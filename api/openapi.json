@@ -1,0 +1,53 @@
+{
+    "openapi": "3.0.1",
+    "info": {
+        "title": "BON in a Box - Script service",
+        "contact": {
+            "email": "jean-michel.lord@mcgill.ca"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8085",
+            "description": "script service URL"
+        }
+    ],
+    "tags": [
+        {
+            "name": "tag1",
+            "description": "First tag"
+        },
+        {
+            "name": "tag2",
+            "description": "Second tag"
+        }
+    ],
+    "paths": {
+        "script/{scriptPath}": {
+          "get": {
+            "tags": [
+            ],
+            "summary": "Run this script",
+            "description": "Run this script ... decription ...",
+            "operationId": "runScript",
+            "parameters": [
+              {
+                "$ref": "parameters.json#/components/parameters/scriptPath"
+              }
+            ],
+            "responses": {
+              "200": {
+                "$ref": "responses.json#/components/responses/script_200"
+              },
+              "400": {
+                "description": "Bad request"
+              },
+              "404": {
+                "description": "Script not found"
+              }
+            }
+          }
+        }
+    }
+}

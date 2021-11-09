@@ -1,0 +1,44 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Schemas Component",
+    "version": "1.0.0"
+  },
+  "paths": {},
+  "components": {
+    "schemas": {
+      "script": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "example": ""
+          },
+          "parameters": {
+            "type": "string",
+            "example": ""
+          }
+        },
+        "xml": {
+          "name": "Script"
+        }
+      },
+      "result": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Script completed"
+          },
+          "file": {
+            "type": "string",
+            "example": "map.tiff"
+          }
+        },
+        "xml": {
+          "name": "Result"
+        }
+      }
+    }
+  }
+}

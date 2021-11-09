@@ -1,0 +1,73 @@
+version: "3.7"
+
+services:
+  ### NodeJS server that was intended to call r-base with params
+  # node:
+  #   image: "node:17"
+  #   user: "node"
+  #   working_dir: /home/node/app
+  #   environment:
+  #     - NODE_ENV=production
+  #   volumes:
+  #     - ./node/:/home/node/app:r
+  #   ports:
+  #     - "8080"
+  #   command: "npm start"
+
+  ### This image can run a single script, but I could not launch it with parameters
+  # stepr:
+  #   image: r-base
+  #   command: ["Rscript", "HelloWorld.R"]
+  #   working_dir: "/usr/local/src/myscripts"
+  #   volumes:
+  #     - ./scripts:/usr/local/src/myscripts:r
+
+
+  
+  ### from https://nuvolar.medium.com/build-a-mock-rest-api-with-swagger-ui-using-open-api-specification-and-docker-4665b53b8d85
+
+  # This service validates the incoming swagger.json file and builds a
+  # final version gathering all the components in one single file.
+  openapi_builder:
+    container_name: swagger_build
+    image: jeanberu/swagger-cli
+    # It will create a volume, copying all the files in your host root folder to /app 
+    # folder inside container host
+    volumes:
+      - ./api/:/app
+    # This command bundle the providded swagger.json file and all its references and 
+    # creates a new schema.json validated file that will be used in the next steps. 
+    # As a volume was created, this file will be available in your project root directory.
+    command: swagger-cli bundle --outfile "/app/schema.json" /app/openapi.json
+
+  # This service run a Mock server in port 8000 using the schema.json file generated 
+  # in the previous step.
+  openapi_mock:
+    container_name: server_mock
+    image: jormaechea/open-api-mocker
+    volumes:
+      - ./api/:/app
+    # Port mapping, the mock server will be exposed at port 8000 of your localhost. Inside 
+    # dockers network the port to reach will be 5000.
+    ports:
+      - "8080:5000"
+    # This service can't start if openapi_builder didn't finish.
+    depends_on:
+      - openapi_builder
+  # This service run a Swagger UI, providing all the API info and documentation
+  # and exposes at port 80. 
+  openapi_swagger:
+    container_name: swagger_ui
+    image: swaggerapi/swagger-ui
+    # Port mapping, the Swagger UI will be available at port :80 or https://localhost
+    ports:
+      - "80:8080"
+    # Swagger File to feed the Swagger UI
+    # Base URL to point for consulting the Swagger https://localhost/swagger
+    environment:
+      SWAGGER_JSON: /app/schema.json
+      BASE_URL: /swagger
+    volumes:
+      - ./api/:/app
+    depends_on:
+      - openapi_mock
