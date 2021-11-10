@@ -9,22 +9,18 @@
     },
     "servers": [
         {
-            "url": "http://localhost:8085",
+            "url": "http://localhost:8080",
             "description": "script service URL"
         }
     ],
     "tags": [
         {
-            "name": "tag1",
-            "description": "First tag"
-        },
-        {
-            "name": "tag2",
-            "description": "Second tag"
+            "name": "placeholder",
+            "description": "We could use tags"
         }
     ],
     "paths": {
-        "script/{scriptPath}": {
+        "/script/{scriptPath}": {
           "get": {
             "tags": [
             ],
