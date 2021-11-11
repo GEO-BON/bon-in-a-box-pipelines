@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "BON in a Box - Script service",
+    "title": "BON in a Box - Pipeline API",
     "contact": {
       "email": "jean-michel.lord@mcgill.ca"
     },
@@ -9,8 +9,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:8080",
-      "description": "script service URL"
+      "url": "http://0.0.0.0:5000",
+      "description": "r-script service"
+    },
+    {
+      "url": "http://0.0.0.0:5001",
+      "description": "we can add another (Python  / Julia ?) service here!"
     }
   ],
   "tags": [
