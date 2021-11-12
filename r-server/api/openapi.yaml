@@ -5,8 +5,10 @@ info:
     email: jean-michel.lord@mcgill.ca
   version: 1.0.0
 servers:
-- url: http://0.0.0.0:5000
-  description: script service URL
+- url: http://localhost:8081
+  description: Example server 1
+- url: http://localhost:8082
+  description: Example server 2
 tags:
 - name: placeholder
   description: We could use tags
