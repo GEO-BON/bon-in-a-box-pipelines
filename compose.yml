@@ -22,16 +22,16 @@ services:
   #   volumes:
   #     - ./scripts:/usr/local/src/myscripts:r
 
-# This can be accessed on localhost:8081/script/..., or within the docker network with r-server1:8081/script/...
-  r-server1:
+# This can be accessed on localhost:8081/script/..., or within the docker network with script-server1:8081/script/...
+  script-server1:
     build:
-      context: ./r-server
+      context: ./script-server
     user: "node"
     working_dir: /home/node/app
     environment:
       - NODE_ENV=development
     volumes:
-      - ./r-server/:/home/node/app:rw
+      - ./script-server/:/home/node/app:rw
       - ./scripts:/usr/local/src/myscripts:r
     ports:
       - "8081:8081"
@@ -40,14 +40,14 @@ services:
     command: "npm start"
 
 # this is a proof of concept, we can have multiple servers.
-  r-server2:
+  script-server2:
     image: "node:17"
     user: "node"
     working_dir: /home/node/app
     environment:
       - NODE_ENV=development
     volumes:
-      - ./r-server/:/home/node/app:rw
+      - ./script-server/:/home/node/app:rw
     ports:
       - "8082:8082"
     environment:
@@ -68,5 +68,5 @@ services:
     volumes:
       - ./api/:/app
     depends_on:
-      - r-server1
-      - r-server2
+      - script-server1
+      - script-server2
