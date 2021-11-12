@@ -1,8 +1,8 @@
 ## If changes are made to this file, be sure to run "docker compose build" to rebuild it.
 ## "docker compose up" would not rebuild the image.
 
-
-FROM node:17 #node:17 is build upon buildpack-deps:bullseye, which includes many packages.
+#node:17 is build upon buildpack-deps:bullseye, which includes many packages.
+FROM node:17 
 
 RUN set -ex; \
     apt-get update && apt-get install -y lsb-release software-properties-common apt-utils; \
