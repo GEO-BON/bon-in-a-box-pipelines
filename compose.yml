@@ -1,27 +1,6 @@
 version: "3.7"
 
 services:
-  ### NodeJS server that was intended to call r-base with params
-  # node:
-  #   image: "node:17"
-  #   user: "node"
-  #   working_dir: /home/node/app
-  #   environment:
-  #     - NODE_ENV=production
-  #   volumes:
-  #     - ./node/:/home/node/app:r
-  #   ports:
-  #     - "8080"
-  #   command: "npm start"
-
-  ### This image can run a single script, but I could not launch it with parameters
-  # stepr:
-  #   image: r-base
-  #   command: ["Rscript", "HelloWorld.R"]
-  #   working_dir: "/usr/local/src/myscripts"
-  #   volumes:
-  #     - ./scripts:/usr/local/src/myscripts:r
-
 # This can be accessed on localhost:8081/script/..., or within the docker network with script-server1:8081/script/...
   script-server1:
     build:
