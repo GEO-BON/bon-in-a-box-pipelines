@@ -22,9 +22,8 @@ services:
   #   volumes:
   #     - ./scripts:/usr/local/src/myscripts:r
 
-
-   ### NodeJS server that was intended to call r-base with params
-  r-server:
+# This can be accessed on localhost:8081/script/..., or within the docker network with r-server1:8081/script/...
+  r-server1:
     image: "node:17"
     user: "node"
     working_dir: /home/node/app
@@ -33,9 +32,24 @@ services:
     volumes:
       - ./r-server/:/home/node/app:rw
     ports:
-      - "8080:5000"
+      - "8081:8081"
     environment:
-      - PORT=5000
+      - PORT=8081
+    command: "npm start"
+
+# this is a proof of concept, we can have multiple servers.
+  r-server2:
+    image: "node:17"
+    user: "node"
+    working_dir: /home/node/app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./r-server/:/home/node/app:rw
+    ports:
+      - "8082:8082"
+    environment:
+      - PORT=8082
     command: "npm start"
 
   openapi_swagger:

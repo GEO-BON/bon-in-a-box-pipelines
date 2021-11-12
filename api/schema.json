@@ -9,12 +9,12 @@
   },
   "servers": [
     {
-      "url": "http://0.0.0.0:5000",
-      "description": "r-script service"
+      "url": "http://0.0.0.0:8081",
+      "description": "Example server 1"
     },
     {
-      "url": "http://0.0.0.0:5001",
-      "description": "we can add another (Python  / Julia ?) service here!"
+      "url": "http://0.0.0.0:8082",
+      "description": "Example server 2"
     }
   ],
   "tags": [
