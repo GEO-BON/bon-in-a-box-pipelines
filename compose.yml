@@ -16,6 +16,7 @@ services:
       - "8081:8081"
     environment:
       - PORT=8081
+      - SCRIPT_LOCATION=/usr/local/src/myscripts
     command: "npm start"
 
 # this is a proof of concept, we can have multiple servers.
