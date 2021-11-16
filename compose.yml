@@ -7,8 +7,6 @@ services:
       context: ./script-server
     user: "node"
     working_dir: /home/node/app
-    environment:
-      - NODE_ENV=development
     volumes:
       - ./script-server/:/home/node/app:rw
       - ./scripts:/usr/local/src/myscripts:r
@@ -17,6 +15,7 @@ services:
     environment:
       - PORT=8081
       - SCRIPT_LOCATION=/usr/local/src/myscripts
+      - NODE_ENV=development
     command: "npm start"
 
 # this is a proof of concept, we can have multiple servers.
@@ -24,14 +23,13 @@ services:
     image: "node:17"
     user: "node"
     working_dir: /home/node/app
-    environment:
-      - NODE_ENV=development
     volumes:
       - ./script-server/:/home/node/app:rw
     ports:
       - "8082:8082"
     environment:
       - PORT=8082
+      - NODE_ENV=development
     command: "npm start"
 
   openapi_swagger:
