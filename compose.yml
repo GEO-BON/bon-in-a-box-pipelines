@@ -10,6 +10,7 @@ services:
     volumes:
       - ./script-server/:/home/node/app:rw
       - ./scripts:/usr/local/src/myscripts:r
+      - ./output:/output:rw
     ports:
       - "8081:8081"
     environment:
@@ -25,6 +26,8 @@ services:
     working_dir: /home/node/app
     volumes:
       - ./script-server/:/home/node/app:rw
+      - ./scripts:/usr/local/src/myscripts:r
+      - ./output:/output:rw
     ports:
       - "8082:8082"
     environment:

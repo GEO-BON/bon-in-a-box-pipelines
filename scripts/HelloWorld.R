@@ -1,2 +1,2 @@
 print("Hello World from R!")
-file.create("hello_file.txt")
+file.create("/output/hello_file.txt")
