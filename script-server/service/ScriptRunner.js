@@ -20,20 +20,24 @@ exports.runScript = function (scriptPath) {
     if (Fs.existsSync(script)  ) {
       // This is a very basic way to run the script, we will probably change this.
       const exec = require('child_process').exec;
-      const myShellScript = exec('Rscript ' + script);
-      myShellScript.stdout.on('data', (data)=>{
-          console.log(data); 
+      const myShellScript = exec('Rscript ' + script, (error, stdout, stderr) => {
+        // Send logs to browser after script ends
+        if (error !== null) {
+          resolve({
+            "message": "Error: " + stderr
+          })
+        } else {
+          resolve({
+            "file": "map.tiff",
+            "message": "Completed: " + stdout
+          })
+        }
       });
-      myShellScript.stderr.on('data', (data)=>{
-          console.error(data);
-      });
- 
-      var examples = {};
-      examples['application/json'] = {
-        "file": "map.tiff",
-        "message": script + " ran!"
-      };
-      resolve(examples[Object.keys(examples)[0]])
+
+      // Realtime server logging
+      myShellScript.stdout.on('data', (data) => { console.log(data); });
+      myShellScript.stderr.on('data', (data) => { console.error(data); });
+
     } else {
       console.log('Script not found: ' + script)
       reject({
