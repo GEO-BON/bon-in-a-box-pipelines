@@ -24,6 +24,8 @@ devtools::install_github("kapitzas/WorldClimTiles")
 
 
 # 0. Settings ----------
+setwd("/output") # Can we use an environment variable for this?
+
 mainDir <- getwd()
 subDir <- "GeoBON"
 dir.create(file.path(mainDir, subDir), showWarnings = FALSE) #dir.create() does not crash if the directory already exists}
