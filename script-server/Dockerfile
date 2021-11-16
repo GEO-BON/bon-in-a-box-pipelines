@@ -17,7 +17,7 @@ RUN set -ex; \
     \
 ## R installation \
     apt-get update; \
-    apt-get install -y --no-install-recommends r-base; \
+    apt-get install -y --no-install-recommends r-base libgdal-dev; \
     apt-get clean all; \
     Rscript --version
 
