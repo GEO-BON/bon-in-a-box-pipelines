@@ -4,9 +4,6 @@
 #node:17 is build upon buildpack-deps:bullseye, which includes many packages.
 FROM node:17 
 
-## Add user to 'staff' group, granting them write privileges to /usr/local/lib/R/site.library
-RUN addgroup node staff
-
 ## R prerequisites
 RUN set -ex; \
     apt-get update && apt-get install -y lsb-release software-properties-common apt-utils;  \

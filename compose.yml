@@ -17,6 +17,7 @@ services:
       - PORT=8081
       - SCRIPT_LOCATION=/usr/local/src/myscripts
       - NODE_ENV=development
+      - R_LIBS_USER=/home/node/app/r-libs
     command: "npm start"
 
 # this is a proof of concept, we can have multiple servers.
