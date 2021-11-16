@@ -4,9 +4,9 @@
 #node:17 is build upon buildpack-deps:bullseye, which includes many packages.
 FROM node:17 
 
-## R prerequisites
+## R prerequisites, including GFortran to compile some packages
 RUN set -ex; \
-    apt-get update && apt-get install -y lsb-release software-properties-common apt-utils;  \
+    apt-get update && apt-get install -y lsb-release software-properties-common apt-utils gfortran;  \
     # R ppa setup to have the latest version (otherwise it's a year behing) \
     # apt-key adv --keyserver keyserver.ubuntu.com --recv-key 'E19F5F87128899B192B1A2C2AD5F960A256A04AF'; \
     add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/"; \
