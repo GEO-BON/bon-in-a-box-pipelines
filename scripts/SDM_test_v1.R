@@ -24,7 +24,7 @@ devtools::install_github("kapitzas/WorldClimTiles")
 
 
 # 0. Settings ----------
-setwd("/output") # Can we use an environment variable for this?
+setwd(Sys.getenv("OUTPUT_LOCATION")) # Can we use an environment variable for this?
 
 mainDir <- getwd()
 subDir <- "GeoBON"
@@ -32,8 +32,8 @@ dir.create(file.path(mainDir, subDir), showWarnings = FALSE) #dir.create() does 
 setwd(file.path(mainDir, subDir))
 
 
-# cLEANING DATA MODULE 
-source("./clean_occurrences.R")
+# CLEANING DATA MODULE 
+source(file.path(Sys.getenv("SCRIPT_LOCATION"), "clean_occurrences.R"))
 
 # Projections
  # Geographic

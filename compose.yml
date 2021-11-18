@@ -2,39 +2,39 @@ version: "3.7"
 
 services:
 # This can be accessed on localhost:8081/script/..., or within the docker network with script-server1:8081/script/...
-  script-server1:
+  script-server:
     build:
       context: ./script-server
     user: "node"
     working_dir: /home/node/app
     volumes:
       - ./script-server/:/home/node/app:rw
-      - ./scripts:/usr/local/src/myscripts:r
+      - ./scripts:/scripts:r
       - ./output:/output:rw
     ports:
       - "8081:8081"
     environment:
       - PORT=8081
-      - SCRIPT_LOCATION=/usr/local/src/myscripts
+      - SCRIPT_LOCATION=/scripts
+      - OUTPUT_LOCATION=/output
       - NODE_ENV=development
       - R_LIBS_USER=/home/node/app/r-libs
     command: "npm start"
 
-# this is a proof of concept, we can have multiple servers.
-  script-server2:
-    image: "node:17"
-    user: "node"
-    working_dir: /home/node/app
-    volumes:
-      - ./script-server/:/home/node/app:rw
-      - ./scripts:/usr/local/src/myscripts:r
-      - ./output:/output:rw
-    ports:
-      - "8082:8082"
-    environment:
-      - PORT=8082
-      - NODE_ENV=development
-    command: "npm start"
+  # ui:
+  #   container_name: biab-ui
+  #   build:
+  #     context: ./ui
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - './ui:/app'
+  #     - '/app/node_modules'
+  #   ports:
+  #     - 3001:3000
+  #   environment:
+  #     - CHOKIDAR_USEPOLLING=true 
+  #   depends_on:
+  #     - script-server
 
   openapi_swagger:
     container_name: swagger_editor
