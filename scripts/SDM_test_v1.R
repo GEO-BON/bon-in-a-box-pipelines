@@ -26,8 +26,9 @@ devtools::install_github("kapitzas/WorldClimTiles")
 # 0. Settings ----------
 setwd(Sys.getenv("OUTPUT_LOCATION"))
 
+# Create a folder "output" in the current directory, and set the working directory to this folder
 mainDir <- getwd()
-subDir <- "GeoBON"
+subDir <- "SDM_test_v1"
 dir.create(file.path(mainDir, subDir), showWarnings = FALSE) #dir.create() does not crash if the directory already exists}
 setwd(file.path(mainDir, subDir))
 
