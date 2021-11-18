@@ -28,7 +28,11 @@ FROM with-r-base AS with-r-libs
 RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
-        libgdal-dev r-cran-devtools r-cran-rcppeigen libudunits2-dev r-cran-rjava; \
+        libgdal-dev \
+        libudunits2-dev \
+        r-cran-devtools \
+        r-cran-rcppeigen \
+        r-cran-rjava; \
     apt-get clean all;
 
 
