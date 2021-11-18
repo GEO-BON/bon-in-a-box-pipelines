@@ -11,8 +11,9 @@ Prerequisites :
 To run:
 1. Clone repository
 2. Navigate to top-level folder
-3. Console: docker compose up
-4. In browser:
+3. docker compose build (this needs to be re-run every time a Dockerfile is modified)
+4. docker compose up
+5. In browser:
     - http://localhost:8081/script/HelloWorld.R should run an R script.
     - http://localhost:8081/script/blabla should return "not found" error message.
     - http://localhost:8081/docs shows the API documentation
