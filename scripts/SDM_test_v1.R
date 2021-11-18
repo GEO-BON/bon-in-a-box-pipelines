@@ -24,16 +24,16 @@ devtools::install_github("kapitzas/WorldClimTiles")
 
 
 # 0. Settings ----------
-setwd("/output") # Can we use an environment variable for this?
 
+# Cleaning data module
+source("./clean_occurrences.R")
+
+# Create a floder "output" in the current directory, and set the working directory to this folder
 mainDir <- getwd()
-subDir <- "GeoBON"
+subDir <- "output"
 dir.create(file.path(mainDir, subDir), showWarnings = FALSE) #dir.create() does not crash if the directory already exists}
 setwd(file.path(mainDir, subDir))
 
-
-# cLEANING DATA MODULE 
-source("./clean_occurrences.R")
 
 # Projections
  # Geographic
