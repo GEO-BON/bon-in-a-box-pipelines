@@ -3,7 +3,7 @@
 
 # Packages requiered -----------
 
-packages <- c("rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos","sf")
+packages <- c("rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos","sf", "terra")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 
 if(length(new.packages)) install.packages(new.packages)
@@ -155,7 +155,7 @@ occs <- dplyr::select(Obs_gbif_data, decimalLongitude, decimalLatitude) %>%
 
 # Pseudo-absences
 library('dismo')
-bg_points <- dismo::randomPoints(clim_tiles_merge_agg$bio1, n = 5000) %>% as.data.frame()
+bg_points <- dismo::randomPoints(clim_tiles_merge_agg[[1]], n = 5000) %>% as.data.frame()
 colnames(bg_points) <- colnames(occs)
 
 
@@ -172,8 +172,9 @@ model_species <- ENMeval::ENMevaluate(occs = occs, envs = clim_tiles_merge_agg ,
 
 # 4. Predictions -------
 
-model_species_prediction <- eval.predictions(model_species)
-
+model_species_prediction <- ENMeval::eval.predictions(model_species)
+terra::writeRaster(terra::rast(model_species_prediction), paste0(getwd(), "/prediction.tif"),
+                   overwrite=TRUE)
 
 # 5.  Model uncertainty ---------
 
@@ -185,7 +186,7 @@ for(i in 1:10){
   cat(paste0("Testing background points_model_", i), '\n')
   
 
-  bg_points <- dismo::randomPoints(clim_tiles_merge_agg$bio1, n = 5000) %>% as.data.frame()
+  bg_points <- dismo::randomPoints(clim_tiles_merge_agg[[1]], n = 5000) %>% as.data.frame()
   colnames(bg_points) <- colnames(occs)
   
   model_10[[i]] <- ENMeval::ENMevaluate(occs = occs, envs = clim_tiles_merge_agg , bg = bg_points, 
@@ -202,7 +203,8 @@ for(i in 1:10){
 
 model_10_predictions <- stack(lapply(model_10, eval.predictions))
 uncertainty <- cv(model_10_predictions)
-
+terra::writeRaster(terra::rast(uncertainty), paste0(getwd(), "/uncertainty.tif"),
+                   overwrite=TRUE)
 
 #############END PIPELINE ####################################
 
