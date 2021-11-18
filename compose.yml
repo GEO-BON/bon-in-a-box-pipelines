@@ -4,7 +4,7 @@ services:
 # This can be accessed on localhost:8081/script/..., or within the docker network with script-server1:8081/script/...
   script-server:
     build:
-      context: ./script-server
+      context: ./script-server/docker
     user: "node"
     working_dir: /home/node/app
     volumes:
@@ -36,19 +36,19 @@ services:
   #   depends_on:
   #     - script-server
 
-  openapi_swagger:
-    container_name: swagger_editor
-    image: swaggerapi/swagger-editor
-    # Swagger editor will be available at port :80 or https://localhost
-    ports:
-      - "80:8080"
-    # Swagger File to feed the Swagger Editor
-    # Base URL to point for consulting the Swagger https://localhost/swagger
-    environment:
-      SWAGGER_FILE: schema.json
-      BASE_URL: /swagger
-    volumes:
-      - ./api/:/app
-    depends_on:
-      - script-server1
-      - script-server2
+  # openapi_swagger:
+  #   container_name: swagger_editor
+  #   image: swaggerapi/swagger-editor
+  #   # Swagger editor will be available at port :80 or https://localhost
+  #   ports:
+  #     - "80:8080"
+  #   # Swagger File to feed the Swagger Editor
+  #   # Base URL to point for consulting the Swagger https://localhost/swagger
+  #   environment:
+  #     SWAGGER_FILE: schema.json
+  #     BASE_URL: /swagger
+  #   volumes:
+  #     - ./api/:/app
+  #   depends_on:
+  #     - script-server1
+  #     - script-server2
