@@ -24,7 +24,7 @@ devtools::install_github("kapitzas/WorldClimTiles")
 
 
 # 0. Settings ----------
-setwd(Sys.getenv("OUTPUT_LOCATION")) # Can we use an environment variable for this?
+setwd(Sys.getenv("OUTPUT_LOCATION"))
 
 mainDir <- getwd()
 subDir <- "GeoBON"
