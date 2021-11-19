@@ -9,7 +9,8 @@
  * params String Additional parameters for the script (optional)
  * returns inline_response_200
  **/
-exports.runScript = function(scriptPath,params) {
+exports.runScript = function(scriptPath, params) {
+  console.log("Received " + scriptPath + " " + params)
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
