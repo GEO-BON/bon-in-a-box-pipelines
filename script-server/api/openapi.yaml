@@ -6,9 +6,7 @@ info:
   version: 1.0.0
 servers:
 - url: http://localhost:8081
-  description: Example server 1
-- url: http://localhost:8082
-  description: Example server 2
+  description: script service (from outside dockers only)
 tags:
 - name: placeholder
   description: We could use tags
@@ -17,7 +15,7 @@ paths:
     get:
       tags: []
       summary: Run this script
-      description: Run this script ... decription ...
+      description: Run the script specified in the URL. Must include the extension.
       operationId: runScript
       parameters:
       - name: scriptPath
@@ -25,6 +23,14 @@ paths:
         description: Where to find the script in ./script folder
         required: true
         style: simple
+        explode: false
+        schema:
+          type: string
+      - name: params
+        in: query
+        description: Additional parameters for the script
+        required: false
+        style: form
         explode: false
         schema:
           type: string
@@ -40,19 +46,53 @@ paths:
         "404":
           description: Script not found
       x-swagger-router-controller: Default
+  /script/{scriptPath}/info:
+    get:
+      tags: []
+      summary: Get metadata about this script
+      operationId: scriptScriptPathInfoGET
+      parameters:
+      - name: scriptPath
+        in: path
+        description: Where to find the script in ./script folder
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the path towards the script's info document.
+          content:
+            application/json:
+              schema:
+                type: string
+                example: http://server.com/scripts/somescript.html
+                x-content-type: application/json
+        "400":
+          description: Bad request
+        "404":
+          description: Script not found
+      x-swagger-router-controller: Default
 components:
   schemas:
     inline_response_200:
       type: object
       properties:
-        message:
+        logs:
           type: string
-          example: Script completed!
-        file:
-          type: string
-          example: map.tiff
+          example: Starting... Script completed!
+        files:
+          type: array
+          example:
+          - presence.tiff
+          - uncertainty.tiff
+          items:
+            type: string
       example:
-        file: map.tiff
-        message: Script completed!
+        files:
+        - presence.tiff
+        - uncertainty.tiff
+        logs: Starting... Script completed!
       xml:
         name: Result
