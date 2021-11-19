@@ -31,7 +31,7 @@ exports.runScript = function (scriptPath, params) {
           })
         } else {
           resolve({
-            "files": [ "presence.tiff", "uncertainty.tiff" ],
+            "files": ["presence.tiff", "uncertainty.tiff"],
             "logs": "Completed: " + stdout
           })
         }
