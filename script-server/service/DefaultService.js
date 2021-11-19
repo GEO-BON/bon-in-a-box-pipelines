@@ -3,18 +3,38 @@
 
 /**
  * Run this script
- * Run this script ... decription ...
+ * Run the script specified in the URL. Must include the extension.
  *
  * scriptPath String Where to find the script in ./script folder
+ * params String Additional parameters for the script (optional)
  * returns inline_response_200
  **/
-exports.runScript = function(scriptPath) {
+exports.runScript = function(scriptPath,params) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "file" : "map.tiff",
-  "message" : "Script completed!"
+  "files" : [ "presence.tiff", "uncertainty.tiff" ],
+  "logs" : "Starting... Script completed!"
 };
+    if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
+    } else {
+      resolve();
+    }
+  });
+}
+
+
+/**
+ * Get metadata about this script
+ *
+ * scriptPath String Where to find the script in ./script folder
+ * returns String
+ **/
+exports.scriptScriptPathInfoGET = function(scriptPath) {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = "http://server.com/scripts/somescript.html";
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {

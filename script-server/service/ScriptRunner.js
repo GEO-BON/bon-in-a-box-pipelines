@@ -28,8 +28,8 @@ exports.runScript = function (scriptPath) {
           })
         } else {
           resolve({
-            "file": "map.tiff",
-            "message": "Completed: " + stdout
+            "files": [ "presence.tiff", "uncertainty.tiff" ],
+            "logs": "Completed: " + stdout
           })
         }
       });
