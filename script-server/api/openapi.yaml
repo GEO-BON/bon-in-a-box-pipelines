@@ -46,11 +46,11 @@ paths:
         "404":
           description: Script not found
       x-swagger-router-controller: Default
-  /script/{scriptPath}/info:
+  /info/{scriptPath}:
     get:
       tags: []
       summary: Get metadata about this script
-      operationId: scriptScriptPathInfoGET
+      operationId: getScriptInfo
       parameters:
       - name: scriptPath
         in: path
