@@ -8,15 +8,18 @@ const Path = require('path')
 
 /**
  * Run this script
- * Run this script ... decription ...
+ * Run the script specified in the URL. Must include the extension.
  *
  * scriptPath String Where to find the script in ./script folder
+ * params String Additional parameters for the script (optional)
  * returns inline_response_200
  **/
-exports.runScript = function (scriptPath) {
+exports.runScript = function (scriptPath, params) {
+  console.log("Received " + scriptPath + " " + params)
+
   return new Promise(function (resolve, reject) {
     const script = Path.join(scriptFolder, scriptPath)
-    
+
     if (Fs.existsSync(script)  ) {
       // This is a very basic way to run the script, we will probably change this.
       const exec = require('child_process').exec;
@@ -24,7 +27,7 @@ exports.runScript = function (scriptPath) {
         // Send logs to browser after script ends
         if (error !== null) {
           resolve({
-            "message": "Error: " + stderr
+            "logs": "Error: " + stderr
           })
         } else {
           resolve({
@@ -41,7 +44,7 @@ exports.runScript = function (scriptPath) {
     } else {
       console.log('Script not found: ' + script)
       reject({
-        "message": "Script not found"
+        "logs": "Script not found"
       });
     }
   });
