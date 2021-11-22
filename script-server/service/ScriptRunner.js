@@ -25,35 +25,35 @@ exports.runScript = function (scriptPath, params) {
       const exec = require('child_process').exec;
       const myShellScript = exec('Rscript ' + script, (error, stdout, stderr) => {
 
-        if (error !== null) {
-          // Send error logs as response
-          resolve({
-            "logs": "Error: " + stderr
-          })
-
-        } else {
+        if (error === null) {
           // End of stdout should be the JSON array of outputs
           var outputs = JSON.parse('{}')
           const jsonstart = stdout.lastIndexOf('{')
-          if(jsonstart == -1)
-          {
-              console.error("no JSON map found for outputs")
-          }
-          else {
+          if (jsonstart == -1) {
+            console.error(stderr = "no JSON map found for outputs")
+
+          } else {
             var jsonstr = stdout.substr(jsonstart)
-            console.log("jsonstr: "+ jsonstr)
+            console.log("jsonstr: " + jsonstr)
             try {
               outputs = JSON.parse(jsonstr);
+              resolve({
+                "files": outputs,
+                "logs": "Completed: " + stdout
+              })
+              return
+
             } catch (ex) {
               console.error(ex);
+              stderr = ex
             }
           }
-
-          resolve({
-            "files": outputs,
-            "logs": "Completed: " + stdout
-          })
         }
+
+        // Send error logs as response
+        resolve({
+          "logs": "Error: " + stderr + "\n\nFull logs: " + stdout
+        })
       });
 
       // Realtime server logging
