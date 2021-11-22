@@ -21,17 +21,36 @@ exports.runScript = function (scriptPath, params) {
     const script = Path.join(scriptFolder, scriptPath)
 
     if (Fs.existsSync(script)  ) {
-      // This is a very basic way to run the script, we will probably change this.
+      // TODO: This is a very basic way to run the script, we will probably change this.
       const exec = require('child_process').exec;
       const myShellScript = exec('Rscript ' + script, (error, stdout, stderr) => {
-        // Send logs to browser after script ends
+
         if (error !== null) {
+          // Send error logs as response
           resolve({
             "logs": "Error: " + stderr
           })
+
         } else {
+          // End of stdout should be the JSON array of outputs
+          var outputs = JSON.parse('{}')
+          const jsonstart = stdout.lastIndexOf('{')
+          if(jsonstart == -1)
+          {
+              console.error("no JSON map found for outputs")
+          }
+          else {
+            var jsonstr = stdout.substr(jsonstart)
+            console.log("jsonstr: "+ jsonstr)
+            try {
+              outputs = JSON.parse(jsonstr);
+            } catch (ex) {
+              console.error(ex);
+            }
+          }
+
           resolve({
-            "files": ["presence.tiff", "uncertainty.tiff"],
+            "files": outputs,
             "logs": "Completed: " + stdout
           })
         }
