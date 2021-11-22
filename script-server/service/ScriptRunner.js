@@ -21,9 +21,11 @@ exports.runScript = function (scriptPath, params) {
     const script = Path.join(scriptFolder, scriptPath)
 
     if (Fs.existsSync(script)  ) {
-      // TODO: This is a very basic way to run the script, we will probably change this.
       const exec = require('child_process').exec;
-      const myShellScript = exec('Rscript ' + script, (error, stdout, stderr) => {
+
+// TODO#20: getCommand(script)
+
+      const shellScript = exec('Rscript ' + script, (error, stdout, stderr) => {
 
         if (error === null) {
           // End of stdout should be the JSON array of outputs
@@ -57,8 +59,8 @@ exports.runScript = function (scriptPath, params) {
       });
 
       // Realtime server logging
-      myShellScript.stdout.on('data', (data) => { console.log(data); });
-      myShellScript.stderr.on('data', (data) => { console.error(data); });
+      shellScript.stdout.on('data', (data) => { console.log(data); });
+      shellScript.stderr.on('data', (data) => { console.error(data); });
 
     } else {
       console.log('Script not found: ' + script)

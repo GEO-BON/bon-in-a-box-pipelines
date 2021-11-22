@@ -36,6 +36,8 @@ RUN set -ex; \
     apt-get clean all;
 
 
+# TODO#20: Install Python
+
 ## Java installation (currently replaced by using r-cran-rjava)
 #FROM node:17 AS with-java
 # AS with-java
