@@ -208,3 +208,9 @@ terra::writeRaster(terra::rast(uncertainty), paste0(getwd(), "/uncertainty.tif")
 
 #############END PIPELINE ####################################
 
+cat(paste0(
+'{
+"prediction": "', getwd(), "/prediction.tif", '",
+"uncertainty": "', getwd(), "/uncertainty.tif", '"
+}'
+))
