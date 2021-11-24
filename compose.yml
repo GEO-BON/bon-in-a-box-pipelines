@@ -48,7 +48,6 @@ services:
   #     SWAGGER_FILE: schema.json
   #     BASE_URL: /swagger
   #   volumes:
-  #     - ./api/:/app
-  #   depends_on:
-  #     - script-server1
-  #     - script-server2
+  #     - ./script-server/api/:/app
+  #   # depends_on:
+  #   #   - script-server
