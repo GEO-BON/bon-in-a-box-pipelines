@@ -54,7 +54,7 @@ exports.runScript = function (scriptPath, params) {
         }
 
         // Send error logs as response
-        reject(respondWithCode(500, {
+        reject(utils.respondWithCode(500, {
           "logs": "Error: " + stderr + "\n\nFull logs: " + stdout
         }))
       });
