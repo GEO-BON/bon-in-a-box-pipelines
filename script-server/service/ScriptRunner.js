@@ -11,7 +11,7 @@ const Path = require('path')
  * Run the script specified in the URL. Must include the extension.
  *
  * scriptPath String Where to find the script in ./script folder
- * params String Additional parameters for the script (optional)
+ * params List Additional parameters for the script (optional)
  * returns inline_response_200
  **/
 exports.runScript = function (scriptPath, params) {
@@ -25,7 +25,7 @@ exports.runScript = function (scriptPath, params) {
 
 // TODO#20: getCommand(script)
 
-      const shellScript = exec('Rscript ' + script, (error, stdout, stderr) => {
+      const shellScript = exec(`Rscript ${script} ${params.join(' ')}`, (error, stdout, stderr) => {
 
         if (error === null) {
           // End of stdout should be the JSON array of outputs
