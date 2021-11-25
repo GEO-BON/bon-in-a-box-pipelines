@@ -3,6 +3,7 @@
 
 var scriptFolder = process.env.SCRIPT_LOCATION;
 
+const utils = require('../utils/writer.js');
 const Fs = require('fs')  
 const Path = require('path')
 
@@ -53,9 +54,9 @@ exports.runScript = function (scriptPath, params) {
         }
 
         // Send error logs as response
-        resolve({
+        reject(respondWithCode(500, {
           "logs": "Error: " + stderr + "\n\nFull logs: " + stdout
-        })
+        }))
       });
 
       // Realtime server logging
@@ -64,9 +65,9 @@ exports.runScript = function (scriptPath, params) {
 
     } else {
       console.log('Script not found: ' + script)
-      reject({
+      reject(utils.respondWithCode(404, {
         "logs": "Script not found"
-      });
+      }))
     }
   });
 }
