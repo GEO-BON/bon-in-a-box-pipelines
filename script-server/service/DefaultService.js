@@ -2,21 +2,15 @@
 
 
 /**
- * Run this script
- * Run the script specified in the URL. Must include the extension.
+ * Get metadata about this script
  *
  * scriptPath String Where to find the script in ./script folder
- * params String Additional parameters for the script (optional)
- * returns inline_response_200
+ * returns String
  **/
-exports.runScript = function(scriptPath, params) {
-  console.log("Received " + scriptPath + " " + params)
+exports.getScriptInfo = function(scriptPath) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = {
-  "files" : [ "presence.tiff", "uncertainty.tiff" ],
-  "logs" : "Starting... Script completed!"
-};
+    examples['application/json'] = "http://server.com/scripts/somescript.html";
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -27,15 +21,20 @@ exports.runScript = function(scriptPath, params) {
 
 
 /**
- * Get metadata about this script
+ * Run this script
+ * Run the script specified in the URL. Must include the extension.
  *
  * scriptPath String Where to find the script in ./script folder
- * returns String
+ * params List Additional parameters for the script (optional)
+ * returns inline_response_200
  **/
-exports.scriptScriptPathInfoGET = function(scriptPath) {
+exports.runScript = function(scriptPath,params) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "http://server.com/scripts/somescript.html";
+    examples['application/json'] = {
+  "files" : [ "presence.tiff", "uncertainty.tiff" ],
+  "logs" : "Starting... Script completed!"
+};
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {

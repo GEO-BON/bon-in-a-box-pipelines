@@ -33,7 +33,12 @@ paths:
         style: form
         explode: false
         schema:
-          type: string
+          type: array
+          example: # Use %2C instead of comma when sending multiple params
+          - param1
+          - param2
+          items:
+            type: string
       responses:
         "200":
           description: successful operation
