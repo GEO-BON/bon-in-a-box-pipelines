@@ -1,11 +1,11 @@
 'use strict';
 
-
 var scriptFolder = process.env.SCRIPT_LOCATION;
 
 const utils = require('../utils/writer.js');
 const Fs = require('fs')  
 const Path = require('path')
+const MD5 = require('crypto-js/md5')
 
 /**
  * Run this script
@@ -15,31 +15,44 @@ const Path = require('path')
  * params List Additional parameters for the script (optional)
  * returns inline_response_200
  **/
-exports.runScript = function (scriptPath, params) {
-  console.log("Received " + scriptPath + " " + params)
+exports.runScript = function (scriptFile, params) {
+  console.log("Received " + scriptFile + " " + params)
 
   return new Promise(function (resolve, reject) {
-    const script = Path.join(scriptFolder, scriptPath)
+    // Make sure the script exists
+    const scriptPath = Path.join(scriptFolder, scriptFile)
+    if (!Fs.existsSync(scriptPath)) {
+      console.log('Script not found: ' + scriptPath)
+      reject(utils.respondWithCode(404, {
+        "logs": "Script not found"
+      }))
+      return
+    }
 
-    if (Fs.existsSync(script)  ) {
-      const exec = require('child_process').exec;
+    // Create the ouput folder based for this invocation
+    const outputFolder = getOutputFolder(scriptFile, params);
+    if (!Fs.existsSync(outputFolder)) {
+      Fs.mkdirSync(outputFolder, { recursive: true });
+    }
 
-// TODO#20: getCommand(script)
+    // TODO#20: getCommand(script)
 
-      const shellScript = exec(`Rscript ${script} ${params.join(' ')}`, (error, stdout, stderr) => {
+    // Run the script
+    const exec = require('child_process').exec;
+    const shellScript = exec(
+      `Rscript ${scriptPath} ${outputFolder} `
+      + (params == undefined ? '' : params.join(' ')),
+      (error, stdout, stderr) => {
 
         if (error === null) {
-          // End of stdout should be the JSON array of outputs
-          var outputs = JSON.parse('{}')
-          const jsonstart = stdout.lastIndexOf('{')
-          if (jsonstart == -1) {
-            console.error(stderr = "no JSON map found for outputs")
+          const outputFile = Path.join(outputFolder, 'output.json')
+          if (!Fs.existsSync(outputFile)) {
+            console.error(stderr = "output.json file not found")
 
           } else {
-            var jsonstr = stdout.substr(jsonstart)
-            console.log("jsonstr: " + jsonstr)
+            // Read output.json
             try {
-              outputs = JSON.parse(jsonstr);
+              var outputs = JSON.parse(Fs.readFileSync(outputFile, { encoding: 'utf8', flag: 'r' }))
               resolve({
                 "files": outputs,
                 "logs": "Completed: " + stdout
@@ -59,16 +72,21 @@ exports.runScript = function (scriptPath, params) {
         }))
       });
 
-      // Realtime server logging
-      shellScript.stdout.on('data', (data) => { console.log(data); });
-      shellScript.stderr.on('data', (data) => { console.error(data); });
-
-    } else {
-      console.log('Script not found: ' + script)
-      reject(utils.respondWithCode(404, {
-        "logs": "Script not found"
-      }))
-    }
+    // Realtime server logging
+    shellScript.stdout.on('data', (data) => { console.log(data); });
+    shellScript.stderr.on('data', (data) => { console.error(data); });
   });
 }
 
+/**
+ * 
+ * @param {String} scriptFile 
+ * @param {List} params 
+ * @returns a folder for this invocation. Invoking with the same params will always give the same output folder.
+ */
+function getOutputFolder(scriptFile, params) {
+  return Path.join(
+    process.env.OUTPUT_LOCATION,
+    scriptFile.replace('.', '_'),
+    params == undefined ? 'no_params' : MD5(params).toString())
+}
