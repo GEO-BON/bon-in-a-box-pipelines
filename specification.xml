@@ -1,0 +1,558 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<object-stream>
+  <serialiser version="1.0"/>
+  <specification projectName="">
+    <levels>
+      <level>
+        <types>
+          <type name="Users" prefix="U">
+            <contentType class="Requirement"/>
+            <content>
+              <comparator class="IdComparator"/>
+              <req id="1" manuallyValidated="false">
+                <title>Governments</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="2" manuallyValidated="false">
+                <title>NGOs</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="3" manuallyValidated="false">
+                <title>Parties to the convention</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="4" manuallyValidated="false">
+                <title>Citizen groups</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="5" manuallyValidated="false">
+                <title>Researchers</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="6" manuallyValidated="false">
+                <title>BON</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="7" manuallyValidated="false">
+                <title>Data providers</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="8" manuallyValidated="false">
+                <title>Developers</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="9" manuallyValidated="false">
+                <title>GeoBON members</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="10" manuallyValidated="false">
+                <title>Funding organisms</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+            </content>
+          </type>
+        </types>
+      </level>
+      <level>
+        <types>
+          <type name="Needs" prefix="N">
+            <contentType class="Requirement"/>
+            <content>
+              <comparator class="IdComparator"/>
+              <req id="1" manuallyValidated="false">
+                <title>Know the state of biodiversity</title>
+                <desc>Currently:
+- Small set of indicators provided my major actors (NGOs, etc.) ex: LPI, Redlist. 
+- Ad-hoc reporting.
+- Realtime dashboard and annual reports.
+- Parties are disagreeing on baselines and indicators.
+
+New system : 
+- Use generic data and agreed-upon indicators to show a basic result.
+- Use additionnal data sources to get a more accurate result.
+- Intergrated in UN Biodiversity Lab and Target Tracker (WCMC, mandated by CBD).
+- For SHI, the species will need to be specified.
+
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="2" manuallyValidated="false">
+                <title>Trace the source of this answer</title>
+                <desc>(supported by which publications, scientists/organisations involved, based on which data)
+
+Currently: 
+- Look your answer... according to the system.
+
+New system: 
+- The process is trasparent.
+- Give the sources for each steps of the pipeline.
+- Know the people / organisations that provided the data for a specific answer.</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="3" manuallyValidated="false">
+                <title>Know uncertainty of the answer</title>
+                <desc>Dimensions: spatial, temporal
+Types: human footprint, calculations, data, etc.
+
+Currently: what we have doesn&apos;t mean much.
+
+New system: 
+- We want to find a way to communicate uncertainty for everything we show.
+- Tell if the monitoring network can detect the trend.
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="4" manuallyValidated="false">
+                <title>Predict the future state of biodiversity</title>
+                <desc>Planning:
+SDM (eg Maria Isabel testing with plant data in Colombia)
+Yan Boulanger - tree species and biomass for QC (he has data for 17spp) combined with info drivers (QC has very good monitoring data)
+Issue: present and future predictions are different in terms of pipelines (debatable maybe?)
+Major gap to be discussed: SDM connected with biodiversity metrics!!! (separate discussion on this point)
+How we go from SDMs to indicators and then compound the uncertainty
+
+New system : 
+Visualize the projection.
+How do you change the monitoring network to reduce prediction uncertainty? ==&gt; N05
+Provide a feedback for better models for the current state ==&gt; N01
+
+(we must decide what trigger a re-run of the model)
+
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="5" manuallyValidated="false">
+                <title>Where should we sample</title>
+                <desc>Criteria could be : 
+- minimize cost of sampling;
+- minimize uncertainty of prediction or uncertianty current state of biodiversity.
+
+Currently: Historically-based reasons, or designed for other things than *detecting change*.
+
+New system: Recommend sites to sample to reduce prediction uncertainty or current state uncertainty.
+
+
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="6" manuallyValidated="true">
+                <title>What can I sample</title>
+                <desc>NOT OUR DECISION
+
+Sampling methods: Sound, DNA, direct observations, camera traps, satellite images
+The model needs both large scale generic information, and reliable/specific observations.
+
+Currently: Depending on who is doing it, can be cost-effective or a brute force approach.
+
+
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="7" manuallyValidated="false">
+                <title>Who is sampling </title>
+                <desc>Know the people / organisations that provide data for a specific species.
+
+Currently: Contact each country one by one. Often leads to overlooking data collectors.
+
+New system: Search for &quot;frogs&quot;, get the organisations observing frogs on a map.
+(separate system from the indicator &quot;answer&quot;, but will be used in conjuction)</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="9" manuallyValidated="false">
+                <title>Identify research needs</title>
+                <desc>(data / algorithms)
+
+Currently: Cite papers specifically, rarely region specific.
+
+New system:
+- Use the uncertainty output to justify reseach needs, to get funding, etc.
+- Data-based and region specific.</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="10" manuallyValidated="false">
+                <title>Expand the system</title>
+                <desc>Currently:
+- No need to reach out to people most of the time, it is on github repos. 
+- There is no coherent generalized pipeline. Every code uses their own pipeline/resolution.
+
+New system:
+- Coherent pipeline that can be extended.
+- Can add a specific step without coding everyting.
+- There must be a gatekeeper process to asses the quality and relevance of what is merged.
+- We want to show a working proof of concept before we allow external researchers to expand the system.
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="11" manuallyValidated="false">
+                <title>See intermediate results</title>
+                <desc>Currently:
+
+New system: 
+-  Anything that can be mapped that is passed between pipeline steps.
+- Any other variable passed between steps (variable dump/graph).
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="12" manuallyValidated="false">
+                <title>Impact &amp; outreach</title>
+                <desc>Currently: Publications, direct contact with deciders.
+
+New system: 
+- Deciders can make queries themselves (uncertainty must be VERY clear)
+- Other scientists will see my research through this platform as well.</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="13" manuallyValidated="false">
+                <title>Contibute analysis</title>
+                <desc>Researchers can communicate their analysis of the system or its result to Geo BON or the community.</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="14" manuallyValidated="false">
+                <title>Contibute data</title>
+                <desc>New system: 
+- We are not hosting anything, the data should be uploaded to another repository.
+- The contributor should add a step to fetch this specific data when needed (for ex GBIF country node).</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="15" manuallyValidated="false">
+                <title>Learning &amp; training</title>
+                <desc>About biodiversity:
+-
+
+About the code and pipeline:
+- The framework must be very clear.
+- Inside each step, scientists will be responsible... but we can ask for clarifications in merge requests.
+- Documentation should be REALLY simple and easily available.</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="16" manuallyValidated="true">
+                <title>Connect with other members</title>
+                <desc>(this is out of MS Project scope, more Geo BON stuff that can be adressed with the secretariat)</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="17" manuallyValidated="false">
+                <title>Tracking progress</title>
+                <desc>Is the capacity to monitor the indacators getting better?
+(going towards the CBD goals)
+
+Currently: Have a researcher grab data and process it in an ad-hoc way. In almost every case, it is not properly designed for purpose (repurposing data / algorithms).
+
+New system: 
+- Must give more confidence, with repeatable results!
+- Tracking the new sites vs previous sampling
+- Impact of these new sites on indicator uncertainty
+- Impact on prediction
+- Can track progress towards the GBF targets.
+</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="18" manuallyValidated="false">
+                <title>View alternative models</title>
+                <desc>The type of model that we use makes a big difference in prediction.
+Might depend on the need of the user... some model will give better results for some needs.
+
+** This needs to be discussed in-depth!!
+
+New system : 
+- Region-specific when available, else choose the best generic model.
+- Front-end user would not need to bother that choice, but in that case it must be explained.</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="20" manuallyValidated="false">
+                <title>Know what species are missing in the analysis</title>
+                <desc>Currently: Normally, published calculations are only done on those species that have enough data. Those with less data are not highlighted.
+
+New system:
+- For species with low data, we should show only what we can. The intermediate results panel would be used to show what we can show if the query was specific.
+- If the indicator query gave a result: be able to know which species were left out / or show at which step the species stopped. 
+- Explain the decision process.</desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+            </content>
+          </type>
+        </types>
+      </level>
+      <level>
+        <types>
+          <type name="User stories" prefix="S">
+            <contentType class="Requirement"/>
+            <content>
+              <comparator class="IdComparator"/>
+              <req id="1" manuallyValidated="true">
+                <title>Dev: Choose the basis for our pipeline</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="2" manuallyValidated="false">
+                <title>Dev: Create a very simple pipeline</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="3" manuallyValidated="false">
+                <title>Scientist: Use valid data for Quebec</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="4" manuallyValidated="false">
+                <title>Scientist: Use heterogenous sources in the SDM</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="5" manuallyValidated="false">
+                <title>Scientist: Visualize the pipeline and references</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="6" manuallyValidated="false">
+                <title>Decider: know uncertainty</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="7" manuallyValidated="false">
+                <title>Decider: See unbiaised data</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="8" manuallyValidated="false">
+                <title>Scientist: Use the pre-calculated SDMs from BioModelos</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="9" manuallyValidated="false">
+                <title>User: Visualise connectivity (and its uncertainty)</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="10" manuallyValidated="false">
+                <title>User: Visualise land cover change (and its uncertainty)</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="11" manuallyValidated="false">
+                <title>User: Visualize the Species Habitat Index (and its uncertainty)</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="12" manuallyValidated="false">
+                <title>BON: Suggest BON structure to detect change</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="13" manuallyValidated="false">
+                <title>BON: Suggest BON structure to accurately reflect current situation</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="14" manuallyValidated="false">
+                <title>Scientist: I want to publish a new version of a script</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+              <req id="15" manuallyValidated="false">
+                <title>Scientist: Choose the appropriate methodology for Connectivity</title>
+                <desc></desc>
+                <manualValidationRef></manualValidationRef>
+                <referenceFile></referenceFile>
+              </req>
+            </content>
+          </type>
+        </types>
+      </level>
+      <level>
+        <types>
+          <type name="Tests" prefix="T">
+            <contentType class="Requirement"/>
+            <content>
+              <comparator class="IdComparator"/>
+            </content>
+          </type>
+        </types>
+      </level>
+    </levels>
+  </specification>
+  <links>
+    <from id="N10">
+      <to>S14</to>
+    </from>
+    <from id="N01">
+      <to>S01</to>
+      <to>S02</to>
+      <to>S03</to>
+      <to>S04</to>
+      <to>S07</to>
+      <to>S08</to>
+      <to>S09</to>
+      <to>S10</to>
+      <to>S11</to>
+      <to>S13</to>
+    </from>
+    <from id="N11">
+      <to>S09</to>
+      <to>S10</to>
+    </from>
+    <from id="N03">
+      <to>S06</to>
+      <to>S09</to>
+      <to>S10</to>
+      <to>S11</to>
+    </from>
+    <from id="N02">
+      <to>S03</to>
+      <to>S04</to>
+      <to>S05</to>
+      <to>S08</to>
+    </from>
+    <from id="N05">
+      <to>S12</to>
+      <to>S13</to>
+    </from>
+    <from id="N04">
+      <to>S12</to>
+    </from>
+    <from id="U10">
+      <to>N17</to>
+    </from>
+    <from id="N06"/>
+    <from id="U02">
+      <to>N01</to>
+      <to>N02</to>
+      <to>N03</to>
+      <to>N04</to>
+      <to>N05</to>
+      <to>N06</to>
+      <to>N07</to>
+      <to>N17</to>
+      <to>N18</to>
+      <to>N20</to>
+    </from>
+    <from id="N09">
+      <to>S05</to>
+      <to>S06</to>
+    </from>
+    <from id="U01">
+      <to>N01</to>
+      <to>N02</to>
+      <to>N03</to>
+      <to>N04</to>
+      <to>N05</to>
+      <to>N06</to>
+      <to>N07</to>
+      <to>N17</to>
+      <to>N18</to>
+      <to>N20</to>
+    </from>
+    <from id="U04">
+      <to>N01</to>
+      <to>N05</to>
+      <to>N06</to>
+      <to>N07</to>
+      <to>N18</to>
+      <to>N20</to>
+    </from>
+    <from id="U03">
+      <to>N01</to>
+      <to>N02</to>
+      <to>N03</to>
+      <to>N04</to>
+      <to>N05</to>
+      <to>N06</to>
+      <to>N07</to>
+      <to>N17</to>
+      <to>N18</to>
+      <to>N20</to>
+    </from>
+    <from id="U06">
+      <to>N01</to>
+      <to>N02</to>
+      <to>N03</to>
+      <to>N04</to>
+      <to>N05</to>
+      <to>N06</to>
+      <to>N07</to>
+      <to>N12</to>
+      <to>N17</to>
+      <to>N20</to>
+    </from>
+    <from id="U05">
+      <to>N01</to>
+      <to>N02</to>
+      <to>N03</to>
+      <to>N04</to>
+      <to>N05</to>
+      <to>N06</to>
+      <to>N07</to>
+      <to>N09</to>
+      <to>N10</to>
+      <to>N11</to>
+      <to>N12</to>
+      <to>N13</to>
+      <to>N14</to>
+      <to>N15</to>
+      <to>N17</to>
+      <to>N18</to>
+      <to>N20</to>
+    </from>
+    <from id="U08">
+      <to>N10</to>
+      <to>N11</to>
+    </from>
+    <from id="U07">
+      <to>N14</to>
+    </from>
+    <from id="U09">
+      <to>N16</to>
+    </from>
+  </links>
+</object-stream>
