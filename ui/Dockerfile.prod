@@ -1,6 +1,6 @@
 # from https://www.bogotobogo.com/DevOps/Docker/Docker-React-App.php
 # pull official base image
-FROM node:16.13.1-alpine3.13
+FROM node:16.13.1-alpine3.13 as builder
 
 # set working directory
 WORKDIR /app
@@ -11,13 +11,17 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
-RUN npm install
+RUN npm ci --silent
+#RUN npm install react-scripts@3.4.1 -g --silent
 
 # add app
 COPY . ./
 
-# Without this line, we get " EACCES: permission denied, open '/app/node_modules/.cache/.eslintcache' "
-RUN chown -R node:node ./node_modules
+RUN npm run build
 
-# start app
-CMD ["npm", "start"]    
+
+# production environment
+FROM nginx:stable-alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"] 
