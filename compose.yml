@@ -21,11 +21,24 @@ services:
       - R_LIBS_USER=/home/node/app/r-libs
     command: "npm start"
 
+## UI server to use when you just want to use the UI
+  ui-prod:
+    container_name: biab-ui-prod
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.prod
+    ports:
+      - '8877:80'
+    depends_on:
+      - script-server
+
+## UI server to use when developing UI code
   # ui:
   #   container_name: biab-ui
   #   build:
   #     context: ./ui
   #     dockerfile: Dockerfile
+  #   user: "node"
   #   volumes:
   #     - './ui:/app'
   #     - '/app/node_modules'
