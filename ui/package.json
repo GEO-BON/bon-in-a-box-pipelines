@@ -9,7 +9,8 @@
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.1.2"
+    "web-vitals": "^1.1.2",
+    "biab-script-service": "file:./BonInABoxScriptService"
   },
   "scripts": {
     "start": "react-scripts start",
