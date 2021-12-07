@@ -15,10 +15,6 @@ RUN set -ex; \
     add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/"; \
     apt-get update; \
     \
-    # TEMP FIX for signature issue https://stackoverflow.com/a/69977747/3519951 \
-    #sed -i 's/deb https:\/\/cloud.r-project.org\/bin\/linux\/debian bullseye-cran40\//deb [trusted=yes] https:\/\/cloud.r-project.org\/bin\/linux\/debian bullseye-cran40\//g' /etc/apt/sources.list; \
-    #cat /etc/apt/sources.list; \
-    \
     # R installation \
     apt-get install -y --no-install-recommends r-base; \
     Rscript --version; \
