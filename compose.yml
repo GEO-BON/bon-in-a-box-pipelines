@@ -58,7 +58,7 @@ services:
   #   # Swagger File to feed the Swagger Editor
   #   # Base URL to point for consulting the Swagger https://localhost/swagger
   #   environment:
-  #     SWAGGER_FILE: schema.json
+  #     SWAGGER_FILE: openapi.json
   #     BASE_URL: /swagger
   #   volumes:
   #     - ./script-server/api/:/app
