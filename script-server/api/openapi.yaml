@@ -69,11 +69,11 @@ paths:
         "200":
           description: Returns the path towards the script's info document.
           content:
-            application/json:
+            text/plain:
               schema:
                 type: string
-                example: http://server.com/scripts/somescript.html
-                x-content-type: application/json
+                example: http://server.com/scripts/somescriptdescription.html
+                x-content-type: text/plain
         "400":
           description: Bad request
         "404":
