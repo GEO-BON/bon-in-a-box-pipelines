@@ -1,36 +1,29 @@
-######### START PIPELINE ######################
+# params: 
+# 1: is always the output folder
+# 2: species scientific name
+# 3: 3-letter country code (ex: CAN for Canada, COL for Colombia)
 
 
 # Packages requiered -----------
 
-packages <- c("rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos","sf", "terra")
+packages <- c("rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos", "sf", "terra", "sp")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 
 if(length(new.packages)) install.packages(new.packages)
 
 # WorldClimTiles not in CRAN
-devtools::install_github("kapitzas/WorldClimTiles")
+remotes::install_github("kapitzas/WorldClimTiles")
 
-## 2nd option, install missing packages and load them (may be preferred)
-# package.check <- lapply(
-#   packages,
-#   FUN = function(x) {
-#     if (!require(x, character.only = TRUE)) {
-#       install.packages(x, dependencies = TRUE)
-#       library(x, character.only = TRUE)
-#     }
-#   }
-# )
+# 0. Receive args ----------
+args <- commandArgs(trailingOnly=TRUE)
+outputFolder <- args[1] # Arg 1 is always the output folder
+print(paste0("outputFolder ", outputFolder))
+setwd(outputFolder)
 
-
-# 0. Settings ----------
-setwd("D:/GeoBON")
-
-# Create a folder "output" in the current directory, and set the working directory to this folder
-mainDir <- getwd()
-subDir <- "SDM_test_v1"
-dir.create(file.path(mainDir, subDir), showWarnings = FALSE) #dir.create() does not crash if the directory already exists}
-setwd(file.path(mainDir, subDir))
+species <- "acer saccharum"# args[2]
+print(paste0("species ", species))
+countryCode <- args[3]
+print(paste0("countryCode  ", countryCode))
 
 
 # CLEANING DATA MODULE 
@@ -39,12 +32,15 @@ source(file.path(Sys.getenv("SCRIPT_LOCATION"), "clean_occurrences.R"))
 
 
 run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333, do_cleaning = TRUE, uncertainty = FALSE) {
-  
+
+  ######### START PIPELINE ######################
+
   library("rgbif")
   library("dplyr")
   library("raster")
   library("adehabitatHR")
   library("sf")
+  library("sp")
   library("rgeos")
   library("CoordinateCleaner")
   library("WorldClimTiles")
@@ -61,11 +57,12 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   
   # 1. Observations ---------
   
-  
+  # TODO: Move this to another module, load it here
   # Loading data from GBIF (https://www.gbif.org/)
   
   print("Loading species observations.")
-  Obs_gbif_data <- rgbif::occ_data(scientificName = "Ramphastos tucanus", hasCoordinate = TRUE, limit=50000)
+  # TODO: Bound to region of interest
+  Obs_gbif_data <- rgbif::occ_data(scientificName = species, hasCoordinate = TRUE, limit=10000)
   
   if (is.null(Obs_gbif_data$data)) {
     stop(sprintf('No observations found for the species %s', species))
@@ -106,10 +103,10 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   
   box_extent_bioclim <- WorldClimTiles::tile_name(country_boundary, "worldclim") # determine which WorldClim tiles your study area intersects with.
   
-  subDir <- "bioclim_t"
-  dir.create(file.path("D:/GeoBON", subDir), showWarnings = FALSE) 
+  subDir <- file.path(".", "bioclim_t")
+  dir.create(subDir, showWarnings = FALSE) 
   
-  clim_tiles <- tile_get(box_extent_bioclim, name =  "worldclim", var="bio", path = file.path("D:/GeoBON", subDir)) # for 0.5 arcmin worldclim tiles of 
+  clim_tiles <- tile_get(box_extent_bioclim, name =  "worldclim", var="bio", path = subDir) # for 0.5 arcmin worldclim tiles of 
   rawPredictors <- tile_merge(clim_tiles)
   
   # Change the resolutuion (upscale if fact > 1, downscale if fact <1)
@@ -150,8 +147,7 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   if (do_cleaning) {
     
     Obs_gbif_data <- clean_occurrences(Obs_gbif_data$data,
-                                       unique_id = "key",
-                                       predictors = nonCollinearPredictors,
+                                       id = "key",
                                        lon = "decimalLongitude", 
                                        lat = "decimalLatitude", 
                                        # all tests by default
@@ -197,7 +193,7 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   
   
   # Model (using Maxent in ENMeval) basic parameters
-  model_species <- ENMeval::ENMevaluate(occs = occs, envs = nonCollinearPredictors , bg = bg_points, 
+  model_species <- ENMeval::ENMevaluate(occs = occs, envs = rawPredictors , bg = bg_points, 
                                         algorithm = 'maxent.jar',
                                         partitions = 'block',
                                         tune.args = list(fc = "L", rm = 1),
@@ -211,7 +207,10 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   model_species_prediction <- ENMeval::eval.predictions(model_species)
   terra::writeRaster(terra::rast(model_species_prediction), paste0(getwd(), "/prediction.tif"),
                      overwrite=TRUE)
-  
-  }
 
-#############END PIPELINE ####################################
+  #############END PIPELINE ####################################
+}
+
+
+run_sdm(species, countryCode)
+

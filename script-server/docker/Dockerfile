@@ -25,6 +25,7 @@ RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         libgdal-dev \
+        libproj-dev \
         libudunits2-dev \
         r-cran-devtools \
         r-cran-rcppeigen \
