@@ -1,23 +1,16 @@
-# from https://www.bogotobogo.com/DevOps/Docker/Docker-React-App.php
-# pull official base image
 FROM node:16.13.1-alpine3.13
 
-# set working directory
 WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
+# Workaround with [] for file that is not always there : https://stackoverflow.com/a/46801962/3519951
+COPY package.json package-lock.jso[n] ./
 RUN npm install
 
-# add app
-COPY . ./
+COPY BonInABoxScriptService ./BonInABoxScriptService
+RUN npm install ./BonInABoxScriptService
 
 # Without this line, we get " EACCES: permission denied, open '/app/node_modules/.cache/.eslintcache' "
-RUN chown -R node:node ./node_modules
+#RUN chown -R node:node ./node_modules
 
-# start app
-CMD ["npm", "start"]    
+CMD ["npm", "start"]

@@ -5,7 +5,7 @@ info:
     email: jean-michel.lord@mcgill.ca
   version: 1.0.0
 servers:
-- url: http://localhost:8081
+- url: http://localhost/
   description: script service (from outside dockers only)
 tags:
 - name: placeholder
