@@ -2,7 +2,7 @@
 
 var scriptFolder = process.env.SCRIPT_LOCATION;
 
-const utils = require('../utils/writer.js');
+const utils = require('../utils/responseWriters.js');
 const Fs = require('fs')  
 const Path = require('path')
 const MD5 = require('crypto-js/md5')
@@ -13,7 +13,7 @@ const MD5 = require('crypto-js/md5')
  *
  * scriptPath String Where to find the script in ./script folder
  * params List Additional parameters for the script (optional)
- * returns inline_response_200
+ * returns a responseWriter object
  **/
 exports.runScript = function (scriptFile, params) {
   console.log("Received " + scriptFile + " " + params)
@@ -23,9 +23,9 @@ exports.runScript = function (scriptFile, params) {
     const scriptPath = Path.join(scriptFolder, scriptFile)
     if (!Fs.existsSync(scriptPath)) {
       console.log('Script not found: ' + scriptPath)
-      reject(utils.respondWithCode(404, {
+      reject(utils.JsonResponse({
         "logs": "Script not found"
-      }))
+      }, 404))
       return
     }
 
@@ -53,10 +53,10 @@ exports.runScript = function (scriptFile, params) {
             // Read output.json
             try {
               var outputs = JSON.parse(Fs.readFileSync(outputFile, { encoding: 'utf8', flag: 'r' }))
-              resolve({
+              resolve(utils.JsonResponse({
                 "files": outputs,
                 "logs": "Completed: " + stdout
-              })
+              }))
               return
 
             } catch (ex) {
@@ -67,14 +67,26 @@ exports.runScript = function (scriptFile, params) {
         }
 
         // Send error logs as response
-        reject(utils.respondWithCode(500, {
+        reject(utils.JsonResponse({
           "logs": "Error: " + stderr + "\n\nFull logs: " + stdout
-        }))
+        }, 500))
       });
 
     // Realtime server logging
     shellScript.stdout.on('data', (data) => { console.log(data); });
     shellScript.stderr.on('data', (data) => { console.error(data); });
+  });
+}
+
+/**
+ * Get metadata about this script
+ *
+ * scriptPath String Where to find the script in ./script folder
+ * returns String
+ **/
+ exports.getScriptInfo = function(scriptPath) {
+  return new Promise(function(resolve, reject) {
+    resolve(utils.TextResponse("http://server.com/scripts/somescript.html"));
   });
 }
 

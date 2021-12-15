@@ -1,3 +1,8 @@
+/*
+ * Do not use this file! Use responseWriters instead.
+ * Kept just so DefaultService can run.
+ */
+
 var ResponsePayload = function(code, payload) {
   this.code = code;
   this.payload = payload;
