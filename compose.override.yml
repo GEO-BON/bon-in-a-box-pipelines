@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+
+## UI server to use when you just want to use the UI
+  ui-prod:
+    container_name: biab-ui-prod
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.prod
+    ports:
+      - '8877:80'
+    depends_on:
+      - script-server
+
+  http-gateway:
+    volumes:
+    - ./http-proxy/conf.d-prod:/etc/nginx/conf.d:rw
+    depends_on:
+      - ui-prod
