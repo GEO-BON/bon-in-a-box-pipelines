@@ -3,6 +3,7 @@ version: "3.7"
 services:
 # This can be accessed on localhost:8081/script/..., or within the docker network with script-server1:8081/script/...
   script-server:
+    container_name: biab-script-server
     build:
       context: ./script-server/docker
     user: "node"
@@ -40,21 +41,35 @@ services:
   #     dockerfile: Dockerfile
   #   user: "node"
   #   volumes:
-  #     - './ui:/app'
-  #     - '/app/node_modules'
+  #     - './ui:/app:rw'
   #   ports:
-  #     - 3001:3000
+  #     - 3000:3000
   #   environment:
   #     - CHOKIDAR_USEPOLLING=true 
   #   depends_on:
   #     - script-server
 
+  http-gateway:
+    container_name: http-rev-prox
+    image: nginx
+    ports:
+    - '80:80'
+    #- '443:443' configure https one day...
+    volumes:
+    - ./http-proxy/conf.d-prod:/etc/nginx/conf.d:rw
+    #- ./http-proxy/conf.d:/etc/nginx/conf.d:rw
+    - /var/run/docker.sock:/tmp/docker.sock:ro
+    depends_on:
+      - ui
+      - script-server
+
+## Server to use when making changes to the OpenAPI specification
   # openapi_swagger:
   #   container_name: swagger_editor
   #   image: swaggerapi/swagger-editor
   #   # Swagger editor will be available at port :80 or https://localhost
   #   ports:
-  #     - "80:8080"
+  #     - "81:8080"
   #   # Swagger File to feed the Swagger Editor
   #   # Base URL to point for consulting the Swagger https://localhost/swagger
   #   environment:

@@ -33,11 +33,11 @@ class ApiClient {
      * Overrides the default value set in spec file if present
      * @param {String} basePath
      */
-    constructor(basePath = 'http://localhost') {
+    constructor(basePath = 'http://localhost/') {
         /**
          * The base URL against which to resolve every API call's (relative) path.
          * @type {String}
-         * @default http://localhost
+         * @default http://localhost/
          */
         this.basePath = basePath.replace(/\/+$/, '');
 
@@ -592,7 +592,7 @@ class ApiClient {
     hostSettings() {
         return [
             {
-              'url': "http://localhost",
+              'url': "http://localhost/",
               'description': "script service (from outside dockers only)",
             }
       ];
