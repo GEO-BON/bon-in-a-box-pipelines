@@ -1,0 +1,43 @@
+## Start this configuration with command
+## docker compose -f compose.yml -f compose.dev.yml up
+version: "3.7"
+
+services:
+## UI server to use when developing UI code
+  ui:
+    container_name: biab-ui
+    build:
+      context: ./ui
+      dockerfile: Dockerfile
+    user: "node"
+    volumes:
+      - './ui:/app:rw'
+    ports:
+      - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true 
+    depends_on:
+      - script-server
+
+  http-gateway:
+    volumes:
+    - ./http-proxy/conf.d:/etc/nginx/conf.d:rw
+    depends_on:
+      - ui
+
+## Server to use when making changes to the OpenAPI specification
+  # openapi_swagger:
+  #   container_name: swagger_editor
+  #   image: swaggerapi/swagger-editor
+  #   # Swagger editor will be available at port :80 or https://localhost
+  #   ports:
+  #     - "81:8080"
+  #   # Swagger File to feed the Swagger Editor
+  #   # Base URL to point for consulting the Swagger https://localhost/swagger
+  #   environment:
+  #     SWAGGER_FILE: openapi.json
+  #     BASE_URL: /swagger
+  #   volumes:
+  #     - ./script-server/api/:/app
+  #   # depends_on:
+  #   #   - script-server
