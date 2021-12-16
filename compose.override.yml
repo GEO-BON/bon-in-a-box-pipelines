@@ -1,3 +1,5 @@
+## This file is automatically added to compose.yml when running
+##   docker compose up
 version: "3.7"
 
 services:

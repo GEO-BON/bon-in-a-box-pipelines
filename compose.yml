@@ -1,3 +1,5 @@
+## Base compose file. Automatically merged with compose.override.yml when running
+##   docker compose up
 version: "3.7"
 
 services:
