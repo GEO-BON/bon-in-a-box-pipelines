@@ -17,9 +17,27 @@ function App() {
         >
           Learn React
         </a>
+        <button onClick={query}>Test script server</button>
       </header>
     </div>
   );
+}
+
+function query() {
+  var BonInABoxScriptService = require('bon_in_a_box_script_service');
+
+  var api = new BonInABoxScriptService.DefaultApi()
+  var scriptPath = "scriptPath_example"; // {String} Where to find the script in ./script folder
+  var callback = function(error, data, response) {
+    if (error) {
+      alert(error)
+      console.error(error);
+    } else {
+      alert('API called successfully. Returned data: ' + data)
+      console.log('API called successfully. Returned data: ' + data);
+    }
+  };
+  api.getScriptInfo(scriptPath, callback);
 }
 
 export default App;

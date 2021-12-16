@@ -10,7 +10,4 @@ RUN npm install
 COPY BonInABoxScriptService ./BonInABoxScriptService
 RUN npm install ./BonInABoxScriptService
 
-# Without this line, we get " EACCES: permission denied, open '/app/node_modules/.cache/.eslintcache' "
-#RUN chown -R node:node ./node_modules
-
 CMD ["npm", "start"]
