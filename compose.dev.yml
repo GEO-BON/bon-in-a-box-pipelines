@@ -12,8 +12,8 @@ services:
     user: "node"
     volumes:
       - './ui:/app:rw'
-    ports:
-      - 3000:3000
+    expose:
+      - '3000'
     environment:
       - CHOKIDAR_USEPOLLING=true 
     depends_on:
@@ -31,7 +31,7 @@ services:
   #   image: swaggerapi/swagger-editor
   #   # Swagger editor will be available at port :80 or https://localhost
   #   ports:
-  #     - "81:8080"
+  #     - "8082:8080"
   #   # Swagger File to feed the Swagger Editor
   #   # Base URL to point for consulting the Swagger https://localhost/swagger
   #   environment:
