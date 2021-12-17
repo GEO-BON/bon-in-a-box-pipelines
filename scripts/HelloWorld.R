@@ -17,7 +17,7 @@ file.create(example_file)
 
 # Outputing result to JSON
 output <- list(presence = example_file, 
-                uncertainty = "map2.tiff")
+                uncertainty = "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg")
                 
 library("rjson")
 jsonData <- toJSON(output, indent=2)
