@@ -9,7 +9,8 @@ COPY package.json package-lock.jso[n] ./
 RUN npm ci
 
 COPY BonInABoxScriptService ./BonInABoxScriptService
-RUN npm install ./BonInABoxScriptService
+RUN cd BonInABoxScriptService; npm run build; cd ..; \
+    npm install ./BonInABoxScriptService;
 
 # add app
 COPY . ./
