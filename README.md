@@ -14,6 +14,6 @@ To run:
 3. docker compose build (this needs to be re-run every time a Dockerfile is modified)
 4. docker compose up
 5. In browser:
-    - http://localhost:8081/script/HelloWorld.R should run an R script.
-    - http://localhost:8081/script/blabla should return "not found" error message.
-    - http://localhost:8081/docs shows the API documentation
+    - http://localhost/ should show a basic UI
+    - http://localhost/script/HelloWorld.R should run an R script.
+    - http://localhost:8081/docs shows the script server's API documentation
