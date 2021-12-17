@@ -86,18 +86,14 @@ components:
       properties:
         logs:
           type: string
-          example: Starting... Script completed!
         files:
-          type: array
-          example:
-          - presence.tiff
-          - uncertainty.tiff
-          items:
+          type: object
+          additionalProperties:
             type: string
       example:
         files:
-        - presence.tiff
-        - uncertainty.tiff
+          presence: presence.tiff,
+          uncertainty: uncertainty.tiff
         logs: Starting... Script completed!
       xml:
         name: Result

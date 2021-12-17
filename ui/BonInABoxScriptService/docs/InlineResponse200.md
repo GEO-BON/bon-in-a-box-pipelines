@@ -5,6 +5,6 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **logs** | **String** |  | [optional] 
-**files** | **[String]** |  | [optional] 
+**files** | **{String: String}** |  | [optional] 
 
 
