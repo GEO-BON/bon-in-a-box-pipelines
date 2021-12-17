@@ -32,8 +32,13 @@ RUN set -ex; \
         r-cran-rjava; \
     apt-get clean all;
 
+  
+FROM with-r-base AS with-python  
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends python python3; \
+    apt-get clean all;
 
-# TODO#20: Install Python
 
 ## Java installation (currently replaced by using r-cran-rjava)
 #FROM node:17 AS with-java
