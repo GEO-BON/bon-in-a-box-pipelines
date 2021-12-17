@@ -51,7 +51,7 @@ class InlineResponse200 {
                 obj['logs'] = ApiClient.convertToType(data['logs'], 'String');
             }
             if (data.hasOwnProperty('files')) {
-                obj['files'] = ApiClient.convertToType(data['files'], ['String']);
+                obj['files'] = ApiClient.convertToType(data['files'], {'String': 'String'});
             }
         }
         return obj;
@@ -66,7 +66,7 @@ class InlineResponse200 {
 InlineResponse200.prototype['logs'] = undefined;
 
 /**
- * @member {Array.<String>} files
+ * @member {Object.<String, String>} files
  */
 InlineResponse200.prototype['files'] = undefined;
 
