@@ -6,12 +6,12 @@ services:
 ## UI server to use when developing UI code
   ui:
     container_name: biab-ui
-    build:
-      context: ./ui
-      dockerfile: Dockerfile
+    image: node:16.13.1-alpine3.13
     user: "node"
     volumes:
       - './ui:/app:rw'
+    working_dir: "/app"
+    command: sh -c "cd BonInABoxScriptService; npm run build; cd -; npm start;"
     expose:
       - '3000'
     environment:
