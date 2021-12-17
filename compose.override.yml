@@ -10,8 +10,8 @@ services:
     build:
       context: ./ui
       dockerfile: Dockerfile.prod
-    ports:
-      - '8877:80'
+    expose:
+      - '80'
     depends_on:
       - script-server
 
