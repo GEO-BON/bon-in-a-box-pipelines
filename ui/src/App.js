@@ -3,19 +3,19 @@ import spinner from './spinner.svg';
 import './App.css';
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 
-const RequestState = Object.freeze({"idle":1, "working":2, "done":3, "error":4})
+const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
 function App() {
   const [requestState, setRequestState] = useState(RequestState.idle);
-  const [result, setResult] = useState(RequestState.idle);
+  const [renderers, setRenderers] = useState([]);
 
   return (
     <>
       <header className="App-header">
         <h1>BON in a Box v2 pre-pre-pre alpha</h1>
       </header>
-      <Form setRequestState={setRequestState} setResult={setResult} />
-      <Result requestState={requestState} result={result} />
+      <Form setRequestState={setRequestState} setRenderers={setRenderers} />
+      <Result requestState={requestState} renderers={renderers} />
     </>
   );
 }
@@ -24,25 +24,15 @@ function Form(props) {
 
   const queryInfo = () => {
     props.setRequestState(RequestState.working)
+    props.setRenderers(null);
 
     var api = new BonInABoxScriptService.DefaultApi()
     var scriptPath = "HelloWorld.R"; // {String} Where to find the script in ./script folder
     var callback = function (error, data, response) {
-      if (error) {
-        props.setResult(data);
-        props.setRequestState(RequestState.error)
-        console.error(error);
-        alert(error)
-
-      } else {
-        props.setResult(data);
-        props.setRequestState(RequestState.done)
-        console.log('API called successfully. Returned data: ' + data);
-        alert('API called successfully. ' + response + ' Returned data: ' + data)
-      }
+      props.setRenderers([error ? <RenderedError error={error.toString()} /> : <RenderedLogs logs={data} />]);
+      props.setRequestState(RequestState.done)
     }
 
-    props.setResult(null);
     api.getScriptInfo(scriptPath, callback);
   }
 
@@ -53,20 +43,21 @@ function Form(props) {
     var api = new BonInABoxScriptService.DefaultApi()
     var scriptPath = "HelloWorld.R"; // {String} Where to find the script in ./script folder
     var callback = function (error, data, response) {
-      if (error) {
-        props.setResult(data);
-        props.setRequestState(RequestState.error)
-        alert(error)
-        console.error(error);
-
-      } else {
-        props.setResult(data);
-        props.setRequestState(RequestState.done)
-        console.log('API called successfully. Returned data: ' + data);
+      if(error)
+      {
+        props.setRenderers([(<RenderedError error={error.toString()} />)]);
       }
+      else if (data) {
+        props.setRenderers([
+          (<RenderedFiles files={data.files} />),
+          (<RenderedLogs logs={data.logs} />)
+        ])
+      }
+
+      props.setRequestState(RequestState.done)
     };
 
-    props.setResult(null);
+    props.setRenderers(null); // make sure we don't mix with last request
     api.runScript(scriptPath, {"params":["test1", "test2"]}, callback);
   }
 
@@ -89,23 +80,22 @@ function Result(props) {
       </div>
     );
 
-  return (
-    <div>
-      <RenderedFiles files={props.result.files} />
-      <div className="logs">
-        <h3>Logs</h3>
-        <pre>{props.result.logs}</pre>
+  if(props.renderers && props.renderers.length > 0)
+  {
+    return (
+      <div>
+        {props.renderers}
       </div>
-    </div>
-  )
+    )
+  }
 
+  return null
 }
 
 function RenderedFiles(props) {
   if(props.files) {
     return Object.entries(props.files).map(entry => {
       const [key, value] = entry;
-      console.log(key, value);
       return (
         <div>
           <h3>{key}</h3>
@@ -116,6 +106,25 @@ function RenderedFiles(props) {
   } else {
     return null
   }
+}
+
+function RenderedLogs(props) {
+  if (props.logs) {
+    return (<div className="logs">
+      <h3>Logs</h3>
+      <pre>{props.logs}</pre>
+    </div>)
+  }
+  return null
+}
+
+function RenderedError(props) {
+  if (props.error) {
+    return (<div className="error">
+      <p>{props.error}</p>
+    </div>)
+  }
+  return null
 }
 
 export default App

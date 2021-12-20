@@ -38,6 +38,12 @@
   color: #61dafb;
 }
 
+.error {
+  background-color: lightgray;
+  color: darkred;
+  font-weight: bold;
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
