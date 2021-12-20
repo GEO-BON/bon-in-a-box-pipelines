@@ -11,7 +11,7 @@ RUN set -ex; \
     # R prerequisites, including GFortran to compile some packages
     apt-get install -y lsb-release software-properties-common apt-utils gfortran;  \
     # R ppa setup to have the latest version (otherwise it's a year behing) \
-    apt-key adv --keyserver keyserver.ubuntu.com --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'; \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'; \
     add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/"; \
     apt-get update; \
     \
