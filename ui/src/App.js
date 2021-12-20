@@ -1,8 +1,12 @@
 import { useState } from "react";
 import spinner from './spinner.svg';
 import './App.css';
-const BonInABoxScriptService = require('bon_in_a_box_script_service');
 
+import React from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+
+const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
 function App() {
@@ -29,7 +33,11 @@ function Form(props) {
     var api = new BonInABoxScriptService.DefaultApi()
     var scriptPath = "HelloWorld.R"; // {String} Where to find the script in ./script folder
     var callback = function (error, data, response) {
-      props.setRenderers([error ? <RenderedError error={error.toString()} /> : <RenderedLogs logs={data} />]);
+      props.setRenderers([
+        error && <RenderedError error={error.toString()} />,
+        data && <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
+      ])
+
       props.setRequestState(RequestState.done)
     }
 
