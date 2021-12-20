@@ -2,13 +2,14 @@
   float: left;
   min-height: 100vh;
   background-color: #f3f3f1;
-  margin-right:30px;
 }
 
 .App {
   background-color: #282c34;
-  min-height: 100vh;
+  height: 100vh;
   color: #f3f3f1;
+  overflow: scroll;
+  padding-left:30px;
 }
 
 .spinner {
