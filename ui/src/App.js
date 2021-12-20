@@ -102,16 +102,20 @@ function Result(props) {
 }
 
 function RenderedFiles(props) {
-  return Object.entries(props.files).map(entry => {
-    const [key, value] = entry;
-    console.log(key, value);
-    return (
-      <div>
-        <h3>{key}</h3>
-        <img src={value} alt={key} />
-      </div>
-    )
-  });
+  if(props.files) {
+    return Object.entries(props.files).map(entry => {
+      const [key, value] = entry;
+      console.log(key, value);
+      return (
+        <div>
+          <h3>{key}</h3>
+          <img src={value} alt={key} />
+        </div>
+      )
+    });
+  } else {
+    return null
+  }
 }
 
 export default App
