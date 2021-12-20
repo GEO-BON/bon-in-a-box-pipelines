@@ -21,7 +21,7 @@ services:
 
   http-gateway:
     volumes:
-    - ./http-proxy/conf.d:/etc/nginx/conf.d:rw
+      - ./http-proxy/conf.d:/etc/nginx/conf.d:rw
     depends_on:
       - ui
 

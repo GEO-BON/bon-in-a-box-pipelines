@@ -17,6 +17,6 @@ services:
 
   http-gateway:
     volumes:
-    - ./http-proxy/conf.d-prod:/etc/nginx/conf.d:rw
+    - ./http-proxy/conf.d-prod:/etc/nginx/conf.d:ro
     depends_on:
       - ui-prod

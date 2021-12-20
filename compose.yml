@@ -12,7 +12,7 @@ services:
     working_dir: /home/node/app
     volumes:
       - ./script-server/:/home/node/app:rw
-      - ./scripts:/scripts:r
+      - ./scripts:/scripts:ro
       - ./output:/output:rw
     expose:
       - '8081'
@@ -28,9 +28,9 @@ services:
     container_name: http-rev-prox
     image: nginx
     ports:
-    - '80:80'
+      - '80:80'
     #- '443:443' configure https one day...
     volumes:
-    - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - script-server
