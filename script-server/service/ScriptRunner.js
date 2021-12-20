@@ -84,11 +84,26 @@ exports.runScript = function (scriptFile, params) {
  * scriptPath String Where to find the script in ./script folder
  * returns String
  **/
- exports.getScriptInfo = function(scriptPath) {
+ exports.getScriptInfo = function(scriptFile) {
   return new Promise(function(resolve, reject) {
-    resolve(utils.TextResponse("http://server.com/scripts/somescript.html"));
+    try {
+      console.log("scriptPath=" + scriptFile)
+      const scriptPath = Path.join(scriptFolder, scriptFile)
+
+      // Replace extension by .md
+      let mdPath = scriptPath.replace(/\.\w+$/, '.md')
+      console.log("mdPath=" + mdPath)
+
+      let content = Fs.readFileSync(mdPath, { encoding: 'utf8', flag: 'r' })
+      console.log("lenght=" + content.length)
+
+      resolve(utils.TextResponse(content));
+    }
+    catch (ex) {
+      reject(utils.TextResponse(ex.message, 404))
+    }
   });
-}
+ }
 
 /**
  * 
