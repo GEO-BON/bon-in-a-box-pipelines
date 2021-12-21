@@ -87,16 +87,11 @@ exports.runScript = function (scriptFile, params) {
  exports.getScriptInfo = function(scriptFile) {
   return new Promise(function(resolve, reject) {
     try {
-      console.log("scriptPath=" + scriptFile)
       const scriptPath = Path.join(scriptFolder, scriptFile)
 
       // Replace extension by .md
       let mdPath = scriptPath.replace(/\.\w+$/, '.md')
-      console.log("mdPath=" + mdPath)
-
       let content = Fs.readFileSync(mdPath, { encoding: 'utf8', flag: 'r' })
-      console.log("lenght=" + content.length)
-
       resolve(utils.TextResponse(content));
     }
     catch (ex) {
