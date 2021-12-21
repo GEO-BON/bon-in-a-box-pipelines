@@ -72,7 +72,7 @@ paths:
             text/plain:
               schema:
                 type: string
-                example: http://server.com/scripts/somescriptdescription.html
+                example: http://server.com/scripts/somescript.md
                 x-content-type: text/plain
         "400":
           description: Bad request
