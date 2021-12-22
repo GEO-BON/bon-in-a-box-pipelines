@@ -120,8 +120,8 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*BonInABoxScriptService.DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getScriptInfo) | **GET** /info/{scriptPath} | Get metadata about this script
-*BonInABoxScriptService.DefaultApi* | [**runScript**](docs/DefaultApi.md#runScript) | **GET** /script/{scriptPath} | Run this script
+*BonInABoxScriptService.DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
+*BonInABoxScriptService.DefaultApi* | [**runScript**](docs/DefaultApi.md#runScript) | **GET** /script/{scriptPath}/run | Run this script
 
 
 ## Documentation for Models

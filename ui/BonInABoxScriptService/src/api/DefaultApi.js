@@ -70,7 +70,7 @@ export default class DefaultApi {
       let accepts = ['text/plain'];
       let returnType = 'String';
       return this.apiClient.callApi(
-        '/info/{scriptPath}', 'GET',
+        '/script/{scriptPath}/info', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
@@ -117,7 +117,7 @@ export default class DefaultApi {
       let accepts = ['application/json'];
       let returnType = InlineResponse200;
       return this.apiClient.callApi(
-        '/script/{scriptPath}', 'GET',
+        '/script/{scriptPath}/run', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

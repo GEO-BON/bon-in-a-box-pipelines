@@ -11,7 +11,7 @@ tags:
 - name: placeholder
   description: We could use tags
 paths:
-  /script/{scriptPath}:
+  /script/{scriptPath}/run:
     get:
       tags: []
       summary: Run this script
@@ -51,7 +51,7 @@ paths:
         "404":
           description: Script not found
       x-swagger-router-controller: Default
-  /info/{scriptPath}:
+  /script/{scriptPath}/info:
     get:
       tags: []
       summary: Get metadata about this script
@@ -92,7 +92,7 @@ components:
             type: string
       example:
         files:
-          presence: presence.tiff,
+          presence: presence.tiff
           uncertainty: uncertainty.tiff
         logs: Starting... Script completed!
       xml:
