@@ -3,7 +3,7 @@ import spinner from './spinner.svg';
 import './App.css';
 import RenderedMap from './RenderedMap'
 
-import React from 'react'
+import React, {useRef} from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
@@ -26,13 +26,16 @@ function App() {
 }
 
 function Form(props) {
+  // Where to find the script in ./script folder
+  const inputScriptRef = useRef(null);
+  // Parameters of the script. In the URL as ...?params=param1,param2
+  const paramRef = useRef(null);
 
   const queryInfo = () => {
     props.setRequestState(RequestState.working)
     props.setRenderers(null);
 
     var api = new BonInABoxScriptService.DefaultApi()
-    var scriptPath = "HelloWorld.R"; // {String} Where to find the script in ./script folder
     var callback = function (error, data, response) {
       props.setRenderers([
         error && <RenderedError error={error.toString()} />,
@@ -42,15 +45,19 @@ function Form(props) {
       props.setRequestState(RequestState.done)
     }
 
-    api.getScriptInfo(scriptPath, callback);
+    api.getScriptInfo(inputScriptRef.current.value, callback);
   }
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    runScript()
+  }
 
   const runScript = () => {
     props.setRequestState(RequestState.working)
 
     var api = new BonInABoxScriptService.DefaultApi()
-    var scriptPath = "HelloWorld.R"; // {String} Where to find the script in ./script folder
     var callback = function (error, data, response) {
       if(error)
       {
@@ -67,14 +74,30 @@ function Form(props) {
     };
 
     props.setRenderers(null); // make sure we don't mix with last request
-    api.runScript(scriptPath, {"params":["test1", "test2"]}, callback);
+
+    let paramsValue = paramRef.current.value
+    let params = paramsValue ? {"params":paramsValue.split('\n')} : {}
+
+    api.runScript(inputScriptRef.current.value, params, callback);
   }
 
   return (
-    <>
-        <button onClick={runScript} disabled={props.requestState === RequestState.working}>Run script</button>
-        <button onClick={queryInfo} disabled={props.requestState === RequestState.working}>Get script info</button>
-    </>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Script file :
+        <br />
+        <input ref={inputScriptRef} type="text" defaultValue="HelloWorld.R" />
+      </label>
+      <button type="button" onClick={queryInfo} disabled={props.requestState === RequestState.working}>Get script info</button>
+      <br /> {/*Why do I need to line break, forms should do it normally... */}
+      <label>
+        Parameters (1 per line) :
+        <br />
+        <textarea ref={paramRef} type="text" value="param1&#10;param2"></textarea>
+      </label>
+      <br />
+      <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
+    </form>
   );
 }
 
