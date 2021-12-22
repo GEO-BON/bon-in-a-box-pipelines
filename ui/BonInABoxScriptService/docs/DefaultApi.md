@@ -4,8 +4,8 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getScriptInfo**](DefaultApi.md#getScriptInfo) | **GET** /info/{scriptPath} | Get metadata about this script
-[**runScript**](DefaultApi.md#runScript) | **GET** /script/{scriptPath} | Run this script
+[**getScriptInfo**](DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
+[**runScript**](DefaultApi.md#runScript) | **GET** /script/{scriptPath}/run | Run this script
 
 
 

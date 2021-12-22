@@ -10,7 +10,7 @@
 exports.getScriptInfo = function(scriptPath) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = "http://server.com/scripts/somescript.html";
+    examples['application/json'] = "http://server.com/scripts/somescript.md";
     if (Object.keys(examples).length > 0) {
       resolve(examples[Object.keys(examples)[0]]);
     } else {
@@ -32,7 +32,10 @@ exports.runScript = function(scriptPath,params) {
   return new Promise(function(resolve, reject) {
     var examples = {};
     examples['application/json'] = {
-  "files" : [ "presence.tiff", "uncertainty.tiff" ],
+  "files" : {
+    "presence" : "presence.tiff",
+    "uncertainty" : "uncertainty.tiff"
+  },
   "logs" : "Starting... Script completed!"
 };
     if (Object.keys(examples).length > 0) {
