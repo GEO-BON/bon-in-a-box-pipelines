@@ -1,6 +1,7 @@
 import { useState } from "react";
 import spinner from './spinner.svg';
 import './App.css';
+import RenderedMap from './RenderedMap'
 
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -104,12 +105,19 @@ function RenderedFiles(props) {
   if(props.files) {
     return Object.entries(props.files).map(entry => {
       const [key, value] = entry;
-      return (
-        <div>
-          <h3>{key}</h3>
-          <img src={value} alt={key} />
-        </div>
-      )
+
+      // Match for tiff, TIFF, tif or TIF extensions
+      if (value.search(/.tiff?$/i) !== -1) {
+        return <RenderedMap key={key} tiff={value} />
+      }
+      else {
+        return (
+          <div key={key}>
+            <h3>{key}</h3>
+            <img src={value} alt={key} />
+          </div>
+        )
+      }
     });
   } else {
     return null
