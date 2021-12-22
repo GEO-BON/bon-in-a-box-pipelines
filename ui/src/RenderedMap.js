@@ -54,6 +54,7 @@ function RenderedMap(props) {
 
     return (
         <>
+            <h3>{props.title}</h3>
             <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
             <div id="map" className="map"></div>
         </>
