@@ -93,7 +93,7 @@ function Form(props) {
       <label>
         Parameters (1 per line) :
         <br />
-        <textarea ref={paramRef} type="text" value="param1&#10;param2"></textarea>
+        <textarea ref={paramRef} type="text" defaultValue="param1&#10;param2"></textarea>
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
