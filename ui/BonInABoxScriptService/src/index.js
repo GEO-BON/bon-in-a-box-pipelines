@@ -13,7 +13,7 @@
 
 
 import ApiClient from './ApiClient';
-import InlineResponse200 from './model/InlineResponse200';
+import ScriptRunResult from './model/ScriptRunResult';
 import DefaultApi from './api/DefaultApi';
 
 
@@ -56,10 +56,10 @@ export {
     ApiClient,
 
     /**
-     * The InlineResponse200 model constructor.
-     * @property {module:model/InlineResponse200}
+     * The ScriptRunResult model constructor.
+     * @property {module:model/ScriptRunResult}
      */
-    InlineResponse200,
+    ScriptRunResult,
 
     /**
     * The DefaultApi service constructor.

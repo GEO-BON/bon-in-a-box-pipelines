@@ -1,4 +1,4 @@
-# BonInABoxScriptService.InlineResponse200
+# BonInABoxScriptService.ScriptRunResult
 
 ## Properties
 
