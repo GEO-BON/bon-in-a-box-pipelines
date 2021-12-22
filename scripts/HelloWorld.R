@@ -25,8 +25,8 @@ if(!file.exists(example_tiff)) {
 
 
 ## Outputing result to JSON
-output <- list(presence = example_tiff, 
-                uncertainty = example_jpg) 
+output <- list("Heat map" = example_tiff, 
+                Uncertainty = example_jpg) 
                 
 library("rjson")
 jsonData <- toJSON(output, indent=2)

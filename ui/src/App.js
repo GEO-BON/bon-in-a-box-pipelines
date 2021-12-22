@@ -108,7 +108,7 @@ function RenderedFiles(props) {
 
       // Match for tiff, TIFF, tif or TIF extensions
       if (value.search(/.tiff?$/i) !== -1) {
-        return <RenderedMap key={key} tiff={value} />
+        return <RenderedMap key={key} title={key} tiff={value} />
       }
       else {
         return (
