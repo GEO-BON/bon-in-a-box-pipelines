@@ -126,7 +126,7 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
- - [BonInABoxScriptService.InlineResponse200](docs/InlineResponse200.md)
+ - [BonInABoxScriptService.ScriptRunResult](docs/ScriptRunResult.md)
 
 
 ## Documentation for Authorization

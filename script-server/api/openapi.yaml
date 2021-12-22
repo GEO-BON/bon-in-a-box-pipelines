@@ -34,7 +34,7 @@ paths:
         explode: false
         schema:
           type: array
-          example: # Use %2C instead of comma when sending multiple params
+          example:
           - param1
           - param2
           items:
@@ -45,7 +45,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/inline_response_200'
+                $ref: '#/components/schemas/script_run_result'
         "400":
           description: Bad request
         "404":
@@ -81,7 +81,7 @@ paths:
       x-swagger-router-controller: Default
 components:
   schemas:
-    inline_response_200:
+    script_run_result:
       type: object
       properties:
         logs:

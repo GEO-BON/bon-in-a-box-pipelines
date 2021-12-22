@@ -13,7 +13,7 @@
 
 
 import ApiClient from "../ApiClient";
-import InlineResponse200 from '../model/InlineResponse200';
+import ScriptRunResult from '../model/ScriptRunResult';
 
 /**
 * Default service.
@@ -80,7 +80,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the runScript operation.
      * @callback module:api/DefaultApi~runScriptCallback
      * @param {String} error Error message, if any.
-     * @param {module:model/InlineResponse200} data The data returned by the service call.
+     * @param {module:model/ScriptRunResult} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -91,7 +91,7 @@ export default class DefaultApi {
      * @param {Object} opts Optional parameters
      * @param {Array.<String>} opts.params Additional parameters for the script
      * @param {module:api/DefaultApi~runScriptCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link module:model/InlineResponse200}
+     * data is of type: {@link module:model/ScriptRunResult}
      */
     runScript(scriptPath, opts, callback) {
       opts = opts || {};
@@ -115,7 +115,7 @@ export default class DefaultApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = InlineResponse200;
+      let returnType = ScriptRunResult;
       return this.apiClient.callApi(
         '/script/{scriptPath}/run', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,

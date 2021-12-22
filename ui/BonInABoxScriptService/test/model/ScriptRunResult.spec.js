@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new BonInABoxScriptService.InlineResponse200();
+    instance = new BonInABoxScriptService.ScriptRunResult();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,22 +47,22 @@
       object[property] = value;
   }
 
-  describe('InlineResponse200', function() {
-    it('should create an instance of InlineResponse200', function() {
-      // uncomment below and update the code to test InlineResponse200
-      //var instance = new BonInABoxScriptService.InlineResponse200();
-      //expect(instance).to.be.a(BonInABoxScriptService.InlineResponse200);
+  describe('ScriptRunResult', function() {
+    it('should create an instance of ScriptRunResult', function() {
+      // uncomment below and update the code to test ScriptRunResult
+      //var instance = new BonInABoxScriptService.ScriptRunResult();
+      //expect(instance).to.be.a(BonInABoxScriptService.ScriptRunResult);
     });
 
     it('should have the property logs (base name: "logs")', function() {
       // uncomment below and update the code to test the property logs
-      //var instance = new BonInABoxScriptService.InlineResponse200();
+      //var instance = new BonInABoxScriptService.ScriptRunResult();
       //expect(instance).to.be();
     });
 
     it('should have the property files (base name: "files")', function() {
       // uncomment below and update the code to test the property files
-      //var instance = new BonInABoxScriptService.InlineResponse200();
+      //var instance = new BonInABoxScriptService.ScriptRunResult();
       //expect(instance).to.be();
     });
 

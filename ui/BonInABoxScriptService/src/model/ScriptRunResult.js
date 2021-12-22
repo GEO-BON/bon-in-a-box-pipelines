@@ -14,18 +14,18 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The InlineResponse200 model module.
- * @module model/InlineResponse200
+ * The ScriptRunResult model module.
+ * @module model/ScriptRunResult
  * @version 1.0.0
  */
-class InlineResponse200 {
+class ScriptRunResult {
     /**
-     * Constructs a new <code>InlineResponse200</code>.
-     * @alias module:model/InlineResponse200
+     * Constructs a new <code>ScriptRunResult</code>.
+     * @alias module:model/ScriptRunResult
      */
     constructor() { 
         
-        InlineResponse200.initialize(this);
+        ScriptRunResult.initialize(this);
     }
 
     /**
@@ -37,15 +37,15 @@ class InlineResponse200 {
     }
 
     /**
-     * Constructs a <code>InlineResponse200</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>ScriptRunResult</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/InlineResponse200} obj Optional instance to populate.
-     * @return {module:model/InlineResponse200} The populated <code>InlineResponse200</code> instance.
+     * @param {module:model/ScriptRunResult} obj Optional instance to populate.
+     * @return {module:model/ScriptRunResult} The populated <code>ScriptRunResult</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new InlineResponse200();
+            obj = obj || new ScriptRunResult();
 
             if (data.hasOwnProperty('logs')) {
                 obj['logs'] = ApiClient.convertToType(data['logs'], 'String');
@@ -63,17 +63,17 @@ class InlineResponse200 {
 /**
  * @member {String} logs
  */
-InlineResponse200.prototype['logs'] = undefined;
+ScriptRunResult.prototype['logs'] = undefined;
 
 /**
  * @member {Object.<String, String>} files
  */
-InlineResponse200.prototype['files'] = undefined;
+ScriptRunResult.prototype['files'] = undefined;
 
 
 
 
 
 
-export default InlineResponse200;
+export default ScriptRunResult;
 

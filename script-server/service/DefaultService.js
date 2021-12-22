@@ -26,7 +26,7 @@ exports.getScriptInfo = function(scriptPath) {
  *
  * scriptPath String Where to find the script in ./script folder
  * params List Additional parameters for the script (optional)
- * returns inline_response_200
+ * returns script_run_result
  **/
 exports.runScript = function(scriptPath,params) {
   return new Promise(function(resolve, reject) {

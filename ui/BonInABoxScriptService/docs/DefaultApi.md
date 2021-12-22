@@ -54,7 +54,7 @@ No authorization required
 
 ## runScript
 
-> InlineResponse200 runScript(scriptPath, opts)
+> ScriptRunResult runScript(scriptPath, opts)
 
 Run this script
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**ScriptRunResult**](ScriptRunResult.md)
 
 ### Authorization
 
