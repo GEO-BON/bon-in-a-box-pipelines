@@ -32,5 +32,6 @@ services:
     #- '443:443' configure https one day...
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./output:/static/output:ro
     depends_on:
       - script-server

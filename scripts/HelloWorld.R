@@ -1,23 +1,32 @@
-# Environment variables available
+## Environment variables available
+# Script location can be used to access other scripts
 print(Sys.getenv("SCRIPT_LOCATION"))
 
-# Install missing packages
+## Install required packages
 packages <- c("rjson")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
-# Receiving args
+## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
 
-# Script body
-example_file = file.path(outputFolder, "hello_world.txt")
-file.create(example_file)
+## Script body
+example_jpg = file.path(outputFolder, "example.jpg")
+if(!file.exists(example_jpg)) {
+    download.file("https://geobon.org/wp-content/uploads/2018/01/default-image.png", example_jpg, "auto")
+}
 
-# Outputing result to JSON
-output <- list(presence = example_file, 
-                uncertainty = "https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg")
+example_tiff = file.path(outputFolder, "utmsmall.tif")
+if(!file.exists(example_tiff)) {
+    download.file("https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif", example_tiff, "auto")
+}
+
+
+## Outputing result to JSON
+output <- list(presence = example_tiff, 
+                uncertainty = example_jpg) 
                 
 library("rjson")
 jsonData <- toJSON(output, indent=2)
