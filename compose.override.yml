@@ -20,3 +20,8 @@ services:
     - ./http-proxy/conf.d-prod:/etc/nginx/conf.d:ro
     depends_on:
       - ui-prod
+
+  kotlin-server:
+    build:
+      context: ./kotlin-server/
+      dockerfile: Dockerfile.prod

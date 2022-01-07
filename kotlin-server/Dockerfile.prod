@@ -1,0 +1,9 @@
+FROM gradle:6.9.2-jdk11-alpine as builder
+COPY . /home/gradle/project
+WORKDIR /home/gradle/project
+RUN gradle check assemble
+
+FROM openjdk:11-jre
+COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar
+WORKDIR /root
+CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "kotlin-server.jar"]
