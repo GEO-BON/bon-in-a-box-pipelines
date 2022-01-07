@@ -24,6 +24,11 @@ services:
       - R_LIBS_USER=/home/node/app/r-libs
     command: "npm start"
 
+  kotlin-server:
+    container_name: biab-script-server-kotlin
+    ports:
+      - '8083:8080'
+
   http-gateway:
     container_name: http-rev-prox
     image: nginx

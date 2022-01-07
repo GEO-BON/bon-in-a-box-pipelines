@@ -1,0 +1,1 @@
+docker exec -it biab-script-server-kotlin sh -c "cd /home/gradle/project/ && gradle build"

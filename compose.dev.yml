@@ -25,6 +25,15 @@ services:
     depends_on:
       - ui
 
+## In the DEV version, using a volume and a single docker. To rebuild without restarting everything, use
+## docker exec -it biab-script-server-kotlin sh -c "cd /home/gradle/project/ && gradle build"
+  kotlin-server:
+    image: gradle:6.9.2-jdk11-alpine
+    volumes:
+      - ./kotlin-server:/home/gradle/project:rw
+    working_dir: /home/gradle/project
+    command: gradle run
+
 ## Server to use when making changes to the OpenAPI specification
   # openapi_swagger:
   #   container_name: swagger_editor

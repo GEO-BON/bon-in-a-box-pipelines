@@ -1,0 +1,99 @@
+openapi: 3.0.1
+info:
+  title: BON in a Box - Script service
+  contact:
+    email: jean-michel.lord@mcgill.ca
+  version: 1.0.0
+servers:
+- url: http://localhost/
+  description: script service (from outside dockers only)
+tags:
+- name: placeholder
+  description: We could use tags
+paths:
+  /script/{scriptPath}/run:
+    get:
+      tags: []
+      summary: Run this script
+      description: Run the script specified in the URL. Must include the extension.
+      operationId: runScript
+      parameters:
+      - name: scriptPath
+        in: path
+        description: Where to find the script in ./script folder
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: params
+        in: query
+        description: Additional parameters for the script
+        required: false
+        style: form
+        explode: false
+        schema:
+          type: array
+          example:
+          - param1
+          - param2
+          items:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/script_run_result'
+        "400":
+          description: Bad request
+        "404":
+          description: Script not found
+      x-swagger-router-controller: Default
+  /script/{scriptPath}/info:
+    get:
+      tags: []
+      summary: Get metadata about this script
+      operationId: getScriptInfo
+      parameters:
+      - name: scriptPath
+        in: path
+        description: Where to find the script in ./script folder
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the path towards the script's info document.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: http://server.com/scripts/somescript.md
+                x-content-type: text/plain
+        "400":
+          description: Bad request
+        "404":
+          description: Script not found
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    script_run_result:
+      type: object
+      properties:
+        logs:
+          type: string
+        files:
+          type: object
+          additionalProperties:
+            type: string
+      example:
+        files:
+          presence: presence.tiff
+          uncertainty: uncertainty.tiff
+        logs: Starting... Script completed!
+      xml:
+        name: Result
