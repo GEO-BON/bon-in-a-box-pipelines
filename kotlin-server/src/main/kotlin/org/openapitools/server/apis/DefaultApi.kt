@@ -20,7 +20,7 @@ import org.openapitools.server.Paths
 import io.ktor.locations.*
 import io.ktor.routing.*
 import org.openapitools.server.infrastructure.ApiPrincipal
-import org.openapitools.server.models.InlineResponse200
+import org.openapitools.server.models.ScriptRunResult
 
 @KtorExperimentalLocationsAPI
 fun Route.DefaultApi() {
