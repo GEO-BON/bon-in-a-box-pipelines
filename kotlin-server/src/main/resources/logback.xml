@@ -9,7 +9,7 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
-    <logger name="org.eclipse.jetty" level="WARN"/>
-    <logger name="io.netty" level="WARN"/>
+    <logger name="org.eclipse.jetty" level="INFO"/>
+    <logger name="io.netty" level="INFO"/>
 
 </configuration>
