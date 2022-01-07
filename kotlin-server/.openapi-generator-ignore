@@ -21,3 +21,8 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
+
+Dockerfile
+README.md
+src/main/kotlin/org/openapitools/server/AppMain.kt
+src/main/resources/application.conf
