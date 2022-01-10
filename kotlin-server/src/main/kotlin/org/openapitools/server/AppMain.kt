@@ -18,6 +18,7 @@ import org.openapitools.server.apis.ScriptRunner
 @KtorExperimentalLocationsAPI
 fun Application.main() {
     install(DefaultHeaders)
+    /* // Server logging. Produces way to much output but could be useful for debugging.
     install(DropwizardMetrics) {
         val reporter = Slf4jReporter.forRegistry(registry)
             .outputTo(log)
@@ -25,7 +26,7 @@ fun Application.main() {
             .convertDurationsTo(TimeUnit.MILLISECONDS)
             .build()
         reporter.start(10, TimeUnit.SECONDS)
-    }
+    }*/
     install(ContentNegotiation) {
         register(ContentType.Application.Json, GsonConverter())
     }
