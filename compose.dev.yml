@@ -28,10 +28,14 @@ services:
 ## In the DEV version, using a volume and a single docker. To rebuild without restarting everything, use
 ## docker exec -it biab-script-server-kotlin sh -c "cd /home/gradle/project/ && gradle build"
   kotlin-server:
-    image: gradle:6.9.2-jdk11-alpine
+    build:
+      context: ./kotlin-server
+      dockerfile: Dockerfile.dev
     volumes:
       - ./kotlin-server:/home/gradle/project:rw
     working_dir: /home/gradle/project
+    environment:
+      - R_LIBS_USER=/home/gradle/project/r-libs
     command: gradle run
 
 ## Server to use when making changes to the OpenAPI specification
