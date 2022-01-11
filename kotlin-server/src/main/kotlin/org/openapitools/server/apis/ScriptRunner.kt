@@ -13,48 +13,127 @@ import io.ktor.locations.*
 import io.ktor.routing.*
 import org.openapitools.server.infrastructure.ApiPrincipal
 import org.openapitools.server.models.ScriptRunResult
+import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
+import kotlin.collections.joinToString
+import kotlin.io.readLine
+import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.launch
+import java.lang.reflect.Type;
+import com.google.gson.reflect.TypeToken
 
-val scriptFolder = System.getenv("SCRIPT_LOCATION")
+val scriptRoot = System.getenv("SCRIPT_LOCATION")
+val ouputRoot = System.getenv("OUTPUT_LOCATION")
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptRunner(logger:Logger) {
+
+    val gson = Gson()
 
     get<Paths.getScriptInfo> { parameters ->
         try {
             // Replace extension by .md
             val mdPath = parameters.scriptPath.replace(Regex("""\.\w+$"""), ".md")
-            val scriptFile = File(scriptFolder, mdPath)
+            val scriptFile = File(scriptRoot, mdPath)
             call.respondText(scriptFile.readText())
-            logger.trace("200: getScriptInfo $scriptFile")
+            logger.trace("200: Paths.getScriptInfo $scriptFile")
         } catch (ex:Exception) {
             call.respondText(text=ex.message!!, status=HttpStatusCode.NotFound)
-            logger.trace("Error 404: getScriptInfo ${parameters.scriptPath}")
+            logger.trace("Error 404: Paths.getScriptInfo ${parameters.scriptPath}")
         }
     }
 
-    val gson = Gson()
-    val empty = mutableMapOf<String, Any?>()
     get<Paths.runScript> { parameters ->
-        val exampleContentType = "application/json"
-        val exampleContentString = """{
-          "files" : {
-            "presence" : "presence.tiff",
-            "uncertainty" : "uncertainty.tiff"
-          },
-          "logs" : "Starting... Script completed!"
-        }"""
-        
         logger.info("scriptPath: ${parameters.scriptPath}")
         parameters.params?.forEach { param -> logger.info("param: $param") }
         
-        when (exampleContentType) {
-            "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
-            "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
-            else -> call.respondText(exampleContentString)
+        val scriptFile = File(scriptRoot, parameters.scriptPath)
+        if(scriptFile.exists()) {
+            // Create the ouput folder based for this invocation
+            val outputFolder = getOutputFolder(parameters.scriptPath, parameters.params)
+            outputFolder.mkdirs()
+            logger.trace("Paths.runScript outputting to $outputFolder")
+
+            // Run the script
+            var code = HttpStatusCode.OK
+            var logs:String = ""
+            var outputs:Map<String, String>? = null
+            runCatching {
+                var command:List<String> = listOf("Rscript", scriptFile.absolutePath, outputFolder.absolutePath)
+                parameters.params?.let {command += it}
+                ProcessBuilder(command)
+                    .directory(File(scriptRoot))
+                    .redirectOutput(ProcessBuilder.Redirect.PIPE)
+                    .redirectErrorStream(true) // Merges stderr into stdout
+                    .start().also { process -> 
+                        launch {
+                            process.inputStream.bufferedReader().run {
+                                while(true) {
+                                    readLine()?.let { line ->
+                                        logger.trace(line)
+                                        logs += "$line\n"
+                                    } ?: break;
+                                }
+                            }
+                        }
+
+                        process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
+                    }
+            }.onSuccess { process ->
+                try {
+                    if(process.exitValue() != 0) {
+                        code = HttpStatusCode.InternalServerError
+                    }
+
+                    val resultFile = File(outputFolder, "output.json")
+                    if(resultFile.exists()) {
+                        val type = object : TypeToken<Map<String, String>>() {}.type
+                        outputs = gson.fromJson<Map<String, String>>(resultFile.readText(), type)
+                        logger.trace(outputs.toString())
+                    } else {
+                        code = HttpStatusCode.InternalServerError
+                        logs += "Error: output.json file not found"
+                    }
+                } catch (ex:IllegalThreadStateException) {
+                    code = HttpStatusCode.RequestTimeout
+                    logs += "TIMEOUT occured\n"
+                    process.destroy()
+                }
+                
+            }.onFailure { ex ->
+                code = HttpStatusCode.InternalServerError
+                logs = ex.stackTraceToString()
+                logger.warn(logs)
+            }
+            
+            // Format log output
+            if(logs.isNotEmpty()) logs = "Full logs: $logs"
+            if(code != HttpStatusCode.OK) logs = "An error occured\n\n$logs"
+            
+            call.respond(code, ScriptRunResult(logs, outputs))
+        }
+        else // Script not found
+        {
+            call.respond(HttpStatusCode.NotFound, ScriptRunResult("Script not found"))
+            logger.warn("Error 404: Paths.runScript ${parameters.scriptPath}")
         }
     }
+}
 
+/**
+ * 
+ * @param {String} scriptFile 
+ * @param {List} params 
+ * @returns a folder for this invocation. Invoking with the same params will always give the same output folder.
+ */
+fun getOutputFolder(scriptPath: kotlin.String, params: kotlin.collections.List<kotlin.String>? = null):File {
+    // Unique to this script
+    val scriptOutputFolder = File(ouputRoot, scriptPath.replace('.', '_'))
+
+    // Unique to this script, with these parameters
+    return File(scriptOutputFolder, 
+        if(params == null) "no_params" else params.joinToString().toMD5()
+    )
 }

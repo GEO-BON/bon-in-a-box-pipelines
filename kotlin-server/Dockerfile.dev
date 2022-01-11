@@ -1,0 +1,50 @@
+FROM gradle:6.9.2-jdk11
+
+## First RUN command to install R-base
+ENV R_BASE_VERSION 4.1.2
+RUN set -ex; \
+    apt-get update; \
+    apt-get install --no-install-recommends -y \
+        # Remove "debconf: delaying package configuration, since apt-utils is not installed"
+        apt-utils \
+        # Necessary for 
+        #gnupg \
+        # Next 2 necessary to call add-apt-repository
+        lsb-release \
+        software-properties-common; \
+    # As per https://cloud.r-project.org/bin/linux/ubuntu/
+    wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc; \
+    add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"; \
+    add-apt-repository ppa:c2d4u.team/c2d4u4.0+; \
+    apt-get update; \
+    \
+    # R installation \
+    apt-get install -y --no-install-recommends \
+        r-base=${R_BASE_VERSION}-* \
+		r-base-dev=${R_BASE_VERSION}-* \
+        r-base-core=${R_BASE_VERSION}-* \
+		r-recommended=${R_BASE_VERSION}-* \
+    Rscript --version; \
+    apt-get clean all;
+
+## Second RUN command to be able to compile some packages on the fly
+RUN apt-get update; \
+    apt-get install -y --no-install-recommends build-essential;
+
+## Third RUN command to install some pre-built r libs
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        libgdal-dev \
+        libproj-dev \
+        libudunits2-dev \
+        r-cran-devtools \
+        r-cran-rcppeigen \
+        r-cran-rjava ;\
+        #including GFortran, necessary 
+        #gfortran; \
+    apt-get clean all;
+
+
+## If there is something missing in the R installation, we can check what is done here for inspiration: 
+## https://github.com/rocker-org/rocker/blob/master/r-base/latest/Dockerfile
