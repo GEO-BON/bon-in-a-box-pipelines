@@ -7,8 +7,6 @@ RUN set -ex; \
     apt-get install --no-install-recommends -y \
         # Remove "debconf: delaying package configuration, since apt-utils is not installed"
         apt-utils \
-        # Necessary for 
-        #gnupg \
         # Next 2 necessary to call add-apt-repository
         lsb-release \
         software-properties-common; \

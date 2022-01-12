@@ -1,9 +1,60 @@
+FROM openjdk:11-jre-bullseye as base-image
+
+## The following is copied from Dockerfile.dev, adapted to Debian architecture
+## First RUN command to install R-base
+ENV R_BASE_VERSION 4.1.2
+RUN set -ex; \
+    apt-get update; \
+    apt-get install --no-install-recommends -y \
+        # Remove "debconf: delaying package configuration, since apt-utils is not installed"
+        apt-utils \
+        # Next 2 necessary to call add-apt-repository
+        lsb-release \
+        software-properties-common; \
+    # As per https://cloud.r-project.org/bin/linux/debian/
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'; \
+    add-apt-repository "deb https://cloud.r-project.org/bin/linux/debian $(lsb_release -cs)-cran40/"; \
+    apt-get update; \
+    \
+    # R installation \
+    apt-get install -y --no-install-recommends \
+        r-base=${R_BASE_VERSION}-* \
+		r-base-dev=${R_BASE_VERSION}-* \
+        r-base-core=${R_BASE_VERSION}-* \
+		r-recommended=${R_BASE_VERSION}-* \
+    Rscript --version; \
+    apt-get clean all;
+
+## Second RUN command to be able to compile some packages on the fly
+RUN apt-get update; \
+    apt-get install -y --no-install-recommends build-essential gfortran;
+
+## Third RUN command to install some pre-built r libs
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        libgdal-dev \
+        libproj-dev \
+        libudunits2-dev \
+        r-cran-devtools \
+        r-cran-rjson \
+        r-cran-rcppeigen \
+        r-cran-rjava ;\
+    apt-get clean all;
+
+# RUN set -ex; \
+    # apt-get update; \
+    # apt-get install -y --no-install-recommends python python3; \
+    # apt-get clean all;
+
+## This image builds the server code
 FROM gradle:6.9.2-jdk11-alpine as builder
 COPY . /home/gradle/project
 WORKDIR /home/gradle/project
 RUN gradle check assemble
 
-FROM openjdk:11-jre
+## This takes the build server and puts in on the R-script enabled image
+FROM base-image
 COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar
 WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "kotlin-server.jar"]
