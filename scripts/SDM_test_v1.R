@@ -3,7 +3,7 @@
 
 # Packages requiered -----------
 
-packages <- c("rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos","sf", "terra")
+packages <- c("rjson", "rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos","sf", "terra")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 
 if(length(new.packages)) install.packages(new.packages)
@@ -207,10 +207,13 @@ terra::writeRaster(terra::rast(uncertainty), paste0(getwd(), "/uncertainty.tif")
                    overwrite=TRUE)
 
 #############END PIPELINE ####################################
+output <- list("prediction" = paste0(getwd(), "/prediction.tif"), 
+                "uncertainty" = paste0(getwd(), "/uncertainty.tif")
+              ) 
 
-cat(paste0(
-'{
-"prediction": "', getwd(), "/prediction.tif", '",
-"uncertainty": "', getwd(), "/uncertainty.tif", '"
-}'
-))
+library("rjson")
+jsonData <- toJSON(output, indent=2)
+
+args <- commandArgs(trailingOnly=TRUE)
+outputFolder <- args[1] # Arg 1 is always the output folder
+write(jsonData, file.path(outputFolder,"output.json"))
