@@ -21,11 +21,11 @@ services:
     depends_on:
       - ui-prod
 
-  kotlin-server:
+  script-server:
     build:
-      context: ./kotlin-server/
+      context: ./script-server/
       dockerfile: Dockerfile.prod
     volumes:
-      - ./kotlin-server/r-libs:/r-libs:rw
+      - ./script-server/r-libs:/r-libs:rw
     environment:
       - R_LIBS_USER=/r-libs

@@ -26,13 +26,13 @@ services:
       - ui
 
 ## In the DEV version, using a volume and a single docker. To rebuild without restarting everything, use
-## docker exec -it biab-script-server-kotlin sh -c "cd /home/gradle/project/ && gradle build"
-  kotlin-server:
+## docker exec -it biab-script-server sh -c "cd /home/gradle/project/ && gradle build"
+  script-server:
     build:
-      context: ./kotlin-server
+      context: ./script-server
       dockerfile: Dockerfile.dev
     volumes:
-      - ./kotlin-server:/home/gradle/project:rw
+      - ./script-server:/home/gradle/project:rw
     working_dir: /home/gradle/project
     environment:
       - R_LIBS_USER=/home/gradle/project/r-libs

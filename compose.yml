@@ -3,34 +3,14 @@
 version: "3.7"
 
 services:
-# This can be accessed on localhost:8081/script/..., or within the docker network with script-server1:8081/script/...
+# This can be accessed within the docker network with http://biab-script-server:8081/script/...
   script-server:
     container_name: biab-script-server
-    build:
-      context: ./script-server/docker
-    user: "node"
-    working_dir: /home/node/app
     volumes:
-      - ./script-server/:/home/node/app:rw
       - ./scripts:/scripts:ro
       - ./output:/output:rw
     expose:
-      - '8081'
-    environment:
-      - PORT=8081
-      - SCRIPT_LOCATION=/scripts
-      - OUTPUT_LOCATION=/output
-      - NODE_ENV=development
-      - R_LIBS_USER=/home/node/app/r-libs
-    command: "npm start"
-
-  kotlin-server:
-    container_name: biab-script-server-kotlin
-    volumes:
-      - ./scripts:/scripts:ro
-      - ./output:/output:rw
-    ports:
-      - '8083:8080'
+      - '8080'
     environment:
       - SCRIPT_LOCATION=/scripts
       - OUTPUT_LOCATION=/output
