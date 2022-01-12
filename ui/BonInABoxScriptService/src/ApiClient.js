@@ -62,7 +62,7 @@ class ApiClient {
          * @type {Number}
          * @default 60000
          */
-        this.timeout = 60000;
+        this.timeout = 60 * 60 * 1000; // 60 minutes (we know this can be long!! TODO: progress indicator)
 
         /**
          * If set to false an additional timestamp parameter is added to all API GET calls to
