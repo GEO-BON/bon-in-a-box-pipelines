@@ -24,13 +24,9 @@ devtools::install_github("kapitzas/WorldClimTiles")
 
 
 # 0. Settings ----------
-setwd(Sys.getenv("OUTPUT_LOCATION"))
-
-# Create a folder "output" in the current directory, and set the working directory to this folder
-mainDir <- getwd()
-subDir <- "SDM_test_v1_R"
-dir.create(file.path(mainDir, subDir), showWarnings = FALSE) #dir.create() does not crash if the directory already exists}
-setwd(file.path(mainDir, subDir))
+args <- commandArgs(trailingOnly=TRUE)
+outputFolder <- args[1] # Arg 1 is always the output folder
+setwd(outputFolder)
 
 
 # CLEANING DATA MODULE 
@@ -214,6 +210,4 @@ output <- list("prediction" = paste0(getwd(), "/prediction.tif"),
 library("rjson")
 jsonData <- toJSON(output, indent=2)
 
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
 write(jsonData, file.path(outputFolder,"output.json"))
