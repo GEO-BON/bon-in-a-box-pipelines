@@ -72,7 +72,7 @@ fun Route.ScriptRunner(logger:Logger) {
                             process.inputStream.bufferedReader().run {
                                 while(true) {
                                     readLine()?.let { line ->
-                                        logger.trace(line)
+                                        logger.trace(line) // realtime logging
                                         logs += "$line\n"
                                     } ?: break;
                                 }
@@ -83,18 +83,18 @@ fun Route.ScriptRunner(logger:Logger) {
                     }
             }.onSuccess { process ->
                 try {
-                    if(process.exitValue() != 0) {
+                    if(process.exitValue() == 0) { // completed with success
+                        val resultFile = File(outputFolder, "output.json")
+                        if(resultFile.exists()) {
+                            val type = object : TypeToken<Map<String, String>>() {}.type
+                            outputs = gson.fromJson<Map<String, String>>(resultFile.readText(), type)
+                            logger.trace(outputs.toString())
+                        } else {
+                            code = HttpStatusCode.InternalServerError
+                            logs += "Error: output.json file not found"
+                        }
+                    } else { // completed with failure
                         code = HttpStatusCode.InternalServerError
-                    }
-
-                    val resultFile = File(outputFolder, "output.json")
-                    if(resultFile.exists()) {
-                        val type = object : TypeToken<Map<String, String>>() {}.type
-                        outputs = gson.fromJson<Map<String, String>>(resultFile.readText(), type)
-                        logger.trace(outputs.toString())
-                    } else {
-                        code = HttpStatusCode.InternalServerError
-                        logs += "Error: output.json file not found"
                     }
                 } catch (ex:IllegalThreadStateException) {
                     code = HttpStatusCode.RequestTimeout
