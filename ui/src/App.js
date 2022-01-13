@@ -7,6 +7,8 @@ import React, {useRef} from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
+import uuid from 'react-uuid'
+
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
@@ -149,7 +151,7 @@ function RenderedFiles(props) {
 
 function RenderedLogs(props) {
   if (props.logs) {
-    return (<div className="logs">
+    return (<div key={myId} className="logs">
       <h3>Logs</h3>
       <pre>{props.logs}</pre>
     </div>)
