@@ -7,8 +7,6 @@ import React, {useRef} from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
-import uuid from 'react-uuid'
-
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
