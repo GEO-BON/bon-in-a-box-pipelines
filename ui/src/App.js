@@ -15,6 +15,7 @@ const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 function App() {
   const [requestState, setRequestState] = useState(RequestState.idle);
   const [renderers, setRenderers] = useState([]);
+  const [activeRenderer, setActiveRenderer] = useState([]);
 
   return (
     <>
@@ -22,7 +23,7 @@ function App() {
         <h1>BON in a Box v2 pre-pre-pre alpha</h1>
       </header>
       <Form setRequestState={setRequestState} setRenderers={setRenderers} />
-      <Result requestState={requestState} renderers={renderers} />
+      <Result requestState={requestState} renderers={renderers} activeRenderer={activeRenderer} setActiveRenderer={setActiveRenderer} />
     </>
   );
 }
@@ -40,8 +41,8 @@ function Form(props) {
     var api = new BonInABoxScriptService.DefaultApi()
     var callback = function (error, data, response) {
       props.setRenderers([
-        error && <RenderedError error={error.toString()} />,
-        data && <ReactMarkdown remarkPlugins={[remarkGfm]}>{data}</ReactMarkdown>
+        error && new RenderedErrorFactory(error.toString()),
+        data && new ReactMarkdownFactory(data)
       ])
 
       props.setRequestState(RequestState.done)
@@ -63,12 +64,12 @@ function Form(props) {
     var callback = function (error, data, response) {
       if(error)
       {
-        props.setRenderers([(<RenderedError error={error.toString()} />)]);
+        props.setRenderers([new RenderedErrorFactory(error.toString())]);
       }
       else if (data) {
         props.setRenderers([
-          (<RenderedFiles files={data.files} />),
-          (<RenderedLogs logs={data.logs} />)
+          new RenderedFilesFactory(data.files),
+          new RenderedLogsFactory(data.logs)
         ])
       }
 
@@ -104,6 +105,10 @@ function Form(props) {
 }
 
 function Result(props) {
+  function toggleVisibility(componentId) {
+    props.setActiveRenderer(props.activeRenderer === componentId ? null : componentId)
+  }
+
   if(props.requestState === RequestState.idle)
     return null
 
@@ -118,7 +123,9 @@ function Result(props) {
   {
     return (
       <div>
-        {props.renderers}
+        {props.renderers.map(factory => {
+            return factory == null ? null : factory.createComponent(props.activeRenderer, toggleVisibility)
+        })}
       </div>
     )
   }
@@ -126,37 +133,83 @@ function Result(props) {
   return null
 }
 
+class ReactMarkdownFactory {
+  constructor(markdown) {
+    this.markdown = markdown
+  }
+
+  createComponent(/*activeRenderer, toggleVisibility*/) {
+      return <ReactMarkdown remarkPlugins={[remarkGfm]}>{this.markdown}</ReactMarkdown>
+  }
+}
+
+class RenderedFilesFactory {
+  constructor(files) {
+    this.files = files
+  }
+
+  createComponent(activeRenderer, toggleVisibility) {
+      return <RenderedFiles files={this.files} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
+  }
+}
+
 function RenderedFiles(props) {
   if(props.files) {
     return Object.entries(props.files).map(entry => {
       const [key, value] = entry;
 
-      // Match for tiff, TIFF, tif or TIF extensions
-      if (value.search(/.tiff?$/i) !== -1) {
-        return <RenderedMap key={key} title={key} tiff={value} />
-      }
-      else {
-        return (
-          <div key={key}>
-            <h3>{key}</h3>
-            <img src={value} alt={key} />
-          </div>
-        )
-      }
+      return (
+        <div key={key}>
+          <h3 onClick={() => props.toggleVisibility(key)}>{key}</h3>
+          {props.activeRenderer === key && (
+            // Match for tiff, TIFF, tif or TIF extensions
+            value.search(/.tiff?$/i) !== -1 ? (
+              <RenderedMap key={key} title={key} tiff={value} toggleVisibility={props.toggleVisibility} />
+            ) : (
+              <img src={value} alt={key} />
+            )
+          )}
+
+        </div>
+      )
+
+      
     });
   } else {
     return null
   }
 }
 
+class RenderedLogsFactory {
+  constructor(logs) {
+    this.logs = logs
+  }
+
+  createComponent(activeRenderer, toggleVisibility) {
+      return <RenderedLogs logs={this.logs} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
+  }
+}
+
 function RenderedLogs(props) {
+  const myId = "logs"
+
   if (props.logs) {
     return (<div key={myId} className="logs">
-      <h3>Logs</h3>
-      <pre>{props.logs}</pre>
+      <h3 onClick={() => props.toggleVisibility(myId)}>Logs</h3>
+      {props.activeRenderer === myId && <pre>{props.logs}</pre>}
     </div>)
   }
   return null
+}
+
+class RenderedErrorFactory {
+  constructor(error) {
+    this.error = error
+  }
+
+  createComponent(/*toggleVisibility always visible*/) {
+      return <RenderedError error={this.error}  />
+  }
 }
 
 function RenderedError(props) {
