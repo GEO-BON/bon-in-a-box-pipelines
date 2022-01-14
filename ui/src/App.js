@@ -131,6 +131,10 @@ function Result(props) {
   return null
 }
 
+function OutputTitle (props) {
+  return <h3 onClick={() => props.toggleVisibility(props.componentId)}>{props.activeRenderer === props.componentId ? <b>–</b> : <b>+</b>} {props.title}</h3>
+}
+
 class ReactMarkdownFactory {
   constructor(markdown) {
     this.markdown = markdown
@@ -158,11 +162,11 @@ function RenderedFiles(props) {
 
       return (
         <div key={key}>
-          <h3 onClick={() => props.toggleVisibility(key)}>{key}</h3>
+          <OutputTitle title={key} componentId={key} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
           {props.activeRenderer === key && (
             // Match for tiff, TIFF, tif or TIF extensions
             value.search(/.tiff?$/i) !== -1 ? (
-              <RenderedMap key={key} title={key} tiff={value} toggleVisibility={props.toggleVisibility} />
+              <RenderedMap key={key} tiff={value} />
             ) : (
               <img src={value} alt={key} />
             )
@@ -193,7 +197,7 @@ function RenderedLogs(props) {
 
   if (props.logs) {
     return (<div key={myId} className="logs">
-      <h3 onClick={() => props.toggleVisibility(myId)}>Logs</h3>
+      <OutputTitle title="Logs" componentId={myId} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
       {props.activeRenderer === myId && <pre>{props.logs}</pre>}
     </div>)
   }
