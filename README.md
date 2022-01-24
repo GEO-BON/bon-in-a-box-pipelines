@@ -13,7 +13,7 @@ Prerequisites :
 To run:
 1. Clone repository
 2. Navigate to top-level folder
-3. docker compose build (this needs to be re-run every time a Dockerfile is modified)
+3. docker compose build (this needs to be re-run everytime the server code changes, or when using git pull if you are not certain.)
 4. docker compose up -d
 5. In browser:
     - http://localhost/ shows a basic UI
