@@ -3,7 +3,7 @@ import spinner from './spinner.svg';
 import './App.css';
 import RenderedMap from './RenderedMap'
 
-import React, {useRef} from 'react'
+import React, {useRef, useEffect} from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
@@ -133,12 +133,19 @@ function Result(props) {
 
 function OutputTitle (props) {
   let active = props.activeRenderer === props.componentId
+  const titleRef = useRef(null);
+
+  useEffect(() => {
+    if(props.activeRenderer === props.componentId) {
+      titleRef.current.scrollIntoView({ block: 'start',  behavior: 'smooth' })
+    }
+  }, [props.activeRenderer, props.componentId]);
 
   return <div>
-    <h3 class="outputTitle" onClick={() => props.toggleVisibility(props.componentId)}>
+    <h3 className="outputTitle" ref={titleRef}  onClick={() => props.toggleVisibility(props.componentId)}>
       {active ? <b>–</b> : <b>+</b>} {props.title}
     </h3>
-    {active && props.link && <a href={props.link} class="RenderedFileLink" target="_blank">{props.link}</a>}
+    {active && props.link && <a href={props.link} target="_blank" rel="noreferrer">{props.link}</a>}
   </div>
 }
 
