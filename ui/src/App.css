@@ -55,6 +55,12 @@ a {
 }
 
 .outputTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.outputTitle h3 {
   display: inline-block;
   margin: 0.5em 1em 0.5em 0em;
 }
