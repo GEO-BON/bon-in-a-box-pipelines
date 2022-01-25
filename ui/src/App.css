@@ -54,6 +54,11 @@ a {
   border: 1px solid red;
 }
 
+.outputTitle {
+  display: inline-block;
+  margin: 0.5em 1em 0.5em 0em;
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
