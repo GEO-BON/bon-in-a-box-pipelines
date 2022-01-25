@@ -25,7 +25,9 @@ if(!file.exists(example_tiff)) {
 
 
 ## Outputing result to JSON
-output <- list("Heat map" = example_tiff, 
+output <- list("Warning" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long warning it will need to be unfolded to see it all.",
+                "A number" = "1024",
+                "Heat map" = example_tiff, 
                 "Other map" = example_tiff,
                 Uncertainty = example_jpg) 
                 

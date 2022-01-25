@@ -131,6 +131,11 @@ function Result(props) {
   return null
 }
 
+function isRelativeLink(value)
+{
+  return value.startsWith('/')
+}
+
 function OutputTitle (props) {
   let active = props.activeRenderer === props.componentId
   const titleRef = useRef(null);
@@ -141,11 +146,17 @@ function OutputTitle (props) {
     }
   }, [active]);
 
-  return <div>
-    <h3 className="outputTitle" ref={titleRef}  onClick={() => props.toggleVisibility(props.componentId)}>
+  return <div className="outputTitle">
+    <h3 ref={titleRef}  onClick={() => props.toggleVisibility(props.componentId)}>
       {active ? <b>–</b> : <b>+</b>} {props.title}
     </h3>
-    {active && props.link && <a href={props.link} target="_blank" rel="noreferrer">{props.link}</a>}
+    {props.inline && (
+      isRelativeLink(props.inline) ? (
+        active && props.inline && <a href={props.inline} target="_blank" rel="noreferrer">{props.inline}</a>
+      ) : (
+        !active && props.inline
+      )
+    )}
   </div>
 }
 
@@ -176,13 +187,17 @@ function RenderedFiles(props) {
 
       return (
         <div key={key}>
-          <OutputTitle title={key} componentId={key} link={value} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
+          <OutputTitle title={key} componentId={key} inline={value} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
           {props.activeRenderer === key && (
+            isRelativeLink(value) ? (
             // Match for tiff, TIFF, tif or TIF extensions
             value.search(/.tiff?$/i) !== -1 ? (
               <RenderedMap tiff={value} />
             ) : (
               <img src={value} alt={key} />
+              )
+            ) : ( // Plain text or numeric value
+              <p>{value}</p>
             )
           )}
         </div>
