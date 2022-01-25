@@ -155,7 +155,7 @@ class ReactMarkdownFactory {
   }
 
   createComponent(/*activeRenderer, toggleVisibility*/) {
-      return <ReactMarkdown remarkPlugins={[remarkGfm]}>{this.markdown}</ReactMarkdown>
+      return <ReactMarkdown key="info" remarkPlugins={[remarkGfm]}>{this.markdown}</ReactMarkdown>
   }
 }
 
@@ -165,7 +165,7 @@ class RenderedFilesFactory {
   }
 
   createComponent(activeRenderer, toggleVisibility) {
-      return <RenderedFiles files={this.files} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
+      return <RenderedFiles key="files" files={this.files} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
   }
 }
 
@@ -180,7 +180,7 @@ function RenderedFiles(props) {
           {props.activeRenderer === key && (
             // Match for tiff, TIFF, tif or TIF extensions
             value.search(/.tiff?$/i) !== -1 ? (
-              <RenderedMap key={key} tiff={value} />
+              <RenderedMap tiff={value} />
             ) : (
               <img src={value} alt={key} />
             )
@@ -200,15 +200,15 @@ class RenderedLogsFactory {
   }
 
   createComponent(activeRenderer, toggleVisibility) {
-      return <RenderedLogs logs={this.logs} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
+      return <RenderedLogs key="logs" logs={this.logs} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
   }
 }
 
 function RenderedLogs(props) {
-  const myId = "logs"
+  let myId="logs"
 
   if (props.logs) {
-    return (<div key={myId} className="logs">
+    return (<div className="logs">
       <OutputTitle title="Logs" componentId={myId} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
       {props.activeRenderer === myId && <pre>{props.logs}</pre>}
     </div>)
@@ -222,7 +222,7 @@ class RenderedErrorFactory {
   }
 
   createComponent(/*toggleVisibility always visible*/) {
-      return <RenderedError error={this.error}  />
+      return <RenderedError key="error" error={this.error}  />
   }
 }
 
