@@ -136,10 +136,10 @@ function OutputTitle (props) {
   const titleRef = useRef(null);
 
   useEffect(() => {
-    if(props.activeRenderer === props.componentId) {
+    if(active) {
       titleRef.current.scrollIntoView({ block: 'start',  behavior: 'smooth' })
     }
-  }, [props.activeRenderer, props.componentId]);
+  }, [active]);
 
   return <div>
     <h3 className="outputTitle" ref={titleRef}  onClick={() => props.toggleVisibility(props.componentId)}>
