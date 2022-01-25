@@ -132,7 +132,14 @@ function Result(props) {
 }
 
 function OutputTitle (props) {
-  return <h3 onClick={() => props.toggleVisibility(props.componentId)}>{props.activeRenderer === props.componentId ? <b>–</b> : <b>+</b>} {props.title}</h3>
+  let active = props.activeRenderer === props.componentId
+
+  return <div>
+    <h3 class="outputTitle" onClick={() => props.toggleVisibility(props.componentId)}>
+      {active ? <b>–</b> : <b>+</b>} {props.title}
+    </h3>
+    {active && props.link && <a href={props.link} class="RenderedFileLink" target="_blank">{props.link}</a>}
+  </div>
 }
 
 class ReactMarkdownFactory {
@@ -162,7 +169,7 @@ function RenderedFiles(props) {
 
       return (
         <div key={key}>
-          <OutputTitle title={key} componentId={key} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
+          <OutputTitle title={key} componentId={key} link={value} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
           {props.activeRenderer === key && (
             // Match for tiff, TIFF, tif or TIF extensions
             value.search(/.tiff?$/i) !== -1 ? (
@@ -171,11 +178,9 @@ function RenderedFiles(props) {
               <img src={value} alt={key} />
             )
           )}
-
         </div>
       )
 
-      
     });
   } else {
     return null
