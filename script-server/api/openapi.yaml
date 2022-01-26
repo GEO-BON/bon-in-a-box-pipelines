@@ -7,12 +7,14 @@ info:
 servers:
 - url: http://localhost/
   description: script service (from outside dockers only)
+- url: http://biab-script-server:8080
+  description: script service (from inside dockers only)
 tags:
 - name: placeholder
   description: We could use tags
 paths:
   /script/{scriptPath}/run:
-    get:
+    post:
       tags: []
       summary: Run this script
       description: Run the script specified in the URL. Must include the extension.
@@ -26,19 +28,8 @@ paths:
         explode: false
         schema:
           type: string
-      - name: params
-        in: query
-        description: Additional parameters for the script
-        required: false
-        style: form
-        explode: false
-        schema:
-          type: array
-          example:
-          - param1
-          - param2
-          items:
-            type: string
+      requestBody:
+        $ref: '#/components/requestBodies/run_input_body'
       responses:
         "200":
           description: successful operation
@@ -97,3 +88,15 @@ components:
         logs: Starting... Script completed!
       xml:
         name: Result
+  requestBodies:
+    run_input_body:
+      description: Content of input.json for this run
+      required: false
+      content:
+        text/plain:
+          schema:
+            type: string
+            example: '{ 
+              "occurence":"/output/result/from$previous/script", 
+              "intensity":"3" 
+            } '
