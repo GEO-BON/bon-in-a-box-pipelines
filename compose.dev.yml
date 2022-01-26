@@ -38,13 +38,14 @@ services:
       - R_LIBS_USER=/home/gradle/project/r-libs-dev
     command: gradle run
 
-## Server to use when making changes to the OpenAPI specification
+## Server to use when making changes to the OpenAPI specification.
+## Also uncomment corresponding section in http-proxy/conf.d/nginx.conf
   # openapi_swagger:
   #   container_name: swagger_editor
   #   image: swaggerapi/swagger-editor
   #   # Swagger editor will be available at port :80 or https://localhost
-  #   ports:
-  #     - "8082:8080"
+  #   expose:
+  #     - "8080"
   #   # Swagger File to feed the Swagger Editor
   #   # Base URL to point for consulting the Swagger https://localhost/swagger
   #   environment:
