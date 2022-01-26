@@ -38,7 +38,7 @@ fun Route.DefaultApi() {
         }
     }
 
-    get<Paths.runScript> {
+    post<Paths.runScript> {
         val exampleContentType = "application/json"
         val exampleContentString = """{
           "files" : {
