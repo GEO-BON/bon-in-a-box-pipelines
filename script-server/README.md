@@ -41,13 +41,13 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getscriptinfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
-*DefaultApi* | [**runScript**](docs/DefaultApi.md#runscript) | **GET** /script/{scriptPath}/run | Run this script
+*DefaultApi* | [**runScript**](docs/DefaultApi.md#runscript) | **POST** /script/{scriptPath}/run | Run this script
 
 
 <a name="documentation-for-models"></a>
 ## Documentation for Models
 
- - [org.openapitools.server.models.InlineResponse200](docs/InlineResponse200.md)
+ - [org.openapitools.server.models.ScriptRunResult](docs/ScriptRunResult.md)
 
 
 <a name="documentation-for-authorization"></a>

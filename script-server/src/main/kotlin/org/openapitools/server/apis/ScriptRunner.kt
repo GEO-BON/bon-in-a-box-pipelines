@@ -11,6 +11,7 @@ import io.ktor.response.*
 import org.openapitools.server.Paths
 import io.ktor.locations.*
 import io.ktor.routing.*
+import io.ktor.request.receive
 import org.openapitools.server.infrastructure.ApiPrincipal
 import org.openapitools.server.models.ScriptRunResult
 import org.openapitools.server.utils.toMD5
@@ -45,14 +46,14 @@ fun Route.ScriptRunner(logger:Logger) {
         }
     }
 
-    get<Paths.runScript> { parameters ->
-        logger.info("scriptPath: ${parameters.scriptPath}")
-        parameters.params?.forEach { param -> logger.info("param: $param") }
+    post<Paths.runScript> { parameters ->
+        val inputFileContent = call.receive<String>()
+        logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
         
         val scriptFile = File(scriptRoot, parameters.scriptPath)
         if(scriptFile.exists()) {
             // Create the ouput folder based for this invocation
-            val outputFolder = getOutputFolder(parameters.scriptPath, parameters.params)
+            val outputFolder = getOutputFolder(parameters.scriptPath, inputFileContent)
             outputFolder.mkdirs()
             logger.trace("Paths.runScript outputting to $outputFolder")
 
@@ -61,8 +62,11 @@ fun Route.ScriptRunner(logger:Logger) {
             var logs:String = ""
             var outputs:Map<String, String>? = null
             runCatching {
+                // Create input.json
+                val inputFile=File(outputFolder, "input.json")
+                inputFile.writeText(inputFileContent)
+
                 var command:List<String> = listOf("Rscript", scriptFile.absolutePath, outputFolder.absolutePath)
-                parameters.params?.let {command += it}
                 ProcessBuilder(command)
                     .directory(File(scriptRoot))
                     .redirectOutput(ProcessBuilder.Redirect.PIPE)
@@ -128,12 +132,12 @@ fun Route.ScriptRunner(logger:Logger) {
  * @param {List} params 
  * @returns a folder for this invocation. Invoking with the same params will always give the same output folder.
  */
-fun getOutputFolder(scriptPath: kotlin.String, params: kotlin.collections.List<kotlin.String>? = null):File {
+fun getOutputFolder(scriptPath: kotlin.String, body: kotlin.String?):File {
     // Unique to this script
     val scriptOutputFolder = File(ouputRoot, scriptPath.replace('.', '_'))
 
     // Unique to this script, with these parameters
     return File(scriptOutputFolder, 
-        if(params == null) "no_params" else params.joinToString().toMD5()
+        if(body == null) "no_params" else body.toMD5()
     )
 }

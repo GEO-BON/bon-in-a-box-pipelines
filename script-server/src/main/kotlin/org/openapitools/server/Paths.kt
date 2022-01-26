@@ -27,8 +27,8 @@ object Paths {
      * Run this script
      * Run the script specified in the URL. Must include the extension.
      * @param scriptPath Where to find the script in ./script folder 
-     * @param params Additional parameters for the script (optional)
+     * @param body Content of input.json for this run (optional)
      */
-    @Location("/script/{scriptPath}/run") class runScript(val scriptPath: kotlin.String, val params: kotlin.collections.List<kotlin.String>? = null)
+    @Location("/script/{scriptPath}/run") class runScript(val scriptPath: kotlin.String, val body: kotlin.String? = null)
 
 }
