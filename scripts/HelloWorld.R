@@ -14,8 +14,8 @@ cat(args, sep = "\n")
 
 library("rjson")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
-cat("Inputs: ")
-str(input)
+print("Inputs: ")
+print(input)
 
 ## Script body
 example_jpg = file.path(outputFolder, "example.jpg")
@@ -31,7 +31,7 @@ if(!file.exists(example_tiff)) {
 
 ## Outputing result to JSON
 output <- list("Warning" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long warning it will need to be unfolded to see it all.",
-                "A number" = "1024",
+                "A number (intensity*3)" = input$intensity * 3,
                 "Heat map" = example_tiff, 
                 "Other map" = example_tiff,
                 Uncertainty = example_jpg) 
