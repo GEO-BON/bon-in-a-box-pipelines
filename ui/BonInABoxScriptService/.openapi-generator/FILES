@@ -11,4 +11,3 @@ src/ApiClient.js
 src/api/DefaultApi.js
 src/index.js
 src/model/ScriptRunResult.js
-test/model/ScriptRunResult.spec.js

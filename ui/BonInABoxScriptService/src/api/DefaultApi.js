@@ -89,13 +89,13 @@ export default class DefaultApi {
      * Run the script specified in the URL. Must include the extension.
      * @param {String} scriptPath Where to find the script in ./script folder
      * @param {Object} opts Optional parameters
-     * @param {Array.<String>} opts.params Additional parameters for the script
+     * @param {String} opts.body Content of input.json for this run
      * @param {module:api/DefaultApi~runScriptCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link module:model/ScriptRunResult}
      */
     runScript(scriptPath, opts, callback) {
       opts = opts || {};
-      let postBody = null;
+      let postBody = opts['body'];
       // verify the required parameter 'scriptPath' is set
       if (scriptPath === undefined || scriptPath === null) {
         throw new Error("Missing the required parameter 'scriptPath' when calling runScript");
@@ -105,7 +105,6 @@ export default class DefaultApi {
         'scriptPath': scriptPath
       };
       let queryParams = {
-        'params': this.apiClient.buildCollectionParam(opts['params'], 'csv')
       };
       let headerParams = {
       };
@@ -113,11 +112,11 @@ export default class DefaultApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
+      let contentTypes = ['text/plain'];
       let accepts = ['application/json'];
       let returnType = ScriptRunResult;
       return this.apiClient.callApi(
-        '/script/{scriptPath}/run', 'GET',
+        '/script/{scriptPath}/run', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

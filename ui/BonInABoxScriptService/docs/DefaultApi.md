@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getScriptInfo**](DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
-[**runScript**](DefaultApi.md#runScript) | **GET** /script/{scriptPath}/run | Run this script
+[**runScript**](DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
 
 
 
@@ -68,7 +68,10 @@ import BonInABoxScriptService from 'bon_in_a_box_script_service';
 let apiInstance = new BonInABoxScriptService.DefaultApi();
 let scriptPath = "scriptPath_example"; // String | Where to find the script in ./script folder
 let opts = {
-  'params': ["param1","param2"] // [String] | Additional parameters for the script
+  'body': '{ 
+              "occurence":"/output/result/from/previous/script", 
+              "intensity":3
+            } ' // String | Content of input.json for this run
 };
 apiInstance.runScript(scriptPath, opts, (error, data, response) => {
   if (error) {
@@ -85,7 +88,7 @@ apiInstance.runScript(scriptPath, opts, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **scriptPath** | **String**| Where to find the script in ./script folder | 
- **params** | [**[String]**](String.md)| Additional parameters for the script | [optional] 
+ **body** | **String**| Content of input.json for this run | [optional] 
 
 ### Return type
 
@@ -97,6 +100,6 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: text/plain
 - **Accept**: application/json
 
