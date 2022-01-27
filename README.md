@@ -20,3 +20,9 @@ To run:
     - http://localhost/script/HelloWorld.R runs the specified R script.
     - http://localhost:8081/docs shows the script server's API documentation
 6. docker compose down
+
+Script lifecycle:
+1. Script launched with output folder as a parameter.
+2. Script reads input.json to get execution parameters (ex. species, area, data source, etc.)
+3. Script performs its task
+4. Script generates output.json, containing links to result files, or native values (int, string, etc.)
