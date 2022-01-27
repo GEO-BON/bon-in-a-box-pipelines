@@ -77,9 +77,10 @@ function Form(props) {
     props.setRenderers(null); // make sure we don't mix with last request
 
     let paramsValue = paramRef.current.value
-    let params = paramsValue ? {"params":paramsValue.split('\n')} : {}
-
-    api.runScript(inputScriptRef.current.value, params, callback);
+    let opts = {
+      'body': paramsValue // String | Content of input.json for this run
+    };
+    api.runScript(inputScriptRef.current.value, opts, callback);
   }
 
   return (
@@ -94,7 +95,7 @@ function Form(props) {
       <label>
         Parameters (1 per line) :
         <br />
-        <textarea ref={paramRef} type="text" defaultValue="param1&#10;param2"></textarea>
+        <textarea ref={paramRef} type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}'></textarea>
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
