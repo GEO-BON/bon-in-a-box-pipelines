@@ -6,7 +6,8 @@
 
 # Packages requiered -----------
 
-packages <- c("rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos", "sf", "terra", "sp")
+packages <- c("rgbif", "raster", 'dismo', "ENMeval", "dplyr", "CoordinateCleaner", "adehabitatHR", "rgeos", "sf", "terra", "sp",
+              "virtualspecies")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 
 if(length(new.packages)) install.packages(new.packages)
@@ -20,21 +21,25 @@ outputFolder <- args[1] # Arg 1 is always the output folder
 print(paste0("outputFolder ", outputFolder))
 setwd(outputFolder)
 
-species <- "acer saccharum"# args[2]
+species <- "Aotus lemurinus"# args[2]
+countryCode <- "COL"
 print(paste0("species ", species))
 countryCode <- args[3]
 print(paste0("countryCode  ", countryCode))
 
 
+# REMOPVING COLLINEARITY MODULE 
+source(file.path(Sys.getenv("SCRIPT_LOCATION"), "removeCollinearity.R"))
+
 # CLEANING DATA MODULE 
-source(file.path(Sys.getenv("SCRIPT_LOCATION"), "clean_occurrences.R"))
+source(file.path(Sys.getenv("SCRIPT_LOCATION"), "cleanOccurrences.R"))
 
 
 
 run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333, do_cleaning = TRUE, uncertainty = FALSE) {
-
+  
   ######### START PIPELINE ######################
-
+  
   library("rgbif")
   library("dplyr")
   library("raster")
@@ -46,6 +51,7 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   library("WorldClimTiles")
   library('dismo')
   library('ENMeval')
+  library('virtualspecies')
   
   # Projections
   # Geographic
@@ -124,6 +130,15 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
     
   }
   
+  # Remove collinearity
+  
+  nonCollinearPredictors <- removeCollinearity(rawPredictors,
+                                     method = "vif.step",
+                                     sample = TRUE, 
+                                     cutoff.vif = 10,
+                                     export = F)
+  
+  
   # 2.2 From Planetary Computer -----------
   
   # Let's include a list of predictors
@@ -146,10 +161,12 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   
   if (do_cleaning) {
     
-    Obs_gbif_data <- clean_occurrences(Obs_gbif_data$data,
-                                       id = "key",
+    Obs_gbif_data <- cleanOccurrences(x = Obs_gbif_data$data,
+                                      predictors = nonCollinearPredictors,
+                                      unique_id = "key",
                                        lon = "decimalLongitude", 
                                        lat = "decimalLatitude", 
+                                      species_col = "scientificName",
                                        # all tests by default
                                        # see https://cran.r-project.org/web/packages/CoordinateCleaner/index.html for details
                                        # remove the seas test for marine species
@@ -159,10 +176,9 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
                                                   "capitals", 
                                                   "centroids",
                                                   "seas", 
-                                                  "urban",
+                                                  "same_pixel",
                                                   "gbif", 
-                                                  "institutions",
-                                                  "env"
+                                                  "institutions"
                                        ), 
                                        dir = getwd(), # directory to store cleaning report, only uised if report =  TRUE
                                        additions = c("eventDate"), # use for filtering duplicates (same coordinates and eventDate)
@@ -177,7 +193,7 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   }
   
   
-  
+  if (class(Obs_gbif_data) == "data.frame" && nrow(Obs_gbif_data) > 0) {
   
   # 3. Model fitting ------
   
@@ -187,13 +203,15 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   
   
   # Pseudo-absences
-  
-  bg_points <- dismo::randomPoints(clim_tiles_merge_agg[[1]], n = 5000) %>% as.data.frame()
+  rNA <- table(is.na(nonCollinearPredictors[[1]][]))
+  n <- min(rNA[["FALSE"]], n) # if not enough non NA cells in the raster, reduce the number of background points
+  message(sprintf("Selecting %i background points", n))
+  bg_points <- dismo::randomPoints(nonCollinearPredictors[[1]], n = n) %>% as.data.frame()
   colnames(bg_points) <- colnames(occs)
   
   
   # Model (using Maxent in ENMeval) basic parameters
-  model_species <- ENMeval::ENMevaluate(occs = occs, envs = rawPredictors , bg = bg_points, 
+  model_species <- ENMeval::ENMevaluate(occs = occs, envs = nonCollinearPredictors , bg = bg_points, 
                                         algorithm = 'maxent.jar',
                                         partitions = 'block',
                                         tune.args = list(fc = "L", rm = 1),
@@ -207,10 +225,11 @@ run_sdm <- function(species, country_code, min_obs = 20, targetRes = 0.08333333,
   model_species_prediction <- ENMeval::eval.predictions(model_species)
   terra::writeRaster(terra::rast(model_species_prediction), paste0(getwd(), "/prediction.tif"),
                      overwrite=TRUE)
-
+  
   #############END PIPELINE ####################################
 }
 
-
+}
 run_sdm(species, countryCode)
+
 
