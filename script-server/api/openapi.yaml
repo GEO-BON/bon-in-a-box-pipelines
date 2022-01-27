@@ -97,6 +97,6 @@ components:
           schema:
             type: string
             example: '{ 
-              "occurence":"/output/result/from$previous/script", 
-              "intensity":"3" 
+              "occurence":"/output/result/from/previous/script", 
+              "intensity":3
             } '

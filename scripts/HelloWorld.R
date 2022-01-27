@@ -12,6 +12,11 @@ args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
 
+library("rjson")
+input <- fromJSON(file=file.path(outputFolder, "input.json"))
+cat("Inputs: ")
+str(input)
+
 ## Script body
 example_jpg = file.path(outputFolder, "example.jpg")
 if(!file.exists(example_jpg)) {
@@ -31,7 +36,6 @@ output <- list("Warning" = "This is just an example. In case you have a very, ve
                 "Other map" = example_tiff,
                 Uncertainty = example_jpg) 
                 
-library("rjson")
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
 
