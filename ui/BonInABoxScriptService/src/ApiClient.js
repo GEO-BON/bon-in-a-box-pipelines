@@ -594,6 +594,10 @@ class ApiClient {
             {
               'url': "http://localhost",
               'description': "script service (from outside dockers only)",
+            },
+            {
+              'url': "http://biab-script-server:8080",
+              'description': "script service (from inside dockers only)",
             }
       ];
     }
