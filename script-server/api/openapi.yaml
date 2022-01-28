@@ -13,6 +13,19 @@ tags:
 - name: placeholder
   description: We could use tags
 paths:
+  /script/list:
+    get:
+      summary: Get a list of available scripts
+      responses:
+        "200":
+          description: Array of script description files
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: ["HelloWorld.yml", "RunSDM.yml","SHI.yml"]
   /script/{scriptPath}/run:
     post:
       tags: []

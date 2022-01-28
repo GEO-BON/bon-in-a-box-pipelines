@@ -31,4 +31,10 @@ object Paths {
      */
     @Location("/script/{scriptPath}/run") class runScript(val scriptPath: kotlin.String, val body: kotlin.String? = null)
 
+    /**
+     * Get a list of available scripts
+     * 
+     */
+    @Location("/script/list") object scriptListGet
+
 }

@@ -55,4 +55,15 @@ fun Route.DefaultApi() {
         }
     }
 
+    get<Paths.scriptListGet> {
+        val exampleContentType = "application/json"
+        val exampleContentString = """"[\"HelloWorld.yml\",\"RunSDM.yml\",\"SHI.yml\"]""""
+        
+        when (exampleContentType) {
+            "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+            "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+            else -> call.respondText(exampleContentString)
+        }
+    }
+
 }
