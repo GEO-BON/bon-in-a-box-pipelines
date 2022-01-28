@@ -30,11 +30,12 @@ if(!file.exists(example_tiff)) {
 
 
 ## Outputing result to JSON
-output <- list("Warning" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long warning it will need to be unfolded to see it all.",
-                "A number (intensity*3)" = input$intensity * 3,
-                "Heat map" = example_tiff, 
-                "Other map" = example_tiff,
-                Uncertainty = example_jpg) 
+# notice that the warning string is not part of the yml spec, so it cannot be used by other scripts, but will still be displayed.
+output <- list("warning" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long warning it will need to be unfolded to see it all.",
+                "number" = input$intensity * 3,
+                "heat_map" = example_tiff, 
+                "other_map" = example_tiff,
+                "some_picture" = example_jpg) 
                 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

@@ -1,0 +1,31 @@
+script: HelloWorld.R
+inputs:
+  - occurence:
+      description: Occurrence data, some description here
+      type: geotiff
+      example: http://something-compatible.tiff
+  - intensity:
+      description: Intensity of bla bla, from [1,10]
+      type: int
+      example: 3
+outputs:
+  - number:
+      label: A number (intensity*3)
+      description: blabla, normalized [0,1]
+      type: int
+      example: 9
+  - heat_map:
+      label: Heat map
+      description: Some heat map that shows bla bla...
+      type: geotiff
+      example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
+  - other_map:
+      label: Other map
+      description: Some other map that shows bla bla...
+      type: geotiff
+      example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
+  - some_picture:
+      label: Other map
+      description: Some picture/graph/etc that shows bla bla...
+      type: jpg
+      example: /path/to/some/example.jpg
