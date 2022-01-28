@@ -22,11 +22,11 @@ import kotlin.collections.joinToString
 import kotlin.io.readLine
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.launch
-import java.lang.reflect.Type;
+import java.lang.reflect.Type
 import com.google.gson.reflect.TypeToken
 
-val scriptRoot = System.getenv("SCRIPT_LOCATION")
-val ouputRoot = System.getenv("OUTPUT_LOCATION")
+val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
+val ouputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptRunner(logger:Logger) {
@@ -68,7 +68,7 @@ fun Route.ScriptRunner(logger:Logger) {
 
                 var command:List<String> = listOf("Rscript", scriptFile.absolutePath, outputFolder.absolutePath)
                 ProcessBuilder(command)
-                    .directory(File(scriptRoot))
+                    .directory(scriptRoot)
                     .redirectOutput(ProcessBuilder.Redirect.PIPE)
                     .redirectErrorStream(true) // Merges stderr into stdout
                     .start().also { process -> 
@@ -78,7 +78,7 @@ fun Route.ScriptRunner(logger:Logger) {
                                     readLine()?.let { line ->
                                         logger.trace(line) // realtime logging
                                         logs += "$line\n"
-                                    } ?: break;
+                                    } ?: break
                                 }
                             }
                         }
@@ -123,6 +123,17 @@ fun Route.ScriptRunner(logger:Logger) {
             call.respond(HttpStatusCode.NotFound, ScriptRunResult("Script not found"))
             logger.warn("Error 404: Paths.runScript ${parameters.scriptPath}")
         }
+    }
+
+    get<Paths.scriptListGet> {
+        val possible = mutableListOf<String>()
+        scriptRoot.walkTopDown().forEach { file ->
+            if(file.extension.equals("yml")) {
+                possible.add(file.absolutePath)
+            }
+        }
+        
+        call.respond(possible)
     }
 }
 
