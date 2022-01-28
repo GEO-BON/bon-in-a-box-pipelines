@@ -6,6 +6,7 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getScriptInfo**](DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
 [**runScript**](DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
+[**scriptListGet**](DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
 
 
 
@@ -101,5 +102,44 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: text/plain
+- **Accept**: application/json
+
+
+## scriptListGet
+
+> [String] scriptListGet()
+
+Get a list of available scripts
+
+### Example
+
+```javascript
+import BonInABoxScriptService from 'bon_in_a_box_script_service';
+
+let apiInstance = new BonInABoxScriptService.DefaultApi();
+apiInstance.scriptListGet((error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+This endpoint does not need any parameter.
+
+### Return type
+
+**[String]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
 - **Accept**: application/json
 
