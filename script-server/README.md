@@ -42,6 +42,7 @@ Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getscriptinfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
 *DefaultApi* | [**runScript**](docs/DefaultApi.md#runscript) | **POST** /script/{scriptPath}/run | Run this script
+*DefaultApi* | [**scriptListGet**](docs/DefaultApi.md#scriptlistget) | **GET** /script/list | Get a list of available scripts
 
 
 <a name="documentation-for-models"></a>
