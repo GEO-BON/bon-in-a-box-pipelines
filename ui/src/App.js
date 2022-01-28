@@ -28,9 +28,9 @@ function App() {
 
 function Form(props) {
   // Where to find the script in ./script folder
-  const inputScriptRef = useRef(null);
+  const scriptFileRef = useRef(null);
   // Parameters of the script. In the URL as ...?params=param1,param2
-  const paramRef = useRef(null);
+  const scriptInputRef = useRef(null);
 
   const queryInfo = () => {
     props.setRequestState(RequestState.working)
@@ -46,7 +46,7 @@ function Form(props) {
       props.setRequestState(RequestState.done)
     }
 
-    api.getScriptInfo(inputScriptRef.current.value, callback);
+    api.getScriptInfo(scriptFileRef.current.value, callback);
   }
 
   const handleSubmit = (event) => {
@@ -76,26 +76,48 @@ function Form(props) {
 
     props.setRenderers(null); // make sure we don't mix with last request
 
-    let paramsValue = paramRef.current.value
+    let paramsValue = scriptInputRef.current.value
     let opts = {
       'body': paramsValue // String | Content of input.json for this run
     };
-    api.runScript(inputScriptRef.current.value, opts, callback);
+    api.runScript(scriptFileRef.current.value, opts, callback);
+  }
+
+  function onInputTextArea(e)
+  {
+    resize(e.target)
+  }
+
+  useEffect(() => {
+      resize(scriptInputRef.current)
+  }, [scriptInputRef])
+
+  /**
+   * Automatic horizontal and vertical resizing of textarea
+   * @param {textarea} input 
+   */
+  function resize(input)
+  {
+    input.style.height = "auto"
+    input.style.height = (input.scrollHeight) + "px";
+
+    input.style.width = "auto"
+    input.style.width = (input.scrollWidth) + "px";
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Script file :
+        Script file:
         <br />
-        <input ref={inputScriptRef} type="text" defaultValue="HelloWorld.R" />
+        <input ref={scriptFileRef} type="text" defaultValue="HelloWorld.R" />
       </label>
       <button type="button" onClick={queryInfo} disabled={props.requestState === RequestState.working}>Get script info</button>
       <br /> {/*Why do I need to line break, forms should do it normally... */}
       <label>
-        Parameters (1 per line) :
+        Content of input.json:
         <br />
-        <textarea ref={paramRef} type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}'></textarea>
+        <textarea className="inputfile" ref={scriptInputRef} type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}' onInput={onInputTextArea}></textarea>
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
