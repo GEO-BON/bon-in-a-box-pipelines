@@ -127,9 +127,11 @@ fun Route.ScriptRunner(logger:Logger) {
 
     get<Paths.scriptListGet> {
         val possible = mutableListOf<String>()
+        val relPathIndex = scriptRoot.absolutePath.length + 1
         scriptRoot.walkTopDown().forEach { file ->
             if(file.extension.equals("yml")) {
-                possible.add(file.absolutePath)
+                // Add the relative path, without the script root.
+                possible.add(file.absolutePath.substring(relPathIndex))
             }
         }
         
