@@ -7,6 +7,8 @@ import React, {useRef, useEffect} from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 
+import Select from 'react-select';
+
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
@@ -27,9 +29,12 @@ function App() {
 }
 
 function Form(props) {
+  const formRef = useRef(null);
+
   // Where to find the script in ./script folder
-  const scriptFileRef = useRef(null);
-  // Parameters of the script. In the URL as ...?params=param1,param2
+  const scriptFileOptions = [];
+
+  // Parameters of the script to be written in output.json
   const scriptInputRef = useRef(null);
 
   const queryInfo = () => {
@@ -46,7 +51,8 @@ function Form(props) {
       props.setRequestState(RequestState.done)
     }
 
-    api.getScriptInfo(scriptFileRef.current.value, callback);
+    
+    api.getScriptInfo(formRef.current.elements["scriptFile"].value, callback);
   }
 
   const handleSubmit = (event) => {
@@ -80,7 +86,7 @@ function Form(props) {
     let opts = {
       'body': paramsValue // String | Content of input.json for this run
     };
-    api.runScript(scriptFileRef.current.value, opts, callback);
+    api.runScript(formRef.current.elements["scriptFile"].value, opts, callback);
   }
 
   function onInputTextArea(e)
@@ -105,12 +111,28 @@ function Form(props) {
     input.style.width = (input.scrollWidth) + "px";
   }
 
+  // Load list of scripts
+  useEffect(() => {
+    let api = new BonInABoxScriptService.DefaultApi();
+    api.scriptListGet((error, data, response) => {
+      if (error) {
+        console.error(error);
+      } else {
+        let items = [];
+        for (let i = 0; i <= data.length; i++) {
+          scriptFileOptions.push({label: data[i], value: data[i]})
+        }
+        return items;
+      }
+    });
+  })
+
   return (
-    <form onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit}>
       <label>
         Script file:
         <br />
-        <input ref={scriptFileRef} type="text" defaultValue="HelloWorld.R" />
+        <Select name="scriptFile" className="blackText" options={scriptFileOptions} />
       </label>
       <button type="button" onClick={queryInfo} disabled={props.requestState === RequestState.working}>Get script info</button>
       <br /> {/*Why do I need to line break, forms should do it normally... */}
