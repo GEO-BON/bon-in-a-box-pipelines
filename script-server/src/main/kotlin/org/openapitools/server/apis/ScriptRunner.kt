@@ -23,6 +23,7 @@ import kotlin.io.readLine
 import java.util.concurrent.TimeUnit
 import kotlinx.coroutines.launch
 import java.lang.reflect.Type
+import java.util.Scanner
 import com.google.gson.reflect.TypeToken
 
 val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
@@ -50,7 +51,15 @@ fun Route.ScriptRunner(logger:Logger) {
         val inputFileContent = call.receive<String>()
         logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
         
-        val scriptFile = File(scriptRoot, parameters.scriptPath)
+        // TEMP code untill /example API is added
+        val scriptFile = try {
+            getScriptFromYAML(File(scriptRoot, parameters.scriptPath))
+        } catch (e:Exception) {
+            call.respond(HttpStatusCode.NotFound, ScriptRunResult("Script not found"))
+            logger.warn("Error 404: Paths.runScript ${parameters.scriptPath}")
+            return@post
+        }
+        
         if(scriptFile.exists()) {
             // Create the ouput folder based for this invocation
             val outputFolder = getOutputFolder(parameters.scriptPath, inputFileContent)
@@ -121,7 +130,7 @@ fun Route.ScriptRunner(logger:Logger) {
         else // Script not found
         {
             call.respond(HttpStatusCode.NotFound, ScriptRunResult("Script not found"))
-            logger.warn("Error 404: Paths.runScript ${parameters.scriptPath}")
+            logger.warn("Error 404: Paths.runScript ${parameters.scriptPath} --> $scriptFile")
         }
     }
 
@@ -153,4 +162,22 @@ fun getOutputFolder(scriptPath: kotlin.String, body: kotlin.String?):File {
     return File(scriptOutputFolder, 
         if(body == null) "no_params" else body.toMD5()
     )
+}
+
+/**
+ * 
+ * @param {File} yamlFile
+ * @returns the script file reference in this YAML.
+ */
+fun getScriptFromYAML(yamlFile:File):File {
+    val scriptTag = "script:"
+    val scanner = Scanner(yamlFile)
+
+    while (scanner.hasNextLine()) {
+        val line = scanner.nextLine()
+        if(line.startsWith(scriptTag)) {
+            return File(yamlFile.parent, line.substring(scriptTag.length).trim())
+        }
+    }
+    throw Exception("YML doesn't contain script:")
 }
