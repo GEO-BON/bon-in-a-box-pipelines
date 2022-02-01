@@ -125,7 +125,9 @@ function Form(props) {
         return items;
       }
     });
-  })
+    // Empty dependency array to get script list only once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <form ref={formRef} onSubmit={handleSubmit}>
