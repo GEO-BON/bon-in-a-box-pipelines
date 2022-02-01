@@ -132,7 +132,7 @@ function Form(props) {
       <label>
         Script file:
         <br />
-        <Select name="scriptFile" className="blackText" options={scriptFileOptions} />
+        <Select name="scriptFile" className="blackText" options={scriptFileOptions} defaultValue={{label:"HelloWorld.yml", value:"HelloWorld.yml"}} />
       </label>
       <button type="button" onClick={queryInfo} disabled={props.requestState === RequestState.working}>Get script info</button>
       <br /> {/*Why do I need to line break, forms should do it normally... */}
