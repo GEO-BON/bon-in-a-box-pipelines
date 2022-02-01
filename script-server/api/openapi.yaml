@@ -54,7 +54,6 @@ paths:
           description: Bad request
         "404":
           description: Script not found
-      x-swagger-router-controller: Default
   /script/{scriptPath}/info:
     get:
       tags: []
@@ -82,7 +81,6 @@ paths:
           description: Bad request
         "404":
           description: Script not found
-      x-swagger-router-controller: Default
 components:
   schemas:
     script_run_result:
