@@ -47,6 +47,7 @@ a {
   background-color: lightgray;
   color: darkred;
   font-weight: bold;
+  white-space: pre;
 }
 
 .map {
