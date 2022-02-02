@@ -62,7 +62,7 @@ fun Route.ScriptRunner(logger:Logger) {
         
         if(scriptFile.exists()) {
             // Create the ouput folder based for this invocation
-            val outputFolder = getOutputFolder(parameters.scriptPath, inputFileContent)
+            val outputFolder = getOutputFolder(scriptFile, inputFileContent)
             outputFolder.mkdirs()
             logger.trace("Paths.runScript outputting to $outputFolder")
 
