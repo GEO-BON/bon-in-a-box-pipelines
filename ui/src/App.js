@@ -29,8 +29,8 @@ function App() {
 function Form(props) {
   const formRef = useRef(null);
 
-  // Where to find the script in ./script folder
-  const scriptFileOptions = []; // dans un state!!!!
+  // List of available scripts
+  const [scriptFileOptions, setScriptFileOptions] = useState([]);
 
   // Parameters of the script to be written in output.json
   const scriptInputRef = useRef(null);
@@ -109,18 +109,16 @@ function Form(props) {
     input.style.width = (input.scrollWidth) + "px";
   }
 
-  // Load list of scripts
+  // Load list of scripts into scriptFileOptions
   useEffect(() => {
     let api = new BonInABoxScriptService.DefaultApi();
     api.scriptListGet((error, data, response) => {
       if (error) {
         console.error(error);
       } else {
-        let items = [];
-        for (let i = 0; i <= data.length; i++) {
-          scriptFileOptions.push({label: data[i], value: data[i]})
-        }
-        return items;
+        let newOptions = [];
+        data.forEach(script => newOptions.push({label: script, value: script}));
+        setScriptFileOptions(newOptions)
       }
     });
     // Empty dependency array to get script list only once
