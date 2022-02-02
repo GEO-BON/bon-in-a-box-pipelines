@@ -36,8 +36,8 @@ fun Route.ScriptRunner(logger:Logger) {
 
     get<Paths.getScriptInfo> { parameters ->
         try {
-            // Replace extension by .md
-            val mdPath = parameters.scriptPath.replace(Regex("""\.\w+$"""), ".md")
+            // Replace extension by .yml
+            val mdPath = parameters.scriptPath.replace(Regex("""\.\w+$"""), ".yml")
             val scriptFile = File(scriptRoot, mdPath)
             call.respondText(scriptFile.readText())
             logger.trace("200: Paths.getScriptInfo $scriptFile")

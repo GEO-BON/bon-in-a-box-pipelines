@@ -11,3 +11,4 @@ outputs:
       description: Sample uncertainty 
       type: geotiff
       example: 
+description: "Running an arbitrary SDM, don't look too much at the results."
