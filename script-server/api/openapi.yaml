@@ -62,7 +62,7 @@ paths:
       parameters:
       - name: scriptPath
         in: path
-        description: Where to find the script in ./script folder
+        description: Where to find the script in ./script folder.
         required: true
         style: simple
         explode: false
@@ -70,12 +70,19 @@ paths:
           type: string
       responses:
         "200":
-          description: Returns the path towards the script's info document.
+          description: Returns the metadata, in YAML format
           content:
             text/plain:
               schema:
                 type: string
-                example: http://server.com/scripts/somescript.md
+                example: "
+                          script:
+                          inputs:
+                          outputs:
+                          description:
+                          external_link:
+                          references:
+                          "
                 x-content-type: text/plain
         "400":
           description: Bad request

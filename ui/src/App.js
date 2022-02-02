@@ -4,8 +4,6 @@ import './App.css';
 import RenderedMap from './RenderedMap'
 
 import React, {useRef, useEffect} from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
 
 import Select from 'react-select';
 
@@ -32,7 +30,7 @@ function Form(props) {
   const formRef = useRef(null);
 
   // Where to find the script in ./script folder
-  const scriptFileOptions = [];
+  const scriptFileOptions = []; // dans un state!!!!
 
   // Parameters of the script to be written in output.json
   const scriptInputRef = useRef(null);
@@ -45,7 +43,7 @@ function Form(props) {
     var callback = function (error, data, response) {
       props.setRenderers([
         error && new RenderedErrorFactory(error.toString()),
-        data && new ReactMarkdownFactory(data)
+        data && new ScriptInfoFactory(data)
       ])
 
       props.setRequestState(RequestState.done)
@@ -207,13 +205,13 @@ function OutputTitle (props) {
   </div>
 }
 
-class ReactMarkdownFactory {
-  constructor(markdown) {
-    this.markdown = markdown
+class ScriptInfoFactory {
+  constructor(metadata) {
+    this.metadata = metadata
   }
 
   createComponent(/*activeRenderer, toggleVisibility*/) {
-      return <ReactMarkdown key="info" remarkPlugins={[remarkGfm]}>{this.markdown}</ReactMarkdown>
+      return <pre key="info">{this.metadata}</pre>
   }
 }
 
