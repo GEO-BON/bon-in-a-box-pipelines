@@ -32,9 +32,6 @@ function Form(props) {
   // List of available scripts
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
 
-  // Parameters of the script to be written in output.json
-  const scriptInputRef = useRef(null);
-
   const queryInfo = () => {
     props.setRequestState(RequestState.working)
     props.setRenderers(null);
@@ -80,9 +77,8 @@ function Form(props) {
 
     props.setRenderers(null); // make sure we don't mix with last request
 
-    let paramsValue = scriptInputRef.current.value
     let opts = {
-      'body': paramsValue // String | Content of input.json for this run
+      'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };
     api.runScript(formRef.current.elements["scriptFile"].value, opts, callback);
   }
@@ -91,10 +87,6 @@ function Form(props) {
   {
     resize(e.target)
   }
-
-  useEffect(() => {
-      resize(scriptInputRef.current)
-  }, [scriptInputRef])
 
   /**
    * Automatic horizontal and vertical resizing of textarea
@@ -109,8 +101,12 @@ function Form(props) {
     input.style.width = (input.scrollWidth) + "px";
   }
 
-  // Load list of scripts into scriptFileOptions
+  // Applied only once when first loaded  
   useEffect(() => {
+    // Initial resize of the textarea
+    resize(formRef.current.elements["inputFile"])
+
+    // Load list of scripts into scriptFileOptions
     let api = new BonInABoxScriptService.DefaultApi();
     api.scriptListGet((error, data, response) => {
       if (error) {
@@ -137,7 +133,7 @@ function Form(props) {
       <label>
         Content of input.json:
         <br />
-        <textarea className="inputfile" ref={scriptInputRef} type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}' onInput={onInputTextArea}></textarea>
+        <textarea name="inputFile" className="inputFile" type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}' onInput={onInputTextArea}></textarea>
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
