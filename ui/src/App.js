@@ -29,11 +29,13 @@ function App() {
 function Form(props) {
   const formRef = useRef(null);
 
-  // List of available scripts
+  const defaultScript = "HelloWorld.yml"
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
+  const [scriptMeta, setScriptMeta] = useState("");
 
-  const queryInfo = () => {
-    props.setRequestState(RequestState.working)
+  function loadScriptMetadata(choice) {
+    // TODO: cancel previous pending request?
+    props.setRequestState(RequestState.done)
     props.setRenderers(null);
 
     var api = new BonInABoxScriptService.DefaultApi()
@@ -43,11 +45,10 @@ function Form(props) {
         data && new ScriptInfoFactory(data)
       ])
 
-      props.setRequestState(RequestState.done)
+      setScriptMeta(data)
     }
 
-    
-    api.getScriptInfo(formRef.current.elements["scriptFile"].value, callback);
+    api.getScriptInfo(choice, callback);
   }
 
   const handleSubmit = (event) => {
@@ -115,6 +116,7 @@ function Form(props) {
         let newOptions = [];
         data.forEach(script => newOptions.push({label: script, value: script}));
         setScriptFileOptions(newOptions)
+        loadScriptMetadata(defaultScript)
       }
     });
     // Empty dependency array to get script list only once
@@ -126,14 +128,15 @@ function Form(props) {
       <label>
         Script file:
         <br />
-        <Select name="scriptFile" className="blackText" options={scriptFileOptions} defaultValue={{label:"HelloWorld.yml", value:"HelloWorld.yml"}} />
+        <Select name="scriptFile" className="blackText" options={scriptFileOptions} defaultValue={{label:defaultScript, value:defaultScript}}
+          onChange={(v)=>loadScriptMetadata(v.value)} />
       </label>
-      <button type="button" onClick={queryInfo} disabled={props.requestState === RequestState.working}>Get script info</button>
       <br /> {/*Why do I need to line break, forms should do it normally... */}
       <label>
         Content of input.json:
         <br />
-        <textarea name="inputFile" className="inputFile" type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}' onInput={onInputTextArea}></textarea>
+        <textarea name="inputFile" className="inputFile" type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}' 
+          onInput={onInputTextArea}></textarea>
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
