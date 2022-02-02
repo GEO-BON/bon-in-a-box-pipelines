@@ -9,6 +9,7 @@ import Select from 'react-select';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
+const yaml = require('js-yaml');
 
 function App() {
   const [requestState, setRequestState] = useState(RequestState.idle);
@@ -31,7 +32,6 @@ function Form(props) {
 
   const defaultScript = "HelloWorld.yml"
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
-  const [scriptMeta, setScriptMeta] = useState("");
 
   function loadScriptMetadata(choice) {
     // TODO: cancel previous pending request?
@@ -45,7 +45,22 @@ function Form(props) {
         data && new ScriptInfoFactory(data)
       ])
 
-      setScriptMeta(data)
+      // Generate example input.json
+      let inputExamples = {}
+      const doc = yaml.load(data)
+      if (doc.inputs) {
+        doc.inputs.forEach((input) => {
+          const key = Object.keys(input)[0]
+          if (key) {
+            const example = input[key].example
+            inputExamples[key] = example ? example : "..."
+          }
+        })
+      }
+
+      // Update input field
+      formRef.current.elements["inputFile"].value = JSON.stringify(inputExamples, null, 2)
+      resize(formRef.current.elements["inputFile"])
     }
 
     api.getScriptInfo(choice, callback);
@@ -82,11 +97,6 @@ function Form(props) {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };
     api.runScript(formRef.current.elements["scriptFile"].value, opts, callback);
-  }
-
-  function onInputTextArea(e)
-  {
-    resize(e.target)
   }
 
   /**
@@ -131,12 +141,11 @@ function Form(props) {
         <Select name="scriptFile" className="blackText" options={scriptFileOptions} defaultValue={{label:defaultScript, value:defaultScript}}
           onChange={(v)=>loadScriptMetadata(v.value)} />
       </label>
-      <br /> {/*Why do I need to line break, forms should do it normally... */}
       <label>
         Content of input.json:
         <br />
         <textarea name="inputFile" className="inputFile" type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}' 
-          onInput={onInputTextArea}></textarea>
+          onInput={(e)=>resize(e.target)}></textarea>
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
