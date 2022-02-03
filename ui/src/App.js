@@ -82,6 +82,7 @@ function Form(props) {
     var callback = function (error, data, response) {
       if(error)
       {
+        if(!data) data = {}
         data.error = error.toString()
       }
 
