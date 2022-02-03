@@ -17,8 +17,6 @@ To run:
 4. docker compose up -d
 5. In browser:
     - http://localhost/ shows a basic UI
-    - http://localhost/script/HelloWorld.R runs the specified R script.
-    - http://localhost:8081/docs shows the script server's API documentation
 6. docker compose down
 
 Script lifecycle:
