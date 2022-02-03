@@ -16,15 +16,15 @@ const RenderContext = React.createContext();
 
 function App() {
   const [requestState, setRequestState] = useState(RequestState.idle);
-  const [renderers, setRenderers] = useState([]);
+  const [resultData, setResultData] = useState();
 
   return (
     <>
       <header className="App-header">
         <h1>BON in a Box v2 pre-pre-pre alpha</h1>
       </header>
-      <Form setRequestState={setRequestState} setRenderers={setRenderers} />
-      <Result requestState={requestState} renderers={renderers} />
+      <Form setResultData={setResultData} setRequestState={setRequestState} />
+      <Result resultData={resultData} requestState={requestState} />
     </>
   );
 }
@@ -39,14 +39,11 @@ function Form(props) {
   function loadScriptMetadata(choice) {
     // TODO: cancel previous pending request?
     props.setRequestState(RequestState.done)
-    props.setRenderers(null);
+    props.setResultData(null)
 
     var api = new BonInABoxScriptService.DefaultApi()
     var callback = function (error, data, response) {
-      props.setRenderers([
-        error && new RenderedErrorFactory(error.toString()),
-        data && new ScriptInfoFactory(data)
-      ])
+      props.setResultData({error:error, metadata:data})
 
       // Generate example input.json
       let inputExamples = {}
@@ -79,24 +76,18 @@ function Form(props) {
 
   const runScript = () => {
     props.setRequestState(RequestState.working)
+    props.setResultData(null)
 
     var api = new BonInABoxScriptService.DefaultApi()
     var callback = function (error, data, response) {
       if(error)
       {
-        props.setRenderers([new RenderedErrorFactory(error.toString())]);
-      }
-      else if (data) {
-        props.setRenderers([
-          new RenderedFilesFactory(data.files),
-          new RenderedLogsFactory(data.logs)
-        ])
+        data.error = error.toString()
       }
 
+      props.setResultData(data)
       props.setRequestState(RequestState.done)
     };
-
-    props.setRenderers(null); // make sure we don't mix with last request
 
     let opts = {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
@@ -160,7 +151,7 @@ function Form(props) {
 
 function Result(props) {
   const [activeRenderer, setActiveRenderer] = useState([]);
-
+  
   function toggleVisibility(componentId) {
     setActiveRenderer(activeRenderer === componentId ? null : componentId)
   }
@@ -175,14 +166,16 @@ function Result(props) {
       </div>
     );
 
-  if(props.renderers && props.renderers.length > 0)
+  let data = props.resultData
+  if(data)
   {
     return (
       <div>
         <RenderContext.Provider value={{active:activeRenderer}}>
-        {props.renderers.map(factory => {
-            return factory == null ? null : factory.createComponent(activeRenderer, toggleVisibility)
-        })}
+          <RenderedError key="error" error={data.error}  />
+          {data.metadata && <pre key="metadata">{data.metadata}</pre>}
+          <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
+          <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
         </RenderContext.Provider>
       </div>
     )
@@ -221,26 +214,6 @@ function OutputTitle (props) {
   </div>
 }
 
-class ScriptInfoFactory {
-  constructor(metadata) {
-    this.metadata = metadata
-  }
-
-  createComponent(/*activeRenderer, toggleVisibility*/) {
-      return <pre key="info">{this.metadata}</pre>
-  }
-}
-
-class RenderedFilesFactory {
-  constructor(files) {
-    this.files = files
-  }
-
-  createComponent(activeRenderer, toggleVisibility) {
-      return <RenderedFiles key="files" files={this.files} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
-  }
-}
-
 function RenderedFiles(props) {
   const renderContext = useContext(RenderContext)
 
@@ -272,16 +245,6 @@ function RenderedFiles(props) {
   }
 }
 
-class RenderedLogsFactory {
-  constructor(logs) {
-    this.logs = logs
-  }
-
-  createComponent(activeRenderer, toggleVisibility) {
-      return <RenderedLogs key="logs" logs={this.logs} activeRenderer={activeRenderer} toggleVisibility={toggleVisibility} />
-  }
-}
-
 function RenderedLogs(props) {
   const renderContext = useContext(RenderContext)
   const myId="logs"
@@ -293,16 +256,6 @@ function RenderedLogs(props) {
     </div>)
   }
   return null
-}
-
-class RenderedErrorFactory {
-  constructor(error) {
-    this.error = error
-  }
-
-  createComponent(/*toggleVisibility always visible*/) {
-      return <RenderedError key="error" error={this.error}  />
-  }
 }
 
 function RenderedError(props) {
