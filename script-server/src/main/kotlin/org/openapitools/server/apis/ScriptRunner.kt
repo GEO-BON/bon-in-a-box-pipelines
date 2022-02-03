@@ -50,19 +50,11 @@ fun Route.ScriptRunner(logger:Logger) {
     post<Paths.runScript> { parameters ->
         val inputFileContent = call.receive<String>()
         logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
-        
-        // TEMP code untill /example API is added
-        val scriptFile = try {
-            getScriptFromYAML(File(scriptRoot, parameters.scriptPath))
-        } catch (e:Exception) {
-            call.respond(HttpStatusCode.NotFound, ScriptRunResult("Script not found"))
-            logger.warn("Error 404: Paths.runScript ${parameters.scriptPath}")
-            return@post
-        }
-        
+
+        val scriptFile = File(scriptRoot, parameters.scriptPath)
         if(scriptFile.exists()) {
             // Create the ouput folder based for this invocation
-            val outputFolder = getOutputFolder(scriptFile, inputFileContent)
+            val outputFolder = getOutputFolder(parameters.scriptPath, inputFileContent)
             outputFolder.mkdirs()
             logger.trace("Paths.runScript outputting to $outputFolder")
 
@@ -162,22 +154,4 @@ fun getOutputFolder(scriptPath: kotlin.String, body: kotlin.String?):File {
     return File(scriptOutputFolder, 
         if(body == null) "no_params" else body.toMD5()
     )
-}
-
-/**
- * 
- * @param {File} yamlFile
- * @returns the script file reference in this YAML.
- */
-fun getScriptFromYAML(yamlFile:File):File {
-    val scriptTag = "script:"
-    val scanner = Scanner(yamlFile)
-
-    while (scanner.hasNextLine()) {
-        val line = scanner.nextLine()
-        if(line.startsWith(scriptTag)) {
-            return File(yamlFile.parent, line.substring(scriptTag.length).trim())
-        }
-    }
-    throw Exception("YML doesn't contain script:")
 }
