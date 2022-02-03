@@ -32,6 +32,7 @@ function Form(props) {
 
   const defaultScript = "HelloWorld.yml"
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
+  const [scriptMetadata, setScriptMetadata] = useState({});
 
   function loadScriptMetadata(choice) {
     // TODO: cancel previous pending request?
@@ -47,9 +48,9 @@ function Form(props) {
 
       // Generate example input.json
       let inputExamples = {}
-      const doc = yaml.load(data)
-      if (doc.inputs) {
-        doc.inputs.forEach((input) => {
+      const parsedData = yaml.load(data)
+      if (parsedData.inputs) {
+        parsedData.inputs.forEach((input) => {
           const key = Object.keys(input)[0]
           if (key) {
             const example = input[key].example
@@ -61,6 +62,8 @@ function Form(props) {
       // Update input field
       formRef.current.elements["inputFile"].value = JSON.stringify(inputExamples, null, 2)
       resize(formRef.current.elements["inputFile"])
+
+      setScriptMetadata(parsedData)
     }
 
     api.getScriptInfo(choice, callback);
@@ -96,7 +99,7 @@ function Form(props) {
     let opts = {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };
-    api.runScript(formRef.current.elements["scriptFile"].value, opts, callback);
+    api.runScript(scriptMetadata.script, opts, callback);
   }
 
   /**
