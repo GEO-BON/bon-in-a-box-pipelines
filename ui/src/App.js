@@ -3,7 +3,7 @@ import spinner from './spinner.svg';
 import './App.css';
 import RenderedMap from './RenderedMap'
 
-import React, {useRef, useEffect} from 'react'
+import React, {useRef, useEffect, useContext} from 'react'
 
 import Select from 'react-select';
 
@@ -11,10 +11,12 @@ const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 const yaml = require('js-yaml');
 
+
+const RenderContext = React.createContext();
+
 function App() {
   const [requestState, setRequestState] = useState(RequestState.idle);
   const [renderers, setRenderers] = useState([]);
-  const [activeRenderer, setActiveRenderer] = useState([]);
 
   return (
     <>
@@ -22,7 +24,7 @@ function App() {
         <h1>BON in a Box v2 pre-pre-pre alpha</h1>
       </header>
       <Form setRequestState={setRequestState} setRenderers={setRenderers} />
-      <Result requestState={requestState} renderers={renderers} activeRenderer={activeRenderer} setActiveRenderer={setActiveRenderer} />
+      <Result requestState={requestState} renderers={renderers} />
     </>
   );
 }
@@ -157,8 +159,10 @@ function Form(props) {
 }
 
 function Result(props) {
+  const [activeRenderer, setActiveRenderer] = useState([]);
+
   function toggleVisibility(componentId) {
-    props.setActiveRenderer(props.activeRenderer === componentId ? null : componentId)
+    setActiveRenderer(activeRenderer === componentId ? null : componentId)
   }
 
   if(props.requestState === RequestState.idle)
@@ -175,9 +179,11 @@ function Result(props) {
   {
     return (
       <div>
+        <RenderContext.Provider value={{active:activeRenderer}}>
         {props.renderers.map(factory => {
-            return factory == null ? null : factory.createComponent(props.activeRenderer, toggleVisibility)
+            return factory == null ? null : factory.createComponent(activeRenderer, toggleVisibility)
         })}
+        </RenderContext.Provider>
       </div>
     )
   }
@@ -191,7 +197,8 @@ function isRelativeLink(value)
 }
 
 function OutputTitle (props) {
-  let active = props.activeRenderer === props.componentId
+  const renderContext = useContext(RenderContext)
+  let active = renderContext.active === props.componentId
   const titleRef = useRef(null);
 
   useEffect(() => {
@@ -235,14 +242,16 @@ class RenderedFilesFactory {
 }
 
 function RenderedFiles(props) {
+  const renderContext = useContext(RenderContext)
+
   if(props.files) {
     return Object.entries(props.files).map(entry => {
       const [key, value] = entry;
 
       return (
         <div key={key}>
-          <OutputTitle title={key} componentId={key} inline={value} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
-          {props.activeRenderer === key && (
+          <OutputTitle title={key} componentId={key} inline={value} toggleVisibility={props.toggleVisibility} />
+          {renderContext.active === key && (
             isRelativeLink(value) ? (
             // Match for tiff, TIFF, tif or TIF extensions
             value.search(/.tiff?$/i) !== -1 ? (
@@ -274,12 +283,13 @@ class RenderedLogsFactory {
 }
 
 function RenderedLogs(props) {
-  let myId="logs"
+  const renderContext = useContext(RenderContext)
+  const myId="logs"
 
   if (props.logs) {
     return (<div className="logs">
-      <OutputTitle title="Logs" componentId={myId} activeRenderer={props.activeRenderer} toggleVisibility={props.toggleVisibility} />
-      {props.activeRenderer === myId && <pre>{props.logs}</pre>}
+      <OutputTitle title="Logs" componentId={myId} toggleVisibility={props.toggleVisibility} />
+      {renderContext.active === myId && <pre>{props.logs}</pre>}
     </div>)
   }
   return null
