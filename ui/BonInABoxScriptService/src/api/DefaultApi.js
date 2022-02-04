@@ -44,7 +44,7 @@ export default class DefaultApi {
 
     /**
      * Get metadata about this script
-     * @param {String} scriptPath Where to find the script in ./script folder
+     * @param {String} scriptPath Where to find the script in ./script folder.
      * @param {module:api/DefaultApi~getScriptInfoCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link String}
      */

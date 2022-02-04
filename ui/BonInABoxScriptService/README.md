@@ -102,7 +102,7 @@ var BonInABoxScriptService = require('bon_in_a_box_script_service');
 
 
 var api = new BonInABoxScriptService.DefaultApi()
-var scriptPath = "scriptPath_example"; // {String} Where to find the script in ./script folder
+var scriptPath = "scriptPath_example"; // {String} Where to find the script in ./script folder.
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);

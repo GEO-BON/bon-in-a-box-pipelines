@@ -79,10 +79,11 @@ function Form(props) {
 
     var api = new BonInABoxScriptService.DefaultApi()
     var callback = function (error, data, response) {
-      if(error)
-      {
-        if(!data) data = {}
-        data.error = error.toString()
+      if (data && data.error) {
+        data.errorText = "An error occured. Please check logs for details."
+      } else if (error) {
+        if (!data) data = {}
+        data.errorText = error.toString()
       }
 
       props.setResultData(data)
@@ -172,7 +173,7 @@ function Result(props) {
     return (
       <div>
         <RenderContext.Provider value={{data:props.data, metadata:props.metadata, active:activeRenderer}}>
-          <RenderedError key="error" error={data.error}  />
+          <RenderedError key="error" error={data.errorText}  />
           {data.rawMetadata && <pre key="metadata">{data.rawMetadata.toString()}</pre>}
           <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
           <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />

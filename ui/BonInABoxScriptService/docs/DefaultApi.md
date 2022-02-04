@@ -22,7 +22,7 @@ Get metadata about this script
 import BonInABoxScriptService from 'bon_in_a_box_script_service';
 
 let apiInstance = new BonInABoxScriptService.DefaultApi();
-let scriptPath = "scriptPath_example"; // String | Where to find the script in ./script folder
+let scriptPath = "scriptPath_example"; // String | Where to find the script in ./script folder.
 apiInstance.getScriptInfo(scriptPath, (error, data, response) => {
   if (error) {
     console.error(error);
@@ -37,7 +37,7 @@ apiInstance.getScriptInfo(scriptPath, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **scriptPath** | **String**| Where to find the script in ./script folder | 
+ **scriptPath** | **String**| Where to find the script in ./script folder. | 
 
 ### Return type
 
