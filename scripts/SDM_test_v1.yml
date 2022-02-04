@@ -4,11 +4,11 @@ outputs:
   prediction:
     label: Prediction
     description: Sample prediction
-    type: geotiff
+    type: image/geotiff
     example: 
   uncertainty:
     label: Uncertainty
     description: Sample uncertainty 
-    type: geotiff
+    type: image/geotiff
     example: 
 description: "Running an arbitrary SDM, don't look too much at the results."
