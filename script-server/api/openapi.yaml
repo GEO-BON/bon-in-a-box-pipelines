@@ -95,6 +95,8 @@ components:
       properties:
         logs:
           type: string
+        error:
+          type: boolean
         files:
           type: object
           additionalProperties:

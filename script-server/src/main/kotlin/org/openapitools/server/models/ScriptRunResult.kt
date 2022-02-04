@@ -15,10 +15,12 @@ package org.openapitools.server.models
 /**
  * 
  * @param logs 
+ * @param error 
  * @param files 
  */
 data class ScriptRunResult(
     val logs: kotlin.String? = null,
+    val error: kotlin.Boolean? = null,
     val files: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
 ) 
 
