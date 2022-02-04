@@ -189,10 +189,23 @@ function isRelativeLink(value)
   return value.startsWith('/')
 }
 
-function OutputTitle (props) {
+function FoldableOutput (props) {
   const renderContext = useContext(RenderContext)
   let active = renderContext.active === props.componentId
   const titleRef = useRef(null);
+
+  let title = props.title
+  let description = null
+  if(renderContext.metadata 
+    && renderContext.metadata.outputs 
+    && renderContext.metadata.outputs[props.title]) {
+      let output = renderContext.metadata.outputs[props.title]
+      if(output.label) 
+       title = output.label
+
+      if(output.description)
+        description = output.description
+  }
 
   useEffect(() => {
     if(active) {
@@ -200,55 +213,49 @@ function OutputTitle (props) {
     }
   }, [active]);
 
-  function getTitleFromMetadata() {
-    if(renderContext.metadata 
-      && renderContext.metadata.outputs 
-      && renderContext.metadata.outputs[props.title]
-      && renderContext.metadata.outputs[props.title].label) {
-        return renderContext.metadata.outputs[props.title].label
-    }
-    return props.title
-  }
+  return <>
+    <div className="outputTitle">
+      <h3 ref={titleRef} onClick={() => props.toggleVisibility(props.componentId)}>
+        {active ? <b>–</b> : <b>+</b>} {title}
+      </h3>
+      {props.inline && (
+        isRelativeLink(props.inline) ? (
+          active && props.inline && <a href={props.inline} target="_blank" rel="noreferrer">{props.inline}</a>
+        ) : (
+          !active && props.inline
+        )
+      )}
 
-  return <div className="outputTitle">
-    <h3 ref={titleRef}  onClick={() => props.toggleVisibility(props.componentId)}>
-      {active ? <b>–</b> : <b>+</b>} {getTitleFromMetadata()}
-    </h3>
-    {props.inline && (
-      isRelativeLink(props.inline) ? (
-        active && props.inline && <a href={props.inline} target="_blank" rel="noreferrer">{props.inline}</a>
-      ) : (
-        !active && props.inline
-      )
-    )}
-  </div>
+    </div>
+    {active &&
+      <div className="outputContent">
+        {description && <p>{description}</p>}
+        {props.children}
+      </div>
+    }
+  </>
 }
 
 function RenderedFiles(props) {
-  const renderContext = useContext(RenderContext)
 
   if(props.files) {
     return Object.entries(props.files).map(entry => {
       const [key, value] = entry;
 
       return (
-        <div key={key}>
-          <OutputTitle title={key} componentId={key} inline={value} toggleVisibility={props.toggleVisibility} />
-          {renderContext.active === key && (
-            isRelativeLink(value) ? (
+        <FoldableOutput key={key} title={key} componentId={key} inline={value} toggleVisibility={props.toggleVisibility}>
+          {isRelativeLink(value) ? (
             // Match for tiff, TIFF, tif or TIF extensions
             value.search(/.tiff?$/i) !== -1 ? (
               <RenderedMap tiff={value} />
             ) : (
               <img src={value} alt={key} />
-              )
-            ) : ( // Plain text or numeric value
-              <p>{value}</p>
             )
+          ) : ( // Plain text or numeric value
+            <p>{value}</p>
           )}
-        </div>
+        </FoldableOutput>
       )
-
     });
   } else {
     return null
@@ -256,14 +263,14 @@ function RenderedFiles(props) {
 }
 
 function RenderedLogs(props) {
-  const renderContext = useContext(RenderContext)
-  const myId="logs"
+  const myId = "logs"
 
   if (props.logs) {
-    return (<div className="logs">
-      <OutputTitle title="Logs" componentId={myId} toggleVisibility={props.toggleVisibility} />
-      {renderContext.active === myId && <pre>{props.logs}</pre>}
-    </div>)
+    return (
+      <FoldableOutput title="Logs" componentId={myId} toggleVisibility={props.toggleVisibility}>
+        <pre>{props.logs}</pre>
+      </FoldableOutput>
+    )
   }
   return null
 }
