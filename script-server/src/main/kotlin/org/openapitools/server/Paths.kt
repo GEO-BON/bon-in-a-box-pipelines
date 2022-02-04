@@ -19,7 +19,7 @@ object Paths {
     /**
      * Get metadata about this script
      * 
-     * @param scriptPath Where to find the script in ./script folder 
+     * @param scriptPath Where to find the script in ./script folder. 
      */
     @Location("/script/{scriptPath}/info") class getScriptInfo(val scriptPath: kotlin.String)
 

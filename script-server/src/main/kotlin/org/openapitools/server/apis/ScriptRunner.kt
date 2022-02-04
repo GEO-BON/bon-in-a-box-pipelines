@@ -59,10 +59,17 @@ fun Route.ScriptRunner(logger:Logger) {
             logger.trace("Paths.runScript outputting to $outputFolder")
 
             // Run the script
-            var code = HttpStatusCode.OK
+            var error = false
             var logs:String = ""
             var outputs:Map<String, String>? = null
+
+            val resultFile = File(outputFolder, "output.json")
             runCatching {
+                // Remove previous run result
+                if(resultFile.delete()) {
+                    logger.trace("Previous results deleted")
+                }
+
                 // Create input.json
                 val inputFile=File(outputFolder, "input.json")
                 inputFile.writeText(inputFileContent)
@@ -86,38 +93,36 @@ fun Route.ScriptRunner(logger:Logger) {
 
                         process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
                     }
-            }.onSuccess { process ->
-                try {
-                    if(process.exitValue() == 0) { // completed with success
-                        val resultFile = File(outputFolder, "output.json")
-                        if(resultFile.exists()) {
-                            val type = object : TypeToken<Map<String, String>>() {}.type
-                            outputs = gson.fromJson<Map<String, String>>(resultFile.readText(), type)
-                            logger.trace(outputs.toString())
-                        } else {
-                            code = HttpStatusCode.InternalServerError
-                            logs += "Error: output.json file not found"
-                        }
-                    } else { // completed with failure
-                        code = HttpStatusCode.InternalServerError
+            }.onSuccess { process -> // completed, with success or failure
+                try { 
+                    if(process.exitValue() != 0) {
+                        error = true
+                        logs += "Error: script returned non-zero value\n"
+                    }
+                    
+                    if(resultFile.exists()) {
+                        val type = object : TypeToken<Map<String, String>>() {}.type
+                        outputs = gson.fromJson<Map<String, String>>(resultFile.readText(), type)
+                        logger.trace(outputs.toString())
+                    } else {
+                        error = true
+                        logs += "Error: output.json file not found\n"
                     }
                 } catch (ex:IllegalThreadStateException) {
-                    code = HttpStatusCode.RequestTimeout
+                    error = true
                     logs += "TIMEOUT occured\n"
                     process.destroy()
                 }
                 
             }.onFailure { ex ->
-                code = HttpStatusCode.InternalServerError
-                logs = ex.stackTraceToString()
-                logger.warn(logs)
+                logger.warn(ex.stackTraceToString())
+                call.respond(HttpStatusCode.InternalServerError)
+                return@post
             }
             
             // Format log output
             if(logs.isNotEmpty()) logs = "Full logs: $logs"
-            if(code != HttpStatusCode.OK) logs = "An error occured\n\n$logs"
-            
-            call.respond(code, ScriptRunResult(logs, outputs))
+            call.respond(HttpStatusCode.OK, ScriptRunResult(logs, error, outputs))
         }
         else // Script not found
         {
