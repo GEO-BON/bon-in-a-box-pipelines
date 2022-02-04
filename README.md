@@ -24,3 +24,12 @@ Script lifecycle:
 2. Script reads input.json to get execution parameters (ex. species, area, data source, etc.)
 3. Script performs its task
 4. Script generates output.json, containing links to result files, or native values (int, string, etc.)
+
+# Input and output types
+- MIME types
+  - image/tiff;application=geotiff
+  - image/jpg
+  - text/plain
+  - etc.
+- int
+- float

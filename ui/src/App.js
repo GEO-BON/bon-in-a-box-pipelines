@@ -237,6 +237,51 @@ function FoldableOutput (props) {
 }
 
 function RenderedFiles(props) {
+  const metadata = useContext(RenderContext).metadata
+
+  function getMimeType(key) {
+    if (metadata.outputs
+      && metadata.outputs[key]
+      && metadata.outputs[key].type) {
+      return metadata.outputs[key].type
+    }
+    return "unknown"
+  }
+
+  function renderWithMime(key, content) {
+    let [type, subtype] = getMimeType(key).split('/')
+    switch (type) {
+      case "image":
+        // Match many MIME type possibilities for geotiffs
+        // Official IANA format: image/tiff; application=geotiff
+        // Others out there: image/geotiff, image/tiff;subtype=geotiff, image/geo+tiff
+        // See https://github.com/opengeospatial/geotiff/issues/34
+        // Plus covering a common typo when second F omitted
+        if (subtype && subtype.includes("tif") && subtype.includes("geo")) {
+          return <RenderedMap tiff={content} />
+        }
+        return <img src={content} alt={key} />
+
+      case "unknown":
+        return <>
+          <p className="error">Missing mime type in output description</p>
+          {// Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
+            isRelativeLink(content) ? (
+              // Match for tiff, TIFF, tif or TIF extensions
+              content.search(/.tiff?$/i) !== -1 ? (
+                <RenderedMap tiff={content} />
+              ) : (
+                <img src={content} alt={key} />
+              )
+            ) : ( // Plain text or numeric value
+              <p>{content}</p>
+            )}
+        </>
+
+      default:
+        return <p>{content}</p>
+    }
+  }
 
   if(props.files) {
     return Object.entries(props.files).map(entry => {
@@ -244,16 +289,7 @@ function RenderedFiles(props) {
 
       return (
         <FoldableOutput key={key} title={key} componentId={key} inline={value} toggleVisibility={props.toggleVisibility}>
-          {isRelativeLink(value) ? (
-            // Match for tiff, TIFF, tif or TIF extensions
-            value.search(/.tiff?$/i) !== -1 ? (
-              <RenderedMap tiff={value} />
-            ) : (
-              <img src={value} alt={key} />
-            )
-          ) : ( // Plain text or numeric value
-            <p>{value}</p>
-          )}
+          {renderWithMime(key, value)}
         </FoldableOutput>
       )
     });
@@ -277,9 +313,7 @@ function RenderedLogs(props) {
 
 function RenderedError(props) {
   if (props.error) {
-    return (<div className="error">
-      <p>{props.error}</p>
-    </div>)
+    return <p className="error">{props.error}</p>
   }
   return null
 }

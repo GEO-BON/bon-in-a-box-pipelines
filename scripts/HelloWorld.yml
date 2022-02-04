@@ -2,7 +2,7 @@ script: HelloWorld.R
 inputs:
   occurence:
     description: Occurrence data, some description here
-    type: geotiff
+    type: image/tiff;application=geotiff
     example: http://something-compatible.tiff
   intensity:
     description: Intensity of bla bla, from [1,10]
@@ -17,17 +17,17 @@ outputs:
   heat_map:
     label: Heat map
     description: Some heat map that shows bla bla...
-    type: geotiff
+    type: image/tiff;application=geotiff
     example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
   other_map:
     label: Other map
     description: Some other map that shows bla bla...
-    type: geotiff
+    type: image/geotiff
     example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
   some_picture:
     label: Some picture
     description: Some picture/graph/etc that shows bla bla...
-    type: jpg
+    type: image/jpg
     example: /path/to/some/example.jpg
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
