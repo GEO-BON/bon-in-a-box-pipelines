@@ -17,14 +17,15 @@ const RenderContext = React.createContext();
 function App() {
   const [requestState, setRequestState] = useState(RequestState.idle);
   const [resultData, setResultData] = useState();
+  const [scriptMetadata, setScriptMetadata] = useState({});
 
   return (
     <>
       <header className="App-header">
         <h1>BON in a Box v2 pre-pre-pre alpha</h1>
       </header>
-      <Form setResultData={setResultData} setRequestState={setRequestState} />
-      <Result resultData={resultData} requestState={requestState} />
+      <Form setResultData={setResultData} setRequestState={setRequestState} scriptMetadata={scriptMetadata} setScriptMetadata={setScriptMetadata} />
+      <Result data={resultData} metadata={scriptMetadata} requestState={requestState} />
     </>
   );
 }
@@ -34,7 +35,6 @@ function Form(props) {
 
   const defaultScript = "HelloWorld.yml"
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
-  const [scriptMetadata, setScriptMetadata] = useState({});
 
   function loadScriptMetadata(choice) {
     // TODO: cancel previous pending request?
@@ -43,17 +43,15 @@ function Form(props) {
 
     var api = new BonInABoxScriptService.DefaultApi()
     var callback = function (error, data, response) {
-      props.setResultData({error:error, metadata:data})
-
       // Generate example input.json
       let inputExamples = {}
       const parsedData = yaml.load(data)
       if (parsedData.inputs) {
-        parsedData.inputs.forEach((input) => {
-          const key = Object.keys(input)[0]
-          if (key) {
-            const example = input[key].example
-            inputExamples[key] = example ? example : "..."
+        Object.keys(parsedData.inputs).forEach((inputKey) => {
+          let input = parsedData.inputs[inputKey]
+          if (input) {
+            const example = input.example
+            inputExamples[inputKey] = example ? example : "..."
           }
         })
       }
@@ -62,7 +60,8 @@ function Form(props) {
       formRef.current.elements["inputFile"].value = JSON.stringify(inputExamples, null, 2)
       resize(formRef.current.elements["inputFile"])
 
-      setScriptMetadata(parsedData)
+      props.setScriptMetadata(parsedData)
+      props.setResultData({error:error, rawMetadata:data})
     }
 
     api.getScriptInfo(choice, callback);
@@ -93,7 +92,7 @@ function Form(props) {
     let opts = {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };
-    api.runScript(scriptMetadata.script, opts, callback);
+    api.runScript(props.scriptMetadata.script, opts, callback);
   }
 
   /**
@@ -135,14 +134,14 @@ function Form(props) {
       <label>
         Script file:
         <br />
-        <Select name="scriptFile" className="blackText" options={scriptFileOptions} defaultValue={{label:defaultScript, value:defaultScript}}
-          onChange={(v)=>loadScriptMetadata(v.value)} />
+        <Select name="scriptFile" className="blackText" options={scriptFileOptions} defaultValue={{ label: defaultScript, value: defaultScript }}
+          onChange={(v) => loadScriptMetadata(v.value)} />
       </label>
       <label>
         Content of input.json:
         <br />
-        <textarea name="inputFile" className="inputFile" type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}' 
-          onInput={(e)=>resize(e.target)}></textarea>
+        <textarea name="inputFile" className="inputFile" type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}'
+          onInput={(e) => resize(e.target)}></textarea>
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
@@ -167,14 +166,14 @@ function Result(props) {
       </div>
     );
 
-  let data = props.resultData
+  let data = props.data
   if(data)
   {
     return (
       <div>
-        <RenderContext.Provider value={{active:activeRenderer}}>
+        <RenderContext.Provider value={{data:props.data, metadata:props.metadata, active:activeRenderer}}>
           <RenderedError key="error" error={data.error}  />
-          {data.metadata && <pre key="metadata">{data.metadata}</pre>}
+          {data.rawMetadata && <pre key="metadata">{data.rawMetadata.toString()}</pre>}
           <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
           <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
         </RenderContext.Provider>
@@ -201,9 +200,19 @@ function OutputTitle (props) {
     }
   }, [active]);
 
+  function getTitleFromMetadata() {
+    if(renderContext.metadata 
+      && renderContext.metadata.outputs 
+      && renderContext.metadata.outputs[props.title]
+      && renderContext.metadata.outputs[props.title].label) {
+        return renderContext.metadata.outputs[props.title].label
+    }
+    return props.title
+  }
+
   return <div className="outputTitle">
     <h3 ref={titleRef}  onClick={() => props.toggleVisibility(props.componentId)}>
-      {active ? <b>–</b> : <b>+</b>} {props.title}
+      {active ? <b>–</b> : <b>+</b>} {getTitleFromMetadata()}
     </h3>
     {props.inline && (
       isRelativeLink(props.inline) ? (
