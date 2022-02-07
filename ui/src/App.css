@@ -43,11 +43,32 @@ a {
   color: #61dafb;
 }
 
-.error {
+.error, .warning {
   background-color: lightgray;
-  color: darkred;
   font-weight: bold;
   white-space: pre;
+  min-height: 1.6em;
+
+  padding-left: 2em;
+  padding-top: 0.4em;
+
+  background-size: 2em 2em;
+  background-repeat: no-repeat;
+}
+
+.error {
+  color: hsl(0, 100%, 27%);
+  background-image: url(img/error.svg);
+}
+
+.warning {
+  color: rgb(0, 0, 0);
+  background-image: url(img/warning.svg);
+}
+
+.outputDescription {
+  font-size: small;
+  font-style: italic;
 }
 
 .map {
@@ -64,6 +85,10 @@ a {
 .outputTitle h3 {
   display: inline-block;
   margin: 0.5em 1em 0.5em 0em;
+}
+
+.outputContent {
+  padding-left: 1em;
 }
 
 .outputContent p {

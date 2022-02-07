@@ -31,7 +31,9 @@ if(!file.exists(example_tiff)) {
 
 ## Outputing result to JSON
 # notice that the warning string is not part of the yml spec, so it cannot be used by other scripts, but will still be displayed.
-output <- list("warning" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long warning it will need to be unfolded to see it all.",
+output <- list("error" = "Some error",
+                "warning" = "Some warning",
+                "text" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long text it will need to be unfolded to see it all.",
                 "number" = input$intensity * 3,
                 "heat_map" = example_tiff, 
                 "other_map" = example_tiff,

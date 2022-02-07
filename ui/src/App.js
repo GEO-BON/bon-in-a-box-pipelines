@@ -1,5 +1,5 @@
 import { useState } from "react";
-import spinner from './spinner.svg';
+import spinner from './img/spinner.svg';
 import './App.css';
 import RenderedMap from './RenderedMap'
 
@@ -78,13 +78,20 @@ function Form(props) {
     props.setResultData(null)
 
     var api = new BonInABoxScriptService.DefaultApi()
-    var callback = function (error, data, response) {
-      if (data && data.error) {
-        data.errorText = "An error occured. Please check logs for details."
-      } else if (error) {
-        if (!data) data = {}
-        data.errorText = error.toString()
+    var callback = function (error, data/*, response*/) {
+      if(error) { // Server / connection errors. Data will be undefined.
+        data = {}
+        data.files = {}
+        data.files.error = error.toString()
+
+      } else if(data && data.error) { // Errors reported by server
+        // Add a preamble if there was not a script-generated error on top
+        if(!data.files.error) {
+          data.files.error = "An error occured. "
+        }
+        data.files.error += "Please check logs for details."
       }
+      // For script-generated errors, nothing to do
 
       props.setResultData(data)
       props.setRequestState(RequestState.done)
@@ -173,7 +180,6 @@ function Result(props) {
     return (
       <div>
         <RenderContext.Provider value={{data:props.data, metadata:props.metadata, active:activeRenderer}}>
-          <RenderedError key="error" error={data.errorText}  />
           {data.rawMetadata && <pre key="metadata">{data.rawMetadata.toString()}</pre>}
           <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
           <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
@@ -230,7 +236,7 @@ function FoldableOutput (props) {
     </div>
     {active &&
       <div className="outputContent">
-        {description && <p>{description}</p>}
+        {description && <p className="outputDescription">{description}</p>}
         {props.children}
       </div>
     }
@@ -287,6 +293,10 @@ function RenderedFiles(props) {
   if(props.files) {
     return Object.entries(props.files).map(entry => {
       const [key, value] = entry;
+
+      if(key == "warning" || key == "error") {
+        return <p className={key}>{value}</p>
+      }
 
       return (
         <FoldableOutput key={key} title={key} componentId={key} inline={value} toggleVisibility={props.toggleVisibility}>
