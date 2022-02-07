@@ -9,6 +9,10 @@ inputs:
     type: int
     example: 3
 outputs:
+  text:
+    label: Text
+    description: We can add plain text
+    type: text/plain
   number:
     label: A number (intensity*3)
     description: blabla, normalized [0,1]

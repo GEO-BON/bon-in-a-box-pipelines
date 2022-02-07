@@ -50,5 +50,8 @@ Each input and output must declare a type, *in lowercase.* The following are acc
   - text/plain
   - etc.
 
+#### Reporting problems
+The output keys `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. Both will be displayed specially in the UI.
+
 ## Pipelines
 Each script becomes a pipeline step.
