@@ -42,8 +42,8 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=in
       
     }
   }
-write.table(data, sprintf("%s/observationGbif.csv", getwd()),
-             append = F, row.names = F, col.names = T, sep = ";")
+#write.table(data, sprintf("%s/observationGbif.csv", getwd()),
+ #            append = F, row.names = F, col.names = T, sep = ";")
  
  #output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
   output <- list("species" = input$species,
