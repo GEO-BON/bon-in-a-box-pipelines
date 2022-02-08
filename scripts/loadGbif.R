@@ -3,16 +3,21 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
+packages <- c("rgbif", "rjson", "raster", "dplyr")
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+## Install required packages
 library("rgbif")
 library("dplyr")
 library("raster")
-
+library("rjson")
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
 
-library("rjson")
+
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
