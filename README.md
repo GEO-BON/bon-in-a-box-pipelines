@@ -47,6 +47,7 @@ Each input and output must declare a type, *in lowercase.* The following are acc
 - MIME types
   - image/tiff;application=geotiff
   - image/jpg
+  - text/csv
   - text/plain
   - etc.
 
