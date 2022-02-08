@@ -48,8 +48,10 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=in
  #output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
   output <- list("species" = input$species,
                   "n.observations" =  nrow(data),
-                  "warning" = warning,
-                  "data" = head(data)) 
+                  "warning" = warning
+                 # ,
+                 # "data" = head(data)
+                  ) 
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
   
