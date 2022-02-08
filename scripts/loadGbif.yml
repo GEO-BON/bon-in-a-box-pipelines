@@ -20,10 +20,15 @@ outputs:
     type: string
     example: "Panthera onca"
   warning:
-     label: species
+     label: warning
      description: We can add plain text
      type: string
      example: "Some warning"
+  data:
+     label: data
+     description: We can add plain text
+     type: string
+     example: data frame
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
