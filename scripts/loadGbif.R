@@ -25,29 +25,31 @@ print(input)
 
 # Loading data from GBIF (https://www.gbif.org/)
 #loadGbifData <- function(species, limit) {
-  
-gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=500) 
+warning <- ""
+gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=input$limit) 
   data <- gbifData$data
   
   if (is.null(data)) {
-    message(sprintf("No observation found for species %s", species))
+    warning <- sprintf("No observation found for species %s", species)
+    data <- data.frame()
   } else {
     data <- data %>% dplyr::select(key, species, decimalLongitude, decimalLatitude, year, month, day, datasetName, basisOfRecord) %>%
       dplyr::rename(id = key, scientific_name = species) %>%
       mutate(created_by = 'GBIF')%>%
       mutate(id = as.double(id))
-    message(sprintf("%s observation loaded", nrow(data)))
-    
-#    if (nrow(data) == limit) {
- #     message("Number of observations equals the limit number. Some observations may be lacking.")
+    if (nrow(data) == limit) {
+      warning <- "Number of observations equals the limit number. Some observations may be lacking."
       
- #   }
+    }
   }
 #  write.table(data, sprintf("%s/observationGbif.csv", getwd()),
 #             append = F, row.names = F, col.names = T, sep = ";")
  
  #output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
-  output <- list("n.observations" =  nrow(data)) 
+  output <- list("species" = input$species,
+                  "n.observations" =  nrow(data),
+                  "warning" = warning,
+                  "data" = head(data)) 
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
   
