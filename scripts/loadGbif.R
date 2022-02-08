@@ -37,7 +37,7 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=in
       dplyr::rename(id = key, scientific_name = species) %>%
       mutate(created_by = 'GBIF')%>%
       mutate(id = as.double(id))
-    if (nrow(data) == limit) {
+    if (nrow(data) == limit$limit) {
       warning <- "Number of observations equals the limit number. Some observations may be lacking."
       
     }
