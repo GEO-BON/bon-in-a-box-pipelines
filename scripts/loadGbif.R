@@ -33,10 +33,10 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=50
       mutate(id = as.double(id))
     message(sprintf("%s observation loaded", nrow(data)))
     
-    if (nrow(data) == limit) {
-      message("Number of observations equals the limit number. Some observations may be lacking.")
+#    if (nrow(data) == limit) {
+ #     message("Number of observations equals the limit number. Some observations may be lacking.")
       
-    }
+ #   }
   }
 #  write.table(data, sprintf("%s/observationGbif.csv", getwd()),
 #             append = F, row.names = F, col.names = T, sep = ";")
