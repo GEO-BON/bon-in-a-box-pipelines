@@ -38,11 +38,11 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=50
       
     }
   }
-  write.table(data, sprintf("%s/observationGbif.csv", getwd()),
-             append = F, row.names = F, col.names = T, sep = ";")
+#  write.table(data, sprintf("%s/observationGbif.csv", getwd()),
+#             append = F, row.names = F, col.names = T, sep = ";")
  
- output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
-  
+ #output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
+  output <- list("n.observations" =  nrow(data)) 
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
   

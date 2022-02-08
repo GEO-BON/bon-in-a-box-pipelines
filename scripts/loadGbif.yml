@@ -6,9 +6,9 @@ inputs:
     example: "Panthera onca"
 outputs:
   observations:
-    label: observations
+    label: n.observations
     description: We can add plain text
-    type: csv
+    type: integer
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
