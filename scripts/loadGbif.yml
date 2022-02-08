@@ -9,6 +9,7 @@ outputs:
     label: n.observations
     description: We can add plain text
     type: int
+    example: 8
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
