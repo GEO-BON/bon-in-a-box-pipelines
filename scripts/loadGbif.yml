@@ -26,9 +26,9 @@ outputs:
      example: "Some warning"
   data:
      label: data
-     description: We can add plain text
-     type: string
-     example: data frame
+     description: table with observations from GBIF
+     type: text/csv
+     example: 
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
