@@ -3,7 +3,7 @@ inputs:
   observations:
     description: Occurrence data, some description here
     type: string
-    example: NULL
+    example: "test"
 outputs:
   n.clean:
     label: n.observations
