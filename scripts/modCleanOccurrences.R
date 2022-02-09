@@ -1,0 +1,89 @@
+
+
+## Install required packages
+packages <- c("rgbif", "rjson", "raster", "dplyr")
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+## Load required packages
+library("terra")
+library("raster")
+library("CoordinateCleaner")
+library("dplyr")
+
+## Load functions
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"))
+
+## Receiving args
+args <- commandArgs(trailingOnly=TRUE)
+outputFolder <- args[1] # Arg 1 is always the output folder
+cat(args, sep = "\n")
+
+
+input <- fromJSON(file=file.path(outputFolder, "input.json"))
+print("Inputs: ")
+print(input)
+
+if (is.null(input$observations)) {
+  observations <- read.table(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"), sep = ";", "header" = T, sep = ";")
+} else {
+  observations <- input$observations
+}
+
+  country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
+  quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
+  
+  subDir <- file.path(".", "bioclim_t")
+  dir.create(subDir, showWarnings = FALSE) 
+  box_extent_bioclim <- WorldClimTiles::tile_name(quebec_boundary, "worldclim") # determine which WorldClim tiles your study area intersects with.
+  
+  clim_tiles <- tile_get(box_extent_bioclim, name =  "worldclim", var="tmean", path = subDir) # for 0.5 arcmin worldclim tiles of 
+  predictors <- tile_merge(clim_tiles)
+
+
+cleaningRes <-  cleanCoordinates(observations,
+                              predictors,
+                                 unique_id = "id",
+                                 lon = "lon", 
+                                 lat = "lat", 
+                              species_col = "scientificName",
+                                 tests = c( 
+                                            "equal",
+                                            "zeros", 
+                                            "duplicates", 
+                                            "same_pixel",
+                                            "centroids",
+                                            "seas", 
+                                            "urban",
+                                            "gbif", 
+                                            "institutions"
+                                 ),
+                                 capitals_rad = 10000,
+                                 centroids_rad = 1000, 
+                                 centroids_detail = "both", 
+                                 inst_rad = 100, 
+                                 range_rad = 0,
+                                 zeros_rad = 0.5,
+                                threshold_env = 0.5,
+                             predictors_env = NULL,
+                                 capitals_ref = NULL, 
+                                 centroids_ref = NULL, 
+                                 inst_ref = NULL, 
+                                 range_ref = NULL,
+                                 seas_ref = NULL, 
+                                 seas_scale = 10,
+                                 additions = NULL,
+                                 urban_ref = NULL, 
+                                 verbose = TRUE)
+ 
+ #output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
+  output <- list(
+                  "n.clean" =  nrow(cleaningRes$clean),
+                  "n.flagged" =  nrow(cleaningRes$flagged)
+                  ) 
+
+jsonData <- toJSON(output, indent=2)
+write(jsonData, file.path(outputFolder,"output.json"))
+
+  
+
