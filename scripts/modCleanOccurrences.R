@@ -24,7 +24,7 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-if (is.null(input$observations)) {
+if (input$observations == "test") {
   observations <- read.table(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"), sep = ";", "header" = T, sep = ";")
 } else {
   observations <- input$observations
