@@ -1,16 +1,19 @@
 
 
 ## Install required packages
-packages <- c("rgbif", "rjson", "raster", "dplyr")
+packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+# WorldClimTiles not in CRAN
+remotes::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
 library("terra")
+library("rjson")
 library("raster")
 library("CoordinateCleaner")
 library("dplyr")
-
+library("WorldClimTiles")
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"))
 
