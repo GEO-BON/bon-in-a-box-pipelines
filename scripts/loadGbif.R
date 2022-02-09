@@ -21,11 +21,7 @@ cat(args, sep = "\n")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
-
-test <- function(a) {
-    return(a)
-  }
-
+source(functionTest.R)
 # Loading data from GBIF (https://www.gbif.org/)
 #loadGbifData <- function(species, limit) {
 warning <- ""
@@ -45,7 +41,7 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=in
       
     }
   }
-  data <- test(a)
+data <- test(data)
 #write.table(data, sprintf("%s/observationGbif.csv", getwd()),
  #            append = F, row.names = F, col.names = T, sep = ";")
  
