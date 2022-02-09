@@ -1,0 +1,6 @@
+# This folder needs to exist or R won't pick it up...
+# https://stackoverflow.com/a/932982/3519951
+# Ignore everything in this directory
+*
+# Except this file
+!.gitignore
