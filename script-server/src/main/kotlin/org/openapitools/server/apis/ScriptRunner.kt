@@ -74,8 +74,19 @@ fun Route.ScriptRunner(logger:Logger) {
                 val inputFile=File(outputFolder, "input.json")
                 inputFile.writeText(inputFileContent)
 
-                var command:List<String> = listOf("Rscript", scriptFile.absolutePath, outputFolder.absolutePath)
-                ProcessBuilder(command)
+                val command = when (scriptFile.extension) {
+                    "jl", "JL" -> "julia"
+                    "r", "R" -> "Rscript"
+                    else -> {
+                        call.respond(
+                                HttpStatusCode.OK,
+                                ScriptRunResult("Unsupported script extension ${scriptFile.extension}", true)
+                        )
+                        return@post
+                    }
+                }
+
+                ProcessBuilder(listOf(command,scriptFile.absolutePath, outputFolder.absolutePath))
                     .directory(scriptRoot)
                     .redirectOutput(ProcessBuilder.Redirect.PIPE)
                     .redirectErrorStream(true) // Merges stderr into stdout
