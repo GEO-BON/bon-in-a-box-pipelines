@@ -21,7 +21,7 @@ cat(args, sep = "\n")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "cleanOccurrence.R", sep = "/"))
+
 # Loading data from GBIF (https://www.gbif.org/)
 #loadGbifData <- function(species, limit) {
 warning <- ""
