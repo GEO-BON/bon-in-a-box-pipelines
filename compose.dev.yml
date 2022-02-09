@@ -39,17 +39,16 @@ services:
     command: gradle run
 
 ## Server to use when making changes to the OpenAPI specification.
-## Also uncomment corresponding section in http-proxy/conf.d/nginx.conf
-  # openapi_swagger:
-  #   container_name: swagger_editor
-  #   image: swaggerapi/swagger-editor
-  #   # Swagger editor will be available at port :80 or https://localhost
-  #   expose:
-  #     - "8080"
-  #   # Swagger File to feed the Swagger Editor
-  #   # Base URL to point for consulting the Swagger https://localhost/swagger
-  #   environment:
-  #     SWAGGER_FILE: openapi.yaml
-  #     BASE_URL: /swagger
-  #   volumes:
-  #     - ./script-server/api/:/app
+  openapi_swagger:
+    container_name: swagger_editor
+    image: swaggerapi/swagger-editor
+    # Swagger editor will be available at port :80 or https://localhost
+    expose:
+      - "8080"
+    # Swagger File to feed the Swagger Editor
+    # Base URL to point for consulting the Swagger https://localhost/swagger
+    environment:
+      SWAGGER_FILE: openapi.yaml
+      BASE_URL: /swagger
+    volumes:
+      - ./script-server/api/:/app
