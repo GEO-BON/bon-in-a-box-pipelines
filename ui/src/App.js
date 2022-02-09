@@ -86,6 +86,7 @@ function Form(props) {
 
       } else if(data && data.error) { // Errors reported by server
         // Add a preamble if there was not a script-generated error on top
+        if(!data.files) data.files = {}
         if(!data.files.error) {
           data.files.error = "An error occured. "
         }
