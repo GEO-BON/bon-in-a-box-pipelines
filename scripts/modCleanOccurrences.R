@@ -1,11 +1,13 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
+packages <- c("devtools", "terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+
 # WorldClimTiles not in CRAN
-remotes::install_github("kapitzas/WorldClimTiles")
+library("devtools")
+devtools::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
 library("terra")
