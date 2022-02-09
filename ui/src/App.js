@@ -295,7 +295,7 @@ function RenderedFiles(props) {
     return Object.entries(props.files).map(entry => {
       const [key, value] = entry;
 
-      if(key == "warning" || key == "error") {
+      if(key === "warning" || key === "error") {
         return <p className={key}>{value}</p>
       }
 
@@ -319,13 +319,6 @@ function RenderedLogs(props) {
         <pre>{props.logs}</pre>
       </FoldableOutput>
     )
-  }
-  return null
-}
-
-function RenderedError(props) {
-  if (props.error) {
-    return <p className="error">{props.error}</p>
   }
   return null
 }
