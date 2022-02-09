@@ -22,6 +22,9 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
+test <- function(a) {
+    return(a)
+  }
 
 # Loading data from GBIF (https://www.gbif.org/)
 #loadGbifData <- function(species, limit) {
@@ -56,6 +59,3 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=in
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
   
-  test <- function(a) {
-    return(a)
-  }
