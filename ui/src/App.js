@@ -301,7 +301,7 @@ function RenderedFiles(props) {
       const [key, value] = entry;
 
       if(key === "warning" || key === "error") {
-        return value && <p className={key}>{value}</p>
+        return value && <p key={key} className={key}>{value}</p>
       }
 
       return (
