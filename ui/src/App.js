@@ -6,6 +6,7 @@ import RenderedMap from './RenderedMap'
 import React, {useRef, useEffect, useContext} from 'react'
 
 import Select from 'react-select';
+import RenderedCSV from './csv/RenderedCSV'
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
@@ -270,6 +271,10 @@ function RenderedFiles(props) {
         }
         return <img src={content} alt={key} />
 
+      case "text":
+        if(subtype === "csv") return <RenderedCSV url={content} csvDelimiter="," />
+        else return <p>{content}</p>
+        
       case "unknown":
         return <>
           <p className="error">Missing mime type in output description</p>
