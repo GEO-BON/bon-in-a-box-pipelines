@@ -1,4 +1,4 @@
-script: HelloJulia.jl
+script: HelloWorld>HelloJulia.jl
 inputs:
   some_int:
     description: An int
