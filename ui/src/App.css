@@ -95,6 +95,16 @@ a {
   margin-top:0px;
 }
 
+table { 
+  border-collapse: collapse;
+  margin-bottom: 0.5em;
+}
+
+th, td {
+  border: 1px solid whitesmoke;
+  padding: 3px 5px;
+}
+
 .inputFile {
   overflow: hidden;
   white-space: pre; /*don't break horizontal lines in two*/

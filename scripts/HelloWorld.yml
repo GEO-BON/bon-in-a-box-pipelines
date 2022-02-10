@@ -23,11 +23,11 @@ outputs:
     description: Some heat map that shows bla bla...
     type: image/tiff;application=geotiff
     example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
-  other_map:
-    label: Other map
-    description: Some other map that shows bla bla...
-    type: image/geotiff
-    example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
+  some_data:
+    label: Some CSV data
+    description: This CSV data is rendered as an HTML table when unfolded. If you do not unfold, it is not loaded at all... Note that only the first kilobyte of the file is retrieved.
+    type: text/csv
+    example: /output/.../some_data.csv
   some_picture:
     label: Some picture
     description: Some picture/graph/etc that shows bla bla...
