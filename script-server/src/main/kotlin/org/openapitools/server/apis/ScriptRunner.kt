@@ -113,8 +113,18 @@ fun Route.ScriptRunner(logger:Logger) {
                     
                     if(resultFile.exists()) {
                         val type = object : TypeToken<Map<String, String>>() {}.type
-                        outputs = gson.fromJson<Map<String, String>>(resultFile.readText(), type)
-                        logger.trace(outputs.toString())
+                        val result = resultFile.readText()
+                        logger.trace(result)
+                        try {
+                            outputs = gson.fromJson<Map<String, String>>(result, type)
+                        } catch (e:Exception) {
+                            error = true
+                            logs += e.message + "\n"
+                            logs += "Error: Malformed JSON file.\n"
+                            logs += "Make sure complex results are saved in a separate file (csv, geojson, etc.).\n"
+                            logs += "Content of output.json:\n"
+                            logs += result
+                        }
                     } else {
                         error = true
                         logs += "Error: output.json file not found\n"
