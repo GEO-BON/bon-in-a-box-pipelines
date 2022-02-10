@@ -47,7 +47,7 @@ function Form(props) {
       // Generate example input.json
       let inputExamples = {}
       const parsedData = yaml.load(data)
-      if (parsedData.inputs) {
+      if (parsedData && parsedData.inputs) {
         Object.keys(parsedData.inputs).forEach((inputKey) => {
           let input = parsedData.inputs[inputKey]
           if (input) {
