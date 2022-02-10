@@ -23,7 +23,6 @@ print("Inputs: ")
 print(input)
 
 # Loading data from GBIF (https://www.gbif.org/)
-#loadGbifData <- function(species, limit) {
 warning <- ""
 gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=input$limit) 
   data <- gbifData$data
@@ -48,9 +47,8 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=in
  #output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
   output <- list("species" = input$species,
                   "n.observations" =  nrow(data),
-                  "warning" = warning
-                  #,
-                 # "data" = head(data)
+                  "warning" = warning,
+                  "data" = data
                   ) 
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
