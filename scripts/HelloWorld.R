@@ -28,13 +28,23 @@ if(!file.exists(example_tiff)) {
     download.file("https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif", example_tiff, "auto")
 }
 
-some_data = file.path(outputFolder, "some_data.csv")
+some_csv_data = file.path(outputFolder, "some_data.csv")
 write("Model,mpg,cyl,disp,hp,drat,wt,qsec,vs,am,gear,carb
 Mazda RX4,21,6,160,110,3.9,2.62,16.46,0,1,4,4
 Mazda RX4 Wag,21,6,160,110,3.9,2.875,17.02,0,1,4,4
 Datsun 710,22.8,4,108,93,3.85,2.32,18.61,1,1,4,1
 Hornet 4 Drive,21.4,6,258,110,3.08,3.215,19.44,1,0,3,1
-", some_data)
+", some_csv_data)
+
+# Example from https://en.wikipedia.org/wiki/Tab-separated_values
+some_tsv_data = file.path(outputFolder, "some_data.tsv")
+write("Sepal length	Sepal width	Petal length	Petal width	Species
+5.1	3.5	1.4	0.2	I. setosa
+4.9	3.0	1.4	0.2	I. setosa
+4.7	3.2	1.3	0.2	I. setosa
+4.6	3.1	1.5	0.2	I. setosa
+5.0	3.6	1.4	0.2	I. setosa
+", some_tsv_data)
 
 ## Outputing result to JSON
 # notice that the warning string is not part of the yml spec, so it cannot be used by other scripts, but will still be displayed.
@@ -43,7 +53,8 @@ output <- list("error" = "Some error",
                 "text" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long text it will need to be unfolded to see it all.",
                 "number" = input$intensity * 3,
                 "heat_map" = example_tiff, 
-                "some_data" = some_data,
+                "some_csv_data" = some_csv_data,
+                "some_tsv_data" = some_tsv_data,
                 "some_picture" = example_jpg,
                 "undocumented_output" = "Some debug output") 
                 

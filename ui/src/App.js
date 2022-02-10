@@ -272,7 +272,8 @@ function RenderedFiles(props) {
         return <img src={content} alt={key} />
 
       case "text":
-        if(subtype === "csv") return <RenderedCSV url={content} csvDelimiter="," />
+        if(subtype === "csv") return <RenderedCSV url={content} delimiter="," />
+        if(subtype === "tab-separated-values") return <RenderedCSV url={content} delimiter="&#9;" />
         else return <p>{content}</p>
         
       case "unknown":
