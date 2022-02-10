@@ -32,13 +32,12 @@ function RenderedCSV(props) {
             }
         };
         xhr.send();
-    }, []);
+    }, [props.url]);
 
     if (data)
         return <>
             <CsvToHtmlTable data={data} csvDelimiter={props.csvDelimiter} />
-            {partial && <p>Displaying partial data. <a href={props.url}>Download full csv file</a> for complete data.</p>
-            }
+            {partial && <p>Displaying partial data. <a href={props.url}>Download full csv file</a> for complete data.</p>}
         </>
     else
         return <img src={spinner} className="spinner" alt="Spinner" />
