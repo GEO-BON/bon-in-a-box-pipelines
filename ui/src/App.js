@@ -62,7 +62,7 @@ function Form(props) {
       resize(formRef.current.elements["inputFile"])
 
       props.setScriptMetadata(parsedData)
-      props.setResultData({error:error, rawMetadata:data})
+      props.setResultData({httpError:error ? error.toString() : null, rawMetadata:data})
     }
 
     api.getScriptInfo(choice, callback);
@@ -82,8 +82,7 @@ function Form(props) {
     var callback = function (error, data/*, response*/) {
       if(error) { // Server / connection errors. Data will be undefined.
         data = {}
-        data.files = {}
-        data.files.error = error.toString()
+        data.httpError = error.toString()
 
       } else if(data && data.error) { // Errors reported by server
         // Add a preamble if there was not a script-generated error on top
@@ -182,6 +181,7 @@ function Result(props) {
     return (
       <div>
         <RenderContext.Provider value={{data:props.data, metadata:props.metadata, active:activeRenderer}}>
+          {data.httpError && <p key="httpError" className="error">{data.httpError}</p>}
           {data.rawMetadata && <pre key="metadata">{data.rawMetadata.toString()}</pre>}
           <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
           <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
