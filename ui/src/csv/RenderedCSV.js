@@ -20,7 +20,7 @@ function RenderedCSV(props) {
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 let responseLength = new TextEncoder().encode(xhr.responseText).length
-                
+
                 let csv = xhr.responseText
                 if(responseLength >= maxLength){
                     // Remove last line (99% chances it's incomplete...)
@@ -36,7 +36,7 @@ function RenderedCSV(props) {
 
     if (data)
         return <>
-            <CsvToHtmlTable data={data} csvDelimiter={props.csvDelimiter} />
+            <CsvToHtmlTable data={data} csvDelimiter={props.delimiter} />
             {partial && <p>Displaying partial data. <a href={props.url}>Download full csv file</a> for complete data.</p>}
         </>
     else
