@@ -42,14 +42,16 @@ The script description is in a .yml file next to the script. It describes
 See [example](/scripts/HelloWorld.yml)
 
 Each input and output must declare a type, *in lowercase.* The following are accepted:
-- int
-- float
-- MIME types
-  - image/tiff;application=geotiff
-  - image/jpg
-  - text/csv
-  - text/plain
-  - etc.
+| type attribute                 | Renderer                     |
+|--------------------------------|------------------------------|
+| float                          | Plain text                   |
+| image/jpg                      | \<img> tag                   |
+| image/tiff;application=geotiff | Map widget (leaflet)         |
+| int                            | Plain text                   |
+| text/csv                       | HTML table (partial content) |
+| text/plain                     | Plain text                   |
+| text/tab-separated-values      | HTML table (partial content) |
+| (any unknown type)             | Plain text                   |
 
 #### Reporting problems
 The output keys `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. Both will be displayed specially in the UI.
