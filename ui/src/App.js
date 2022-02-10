@@ -34,7 +34,7 @@ function App() {
 function Form(props) {
   const formRef = useRef(null);
 
-  const defaultScript = "HelloWorld.yml"
+  const defaultScript = "HelloWorld>HelloR.yml"
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
 
   function loadScriptMetadata(choice) {
