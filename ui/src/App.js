@@ -98,10 +98,17 @@ function Form(props) {
       props.setRequestState(RequestState.done)
     };
 
+    // Script path: folder from yml + script name
+    let scriptPath = props.scriptMetadata.script;
+    let ymlPath = formRef.current.elements["scriptFile"].value
+    if(ymlPath.includes('>')) {
+      scriptPath = ymlPath.replace(new RegExp(">[^>]+$"), `>${scriptPath}`);
+    }
+
     let opts = {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };
-    api.runScript(props.scriptMetadata.script, opts, callback);
+    api.runScript(scriptPath, opts, callback);
   }
 
   /**
