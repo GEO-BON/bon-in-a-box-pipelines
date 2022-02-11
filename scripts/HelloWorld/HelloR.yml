@@ -1,4 +1,4 @@
-script: HelloWorld>HelloR.R
+script: HelloR.R
 inputs:
   occurence:
     description: Occurrence data, some description here
