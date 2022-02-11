@@ -21,9 +21,11 @@ To run:
 6. `docker compose down` (to stop the server when done)
 
 ## Scripts
-The scripts perform the actual work behind the scenes.
+The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
+
 Currently supported : 
  - R version 4.1.2
+ - Julia version 1.7.1
 
 Script lifecycle:
 1. Script launched with output folder as a parameter.
@@ -33,13 +35,14 @@ Script lifecycle:
 
 ### Describing a script
 The script description is in a .yml file next to the script. It describes
-- The script to run
+- The filename of the script to run
 - Inputs
 - Outputs
 - Description
 - External link (optional)
 - References
-See [example](/scripts/HelloWorld.yml)
+
+See [example](/scripts/HelloWorld/HelloR.yml)
 
 Each input and output must declare a type, *in lowercase.* The following are accepted:
 | type attribute                 | Renderer                     |
