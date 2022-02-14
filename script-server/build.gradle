@@ -7,7 +7,7 @@ wrapper {
 }
 
 buildscript {
-    ext.kotlin_version = "1.4.32"
+    ext.kotlin_version = "1.6.10"
     ext.ktor_version = "1.5.4"
     ext.shadow_version = "6.1.0"
 
@@ -52,9 +52,7 @@ test {
 }
 
 repositories {
-    maven { setUrl("https://repo1.maven.org/maven2") }
-    maven { setUrl("https://dl.bintray.com/kotlin/ktor") }
-    maven { setUrl("https://dl.bintray.com/kotlin/kotlinx") }
+    mavenCentral()
 }
 
 dependencies {
