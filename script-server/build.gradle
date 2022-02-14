@@ -47,6 +47,10 @@ shadowJar {
     version = null
 }
 
+test {
+    useJUnitPlatform()
+}
+
 repositories {
     maven { setUrl("https://repo1.maven.org/maven2") }
     maven { setUrl("https://dl.bintray.com/kotlin/ktor") }
@@ -62,6 +66,8 @@ dependencies {
     implementation("io.dropwizard.metrics:metrics-core:4.1.18")
     implementation("io.ktor:ktor-metrics:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 
-    testImplementation("junit:junit:4.13.2")
+    testImplementation 'io.mockk:mockk:1.12.2'
+    testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }
