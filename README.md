@@ -21,9 +21,11 @@ To run:
 6. `docker compose down` (to stop the server when done)
 
 ## Scripts
-The scripts perform the actual work behind the scenes.
+The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
+
 Currently supported : 
  - R version 4.1.2
+ - Julia version 1.7.1
 
 Script lifecycle:
 1. Script launched with output folder as a parameter.
@@ -33,23 +35,26 @@ Script lifecycle:
 
 ### Describing a script
 The script description is in a .yml file next to the script. It describes
-- The script to run
+- The filename of the script to run
 - Inputs
 - Outputs
 - Description
 - External link (optional)
 - References
-See [example](/scripts/HelloWorld.yml)
+
+See [example](/scripts/HelloWorld/HelloR.yml)
 
 Each input and output must declare a type, *in lowercase.* The following are accepted:
-- int
-- float
-- MIME types
-  - image/tiff;application=geotiff
-  - image/jpg
-  - text/csv
-  - text/plain
-  - etc.
+| type attribute                 | Renderer                     |
+|--------------------------------|------------------------------|
+| float                          | Plain text                   |
+| image/jpg                      | \<img> tag                   |
+| image/tiff;application=geotiff | Map widget (leaflet)         |
+| int                            | Plain text                   |
+| text/csv                       | HTML table (partial content) |
+| text/plain                     | Plain text                   |
+| text/tab-separated-values      | HTML table (partial content) |
+| (any unknown type)             | Plain text                   |
 
 #### Reporting problems
 The output keys `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. Both will be displayed specially in the UI.

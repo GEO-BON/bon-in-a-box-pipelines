@@ -1,4 +1,4 @@
-script: HelloWorld.R
+script: HelloR.R
 inputs:
   occurence:
     description: Occurrence data, some description here
@@ -23,11 +23,16 @@ outputs:
     description: Some heat map that shows bla bla...
     type: image/tiff;application=geotiff
     example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
-  some_data:
+  some_csv_data:
     label: Some CSV data
-    description: This CSV data is rendered as an HTML table when unfolded. If you do not unfold, it is not loaded at all... Note that only the first kilobyte of the file is retrieved.
+    description: This CSV (Comma Separated Values) data is rendered as an HTML table when unfolded. If you do not unfold, it is not loaded at all... Note that only the first kilobyte of the file is retrieved.
     type: text/csv
     example: /output/.../some_data.csv
+  some_tsv_data:
+    label: Some TSV data
+    description: This TSV (Tab Separated Values) data is rendered as an HTML table when unfolded. If you do not unfold, it is not loaded at all... Note that only the first kilobyte of the file is retrieved.
+    type: text/tab-separated-values
+    example: /output/.../some_data.tsv
   some_picture:
     label: Some picture
     description: Some picture/graph/etc that shows bla bla...

@@ -29,6 +29,12 @@ import com.google.gson.reflect.TypeToken
 val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
 val ouputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
+/**
+ * Used to transport paths through path param.
+ * Folder tree not supported, see https://github.com/OAI/OpenAPI-Specification/issues/892
+ */
+val fileSeparator = '>'
+
 @KtorExperimentalLocationsAPI
 fun Route.ScriptRunner(logger:Logger) {
 
@@ -36,9 +42,9 @@ fun Route.ScriptRunner(logger:Logger) {
 
     get<Paths.getScriptInfo> { parameters ->
         try {
-            // Replace extension by .yml
-            val mdPath = parameters.scriptPath.replace(Regex("""\.\w+$"""), ".yml")
-            val scriptFile = File(scriptRoot, mdPath)
+            // Put back slashes and replace extension by .yml
+            val ymlPath = parameters.scriptPath.replace(fileSeparator, '/').replace(Regex("""\.\w+$"""), ".yml")
+            val scriptFile = File(scriptRoot, ymlPath)
             call.respondText(scriptFile.readText())
             logger.trace("200: Paths.getScriptInfo $scriptFile")
         } catch (ex:Exception) {
@@ -51,10 +57,11 @@ fun Route.ScriptRunner(logger:Logger) {
         val inputFileContent = call.receive<String>()
         logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
 
-        val scriptFile = File(scriptRoot, parameters.scriptPath)
+        val scriptRelPath = parameters.scriptPath.replace(fileSeparator, '/')
+        val scriptFile = File(scriptRoot, scriptRelPath)
         if(scriptFile.exists()) {
             // Create the ouput folder based for this invocation
-            val outputFolder = getOutputFolder(parameters.scriptPath, inputFileContent)
+            val outputFolder = getOutputFolder(scriptRelPath, inputFileContent)
             outputFolder.mkdirs()
             logger.trace("Paths.runScript outputting to $outputFolder")
 
@@ -158,7 +165,7 @@ fun Route.ScriptRunner(logger:Logger) {
         scriptRoot.walkTopDown().forEach { file ->
             if(file.extension.equals("yml")) {
                 // Add the relative path, without the script root.
-                possible.add(file.absolutePath.substring(relPathIndex))
+                possible.add(file.absolutePath.substring(relPathIndex).replace('/', fileSeparator))
             }
         }
         

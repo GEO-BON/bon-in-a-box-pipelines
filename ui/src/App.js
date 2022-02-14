@@ -34,7 +34,7 @@ function App() {
 function Form(props) {
   const formRef = useRef(null);
 
-  const defaultScript = "HelloWorld.yml"
+  const defaultScript = "HelloWorld>HelloR.yml"
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
 
   function loadScriptMetadata(choice) {
@@ -47,7 +47,7 @@ function Form(props) {
       // Generate example input.json
       let inputExamples = {}
       const parsedData = yaml.load(data)
-      if (parsedData.inputs) {
+      if (parsedData && parsedData.inputs) {
         Object.keys(parsedData.inputs).forEach((inputKey) => {
           let input = parsedData.inputs[inputKey]
           if (input) {
@@ -62,7 +62,7 @@ function Form(props) {
       resize(formRef.current.elements["inputFile"])
 
       props.setScriptMetadata(parsedData)
-      props.setResultData({error:error, rawMetadata:data})
+      props.setResultData({httpError:error ? error.toString() : null, rawMetadata:data})
     }
 
     api.getScriptInfo(choice, callback);
@@ -82,8 +82,7 @@ function Form(props) {
     var callback = function (error, data/*, response*/) {
       if(error) { // Server / connection errors. Data will be undefined.
         data = {}
-        data.files = {}
-        data.files.error = error.toString()
+        data.httpError = error.toString()
 
       } else if(data && data.error) { // Errors reported by server
         // Add a preamble if there was not a script-generated error on top
@@ -99,10 +98,17 @@ function Form(props) {
       props.setRequestState(RequestState.done)
     };
 
+    // Script path: folder from yml + script name
+    let scriptPath = props.scriptMetadata.script;
+    let ymlPath = formRef.current.elements["scriptFile"].value
+    if(ymlPath.includes('>')) {
+      scriptPath = ymlPath.replace(new RegExp(">[^>]+$"), `>${scriptPath}`);
+    }
+
     let opts = {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };
-    api.runScript(props.scriptMetadata.script, opts, callback);
+    api.runScript(scriptPath, opts, callback);
   }
 
   /**
@@ -182,6 +188,7 @@ function Result(props) {
     return (
       <div>
         <RenderContext.Provider value={{data:props.data, metadata:props.metadata, active:activeRenderer}}>
+          {data.httpError && <p key="httpError" className="error">{data.httpError}</p>}
           {data.rawMetadata && <pre key="metadata">{data.rawMetadata.toString()}</pre>}
           <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
           <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
@@ -272,7 +279,8 @@ function RenderedFiles(props) {
         return <img src={content} alt={key} />
 
       case "text":
-        if(subtype === "csv") return <RenderedCSV url={content} csvDelimiter="," />
+        if(subtype === "csv") return <RenderedCSV url={content} delimiter="," />
+        if(subtype === "tab-separated-values") return <RenderedCSV url={content} delimiter="&#9;" />
         else return <p>{content}</p>
         
       case "unknown":
@@ -301,7 +309,7 @@ function RenderedFiles(props) {
       const [key, value] = entry;
 
       if(key === "warning" || key === "error") {
-        return value && <p className={key}>{value}</p>
+        return value && <p key={key} className={key}>{value}</p>
       }
 
       return (
