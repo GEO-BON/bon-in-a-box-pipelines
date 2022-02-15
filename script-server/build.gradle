@@ -1,4 +1,4 @@
-group "org.openapitools"
+group "org.geobon"
 version "1.0.0"
 
 wrapper {
@@ -12,7 +12,6 @@ buildscript {
     ext.shadow_version = "6.1.0"
 
     repositories {
-        maven { url "https://repo1.maven.org/maven2" }
         maven { url "https://plugins.gradle.org/m2/" }
     }
     dependencies {
@@ -57,14 +56,14 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation("ch.qos.logback:logback-classic:1.2.1")
+    implementation('ch.qos.logback:logback-classic:1.2.10')
     implementation("io.ktor:ktor-auth:$ktor_version")
     implementation("io.ktor:ktor-gson:$ktor_version")
     implementation("io.ktor:ktor-locations:$ktor_version")
-    implementation("io.dropwizard.metrics:metrics-core:4.1.18")
+    //implementation("io.dropwizard.metrics:metrics-core:4.1.18")
     implementation("io.ktor:ktor-metrics:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
-    implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
+    implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
     // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.30'
