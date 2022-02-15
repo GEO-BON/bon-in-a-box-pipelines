@@ -27,7 +27,7 @@ outputs:
   data:
      label: data
      description: table with observations from GBIF
-     type: text/csv
+     type: text/tab-separated-values
      example: 
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
