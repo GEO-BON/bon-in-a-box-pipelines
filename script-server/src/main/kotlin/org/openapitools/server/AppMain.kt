@@ -1,16 +1,13 @@
 package org.openapitools.server
 
-import com.codahale.metrics.Slf4jReporter
 import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.gson.*
 import io.ktor.http.*
 import io.ktor.locations.*
-import io.ktor.metrics.dropwizard.*
-import java.util.concurrent.TimeUnit
 import io.ktor.routing.*
 import io.ktor.util.*
-import org.openapitools.server.apis.ScriptRunner
+import org.openapitools.server.apis.ScriptApi
 
 
 
@@ -35,7 +32,7 @@ fun Application.main() {
     install(HSTS, ApplicationHstsConfiguration()) // see https://ktor.io/docs/hsts.html
     install(Locations) // see https://ktor.io/docs/features-locations.html
     install(Routing) {
-        ScriptRunner(log)
+        ScriptApi(log)
     }
 
 }

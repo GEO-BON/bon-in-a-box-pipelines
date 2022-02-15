@@ -4,27 +4,20 @@
 package org.openapitools.server.apis
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.ktor.application.*
-import io.ktor.auth.*
 import io.ktor.http.*
 import io.ktor.response.*
 import org.openapitools.server.Paths
 import io.ktor.locations.*
 import io.ktor.routing.*
 import io.ktor.request.receive
-import org.openapitools.server.infrastructure.ApiPrincipal
+import kotlinx.coroutines.launch
 import org.openapitools.server.models.ScriptRunResult
 import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.io.File
-import kotlin.collections.joinToString
-import kotlin.io.readLine
 import java.util.concurrent.TimeUnit
-import kotlinx.coroutines.launch
-import java.lang.reflect.Type
-import java.util.Scanner
-import com.google.gson.reflect.TypeToken
 
 val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
 val ouputRoot = File(System.getenv("OUTPUT_LOCATION"))
@@ -36,7 +29,7 @@ val ouputRoot = File(System.getenv("OUTPUT_LOCATION"))
 val fileSeparator = '>'
 
 @KtorExperimentalLocationsAPI
-fun Route.ScriptRunner(logger:Logger) {
+fun Route.ScriptApi(logger:Logger) {
 
     val gson = Gson()
 
@@ -60,7 +53,7 @@ fun Route.ScriptRunner(logger:Logger) {
         val scriptRelPath = parameters.scriptPath.replace(fileSeparator, '/')
         val scriptFile = File(scriptRoot, scriptRelPath)
         if(scriptFile.exists()) {
-            // Create the ouput folder based for this invocation
+            // Create the output folder based for this invocation
             val outputFolder = getOutputFolder(scriptRelPath, inputFileContent)
             outputFolder.mkdirs()
             logger.trace("Paths.runScript outputting to $outputFolder")
@@ -86,8 +79,8 @@ fun Route.ScriptRunner(logger:Logger) {
                     "r", "R" -> "Rscript"
                     else -> {
                         call.respond(
-                                HttpStatusCode.OK,
-                                ScriptRunResult("Unsupported script extension ${scriptFile.extension}", true)
+                            HttpStatusCode.OK,
+                            ScriptRunResult("Unsupported script extension ${scriptFile.extension}", true)
                         )
                         return@post
                     }
@@ -97,7 +90,7 @@ fun Route.ScriptRunner(logger:Logger) {
                     .directory(scriptRoot)
                     .redirectOutput(ProcessBuilder.Redirect.PIPE)
                     .redirectErrorStream(true) // Merges stderr into stdout
-                    .start().also { process -> 
+                    .start().also { process ->
                         launch {
                             process.inputStream.bufferedReader().run {
                                 while(true) {
@@ -112,12 +105,12 @@ fun Route.ScriptRunner(logger:Logger) {
                         process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
                     }
             }.onSuccess { process -> // completed, with success or failure
-                try { 
+                try {
                     if(process.exitValue() != 0) {
                         error = true
                         logs += "Error: script returned non-zero value\n"
                     }
-                    
+
                     if(resultFile.exists()) {
                         val type = object : TypeToken<Map<String, String>>() {}.type
                         val result = resultFile.readText()
@@ -141,13 +134,13 @@ fun Route.ScriptRunner(logger:Logger) {
                     logs += "TIMEOUT occured\n"
                     process.destroy()
                 }
-                
+
             }.onFailure { ex ->
                 logger.warn(ex.stackTraceToString())
                 call.respond(HttpStatusCode.InternalServerError)
                 return@post
             }
-            
+
             // Format log output
             if(logs.isNotEmpty()) logs = "Full logs: $logs"
             call.respond(HttpStatusCode.OK, ScriptRunResult(logs, error, outputs))
