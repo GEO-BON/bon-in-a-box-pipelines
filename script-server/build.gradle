@@ -66,6 +66,9 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 
+    // https://mvnrepository.com/artifact/org.yaml/snakeyaml
+    implementation group: 'org.yaml', name: 'snakeyaml', version: '1.30'
+
     testImplementation 'io.mockk:mockk:1.12.2'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
 }

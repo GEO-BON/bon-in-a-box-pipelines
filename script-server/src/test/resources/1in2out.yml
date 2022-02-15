@@ -1,0 +1,17 @@
+script: 1in2out.R
+inputs:
+  some_int:
+    description: A number
+    type: int
+    example: 3
+outputs:
+  number:
+    label: A number (input++)
+    description: bla bla
+    type: int
+    example: 4
+  tell_me:
+    label: Tell me
+    description: bla bla
+    type: text/plain
+    example: "Some string"

@@ -13,7 +13,7 @@ import kotlin.test.assertTrue
  * Dummy step for testing purpose
  */
 class Concatenate(
-    inputs: Map<String, Input>
+    inputs: Map<String, Pipe>
 ) : Step (inputs, mapOf(STRING to Output("text/plain"))) {
 
     companion object {
@@ -41,9 +41,9 @@ internal class StepTest {
 
     @Test
     fun givenTwoInOneOut_whenExecuted_thenInputsAreCalledAndOutputReceivesValue() {
-        val input1 = mockk<Input>()
+        val input1 = mockk<Pipe>()
         every { input1.pull() } returns "value1"
-        val input2 = mockk<Input>()
+        val input2 = mockk<Pipe>()
         every { input2.pull() } returns "value2"
         val step = Concatenate(mapOf("1" to input1, "2" to input2))
 

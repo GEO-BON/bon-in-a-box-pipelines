@@ -1,0 +1,12 @@
+script: 1in1out.R
+inputs:
+  some_int:
+    description: A number
+    type: int
+    example: 3
+outputs:
+  number:
+    label: A number (input++)
+    description: bla bla
+    type: int
+    example: 4
