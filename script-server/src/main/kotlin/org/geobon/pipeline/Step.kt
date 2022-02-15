@@ -1,7 +1,7 @@
 package org.geobon.pipeline
 
 abstract class Step(
-    private val inputs: Map<String, Input> = mapOf(),
+    private val inputs: Map<String, Pipe> = mapOf(),
     val outputs: Map<String, Output> = mapOf()
 ) {
     init {
