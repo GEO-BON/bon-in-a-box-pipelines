@@ -41,9 +41,9 @@ compileTestKotlin {
 }
 
 shadowJar {
-    baseName = "kotlin-server"
-    classifier = null
-    version = null
+    archiveBaseName.set('kotlin-server')
+    archiveClassifier.set('')
+    archiveVersion.set('')
 }
 
 test {
