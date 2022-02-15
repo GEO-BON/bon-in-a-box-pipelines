@@ -1,10 +1,13 @@
 package org.geobon.pipeline
 
+import org.geobon.script.Description.INPUTS
+import org.geobon.script.Description.OUTPUTS
+import org.geobon.script.Description.TYPE
 import org.yaml.snakeyaml.Yaml
 
-open class YMLStep(
+abstract class YMLStep(
     yamlString: String = "",
-    yamlParsed: Map<String, Any> = Yaml().load(yamlString),
+    protected val yamlParsed: Map<String, Any> = Yaml().load(yamlString),
     inputs: Map<String, Pipe> = mapOf()
 ) : Step(inputs, readOutputs(yamlParsed)) {
 
@@ -24,14 +27,7 @@ open class YMLStep(
 
     }
 
-    override fun execute(resolvedInputs: Map<String, String>): Map<String, String> {
-        TODO("Not yet implemented")
-    }
-
     companion object {
-        private const val INPUTS = "inputs"
-        private const val OUTPUTS = "outputs"
-        private const val TYPE = "type"
 
         private fun readInputs(yamlParsed: Map<String, Any>): Map<String, String> {
             val inputs = mutableMapOf<String, String>()
