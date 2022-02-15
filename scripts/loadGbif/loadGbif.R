@@ -42,8 +42,9 @@ gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=in
   }
 
 obs.data <- file.path(outputFolder, "obs_data.tsv")
-write.table(data, 
+write.table(data, obs.data,
              append = F, row.names = F, col.names = T, sep = "\t")
+
 
   output <- list("species" = input$species,
                   "n.observations" =  nrow(data),
