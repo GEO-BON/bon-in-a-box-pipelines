@@ -17,123 +17,126 @@ val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
 class ScriptRun {
+    var result:ScriptRunResult? = null
+
     private val scriptFile: File
+    private val inputFileContent: String
 
     companion object {
         private val logger: Logger = LoggerFactory.getLogger(ScriptRun::class.java)
         private val gson = Gson()
     }
 
-    constructor (scriptRelPath: String) {
+    constructor (scriptRelPath: String, inputFileContent:String) {
         this.scriptFile = File(scriptRoot, scriptRelPath)
+        this.inputFileContent = inputFileContent
     }
 
-    constructor (scriptFile: File) {
+    constructor (scriptFile: File, inputFileContent:String) {
         this.scriptFile = scriptFile
+        this.inputFileContent = inputFileContent
     }
 
-    /**
-     * @param inputFileContent The raw JSON content to serve as input to this script
-     * @return ScriptRunResult with the results of this run
-     */
-    suspend fun execute(inputFileContent:String):ScriptRunResult {
-        if(scriptFile.exists()) {
-            // Create the output folder based for this invocation
-            val outputFolder = getOutputFolder(scriptFile.relativeTo(scriptRoot).path, inputFileContent)
-            outputFolder.mkdirs()
-            logger.trace("Paths.runScript outputting to $outputFolder")
+    suspend fun execute() {
+        if(!scriptFile.exists()) {
+            logger.warn("Error 404: Paths.runScript $scriptFile")
+            result = ScriptRunResult("Script $scriptFile not found", true)
+            return
+        }
 
-            // Run the script
-            var error = false
-            var logs = ""
-            var outputs:Map<String, String>? = null
+        // Create the output folder for this invocation
+        val outputFolder = getOutputFolder(scriptFile.relativeTo(scriptRoot).path, inputFileContent)
+        outputFolder.mkdirs()
+        logger.trace("Paths.runScript outputting to $outputFolder")
 
-            val resultFile = File(outputFolder, "output.json")
-            runCatching {
-                // Remove previous run result
-                if(resultFile.delete()) {
-                    logger.trace("Previous results deleted")
-                }
+        // Run the script
+        var error = false
+        var logs = ""
+        var outputs:Map<String, String>? = null
 
-                // Create input.json
-                val inputFile= File(outputFolder, "input.json")
-                inputFile.writeText(inputFileContent)
-
-                val command = when (scriptFile.extension) {
-                    "jl", "JL" -> "julia"
-                    "r", "R" -> "Rscript"
-                    else -> {
-                        return ScriptRunResult("Unsupported script extension ${scriptFile.extension}", true)
-                    }
-                }
-
-                ProcessBuilder(listOf(command,scriptFile.absolutePath, outputFolder.absolutePath))
-                    .directory(scriptRoot)
-                    .redirectOutput(ProcessBuilder.Redirect.PIPE)
-                    .redirectErrorStream(true) // Merges stderr into stdout
-                    .start().also { process ->
-                        coroutineScope {
-                            launch {
-                                process.inputStream.bufferedReader().run {
-                                    while (true) {
-                                        readLine()?.let { line ->
-                                            logger.trace(line) // realtime logging
-                                            logs += "$line\n"
-                                        } ?: break
-                                    }
-                                }
-                            }
-
-                            withContext(Dispatchers.IO) {
-                                process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
-                            }
-                        }
-                    }
-            }.onSuccess { process -> // completed, with success or failure
-                try {
-                    if(process.exitValue() != 0) {
-                        error = true
-                        logs += "Error: script returned non-zero value\n"
-                    }
-
-                    if(resultFile.exists()) {
-                        val type = object : TypeToken<Map<String, String>>() {}.type
-                        val result = resultFile.readText()
-                        logger.trace(result)
-                        try {
-                            outputs = gson.fromJson<Map<String, String>>(result, type)
-                        } catch (e:Exception) {
-                            error = true
-                            logs += e.message + "\n"
-                            logs += "Error: Malformed JSON file.\n"
-                            logs += "Make sure complex results are saved in a separate file (csv, geojson, etc.).\n"
-                            logs += "Content of output.json:\n"
-                            logs += result
-                        }
-                    } else {
-                        error = true
-                        logs += "Error: output.json file not found\n"
-                    }
-                } catch (ex:IllegalThreadStateException) {
-                    error = true
-                    logs += "TIMEOUT occured\n"
-                    process.destroy()
-                }
-
-            }.onFailure { ex ->
-                logger.warn(ex.stackTraceToString())
-                return ScriptRunResult("An error occurred when launching script", true)
+        val resultFile = File(outputFolder, "output.json")
+        runCatching {
+            // Remove previous run result
+            if(resultFile.delete()) {
+                logger.trace("Previous results deleted")
             }
 
-            // Format log output
-            if(logs.isNotEmpty()) logs = "Full logs: $logs"
-            return ScriptRunResult(logs, error, outputs)
+            // Create input.json
+            val inputFile= File(outputFolder, "input.json")
+            inputFile.writeText(inputFileContent)
+
+            val command = when (scriptFile.extension) {
+                "jl", "JL" -> "julia"
+                "r", "R" -> "Rscript"
+                else -> {
+                    result = ScriptRunResult("Unsupported script extension ${scriptFile.extension}", true)
+                    return
+                }
+            }
+
+            ProcessBuilder(listOf(command,scriptFile.absolutePath, outputFolder.absolutePath))
+                .directory(scriptRoot)
+                .redirectOutput(ProcessBuilder.Redirect.PIPE)
+                .redirectErrorStream(true) // Merges stderr into stdout
+                .start().also { process ->
+                    coroutineScope {
+                        launch {
+                            process.inputStream.bufferedReader().run {
+                                while (true) {
+                                    readLine()?.let { line ->
+                                        logger.trace(line) // realtime logging
+                                        logs += "$line\n"
+                                    } ?: break
+                                }
+                            }
+                        }
+
+                        withContext(Dispatchers.IO) {
+                            process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
+                        }
+                    }
+                }
+        }.onSuccess { process -> // completed, with success or failure
+            try {
+                if(process.exitValue() != 0) {
+                    error = true
+                    logs += "Error: script returned non-zero value\n"
+                }
+
+                if(resultFile.exists()) {
+                    val type = object : TypeToken<Map<String, String>>() {}.type
+                    val result = resultFile.readText()
+                    logger.trace(result)
+                    try {
+                        outputs = gson.fromJson<Map<String, String>>(result, type)
+                    } catch (e:Exception) {
+                        error = true
+                        logs += e.message + "\n"
+                        logs += "Error: Malformed JSON file.\n"
+                        logs += "Make sure complex results are saved in a separate file (csv, geojson, etc.).\n"
+                        logs += "Content of output.json:\n"
+                        logs += result
+                    }
+                } else {
+                    error = true
+                    logs += "Error: output.json file not found\n"
+                }
+            } catch (ex:IllegalThreadStateException) {
+                error = true
+                logs += "TIMEOUT occurred\n"
+                process.destroy()
+            }
+
+        }.onFailure { ex ->
+            logger.warn(ex.stackTraceToString())
+            result = ScriptRunResult("An error occurred when running the script", true)
+            return
         }
-        else // Script not found
-        {
-            logger.warn("Error 404: Paths.runScript $scriptFile")
-            return ScriptRunResult("Script $scriptFile not found", true)
-        }
+
+        // Format log output
+        if(logs.isNotEmpty()) logs = "Full logs: $logs"
+        result = ScriptRunResult(logs, error, outputs)
+        return
     }
 
     /**

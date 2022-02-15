@@ -42,8 +42,10 @@ fun Route.ScriptApi(logger:Logger) {
         logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
 
         val scriptRelPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/')
-        val script = ScriptRun(scriptRelPath)
-        call.respond(HttpStatusCode.OK, script.execute(inputFileContent))
+        val script = ScriptRun(scriptRelPath, inputFileContent)
+        script.execute()
+        script.result?.let { call.respond(HttpStatusCode.OK, it) }
+            ?: call.respond(HttpStatusCode.InternalServerError)
     }
 
     get<Paths.scriptListGet> {
