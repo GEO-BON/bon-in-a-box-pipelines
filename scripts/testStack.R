@@ -23,9 +23,10 @@ print("Inputs: ")
 print(input)
 
  s <- stac(input$stac_path)
+ print("s")
  it_obj <- s |>
   stac_search(bbox=c(-120,30,-40,68), collections=c('chelsa-clim'),limit=5000) |> get_request()
-
+print("it_obj")
 st<-stac_image_collection(it_obj$features,asset_names=c("bio2"))
 
 print("st")
