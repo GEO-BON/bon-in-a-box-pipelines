@@ -5,7 +5,7 @@ class Output(override val type:String) : Pipe {
     var step: Step? = null
     var value:String? = null
 
-    override fun pull(): String {
+    override suspend fun pull(): String {
         if(value == null) {
             step?.apply { execute() }
                 ?: throw Exception("Output disconnected from any step")
