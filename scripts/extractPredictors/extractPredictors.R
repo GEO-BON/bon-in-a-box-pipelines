@@ -3,7 +3,7 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf")
+packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "rgdal")
 
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
