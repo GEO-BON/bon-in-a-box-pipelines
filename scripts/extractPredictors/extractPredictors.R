@@ -3,7 +3,8 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf")
+packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf",
+  "curl")
 
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
@@ -18,7 +19,7 @@ library("rstac")
 library("tibble")
 library("sp")
 library("sf")
-
+library("curl")
 
 
 ## Receiving args
