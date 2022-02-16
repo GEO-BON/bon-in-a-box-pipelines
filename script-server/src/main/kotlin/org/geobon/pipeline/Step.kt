@@ -1,14 +1,14 @@
 package org.geobon.pipeline
 
 abstract class Step(
-    private val inputs: Map<String, Pipe> = mapOf(),
+    protected val inputs: Map<String, Pipe> = mapOf(),
     val outputs: Map<String, Output> = mapOf()
 ) {
     init {
         outputs.values.forEach { it.step = this }
     }
 
-    fun execute() {
+    suspend fun execute() {
         val resolved = mutableMapOf<String, String>()
         inputs.forEach {
             resolved[it.key] = it.value.pull()
@@ -24,6 +24,6 @@ abstract class Step(
         }
     }
 
-    abstract fun execute(resolvedInputs: Map<String, String>): Map<String, String>
+    abstract suspend fun execute(resolvedInputs: Map<String, String>): Map<String, String>
 
 }

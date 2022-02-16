@@ -1,8 +1,10 @@
 package org.geobon.pipeline
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import kotlin.test.assertEquals
 
 class EchoStep(private val sound: String) :
     Step(
@@ -17,15 +19,16 @@ class EchoStep(private val sound: String) :
         const val BAD_KEY = "no-echo"
     }
 
-    override fun execute(resolvedInputs: Map<String, String>): Map<String, String> {
+    override suspend fun execute(resolvedInputs: Map<String, String>): Map<String, String> {
         return mapOf(KEY to sound)
     }
 }
 
+@ExperimentalCoroutinesApi
 internal class OutputTest {
 
     @Test
-    fun givenConnectedOutput_whenPull_thenStepIsLaunched() {
+    fun givenConnectedOutput_whenPull_thenStepIsLaunched() = runTest {
         val expected = "Bouh!"
         val step = EchoStep(expected)
 
@@ -33,19 +36,19 @@ internal class OutputTest {
     }
 
     @Test
-    fun givenDisconnectedOutput_whenPull_thenExceptionThrown() {
+    fun givenDisconnectedOutput_whenPull_thenExceptionThrown() = runTest {
         val underTest = Output("text/plain")
 
-        assertThrows(Exception::class.java) {
+        assertThrows<Exception> {
             println(underTest.pull())
         }
     }
 
     @Test
-    fun givenOutputNotFulfilled_whenPull_thenExceptionThrown() {
+    fun givenOutputNotFulfilled_whenPull_thenExceptionThrown() = runTest {
         val step = EchoStep("Bouh!")
 
-        assertThrows(Exception::class.java) {
+        assertThrows<Exception> {
             println(step.outputs[EchoStep.BAD_KEY]!!.pull())
         }
     }
