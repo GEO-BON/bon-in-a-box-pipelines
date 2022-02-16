@@ -83,6 +83,9 @@ class ScriptRun {
                         launch {
                             process.inputStream.bufferedReader().run {
                                 while (true) {
+                                    // TODO: Use delay() + BufferedReader.ready() to avoid blocking a thread.
+                                    //  https://docs.oracle.com/javase/8/docs/api/java/io/BufferedReader.html#readLine--
+                                    //  https://docs.oracle.com/javase/8/docs/api/java/io/BufferedReader.html#ready--
                                     readLine()?.let { line ->
                                         logger.trace(line) // realtime logging
                                         logs += "$line\n"
@@ -91,6 +94,8 @@ class ScriptRun {
                             }
                         }
 
+                        // TODO: waitFor is blocking : https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html#waitFor--
+                        //  Use delay + isAlive() in a loop to avoid blocking a thread https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html#isAlive--
                         withContext(Dispatchers.IO) {
                             process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
                         }
