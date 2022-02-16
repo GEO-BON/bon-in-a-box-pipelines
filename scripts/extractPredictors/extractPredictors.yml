@@ -3,7 +3,7 @@ inputs:
   stac_path:
     description: Path to species observation tsv file
     type: string
-    example: "http://io.biodiversite-quebec.ca/stac/"
+    example:  "http://206.12.92.134/stac/"
   limit:
     description: Path to species observation tsv file
     type: int
