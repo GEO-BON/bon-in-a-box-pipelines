@@ -59,7 +59,9 @@ findBox <- function(xy, buffer = 0, proj.new = NULL) {
   bbox
 }
 
-loadCube <- function(stac_path = "http://io.biodiversite-quebec.ca/stac/",
+loadCube <- function(stac_path = 
+  "http://io.biodiversite-quebec.ca/stac/",
+ 
                      limit = 5000, 
                      collections = c('chelsa-clim'), 
                      use.obs = T,
