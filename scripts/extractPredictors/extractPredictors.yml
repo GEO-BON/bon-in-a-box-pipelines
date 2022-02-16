@@ -15,7 +15,7 @@ inputs:
   obs:
     description: Path to species observation tsv file
     type: string
-    example: "C:/GitHub/biab-2.0/scripts/extractPredictors/obs_data.tsv"
+    example: "/scripts/extractPredictors/obs_data.tsv"
   srs:
     description: Projection 
     type: string
