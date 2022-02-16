@@ -1,11 +1,24 @@
+## Environment variables available
+# Script location can be used to access other scripts
+print(Sys.getenv("SCRIPT_LOCATION"))
+
+## Install required packages
+packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf")
+)
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
 ## Load required packages
 library("gdalcubes")
+library("rjson")
+library("raster")
+library("dplyr")
 library("rstac")
 library("tibble")
 library("sp")
 library("sf")
-library("dplyr")
-library("raster")
+
+
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
