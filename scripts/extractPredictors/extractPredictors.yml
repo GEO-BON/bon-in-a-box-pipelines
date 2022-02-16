@@ -27,7 +27,7 @@ inputs:
   buffer.box :
     description: Projection 
     type: integer
-    example: 0
+    example: 400
   t0 :
     description: Projection 
     type: string
