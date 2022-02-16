@@ -20,7 +20,7 @@ library("tibble")
 library("sp")
 library("sf")
 library("curl")
-options("curl_interrupt" = F)
+options(timeout = max(60000, getOption("timeout")))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
