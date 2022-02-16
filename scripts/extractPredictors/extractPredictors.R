@@ -20,7 +20,7 @@ library("tibble")
 library("sp")
 library("sf")
 library("curl")
-option(curl_interrupt = F)
+options("curl_interrupt" = F)
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
