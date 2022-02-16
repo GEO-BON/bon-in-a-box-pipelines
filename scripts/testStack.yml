@@ -1,0 +1,7 @@
+script: testStack.R
+inputs:
+  stac_path:
+    description: Path to species observation tsv file
+    type: string
+    example: "http://io.biodiversite-quebec.ca/stac/"
+ 
