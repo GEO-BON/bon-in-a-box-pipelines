@@ -4,7 +4,7 @@ print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
 packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf",
-  "curl")
+  "RCurl")
 
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
@@ -19,7 +19,7 @@ library("rstac")
 library("tibble")
 library("sp")
 library("sf")
-library("curl")
+library("RCurl")
 options(timeout = max(60000, getOption("timeout")))
 
 ## Receiving args
@@ -127,7 +127,8 @@ obs <- bind_cols(obs,
                  setNames(data.frame(proj.pts), c("lon", "lat"))) 
 
 value.points <- query_points(cube, obs$lon, obs$lat, pt = rep(as.Date(input$t0), length(obs$lon)), srs(cube))
-
+obs <- bind_cols(obs,
+  value.points)
 
 
 obs.values <- file.path(outputFolder, "obs_values.tsv")
