@@ -1,7 +1,10 @@
 package org.geobon.pipeline
 
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
+
 abstract class Step(
-    protected val inputs: Map<String, Pipe> = mapOf(),
+    private val inputs: Map<String, Pipe> = mapOf(),
     val outputs: Map<String, Output> = mapOf()
 ) {
     init {
@@ -9,12 +12,15 @@ abstract class Step(
     }
 
     suspend fun execute() {
-        val resolved = mutableMapOf<String, String>()
-        inputs.forEach {
-            resolved[it.key] = it.value.pull()
+        val resolvedInputs = mutableMapOf<String, String>()
+        coroutineScope {
+            inputs.forEach {
+                // This can happen in parallel coroutines
+                launch { resolvedInputs[it.key] = it.value.pull() }
+            }
         }
 
-        val results = execute(resolved)
+        val results = execute(resolvedInputs)
 
         results.forEach { (key, value) ->
             // Undocumented outputs will simply be discarded by the "?"
