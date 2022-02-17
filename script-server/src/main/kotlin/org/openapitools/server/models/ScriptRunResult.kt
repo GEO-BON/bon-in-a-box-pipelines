@@ -19,8 +19,8 @@ package org.openapitools.server.models
  * @param files 
  */
 data class ScriptRunResult(
-    val logs: kotlin.String? = null,
-    val error: kotlin.Boolean? = null,
-    val files: kotlin.collections.Map<kotlin.String, kotlin.String>? = null
+    val logs: String? = null,
+    val error: Boolean = false,
+    val files: Map<String, String>? = null
 ) 
 
