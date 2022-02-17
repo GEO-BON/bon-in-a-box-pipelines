@@ -17,7 +17,7 @@ private class ResourceYml(resourcePath: String, inputs: Map<String, Pipe> = mapO
 internal class YMLStepTest {
     @Test
     fun givenNoInOneOut_whenConstructed_thenExpectedOutputsIsFound() {
-        val step = ResourceYml("0in1out.yml")
+        val step = ResourceYml("scripts/0in1out.yml")
         assertNotNull(step.outputs["randomness"])
         assertEquals("int", step.outputs["randomness"]!!.type)
     }
@@ -25,14 +25,14 @@ internal class YMLStepTest {
     @Test
     fun givenOneInOneOut_whenBadNumberOfInputsProvided_thenExceptionIsThrown() {
         // Should throw : no input!
-        assertThrows<AssertionError> { ResourceYml("1in1out.yml") }
+        assertThrows<AssertionError> { ResourceYml("scripts/1in1out.yml") }
 
         // Should throw : too many inputs!
         val correctInput = mockk<Pipe>()
         every { correctInput.type } returns "int"
         val badInput = mockk<Pipe>()
         every { badInput.type } returns "text/plain"
-        assertThrows<AssertionError> { ResourceYml("1in1out.yml", mapOf(
+        assertThrows<AssertionError> { ResourceYml("scripts/1in1out.yml", mapOf(
             "some_int" to correctInput,
             "oups" to badInput
         )) }
@@ -42,21 +42,21 @@ internal class YMLStepTest {
     fun givenOneInOneOut_whenBadTypeOfInputsProvided_thenExceptionIsThrown() {
         val badInput = mockk<Pipe>()
         every { badInput.type } returns "text/plain"
-        assertThrows<AssertionError> { ResourceYml("1in1out.yml", mapOf("some_int" to badInput)) }
+        assertThrows<AssertionError> { ResourceYml("scripts/1in1out.yml", mapOf("some_int" to badInput)) }
     }
 
     @Test
     fun givenOneInOneOut_whenInputKeyNotFound_thenExceptionIsThrown() {
         val typoInput = mockk<Pipe>()
         every { typoInput.type } returns "int"
-        assertThrows<AssertionError> { ResourceYml("1in1out.yml", mapOf("some_intt" to typoInput)) }
+        assertThrows<AssertionError> { ResourceYml("scripts/1in1out.yml", mapOf("some_intt" to typoInput)) }
     }
 
     @Test
     fun givenOneInOneOut_whenConstructed_thenExpectedIOIsFound() {
         val correctInput = mockk<Pipe>()
         every { correctInput.type } returns "int"
-        val step = ResourceYml("1in1out.yml", mapOf("some_int" to correctInput))
+        val step = ResourceYml("scripts/1in1out.yml", mapOf("some_int" to correctInput))
         assertNotNull(step.outputs["number"])
         assertEquals("int", step.outputs["number"]!!.type)
     }
@@ -65,7 +65,7 @@ internal class YMLStepTest {
     fun givenOneInTwoOut_whenConstructed_thenExpectedIOIsFound() {
         val correctInput = mockk<Pipe>()
         every { correctInput.type } returns "int"
-        val step = ResourceYml("1in2out.yml", mapOf("some_int" to correctInput))
+        val step = ResourceYml("scripts/1in2out.yml", mapOf("some_int" to correctInput))
 
         assertNotNull(step.outputs["number"])
         assertEquals("int", step.outputs["number"]!!.type)
