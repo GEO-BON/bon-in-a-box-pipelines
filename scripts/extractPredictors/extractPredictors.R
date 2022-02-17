@@ -20,7 +20,7 @@ library("tibble")
 library("sp")
 library("sf")
 library("RCurl")
-options(timeout = max(60000, getOption("timeout")))
+#options(timeout = max(60000, getOption("timeout")))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -127,9 +127,7 @@ cube <-
 
 obs <- bind_cols(obs, 
                  setNames(data.frame(proj.pts), c("lon", "lat"))) 
-print(head(obs$lon))
-print(head(obs$lat))
-print(input$t0)
+
 value.points <- query_points(cube, obs$lon, obs$lat, pt = rep(as.Date(input$t0), length(obs$lon)), srs(cube))
 obs <- bind_cols(obs,
   value.points)
