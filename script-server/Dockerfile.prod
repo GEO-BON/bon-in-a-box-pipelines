@@ -109,10 +109,10 @@ RUN set -ex; \
         r-cran-rjava ;\
     apt-get clean all;
 
-# RUN set -ex; \
-    # apt-get update; \
-    # apt-get install -y --no-install-recommends python python3; \
-    # apt-get clean all;
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends python3; \
+    apt-get clean all;
 
 ## This image builds the server code
 FROM gradle:6.9.2-jdk11-alpine as builder
