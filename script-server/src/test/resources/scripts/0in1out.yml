@@ -1,4 +1,4 @@
-script: 0in1out.R
+script: 0in1out.sh
 inputs:
 outputs:
   randomness:

@@ -57,8 +57,8 @@ internal class YMLStepTest {
         val correctInput = mockk<Pipe>()
         every { correctInput.type } returns "int"
         val step = ResourceYml("scripts/1in1out.yml", mapOf("some_int" to correctInput))
-        assertNotNull(step.outputs["number"])
-        assertEquals("int", step.outputs["number"]!!.type)
+        assertNotNull(step.outputs["increment"])
+        assertEquals("int", step.outputs["increment"]!!.type)
     }
 
     @Test
