@@ -1,0 +1,64 @@
+package org.geobon.pipeline
+
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
+import org.geobon.script.outputRoot
+import org.geobon.script.scriptRoot
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import java.io.File
+
+@ExperimentalCoroutinesApi
+internal class ScriptStepTest {
+
+    @BeforeEach
+    fun setupOutputFolder() {
+        with(outputRoot) {
+            assertTrue(!exists())
+            mkdirs()
+            assertTrue(exists())
+        }
+    }
+
+    @AfterEach
+    fun removeOutputFolder() {
+        assertTrue(File(System.getenv("OUTPUT_LOCATION")).deleteRecursively())
+    }
+
+    @Test
+    fun givenNoInput_whenExecute_thenNoInputFileIsGenerated_andOutputIsThere() = runTest {
+        val step = ScriptStep(File(scriptRoot, "0in1out.yml"))
+
+        step.execute()
+
+        val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!
+        assertEquals(0, files.filter { it.name == "input.json" }.size)
+        assertEquals(1, files.filter { it.name == "output.json" }.size)
+
+        assertNotNull(step.outputs["randomness"])
+        assertNotNull(step.outputs["randomness"]!!.value)
+        assertEquals("234", step.outputs["randomness"]!!.value)
+    }
+
+    @Test
+    fun given1In1Out_whenExecute_thenInputFileIsGenerated_andOutputIsThere() = runTest {
+        val input = 234
+        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), mapOf("some_int" to ConstantPipe("int", "$input")))
+
+        step.execute()
+
+        val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!
+        files.filter { it.name == "input.json" }.let {
+            assertEquals(1, it.size)
+            println(it[0]!!.readText())
+        }
+
+        assertEquals(1, files.filter { it.name == "output.json" }.size)
+        assertNotNull(step.outputs["increment"])
+        // TODO: Support integers
+        assertEquals(input.toString(), step.outputs["increment"]!!.value)
+    }
+
+}
