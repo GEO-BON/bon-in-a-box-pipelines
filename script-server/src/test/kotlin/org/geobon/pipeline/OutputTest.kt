@@ -2,27 +2,10 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.pipeline.teststeps.EchoStep
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.assertEquals
-
-class EchoStep(private val sound: String) :
-    Step(
-        outputs = mapOf(
-            KEY to Output("text/plain"),
-            BAD_KEY to Output("text/plain")
-        )
-    ) {
-
-    companion object {
-        const val KEY = "echo"
-        const val BAD_KEY = "no-echo"
-    }
-
-    override suspend fun execute(resolvedInputs: Map<String, String>): Map<String, String> {
-        return mapOf(KEY to sound)
-    }
-}
 
 @ExperimentalCoroutinesApi
 internal class OutputTest {
