@@ -16,25 +16,26 @@ import java.util.concurrent.TimeUnit
 val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
-class ScriptRun {
+class ScriptRun (private val scriptFile: File, private val inputFileContent:String?) {
     var result:ScriptRunResult? = null
+        private set
 
-    private val scriptFile: File
-    private val inputFileContent: String
+    /**
+     * A unique string identifier representing a run of this script with these specific parameters.
+     * i.e. Calling the same script with the same param would result in the same ID.
+     */
+    val id = File(
+        // Unique to this script
+        scriptFile.relativeTo(scriptRoot).path,
+        // Unique to these params
+        inputFileContent?.toMD5() ?: "no_params"
+    ).path // as a string
 
     companion object {
         private val logger: Logger = LoggerFactory.getLogger(ScriptRun::class.java)
         private val gson = Gson()
-    }
 
-    constructor (scriptRelPath: String, inputFileContent:String) {
-        this.scriptFile = File(scriptRoot, scriptRelPath)
-        this.inputFileContent = inputFileContent
-    }
-
-    constructor (scriptFile: File, inputFileContent:String) {
-        this.scriptFile = scriptFile
-        this.inputFileContent = inputFileContent
+        fun toJson(src: Any): String = gson.toJson(src)
     }
 
     suspend fun execute() {
@@ -45,7 +46,7 @@ class ScriptRun {
         }
 
         // Create the output folder for this invocation
-        val outputFolder = getOutputFolder(scriptFile.relativeTo(scriptRoot).path, inputFileContent)
+        val outputFolder = File(outputRoot, id.replace('.', '_'))
         outputFolder.mkdirs()
         logger.trace("Paths.runScript outputting to $outputFolder")
 
@@ -61,20 +62,27 @@ class ScriptRun {
                 logger.trace("Previous results deleted")
             }
 
-            // Create input.json
-            val inputFile= File(outputFolder, "input.json")
-            inputFile.writeText(inputFileContent)
+            inputFileContent?.let {
+                // Create input.json
+                val inputFile = File(outputFolder, "input.json")
+                inputFile.writeText(inputFileContent)
+            }
 
             val command = when (scriptFile.extension) {
                 "jl", "JL" -> "julia"
                 "r", "R" -> "Rscript"
+                "sh" -> "sh"
+                "py", "PY" -> "python3"
                 else -> {
-                    result = ScriptRunResult("Unsupported script extension ${scriptFile.extension}", true)
+                    "Unsupported script extension ${scriptFile.extension}".let {
+                        logger.warn(it)
+                        result = ScriptRunResult(it, true)
+                    }
                     return
                 }
             }
 
-            ProcessBuilder(listOf(command,scriptFile.absolutePath, outputFolder.absolutePath))
+            ProcessBuilder(listOf(command, scriptFile.absolutePath, outputFolder.absolutePath))
                 .directory(scriptRoot)
                 .redirectOutput(ProcessBuilder.Redirect.PIPE)
                 .redirectErrorStream(true) // Merges stderr into stdout
@@ -105,30 +113,31 @@ class ScriptRun {
             try {
                 if(process.exitValue() != 0) {
                     error = true
-                    logs += "Error: script returned non-zero value\n"
+                    logs += "Error: script returned non-zero value".also { logger.warn(it) } + "\n"
                 }
 
                 if(resultFile.exists()) {
                     val type = object : TypeToken<Map<String, String>>() {}.type
                     val result = resultFile.readText()
-                    logger.trace(result)
                     try {
                         outputs = gson.fromJson<Map<String, String>>(result, type)
+                        logger.trace(result)
                     } catch (e:Exception) {
                         error = true
-                        logs += e.message + "\n"
-                        logs += "Error: Malformed JSON file.\n"
-                        logs += "Make sure complex results are saved in a separate file (csv, geojson, etc.).\n"
-                        logs += "Content of output.json:\n"
-                        logs += result
+                        logs +=  ("""
+                            ${e.message}
+                            Error: Malformed JSON file.
+                            Make sure complex results are saved in a separate file (csv, geojson, etc.).
+                            Contents of output.json:
+                        """.trimIndent() + "\n$result").also { logger.warn(it) }
                     }
                 } else {
                     error = true
-                    logs += "Error: output.json file not found\n"
+                    logs += "Error: output.json file not found".also { logger.warn(it) } + "\n"
                 }
             } catch (ex:IllegalThreadStateException) {
                 error = true
-                logs += "TIMEOUT occurred\n"
+                logs += "TIMEOUT occurred".also { logger.warn(it) } + "\n"
                 process.destroy()
             }
 
@@ -142,21 +151,5 @@ class ScriptRun {
         if(logs.isNotEmpty()) logs = "Full logs: $logs"
         result = ScriptRunResult(logs, error, outputs)
         return
-    }
-
-    /**
-     *
-     * @param {String} scriptFile
-     * @param {List} params
-     * @returns a folder for this invocation. Invoking with the same params will always give the same output folder.
-     */
-    private fun getOutputFolder(scriptPath: String, body: String?):File {
-        // Unique to this script
-        val scriptOutputFolder = File(outputRoot, scriptPath.replace('.', '_'))
-
-        // Unique to this script, with these parameters
-        return File(scriptOutputFolder,
-            body?.toMD5() ?: "no_params"
-        )
     }
 }
