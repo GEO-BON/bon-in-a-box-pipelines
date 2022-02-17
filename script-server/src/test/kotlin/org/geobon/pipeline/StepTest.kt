@@ -4,6 +4,7 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.teststeps.ConcatenateStep
 import org.junit.jupiter.api.Test
@@ -14,6 +15,16 @@ import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
 internal class StepTest {
+
+    class DelayPipe(private val finishLine: MutableList<String>, private val delay:Long, private val value: String) : Pipe {
+        override val type: String = "text/plain"
+
+        override suspend fun pull(): String {
+            delay(delay)
+            finishLine.add(value)
+            return value
+        }
+    }
 
     @Test
     fun givenNoInOneOut_whenExecuted_thenInputsAreCalledAndOutputReceivesValue() = runTest {
@@ -44,6 +55,26 @@ internal class StepTest {
         assertNotNull(step.outputs[ConcatenateStep.STRING]!!.value)
         assertTrue (step.outputs[ConcatenateStep.STRING]!!.value!!.contains("value1"))
         assertTrue (step.outputs[ConcatenateStep.STRING]!!.value!!.contains("value2"))
+    }
+
+    @Test
+    fun givenManyInputs_whenExecuted_thenInputsAreCalledInParallel() = runTest {
+        val finishLine = mutableListOf<String>()
+
+        val step = ConcatenateStep(mapOf(
+            "1" to DelayPipe(finishLine, 2000, "!"),
+            "2" to DelayPipe(finishLine, 500, " "),
+            "3" to DelayPipe(finishLine, 1000, "world"),
+            "4" to DelayPipe(finishLine, 0, "Hello")))
+
+        step.execute()
+
+        // They finished in order of delay, not in order of insertion
+        val expectedFinishLine = listOf("Hello", " ", "world", "!")
+        assertEquals(expectedFinishLine, finishLine)
+
+        // This happens to be true, but could vary with map implementation:
+        assertEquals("Hello world!", step.outputs[ConcatenateStep.STRING]!!.value)
     }
 
 }
