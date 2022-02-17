@@ -31,7 +31,7 @@ abstract class YMLStep(
 
         private fun readInputs(yamlParsed: Map<String, Any>): Map<String, String> {
             val inputs = mutableMapOf<String, String>()
-            readIO(yamlParsed, INPUTS) { key, type ->
+            readIO("inputs", yamlParsed, INPUTS) { key, type ->
                 inputs[key] = type
             }
             return inputs
@@ -39,7 +39,7 @@ abstract class YMLStep(
 
         private fun readOutputs(yamlParsed: Map<String, Any>): Map<String, Output> {
             val outputs = mutableMapOf<String, Output>()
-            readIO(yamlParsed, OUTPUTS) { key, type ->
+            readIO("outputs", yamlParsed, OUTPUTS) { key, type ->
                 outputs[key] = Output(type)
             }
             return outputs
@@ -48,11 +48,10 @@ abstract class YMLStep(
         /**
          * Since both Input and output look alike, function to read key and type is in common.
          */
-        private fun readIO(yamlParsed: Map<String, Any>, section:String, toExecute:(String, String) -> Unit) {
+        private fun readIO(label:String, yamlParsed: Map<String, Any>, section:String, toExecute:(String, String) -> Unit) {
             yamlParsed[section]?.let {
                 if(it is Map<*, *>) {
                     it.forEach { (key, description) ->
-                        println("$key: $description")
                         key?.let {
                             //println("Key valid: $key")
                             if(description is Map<*, *>) {
@@ -62,14 +61,14 @@ abstract class YMLStep(
                                     toExecute(key.toString(), type.toString())
                                 } ?: println("Invalid type")
                             } else {
-                                println("Output description is not a map")
+                                println("$label description is not a map")
                             }
                         } ?: println("Invalid key")
                     }
                 } else {
-                    println("Outputs is not a map")
+                    println("$label is not a map")
                 }
-            } ?: println("No output map")
+            } ?: println("No $label map")
         }
     }
 }
