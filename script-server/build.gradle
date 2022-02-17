@@ -48,6 +48,8 @@ shadowJar {
 
 test {
     useJUnitPlatform()
+    environment "SCRIPT_LOCATION", "${projectDir}/src/test/resources/scripts/"
+    environment "OUTPUT_LOCATION", "${projectDir}/src/test/resources/outputs/"
 }
 
 repositories {
