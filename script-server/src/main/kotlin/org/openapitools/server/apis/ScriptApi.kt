@@ -95,7 +95,7 @@ fun Route.ScriptApi(logger:Logger) {
 
 
     get<Paths.runPipeline> { parameters ->
-        logger.info("runPipeline ${parameters.descriptionPath}")
+        // TODO some real implementation
 
         try {
             // Launch fake pipeline
@@ -104,12 +104,16 @@ fun Route.ScriptApi(logger:Logger) {
             val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 14
             finalStep.outputs["increment"]!!.pull()
 
-            call.respondText("fakePipeline")
+            // Dump the content (normally )
+            call.respondText("""
+                step1: ${step1.outputs}
+                step2: ${step2.outputs}
+                finalStep: ${finalStep.outputs}
+            """.trimIndent())
         } catch (ex:Exception) {
             call.respondText(ex.stackTraceToString(), status=HttpStatusCode.InternalServerError)
         }
 
-        // TODO some real implementation
     }
 
     get<Paths.getPipelineOutputs> { parameters ->
