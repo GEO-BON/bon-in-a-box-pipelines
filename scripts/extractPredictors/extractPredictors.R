@@ -3,7 +3,7 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "rgdal")
+packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "rgdal", "RCurl")
 
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
@@ -18,8 +18,8 @@ library("rstac")
 library("tibble")
 library("sp")
 library("sf")
-
-
+library("RCurl")
+#options(timeout = max(60000, getOption("timeout")))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -58,7 +58,9 @@ findBox <- function(xy, buffer = 0, proj.new = NULL) {
   bbox
 }
 
-loadCube <- function(stac_path = "http://io.biodiversite-quebec.ca/stac/",
+loadCube <- function(stac_path = 
+  "http://io.biodiversite-quebec.ca/stac/",
+ 
                      limit = 5000, 
                      collections = c('chelsa-clim'), 
                      use.obs = T,
@@ -126,7 +128,8 @@ obs <- bind_cols(obs,
                  setNames(data.frame(proj.pts), c("lon", "lat"))) 
 
 value.points <- query_points(cube, obs$lon, obs$lat, pt = rep(as.Date(input$t0), length(obs$lon)), srs(cube))
-
+obs <- bind_cols(obs,
+  value.points)
 
 
 obs.values <- file.path(outputFolder, "obs_values.tsv")
