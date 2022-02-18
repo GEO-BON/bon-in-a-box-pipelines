@@ -102,7 +102,7 @@ var BonInABoxScriptService = require('bon_in_a_box_script_service');
 
 
 var api = new BonInABoxScriptService.DefaultApi()
-var scriptPath = "scriptPath_example"; // {String} Where to find the script in ./script folder.
+var descriptionPath = "descriptionPath_example"; // {String} Where to find the pipeline in ./pipeline folder.
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -110,7 +110,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getScriptInfo(scriptPath, callback);
+api.getPipelineInfo(descriptionPath, callback);
 
 ```
 
@@ -120,7 +120,11 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*BonInABoxScriptService.DefaultApi* | [**getPipelineInfo**](docs/DefaultApi.md#getPipelineInfo) | **GET** /pipeline/{descriptionPath}/info | Get metadata about this pipeline
+*BonInABoxScriptService.DefaultApi* | [**getPipelineOutputs**](docs/DefaultApi.md#getPipelineOutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
 *BonInABoxScriptService.DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
+*BonInABoxScriptService.DefaultApi* | [**pipelineListGet**](docs/DefaultApi.md#pipelineListGet) | **GET** /pipeline/list | Get a list of available pipelines
+*BonInABoxScriptService.DefaultApi* | [**runPipeline**](docs/DefaultApi.md#runPipeline) | **GET** /pipeline/{descriptionPath}/run | Run this pipeline
 *BonInABoxScriptService.DefaultApi* | [**runScript**](docs/DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
 *BonInABoxScriptService.DefaultApi* | [**scriptListGet**](docs/DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
 

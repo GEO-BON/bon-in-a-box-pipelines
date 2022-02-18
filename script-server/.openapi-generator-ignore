@@ -26,3 +26,4 @@ Dockerfile
 src/main/kotlin/org/openapitools/server/AppMain.kt
 src/main/resources/application.conf
 src/main/resources/logback.xml
+build.gradle

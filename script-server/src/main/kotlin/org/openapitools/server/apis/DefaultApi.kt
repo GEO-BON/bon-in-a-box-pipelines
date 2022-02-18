@@ -27,9 +27,53 @@ fun Route.DefaultApi() {
     val gson = Gson()
     val empty = mutableMapOf<String, Any?>()
 
+    get<Paths.getPipelineInfo> {
+        val exampleContentType = ""
+        val exampleContentString = """"""
+        
+        when (exampleContentType) {
+            "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+            "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+            else -> call.respondText(exampleContentString)
+        }
+    }
+
+    get<Paths.getPipelineOutputs> {
+        val exampleContentType = "application/json"
+        val exampleContentString = """"[\"Folder/Script_ext/88204814d39b762f933d67d9a3d68832\",\"Folder/Script2/1a015dccdfb7f639ec32c278506e7c5a\"]""""
+        
+        when (exampleContentType) {
+            "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+            "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+            else -> call.respondText(exampleContentString)
+        }
+    }
+
     get<Paths.getScriptInfo> {
         val exampleContentType = ""
-        val exampleContentString = """http://something"""
+        val exampleContentString = """"""
+        
+        when (exampleContentType) {
+            "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+            "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+            else -> call.respondText(exampleContentString)
+        }
+    }
+
+    get<Paths.pipelineListGet> {
+        val exampleContentType = "application/json"
+        val exampleContentString = """"[\"SHI.yml\",\"Folder>SDM.yml\"]""""
+        
+        when (exampleContentType) {
+            "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
+            "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
+            else -> call.respondText(exampleContentString)
+        }
+    }
+
+    get<Paths.runPipeline> {
+        val exampleContentType = ""
+        val exampleContentString = """"""
         
         when (exampleContentType) {
             "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))

@@ -88,6 +88,108 @@ paths:
           description: Bad request
         "404":
           description: Script not found
+  /pipeline/list:
+    get:
+      summary: Get a list of available pipelines
+      responses:
+        "200":
+          description: Array of pipeline description files
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: ["SHI.yml", "Folder>SDM.yml"]
+  /pipeline/{descriptionPath}/info:
+    get:
+      tags: []
+      summary: Get metadata about this pipeline
+      operationId: getPipelineInfo
+      parameters:
+      - name: descriptionPath
+        in: path
+        description: Where to find the pipeline in ./pipeline folder.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the metadata, in YAML format
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "
+                          inputs:
+                          outputs:
+                          description:
+                          external_link:
+                          references:
+                          definition:
+                          "
+                x-content-type: text/plain
+        "400":
+          description: Bad request
+        "404":
+          description: Script not found
+  /pipeline/{descriptionPath}/run:
+    get:
+      tags: []
+      summary: Run this pipeline
+      operationId: runPipeline
+      parameters:
+      - name: descriptionPath
+        in: path
+        description: Where to find the script in ./script folder.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Returns the unique ID for this run. It corresponds to the unique output folder.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "HelloWorld/Hello World/88204814d39b762f933d67d9a3d68832"
+                x-content-type: text/plain
+        "400":
+          description: Bad request
+        "404":
+          description: Script not found
+  /pipeline/{id}/outputs:
+    get:
+      tags: []
+      summary: Get the output folders of the scripts composing this pipeline
+      operationId: getPipelineOutputs
+      parameters:
+      - name: id
+        in: path
+        description: Where to find the pipeline in ./script folder.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: List of output folders for all the scripts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: ["Folder/Script_ext/88204814d39b762f933d67d9a3d68832", "Folder/Script2/1a015dccdfb7f639ec32c278506e7c5a"]
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
 components:
   schemas:
     script_run_result:

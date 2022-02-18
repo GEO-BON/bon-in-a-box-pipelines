@@ -35,6 +35,90 @@ export default class DefaultApi {
 
 
     /**
+     * Callback function to receive the result of the getPipelineInfo operation.
+     * @callback module:api/DefaultApi~getPipelineInfoCallback
+     * @param {String} error Error message, if any.
+     * @param {String} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get metadata about this pipeline
+     * @param {String} descriptionPath Where to find the pipeline in ./pipeline folder.
+     * @param {module:api/DefaultApi~getPipelineInfoCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link String}
+     */
+    getPipelineInfo(descriptionPath, callback) {
+      let postBody = null;
+      // verify the required parameter 'descriptionPath' is set
+      if (descriptionPath === undefined || descriptionPath === null) {
+        throw new Error("Missing the required parameter 'descriptionPath' when calling getPipelineInfo");
+      }
+
+      let pathParams = {
+        'descriptionPath': descriptionPath
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain'];
+      let returnType = 'String';
+      return this.apiClient.callApi(
+        '/pipeline/{descriptionPath}/info', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the getPipelineOutputs operation.
+     * @callback module:api/DefaultApi~getPipelineOutputsCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<String>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get the output folders of the scripts composing this pipeline
+     * @param {String} id Where to find the pipeline in ./script folder.
+     * @param {module:api/DefaultApi~getPipelineOutputsCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<String>}
+     */
+    getPipelineOutputs(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling getPipelineOutputs");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = ['String'];
+      return this.apiClient.callApi(
+        '/pipeline/{id}/outputs', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the getScriptInfo operation.
      * @callback module:api/DefaultApi~getScriptInfoCallback
      * @param {String} error Error message, if any.
@@ -71,6 +155,84 @@ export default class DefaultApi {
       let returnType = 'String';
       return this.apiClient.callApi(
         '/script/{scriptPath}/info', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the pipelineListGet operation.
+     * @callback module:api/DefaultApi~pipelineListGetCallback
+     * @param {String} error Error message, if any.
+     * @param {Array.<String>} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get a list of available pipelines
+     * @param {module:api/DefaultApi~pipelineListGetCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Array.<String>}
+     */
+    pipelineListGet(callback) {
+      let postBody = null;
+
+      let pathParams = {
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = ['String'];
+      return this.apiClient.callApi(
+        '/pipeline/list', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
+     * Callback function to receive the result of the runPipeline operation.
+     * @callback module:api/DefaultApi~runPipelineCallback
+     * @param {String} error Error message, if any.
+     * @param {String} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Run this pipeline
+     * @param {String} descriptionPath Where to find the script in ./script folder.
+     * @param {module:api/DefaultApi~runPipelineCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link String}
+     */
+    runPipeline(descriptionPath, callback) {
+      let postBody = null;
+      // verify the required parameter 'descriptionPath' is set
+      if (descriptionPath === undefined || descriptionPath === null) {
+        throw new Error("Missing the required parameter 'descriptionPath' when calling runPipeline");
+      }
+
+      let pathParams = {
+        'descriptionPath': descriptionPath
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['text/plain'];
+      let returnType = 'String';
+      return this.apiClient.callApi(
+        '/pipeline/{descriptionPath}/run', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );

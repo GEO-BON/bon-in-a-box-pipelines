@@ -17,11 +17,38 @@ import org.openapitools.server.models.*
 @KtorExperimentalLocationsAPI
 object Paths {
     /**
+     * Get metadata about this pipeline
+     * 
+     * @param descriptionPath Where to find the pipeline in ./pipeline folder. 
+     */
+    @Location("/pipeline/{descriptionPath}/info") class getPipelineInfo(val descriptionPath: kotlin.String)
+
+    /**
+     * Get the output folders of the scripts composing this pipeline
+     * 
+     * @param id Where to find the pipeline in ./script folder. 
+     */
+    @Location("/pipeline/{id}/outputs") class getPipelineOutputs(val id: kotlin.String)
+
+    /**
      * Get metadata about this script
      * 
      * @param scriptPath Where to find the script in ./script folder. 
      */
     @Location("/script/{scriptPath}/info") class getScriptInfo(val scriptPath: kotlin.String)
+
+    /**
+     * Get a list of available pipelines
+     * 
+     */
+    @Location("/pipeline/list") object pipelineListGet
+
+    /**
+     * Run this pipeline
+     * 
+     * @param descriptionPath Where to find the script in ./script folder. 
+     */
+    @Location("/pipeline/{descriptionPath}/run") class runPipeline(val descriptionPath: kotlin.String)
 
     /**
      * Run this script
