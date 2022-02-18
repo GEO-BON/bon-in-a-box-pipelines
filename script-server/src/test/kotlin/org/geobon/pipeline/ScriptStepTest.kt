@@ -39,13 +39,13 @@ internal class ScriptStepTest {
 
         assertNotNull(step.outputs["randomness"])
         assertNotNull(step.outputs["randomness"]!!.value)
-        assertEquals("234", step.outputs["randomness"]!!.value)
+        assertEquals(234.toDouble(), step.outputs["randomness"]!!.value as Double)
     }
 
     @Test
     fun given1In1Out_whenExecute_thenInputFileIsGenerated_andOutputIsThere() = runTest {
         val input = 234
-        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), mapOf("some_int" to ConstantPipe("int", "$input")))
+        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), mapOf("some_int" to ConstantPipe("int", input)))
 
         step.execute()
 
@@ -57,8 +57,7 @@ internal class ScriptStepTest {
 
         assertEquals(1, files.filter { it.name == "output.json" }.size)
         assertNotNull(step.outputs["increment"])
-        // TODO: Support integers
-        assertEquals(input.toString(), step.outputs["increment"]!!.value)
+        assertEquals((input + 1).toDouble(), step.outputs["increment"]!!.value as Double)
     }
 
 }

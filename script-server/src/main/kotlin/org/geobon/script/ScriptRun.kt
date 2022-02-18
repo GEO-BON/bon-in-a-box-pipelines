@@ -53,7 +53,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         // Run the script
         var error = false
         var logs = ""
-        var outputs:Map<String, String>? = null
+        var outputs:Map<String, Any>? = null
 
         val resultFile = File(outputFolder, "output.json")
         runCatching {
@@ -117,10 +117,10 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 }
 
                 if(resultFile.exists()) {
-                    val type = object : TypeToken<Map<String, String>>() {}.type
+                    val type = object : TypeToken<Map<String, Any>>() {}.type
                     val result = resultFile.readText()
                     try {
-                        outputs = gson.fromJson<Map<String, String>>(result, type)
+                        outputs = gson.fromJson<Map<String, Any>>(result, type)
                         logger.trace(result)
                     } catch (e:Exception) {
                         error = true

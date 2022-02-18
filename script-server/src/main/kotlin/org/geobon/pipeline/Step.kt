@@ -12,7 +12,7 @@ abstract class Step(
     }
 
     suspend fun execute() {
-        val resolvedInputs = mutableMapOf<String, String>()
+        val resolvedInputs = mutableMapOf<String, Any>()
         coroutineScope {
             inputs.forEach {
                 // This can happen in parallel coroutines
@@ -30,6 +30,6 @@ abstract class Step(
         }
     }
 
-    abstract suspend fun execute(resolvedInputs: Map<String, String>): Map<String, String>
+    abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
 
 }

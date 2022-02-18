@@ -53,8 +53,8 @@ internal class StepTest {
         }
         assertNotNull(step.outputs[ConcatenateStep.STRING])
         assertNotNull(step.outputs[ConcatenateStep.STRING]!!.value)
-        assertTrue (step.outputs[ConcatenateStep.STRING]!!.value!!.contains("value1"))
-        assertTrue (step.outputs[ConcatenateStep.STRING]!!.value!!.contains("value2"))
+        assertTrue ((step.outputs[ConcatenateStep.STRING]!!.value!! as String).contains("value1"))
+        assertTrue ((step.outputs[ConcatenateStep.STRING]!!.value!! as String).contains("value2"))
     }
 
     @Test

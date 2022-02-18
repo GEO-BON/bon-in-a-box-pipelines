@@ -9,7 +9,7 @@ import kotlin.test.assertNotNull
 
 private class ResourceYml(resourcePath: String, inputs: Map<String, Pipe> = mapOf()) :
     YMLStep(yamlString = ResourceYml::class.java.classLoader.getResource(resourcePath)!!.readText(), inputs = inputs) {
-    override suspend fun execute(resolvedInputs: Map<String, String>): Map<String, String> {
+    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         throw Exception("this is in YMLStep, should not be tested")
     }
 }
