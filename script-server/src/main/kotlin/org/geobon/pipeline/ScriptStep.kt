@@ -6,13 +6,13 @@ import org.geobon.script.scriptRoot
 import java.io.File
 
 
-class ScriptStep(yamlFile: File, inputs: Map<String, Pipe> = mapOf()) :
+class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()) :
     YMLStep(yamlString = yamlFile.readText(), inputs = inputs) {
 
     constructor(fileName:String, inputs: Map<String, Pipe> = mapOf()) : this (File(scriptRoot, fileName), inputs)
 
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
-        val scriptFile = File(scriptRoot, yamlParsed[SCRIPT].toString())
+        val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
         val scriptRun = ScriptRun(
             scriptFile,
             if(resolvedInputs.isEmpty()) null else ScriptRun.toJson(resolvedInputs)

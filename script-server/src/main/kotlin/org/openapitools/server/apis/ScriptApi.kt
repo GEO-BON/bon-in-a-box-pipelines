@@ -9,6 +9,8 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import org.geobon.pipeline.ConstantPipe
+import org.geobon.pipeline.ScriptStep
 import org.geobon.script.ScriptRun
 import org.geobon.script.scriptRoot
 import org.openapitools.server.Paths
@@ -60,4 +62,58 @@ fun Route.ScriptApi(logger:Logger) {
         
         call.respond(possible)
     }
+
+    get<Paths.pipelineListGet> {
+        call.respondText("Unimplemented")
+/*
+        val possible = mutableListOf<String>()
+        val relPathIndex = scriptRoot.absolutePath.length + 1
+        scriptRoot.walkTopDown().forEach { file ->
+            if(file.extension == "yml") {
+                // Add the relative path, without the script root.
+                possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
+            }
+        }
+
+        call.respond(possible)*/
+    }
+
+    get<Paths.getPipelineInfo> { parameters ->
+        call.respondText("Unimplemented")
+        /*
+        try {
+            // Put back the slashes and replace extension by .yml
+            val ymlPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")
+            val scriptFile = File(scriptRoot, ymlPath)
+            call.respondText(scriptFile.readText())
+            logger.trace("200: Paths.getScriptInfo $scriptFile")
+        } catch (ex:Exception) {
+            call.respondText(text=ex.message!!, status=HttpStatusCode.NotFound)
+            logger.trace("Error 404: Paths.getScriptInfo ${parameters.scriptPath}")
+        }*/
+    }
+
+
+    get<Paths.runPipeline> { parameters ->
+        logger.info("runPipeline ${parameters.descriptionPath}")
+
+        try {
+            // Launch fake pipeline
+            val step1 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to ConstantPipe("int", 12))) // 12
+            val step2 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step1.outputs["increment"]!!)) // 13
+            val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 14
+            finalStep.outputs["increment"]!!.pull()
+
+            call.respondText("fakePipeline")
+        } catch (ex:Exception) {
+            call.respondText(ex.stackTraceToString(), status=HttpStatusCode.InternalServerError)
+        }
+
+        // TODO some real implementation
+    }
+
+    get<Paths.getPipelineOutputs> { parameters ->
+        call.respondText("Unimplemented")
+    }
+
 }
