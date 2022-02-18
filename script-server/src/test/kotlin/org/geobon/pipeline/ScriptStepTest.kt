@@ -60,4 +60,20 @@ internal class ScriptStepTest {
         assertEquals((input + 1).toDouble(), step.outputs["increment"]!!.value as Double)
     }
 
+    @Test
+    fun givenScriptInSubfolder_whenExecute_thenOutputInSubfolder() = runTest {
+        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"))
+
+        step.execute()
+
+        // There is one additional listFiles                     here
+        val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!![0].listFiles()!!
+        assertEquals(0, files.filter { it.name == "input.json" }.size)
+        assertEquals(1, files.filter { it.name == "output.json" }.size)
+
+        assertNotNull(step.outputs["randomness"])
+        assertNotNull(step.outputs["randomness"]!!.value)
+        assertEquals(234.toDouble(), step.outputs["randomness"]!!.value as Double)
+    }
+
 }
