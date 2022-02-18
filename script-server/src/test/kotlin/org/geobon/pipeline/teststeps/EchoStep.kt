@@ -25,7 +25,7 @@ class EchoStep(sound: String) :
         private const val SOUND = "sound"
     }
 
-    override suspend fun execute(resolvedInputs: Map<String, String>): Map<String, String> {
+    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         return mapOf(KEY to resolvedInputs[SOUND]!!)
     }
 }

@@ -24,11 +24,12 @@ abstract class YMLStep(
                 assert(it.type == expectedType) { "Wrong type \"${it.type}\" for $inputKey, \"$expectedType\" expected." }
             } ?: throw AssertionError("Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}")
         }
-
     }
 
     companion object {
-
+        /**
+         * @return Map of input name to type
+         */
         private fun readInputs(yamlParsed: Map<String, Any>): Map<String, String> {
             val inputs = mutableMapOf<String, String>()
             readIO("inputs", yamlParsed, INPUTS) { key, type ->
@@ -37,6 +38,9 @@ abstract class YMLStep(
             return inputs
         }
 
+        /**
+         * @return Map of output name to type
+         */
         private fun readOutputs(yamlParsed: Map<String, Any>): Map<String, Output> {
             val outputs = mutableMapOf<String, Output>()
             readIO("outputs", yamlParsed, OUTPUTS) { key, type ->

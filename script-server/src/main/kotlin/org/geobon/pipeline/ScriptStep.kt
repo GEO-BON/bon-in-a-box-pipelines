@@ -9,7 +9,7 @@ import java.io.File
 class ScriptStep(yamlFile: File, inputs: Map<String, Pipe> = mapOf()) :
     YMLStep(yamlString = yamlFile.readText(), inputs = inputs) {
 
-    override suspend fun execute(resolvedInputs: Map<String, String>): Map<String, String> {
+    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(scriptRoot, yamlParsed[SCRIPT].toString())
         val scriptRun = ScriptRun(
             scriptFile,

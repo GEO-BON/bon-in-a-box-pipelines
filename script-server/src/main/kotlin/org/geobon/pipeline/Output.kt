@@ -3,9 +3,9 @@ package org.geobon.pipeline
 class Output(override val type:String) : Pipe {
 
     var step: Step? = null
-    var value:String? = null
+    var value:Any? = null
 
-    override suspend fun pull(): String {
+    override suspend fun pull(): Any {
         if(value == null) {
             step?.apply { execute() }
                 ?: throw Exception("Output disconnected from any step")

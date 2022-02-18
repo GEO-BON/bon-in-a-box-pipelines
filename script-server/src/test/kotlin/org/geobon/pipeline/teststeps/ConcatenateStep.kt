@@ -15,7 +15,7 @@ class ConcatenateStep(
         const val STRING = "concat"
     }
 
-    override suspend fun execute(resolvedInputs: Map<String, String>) : Map<String, String> {
+    override suspend fun execute(resolvedInputs: Map<String, Any>) : Map<String, Any> {
         var resultString  = ""
         resolvedInputs.values.forEach { resultString += it }
         return mapOf(STRING to resultString)
