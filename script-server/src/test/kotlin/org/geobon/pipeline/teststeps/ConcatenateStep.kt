@@ -17,7 +17,7 @@ class ConcatenateStep(
 
     override suspend fun execute(resolvedInputs: Map<String, Any>) : Map<String, Any> {
         var resultString  = ""
-        resolvedInputs.values.forEach { resultString += it }
+        resolvedInputs.values.forEach { resultString += it.toString() }
         return mapOf(STRING to resultString)
     }
 }
