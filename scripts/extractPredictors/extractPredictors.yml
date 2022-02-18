@@ -3,7 +3,7 @@ inputs:
   stac_path:
     description: Path to species observation tsv file
     type: string
-    example: "http://io.biodiversite-quebec.ca/stac/"
+    example:  "http://io.biodiversite-quebec.ca/stac/"
   limit:
     description: Path to species observation tsv file
     type: int
@@ -27,15 +27,15 @@ inputs:
   buffer.box :
     description: Projection 
     type: integer
-    example: 0
+    example: 400
   t0 :
     description: Projection 
     type: string
-    example: '1980-01-01'
+    example: '1981-01-01'
   t1 :
     description: Projection 
     type: string
-    example: '1980-01-31'
+    example: '1981-01-31'
   spatial_res :
     description: Projection 
     type: integer
