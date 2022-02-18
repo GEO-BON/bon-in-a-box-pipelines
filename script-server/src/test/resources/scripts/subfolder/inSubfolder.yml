@@ -1,0 +1,8 @@
+script: inSubfolder.sh
+inputs:
+outputs:
+  randomness:
+    label: A random number
+    description: bla bla
+    type: int
+    example: 234
