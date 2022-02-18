@@ -42,8 +42,8 @@ inputs:
     example: 2000
 
 outputs:
-  data:
-     label: obs.data
+  obs.values:
+     label: Observation data
      description: table with observations from GBIF
      type: text/tab-separated-values
      example: 
