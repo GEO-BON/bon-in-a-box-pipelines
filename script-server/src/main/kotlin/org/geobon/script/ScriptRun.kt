@@ -32,7 +32,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     ).path // as a string
 
     companion object {
-        private val logger: Logger = LoggerFactory.getLogger(ScriptRun::class.java)
+        private val logger: Logger = LoggerFactory.getLogger("Script")
         private val gson = Gson()
 
         fun toJson(src: Any): String = gson.toJson(src)
