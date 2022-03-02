@@ -41,10 +41,10 @@ obs <- read.table(file = input$obs, sep = '\t', header = TRUE)
 country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
 quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
   
-  subDir <- file.path(".", "bioclim_t")
-  dir.create(subDir, showWarnings = FALSE) 
+  subDir <- file.path(outputFolder)
+  print(1)
   box_extent_bioclim <- WorldClimTiles::tile_name(quebec_boundary, "worldclim") # determine which WorldClim tiles your study area intersects with.
-  
+    print(2)
   clim_tiles <- tile_get(box_extent_bioclim, name =  "worldclim", var="tmean", path = subDir) # for 0.5 arcmin worldclim tiles of 
   predictors <- tile_merge(clim_tiles)
 
