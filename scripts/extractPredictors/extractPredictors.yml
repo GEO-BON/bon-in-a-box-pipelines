@@ -16,10 +16,10 @@ inputs:
     description: Path to species observation tsv file
     type: string
     example: "/scripts/extractPredictors/obs_data.tsv"
-  srs:
+  crs.obs:
     description: Projection 
     type: string
-    example: "EPSG:32198"
+    example: "EPSG:4326"
   layers:
     description: Projection 
     type: vector
@@ -28,6 +28,10 @@ inputs:
     description: Projection 
     type: integer
     example: 400
+  crs.cube:
+    description: Projection 
+    type: string
+    example: "EPSG:4326"
   t0 :
     description: Projection 
     type: string
@@ -35,11 +39,15 @@ inputs:
   t1 :
     description: Projection 
     type: string
-    example: '1981-01-31'
-  spatial_res :
+    example: '1981-01-01'
+  spatial.res :
     description: Projection 
     type: integer
     example: 2000
+  temporal.res :
+    description: Projection 
+    type: string
+    example: "P1Y"
 
 outputs:
   obs.values:
