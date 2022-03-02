@@ -11,7 +11,8 @@ install.packages("Rtools")
 # WorldClimTiles not in CRAN
 library("devtools")
 library("crul")
-devtools::install_github("kapitzas/WorldClimTiles")
+linrary("remotes")
+remotes::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
 library("terra")
