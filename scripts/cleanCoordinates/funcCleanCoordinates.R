@@ -82,7 +82,7 @@ cleanCoordinates <- function(x,
   
   # Run tests Validity, check if coordinates fit to lat/long system, this has
   # to be run all the time, as otherwise the other tests don't work
-  val <- CoordinateCleaner::cc_val(x, lon = "decimalLon", lat =  "decimalLat", 
+  val <- CoordinateCleaner::cc_val(x, lon = "decimalLongitude", lat =  "decimalLatitude", 
                 verbose = verbose, value = "flagged")
   
   x1 <- x[!val,]
