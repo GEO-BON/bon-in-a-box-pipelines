@@ -4,7 +4,6 @@ print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
 #packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "rgdal", "curl", "RCurl")
-#install.packages("crul")
 
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
@@ -19,7 +18,7 @@ library("tibble")
 library("sp")
 library("sf")
 #library("RCurl")
-library("crul")
+#library("crul")
 options(timeout = max(60000000, getOption("timeout")))
 
 ## Receiving args
