@@ -9,7 +9,7 @@ install.packages("devtools")
 install.packages("remotes")
 library("remotes")
 # WorldClimTiles not in CRAN
-remotes::install_github("kapitzas/WorldClimTiles")
+devtools::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
 library("terra")
