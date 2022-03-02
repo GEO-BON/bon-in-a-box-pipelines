@@ -36,7 +36,7 @@ print(input)
 source("/scripts/extractPredictors/funcExtractPredictors.R")
 obs <- read.table(file = input$obs, sep = '\t', header = TRUE) 
 
-decimal.coords <- dplyr::select(obs, decimalLongitude, decimalLatitude)
+obs.coords <- dplyr::select(obs, decimalLongitude, decimalLatitude)
 
 
 cube <- 
