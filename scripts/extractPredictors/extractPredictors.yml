@@ -28,7 +28,7 @@ inputs:
     description: Projection 
     type: integer
     example: 400
-  crs.cube:
+  srs.cube:
     description: Projection 
     type: string
     example: "EPSG:4326"
