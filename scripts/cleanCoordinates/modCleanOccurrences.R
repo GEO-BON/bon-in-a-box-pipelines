@@ -9,6 +9,8 @@
 install.packages("Rtools")
 #library("remotes")
 # WorldClimTiles not in CRAN
+library("devtools")
+library("crul")
 devtools::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
@@ -18,6 +20,7 @@ library("raster")
 library("CoordinateCleaner")
 library("dplyr")
 library("WorldClimTiles")
+
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"))
 
