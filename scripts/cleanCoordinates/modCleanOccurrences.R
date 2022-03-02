@@ -38,8 +38,8 @@ print(input)
 
 obs <- read.table(file = input$obs, sep = '\t', header = TRUE) 
 
-#country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
-#quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
+country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
+quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
   
   subDir <- file.path(".", "bioclim_t")
   dir.create(subDir, showWarnings = FALSE) 
@@ -49,7 +49,7 @@ obs <- read.table(file = input$obs, sep = '\t', header = TRUE)
   predictors <- tile_merge(clim_tiles)
 
 
-cleaningRes <-  cleanCoordinates(observations,
+cleaningRes <-  cleanCoordinates(obs,
                               predictors,
                                  unique_id = "id",
                                  lon = "decimalLongitude", 
