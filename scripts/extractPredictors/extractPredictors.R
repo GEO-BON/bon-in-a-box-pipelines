@@ -20,6 +20,7 @@ library("sf")
 library("RCurl")
 #install.packages("crul")
 library("crul")
+library("curl")
 options(timeout = max(60000000, getOption("timeout")))
 
 ## Receiving args
