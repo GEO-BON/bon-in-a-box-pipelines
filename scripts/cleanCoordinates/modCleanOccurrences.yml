@@ -4,6 +4,14 @@ inputs:
     description: Occurrence data, some description here
     type: string
     example: "/scripts/extractPredictors/obs_data.tsv"
+  srs.obs:
+    description: Projection 
+    type: string
+    example: "EPSG:4326"
+  srs.target:
+    description: Projection 
+    type: string
+    example: "EPSG:6623"
 outputs:
   n.clean:
     label: n.observations
