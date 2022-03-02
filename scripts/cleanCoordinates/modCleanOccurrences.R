@@ -1,10 +1,13 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
+install.packages("devtools")
+install.packages("remotes")
+library("remotes")
 # WorldClimTiles not in CRAN
 remotes::install_github("kapitzas/WorldClimTiles")
 
@@ -30,8 +33,8 @@ print(input)
 
 obs <- read.table(file = input$obs, sep = '\t', header = TRUE) 
 
-country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
-quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
+#country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
+#quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
   
   subDir <- file.path(".", "bioclim_t")
   dir.create(subDir, showWarnings = FALSE) 
