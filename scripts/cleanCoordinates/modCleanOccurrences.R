@@ -39,6 +39,7 @@ print(input)
 obs <- read.table(file = input$obs, sep = '\t', header = TRUE) 
 
 country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
+print(country_boundary$NAME_1)
 quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
   
   subDir <- file.path(outputFolder)
