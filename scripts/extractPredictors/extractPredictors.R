@@ -45,7 +45,7 @@ cube <-
            collections = c(input$collections), 
            use.obs = T,
            obs = obs.coords,
-           srs.obs = input$crs.obs,
+           srs.obs = input$srs.obs,
            lon = "decimalLongitude",
            lat = "decimalLatitude",
            buffer.box = input$buffer.box,
