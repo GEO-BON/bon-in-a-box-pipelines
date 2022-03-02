@@ -12,6 +12,10 @@ inputs:
     description: Projection 
     type: string
     example: "EPSG:6623"
+  spatial.res :
+    description: Projection 
+    type: integer
+    example: 1000  
 outputs:
   n.clean:
     label: n.observations
