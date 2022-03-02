@@ -12,6 +12,7 @@ install.packages("Rtools")
 library("devtools")
 library("crul")
 library("remotes")
+options(timeout = max(60000000, getOption("timeout")))
 remotes::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
