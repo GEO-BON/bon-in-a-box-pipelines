@@ -20,8 +20,8 @@ library("tibble")
 library("sp")
 library("sf")
 #library("RCurl")
-library("crul")
-options(timeout = max(60000, getOption("timeout")))
+#library("crul")
+options(timeout = max(60000000, getOption("timeout")))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
