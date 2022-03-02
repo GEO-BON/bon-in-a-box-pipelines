@@ -58,6 +58,7 @@ cleaningRes <-  cleanCoordinates(obs,
                               species_col = "scientificName",
                               srs.obs = input$srs.obs,
                               srs.target = input$srs.target,
+                              spatial.res = input$spatial.res,
                                  tests = c( 
                                             "equal",
                                             "zeros", 

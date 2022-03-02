@@ -161,7 +161,7 @@ cleanCoordinates <- function(x,
       
     }
     
-    cell <- raster::cellFromXY(mask,  dplyr::select(x, lon, lat ) %>% data.frame())
+    cell <- raster::cellFromXY(mask,  dplyr::select(x, lon, lat) %>% data.frame())
     dup <- duplicated(cell)
     out$pixel <- !dup
     if (verbose) {
