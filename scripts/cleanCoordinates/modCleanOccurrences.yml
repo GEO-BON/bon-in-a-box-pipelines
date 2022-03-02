@@ -1,9 +1,9 @@
 script: modCleanOccurrences.R
 inputs:
-  observations:
+  obs:
     description: Occurrence data, some description here
     type: string
-    example: "test"
+    example: "/scripts/extractPredictors/obs_data.tsv"
 outputs:
   n.clean:
     label: n.observations
