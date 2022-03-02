@@ -124,7 +124,7 @@ cleanCoordinates <- function(x,
   ## Equal coordinates
   if ("equal" %in% tests) {
     out$equ <- CoordinateCleaner::cc_equ(x,
-                                         lon = "decimalLon", lat = "decimalLat", verbose = verbose, value = "flagged",
+                                         lon = "decimalLongitude", lat = "decimalLatitude", verbose = verbose, value = "flagged",
                                          test = "absolute"
     )
   }
@@ -132,14 +132,14 @@ cleanCoordinates <- function(x,
   ## Zero coordinates
   if ("zeros" %in% tests) {
     out$zer <- CoordinateCleaner::cc_zero(x,
-                                          lon = "decimalLon", lat = "decimalLat", buffer = zeros_rad, verbose = verbose,
+                                          lon = "decimalLongitude", lat = "decimalLatitude", buffer = zeros_rad, verbose = verbose,
                                           value = "flagged"
     )
   }
   
   ## Duplicates
   if ("duplicates" %in% tests) {
-    out$dup <-CoordinateCleaner::cc_dupl(x, lon = "decimalLon" , lat = "decimalLat", species = species_col, additions = additions,
+    out$dup <-CoordinateCleaner::cc_dupl(x, lon = "decimalLongitude" , lat = "decimalLatitude", species = species_col, additions = additions,
                                          value = "flagged")
     
   }
@@ -315,7 +315,7 @@ createDecimalCoordinates <- function(obs, lon, lat, crs_init) {
   sp::coordinates(coords) <- c(lon, lat)
   proj4string(coords) <- CRS(crs_init)
   coordsDecimal <- data.frame(spTransform(coords, CRS(wgs84)))%>% 
-    setNames(c("decimalLon", "decimalLat"))
+    setNames(c("decimalLongitude", "decimalLatitude"))
   #Suppress warnings: dplyr one_of creates a warning if column names do not exist
   suppressWarnings(obs <- obs %>%
                      dplyr::select(-one_of(c("decimalLongitude", "decimalLatitude"))) %>% bind_cols(coordsDecimal))
