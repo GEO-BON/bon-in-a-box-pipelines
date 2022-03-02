@@ -38,24 +38,26 @@ print(input)
 
 obs <- read.table(file = input$obs, sep = '\t', header = TRUE) 
 
-country_boundary <- raster::getData("GADM", country = "CAN", level = 1, download=TRUE, path=outputFolder) #
-print(country_boundary$NAME_1)
-quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
+#country_boundary <- raster::getData("GADM", country = "CAN", level = 1, download=TRUE, path=outputFolder) #
+#quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
   
-  subDir <- file.path(outputFolder)
-  print(1)
-  box_extent_bioclim <- WorldClimTiles::tile_name(quebec_boundary, "worldclim") # determine which WorldClim tiles your study area intersects with.
-    print(2)
-  clim_tiles <- tile_get(box_extent_bioclim, name =  "worldclim", var="tmean", path = subDir) # for 0.5 arcmin worldclim tiles of 
-  predictors <- tile_merge(clim_tiles)
+ # subDir <- file.path(outputFolder)
+
+ # box_extent_bioclim <- WorldClimTiles::tile_name(quebec_boundary, "worldclim") # determine which WorldClim tiles your study area intersects with.
+
+ # clim_tiles <- tile_get(box_extent_bioclim, name =  "worldclim", var="tmean", path = subDir) # for 0.5 arcmin worldclim tiles of 
+  # predictors <- tile_merge(clim_tiles)
+
 
 
 cleaningRes <-  cleanCoordinates(obs,
-                              predictors,
+                              predictors = NULL,
                                  unique_id = "id",
                                  lon = "decimalLongitude", 
                                  lat = "decimalLatitude", 
                               species_col = "scientificName",
+                              srs.obs = input$srs.obs,
+                              srs.target = input$srs.target
                                  tests = c( 
                                             "equal",
                                             "zeros", 
