@@ -16,7 +16,7 @@ inputs:
     description: Path to species observation tsv file
     type: string
     example: "/scripts/extractPredictors/obs_data.tsv"
-  crs.obs:
+  srs.obs:
     description: Projection 
     type: string
     example: "EPSG:4326"
