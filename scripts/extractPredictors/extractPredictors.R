@@ -46,6 +46,8 @@ cube <-
            use.obs = T,
            obs = obs.coords,
            srs.obs = input$crs.obs,
+           lon = "decimalLongitude",
+           lat = "decimalLatitude",
            buffer.box = input$buffer.box,
            layers= input$layers,
            srs.cube = input$srs.cube,
