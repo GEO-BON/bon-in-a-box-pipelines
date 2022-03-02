@@ -28,14 +28,10 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-if (input$observations == "test") {
-  observations <- read.table(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"), sep = ";", "header" = T, sep = ";")
-} else {
-  observations <- input$observations
-}
+obs <- read.table(file = input$obs, sep = '\t', header = TRUE) 
 
-  country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
-  quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
+country_boundary <- raster::getData("GADM", country = "CAN", level = 1) #
+quebec_boundary <- country_boundary[country_boundary$NAME_1 == "Québec",]
   
   subDir <- file.path(".", "bioclim_t")
   dir.create(subDir, showWarnings = FALSE) 
@@ -48,19 +44,19 @@ if (input$observations == "test") {
 cleaningRes <-  cleanCoordinates(observations,
                               predictors,
                                  unique_id = "id",
-                                 lon = "lon", 
-                                 lat = "lat", 
+                                 lon = "decimalLongitude", 
+                                 lat = "decimalLatitude", 
                               species_col = "scientificName",
                                  tests = c( 
                                             "equal",
                                             "zeros", 
                                             "duplicates", 
                                             "same_pixel",
-                                            "centroids",
-                                            "seas", 
-                                            "urban",
-                                            "gbif", 
-                                            "institutions"
+                                          #  "centroids",
+                                         #   "seas", 
+                                          #  "urban",
+                                          #  "gbif", 
+                                         #   "institutions"
                                  ),
                                  capitals_rad = 10000,
                                  centroids_rad = 1000, 
