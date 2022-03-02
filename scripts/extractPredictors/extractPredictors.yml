@@ -31,7 +31,7 @@ inputs:
   srs.cube:
     description: Projection 
     type: string
-    example: "EPSG:4326"
+    example: "EPSG:6623"
   t0 :
     description: Projection 
     type: string
