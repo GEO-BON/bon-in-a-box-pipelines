@@ -62,7 +62,7 @@ cleaningRes <-  cleanCoordinates(obs,
                                             "equal",
                                             "zeros", 
                                             "duplicates", 
-                                            "same_pixel",
+                                            "same_pixel"
                                           #  "centroids",
                                          #   "seas", 
                                           #  "urban",
