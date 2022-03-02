@@ -3,8 +3,8 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "rgdal", "curl", "RCurl")
-install.packages(packages)
+#packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "rgdal", "curl", "RCurl")
+#install.packages(packages)
 
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
@@ -18,9 +18,9 @@ library("rstac")
 library("tibble")
 library("sp")
 library("sf")
-library("RCurl")
+#library("RCurl")
 library("curl")
-#options(timeout = max(60000, getOption("timeout")))
+options(timeout = max(60000, getOption("timeout")))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
