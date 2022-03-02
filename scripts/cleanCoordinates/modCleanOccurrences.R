@@ -24,7 +24,7 @@ library("dplyr")
 library("WorldClimTiles")
 
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"))
+#source(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"))
 source("/scripts/cleanCoordinates/funcCleanCoordinates.R")
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
