@@ -9,10 +9,10 @@
 #install.packages("Rtools")
 #library("remotes")
 # WorldClimTiles not in CRAN
-library("devtools")
-library("crul")
-library("remotes")
-options(timeout = max(60000000, getOption("timeout")))
+#library("devtools")
+#library("crul")
+#library("remotes")
+#options(timeout = max(60000000, getOption("timeout")))
 #remotes::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
@@ -21,7 +21,7 @@ library("rjson")
 library("raster")
 library("CoordinateCleaner")
 library("dplyr")
-library("WorldClimTiles")
+#library("WorldClimTiles")
 
 ## Load functions
 #source(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"))
@@ -57,7 +57,7 @@ cleaningRes <-  cleanCoordinates(obs,
                                  lat = "decimalLatitude", 
                               species_col = "scientificName",
                               srs.obs = input$srs.obs,
-                              srs.target = input$srs.target
+                              srs.target = input$srs.target,
                                  tests = c( 
                                             "equal",
                                             "zeros", 
