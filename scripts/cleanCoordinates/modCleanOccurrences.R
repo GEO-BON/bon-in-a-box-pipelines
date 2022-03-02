@@ -5,9 +5,9 @@
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
-install.packages("devtools")
-install.packages("remotes")
-library("remotes")
+#install.packages("devtools")
+install.packages("Rtools")
+#library("remotes")
 # WorldClimTiles not in CRAN
 devtools::install_github("kapitzas/WorldClimTiles")
 
