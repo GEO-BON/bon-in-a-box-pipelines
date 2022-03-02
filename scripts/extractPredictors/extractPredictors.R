@@ -58,8 +58,9 @@ cube <-
            spatial.res = input$spatial.res,
            temporal.res = input$temporal.res) 
 
+obs.proj <-  projectCoords(obs.coords, lon = "decimalLongitude", lat = "decimalLatitude", proj.from = input$srs.obs, proj.to = input$srs.cube)
 obs <- bind_cols(obs, 
-                 setNames(data.frame(proj.pts), c("lon", "lat"))) 
+                 setNames(data.frame(obs.proj), c("lon", "lat"))) 
 
 value.points <- query_points(cube, obs$lon, obs$lat, pt = rep(as.Date(input$t0), length(obs$lon)), srs(cube))
 obs <- bind_cols(obs,
