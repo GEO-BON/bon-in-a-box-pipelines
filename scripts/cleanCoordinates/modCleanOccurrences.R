@@ -6,14 +6,14 @@
 #if(length(new.packages)) install.packages(new.packages)
 
 #install.packages("devtools")
-install.packages("Rtools")
+#install.packages("Rtools")
 #library("remotes")
 # WorldClimTiles not in CRAN
 library("devtools")
 library("crul")
 library("remotes")
 options(timeout = max(60000000, getOption("timeout")))
-remotes::install_github("kapitzas/WorldClimTiles")
+#remotes::install_github("kapitzas/WorldClimTiles")
 
 ## Load required packages
 library("terra")
@@ -25,7 +25,7 @@ library("WorldClimTiles")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "funcCleanCoordinates.R", sep = "/"))
-
+source("/scripts/cleanCoordinates/funcCleanCoordinates.R")
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
