@@ -18,7 +18,8 @@ library("tibble")
 library("sp")
 library("sf")
 #library("RCurl")
-#library("crul")
+install.packages("crul")
+library("crul")
 options(timeout = max(60000000, getOption("timeout")))
 
 ## Receiving args
