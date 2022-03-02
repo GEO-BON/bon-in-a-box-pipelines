@@ -63,7 +63,7 @@ obs.proj <-  setNames(data.frame(obs.proj), c("lon", "lat"))
 
 value.points <- query_points(cube, obs.proj$lon, obs.proj$lat, 
   pt = rep(as.Date(input$t0), length(obs.proj$lon)), srs(cube)) %>% data.frame()
-obs.values <- bind_cols(obs,
+obs <- bind_cols(obs,
   value.points)
 
 
