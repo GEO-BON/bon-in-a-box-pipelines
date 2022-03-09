@@ -11,6 +11,7 @@ import io.ktor.response.*
 import io.ktor.routing.*
 import org.geobon.pipeline.ConstantPipe
 import org.geobon.pipeline.ScriptStep
+import org.geobon.pipeline.Step
 import org.geobon.script.ScriptRun
 import org.geobon.script.scriptRoot
 import org.openapitools.server.Paths
@@ -22,6 +23,8 @@ import java.io.File
  * Folder tree not supported, see https://github.com/OAI/OpenAPI-Specification/issues/892
  */
 const val FILE_SEPARATOR = '>'
+
+val runningPipelines = mutableMapOf<String, Step>()
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptApi(logger:Logger) {
@@ -102,14 +105,11 @@ fun Route.ScriptApi(logger:Logger) {
             val step1 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to ConstantPipe("int", 12))) // 12
             val step2 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step1.outputs["increment"]!!)) // 13
             val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 14
+            runningPipelines["fakePath"] = finalStep
             finalStep.outputs["increment"]!!.pull()
+            // runningPipelines.remove("fakePath")
 
-            // Dump the content (normally )
-            call.respondText("""
-                step1: ${step1.outputs}
-                step2: ${step2.outputs}
-                finalStep: ${finalStep.outputs}
-            """.trimIndent())
+            call.respondText("fakePath")
         } catch (ex:Exception) {
             call.respondText(ex.stackTraceToString(), status=HttpStatusCode.InternalServerError)
         }
@@ -117,7 +117,13 @@ fun Route.ScriptApi(logger:Logger) {
     }
 
     get<Paths.getPipelineOutputs> { parameters ->
-        call.respondText("Unimplemented")
+        runningPipelines[parameters.id]?.let { finalStep -> // Return live result
+            val allOutputs = mutableMapOf<String, String>()
+            finalStep.dumpOutputFolders(allOutputs)
+            call.respond(allOutputs)
+        } ?: call.respondText("Unimplemented: only hardcoded result can be retrieved") // TODO: Get the file
+
+        // TODO some real implementation
     }
 
 }
