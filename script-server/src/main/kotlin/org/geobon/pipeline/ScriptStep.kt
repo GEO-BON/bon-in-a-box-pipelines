@@ -9,6 +9,8 @@ import java.io.File
 class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()) :
     YMLStep(yamlString = yamlFile.readText(), inputs = inputs) {
 
+    var outputFolder:String? = null
+
     constructor(fileName:String, inputs: Map<String, Pipe> = mapOf()) : this (File(scriptRoot, fileName), inputs)
 
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
@@ -17,6 +19,7 @@ class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()
             scriptFile,
             if(resolvedInputs.isEmpty()) null else ScriptRun.toJson(resolvedInputs)
         )
+        outputFolder = scriptRun.id
         scriptRun.execute()
 
         // Get result
@@ -27,5 +30,13 @@ class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()
 
             return result.files ?: throw java.lang.Exception("Output file is empty")
         } ?: throw java.lang.Exception("Script run produced no result")
+    }
+
+    /**
+     * @param allOutputs Map of Step identifier to output folder.
+     */
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        allOutputs[toString()] = outputFolder ?: ""
+        super.dumpOutputFolders(allOutputs)
     }
 }

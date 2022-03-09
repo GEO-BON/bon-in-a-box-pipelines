@@ -32,4 +32,8 @@ abstract class Step(
 
     abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
 
+    open fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        // Not all steps have output folders. Default implementation just forwards to other steps.
+        inputs.values.forEach{it.dumpOutputFolders(allOutputs)}
+    }
 }

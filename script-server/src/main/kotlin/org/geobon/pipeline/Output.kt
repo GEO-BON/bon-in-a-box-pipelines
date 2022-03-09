@@ -13,6 +13,10 @@ class Output(override val type:String) : Pipe {
         return value ?: throw Exception("Output has not been set by step")
     }
 
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        step?.dumpOutputFolders(allOutputs)
+    }
+
     override fun toString(): String {
         return "Output(type='$type', value=$value)"
     }

@@ -16,13 +16,14 @@ import kotlin.test.assertTrue
 @ExperimentalCoroutinesApi
 internal class StepTest {
 
-    class DelayPipe(private val finishLine: MutableList<String>, private val delay:Long, private val value: String) : Pipe {
-        override val type: String = "text/plain"
+    class DelayPipe(private val finishLine: MutableList<String>, private val delay:Long, value: String) :
+        ConstantPipe("text/plain", value) {
 
-        override suspend fun pull(): String {
+        override suspend fun pull(): Any {
             delay(delay)
-            finishLine.add(value)
-            return value
+
+            return super.pull()
+                .also { finishLine.add(it.toString()) }
         }
     }
 
