@@ -71,7 +71,7 @@ internal class SamplePipelineTest {
         val finalStep = ScriptStep("1in1out.yml", mapOf("some_int" to goodBranch.outputs["increment"]!!)) // 237
 
         assertEquals(237.0, finalStep.outputs["increment"]!!.pull())
-        assertNull(deadBranch.outputs[ConcatenateStep.STRING])
+        assertNull(deadBranch.outputs[ConcatenateStep.STRING]!!.value)
     }
 
 }

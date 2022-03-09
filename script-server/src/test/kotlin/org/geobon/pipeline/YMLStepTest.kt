@@ -67,8 +67,8 @@ internal class YMLStepTest {
         every { correctInput.type } returns "int"
         val step = ResourceYml("scripts/1in2out.yml", mapOf("some_int" to correctInput))
 
-        assertNotNull(step.outputs["number"])
-        assertEquals("int", step.outputs["number"]!!.type)
+        assertNotNull(step.outputs["increment"])
+        assertEquals("int", step.outputs["increment"]!!.type)
 
         assertNotNull(step.outputs["tell_me"])
         assertEquals("text/plain", step.outputs["tell_me"]!!.type)
