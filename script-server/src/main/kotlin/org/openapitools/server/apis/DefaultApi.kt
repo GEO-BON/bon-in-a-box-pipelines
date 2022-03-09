@@ -40,7 +40,10 @@ fun Route.DefaultApi() {
 
     get<Paths.getPipelineOutputs> {
         val exampleContentType = "application/json"
-        val exampleContentString = """"[\"Folder/Script_ext/88204814d39b762f933d67d9a3d68832\",\"Folder/Script2/1a015dccdfb7f639ec32c278506e7c5a\"]""""
+        val exampleContentString = """{
+          "id1" : "Folder/Script_ext/88204814d39b762f933d67d9a3d68832",
+          "id2" : "Folder/Script2/1a015dccdfb7f639ec32c278506e7c5a"
+        }"""
         
         when (exampleContentType) {
             "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))

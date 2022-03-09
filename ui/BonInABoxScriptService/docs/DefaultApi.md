@@ -59,7 +59,7 @@ No authorization required
 
 ## getPipelineOutputs
 
-> [String] getPipelineOutputs(id)
+> {String: String} getPipelineOutputs(id)
 
 Get the output folders of the scripts composing this pipeline
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**[String]**
+**{String: String}**
 
 ### Authorization
 
