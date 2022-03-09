@@ -111,6 +111,13 @@ fun Route.ScriptApi(logger:Logger) {
             finalStep.outputs["increment"]!!.pull()
             // runningPipelines.remove("fakePath")
 
+            // Output dump for debugging :
+            logger.trace("""
+                step1: ${step1.outputs}
+                step2: ${step2.outputs}
+                finalStep: ${finalStep.outputs}
+            """.trimIndent())
+
             call.respondText("fakePath")
         } catch (ex:Exception) {
             call.respondText(ex.stackTraceToString(), status=HttpStatusCode.InternalServerError)
