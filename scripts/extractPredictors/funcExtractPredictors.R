@@ -1,5 +1,6 @@
 
 
+
 #' @name projectCoords
 #' @param xy data frame, containing the coordinates to reproject
 #' @param lon string, name of the longitude column
@@ -57,19 +58,6 @@ sampleGdalCube <- function(cube, date, n.sample) {
 }
 
 
-
-
-## Install required packages
-
-
-
-# Load functions
-projectCoords <- function(xy, lon, lat, proj.i = "+proj=longlat +datum=WGS84", proj.y) {
-  sp::coordinates(xy) <- c(lon, lat)
-  proj4string(xy) <- CRS(proj.i)
-  xy <- spTransform(xy, CRS(proj.y))
-  xy
-}
 
 sampleGdalCube <- function(cube, lon, lat, date) {
   
