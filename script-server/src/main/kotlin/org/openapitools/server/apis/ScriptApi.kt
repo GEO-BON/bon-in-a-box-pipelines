@@ -67,7 +67,8 @@ fun Route.ScriptApi(logger:Logger) {
     }
 
     get<Paths.pipelineListGet> {
-        call.respondText("Unimplemented")
+        // TODO some real implementation
+        call.respond(listOf("hard-coded"))
 /*
         val possible = mutableListOf<String>()
         val relPathIndex = scriptRoot.absolutePath.length + 1
@@ -82,7 +83,8 @@ fun Route.ScriptApi(logger:Logger) {
     }
 
     get<Paths.getPipelineInfo> { parameters ->
-        call.respondText("Unimplemented")
+        // TODO some real implementation
+        call.respondText("Currently, only a hard-coded pipeline is available.")
         /*
         try {
             // Put back the slashes and replace extension by .yml
