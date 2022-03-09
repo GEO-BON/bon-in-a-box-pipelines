@@ -27,7 +27,7 @@ options(timeout = max(60000000, getOption("timeout")))
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
-
+setwd(outputFolder)
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
