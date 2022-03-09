@@ -1,11 +1,9 @@
 import { useState } from "react";
-import spinner from './img/spinner.svg';
 import RenderedMap from './RenderedMap';
 import React, { useRef, useEffect, useContext } from 'react';
 import RenderedCSV from './csv/RenderedCSV';
 
 const RenderContext = React.createContext();
-export const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
 export function Result(props) {
     const [activeRenderer, setActiveRenderer] = useState([]);
@@ -13,16 +11,6 @@ export function Result(props) {
     function toggleVisibility(componentId) {
         setActiveRenderer(activeRenderer === componentId ? null : componentId);
     }
-
-    if (props.requestState === RequestState.idle)
-        return null;
-
-    if (props.requestState === RequestState.working)
-        return (
-            <div>
-                <img src={spinner} className="spinner" alt="Spinner" />
-            </div>
-        );
 
     let data = props.data;
     if (data) {

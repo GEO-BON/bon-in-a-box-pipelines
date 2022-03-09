@@ -4,11 +4,13 @@ import './App.css';
 import React, {useRef, useEffect} from 'react'
 
 import Select from 'react-select';
-import { Result, RequestState } from "./Result";
+import { Result } from "./Result";
+import spinner from './img/spinner.svg';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
 
+const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
 function App() {
   const [requestState, setRequestState] = useState(RequestState.idle);
@@ -21,7 +23,15 @@ function App() {
         <h1>BON in a Box v2 pre-pre-pre alpha</h1>
       </header>
       <Form setResultData={setResultData} setRequestState={setRequestState} scriptMetadata={scriptMetadata} setScriptMetadata={setScriptMetadata} />
-      <Result data={resultData} metadata={scriptMetadata} requestState={requestState} />
+      {requestState !== RequestState.idle &&
+        (requestState === RequestState.working) ? (
+          <div>
+            <img src={spinner} className="spinner" alt="Spinner" />
+          </div>
+        ) : (
+          <Result data={resultData} metadata={scriptMetadata} />
+        )
+      }
     </>
   );
 }
