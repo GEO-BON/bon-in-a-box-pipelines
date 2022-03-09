@@ -80,7 +80,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the getPipelineOutputs operation.
      * @callback module:api/DefaultApi~getPipelineOutputsCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<String>} data The data returned by the service call.
+     * @param {Object.<String, {String: String}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -88,7 +88,7 @@ export default class DefaultApi {
      * Get the output folders of the scripts composing this pipeline
      * @param {String} id Where to find the pipeline in ./script folder.
      * @param {module:api/DefaultApi~getPipelineOutputsCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<String>}
+     * data is of type: {@link Object.<String, {String: String}>}
      */
     getPipelineOutputs(id, callback) {
       let postBody = null;
@@ -110,7 +110,7 @@ export default class DefaultApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = ['String'];
+      let returnType = {'String': 'String'};
       return this.apiClient.callApi(
         '/pipeline/{id}/outputs', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
