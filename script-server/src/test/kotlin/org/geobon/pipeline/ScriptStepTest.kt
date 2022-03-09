@@ -76,4 +76,30 @@ internal class ScriptStepTest {
         assertEquals(234.toDouble(), step.outputs["randomness"]!!.value as Double)
     }
 
+    @Test
+    fun givenScriptStepThatHasNotRun_whenGettingOutputFolder_thenEmptyStringIsReturned() {
+        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"))
+        val outputList = mutableMapOf<String, String>()
+        step.dumpOutputFolders(outputList)
+
+        assertEquals(1, outputList.size)
+        outputList.forEach { assertEquals("", it.value) }
+    }
+
+    @Test
+    fun givenScriptStepThatHasRun_whenGettingOutputFolder_thenGetOutputFolder() = runTest {
+        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"))
+        val outputList = mutableMapOf<String, String>()
+
+        step.execute()
+
+        step.dumpOutputFolders(outputList)
+        assertEquals(1, outputList.size)
+        outputList.forEach {
+            assertNotEquals("", it.value)
+            assertTrue(File(outputRoot, it.value).exists())
+        }
+        println(outputList.toString())
+    }
+
 }

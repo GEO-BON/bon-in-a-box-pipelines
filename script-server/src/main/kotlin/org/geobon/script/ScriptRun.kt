@@ -29,7 +29,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         scriptFile.relativeTo(scriptRoot).path,
         // Unique to these params
         inputFileContent?.toMD5() ?: "no_params"
-    ).path // as a string
+    ).path.replace('.', '_')
 
     companion object {
         private val logger: Logger = LoggerFactory.getLogger("Script")
@@ -46,7 +46,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }
 
         // Create the output folder for this invocation
-        val outputFolder = File(outputRoot, id.replace('.', '_'))
+        val outputFolder = File(outputRoot, id)
         outputFolder.mkdirs()
         logger.trace("Paths.runScript outputting to $outputFolder")
 
