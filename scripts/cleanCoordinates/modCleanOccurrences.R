@@ -90,8 +90,8 @@ cleaningRes <-  cleanCoordinates(obs,
  
  #output <- list("observation" =  sprintf("%s/observationGbif.csv", getwd())) 
   output <- list(
-                  "n.clean" =  nrow(cleaningRes$clean),
-                  "n.flagged" =  nrow(cleaningRes$flagged)
+                  "n.clean" =  nrow(cleaningRes$flagged),
+                  "n.flagged" =  nrow(cleaningRes$clean)
                   ) 
 
 jsonData <- toJSON(output, indent=2)
