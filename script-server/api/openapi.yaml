@@ -178,7 +178,7 @@ paths:
           type: string
       responses:
         "200":
-          description: List of output folders for all the scripts
+          description: List of output folders for all the scripts (relative paths to output root)
           content:
             application/json:
               schema:
