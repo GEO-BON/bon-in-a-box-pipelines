@@ -3,3 +3,6 @@
 **/build
 **/r-libs
 **/r-libs-dev
+
+**/Dockerfile*
+**/.dockerignore
