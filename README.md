@@ -20,12 +20,18 @@ To run:
     - http://localhost/ shows a basic UI
 6. `docker compose down` (to stop the server when done)
 
+Servers do not need to be restarted when modifying scripts in the /scripts folder:
+- When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
+- When adding/renaming/removing scripts, refresh the browser page.
+
 ## Scripts
 The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
 
 Currently supported : 
  - R version 4.1.2
  - Julia version 1.7.1
+ - Python3
+ - sh
 
 Script lifecycle:
 1. Script launched with output folder as a parameter.
