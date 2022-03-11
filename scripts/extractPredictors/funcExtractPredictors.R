@@ -127,7 +127,7 @@ loadCube <- function(stac_path =
   
   # Creating RSTACQuery  query
   s <- rstac::stac(stac_path)
-  
+
   # use observations to create the bbox and extent
   if (use.obs) {
     
@@ -150,11 +150,23 @@ loadCube <- function(stac_path =
     bbox.wgs84 <- findBox(proj.pts, buffer = buffer.box, proj.to ="+proj=longlat +datum=WGS84")
     
   }
-  
+
+ # Hack: rstac::stac_search produces timeout error if not ping before
+  # RCurl::getURL(stac_path)
+  RCurl::url.exists(stac_path)
+
   # CreateRSTACQuery object with the subclass search containing all search field parameters 
+
   it_obj <- s |>
     rstac::stac_search(bbox = bbox.wgs84, collections = collections, limit = limit) |> get_request() # bbox in decimal lon/lat
-  
+ 
+
+  it_obj <- s |>
+    rstac::stac_search(bbox = bbox.wgs84, collections = collections, limit = limit) |> get_request() # bbox in decimal lon/lat
+
+  it_obj <- s |>
+    rstac::stac_search(bbox = bbox.wgs84, collections = collections, limit = limit) |> get_request() # bbox in decimal lon/lat
+ 
   # If no layers is selected, get all the layers by default
   if (is.null(layers)) {
     layers <- unlist(lapply(it_obj$features,function(x){names(x$assets)}))
@@ -167,7 +179,7 @@ loadCube <- function(stac_path =
   v <- gdalcubes::cube_view(srs = srs.cube,  extent = list(t0 = t0, t1 = t1,
                                            left = left, right = right,  top = top, bottom = bottom),
                  dx = spatial.res, dy = spatial.res, dt = temporal.res, aggregation = aggregation, resampling = resampling)
-  gdalcubes_options(threads = 4)
+  gdalcubes_options(parallel = 4)
   cube <- gdalcubes::raster_cube(st, v)
 
   return(cube)
@@ -175,7 +187,8 @@ loadCube <- function(stac_path =
 
 
 
-#' Extract values of a proxy raster data cube
+#' DEPRECATED
+#'Extract values of a proxy raster data cube
 #' 
 #' @name extractCubeValues
 #' 

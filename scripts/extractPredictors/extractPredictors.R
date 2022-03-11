@@ -7,7 +7,7 @@ print(Sys.getenv("SCRIPT_LOCATION"))
 
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
-
+#install.packages("gdalcubes")
 ## Load required packages
 library("gdalcubes")
 library("rjson")
@@ -17,10 +17,11 @@ library("rstac")
 library("tibble")
 library("sp")
 library("sf")
-#library("RCurl")
+
 #install.packages("crul")
 #library("crul")
-library("curl")
+#library("curl")
+library("RCurl")
 options(timeout = max(60000000, getOption("timeout")))
 
 ## Receiving args
@@ -34,8 +35,11 @@ print("Inputs: ")
 print(input)
 
 
+
 # Load functions
 source("/scripts/extractPredictors/funcExtractPredictors.R")
+
+print(input)
 obs <- read.table(file = input$obs, sep = '\t', header = TRUE) 
 
 obs.coords <- dplyr::select(obs, decimalLongitude, decimalLatitude)
@@ -59,16 +63,21 @@ cube <-
            temporal.res = input$temporal.res) 
 
 obs.proj <-  projectCoords(obs.coords, lon = "decimalLongitude", lat = "decimalLatitude", proj.from = input$srs.obs, proj.to = input$srs.cube)
-obs.proj <-  setNames(data.frame(obs.proj), c("lon", "lat"))
+#obs.proj <-  setNames(data.frame(obs.proj), c("lon", "lat"))
 
-value.points <- query_points(cube, obs.proj$lon, obs.proj$lat, 
-  pt = rep(as.Date(input$t0), length(obs.proj$lon)), srs(cube)) %>% data.frame()
-obs <- bind_cols(obs,
-  value.points)
+#value.points <- query_points(cube, obs.proj$lon, obs.proj$lat, 
+ # pt = rep(as.Date(input$t0), length(obs.proj$lon)), srs(cube)) %>% data.frame()
+#obs <- bind_cols(obs,
+ # value.points)
 
+value.points <- extract_geom(cube, st_as_sf(obs.proj)) 
+print(head(value.points))
+obs.val <- bind_cols(select(value.points, FID, time) %>% dplyr::rename(id = FID),
+          data.frame(obs.proj),
+          select(value.points, all_of(input$layers)))
 
-obs.values <- file.path(outputFolder, "obs_values.tsv")
-write.table(obs, obs.values,
+obs.values <- file.path(outputFolder, "obs_values_out.tsv")
+write.table(obs.val, obs.values,
              append = F, row.names = F, col.names = T, sep = "\t")
 
 
