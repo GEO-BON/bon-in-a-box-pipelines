@@ -1,7 +1,5 @@
-node_modules
-npm-debug.log
-build
-.dockerignore
-**/.git
-**/.DS_Store
+**/build
 **/node_modules
+
+.dockerignore
+**/Dockerfile*

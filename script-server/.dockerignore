@@ -1,2 +1,8 @@
-r-libs/
-r-libs-dev/
+**/.idea
+**/.openapi-generator
+**/build
+**/r-libs
+**/r-libs-dev
+
+**/Dockerfile*
+**/.dockerignore
