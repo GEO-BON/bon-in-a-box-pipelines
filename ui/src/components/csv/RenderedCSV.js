@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import spinner from '../img/spinner.svg';
+import spinner from '../../img/spinner.svg';
 import CsvToHtmlTable from './CsvToHtmlTable.jsx'
 
 /**
