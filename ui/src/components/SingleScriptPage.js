@@ -3,6 +3,7 @@ import Select from 'react-select';
 
 import { Result } from "./Result";
 import spinner from '../img/spinner.svg';
+import { InputFileWithExample } from './InputFileWithExample';
 
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
@@ -43,24 +44,7 @@ function SingleScriptForm(props) {
 
     var api = new BonInABoxScriptService.DefaultApi();
     var callback = function (error, data, response) {
-      // Generate example input.json
-      let inputExamples = {};
-      const parsedData = yaml.load(data);
-      if (parsedData && parsedData.inputs) {
-        Object.keys(parsedData.inputs).forEach((inputKey) => {
-          let input = parsedData.inputs[inputKey];
-          if (input) {
-            const example = input.example;
-            inputExamples[inputKey] = example ? example : "...";
-          }
-        });
-      }
-
-      // Update input field
-      formRef.current.elements["inputFile"].value = JSON.stringify(inputExamples, null, 2);
-      resize(formRef.current.elements["inputFile"]);
-
-      props.setScriptMetadata(parsedData);
+      props.setScriptMetadata(yaml.load(data));
       props.setResultData({ httpError: error ? error.toString() : null, rawMetadata: data });
     };
 
@@ -110,23 +94,8 @@ function SingleScriptForm(props) {
     api.runScript(scriptPath, opts, callback);
   };
 
-  /**
-   * Automatic horizontal and vertical resizing of textarea
-   * @param {textarea} input
-   */
-  function resize(input) {
-    input.style.height = "auto";
-    input.style.height = (input.scrollHeight) + "px";
-
-    input.style.width = "auto";
-    input.style.width = (input.scrollWidth) + "px";
-  }
-
   // Applied only once when first loaded  
   useEffect(() => {
-    // Initial resize of the textarea
-    resize(formRef.current.elements["inputFile"]);
-
     // Load list of scripts into scriptFileOptions
     let api = new BonInABoxScriptService.DefaultApi();
     api.scriptListGet((error, data, response) => {
@@ -154,8 +123,8 @@ function SingleScriptForm(props) {
       <label>
         Content of input.json:
         <br />
-        <textarea name="inputFile" className="inputFile" type="text" defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}'
-          onInput={(e) => resize(e.target)}></textarea>
+        <InputFileWithExample defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}'
+          scriptMetadata={props.scriptMetadata} />
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
