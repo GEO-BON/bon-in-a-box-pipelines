@@ -44,7 +44,7 @@ Class | Method | HTTP request | Description
 *DefaultApi* | [**getPipelineOutputs**](docs/DefaultApi.md#getpipelineoutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
 *DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getscriptinfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
 *DefaultApi* | [**pipelineListGet**](docs/DefaultApi.md#pipelinelistget) | **GET** /pipeline/list | Get a list of available pipelines
-*DefaultApi* | [**runPipeline**](docs/DefaultApi.md#runpipeline) | **GET** /pipeline/{descriptionPath}/run | Run this pipeline
+*DefaultApi* | [**runPipeline**](docs/DefaultApi.md#runpipeline) | **POST** /pipeline/{descriptionPath}/run | Run this pipeline
 *DefaultApi* | [**runScript**](docs/DefaultApi.md#runscript) | **POST** /script/{scriptPath}/run | Run this script
 *DefaultApi* | [**scriptListGet**](docs/DefaultApi.md#scriptlistget) | **GET** /script/list | Get a list of available scripts
 

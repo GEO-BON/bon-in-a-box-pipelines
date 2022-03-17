@@ -47,8 +47,9 @@ object Paths {
      * Run this pipeline
      * 
      * @param descriptionPath Where to find the script in ./script folder. 
+     * @param body Content of input.json for this run (optional)
      */
-    @Location("/pipeline/{descriptionPath}/run") class runPipeline(val descriptionPath: kotlin.String)
+    @Location("/pipeline/{descriptionPath}/run") class runPipeline(val descriptionPath: kotlin.String, val body: kotlin.String? = null)
 
     /**
      * Run this script

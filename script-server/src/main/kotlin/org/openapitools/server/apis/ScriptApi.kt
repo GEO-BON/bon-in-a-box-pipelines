@@ -99,7 +99,9 @@ fun Route.ScriptApi(logger:Logger) {
     }
 
 
-    get<Paths.runPipeline> { parameters ->
+    post<Paths.runPipeline> { parameters ->
+        val inputFileContent = call.receive<String>()
+        logger.info("pipeline: ${parameters.descriptionPath}\nbody:$inputFileContent")
         // TODO some real implementation
 
         try {

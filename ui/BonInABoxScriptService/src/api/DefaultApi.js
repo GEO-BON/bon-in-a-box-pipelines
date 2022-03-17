@@ -207,11 +207,14 @@ export default class DefaultApi {
     /**
      * Run this pipeline
      * @param {String} descriptionPath Where to find the script in ./script folder.
+     * @param {Object} opts Optional parameters
+     * @param {String} opts.body Content of input.json for this run
      * @param {module:api/DefaultApi~runPipelineCallback} callback The callback function, accepting three arguments: error, data, response
      * data is of type: {@link String}
      */
-    runPipeline(descriptionPath, callback) {
-      let postBody = null;
+    runPipeline(descriptionPath, opts, callback) {
+      opts = opts || {};
+      let postBody = opts['body'];
       // verify the required parameter 'descriptionPath' is set
       if (descriptionPath === undefined || descriptionPath === null) {
         throw new Error("Missing the required parameter 'descriptionPath' when calling runPipeline");
@@ -228,11 +231,11 @@ export default class DefaultApi {
       };
 
       let authNames = [];
-      let contentTypes = [];
+      let contentTypes = ['text/plain'];
       let accepts = ['text/plain'];
       let returnType = 'String';
       return this.apiClient.callApi(
-        '/pipeline/{descriptionPath}/run', 'GET',
+        '/pipeline/{descriptionPath}/run', 'POST',
         pathParams, queryParams, headerParams, formParams, postBody,
         authNames, contentTypes, accepts, returnType, null, callback
       );
