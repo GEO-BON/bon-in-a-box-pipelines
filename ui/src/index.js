@@ -10,14 +10,14 @@ import {
 } from "react-router-dom";
 
 import { SingleScriptPage } from "./components/SingleScriptPage";
+import { PipelinePage } from "./components/PipelinePage";
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
         <Route path="script-form" element={<SingleScriptPage />} />
-        <Route path="pipeline-form" element={<h1>Pipeline!</h1>} />
-
+        <Route path="pipeline-form" element={<PipelinePage />} />
 
         <Route path="*" element={
           <main style={{ padding: "1rem" }}>
