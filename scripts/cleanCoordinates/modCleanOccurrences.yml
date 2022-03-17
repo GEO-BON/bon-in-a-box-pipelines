@@ -3,12 +3,33 @@ inputs:
   obs:
     description: Occurrence data, some description here
     type: string
-    example: "/scripts/extractPredictors/obs_data.tsv"
-  srs.obs:
-    description: Projection 
-    type: string
-    example: "EPSG:4326"
-  srs.target:
+    example: "/scripts/cleanCoordinates/data/obs_values_out.tsv"
+  predictors.dir: 
+    description: Occurrence data, some description here
+    type: tif folder
+    example: null
+  covars: 
+    description: Occurrence data, some description here
+    type: vector
+    example: ["bio1", "bio2", "bio4"]
+  tests: 
+    description: Occurrence data, some description here
+    type: tif folder
+    example: [ "equal",
+                               "zeros", 
+                               "duplicates", 
+                               "same_pixel",
+                               "capitals", 
+                               "centroids",
+                               "seas", 
+                               "urban",
+                               "gbif", 
+                               "institutions",
+                               "env"
+                               
+                             ]
+
+  srs:
     description: Projection 
     type: string
     example: "EPSG:6623"
