@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**getPipelineOutputs**](DefaultApi.md#getPipelineOutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
 [**getScriptInfo**](DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
 [**pipelineListGet**](DefaultApi.md#pipelineListGet) | **GET** /pipeline/list | Get a list of available pipelines
-[**runPipeline**](DefaultApi.md#runPipeline) | **GET** /pipeline/{descriptionPath}/run | Run this pipeline
+[**runPipeline**](DefaultApi.md#runPipeline) | **POST** /pipeline/{descriptionPath}/run | Run this pipeline
 [**runScript**](DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
 [**scriptListGet**](DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
 
@@ -184,7 +184,7 @@ No authorization required
 
 ## runPipeline
 
-> String runPipeline(descriptionPath)
+> String runPipeline(descriptionPath, opts)
 
 Run this pipeline
 
@@ -195,7 +195,10 @@ import BonInABoxScriptService from 'bon_in_a_box_script_service';
 
 let apiInstance = new BonInABoxScriptService.DefaultApi();
 let descriptionPath = "descriptionPath_example"; // String | Where to find the script in ./script folder.
-apiInstance.runPipeline(descriptionPath, (error, data, response) => {
+let opts = {
+  'body': "body_example" // String | Content of input.json for this run
+};
+apiInstance.runPipeline(descriptionPath, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -210,6 +213,7 @@ apiInstance.runPipeline(descriptionPath, (error, data, response) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **descriptionPath** | **String**| Where to find the script in ./script folder. | 
+ **body** | **String**| Content of input.json for this run | [optional] 
 
 ### Return type
 
@@ -221,7 +225,7 @@ No authorization required
 
 ### HTTP request headers
 
-- **Content-Type**: Not defined
+- **Content-Type**: text/plain
 - **Accept**: text/plain
 
 

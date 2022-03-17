@@ -74,7 +74,7 @@ fun Route.DefaultApi() {
         }
     }
 
-    get<Paths.runPipeline> {
+    post<Paths.runPipeline> {
         val exampleContentType = ""
         val exampleContentString = """"""
         
