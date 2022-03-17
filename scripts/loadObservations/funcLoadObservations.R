@@ -1,3 +1,27 @@
+#' Load observations from GBIF or ATLAS databases
+#' @name load_observations
+#' 
+#' @param species, a character, scientific name of the species.
+#' @param data_source, an integer, "gbif" or "atlas", source to use
+#' @param year_start, an integer, starting year of the period
+#' @param year_end, an integer, end year of the period
+#' @param extent_wkt, a string in WKT format, used to subset the obs spatially (only used with gbif for now)
+#' @param extent_shp, sf polygone, used to subset the obs spatially (only used with gbif for now)
+#' @param proj_shp, extent_shp projection system, if not included in extent_shp.
+#' @param xmin, a float, xmin coords of extent box (MUST BE IN WGS84), used to subset the obs spatially (only used with gbif for now)
+#' @param ymin, a float, ymin coords of extent box (MUST BE IN WGS84), used to subset the obs spatially (only used with gbif for now)#' @param aggregation, a character, aggregation method as string, defining how to deal with pixels containing data from multiple images, can be "min", "max", "mean", "median", or "first"
+#' @param xmax, a float, xmax coords of extent box (MUST BE IN WGS84), used to subset the obs spatially (only used with gbif for now)#' @return a raster stack of variables not intercorrelated
+#' @param ymax, a float, ymax coords of extent box (MUST BE IN WGS84), used to subset the obs spatially (only used with gbif for now)
+#' @param bbox, a vector of float, format: c(xmin, ymin, xmax, ymax) (MUST BE IN WGS84), used to subset the obs spatially (only used with gbif for now)
+#' @param limit, an integer, limit param for rgbif::occ_data function
+#' @import rgbif dplyr sp sf atlas
+#' @return a data.frame
+
+# things to do:
+# add spatial filter when loading data from atlas (after import)
+# Vincent is fixing a bug to be able to use other filters (month, day)
+# add other columns such as species group
+
 load_observations <-
   function(species,
            data_source,
@@ -12,6 +36,7 @@ load_observations <-
            ymax = NA,
            bbox = NULL,
            limit = 1000) {
+
     # TEMPORAL RANGE
     if (!is.null(year_end) && year_end < year_start) {
       stop("The end year should be higher than the start year.")
