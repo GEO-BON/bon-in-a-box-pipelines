@@ -7,12 +7,27 @@ import { InputFileWithExample } from './InputFileWithExample';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
+const api = new BonInABoxScriptService.DefaultApi();
 
 export function PipelinePage(props) {
-  const [resultFolder, setResultFolder] = useState();
+  const [runId, setRunId] = useState();
+  const [resultsData, setResultsData] = useState();
   const [httpError, setHttpError] = useState();
   const [pipelineMetadata, setPipelineMetadata] = useState({});
   const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState({});
+
+  // Called when ID changes
+  useEffect(() => {
+    if (runId) {
+      api.getPipelineOutputs(runId, (error, data, response) => {
+        if (error) {
+          setHttpError(error.toString());
+        } else {
+          setResultsData(data);
+        }
+      });
+    }
+  }, [runId])
 
  return (
   <>
@@ -20,17 +35,16 @@ export function PipelinePage(props) {
     <PipelineForm 
       pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
       setPipelineMetadataRaw={setPipelineMetadataRaw}
-      setResultFolder={setResultFolder} 
+      setRunId={setRunId} 
       setHttpError={setHttpError} />
     {httpError && <p key="httpError" className="error">{httpError}</p>}
     {pipelineMetadataRaw && <pre key="metadata">{pipelineMetadataRaw.toString()}</pre>}
-    {resultFolder && <pre key="resultFolderTEMP">{resultFolder.toString()}</pre>}
+    <PipelineResults key="results" resultsData={resultsData} setHttpError={setHttpError} />
   </>)
 }
 
 function PipelineForm(props) {
   const formRef = useRef(null);
-  const api = new BonInABoxScriptService.DefaultApi();
 
   const defaultPipeline = "hard-coded";
   const [pipelineOptions, setPipelineOptions] = useState([]);
@@ -41,7 +55,7 @@ function PipelineForm(props) {
 
     var callback = function (error, data, response) {
       if(error) {
-        setHttpError(error.toString());
+        props.setHttpError(error.toString());
       } else {
         props.setPipelineMetadataRaw(data);
         if(data) props.setPipelineMetadata(yaml.load(data));
@@ -58,7 +72,7 @@ function PipelineForm(props) {
   };
 
   const runScript = () => {
-    props.setResultFolder(null);
+    props.setRunId(null);
 
     var callback = function (error, data /*, response*/) {
       if (error) { // Server / connection errors. Data will be undefined.
@@ -66,7 +80,7 @@ function PipelineForm(props) {
         props.setHttpError(error.toString());
 
       } else if (data) { 
-        props.setResultFolder(data);
+        props.setRunId(data);
       } else {
         props.setHttpError("Server returned empty result");
       }
@@ -114,4 +128,9 @@ function PipelineForm(props) {
       <input type="submit" disabled={false} value="Run pipeline" />
     </form>
   );
+}
+
+function PipelineResults(props){
+  if(props.resultsData) return <pre>{JSON.stringify(props.resultsData, null, 2)}</pre>
+  else return null
 }
