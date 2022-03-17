@@ -6,13 +6,6 @@ import { Outlet, NavLink } from "react-router-dom";
 
 function App() {
 
-  function getLinkStyle( isActive ) {
-    return {
-       color: isActive ? "white" : "",
-       "text-decoration": isActive ? "none" : "underline"
-       };
-  }
-
   return (
     <>
       <header className="App-header">
@@ -20,7 +13,9 @@ function App() {
       </header>
 
       <nav>
-        <NavLink to="/script-form" style={({ isActive }) => getLinkStyle(isActive)}>Single script</NavLink> | <NavLink to="/pipeline-form">Pipeline</NavLink>
+        <NavLink to="/script-form">Single script</NavLink>
+        &nbsp;|&nbsp;
+        <NavLink to="/pipeline-form">Pipeline</NavLink>
       </nav>
 
       <main>
