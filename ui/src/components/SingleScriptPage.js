@@ -119,7 +119,8 @@ function SingleScriptForm(props) {
       <label>
         Script file:
         <br />
-        <Select name="scriptFile" className="blackText" options={scriptFileOptions} defaultValue={{ label: defaultScript, value: defaultScript }}
+        <Select name="scriptFile" className="blackText" options={scriptFileOptions}
+          defaultValue={{ label: defaultScript, value: defaultScript }}
           onChange={(v) => loadScriptMetadata(v.value)} />
       </label>
       <label>
