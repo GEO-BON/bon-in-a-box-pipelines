@@ -19,7 +19,7 @@ export function InputFileWithExample(props) {
     // Generate example input.json
     let inputExamples = {};
 
-    let meta = props.scriptMetadata;
+    let meta = props.metadata;
     if (meta && meta.inputs) {
       Object.keys(meta.inputs).forEach((inputKey) => {
         let input = meta.inputs[inputKey];

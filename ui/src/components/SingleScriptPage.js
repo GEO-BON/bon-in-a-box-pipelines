@@ -37,6 +37,7 @@ export function SingleScriptPage(props) {
 
 function SingleScriptForm(props) {
   const formRef = useRef(null);
+  const api = new BonInABoxScriptService.DefaultApi();
 
   const defaultScript = "HelloWorld>HelloR.yml";
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
@@ -46,7 +47,6 @@ function SingleScriptForm(props) {
     props.setRequestState(RequestState.done);
     props.setResultData(null);
 
-    var api = new BonInABoxScriptService.DefaultApi();
     var callback = function (error, data, response) {
       props.setScriptMetadata(yaml.load(data));
       props.setResultData({ httpError: error ? error.toString() : null, rawMetadata: data });
@@ -65,7 +65,6 @@ function SingleScriptForm(props) {
     props.setRequestState(RequestState.working);
     props.setResultData(null);
 
-    var api = new BonInABoxScriptService.DefaultApi();
     var callback = function (error, data /*, response*/) {
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
@@ -101,7 +100,6 @@ function SingleScriptForm(props) {
   // Applied only once when first loaded  
   useEffect(() => {
     // Load list of scripts into scriptFileOptions
-    let api = new BonInABoxScriptService.DefaultApi();
     api.scriptListGet((error, data, response) => {
       if (error) {
         console.error(error);
@@ -128,7 +126,7 @@ function SingleScriptForm(props) {
         Content of input.json:
         <br />
         <InputFileWithExample defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}'
-          scriptMetadata={props.scriptMetadata} />
+          metadata={props.scriptMetadata} />
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
