@@ -1,48 +1,6 @@
 
 
 
-#' @name projectCoords
-#' @param xy data frame, containing the coordinates to reproject
-#' @param lon string, name of the longitude column
-#' @param lat string, name of the latitude column
-#' @param proj.from character, initial projection of the xy coordinates
-#' @param proj.to character, target projection 
-#' @return spatial points in the proj.to projection
-
-projectCoords <- function(xy, lon = "lon", lat = "lat", proj.from, proj.to) {
-  xy <- dplyr::select(xy, all_of(c(lon, lat)))
-  sp::coordinates(xy) <-  c(lon, lat)
-  proj4string(xy) <- sp::CRS(proj.from)
-  xy <- sp::spTransform(xy, sp::CRS(proj.to)) 
-  xy
-}
-
-
-#' @name findBox
-#' @param xy data frame, containing the coordinates to reproject
-#' @param buffer integer, buffer to add around the observations
-#' @param proj.from character, initial projection of the xy coordinates
-#' @param proj.to character, target projection 
-#' @return a box extent
-findBox <- function(xy, buffer = 0, proj.from = NULL, proj.to = NULL) {
-  if (class(xy) != "SpatialPoints") {
-    sp::coordinates(xy) <- colnames(xy)
-    proj4string(xy) <- sp::CRS(proj.from)
-  }
-  bbox <-  sf::st_buffer(sf::st_as_sfc(sf::st_bbox(xy)), dist =  buffer)
-  
-  if (!is.null(proj.to) ) {
-    bbox <- bbox  %>%
-      sf::st_transform(crs = sp::CRS(proj.to))
-  }
-  bbox <- c(sf::st_bbox(bbox)$xmin, sf::st_bbox(bbox)$xmax,
-            sf::st_bbox(bbox)$ymin, sf::st_bbox(bbox)$ymax)
-  bbox
-}
-
-
-
-
 
 sampleGdalCube <- function(cube, date, n.sample) {
   
@@ -58,24 +16,11 @@ sampleGdalCube <- function(cube, date, n.sample) {
 }
 
 
-
-sampleGdalCube <- function(cube, lon, lat, date) {
-  
-  x <- dimension_values(cube)$x
-  y <- dimension_values(cube)$y
-  
-  all.points <- expand.grid(x,y) %>% setNames(c("x", "y"))
-  sample.points <- all.points[sample(1:nrow(all.points), n.sample),]
-  t <- rep(as.Date(date), nrow(sample.points) )
-  
-  value.points
-}
-
 #' Create a proxy data cube for current climate, 
 #' which loads data from a given image collection according to a data cube view based
 #' on a specific box coordinates or using a set of observations
 #' 
-#' @name loadCube
+#' @name load_cube
 #' 
 #' @param stac_path, a character, base url of a STAC web service.
 #' @param limit, an integer defining the maximum number of results to return. 
@@ -101,16 +46,15 @@ sampleGdalCube <- function(cube, lon, lat, date) {
 #' @param aggregation, a character, aggregation method as string, defining how to deal with pixels containing data from multiple images, can be "min", "max", "mean", "median", or "first"
 #' @param resampling, a character, resampling method used in gdalwarp when images are read, can be "near", "bilinear", "bicubic" or others as supported by gdalwarp (see https://gdal.org/programs/gdalwarp.html)
 #' @return a raster stack of variables not intercorrelated
-#' @import gdalcubes, dplyr, sp, sf, rstac
+#' @import gdalcubes dplyr sp sf rstac
 #' @return a proxy raster data cube
 
-loadCube <- function(stac_path =
+load_cube <- function(stac_path =
                        "http://io.biodiversite-quebec.ca/stac/",
                      limit = 5000,
                      collections = c('chelsa-clim'),
                      use.obs = T,
                      obs = NULL,
-                     srs.obs = NULL,
                      lon = "lon",
                      lat = "lat",
                      buffer.box = 0,
@@ -127,49 +71,57 @@ loadCube <- function(stac_path =
   
   # Creating RSTACQuery  query
   s <- rstac::stac(stac_path)
-
+  
   # use observations to create the bbox and extent
   if (use.obs) {
     
-    if ("data.frame" %in% class(obs)) {
+    if (inherits(obs, "data.frame")) {
       # Reproject the obs to the data cube projection
-      proj.pts <- projectCoords(obs, lon = lon, lat = lat, proj.from = srs.obs, proj.to = srs.cube)
+      proj.pts <- project_coords(obs, lon = lon, lat = lat, proj.from = srs.cube)
       
     } else {
       proj.pts <- obs
     }
 
     # Create the extent (data cube projection)
-    bbox.proj <- findBox(proj.pts, buffer = buffer.box)
+    bbox.proj <- points_to_bbox(proj.pts, buffer = buffer.box)
     left <- bbox.proj[1]
     right <- bbox.proj[2]
     bottom <- bbox.proj[3]
     top <- bbox.proj[4]
     
     # Create the bbxo (WGS84 projection)
-    bbox.wgs84 <- findBox(proj.pts, buffer = buffer.box, proj.to ="+proj=longlat +datum=WGS84")
+    bbox.wgs84 <- points_to_bbox(proj.pts, buffer = buffer.box, proj.to ="+proj=longlat +datum=WGS84")
+    
+  } else {
+    
+    bbox.wgs84 <- c(left, right, bottom, top) 
+    
+    if (left > right) stop("left and right seem reversed")
+    if (bottom > top) stop("left and right seem reversed")
+  }
+  
+  # Create datetime object
+  datetime <- format(lubridate::as_datetime(t0), "%Y-%m-%dT%H:%M:%SZ")
+  
+  if (!is.null(t1) && t1 != t0) {
+    datetime <- paste(datetime,
+                      format(lubridate::as_datetime(t1), "%Y-%m-%dT%H:%M:%SZ"),
+                      sep = "/")
     
   }
-
- # Hack: rstac::stac_search produces timeout error if not ping before
-  # RCurl::getURL(stac_path)
+  
+  
   RCurl::url.exists(stac_path)
-
   # CreateRSTACQuery object with the subclass search containing all search field parameters 
-
   it_obj <- s |>
-    rstac::stac_search(bbox = bbox.wgs84, collections = collections, limit = limit) |> get_request() # bbox in decimal lon/lat
- 
-
-  it_obj <- s |>
-    rstac::stac_search(bbox = bbox.wgs84, collections = collections, limit = limit) |> get_request() # bbox in decimal lon/lat
-
-  it_obj <- s |>
-    rstac::stac_search(bbox = bbox.wgs84, collections = collections, limit = limit) |> get_request() # bbox in decimal lon/lat
- 
+    rstac::stac_search(bbox = bbox.wgs84, collections = collections, 
+                       datetime = datetime,
+                       limit = limit) |> rstac::get_request() # bbox in decimal lon/lat
+  
   # If no layers is selected, get all the layers by default
   if (is.null(layers)) {
-    layers <- unlist(lapply(it_obj$features,function(x){names(x$assets)}))
+    layers <- unlist(lapply(it_obj$features, function(x){names(x$assets)}))
     
   }
   
@@ -179,7 +131,7 @@ loadCube <- function(stac_path =
   v <- gdalcubes::cube_view(srs = srs.cube,  extent = list(t0 = t0, t1 = t1,
                                            left = left, right = right,  top = top, bottom = bottom),
                  dx = spatial.res, dy = spatial.res, dt = temporal.res, aggregation = aggregation, resampling = resampling)
-  gdalcubes_options(parallel = 4)
+  gdalcubes::gdalcubes_options(parallel = 4)
   cube <- gdalcubes::raster_cube(st, v)
 
   return(cube)
@@ -276,8 +228,8 @@ loadCubeProjection <- function(stac_path =
       proj.pts <- obs
     }
 
-    bbox <- findBox(proj.pts, buffer = buffer.box, proj.to ="+proj=longlat +datum=WGS84")
-    bbox.proj <- findBox(proj.pts, buffer = buffer.box)
+    bbox <- points_to_bbox(proj.pts, buffer = buffer.box, proj.to ="+proj=longlat +datum=WGS84")
+    bbox.proj <- points_to_bbox(proj.pts, buffer = buffer.box)
     left <- bbox.proj[1]
     right <- bbox.proj[2]
     bottom <- bbox.proj[3]
@@ -285,19 +237,19 @@ loadCubeProjection <- function(stac_path =
   }
   
   it_obj <- s |>
-    stac_search(bbox = bbox, collections = collections, limit = limit) |> get_request() # bbox in decimal lon/lat
+    rstac::stac_search(bbox = bbox, collections = collections, limit = limit) |>  rstac::get_request() # bbox in decimal lon/lat
   
   all.layers <- unlist(lapply(it_obj$features,function(x){names(x$assets)}))
   
   
-  st <- stac_image_collection(it_obj$features, asset_names = all.layers,
+  st <- gdalcubes::stac_image_collection(it_obj$features, asset_names = all.layers,
                               property_filter = function(x) {x[["variable"]] %in% layers & x[["time_span"]] == time.span  & x[["rcp"]] == rcp })
   
   #if layers = NULL, load all the layers
-  v <- cube_view(srs = srs.cube,  extent = list(t0 = t0, t1 = t0,
+  v <- gdalcubes:cube_view(srs = srs.cube,  extent = list(t0 = t0, t1 = t0,
                                            left = left, right = right,  top = top, bottom = bottom),
                  dx = spatial.res, dy = spatial.res, dt = temporal.res, aggregation = aggregation, resampling = resampling)
-  gdalcubes_options(threads = 4)
+  gdalcubes::gdalcubes_options(parallel = 4)
   cube <- raster_cube(st, v)
   return(cube)
 }
@@ -350,3 +302,30 @@ aggregModels <- function(df, grp = c("lon", "lat", "variable"), fun = "mean") {
   return(df.agg)
 }
 
+
+
+cube_to_raster <- function(cube, format = "raster") {
+  # Transform to a star object
+  cube.xy <- cube %>%
+    stars::st_as_stars()
+  
+  # If not, names are concatenated with temp file names
+  names(cube.xy) <- names(cube)
+  
+  # We remove the temporal dimension
+  cube.xy <- cube.xy|> abind::adrop(c(F,F,T))
+  
+  # Conversion to a spatial object
+  
+  if (format == "raster") {
+    # Raster format
+    cube.xy <- raster::stack(as(cube.xy, "Spatial"))
+    
+  } else {
+    # Terra format
+    cube.xy <- terra::rast(cube.xy)
+  }
+  
+  cube.xy
+  
+}
