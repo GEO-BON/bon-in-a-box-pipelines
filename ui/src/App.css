@@ -1,6 +1,10 @@
 a {
   color:lightskyblue;
 }
+a.active {
+  color:white;
+  text-decoration: none
+}
 
 .left-banner {
   float: left;
