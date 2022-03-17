@@ -1,0 +1,30 @@
+script: studyExtent.R
+inputs:
+  obs:
+    description: Occurrence data, some description here
+    type: string
+    example: "/output/cleanCoordinates/modCleanOccurrences_R/21dc20f610a4fe630811eadf9e655274/flagg_occ.csv"
+  srs:
+    description: Projection 
+    type: string
+    example: "EPSG:6623"
+  method: 
+    description: Occurrence data, some description here
+    type: vector
+    example: "mcp"
+  dist.buffer :
+    description: Projection 
+    type: integer
+    example: null  
+outputs:
+  area_study_extent:
+    description: Projection 
+    type: integer
+    example: null  
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+references:
+  - text: Rick Bonney, Expanding the Impact of Citizen Science, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
+    doi: 10.1093/biosci/biab041
+  - text: Ruiping Yang, Yongkui Qi, Li Yang, Tao Chen, Aixing Deng, Jun Zhang, Zhenwei Song, Baoming Ge, Rotation regimes lead to significant differences in soil macrofaunal biodiversity and trophic structure with the changed soil properties in a rice-based double cropping system, Geoderma, 405, (115424), (2022).
+    doi: 10.1016/j.geoderma.2021.115424
