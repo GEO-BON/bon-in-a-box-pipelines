@@ -26,7 +26,11 @@ export function SingleScriptPage(props) {
         <img src={spinner} className="spinner" alt="Spinner" />
       </div>
     ) : (
-      <Result data={resultData} metadata={scriptMetadata} />
+      <>
+        {resultData && resultData.httpError && <p key="httpError" className="error">{resultData.httpError}</p>}
+        {resultData && resultData.rawMetadata && <pre key="metadata">{resultData.rawMetadata.toString()}</pre>}
+        <Result data={resultData} metadata={scriptMetadata} />
+      </>
     )}
   </>)
 }
