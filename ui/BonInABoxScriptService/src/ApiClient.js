@@ -13,7 +13,6 @@
 
 
 import superagent from "superagent";
-import querystring from "querystring";
 
 /**
 * @module ApiClient
@@ -33,11 +32,11 @@ class ApiClient {
      * Overrides the default value set in spec file if present
      * @param {String} basePath
      */
-    constructor(basePath = 'http://localhost') {
+    constructor(basePath = '') {
         /**
          * The base URL against which to resolve every API call's (relative) path.
          * @type {String}
-         * @default http://localhost
+         * @default empty
          */
         this.basePath = basePath.replace(/\/+$/, '');
 
@@ -438,7 +437,11 @@ class ApiClient {
         }
 
         if (contentType === 'application/x-www-form-urlencoded') {
-            request.send(querystring.stringify(this.normalizeParams(formParams)));
+            
+            request.send(
+                // Migrated from querystring (deprecated) to URLSearchParams
+                new URLSearchParams(this.normalizeParams(formParams)).toString()
+            );
         } else if (contentType == 'multipart/form-data') {
             var _formParams = this.normalizeParams(formParams);
             for (var key in _formParams) {

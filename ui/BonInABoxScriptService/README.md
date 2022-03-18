@@ -124,7 +124,7 @@ Class | Method | HTTP request | Description
 *BonInABoxScriptService.DefaultApi* | [**getPipelineOutputs**](docs/DefaultApi.md#getPipelineOutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
 *BonInABoxScriptService.DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
 *BonInABoxScriptService.DefaultApi* | [**pipelineListGet**](docs/DefaultApi.md#pipelineListGet) | **GET** /pipeline/list | Get a list of available pipelines
-*BonInABoxScriptService.DefaultApi* | [**runPipeline**](docs/DefaultApi.md#runPipeline) | **GET** /pipeline/{descriptionPath}/run | Run this pipeline
+*BonInABoxScriptService.DefaultApi* | [**runPipeline**](docs/DefaultApi.md#runPipeline) | **POST** /pipeline/{descriptionPath}/run | Run this pipeline
 *BonInABoxScriptService.DefaultApi* | [**runScript**](docs/DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
 *BonInABoxScriptService.DefaultApi* | [**scriptListGet**](docs/DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
 

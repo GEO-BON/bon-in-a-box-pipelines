@@ -16,9 +16,7 @@ export function Result(props) {
     if (data) {
         return (
             <div>
-                <RenderContext.Provider value={{ data: props.data, metadata: props.metadata, active: activeRenderer }}>
-                    {data.httpError && <p key="httpError" className="error">{data.httpError}</p>}
-                    {data.rawMetadata && <pre key="metadata">{data.rawMetadata.toString()}</pre>}
+                <RenderContext.Provider value={{ metadata: props.metadata, active: activeRenderer }}>
                     <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
                     <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
                 </RenderContext.Provider>

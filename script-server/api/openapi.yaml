@@ -136,7 +136,7 @@ paths:
         "404":
           description: Script not found
   /pipeline/{descriptionPath}/run:
-    get:
+    post:
       tags: []
       summary: Run this pipeline
       operationId: runPipeline
@@ -149,6 +149,8 @@ paths:
         explode: false
         schema:
           type: string
+      requestBody:
+        $ref: '#/components/requestBodies/run_input_body'
       responses:
         "200":
           description: Returns the unique ID for this run. It corresponds to the unique output folder.
@@ -161,7 +163,7 @@ paths:
         "400":
           description: Bad request
         "404":
-          description: Script not found
+          description: Pipeline not found
   /pipeline/{id}/outputs:
     get:
       tags: []
