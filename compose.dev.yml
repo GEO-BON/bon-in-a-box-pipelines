@@ -6,12 +6,14 @@ services:
 ## UI server to use when developing UI code
   ui:
     container_name: biab-ui
-    image: node:16.13.1-alpine3.13
+    build:
+      context: ./ui
+      dockerfile: Dockerfile.dev
     user: "node"
     volumes:
       - './ui:/app:rw'
     working_dir: "/app"
-    command: sh -c "cd BonInABoxScriptService; npm run build; cd -; npm start;"
+    command: sh -c "cd BonInABoxScriptService; npm run build; cd -; npm install; npm start;"
     expose:
       - '3000'
     environment:
@@ -42,11 +44,8 @@ services:
   openapi_swagger:
     container_name: swagger_editor
     image: swaggerapi/swagger-editor
-    # Swagger editor will be available at port :80 or https://localhost
     expose:
       - "8080"
-    # Swagger File to feed the Swagger Editor
-    # Base URL to point for consulting the Swagger https://localhost/swagger
     environment:
       SWAGGER_FILE: openapi.yaml
       BASE_URL: /swagger
