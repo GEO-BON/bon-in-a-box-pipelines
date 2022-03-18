@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <header className="App-header">
-        <h1>BON in a Box v2 pre-pre-pre alpha</h1>
+        <h1>BON in a Box v2 pre-pre alpha</h1>
       </header>
 
       <nav>
