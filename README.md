@@ -69,7 +69,7 @@ The output keys `warning` and `error` can be used to report problems in script e
 Each script becomes a pipeline step.
 
 ## Developer documentation
-The following is intended for those developing the microservice infrastructure supporting the pipelines.
+The linked content is intended for those developing the microservice infrastructure supporting the pipelines.
 
 [Developer documentation](/docs/dev.md)
 
