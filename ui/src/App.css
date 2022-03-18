@@ -1,5 +1,9 @@
 a {
-  color:lightskyblue
+  color:lightskyblue;
+}
+a.active {
+  color:white;
+  text-decoration: none
 }
 
 .left-banner {
