@@ -10,7 +10,7 @@ For the global project, Visual Studio Code. Recommended extensions:
 For the script-server (Kotlin code), IntelliJ Idea
 
 ## Launching the dockers in development mode
-
+`docker compose -f compose.yml -f compose.dev.yml build`
 `docker compose -f compose.yml -f compose.dev.yml up`
 
 This command enables:
