@@ -114,17 +114,17 @@ shp_to_bbox <- function(shp, proj.from = NULL, proj.to = NULL) {
   }
   
   if(is.na(sf::st_crs(shp))) {
-    crs(study_extent) <- proj.from
-    study_extent <- study_extent %>% sf::st_set_crs(proj.from)
+    crs(shp) <- proj.from
+    shp <- shp %>% sf::st_set_crs(proj.from)
   }
   
   if (!is.null(proj.to) ) {
-    study_extent <- study_extent %>%
+    shp <- shp %>%
       sf::st_transform(crs = sp::CRS(proj.to))
   }
   
   
-  bbox <- sf::st_bbox(study_extent, crs = proj)
+  bbox <- sf::st_bbox(shp, crs = proj)
 
   bbox
 }
