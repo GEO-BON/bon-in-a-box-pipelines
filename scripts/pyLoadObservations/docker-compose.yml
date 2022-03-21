@@ -1,0 +1,20 @@
+version: '2.3'
+services:
+  pcdock:
+    build: .
+    image: "planetary-computer-pygbif"
+    command:
+      - python
+    volumes:
+      - ./:/home/jovyan/
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
+      - DASK_GATEWAY__AUTH__TYPE="jupyterhub"
+      - DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE="mcr.microsoft.com/planetary-computer/python:latest"
+      - DASK_GATEWAY__ADDRESS="https://pccompute.westeurope.cloudapp.azure.com/compute/services/dask-gateway"
+      - DASK_GATEWAY__PROXY_ADDRESS="gateway://pccompute-dask.westeurope.cloudapp.azure.com:80"
+      - GBIF_USER=${GBIF_USER}
+      - GBIF_PWD=${GBIF_PWD}
+    ports:
+      - "8888:8888"
