@@ -14,6 +14,9 @@ services:
     environment:
       - SCRIPT_LOCATION=/scripts
       - OUTPUT_LOCATION=/output
+      - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
+      - GBIF_USER=${GBIF_USER}
+      - GBIF_PWD=${GBIF_PWD}
 
   http-gateway:
     container_name: http-rev-prox
