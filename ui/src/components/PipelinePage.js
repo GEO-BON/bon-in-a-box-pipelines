@@ -130,7 +130,50 @@ function PipelineForm(props) {
   );
 }
 
-function PipelineResults(props){
-  if(props.resultsData) return <pre>{JSON.stringify(props.resultsData, null, 2)}</pre>
+function PipelineResults(props) {
+  if (props.resultsData) {
+    return Object.entries(props.resultsData).map((entry, i) => {
+      const [key, value] = entry;
+
+      if (!key.startsWith("Constant@")) {
+        let script = key.substring(0, key.indexOf('@'))
+        return <DelayedResult key={key} script={script} folder={value} />
+      } else {
+        return <pre key={key}>{key} : {value}</pre>
+      }
+    });
+  }
   else return null
+}
+
+function DelayedResult(props) {
+  const [resultData, setResultData] = useState(null)
+  const [scriptMetadata, setScriptMetadata] = useState(null)
+
+  useEffect(() => {
+    // Script result
+    let xhr = new XMLHttpRequest();
+    xhr.open("get", "output/" + props.folder + "/output.json");
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        setResultData(JSON.parse(xhr.responseText))
+      }
+    };
+    xhr.send();
+
+    // Script metadata
+    var callback = function (error, data, response) {
+      // TODO: error handling
+      setScriptMetadata(yaml.load(data))
+    };
+
+    api.getScriptInfo(props.script, callback);
+
+  }, [props.folder, props.script]);
+
+  if (resultData && scriptMetadata) {
+    return <Result data={resultData} logs="" metadata={scriptMetadata} />
+  }
+
+  return <img src={spinner} className="spinner" alt="Spinner" />
 }
