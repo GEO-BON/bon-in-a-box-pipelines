@@ -131,7 +131,9 @@ fun Route.ScriptApi(logger:Logger) {
         runningPipelines[parameters.id]?.let { finalStep -> // Return live result
             val allOutputs = mutableMapOf<String, String>()
             finalStep.dumpOutputFolders(allOutputs)
-            call.respond(allOutputs)
+            call.respond(
+                allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
+            )
         } ?: call.respondText("Unimplemented: only hardcoded result can be retrieved") // TODO: Get the file
 
         // TODO some real implementation
