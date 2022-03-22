@@ -83,7 +83,8 @@ function RenderedFiles(props) {
     const metadata = useContext(RenderContext).metadata;
 
     function getMimeType(key) {
-        if (metadata.outputs
+        if (metadata
+            && metadata.outputs
             && metadata.outputs[key]
             && metadata.outputs[key].type) {
             return metadata.outputs[key].type;
