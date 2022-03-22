@@ -8,7 +8,7 @@ import CsvToHtmlTable from './CsvToHtmlTable.jsx'
  * - delimiter: used to parse the CSV file
  */
 function RenderedCSV(props) {
-    const [data, setData] = useState("Loading...")
+    const [data, setData] = useState(null)
     const [partial, setPartial] = useState(false)
 
     useEffect(() => {
