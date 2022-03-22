@@ -9,6 +9,7 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
+import kotlinx.coroutines.launch
 import org.geobon.pipeline.ConstantPipe
 import org.geobon.pipeline.ScriptStep
 import org.geobon.pipeline.Step
@@ -110,7 +111,10 @@ fun Route.ScriptApi(logger:Logger) {
             val step2 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step1.outputs["increment"]!!)) // 13
             val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 14
             runningPipelines["fakePath"] = finalStep
-            finalStep.outputs["increment"]!!.pull()
+
+            launch {
+                finalStep.outputs["increment"]!!.pull()
+            }
             // runningPipelines.remove("fakePath")
 
             // Output dump for debugging :

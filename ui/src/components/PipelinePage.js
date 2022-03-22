@@ -9,6 +9,8 @@ const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
 const api = new BonInABoxScriptService.DefaultApi();
 
+// TODO: cancel timeout / interval
+
 export function PipelinePage(props) {
   const [runId, setRunId] = useState();
   const [resultsData, setResultsData] = useState();
@@ -16,17 +18,26 @@ export function PipelinePage(props) {
   const [pipelineMetadata, setPipelineMetadata] = useState({});
   const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState({});
 
-  // Called when ID changes
-  useEffect(() => {
+  function getPipelineOutputs() {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
           setHttpError(error.toString());
         } else {
+          let allDone = Object.values(data).every(val => val !== "")
+          if(!allDone) { // try again later
+            setTimeout(getPipelineOutputs, 1000)
+          }
+
           setResultsData(data);
         }
       });
     }
+  }
+
+  // Called when ID changes
+  useEffect(() => {
+    getPipelineOutputs()
   }, [runId])
 
  return (
@@ -150,25 +161,39 @@ function DelayedResult(props) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
 
-  useEffect(() => {
-    // Script result
-    let xhr = new XMLHttpRequest();
-    xhr.open("get", "output/" + props.folder + "/output.json");
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        setResultData(JSON.parse(xhr.responseText))
-      }
-    };
-    xhr.send();
+  useEffect(() => { // Script result (poll every second)
+    const interval = setInterval(() => {
+      if (props.folder && props.folder !== "") {
+        fetch("output/" + props.folder + "/output.json")
+          .then((response) => {
+            if (response.ok) {
+              clearInterval(interval);
+              return response.json();
+            }
 
-    // Script metadata
+            // Script not done yet: wait for next attempt
+            if (response.status == 404) {
+              return Promise.resolve(null)
+            }
+
+            return Promise.reject(response);
+          })
+          .then(json => setResultData(json))
+          .catch(response => {
+            clearInterval(interval);
+            setResultData({ error: response.status + " (" + response.statusText + ")" })
+          });
+      }
+    }, 1000);
+  }, [props.folder]);
+
+  useEffect(() => { // Script metadata
     var callback = function (error, data, response) {
       setScriptMetadata(yaml.load(data))
     };
 
     api.getScriptInfo(props.script, callback);
-
-  }, [props.folder, props.script]);
+  }, [props.script]);
 
   if (resultData) {
     return <Result data={resultData} logs="" metadata={scriptMetadata} />
