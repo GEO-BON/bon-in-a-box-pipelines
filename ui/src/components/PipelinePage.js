@@ -12,9 +12,9 @@ const api = new BonInABoxScriptService.DefaultApi();
 // TODO: cancel timeout / interval
 
 export function PipelinePage(props) {
-  const [runId, setRunId] = useState();
-  const [resultsData, setResultsData] = useState();
-  const [httpError, setHttpError] = useState();
+  const [runId, setRunId] = useState(null);
+  const [resultsData, setResultsData] = useState(null);
+  const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState({});
   const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState({});
 
