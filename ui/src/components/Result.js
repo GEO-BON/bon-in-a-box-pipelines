@@ -12,13 +12,12 @@ export function Result(props) {
         setActiveRenderer(activeRenderer === componentId ? null : componentId);
     }
 
-    let data = props.data;
-    if (data) {
+    if (props.data || props.logs) {
         return (
             <div>
                 <RenderContext.Provider value={{ metadata: props.metadata, active: activeRenderer }}>
-                    <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
-                    <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
+                    <RenderedFiles key="files" files={props.data} toggleVisibility={toggleVisibility} />
+                    <RenderedLogs key="logs" logs={props.logs} toggleVisibility={toggleVisibility} />
                 </RenderContext.Provider>
             </div>
         );
