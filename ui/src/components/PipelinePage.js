@@ -163,7 +163,6 @@ function DelayedResult(props) {
 
     // Script metadata
     var callback = function (error, data, response) {
-      // TODO: error handling
       setScriptMetadata(yaml.load(data))
     };
 
@@ -171,7 +170,7 @@ function DelayedResult(props) {
 
   }, [props.folder, props.script]);
 
-  if (resultData && scriptMetadata) {
+  if (resultData) {
     return <Result data={resultData} logs="" metadata={scriptMetadata} />
   }
 
