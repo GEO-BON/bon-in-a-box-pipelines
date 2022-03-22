@@ -36,7 +36,8 @@ class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()
      * @param allOutputs Map of Step identifier to output folder.
      */
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
-        allOutputs[toString()] = outputFolder ?: ""
+        val relPath = yamlFile.relativeTo(scriptRoot).path
+        allOutputs["$relPath@${hashCode()}"] = outputFolder ?: ""
         super.dumpOutputFolders(allOutputs)
     }
 }
