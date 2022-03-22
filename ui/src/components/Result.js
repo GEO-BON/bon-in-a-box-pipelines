@@ -28,7 +28,10 @@ export function Result(props) {
 }
 
 function isRelativeLink(value) {
-    return value.startsWith('/');
+    if (typeof value.startsWith === "function") { 
+        return value.startsWith('/')
+    }
+    return false
 }
 
 function FoldableOutput(props) {
