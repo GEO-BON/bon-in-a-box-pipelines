@@ -9,8 +9,6 @@ const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
 const api = new BonInABoxScriptService.DefaultApi();
 
-// TODO: cancel timeout / interval
-
 export function PipelinePage(props) {
   const [runId, setRunId] = useState(null);
   const [resultsData, setResultsData] = useState(null);
@@ -18,7 +16,8 @@ export function PipelinePage(props) {
   const [pipelineMetadata, setPipelineMetadata] = useState({});
   const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState({});
 
-  function getPipelineOutputs() {
+  let timeout
+  function loadPipelineOutputs() {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
@@ -26,7 +25,7 @@ export function PipelinePage(props) {
         } else {
           let allDone = Object.values(data).every(val => val !== "")
           if(!allDone) { // try again later
-            setTimeout(getPipelineOutputs, 1000)
+            timeout = setTimeout(loadPipelineOutputs, 1000)
           }
 
           setResultsData(data);
@@ -37,9 +36,17 @@ export function PipelinePage(props) {
 
   // Called when ID changes
   useEffect(() => {
-    getPipelineOutputs()
-  }, [runId])
+    console.log("Run id: " + runId)
+    setResultsData(null);
+    loadPipelineOutputs()
 
+    return function cleanup() { 
+      if(timeout) clearTimeout(timeout)
+    };
+  // Called only when ID changes. Including all deps would result in infinite loop.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runId])
+  
  return (
   <>
     <h2>Single script run</h2>
@@ -172,7 +179,7 @@ function DelayedResult(props) {
             }
 
             // Script not done yet: wait for next attempt
-            if (response.status == 404) {
+            if (response.status === 404) {
               return Promise.resolve(null)
             }
 
@@ -185,6 +192,8 @@ function DelayedResult(props) {
           });
       }
     }, 1000);
+
+    return function cleanup() { clearInterval(interval) };
   }, [props.folder]);
 
   useEffect(() => { // Script metadata

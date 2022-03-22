@@ -69,7 +69,7 @@ fun Route.ScriptApi(logger:Logger) {
 
     get<Paths.pipelineListGet> {
         // TODO some real implementation
-        call.respond(listOf("hard-coded"))
+        call.respond(listOf("hard-coded", "something else"))
 /*
         val possible = mutableListOf<String>()
         val relPathIndex = scriptRoot.absolutePath.length + 1
