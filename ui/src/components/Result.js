@@ -5,7 +5,7 @@ import RenderedCSV from './csv/RenderedCSV';
 import { FoldableOutput, RenderContext, createContext, isRelativeLink } from "./FoldableOutput";
 
 export function Result(props) {
-    const [activeRenderer, setActiveRenderer] = useState([]);
+    const [activeRenderer, setActiveRenderer] = useState({});
 
     if (props.data || props.logs) {
         return (

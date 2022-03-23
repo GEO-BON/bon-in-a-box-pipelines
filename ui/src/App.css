@@ -31,8 +31,13 @@ a.active {
   pointer-events: none;
 }
 
+.spinner-inline {
+  height: 1em;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .spinner {
+  .spinner, .spinner-inline {
     animation: spin infinite 4s linear;
   }
 }
