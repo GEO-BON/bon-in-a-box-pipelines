@@ -20,5 +20,5 @@ outputs:
   observations_file:
     label: CSV file with observations
     description: CSV file with observations
-    type: csv
+    type: text/csv
     example: hfn7s62sq.csv

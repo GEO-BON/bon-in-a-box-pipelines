@@ -30,7 +30,8 @@ def get_taxa_gbif_pc(taxa=[], bbox=[], outfile=''):
         dataset={"require_extension": None},
         engine="pyarrow",
     ).compute() # CHECK TO SEE WHY to_csv IS NOT WORKING WITH DASK WORKERS
-    df.to_csv(outfile) 
+    df.to_csv(outfile)
+    return(outfile)
 
 
 def get_cluster():
