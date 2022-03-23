@@ -99,7 +99,7 @@ function RenderedFiles(props) {
             }
 
             return (
-                <FoldableOutput key={key} title={title} description={description} componentId={key} inline={value}>
+                <FoldableOutput key={key} title={title} description={description} componentId={key} inline={value} className="foldableOutput">
                     {renderWithMime(key, value)}
                 </FoldableOutput>
             );
@@ -114,7 +114,7 @@ function RenderedLogs(props) {
 
     if (props.logs) {
         return (
-            <FoldableOutput title="Logs" componentId={myId}>
+            <FoldableOutput title="Logs" componentId={myId} className="foldableOutput">
                 <pre>{props.logs}</pre>
             </FoldableOutput>
         );

@@ -20,7 +20,7 @@ export function FoldableOutput(props) {
         }
     }, [active]);
 
-    return <>
+    return <div className={props.className}>
         <div className="outputTitle">
             <h3 ref={titleRef} onClick={() => renderContext.toggleVisibility(props.componentId)} className="clickable">
                 {active ? <b>–</b> : <b>+</b>} {props.title}
@@ -39,7 +39,7 @@ export function FoldableOutput(props) {
                 {props.description && <p className="outputDescription">{props.description}</p>}
                 {props.children}
             </div>}
-    </>;
+    </div>;
 }
 
 export function isRelativeLink(value) {

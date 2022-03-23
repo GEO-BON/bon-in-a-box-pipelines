@@ -213,7 +213,7 @@ function DelayedResult(props) {
   let inline = resultData ? null : <img src={spinner} className="spinner-inline" alt="Spinner" />
 
   return (
-    <FoldableOutput title={script} componentId={props.id} inline={inline}>
+    <FoldableOutput title={script} componentId={props.id} inline={inline} className="foldableScriptResult">
       {resultData ? <Result data={resultData} logs="" metadata={scriptMetadata} />
         : <img src={spinner} className="spinner" alt="Spinner" />}
     </FoldableOutput>
