@@ -113,7 +113,12 @@ fun Route.ScriptApi(logger:Logger) {
             runningPipelines["fakePath"] = finalStep
 
             launch {
-                finalStep.outputs["increment"]!!.pull()
+                try {
+                    finalStep.outputs["increment"]!!.pull()
+                } catch (ex:Exception) {
+                    // TODO: Do something here with the pipeline result file, so that we know a crash occurred!
+                    logger.error(ex.stackTraceToString())
+                }
             }
             // runningPipelines.remove("fakePath")
 
