@@ -7,14 +7,10 @@ import { FoldableOutput, RenderContext, createContext, isRelativeLink } from "./
 export function Result(props) {
     const [activeRenderer, setActiveRenderer] = useState([]);
 
-    function toggleVisibility(componentId) {
-        setActiveRenderer(activeRenderer === componentId ? null : componentId);
-    }
-
     if (props.data || props.logs) {
         return (
             <div>
-                <RenderContext.Provider value={createContext(activeRenderer, toggleVisibility)}>
+                <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
                     <RenderedFiles key="files" files={props.data} metadata={props.metadata} />
                     <RenderedLogs key="logs" logs={props.logs} />
                 </RenderContext.Provider>

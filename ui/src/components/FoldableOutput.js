@@ -2,8 +2,11 @@ import React, { useRef, useEffect, useContext } from 'react';
 
 export const RenderContext = React.createContext();
 
-export function createContext(activeRenderer, toggleVisibility) {
-    return { active: activeRenderer, toggleVisibility: toggleVisibility }
+export function createContext(activeRenderer, setActiveRenderer) {
+    return { 
+        active: activeRenderer,
+        toggleVisibility: (componentId) => setActiveRenderer(activeRenderer === componentId ? null : componentId)
+    }
 }
 
 export function FoldableOutput(props) {
