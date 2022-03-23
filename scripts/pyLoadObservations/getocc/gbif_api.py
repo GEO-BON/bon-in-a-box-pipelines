@@ -7,8 +7,11 @@ import time
 from pathlib import Path
 import urllib.request
 from zipfile import ZipFile
+import os
 
 def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022],outfile=('out.csv')):
+	GBIF_USER=os.environ['GBIF_USER']
+	GBIF_PWD=os.environ['GBIF_PWD']
 	keys = [ species.name_backbone(x)['usageKey'] for x in splist ]
 	counts = [ occ.search(taxonKey = x, limit=0)['count'] for x in keys ]
 	spcount = dict(zip(splist, counts))
@@ -23,12 +26,13 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022],outfile=('out.csv')):
 	gbif_query.add_predicate('DECIMAL_LONGITUDE', bbox[0], predicate_type='>=')
 	gbif_query.add_predicate('DECIMAL_LONGITUDE', bbox[2], predicate_type='<=')
 	gbif_query.payload["send_notification"]="false"
-	down = gbif_query.post_download()
+	down = gbif_query.post_download(user=GBIF_USER, pwd=GBIF_PWD)
 	meta=occ.download_meta(down)
 	while (meta['status']!='SUCCEEDED'):
 		meta=occ.download_meta(down)
 		time.sleep(10)
 	process_gbif_download(meta['downloadLink'],outfile)
+	return(outfile)
 
 def process_gbif_download(link,outfile):
 	temp_input_path = (Path(tempfile.gettempdir()) / next(tempfile._get_candidate_names())).with_suffix(".zip")

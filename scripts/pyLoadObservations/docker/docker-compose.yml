@@ -1,14 +1,16 @@
 version: '2.3'
 services:
-  pcdock:
+  pc-dock:
     build: .
     image: "planetary-computer-pygbif"
+    user: root
     command:
       - python
     volumes:
-      - ./:/home/jovyan/
-      - /var/run/docker.sock:/var/run/docker.sock
+      - ${HOST_PATH}/scripts/:/home/jovyan/scripts/
+      - ${HOST_PATH}/output:/output/:rw
     environment:
+      - GRANT_SUDO=yes
       - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
       - DASK_GATEWAY__AUTH__TYPE="jupyterhub"
       - DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE="mcr.microsoft.com/planetary-computer/python:latest"

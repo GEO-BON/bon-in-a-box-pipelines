@@ -1,2 +1,3 @@
 #!bin/sh
-docker compose run -d pcdock python /home/jovyan/getocc/get_occ.py ${1}
+cd /scripts/pyLoadObservations/docker/
+docker-compose run pc-dock python /home/jovyan/scripts/pyLoadObservations/getocc/get_occ.py ${1}

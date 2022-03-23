@@ -4,6 +4,7 @@ import gbif_api
 import gbif_pc
 import json
 import tempfile
+from pathlib import Path
 
 # Reading input.json
 inputFile = open(sys.argv[1] + '/input.json')
@@ -14,17 +15,22 @@ taxa = data['taxa'].replace(', ',',').split(',')
 bbox = data['bbox'].replace(', ',',').split(',')
 years = data['years'].replace(', ',',').split(',')
 
-temp_file = (Path(tempfile.gettempdir()) / next(tempfile._get_candidate_names())).with_suffix(".csv")
+temp_file = (Path(sys.argv[1]) / next(tempfile._get_candidate_names())).with_suffix(".csv")
 
 
-if data_source=='gbif_dl':
-	gbif_api.gbif_api_dl(splist=taxa, bbox=bbox, years=years, outfile=(str(temp_file)))
-elif data_source=='gbif_api':
-	gbif_pc.get_taxa_gbif_pc(taxa=taxa, bbox=bbox, outfile=(str(temp_file)))
+print(taxa)
+print(sys.argv[1])
+
+if data_source=='gbif_api':
+	out=gbif_api.gbif_api_dl(splist=taxa, bbox=bbox, years=years, outfile=(str(temp_file)))
+elif data_source=='gbif_pc':
+	out=gbif_pc.get_taxa_gbif_pc(taxa=taxa, bbox=bbox, outfile=(str(temp_file)))
+else:
+	print('Please specify proper data source')
 
 
 output = {
-  "observations_file": str(temp_file)
+  "observations_file": str(out)
 }
 
 json_object = json.dumps(output, indent = 2)

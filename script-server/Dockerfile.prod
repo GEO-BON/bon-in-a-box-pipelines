@@ -114,6 +114,17 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends python3; \
     apt-get clean all;
 
+#INSTALL DOCKER CLI 
+ENV DOCKER_VERSION=20.10.9
+RUN curl -sfL -o docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" && \
+  tar -xzf docker.tgz docker/docker --strip=1 && \
+  mv docker /usr/local/bin && \
+  rm docker.tgz
+
+#INSTALL DOCKER COMPOSE
+RUN curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
+
 ## This image builds the server code
 FROM gradle:6.9.2-jdk11-alpine as builder
 COPY . /home/gradle/project

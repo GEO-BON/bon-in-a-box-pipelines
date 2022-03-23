@@ -97,6 +97,17 @@ RUN set -ex; \
 RUN apt-get update; \
     apt-get install -y --no-install-recommends build-essential gfortran;
 
+#INSTALL DOCKER CLI 
+ENV DOCKER_VERSION=20.10.9
+RUN curl -sfL -o docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" && \
+  tar -xzf docker.tgz docker/docker --strip=1 && \
+  mv docker /usr/local/bin && \
+  rm docker.tgz
+
+
+RUN curl -L "hhttps://github.com/docker/compose/releases/download/v2.3.3/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker-compose
+
 # Third RUN command to install some pre-built r libs
 RUN set -ex; \
     apt-get update; \
