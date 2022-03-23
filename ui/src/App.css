@@ -6,6 +6,10 @@ a.active {
   text-decoration: none
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .left-banner {
   float: left;
   min-height: 100vh;
@@ -27,8 +31,13 @@ a.active {
   pointer-events: none;
 }
 
+.spinner-inline {
+  height: 1em;
+  pointer-events: none;
+}
+
 @media (prefers-reduced-motion: no-preference) {
-  .spinner {
+  .spinner, .spinner-inline {
     animation: spin infinite 4s linear;
   }
 }
@@ -41,10 +50,6 @@ a.active {
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-}
-
-.App-link {
-  color: #61dafb;
 }
 
 .error, .warning {
@@ -92,11 +97,20 @@ a.active {
 }
 
 .outputContent {
-  padding-left: 1em;
+  padding-left: 0.7em;
+  margin-left: 0.1em;
 }
 
 .outputContent p {
   margin-top:0px;
+}
+
+.foldableScriptResult .outputContent {
+  border-left: 0.4em solid #71AAB0;
+}
+
+.foldableOutput .outputContent {
+  border-left: 0.4em solid #115CA2;
 }
 
 table { 
@@ -105,7 +119,7 @@ table {
 }
 
 th, td {
-  border: 1px solid whitesmoke;
+  border: 1px solid #f3f3f1;
   padding: 3px 5px;
 }
 
