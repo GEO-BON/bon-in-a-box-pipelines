@@ -15,9 +15,9 @@ export function Result(props) {
     if (props.data || props.logs) {
         return (
             <div>
-                <RenderContext.Provider value={{ active: activeRenderer }}>
-                    <RenderedFiles key="files" files={props.data} metadata={props.metadata} toggleVisibility={toggleVisibility} />
-                    <RenderedLogs key="logs" logs={props.logs} toggleVisibility={toggleVisibility} />
+                <RenderContext.Provider value={{ active: activeRenderer, toggleVisibility: toggleVisibility }}>
+                    <RenderedFiles key="files" files={props.data} metadata={props.metadata} />
+                    <RenderedLogs key="logs" logs={props.logs} />
                 </RenderContext.Provider>
             </div>
         );
@@ -46,7 +46,7 @@ function FoldableOutput(props) {
 
     return <>
         <div className="outputTitle">
-            <h3 ref={titleRef} onClick={() => props.toggleVisibility(props.componentId)}>
+            <h3 ref={titleRef} onClick={() => renderContext.toggleVisibility(props.componentId)} className="clickable">
                 {active ? <b>–</b> : <b>+</b>} {props.title}
             </h3>
             {props.inline && (
@@ -144,7 +144,7 @@ function RenderedFiles(props) {
             }
 
             return (
-                <FoldableOutput key={key} title={title} description={description} componentId={key} inline={value} toggleVisibility={props.toggleVisibility}>
+                <FoldableOutput key={key} title={title} description={description} componentId={key} inline={value}>
                     {renderWithMime(key, value)}
                 </FoldableOutput>
             );
@@ -159,7 +159,7 @@ function RenderedLogs(props) {
 
     if (props.logs) {
         return (
-            <FoldableOutput title="Logs" componentId={myId} toggleVisibility={props.toggleVisibility}>
+            <FoldableOutput title="Logs" componentId={myId}>
                 <pre>{props.logs}</pre>
             </FoldableOutput>
         );

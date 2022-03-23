@@ -6,6 +6,10 @@ a.active {
   text-decoration: none
 }
 
+.clickable {
+  cursor: pointer;
+}
+
 .left-banner {
   float: left;
   min-height: 100vh;
