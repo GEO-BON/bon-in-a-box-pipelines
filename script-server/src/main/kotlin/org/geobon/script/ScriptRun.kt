@@ -3,7 +3,6 @@ package org.geobon.script
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.openapitools.server.models.ScriptRunResult
@@ -87,63 +86,55 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 .redirectOutput(ProcessBuilder.Redirect.PIPE)
                 .redirectErrorStream(true) // Merges stderr into stdout
                 .start().also { process ->
-                    coroutineScope {
+                    withContext(Dispatchers.IO) { // More info on this context switching : https://elizarov.medium.com/blocking-threads-suspending-coroutines-d33e11bf4761
                         launch {
                             process.inputStream.bufferedReader().run {
-                                while (true) {
-                                    // TODO: Use delay() + BufferedReader.ready() to avoid blocking a thread.
-                                    //  https://docs.oracle.com/javase/8/docs/api/java/io/BufferedReader.html#readLine--
-                                    //  https://docs.oracle.com/javase/8/docs/api/java/io/BufferedReader.html#ready--
+                                while (true) { // Breaks when readLine returns null
                                     readLine()?.let { line ->
                                         logger.trace(line) // realtime logging
-                                        logs += "$line\n"
+                                        logs += "$line\n" // record
                                     } ?: break
                                 }
                             }
                         }
 
-                        // TODO: waitFor is blocking : https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html#waitFor--
-                        //  Use delay + isAlive() in a loop to avoid blocking a thread https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html#isAlive--
-                        withContext(Dispatchers.IO) {
-                            process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
+                        process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
+                        if (process.isAlive) {
+                            logs += "TIMEOUT occurred after 1h".also { logger.warn(it) } + "\n"
+                            process.destroy()
                         }
                     }
                 }
         }.onSuccess { process -> // completed, with success or failure
-            try {
-                if(process.exitValue() != 0) {
-                    error = true
-                    logs += "Error: script returned non-zero value".also { logger.warn(it) } + "\n"
-                }
-
-                if(resultFile.exists()) {
-                    val type = object : TypeToken<Map<String, Any>>() {}.type
-                    val result = resultFile.readText()
-                    try {
-                        outputs = gson.fromJson<Map<String, Any>>(result, type)
-                        logger.trace(result)
-                    } catch (e:Exception) {
-                        error = true
-                        logs +=  ("""
-                            ${e.message}
-                            Error: Malformed JSON file.
-                            Make sure complex results are saved in a separate file (csv, geojson, etc.).
-                            Contents of output.json:
-                        """.trimIndent() + "\n$result").also { logger.warn(it) }
-                    }
-                } else {
-                    error = true
-                    logs += "Error: output.json file not found".also { logger.warn(it) } + "\n"
-                }
-            } catch (ex:IllegalThreadStateException) {
+            if(process.exitValue() != 0) {
                 error = true
-                logs += "TIMEOUT occurred".also { logger.warn(it) } + "\n"
-                process.destroy()
+                logs += "Error: script returned non-zero value".also { logger.warn(it) } + "\n"
+            }
+
+            if(resultFile.exists()) {
+                val type = object : TypeToken<Map<String, Any>>() {}.type
+                val result = resultFile.readText()
+                try {
+                    outputs = gson.fromJson<Map<String, Any>>(result, type)
+                    logger.trace(result)
+                } catch (e:Exception) {
+                    error = true
+                    logs +=  ("""
+                        ${e.message}
+                        Error: Malformed JSON file.
+                        Make sure complex results are saved in a separate file (csv, geojson, etc.).
+                        Contents of output.json:
+                    """.trimIndent() + "\n$result").also { logger.warn(it) }
+                }
+            } else {
+                error = true
+                logs += "Error: output.json file not found".also { logger.warn(it) } + "\n"
             }
 
         }.onFailure { ex ->
             logger.warn(ex.stackTraceToString())
-            result = ScriptRunResult("An error occurred when running the script", true)
+            logs += "An error occurred when running the script: ${ex.message}"
+            result = ScriptRunResult(logs, true)
             return
         }
 
