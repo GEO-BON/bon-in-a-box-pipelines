@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { Result } from "./Result";
 import spinner from '../img/spinner.svg';
 import { InputFileWithExample } from './InputFileWithExample';
+import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -148,17 +149,21 @@ function PipelineForm(props) {
 }
 
 function PipelineResults(props) {
-  if (props.resultsData) {
-    return Object.entries(props.resultsData).map((entry, i) => {
-      const [key, value] = entry;
+  const [activeRenderer, setActiveRenderer] = useState({});
 
-      if (!key.startsWith("Constant@")) {
-        let script = key.substring(0, key.indexOf('@'))
-        return <DelayedResult key={key} script={script} folder={value} />
-      } else {
-        return <pre key={key}>{key} : {value}</pre>
-      }
-    });
+  if (props.resultsData) {
+    return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
+      {Object.entries(props.resultsData).map((entry, i) => {
+        const [key, value] = entry;
+
+        if (!key.startsWith("Constant@")) {
+          return <DelayedResult key={key} id={key} folder={value} />
+        } else {
+          return <pre key={key}>{key} : {value}</pre>
+        }
+      })}
+    </RenderContext.Provider>
+    
   }
   else return null
 }
@@ -166,6 +171,8 @@ function PipelineResults(props) {
 function DelayedResult(props) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
+
+  const script = props.id.substring(0, props.id.indexOf('@'))
 
   useEffect(() => { // Script result (poll every second)
     const interval = setInterval(() => {
@@ -200,12 +207,15 @@ function DelayedResult(props) {
       setScriptMetadata(yaml.load(data))
     };
 
-    api.getScriptInfo(props.script, callback);
-  }, [props.script]);
+    api.getScriptInfo(script, callback);
+  }, [script]);
 
-  if (resultData) {
-    return <Result data={resultData} logs="" metadata={scriptMetadata} />
-  }
+  let inline = resultData ? null : <img src={spinner} className="spinner-inline" alt="Spinner" />
 
-  return <img src={spinner} className="spinner" alt="Spinner" />
+  return (
+    <FoldableOutput title={script} componentId={props.id} inline={inline}>
+      {resultData ? <Result data={resultData} logs="" metadata={scriptMetadata} />
+        : <img src={spinner} className="spinner" alt="Spinner" />}
+    </FoldableOutput>
+  )
 }
