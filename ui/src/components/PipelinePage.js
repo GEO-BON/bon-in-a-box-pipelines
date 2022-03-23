@@ -36,7 +36,6 @@ export function PipelinePage(props) {
 
   // Called when ID changes
   useEffect(() => {
-    console.log("Run id: " + runId)
     setResultsData(null);
     loadPipelineOutputs()
 
