@@ -1,24 +1,18 @@
 import { useState } from "react";
 import RenderedMap from './RenderedMap';
-import React, { useRef, useEffect, useContext } from 'react';
+import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
-
-const RenderContext = React.createContext();
+import { FoldableOutput, RenderContext, createContext, isRelativeLink } from "./FoldableOutput";
 
 export function Result(props) {
-    const [activeRenderer, setActiveRenderer] = useState([]);
+    const [activeRenderer, setActiveRenderer] = useState({});
 
-    function toggleVisibility(componentId) {
-        setActiveRenderer(activeRenderer === componentId ? null : componentId);
-    }
-
-    let data = props.data;
-    if (data) {
+    if (props.data || props.logs) {
         return (
             <div>
-                <RenderContext.Provider value={{ metadata: props.metadata, active: activeRenderer }}>
-                    <RenderedFiles key="files" files={data.files} toggleVisibility={toggleVisibility} />
-                    <RenderedLogs key="logs" logs={data.logs} toggleVisibility={toggleVisibility} />
+                <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
+                    <RenderedFiles key="files" files={props.data} metadata={props.metadata} />
+                    <RenderedLogs key="logs" logs={props.logs} />
                 </RenderContext.Provider>
             </div>
         );
@@ -27,61 +21,12 @@ export function Result(props) {
     return null;
 }
 
-function isRelativeLink(value) {
-    return value.startsWith('/');
-}
-
-function FoldableOutput(props) {
-    const renderContext = useContext(RenderContext);
-    let active = renderContext.active === props.componentId;
-    const titleRef = useRef(null);
-
-    let title = props.title;
-    let description = null;
-    if (renderContext.metadata
-        && renderContext.metadata.outputs
-        && renderContext.metadata.outputs[props.title]) {
-        let output = renderContext.metadata.outputs[props.title];
-        if (output.label)
-            title = output.label;
-
-        if (output.description)
-            description = output.description;
-    }
-
-    useEffect(() => {
-        if (active) {
-            titleRef.current.scrollIntoView({ block: 'start', behavior: 'smooth' });
-        }
-    }, [active]);
-
-    return <>
-        <div className="outputTitle">
-            <h3 ref={titleRef} onClick={() => props.toggleVisibility(props.componentId)}>
-                {active ? <b>–</b> : <b>+</b>} {title}
-            </h3>
-            {props.inline && (
-                isRelativeLink(props.inline) ? (
-                    active && props.inline && <a href={props.inline} target="_blank" rel="noreferrer">{props.inline}</a>
-                ) : (
-                    !active && props.inline
-                )
-            )}
-
-        </div>
-        {active &&
-            <div className="outputContent">
-                {description && <p className="outputDescription">{description}</p>}
-                {props.children}
-            </div>}
-    </>;
-}
-
 function RenderedFiles(props) {
-    const metadata = useContext(RenderContext).metadata;
+    const metadata = props.metadata;
 
     function getMimeType(key) {
-        if (metadata.outputs
+        if (metadata
+            && metadata.outputs
             && metadata.outputs[key]
             && metadata.outputs[key].type) {
             return metadata.outputs[key].type;
@@ -140,8 +85,21 @@ function RenderedFiles(props) {
                 return value && <p key={key} className={key}>{value}</p>;
             }
 
+            let title = key;
+            let description = null;
+            if (metadata
+                && metadata.outputs
+                && metadata.outputs[title]) {
+                let output = metadata.outputs[title];
+                if (output.label)
+                    title = output.label;
+
+                if (output.description)
+                    description = output.description;
+            }
+
             return (
-                <FoldableOutput key={key} title={key} componentId={key} inline={value} toggleVisibility={props.toggleVisibility}>
+                <FoldableOutput key={key} title={title} description={description} componentId={key} inline={value} className="foldableOutput">
                     {renderWithMime(key, value)}
                 </FoldableOutput>
             );
@@ -156,7 +114,7 @@ function RenderedLogs(props) {
 
     if (props.logs) {
         return (
-            <FoldableOutput title="Logs" componentId={myId} toggleVisibility={props.toggleVisibility}>
+            <FoldableOutput title="Logs" componentId={myId} className="foldableOutput">
                 <pre>{props.logs}</pre>
             </FoldableOutput>
         );

@@ -4,31 +4,49 @@ import Select from 'react-select';
 import { Result } from "./Result";
 import spinner from '../img/spinner.svg';
 import { InputFileWithExample } from './InputFileWithExample';
+import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
 const api = new BonInABoxScriptService.DefaultApi();
 
 export function PipelinePage(props) {
-  const [runId, setRunId] = useState();
-  const [resultsData, setResultsData] = useState();
-  const [httpError, setHttpError] = useState();
+  const [runId, setRunId] = useState(null);
+  const [resultsData, setResultsData] = useState(null);
+  const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState({});
   const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState({});
 
-  // Called when ID changes
-  useEffect(() => {
+  let timeout
+  function loadPipelineOutputs() {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
           setHttpError(error.toString());
         } else {
+          let allDone = Object.values(data).every(val => val !== "")
+          if(!allDone) { // try again later
+            timeout = setTimeout(loadPipelineOutputs, 1000)
+          }
+
           setResultsData(data);
         }
       });
     }
-  }, [runId])
+  }
 
+  // Called when ID changes
+  useEffect(() => {
+    setResultsData(null);
+    loadPipelineOutputs()
+
+    return function cleanup() { 
+      if(timeout) clearTimeout(timeout)
+    };
+  // Called only when ID changes. Including all deps would result in infinite loop.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [runId])
+  
  return (
   <>
     <h2>Single script run</h2>
@@ -130,7 +148,74 @@ function PipelineForm(props) {
   );
 }
 
-function PipelineResults(props){
-  if(props.resultsData) return <pre>{JSON.stringify(props.resultsData, null, 2)}</pre>
+function PipelineResults(props) {
+  const [activeRenderer, setActiveRenderer] = useState({});
+
+  if (props.resultsData) {
+    return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
+      {Object.entries(props.resultsData).map((entry, i) => {
+        const [key, value] = entry;
+
+        if (!key.startsWith("Constant@")) {
+          return <DelayedResult key={key} id={key} folder={value} />
+        } else {
+          return <pre key={key}>{key} : {value}</pre>
+        }
+      })}
+    </RenderContext.Provider>
+    
+  }
   else return null
+}
+
+function DelayedResult(props) {
+  const [resultData, setResultData] = useState(null)
+  const [scriptMetadata, setScriptMetadata] = useState(null)
+
+  const script = props.id.substring(0, props.id.indexOf('@'))
+
+  useEffect(() => { // Script result (poll every second)
+    const interval = setInterval(() => {
+      if (props.folder && props.folder !== "") {
+        fetch("output/" + props.folder + "/output.json")
+          .then((response) => {
+            if (response.ok) {
+              clearInterval(interval);
+              return response.json();
+            }
+
+            // Script not done yet: wait for next attempt
+            if (response.status === 404) {
+              return Promise.resolve(null)
+            }
+
+            return Promise.reject(response);
+          })
+          .then(json => setResultData(json))
+          .catch(response => {
+            clearInterval(interval);
+            setResultData({ error: response.status + " (" + response.statusText + ")" })
+          });
+      }
+    }, 1000);
+
+    return function cleanup() { clearInterval(interval) };
+  }, [props.folder]);
+
+  useEffect(() => { // Script metadata
+    var callback = function (error, data, response) {
+      setScriptMetadata(yaml.load(data))
+    };
+
+    api.getScriptInfo(script, callback);
+  }, [script]);
+
+  let inline = resultData ? null : <img src={spinner} className="spinner-inline" alt="Spinner" />
+
+  return (
+    <FoldableOutput title={script} componentId={props.id} inline={inline} className="foldableScriptResult">
+      {resultData ? <Result data={resultData} logs="" metadata={scriptMetadata} />
+        : <img src={spinner} className="spinner" alt="Spinner" />}
+    </FoldableOutput>
+  )
 }

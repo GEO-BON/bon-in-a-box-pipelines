@@ -29,7 +29,7 @@ export function SingleScriptPage(props) {
       <>
         {resultData && resultData.httpError && <p key="httpError" className="error">{resultData.httpError}</p>}
         {resultData && resultData.rawMetadata && <pre key="metadata">{resultData.rawMetadata.toString()}</pre>}
-        <Result data={resultData} metadata={scriptMetadata} />
+        {resultData && <Result data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
       </>
     )}
   </>)

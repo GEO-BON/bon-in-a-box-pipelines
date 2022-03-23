@@ -1,4 +1,5 @@
 import sys, json;
+import time;
 
 # Reading input.json
 inputFile = open(sys.argv[1] + '/input.json')
@@ -7,6 +8,7 @@ intIn = data['some_int']
 
 # Do stuff
 intIn += 1
+time.sleep(1)
 
 # Serializing output.json
 dictionary = {
