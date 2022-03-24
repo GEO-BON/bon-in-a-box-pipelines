@@ -211,12 +211,22 @@ function DelayedResult(props) {
     api.getScriptInfo(script, callback);
   }, [script]);
 
-  let inline = resultData ? null : <img src={spinner} className="spinner-inline" alt="Spinner" />
+  let content, inline = null;
+  if (props.folder) {
+    if (resultData) {
+      content = <Result data={resultData} logs="" metadata={scriptMetadata} />
+      // TODO: Display warning and error icon inline
+    } else {
+      content = <img src={spinner} className="spinner" alt="Spinner" />
+      inline = <img src={spinner} className="spinner-inline" alt="Spinner" />
+    }
+  } else {
+    content = <p>Waiting for previous steps to complete.</p>
+  }
 
   return (
     <FoldableOutput title={script} componentId={props.id} inline={inline} className="foldableScriptResult">
-      {resultData ? <Result data={resultData} logs="" metadata={scriptMetadata} />
-        : <img src={spinner} className="spinner" alt="Spinner" />}
+      {content}
     </FoldableOutput>
   )
 }
