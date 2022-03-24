@@ -212,21 +212,24 @@ function DelayedResult(props) {
   }, [script]);
 
   let content, inline = null;
+  let className = "foldableScriptResult"
   if (props.folder) {
     if (resultData) {
       content = <Result data={resultData} logs="" metadata={scriptMetadata} />
       // TODO: Display warning and error icon inline
     } else {
-      content = <img src={spinner} className="spinner" alt="Spinner" />
+      content = <p>Running...</p>
       inline = <img src={spinner} className="spinner-inline" alt="Spinner" />
     }
   } else {
     content = <p>Waiting for previous steps to complete.</p>
+    className += " gray"
   }
 
   return (
-    <FoldableOutput title={script} componentId={props.id} inline={inline} className="foldableScriptResult">
+    <FoldableOutput title={script} componentId={props.id} inline={inline} className={className}
+      description={scriptMetadata && scriptMetadata.description}>
       {content}
-    </FoldableOutput>
+    </FoldableOutput> 
   )
 }
