@@ -2,7 +2,7 @@ import { useState } from "react";
 import RenderedMap from './RenderedMap';
 import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
-import { FoldableOutput, RenderContext, createContext, isRelativeLink } from "./FoldableOutput";
+import { FoldableOutput, RenderContext, createContext } from "./FoldableOutput";
 
 export function Result(props) {
     const [activeRenderer, setActiveRenderer] = useState({});
@@ -98,8 +98,12 @@ function RenderedFiles(props) {
                     description = output.description;
             }
 
+            let isLink = isRelativeLink(value)
             return (
-                <FoldableOutput key={key} title={title} description={description} componentId={key} inline={value} className="foldableOutput">
+                <FoldableOutput key={key} title={title} description={description} componentId={key}
+                    inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
+                    inlineCollapsed={!isLink && value}
+                    className="foldableOutput">
                     {renderWithMime(key, value)}
                 </FoldableOutput>
             );
@@ -120,4 +124,12 @@ function RenderedLogs(props) {
         );
     }
     return null;
+}
+
+
+function isRelativeLink(value) {
+    if (typeof value.startsWith === "function") { 
+        return value.startsWith('/')
+    }
+    return false
 }
