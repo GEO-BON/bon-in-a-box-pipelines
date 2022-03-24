@@ -12,11 +12,12 @@ import os
 def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022],outfile=('out.csv')):
 	GBIF_USER=os.environ['GBIF_USER']
 	GBIF_PWD=os.environ['GBIF_PWD']
+	GBIF_EMAIL=os.environ['GBIF_EMAIL']
 	keys = [ species.name_backbone(x)['usageKey'] for x in splist ]
 	counts = [ occ.search(taxonKey = x, limit=0)['count'] for x in keys ]
 	spcount = dict(zip(splist, counts))
 	print(spcount)
-	gbif_query = GbifDownload('glaroc', 'glaroc@gmail.com')
+	gbif_query = GbifDownload(GBIF_USER, GBIF_EMAIL)
 	gbif_query.add_iterative_predicate('TAXON_KEY', keys)
 	gbif_query.add_predicate('HAS_COORDINATE', 'TRUE', predicate_type='equals')
 	gbif_query.add_predicate('YEAR', years[0], predicate_type='>=')
