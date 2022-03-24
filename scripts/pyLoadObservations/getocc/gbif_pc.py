@@ -2,13 +2,17 @@ import pystac_client
 from dask_gateway import GatewayCluster
 import planetary_computer
 import dask.dataframe as dd
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv() 
 
 
 def get_taxa_gbif_pc(taxa=[], bbox=[], outfile=''):
     catalog = pystac_client.Client.open(
         "https://planetarycomputer.microsoft.com/api/stac/v1",
     )
-
     client=get_cluster()
 
     search = catalog.search(collections=["gbif"])
@@ -17,11 +21,13 @@ def get_taxa_gbif_pc(taxa=[], bbox=[], outfile=''):
     item = list(items.values())[0]
 
     signed_asset = planetary_computer.sign(item).assets["data"]
-    signed_asset.extra_fields["table:storage_options"]
+    #signed_asset.extra_fields["table:storage_options"]
 
     filters=[]
     for t in taxa:
         filters.append([('species', '==', t), ('decimallatitude','<',bbox[3]), ('decimallatitude','>',bbox[1]), ('decimallongitude','>',bbox[0]), ('decimallongitude','<',bbox[2])])
+
+
 
     df = dd.read_parquet(
         signed_asset.href,
@@ -29,8 +35,11 @@ def get_taxa_gbif_pc(taxa=[], bbox=[], outfile=''):
         filters=filters,
         dataset={"require_extension": None},
         engine="pyarrow",
-    ).compute() # CHECK TO SEE WHY to_csv IS NOT WORKING WITH DASK WORKERS
-    df.to_csv(outfile)
+        credential=os.environ['JUPYTERHUB_API_TOKEN']
+    )
+
+    res=df.compute() # CHECK TO SEE WHY to_csv IS NOT WORKING WITH DASK WORKERS
+    res.to_csv(outfile)
     return(outfile)
 
 

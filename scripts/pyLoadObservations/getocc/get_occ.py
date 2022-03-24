@@ -1,5 +1,5 @@
 import sys
-sys.path.append('/home/jovyan/getocc/')
+sys.path.append('/home/jovyan/scripts/pyLoadObservations/getocc/')
 import gbif_api
 import gbif_pc
 import json
