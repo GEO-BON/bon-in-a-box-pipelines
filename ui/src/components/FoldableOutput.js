@@ -25,14 +25,8 @@ export function FoldableOutput(props) {
             <h3 ref={titleRef} onClick={() => renderContext.toggleVisibility(props.componentId)} className="clickable">
                 {active ? <b>–</b> : <b>+</b>} {props.title}
             </h3>
-            {props.inline && (
-                isRelativeLink(props.inline) ? (
-                    active && props.inline && <a href={props.inline} target="_blank" rel="noreferrer">{props.inline}</a>
-                ) : (
-                    !active && props.inline
-                )
-            )}
-
+            {props.inline}
+            {!active && props.inlineCollapsed}
         </div>
         {active &&
             <div className="outputContent">
@@ -40,11 +34,4 @@ export function FoldableOutput(props) {
                 {props.children}
             </div>}
     </div>;
-}
-
-export function isRelativeLink(value) {
-    if (typeof value.startsWith === "function") { 
-        return value.startsWith('/')
-    }
-    return false
 }
