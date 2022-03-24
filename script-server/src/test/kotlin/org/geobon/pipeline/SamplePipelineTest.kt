@@ -74,4 +74,22 @@ internal class SamplePipelineTest {
         assertNull(deadBranch.outputs[ConcatenateStep.STRING]!!.value)
     }
 
+    @Test
+    fun `given pipeline_when script fails_then pipeline is halted with exception`() = runTest {
+        // Note: in non-test code: surround whole block with try/catch, there are so many !! in there
+        val step1 = ScriptStep("0in1out.yml") // 234
+        val step2 = ScriptStep("1in1out_fail.yml", mapOf("some_int" to step1.outputs["randomness"]!!)) // 235
+        val finalStep = ScriptStep("1in1out.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 236
+
+        try {
+            finalStep.outputs["increment"]!!.pull()
+            fail("It should have crashed")
+        } catch (_:Exception) {}
+
+        // Script results left as they were before crash
+        assertEquals(234.0, step1.outputs["randomness"]!!.value)
+        assertNull(step2.outputs["increment"]!!.value)
+        assertNull(finalStep.outputs["increment"]!!.value)
+    }
+
 }
