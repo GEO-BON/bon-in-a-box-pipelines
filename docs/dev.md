@@ -92,11 +92,10 @@ sequenceDiagram
 flowchart TD
  never[Never ran] --> running[Running]
  running --> input[(- run folder\n- input.json)]
+ running --> log[(log file)]
  running --> success{Success?}
  success --> |Yes| Done
  Done --> output[(output.json)]
  success --> |No| Failed
- Done --> log[(log file)]
- Failed --> log
- Failed --> error[(error flag)]
+ Failed --> |Add error flag|output
 ```
