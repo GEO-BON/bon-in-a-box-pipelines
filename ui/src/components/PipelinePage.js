@@ -175,8 +175,9 @@ function DelayedResult(props) {
   const script = props.id.substring(0, props.id.indexOf('@'))
 
   useEffect(() => { // Script result (poll every second)
-    const interval = setInterval(() => {
-      if (props.folder && props.folder !== "") {
+    if (props.folder) {
+      const interval = setInterval(() => {
+
         fetch("output/" + props.folder + "/output.json")
           .then((response) => {
             if (response.ok) {
@@ -196,10 +197,10 @@ function DelayedResult(props) {
             clearInterval(interval);
             setResultData({ error: response.status + " (" + response.statusText + ")" })
           });
-      }
-    }, 1000);
+      }, 1000);
 
-    return function cleanup() { clearInterval(interval) };
+      return function cleanup() { clearInterval(interval) };
+    }
   }, [props.folder]);
 
   useEffect(() => { // Script metadata
