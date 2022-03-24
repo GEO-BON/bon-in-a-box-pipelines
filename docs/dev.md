@@ -87,3 +87,16 @@ sequenceDiagram
 4. Merge carefully, not all generated code is to be kept.
 5. Implement the gaps.
 
+## Script lifecycle & artifacts
+```mermaid
+flowchart TD
+ never[Never ran] --> running[Running]
+ running --> input[(- run folder\n- input.json)]
+ running --> success{Success?}
+ success --> |Yes| Done
+ Done --> output[(output.json)]
+ success --> |No| Failed
+ Done --> log[(log file)]
+ Failed --> log
+ Failed --> error[(error flag)]
+```
