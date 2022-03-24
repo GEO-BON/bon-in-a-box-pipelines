@@ -32,7 +32,7 @@ export function InputFileWithExample(props) {
 
     textareaRef.current.value = JSON.stringify(inputExamples, null, 2);
     resize(textareaRef.current);
-  });
+  }, [props.metadata]);
 
   return <textarea ref={textareaRef} name="inputFile" className="inputFile" type="text" defaultValue={props.defaultValue}
     onInput={(e) => resize(e.target)}></textarea>;
