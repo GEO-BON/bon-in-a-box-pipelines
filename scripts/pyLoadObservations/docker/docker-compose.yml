@@ -18,5 +18,6 @@ services:
       - DASK_GATEWAY__PROXY_ADDRESS="gateway://pccompute-dask.westeurope.cloudapp.azure.com:80"
       - GBIF_USER=${GBIF_USER}
       - GBIF_PWD=${GBIF_PWD}
+      - GBIF_EMAIL=${GBIF_EMAIL}
     ports:
       - "8888:8888"

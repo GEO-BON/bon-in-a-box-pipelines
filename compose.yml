@@ -18,6 +18,7 @@ services:
       - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
       - GBIF_USER=${GBIF_USER}
       - GBIF_PWD=${GBIF_PWD}
+      - GBIF_EMAIL=${GBIF_EMAIL}
       - HOST_PATH=${PWD}
 
   http-gateway:
