@@ -26,8 +26,8 @@ a.active {
 }
 
 .spinner {
-  height: 10vmin;
-  margin:3vmin;
+  height: 2em;
+  margin: 1em;
   pointer-events: none;
 }
 
@@ -130,6 +130,18 @@ th, td {
 
 .blackText {
   color: black;
+}
+
+.dot-green {
+  height: 1em;
+  width: 1em;
+  background-color: #168D78;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.gray {  
+  color: #aaaaaa;
 }
 
 @keyframes spin {
