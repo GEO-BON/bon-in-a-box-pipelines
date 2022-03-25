@@ -16,7 +16,7 @@ bbox = data['bbox'].replace(', ',',').split(',')
 min_year = data['min_year']
 max_year = data['max_year']
 
-temp_file = (Path(sys.argv[1]) / next(tempfile._get_candidate_names())).with_suffix(".csv")
+temp_file = (Path(sys.argv[1]) / next(tempfile._get_candidate_names())).with_suffix(".tsv")
 
 
 print(taxa)
