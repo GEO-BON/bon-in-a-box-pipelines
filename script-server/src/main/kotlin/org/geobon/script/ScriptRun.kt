@@ -30,6 +30,9 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         inputFileContent?.toMD5() ?: "no_params"
     ).path.replace('.', '_')
 
+    private val outputFolder = File(outputRoot, id)
+    private val resultFile = File(outputFolder, "output.json")
+
     companion object {
         const val ERROR_KEY = "error"
 
@@ -50,7 +53,6 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }
 
         // Create the output folder for this invocation
-        val outputFolder = File(outputRoot, id)
         outputFolder.mkdirs()
         logger.trace("Paths.runScript outputting to $outputFolder")
 
@@ -59,7 +61,6 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         var logs = ""
         var outputs:Map<String, Any>? = null
 
-        val resultFile = File(outputFolder, "output.json")
         runCatching {
             // Remove previous run result
             if(resultFile.delete()) {
@@ -145,12 +146,13 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     }
 
     private fun flagError(result: ScriptRunResult, error:Boolean) : ScriptRunResult {
-        if(error) {
+        if(error || result.files.isEmpty()) {
             if(!result.files.containsKey(ERROR_KEY)) {
                 val outputs = result.files.toMutableMap()
                 outputs[ERROR_KEY] = "An error occurred. Check logs for details."
 
-                // TODO: rewrite the output.json file
+                // Rewrite output file with error
+                resultFile.writeText(gson.toJson(outputs))
 
                 return ScriptRunResult(result.logs, outputs)
             }
