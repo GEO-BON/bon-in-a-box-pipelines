@@ -102,4 +102,21 @@ internal class ScriptStepTest {
         println(outputList.toString())
     }
 
+    @Test
+    fun givenScriptStepThatHasRun_whenOutputFileEmpty_thenThrowsAndOutputHasError() = runTest {
+        val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), mapOf("some_int" to ConstantPipe("int", 123)))
+
+        try {
+            step.execute()
+            fail("Exception should have been thrown")
+        } catch (_:Exception) {}
+
+        val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!
+        files.filter { it.name == "output.json" }.let {
+            assertEquals(1, it.size)
+            it[0]!!.readText().contains("\"error\"")
+        }
+
+    }
+
 }
