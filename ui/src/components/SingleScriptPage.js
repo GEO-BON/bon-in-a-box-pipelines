@@ -69,17 +69,8 @@ function SingleScriptForm(props) {
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
         data.httpError = error.toString();
-
-      } else if (data && data.error) { // Errors reported by server
-        // Add a preamble if there was not a script-generated error on top
-        if (!data.files)
-          data.files = {};
-        if (!data.files.error) {
-          data.files.error = "An error occured. ";
-        }
-        data.files.error += "Please check logs for details.";
       }
-      // For script-generated errors, nothing to do
+
       props.setResultData(data);
       props.setRequestState(RequestState.done);
     };

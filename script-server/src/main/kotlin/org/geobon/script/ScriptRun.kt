@@ -31,6 +31,8 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     ).path.replace('.', '_')
 
     companion object {
+        const val ERROR_KEY = "error"
+
         private val logger: Logger = LoggerFactory.getLogger("Script")
         private val gson = Gson()
 
@@ -38,10 +40,13 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     }
 
     suspend fun execute() {
+        result = getResult()
+    }
+
+    private suspend fun getResult():ScriptRunResult {
         if(!scriptFile.exists()) {
             logger.warn("Error 404: Paths.runScript $scriptFile")
-            result = ScriptRunResult("Script $scriptFile not found", true)
-            return
+            return flagError(ScriptRunResult("Script $scriptFile not found"), true)
         }
 
         // Create the output folder for this invocation
@@ -72,12 +77,9 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 "r", "R" -> "Rscript"
                 "sh" -> "sh"
                 "py", "PY" -> "python3"
-                else -> {
-                    "Unsupported script extension ${scriptFile.extension}".let {
-                        logger.warn(it)
-                        result = ScriptRunResult(it, true)
-                    }
-                    return
+                else -> "Unsupported script extension ${scriptFile.extension}".let {
+                    logger.warn(it)
+                    return flagError(ScriptRunResult(it), true)
                 }
             }
 
@@ -134,13 +136,25 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }.onFailure { ex ->
             logger.warn(ex.stackTraceToString())
             logs += "An error occurred when running the script: ${ex.message}"
-            result = ScriptRunResult(logs, true)
-            return
+            return flagError(ScriptRunResult(logs), true)
         }
 
         // Format log output
         if(logs.isNotEmpty()) logs = "Full logs: $logs"
-        result = ScriptRunResult(logs, error, outputs)
-        return
+        return flagError(ScriptRunResult(logs, outputs ?: mapOf()), error)
+    }
+
+    private fun flagError(result: ScriptRunResult, error:Boolean) : ScriptRunResult {
+        if(error) {
+            if(!result.files.containsKey(ERROR_KEY)) {
+                val outputs = result.files.toMutableMap()
+                outputs[ERROR_KEY] = "An error occurred. Check logs for details."
+
+                // TODO: rewrite the output.json file
+
+                return ScriptRunResult(result.logs, outputs)
+            }
+        }
+        return result
     }
 }
