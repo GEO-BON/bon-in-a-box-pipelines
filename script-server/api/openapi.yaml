@@ -5,13 +5,13 @@ info:
     email: jean-michel.lord@mcgill.ca
   version: 1.0.0
 servers:
-- url: http://localhost/
-  description: script service (from outside dockers only)
-- url: http://biab-script-server:8080
-  description: script service (from inside dockers only)
+  - url: http://localhost/
+    description: script service (from outside dockers only)
+  - url: http://biab-script-server:8080
+    description: script service (from inside dockers only)
 tags:
-- name: placeholder
-  description: We could use tags
+  - name: placeholder
+    description: We could use tags
 paths:
   /script/list:
     get:
@@ -33,14 +33,14 @@ paths:
       description: Run the script specified in the URL. Must include the extension.
       operationId: runScript
       parameters:
-      - name: scriptPath
-        in: path
-        description: Where to find the script in ./script folder
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: scriptPath
+          in: path
+          description: Where to find the script in ./script folder
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         $ref: '#/components/requestBodies/run_input_body'
       responses:
@@ -60,14 +60,14 @@ paths:
       summary: Get metadata about this script
       operationId: getScriptInfo
       parameters:
-      - name: scriptPath
-        in: path
-        description: Where to find the script in ./script folder.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: scriptPath
+          in: path
+          description: Where to find the script in ./script folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Returns the metadata, in YAML format
@@ -107,14 +107,14 @@ paths:
       summary: Get metadata about this pipeline
       operationId: getPipelineInfo
       parameters:
-      - name: descriptionPath
-        in: path
-        description: Where to find the pipeline in ./pipeline folder.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: descriptionPath
+          in: path
+          description: Where to find the pipeline in ./pipeline folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: Returns the metadata, in YAML format
@@ -141,14 +141,14 @@ paths:
       summary: Run this pipeline
       operationId: runPipeline
       parameters:
-      - name: descriptionPath
-        in: path
-        description: Where to find the script in ./script folder.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: descriptionPath
+          in: path
+          description: Where to find the script in ./script folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       requestBody:
         $ref: '#/components/requestBodies/run_input_body'
       responses:
@@ -170,14 +170,14 @@ paths:
       summary: Get the output folders of the scripts composing this pipeline
       operationId: getPipelineOutputs
       parameters:
-      - name: id
-        in: path
-        description: Where to find the pipeline in ./script folder.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+        - name: id
+          in: path
+          description: Where to find the pipeline in ./script folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
       responses:
         "200":
           description: List of output folders for all the scripts
@@ -201,8 +201,6 @@ components:
       properties:
         logs:
           type: string
-        error:
-          type: boolean
         files:
           type: object
           additionalProperties:
