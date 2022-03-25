@@ -13,7 +13,8 @@ data = json.load(inputFile)
 data_source = data['data_source']
 taxa = data['taxa'].replace(', ',',').split(',')
 bbox = data['bbox'].replace(', ',',').split(',')
-years = data['years'].replace(', ',',').split(',')
+min_year = data['min_year']
+max_year = data['max_year']
 
 temp_file = (Path(sys.argv[1]) / next(tempfile._get_candidate_names())).with_suffix(".csv")
 
@@ -22,7 +23,7 @@ print(taxa)
 print(sys.argv[1])
 
 if data_source=='gbif_api':
-	out=gbif_api.gbif_api_dl(splist=taxa, bbox=bbox, years=years, outfile=(str(temp_file)))
+	out=gbif_api.gbif_api_dl(splist=taxa, bbox=bbox, years=[min_year,max_year], outfile=(str(temp_file)))
 elif data_source=='gbif_pc':
 	out=gbif_pc.get_taxa_gbif_pc(taxa=taxa, bbox=bbox, outfile=(str(temp_file)))
 else:

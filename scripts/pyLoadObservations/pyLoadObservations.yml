@@ -12,13 +12,17 @@ inputs:
     description: Bounding box (long_min, lat_min, long_max, lat_ymax) in decimal degrees WGS84
     type: text
     example: -77.3, 45.2, -60.3, 62.3
-  years:
-    description: (min year, max year) of observations wanted
-    type: text
-    example: 2010, 2020    
+  min_year:
+    description: min year observations wanted
+    type: int
+    example: 2010
+  max_year:
+    description: max year observations wanted
+    type: int
+    example: 2020
 outputs:
   observations_file:
     label: CSV file with observations
     description: CSV file with observations
-    type: text/csv
+    type: text/tab-separated-values
     example: hfn7s62sq.csv

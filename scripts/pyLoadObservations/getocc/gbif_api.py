@@ -47,4 +47,4 @@ def process_gbif_download(link,outfile):
 	df = df[['gbifID','datasetKey','occurrenceID','kingdom','phylum','class','order','family','genus','species','infraspecificEpithet','taxonRank','scientificName','verbatimScientificName','countryCode','locality','stateProvince','occurrenceStatus','individualCount','publisher','decimalLatitude','decimalLongitude','coordinateUncertaintyInMeters','coordinatePrecision','elevation','elevationAccuracy','depth','depthAccuracy','eventDate','day','month','year','taxonKey','speciesKey','institutionCode','collectionCode','catalogNumber','recordNumber','basisOfRecord','identifiedBy','dateIdentified','license','rightsHolder','recordedBy','typeStatus','establishmentMeans','lastInterpreted','mediaType','issue','iucnRedListCategory']]
 
 	print('Saving CSV')
-	df.to_csv(outfile)
+	df.to_csv(outfile, sep ='\t')
