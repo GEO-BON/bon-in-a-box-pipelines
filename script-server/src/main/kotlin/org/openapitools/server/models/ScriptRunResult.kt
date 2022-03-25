@@ -19,6 +19,6 @@ package org.openapitools.server.models
  */
 data class ScriptRunResult(
     val logs: String? = null,
-    val files: Map<String, Any>? = null
+    val files: Map<String, Any> = mapOf()
 ) 
 
