@@ -54,7 +54,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
         // Create the output folder for this invocation
         outputFolder.mkdirs()
-        logger.trace("Paths.runScript outputting to $outputFolder")
+        logger.trace("Script run outputting to $outputFolder")
 
         // Run the script
         var error = false
@@ -137,11 +137,10 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }.onFailure { ex ->
             logger.warn(ex.stackTraceToString())
             logs += "An error occurred when running the script: ${ex.message}"
-            return flagError(ScriptRunResult(logs), true)
+            error = true
         }
 
         // Format log output
-        if(logs.isNotEmpty()) logs = "Full logs: $logs"
         return flagError(ScriptRunResult(logs, outputs ?: mapOf()), error)
     }
 
