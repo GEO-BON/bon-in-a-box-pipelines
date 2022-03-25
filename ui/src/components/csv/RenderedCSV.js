@@ -12,7 +12,7 @@ function RenderedCSV(props) {
     const [partial, setPartial] = useState(false)
 
     useEffect(() => {
-        const maxLength = 2048;
+        const maxLength = 1024*6;
 
         var xhr = new XMLHttpRequest();
         xhr.open("get", props.url);
