@@ -23,15 +23,13 @@ class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()
         scriptRun.execute()
 
         // Get result
-        scriptRun.result?.let { result ->
-            if(result.files.isEmpty())
-                throw java.lang.Exception("Output file is empty for $scriptFile")
+        if(scriptRun.result.files.isEmpty())
+            throw java.lang.Exception("Output file is empty for $scriptFile")
 
-            if (result.files.containsKey(ScriptRun.ERROR_KEY))
-                throw java.lang.Exception("Script run detected an error")
+        if (scriptRun.result.files.containsKey(ScriptRun.ERROR_KEY))
+            throw java.lang.Exception("Script run detected an error")
 
-            return result.files
-        } ?: throw java.lang.Exception("Script run produced no result")
+        return scriptRun.result.files
     }
 
     /**

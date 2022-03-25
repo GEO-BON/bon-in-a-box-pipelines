@@ -16,7 +16,7 @@ val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
 class ScriptRun (private val scriptFile: File, private val inputFileContent:String?) {
-    var result:ScriptRunResult? = null
+    lateinit var result:ScriptRunResult
         private set
 
     /**
