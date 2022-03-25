@@ -50,9 +50,6 @@ class ScriptRunResult {
             if (data.hasOwnProperty('logs')) {
                 obj['logs'] = ApiClient.convertToType(data['logs'], 'String');
             }
-            if (data.hasOwnProperty('error')) {
-                obj['error'] = ApiClient.convertToType(data['error'], 'Boolean');
-            }
             if (data.hasOwnProperty('files')) {
                 obj['files'] = ApiClient.convertToType(data['files'], {'String': 'String'});
             }
@@ -67,11 +64,6 @@ class ScriptRunResult {
  * @member {String} logs
  */
 ScriptRunResult.prototype['logs'] = undefined;
-
-/**
- * @member {Boolean} error
- */
-ScriptRunResult.prototype['error'] = undefined;
 
 /**
  * @member {Object.<String, String>} files
