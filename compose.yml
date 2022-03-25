@@ -26,7 +26,6 @@ services:
     image: nginx
     ports:
       - '80:80'
-    #- '443:443' configure https one day...
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./output:/static/output:ro
