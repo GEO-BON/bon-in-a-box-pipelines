@@ -50,8 +50,7 @@ fun Route.ScriptApi(logger:Logger) {
         val scriptRelPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/')
         val script = ScriptRun(File(scriptRoot, scriptRelPath), inputFileContent)
         script.execute()
-        script.result?.let { call.respond(HttpStatusCode.OK, it) }
-            ?: call.respond(HttpStatusCode.InternalServerError)
+        call.respond(HttpStatusCode.OK, script.result)
     }
 
     get<Paths.scriptListGet> {
