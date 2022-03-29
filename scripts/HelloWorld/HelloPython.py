@@ -6,7 +6,11 @@ inputFile = open(sys.argv[1] + '/input.json')
 data = json.load(inputFile)
 intIn = data['some_int']
 
-# Do stuff
+# Do stuff.
+if intIn == 13 :
+  print("some_int == 13, you're not lucky! This causes failure.")
+  sys.exit(1)
+
 intIn += 1
 
 # Serializing output.json

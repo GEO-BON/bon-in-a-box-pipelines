@@ -132,10 +132,10 @@ fun Route.ScriptApi(logger:Logger) {
                 finalStep.outputs["increment"]!!.pull()
             } catch (ex:Exception) {
                 logger.error(ex.stackTraceToString())
-            } finally {  // Write the results file, adding "not run" to steps that were not run.
+            } finally {  // Write the results file, adding "skipped" to steps that were not run.
                 val resultFile = File(outputFolder, "output.json")
                 val content = gson.toJson(getLiveOutput(finalStep).mapValues { (_, value) ->
-                    if (value == "") "Not run" else value
+                    if (value == "") "skipped" else value
                 })
                 println("Outputting to $resultFile")
 

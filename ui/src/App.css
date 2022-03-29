@@ -65,6 +65,14 @@ a.active {
   background-repeat: no-repeat;
 }
 
+
+.error-inline {
+  height: 2em;
+  display:inline;
+  /* Compensate for margins that are in the vector graphic */
+  margin: 0em 0em -0.55em -0.5em;
+}
+
 .error {
   color: hsl(0, 100%, 27%);
   background-image: url(img/error.svg);
