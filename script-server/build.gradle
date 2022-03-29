@@ -17,14 +17,12 @@ buildscript {
     dependencies {
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
         classpath("com.github.jengelman.gradle.plugins:shadow:$shadow_version")
-        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
 }
 
 apply plugin: "java"
 apply plugin: "kotlin"
 apply plugin: "application"
-apply plugin: "kotlinx-serialization"
 
 mainClassName = "io.ktor.server.netty.DevelopmentEngine"
 
@@ -68,7 +66,6 @@ dependencies {
     implementation("io.ktor:ktor-metrics:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
 
     // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.30'
