@@ -3,6 +3,8 @@
  */
 package org.openapitools.server.apis
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import io.ktor.application.*
 import io.ktor.http.*
 import io.ktor.locations.*
@@ -10,9 +12,6 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.coroutines.launch
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.encodeToString
-import kotlinx.serialization.json.Json
 import org.geobon.pipeline.ConstantPipe
 import org.geobon.pipeline.ScriptStep
 import org.geobon.pipeline.Step
@@ -37,6 +36,8 @@ private fun getLiveOutput(step: Step): Map<String, String> {
     step.dumpOutputFolders(allOutputs)
     return allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
 }
+
+private val gson = Gson()
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptApi(logger:Logger) {
@@ -133,7 +134,7 @@ fun Route.ScriptApi(logger:Logger) {
                 logger.error(ex.stackTraceToString())
             } finally {  // Write the results file, adding "not run" to steps that were not run.
                 val resultFile = File(outputFolder, "output.json")
-                val content = Json.encodeToString(getLiveOutput(finalStep).mapValues { (_, value) ->
+                val content = gson.toJson(getLiveOutput(finalStep).mapValues { (_, value) ->
                     if (value == "") "Not run" else value
                 })
                 println("Outputting to $resultFile")
@@ -153,7 +154,8 @@ fun Route.ScriptApi(logger:Logger) {
         if(finalStep == null) {
             val outputFolder = File(outputRoot, parameters.id.replace(FILE_SEPARATOR, '/'))
             val outputFile = File(outputFolder, "output.json")
-            call.respond(Json.decodeFromString<Map<String, String>>(outputFile.readText()))
+            val type = object : TypeToken<Map<String, Any>>() {}.type
+            call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
         } else {
             call.respond(getLiveOutput(finalStep))
         }
