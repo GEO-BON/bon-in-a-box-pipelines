@@ -2,9 +2,12 @@ import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 
 import { Result } from "./Result";
-import spinner from '../img/spinner.svg';
 import { InputFileWithExample } from './InputFileWithExample';
 import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
+
+import spinnerImg from '../img/spinner.svg';
+import errorImg from '../img/error.svg';
+import warningImg from '../img/warning.svg';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -183,30 +186,34 @@ function DelayedResult(props) {
 
   useEffect(() => { // Script result (poll every second)
     if (props.folder) {
-      const interval = setInterval(() => {
-
-        fetch("output/" + props.folder + "/output.json")
-          .then((response) => {
-            if (response.ok) {
+      if(props.folder === "skipped") {
+        setResultData({warning:"Skipped due to previous failure"})
+      } else {
+        const interval = setInterval(() => {
+  
+          fetch("output/" + props.folder + "/output.json")
+            .then((response) => {
+              if (response.ok) {
+                clearInterval(interval);
+                return response.json();
+              }
+  
+              // Script not done yet: wait for next attempt
+              if (response.status === 404) {
+                return Promise.resolve(null)
+              }
+  
+              return Promise.reject(response);
+            })
+            .then(json => setResultData(json))
+            .catch(response => {
               clearInterval(interval);
-              return response.json();
-            }
+              setResultData({ error: response.status + " (" + response.statusText + ")" })
+            });
+        }, 1000);
 
-            // Script not done yet: wait for next attempt
-            if (response.status === 404) {
-              return Promise.resolve(null)
-            }
-
-            return Promise.reject(response);
-          })
-          .then(json => setResultData(json))
-          .catch(response => {
-            clearInterval(interval);
-            setResultData({ error: response.status + " (" + response.statusText + ")" })
-          });
-      }, 1000);
-
-      return function cleanup() { clearInterval(interval) };
+        return function cleanup() { clearInterval(interval) };
+      }
     }
   }, [props.folder]);
 
@@ -223,10 +230,18 @@ function DelayedResult(props) {
   if (props.folder) {
     if (resultData) {
       content = <Result data={resultData} logs="" metadata={scriptMetadata} />
+      if(resultData.error) {
+        inline = <img src={errorImg} alt="Error" className="error-inline" />
+      } else if(resultData.warning) {
+        inline = <>
+          <img src={warningImg} alt="Warning" className="error-inline" />
+          {props.folder === "skipped" && <i>Skipped</i>}
+        </>
+      }
       // TODO: Display warning and error icon inline
     } else {
       content = <p>Running...</p>
-      inline = <img src={spinner} className="spinner-inline" alt="Spinner" />
+      inline = <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
     }
   } else {
     content = <p>Waiting for previous steps to complete.</p>
