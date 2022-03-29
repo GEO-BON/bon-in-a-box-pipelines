@@ -8,7 +8,6 @@ intIn = data['some_int']
 
 # Do stuff
 intIn += 1
-time.sleep(1)
 
 # Serializing output.json
 dictionary = {

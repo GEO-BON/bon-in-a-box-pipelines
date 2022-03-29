@@ -10,12 +10,17 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.geobon.pipeline.ConstantPipe
 import org.geobon.pipeline.ScriptStep
 import org.geobon.pipeline.Step
 import org.geobon.script.ScriptRun
+import org.geobon.script.outputRoot
 import org.geobon.script.scriptRoot
 import org.openapitools.server.Paths
+import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import java.io.File
 
@@ -26,6 +31,12 @@ import java.io.File
 const val FILE_SEPARATOR = '>'
 
 val runningPipelines = mutableMapOf<String, Step>()
+
+private fun getLiveOutput(step: Step): Map<String, String> {
+    val allOutputs = mutableMapOf<String, String>()
+    step.dumpOutputFolders(allOutputs)
+    return allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
+}
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptApi(logger:Logger) {
@@ -101,50 +112,51 @@ fun Route.ScriptApi(logger:Logger) {
 
     post<Paths.runPipeline> { parameters ->
         val inputFileContent = call.receive<String>()
-        logger.info("pipeline: ${parameters.descriptionPath}\nbody:$inputFileContent")
-        // TODO some real implementation
+        val descriptionPath = parameters.descriptionPath
+        logger.info("Pipeline: $descriptionPath\nBody:$inputFileContent")
 
-        try {
-            // Launch fake pipeline
-            val step1 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to ConstantPipe("int", 12))) // 12
-            val step2 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step1.outputs["increment"]!!)) // 13
-            val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 14
-            runningPipelines["fakePath"] = finalStep
+        // Unique   to this pipeline                                        and to these params
+        val runId = descriptionPath.removeSuffix(".yml") + FILE_SEPARATOR + inputFileContent.toMD5()
+        val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 
-            launch {
-                try {
-                    finalStep.outputs["increment"]!!.pull()
-                } catch (ex:Exception) {
-                    // TODO: Do something here with the pipeline result file, so that we know a crash occurred!
-                    logger.error(ex.stackTraceToString())
-                }
+        // Launch fake pipeline // TODO read from file
+        val step1 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to ConstantPipe("int", 12))) // 12
+        val step2 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step1.outputs["increment"]!!)) // 13
+        val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 14
 
-                // Output dump for debugging :
-                logger.trace("""
-                        step1: ${step1.outputs}
-                        step2: ${step2.outputs}
-                        finalStep: ${finalStep.outputs}
-                    """.trimIndent())
+        launch {
+            runningPipelines[runId] = finalStep
+
+            try {
+                finalStep.outputs["increment"]!!.pull()
+            } catch (ex:Exception) {
+                logger.error(ex.stackTraceToString())
+            } finally {  // Write the results file, adding "not run" to steps that were not run.
+                val resultFile = File(outputFolder, "output.json")
+                val content = Json.encodeToString(getLiveOutput(finalStep).mapValues { (_, value) ->
+                    if (value == "") "Not run" else value
+                })
+                println("Outputting to $resultFile")
+
+                outputFolder.mkdirs()
+                resultFile.writeText(content)
             }
-            // runningPipelines.remove("fakePath")
 
-            call.respondText("fakePath")
-        } catch (ex:Exception) {
-            call.respondText(ex.stackTraceToString(), status=HttpStatusCode.InternalServerError)
+            runningPipelines.remove(runId)
         }
 
+        call.respondText(runId)
     }
 
     get<Paths.getPipelineOutputs> { parameters ->
-        runningPipelines[parameters.id]?.let { finalStep -> // Return live result
-            val allOutputs = mutableMapOf<String, String>()
-            finalStep.dumpOutputFolders(allOutputs)
-            call.respond(
-                allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
-            )
-        } ?: call.respondText("Unimplemented: only hardcoded result can be retrieved") // TODO: Get the file
-
-        // TODO some real implementation
+        val finalStep = runningPipelines[parameters.id]
+        if(finalStep == null) {
+            val outputFolder = File(outputRoot, parameters.id.replace(FILE_SEPARATOR, '/'))
+            val outputFile = File(outputFolder, "output.json")
+            call.respond(Json.decodeFromString<Map<String, String>>(outputFile.readText()))
+        } else {
+            call.respond(getLiveOutput(finalStep))
+        }
     }
 
 }
