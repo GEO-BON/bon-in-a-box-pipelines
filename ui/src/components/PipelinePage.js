@@ -14,8 +14,8 @@ export function PipelinePage(props) {
   const [runId, setRunId] = useState(null);
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
-  const [pipelineMetadata, setPipelineMetadata] = useState({});
-  const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState({});
+  const [pipelineMetadata, setPipelineMetadata] = useState(null);
+  const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState(null);
 
   let timeout
   function loadPipelineOutputs() {
@@ -32,6 +32,8 @@ export function PipelinePage(props) {
           setResultsData(data);
         }
       });
+    } else {
+      setResultsData(null);
     }
   }
 
@@ -67,6 +69,11 @@ function PipelineForm(props) {
   const defaultPipeline = "hard-coded";
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
+  function clearPreviousRequest() {
+    props.setHttpError(null)
+    props.setRunId(null)
+  }
+
   function loadPipelineMetadata(choice) {
     props.setPipelineMetadata(null);
     props.setPipelineMetadataRaw(null);
@@ -90,7 +97,7 @@ function PipelineForm(props) {
   };
 
   const runScript = () => {
-    props.setRunId(null);
+    clearPreviousRequest()
 
     var callback = function (error, data /*, response*/) {
       if (error) { // Server / connection errors. Data will be undefined.
