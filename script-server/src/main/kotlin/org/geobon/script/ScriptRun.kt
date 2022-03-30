@@ -5,7 +5,6 @@ import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.openapitools.server.models.ScriptRunResult
 import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -16,7 +15,7 @@ val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
 class ScriptRun (private val scriptFile: File, private val inputFileContent:String?) {
-    lateinit var result:ScriptRunResult
+    lateinit var results:Map<String, Any>
         private set
 
     /**
@@ -32,7 +31,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
     private val outputFolder = File(outputRoot, id)
     private val resultFile = File(outputFolder, "output.json")
-    private val logFile = File(outputFolder, "logs.txt")
+    val logFile = File(outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"
@@ -44,13 +43,13 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     }
 
     suspend fun execute() {
-        result = getResult()
+        results = getResult()
     }
 
-    private suspend fun getResult():ScriptRunResult {
+    private suspend fun getResult():Map<String, Any> {
         if(!scriptFile.exists()) {
-            logger.warn("Error 404: Paths.runScript $scriptFile")
-            return flagError(ScriptRunResult("Script $scriptFile not found"), true)
+            log(logger::warn, "Script $scriptFile not found")
+            return flagError(mapOf(), true)
         }
 
         // Create the output folder for this invocation
@@ -83,7 +82,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 "py", "PY" -> "python3"
                 else -> "Unsupported script extension ${scriptFile.extension}".let {
                     log(logger::warn, it)
-                    return flagError(ScriptRunResult(it), true)
+                    return flagError(mapOf(), true)
                 }
             }
 
@@ -142,9 +141,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }
 
         // Format log output
-        return flagError(ScriptRunResult(
-            logFile.readText(), // TODO: TEMP until ScriptRunResult never returns a log.
-            outputs ?: mapOf()), error)
+        return flagError(outputs ?: mapOf(), error)
     }
 
     private fun log(func: (String?)->Unit, line: String) {
@@ -152,18 +149,18 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         logFile.appendText("$line\n") // record
     }
 
-    private fun flagError(result: ScriptRunResult, error:Boolean) : ScriptRunResult {
-        if(error || result.files.isEmpty()) {
-            if(!result.files.containsKey(ERROR_KEY)) {
-                val outputs = result.files.toMutableMap()
+    private fun flagError(results: Map<String, Any>, error:Boolean) : Map<String, Any> {
+        if(error || results.isEmpty()) {
+            if(!results.containsKey(ERROR_KEY)) {
+                val outputs = results.toMutableMap()
                 outputs[ERROR_KEY] = "An error occurred. Check logs for details."
 
                 // Rewrite output file with error
                 resultFile.writeText(gson.toJson(outputs))
 
-                return ScriptRunResult(result.logs, outputs)
+                return results
             }
         }
-        return result
+        return results
     }
 }
