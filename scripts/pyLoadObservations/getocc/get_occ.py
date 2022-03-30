@@ -25,7 +25,7 @@ print(sys.argv[1])
 if data_source=='gbif_api':
 	out=gbif_api.gbif_api_dl(splist=taxa, bbox=bbox, years=[min_year,max_year], outfile=(str(temp_file)))
 elif data_source=='gbif_pc':
-	out=gbif_pc.get_taxa_gbif_pc(taxa=taxa, bbox=bbox, outfile=(str(temp_file)))
+	out=gbif_pc.get_taxa_gbif_pc(taxa=taxa, bbox=bbox, years=[min_year,max_year], outfile=(str(temp_file)))
 else:
 	print('Please specify proper data source')
 

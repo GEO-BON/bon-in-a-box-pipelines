@@ -5,7 +5,7 @@ import dask.dataframe as dd
 import os
 
 
-def get_taxa_gbif_pc(taxa=[], bbox=[], outfile=''):
+def get_taxa_gbif_pc(taxa=[], bbox=[], years=[1980,2022], outfile=''):
     catalog = pystac_client.Client.open(
         "https://planetarycomputer.microsoft.com/api/stac/v1",
     )
@@ -22,7 +22,7 @@ def get_taxa_gbif_pc(taxa=[], bbox=[], outfile=''):
 
     filters=[]
     for t in taxa:
-      filters.append([('species', '==', t), ('decimallatitude','<',float(bbox[3])), ('decimallatitude','>',float(bbox[1])), ('decimallongitude','>',float(bbox[0])), ('decimallongitude','<',float(bbox[2]))])
+      filters.append([('species', '==', t), ('decimallatitude','<',float(bbox[3])), ('decimallatitude','>',float(bbox[1])), ('decimallongitude','>',float(bbox[0])), ('decimallongitude','<',float(bbox[2])), ('year','>',int(years[0])), ('year','<',int(years[1]))])
     
     
     df = dd.read_parquet(
