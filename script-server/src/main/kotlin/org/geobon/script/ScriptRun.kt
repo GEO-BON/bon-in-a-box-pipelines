@@ -32,7 +32,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
     private val outputFolder = File(outputRoot, id)
     private val resultFile = File(outputFolder, "output.json")
-    private val logFile = File(outputFolder, "log.txt")
+    private val logFile = File(outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"
