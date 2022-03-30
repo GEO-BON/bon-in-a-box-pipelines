@@ -22,10 +22,10 @@ class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()
         runId = scriptRun.id
         scriptRun.execute()
 
-        if (scriptRun.result.files.containsKey(ScriptRun.ERROR_KEY))
+        if (scriptRun.results.containsKey(ScriptRun.ERROR_KEY))
             throw java.lang.Exception("Script run detected an error")
 
-        return scriptRun.result.files
+        return scriptRun.results
     }
 
     /**
