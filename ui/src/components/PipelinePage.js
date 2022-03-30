@@ -5,6 +5,8 @@ import { Result } from "./Result";
 import { InputFileWithExample } from './InputFileWithExample';
 import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
 
+import { useInterval } from '../UseInterval';
+
 import spinnerImg from '../img/spinner.svg';
 import errorImg from '../img/error.svg';
 import warningImg from '../img/warning.svg';
@@ -45,20 +47,20 @@ export function PipelinePage(props) {
     setResultsData(null);
     loadPipelineOutputs()
 
-    return function cleanup() { 
+    return function cleanup() {
       if(timeout) clearTimeout(timeout)
     };
   // Called only when ID changes. Including all deps would result in infinite loop.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runId])
-  
+
  return (
   <>
     <h2>Single script run</h2>
-    <PipelineForm 
+    <PipelineForm
       pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
       setPipelineMetadataRaw={setPipelineMetadataRaw}
-      setRunId={setRunId} 
+      setRunId={setRunId}
       setHttpError={setHttpError} />
     {httpError && <p key="httpError" className="error">{httpError}</p>}
     {pipelineMetadataRaw && <pre key="metadata">{pipelineMetadataRaw.toString()}</pre>}
@@ -107,7 +109,7 @@ function PipelineForm(props) {
         data = {};
         props.setHttpError(error.toString());
 
-      } else if (data) { 
+      } else if (data) {
         props.setRunId(data);
       } else {
         props.setHttpError("Server returned empty result");
@@ -120,7 +122,7 @@ function PipelineForm(props) {
     api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
   };
 
-  // Applied only once when first loaded  
+  // Applied only once when first loaded
   useEffect(() => {
     // Load list of scripts into pipelineOptions
     api.pipelineListGet((error, data, response) => {
@@ -173,7 +175,7 @@ function PipelineResults(props) {
         }
       })}
     </RenderContext.Provider>
-    
+
   }
   else return null
 }
@@ -181,41 +183,66 @@ function PipelineResults(props) {
 function DelayedResult(props) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
+  const [logs, setLogs] = useState("")
 
   const script = props.id.substring(0, props.id.indexOf('@'))
 
-  useEffect(() => { // Script result (poll every second)
-    if (props.folder) {
-      if(props.folder === "skipped") {
-        setResultData({warning:"Skipped due to previous failure"})
-      } else {
-        const interval = setInterval(() => {
-  
-          fetch("output/" + props.folder + "/output.json")
-            .then((response) => {
-              if (response.ok) {
-                clearInterval(interval);
-                return response.json();
-              }
-  
-              // Script not done yet: wait for next attempt
-              if (response.status === 404) {
-                return Promise.resolve(null)
-              }
-  
-              return Promise.reject(response);
-            })
-            .then(json => setResultData(json))
-            .catch(response => {
-              clearInterval(interval);
-              setResultData({ error: response.status + " (" + response.statusText + ")" })
-            });
-        }, 1000);
-
-        return function cleanup() { clearInterval(interval) };
-      }
+  useEffect(() => {
+    if (props.folder && props.folder === "skipped") {
+      setResultData({ warning: "Skipped due to previous failure" })
     }
-  }, [props.folder]);
+  // Execute only when folder changes (omitting resultData on purpose)
+  }, [props.folder]) 
+
+  const interval = useInterval(() => {
+    // Fetch the output
+    fetch("output/" + props.folder + "/output.json")
+      .then((response) => {
+        if (response.ok) {
+          clearInterval(interval);
+          return response.json();
+        }
+
+        // Script not done yet: wait for next attempt
+        if (response.status === 404) {
+          return Promise.resolve(null)
+        }
+
+        return Promise.reject(response);
+      })
+      .then(json => setResultData(json))
+      .catch(response => {
+        clearInterval(interval);
+        setResultData({ error: response.status + " (" + response.statusText + ")" })
+      });
+
+    // Fetch the logs
+    let start = new Blob([logs]).size
+    fetch("output/" + props.folder + "/logs.txt", {
+      headers: { 'range': `bytes=${start}-` },
+    })
+      .then(response => {
+        if (response.ok) {
+          return response.text();
+        } else if(response.status === 416) { // Range not satifiable
+          return Promise.resolve(null) // Wait for next try
+        } else {
+          return Promise.reject(response)
+        }
+      })
+      .then(responseText => {
+        if(responseText) {
+          console.log("logs:" + responseText)
+          setLogs(logs + responseText);
+        }
+      })
+      .catch(response => {
+        clearInterval(interval);
+        setResultData({ error: response.status + " (" + response.statusText + ")" })
+      });
+
+  // Will start when folder has value, and continue the until resultData also has a value
+  }, props.folder && !resultData ? 1000 : null);
 
   useEffect(() => { // Script metadata
     var callback = function (error, data, response) {
@@ -229,7 +256,7 @@ function DelayedResult(props) {
   let className = "foldableScriptResult"
   if (props.folder) {
     if (resultData) {
-      content = <Result data={resultData} logs="" metadata={scriptMetadata} />
+      content = <Result data={resultData} metadata={scriptMetadata} />
       if(resultData.error) {
         inline = <img src={errorImg} alt="Error" className="error-inline" />
       } else if(resultData.warning) {
@@ -252,6 +279,7 @@ function DelayedResult(props) {
     <FoldableOutput title={script} componentId={props.id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
-    </FoldableOutput> 
+      <pre>{logs}</pre>
+    </FoldableOutput>
   )
 }
