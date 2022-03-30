@@ -32,6 +32,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
     private val outputFolder = File(outputRoot, id)
     private val resultFile = File(outputFolder, "output.json")
+    private val logFile = File(outputFolder, "log.txt")
 
     companion object {
         const val ERROR_KEY = "error"
@@ -58,13 +59,15 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
         // Run the script
         var error = false
-        var logs = ""
         var outputs:Map<String, Any>? = null
 
         runCatching {
             // Remove previous run result
-            if(resultFile.delete()) {
-                logger.trace("Previous results deleted")
+            // TODO this is temp until we use the cache.
+            if(resultFile.delete()) logger.trace("Previous results deleted")
+            if(logFile.delete()) logger.trace("Previous results deleted")
+            withContext(Dispatchers.IO) {
+                logFile.createNewFile()
             }
 
             inputFileContent?.let {
@@ -79,7 +82,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 "sh" -> "sh"
                 "py", "PY" -> "python3"
                 else -> "Unsupported script extension ${scriptFile.extension}".let {
-                    logger.warn(it)
+                    log(logger::warn, it)
                     return flagError(ScriptRunResult(it), true)
                 }
             }
@@ -93,17 +96,15 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                         launch {
                             process.inputStream.bufferedReader().run {
                                 while (true) { // Breaks when readLine returns null
-                                    readLine()?.let { line ->
-                                        logger.trace(line) // realtime logging
-                                        logs += "$line\n" // record
-                                    } ?: break
+                                    readLine()?.let { log(logger::trace, it) }
+                                        ?: break
                                 }
                             }
                         }
 
                         process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
                         if (process.isAlive) {
-                            logs += "TIMEOUT occurred after 1h".also { logger.warn(it) } + "\n"
+                            log(logger::warn, "TIMEOUT occurred after 1h")
                             process.destroy()
                         }
                     }
@@ -111,7 +112,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }.onSuccess { process -> // completed, with success or failure
             if(process.exitValue() != 0) {
                 error = true
-                logs += "Error: script returned non-zero value".also { logger.warn(it) } + "\n"
+                log(logger::warn, "Error: script returned non-zero value")
             }
 
             if(resultFile.exists()) {
@@ -122,26 +123,33 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                     logger.trace(result)
                 } catch (e:Exception) {
                     error = true
-                    logs +=  ("""
+                    log(logger::warn, """
                         ${e.message}
                         Error: Malformed JSON file.
                         Make sure complex results are saved in a separate file (csv, geojson, etc.).
                         Contents of output.json:
-                    """.trimIndent() + "\n$result").also { logger.warn(it) }
+                    """.trimIndent() + "\n$result")
                 }
             } else {
                 error = true
-                logs += "Error: output.json file not found".also { logger.warn(it) } + "\n"
+                log(logger::warn, "Error: output.json file not found")
             }
 
         }.onFailure { ex ->
+            log(logger::warn, "An error occurred when running the script: ${ex.message}")
             logger.warn(ex.stackTraceToString())
-            logs += "An error occurred when running the script: ${ex.message}"
             error = true
         }
 
         // Format log output
-        return flagError(ScriptRunResult(logs, outputs ?: mapOf()), error)
+        return flagError(ScriptRunResult(
+            logFile.readText(), // TODO: TEMP until ScriptRunResult never returns a log.
+            outputs ?: mapOf()), error)
+    }
+
+    private fun log(func: (String?)->Unit, line: String) {
+        func(line) // realtime logging
+        logFile.appendText("$line\n") // record
     }
 
     private fun flagError(result: ScriptRunResult, error:Boolean) : ScriptRunResult {
