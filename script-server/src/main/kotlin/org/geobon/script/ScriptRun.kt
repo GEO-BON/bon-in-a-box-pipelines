@@ -54,7 +54,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
         // Create the output folder for this invocation
         outputFolder.mkdirs()
-        logger.trace("Script run outputting to $outputFolder")
+        logger.debug("Script run outputting to $outputFolder")
 
         // Run the script
         var error = false
@@ -80,8 +80,8 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 "r", "R" -> "Rscript"
                 "sh" -> "sh"
                 "py", "PY" -> "python3"
-                else -> "Unsupported script extension ${scriptFile.extension}".let {
-                    log(logger::warn, it)
+                else -> {
+                    log(logger::warn, "Unsupported script extension ${scriptFile.extension}")
                     return flagError(mapOf(), true)
                 }
             }
