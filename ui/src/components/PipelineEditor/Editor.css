@@ -1,0 +1,54 @@
+aside.scriptChooser {
+    padding: 15px 10px;
+}
+
+aside.scriptChooser .description {
+    margin-bottom: 10px;
+}
+
+.dndnode {
+    height: 20px;
+    padding: 4px;
+    border: 1px solid #1a192b;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    background: #fcfcfc;
+}
+
+.dndnode.input {
+    border-color: #0041d0;
+}
+
+.dndnode.output {
+    border-color: #ff0072;
+}
+
+.reactflow-wrapper {
+    flex-grow: 1;
+    height: 300px;
+    background-color: #fcfcfc99;
+}
+
+.selectall {
+    margin-top: 10px;
+}
+
+.react-flow__edge-path {
+    stroke: #fcfcfc;
+    stroke-width: 2;
+  }
+
+@media screen and (min-width: 768px) {
+    .dndflow {
+        flex-direction: row;
+    }
+
+    .dndflow aside {
+        width: 20%;
+        max-width: 250px;
+    }
+}

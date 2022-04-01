@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter,
@@ -12,21 +11,33 @@ import {
 import { SingleScriptPage } from "./components/SingleScriptPage";
 import { PipelinePage } from "./components/PipelinePage";
 import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
+import ScriptChooser from "./components/PipelineEditor/ScriptChooser";
+import { Layout } from './Layout.js';
 
 ReactDOM.render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="script-form" element={<SingleScriptPage />} />
-        <Route path="pipeline-form" element={<PipelinePage />} />
-        <Route path="pipeline-editor" element={<PipelineEditor />} />
+      <Route path="/" element={<Layout />} />
 
-        <Route path="*" element={
-          <main style={{ padding: "1rem" }}>
-            <h2>404 - Page not found</h2>
-            <p>Lost in the wilderness?</p>
-          </main>} />
-      </Route>
+      <Route path="script-form" element={
+        <Layout right={<SingleScriptPage />} />
+      } />
+
+      <Route path="pipeline-form" element={
+      <Layout right={<PipelinePage />} />
+      } />
+
+      <Route path="pipeline-editor" element={
+        <Layout left={<ScriptChooser />}
+          right={<PipelineEditor />} />
+      } />
+
+      <Route path="*" element={
+        <main style={{ padding: "1rem" }}>
+          <h2>404 - Page not found</h2>
+          <p>Lost in the wilderness?</p>
+        </main>
+      } />
 
     </Routes>
   </BrowserRouter>,
