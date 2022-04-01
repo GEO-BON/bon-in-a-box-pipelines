@@ -217,6 +217,7 @@ function DelayedResult(props) {
       });
 
     // Fetch the logs
+    // TODO: Don't fetch if log section is folded.
     let start = new Blob([logs]).size
     fetch("output/" + props.folder + "/logs.txt", {
       headers: { 'range': `bytes=${start}-` },
@@ -265,7 +266,6 @@ function DelayedResult(props) {
           {props.folder === "skipped" && <i>Skipped</i>}
         </>
       }
-      // TODO: Display warning and error icon inline
     } else {
       content = <p>Running...</p>
       inline = <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
