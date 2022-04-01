@@ -13,9 +13,11 @@ function App() {
       </header>
 
       <nav>
-        <NavLink to="/script-form">Single script</NavLink>
+        <NavLink to="/script-form">Single script run</NavLink>
         &nbsp;|&nbsp;
-        <NavLink to="/pipeline-form">Pipeline</NavLink>
+        <NavLink to="/pipeline-form">Pipeline run</NavLink>
+        &nbsp;|&nbsp;
+        <NavLink to="/pipeline-editor">Pipeline editor</NavLink>
       </nav>
 
       <main>
