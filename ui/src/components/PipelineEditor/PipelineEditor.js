@@ -64,7 +64,6 @@ export function PipelineEditor(props) {
 
   return (
     <div className="dndflow">
-      <p>I am here</p>
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
           <ReactFlow
