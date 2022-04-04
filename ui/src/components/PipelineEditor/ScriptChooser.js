@@ -11,7 +11,7 @@ export default () => {
 
   return (
     <aside className='scriptChooser'>
-      <div className="description">You can drag these nodes to the pane on the right.</div>
+      <div className="description">Available scripts:</div>
       <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'input')} draggable>
         Input Node
       </div>
