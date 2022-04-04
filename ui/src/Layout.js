@@ -15,7 +15,7 @@ export function Layout(props) {
         {props.left}
       </div>
 
-      <div className='right'>
+      <div className='right-content'>
         <header className="App-header">
           <h1>BON in a Box v2 pre-pre alpha</h1>
         </header>
