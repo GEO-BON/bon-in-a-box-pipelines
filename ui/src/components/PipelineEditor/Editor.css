@@ -6,6 +6,13 @@ aside.scriptChooser .description {
     margin-bottom: 10px;
 }
 
+.dndflow {
+    flex-direction: column;
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+}
+
 .dndnode {
     height: 20px;
     padding: 4px;
@@ -29,7 +36,7 @@ aside.scriptChooser .description {
 
 .reactflow-wrapper {
     flex-grow: 1;
-    height: 300px;
+    height: 100%;
     background-color: #fcfcfc99;
 }
 
