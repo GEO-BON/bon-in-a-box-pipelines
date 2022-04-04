@@ -5,6 +5,7 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Controls,
+  MiniMap,
 } from 'react-flow-renderer';
 
 import './Editor.css';
@@ -78,6 +79,7 @@ export function PipelineEditor(props) {
             fitView
           >
             <Controls />
+            <MiniMap />
           </ReactFlow>
         </div>
       </ReactFlowProvider>
