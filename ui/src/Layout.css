@@ -20,7 +20,7 @@ a.active {
   background-color: #282c34;
   height: 100vh;
   color: #f3f3f1;
-  overflow: scroll;
+  overflow: auto;
   padding-left:30px;
   padding-right:30px;
 }
