@@ -1,12 +1,23 @@
 import './Layout.css';
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { NavLink } from "react-router-dom";
 
 import BiaBLogo from "./img/boninabox.jpg"
 
+import useWindowDimensions from "./states/WindowDimensions"
+
 export function Layout(props) {
+  const { windowHeight } = useWindowDimensions();
+  const [mainHeight, setMainHeight] = useState();
+
+  // Main section size
+  useEffect(() => {
+    let header = document.getElementsByTagName('header')[0];
+    let nav = document.getElementsByTagName('nav')[0];
+    setMainHeight(windowHeight - header.offsetHeight - nav.offsetHeight)
+  }, [windowHeight])
 
   return (
     <>
@@ -28,7 +39,7 @@ export function Layout(props) {
           <NavLink to="/pipeline-editor">Pipeline editor</NavLink>
         </nav>
 
-        <main>
+        <main style={{height: mainHeight}}>
           {props.right}
         </main>
       </div>
