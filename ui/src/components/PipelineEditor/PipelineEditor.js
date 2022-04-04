@@ -76,6 +76,7 @@ export function PipelineEditor(props) {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            deleteKeyCode='Delete'
             fitView
           >
             <Controls />
