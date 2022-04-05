@@ -108,6 +108,32 @@ export function PipelineEditor(props) {
     );
   };
 
+  const onSave = useCallback(() => {
+    if (reactFlowInstance) {
+      const flow = reactFlowInstance.toObject();
+      navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
+      alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
+    }
+  }, [reactFlowInstance]);
+
+  // const onLoad = useCallback(() => {
+  //   const restoreFlow = async () => {
+  //     navigator.clipboard.readText().then(clipText => {
+  //       console.log(clipText)
+  //       const flow = JSON.parse(clipText);
+
+  //       if (flow) {
+  //         setNodes(flow.nodes || []);
+  //         setEdges(flow.edges || []);
+  //         // const { x = 0, y = 0, zoom = 1 } = flow.viewport;
+  //         // setViewport({ x, y, zoom });
+  //       }
+  //     });
+  //   };
+
+  //   restoreFlow();
+  // }, [setNodes/*, setViewport*/]);
+
   return (
     <div className="dndflow">
       <ReactFlowProvider>
@@ -125,6 +151,10 @@ export function PipelineEditor(props) {
             deleteKeyCode='Delete'
             fitView
           >
+            <div className="save__controls">
+              {/* <button onClick={onLoad}>Load from clipboard</button> */}
+              <button onClick={onSave}>Save</button>
+            </div>
             <Controls />
             <MiniMap />
           </ReactFlow>

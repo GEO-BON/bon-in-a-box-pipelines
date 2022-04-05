@@ -103,6 +103,18 @@ aside.scriptChooser .description {
     margin-right:-4px;
 }
 
+.save__controls {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 4;
+    font-size: 12px;
+}
+
+.save__controls button {
+    margin-left: 5px;
+}
+
 @media screen and (min-width: 768px) {
     .dndflow {
         flex-direction: row;
