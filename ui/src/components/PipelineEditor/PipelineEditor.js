@@ -41,6 +41,7 @@ export function PipelineEditor(props) {
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
       const type = event.dataTransfer.getData('application/reactflow');
+      const descriptionFile = event.dataTransfer.getData('descriptionFile');
 
       // check if the dropped element is valid
       if (typeof type === 'undefined' || !type) {
@@ -51,11 +52,13 @@ export function PipelineEditor(props) {
         x: event.clientX - reactFlowBounds.left,
         y: event.clientY - reactFlowBounds.top,
       });
+
       const newNode = {
         id: getId(),
         type,
         position,
         data: { label: `${type} node` },
+        descriptionFile: descriptionFile
       };
 
       setNodes((nds) => nds.concat(newNode));
