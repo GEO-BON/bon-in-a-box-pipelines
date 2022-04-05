@@ -16,12 +16,12 @@ import IONode from './IONode'
 import ConstantNode from './ConstantNode'
 
 const initialNodes = [
-  {
+  /*{
     id: '1',
     type: 'input',
     data: { label: 'input node' },
     position: { x: 250, y: 5 },
-  },
+  },*/
 ];
 
 const nodeTypes = {
@@ -82,7 +82,6 @@ export function PipelineEditor(props) {
         type,
         position,
         data: data,
-        descriptionFile: descriptionFile
       };
 
       setNodes((nds) => nds.concat(newNode));
