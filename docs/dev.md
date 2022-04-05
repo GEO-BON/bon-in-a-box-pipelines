@@ -11,13 +11,14 @@ For the script-server (Kotlin code), IntelliJ Idea
 
 ## Launching the dockers in development mode
 `docker compose -f compose.yml -f compose.dev.yml build`
+
 `docker compose -f compose.yml -f compose.dev.yml up`
 
 This command enables:
 - OpenAPI editor at http://localhost/swagger
-- UI server automatic React hot-swapping
-- Script-server (Kotlin) hot-swapping with ./script-server/hotswap.sh in 
-- [http-proxy/conf.d/ngnix.conf](../http-proxy/conf.d/ngnix.conf) will be loaded
+- UI server: React automatic hot-swapping
+- Script-server: Kotlin hot-swapping by launching [./script-server/hotswap.sh](../script-server/hotswap.sh)
+- NGINX: [http-proxy/conf.d/ngnix.conf](../http-proxy/conf.d/ngnix.conf) will be loaded
 
 ## Microservice infrastructure
 
@@ -41,6 +42,19 @@ In addition to these services,
 - [scripts](../scripts/) folder contains all the scripts that can be run.
 - [output](../output/) folder contains all scripts result.
 
+## Script lifecycle & artifacts
+```mermaid
+flowchart TD
+ never[Never ran] --> running[Running]
+ running --> input[(- run folder\n- input.json)]
+ running --> log[(log file)]
+ running --> success{Success?}
+ success --> |Yes| Done
+ Done --> output[(output.json)]
+ success --> |No| Failed
+ Failed --> |Add error flag|output
+```
+
 ## OpenAPI specification
 
 ### Single-script scenario
@@ -62,40 +76,33 @@ sequenceDiagram
 ### Pipeline scenario
 ```mermaid
 sequenceDiagram
-    ui->>pipeline_server: pipeline/list
-    pipeline_server-->>ui: 
+    ui->>script_server: pipeline/list
+    script_server-->>ui: 
 
-    ui->>pipeline_server: pipeline/<path>/info
-    pipeline_server-->>ui: 
+    ui->>script_server: pipeline/<path>/info
+    script_server-->>ui: 
 
-    ui->>pipeline_server: pipeline/<path>/run
-    pipeline_server-->>ui: id
+    ui->>script_server: pipeline/<path>/run
+    script_server-->>ui: id
     loop For each step
-        pipeline_server->>script_server: run
-        Note right of script_server: May still have timeout issue
-        script_server-->>pipeline_server: output.json (script)
-        ui->>pipeline_server: pipeline/<id>/outputs
-        pipeline_server-->>ui: output.json (pipeline)
+        script_server->>script: run
+        Note right of script: 1h timeout for individual script
+        script-->>script_server: output.json (script)
+        ui->>script_server: pipeline/<id>/outputs
+        script_server-->>ui: output.json (pipeline)
     end
 
 ```
 
-### Editing the specification
+Every second, the UI polls for:
+- output.json from the pipeline, to get the output folders of individual scripts. Stops polling when pipeline stops.
+- logs.txt of individual scripts, for realtime logging, only if log section is opened. Stops when individual script completes, or when log section closed.
+- output.json of individual scripts, to know when script completes and display its outputs. Stops when script stops.
+
+
+### Editing the OpenAPI specification of the script-server
 1. Using http://localhost/swagger, edit the specification.
 2. Copy the result to [script-server/api/openapi.yaml](../script-server/api/openapi.yaml)
 3. Use [ui/BonInABoxScriptService/generate-client.sh](../ui/BonInABoxScriptService/generate-client.sh) and  [script-server/generate-server-openapitools.sh](../script-server/generate-server-openapitools.sh) to regenerate the client and the server.
 4. Merge carefully, not all generated code is to be kept.
 5. Implement the gaps.
-
-## Script lifecycle & artifacts
-```mermaid
-flowchart TD
- never[Never ran] --> running[Running]
- running --> input[(- run folder\n- input.json)]
- running --> log[(log file)]
- running --> success{Success?}
- success --> |Yes| Done
- Done --> output[(output.json)]
- success --> |No| Failed
- Failed --> |Add error flag|output
-```

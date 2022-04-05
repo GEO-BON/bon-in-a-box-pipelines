@@ -1,0 +1,127 @@
+aside.scriptChooser {
+    padding: 15px 10px;
+}
+
+aside.scriptChooser .description {
+    margin-bottom: 10px;
+}
+
+.dndflow {
+    flex-direction: column;
+    display: flex;
+    flex-grow: 1;
+    height: 100%;
+}
+
+.dndnode {
+    height: 20px;
+    padding: 4px;
+    border: 1px solid #1a192b;
+    border-radius: 2px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: grab;
+    background: #fcfcfc;
+}
+
+.dndnode.input {
+    border-color: #0041d0;
+}
+
+.dndnode.output {
+    border-color: #ff0072;
+}
+
+.reactflow-wrapper {
+    flex-grow: 1;
+    height: 100%;
+    background-color: #fcfcfc99;
+}
+
+.selectall {
+    margin-top: 10px;
+}
+
+.react-flow__edge-path, .react-flow__connection-path {
+    stroke: #fcfcfc;
+    stroke-width: 2;
+  }
+
+.ioNode {
+    background-color: whitesmoke;
+    border: 1px solid black;
+    color: black;
+}
+
+.ioNode td {
+    border: none;
+    padding:3px 0px;
+    min-width: 0.5em;
+}
+
+.ioNode td.name {
+    padding: 0.5em;
+}
+
+.inputs, .outputs {
+    vertical-align: top;
+    font-size: 0.7em;
+}
+
+/*.inputs div, .outputs div {
+    border: 1px solid red;;
+}*/
+
+
+.inputs .react-flow__handle, .outputs .react-flow__handle{
+    position:relative;
+}
+
+.inputs .react-flow__handle-left, .outputs .react-flow__handle-right {
+    /* Undo default style */
+    right:auto;
+    left:auto;
+    top:auto;
+    bottom:auto;
+    transform: none;
+    display: inline-block;
+}
+
+.inputs .react-flow__handle-left {
+    margin-left:-4px;
+    margin-right:3px;
+}
+
+.outputs {
+    text-align: right;
+}
+
+.outputs .react-flow__handle-right {
+    margin-left:3px;
+    margin-right:-4px;
+}
+
+.save__controls {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    z-index: 4;
+    font-size: 12px;
+}
+
+.save__controls button {
+    margin-left: 5px;
+}
+
+@media screen and (min-width: 768px) {
+    .dndflow {
+        flex-direction: row;
+    }
+
+    .dndflow aside {
+        width: 20%;
+        max-width: 250px;
+    }
+}

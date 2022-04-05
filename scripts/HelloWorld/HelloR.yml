@@ -1,10 +1,12 @@
 script: HelloR.R
 inputs:
   occurence:
+    label: Occurence
     description: Occurrence data, some description here
     type: image/tiff;application=geotiff
     example: http://something-compatible.tiff
   intensity:
+    label: Intensity
     description: Intensity of bla bla, from [1,10]
     type: int
     example: 3

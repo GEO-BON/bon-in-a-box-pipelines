@@ -1,7 +1,8 @@
 script: HelloPython.py
 inputs:
   some_int:
-    description: A number
+    label: Some int
+    description: A number that we will increment
     type: int
     example: 3
 outputs:
