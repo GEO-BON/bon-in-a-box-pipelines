@@ -1,9 +1,5 @@
 script: HelloJulia.jl
 inputs:
-  some_int:
-    description: An int
-    type: int
-    example: 3
 outputs:
   number:
     label: A number (input*3)
