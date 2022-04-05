@@ -19,6 +19,7 @@ import org.geobon.script.ScriptRun
 import org.geobon.script.outputRoot
 import org.geobon.script.scriptRoot
 import org.openapitools.server.Paths
+import org.openapitools.server.models.ScriptRunResult
 import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import java.io.File
@@ -60,9 +61,12 @@ fun Route.ScriptApi(logger:Logger) {
         logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
 
         val scriptRelPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/')
-        val script = ScriptRun(File(scriptRoot, scriptRelPath), inputFileContent)
-        script.execute()
-        call.respond(HttpStatusCode.OK, script.result)
+        val run = ScriptRun(File(scriptRoot, scriptRelPath), inputFileContent)
+        run.execute()
+        call.respond(HttpStatusCode.OK, ScriptRunResult(
+            run.logFile.readText(),
+            run.results
+        ))
     }
 
     get<Paths.scriptListGet> {
