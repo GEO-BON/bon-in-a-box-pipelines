@@ -63,7 +63,6 @@ export function PipelineEditor(props) {
         y: event.clientY - reactFlowBounds.top,
       });
 
-      let id = getId();
       let data;
       switch (type) {
         case 'io':
@@ -71,7 +70,6 @@ export function PipelineEditor(props) {
           break;
         case 'constant':
           data = {
-            id: id,
             onChange: onConstantValueChange
           }
           break;
@@ -80,7 +78,7 @@ export function PipelineEditor(props) {
       }
 
       const newNode = {
-        id: id,
+        id: getId(),
         type,
         position,
         data: data,

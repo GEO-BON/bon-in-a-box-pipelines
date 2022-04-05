@@ -6,6 +6,7 @@ const yaml = require('js-yaml');
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
 
+// props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
 export default function IONode({ data }) {
   const [descriptionFileLocation] = useState(data.descriptionFile);
   const [metadata, setMetadata] = useState(null);
