@@ -31,7 +31,7 @@ export default () => {
 
   return (
     <aside className='scriptChooser'>
-      <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'input')} draggable>
+      <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'constant')} draggable>
         Constant value
       </div>
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
@@ -40,7 +40,7 @@ export default () => {
       <div className="description">Available scripts:</div>
       {scriptFiles.map((descriptionFile) => {
         // TODO: a hierarchy?
-        return <div key={descriptionFile} className="dndnode" onDragStart={(event) => onDragStart(event, 'ioNode', descriptionFile)} draggable>
+        return <div key={descriptionFile} className="dndnode" onDragStart={(event) => onDragStart(event, 'io', descriptionFile)} draggable>
           <pre>
             {descriptionFile.replace('>', '\n')}
           </pre>

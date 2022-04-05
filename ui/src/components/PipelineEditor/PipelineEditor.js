@@ -13,6 +13,7 @@ import ReactFlow, {
 } from 'react-flow-renderer/nocss';
 
 import IONode from './IONode'
+import ConstantNode from './ConstantNode'
 
 const initialNodes = [
   {
@@ -23,10 +24,13 @@ const initialNodes = [
   },
 ];
 
-const nodeTypes = { ioNode: IONode }
+const nodeTypes = {
+  io: IONode,
+  constant: ConstantNode
+}
 
 let id = 0;
-const getId = () => `dndnode_${id++}`;
+const getId = () => `node_${id++}`;
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
@@ -59,17 +63,24 @@ export function PipelineEditor(props) {
         y: event.clientY - reactFlowBounds.top,
       });
 
+      let id = getId();
       let data;
       switch (type) {
-        case 'ioNode':
+        case 'io':
           data = { descriptionFile: descriptionFile }
+          break;
+        case 'constant':
+          data = {
+            id: id,
+            onChange: onConstantValueChange
+          }
           break;
         default:
           data = { label: `${type} node` }
       }
 
       const newNode = {
-        id: getId(),
+        id: id,
         type,
         position,
         data: data,
@@ -80,6 +91,25 @@ export function PipelineEditor(props) {
     },
     [reactFlowInstance]
   );
+
+  const onConstantValueChange = (event) => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        if(node.id != event.target.id) {
+          return node;
+        }
+
+        const value = event.target.value;
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            value,
+          },
+        };
+      })
+    );
+  };
 
   return (
     <div className="dndflow">
