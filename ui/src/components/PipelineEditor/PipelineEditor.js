@@ -1,3 +1,7 @@
+import 'react-flow-renderer/dist/style.css';
+import 'react-flow-renderer/dist/theme-default.css';
+import './Editor.css';
+
 import React, { useState, useRef, useCallback } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
@@ -6,9 +10,9 @@ import ReactFlow, {
   useEdgesState,
   Controls,
   MiniMap,
-} from 'react-flow-renderer';
+} from 'react-flow-renderer/nocss';
 
-import './Editor.css';
+import IONode from './IONode'
 
 const initialNodes = [
   {
@@ -18,6 +22,8 @@ const initialNodes = [
     position: { x: 250, y: 5 },
   },
 ];
+
+const nodeTypes = { ioNode: IONode }
 
 let id = 0;
 const getId = () => `dndnode_${id++}`;
@@ -53,11 +59,20 @@ export function PipelineEditor(props) {
         y: event.clientY - reactFlowBounds.top,
       });
 
+      let data;
+      switch (type) {
+        case 'ioNode':
+          data = { descriptionFile: descriptionFile }
+          break;
+        default:
+          data = { label: `${type} node` }
+      }
+
       const newNode = {
         id: getId(),
         type,
         position,
-        data: { label: `${type} node` },
+        data: data,
         descriptionFile: descriptionFile
       };
 
@@ -73,6 +88,7 @@ export function PipelineEditor(props) {
           <ReactFlow
             nodes={nodes}
             edges={edges}
+            nodeTypes={nodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}

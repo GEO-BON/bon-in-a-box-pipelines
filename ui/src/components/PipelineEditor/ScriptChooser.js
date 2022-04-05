@@ -11,12 +11,11 @@ export default () => {
   // Applied only once when first loaded  
   useEffect(() => {
     // Load list of scripts into scriptFileOptions
-    console.log("scriptListGet");
     api.scriptListGet((error, data, response) => {
       if (error) {
+        // TODO: Client error
         console.error(error);
       } else {
-        console.log(data);
         setScriptFiles(data);
       }
     });
@@ -41,8 +40,7 @@ export default () => {
       <div className="description">Available scripts:</div>
       {scriptFiles.map((descriptionFile) => {
         // TODO: a hierarchy?
-        console.log(descriptionFile)
-        return <div key={descriptionFile} className="dndnode" onDragStart={(event) => onDragStart(event, 'default', descriptionFile)} draggable>
+        return <div key={descriptionFile} className="dndnode" onDragStart={(event) => onDragStart(event, 'ioNode', descriptionFile)} draggable>
           <pre>
             {descriptionFile.replace('>', '\n')}
           </pre>
