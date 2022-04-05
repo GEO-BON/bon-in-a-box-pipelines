@@ -24,8 +24,9 @@ export default () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const onDragStart = (event, nodeType) => {
+  const onDragStart = (event, nodeType, descriptionFile) => {
     event.dataTransfer.setData('application/reactflow', nodeType);
+    event.dataTransfer.setData('descriptionFile', descriptionFile);
     event.dataTransfer.effectAllowed = 'move';
   };
 
@@ -38,12 +39,12 @@ export default () => {
         Pipeline output
       </div>
       <div className="description">Available scripts:</div>
-      {scriptFiles.map((script) => {
+      {scriptFiles.map((descriptionFile) => {
         // TODO: a hierarchy?
-        console.log(script)
-        return <div key={script} className="dndnode" onDragStart={(event) => onDragStart(event, 'default')} draggable>
+        console.log(descriptionFile)
+        return <div key={descriptionFile} className="dndnode" onDragStart={(event) => onDragStart(event, 'default', descriptionFile)} draggable>
           <pre>
-            {script.replace('>', '\n')}
+            {descriptionFile.replace('>', '\n')}
           </pre>
         </div>
       })}
