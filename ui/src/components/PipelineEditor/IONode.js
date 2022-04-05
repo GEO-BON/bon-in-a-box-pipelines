@@ -26,7 +26,7 @@ export default function IONode({ data }) {
 
 
   return (metadata &&
-    <table className='ioNode'>
+    <table className='ioNode'><tbody>
       <tr>
         <td className='inputs'>
           {metadata.inputs && Object.entries(metadata.inputs).map(([key, desc]) => {
@@ -48,6 +48,6 @@ export default function IONode({ data }) {
           })}
         </td>
       </tr>
-    </table>
+    </tbody></table>
   );
 }
