@@ -79,7 +79,7 @@ project_coords <- function(xy, lon = "lon", lat = "lat", proj.from, proj.to = NU
 #' @param proj.to character, target projection 
 #' @return a box extent
 points_to_bbox <- function(xy, buffer = 0, proj.from = NULL, proj.to = NULL) {
-  if (class(xy) != "SpatialPoints") {
+  if (!inherits(xy, "SpatialPoints")) {
     sp::coordinates(xy) <- colnames(xy)
     proj4string(xy) <- sp::CRS(proj.from)
   }
@@ -89,10 +89,10 @@ points_to_bbox <- function(xy, buffer = 0, proj.from = NULL, proj.to = NULL) {
     bbox <- bbox  %>%
       sf::st_transform(crs = sp::CRS(proj.to))
   }
-  bbox <- c(sf::st_bbox(bbox)$xmin, sf::st_bbox(bbox)$xmax,
-            sf::st_bbox(bbox)$ymin, sf::st_bbox(bbox)$ymax)
-  bbox
+  
+  bbox %>% sf::st_bbox()
 }
+
 
 
 bbox_to_wkt <- function(xmin = NA, ymin = NA, xmax = NA, ymax = NA, bbox = NULL) {

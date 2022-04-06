@@ -1,20 +1,24 @@
-script: modCleanOccurrences.R
+script: modCleanCoordinates.R
 inputs:
   obs:
     description: Occurrence data, some description here
     type: string
-    example: "/scripts/cleanCoordinates/data/obs_values_out.tsv"
-  predictors.dir: 
-    description: Occurrence data, some description here
-    type: tif folder
-    example: null
-  covars: 
-    description: Occurrence data, some description here
+    example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
+  tif_folder:
+    label: tif_folder
+    description: path to predictors tif file
+    type: string
+    example: "mytiffolder/"
+  layers: 
+    label: layers
+    description: layers (predictors)
     type: vector
     example: ["bio1", "bio2", "bio4"]
   tests: 
-    description: Occurrence data, some description here
-    type: tif folder
+    labels: cleaning_tests
+    description: tests to run from all tests available - capitals, centroids,
+ equal, gbif, institutions, duplicates, urban, seas, zeros, env
+    type: vector
     example: [ "equal",
                                "zeros", 
                                "duplicates", 
@@ -29,25 +33,31 @@ inputs:
                                
                              ]
 
-  srs:
+  proj_to:
+    label: projection
     description: Projection 
     type: string
     example: "EPSG:6623"
-  spatial.res :
-    description: Projection 
-    type: integer
+  spatial_res :
+    label: spatial_res
+    description: spatial resolution, only used if predictors are loaded from a stac catalogue. 
+    type: integer or float
     example: 1000  
 outputs:
-  n.clean:
-    label: n.observations
-    description: We can add plain text
+  n_presence:
+    label: n_presence
+    description: Initial number of presences points.
     type: int
-    example: 8
-  n.flagged:
-    label: n.flagged
-    description: We can add plain text
+    example: 500
+  n_clean:
+    label: n_clean_presence
+    description: Final number of presences points after cleaning.
     type: int
-    example: 8
+    example: 400
+  clean_presence:
+     label: clean_presence
+     description: table with clean presence points.
+     type: text/tab-separated-values
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:

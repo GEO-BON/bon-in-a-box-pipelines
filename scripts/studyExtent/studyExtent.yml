@@ -3,8 +3,8 @@ inputs:
   obs:
     description: Occurrence data, some description here
     type: string
-    example: "/output/cleanCoordinates/modCleanOccurrences_R/21dc20f610a4fe630811eadf9e655274/flagg_occ.csv"
-  srs:
+    example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
+  proj_to:
     description: Projection 
     type: string
     example: "EPSG:6623"
@@ -12,7 +12,7 @@ inputs:
     description: Occurrence data, some description here
     type: vector
     example: "mcp"
-  dist.buffer :
+  dist_buffer :
     description: Projection 
     type: integer
     example: null  
