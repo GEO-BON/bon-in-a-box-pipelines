@@ -25,16 +25,12 @@ export default function IONode({ data }) {
     }
   }, [descriptionFileLocation])
 
-
-  return (metadata &&
+    return (metadata &&
     <table className='ioNode'><tbody>
       <tr>
         <td className='inputs'>
-          {metadata.inputs && Object.entries(metadata.inputs).map(([key, desc]) => {
-            return <div key={key}>
-              <Handle id={key} type="target" position={Position.Left} />
-              <span>{desc.label ? desc.label : key}</span>
-            </div>
+          {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
+            return <ScriptInput key={inputName} inputName={inputName} desc={desc} setToolTip={data.setToolTip} />
           })}
         </td>
         <td className='name'>
@@ -51,4 +47,23 @@ export default function IONode({ data }) {
       </tr>
     </tbody></table>
   );
+}
+
+function ScriptInput(props) {
+  function setToolTip() {
+    props.setToolTip(<>
+      {props.desc.type && <>{props.desc.type} <br /></>}
+      {props.desc.description && <>{props.desc.description} <br /></>}
+      {props.desc.example && <>Example: {props.desc.example}</>}
+    </>)
+  }
+
+  function clearToolTip() {
+    props.setToolTip(null)
+  }
+
+  return <div onMouseEnter={setToolTip} onMouseLeave={clearToolTip}>
+    <Handle id={props.inputName} type="target" position={Position.Left} />
+    <span>{props.desc.label ? props.desc.label : props.inputName}</span>
+  </div>
 }

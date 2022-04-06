@@ -13,6 +13,13 @@ aside.scriptChooser .description {
     height: 100%;
 }
 
+.tooltip {
+    margin: 5px;
+    padding: 5px;
+    background-color: #00000088;
+    width: max-content;
+}
+
 .dndnode {
     height: 20px;
     padding: 4px;
