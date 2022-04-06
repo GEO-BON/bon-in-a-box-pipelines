@@ -1,40 +1,38 @@
-script: selectBackground.R
+script: modRunSDM.R
 inputs:
+  clean_presence:
+    description: Occurrence data, some description here
+    type: string
+    example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
+  clean_background:
+    description: Occurrence data, some description here
+    type: string
+    example: "/output/selectBackground/selectBackground_R/91768c70f430287fe46f5a86fb557109/background.tsv"
   study_extent:
     description: Occurrence data, some description here
     type: string
     example: "/output/studyExtent/studyExtent_R/a0f5047b6fd1ca648d2714e9ac1819d9/study_extent.shp"
+  layers: 
+    description: Occurrence data, some description here
+    type: vector
+    example: ["bio1", "bio2", "bio4"]
   proj_to:
     description: Projection 
     type: string
     example: "EPSG:6623"
-  method_background: 
-    description: Occurrence data, some description here
-    type: vector
-    example: "random"
-  n_background: 
-    description: Occurrence data, some description here
-    type: numeric
-    example: 10000
-  species: 
-    description: Occurrence data, some description here
-    type: numeric
-    example: "Panthera onca"
-  layers :
+  spatial_res :
     description: Projection 
     type: integer
-    example: ["bio1", "bio2", "bio4"]  
+    example: 1000  
 outputs:
-  n.background:
-    label: n.observations
-    description: We can add plain text
-    type: int
-    example: 8
-  data:
-    label: data
-    description: We can add plain text
-    type: text/tab-separated-value
-    example:
+  prediction_map:
+    label: Heat map
+    description: Some heat map that shows bla bla...
+    type: image/tiff;application=geotiff
+  output_eval:
+     label: output_eval
+     description: table with observations from GBIF
+     type: text/tab-separated-values
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:

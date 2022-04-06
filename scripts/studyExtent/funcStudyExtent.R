@@ -11,7 +11,10 @@ create_study_extent <- function(obs,
                               proj = proj,
                               method = "box",
                               dist_buffer = NULL,
-                              shapefile_path = NULL) {
+                              shapefile_path = NULL,
+                              export = NULL,
+                              path = NULL,
+                              species = NULL) {
   
   # projecting observations coordinates
   obs_points <- project_coords(obs, lon, lat, proj)
@@ -57,7 +60,8 @@ create_study_extent <- function(obs,
     
     study_extent <- sf::st_read(shapefile_path) 
   }
-  
+  study_extent <- study_extent %>% sf::st_set_crs(proj)
+ 
   return(study_extent)
   
 }
@@ -69,6 +73,6 @@ mcp <- function(obs_points) {
   xy.bord <- xy[coords.t, ]
   xy.bord <- rbind(xy.bord[nrow(xy.bord), ], xy.bord)
   mcp <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(as.matrix(xy.bord))), 1))) %>%
-    sf::st_as_sf(crs = raster::crs(obs_points@proj4string))
+    sf::st_as_sf()  
   return(mcp)
 }

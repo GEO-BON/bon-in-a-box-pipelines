@@ -15,9 +15,9 @@ library("stars")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "selectBackground/funcSelectBackground.R", sep = "/"))
-source("/scripts/extractPredictors/funcExtractPredictors.R")
 source("/scripts/utils/utils.R")
-#source("/scripts/cleanCoordinates/funcCleanCoordinates.R")
+source("/scripts/utils/predictors_func.R")
+
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
@@ -29,19 +29,16 @@ print("Inputs: ")
 print(input)
 
 study_extent <- sf::st_read(input$study_extent)
-bbox <- sf::st_bbox(study_extent, crs = input$srs)
-cube <- 
+bbox <- sf::st_bbox(study_extent, crs = input$proj_to)
+predictors_nc <- 
   load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
             collections = c("chelsa-clim"), 
             use.obs = F,
             buffer.box = 0,
-            layers = input$layers,
-            left = bbox$xmin,
-            right =  bbox$xmax,
-            bottom = bbox$ymin,
-            top = bbox$ymax,
-            srs.cube = input$srs,
+            layers = input$layers[1],
+            bbox = bbox,
+            srs.cube = input$proj_to,
             t0 = "1981-01-01",
             t1 = "1981-01-01",
             spatial.res = 1000, # in meters
@@ -49,18 +46,15 @@ cube <-
             aggregation = "mean",
             resampling = "near") 
 
-predictors_study_extent <- gdalcubes::filter_geom(cube,  sf::st_geometry(study_extent, crs = "EPSG:6623"), srs = "EPSG:6623")
-
-predictors_study_extent <- cube_to_raster(predictors_study_extent, format = "terra")
-
 background <- create_background(
-                                   predictors_study_extent, 
-                                    lon = "lon",
-                                    lat = "lat",
-                                    species = input$species,
-                                    method = input$method_background, #will select random points in predictors_study_extent area
-                                    n = input$n_background,
-                                   density_bias = NULL) 
+  predictors = predictors_nc, 
+  species = input$species,
+  mask = study_extent,
+  lon = "lon",
+  lat = "lat",
+  method = "random", #will select random points in predictors_study_extent area
+  n = input$n_background,
+  density_bias = NULL) 
 
  
 background.data <- file.path(outputFolder, "background.tsv")

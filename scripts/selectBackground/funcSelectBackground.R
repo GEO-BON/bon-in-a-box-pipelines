@@ -8,46 +8,51 @@
 #' @export
 
 create_background <- function(
-                            predictors, 
-                            species,
-                              method = "random",
-                              lon = "lon",
-                              lat = "lat",
-                            n = 10000,  
-                            obs = NULL,
-                              density_bias = NULL,
-                              dist_buffer = NULL) {
- 
+  predictors, 
+  species = NULL,
+  mask = NULL,
+  method = "random",
+  lon = "lon",
+  lat = "lat",
+  n = 10000,  
+  obs = NULL,
+  density_bias = NULL,
+  dist_buffer = NULL) {
+  
+  if (inherits(predictors, "cube")) {
+    predictors <- cube_to_raster(predictors, format = "terra")
+  }
   proj <- terra::crs(predictors, proj = T)
   # Create on single layer where a cell is NA if at least one of the layers is NA
   # to make sure nackground points won't be selected in NA's cells
-  layer_na <- terra::tapp(predictors, index = c(rep(1, terra::nlyr(predictors))), 
-  fun = sum, na.rm = F)
+  if (!is.null(mask)) predictors <- fast_crop(predictors, mask)
+  #layer_na <- terra::tapp(predictors, index = c(rep(1, terra::nlyr(predictors))), 
+   #                       fun = sum, na.rm = F)
   
-  
+  layer_na  <- predictors[[1]]
   if (method == "random") {
     
     # all the cells have the same probability to be selected
     
     message(sprintf("Selecting %i background point based on %s method.", n, method  ))
-
-    backgr <- terra::spatSample(layer_na,
-                            size = n, method="random", replace=FALSE, na.rm=T,
-               xy=TRUE, as.points=FALSE, values=F)
     
- 
+    backgr <- terra::spatSample(layer_na,
+                                size = n, method="random", replace=FALSE, na.rm=T,
+                                xy=TRUE, as.points=FALSE, values=F)
+    
+    
   } else if (method == "inclusion_buffer") {
-      obs <- obs %>% dplyr::select(dplyr::all_of(c(lon, lat))) %>% data.frame()
+    obs <- obs %>% dplyr::select(dplyr::all_of(c(lon, lat))) %>% data.frame()
     # projecting observations coordinates
     obs_points <- project_coords(obs, lon, lat, proj)
     
     if (is.null(dist_buffer)) {
-  
+      
       message("Buffer distance not provided. Using the 95% quantile 
       of the minimum distance between each point.")
       dist_buffer <- calculate_dist_buffer(obs)
       message(sprintf("Buffer distance: %s (unit of projection)", dist_buffer))
-  
+      
     }
     
     # Creating the buffer
@@ -72,7 +77,7 @@ create_background <- function(
     
     # densityRaster cells set to NA if NA in the layerSummarized
     density_bias <-terra::tapp(c(density_bias, layer_na), index = c(1, 1), fun = sum, na.rm = F)
-
+    
     message(sprintf("Selecting %i background point based on %s method.", n ,method  ))
     backgr <- terra::spatSample(density_bias,
                                 size = n, method="weighted", replace=FALSE, na.rm=T,
@@ -80,12 +85,12 @@ create_background <- function(
     
   } 
   
-  backgr <- bind_cols(id = 1:nrow(backgr),
+  backgr <- dplyr::bind_cols(id = 1:nrow(backgr),
                       scientific_name = species,
                       backgr %>% data.frame()) %>%
     setNames(c("id", "scientific_name", "lon", "lat"))
-
-
+  
+  
   
   return(backgr)
 }
