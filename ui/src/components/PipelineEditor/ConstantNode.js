@@ -5,8 +5,7 @@ export default function TextUpdaterNode({ id, data }) {
   return (
     <div className='constant'>
       <div>
-        <label htmlFor="text">Constant: </label>
-        <input id={id} name="text" onChange={data.onChange} defaultValue={data.value} />
+        <input id={id} placeholder='Constant' onChange={data.onChange} defaultValue={data.value} />
       </div>
       <Handle type="source" position={Position.Bottom} />
     </div>
