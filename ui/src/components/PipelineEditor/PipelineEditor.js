@@ -73,8 +73,11 @@ export function PipelineEditor(props) {
             onChange: onConstantValueChange
           }
           break;
+        case 'output':
+          data = { label: 'Output' }
+          break;
         default:
-          data = { label: `${type} node` }
+          throw "unknown node type"
       }
 
       const newNode = {
@@ -156,7 +159,18 @@ export function PipelineEditor(props) {
               <button onClick={onSave}>Save</button>
             </div>
             <Controls />
-            <MiniMap />
+            <MiniMap
+              nodeStrokeColor={(n) => {
+                if (n.type === 'constant') return '#0041d0';
+                if (n.type === 'output') return '#ff0072';
+                return 'black'
+              }}
+              nodeColor={(n) => {
+                if (n.type === 'constant') return '#0041d0';
+                if (n.type === 'output') return '#ff0072';
+                return '#ffffff';
+              }}
+            />
           </ReactFlow>
         </div>
       </ReactFlowProvider>

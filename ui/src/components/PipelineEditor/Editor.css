@@ -34,6 +34,22 @@ aside.scriptChooser .description {
     border-color: #ff0072;
 }
 
+.constant  {
+    color: black;
+    background-color: whitesmoke;
+    padding: 10px;
+    border-radius: 3px;
+    border: 2px solid #0041d0;
+}
+
+.constant label {
+    pointer-events: none;
+}
+
+.react-flow__node-output {
+    border: 2px solid #ff0072;
+}
+
 .reactflow-wrapper {
     flex-grow: 1;
     height: 100%;
