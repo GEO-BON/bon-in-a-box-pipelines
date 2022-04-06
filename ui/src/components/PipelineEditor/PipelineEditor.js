@@ -38,6 +38,8 @@ export function PipelineEditor(props) {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
+  const [toolTip, setToolTip] = useState(null);
+
   const inputFile = useRef(null) 
 
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
@@ -68,7 +70,10 @@ export function PipelineEditor(props) {
       let data;
       switch (type) {
         case 'io':
-          data = { descriptionFile: descriptionFile }
+          data = { 
+            descriptionFile: descriptionFile,
+            setToolTip: setToolTip
+           }
           break;
         case 'constant':
           data = {
@@ -167,6 +172,10 @@ export function PipelineEditor(props) {
             deleteKeyCode='Delete'
             fitView
           >
+            {toolTip && <div className="tooltip">
+              {toolTip}
+            </div>}
+            
             <div className="save__controls">
               <input type='file' id='file' ref={inputFile} accept="application/json"
                 onChange={onLoad} style={{ display: 'none' }} />
@@ -174,7 +183,9 @@ export function PipelineEditor(props) {
               <button disabled={true}>Load from server</button>
               <button onClick={onSave}>Save</button>
             </div>
+
             <Controls />
+
             <MiniMap
               nodeStrokeColor={(n) => {
                 if (n.type === 'constant') return '#0041d0';
