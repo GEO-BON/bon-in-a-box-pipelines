@@ -38,6 +38,8 @@ export function PipelineEditor(props) {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
 
+  const inputFile = useRef(null) 
+
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
   const onDragOver = useCallback((event) => {
@@ -119,23 +121,34 @@ export function PipelineEditor(props) {
     }
   }, [reactFlowInstance]);
 
-  // const onLoad = useCallback(() => {
-  //   const restoreFlow = async () => {
-  //     navigator.clipboard.readText().then(clipText => {
-  //       console.log(clipText)
-  //       const flow = JSON.parse(clipText);
+  const loadFromFileBtnClick = () => {
+    inputFile.current.click() // will call onLoad
+  }
 
-  //       if (flow) {
-  //         setNodes(flow.nodes || []);
-  //         setEdges(flow.edges || []);
-  //         // const { x = 0, y = 0, zoom = 1 } = flow.viewport;
-  //         // setViewport({ x, y, zoom });
-  //       }
-  //     });
-  //   };
+  const onLoad = (clickEvent) => {
+    clickEvent.stopPropagation()
+    clickEvent.preventDefault()
 
-  //   restoreFlow();
-  // }, [setNodes/*, setViewport*/]);
+    var file = clickEvent.target.files[0]
+    if (file) {
+      var fr = new FileReader();
+      fr.readAsText(file);
+      fr.onload = loadEvent => {
+        const flow = JSON.parse(loadEvent.target.result);
+        if (flow) {
+          setNodes(flow.nodes || []);
+          setEdges(flow.edges || []);
+        } else {
+          console.error("Error parsing flow")
+        }
+      }
+
+      // Now that it's done, reset the value of the input.
+      inputFile.current.value = ""
+    }
+  }
+
+
 
   return (
     <div className="dndflow">
@@ -155,7 +168,10 @@ export function PipelineEditor(props) {
             fitView
           >
             <div className="save__controls">
-              {/* <button onClick={onLoad}>Load from clipboard</button> */}
+              <input type='file' id='file' ref={inputFile} accept="application/json"
+                onChange={onLoad} style={{ display: 'none' }} />
+              <button onClick={loadFromFileBtnClick}>Load from file</button>
+              <button disabled={true}>Load from server</button>
               <button onClick={onSave}>Save</button>
             </div>
             <Controls />
