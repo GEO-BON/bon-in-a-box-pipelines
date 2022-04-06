@@ -16,25 +16,23 @@ library("ratlas")
 library("rgbif")
 
 # Load functions
-source("/scripts/loadObservations/funcLoadObservations.R")
-source("/scripts/utils/utils.R")
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadObservations/funcLoadObservations.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
 
-obs_gbif <- load_observations(species = "Glyptemys insculpta",
-           data_source = "gbif",
-           year_start = 1980,
-           year_end = 2020,
-           extent_wkt = NULL,
-           extent_shp = NULL,
-           proj_shp = NULL,
-           xmin = NA,
-           ymin = NA,
-           xmax = NA,
-           ymax = NA,
-           bbox = NULL,
-           limit = 1000)
 
-obs_atlas <- load_observations(species = "Glyptemys insculpta",
-           data_source = "atlas",
+## Receiving args
+args <- commandArgs(trailingOnly=TRUE)
+outputFolder <- args[1] # Arg 1 is always the output folder
+cat(args, sep = "\n")
+
+
+input <- fromJSON(file=file.path(outputFolder, "input.json"))
+print("Inputs: ")
+print(input)
+
+
+observations <- load_observations(species = input$species,
+           data_source = input$data_source,
            year_start = 1980,
            year_end = 2020,
            extent_wkt = NULL,
