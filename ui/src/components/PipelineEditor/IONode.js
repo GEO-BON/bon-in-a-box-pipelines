@@ -25,23 +25,26 @@ export default function IONode({ data }) {
     }
   }, [descriptionFileLocation])
 
-    return (metadata &&
+  return (metadata &&
     <table className='ioNode'><tbody>
       <tr>
         <td className='inputs'>
           {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
-            return <ScriptInput key={inputName} inputName={inputName} desc={desc} setToolTip={data.setToolTip} />
+            return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip}>
+              <Handle id={inputName} type="target" position={Position.Left} />
+              <span>{desc.label ? desc.label : inputName}</span>
+            </ScriptIO>
           })}
         </td>
         <td className='name'>
           {metadata.script}
         </td>
         <td className='outputs'>
-        {metadata.outputs && Object.entries(metadata.outputs).map(([key, desc]) => {
-            return <div key={key}>
-              <span>{desc.label ? desc.label : key}</span>
-              <Handle id={key} type="source" position={Position.Right} />
-            </div>
+          {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
+            return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip}>
+              <span>{desc.label ? desc.label : outputName}</span>
+              <Handle id={outputName} type="source" position={Position.Right} />
+            </ScriptIO>
           })}
         </td>
       </tr>
@@ -49,21 +52,20 @@ export default function IONode({ data }) {
   );
 }
 
-function ScriptInput(props) {
-  function setToolTip() {
-    props.setToolTip(<>
-      {props.desc.type && <>{props.desc.type} <br /></>}
-      {props.desc.description && <>{props.desc.description} <br /></>}
-      {props.desc.example && <>Example: {props.desc.example}</>}
+function ScriptIO({children, desc, setToolTip}) {
+  function onMouseEnter() {
+    setToolTip(<>
+      {desc.type && <>{desc.type} <br /></>}
+      {desc.description && <>{desc.description} <br /></>}
+      {desc.example && <>Example: {desc.example}</>}
     </>)
   }
 
-  function clearToolTip() {
-    props.setToolTip(null)
+  function onMouseLeave() {
+    setToolTip(null)
   }
 
-  return <div onMouseEnter={setToolTip} onMouseLeave={clearToolTip}>
-    <Handle id={props.inputName} type="target" position={Position.Left} />
-    <span>{props.desc.label ? props.desc.label : props.inputName}</span>
+  return <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+    {children}
   </div>
 }
