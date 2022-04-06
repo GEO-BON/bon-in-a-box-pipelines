@@ -1,0 +1,77 @@
+script: modFindCollinearPredictors.R
+inputs:
+  obs:
+    label: presence
+    description: path to presence data file
+    type: string
+    example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
+  obs_buffer:
+    label: buffer
+    description: buffer around presence points (used to create an extent for collinearity measurement). Unit depends on the projection system.
+    type: integer
+    example: 100000
+  bbox: 
+    label: bbox
+    description: bbox, used to create an extent for collinearity measurement. Should be in the same projection as "proj_to"
+    type: bbox
+    example: NULL
+  source:
+    label: source
+    description: type of source to load the predictors (either from tif, or from the stac catalogue)
+    type: string/accepted_values:"from_tif" or "from_cube"
+    example: "from_cube"
+  tif_folder:
+    label: tif_folder
+    description: path to predictors tif file
+    type: string
+    example: "mytiffolder/"
+   layers: 
+    label: layers
+    description: names of layers to select
+    type: vector
+    example: ["bio1", "bio2", "bio4"]
+  method: 
+    label: method
+    description: The correlation method to be used:"vif.cor", "vif.step", "pearson", "spearman"
+ or "kendall". "vif.cor" and "vif.step" use the Variance Inflation factor and the pearson correlation, more details
+ here https://www.rdocumentation.org/packages/usdm/versions/1.1-18/topics/vif. If your variables are skewed or have outliers 
+ (e.g. when working with precipitation variables) you should favour the Spearman or Kendall methods.
+    type: string/"vif.cor", "vif.step", "pearson", "spearman" or "kendall"
+    example: "vif.cor"
+  proj_to:
+    description: Projection 
+    type: string
+    example: "EPSG:6623"
+  spatial_res:
+    description: Projection 
+    type: integer
+    example: 1000
+  method_cor_vif :
+    description: Projection 
+    type: integer
+    example: "pearson" 
+  nb_sample :
+    description: Projection 
+    type: integer
+    example: 5000
+  cutoff_cor :
+    description: Projection 
+    type: float
+    example: 0.75
+  cutoff_vif :
+    description: Projection 
+    type: integer
+    example: 8
+
+outputs:
+  nc_predictors:
+     label: data
+     description: table with observations from GBIF
+     type: text/tab-separated-values
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+references:
+  - text: Rick Bonney, Expanding the Impact of Citizen Science, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
+    doi: 10.1093/biosci/biab041
+  - text: Ruiping Yang, Yongkui Qi, Li Yang, Tao Chen, Aixing Deng, Jun Zhang, Zhenwei Song, Baoming Ge, Rotation regimes lead to significant differences in soil macrofaunal biodiversity and trophic structure with the changed soil properties in a rice-based double cropping system, Geoderma, 405, (115424), (2022).
+    doi: 10.1016/j.geoderma.2021.115424
