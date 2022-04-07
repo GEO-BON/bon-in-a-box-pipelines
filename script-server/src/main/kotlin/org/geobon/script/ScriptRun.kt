@@ -158,7 +158,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 // Rewrite output file with error
                 resultFile.writeText(gson.toJson(outputs))
 
-                return results
+                return outputs
             }
         }
         return results
