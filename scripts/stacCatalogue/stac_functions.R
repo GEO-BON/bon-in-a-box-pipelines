@@ -72,6 +72,29 @@ points_to_bbox <- function(xy, buffer = 0, proj_from = NULL, proj_to = NULL) {
   bbox %>% sf::st_bbox()
 }
 
+
+shp_to_bbox <- function(shp, proj_from = NULL, proj_to = NULL) {
+  if(is.na(sf::st_crs(shp)) && is.null(proj_from)) {
+    stop("proj.fom is null and shapefile has no crs.")
+  }
+  
+  if(is.na(sf::st_crs(shp))) {
+    crs(shp) <- proj_from
+    shp <- shp %>% sf::st_set_crs(proj_from)
+  }
+  
+  if (!is.null(proj_to) ) {
+    shp <- shp %>%
+      sf::st_transform(crs = sp::CRS(proj_to))
+  }
+  
+  
+  bbox <- sf::st_bbox(shp, crs = proj)
+
+  bbox
+}
+
+
 #' Create a proxy data cube for current climate, 
 #' which loads data from a given image collection according to a data cube view based
 #' on a specific box coordinates or using a set of observations

@@ -38,7 +38,7 @@ presence <- read.table(file = input$obs, sep = '\t', header = TRUE)
 presence <- dplyr::rename(presence, scientific_name = scientificName)
 
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
-proj.from = "+proj=longlat +datum=WGS84", proj.to = input$proj_to, new.lon = "lon", new.lat = "lat") 
+proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
 mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj.from = input$proj_to)
 
