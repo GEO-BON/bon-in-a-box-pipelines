@@ -419,7 +419,6 @@ cube_to_raster <- function(cube, format = "raster") {
     stars::st_as_stars()
   
   # If not, names are concatenated with temp file names
-  names(cube.xy) <- names(cube)
   
   # We remove the temporal dimension
   cube.xy <- cube.xy|> abind::adrop(c(F,F,T))
@@ -434,6 +433,7 @@ cube_to_raster <- function(cube, format = "raster") {
     # Terra format
     cube.xy <- terra::rast(cube.xy)
   }
+  names(cube.xy) <- names(cube)
   
   cube.xy
   
