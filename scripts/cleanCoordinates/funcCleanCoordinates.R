@@ -81,10 +81,10 @@ clean_coordinates <- function(x,
   # If proj is not lon/lat, transform coordinates to lon/lat to ensure further tests
   
   x <- create_projection(x, lon, lat,
-                         proj.from = srs,
-                         proj.to = "EPSG:4326", 
-                         new.lon = "decimalLongitude",
-                         new.lat = "decimalLatitude")
+                         proj_from = srs,
+                         proj_to = "EPSG:4326", 
+                         new_lon = "decimalLongitude",
+                         new_lat = "decimalLatitude")
   
   # Run tests Validity, check if coordinates fit to lat/long system, this has
   # to be run all the time, as otherwise the other tests don't work

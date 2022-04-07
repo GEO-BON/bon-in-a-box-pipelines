@@ -24,27 +24,32 @@ predictors <- terra::crop(predictors, mask)
 
 
 #' @name create_projection
-#' @param predictors, a raster, either from raster or terra format
-#' @param mask, a vector file, either from raster or terra format
-#' @return the predictors raster cropped and masked by mask, in terra format
+#' @param lon string, name of the longitude column
+#' @param lat string, name of the latitude column
+#' @param proj_from character, initial projection of the xy coordinates
+#' @param proj_to character, target projection
+#' @param new_lon character, name of the new longitude column
+#' @param new_lat character, name of the new latitude column
+#' @return a dataframe with two columns in the proj_to projection
 #' @import dplyr
-create_projection <- function(obs, lon, lat, proj.from, 
- proj.to, new.lon = NULL, new.lat = NULL) {
+#' 
+create_projection <- function(obs, lon, lat, proj_from, 
+                              proj_to, new_lon = NULL, new_lat = NULL) {
   
-  if(is.null(new.lon)) {
-    new.lon <- lon
+  if(is.null(new_lon)) {
+    new_lon <- lon
   }
   
-  if(is.null(new.lat)) {
-    new.lat <- lat
+  if(is.null(new_lat)) {
+    new_lat <- lat
   }
   
-  new.coords <- project_coords(obs, lon, lat, proj.from, proj.to)
-  new.coords.df <- data.frame(new.coords)%>% 
-    setNames(c(new.lon, new.lat))
+  new.coords <- project_coords(obs, lon, lat, proj_from, proj_to)
+  new.coords.df <- data.frame(new.coords) %>% 
+    setNames(c(new_lon, new_lat))
   
   suppressWarnings(obs <- obs %>%
-                     dplyr::select(-one_of(c(new.lon, new.lat))) %>% dplyr::bind_cols(new.coords.df))
+                     dplyr::select(-one_of(c(new_lon, new_lat))) %>% dplyr::bind_cols(new.coords.df))
   
   return(obs)
 }
@@ -54,19 +59,19 @@ create_projection <- function(obs, lon, lat, proj.from,
 #' @param xy data frame, containing the coordinates to reproject
 #' @param lon string, name of the longitude column
 #' @param lat string, name of the latitude column
-#' @param proj.from character, initial projection of the xy coordinates
-#' @param proj.to character, target projection
+#' @param proj_from character, initial projection of the xy coordinates
+#' @param proj_to character, target projection
 #' @import sp dplyr
-#' @return spatial points in the proj.to projection
+#' @return spatial points in the proj_to projection
 
-project_coords <- function(xy, lon = "lon", lat = "lat", proj.from, proj.to = NULL) {
+project_coords <- function(xy, lon = "lon", lat = "lat", proj_from, proj_to = NULL) {
   xy <- dplyr::select(xy, dplyr::all_of(c(lon, lat)))
   sp::coordinates(xy) <-  c(lon, lat)
-  sp::proj4string(xy) <- sp::CRS(proj.from)
-
-  if (!is.null(proj.to)) {
-  xy <- sp::spTransform(xy, sp::CRS(proj.to)) 
-
+  sp::proj4string(xy) <- sp::CRS(proj_from)
+  
+  if (!is.null(proj_to)) {
+    xy <- sp::spTransform(xy, sp::CRS(proj_to)) 
+    
   }
   xy
 }
@@ -75,19 +80,19 @@ project_coords <- function(xy, lon = "lon", lat = "lat", proj.from, proj.to = NU
 #' @name points_to_bbox
 #' @param xy data frame, containing the coordinates to reproject
 #' @param buffer integer, buffer to add around the observations
-#' @param proj.from character, initial projection of the xy coordinates
-#' @param proj.to character, target projection 
+#' @param proj_from character, initial projection of the xy coordinates
+#' @param proj_to character, target projection 
 #' @return a box extent
-points_to_bbox <- function(xy, buffer = 0, proj.from = NULL, proj.to = NULL) {
+points_to_bbox <- function(xy, buffer = 0, proj_from = NULL, proj_to = NULL) {
   if (!inherits(xy, "SpatialPoints")) {
     sp::coordinates(xy) <- colnames(xy)
-    proj4string(xy) <- sp::CRS(proj.from)
+    proj4string(xy) <- sp::CRS(proj_from)
   }
   bbox <-  sf::st_buffer(sf::st_as_sfc(sf::st_bbox(xy)), dist =  buffer)
   
-  if (!is.null(proj.to) ) {
+  if (!is.null(proj_to) ) {
     bbox <- bbox  %>%
-      sf::st_transform(crs = sp::CRS(proj.to))
+      sf::st_transform(crs = sp::CRS(proj_to))
   }
   
   bbox %>% sf::st_bbox()
@@ -108,19 +113,19 @@ bbox_to_wkt <- function(xmin = NA, ymin = NA, xmax = NA, ymax = NA, bbox = NULL)
   )
 }
 
-shp_to_bbox <- function(shp, proj.from = NULL, proj.to = NULL) {
-  if(is.na(sf::st_crs(shp)) && is.null(proj.from)) {
+shp_to_bbox <- function(shp, proj_from = NULL, proj_to = NULL) {
+  if(is.na(sf::st_crs(shp)) && is.null(proj_from)) {
     stop("proj.fom is null and shapefile has no crs.")
   }
   
   if(is.na(sf::st_crs(shp))) {
-    crs(shp) <- proj.from
-    shp <- shp %>% sf::st_set_crs(proj.from)
+    crs(shp) <- proj_from
+    shp <- shp %>% sf::st_set_crs(proj_from)
   }
   
-  if (!is.null(proj.to) ) {
+  if (!is.null(proj_to) ) {
     shp <- shp %>%
-      sf::st_transform(crs = sp::CRS(proj.to))
+      sf::st_transform(crs = sp::CRS(proj_to))
   }
   
   
@@ -137,10 +142,10 @@ shp_to_bbox <- function(shp, proj.from = NULL, proj.to = NULL) {
 #' @param xy data frame, containing the coordinates to reproject
 #' @param lon string, name of the longitude column
 #' @param lat string, name of the latitude column
-#' @param proj.from character, initial projection of the xy coordinates
-#' @param proj.to character, target projection
+#' @param proj_from character, initial projection of the xy coordinates
+#' @param proj_to character, target projection
 #' @import ggplot2
-#' @return spatial points in the proj.to projection
+#' @return spatial points in the proj_to projection
 #' @export
 create_density_plots <- function(df, factors = NULL, export = T, path = "./density_plot.pdf") {
 
