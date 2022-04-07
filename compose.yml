@@ -10,6 +10,7 @@ services:
       - ./scripts:/scripts:ro
       - ./output:/output:rw
       - //var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/bin/docker
     expose:
       - '8080'
     environment:
