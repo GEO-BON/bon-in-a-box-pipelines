@@ -4,7 +4,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 abstract class Step(
-    private val inputs: Map<String, Pipe> = mapOf(),
+    protected val inputs: Map<String, Pipe> = mapOf(),
     val outputs: Map<String, Output> = mapOf()
 ) {
     init {
@@ -31,6 +31,16 @@ abstract class Step(
     }
 
     abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
+
+    open fun validateGraph():String {
+        var problems = validateStepInputs()
+        inputs.values.forEach { problems += it.validateGraph() }
+        return problems
+    }
+
+    open fun validateStepInputs(): String {
+        return ""
+    }
 
     open fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         // Not all steps have output folders. Default implementation just forwards to other steps.

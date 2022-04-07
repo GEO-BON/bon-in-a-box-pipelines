@@ -3,7 +3,7 @@ package org.geobon.pipeline
 class Output(override val type:String) : Pipe {
 
     var step: Step? = null
-    var value:Any? = null
+    var value: Any? = null
 
     override suspend fun pull(): Any {
         if(value == null) {
@@ -15,6 +15,11 @@ class Output(override val type:String) : Pipe {
 
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         step?.dumpOutputFolders(allOutputs)
+    }
+
+    override fun validateGraph(): String {
+        return step?.validateGraph()
+            ?: "Output has no associated step\n"
     }
 
     override fun toString(): String {

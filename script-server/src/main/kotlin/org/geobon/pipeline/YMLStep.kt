@@ -11,19 +11,23 @@ abstract class YMLStep(
     inputs: Map<String, Pipe> = mapOf()
 ) : Step(inputs, readOutputs(yamlParsed)) {
 
-    init {
+    override fun validateStepInputs(): String {
         val inputsFromYml = readInputs(yamlParsed)
 
-        assert(inputs.size == inputsFromYml.size) {
-            "Bad number of inputs\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
+        if(inputs.size != inputsFromYml.size) {
+            return "Bad number of inputs.\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
         }
 
         // Validate presence and type of each input
         inputsFromYml.forEach { (inputKey, expectedType) ->
             inputs[inputKey]?.let {
-                assert(it.type == expectedType) { "Wrong type \"${it.type}\" for $inputKey, \"$expectedType\" expected." }
-            } ?: throw AssertionError("Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}")
+                if(it.type != expectedType) {
+                    return "Wrong type \"${it.type}\" for $inputKey, \"$expectedType\" expected."
+                }
+            } ?: return "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
         }
+
+        return ""
     }
 
     companion object {

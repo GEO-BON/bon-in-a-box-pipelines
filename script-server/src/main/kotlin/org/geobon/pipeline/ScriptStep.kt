@@ -13,6 +13,13 @@ class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()
 
     constructor(fileName:String, inputs: Map<String, Pipe> = mapOf()) : this (File(scriptRoot, fileName), inputs)
 
+    override fun validateGraph(): String {
+        if(!yamlFile.exists())
+            return "Description file not found: ${yamlFile.path}"
+
+        return super.validateGraph()
+    }
+
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
         val scriptRun = ScriptRun(

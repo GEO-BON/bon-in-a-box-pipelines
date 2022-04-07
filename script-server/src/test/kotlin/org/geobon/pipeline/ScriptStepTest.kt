@@ -30,6 +30,7 @@ internal class ScriptStepTest {
     @Test
     fun givenNoInput_whenExecute_thenNoInputFileIsGenerated_andOutputIsThere() = runTest {
         val step = ScriptStep(File(scriptRoot, "0in1out.yml"))
+        assertTrue(step.validateGraph().isEmpty())
 
         step.execute()
 
@@ -46,6 +47,7 @@ internal class ScriptStepTest {
     fun given1In1Out_whenExecute_thenInputFileIsGenerated_andOutputIsThere() = runTest {
         val input = 234
         val step = ScriptStep(File(scriptRoot, "1in1out.yml"), mapOf("some_int" to ConstantPipe("int", input)))
+        assertTrue(step.validateGraph().isEmpty())
 
         step.execute()
 
@@ -63,6 +65,7 @@ internal class ScriptStepTest {
     @Test
     fun givenScriptInSubfolder_whenExecute_thenOutputInSubfolder() = runTest {
         val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"))
+        assertTrue(step.validateGraph().isEmpty())
 
         step.execute()
 
@@ -79,6 +82,7 @@ internal class ScriptStepTest {
     @Test
     fun givenScriptStepThatHasNotRun_whenGettingOutputFolder_thenEmptyStringIsReturned() {
         val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"))
+        assertTrue(step.validateGraph().isEmpty())
         val outputList = mutableMapOf<String, String>()
         step.dumpOutputFolders(outputList)
 
@@ -89,6 +93,7 @@ internal class ScriptStepTest {
     @Test
     fun givenScriptStepThatHasRun_whenGettingOutputFolder_thenGetOutputFolder() = runTest {
         val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"))
+        assertTrue(step.validateGraph().isEmpty())
         val outputList = mutableMapOf<String, String>()
 
         step.execute()
@@ -105,6 +110,7 @@ internal class ScriptStepTest {
     @Test
     fun givenScriptStepThatHasRun_whenOutputFileEmpty_thenThrowsAndOutputHasError() = runTest {
         val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), mapOf("some_int" to ConstantPipe("int", 123)))
+        assertTrue(step.validateGraph().isEmpty())
 
         try {
             step.execute()
