@@ -11,7 +11,7 @@ import org.geobon.pipeline.Step
  */
 class EchoStep(sound: String) :
     Step(
-        mapOf(SOUND to ConstantPipe("text/plain", sound)),
+        mutableMapOf(SOUND to ConstantPipe("text/plain", sound)),
         mapOf(
             KEY to Output("text/plain"),
             BAD_KEY to Output("text/plain")

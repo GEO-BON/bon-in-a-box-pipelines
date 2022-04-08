@@ -29,7 +29,7 @@ internal class StepTest {
 
     @Test
     fun givenNoInOneOut_whenExecuted_thenInputsAreCalledAndOutputReceivesValue() = runTest {
-        val step = ConcatenateStep(mapOf())
+        val step = ConcatenateStep(mutableMapOf())
         assertNull(step.outputs[ConcatenateStep.STRING]!!.value)
 
         step.execute()
@@ -43,7 +43,7 @@ internal class StepTest {
         coEvery { input1.pull() } returns "value1"
         val input2 = mockk<Pipe>()
         coEvery { input2.pull() } returns "value2"
-        val step = ConcatenateStep(mapOf("1" to input1, "2" to input2))
+        val step = ConcatenateStep(mutableMapOf("1" to input1, "2" to input2))
         assertNull(step.outputs[ConcatenateStep.STRING]!!.value)
 
         step.execute()
@@ -62,7 +62,7 @@ internal class StepTest {
     fun givenManyInputs_whenExecuted_thenInputsAreCalledInParallel() = runTest {
         val finishLine = mutableListOf<String>()
 
-        val step = ConcatenateStep(mapOf(
+        val step = ConcatenateStep(mutableMapOf(
             "1" to DelayPipe(finishLine, 2000, "!"),
             "2" to DelayPipe(finishLine, 500, " "),
             "3" to DelayPipe(finishLine, 1000, "world"),

@@ -46,7 +46,7 @@ internal class ScriptStepTest {
     @Test
     fun given1In1Out_whenExecute_thenInputFileIsGenerated_andOutputIsThere() = runTest {
         val input = 234
-        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), mapOf("some_int" to ConstantPipe("int", input)))
+        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), mutableMapOf("some_int" to ConstantPipe("int", input)))
         assertTrue(step.validateGraph().isEmpty())
 
         step.execute()
@@ -109,7 +109,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenScriptStepThatHasRun_whenOutputFileEmpty_thenThrowsAndOutputHasError() = runTest {
-        val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), mapOf("some_int" to ConstantPipe("int", 123)))
+        val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), mutableMapOf("some_int" to ConstantPipe("int", 123)))
         assertTrue(step.validateGraph().isEmpty())
 
         try {

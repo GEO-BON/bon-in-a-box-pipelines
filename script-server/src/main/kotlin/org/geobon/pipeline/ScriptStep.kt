@@ -6,12 +6,12 @@ import org.geobon.script.scriptRoot
 import java.io.File
 
 
-class ScriptStep(private val yamlFile: File, inputs: Map<String, Pipe> = mapOf()) :
+class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(yamlString = yamlFile.readText(), inputs = inputs) {
 
     var runId:String? = null
 
-    constructor(fileName:String, inputs: Map<String, Pipe> = mapOf()) : this (File(scriptRoot, fileName), inputs)
+    constructor(fileName:String, inputs: MutableMap<String, Pipe> = mutableMapOf()) : this (File(scriptRoot, fileName), inputs)
 
     override fun validateGraph(): String {
         if(!yamlFile.exists())
