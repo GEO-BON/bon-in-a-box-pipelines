@@ -125,9 +125,9 @@ fun Route.ScriptApi(logger:Logger) {
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 
         // Launch fake pipeline // TODO read from file
-        val step1 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to ConstantPipe("int", 12))) // 12
-        val step2 = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step1.outputs["increment"]!!)) // 13
-        val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mapOf("some_int" to step2.outputs["increment"]!!)) // 14
+        val step1 = ScriptStep("HelloWorld/HelloPython.yml", mutableMapOf("some_int" to ConstantPipe("int", 12))) // 12
+        val step2 = ScriptStep("HelloWorld/HelloPython.yml", mutableMapOf("some_int" to step1.outputs["increment"]!!)) // 13
+        val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 14
 
         launch {
             runningPipelines[runId] = finalStep

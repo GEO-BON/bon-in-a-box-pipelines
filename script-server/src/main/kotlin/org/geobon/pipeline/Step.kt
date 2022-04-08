@@ -4,7 +4,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
 abstract class Step(
-    protected val inputs: Map<String, Pipe> = mapOf(),
+    val inputs: MutableMap<String, Pipe> = mutableMapOf(),
     val outputs: Map<String, Output> = mapOf()
 ) {
     init {

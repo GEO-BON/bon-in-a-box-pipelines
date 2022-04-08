@@ -8,7 +8,7 @@ import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertNotNull
 
-private class ResourceYml(resourcePath: String, inputs: Map<String, Pipe> = mapOf()) :
+private class ResourceYml(resourcePath: String, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(yamlString = ResourceYml::class.java.classLoader.getResource(resourcePath)!!.readText(), inputs = inputs) {
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         throw Exception("this is in YMLStep, should not be tested")
@@ -37,7 +37,7 @@ internal class YMLStepTest {
         val badInput = mockk<Pipe>()
         every { badInput.type } returns "text/plain"
         every { badInput.validateGraph() } returns ""
-        step = ResourceYml("scripts/1in1out.yml", mapOf(
+        step = ResourceYml("scripts/1in1out.yml", mutableMapOf(
             "some_int" to correctInput,
             "oups" to badInput
         ))
@@ -50,7 +50,7 @@ internal class YMLStepTest {
         val badInput = mockk<Pipe>()
         every { badInput.type } returns "text/plain"
         every { badInput.validateGraph() } returns ""
-        val step = ResourceYml("scripts/1in1out.yml", mapOf("some_int" to badInput))
+        val step = ResourceYml("scripts/1in1out.yml", mutableMapOf("some_int" to badInput))
         assertFalse(step.validateGraph().isEmpty())
     }
 
@@ -59,7 +59,7 @@ internal class YMLStepTest {
         val typoInput = mockk<Pipe>()
         every { typoInput.type } returns "int"
         every { typoInput.validateGraph() } returns ""
-        val step = ResourceYml("scripts/1in1out.yml", mapOf("some_intt" to typoInput))
+        val step = ResourceYml("scripts/1in1out.yml", mutableMapOf("some_intt" to typoInput))
         assertFalse(step.validateGraph().isEmpty())
     }
 
@@ -68,7 +68,7 @@ internal class YMLStepTest {
         val correctInput = mockk<Pipe>()
         every { correctInput.type } returns "int"
         every { correctInput.validateGraph() } returns ""
-        val step = ResourceYml("scripts/1in1out.yml", mapOf("some_int" to correctInput))
+        val step = ResourceYml("scripts/1in1out.yml", mutableMapOf("some_int" to correctInput))
         assertTrue(step.validateGraph().isEmpty())
         assertNotNull(step.outputs["increment"])
         assertEquals("int", step.outputs["increment"]!!.type)
@@ -79,7 +79,7 @@ internal class YMLStepTest {
         val correctInput = mockk<Pipe>()
         every { correctInput.type } returns "int"
         every { correctInput.validateGraph() } returns ""
-        val step = ResourceYml("scripts/1in2out.yml", mapOf("some_int" to correctInput))
+        val step = ResourceYml("scripts/1in2out.yml", mutableMapOf("some_int" to correctInput))
 
         assertTrue(step.validateGraph().isEmpty())
         assertNotNull(step.outputs["increment"])

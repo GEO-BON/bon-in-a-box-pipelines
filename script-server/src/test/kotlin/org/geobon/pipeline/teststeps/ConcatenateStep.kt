@@ -8,7 +8,7 @@ import org.geobon.pipeline.Step
  * Dummy step for testing purpose: Concatenates all inputs
  */
 class ConcatenateStep(
-    inputs: Map<String, Pipe>
+    inputs: MutableMap<String, Pipe>
 ) : Step(inputs, mapOf(STRING to Output("text/plain"))) {
 
     companion object {

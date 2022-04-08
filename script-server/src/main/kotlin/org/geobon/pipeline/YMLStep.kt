@@ -8,7 +8,7 @@ import org.yaml.snakeyaml.Yaml
 abstract class YMLStep(
     yamlString: String = "",
     protected val yamlParsed: Map<String, Any> = Yaml().load(yamlString),
-    inputs: Map<String, Pipe> = mapOf()
+    inputs: MutableMap<String, Pipe> = mutableMapOf()
 ) : Step(inputs, readOutputs(yamlParsed)) {
 
     override fun validateStepInputs(): String {
