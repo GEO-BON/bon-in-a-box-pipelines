@@ -49,6 +49,7 @@ shadowJar {
 test {
     useJUnitPlatform()
     environment "SCRIPT_LOCATION", "${projectDir}/src/test/resources/scripts/"
+    environment "PIPELINES_LOCATION", "${projectDir}/src/test/resources/pipelines/"
     environment "OUTPUT_LOCATION", "${projectDir}/src/test/resources/outputs/"
 }
 
@@ -66,6 +67,9 @@ dependencies {
     implementation("io.ktor:ktor-metrics:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+
+    // https://mvnrepository.com/artifact/org.json/json
+    implementation group: 'org.json', name: 'json', version: '20220320'
 
     // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.30'
