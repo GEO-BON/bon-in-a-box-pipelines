@@ -30,7 +30,7 @@ abstract class Step(
         }
     }
 
-    abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
+    protected abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
 
     open fun validateGraph():String {
         var problems = validateStepInputs()

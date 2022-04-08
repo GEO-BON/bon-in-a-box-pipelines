@@ -1,0 +1,84 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "constant",
+      "position": {
+        "x": 286,
+        "y": 166.76666259765625
+      },
+      "data": {
+        "value": "19"
+      },
+      "positionAbsolute": {
+        "x": 286,
+        "y": 166.76666259765625
+      },
+      "z": 1000,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "bottom",
+            "x": 113.5,
+            "y": 41.5,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 235,
+      "height": 46,
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "1",
+      "type": "output",
+      "position": {
+        "x": 362.5,
+        "y": 281.8999938964844
+      },
+      "data": {
+        "label": "Output"
+      },
+      "positionAbsolute": {
+        "x": 362.5,
+        "y": 281.8999938964844
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": null,
+        "target": [
+          {
+            "id": null,
+            "position": "top",
+            "x": 71,
+            "y": -2,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 150,
+      "height": 38,
+      "selected": false,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_0-node_1"
+    }
+  ],
+  "viewport": {
+    "x": 65,
+    "y": -52.0333251953125,
+    "zoom": 2
+  }
+}
