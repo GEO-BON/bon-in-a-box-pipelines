@@ -30,7 +30,7 @@ const nodeTypes = {
 }
 
 let id = 0;
-const getId = () => `node_${id++}`;
+const getId = () => `${id++}`;
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
@@ -141,6 +141,14 @@ export function PipelineEditor(props) {
       fr.onload = loadEvent => {
         const flow = JSON.parse(loadEvent.target.result);
         if (flow) {
+          // Make sure next id doesn't overlap
+          id = 0
+          flow.nodes.forEach(node => {
+            id = Math.max(id, parseInt(node.id))
+          })
+          id++
+
+          // Load the graph
           setNodes(flow.nodes || []);
           setEdges(flow.edges || []);
         } else {
