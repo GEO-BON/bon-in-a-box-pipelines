@@ -4,10 +4,9 @@ import { Handle, Position } from 'react-flow-renderer/nocss';
 export default function TextUpdaterNode({ id, data }) {
   return (
     <div className='constant'>
-      <div>
-        <input id={id} placeholder='Constant' onChange={data.onChange} defaultValue={data.value} />
-      </div>
-      <Handle type="source" position={Position.Bottom} />
+      <label htmlFor={id}>{data.type} </label>
+      <input id={id} placeholder='Constant' onChange={data.onChange} defaultValue={data.value} />
+      <Handle type="source" position={Position.Right} />
     </div>
   );
 }

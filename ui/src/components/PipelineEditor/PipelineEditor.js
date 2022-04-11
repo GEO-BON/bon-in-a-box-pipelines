@@ -68,6 +68,41 @@ export function PipelineEditor(props) {
     );
   };
 
+  const injectConstant = useCallback((event, dataType, target, targetHandle) => {
+    event.preventDefault()
+console.log(event)
+    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
+
+    // Offset from pointer event to canvas
+    const position = reactFlowInstance.project({
+      x: event.clientX - reactFlowBounds.left,
+      y: event.clientY - reactFlowBounds.top,
+    })
+
+    // Approx offset so the node appears near the input.
+    position.x = position.x - 300
+    position.y = position.y - 25
+
+    const newNode = {
+      id: getId(),
+      type: 'constant',
+      position,
+      data: { 
+        onChange: onConstantValueChange,
+        type: dataType
+       },
+    }
+    setNodes((nds) => nds.concat(newNode))
+
+    const newEdge = {
+      source: newNode.id,
+      sourceHandle: null,
+      target: target,
+      targetHandle: targetHandle
+    }
+    setEdges((edgesList) => addEdge(newEdge, edgesList))
+  }, [reactFlowInstance])
+
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -91,13 +126,9 @@ export function PipelineEditor(props) {
         case 'io':
           data = { 
             descriptionFile: descriptionFile,
-            setToolTip: setToolTip
+            setToolTip: setToolTip,
+            injectConstant: injectConstant
            }
-          break;
-        case 'constant':
-          data = {
-            onChange: onConstantValueChange
-          }
           break;
         case 'output':
           data = { label: 'Output' }
@@ -115,7 +146,7 @@ export function PipelineEditor(props) {
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance, setNodes, onConstantValueChange]
+    [reactFlowInstance]
   )
 
   const onSave = useCallback(() => {
@@ -147,6 +178,10 @@ export function PipelineEditor(props) {
             id = Math.max(id, parseInt(node.id))
           })
           id++
+
+          // TODO: Load onConstantValue
+          // TODO: Load setToolTip
+          // TODO: Load injectConstant
 
           // Load the graph
           setNodes(flow.nodes || []);
