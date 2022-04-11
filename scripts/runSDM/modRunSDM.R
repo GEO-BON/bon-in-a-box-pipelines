@@ -18,8 +18,8 @@ library("ENMeval")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "runSDM/funcRunSDM.R", sep = "/"))
-source("/scripts/utils/utils.R")
-source("/scripts/utils/predictors_func.R")
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "stacCatalogue/stac_functions.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -54,10 +54,9 @@ predictors_nc <-
             aggregation = "mean",
             resampling = "near") 
 
-
-
 predictors_nc <- cube_to_raster(predictors_nc, format = "terra")
 predictors_nc <- fast_crop(predictors_nc, study_extent)
+
 presence.vals <- add_predictors(clean_presence, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 1)
 bg.vals <- add_predictors(clean_background, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 0)
 presence.bg.vals <- dplyr::bind_rows(presence.vals, bg.vals)
@@ -87,7 +86,6 @@ write.table(res_tuning, output_eval,
              append = F, row.names = F, col.names = T, sep = "\t")
 
 predictors_nc <- raster::stack(predictors_nc)
-
 pred_pres <- predict_maxent(mod_tuning,
                             algorithm = "maxent.jar",
                             param = tuned_param,
