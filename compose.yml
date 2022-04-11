@@ -8,12 +8,14 @@ services:
     container_name: biab-script-server
     volumes:
       - ./scripts:/scripts:ro
+      - ./pipelines:/pipelines:rw
       - ./output:/output:rw
       - /var/run/docker.sock:/var/run/docker.sock
     expose:
       - '8080'
     environment:
       - SCRIPT_LOCATION=/scripts
+      - PIPELINES_LOCATION=/pipelines
       - OUTPUT_LOCATION=/output
       - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
       - GBIF_USER=${GBIF_USER}
