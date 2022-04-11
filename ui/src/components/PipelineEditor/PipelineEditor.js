@@ -172,16 +172,22 @@ console.log(event)
       fr.onload = loadEvent => {
         const flow = JSON.parse(loadEvent.target.result);
         if (flow) {
-          // Make sure next id doesn't overlap
           id = 0
           flow.nodes.forEach(node => {
+            // Make sure next id doesn't overlap
             id = Math.max(id, parseInt(node.id))
+
+            switch (node.type) {
+              case 'io':
+                node.data.setToolTip = setToolTip
+                node.data.injectConstant = injectConstant
+                break;
+              case 'constant':
+                node.data.onChange = onConstantValueChange
+                break;
+            }
           })
           id++
-
-          // TODO: Load onConstantValue
-          // TODO: Load setToolTip
-          // TODO: Load injectConstant
 
           // Load the graph
           setNodes(flow.nodes || []);
