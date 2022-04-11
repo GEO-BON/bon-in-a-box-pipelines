@@ -80,8 +80,8 @@ console.log(event)
     })
 
     // Approx offset so the node appears near the input.
-    position.x = position.x - 300
-    position.y = position.y - 25
+    position.x = position.x - 350
+    position.y = position.y - 15
 
     const newNode = {
       id: getId(),
