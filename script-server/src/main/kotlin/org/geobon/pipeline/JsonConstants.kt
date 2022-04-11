@@ -9,6 +9,7 @@ const val NODE__TYPE_SCRIPT = "io"
 const val NODE__TYPE_OUTPUT = "output"
 const val NODE__DATA = "data"
 const val NODE__DATA__VALUE = "value"
+const val NODE__DATA__TYPE = "type"
 const val NODE__DATA__FILE = "descriptionFile"
 
 

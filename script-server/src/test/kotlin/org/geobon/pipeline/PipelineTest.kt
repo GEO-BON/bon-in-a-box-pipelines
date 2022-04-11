@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.assertContains
 
 @ExperimentalCoroutinesApi
 internal class PipelineTest {
@@ -32,31 +33,63 @@ internal class PipelineTest {
         val allOutputs = mutableMapOf<String, String>()
         pipeline.dumpOutputFolders(allOutputs)
 
-        assertEquals(2, allOutputs.size) // The constant and the script. Should we output the constant?
+        assertEquals(1, allOutputs.size)
         assertTrue(allOutputs.any { it.key.contains("HelloPython.yml") })
 
         pipeline.execute()
-        assertEquals(123456 + 1, pipeline.getPipelineOutputs()[0])
+        assertEquals(19 + 1.0, pipeline.getPipelineOutputs()[0].pull())
     }
 
     @Test
-    fun `given a no-script pipeline_when built and ran_then constant is there_execute is a no-op_output can be retrieved`() = runTest {
-        // TODO
+    fun `given a no-script pipeline_when built and ran_then constant is there_output can be retrieved`() = runTest {
+        val pipeline = Pipeline("0in1out_noStep.json")
+
+        val allOutputs = mutableMapOf<String, String>()
+        pipeline.dumpOutputFolders(allOutputs)
+
+        assertEquals(0, allOutputs.size)
+
+        pipeline.execute()
+        assertEquals(19, pipeline.getPipelineOutputs()[0].pull())
     }
 
     @Test
     fun `given a pipeline with outputs from many scripts_when ran_then all outputs satisfied_no step is duplicated in output dump`() = runTest {
-        // TODO
+        val pipeline = Pipeline("0in2out_twoBranches.json")
+
+        val allOutputs = mutableMapOf<String, String>()
+        pipeline.dumpOutputFolders(allOutputs)
+
+        assertEquals(4, allOutputs.size)
+
+        pipeline.execute()
+
+        with(listOf(pipeline.getPipelineOutputs()[0].pull(), pipeline.getPipelineOutputs()[1].pull())) {
+            assertContains(this, 21.0)
+            assertContains(this, 22.0)
+        }
     }
 
     @Test
     fun `given a pipeline with two disconnected pipelines_when ran_then both are run`() = runTest {
-        // TODO
+        val pipeline = Pipeline("0in2out_parallelPipelines.json")
+
+        val allOutputs = mutableMapOf<String, String>()
+        pipeline.dumpOutputFolders(allOutputs)
+
+        assertEquals(4, allOutputs.size)
+
+        pipeline.execute()
+
+        with(listOf(pipeline.getPipelineOutputs()[0].pull(), pipeline.getPipelineOutputs()[1].pull())) {
+            assertContains(this, 5.0)
+            assertContains(this, 22.0)
+        }
     }
 
 
 
     // TODO: test against infinite loops when using dumpOutputs (if already in map, do not pass it on!)
 
-    // TODO: With cache: Test that a script will not be ran again if already running. We should be able to listen to it, even it this is in *another* pipeline!
+    // TODO: With cache: Test that a script will not be ran again if already running. We should be able to listen to it, even if it this is in *another* pipeline!
 }

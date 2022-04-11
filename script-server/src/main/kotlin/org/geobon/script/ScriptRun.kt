@@ -43,6 +43,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     }
 
     suspend fun execute() {
+        // TODO Wait if already running
         results = getResult()
     }
 

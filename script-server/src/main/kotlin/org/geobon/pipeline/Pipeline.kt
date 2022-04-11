@@ -43,10 +43,10 @@ class Pipeline(descriptionFile: File) {
                         )
                     }
                     NODE__TYPE_CONSTANT -> {
-                        constants[id] = ConstantPipe(
-                            "", // TODO: Type? Need to fix constantpipe type, python crashes because int is seen as a string.
-                            node.getJSONObject(NODE__DATA)
-                                .getString(NODE__DATA__VALUE)
+                        val nodeData = node.getJSONObject(NODE__DATA)
+                        constants[id] = ConstantPipe.create(
+                            nodeData.getString(NODE__DATA__TYPE),
+                            nodeData.getString(NODE__DATA__VALUE)
                         )
                     }
                     NODE__TYPE_OUTPUT -> outputIds.add(id)
