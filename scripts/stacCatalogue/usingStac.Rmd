@@ -236,7 +236,6 @@ cube <-
 ```{r, warning=FALSE}
 get_info_collection(stac_path =
                                   "http://io.biodiversite-quebec.ca/stac/",
-                                limit = 5000,
                                 collections = c('chelsa-monthly'),
                                 bbox = NULL)
 
@@ -255,7 +254,7 @@ cube <-
            t1 = "2016-03-01",
            variable = "tasmax",
            spatial.res = 1000, # in meters
-           temporal.res = "P1M",
+           temporal.res = "P1Y",
            aggregation = "mean",
            resampling = "near") 
 
@@ -264,6 +263,48 @@ cube <-
 
 ```{r, warning=FALSE}
 plot(cube)
+```
+
+```{r, warning=FALSE}
+layers <- c("bio6", "bio13")
+
+cube <- 
+  load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
+           limit = 5000, 
+           collections = c("cop-dem-glo-90"), 
+           use.obs = T,
+           obs = obs.coords.proj,
+           buffer.box = 0,
+          layers = layers,
+           srs.cube = srs.cube,
+           t0 = "1981-01-01",
+           t1 = "1981-01-01",
+           spatial.res = 1000, # in meters
+           temporal.res = "P1Y",
+           aggregation = "mean",
+           resampling = "near") 
+```
+```{r, warning=FALSE}
+get_info_collection(stac_path =
+                                  "http://io.biodiversite-quebec.ca/stac/",
+                                collections = c('soilgrids'),
+                                bbox = NULL)
+
+cube <- 
+  load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
+           limit = 5000, 
+           collections = c("soilgrids"), 
+           use.obs = T,
+           obs = obs.coords.proj,
+           buffer.box = 0,
+          layers = "sand_0-5cm",
+          t0 = "2016-07-04T00:00:00Z",
+          t1= "2016-07-04T00:00:00Z",
+           srs.cube = srs.cube,
+           spatial.res = 1000, # in meters
+           temporal.res = "P1Y",
+           aggregation = "mean",
+           resampling = "near") 
 ```
 
 ### To continue: usefull ressources

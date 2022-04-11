@@ -59,7 +59,7 @@ load_predictors <- function(source = "from_cube",
   if (source == "from_tif") {
     
     if (!is.null(subset_layers)) {
-      files <- sprintf("%s%s.tif", predictors_dir, subset_layers) 
+      files <- sprintf("%s/%s.tif", predictors_dir, subset_layers) 
     } else {
       files <- list.files(predictors_dir, pattern = "*.tif$", full.names = TRUE)
       
