@@ -31,7 +31,7 @@ export default function IONode({ id, data }) {
     <tr>
       <td className='inputs'>
         {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
-          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip} onDoubleClick={(e)=>data.injectConstant(e, desc.type, id, inputName)}>
+          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip} onDoubleClick={(e)=>data.injectConstant(e, desc.type, desc.example, id, inputName)}>
             <Handle id={inputName} type="target" position={Position.Left} />
             <span>{desc.label ? desc.label : inputName}</span>
           </ScriptIO>
