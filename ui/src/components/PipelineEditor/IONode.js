@@ -25,31 +25,30 @@ export default function IONode({ data }) {
     }
   }, [descriptionFileLocation])
 
-  return (metadata &&
-    <table className='ioNode'><tbody>
-      <tr>
-        <td className='inputs'>
-          {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
-            return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip}>
-              <Handle id={inputName} type="target" position={Position.Left} />
-              <span>{desc.label ? desc.label : inputName}</span>
-            </ScriptIO>
-          })}
-        </td>
-        <td className='name'>
-          {metadata.script}
-        </td>
-        <td className='outputs'>
-          {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
-            return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip}>
-              <span>{desc.label ? desc.label : outputName}</span>
-              <Handle id={outputName} type="source" position={Position.Right} />
-            </ScriptIO>
-          })}
-        </td>
-      </tr>
-    </tbody></table>
-  );
+  if (!metadata) return null
+  return <table className='ioNode'><tbody>
+    <tr>
+      <td className='inputs'>
+        {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
+          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip}>
+            <Handle id={inputName} type="target" position={Position.Left} />
+            <span>{desc.label ? desc.label : inputName}</span>
+          </ScriptIO>
+        })}
+      </td>
+      <td className='name'>
+        {metadata.script}
+      </td>
+      <td className='outputs'>
+        {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
+          return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip}>
+            <span>{desc.label ? desc.label : outputName}</span>
+            <Handle id={outputName} type="source" position={Position.Right} />
+          </ScriptIO>
+        })}
+      </td>
+    </tr>
+  </tbody></table>
 }
 
 function ScriptIO({children, desc, setToolTip}) {
