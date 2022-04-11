@@ -11,13 +11,12 @@ inputs:
     example: "mytiffolder/"
   layers: 
     label: layers
-    description: layers (predictors)
+    description: list of layers names (predictors)
     type: vector
     example: ["bio1", "bio2", "bio4"]
   tests: 
     labels: cleaning_tests
-    description: tests to run from all tests available - capitals, centroids,
- equal, gbif, institutions, duplicates, urban, seas, zeros, env
+    description: tests to run from all tests available - capitals, centroids, equal, gbif, institutions, duplicates, urban, seas, zeros, env
     type: vector
     example: [ "equal",
                                "zeros", 
@@ -32,7 +31,6 @@ inputs:
                                "env"
                                
                              ]
-
   proj_to:
     label: projection
     description: Projection 

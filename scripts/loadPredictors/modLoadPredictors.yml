@@ -1,6 +1,6 @@
 script: modLoadPredictors.R
 inputs:
-  obs:
+  presence:
     label: presence
     description: path to presence data file
     type: string
@@ -12,33 +12,31 @@ inputs:
     example: 100000
   bbox: 
     label: bbox
-    description: bbox, used to create an extent for collinearity measurement. Should be in the same projection as "proj_to"
+    description: bbox, used to create an extent for collinearity measurement. Should be in the same projection as proj_to
     type: bbox
     example: NULL
   source:
     label: source
     description: type of source to load the predictors (either from tif, or from the stac catalogue)
-    type: string/accepted_values:"from_tif" or "from_cube"
+    type: string/accepted_values:"from_tif" or "from_cube" 
     example: "from_cube"
   tif_folder:
     label: tif_folder
     description: path to predictors tif file
     type: string
     example: "mytiffolder/"
-   layers: 
+  layers: 
     label: layers
     description: names of layers to select
     type: vector
     example: ["bio1", "bio2", "bio4"]
   method: 
     label: method
-    description: The correlation method to be used:"vif.cor", "vif.step", "pearson", "spearman"
- or "kendall". "vif.cor" and "vif.step" use the Variance Inflation factor and the pearson correlation, more details
- here https://www.rdocumentation.org/packages/usdm/versions/1.1-18/topics/vif. If your variables are skewed or have outliers 
- (e.g. when working with precipitation variables) you should favour the Spearman or Kendall methods.
-    type: string/"vif.cor", "vif.step", "pearson", "spearman" or "kendall"
+    description: 
+    type: string/vif.cor, vif.step, pearson, spearman or kendall
     example: "vif.cor"
   proj_to:
+    label: projection system
     description: Projection 
     type: string
     example: "EPSG:6623"
@@ -62,11 +60,10 @@ inputs:
     description: Projection 
     type: integer
     example: 8
-
 outputs:
   nc_predictors:
-     label: data
-     description: table with observations from GBIF
+     label: non collinear predictors
+     description: list of non collinear predictors
      type: text/tab-separated-values
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0

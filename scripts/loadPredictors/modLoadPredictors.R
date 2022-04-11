@@ -28,9 +28,9 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-if(!is.null(input$obs)) {
+if(!is.null(input$presence)) {
 
-presence <- read.table(file = input$obs, sep = '\t', header = TRUE) 
+presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
 proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
@@ -81,7 +81,7 @@ write.table(predictors_nc, output_nc_predictors,
 
 
   output <- list(
-                  "data" = predictors_nc
+                  "nc_predictors" = predictors_nc
                   ) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
