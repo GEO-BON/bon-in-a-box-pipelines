@@ -16,7 +16,7 @@ export function Layout(props) {
   useEffect(() => {
     let header = document.getElementsByTagName('header')[0];
     let nav = document.getElementsByTagName('nav')[0];
-    setMainHeight(windowHeight - header.offsetHeight - nav.offsetHeight)
+    setMainHeight(windowHeight - nav.offsetHeight)
   }, [windowHeight])
 
   return (
@@ -27,10 +27,6 @@ export function Layout(props) {
       </div>
 
       <div className='right-content'>
-        <header className="App-header">
-          <h1>BON in a Box v2 pre-pre alpha</h1>
-        </header>
-
         <nav>
           <NavLink to="/script-form">Single script run</NavLink>
           &nbsp;|&nbsp;
