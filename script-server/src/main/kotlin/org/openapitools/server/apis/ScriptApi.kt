@@ -12,10 +12,7 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.coroutines.launch
-import org.geobon.pipeline.ConstantPipe
-import org.geobon.pipeline.ScriptStep
-import org.geobon.pipeline.Step
-import org.geobon.pipeline.pipelinesRoot
+import org.geobon.pipeline.*
 import org.geobon.script.ScriptRun
 import org.geobon.script.outputRoot
 import org.geobon.script.scriptRoot
@@ -31,11 +28,11 @@ import java.io.File
  */
 const val FILE_SEPARATOR = '>'
 
-val runningPipelines = mutableMapOf<String, Step>()
+val runningPipelines = mutableMapOf<String, Pipeline>()
 
-private fun getLiveOutput(step: Step): Map<String, String> {
+private fun getLiveOutput(pipeline: Pipeline): Map<String, String> {
     val allOutputs = mutableMapOf<String, String>()
-    step.dumpOutputFolders(allOutputs)
+    pipeline.dumpOutputFolders(allOutputs)
     return allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
 }
 
@@ -98,7 +95,7 @@ fun Route.ScriptApi(logger:Logger) {
 
     get<Paths.getPipelineInfo> { parameters ->
         // TODO some real implementation
-        call.respondText("Currently, only a hard-coded pipeline is available.")
+        call.respondText("Currently, no metadata is available.")
         /*
         try {
             // Put back the slashes and replace extension by .yml
@@ -118,25 +115,21 @@ fun Route.ScriptApi(logger:Logger) {
         val descriptionPath = parameters.descriptionPath
         logger.info("Pipeline: $descriptionPath\nBody:$inputFileContent")
 
-        // Unique   to this pipeline                                        and to these params
-        val runId = descriptionPath.removeSuffix(".yml") + FILE_SEPARATOR + inputFileContent.toMD5()
+        // Unique   to this pipeline                                               and to these params
+        val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 
-        // Launch fake pipeline // TODO read from file
-        val step1 = ScriptStep("HelloWorld/HelloPython.yml", mutableMapOf("some_int" to ConstantPipe("int", 12))) // 12
-        val step2 = ScriptStep("HelloWorld/HelloPython.yml", mutableMapOf("some_int" to step1.outputs["increment"]!!)) // 13
-        val finalStep = ScriptStep("HelloWorld/HelloPython.yml", mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 14
-
         launch {
-            runningPipelines[runId] = finalStep
+            val pipeline = Pipeline(descriptionPath)
+            runningPipelines[runId] = pipeline
 
             try {
-                finalStep.outputs["increment"]!!.pull()
+                pipeline.execute()
             } catch (ex:Exception) {
                 logger.error(ex.stackTraceToString())
             } finally {  // Write the results file, adding "skipped" to steps that were not run.
                 val resultFile = File(outputFolder, "output.json")
-                val content = gson.toJson(getLiveOutput(finalStep).mapValues { (_, value) ->
+                val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
                     if (value == "") "skipped" else value
                 })
                 println("Outputting to $resultFile")
