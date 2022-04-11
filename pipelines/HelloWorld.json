@@ -1,0 +1,134 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "output",
+      "position": {
+        "x": 477.5,
+        "y": 197.89999389648438
+      },
+      "data": {
+        "label": "Output"
+      },
+      "positionAbsolute": {
+        "x": 477.5,
+        "y": 197.89999389648438
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": null,
+        "target": [
+          {
+            "id": null,
+            "position": "top",
+            "x": 71,
+            "y": -2,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 150,
+      "height": 39,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 224,
+        "y": 131.89999389648438
+      },
+      "data": {
+        "descriptionFile": "HelloWorld>HelloPython.yml"
+      },
+      "positionAbsolute": {
+        "x": 224,
+        "y": 131.89999389648438
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": "increment",
+            "position": "right",
+            "x": 282.3499755859375,
+            "y": 7,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": [
+          {
+            "id": "some_int",
+            "position": "left",
+            "x": -3,
+            "y": 7,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 287,
+      "height": 45,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "3",
+      "type": "constant",
+      "position": {
+        "x": -64.59370835690285,
+        "y": 117.29969161001281
+      },
+      "data": {
+        "type": "int",
+        "value": "19"
+      },
+      "positionAbsolute": {
+        "x": -64.59370835690285,
+        "y": 117.29969161001281
+      },
+      "z": 1000,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 254.36412061361654,
+            "y": 18.751094212672903,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 258,
+      "height": 46,
+      "selected": true,
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "2",
+      "sourceHandle": "increment",
+      "target": "1",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_2increment-node_1"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "some_int",
+      "id": "reactflow__edge-3-2some_int"
+    }
+  ],
+  "viewport": {
+    "x": 83.53382020291394,
+    "y": -22.78821770094251,
+    "zoom": 1.055049106517846
+  }
+}

@@ -15,6 +15,7 @@ import kotlinx.coroutines.launch
 import org.geobon.pipeline.ConstantPipe
 import org.geobon.pipeline.ScriptStep
 import org.geobon.pipeline.Step
+import org.geobon.pipeline.pipelinesRoot
 import org.geobon.script.ScriptRun
 import org.geobon.script.outputRoot
 import org.geobon.script.scriptRoot
@@ -83,19 +84,16 @@ fun Route.ScriptApi(logger:Logger) {
     }
 
     get<Paths.pipelineListGet> {
-        // TODO some real implementation
-        call.respond(listOf("hard-coded", "something else"))
-/*
         val possible = mutableListOf<String>()
-        val relPathIndex = scriptRoot.absolutePath.length + 1
-        scriptRoot.walkTopDown().forEach { file ->
-            if(file.extension == "yml") {
+        val relPathIndex = pipelinesRoot.absolutePath.length + 1
+        pipelinesRoot.walkTopDown().forEach { file ->
+            if(file.extension == "json") {
                 // Add the relative path, without the script root.
                 possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
             }
         }
 
-        call.respond(possible)*/
+        call.respond(possible)
     }
 
     get<Paths.getPipelineInfo> { parameters ->

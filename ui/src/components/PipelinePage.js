@@ -71,7 +71,7 @@ export function PipelinePage(props) {
 function PipelineForm(props) {
   const formRef = useRef(null);
 
-  const defaultPipeline = "hard-coded";
+  const defaultPipeline = "HelloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {
