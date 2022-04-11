@@ -8,6 +8,7 @@
         "y": 93.76666259765625
       },
       "data": {
+        "type": "int",
         "value": "19"
       },
       "positionAbsolute": {
@@ -275,6 +276,7 @@
         "y": 224.6065132286244
       },
       "data": {
+        "type": "int",
         "value": "4"
       },
       "positionAbsolute": {
