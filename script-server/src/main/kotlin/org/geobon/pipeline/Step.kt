@@ -7,6 +7,8 @@ abstract class Step(
     val inputs: MutableMap<String, Pipe> = mutableMapOf(),
     val outputs: Map<String, Output> = mapOf()
 ) {
+    private var validated = false
+
     init {
         outputs.values.forEach { it.step = this }
     }
@@ -33,7 +35,12 @@ abstract class Step(
     protected abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
 
     open fun validateGraph():String {
+        if(validated)
+            return "" // This avoids validating many times the same node in complex graphs
+
         var problems = validateStepInputs()
+        validated = true
+
         inputs.values.forEach { problems += it.validateGraph() }
         return problems
     }
