@@ -40,7 +40,11 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
      */
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         val relPath = yamlFile.relativeTo(scriptRoot).path
-        allOutputs["$relPath@${hashCode()}"] = runId ?: ""
-        super.dumpOutputFolders(allOutputs)
+        val previousValue = allOutputs.put("$relPath@${hashCode()}", runId ?: "")
+
+        // Pass it on only if not already been there (avoids duplication for more complex graphs)
+        if(previousValue == null) {
+            super.dumpOutputFolders(allOutputs)
+        }
     }
 }
