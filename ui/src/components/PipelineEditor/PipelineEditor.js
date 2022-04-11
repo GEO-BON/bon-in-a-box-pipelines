@@ -49,6 +49,25 @@ export function PipelineEditor(props) {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
+  const onConstantValueChange = (event) => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        if(node.id !== event.target.id) {
+          return node;
+        }
+
+        const value = event.target.value;
+        return {
+          ...node,
+          data: {
+            ...node.data,
+            value,
+          },
+        };
+      })
+    );
+  };
+
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -84,7 +103,7 @@ export function PipelineEditor(props) {
           data = { label: 'Output' }
           break;
         default:
-          throw "unknown node type"
+          throw Error("unknown node type")
       }
 
       const newNode = {
@@ -96,27 +115,8 @@ export function PipelineEditor(props) {
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance]
-  );
-
-  const onConstantValueChange = (event) => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if(node.id != event.target.id) {
-          return node;
-        }
-
-        const value = event.target.value;
-        return {
-          ...node,
-          data: {
-            ...node.data,
-            value,
-          },
-        };
-      })
-    );
-  };
+    [reactFlowInstance, setNodes, onConstantValueChange]
+  )
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
