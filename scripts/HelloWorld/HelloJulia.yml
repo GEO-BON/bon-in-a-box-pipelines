@@ -2,7 +2,7 @@ script: HelloJulia.jl
 inputs:
 outputs:
   number:
-    label: A number (input*3)
+    label: A number
     description: bla bla
     type: int
     example: 9
