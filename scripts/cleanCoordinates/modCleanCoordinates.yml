@@ -11,7 +11,7 @@ inputs:
     example: "mytiffolder/"
   layers: 
     label: layers
-    description: layers (predictors)
+    description: list of layers names (predictors)
     type: vector
     example: ["bio1", "bio2", "bio4"]
   tests: 
