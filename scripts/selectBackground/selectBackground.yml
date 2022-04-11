@@ -1,38 +1,49 @@
 script: selectBackground.R
 inputs:
   study_extent:
-    description: Occurrence data, some description here
+    label: study_extent
+    description: Path to a .shp file representing the extent to sample the background points from.
     type: string
     example: "/output/studyExtent/studyExtent_R/a0f5047b6fd1ca648d2714e9ac1819d9/study_extent.shp"
   proj_to:
-    description: Projection 
+    label: projection
+    description: projection of study_extent
     type: string
     example: "EPSG:6623"
   method_background: 
-    description: Occurrence data, some description here
-    type: vector
+    label: method_background
+    description: method used to sample background points
+    type: string/accepted_values "random", "inclusion_buffer"
     example: "random"
   n_background: 
-    description: Occurrence data, some description here
+    label: number of background points
+    description: number of background points
     type: numeric
     example: 10000
   species: 
-    description: Occurrence data, some description here
-    type: numeric
+    label: species
+    description: scientific name of the species
+    type: string
     example: "Panthera onca"
-  layers :
-    description: Projection 
-    type: integer
-    example: ["bio1", "bio2", "bio4"]  
+  layers: 
+    label: layers
+    description: list of layers names (predictors)
+    type: vector
+    example: ["bio1", "bio2", "bio4"]
+  spatial_res :
+    label: spatial resolution
+    description: spatial resolution, only used if predictors are loaded from a stac catalogue. 
+    type: integer or float
+    example: 1000  
 outputs:
-  n.background:
-    label: n.observations
-    description: We can add plain text
+  n_background:
+    label: n_background_clean
+    description: Number of background points selected and cleaned
     type: int
-    example: 8
-  data:
-    label: data
-    description: We can add plain text
+    example: 20000
+  clean_background:
+    label: clean background points
+    description: Clean background points
     type: text/tab-separated-value
     example:
 description: "This sample script shows how it works."

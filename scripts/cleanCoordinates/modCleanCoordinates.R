@@ -21,8 +21,8 @@ library("gdalcubes")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "cleanCoordinates/funcCleanCoordinates.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/predictors_func.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "stacCatalogue/stac_functions.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -40,7 +40,7 @@ presence <- dplyr::rename(presence, scientific_name = scientificName)
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
 proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
-mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj.from = input$proj_to)
+mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
 
 # layers
 if (file.exists(input$layers)) {
@@ -49,7 +49,7 @@ layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
   } else {
     layers <- input$layers
   }
- print(mask)
+
 predictors_nc <- load_predictors(source = "from_cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 

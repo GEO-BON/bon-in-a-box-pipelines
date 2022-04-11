@@ -1,7 +1,3 @@
-#
-
-
-
 #' Create a proxy data cube for current climate, 
 #' which loads data from a given image collection according to a data cube view based
 #' on a specific box coordinates or using a set of observations

@@ -18,9 +18,9 @@ library("ENMeval")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "runSDM/funcRunSDM.R", sep = "/"))
-source("/scripts/utils/utils.R")
-source("/scripts/utils/predictors_func.R")
-
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "stacCatalogue/stac_functions.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
@@ -38,13 +38,22 @@ study_extent <- sf::st_read(input$study_extent)
 
 bbox <- sf::st_bbox(study_extent, crs = input$proj_to)
 
+# layers
+if (file.exists(input$layers)) {
+
+layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
+
+  } else {
+    layers <- input$layers
+  }
+
 predictors_nc <- 
   load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
             collections = c("chelsa-clim"), 
             use.obs = F,
             buffer.box = 0,
-            layers = input$layers,
+            layers = layers,
             bbox = bbox,
             srs.cube = input$proj_to,
             t0 = "1981-01-01",
@@ -54,10 +63,9 @@ predictors_nc <-
             aggregation = "mean",
             resampling = "near") 
 
-
-
 predictors_nc <- cube_to_raster(predictors_nc, format = "terra")
 predictors_nc <- fast_crop(predictors_nc, study_extent)
+
 presence.vals <- add_predictors(clean_presence, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 1)
 bg.vals <- add_predictors(clean_background, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 0)
 presence.bg.vals <- dplyr::bind_rows(presence.vals, bg.vals)
@@ -87,7 +95,6 @@ write.table(res_tuning, output_eval,
              append = F, row.names = F, col.names = T, sep = "\t")
 
 predictors_nc <- raster::stack(predictors_nc)
-
 pred_pres <- predict_maxent(mod_tuning,
                             algorithm = "maxent.jar",
                             param = tuned_param,

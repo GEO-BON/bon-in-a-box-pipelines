@@ -1,0 +1,8 @@
+JUPYTERHUB_API_TOKEN=9f51ecc8297649a98dacfaeaabb5d369
+DASK_GATEWAY__AUTH__TYPE=jupyterhub
+DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE=mcr.microsoft.com/planetary-computer/python:latest
+DASK_GATEWAY__ADDRESS=https://pccompute.westeurope.cloudapp.azure.com/compute/services/dask-gateway
+DASK_GATEWAY__PROXY_ADDRESS=gateway://pccompute-dask.westeurope.cloudapp.azure.com:80
+GBIF_USER=geobon
+GBIF_PWD=Mr1QK6VHcX
+GBIF_EMAIL=web@geobon.org

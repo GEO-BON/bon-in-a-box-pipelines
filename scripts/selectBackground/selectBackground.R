@@ -36,12 +36,12 @@ predictors_nc <-
             collections = c("chelsa-clim"), 
             use.obs = F,
             buffer.box = 0,
-            layers = input$layers[1],
+            layers = input$layers,
             bbox = bbox,
             srs.cube = input$proj_to,
             t0 = "1981-01-01",
             t1 = "1981-01-01",
-            spatial.res = 1000, # in meters
+            spatial.res = input$spatial_res, # in meters
             temporal.res = "P1Y",
             aggregation = "mean",
             resampling = "near") 
@@ -63,8 +63,8 @@ write.table(background, background.data,
 
 
   output <- list(
-                  "n.background" =  nrow(background),
-                  "data"= background.data
+                  "n_background" =  nrow(background),
+                  "clean_background"= background.data
                   
                   ) 
 
