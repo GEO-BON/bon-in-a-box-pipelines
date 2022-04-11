@@ -4,7 +4,7 @@ import {React, useState, useEffect} from 'react';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 
-export default () => {
+export default function ScriptChooser() {
   const api = new BonInABoxScriptService.DefaultApi();
   const [scriptFiles, setScriptFiles] = useState([]);
 
@@ -31,9 +31,6 @@ export default () => {
 
   return (
     <aside className='scriptChooser'>
-      <div className="dndnode input" onDragStart={(event) => onDragStart(event, 'constant')} draggable>
-        Constant value
-      </div>
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
         Pipeline output
       </div>

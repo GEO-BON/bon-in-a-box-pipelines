@@ -7,7 +7,7 @@ const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
 
 // props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
-export default function IONode({ data }) {
+export default function IONode({ id, data }) {
   const [descriptionFileLocation] = useState(data.descriptionFile);
   const [metadata, setMetadata] = useState(null);
 
@@ -25,12 +25,13 @@ export default function IONode({ data }) {
     }
   }, [descriptionFileLocation])
 
+
   if (!metadata) return null
   return <table className='ioNode'><tbody>
     <tr>
       <td className='inputs'>
         {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
-          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip}>
+          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip} onDoubleClick={(e)=>data.injectConstant(e, desc.type, id, inputName)}>
             <Handle id={inputName} type="target" position={Position.Left} />
             <span>{desc.label ? desc.label : inputName}</span>
           </ScriptIO>
@@ -51,7 +52,7 @@ export default function IONode({ data }) {
   </tbody></table>
 }
 
-function ScriptIO({children, desc, setToolTip}) {
+function ScriptIO({children, desc, setToolTip, onDoubleClick}) {
   function onMouseEnter() {
     setToolTip(<>
       {desc.type && <>{desc.type} <br /></>}
@@ -64,7 +65,7 @@ function ScriptIO({children, desc, setToolTip}) {
     setToolTip(null)
   }
 
-  return <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave}>
+  return <div onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} onDoubleClick={onDoubleClick}>
     {children}
   </div>
 }
