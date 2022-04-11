@@ -87,9 +87,5 @@ internal class PipelineTest {
         }
     }
 
-
-
-    // TODO: test against infinite loops when using dumpOutputs (if already in map, do not pass it on!)
-
     // TODO: With cache: Test that a script will not be ran again if already running. We should be able to listen to it, even if it this is in *another* pipeline!
 }
