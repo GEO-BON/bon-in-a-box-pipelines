@@ -1,26 +1,36 @@
 script: studyExtent.R
 inputs:
-  obs:
-    description: Occurrence data, some description here
+  presence:
+    label: presence points
+    description: path to presence points dataframe
     type: string
     example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
   proj_to:
+    label: projection system
     description: Projection 
     type: string
     example: "EPSG:6623"
   method: 
-    description: Occurrence data, some description here
-    type: vector
+    label: study extent method
+    description: Method to create the study extent.
+    type: string/accepted value "box", "mcp", "buffer"
     example: "mcp"
   dist_buffer :
-    description: Projection 
+    label: buffer length
+    description: buffer length (applied around the box, mcp or points depending on the method used) 
     type: integer
     example: null  
 outputs:
   area_study_extent:
-    description: Projection 
-    type: integer
-    example: null  
+    label: study extent area
+    description: Area of the study extent 
+    type: float
+    example: 100.52
+  study_extent:
+    label: study extent 
+    description: Study extent 
+    type: polygone
+    example: 100.52 
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:

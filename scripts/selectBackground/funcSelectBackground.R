@@ -12,10 +12,10 @@ create_background <- function(
   species = NULL,
   mask = NULL,
   method = "random",
-  lon = "lon",
-  lat = "lat",
   n = 10000,  
   obs = NULL,
+  lon = "lon",
+  lat = "lat",
   density_bias = NULL,
   dist_buffer = NULL) {
   

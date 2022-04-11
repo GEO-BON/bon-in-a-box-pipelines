@@ -1,6 +1,6 @@
 script: modLoadPredictors.R
 inputs:
-  obs:
+  presence:
     label: presence
     description: path to presence data file
     type: string
@@ -36,6 +36,7 @@ inputs:
     type: string/vif.cor, vif.step, pearson, spearman or kendall
     example: "vif.cor"
   proj_to:
+    label: projection system
     description: Projection 
     type: string
     example: "EPSG:6623"
@@ -61,8 +62,8 @@ inputs:
     example: 8
 outputs:
   nc_predictors:
-     label: data
-     description: table with observations from GBIF
+     label: non collinear predictors
+     description: list of non collinear predictors
      type: text/tab-separated-values
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0

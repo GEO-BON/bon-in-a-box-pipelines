@@ -15,7 +15,7 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-presence <- read.table(file = input$obs, sep = '\t', header = TRUE) 
+presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
 
 if (is.numeric(input$dist_buffer)) {
 dist_buffer <- input$dist_buffer
@@ -36,9 +36,8 @@ study_extent_shp <- file.path(outputFolder, "study_extent.shp")
 sf::st_write(study_extent, study_extent_shp, append = FALSE  )
 
 
-output <- list(
-                  "area_study_extent" = sf::st_area(study_extent) / 1000000
-                  ) 
+output <- list( "area_study_extent" = sf::st_area(study_extent) / 1000000,
+    "study_extent" = study_extent_shp ) 
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
 

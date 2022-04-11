@@ -49,7 +49,7 @@ layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
   } else {
     layers <- input$layers
   }
- print(mask)
+
 predictors_nc <- load_predictors(source = "from_cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
