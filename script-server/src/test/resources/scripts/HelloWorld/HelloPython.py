@@ -7,12 +7,6 @@ data = json.load(inputFile)
 intIn = data['some_int']
 
 # Do stuff.
-print("Ready?", flush=True)
-time.sleep(2)
-print("Set", flush=True)
-time.sleep(2)
-print("Go!", flush=True)
-
 if intIn == 13 :
   print("some_int == 13, you're not lucky! This causes failure.")
   sys.exit(1)
