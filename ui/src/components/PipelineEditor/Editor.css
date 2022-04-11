@@ -44,7 +44,7 @@ aside.scriptChooser .description {
 .constant  {
     color: black;
     background-color: whitesmoke;
-    padding: 0px 10px;
+    padding: 1px 10px;
     border-radius: 3px;
     border: 2px solid #0041d0;
 }
