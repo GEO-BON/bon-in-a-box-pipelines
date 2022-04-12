@@ -1,32 +1,23 @@
 script: loadGbif.R
 inputs:
   species:
-    label:
-    description: Occurrence data, some description here
+    label: species names
+    description: scientific name of the species
     type: string
     example: "Panthera onca"
   limit:
-    description: Occurrence data, some description here
+    label: limit
+    description: maximum number of observations to load
     type: int
     example: 5000
 outputs:
-  n.observations:
-    label: n.observations
-    description: We can add plain text
+  n_presence:
+    label: number of presence points
+    description: number of presence points
     type: int
     example: 8
-  species:
-    label: species
-    description: We can add plain text
-    type: string
-    example: "Panthera onca"
-  warning:
-     label: warning
-     description: We can add plain text
-     type: string
-     example: "Some warning"
-  data:
-     label: data
+  presence:
+     label: presence
      description: table with observations from GBIF
      type: text/tab-separated-values
      example: 

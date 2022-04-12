@@ -46,10 +46,9 @@ write.table(data, obs.data,
              append = F, row.names = F, col.names = T, sep = "\t")
 
 
-  output <- list("species" = input$species,
-                  "n.observations" =  nrow(data),
-                  "warning" = warning,
-                  "data" = obs.data
+  output <- list(
+                  "n_presence" =  nrow(data),
+                  "presence" = obs.data
                   ) 
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
