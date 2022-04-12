@@ -34,7 +34,7 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-presence <- read.table(file = input$obs, sep = '\t', header = TRUE) 
+presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
 presence <- dplyr::rename(presence, scientific_name = scientificName)
 
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
