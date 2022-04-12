@@ -1,6 +1,6 @@
 script: modCleanCoordinates.R
 inputs:
-  obs:
+  presence:
     description: Occurrence data, some description here
     type: string
     example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
