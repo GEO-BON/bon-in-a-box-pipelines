@@ -1,18 +1,18 @@
 {
   "nodes": [
     {
-      "id": "node_1",
+      "id": "0",
       "type": "io",
       "position": {
-        "x": 377.7578125,
-        "y": 57.171875
+        "x": 707,
+        "y": 470
       },
       "data": {
         "descriptionFile": "loadGbif>loadGbif.yml"
       },
       "positionAbsolute": {
-        "x": 377.7578125,
-        "y": 57.171875
+        "x": 707,
+        "y": 470
       },
       "z": 0,
       "handleBounds": {
@@ -20,16 +20,16 @@
           {
             "id": "n_presence",
             "position": "right",
-            "x": 304.1875,
-            "y": 8,
+            "x": 311.8333740234375,
+            "y": 7,
             "width": 8,
             "height": 8
           },
           {
             "id": "presence",
             "position": "right",
-            "x": 304.1875,
-            "y": 23,
+            "x": 311.8333740234375,
+            "y": 21,
             "width": 8,
             "height": 8
           }
@@ -39,7 +39,7 @@
             "id": "species",
             "position": "left",
             "x": -3,
-            "y": 8,
+            "y": 7,
             "width": 8,
             "height": 8
           },
@@ -47,95 +47,94 @@
             "id": "limit",
             "position": "left",
             "x": -3,
-            "y": 23,
+            "y": 21,
             "width": 8,
             "height": 8
           }
         ]
       },
       "width": 317,
-      "height": 45,
-      "selected": false,
-      "dragging": false
+      "height": 45
     },
     {
-      "id": "node_3",
+      "id": "1",
       "type": "constant",
       "position": {
-        "x": 322.906548381315,
-        "y": -25.704306033281746
+        "x": 358.5,
+        "y": 467.25
       },
       "data": {
+        "type": "string",
         "value": "Panthera onca"
       },
       "positionAbsolute": {
-        "x": 322.906548381315,
-        "y": -25.704306033281746
+        "x": 358.5,
+        "y": 467.25
       },
       "z": 0,
       "handleBounds": {
         "source": [
           {
             "id": null,
-            "position": "bottom",
-            "x": 96.50000465451222,
-            "y": 42.99999272696426,
+            "position": "right",
+            "x": 276.933349609375,
+            "y": 10,
             "width": 8,
             "height": 8
           }
         ],
         "target": null
       },
-      "width": 235,
-      "height": 28,
-      "selected": false
+      "width": 281,
+      "height": 28
     },
     {
-      "id": "node_4",
+      "id": "2",
       "type": "constant",
       "position": {
-        "x": 129.17426297441511,
-        "y": 104.91849637046869
+        "x": 386.5,
+        "y": 549.75
       },
       "data": {
-        "value": "\"1000\""
+        "type": "int",
+        "value": "1000"
       },
       "positionAbsolute": {
-        "x": 129.17426297441511,
-        "y": 104.91849637046869
+        "x": 386.5,
+        "y": 549.75
       },
       "z": 1000,
       "handleBounds": {
         "source": [
           {
             "id": null,
-            "position": "bottom",
-            "x": 96.50000465451222,
-            "y": 42.99999272696426,
+            "position": "right",
+            "x": 254.36666870117188,
+            "y": 10,
             "width": 8,
             "height": 8
           }
         ],
         "target": null
       },
-      "width": 235,
+      "width": 258,
       "height": 28,
       "selected": true,
       "dragging": false
     },
     {
-      "id": "node_0",
+      "id": "3",
       "type": "output",
       "position": {
-        "x": 772.0974083344875,
-        "y": 133.24891254741033
+        "x": 1210,
+        "y": 454.75
       },
       "data": {
         "label": "Output"
       },
       "positionAbsolute": {
-        "x": 772.0974083344875,
-        "y": 133.24891254741033
+        "x": 1210,
+        "y": 454.75
       },
       "z": 0,
       "handleBounds": {
@@ -144,8 +143,8 @@
           {
             "id": null,
             "position": "top",
-            "x": 70.99999139738392,
-            "y": -2.0000029697738824,
+            "x": 71,
+            "y": -2,
             "width": 8,
             "height": 8
           }
@@ -155,18 +154,18 @@
       "height": 39
     },
     {
-      "id": "node_2",
+      "id": "4",
       "type": "output",
       "position": {
-        "x": 876.7599593930994,
-        "y": -4.106592477762104
+        "x": 1245.4140794203886,
+        "y": 561.860081152386
       },
       "data": {
         "label": "Output"
       },
       "positionAbsolute": {
-        "x": 876.7599593930994,
-        "y": -4.106592477762104
+        "x": 1245.4140794203886,
+        "y": 561.860081152386
       },
       "z": 0,
       "handleBounds": {
@@ -175,8 +174,8 @@
           {
             "id": null,
             "position": "top",
-            "x": 70.99999036876477,
-            "y": -1.9999881038898955,
+            "x": 70.9977749311494,
+            "y": -1.9948500272249414,
             "width": 8,
             "height": 8
           }
@@ -188,37 +187,37 @@
   ],
   "edges": [
     {
-      "source": "node_3",
+      "source": "1",
       "sourceHandle": null,
-      "target": "node_1",
+      "target": "0",
       "targetHandle": "species",
-      "id": "reactflow__edge-node_3-node_1species"
+      "id": "reactflow__edge-1-0species"
     },
     {
-      "source": "node_4",
+      "source": "2",
       "sourceHandle": null,
-      "target": "node_1",
+      "target": "0",
       "targetHandle": "limit",
-      "id": "reactflow__edge-node_4-node_1limit"
+      "id": "reactflow__edge-2-0limit"
     },
     {
-      "source": "node_1",
-      "sourceHandle": "presence",
-      "target": "node_0",
-      "targetHandle": null,
-      "id": "reactflow__edge-node_1presence-node_0"
-    },
-    {
-      "source": "node_1",
+      "source": "0",
       "sourceHandle": "n_presence",
-      "target": "node_2",
+      "target": "3",
       "targetHandle": null,
-      "id": "reactflow__edge-node_1n_presence-node_2"
+      "id": "reactflow__edge-0n_presence-3"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "presence",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-0presence-4"
     }
   ],
   "viewport": {
-    "x": -124.98968420517201,
-    "y": 349.8543576888881,
-    "zoom": 1.4827654854788148
+    "x": -203.38389985264553,
+    "y": -128.4451389163405,
+    "zoom": 1.24487423538217
   }
 }
