@@ -1,0 +1,224 @@
+{
+  "nodes": [
+    {
+      "id": "node_1",
+      "type": "io",
+      "position": {
+        "x": 377.7578125,
+        "y": 57.171875
+      },
+      "data": {
+        "descriptionFile": "loadGbif>loadGbif.yml"
+      },
+      "positionAbsolute": {
+        "x": 377.7578125,
+        "y": 57.171875
+      },
+      "z": 1000,
+      "handleBounds": {
+        "source": [
+          {
+            "id": "n_presence",
+            "position": "right",
+            "x": 304.1875,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "presence",
+            "position": "right",
+            "x": 304.1875,
+            "y": 23,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": [
+          {
+            "id": "species",
+            "position": "left",
+            "x": -3,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "limit",
+            "position": "left",
+            "x": -3,
+            "y": 23,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 309,
+      "height": 47,
+      "selected": true,
+      "dragging": false
+    },
+    {
+      "id": "node_3",
+      "type": "constant",
+      "position": {
+        "x": 322.906548381315,
+        "y": -25.704306033281746
+      },
+      "data": {
+        "value": "Panthera onca"
+      },
+      "positionAbsolute": {
+        "x": 322.906548381315,
+        "y": -25.704306033281746
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "bottom",
+            "x": 96.50000465451222,
+            "y": 42.99999272696426,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 201,
+      "height": 47,
+      "selected": false
+    },
+    {
+      "id": "node_4",
+      "type": "constant",
+      "position": {
+        "x": 129.17426297441511,
+        "y": 104.91849637046869
+      },
+      "data": {
+        "value": "1000"
+      },
+      "positionAbsolute": {
+        "x": 129.17426297441511,
+        "y": 104.91849637046869
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "bottom",
+            "x": 96.50000465451222,
+            "y": 42.99999272696426,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 201,
+      "height": 47,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "node_0",
+      "type": "output",
+      "position": {
+        "x": 772.0974083344875,
+        "y": 133.24891254741033
+      },
+      "data": {
+        "label": "Output"
+      },
+      "positionAbsolute": {
+        "x": 772.0974083344875,
+        "y": 133.24891254741033
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": null,
+        "target": [
+          {
+            "id": null,
+            "position": "top",
+            "x": 70.99999139738392,
+            "y": -2.0000029697738824,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 150,
+      "height": 40
+    },
+    {
+      "id": "node_2",
+      "type": "output",
+      "position": {
+        "x": 876.7599593930994,
+        "y": -4.106592477762104
+      },
+      "data": {
+        "label": "Output"
+      },
+      "positionAbsolute": {
+        "x": 876.7599593930994,
+        "y": -4.106592477762104
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": null,
+        "target": [
+          {
+            "id": null,
+            "position": "top",
+            "x": 70.99999036876477,
+            "y": -1.9999881038898955,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 150,
+      "height": 40
+    }
+  ],
+  "edges": [
+    {
+      "source": "node_3",
+      "sourceHandle": null,
+      "target": "node_1",
+      "targetHandle": "species",
+      "id": "reactflow__edge-node_3-node_1species"
+    },
+    {
+      "source": "node_4",
+      "sourceHandle": null,
+      "target": "node_1",
+      "targetHandle": "limit",
+      "id": "reactflow__edge-node_4-node_1limit"
+    },
+    {
+      "source": "node_1",
+      "sourceHandle": "presence",
+      "target": "node_0",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_1presence-node_0"
+    },
+    {
+      "source": "node_1",
+      "sourceHandle": "n_presence",
+      "target": "node_2",
+      "targetHandle": null,
+      "id": "reactflow__edge-node_1n_presence-node_2"
+    }
+  ],
+  "viewport": {
+    "x": -183.16390931639353,
+    "y": 244.57094043052695,
+    "zoom": 1.5450451567815155
+  }
+}
