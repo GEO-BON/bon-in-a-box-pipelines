@@ -42,15 +42,15 @@ inputs:
     example: "EPSG:6623"
   spatial_res:
     description: Projection 
-    type: integer
+    type: int
     example: 1000
   method_cor_vif :
     description: Projection 
-    type: integer
+    type: int
     example: "pearson" 
   nb_sample :
     description: Projection 
-    type: integer
+    type: int
     example: 5000
   cutoff_cor :
     description: Projection 
@@ -58,7 +58,7 @@ inputs:
     example: 0.75
   cutoff_vif :
     description: Projection 
-    type: integer
+    type: int
     example: 8
 outputs:
   nc_predictors:
