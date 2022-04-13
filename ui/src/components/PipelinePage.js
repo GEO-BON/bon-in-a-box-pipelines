@@ -6,6 +6,7 @@ import { InputFileWithExample } from './InputFileWithExample';
 import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
 
 import { useInterval } from '../UseInterval';
+import { isVisible } from '../utils/IsVisible';
 
 import spinnerImg from '../img/spinner.svg';
 import errorImg from '../img/error.svg';
@@ -183,7 +184,10 @@ function PipelineResults(props) {
 function DelayedResult(props) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
+
   const [logs, setLogs] = useState("")
+  const [logsAutoScroll, setLogsAutoScroll] = useState(true)
+  const logsEndRef = useRef()
 
   const script = props.id.substring(0, props.id.indexOf('@'))
 
@@ -217,7 +221,7 @@ function DelayedResult(props) {
       });
 
     // Fetch the logs
-    // TODO: Don't fetch if log section is folded.
+    // TODO: Don't fetch if section is folded.
     let start = new Blob([logs]).size
     fetch("output/" + props.folder + "/logs.txt", {
       headers: { 'range': `bytes=${start}-` },
@@ -233,7 +237,12 @@ function DelayedResult(props) {
       })
       .then(responseText => {
         if(responseText) {
-          console.log("logs:" + responseText)
+
+          if(logsEndRef.current) {
+            let visible = isVisible(logsEndRef.current, logsEndRef.current.parentNode)
+            setLogsAutoScroll(visible)
+          }
+
           setLogs(logs + responseText);
         }
       })
@@ -252,6 +261,13 @@ function DelayedResult(props) {
 
     api.getScriptInfo(script, callback);
   }, [script]);
+
+  // Logs auto-scrolling
+  useEffect(() => {
+    if(logsAutoScroll && logsEndRef.current) {
+      logsEndRef.current.scrollIntoView({ block: 'end' })
+    }
+  }, [logs])
 
   let content, inline = null;
   let className = "foldableScriptResult"
@@ -279,7 +295,9 @@ function DelayedResult(props) {
     <FoldableOutput title={script} componentId={props.id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
-      <pre>{logs}</pre>
+      {props.folder &&
+          <pre className='logs'>{logs}<span ref={logsEndRef}/></pre>
+      }
     </FoldableOutput>
   )
 }
