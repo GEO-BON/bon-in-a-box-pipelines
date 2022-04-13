@@ -97,7 +97,7 @@ class Pipeline(descriptionFile: File) {
             val message = it.validateGraph()
             if(message != "") {
                 logger.warn(message)
-                throw Exception("Pipeline validation failed.")
+                throw Exception("Pipeline validation failed: $message")
             }
         }
     }

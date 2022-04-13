@@ -105,10 +105,10 @@ function PipelineForm(props) {
   const runScript = () => {
     clearPreviousRequest()
 
-    var callback = function (error, data /*, response*/) {
+    var callback = function (error, data , response) {
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
-        props.setHttpError(error.toString());
+        props.setHttpError(error.toString() + '\n' + response.text);
 
       } else if (data) {
         props.setRunId(data);

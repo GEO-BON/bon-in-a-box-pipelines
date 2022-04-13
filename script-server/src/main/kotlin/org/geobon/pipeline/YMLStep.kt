@@ -22,7 +22,7 @@ abstract class YMLStep(
         inputsFromYml.forEach { (inputKey, expectedType) ->
             inputs[inputKey]?.let {
                 if(it.type != expectedType) {
-                    return "Wrong type \"${it.type}\" for $inputKey, \"$expectedType\" expected."
+                    return "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected."
                 }
             } ?: return "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
         }

@@ -39,7 +39,7 @@ private fun getLiveOutput(pipeline: Pipeline): Map<String, String> {
 private val gson = Gson()
 
 @KtorExperimentalLocationsAPI
-fun Route.ScriptApi(logger:Logger) {
+fun Route.ScriptApi(logger: Logger) {
 
     get<Paths.getScriptInfo> { parameters ->
         try {
@@ -48,8 +48,8 @@ fun Route.ScriptApi(logger:Logger) {
             val scriptFile = File(scriptRoot, ymlPath)
             call.respondText(scriptFile.readText())
             logger.trace("200: Paths.getScriptInfo $scriptFile")
-        } catch (ex:Exception) {
-            call.respondText(text=ex.message!!, status=HttpStatusCode.NotFound)
+        } catch (ex: Exception) {
+            call.respondText(text = ex.message!!, status = HttpStatusCode.NotFound)
             logger.trace("Error 404: Paths.getScriptInfo ${parameters.scriptPath}")
         }
     }
@@ -61,22 +61,24 @@ fun Route.ScriptApi(logger:Logger) {
         val scriptRelPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/')
         val run = ScriptRun(File(scriptRoot, scriptRelPath), inputFileContent)
         run.execute()
-        call.respond(HttpStatusCode.OK, ScriptRunResult(
-            run.logFile.readText(),
-            run.results
-        ))
+        call.respond(
+            HttpStatusCode.OK, ScriptRunResult(
+                run.logFile.readText(),
+                run.results
+            )
+        )
     }
 
     get<Paths.scriptListGet> {
         val possible = mutableListOf<String>()
         val relPathIndex = scriptRoot.absolutePath.length + 1
         scriptRoot.walkTopDown().forEach { file ->
-            if(file.extension == "yml") {
+            if (file.extension == "yml") {
                 // Add the relative path, without the script root.
                 possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
             }
         }
-        
+
         call.respond(possible)
     }
 
@@ -84,7 +86,7 @@ fun Route.ScriptApi(logger:Logger) {
         val possible = mutableListOf<String>()
         val relPathIndex = pipelinesRoot.absolutePath.length + 1
         pipelinesRoot.walkTopDown().forEach { file ->
-            if(file.extension == "json") {
+            if (file.extension == "json") {
                 // Add the relative path, without the script root.
                 possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
             }
@@ -119,34 +121,37 @@ fun Route.ScriptApi(logger:Logger) {
         val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 
-        launch {
+        try {
             val pipeline = Pipeline(descriptionPath)
             runningPipelines[runId] = pipeline
+            call.respondText(runId)
 
-            try {
-                pipeline.execute()
-            } catch (ex:Exception) {
-                logger.error(ex.stackTraceToString())
-            } finally {  // Write the results file, adding "skipped" to steps that were not run.
-                val resultFile = File(outputFolder, "output.json")
-                val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
-                    if (value == "") "skipped" else value
-                })
-                println("Outputting to $resultFile")
+            launch {
+                try {
+                    pipeline.execute()
+                } catch (ex: Exception) {
+                    logger.error(ex.stackTraceToString())
+                } finally {  // Write the results file, adding "skipped" to steps that were not run.
+                    val resultFile = File(outputFolder, "output.json")
+                    val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
+                        if (value == "") "skipped" else value
+                    })
+                    println("Outputting to $resultFile")
 
-                outputFolder.mkdirs()
-                resultFile.writeText(content)
+                    outputFolder.mkdirs()
+                    resultFile.writeText(content)
+                }
+
+                runningPipelines.remove(runId)
             }
-
-            runningPipelines.remove(runId)
+        } catch (e: Exception) {
+            call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
         }
-
-        call.respondText(runId)
     }
 
     get<Paths.getPipelineOutputs> { parameters ->
         val finalStep = runningPipelines[parameters.id]
-        if(finalStep == null) {
+        if (finalStep == null) {
             val outputFolder = File(outputRoot, parameters.id.replace(FILE_SEPARATOR, '/'))
             val outputFile = File(outputFolder, "output.json")
             val type = object : TypeToken<Map<String, Any>>() {}.type
