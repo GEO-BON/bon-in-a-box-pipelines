@@ -18,7 +18,7 @@ inputs:
   dist_buffer :
     label: buffer length
     description: buffer length (applied around the box, mcp or points depending on the method used) 
-    type: integer
+    type: int
     example: null  
 outputs:
   area_study_extent:
