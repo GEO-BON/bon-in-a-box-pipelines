@@ -48,7 +48,7 @@ class Pipeline(descriptionFile: File) {
                         constants[id] = when (type) {
                             "int" -> ConstantPipe(type, nodeData.getInt(NODE__DATA__VALUE))
                             "float" -> ConstantPipe(type, nodeData.getFloat(NODE__DATA__VALUE))
-                            else -> ConstantPipe(type, nodeData.getString(NODE__DATA__VALUE))
+                            else -> ConstantPipe(type, nodeData.optString(NODE__DATA__VALUE))
                         }
                     }
                     NODE__TYPE_OUTPUT -> outputIds.add(id)
