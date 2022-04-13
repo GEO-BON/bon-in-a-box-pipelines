@@ -10,6 +10,8 @@ The left pane shows the available steps, the right pane shows the canvas.
 
 **To add a constant value:** double-click on any input to add a constant value linked to this input.
 
+**To delete a step or a pipe:** select it and pres the Delete yek on your keyboard.
+
 
 ## Pipeline inputs and outputs
 Any **input** with no constant value assigned will be considered a pipeline input and user will have to fill the value.
