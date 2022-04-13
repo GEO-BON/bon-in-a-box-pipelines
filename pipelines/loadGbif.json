@@ -1,18 +1,18 @@
 {
   "nodes": [
     {
-      "id": "node_1",
+      "id": "0",
       "type": "io",
       "position": {
-        "x": 377.7578125,
-        "y": 57.171875
+        "x": 707,
+        "y": 470
       },
       "data": {
         "descriptionFile": "loadGbif>loadGbif.yml"
       },
       "positionAbsolute": {
-        "x": 377.7578125,
-        "y": 57.171875
+        "x": 707,
+        "y": 470
       },
       "z": 0,
       "handleBounds": {
@@ -20,16 +20,16 @@
           {
             "id": "n_presence",
             "position": "right",
-            "x": 304.1875,
-            "y": 8,
+            "x": 311.8333740234375,
+            "y": 7,
             "width": 8,
             "height": 8
           },
           {
             "id": "presence",
             "position": "right",
-            "x": 304.1875,
-            "y": 23,
+            "x": 311.8333740234375,
+            "y": 21,
             "width": 8,
             "height": 8
           }
@@ -39,7 +39,7 @@
             "id": "species",
             "position": "left",
             "x": -3,
-            "y": 8,
+            "y": 7,
             "width": 8,
             "height": 8
           },
@@ -47,126 +47,539 @@
             "id": "limit",
             "position": "left",
             "x": -3,
-            "y": 23,
+            "y": 21,
             "width": 8,
             "height": 8
           }
         ]
       },
-      "width": 317,
-      "height": 45,
+      "width": 309,
+      "height": 47
+    },
+    {
+      "id": "1",
+      "type": "constant",
+      "position": {
+        "x": 358.5,
+        "y": 467.25
+      },
+      "data": {
+        "type": "string",
+        "value": "Panthera onca"
+      },
+      "positionAbsolute": {
+        "x": 358.5,
+        "y": 467.25
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 276.933349609375,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "2",
+      "type": "constant",
+      "position": {
+        "x": 386.5,
+        "y": 549.75
+      },
+      "data": {
+        "type": "int",
+        "value": "1000"
+      },
+      "positionAbsolute": {
+        "x": 386.5,
+        "y": 549.75
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 254.36666870117188,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 217,
+      "height": 30,
       "selected": false,
       "dragging": false
     },
     {
-      "id": "node_3",
-      "type": "constant",
+      "id": "4",
+      "type": "output",
       "position": {
-        "x": 322.906548381315,
-        "y": -25.704306033281746
+        "x": 1245.4140794203886,
+        "y": 561.860081152386
       },
       "data": {
-        "value": "Panthera onca"
+        "label": "Output"
       },
       "positionAbsolute": {
-        "x": 322.906548381315,
-        "y": -25.704306033281746
+        "x": 1245.4140794203886,
+        "y": 561.860081152386
       },
       "z": 0,
       "handleBounds": {
-        "source": [
+        "source": null,
+        "target": [
           {
             "id": null,
-            "position": "bottom",
-            "x": 96.50000465451222,
-            "y": 42.99999272696426,
+            "position": "top",
+            "x": 70.9977749311494,
+            "y": -1.9948500272249414,
             "width": 8,
             "height": 8
           }
-        ],
-        "target": null
+        ]
       },
-      "width": 235,
-      "height": 28,
+      "width": 150,
+      "height": 40,
       "selected": false
     },
     {
-      "id": "node_4",
-      "type": "constant",
+      "id": "6",
+      "type": "io",
       "position": {
-        "x": 129.17426297441511,
-        "y": 104.91849637046869
+        "x": 921.1218986484699,
+        "y": 810.3627383161102
       },
       "data": {
-        "value": "\"1000\""
+        "descriptionFile": "loadPredictors>modLoadPredictors.yml"
       },
       "positionAbsolute": {
-        "x": 129.17426297441511,
-        "y": 104.91849637046869
+        "x": 921.1218986484699,
+        "y": 810.3627383161102
       },
-      "z": 1000,
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": "nc_predictors",
+            "position": "right",
+            "x": 382.04164090859007,
+            "y": 7.999981706085918,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": [
+          {
+            "id": "presence",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 7.999981706085918,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "obs_buffer",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 22.66667343410719,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "bbox",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 37.33328702853234,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "source",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 51.99993968975556,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "tif_folder",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 66.66663141777683,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "layers",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 81.33328407900004,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "method",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 96.00001487381937,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "proj_to",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 110.66666753504258,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "spatial_res",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 125.33332019626579,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "method_cor_vif",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 140.00001192428707,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "nb_sample",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 154.6666645855103,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "cutoff_cor",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 169.3333172467335,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "cutoff_vif",
+            "position": "left",
+            "x": -3.000017556531006,
+            "y": 184.00000897475476,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 387,
+      "height": 207,
+      "selected": false
+    },
+    {
+      "id": "7",
+      "type": "constant",
+      "position": {
+        "x": 333.12189864846994,
+        "y": 654.9690760616872
+      },
+      "data": {
+        "type": "string/accepted_values:\"from_tif\" or \"from_cube\"",
+        "value": "from_cube"
+      },
+      "positionAbsolute": {
+        "x": 333.12189864846994,
+        "y": 654.9690760616872
+      },
+      "z": 0,
       "handleBounds": {
         "source": [
           {
             "id": null,
-            "position": "bottom",
-            "x": 96.50000465451222,
-            "y": 42.99999272696426,
+            "position": "right",
+            "x": 536.7083445608984,
+            "y": 10.833379368896162,
             "width": 8,
             "height": 8
           }
         ],
         "target": null
       },
-      "width": 235,
-      "height": 28,
-      "selected": true,
+      "width": 541,
+      "height": 30,
+      "selected": false,
       "dragging": false
     },
     {
-      "id": "node_0",
-      "type": "output",
+      "id": "8",
+      "type": "constant",
       "position": {
-        "x": 772.0974083344875,
-        "y": 133.24891254741033
+        "x": 564.4020394872605,
+        "y": 860.1321745150806
       },
       "data": {
-        "label": "Output"
+        "type": "vector",
+        "value": [
+          "bio1",
+          "bio2",
+          "bio4"
+        ]
       },
       "positionAbsolute": {
-        "x": 772.0974083344875,
-        "y": 133.24891254741033
+        "x": 564.4020394872605,
+        "y": 860.1321745150806
       },
       "z": 0,
       "handleBounds": {
-        "source": null,
-        "target": [
+        "source": [
           {
             "id": null,
-            "position": "top",
-            "x": 70.99999139738392,
-            "y": -2.0000029697738824,
+            "position": "right",
+            "x": 238.1666714184472,
+            "y": 10.833301235300045,
             "width": 8,
             "height": 8
           }
-        ]
+        ],
+        "target": null
       },
-      "width": 150,
-      "height": 39
+      "width": 242,
+      "height": 30,
+      "selected": false,
+      "dragging": false
     },
     {
-      "id": "node_2",
+      "id": "9",
+      "type": "constant",
+      "position": {
+        "x": 604.5616169708887,
+        "y": 810.6854142531316
+      },
+      "data": {
+        "type": "integer",
+        "value": "0"
+      },
+      "positionAbsolute": {
+        "x": 604.5616169708887,
+        "y": 810.6854142531316
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 244.45830111222008,
+            "y": 10.833301235300045,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 249,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "10",
+      "type": "constant",
+      "position": {
+        "x": 309.40556045702556,
+        "y": 914.054146258149
+      },
+      "data": {
+        "type": "string/vif.cor, vif.step, pearson, spearman or kendall",
+        "value": "vif.cor"
+      },
+      "positionAbsolute": {
+        "x": 309.40556045702556,
+        "y": 914.054146258149
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 556.97924660405,
+            "y": 10.833301235300045,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 561,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "11",
+      "type": "constant",
+      "position": {
+        "x": 534.2424620036323,
+        "y": 966.4158363236362
+      },
+      "data": {
+        "type": "string",
+        "value": "EPSG:6623"
+      },
+      "positionAbsolute": {
+        "x": 534.2424620036323,
+        "y": 966.4158363236362
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.51040978812458,
+            "y": 10.833340302098103,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "12",
+      "type": "constant",
+      "position": {
+        "x": 561.9623211648417,
+        "y": 1024.497385550333
+      },
+      "data": {
+        "type": "integer",
+        "value": 1000
+      },
+      "positionAbsolute": {
+        "x": 561.9623211648417,
+        "y": 1024.497385550333
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 244.45830111222008,
+            "y": 10.833340302098103,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 249,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "13",
+      "type": "constant",
+      "position": {
+        "x": 562.4020394872605,
+        "y": 1087.660484003726
+      },
+      "data": {
+        "type": "integer",
+        "value": 5000
+      },
+      "positionAbsolute": {
+        "x": 562.4020394872605,
+        "y": 1087.660484003726
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 244.45830111222008,
+            "y": 10.833379368896162,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 249,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 644.2424620036323,
+        "y": 1118.7420332304227
+      },
+      "data": {
+        "type": "float",
+        "value": 0.75
+      },
+      "positionAbsolute": {
+        "x": 644.2424620036323,
+        "y": 1118.7420332304227
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 226.20840266624612,
+            "y": 10.833301235300045,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 230,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "15",
       "type": "output",
       "position": {
-        "x": 876.7599593930994,
-        "y": -4.106592477762104
+        "x": 1388.37330480704,
+        "y": 723.3131612783491
       },
       "data": {
         "label": "Output"
       },
       "positionAbsolute": {
-        "x": 876.7599593930994,
-        "y": -4.106592477762104
+        "x": 1388.37330480704,
+        "y": 723.3131612783491
       },
       "z": 0,
       "handleBounds": {
@@ -175,50 +588,113 @@
           {
             "id": null,
             "position": "top",
-            "x": 70.99999036876477,
-            "y": -1.9999881038898955,
+            "x": 71.00015505924675,
+            "y": -1.9999856598219647,
             "width": 8,
             "height": 8
           }
         ]
       },
       "width": 150,
-      "height": 39
+      "height": 40
     }
   ],
   "edges": [
     {
-      "source": "node_3",
+      "source": "1",
       "sourceHandle": null,
-      "target": "node_1",
+      "target": "0",
       "targetHandle": "species",
-      "id": "reactflow__edge-node_3-node_1species"
+      "id": "reactflow__edge-1-0species"
     },
     {
-      "source": "node_4",
+      "source": "2",
       "sourceHandle": null,
-      "target": "node_1",
+      "target": "0",
       "targetHandle": "limit",
-      "id": "reactflow__edge-node_4-node_1limit"
+      "id": "reactflow__edge-2-0limit"
     },
     {
-      "source": "node_1",
+      "source": "0",
       "sourceHandle": "presence",
-      "target": "node_0",
+      "target": "4",
       "targetHandle": null,
-      "id": "reactflow__edge-node_1presence-node_0"
+      "id": "reactflow__edge-0presence-4"
     },
     {
-      "source": "node_1",
-      "sourceHandle": "n_presence",
-      "target": "node_2",
+      "source": "0",
+      "sourceHandle": "presence",
+      "target": "6",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-0presence-6presence"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "source",
+      "id": "reactflow__edge-7-6source"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-8-6layers"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "obs_buffer",
+      "id": "reactflow__edge-9-6obs_buffer"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "method",
+      "id": "reactflow__edge-10-6method"
+    },
+    {
+      "source": "11",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-11-6proj_to"
+    },
+    {
+      "source": "12",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-12-6spatial_res"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "nb_sample",
+      "id": "reactflow__edge-13-6nb_sample"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "cutoff_cor",
+      "id": "reactflow__edge-14-6cutoff_cor"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "nc_predictors",
+      "target": "15",
       "targetHandle": null,
-      "id": "reactflow__edge-node_1n_presence-node_2"
+      "id": "reactflow__edge-6nc_predictors-15"
     }
   ],
   "viewport": {
-    "x": -124.98968420517201,
-    "y": 349.8543576888881,
-    "zoom": 1.4827654854788148
+    "x": -271.8078414439816,
+    "y": -211.36110084537347,
+    "zoom": 0.6345023701638961
   }
 }
