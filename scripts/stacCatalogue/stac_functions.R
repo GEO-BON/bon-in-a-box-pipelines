@@ -219,7 +219,7 @@ load_cube <- function(stac_path =
                       sep = "/")
     
   }
-  
+  RCurl::url.exists(stac_path)
   # CreateRSTACQuery object with the subclass search containing all search field parameters 
   it_obj <- s |> #think changing it for %>%
     rstac::stac_search(bbox = bbox.wgs84, collections = collections, 

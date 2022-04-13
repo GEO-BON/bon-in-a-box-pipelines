@@ -123,51 +123,20 @@
       "dragging": false
     },
     {
-      "id": "3",
-      "type": "output",
-      "position": {
-        "x": 1210,
-        "y": 454.75
-      },
-      "data": {
-        "label": "Output"
-      },
-      "positionAbsolute": {
-        "x": 1210,
-        "y": 454.75
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": null,
-        "target": [
-          {
-            "id": null,
-            "position": "top",
-            "x": 71,
-            "y": -2,
-            "width": 8,
-            "height": 8
-          }
-        ]
-      },
-      "width": 150,
-      "height": 40
-    },
-    {
       "id": "5",
       "type": "io",
       "position": {
-        "x": 962.3130710521065,
-        "y": 734.8344324899768
+        "x": 1105.5152774418432,
+        "y": 633.4851464506294
       },
       "data": {
         "descriptionFile": "loadPredictors>modLoadPredictors.yml"
       },
       "positionAbsolute": {
-        "x": 962.3130710521065,
-        "y": 734.8344324899768
+        "x": 1105.5152774418432,
+        "y": 633.4851464506294
       },
-      "z": 0,
+      "z": 1000,
       "handleBounds": {
         "source": [
           {
@@ -192,7 +161,7 @@
             "id": "obs_buffer",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 22.666683200806705,
+            "y": 22.66665390070816,
             "width": 8,
             "height": 8
           },
@@ -200,7 +169,7 @@
             "id": "bbox",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 37.333355395428946,
+            "y": 37.33334562872943,
             "width": 8,
             "height": 8
           },
@@ -208,7 +177,7 @@
             "id": "source",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 52.00002759005119,
+            "y": 52.000017823351676,
             "width": 8,
             "height": 8
           },
@@ -224,7 +193,7 @@
             "id": "layers",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 81.33335244589664,
+            "y": 81.33334267919713,
             "width": 8,
             "height": 8
           },
@@ -232,7 +201,7 @@
             "id": "method",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 96.00002464051889,
+            "y": 96.00001487381937,
             "width": 8,
             "height": 8
           },
@@ -240,7 +209,7 @@
             "id": "proj_to",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 110.6666773017421,
+            "y": 110.6666870684416,
             "width": 8,
             "height": 8
           },
@@ -248,7 +217,7 @@
             "id": "spatial_res",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 125.33334949636433,
+            "y": 125.33333972966483,
             "width": 8,
             "height": 8
           },
@@ -256,7 +225,7 @@
             "id": "method_cor_vif",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 140.00002169098659,
+            "y": 140.00001192428707,
             "width": 8,
             "height": 8
           },
@@ -264,7 +233,7 @@
             "id": "nb_sample",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 154.66667435220978,
+            "y": 154.6666841189093,
             "width": 8,
             "height": 8
           },
@@ -272,7 +241,7 @@
             "id": "cutoff_cor",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 169.33334654683205,
+            "y": 169.33333678013253,
             "width": 8,
             "height": 8
           },
@@ -280,7 +249,7 @@
             "id": "cutoff_vif",
             "position": "left",
             "x": -3.000017556531006,
-            "y": 184.00001874145428,
+            "y": 184.00000897475476,
             "width": 8,
             "height": 8
           }
@@ -288,22 +257,23 @@
       },
       "width": 387,
       "height": 207,
-      "selected": false
+      "selected": true,
+      "dragging": false
     },
     {
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 612.4835368538652,
-        "y": 746.5416526903269
+        "x": 782.7084448976796,
+        "y": 648.6245680656154
       },
       "data": {
         "type": "int",
         "value": 100000
       },
       "positionAbsolute": {
-        "x": 612.4835368538652,
-        "y": 746.5416526903269
+        "x": 782.7084448976796,
+        "y": 648.6245680656154
       },
       "z": 0,
       "handleBounds": {
@@ -311,8 +281,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 212.73967132498902,
-            "y": 10.833363087183612,
+            "x": 212.73954182691915,
+            "y": 10.833295826878604,
             "width": 8,
             "height": 8
           }
@@ -326,25 +296,25 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 614.059575095837,
-        "y": 759.1499586261008
+        "x": 758.3438459446293,
+        "y": 687.446784804885
       },
       "data": {
         "type": "bbox",
         "value": null
       },
       "positionAbsolute": {
-        "x": 614.059575095837,
-        "y": 759.1499586261008
+        "x": 758.3438459446293,
+        "y": 687.446784804885
       },
-      "z": 1000,
+      "z": 0,
       "handleBounds": {
         "source": [
           {
             "id": null,
             "position": "right",
-            "x": 229.91665086204006,
-            "y": 10.833339038748521,
+            "x": 229.916701271583,
+            "y": 10.833359835497129,
             "width": 8,
             "height": 8
           }
@@ -353,22 +323,23 @@
       },
       "width": 234,
       "height": 30,
-      "selected": true
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 353.63561333780865,
-        "y": 779.4863792877898
+        "x": 487.9041276222106,
+        "y": 724.8084748703723
       },
       "data": {
         "type": "string/accepted_values:\"from_tif\" or \"from_cube\"",
         "value": "from_cube"
       },
       "positionAbsolute": {
-        "x": 353.63561333780865,
-        "y": 779.4863792877898
+        "x": 487.9041276222106,
+        "y": 724.8084748703723
       },
       "z": 0,
       "handleBounds": {
@@ -376,8 +347,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 536.7082127190105,
-            "y": 10.833290941878344,
+            "x": 536.7083445608982,
+            "y": 10.833262168501983,
             "width": 8,
             "height": 8
           }
@@ -393,16 +364,16 @@
       "id": "9",
       "type": "constant",
       "position": {
-        "x": 612.4835368538652,
-        "y": 792.2467617075071
+        "x": 743.8651134937447,
+        "y": 799.6098832582784
       },
       "data": {
         "type": "string",
         "value": "mytiffolder/"
       },
       "positionAbsolute": {
-        "x": 612.4835368538652,
-        "y": 792.2467617075071
+        "x": 743.8651134937447,
+        "y": 799.6098832582784
       },
       "z": 0,
       "handleBounds": {
@@ -410,8 +381,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 234.51043102954986,
-            "y": 10.833339038748521,
+            "x": 234.51037072132644,
+            "y": 10.833379368896159,
             "width": 8,
             "height": 8
           }
@@ -419,26 +390,24 @@
         "target": null
       },
       "width": 239,
-      "height": 30
+      "height": 30,
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "10",
       "type": "constant",
       "position": {
-        "x": 612.4835368538652,
-        "y": 804.8550676432809
+        "x": 804.1452543325354,
+        "y": 849.9715733237656
       },
       "data": {
         "type": "vector",
-        "value": [
-          "bio1",
-          "bio2",
-          "bio4"
-        ]
+        "value": "[bio1,bio2,bio4]"
       },
       "positionAbsolute": {
-        "x": 612.4835368538652,
-        "y": 804.8550676432809
+        "x": 804.1452543325354,
+        "y": 849.9715733237656
       },
       "z": 0,
       "handleBounds": {
@@ -446,8 +415,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 238.16675510043277,
-            "y": 10.833339038748521,
+            "x": 238.1666323516491,
+            "y": 10.833320768699071,
             "width": 8,
             "height": 8
           }
@@ -455,22 +424,24 @@
         "target": null
       },
       "width": 242,
-      "height": 30
+      "height": 30,
+      "selected": false,
+      "dragging": false
     },
     {
       "id": "11",
       "type": "constant",
       "position": {
-        "x": 202.63561333780865,
-        "y": 845.6154500629981
+        "x": 525.8651134937447,
+        "y": 911.6134042280435
       },
       "data": {
         "type": "string/vif.cor, vif.step, pearson, spearman or kendall",
         "value": "vif.cor"
       },
       "positionAbsolute": {
-        "x": 202.63561333780865,
-        "y": 845.6154500629981
+        "x": 525.8651134937447,
+        "y": 911.6134042280435
       },
       "z": 0,
       "handleBounds": {
@@ -478,8 +449,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 556.979215817701,
-            "y": 10.833290941878344,
+            "x": 556.9792075372518,
+            "y": 10.833340302098101,
             "width": 8,
             "height": 8
           }
@@ -495,50 +466,16 @@
       "id": "12",
       "type": "constant",
       "position": {
-        "x": 530.6356133378086,
-        "y": 884.7997942407436
-      },
-      "data": {
-        "type": "string",
-        "value": "EPSG:6623"
-      },
-      "positionAbsolute": {
-        "x": 530.6356133378086,
-        "y": 884.7997942407436
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 234.51038293267968,
-            "y": 10.833339038748521,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 239,
-      "height": 30,
-      "selected": false,
-      "dragging": false
-    },
-    {
-      "id": "13",
-      "type": "constant",
-      "position": {
-        "x": 546.3314603699217,
-        "y": 925.8320619345458
+        "x": 786.1062402040695,
+        "y": 742.8155168099024
       },
       "data": {
         "type": "int",
         "value": 1000
       },
       "positionAbsolute": {
-        "x": 546.3314603699217,
-        "y": 925.8320619345458
+        "x": 786.1062402040695,
+        "y": 742.8155168099024
       },
       "z": 0,
       "handleBounds": {
@@ -546,8 +483,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 212.73952703437848,
-            "y": 10.833339038748521,
+            "x": 212.73965523389967,
+            "y": 10.833320768699071,
             "width": 8,
             "height": 8
           }
@@ -555,24 +492,22 @@
         "target": null
       },
       "width": 217,
-      "height": 30,
-      "selected": false,
-      "dragging": false
+      "height": 30
     },
     {
-      "id": "14",
+      "id": "13",
       "type": "constant",
       "position": {
-        "x": 617.2116515797804,
-        "y": 861.592444354263
+        "x": 798.9076485919757,
+        "y": 764.5779110693427
       },
       "data": {
         "type": "string",
         "value": "pearson"
       },
       "positionAbsolute": {
-        "x": 617.2116515797804,
-        "y": 861.592444354263
+        "x": 798.9076485919757,
+        "y": 764.5779110693427
       },
       "z": 0,
       "handleBounds": {
@@ -580,8 +515,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 234.51038293267968,
-            "y": 10.833339038748521,
+            "x": 234.5104097881245,
+            "y": 10.833320768699071,
             "width": 8,
             "height": 8
           }
@@ -589,24 +524,22 @@
         "target": null
       },
       "width": 239,
-      "height": 30,
-      "selected": false,
-      "dragging": false
+      "height": 30
     },
     {
-      "id": "15",
+      "id": "14",
       "type": "constant",
       "position": {
-        "x": 614.059575095837,
-        "y": 880.5049032579237
+        "x": 800.1877894307663,
+        "y": 737.69495345474
       },
       "data": {
-        "type": "int",
-        "value": 5000
+        "type": "string",
+        "value": "EPSG:6623"
       },
       "positionAbsolute": {
-        "x": 614.059575095837,
-        "y": 880.5049032579237
+        "x": 800.1877894307663,
+        "y": 737.69495345474
       },
       "z": 0,
       "handleBounds": {
@@ -614,8 +547,40 @@
           {
             "id": null,
             "position": "right",
-            "x": 212.73952703437848,
-            "y": 10.833339038748521,
+            "x": 234.5103316545284,
+            "y": 10.833379368896159,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": 782.2658176876978,
+        "y": 782.4998828124111
+      },
+      "data": {
+        "type": "int",
+        "value": 5000
+      },
+      "positionAbsolute": {
+        "x": 782.2658176876978,
+        "y": 782.4998828124111
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 212.73957710030356,
+            "y": 10.833340302098101,
             "width": 8,
             "height": 8
           }
@@ -629,48 +594,16 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 615.6356133378086,
-        "y": 891.5371709517258
-      },
-      "data": {
-        "type": "float",
-        "value": 0.75
-      },
-      "positionAbsolute": {
-        "x": 615.6356133378086,
-        "y": 891.5371709517258
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 226.20828597762525,
-            "y": 10.833339038748521,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 230,
-      "height": 30
-    },
-    {
-      "id": "17",
-      "type": "constant",
-      "position": {
-        "x": 612.4835368538652,
-        "y": 908.8735916134148
+        "x": 784.8260993652791,
+        "y": 802.9821362330608
       },
       "data": {
         "type": "int",
         "value": 8
       },
       "positionAbsolute": {
-        "x": 612.4835368538652,
-        "y": 908.8735916134148
+        "x": 784.8260993652791,
+        "y": 802.9821362330608
       },
       "z": 0,
       "handleBounds": {
@@ -678,8 +611,8 @@
           {
             "id": null,
             "position": "right",
-            "x": 212.73967132498902,
-            "y": 10.833339038748521,
+            "x": 212.73957710030356,
+            "y": 10.833320768699071,
             "width": 8,
             "height": 8
           }
@@ -690,18 +623,50 @@
       "height": 30
     },
     {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": 788.6665218816509,
+        "y": 795.3012912003172
+      },
+      "data": {
+        "type": "float",
+        "value": 0.75
+      },
+      "positionAbsolute": {
+        "x": 788.6665218816509,
+        "y": 795.3012912003172
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 226.20824639905382,
+            "y": 10.833379368896159,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 230,
+      "height": 30
+    },
+    {
       "id": "18",
       "type": "output",
       "position": {
-        "x": 1649.636210353538,
-        "y": 573.9931018956916
+        "x": 1732.6518710804903,
+        "y": 568.3546726688932
       },
       "data": {
         "label": "Output"
       },
       "positionAbsolute": {
-        "x": 1649.636210353538,
-        "y": 573.9931018956916
+        "x": 1732.6518710804903,
+        "y": 568.3546726688932
       },
       "z": 0,
       "handleBounds": {
@@ -710,8 +675,8 @@
           {
             "id": null,
             "position": "top",
-            "x": 71.00002259337641,
-            "y": -1.999988104150064,
+            "x": 70.9999987920545,
+            "y": -2.0000051932209937,
             "width": 8,
             "height": 8
           }
@@ -735,13 +700,6 @@
       "target": "0",
       "targetHandle": "limit",
       "id": "reactflow__edge-2-0limit"
-    },
-    {
-      "source": "0",
-      "sourceHandle": "n_presence",
-      "target": "3",
-      "targetHandle": null,
-      "id": "reactflow__edge-0n_presence-3"
     },
     {
       "source": "0",
@@ -796,22 +754,22 @@
       "source": "12",
       "sourceHandle": null,
       "target": "5",
-      "targetHandle": "proj_to",
-      "id": "reactflow__edge-12-5proj_to"
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-12-5spatial_res"
     },
     {
       "source": "13",
       "sourceHandle": null,
       "target": "5",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-13-5spatial_res"
+      "targetHandle": "method_cor_vif",
+      "id": "reactflow__edge-13-5method_cor_vif"
     },
     {
       "source": "14",
       "sourceHandle": null,
       "target": "5",
-      "targetHandle": "method_cor_vif",
-      "id": "reactflow__edge-14-5method_cor_vif"
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-14-5proj_to"
     },
     {
       "source": "15",
@@ -824,15 +782,15 @@
       "source": "16",
       "sourceHandle": null,
       "target": "5",
-      "targetHandle": "cutoff_cor",
-      "id": "reactflow__edge-16-5cutoff_cor"
+      "targetHandle": "cutoff_vif",
+      "id": "reactflow__edge-16-5cutoff_vif"
     },
     {
       "source": "17",
       "sourceHandle": null,
       "target": "5",
-      "targetHandle": "cutoff_vif",
-      "id": "reactflow__edge-17-5cutoff_vif"
+      "targetHandle": "cutoff_cor",
+      "id": "reactflow__edge-17-5cutoff_cor"
     },
     {
       "source": "5",
@@ -843,8 +801,8 @@
     }
   ],
   "viewport": {
-    "x": -344.5210223892258,
-    "y": -123.86664773407813,
-    "zoom": 0.634502370163896
+    "x": -269.8296473999461,
+    "y": 61.532311859475726,
+    "zoom": 0.5
   }
 }
