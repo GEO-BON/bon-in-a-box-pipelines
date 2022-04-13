@@ -68,6 +68,8 @@ The output keys `warning` and `error` can be used to report problems in script e
 ## Pipelines
 Each script becomes a pipeline step. Pipelines support the same input and output types and UI rendering as individual scripts.
 
+To create or edit pipelines, see the [pipeline editor documentation](/docs/pipeline-editor.md).
+
 ## Developer documentation
 The linked content is intended for those developing the microservice infrastructure supporting the pipelines.
 
