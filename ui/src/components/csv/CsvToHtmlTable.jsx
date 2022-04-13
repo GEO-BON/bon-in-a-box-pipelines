@@ -24,7 +24,7 @@ const CsvToHtmlTable = ({
   colKey,
   renderCell
 }) => {
-  const rowsWithColumns = parseCsvToRowsAndColumn(data.trim(), csvDelimiter);
+  const rowsWithColumns = parseCsvToRowsAndColumn(data.trimEnd(), csvDelimiter);
   let headerRow = undefined;
   if (hasHeader) {
     headerRow = rowsWithColumns.splice(0, 1)[0];
