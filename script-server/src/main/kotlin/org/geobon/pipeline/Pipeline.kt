@@ -44,10 +44,12 @@ class Pipeline(descriptionFile: File) {
                     }
                     NODE__TYPE_CONSTANT -> {
                         val nodeData = node.getJSONObject(NODE__DATA)
-                        constants[id] = ConstantPipe.create(
-                            nodeData.getString(NODE__DATA__TYPE),
-                            nodeData.getString(NODE__DATA__VALUE)
-                        )
+                        val type = nodeData.getString(NODE__DATA__TYPE)
+                        constants[id] = when (type) {
+                            "int" -> ConstantPipe(type, nodeData.getInt(NODE__DATA__VALUE))
+                            "float" -> ConstantPipe(type, nodeData.getFloat(NODE__DATA__VALUE))
+                            else -> ConstantPipe(type, nodeData.getString(NODE__DATA__VALUE))
+                        }
                     }
                     NODE__TYPE_OUTPUT -> outputIds.add(id)
                     else -> logger.warn("Ignoring node type ${node.getString(NODE__TYPE)}")
