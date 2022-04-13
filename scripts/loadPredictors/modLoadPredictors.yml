@@ -8,7 +8,7 @@ inputs:
   obs_buffer:
     label: buffer
     description: buffer around presence points (used to create an extent for collinearity measurement). Unit depends on the projection system.
-    type: integer
+    type: int
     example: 100000
   bbox: 
     label: bbox
@@ -46,7 +46,7 @@ inputs:
     example: 1000
   method_cor_vif :
     description: Projection 
-    type: int
+    type: string
     example: "pearson" 
   nb_sample :
     description: Projection 
