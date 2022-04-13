@@ -157,6 +157,13 @@ th, td {
   color: #aaaaaa;
 }
 
+.logs {
+  border:1px solid #414855;
+  max-height: 30em;
+  overflow:auto;
+  padding: 0.5em;
+}
+
 @keyframes spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

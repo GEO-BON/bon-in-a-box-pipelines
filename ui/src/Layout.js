@@ -6,7 +6,7 @@ import { NavLink } from "react-router-dom";
 
 import BiaBLogo from "./img/boninabox.jpg"
 
-import useWindowDimensions from "./states/WindowDimensions"
+import useWindowDimensions from "./utils/WindowDimensions"
 
 export function Layout(props) {
   const { windowHeight } = useWindowDimensions();
