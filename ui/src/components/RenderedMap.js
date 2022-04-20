@@ -1,5 +1,22 @@
 import React, { useEffect, useRef } from 'react'
+import chroma from "chroma-js";
 import * as L from "leaflet";
+
+const scale = chroma
+  .scale([
+    "#E5E5E5",
+    "#36648B",
+    "#5CACEE",
+    "#63B8FF",
+    "#FFD700",
+    "#FF0000",
+    "#8B0000",
+  ])
+  .domain([0.001, 100]);
+
+function colorize(values) {
+    return values[0] ? scale(values[0]).hex() : "#ffffff00"
+}
 
 function RenderedMap(props) {
     const mapRef = useRef(null);
@@ -26,8 +43,6 @@ function RenderedMap(props) {
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
                 parse_georaster(arrayBuffer).then(georaster => {
-                    console.log("georaster:", georaster);
-
                     /*
                         GeoRasterLayer is an extension of GridLayer,
                         which means can use GridLayer options like opacity.
@@ -42,7 +57,8 @@ function RenderedMap(props) {
                     var layer = new GeoRasterLayer({
                         georaster: georaster,
                         opacity: 0.6,
-                        resolution: 320 // optional parameter for adjusting display resolution
+                        resolution: 320, // optional parameter for adjusting display resolution
+                        pixelValuesToColorFn: colorize
                     });
                     layer.addTo(mapRef.current);
 
