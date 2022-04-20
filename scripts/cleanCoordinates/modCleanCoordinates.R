@@ -39,7 +39,7 @@ presence <- dplyr::rename(presence, scientific_name = scientificName)
 
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
 proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
-
+print(head(presence))
 mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
 
 # layers
@@ -49,7 +49,7 @@ layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
   } else {
     layers <- input$layers
   }
-
+#layers <- c("bio1", "bio2", "bio8")
 predictors_nc <- load_predictors(source = "from_cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
@@ -65,7 +65,7 @@ predictors_nc <- load_predictors(source = "from_cube",
                            subset_layers = layers,
                            remove_collinear = F,
                            method = "vif.cor",
-                           method_cor_vif = NULL,
+                           method_cor_vif = "pearson",
                            new_proj = input$proj_to,
                            mask = mask,
                            sample = TRUE,
@@ -78,7 +78,7 @@ predictors_nc <- load_predictors(source = "from_cube",
 
 
   clean_presence <- clean_coordinates(
-      presence,
+      x = presence,
       predictors = predictors_nc,
       spatial_res = input$spatial_res,
       species_name = species,

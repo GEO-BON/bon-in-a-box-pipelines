@@ -1,0 +1,1235 @@
+{
+  "nodes": [
+    {
+      "id": "19",
+      "type": "io",
+      "position": {
+        "x": 481.1659116934886,
+        "y": 474.43517771411484
+      },
+      "data": {
+        "descriptionFile": "loadGbif>loadGbif.yml"
+      },
+      "positionAbsolute": {
+        "x": 481.1659116934886,
+        "y": 474.43517771411484
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": "n_presence",
+            "position": "right",
+            "x": 304.0521240234375,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "presence",
+            "position": "right",
+            "x": 304.0521240234375,
+            "y": 22.66668701171875,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": [
+          {
+            "id": "species",
+            "position": "left",
+            "x": -3,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "limit",
+            "position": "left",
+            "x": -3,
+            "y": 22.66668701171875,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 309,
+      "height": 47,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "20",
+      "type": "constant",
+      "position": {
+        "x": 339.1659116934886,
+        "y": 339.43517771411484
+      },
+      "data": {
+        "type": "string",
+        "value": "Panthera onca"
+      },
+      "positionAbsolute": {
+        "x": 339.1659116934886,
+        "y": 339.43517771411484
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.510498046875,
+            "y": 10.833343505859375,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "21",
+      "type": "constant",
+      "position": {
+        "x": 337.1659116934886,
+        "y": 353.43517771411484
+      },
+      "data": {
+        "type": "int",
+        "value": 1000
+      },
+      "positionAbsolute": {
+        "x": 337.1659116934886,
+        "y": 353.43517771411484
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 212.7396240234375,
+            "y": 10.833343505859375,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 217,
+      "height": 30
+    },
+    {
+      "id": "24",
+      "type": "constant",
+      "position": {
+        "x": 1148.060537373876,
+        "y": 435.4465954892962
+      },
+      "data": {
+        "type": "string",
+        "value": "mytiffolder/"
+      },
+      "positionAbsolute": {
+        "x": 1148.060537373876,
+        "y": 435.4465954892962
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.510496689983,
+            "y": 10.833357159239448,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": 1120.1274823609042,
+        "y": 490.24093205270356
+      },
+      "data": {
+        "type": "vector",
+        "value": [
+          "equal",
+          "zeros",
+          "duplicates",
+          "same_pixel",
+          "capitals",
+          "centroids",
+          "seas",
+          "urban",
+          "gbif",
+          "institutions",
+          "env"
+        ]
+      },
+      "positionAbsolute": {
+        "x": 1120.1274823609042,
+        "y": 490.24093205270356
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 238.16678539491105,
+            "y": 10.833324451309073,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 242,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 1139.529412774821,
+        "y": 560.4353799575733
+      },
+      "data": {
+        "type": "string",
+        "value": "EPSG:6623"
+      },
+      "positionAbsolute": {
+        "x": 1139.529412774821,
+        "y": 560.4353799575733
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.51032304747082,
+            "y": 10.833317391857513,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 1132.6588622115248,
+        "y": 589.8463912234959
+      },
+      "data": {
+        "type": "integer or float",
+        "value": 1000
+      },
+      "positionAbsolute": {
+        "x": 1132.6588622115248,
+        "y": 589.8463912234959
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 299.9792163235996,
+            "y": 10.833317391857513,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 304,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "28",
+      "type": "output",
+      "position": {
+        "x": 1877.2771662580767,
+        "y": 509.66841375534074
+      },
+      "data": {
+        "label": "Output"
+      },
+      "positionAbsolute": {
+        "x": 1877.2771662580767,
+        "y": 509.66841375534074
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": null,
+        "target": [
+          {
+            "id": null,
+            "position": "top",
+            "x": 70.9999764494781,
+            "y": -1.9999974656828459,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 150,
+      "height": 40
+    },
+    {
+      "id": "29",
+      "type": "io",
+      "position": {
+        "x": 1149.575664952345,
+        "y": 651.1909779827979
+      },
+      "data": {
+        "descriptionFile": "loadPredictors>modLoadPredictors.yml"
+      },
+      "positionAbsolute": {
+        "x": 1149.575664952345,
+        "y": 651.1909779827979
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": "nc_predictors",
+            "position": "right",
+            "x": 382.041748046875,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": [
+          {
+            "id": "presence",
+            "position": "left",
+            "x": -3,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "obs_buffer",
+            "position": "left",
+            "x": -3,
+            "y": 22.666671752929688,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "bbox",
+            "position": "left",
+            "x": -3,
+            "y": 37.33332824707031,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "source",
+            "position": "left",
+            "x": -3,
+            "y": 52,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "tif_folder",
+            "position": "left",
+            "x": -3,
+            "y": 66.66667175292969,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "layers",
+            "position": "left",
+            "x": -3,
+            "y": 81.33332824707031,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "method",
+            "position": "left",
+            "x": -3,
+            "y": 96,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "proj_to",
+            "position": "left",
+            "x": -3,
+            "y": 110.66667175292969,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "spatial_res",
+            "position": "left",
+            "x": -3,
+            "y": 125.33329772949219,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "method_cor_vif",
+            "position": "left",
+            "x": -3,
+            "y": 139.9999542236328,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "nb_sample",
+            "position": "left",
+            "x": -3,
+            "y": 154.66664123535156,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "cutoff_cor",
+            "position": "left",
+            "x": -3,
+            "y": 169.3332977294922,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "cutoff_vif",
+            "position": "left",
+            "x": -3,
+            "y": 183.9999542236328,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 387,
+      "height": 207,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "30",
+      "type": "constant",
+      "position": {
+        "x": 908.5248006918484,
+        "y": 586.4740413858009
+      },
+      "data": {
+        "type": "int",
+        "value": "0"
+      },
+      "positionAbsolute": {
+        "x": 908.5248006918484,
+        "y": 586.4740413858009
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 212.73956357272743,
+            "y": 10.833370147375094,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 217,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": 831.5662769595297,
+        "y": 604.030104671984
+      },
+      "data": {
+        "type": "bbox",
+        "value": null
+      },
+      "positionAbsolute": {
+        "x": 831.5662769595297,
+        "y": 604.030104671984
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 229.91668303325514,
+            "y": 10.833309745096464,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 234,
+      "height": 30
+    },
+    {
+      "id": "32",
+      "type": "constant",
+      "position": {
+        "x": 484.24676904875696,
+        "y": 636.5446916904858
+      },
+      "data": {
+        "type": "string/accepted_values:\"from_tif\" or \"from_cube\"",
+        "value": "from_cube"
+      },
+      "positionAbsolute": {
+        "x": 484.24676904875696,
+        "y": 636.5446916904858
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 536.7082319794446,
+            "y": 10.83332987918934,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 541,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "33",
+      "type": "constant",
+      "position": {
+        "x": 836.8443086026214,
+        "y": 638.3373103520793
+      },
+      "data": {
+        "type": "string",
+        "value": "mytiffolder/"
+      },
+      "positionAbsolute": {
+        "x": 836.8443086026214,
+        "y": 638.3373103520793
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.51039712765058,
+            "y": 10.833309745096464,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "34",
+      "type": "constant",
+      "position": {
+        "x": 832.8857848703026,
+        "y": 651.5323894598082
+      },
+      "data": {
+        "type": "vector",
+        "value": [
+          "bio1",
+          "bio2",
+          "bio4"
+        ]
+      },
+      "positionAbsolute": {
+        "x": 832.8857848703026,
+        "y": 651.5323894598082
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 238.166667857703,
+            "y": 10.833370147375094,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 242,
+      "height": 30
+    },
+    {
+      "id": "35",
+      "type": "constant",
+      "position": {
+        "x": 410.1638165133943,
+        "y": 664.4079606567643
+      },
+      "data": {
+        "type": "string/vif.cor, vif.step, pearson, spearman or kendall",
+        "value": "vif.cor"
+      },
+      "positionAbsolute": {
+        "x": 410.1638165133943,
+        "y": 664.4079606567643
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 556.9790756150473,
+            "y": 10.833370147375094,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 561,
+      "height": 30,
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "36",
+      "type": "constant",
+      "position": {
+        "x": 835.5248006918484,
+        "y": 679.242055586039
+      },
+      "data": {
+        "type": "string",
+        "value": "EPSG:6623"
+      },
+      "positionAbsolute": {
+        "x": 835.5248006918484,
+        "y": 679.242055586039
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.51039712765058,
+            "y": 10.833269476910711,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "37",
+      "type": "constant",
+      "position": {
+        "x": 831.5662769595297,
+        "y": 696.3956584260867
+      },
+      "data": {
+        "type": "int",
+        "value": 1000
+      },
+      "positionAbsolute": {
+        "x": 831.5662769595297,
+        "y": 696.3956584260867
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 212.73956357272743,
+            "y": 10.833309745096464,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 217,
+      "height": 30
+    },
+    {
+      "id": "38",
+      "type": "constant",
+      "position": {
+        "x": 831.5662769595297,
+        "y": 710.9102454445886
+      },
+      "data": {
+        "type": "string",
+        "value": "pearson"
+      },
+      "positionAbsolute": {
+        "x": 831.5662769595297,
+        "y": 710.9102454445886
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.5104776640221,
+            "y": 10.833309745096464,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "39",
+      "type": "constant",
+      "position": {
+        "x": 830.246769048757,
+        "y": 722.7858166415446
+      },
+      "data": {
+        "type": "int",
+        "value": 5000
+      },
+      "positionAbsolute": {
+        "x": 830.246769048757,
+        "y": 722.7858166415446
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 212.73956357272743,
+            "y": 10.833309745096464,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 217,
+      "height": 30
+    },
+    {
+      "id": "40",
+      "type": "constant",
+      "position": {
+        "x": 835.5248006918484,
+        "y": 735.9808957492735
+      },
+      "data": {
+        "type": "float",
+        "value": 0.75
+      },
+      "positionAbsolute": {
+        "x": 835.5248006918484,
+        "y": 735.9808957492735
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 226.2083052708376,
+            "y": 10.833309745096464,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 230,
+      "height": 30
+    },
+    {
+      "id": "41",
+      "type": "constant",
+      "position": {
+        "x": 832.8857848703026,
+        "y": 757.0930223216398
+      },
+      "data": {
+        "type": "int",
+        "value": 8
+      },
+      "positionAbsolute": {
+        "x": 832.8857848703026,
+        "y": 757.0930223216398
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 212.73956357272743,
+            "y": 10.833350013282217,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 217,
+      "height": 30
+    },
+    {
+      "id": "42",
+      "type": "io",
+      "position": {
+        "x": 1729.575664952345,
+        "y": 389.1464118175726
+      },
+      "data": {
+        "descriptionFile": "cleanCoordinates>modCleanCoordinates.yml"
+      },
+      "positionAbsolute": {
+        "x": 1729.575664952345,
+        "y": 389.1464118175726
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": "n_presence",
+            "position": "right",
+            "x": 334.010498046875,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "n_clean",
+            "position": "right",
+            "x": 334.010498046875,
+            "y": 22.666671752929688,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "clean_presence",
+            "position": "right",
+            "x": 334.010498046875,
+            "y": 37.333343505859375,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": [
+          {
+            "id": "presence",
+            "position": "left",
+            "x": -3,
+            "y": 8,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "tif_folder",
+            "position": "left",
+            "x": -3,
+            "y": 22.666671752929688,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "layers",
+            "position": "left",
+            "x": -3,
+            "y": 37.333343505859375,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "tests",
+            "position": "left",
+            "x": -3,
+            "y": 52,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "proj_to",
+            "position": "left",
+            "x": -3,
+            "y": 66.66668701171875,
+            "width": 8,
+            "height": 8
+          },
+          {
+            "id": "spatial_res",
+            "position": "left",
+            "x": -3,
+            "y": 81.33334350585938,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      },
+      "width": 339,
+      "height": 104,
+      "selected": false
+    },
+    {
+      "id": "44",
+      "type": "constant",
+      "position": {
+        "x": 1378.7143834019096,
+        "y": 398.7875445048911
+      },
+      "data": {
+        "type": "string",
+        "value": "mytiffolder/"
+      },
+      "positionAbsolute": {
+        "x": 1378.7143834019096,
+        "y": 398.7875445048911
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.51036585826157,
+            "y": 10.833340805274263,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "45",
+      "type": "constant",
+      "position": {
+        "x": 1381.9297037895185,
+        "y": 432.0125218435162
+      },
+      "data": {
+        "type": "vector",
+        "value": [
+          "equal",
+          "zeros",
+          "duplicates",
+          "same_pixel",
+          "capitals",
+          "centroids",
+          "seas",
+          "urban",
+          "gbif",
+          "institutions",
+          "env"
+        ]
+      },
+      "positionAbsolute": {
+        "x": 1381.9297037895185,
+        "y": 432.0125218435162
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 238.1666545631896,
+            "y": 10.833324451309075,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 242,
+      "height": 30
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": 1381.9297037895185,
+        "y": 444.87380339395173
+      },
+      "data": {
+        "type": "string",
+        "value": "EPSG:6623"
+      },
+      "positionAbsolute": {
+        "x": 1381.9297037895185,
+        "y": 444.87380339395173
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 234.51036585826157,
+            "y": 10.833340805274263,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 239,
+      "height": 30
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": 1380.8579303269823,
+        "y": 459.8786318694598
+      },
+      "data": {
+        "type": "int",
+        "value": 1000
+      },
+      "positionAbsolute": {
+        "x": 1380.8579303269823,
+        "y": 459.8786318694598
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 212.73964032118937,
+            "y": 10.833324451309075,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 217,
+      "height": 30
+    }
+  ],
+  "edges": [
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "species",
+      "id": "reactflow__edge-20-19species"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "limit",
+      "id": "reactflow__edge-21-19limit"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "presence",
+      "target": "29",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-19presence-29presence"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "obs_buffer",
+      "id": "reactflow__edge-30-29obs_buffer"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-31-29bbox"
+    },
+    {
+      "source": "32",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "source",
+      "id": "reactflow__edge-32-29source"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "tif_folder",
+      "id": "reactflow__edge-33-29tif_folder"
+    },
+    {
+      "source": "34",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-34-29layers"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "method",
+      "id": "reactflow__edge-35-29method"
+    },
+    {
+      "source": "36",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-36-29proj_to"
+    },
+    {
+      "source": "37",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-37-29spatial_res"
+    },
+    {
+      "source": "38",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "method_cor_vif",
+      "id": "reactflow__edge-38-29method_cor_vif"
+    },
+    {
+      "source": "39",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "nb_sample",
+      "id": "reactflow__edge-39-29nb_sample"
+    },
+    {
+      "source": "40",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "cutoff_cor",
+      "id": "reactflow__edge-40-29cutoff_cor"
+    },
+    {
+      "source": "41",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "cutoff_vif",
+      "id": "reactflow__edge-41-29cutoff_vif"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "presence",
+      "target": "42",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-19presence-42presence"
+    },
+    {
+      "source": "29",
+      "sourceHandle": "nc_predictors",
+      "target": "42",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-29nc_predictors-42layers"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "42",
+      "targetHandle": "tif_folder",
+      "id": "reactflow__edge-44-42tif_folder"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "42",
+      "targetHandle": "tests",
+      "id": "reactflow__edge-45-42tests"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "42",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-46-42proj_to"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "42",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-47-42spatial_res"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "clean_presence",
+      "target": "28",
+      "targetHandle": null,
+      "id": "reactflow__edge-42clean_presence-28"
+    }
+  ],
+  "viewport": {
+    "x": -619.2570574857607,
+    "y": 9.84434135960629,
+    "zoom": 0.5
+  }
+}
