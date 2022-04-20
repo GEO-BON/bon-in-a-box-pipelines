@@ -29,7 +29,7 @@ outputs:
   study_extent:
     label: study extent 
     description: Study extent 
-    type: polygone
+    type: string
     example: 100.52 
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0

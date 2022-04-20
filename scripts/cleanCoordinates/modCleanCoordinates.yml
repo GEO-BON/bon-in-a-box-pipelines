@@ -12,7 +12,7 @@ inputs:
   layers: 
     label: layers
     description: list of layers names (predictors)
-    type: vector
+    type: string
     example: ["bio1", "bio2", "bio4"]
   tests: 
     labels: cleaning_tests
@@ -39,7 +39,7 @@ inputs:
   spatial_res :
     label: spatial_res
     description: spatial resolution, only used if predictors are loaded from a stac catalogue. 
-    type: integer or float
+    type: int
     example: 1000  
 outputs:
   n_presence:
@@ -55,7 +55,7 @@ outputs:
   clean_presence:
      label: clean_presence
      description: table with clean presence points.
-     type: text/tab-separated-values
+     type: string
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:

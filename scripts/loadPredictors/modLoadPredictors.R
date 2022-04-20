@@ -7,6 +7,7 @@ if(length(new.packages)) install.packages(new.packages)
 
 ## Load required packages
 
+#install.packages("gdalcubes")
 library("terra")
 library("rjson")
 library("raster")
@@ -41,10 +42,15 @@ bbox <- input$bbox
 }
 
 if(is.null(input$nb_sample)) {
-  sample <- F 
+  sample <- FALSE 
   } else {
-    sample <- T
+    sample <- TRUE
   }
+
+#layers <- strsplit(gsub("[^[:alnum:] ]", " ", input$layers), " +")[[1]]
+#layers <- layers[layers!=""]
+
+layers <- inut$layers
 
 predictors_nc <- load_predictors(source = input$source,
   predictors_dir = input$tif_folder,
@@ -59,7 +65,7 @@ predictors_nc <- load_predictors(source = input$source,
             resampling = "near",
             buffer.box = NULL),
                           
-                           subset_layers = input$layers,
+                           subset_layers = layers,
                            remove_collinear = T,
                            method = input$method,
                            method_cor_vif = input$method_cor_vif,
@@ -81,7 +87,7 @@ write.table(predictors_nc, output_nc_predictors,
 
 
   output <- list(
-                  "nc_predictors" = predictors_nc
+                  "nc_predictors" = output_nc_predictors
                   ) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
