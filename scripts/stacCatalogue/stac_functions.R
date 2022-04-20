@@ -223,14 +223,12 @@ load_cube <- function(stac_path =
   # CreateRSTACQuery object with the subclass search containing all search field parameters 
   it_obj <- s |> #think changing it for %>%
     rstac::stac_search(bbox = bbox.wgs84, collections = collections, 
-                       limit = limit, datetime = datetime) |> rstac::get_request()
+                       datetime = datetime) |> rstac::get_request()
   
   if (is.null(spatial.res)) {
     name1 <- unlist(lapply(it_obj$features, function(x){names(x$assets)}))[1]
     spatial.res <-  it_obj$features[[1]]$assets[[name1]]$`raster:bands`[[1]]$spatial_resolution
   }
-  RCurl::url.exists(stac_path)
-  
   # bbox in decimal lon/lat
   
   # If no layers is selected, get all the layers by default
@@ -250,11 +248,11 @@ load_cube <- function(stac_path =
     
   }
   
-  v <- gdalcubes::cube_view(srs = srs.cube,  extent = list(t0 = t0, t1 = t1,
+  v <- gdalcubes::cube_view(srs = srs.cube,  extent = list(t0 = t0,  t1 = t1,
                                                            left = left, right = right,
                                                            top = top, bottom = bottom),
                             dx = spatial.res, dy = spatial.res, dt = temporal.res, aggregation = aggregation, resampling = resampling)
-  gdalcubes::gdalcubes_options(parallel = 4)
+  gdalcubes::gdalcubes_options(parallel = T)
   cube <- gdalcubes::raster_cube(st, v)
   
   return(cube)
@@ -444,15 +442,19 @@ cube_to_raster <- function(cube, format = "raster") {
 extract_gdal_cube <- function(cube, n_sample = 5000, simplify = T) {
   
   x <- gdalcubes::dimension_values(cube)$x
+  print(x)
   y <- gdalcubes::dimension_values(cube)$y
-  
+  print(y)
   all_points <- expand.grid(x,y) %>% setNames(c("x", "y"))
   
   if (n_sample >= nrow(all_points)) {
+    print(1)
     value_points <- gdalcubes::extract_geom(cube, sf::st_as_sf(all_points, coords = c("x", "y"),
                                                crs = srs(cube))) 
   } else {
+    print(2)
     sample_points <- all_points[sample(1:nrow(all_points), n_sample),]
+    print(head(sample_points))
     value_points <- gdalcubes::extract_geom(cube, sf::st_as_sf(sample_points, coords = c("x", "y"),
                                                                crs = srs(cube))) 
   }
