@@ -50,7 +50,7 @@ if(is.null(input$nb_sample)) {
 #layers <- strsplit(gsub("[^[:alnum:] ]", " ", input$layers), " +")[[1]]
 #layers <- layers[layers!=""]
 
-layers <- inut$layers
+layers <- input$layers
 
 predictors_nc <- load_predictors(source = input$source,
   predictors_dir = input$tif_folder,
