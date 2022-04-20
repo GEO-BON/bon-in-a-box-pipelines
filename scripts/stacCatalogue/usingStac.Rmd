@@ -82,6 +82,13 @@ get_info_collection(stac_path =
 
 ```{r, warning=FALSE}
 layers <- c("bio6", "bio13")
+obs_data <- read_delim("C:/GitHub/biab-2.0/output/loadGbif /loadGbif_R/8a3683f3d98459637d4cdf5e6a02521c/obs_data.tsv", 
+                            delim = "\t", escape_double = FALSE, 
+                            trim_ws = TRUE)
+proj = "EPSG:6623"
+obs.coords.proj <- create_projection(obs_data, lon = "decimalLongitude", lat = "decimalLatitude", 
+                              proj_from = "+proj=longlat +datum=WGS84",
+                              proj_to = proj,new_lon = "lon", new_lat = "lat") %>% dplyr::select(lon, lat)
 
 cube <- 
   load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
@@ -264,21 +271,27 @@ cube <-
 ```{r, warning=FALSE}
 plot(cube)
 ```
-
 ```{r, warning=FALSE}
-layers <- c("bio6", "bio13")
+get_info_collection(stac_path =
+                             "https://planetarycomputer.microsoft.com/api/stac/v1/",
+                            limit = NULL,
+                            collections = c('cop-dem-glo-90'),
+                            bbox = NULL)
+```                            
+```{r, warning=FALSE}
+#layers <- c("bio6", "bio13")
 
 cube <- 
   load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
-           limit = 5000, 
+           limit = NULL, 
            collections = c("cop-dem-glo-90"), 
-           use.obs = T,
+           use.obs = F,
            obs = obs.coords.proj,
            buffer.box = 0,
-          layers = layers,
+          bbox = data.frame("xmin" = -248000, "xmax" = -157719, "ymin" = 344267, "ymax" = 500000),
            srs.cube = srs.cube,
-           t0 = "1981-01-01",
-           t1 = "1981-01-01",
+           t0 = "2021-04-22",
+           t1 = "2021-04-22",
            spatial.res = 1000, # in meters
            temporal.res = "P1Y",
            aggregation = "mean",

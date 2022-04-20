@@ -98,16 +98,20 @@ load_predictors <- function(source = "from_cube",
      cube_args_c <- append(cube_args, list(layers = subset_layers, 
                                           srs.cube = new_proj, use.obs = F, 
                                           bbox = bbox))
-    print(cube_args_c)
+   
     all_predictors <- do.call(load_cube, cube_args_c)
 
     all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(sf::st_as_sf(mask), srs = new_proj))
   }
-  nc_names <- names(all_predictors)
+nc_names <- names(all_predictors)
+
+ # names(all_predictors)
   # Selection of non-collinear predictors
-  if (remove_collinear) {
+  if (remove_collinear && length(subset_layers) >1) {
     if (sample) {
+
       env_df <- sample_spatial_obj(all_predictors, nb_points = nb_points)
+
     }
     
     nc_names <-detect_collinearity(env_df,
