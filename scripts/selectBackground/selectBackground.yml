@@ -18,7 +18,7 @@ inputs:
   n_background: 
     label: number of background points
     description: number of background points
-    type: numeric
+    type: int
     example: 10000
   species: 
     label: species
@@ -28,12 +28,12 @@ inputs:
   layers: 
     label: layers
     description: list of layers names (predictors)
-    type: vector
+    type: string
     example: ["bio1", "bio2", "bio4"]
   spatial_res :
     label: spatial resolution
     description: spatial resolution, only used if predictors are loaded from a stac catalogue. 
-    type: integer or float
+    type: int
     example: 1000  
 outputs:
   n_background:
@@ -44,7 +44,7 @@ outputs:
   clean_background:
     label: clean background points
     description: Clean background points
-    type: text/tab-separated-value
+    type: string
     example:
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0

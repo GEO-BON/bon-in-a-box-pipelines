@@ -18,7 +18,7 @@ inputs:
   layers: 
     label: layers
     description: layer names (predictors) as a list, or path to a list
-    type: vector or string
+    type: string
     example: "/output/loadPredictors/modLoadPredictors_R/446f714fcde6a956a32d31ae95555f08/nc_predictors.tsv"
   proj_to:
     label: projection
@@ -28,7 +28,7 @@ inputs:
   spatial_res :
     label: spatial resolution
     description: Spatial resolution 
-    type: integer
+    type: int
     example: 1000  
 outputs:
   prediction_map:
