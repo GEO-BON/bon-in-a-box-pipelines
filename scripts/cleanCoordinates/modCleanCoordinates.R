@@ -49,6 +49,9 @@ layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
   } else {
     layers <- input$layers
   }
+
+
+
 #layers <- c("bio1", "bio2", "bio8")
 predictors_nc <- load_predictors(source = "from_cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
@@ -76,6 +79,8 @@ predictors_nc <- load_predictors(source = "from_cube",
                            ouput_dir = getwd(),
                            as.list = F)
 
+tests <- strsplit(gsub("[^[:alnum:] ]", " ", input$tests ), " +")[[1]]
+tests <- tests[tests!=""]
 
   clean_presence <- clean_coordinates(
       x = presence,
@@ -87,7 +92,7 @@ predictors_nc <- load_predictors(source = "from_cube",
       lon = "lon",
       lat = "lat",
       species_col = "scientific_name",
-      tests = input$tests,
+      tests = tests,
       threshold_env = 0.8,
        report = F,
    value = "clean"
@@ -104,7 +109,7 @@ write.table(clean_presence, output_clean_presence,
 
 
   output <- list("n_observations" =  nrow(presence),
-                 "n_clean" =  nrow(presence) - nrow(clean_presence),
+                 "n_clean" = nrow(clean_presence),
                   "clean_presence" = output_clean_presence
                   ) 
 jsonData <- toJSON(output, indent=2)

@@ -66,6 +66,7 @@ predictors_nc <-
 predictors_nc <- cube_to_raster(predictors_nc, format = "terra")
 predictors_nc <- fast_crop(predictors_nc, study_extent)
 
+head(clean_background)
 presence.vals <- add_predictors(clean_presence, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 1)
 bg.vals <- add_predictors(clean_background, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 0)
 presence.bg.vals <- dplyr::bind_rows(presence.vals, bg.vals)
