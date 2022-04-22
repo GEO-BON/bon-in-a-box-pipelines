@@ -38,7 +38,7 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const getLayoutedElements = (nodes, edges) => {
-  dagreGraph.setGraph({ rankdir: 'LR' });
+  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
 
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
@@ -55,11 +55,9 @@ const getLayoutedElements = (nodes, edges) => {
     node.targetPosition = 'left';
     node.sourcePosition = 'right';
 
-    // We are shifting the dagre node position (anchor=center center) to the top left
-    // so it matches the React Flow node anchor point (top left).
     node.position = {
-      x: nodeWithPosition.x - node.width / 2,
-      y: nodeWithPosition.y - node.height / 2,
+      x: nodeWithPosition.x,
+      y: nodeWithPosition.y
     };
 
     return node;
@@ -267,7 +265,6 @@ console.log(event)
             onDrop={onDrop}
             onDragOver={onDragOver}
             deleteKeyCode='Delete'
-            fitView
           >
             {toolTip && <div className="tooltip">
               {toolTip}
