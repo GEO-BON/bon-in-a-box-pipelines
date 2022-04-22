@@ -38,7 +38,7 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
 const getLayoutedElements = (nodes, edges) => {
-  dagreGraph.setGraph({ rankdir: direction });
+  dagreGraph.setGraph({ rankdir: 'LR' });
 
   nodes.forEach((node) => {
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
