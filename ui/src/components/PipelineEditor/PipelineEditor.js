@@ -37,8 +37,7 @@ const getId = () => `${id++}`;
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 
-const getLayoutedElements = (nodes, edges, direction = 'TB') => {
-  const isHorizontal = direction === 'LR';
+const getLayoutedElements = (nodes, edges) => {
   dagreGraph.setGraph({ rankdir: direction });
 
   nodes.forEach((node) => {
@@ -53,8 +52,8 @@ const getLayoutedElements = (nodes, edges, direction = 'TB') => {
 
   nodes.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = isHorizontal ? 'left' : 'top';
-    node.sourcePosition = isHorizontal ? 'right' : 'bottom';
+    node.targetPosition = 'left';
+    node.sourcePosition = 'right';
 
     // We are shifting the dagre node position (anchor=center center) to the top left
     // so it matches the React Flow node anchor point (top left).
@@ -188,13 +187,8 @@ console.log(event)
     [reactFlowInstance]
   )
 
-  const onLayout = useCallback(
-    (direction) => {
-      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
-        nodes,
-        edges,
-        direction
-      );
+  const onLayout = useCallback(() => {
+      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(nodes, edges);
 
       setNodes([...layoutedNodes]);
       setEdges([...layoutedEdges]);
@@ -280,7 +274,7 @@ console.log(event)
             </div>}
             
             <div className="save__controls">
-              <button onClick={() => onLayout('LR')}>Layout</button>
+              <button onClick={() => onLayout()}>Layout</button>
               <input type='file' id='file' ref={inputFile} accept="application/json"
                 onChange={onLoad} style={{ display: 'none' }} />
               <button onClick={loadFromFileBtnClick}>Load from file</button>
