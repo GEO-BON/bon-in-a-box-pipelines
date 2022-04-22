@@ -12,6 +12,8 @@ import ReactFlow, {
   MiniMap,
 } from 'react-flow-renderer/nocss';
 
+import dagre from 'dagre';
+
 import IONode from './IONode'
 import ConstantNode from './ConstantNode'
 
@@ -31,6 +33,42 @@ const nodeTypes = {
 
 let id = 0;
 const getId = () => `${id++}`;
+
+const dagreGraph = new dagre.graphlib.Graph();
+dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+const getLayoutedElements = (nodes, edges, direction = 'TB') => {
+  const isHorizontal = direction === 'LR';
+  dagreGraph.setGraph({ rankdir: direction });
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
+  });
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  dagre.layout(dagreGraph);
+
+  nodes.forEach((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id);
+    node.targetPosition = isHorizontal ? 'left' : 'top';
+    node.sourcePosition = isHorizontal ? 'right' : 'bottom';
+
+    // We are shifting the dagre node position (anchor=center center) to the top left
+    // so it matches the React Flow node anchor point (top left).
+    node.position = {
+      x: nodeWithPosition.x - node.width / 2,
+      y: nodeWithPosition.y - node.height / 2,
+    };
+
+    return node;
+  });
+
+  return { nodes, edges };
+};
+
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
@@ -150,6 +188,20 @@ console.log(event)
     [reactFlowInstance]
   )
 
+  const onLayout = useCallback(
+    (direction) => {
+      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(
+        nodes,
+        edges,
+        direction
+      );
+
+      setNodes([...layoutedNodes]);
+      setEdges([...layoutedEdges]);
+    },
+    [nodes, edges]
+  );
+
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
@@ -228,6 +280,7 @@ console.log(event)
             </div>}
             
             <div className="save__controls">
+              <button onClick={() => onLayout('LR')}>Layout</button>
               <input type='file' id='file' ref={inputFile} accept="application/json"
                 onChange={onLoad} style={{ display: 'none' }} />
               <button onClick={loadFromFileBtnClick}>Load from file</button>
