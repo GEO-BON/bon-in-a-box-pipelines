@@ -92,9 +92,16 @@ export function PipelineEditor(props) {
           return node
         }
 
-        let value = event.target.value
-        if(event.target.placeholder == ARRAY_PLACEHOLDER)
-          value = value.split(',')
+        let value
+        if(event.target.type == 'checkbox') {
+          value = event.target.checked
+        } else {
+          value = event.target.value
+
+          if(event.target.placeholder == ARRAY_PLACEHOLDER) {
+            value = value.split(',')
+          }
+        }
 
         return {
           ...node,

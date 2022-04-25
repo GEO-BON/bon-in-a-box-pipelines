@@ -15,6 +15,11 @@ inputs:
     description: a list of species
     type: text[]
     example: [Acer saccharum, Bubo scandiacus]
+  a_boolean:
+    label: A boolean value
+    description: The description of this value
+    type: boolean
+    example: true
 outputs:
   text:
     label: Text
