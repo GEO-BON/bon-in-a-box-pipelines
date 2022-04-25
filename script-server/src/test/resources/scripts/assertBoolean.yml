@@ -1,0 +1,12 @@
+script: assertBoolean.py
+inputs:
+  input_bool:
+    label: Some boolean
+    type: boolean
+    example: false
+outputs:
+  the_same:
+    label: The same boolean as in the inputs. But this crashes if not an array.
+    type: boolean
+    example: false
+description: "Sample python script fail if it doesn't receive a boolean."

@@ -88,13 +88,24 @@ internal class PipelineTest {
     }
 
     @Test
-    fun `given a pipeline receives an array_when ran_then input json created with array`() = runTest {
+    fun `given a pipeline with constant array_when ran_then input json created with array`() = runTest {
         val pipeline = Pipeline("arrayConst.json")
 
         pipeline.execute()
 
         assertEquals(
             """{"array":[11,12,13]}""",
+            outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!.filter { it.name == "input.json" }[0].readText())
+    }
+
+    @Test
+    fun `given a pipeline with boolean constant_when ran_then script input json created with boolean`() = runTest {
+        val pipeline = Pipeline("boolConst.json")
+
+        pipeline.execute()
+
+        assertEquals(
+            """{"input_bool":true}""",
             outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!.filter { it.name == "input.json" }[0].readText())
     }
 
