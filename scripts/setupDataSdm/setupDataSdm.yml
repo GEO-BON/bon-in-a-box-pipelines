@@ -1,0 +1,68 @@
+script: setupDataSdm.R
+inputs:
+  clean_presence:
+    label: presence
+    description: Path to the presence points
+    type: string
+    example: "/output/cleanCoordinates/modCleanCoordinates_R/fe62eaec2b4e1eff8cbf6a49e15ee0d5/clean_presence.tsv"
+  clean_background:
+    label: background
+    description: Path to the background point
+    type: string
+    example: "/output/selectBackground/selectBackground_R/495f044db01b852e6a435dd2acdc8632/background.tsv"
+  study_extent:
+    label: study extent
+    description: Path to the study extent shapefile
+    type: string
+    example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
+  layers: 
+    label: layers
+    description: layer names (predictors) as a list, or path to a list
+    type: string
+    example: "/output/loadPredictors/modLoadPredictors_R/446f714fcde6a956a32d31ae95555f08/nc_predictors.tsv"
+  proj_to:
+    label: projection
+    description: Projection system
+    type: string
+    example: "EPSG:6623"
+  spatial_res :
+    label: spatial resolution
+    description: Spatial resolution 
+    type: int
+    example: 1000 
+  partition_type :
+    label: partition type
+    description: Spatial resolution 
+    type: string
+    example: "boostrap" 
+  runs_n:
+    label: number of runs
+    description: number of runsn 
+    type: int
+    example: 2
+  boot_proportion:
+    label: bootstrap proportion
+    description: proportion of points to be sampled for bootstrap
+    type: float
+    example: 0.7
+  cv_partitions:
+    label: crossvalidation partitions
+    description: number of partitions in the crossvalidation
+    type: int
+    example: 5
+outputs:
+  presence_background:
+    label: presence_background
+    description: Some heat map that shows bla bla...
+    type: string
+  predictors:
+    label: predictors
+    description: Some heat map that shows bla bla...
+    type: string
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+references:
+  - text: Rick Bonney, Expanding the Impact of Citizen Science, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
+    doi: 10.1093/biosci/biab041
+  - text: Ruiping Yang, Yongkui Qi, Li Yang, Tao Chen, Aixing Deng, Jun Zhang, Zhenwei Song, Baoming Ge, Rotation regimes lead to significant differences in soil macrofaunal biodiversity and trophic structure with the changed soil properties in a rice-based double cropping system, Geoderma, 405, (115424), (2022).
+    doi: 10.1016/j.geoderma.2021.115424

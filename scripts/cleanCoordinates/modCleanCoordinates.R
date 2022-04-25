@@ -39,7 +39,7 @@ presence <- dplyr::rename(presence, scientific_name = scientificName)
 
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
 proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
-print(head(presence))
+
 mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
 
 # layers

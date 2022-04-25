@@ -32,6 +32,14 @@ print(input)
 if(!is.null(input$presence)) {
 
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
+
+presence <- CoordinateCleaner::cc_val(presence, lon = "decimalLongitude", 
+                                 lat = "decimalLatitude", verbose = T, value = "clean")
+
+presence <- CoordinateCleaner::cc_zero(presence, lon = "decimalLongitude", 
+                                        lat = "decimalLatitude", buffer = 0.5, 
+                                        verbose = T, value = "clean")
+
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
 proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
@@ -47,9 +55,14 @@ if(is.null(input$nb_sample)) {
     sample <- TRUE
   }
 
-layers <- strsplit(gsub("[^[:alnum:] ]", " ", input$layers), " +")[[1]]
-layers <- layers[layers!=""]
 
+layers <- strsplit(gsub("[^[:alnum:] ]", " ", input$layers), " +")
+
+if (length(layers) == 1) {
+  layers <- layers[[1]][layers[[1]]!=""]
+} else {
+layers <- input$layers
+}
 
 predictors_nc <- load_predictors(source = input$source,
   predictors_dir = input$tif_folder,
@@ -65,7 +78,7 @@ predictors_nc <- load_predictors(source = input$source,
             buffer.box = NULL),
                           
                            subset_layers = layers,
-                           remove_collinear = T,
+                           remove_collinear = F,
                            method = input$method,
                            method_cor_vif = input$method_cor_vif,
                            new_proj = input$proj_to,

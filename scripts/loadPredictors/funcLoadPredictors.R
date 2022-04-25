@@ -149,29 +149,6 @@ nc_names <- names(all_predictors)
 }
 
 
-extract_gdal_cube <- function(cube, n_sample = 5000, simplify = T) {
-  
-  x <- gdalcubes::dimension_values(cube)$x
-  y <- gdalcubes::dimension_values(cube)$y
-  
-  all_points <- expand.grid(x,y) %>% setNames(c("x", "y"))
-  
-  if (n_sample >= nrow(all_points)) {
-    value_points <- gdalcubes::extract_geom(cube, sf::st_as_sf(all_points, coords = c("x", "y"),
-                                               crs = gdalcubes::srs(cube))) 
-  } else {
-    sample_points <- all_points[sample(1:nrow(all_points), n_sample),]
-    value_points <- gdalcubes::extract_geom(cube, sf::st_as_sf(sample_points, coords = c("x", "y"),
-                                                               crs = gdalcubes::srs(cube))) 
-  }
-  
-  if (simplify) {
-    value_points <- value_points %>% dplyr::select(-FID, -time)
-  }
-  value_points
-}
-
-
 #' @name sample_spatial_obj
 #' @param predictors, a raster, either from raster or terra format
 #' @param method, The correlation method to be used:"vif.cor", "vif.step", "pearson", "spearman"

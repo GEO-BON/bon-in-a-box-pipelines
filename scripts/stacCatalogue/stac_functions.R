@@ -62,14 +62,16 @@ points_to_bbox <- function(xy, buffer = 0, proj_from = NULL, proj_to = NULL) {
     sp::coordinates(xy) <- colnames(xy)
     proj4string(xy) <- sp::CRS(proj_from)
   }
+  
   bbox <-  sf::st_buffer(sf::st_as_sfc(sf::st_bbox(xy)), dist =  buffer)
   
   if (!is.null(proj_to) ) {
     bbox <- bbox  %>%
       sf::st_transform(crs = sp::CRS(proj_to))
+    proj_from <- proj_to
   }
   
-  bbox %>% sf::st_bbox()
+  bbox %>% sf::st_bbox(crs = proj_from)
 }
 
 
@@ -162,7 +164,7 @@ load_cube <- function(stac_path =
     }
     
     # Create the extent (data cube projection)
-    bbox.proj <- points_to_bbox(proj.pts, buffer = buffer.box)
+    bbox.proj <- points_to_bbox(proj.pts, proj_from=srs.cube, buffer = buffer.box)
     left <- bbox.proj$xmin
     right <- bbox.proj$xmax
     bottom <- bbox.proj$ymin
@@ -172,7 +174,7 @@ load_cube <- function(stac_path =
     bbox.wgs84 <- bbox.proj %>%
       sf::st_bbox(crs = srs.cube) %>%
       sf::st_as_sfc() %>%
-      sf::st_transform(crs = 4326) %>%
+      sf::st_transform(crs = "EPSG:4326") %>%
       sf::st_bbox()
     
   } else {
@@ -193,7 +195,7 @@ load_cube <- function(stac_path =
                     bottom) %>%
       sf::st_bbox(crs = srs.cube) %>%
       sf::st_as_sfc() %>%
-      sf::st_transform(crs = 4326) %>%
+      sf::st_transform(crs = "EPSG:4326") %>%
       sf::st_bbox()
     
   }
@@ -207,7 +209,7 @@ load_cube <- function(stac_path =
   } else {
     it_obj_tmp <- s |> #think changing it for %>%
       rstac::stac_search(bbox = bbox.wgs84, collections = collections, 
-                         limit = limit) |> rstac::get_request()
+                         limit = limit) |> rstac::   post_request()
     
     datetime <- it_obj_tmp$features[[1]]$properties$datetime
     t0 <- datetime
@@ -378,7 +380,7 @@ load_cube_projection <- function(stac_path =
    
   
   it_obj <- s |>
-    stac_search(bbox = bbox.wgs84, collections = collections, limit = limit, datetime = datetime) |> get_request() # bbox in decimal lon/lat
+    rstac::stac_search(bbox = bbox.wgs84, collections = collections, datetime = datetime) |>post_request() # bbox in decimal lon/lat
   
   # If no layers is selected, get all the layers by default
   if (is.null(layers)) {
@@ -438,27 +440,22 @@ cube_to_raster <- function(cube, format = "raster") {
 }
 
 
-
 extract_gdal_cube <- function(cube, n_sample = 5000, simplify = T) {
   
-  x <- gdalcubes::dimension_values(cube)$x
-  print(x)
-  y <- gdalcubes::dimension_values(cube)$y
-  print(y)
-  all_points <- expand.grid(x,y) %>% setNames(c("x", "y"))
+  x_min <- min(gdalcubes::dimension_values(cube)$x)
+  x_max <- max(gdalcubes::dimension_values(cube)$x)
+  y_min <- min(gdalcubes::dimension_values(cube)$y)
+  y_max <- max(gdalcubes::dimension_values(cube)$y)
   
-  if (n_sample >= nrow(all_points)) {
-    print(1)
-    value_points <- gdalcubes::extract_geom(cube, sf::st_as_sf(all_points, coords = c("x", "y"),
-                                               crs = srs(cube))) 
-  } else {
-    print(2)
-    sample_points <- all_points[sample(1:nrow(all_points), n_sample),]
-    print(head(sample_points))
-    value_points <- gdalcubes::extract_geom(cube, sf::st_as_sf(sample_points, coords = c("x", "y"),
-                                                               crs = srs(cube))) 
-  }
+  #ensure that the number of samplis is smaller than the number of pixels
+  n_sample <- min(n_sample, dim(cube)[1]*dim(cube)[2])
+ 
+  x <- runif(n_sample, x_min, x_max)
+  y <- runif(n_sample, y_min, y_max)
   
+  df <- sf::st_as_sf(data.frame(x = x, y = y), coords = c("x", "y"), crs = srs(cube))
+  value_points <- gdalcubes::extract_geom(cube, df)
+
   if (simplify) {
     value_points <- value_points %>% dplyr::select(-FID, -time)
   }
@@ -480,15 +477,15 @@ get_info_collection <- function(stac_path =
   if(is.null(bbox)) {
     bbox <- c(xmin = -180, 
               xmax = 180,
-              ymax = 180,
-              ymin = -180)
+              ymax = 90,
+              ymin = -90)
   }
 
   
   # CreateRSTACQuery object with the subclass search containing all search field parameters 
   it_obj <- s |> #think changing it for %>%
     rstac::stac_search(bbox = bbox, collections = collections, 
-                       limit = limit) |> rstac::get_request()
+                       limit = limit) |> rstac::   post_request()
   
   layers <- unlist(lapply(it_obj$features, function(x){names(x$assets)}))
   temporal_extent <- unlist(lapply(it_obj$features, function(x){x$properties$datetime}))
