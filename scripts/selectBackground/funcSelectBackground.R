@@ -18,12 +18,12 @@ create_background <- function(
   density_bias = NULL,
   dist_buffer = NULL) {
   
-  study_extent_rast <- terra::rast(ext= extent(study_extent), res = resolution)
+  study_extent_rast <- terra::rast(ext = raster::extent(study_extent), res = resolution)
   terra::values(study_extent_rast) <- 1
   study_extent_rast <- fast_crop(study_extent_rast, study_extent)
-  
+print(study_extent_rast)
   proj <- terra::crs(study_extent, proj = T)
-
+print(proj)
   if (!is.null(mask)) study_extent_rast <- fast_crop(study_extent_rast, mask)
 
   if (method == "random") {
@@ -35,7 +35,7 @@ create_background <- function(
     backgr <- terra::spatSample(study_extent_rast,
                                 size = n, method="random", replace=FALSE, na.rm=T,
                                 xy=TRUE, as.points=FALSE, values=F)
-     
+     print(head(backgr))
   } else if (method == "inclusion_buffer") {
     obs <- obs %>% dplyr::select(lon, lat) %>% data.frame()
     # projecting observations coordinates

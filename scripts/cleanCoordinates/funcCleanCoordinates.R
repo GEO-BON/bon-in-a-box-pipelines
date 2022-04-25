@@ -109,9 +109,8 @@ clean_coordinates <- function(x,
     presvals <-  presvals[comp, ]
     
   } else if (inherits(predictors, "cube")){
-    #presvals <- extract_cube_values(predictors, x, "lon", "lat", srs)
-
-    presvals <- extract_geom(predictors, sf::st_as_sf(x, coords = c("lon", "lat"),
+  
+    presvals <- gdalcubes::extract_geom(predictors, sf::st_as_sf(x, coords = c("lon", "lat"),
                                                          crs = srs)) %>% dplyr::select(-time)
 
     x <- x %>% dplyr::mutate(FID = as.integer(rownames(x)))
