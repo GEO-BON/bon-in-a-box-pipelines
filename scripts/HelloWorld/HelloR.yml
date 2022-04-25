@@ -10,6 +10,11 @@ inputs:
     description: Intensity of bla bla, from [1,10]
     type: int
     example: 3
+  species:
+    label: Species
+    description: a list of species
+    type: text[]
+    example: [Acer saccharum, Bubo scandiacus]
 outputs:
   text:
     label: Text

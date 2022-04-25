@@ -45,10 +45,16 @@ class Pipeline(descriptionFile: File) {
                     NODE__TYPE_CONSTANT -> {
                         val nodeData = node.getJSONObject(NODE__DATA)
                         val type = nodeData.getString(NODE__DATA__TYPE)
-                        constants[id] = when (type) {
-                            "int" -> ConstantPipe(type, nodeData.getInt(NODE__DATA__VALUE))
-                            "float" -> ConstantPipe(type, nodeData.getFloat(NODE__DATA__VALUE))
-                            else -> ConstantPipe(type, nodeData.optString(NODE__DATA__VALUE))
+
+                        constants[id] = if(type.endsWith("[]")) {
+                            ConstantPipe(type, nodeData.getJSONArray(NODE__DATA__VALUE).toList())
+                        } else {
+                            when (type) {
+                                "int" -> ConstantPipe(type, nodeData.getInt(NODE__DATA__VALUE))
+                                "float" -> ConstantPipe(type, nodeData.getFloat(NODE__DATA__VALUE))
+                                // Everything else is read as text
+                                else -> ConstantPipe(type, nodeData.optString(NODE__DATA__VALUE))
+                            }
                         }
                     }
                     NODE__TYPE_OUTPUT -> outputIds.add(id)

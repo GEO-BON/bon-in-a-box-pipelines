@@ -53,10 +53,11 @@ See [example](/scripts/HelloWorld/HelloR.yml)
 Each input and output must declare a type, *in lowercase.* The following are accepted:
 | "type" attribute               | UI rendering                 |
 |--------------------------------|------------------------------|
-| float                          | Plain text                   |
+| float, float[]                 | Plain text                   |
 | image/jpg                      | \<img> tag                   |
 | image/tiff;application=geotiff | Map widget (leaflet)         |
-| int                            | Plain text                   |
+| int, int[]                     | Plain text                   |
+| text, text[]                   | Plain text                   |
 | text/csv                       | HTML table (partial content) |
 | text/plain                     | Plain text                   |
 | text/tab-separated-values      | HTML table (partial content) |

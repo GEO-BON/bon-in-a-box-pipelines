@@ -87,5 +87,16 @@ internal class PipelineTest {
         }
     }
 
+    @Test
+    fun `given a pipeline receives an array_when ran_then input json created with array`() = runTest {
+        val pipeline = Pipeline("arrayConst.json")
+
+        pipeline.execute()
+
+        assertEquals(
+            """{"array":[11,12,13]}""",
+            outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!.filter { it.name == "input.json" }[0].readText())
+    }
+
     // TODO: With cache: Test that a script will not be ran again if already running. We should be able to listen to it, even if it this is in *another* pipeline!
 }
