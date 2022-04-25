@@ -57,7 +57,7 @@ function ScriptIO({children, desc, setToolTip, onDoubleClick}) {
     setToolTip(<>
       {desc.type && <>{desc.type} <br /></>}
       {desc.description && <>{desc.description} <br /></>}
-      {desc.example && <>Example: {desc.example}</>}
+      {desc.example && <>Example: {desc.example.toString()}</>}
     </>)
   }
 

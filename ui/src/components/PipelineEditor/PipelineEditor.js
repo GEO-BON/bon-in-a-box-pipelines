@@ -12,6 +12,8 @@ import ReactFlow, {
   MiniMap,
 } from 'react-flow-renderer/nocss';
 
+import dagre from 'dagre';
+
 import IONode from './IONode'
 import ConstantNode from './ConstantNode'
 
@@ -31,6 +33,39 @@ const nodeTypes = {
 
 let id = 0;
 const getId = () => `${id++}`;
+
+const dagreGraph = new dagre.graphlib.Graph();
+dagreGraph.setDefaultEdgeLabel(() => ({}));
+
+const getLayoutedElements = (nodes, edges) => {
+  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
+  });
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  dagre.layout(dagreGraph);
+
+  nodes.forEach((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id);
+    node.targetPosition = 'left';
+    node.sourcePosition = 'right';
+
+    node.position = {
+      x: nodeWithPosition.x,
+      y: nodeWithPosition.y
+    };
+
+    return node;
+  });
+
+  return { nodes, edges };
+};
+
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
@@ -150,6 +185,15 @@ console.log(event)
     [reactFlowInstance]
   )
 
+  const onLayout = useCallback(() => {
+      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(nodes, edges);
+
+      setNodes([...layoutedNodes]);
+      setEdges([...layoutedEdges]);
+    },
+    [nodes, edges]
+  );
+
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
@@ -221,13 +265,13 @@ console.log(event)
             onDrop={onDrop}
             onDragOver={onDragOver}
             deleteKeyCode='Delete'
-            fitView
           >
             {toolTip && <div className="tooltip">
               {toolTip}
             </div>}
             
             <div className="save__controls">
+              <button onClick={() => onLayout()}>Layout</button>
               <input type='file' id='file' ref={inputFile} accept="application/json"
                 onChange={onLoad} style={{ display: 'none' }} />
               <button onClick={loadFromFileBtnClick}>Load from file</button>
