@@ -15,7 +15,7 @@ import ReactFlow, {
 import dagre from 'dagre';
 
 import IONode from './IONode'
-import ConstantNode from './ConstantNode'
+import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
 
 const initialNodes = [
   /*{
@@ -41,6 +41,7 @@ const getLayoutedElements = (nodes, edges) => {
   dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
 
   nodes.forEach((node) => {
+    console.log(node.width)
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
   });
 
@@ -56,8 +57,8 @@ const getLayoutedElements = (nodes, edges) => {
     node.sourcePosition = 'right';
 
     node.position = {
-      x: nodeWithPosition.x,
-      y: nodeWithPosition.y
+      x: nodeWithPosition.x - node.width,
+      y: nodeWithPosition.y - node.height / 2
     };
 
     return node;
@@ -88,10 +89,13 @@ export function PipelineEditor(props) {
     setNodes((nds) =>
       nds.map((node) => {
         if(node.id !== event.target.id) {
-          return node;
+          return node
         }
 
-        const value = event.target.value;
+        let value = event.target.value
+        if(event.target.placeholder == ARRAY_PLACEHOLDER)
+          value = value.split(',')
+
         return {
           ...node,
           data: {
