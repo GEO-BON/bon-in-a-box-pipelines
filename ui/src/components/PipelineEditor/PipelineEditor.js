@@ -15,7 +15,7 @@ import ReactFlow, {
 import dagre from 'dagre';
 
 import IONode from './IONode'
-import ConstantNode from './ConstantNode'
+import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
 
 const initialNodes = [
   /*{
@@ -88,10 +88,13 @@ export function PipelineEditor(props) {
     setNodes((nds) =>
       nds.map((node) => {
         if(node.id !== event.target.id) {
-          return node;
+          return node
         }
 
-        const value = event.target.value;
+        let value = event.target.value
+        if(event.target.placeholder == ARRAY_PLACEHOLDER)
+          value = value.split(',')
+
         return {
           ...node,
           data: {

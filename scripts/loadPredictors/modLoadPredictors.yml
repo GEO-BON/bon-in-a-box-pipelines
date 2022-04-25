@@ -28,7 +28,7 @@ inputs:
   layers: 
     label: layers
     description: names of layers to select
-    type: vector
+    type: text[]
     example: ["bio1", "bio2", "bio4"]
   method: 
     label: method
