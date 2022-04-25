@@ -32,49 +32,14 @@ print("Inputs: ")
 print(input)
 
 
-clean_presence <- read.table(file = input$clean_presence, sep = '\t', header = TRUE) 
-clean_background <- read.table(file = input$clean_background, sep = '\t', header = TRUE) 
-study_extent <- sf::st_read(input$study_extent)
-
-bbox <- sf::st_bbox(study_extent, crs = input$proj_to)
-
-# layers
-if (file.exists(input$layers)) {
-
-layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
-
-  } else {
-    layers <- input$layers
-  }
-
-predictors_nc <- 
-  load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
-            limit = 5000, 
-            collections = c("chelsa-clim"), 
-            use.obs = F,
-            buffer.box = 0,
-            layers = layers,
-            bbox = bbox,
-            srs.cube = input$proj_to,
-            t0 = "1981-01-01",
-            t1 = "1981-01-01",
-            spatial.res = 1000, # in meters
-            temporal.res = "P1Y",
-            aggregation = "mean",
-            resampling = "near") 
-
-predictors_nc <- cube_to_raster(predictors_nc, format = "terra")
-predictors_nc <- fast_crop(predictors_nc, study_extent)
-
-head(clean_background)
-presence.vals <- add_predictors(clean_presence, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 1)
-bg.vals <- add_predictors(clean_background, lon = "lon", lat = "lat", predictors = predictors_nc) %>% dplyr::mutate(pa = 0)
-presence.bg.vals <- dplyr::bind_rows(presence.vals, bg.vals)
+presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE) 
+predictors <- terra::rast(input$predictors)
 
 partition_type <-  c("block")
-mod_tuning <- run_maxent(presence.bg.vals, 
+mod_tuning <- run_maxent(presence_background, 
                          with_raster = F, # can be set to F to speed up
                          algorithm = "maxent.jar",
+                         layers = names(predictors),
                          predictors = NULL,
                          partition_type = partition_type,
                          factors = NULL,
@@ -86,26 +51,45 @@ mod_tuning <- run_maxent(presence.bg.vals,
                          parallelType = "doParallel")
 
 res_tuning <- mod_tuning@results
-
 tuned_param <- select_param(res_tuning, method = "p10", list = F)
 
-output_pred <- file.path(outputFolder, "prediction.tif")
-output_eval <- file.path(outputFolder, "eval.tsv")
 
-write.table(res_tuning, output_eval,
-             append = F, row.names = F, col.names = T, sep = "\t")
 
-predictors_nc <- raster::stack(predictors_nc)
-pred_pres <- predict_maxent(mod_tuning,
-                            algorithm = "maxent.jar",
-                            param = tuned_param,
-                            predictors = predictors_nc, 
+predictors <- raster::stack(predictors)
+
+
+pred_runs <- predict_maxent_2(presence_background, 
+  algorithm = "maxent.jar", 
+                           predictors = predictors,
+                           layers = names(predictors),
+                           rm = 1, 
+                           fc = "L",
+                           type = "cloglog",
                            mask = NULL,
-                           type = "cloglog")
-raster::writeRaster(pred_pres, output_pred, overwrite = T)
+                           parallel = T,
+                           updateProgress = T,
+                           uncertainty = T,
+                           parallelType = "doParallel",
+                           factors = c(),
+                           output_folder = outputFolder)
 
-  output <- list("prediction_map" =  output_pred,
-                 "output_eval" =  output_eval
+
+output_runs <- file.path(outputFolder, "pred_runs.tif")
+raster::writeRaster(x = pred_runs,
+                          filename = output_runs,
+                          overwrite = TRUE)
+
+
+uncertainty <- do_uncertainty(output_runs)  
+
+output_uncertainty <- file.path(outputFolder, "uncertainty.tif")
+raster::writeRaster(x = uncertainty,
+                          output_uncertainty,
+                          overwrite = TRUE)
+ 
+output <- list("pred_runs" = output_runs,
+  "uncertainty" =  output_uncertainty
                   ) 
+
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

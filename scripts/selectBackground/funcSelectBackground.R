@@ -8,43 +8,38 @@
 #' @export
 
 create_background <- function(
-  predictors, 
-  species = NULL,
+  species,
+  study_extent,
+  resolution,
   mask = NULL,
   method = "random",
   n = 10000,  
   obs = NULL,
-  lon = "lon",
-  lat = "lat",
   density_bias = NULL,
   dist_buffer = NULL) {
   
-  if (inherits(predictors, "cube")) {
-    predictors <- cube_to_raster(predictors, format = "terra")
-  }
-  proj <- terra::crs(predictors, proj = T)
-  # Create on single layer where a cell is NA if at least one of the layers is NA
-  # to make sure nackground points won't be selected in NA's cells
-  if (!is.null(mask)) predictors <- fast_crop(predictors, mask)
-  #layer_na <- terra::tapp(predictors, index = c(rep(1, terra::nlyr(predictors))), 
-   #                       fun = sum, na.rm = F)
+  study_extent_rast <- terra::rast(ext= extent(study_extent), res = resolution)
+  terra::values(study_extent_rast) <- 1
+  study_extent_rast <- fast_crop(study_extent_rast, study_extent)
   
-  layer_na  <- predictors[[1]]
+  proj <- terra::crs(study_extent, proj = T)
+
+  if (!is.null(mask)) study_extent_rast <- fast_crop(study_extent_rast, mask)
+
   if (method == "random") {
     
     # all the cells have the same probability to be selected
     
     message(sprintf("Selecting %i background point based on %s method.", n, method  ))
     
-    backgr <- terra::spatSample(layer_na,
+    backgr <- terra::spatSample(study_extent_rast,
                                 size = n, method="random", replace=FALSE, na.rm=T,
                                 xy=TRUE, as.points=FALSE, values=F)
-    
-    
+     
   } else if (method == "inclusion_buffer") {
-    obs <- obs %>% dplyr::select(dplyr::all_of(c(lon, lat))) %>% data.frame()
+    obs <- obs %>% dplyr::select(lon, lat) %>% data.frame()
     # projecting observations coordinates
-    obs_points <- project_coords(obs, lon, lat, proj)
+    obs_points <- project_coords(obs, "lon", "lat", proj)
     
     if (is.null(dist_buffer)) {
       
@@ -57,13 +52,13 @@ create_background <- function(
     
     # Creating the buffer
     
-    buffer.shape <- rgeos::gBuffer(spgeom = obs_points,
+    buffer_shape <- rgeos::gBuffer(spgeom = obs_points,
                                    byid = FALSE, width = dist_buffer)
     # crops the predictors to that shape to rasterize
-    layer_na <- fast_crop(layer_na,  buffer.shape)
+    study_extent_rast <- fast_crop(study_extent_rast,  buffer_shape)
     
     message(sprintf("Trying selecting %i background point based on %s method.", n ,method  ))
-    backgr <- terra::spatSample(layer_na,
+    backgr <- terra::spatSample(study_extent_rast,
                                 size = n, method="random", replace=FALSE, na.rm=T,
                                 xy=TRUE, as.points=FALSE, values=F)
     
@@ -73,10 +68,10 @@ create_background <- function(
     
   } else if (method == "weighted_density") {
     
-    layer_na <- terra::app(layer_na, fun=function(x){ x[!is.na(x)] <- 0; return(x)} )
+    study_extent_rast <- terra::app(study_extent_rast, fun=function(x){ x[!is.na(x)] <- 0; return(x)} )
     
     # densityRaster cells set to NA if NA in the layerSummarized
-    density_bias <-terra::tapp(c(density_bias, layer_na), index = c(1, 1), fun = sum, na.rm = F)
+    density_bias <-terra::tapp(c(density_bias, study_extent_rast), index = c(1, 1), fun = sum, na.rm = F)
     
     message(sprintf("Selecting %i background point based on %s method.", n ,method  ))
     backgr <- terra::spatSample(density_bias,

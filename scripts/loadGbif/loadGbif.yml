@@ -4,12 +4,12 @@ inputs:
     label: species names
     description: scientific name of the species
     type: string
-    example: "Panthera onca"
+    example: "Glyptemys insculpta"
   limit:
     label: limit
     description: maximum number of observations to load
     type: int
-    example: 5000
+    example: 2000
 outputs:
   n_presence:
     label: number of presence points

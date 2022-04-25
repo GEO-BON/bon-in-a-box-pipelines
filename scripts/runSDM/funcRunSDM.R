@@ -10,6 +10,7 @@
 
 run_maxent <- function(presence.bg, with_raster = F,
                         algorithm = "maxnet",
+                        layers = c(),
                         factors = NULL,
                         predictors = NULL,
                         partition_type = "crossvalidation",
@@ -39,9 +40,9 @@ run_maxent <- function(presence.bg, with_raster = F,
     
     
   } else {
-    covars <- names(presence)[-which(names(presence) %in% c("id", "scientific_name",  "pa"))]
-    ENMmodel <- ENMeval::ENMevaluate(occs = presence[,covars], 
-                            bg = background[,covars],  
+    layers <- c("lon", "lat", layers)
+    ENMmodel <- ENMeval::ENMevaluate(occs = presence[,layers], 
+                            bg = background[,layers],  
                             algorithm = algorithm,
                             categoricals = factors,
                             partitions = partition_type, 
@@ -226,3 +227,91 @@ binarize_pred <- function(sdm, threshold) {
   sdm[sdm >= threshold] <- 1
   return(sdm)
 }
+
+
+predict_maxent_2 <- function(presence_background, 
+  algorithm, 
+                           predictors = NULL,
+                           layers = NULL,
+                           rm = 1, 
+                           fc = "L",
+                           type = "cloglog",
+                           mask = NULL,
+                           parallel = T,
+                           updateProgress = T,
+                           uncertainty = T,
+                           parallelType = "doParallel",
+                           factors = c(),
+                           output_folder = getwd()) {
+  
+  runs <- names(presence_background %>% 
+                  dplyr:: select(starts_with("run")))
+  pred_runs <- NULL
+  
+  for (i in runs) {
+    group.all <- presence_background %>% dplyr::select(all_of(c(i, "scientific_name", "lon", "lat", "pa", layers)))
+    group_folds <- group.all[,1]
+    group  <- group_folds[presence_background$pa == 1]
+    bg.grp <- group_folds[presence_background$pa == 0]
+    occurrences <- group.all[group.all$pa == 1, c("lon", "lat")]#recria occs
+    backgr      <- group.all[group.all$pa == 0, c("lon", "lat")]
+    #para cada grupo
+    for (g in setdiff(unique(group), 0)) {
+      #excluding the zero allows for bootstrap. only 1 partition will run
+      message(paste("run number", i, "part. nb.",
+                    g))
+      pres_train <- occurrences[group != g, ]
+      if (nrow(occurrences) == 1) #only distance algorithms can be run
+        pres_train <- occurrences[group == g, ]
+      pres_test  <- occurrences[group == g, ]
+      backg_test <- backgr[bg.grp == g, ]
+      presence_bg_train <- group.all[which(group.all[,1] == g),]
+      
+      presence <- presence_bg_train %>% dplyr::filter(pa == 1) %>% data.frame()
+      background <- presence_bg_train %>% dplyr::filter(pa == 0) %>% data.frame()
+      
+      mod_tuning <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat", layers)], 
+                                         bg = background[, c("lon", "lat", layers)],  
+                                         algorithm = "maxent.jar",
+                                         categoricals = factors,
+                                         partitions = "none", 
+                                         tune.args = list(fc = fc, rm = rm),
+                                         parallel =  parallel,
+                                         updateProgress = updateProgress,
+                                         parallelType = parallelType)
+      
+      tuned_param <- sprintf("fc.%s_rm.%s", fc, rm)
+      pred_pres <- dismo::predict(mod_tuning@models[[tuned_param]], predictors,
+                                  args = sprintf("outputformat=%s", type))
+
+        if (inherits(pred_runs, "RasterLayer") || inherits(pred_runs, "RasterStack")) {
+              pred_runs <- raster::stack(pred_runs, pred_pres)
+         
+        } else {
+           pred_runs <-  pred_pres 
+           }
+      
+ 
+
+    }  
+  }
+  
+  return(pred_runs)
+  }
+
+
+  do_uncertainty <- function(path) {
+
+    pred_rasters <- terra::rast(path) 
+
+    if (terra::nlyr(pred_rasters) == 1) message("one single prediction - not calculating uncertainty.")
+    
+    if (terra::nlyr(pred_rasters) > 1) {
+      raster_uncertainty <- terra::app(pred_rasters, fun = function(i) {max(i) - min(i) })
+      names(raster_uncertainty) <- "raw_uncertainty"
+     
+    }
+
+return(raster_uncertainty)
+  }
+  

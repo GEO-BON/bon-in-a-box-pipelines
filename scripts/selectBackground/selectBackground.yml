@@ -4,12 +4,7 @@ inputs:
     label: study_extent
     description: Path to a .shp file representing the extent to sample the background points from.
     type: string
-    example: "/output/studyExtent/studyExtent_R/a0f5047b6fd1ca648d2714e9ac1819d9/study_extent.shp"
-  proj_to:
-    label: projection
-    description: projection of study_extent
-    type: string
-    example: "EPSG:6623"
+    example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
   method_background: 
     label: method_background
     description: method used to sample background points
@@ -24,12 +19,7 @@ inputs:
     label: species
     description: scientific name of the species
     type: string
-    example: "Panthera onca"
-  layers: 
-    label: layers
-    description: list of layers names (predictors)
-    type: string
-    example: ["bio1", "bio2", "bio4"]
+    example: "Glyptemys insculpta"
   spatial_res :
     label: spatial resolution
     description: spatial resolution, only used if predictors are loaded from a stac catalogue. 

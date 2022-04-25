@@ -1,25 +1,15 @@
 script: modRunSDM.R
 inputs:
-  clean_presence:
-    label: presence
-    description: Path to the presence points
-    type: string
-    example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
-  clean_background:
+  presence_background:
     label: background
     description: Path to the background point
     type: string
-    example: "/output/selectBackground/selectBackground_R/91768c70f430287fe46f5a86fb557109/background.tsv"
-  study_extent:
-    label: study extent
-    description: Path to the study extent shapefile
-    type: string
-    example: "/output/studyExtent/studyExtent_R/a0f5047b6fd1ca648d2714e9ac1819d9/study_extent.shp"
-  layers: 
-    label: layers
+    example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/presence_background.tsv"
+  predictors: 
+    label: predictors
     description: layer names (predictors) as a list, or path to a list
     type: string
-    example: "/output/loadPredictors/modLoadPredictors_R/446f714fcde6a956a32d31ae95555f08/nc_predictors.tsv"
+    example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/predictors.tif"
   proj_to:
     label: projection
     description: Projection system
@@ -31,14 +21,14 @@ inputs:
     type: int
     example: 1000  
 outputs:
-  prediction_map:
-    label: Heat map
-    description: Some heat map that shows bla bla...
-    type: image/tiff;application=geotiff
-  output_eval:
-     label: output_eval
+  output_uncertainty:
+     label: uncertainty
      description: table with observations from GBIF
-     type: text/tab-separated-values
+     type: image/tiff;application=geotiff
+  output_runs:
+     label: runs
+     description: table with observations from GBIF
+     type: image/tiff;application=geotiff
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
