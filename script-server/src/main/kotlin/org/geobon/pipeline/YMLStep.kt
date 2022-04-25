@@ -14,14 +14,14 @@ abstract class YMLStep(
     override fun validateStepInputs(): String {
         val inputsFromYml = readInputs(yamlParsed)
 
-        if(inputs.size != inputsFromYml.size) {
+        if (inputs.size != inputsFromYml.size) {
             return "Bad number of inputs.\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
         }
 
         // Validate presence and type of each input
         inputsFromYml.forEach { (inputKey, expectedType) ->
             inputs[inputKey]?.let {
-                if(it.type != expectedType) {
+                if (it.type != expectedType) {
                     return "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected."
                 }
             } ?: return "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
@@ -56,13 +56,18 @@ abstract class YMLStep(
         /**
          * Since both Input and output look alike, function to read key and type is in common.
          */
-        private fun readIO(label:String, yamlParsed: Map<String, Any>, section:String, toExecute:(String, String) -> Unit) {
+        private fun readIO(
+            label: String,
+            yamlParsed: Map<String, Any>,
+            section: String,
+            toExecute: (String, String) -> Unit
+        ) {
             yamlParsed[section]?.let {
-                if(it is Map<*, *>) {
+                if (it is Map<*, *>) {
                     it.forEach { (key, description) ->
                         key?.let {
                             //println("Key valid: $key")
-                            if(description is Map<*, *>) {
+                            if (description is Map<*, *>) {
                                 //println("description is a map")
                                 description[TYPE]?.let { type ->
                                     //println("Type valid: $type")
