@@ -42,7 +42,6 @@ const getLayoutedElements = (nodes, edges) => {
   dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
 
   nodes.forEach((node) => {
-    console.log(node.width)
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
   });
 
