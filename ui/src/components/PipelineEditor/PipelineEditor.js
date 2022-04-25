@@ -10,6 +10,7 @@ import ReactFlow, {
   useEdgesState,
   Controls,
   MiniMap,
+  Position,
 } from 'react-flow-renderer/nocss';
 
 import dagre from 'dagre';
@@ -161,28 +162,27 @@ console.log(event)
         y: event.clientY - reactFlowBounds.top,
       });
 
-      let data;
+      const newNode = {
+        id: getId(),
+        type,
+        position,
+      };
+
       switch (type) {
         case 'io':
-          data = { 
+          newNode.data = { 
             descriptionFile: descriptionFile,
             setToolTip: setToolTip,
             injectConstant: injectConstant
            }
           break;
         case 'output':
-          data = { label: 'Output' }
+          newNode.data = { label: 'Output' }
+          newNode.targetPosition = Position.Left
           break;
         default:
           throw Error("unknown node type")
       }
-
-      const newNode = {
-        id: getId(),
-        type,
-        position,
-        data: data,
-      };
 
       setNodes((nds) => nds.concat(newNode));
     },
