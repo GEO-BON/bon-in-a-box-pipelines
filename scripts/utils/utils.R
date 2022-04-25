@@ -83,6 +83,7 @@ project_coords <- function(xy, lon = "lon", lat = "lat", proj_from, proj_to = NU
 #' @param proj_from character, initial projection of the xy coordinates
 #' @param proj_to character, target projection 
 #' @return a box extent
+
 points_to_bbox <- function(xy, buffer = 0, proj_from = NULL, proj_to = NULL) {
   if (!inherits(xy, "SpatialPoints")) {
     sp::coordinates(xy) <- colnames(xy)
