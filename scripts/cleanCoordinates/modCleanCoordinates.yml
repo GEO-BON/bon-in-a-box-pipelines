@@ -17,7 +17,7 @@ inputs:
   tests: 
     labels: cleaning_tests
     description: tests to run from all tests available - capitals, centroids, equal, gbif, institutions, duplicates, urban, seas, zeros, env
-    type: vector
+    type: text[]
     example: [ "equal",
                                "zeros", 
                                "duplicates", 
