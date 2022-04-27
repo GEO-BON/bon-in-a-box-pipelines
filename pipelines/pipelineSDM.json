@@ -406,7 +406,7 @@
         "y": 353.5
       },
       "data": {
-        "type": "vector",
+        "type": "text[]",
         "value": [
           "bio1",
           "bio2",
@@ -810,7 +810,7 @@
         "y": 191.99999999999991
       },
       "data": {
-        "type": "vector",
+        "type": "text[]",
         "value": [
           "equal",
           "zeros",

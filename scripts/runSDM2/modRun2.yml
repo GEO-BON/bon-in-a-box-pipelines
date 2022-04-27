@@ -14,7 +14,7 @@ inputs:
     example: "/scripts/runSDM2/data/shape_study_area_nolakes_nad83.shp"
   layers: 
     description: Occurrence data, some description here
-    type: vector
+    type: text[]
     example: ["elevation", "prec", "temp"]
   tif_folder:
     label: tif_folder

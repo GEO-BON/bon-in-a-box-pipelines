@@ -22,7 +22,7 @@ inputs:
     example: "EPSG:4326"
   layers:
     description: Projection 
-    type: vector
+    type: text[]
     example: "bio4"
   buffer.box :
     description: Projection 
