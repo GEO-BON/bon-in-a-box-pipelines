@@ -125,4 +125,6 @@ internal class ScriptStepTest {
 
     }
 
+    // TODO with cache: If a script is ran in *another* pipeline with the same parameters, we should be able to listen to it!
+
 }

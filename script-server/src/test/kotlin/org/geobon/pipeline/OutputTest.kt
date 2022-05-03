@@ -15,7 +15,7 @@ internal class OutputTest {
         val expected = "Bouh!"
         val step = EchoStep(expected)
 
-        assertEquals(expected, step.outputs[EchoStep.KEY]?.pull())
+        assertEquals(expected, step.outputs[EchoStep.ECHO]?.pull())
     }
 
     @Test
@@ -32,7 +32,7 @@ internal class OutputTest {
         val step = EchoStep("Bouh!")
 
         assertThrows<Exception> {
-            println(step.outputs[EchoStep.BAD_KEY]!!.pull())
+            println(step.outputs[EchoStep.NO_ECHO]!!.pull())
         }
     }
 }
