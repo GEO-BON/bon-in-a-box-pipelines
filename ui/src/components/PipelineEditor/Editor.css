@@ -1,5 +1,7 @@
 aside.scriptChooser {
     padding: 15px 10px;
+    flex:1;
+    overflow: scroll;
 }
 
 aside.scriptChooser .description {
