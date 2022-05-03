@@ -6,11 +6,14 @@ aside.scriptChooser .description {
     margin-bottom: 10px;
 }
 
-.dndflow {
+#editorLayout {
     flex-direction: column;
     display: flex;
-    flex-grow: 1;
     height: 100%;
+}
+
+.dndflow {
+    flex:1;
 }
 
 .tooltip {

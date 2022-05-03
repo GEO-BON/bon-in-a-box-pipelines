@@ -259,7 +259,7 @@ console.log(event)
 
 
 
-  return <>
+  return <div id='editorLayout'>
     <p>Need help? Check out <a href="https://github.com/GEO-BON/biab-2.0/blob/main/docs/pipeline-editor.md" target='_blank' rel='noreferrer'>the documentation</a></p>
     <div className="dndflow">
       <ReactFlowProvider>
@@ -307,5 +307,5 @@ console.log(event)
         </div>
       </ReactFlowProvider>
     </div>
-  </>
+  </div>
 };

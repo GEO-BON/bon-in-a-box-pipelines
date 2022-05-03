@@ -15,7 +15,6 @@ export function Layout(props) {
   // Main section size
   useEffect(() => {
     let nav = document.getElementsByTagName('nav')[0];
-    console.log("nav height="+nav.offsetHeight)
     setMainHeight(windowHeight - nav.offsetHeight)
   }, [windowHeight])
 
