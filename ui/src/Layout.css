@@ -17,8 +17,11 @@ a.active {
 
 .left-pane {
   float: left;
-  min-height: 100vh;
   background-color: #f3f3f1;
+
+  flex-direction: column;
+  display: flex;
+  height: 100vh;
 }
 
 .right-content {
