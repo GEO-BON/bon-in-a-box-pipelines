@@ -15,12 +15,13 @@ export function Layout(props) {
   // Main section size
   useEffect(() => {
     let nav = document.getElementsByTagName('nav')[0];
+    console.log("nav height="+nav.offsetHeight)
     setMainHeight(windowHeight - nav.offsetHeight)
   }, [windowHeight])
 
   return (
     <>
-      <div className="left-banner">
+      <div className="left-pane">
         <img id="logo" src={BiaBLogo} alt="BON in a Box logo" />
         {props.left}
       </div>

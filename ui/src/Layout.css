@@ -15,7 +15,7 @@ a.active {
   cursor: pointer;
 }
 
-.left-banner {
+.left-pane {
   float: left;
   min-height: 100vh;
   background-color: #f3f3f1;
