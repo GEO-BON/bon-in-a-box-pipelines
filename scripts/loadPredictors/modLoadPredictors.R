@@ -1,7 +1,7 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
+packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
