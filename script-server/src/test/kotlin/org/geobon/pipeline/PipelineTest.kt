@@ -109,5 +109,4 @@ internal class PipelineTest {
             outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!.filter { it.name == "input.json" }[0].readText())
     }
 
-    // TODO: With cache: Test that a script will not be ran again if already running. We should be able to listen to it, even if it this is in *another* pipeline!
 }

@@ -3,15 +3,18 @@ package org.geobon.pipeline
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.teststeps.ConcatenateStep
+import org.geobon.pipeline.teststeps.EchoStep
+import org.geobon.pipeline.teststeps.EchoStep.Companion.ECHO
+import org.geobon.pipeline.teststeps.EchoStep.Companion.SOUND
 import org.geobon.script.outputRoot
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
+import kotlin.test.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
 
 @ExperimentalCoroutinesApi
-internal class SamplePipelineTest {
+internal class StepsPullTest {
 
     @BeforeEach
     fun setupOutputFolder() {
@@ -90,6 +93,22 @@ internal class SamplePipelineTest {
         assertEquals(234.0, step1.outputs["randomness"]!!.value)
         assertNull(step2.outputs["increment"]!!.value)
         assertNull(finalStep.outputs["increment"]!!.value)
+    }
+
+    @Test
+    fun `given single origin and output but multiple branches_when ran_then origin step ran only once`() = runTest {
+        val origin = ConstantPipe("text", "Echo!")
+        val mainBranch = EchoStep(mutableMapOf(SOUND to origin))
+        val branch1 = EchoStep(mutableMapOf(SOUND to mainBranch.outputs[ECHO]!!))
+        val branch2 = EchoStep(mutableMapOf(SOUND to mainBranch.outputs[ECHO]!!))
+        val merged = ConcatenateStep(mutableMapOf("1" to branch1.outputs[ECHO]!!, "2" to branch2.outputs[ECHO]!!))
+
+        val result = merged.outputs[ConcatenateStep.STRING]!!.pull()
+
+        assertEquals("Echo!Echo!", result)
+        assertEquals(1, branch1.executeCount)
+        assertEquals(1, branch2.executeCount)
+        assertEquals(1, mainBranch.executeCount)
     }
 
 }

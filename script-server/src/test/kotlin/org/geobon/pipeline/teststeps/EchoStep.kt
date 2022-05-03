@@ -2,6 +2,7 @@ package org.geobon.pipeline.teststeps
 
 import org.geobon.pipeline.ConstantPipe
 import org.geobon.pipeline.Output
+import org.geobon.pipeline.Pipe
 import org.geobon.pipeline.Step
 
 /**
@@ -9,23 +10,29 @@ import org.geobon.pipeline.Step
  * - Transfers param sound to output KEY.
  * - Output BAD_KEY will stay null.
  */
-class EchoStep(sound: String) :
+class EchoStep(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     Step(
-        mutableMapOf(SOUND to ConstantPipe("text/plain", sound)),
+        inputs,
         mapOf(
-            KEY to Output("text/plain"),
-            BAD_KEY to Output("text/plain")
+            ECHO to Output("text/plain"),
+            NO_ECHO to Output("text/plain")
         )
     ) {
 
-    companion object {
-        const val KEY = "echo"
-        const val BAD_KEY = "no-echo"
+    constructor(sound: String) :
+            this(mutableMapOf(SOUND to ConstantPipe("text/plain", sound)))
 
-        private const val SOUND = "sound"
+    companion object {
+        const val ECHO = "echo"
+        const val NO_ECHO = "no-echo"
+
+        const val SOUND = "sound"
     }
 
+    var executeCount = 0
+
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
-        return mapOf(KEY to resolvedInputs[SOUND]!!)
+        executeCount++
+        return mapOf(ECHO to resolvedInputs[SOUND]!!)
     }
 }

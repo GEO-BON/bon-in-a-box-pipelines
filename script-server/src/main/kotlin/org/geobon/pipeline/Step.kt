@@ -2,33 +2,43 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 abstract class Step(
     val inputs: MutableMap<String, Pipe> = mutableMapOf(),
     val outputs: Map<String, Output> = mapOf()
 ) {
     private var validated = false
+    private var executed = false
+    private val executeMutex = Mutex()
 
     init {
         outputs.values.forEach { it.step = this }
     }
 
     suspend fun execute() {
-        val resolvedInputs = mutableMapOf<String, Any>()
-        coroutineScope {
-            inputs.forEach {
-                // This can happen in parallel coroutines
-                launch { resolvedInputs[it.key] = it.value.pull() }
-            }
-        }
+        executeMutex.withLock {
+            if(executed)
+                return // this has already been executed!
 
-        val results = execute(resolvedInputs)
-
-        results.forEach { (key, value) ->
-            // Undocumented outputs will simply be discarded by the "?"
-            outputs[key]?.let { output ->
-                output.value = value
+            val resolvedInputs = mutableMapOf<String, Any>()
+            coroutineScope {
+                inputs.forEach {
+                    // This can happen in parallel coroutines
+                    launch { resolvedInputs[it.key] = it.value.pull() }
+                }
             }
+
+            val results = execute(resolvedInputs)
+            results.forEach { (key, value) ->
+                // Undocumented outputs will simply be discarded by the "?"
+                outputs[key]?.let { output ->
+                    output.value = value
+                }
+            }
+
+            executed = true
         }
     }
 
@@ -46,6 +56,7 @@ abstract class Step(
     }
 
     open fun validateStepInputs(): String {
+        // Not all steps need input validation.
         return ""
     }
 
