@@ -41,10 +41,33 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const getLayoutedElements = (nodes, edges) => {
   dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
 
-  nodes.forEach((node) => {
+  // Map to record the order of the inputs on the script card
+  const inputOrderMap = new Map();
+
+  nodes.forEach(node => {
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
+
+    if (node.type == 'io') {
+      inputOrderMap.set(node.id, node.data.inputs)
+    }
   });
 
+  console.log(inputOrderMap)
+
+  // Sort the edges in the order that they appear on the card
+  edges.sort((edge1, edge2) => {
+    let edge1Value = 0
+    let nodeInputs = inputOrderMap.get(edge1.target)
+    if(nodeInputs) edge1Value += nodeInputs.indexOf(edge1.targetHandle)
+    
+    
+    let edge2Value = 0
+    nodeInputs = inputOrderMap.get(edge2.target)
+    if(nodeInputs) edge2Value += nodeInputs.indexOf(edge2.targetHandle)
+    
+    return edge1Value - edge2Value
+  });
+  
   edges.forEach((edge) => {
     dagreGraph.setEdge(edge.source, edge.target);
   });
@@ -116,7 +139,7 @@ export function PipelineEditor(props) {
 
   const injectConstant = useCallback((event, dataType, defaultValue, target, targetHandle) => {
     event.preventDefault()
-console.log(event)
+
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
 
     // Offset from pointer event to canvas
@@ -207,6 +230,10 @@ console.log(event)
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
+
+      // No need to save the inputs (for sorting), the accurate info is fetched from server when loading graph.
+      flow.nodes.forEach(node => delete node.data.inputs)
+      
       navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
       alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
     }

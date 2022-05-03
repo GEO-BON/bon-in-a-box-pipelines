@@ -13,11 +13,14 @@ export default function IONode({ id, data }) {
 
   useEffect(() => {
     if (descriptionFileLocation) {
-      var callback = function (error, data, response) {
+      var callback = function (error, callbackData, response) {
         if (error) {
           console.error("Loading " + descriptionFileLocation + ": " + error.toString())
         } else {
-          setMetadata(yaml.load(data))
+          const newMetadata = yaml.load(callbackData)
+          setMetadata(newMetadata)
+
+          data.inputs = Object.entries(newMetadata.inputs).map(([inputName]) => {return inputName})
         }
       };
 
