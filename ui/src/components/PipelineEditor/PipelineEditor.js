@@ -35,10 +35,9 @@ const nodeTypes = {
 let id = 0;
 const getId = () => `${id++}`;
 
-const dagreGraph = new dagre.graphlib.Graph();
-dagreGraph.setDefaultEdgeLabel(() => ({}));
-
 const getLayoutedElements = (nodes, edges) => {
+  const dagreGraph = new dagre.graphlib.Graph();
+  dagreGraph.setDefaultEdgeLabel(() => ({}));
   dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
 
   // Map to record the order of the inputs on the script card
@@ -51,8 +50,6 @@ const getLayoutedElements = (nodes, edges) => {
       inputOrderMap.set(node.id, node.data.inputs)
     }
   });
-
-  console.log(inputOrderMap)
 
   // Sort the edges in the order that they appear on the card
   edges.sort((edge1, edge2) => {
@@ -233,7 +230,7 @@ export function PipelineEditor(props) {
 
       // No need to save the inputs (for sorting), the accurate info is fetched from server when loading graph.
       flow.nodes.forEach(node => delete node.data.inputs)
-      
+
       navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
       alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
     }
