@@ -29,8 +29,8 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         inputFileContent?.toMD5() ?: "no_params"
     ).path.replace('.', '_')
 
-    private val outputFolder = File(outputRoot, id)
-    private val resultFile = File(outputFolder, "output.json")
+    internal val outputFolder = File(outputRoot, id)
+    internal val resultFile = File(outputFolder, "output.json")
     val logFile = File(outputFolder, "logs.txt")
 
     companion object {
@@ -43,15 +43,41 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     }
 
     suspend fun execute() {
-        // TODO Wait if already running
-        results = getResult()
+        results = loadFromCache()
+            ?: runScript()
     }
 
-    private suspend fun getResult():Map<String, Any> {
-        if(!scriptFile.exists()) {
-            log(logger::warn, "Script $scriptFile not found")
-            return flagError(mapOf(), true)
+    private fun loadFromCache(): Map<String, Any>? {
+        if (resultFile.exists()) {
+            // Use this result only if
+            kotlin.runCatching {
+                gson.fromJson<Map<String, Any>>(
+                    resultFile.readText().also { logger.trace(it) },
+                    object : TypeToken<Map<String, Any>>() {}.type
+                )
+            }.onSuccess { previousOutputs ->
+                if (previousOutputs["ERROR_KEY"] == null) {
+                    logger.info("Loading from cache")
+                    return previousOutputs
+                }
+            }.onFailure { e ->
+                logger.warn("Cache could not be reused: ${e.message}")
+            }
         }
+
+        return null
+    }
+
+    private suspend fun runScript():Map<String, Any> {
+        // TODO Wait if already running
+        if(!scriptFile.exists()) {
+            val message = "Script $scriptFile not found"
+            logger.warn(message)
+            return flagError(mapOf(ERROR_KEY to message), true)
+        }
+
+        // If loading from cache didn't succeed, make sure we have a clean slate.
+        outputFolder.deleteRecursively()
 
         // Create the output folder for this invocation
         outputFolder.mkdirs()
