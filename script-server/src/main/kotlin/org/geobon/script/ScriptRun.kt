@@ -88,10 +88,6 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         var outputs:Map<String, Any>? = null
 
         runCatching {
-            // Remove previous run result
-            // TODO this is temp until we use the cache.
-            if(resultFile.delete()) logger.trace("Previous results deleted")
-            if(logFile.delete()) logger.trace("Previous results deleted")
             withContext(Dispatchers.IO) {
                 logFile.createNewFile()
             }
