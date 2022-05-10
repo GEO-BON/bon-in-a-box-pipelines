@@ -86,6 +86,24 @@ internal class ScriptRunTest {
     }
 
     @Test
+    fun `given cache removed for modified script_when other results existed_then all cache removed`() = runTest {
+        val scriptFile = File(scriptRoot, "1in1out.py")
+        scriptFile.setLastModified(currentTimeMillis())
+
+        ScriptRun(scriptFile, """{"some_int":5}""").execute()
+        ScriptRun(scriptFile, """{"some_int":6}""").execute()
+
+        // We expect two folder in the cache
+        assertEquals(2, outputRoot.listFiles()!![0].listFiles()!!.size)
+
+        scriptFile.setLastModified(currentTimeMillis())
+        ScriptRun(scriptFile, """{"some_int":5}""").execute()
+
+        // We expect cache was deleted and only one folder is left
+        assertEquals(1, outputRoot.listFiles()!![0].listFiles()!!.size)
+    }
+
+    @Test
     fun `given many outputs produced_when scripts completes_only final outputs are kept`() = runTest {
 
     }

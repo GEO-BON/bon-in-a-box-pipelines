@@ -49,20 +49,25 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
     private fun loadFromCache(): Map<String, Any>? {
         // Looking for a cached result most recent than the script
-        if (resultFile.exists() && scriptFile.lastModified() < resultFile.lastModified()) {
-            kotlin.runCatching {
-                gson.fromJson<Map<String, Any>>(
-                    resultFile.readText().also { logger.trace(it) },
-                    object : TypeToken<Map<String, Any>>() {}.type
-                )
-            }.onSuccess { previousOutputs ->
-                // Use this result only if there was no error
-                if (previousOutputs["ERROR_KEY"] == null) {
-                    logger.info("Loading from cache")
-                    return previousOutputs
+        if (resultFile.exists()) {
+            if(scriptFile.lastModified() < resultFile.lastModified()) {
+                kotlin.runCatching {
+                    gson.fromJson<Map<String, Any>>(
+                        resultFile.readText().also { logger.trace(it) },
+                        object : TypeToken<Map<String, Any>>() {}.type
+                    )
+                }.onSuccess { previousOutputs ->
+                    // Use this result only if there was no error
+                    if (previousOutputs["ERROR_KEY"] == null) {
+                        logger.info("Loading from cache")
+                        return previousOutputs
+                    }
+                }.onFailure { e ->
+                    logger.warn("Cache could not be reused: ${e.message}")
                 }
-            }.onFailure { e ->
-                logger.warn("Cache could not be reused: ${e.message}")
+
+            } else { // Script was updated, flush the whole cache for this script
+                outputFolder.parentFile.deleteRecursively()
             }
         }
 
