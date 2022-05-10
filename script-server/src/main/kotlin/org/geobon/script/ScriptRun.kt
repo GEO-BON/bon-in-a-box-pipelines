@@ -48,14 +48,15 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     }
 
     private fun loadFromCache(): Map<String, Any>? {
-        if (resultFile.exists()) {
-            // Use this result only if
+        // Looking for a cached result most recent than the script
+        if (resultFile.exists() && scriptFile.lastModified() < resultFile.lastModified()) {
             kotlin.runCatching {
                 gson.fromJson<Map<String, Any>>(
                     resultFile.readText().also { logger.trace(it) },
                     object : TypeToken<Map<String, Any>>() {}.type
                 )
             }.onSuccess { previousOutputs ->
+                // Use this result only if there was no error
                 if (previousOutputs["ERROR_KEY"] == null) {
                     logger.info("Loading from cache")
                     return previousOutputs
