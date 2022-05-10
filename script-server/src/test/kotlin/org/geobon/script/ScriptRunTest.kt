@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.io.File
+import java.lang.System.currentTimeMillis
 
 @ExperimentalCoroutinesApi
 internal class ScriptRunTest {
@@ -55,6 +56,30 @@ internal class ScriptRunTest {
         run2.execute()
         assertNotNull(run2.results["increment"], "increment key not found in ${run2.results}")
         assertEquals(11.0, run2.results["increment"]!!)
+        val run2Time = run2.resultFile.lastModified()
+
+        assertNotEquals(run1Time, run2Time)
+    }
+
+    @Test
+    fun `given script has been modified since previous run_when ran with same parameters_then script ran again`() = runTest {
+        val scriptFile = File(scriptRoot, "1in1out.py")
+        scriptFile.setLastModified(currentTimeMillis())
+        val scriptTime1 = scriptFile.lastModified()
+
+        val run1 = ScriptRun(scriptFile, """{"some_int":5}""")
+        run1.execute()
+        assertNotNull(run1.results["increment"], "increment key not found in ${run1.results}")
+        assertEquals(6.0, run1.results["increment"]!!)
+        val run1Time = run1.resultFile.lastModified()
+
+        scriptFile.setLastModified(currentTimeMillis())
+        assertNotEquals(scriptTime1, scriptFile.lastModified())
+
+        val run2 = ScriptRun(scriptFile, """{"some_int":5}""")
+        run2.execute()
+        assertNotNull(run2.results["increment"], "increment key not found in ${run2.results}")
+        assertEquals(6.0, run2.results["increment"]!!)
         val run2Time = run2.resultFile.lastModified()
 
         assertNotEquals(run1Time, run2Time)
