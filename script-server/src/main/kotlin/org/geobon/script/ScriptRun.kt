@@ -76,26 +76,26 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
             return flagError(mapOf(ERROR_KEY to message), true)
         }
 
-        // If loading from cache didn't succeed, make sure we have a clean slate.
-        outputFolder.deleteRecursively()
-
-        // Create the output folder for this invocation
-        outputFolder.mkdirs()
-        logger.debug("Script run outputting to $outputFolder")
-
         // Run the script
         var error = false
         var outputs:Map<String, Any>? = null
 
         runCatching {
             withContext(Dispatchers.IO) {
-                logFile.createNewFile()
-            }
+                // If loading from cache didn't succeed, make sure we have a clean slate.
+                outputFolder.deleteRecursively()
 
-            inputFileContent?.let {
-                // Create input.json
-                val inputFile = File(outputFolder, "input.json")
-                inputFile.writeText(inputFileContent)
+                // Create the output folder for this invocation
+                outputFolder.mkdirs()
+                logger.debug("Script run outputting to $outputFolder")
+
+                // Script run pre-requisites
+                logFile.createNewFile()
+                inputFileContent?.let {
+                    // Create input.json
+                    val inputFile = File(outputFolder, "input.json")
+                    inputFile.writeText(inputFileContent)
+                }
             }
 
             val command = when (scriptFile.extension) {
