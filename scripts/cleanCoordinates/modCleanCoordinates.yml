@@ -2,16 +2,16 @@ script: modCleanCoordinates.R
 inputs:
   presence:
     description: Occurrence data, some description here
-    type: string
+    type: text/tab-separated-values
     example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
   tif_folder:
-    label: tif_folder
+    label: tiff folder
     description: path to predictors tif file
-    type: string
+    type: text
     example: "mytiffolder/"
   layers: 
     label: layers
-    description: list of layers names (predictors)
+    description: list of layers names (predictors) TODO: type text[]
     type: string
     example: ["bio1", "bio2", "bio4"]
   tests: 
@@ -34,7 +34,7 @@ inputs:
   proj_to:
     label: projection
     description: Projection 
-    type: string
+    type: text
     example: "EPSG:6623"
   spatial_res :
     label: spatial_res
@@ -53,11 +53,11 @@ outputs:
     type: int
     example: 400
   clean_presence:
-     label: clean_presence
-     description: table with clean presence points.
-     type: string
+     label: clean presence table
+     description: CSV file containing a table with clean presence points.
+     type: text/csv
 description: "This sample script shows how it works."
-external_link: https://github.com/GEO-BON/biab-2.0
+external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/cleanCoordinates
 references:
   - text: Rick Bonney, Expanding the Impact of Citizen Science, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
     doi: 10.1093/biosci/biab041
