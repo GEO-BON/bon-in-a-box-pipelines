@@ -2,7 +2,7 @@ script: extractProjections.R
 inputs:
   stac_path:
     description: Path to species observation tsv file
-    type: string
+    type: text
     example:  "http://io.biodiversite-quebec.ca/stac/"
   limit:
     description: Path to species observation tsv file
@@ -10,15 +10,15 @@ inputs:
     example: 5000
   collections:
     description: Path to species observation tsv file
-    type: string
+    type: text
     example: 'chelsa-clim'                  
   obs:
     description: Path to species observation tsv file
-    type: string
+    type: text
     example: "/scripts/extractPredictors/obs_data.tsv"
   srs.obs:
     description: Projection 
-    type: string
+    type: text
     example: "EPSG:4326"
   layers:
     description: Projection 
@@ -30,15 +30,15 @@ inputs:
     example: 400
   srs.cube:
     description: Projection 
-    type: string
+    type: text
     example: "EPSG:4326"
   t0 :
     description: Projection 
-    type: string
+    type: text
     example: '1981-01-01'
   t1 :
     description: Projection 
-    type: string
+    type: text
     example: '1981-01-01'
   spatial.res :
     description: Projection 
@@ -46,7 +46,7 @@ inputs:
     example: 2000
   temporal.res :
     description: Projection 
-    type: string
+    type: text
     example: "P1Y"
 
 outputs:

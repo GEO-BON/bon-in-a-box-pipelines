@@ -2,15 +2,15 @@ script: modRun2.R
 inputs:
   clean_presence:
     description: Occurrence data, some description here
-    type: string
+    type: text
     example: "/scripts/runSDM2/data/clean_presence.tsv"
   clean_background:
     description: Occurrence data, some description here
-    type: string
+    type: text
     example: "/scripts/runSDM2/data/clean_background.tsv"
   mask:
     description: Occurrence data, some description here
-    type: string
+    type: text
     example: "/scripts/runSDM2/data/shape_study_area_nolakes_nad83.shp"
   layers: 
     description: Occurrence data, some description here
@@ -19,11 +19,11 @@ inputs:
   tif_folder:
     label: tif_folder
     description: path to predictors tif file
-    type: string
+    type: text
     example: "mytiffolder/"
   proj_to:
     description: Projection 
-    type: string
+    type: text
     example: "EPSG:6623"
   spatial_res :
     description: Projection 

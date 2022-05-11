@@ -3,7 +3,7 @@ inputs:
   presence:
     label: presence
     description: path to presence data file
-    type: string
+    type: text
     example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
   obs_buffer:
     label: buffer
@@ -18,12 +18,12 @@ inputs:
   source:
     label: source
     description: type of source to load the predictors (either from tif, or from the stac catalogue)
-    type: string/accepted_values:"from_tif" or "from_cube" 
+    type: text/accepted_values:"from_tif" or "from_cube" 
     example: "from_cube"
   tif_folder:
     label: tif_folder
     description: path to predictors tif file
-    type: string
+    type: text
     example: "mytiffolder/"
   layers: 
     label: layers
@@ -33,12 +33,12 @@ inputs:
   method: 
     label: method
     description: 
-    type: string/vif.cor, vif.step, pearson, spearman or kendall
+    type: text/vif.cor, vif.step, pearson, spearman or kendall
     example: "vif.cor"
   proj_to:
     label: projection system
     description: Projection 
-    type: string
+    type: text
     example: "EPSG:6623"
   spatial_res:
     description: Projection 
@@ -46,7 +46,7 @@ inputs:
     example: 1000
   method_cor_vif :
     description: Projection 
-    type: string
+    type: text
     example: "pearson" 
   nb_sample :
     description: Projection 
@@ -64,7 +64,7 @@ outputs:
   nc_predictors:
      label: non collinear predictors
      description: list of non collinear predictors
-     type: string
+     type: text
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:

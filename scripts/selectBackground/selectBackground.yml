@@ -3,12 +3,12 @@ inputs:
   study_extent:
     label: study_extent
     description: Path to a .shp file representing the extent to sample the background points from.
-    type: string
+    type: text
     example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
   method_background: 
     label: method_background
     description: method used to sample background points
-    type: string/accepted_values "random", "inclusion_buffer"
+    type: text/accepted_values "random", "inclusion_buffer"
     example: "random"
   n_background: 
     label: number of background points
@@ -18,7 +18,7 @@ inputs:
   species: 
     label: species
     description: scientific name of the species
-    type: string
+    type: text
     example: "Glyptemys insculpta"
   spatial_res :
     label: spatial resolution
@@ -34,7 +34,7 @@ outputs:
   clean_background:
     label: clean background points
     description: Clean background points
-    type: string
+    type: text
     example:
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
