@@ -3,7 +3,7 @@ inputs:
   species:
     label: species names
     description: scientific name of the species
-    type: string
+    type: text
     example: "Glyptemys insculpta"
   limit:
     label: limit
@@ -19,7 +19,7 @@ outputs:
   presence:
      label: presence
      description: table with observations from GBIF
-     type: string
+     type: text
      example: 
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0

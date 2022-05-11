@@ -3,7 +3,7 @@ inputs:
   species:
     label:
     description: Occurrence data, some description here
-    type: string
+    type: text
     example: "Panthera onca"
   limit:
     description: Occurrence data, some description here
@@ -18,12 +18,12 @@ outputs:
   species:
     label: species
     description: We can add plain text
-    type: string
+    type: text
     example: "Panthera onca"
   warning:
      label: warning
      description: We can add plain text
-     type: string
+     type: text
      example: "Some warning"
   data:
      label: data
