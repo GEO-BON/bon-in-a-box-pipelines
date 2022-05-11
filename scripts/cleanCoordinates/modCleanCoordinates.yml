@@ -11,26 +11,25 @@ inputs:
     example: "mytiffolder/"
   layers: 
     label: layers
-    description: list of layers names (predictors) TODO: type text[]
+    description: "list of layers names (predictors) TODO: type text[]"
     type: text
     example: ["bio1", "bio2", "bio4"]
   tests: 
     labels: cleaning_tests
     description: tests to run from all tests available - capitals, centroids, equal, gbif, institutions, duplicates, urban, seas, zeros, env
     type: text[]
-    example: [ "equal",
-                               "zeros", 
-                               "duplicates", 
-                               "same_pixel",
-                               "capitals", 
-                               "centroids",
-                               "seas", 
-                               "urban",
-                               "gbif", 
-                               "institutions",
-                               "env"
-                               
-                             ]
+    example: 
+     - equal
+     - zeros
+     - duplicates
+     - same_pixel
+     - capitals
+     - centroids
+     - seas
+     - urban
+     - gbif
+     - institutions
+     - env
   proj_to:
     label: projection
     description: Projection 
