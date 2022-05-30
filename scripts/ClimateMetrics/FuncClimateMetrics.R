@@ -7,6 +7,7 @@
 #' @param metric, a character vector indicating climate metrics.  Options include: "local", "forward", "backward", "rarity"
 #' @param movingWindow, float indicating number of cells (must be an odd number) to search for similar climates
 #' @return a raster stack
+#' @import gdalcubes rstac tibble sp sf dplyr rgbif tidyr stars
 
 
 # Local climate-change velocity
@@ -42,7 +43,7 @@
     
   if(metric == "local"){
   
-  # Spatial gradient (meters/°C)
+  # Spatial gradient (meters/?C)
     
     # Neighborhood Slope Algorithm, average maximum technique
       f <- matrix(1, nrow=3, ncol=3)
@@ -53,7 +54,7 @@
       spatial_tmean_current_0 <- spatial_tmean_current
       spatial_tmean_current_0[spatial_tmean_current_0 <= 0.00001] <- 0.00001
       
-  # Temporal gradient (°C/year)
+  # Temporal gradient (?C/year)
     Temporal_tmean <- (tmean_future_C - tmean_current_C)/time_span
     
   
