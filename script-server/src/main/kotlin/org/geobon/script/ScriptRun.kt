@@ -30,6 +30,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     ).path.replace('.', '_')
 
     internal val outputFolder = File(outputRoot, id)
+    private val inputFile = File(outputFolder, "input.json")
     internal val resultFile = File(outputFolder, "output.json")
     val logFile = File(outputFolder, "logs.txt")
 
@@ -57,8 +58,9 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                         object : TypeToken<Map<String, Any>>() {}.type
                     )
                 }.onSuccess { previousOutputs ->
-                    // Use this result only if there was no error
-                    if (previousOutputs["ERROR_KEY"] == null) {
+                    // Use this result only if there was no error and inputs have not changed
+                    if (previousOutputs["ERROR_KEY"] == null
+                        && inputsOlderThanCache()) {
                         logger.info("Loading from cache")
                         return previousOutputs
                     }
@@ -72,6 +74,37 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }
 
         return null
+    }
+
+    /**
+     * @return true if all inputs are older than cached result
+     */
+    private fun inputsOlderThanCache(): Boolean {
+        if(inputFile.exists())
+        {
+            val cacheTime = resultFile.lastModified()
+            val inputs = gson.fromJson<Map<String, Any>>(
+                inputFile.readText().also { logger.trace(it) },
+                object : TypeToken<Map<String, Any>>() {}.type
+            )
+
+            inputs.forEach{(_,value) ->
+                val stringValue = value.toString()
+                // We assume that all local paths start with / and that URLs won't.
+                if(stringValue.startsWith('/')){
+                    with(File(stringValue)) {
+                        // check if missing or newer than cache
+                        if(!exists() || cacheTime < lastModified()){
+                            return false
+                        }
+                    }
+                }
+            }
+            return true
+
+        } else {
+            return true // no input file => cache valid
+        }
     }
 
     private suspend fun runScript():Map<String, Any> {
@@ -99,7 +132,6 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 logFile.createNewFile()
                 inputFileContent?.let {
                     // Create input.json
-                    val inputFile = File(outputFolder, "input.json")
                     inputFile.writeText(inputFileContent)
                 }
             }
