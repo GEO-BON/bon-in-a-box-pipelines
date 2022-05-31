@@ -4,15 +4,15 @@
       "id": "10",
       "type": "io",
       "position": {
-        "x": 301.31491587109446,
-        "y": -37.41077958217427
+        "x": 302,
+        "y": 10.5
       },
       "data": {
         "descriptionFile": "loadGbif>loadGbif.yml"
       },
       "positionAbsolute": {
-        "x": 301.31491587109446,
-        "y": -37.41077958217427
+        "x": 302,
+        "y": 10.5
       },
       "z": 0,
       "handleBounds": {
@@ -53,56 +53,26 @@
           }
         ]
       },
-      "width": 309,
-      "height": 47,
-      "selected": false
-    },
-    {
-      "id": "11",
-      "type": "constant",
-      "position": {
-        "x": -45.496213693685604,
-        "y": -44.43860349412435
-      },
-      "data": {
-        "type": "string",
-        "value": "Panthera onca"
-      },
-      "positionAbsolute": {
-        "x": -45.496213693685604,
-        "y": -44.43860349412435
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 234.51038624584768,
-            "y": 10.833332863888689,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 239,
-      "height": 30
+      "width": 317,
+      "height": 45,
+      "selected": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "12",
       "type": "constant",
       "position": {
-        "x": -39.11847282324567,
-        "y": -26.899816100414522
+        "x": -123.5,
+        "y": 38
       },
       "data": {
         "type": "int",
         "value": 1000
       },
       "positionAbsolute": {
-        "x": -39.11847282324567,
-        "y": -26.899816100414522
+        "x": -123.5,
+        "y": 38
       },
       "z": 0,
       "handleBounds": {
@@ -118,22 +88,24 @@
         ],
         "target": null
       },
-      "width": 217,
-      "height": 30
+      "width": 258,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "13",
       "type": "io",
       "position": {
-        "x": 866.4776101869935,
-        "y": 99.46623352603062
+        "x": 769,
+        "y": 170.5
       },
       "data": {
         "descriptionFile": "loadPredictors>modLoadPredictors.yml"
       },
       "positionAbsolute": {
-        "x": 866.4776101869935,
-        "y": 99.46623352603062
+        "x": 769,
+        "y": 170.5
       },
       "z": 0,
       "handleBounds": {
@@ -254,24 +226,26 @@
           }
         ]
       },
-      "width": 387,
-      "height": 207,
-      "selected": false
+      "width": 400,
+      "height": 198,
+      "selected": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "14",
       "type": "constant",
       "position": {
-        "x": 520.8977879647713,
-        "y": 118.35426315566025
+        "x": 344,
+        "y": 103.5
       },
       "data": {
         "type": "bbox",
         "value": null
       },
       "positionAbsolute": {
-        "x": 520.8977879647713,
-        "y": 118.35426315566025
+        "x": 344,
+        "y": 103.5
       },
       "z": 0,
       "handleBounds": {
@@ -287,57 +261,28 @@
         ],
         "target": null
       },
-      "width": 234,
-      "height": 30
-    },
-    {
-      "id": "15",
-      "type": "constant",
-      "position": {
-        "x": 95.00421759440098,
-        "y": 142.50836685936395
-      },
-      "data": {
-        "type": "string/accepted_values:\"from_tif\" or \"from_cube\"",
-        "value": "from_cube"
-      },
-      "positionAbsolute": {
-        "x": 95.00421759440098,
-        "y": 142.50836685936395
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 536.7084319010416,
-            "y": 10.833356448929397,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 541,
-      "height": 30,
-      "selected": false,
-      "dragging": false
+      "width": 275,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 520.8977879647713,
-        "y": 169.92300389640099
+        "x": 339,
+        "y": 217.5
       },
       "data": {
         "type": "text[]",
-        "value": ["bio1","bio2"]
+        "value": [
+          "bio1",
+          "bio2"
+        ]
       },
       "positionAbsolute": {
-        "x": 520.8977879647713,
-        "y": 169.92300389640099
+        "x": 339,
+        "y": 217.5
       },
       "z": 0,
       "handleBounds": {
@@ -353,57 +298,25 @@
         ],
         "target": null
       },
-      "width": 242,
-      "height": 30
-    },
-    {
-      "id": "17",
-      "type": "constant",
-      "position": {
-        "x": 116.7913583351417,
-        "y": 190.07710760010468
-      },
-      "data": {
-        "type": "string/vif.cor, vif.step, pearson, spearman or kendall",
-        "value": "vif.cor"
-      },
-      "positionAbsolute": {
-        "x": 116.7913583351417,
-        "y": 190.07710760010468
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 556.9790909288195,
-            "y": 10.833356448929397,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 561,
-      "height": 30,
-      "selected": false,
-      "dragging": false
+      "width": 280,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "18",
       "type": "constant",
       "position": {
-        "x": 574.3124250018084,
-        "y": 346.2312113038084
+        "x": 361,
+        "y": 331.5
       },
       "data": {
         "type": "int",
         "value": 1000
       },
       "positionAbsolute": {
-        "x": 574.3124250018084,
-        "y": 346.2312113038084
+        "x": 361,
+        "y": 331.5
       },
       "z": 0,
       "handleBounds": {
@@ -419,89 +332,27 @@
         ],
         "target": null
       },
-      "width": 217,
-      "height": 30,
+      "width": 258,
+      "height": 28,
       "selected": false,
-      "dragging": false
-    },
-    {
-      "id": "20",
-      "type": "constant",
-      "position": {
-        "x": 516.4892843429815,
-        "y": 200.04020763338224
-      },
-      "data": {
-        "type": "string",
-        "value": "EPSG:6623"
-      },
-      "positionAbsolute": {
-        "x": 516.4892843429815,
-        "y": 200.04020763338224
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 234.51038686208557,
-            "y": 10.833335054241118,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 239,
-      "height": 30
-    },
-    {
-      "id": "21",
-      "type": "constant",
-      "position": {
-        "x": 515.2925176788746,
-        "y": 229.95937423605372
-      },
-      "data": {
-        "type": "string",
-        "value": "pearson"
-      },
-      "positionAbsolute": {
-        "x": 515.2925176788746,
-        "y": 229.95937423605372
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 234.51038686208557,
-            "y": 10.833316793031033,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 239,
-      "height": 30
+      "dragging": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "22",
       "type": "constant",
       "position": {
-        "x": 517.6860510070883,
-        "y": 245.51734086944293
+        "x": 361,
+        "y": 407.5
       },
       "data": {
         "type": "int",
         "value": 5000
       },
       "positionAbsolute": {
-        "x": 517.6860510070883,
-        "y": 245.51734086944293
+        "x": 361,
+        "y": 407.5
       },
       "z": 0,
       "handleBounds": {
@@ -517,23 +368,25 @@
         ],
         "target": null
       },
-      "width": 217,
-      "height": 30
+      "width": 258,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "23",
       "type": "constant",
       "position": {
-        "x": 517.6860510070883,
-        "y": 259.8785408387252
+        "x": 345,
+        "y": 445.5
       },
       "data": {
         "type": "float",
         "value": 0.75
       },
       "positionAbsolute": {
-        "x": 517.6860510070883,
-        "y": 259.8785408387252
+        "x": 345,
+        "y": 445.5
       },
       "z": 0,
       "handleBounds": {
@@ -549,23 +402,25 @@
         ],
         "target": null
       },
-      "width": 230,
-      "height": 30
+      "width": 274,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "24",
       "type": "constant",
       "position": {
-        "x": 518.8828176711952,
-        "y": 275.4365074721144
+        "x": 361,
+        "y": 483.5
       },
       "data": {
         "type": "int",
         "value": 8
       },
       "positionAbsolute": {
-        "x": 518.8828176711952,
-        "y": 275.4365074721144
+        "x": 361,
+        "y": 483.5
       },
       "z": 0,
       "handleBounds": {
@@ -581,22 +436,24 @@
         ],
         "target": null
       },
-      "width": 217,
-      "height": 30
+      "width": 258,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "25",
       "type": "output",
       "position": {
-        "x": 1281.475884174034,
-        "y": -35.2780253185399
+        "x": 1344,
+        "y": 250
       },
       "data": {
         "label": "Output"
       },
       "positionAbsolute": {
-        "x": 1281.475884174034,
-        "y": -35.2780253185399
+        "x": 1344,
+        "y": 250
       },
       "z": 0,
       "handleBounds": {
@@ -613,54 +470,24 @@
         ]
       },
       "width": 150,
-      "height": 40
-    },
-    {
-      "id": "26",
-      "type": "constant",
-      "position": {
-        "x": 515.1519891516822,
-        "y": 154.07676200515235
-      },
-      "data": {
-        "type": "string",
-        "value": "mytiffolder/"
-      },
-      "positionAbsolute": {
-        "x": 515.1519891516822,
-        "y": 154.07676200515235
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 234.5104603193533,
-            "y": 10.833368843757219,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 239,
-      "height": 30
+      "height": 39,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     },
     {
       "id": "27",
       "type": "constant",
       "position": {
-        "x": 517.5580093580122,
-        "y": 110.76839829121249
+        "x": 361,
+        "y": 65.5
       },
       "data": {
         "type": "int",
         "value": 0
       },
       "positionAbsolute": {
-        "x": 517.5580093580122,
-        "y": 110.76839829121249
+        "x": 361,
+        "y": 65.5
       },
       "z": 0,
       "handleBounds": {
@@ -676,17 +503,246 @@
         ],
         "target": null
       },
-      "width": 217,
-      "height": 30
+      "width": 258,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
+    },
+    {
+      "id": "28",
+      "type": "constant",
+      "position": {
+        "x": 350,
+        "y": 293.5
+      },
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      },
+      "positionAbsolute": {
+        "x": 350,
+        "y": 293.5
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 264.5333251953125,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 269,
+      "height": 28,
+      "selected": false,
+      "dragging": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
+    },
+    {
+      "id": "29",
+      "type": "constant",
+      "position": {
+        "x": -134.5,
+        "y": 0
+      },
+      "data": {
+        "type": "text",
+        "value": "Panthera onca"
+      },
+      "positionAbsolute": {
+        "x": -134.5,
+        "y": 0
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 264.5333251953125,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 269,
+      "height": 28,
+      "selected": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
+    },
+    {
+      "id": "30",
+      "type": "constant",
+      "position": {
+        "x": 350,
+        "y": 179.5
+      },
+      "data": {
+        "type": "text",
+        "value": "mytiffolder/"
+      },
+      "positionAbsolute": {
+        "x": 350,
+        "y": 179.5
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 264.5333251953125,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 269,
+      "height": 28,
+      "selected": false,
+      "dragging": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": 350,
+        "y": 369.5
+      },
+      "data": {
+        "type": "text",
+        "value": "pearson"
+      },
+      "positionAbsolute": {
+        "x": 350,
+        "y": 369.5
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 264.5333251953125,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 269,
+      "height": 28,
+      "targetPosition": "left",
+      "sourcePosition": "right"
+    },
+    {
+      "id": "32",
+      "type": "constant",
+      "position": {
+        "x": 19,
+        "y": 255.5
+      },
+      "data": {
+        "type": "text/vif.cor, vif.step, pearson, spearman or kendall",
+        "value": "vif.cor"
+      },
+      "positionAbsolute": {
+        "x": 19,
+        "y": 255.5
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 595.63330078125,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 600,
+      "height": 28,
+      "selected": false,
+      "dragging": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
+    },
+    {
+      "id": "33",
+      "type": "constant",
+      "position": {
+        "x": 32,
+        "y": 141.5
+      },
+      "data": {
+        "type": "text/accepted_values:\"from_tif\" or \"from_cube\"",
+        "value": "from_cube"
+      },
+      "positionAbsolute": {
+        "x": 32,
+        "y": 141.5
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": null,
+            "position": "right",
+            "x": 583.0166015625,
+            "y": 10,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": null
+      },
+      "width": 587,
+      "height": 28,
+      "selected": false,
+      "dragging": false,
+      "targetPosition": "left",
+      "sourcePosition": "right"
     }
   ],
   "edges": [
     {
-      "source": "11",
+      "source": "10",
+      "sourceHandle": "presence",
+      "target": "13",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-10presence-13presence"
+    },
+    {
+      "source": "13",
+      "sourceHandle": "nc_predictors",
+      "target": "25",
+      "targetHandle": null,
+      "id": "reactflow__edge-13nc_predictors-25"
+    },
+    {
+      "source": "29",
       "sourceHandle": null,
       "target": "10",
       "targetHandle": "species",
-      "id": "reactflow__edge-11-10species"
+      "id": "reactflow__edge-29-10species"
     },
     {
       "source": "12",
@@ -696,11 +752,11 @@
       "id": "reactflow__edge-12-10limit"
     },
     {
-      "source": "10",
-      "sourceHandle": "presence",
+      "source": "27",
+      "sourceHandle": null,
       "target": "13",
-      "targetHandle": "presence",
-      "id": "reactflow__edge-10presence-13presence"
+      "targetHandle": "obs_buffer",
+      "id": "reactflow__edge-27-13obs_buffer"
     },
     {
       "source": "14",
@@ -710,11 +766,18 @@
       "id": "reactflow__edge-14-13bbox"
     },
     {
-      "source": "15",
+      "source": "33",
       "sourceHandle": null,
       "target": "13",
       "targetHandle": "source",
-      "id": "reactflow__edge-15-13source"
+      "id": "reactflow__edge-33-13source"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "tif_folder",
+      "id": "reactflow__edge-30-13tif_folder"
     },
     {
       "source": "16",
@@ -724,11 +787,18 @@
       "id": "reactflow__edge-16-13layers"
     },
     {
-      "source": "17",
+      "source": "32",
       "sourceHandle": null,
       "target": "13",
       "targetHandle": "method",
-      "id": "reactflow__edge-17-13method"
+      "id": "reactflow__edge-32-13method"
+    },
+    {
+      "source": "28",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-28-13proj_to"
     },
     {
       "source": "18",
@@ -738,18 +808,11 @@
       "id": "reactflow__edge-18-13spatial_res"
     },
     {
-      "source": "20",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "proj_to",
-      "id": "reactflow__edge-20-13proj_to"
-    },
-    {
-      "source": "21",
+      "source": "31",
       "sourceHandle": null,
       "target": "13",
       "targetHandle": "method_cor_vif",
-      "id": "reactflow__edge-21-13method_cor_vif"
+      "id": "reactflow__edge-31-13method_cor_vif"
     },
     {
       "source": "22",
@@ -771,32 +834,11 @@
       "target": "13",
       "targetHandle": "cutoff_vif",
       "id": "reactflow__edge-24-13cutoff_vif"
-    },
-    {
-      "source": "13",
-      "sourceHandle": "nc_predictors",
-      "target": "25",
-      "targetHandle": null,
-      "id": "reactflow__edge-13nc_predictors-25"
-    },
-    {
-      "source": "26",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "tif_folder",
-      "id": "reactflow__edge-26-13tif_folder"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "obs_buffer",
-      "id": "reactflow__edge-27-13obs_buffer"
     }
   ],
   "viewport": {
-    "x": -483.1560460511147,
-    "y": 204.78857175639018,
-    "zoom": 0.8312482142661168
+    "x": 235,
+    "y": 127,
+    "zoom": 1
   }
 }
