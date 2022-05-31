@@ -65,7 +65,7 @@ RUN set -eux; \
 	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
 	\
 # smoke test
-	julia --version
+    julia -e 'pwd(); using Pkg; Pkg.add.(["JSON", "SimpleSDMLayers"]); Pkg.instantiate();'
 
 ## The following is copied from Dockerfile.dev, adapted to Debian architecture
 ## First RUN command to install R-base

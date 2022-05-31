@@ -11,6 +11,7 @@ ENV JULIA_GPG 3673DF529D9049477F76B37566E3C7DC03D6E495
 # https://julialang.org/downloads/
 ENV JULIA_VERSION 1.7.1
 
+
 RUN set -eux; \
 	\
 	savedAptMark="$(apt-mark showmanual)"; \
@@ -64,8 +65,7 @@ RUN set -eux; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
 	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
 	\
-# smoke test
-	julia --version
+	julia -e 'using Pkg; Pkg.add.(["SimpleSDMLayers", "JSON"]); Pkg.instantiate();'
 
 ## Install R
 # First RUN command to install R-base
