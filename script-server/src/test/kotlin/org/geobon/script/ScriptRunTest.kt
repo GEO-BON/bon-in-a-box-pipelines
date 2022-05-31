@@ -104,7 +104,30 @@ internal class ScriptRunTest {
     }
 
     @Test
-    fun `given many outputs produced_when scripts completes_only final outputs are kept`() = runTest {
+    fun `given input has changed_when scripts executed_then cache discarded`() = runTest {
+        val scriptFile = File(scriptRoot, "checkFile.py")
 
+        // First run
+        val inputFile = File(outputRoot, "someinputfile.csv")
+        inputFile.createNewFile()
+        val run1Time = ScriptRun(scriptFile, """{"file":"${inputFile.path}"}""").let {
+            it.execute()
+            it.resultFile.lastModified()
+        }
+
+        // Second run, input has changed
+        inputFile.setLastModified(currentTimeMillis())
+        val run2Time = ScriptRun(scriptFile, """{"file":"${inputFile.path}"}""").let {
+            it.execute()
+            it.resultFile.lastModified()
+        }
+
+        // Cache should have been bypassed
+        assertNotEquals(run1Time, run2Time)
+    }
+
+    @Test
+    fun `given many outputs produced_when scripts completes_only final outputs are kept`() = runTest {
+        // TODO: Do we want this?
     }
 }
