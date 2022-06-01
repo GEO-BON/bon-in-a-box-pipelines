@@ -83,11 +83,12 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         if(inputFile.exists())
         {
             val cacheTime = resultFile.lastModified()
-            val inputs = gson.fromJson<Map<String, Any>>(
+            kotlin.runCatching {
+                gson.fromJson<Map<String, Any>>(
                 inputFile.readText().also { logger.trace(it) },
                 object : TypeToken<Map<String, Any>>() {}.type
             )
-
+            }.onSuccess { inputs ->
             inputs.forEach{(_,value) ->
                 val stringValue = value.toString()
                 // We assume that all local paths start with / and that URLs won't.
@@ -100,6 +101,11 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                     }
                 }
             }
+            }.onFailure { e ->
+                logger.warn("Error reading previous inputs: ${e.message}")
+                return false // We could not validate inputs, discard the cache.
+            }
+            
             return true
 
         } else {
