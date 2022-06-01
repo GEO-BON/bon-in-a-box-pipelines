@@ -118,9 +118,9 @@
     x <-  raster::coordinates(tmean_current_C)[,1]                    # vector of grid cell x coordinates
     y <-  raster::coordinates(tmean_current_C)[,2]                    # vector of grid cell y coordinates
     
-    p <- round(raster::getValues(tmean_future_C)*t_match)/t_match    # vector of present climate values for xy coordinates
+    p <- round(raster::getValues(tmean_future_C)*t_match)/t_match     # vector of present climate values for xy coordinates
     
-    f <- round(raster::getValues(tmean_current_C)*t_match)/t_match     # vector of future climate values for xy coordinates 
+    f <- round(raster::getValues(tmean_current_C)*t_match)/t_match    # vector of future climate values for xy coordinates 
     d <- vector(length=length(p))                                     # empty vector to write distance to climate match
     
     u     <- unique(p)[order(unique(p))]                              # list of unique climate values in p
