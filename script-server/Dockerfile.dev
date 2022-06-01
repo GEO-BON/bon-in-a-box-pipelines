@@ -63,9 +63,7 @@ RUN set -eux; \
 	\
 	apt-mark auto '.*' > /dev/null; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
-	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-	\
-	julia -e 'using Pkg; Pkg.add.(["SimpleSDMLayers", "JSON"]); Pkg.instantiate();'
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false;
 
 ## Install R
 # First RUN command to install R-base
@@ -97,7 +95,7 @@ RUN set -ex; \
 RUN apt-get update; \
     apt-get install -y --no-install-recommends build-essential gfortran;
 
-#INSTALL DOCKER CLI 
+#INSTALL DOCKER CLI
 ENV DOCKER_VERSION=20.10.9
 RUN curl -sfL -o docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" && \
   tar -xzf docker.tgz docker/docker --strip=1 && \
@@ -121,10 +119,12 @@ RUN set -ex; \
         r-cran-rjava ;\
     apt-get clean all;
 
-# If there is something missing in the R installation, we can check what is done here for inspiration: 
+# If there is something missing in the R installation, we can check what is done here for inspiration:
 # https://github.com/rocker-org/rocker/blob/master/r-base/latest/Dockerfile
 
 RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends python3; \
     apt-get clean all;
+
+RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots"]); Pkg.instantiate();'
