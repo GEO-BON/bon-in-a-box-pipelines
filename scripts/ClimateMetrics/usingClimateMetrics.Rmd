@@ -1,0 +1,335 @@
+---
+title: "Calculating climate-related metrics using the StacCatalogue"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+output: html_document
+ 
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("gdalcubes")
+library("rstac")
+library("tibble")
+library("sp")
+library("sf")
+library("dplyr")
+library("rgbif")
+library("tidyr")
+library("stars")
+library("ggplot2")
+
+#devtools::install_version("rmarkdown", version = "2.11")
+
+```
+
+
+## Introduction
+
+Here we present a function that calculate various climate-related metrics using the StacCatalogue:
+
++ Climate-change velocity (local, forward and backward)
+
++ Climate rarity
+
++ Additional metrics will be incorporated in the function
+
+
+## Data
+
+We need the `stac_functions.R` to create a manipulate cubes.
+
+```{r }
+source("stac_functions.R")
+```
+
+Let's first define a study area.
+
+### Extent of the analysis (loading observations)
+
+As a bounding box we used observations from GBIF fo this species: <a href="https://en.wikipedia.org/wiki/Wood_turtle" target="_blank">Glyptemys insculpta</a>.
+
+```{r}
+obs <- rgbif::occ_data(scientificName = "Glyptemys insculpta", hasCoordinate = TRUE, limit = 1000)
+obs <- dplyr::select(obs$data, decimalLongitude, decimalLatitude) %>%
+  dplyr::rename(lon = decimalLongitude) %>%
+  dplyr::rename(lat = decimalLatitude) 
+head(obs)
+
+
+```
+
+We re-projected the decimal longitude and latitude to a user-specified projection system. This conversion to a projected system is essential to interact with the cube.
+
+```{r }
+srs.obs <- "EPSG:4326" # initial observations projection system
+srs.cube <- "EPSG:6623"  # targeted projected projection system
+obs.coords.proj <- create_projection(obs, lon = "lon", lat = "lat", 
+                                       srs.obs, srs.cube)
+
+```
+
+
+### Current climate
+
+We used `chelsa-monthly` collection that spans from 1981 to 2010 at ~1Km^2 resolution.
+
+```{r}
+stac("https://io.biodiversite-quebec.ca/stac/") %>%
+  collections() %>%
+  get_request()
+
+``` 
+<br>
+
+```{r}
+get_info_collection("https://io.biodiversite-quebec.ca/stac/", collections = c("chelsa-monthly"), bbox = c(-47.02148, -42.53906, -12.98314,  -17.35063), limit = 5000)
+```
+
+#### Creating current climate cube
+
+We load the cube from the collections `chelsa-monthly`,  using the observations points as an extent (option  use.obs = T and adding the observations points in parameter obs). 
+
+To save some time we used: spatial resolution = **~10,000 m** and  temporal resolution = **3 years** (1981 to 1983).
+
+```{r, warning=FALSE}
+
+
+cube_current <- 
+  load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+           limit = 5000, 
+           collections = c('chelsa-monthly'), 
+           use.obs = T,
+           obs = obs.coords.proj,
+           buffer.box = 0,
+           srs.cube = srs.cube,
+           t0 = "1981-01-01",
+           t1 = "1983-12-31",
+           variable = "tas",
+           spatial.res = 10000, # in meters
+           temporal.res = "P3Y",
+           aggregation = "mean",
+           resampling = "bilinear")
+cube_current
+
+
+```
+
+
+
+### Future climate
+
+We used the `chelsa-clim-proj` collection that contains some selected <a href="https://chelsa-climate.org/cmip6/" target="_blank">CMIP6</a> scenarios, as follow:
+
+- Three periods: `2011-2040`, `2041-2070`, `2071-2100`
+- Five GMCs: `gfdl-esm4`, `ipsl-cm6a-lr`, `mpi-esm1-2-hr`, `mri-esm2-0`, `ukesm1-0-ll`
+- Three climate scenario specifiers: `ssp126`(~rcp2.6), `ssp370`(~rcp7) , `ssp585`(~rcp8.5)
+
+
+
+#### Creating future climate cube
+
+We load the climate data projection from the collection "chelsa-clim-proj", still using the observations points as an extent. The structure of the function is very similar to load_cube, except that the user has to select the climatic scenario (for now, "ssp126", "ssp370", or "ssp585") and the time span ("2011-2040", 2041-2070" or "2071-2100").
+
+To save some time we used: spatial resolution = **~10,000 m**
+
+we used `bio` layers from each GMC.
+
+```{r, warning=FALSE}
+cube_future <- load_cube_projection(stac_path = 
+                                    "https://io.biodiversite-quebec.ca/stac/",
+                                  limit = 5000, 
+                                  collections = c('chelsa-clim-proj'), 
+                                  use.obs = T,
+                                  obs = obs.coords.proj,
+                                  buffer.box = 0,
+                                  rcp = 'ssp126', #ssp126, ssp370, ssp585
+                                  bbox = NULL,
+                                  variable = "bio1",
+                                  srs.cube = srs.cube, 
+                                  time.span = "2041-2070", #"2011-2040", 2041-2070 or 2071-2100
+                                  spatial.res = 10000, 
+                                  temporal.res  = "P1Y",
+                                  aggregation = "mean",
+                                  resampling = "bilinear") 
+cube_future
+```
+
+<br>
+
+### Local climate-change velocity
+
+Climate-change velocity is a measure of the local rate of displacement of climatic conditions over Earth’s surface" (<a href="https://www.nature.com/articles/nature08649" target="_blank">Loarie et al. 2009</a> and <a href="https://www.science.org/doi/10.1126/science.1210173" target="_blank">Sandel et al. 2011</a>).
+
+It is the speed at which species must migrate over the geographic space to maintain similar climate (~temperature) conditions. And, it is calculated using the temporal gradient  divided by the spatial gradient, therefore the standard climate-change velocity is presented in units of distance per time (meters/year)(<a href="https://www.science.org/doi/10.1126/science.1210173" target="_blank">Sandel et al. 2011</a>).
+
+`local climate-change velocity` = temporal gradient / spatial gradient
+
++ Temporal gradient: it is the difference between future and current mean temperature divided by number of years (°C/year).  The number of years was calculated as follow: for current climate, we used the highest number from the temporal resolution (e.g.,1981-1982, then 1982);and, for future climate, we used the lowest number (e.g.,  2041-2070, then 2041), so time_span = 2041-1982 = 59.
+
++ Spatial gradient: it is the mean of the absolute differences between the value of a cell and the value of its 8 surrounding cells divided by the spatial resolution (°C/meters). We truncated the lower end of the spatial raster gradient to remove zero values. That is, all values below 0.00001 °C/m were replaced by 0.00001.
+
+Let's source the function to calculate climate metrics:
+
+```{r}
+
+source("funcClimateMetrics.R")
+
+```
+
+
+
+```{r message=FALSE, warning=FALSE, fig.width=10}
+
+local_velocity <- climate_metrics(cube_current = cube_current,
+                                  cube_future = cube_future,
+                                # time_span = 59, # you are able to manually set this value
+                                  metric = "local"
+                               )
+
+```
+
+Plot shows `local climate velocity`.
+
+```{r message=FALSE, warning=FALSE, fig.width=10}
+# Plotting
+  breaks = seq(0, raster::maxValue(local_velocity), by=1)
+  plot(local_velocity,
+       legend.args = list(text = 'meter/year', cex=0.8),
+       breaks = breaks,
+       col=rev(viridis::viridis(length(breaks))),
+       main="Local climate-change velocity")
+  
+```
+
+
+
+<br>
+
+<a href="#top">Back to top</a>
+
+### **Distance based climate-change velocity**
+                          
+Because local climate-change velocity only considers variability across spatial neighborhood, some search radius problems arise. For instance, "In areas of flat terrain, velocity estimates may be inflated (approaching infinity in flat terrain), although suitable climate habitat may be very close, but just outside the search radius. Conversely, in mountainous terrain true migration requirements may be underestimated by orders of magnitude. For instance, a population near a mountain top may face extinction of suitable climate habitat in the immediate surroundings under climate change (a climatic cul-de-sac). Yet, the velocity algorithm will imply low migration requirements as long as the population is situated on a steep climatic slope." (<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/gcb.12736" target="_blank">Hamann et al. 2014</a>).
+
+
+<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/gcb.12736" target="_blank">Hamann et al. (2014)</a> proposed a distance-based algorithm (two methods) to include in climate velocity the distance to a similar (analogous) climate (temperature) in geographic space.
+
+#### **Forward climate-change velocity**
+
+Forward velocity is "the distance from current climate locations to the nearest site with an analogous future climate"; that is, it "measures the distance from a single source to multiple future destinations" (<a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0140486" target="_blank">Carroll et al. 2015</a>). 
+
+"That is the exposure of organisms to climate change. Low velocity values indicate that suitable habitat can be found nearby, and that is generally the case in areas of high topographic heterogeneity." (<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/gcb.12736" target="_blank">Hamann et al. 2014</a>)
+
+In other words, "what is the rate at which an organism in the current landscape has to migrate to maintain constant climate conditions?" (<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/gcb.12736" target="_blank">Hamann et al. 2014</a>).
+
+Here , we used  formula from <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0140486" target="_blank">Carroll et al. (2015)</a>. Users have the option to set the matching plus/minus threshold mean temperature (`t_match`). If the matching temperature for a given pixels is not inside the extent of the area of study (i.e., Inf values) we assigned 10,000Km.
+
+```{r message=FALSE, warning=FALSE, fig.width=10}
+
+forward_velocity <- climate_metrics(cube_current = cube_current,
+                                    cube_future = cube_future,
+                                    t_match = 0.25,
+                                  # time_span = 59, # you are able to manually set this value
+                                    metric = "forward"
+                               )
+forward_velocity
+```
+
+Remember that pixels with matching mean temperature values (plus/minus threshold) beyond study area were set at 10,000Km. In the first plot we can see where those pixels (red color). The second plot on the right shows `forward climate change velocity` for all pixels with matching values inside the extent of the analysis (for visualization purposes we set 10,000 to NA).
+
+```{r message=FALSE, warning=FALSE, fig.width=10}
+
+par(mfrow = c(1,2))
+
+  plot(forward_velocity,
+       breaks = c(0, 20, 10000),
+       col = c("yellow", "red"),
+       main="Red areas indicate\n tmean matching values beyond study area", cex.main=0.9
+      )
+
+ forward_velocity_NA <- forward_velocity
+ forward_velocity_NA[forward_velocity_NA == 10000]<-NA
+  
+ plot(forward_velocity_NA,
+       legend.args = list(text = 'meters/year', cex=0.8),
+    
+       col = rev(viridis::viridis(10)),
+       main="Forward climate-change velocity"
+      )
+ 
+ 
+
+```
+
+<br>
+
+#### **Backward climate-change velocity**
+
+Backward velocity is "the distance from projected future climate cells back to analogous current climate locations"; that is, it "considers the distance between disparate source locations and a single future destination" (<a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0140486" target="_blank">Carroll et al. 2015</a>).
+
+In other words, "given the projected future climate habitat of a grid cell, what is the minimum rate of migration for an organism from equivalent climate conditions to colonize this climate habitat? " (<a href="https://onlinelibrary.wiley.com/doi/full/10.1111/gcb.12736" target="_blank">Hamann et al. 2014</a>).
+
+<br>
+
+
+```{r message=FALSE, warning=FALSE, fig.width=10}
+
+backward_velocity <- climate_metrics(cube_current = cube_current,
+                                     cube_future = cube_future,
+                                     t_match = 0.1,
+                                   # time_span = 59, # you are able to manually set this value
+                                     metric = "backward"
+                                   )
+backward_velocity
+```
+
+<br>
+The plot shows `backward climate change velocity`.
+
+```{r message=FALSE, warning=FALSE, fig.width=10}
+
+  
+ plot(backward_velocity,
+       legend.args = list(text = 'meters/year', cex=0.8),
+    
+       col = rev(viridis::viridis(10)),
+       main="Backward climate-change velocity"
+      )
+ 
+```
+
+###  **Climate rarity (distinctiveness)**
+
+Here we measure areas that are climatically distinct from their regional surroundings for current and future mean temperature values, using a threshold (+- t_match) and a moving window (e.g., it must be an odd number: 11 cells ~ 11,000Km). 
+
+```{r message=FALSE, warning=FALSE}
+
+climate_rarity <- climate_metrics(cube_current = cube_current,
+                                  cube_future = cube_future,
+                                  t_match = 0.25,
+                                  movingWindow = 11,
+                                  metric = "rarity"
+                                   )
+climate_rarity
+```
+<br>
+
+The plot shows `climate rarity` 
+Values close to zero indicate that mean current temperature is rare compare with their surroundings. 
+
+```{r message=FALSE, warning=FALSE, fig.width=10}
+par(mfrow=c(1,2))
+plot(climate_rarity$current_rarity, main="Tmean-current rarity")
+plot(climate_rarity$future_rarity, main="Tmean-future rarity")
+
+
+```
+
+<a href="#top">Back to top</a>
+
+
+
+
+
+
