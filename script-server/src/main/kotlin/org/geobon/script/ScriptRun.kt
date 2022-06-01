@@ -59,7 +59,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                     )
                 }.onSuccess { previousOutputs ->
                     // Use this result only if there was no error and inputs have not changed
-                    if (previousOutputs["ERROR_KEY"] == null
+                    if (previousOutputs[ERROR_KEY] == null
                         && inputsOlderThanCache()) {
                         logger.info("Loading from cache")
                         return previousOutputs
