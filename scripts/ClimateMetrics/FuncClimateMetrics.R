@@ -1,4 +1,4 @@
-#' Create multiple climate-related metrics, using current and future mean temperatures
+#' Creating multiple climate-related metrics, using current and future mean temperatures
 
 #' @name climate_metrics
 #' @param cube_current, a GDAL data cube proxy object for current temperature
