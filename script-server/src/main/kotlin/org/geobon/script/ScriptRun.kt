@@ -32,12 +32,13 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     internal val outputFolder = File(outputRoot, id)
     private val inputFile = File(outputFolder, "input.json")
     internal val resultFile = File(outputFolder, "output.json")
+
+    private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
     val logFile = File(outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"
 
-        private val logger: Logger = LoggerFactory.getLogger("Script")
         private val gson = Gson()
 
         fun toJson(src: Any): String = gson.toJson(src)
@@ -54,7 +55,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
             if(scriptFile.lastModified() < resultFile.lastModified()) {
                 kotlin.runCatching {
                     gson.fromJson<Map<String, Any>>(
-                        resultFile.readText().also { logger.trace(it) },
+                        resultFile.readText().also { logger.trace("Cached outputs: $it") },
                         object : TypeToken<Map<String, Any>>() {}.type
                     )
                 }.onSuccess { previousOutputs ->
@@ -85,22 +86,22 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
             val cacheTime = resultFile.lastModified()
             kotlin.runCatching {
                 gson.fromJson<Map<String, Any>>(
-                inputFile.readText().also { logger.trace(it) },
-                object : TypeToken<Map<String, Any>>() {}.type
-            )
+                    inputFile.readText().also { logger.trace("Cached inputs: $it") },
+                    object : TypeToken<Map<String, Any>>() {}.type
+                )
             }.onSuccess { inputs ->
-            inputs.forEach{(_,value) ->
-                val stringValue = value.toString()
-                // We assume that all local paths start with / and that URLs won't.
-                if(stringValue.startsWith('/')){
-                    with(File(stringValue)) {
-                        // check if missing or newer than cache
-                        if(!exists() || cacheTime < lastModified()){
-                            return false
+                inputs.forEach{(_,value) ->
+                    val stringValue = value.toString()
+                    // We assume that all local paths start with / and that URLs won't.
+                    if(stringValue.startsWith('/')){
+                        with(File(stringValue)) {
+                            // check if missing or newer than cache
+                            if(!exists() || cacheTime < lastModified()){
+                                return false
+                            }
                         }
                     }
                 }
-            }
             }.onFailure { e ->
                 logger.warn("Error reading previous inputs: ${e.message}")
                 return false // We could not validate inputs, discard the cache.
@@ -186,7 +187,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 val result = resultFile.readText()
                 try {
                     outputs = gson.fromJson<Map<String, Any>>(result, type)
-                    logger.trace(result)
+                    logger.trace("Output: $result")
                 } catch (e:Exception) {
                     error = true
                     log(logger::warn, """
