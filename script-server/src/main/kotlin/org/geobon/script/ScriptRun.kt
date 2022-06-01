@@ -29,51 +29,118 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         inputFileContent?.toMD5() ?: "no_params"
     ).path.replace('.', '_')
 
-    private val outputFolder = File(outputRoot, id)
-    private val resultFile = File(outputFolder, "output.json")
+    internal val outputFolder = File(outputRoot, id)
+    private val inputFile = File(outputFolder, "input.json")
+    internal val resultFile = File(outputFolder, "output.json")
+
+    private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
     val logFile = File(outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"
 
-        private val logger: Logger = LoggerFactory.getLogger("Script")
         private val gson = Gson()
 
         fun toJson(src: Any): String = gson.toJson(src)
     }
 
     suspend fun execute() {
-        // TODO Wait if already running
-        results = getResult()
+        results = loadFromCache()
+            ?: runScript()
     }
 
-    private suspend fun getResult():Map<String, Any> {
-        if(!scriptFile.exists()) {
-            log(logger::warn, "Script $scriptFile not found")
-            return flagError(mapOf(), true)
+    private fun loadFromCache(): Map<String, Any>? {
+        // Looking for a cached result most recent than the script
+        if (resultFile.exists()) {
+            if(scriptFile.lastModified() < resultFile.lastModified()) {
+                kotlin.runCatching {
+                    gson.fromJson<Map<String, Any>>(
+                        resultFile.readText().also { logger.trace("Cached outputs: $it") },
+                        object : TypeToken<Map<String, Any>>() {}.type
+                    )
+                }.onSuccess { previousOutputs ->
+                    // Use this result only if there was no error and inputs have not changed
+                    if (previousOutputs[ERROR_KEY] == null
+                        && inputsOlderThanCache()) {
+                        logger.info("Loading from cache")
+                        return previousOutputs
+                    }
+                }.onFailure { e ->
+                    logger.warn("Cache could not be reused: ${e.message}")
+                }
+
+            } else { // Script was updated, flush the whole cache for this script
+                outputFolder.parentFile.deleteRecursively()
+            }
         }
 
-        // Create the output folder for this invocation
-        outputFolder.mkdirs()
-        logger.debug("Script run outputting to $outputFolder")
+        return null
+    }
+
+    /**
+     * @return true if all inputs are older than cached result
+     */
+    private fun inputsOlderThanCache(): Boolean {
+        if(inputFile.exists())
+        {
+            val cacheTime = resultFile.lastModified()
+            kotlin.runCatching {
+                gson.fromJson<Map<String, Any>>(
+                    inputFile.readText().also { logger.trace("Cached inputs: $it") },
+                    object : TypeToken<Map<String, Any>>() {}.type
+                )
+            }.onSuccess { inputs ->
+                inputs.forEach{(_,value) ->
+                    val stringValue = value.toString()
+                    // We assume that all local paths start with / and that URLs won't.
+                    if(stringValue.startsWith('/')){
+                        with(File(stringValue)) {
+                            // check if missing or newer than cache
+                            if(!exists() || cacheTime < lastModified()){
+                                return false
+                            }
+                        }
+                    }
+                }
+            }.onFailure { e ->
+                logger.warn("Error reading previous inputs: ${e.message}")
+                return false // We could not validate inputs, discard the cache.
+            }
+            
+            return true
+
+        } else {
+            return true // no input file => cache valid
+        }
+    }
+
+    private suspend fun runScript():Map<String, Any> {
+        // TODO Wait if already running
+        if(!scriptFile.exists()) {
+            val message = "Script $scriptFile not found"
+            logger.warn(message)
+            return flagError(mapOf(ERROR_KEY to message), true)
+        }
 
         // Run the script
         var error = false
         var outputs:Map<String, Any>? = null
 
         runCatching {
-            // Remove previous run result
-            // TODO this is temp until we use the cache.
-            if(resultFile.delete()) logger.trace("Previous results deleted")
-            if(logFile.delete()) logger.trace("Previous results deleted")
             withContext(Dispatchers.IO) {
-                logFile.createNewFile()
-            }
+                // If loading from cache didn't succeed, make sure we have a clean slate.
+                outputFolder.deleteRecursively()
 
-            inputFileContent?.let {
-                // Create input.json
-                val inputFile = File(outputFolder, "input.json")
-                inputFile.writeText(inputFileContent)
+                // Create the output folder for this invocation
+                outputFolder.mkdirs()
+                logger.debug("Script run outputting to $outputFolder")
+
+                // Script run pre-requisites
+                logFile.createNewFile()
+                inputFileContent?.let {
+                    // Create input.json
+                    inputFile.writeText(inputFileContent)
+                }
             }
 
             val command = when (scriptFile.extension) {
@@ -120,7 +187,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 val result = resultFile.readText()
                 try {
                     outputs = gson.fromJson<Map<String, Any>>(result, type)
-                    logger.trace(result)
+                    logger.trace("Output: $result")
                 } catch (e:Exception) {
                     error = true
                     log(logger::warn, """

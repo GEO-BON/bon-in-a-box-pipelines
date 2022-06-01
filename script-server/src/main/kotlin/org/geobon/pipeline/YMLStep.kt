@@ -15,16 +15,16 @@ abstract class YMLStep(
         val inputsFromYml = readInputs(yamlParsed)
 
         if (inputs.size != inputsFromYml.size) {
-            return "Bad number of inputs.\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
+            return "Bad number of inputs.\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
         }
 
         // Validate presence and type of each input
         inputsFromYml.forEach { (inputKey, expectedType) ->
             inputs[inputKey]?.let {
                 if (it.type != expectedType) {
-                    return "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected."
+                    return "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected.\n"
                 }
-            } ?: return "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}"
+            } ?: return "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
         }
 
         return ""
