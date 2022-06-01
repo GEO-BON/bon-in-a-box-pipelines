@@ -1,39 +1,44 @@
-script: ClimateMetrics
+script: ClimateMetrics.R
 inputs:
   metric:
     label: metric
-    description: climate metric (local, forward, backward, rarity) 
+    description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
-    example: "local"
+    example: local
   time_span:
-    label: time_span
-    description: temporal resolution in climate (future-current)
+    label: time span
+    description: number of years between future and current
     type: int 
     example: 58
   t_match: 
-    label: t_match
+    label: threshold match
     description: plus/minus threshold mean temperature
     type: float
     example: 0.25
   movingWindow:
-    label: movingWindow
+    label: search moving window
     description: number of cells (must be an odd number)
     type: int
     example: 11
 outputs:
   local_velocity:
-    label: local_velocity
+    label: local velocity
     description: local climate change velocity
     type: image/tiff;application=geotiff
   forward_velocity:
-    label: forward_velocity
+    label: forward velocity
     description: forward climate change velocity
     type: image/tiff;application=geotiff
   backward_velocity:
-    label: backward_velocity
+    label: backward velocity
     description: backward climate change velocity
     type: image/tiff;application=geotiff
-  climate rarity:
-    label: climate_rarity
-    description: climate rarity (Tmean current and future)
+  climate_rarity:
+    label: climate rarity
+    description: climate rarity (mean  temperature for current and future)
     type: image/tiff;application=geotiff
+references:
+  - Carroll et. al. (2015). Biotic and climatic velocity identify contrasting areas of vulnerability to climate change. PloS one, 10(10), e0140486.
+  - Hamann et. al.(2015). Velocity of climate change algorithms for guiding conservation and management. Global Change Biology, 21(2), 997-1004.
+  - Loarie et. al. (2009). The velocity of climate change. Nature, 462(7276), 1052-1055.
+  - Sandel et. al. (2011). The influence of Late Quaternary climate-change velocity on species endemism. Science, 334(6056), 660-664.
