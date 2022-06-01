@@ -39,6 +39,6 @@ outputs:
     type: image/tiff;application=geotiff
 references:
   - Carroll et. al. (2015). Biotic and climatic velocity identify contrasting areas of vulnerability to climate change. PloS one, 10(10), e0140486.
-  - Hamann et. al.(2015). Velocity of climate change algorithms for guiding conservation and management. Global Change Biology, 21(2), 997-1004.
+  - Hamann et. al. (2015). Velocity of climate change algorithms for guiding conservation and management. Global Change Biology, 21(2), 997-1004.
   - Loarie et. al. (2009). The velocity of climate change. Nature, 462(7276), 1052-1055.
   - Sandel et. al. (2011). The influence of Late Quaternary climate-change velocity on species endemism. Science, 334(6056), 660-664.
