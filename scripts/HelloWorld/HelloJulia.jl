@@ -1,5 +1,4 @@
-import Pkg; Pkg.add("JSON")
-import JSON
+using JSON
 
 println("Hello World")
 outputFolder = ARGS[1]
