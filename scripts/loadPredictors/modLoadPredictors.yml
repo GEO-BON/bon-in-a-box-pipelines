@@ -64,7 +64,7 @@ outputs:
   nc_predictors:
      label: non collinear predictors
      description: list of non collinear predictors
-     type: text
+     type: text/tab-separated-values
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
