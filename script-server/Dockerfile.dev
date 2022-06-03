@@ -127,4 +127,5 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends python3; \
     apt-get clean all;
 
+# Pre-compiling Julia dependencies
 RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots"]); Pkg.instantiate();'
