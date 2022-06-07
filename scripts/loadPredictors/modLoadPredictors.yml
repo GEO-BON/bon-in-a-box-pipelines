@@ -3,7 +3,7 @@ inputs:
   presence:
     label: presence
     description: path to presence data file
-    type: text
+    type: text/tab-separated-values
     example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
   obs_buffer:
     label: buffer
