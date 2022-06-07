@@ -1,9 +1,12 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate")
+packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+
+library(remotes)
+install_git("https://github.com/appelmar/gdalcubes_R")
 
 ## Load required packages
 
