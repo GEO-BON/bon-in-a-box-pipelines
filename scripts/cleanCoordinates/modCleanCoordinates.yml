@@ -12,7 +12,7 @@ inputs:
   layers: 
     label: layers
     description: "list of layers names (predictors) TODO: type text[]"
-    type: text
+    type: text[]
     example: ["bio1", "bio2", "bio4"]
   tests: 
     labels: cleaning_tests
