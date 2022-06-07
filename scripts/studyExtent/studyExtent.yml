@@ -27,10 +27,10 @@ outputs:
     type: float
     example: 100.52
   study_extent:
-    label: study extent 
-    description: Study extent 
-    type: text
-    example: 100.52 
+    label: study extent
+    description: Shape file representing the study extent 
+    type: application/dbf
+    example: /output/studyExtent/studyExtent_R/9ab734795ba757bdabb32ae6708e18d1/study_extent.shp
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
