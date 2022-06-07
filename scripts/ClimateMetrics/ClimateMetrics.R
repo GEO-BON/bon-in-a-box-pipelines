@@ -36,16 +36,14 @@ print(input)
 # Load functions
 source("/scripts/ClimateMetrics/funcClimateMetrics.R")
 #source("/scripts/stacCatalogue/stac_functions.R")
-
-
+cube_future=generate_cube(input$res,)
+tif=funcClimateMetrics(cube_future,metric=input$metric, )
 
 
 ## Outputing result to JSON
 
-output <- list("local velocity" = local_velocity,
-               "forward velocity" = forward_velocity,
-               "backward velocity" = backward_velocity,
-               "climate rarity" = climate_rarity)
+output <- list("output_tif" = tif,
+               "metric" = input[['metric']])
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

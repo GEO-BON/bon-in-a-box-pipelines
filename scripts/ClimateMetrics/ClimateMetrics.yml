@@ -1,5 +1,35 @@
 script: ClimateMetrics.R
 inputs:
+  t0:
+    label: t0
+    description: start time 
+    type: text
+    example: format is YYYY-MM-DD (1981-01-01)
+  t1:
+    label: t1
+    description: end time 
+    type: text
+    example: format is YYYY-MM-DD (1983-12-31)
+  variable:
+    label: variable
+    description: data type mean temperature
+    type: text
+    example: tas
+  tempora.res:
+    label: temporal resolution
+    description: size of pixels in time-direction, expressed as ISO8601
+    type: text
+    example: P3Y
+  spatial.res:
+    label: spatial resolution
+    decription: pixel size
+    type: int
+    example: 10000
+  rcp:
+    label: rcp
+    description: Representative Concentration Pathway scenarios (ssp126, ssp370, ssp585)
+    type: text
+    example: ssp126
   metric:
     label: metric
     description: climate metric (e.g., local, forward, backward, rarity) 
@@ -21,22 +51,16 @@ inputs:
     type: int
     example: 11
 outputs:
-  local_velocity:
-    label: local velocity
-    description: local climate change velocity
+  output_tif:
+    label: output metric
+    description: metric raster file 
     type: image/tiff;application=geotiff
-  forward_velocity:
-    label: forward velocity
-    description: forward climate change velocity
-    type: image/tiff;application=geotiff
-  backward_velocity:
-    label: backward velocity
-    description: backward climate change velocity
-    type: image/tiff;application=geotiff
-  climate_rarity:
-    label: climate rarity
-    description: climate rarity (mean  temperature for current and future)
-    type: image/tiff;application=geotiff
+    example: local_velocity.tif
+  metric:
+    label: metric
+    description: climate metric (e.g., local, forward, backward, rarity) 
+    type: text
+    example: local
 references:
   - Carroll et. al. (2015). Biotic and climatic velocity identify contrasting areas of vulnerability to climate change. PloS one, 10(10), e0140486.
   - Hamann et. al. (2015). Velocity of climate change algorithms for guiding conservation and management. Global Change Biology, 21(2), 997-1004.
