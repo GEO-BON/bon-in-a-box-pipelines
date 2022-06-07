@@ -1,5 +1,47 @@
 script: ClimateMetrics.R
 inputs:
+  bbox:
+    label: bbox
+    description: bounding box created from funcStudyExtent.R
+    type: application/dbf
+  buffer.box:
+    label: buffer box
+    description: buffer surronding box
+    type: int
+  collections:
+    label: collection
+    description: data set collection
+    type: text
+    example: chelsa-monthly
+  metric:
+    label: metric
+    description: climate metric (e.g., local, forward, backward, rarity) 
+    type: text
+    example: local
+  movingWindow:
+    label: search moving window
+    description: number of cells (must be an odd number)
+    type: int
+    example: 11
+  obs:
+    label: obs
+    description: bouding box created from loadGbif
+    type: application/dbf
+  rcp:
+    label: rcp
+    description: Representative Concentration Pathway scenarios (ssp126, ssp370, ssp585)
+    type: text
+    example: ssp126
+  spatial.res:
+    label: spatial resolution
+    decription: pixel size
+    type: int
+    example: 10000
+  srs.cube: 
+    label: srs cube
+    description: target spatial reference system
+    type: text
+    example: EPSG:6623
   t0:
     label: t0
     description: start time 
@@ -10,46 +52,36 @@ inputs:
     description: end time 
     type: text
     example: format is YYYY-MM-DD (1983-12-31)
-  variable:
-    label: variable
-    description: data type mean temperature
-    type: text
-    example: tas
-  tempora.res:
-    label: temporal resolution
-    description: size of pixels in time-direction, expressed as ISO8601
-    type: text
-    example: P3Y
-  spatial.res:
-    label: spatial resolution
-    decription: pixel size
-    type: int
-    example: 10000
-  rcp:
-    label: rcp
-    description: Representative Concentration Pathway scenarios (ssp126, ssp370, ssp585)
-    type: text
-    example: ssp126
-  metric:
-    label: metric
-    description: climate metric (e.g., local, forward, backward, rarity) 
-    type: text
-    example: local
-  time_span:
-    label: time span
-    description: number of years between future and current
-    type: int 
-    example: 58
   t_match: 
     label: threshold match
     description: plus/minus threshold mean temperature
     type: float
     example: 0.25
-  movingWindow:
-    label: search moving window
-    description: number of cells (must be an odd number)
-    type: int
-    example: 11
+  temporal.res:
+    label: temporal resolution
+    description: size of pixels in time-direction, expressed as ISO8601
+    type: text
+    example: P3Y
+  time.span:
+    label: time span
+    description: period cliamte projection
+    type: text
+    example: 2041-2070
+  use.obs:
+    label: use obs
+    description: use observations
+    type: boolean
+    example: T 
+  variable:
+    label: variable
+    description: data type mean temperature
+    type: text
+    example: tas, bio1
+  years_dif:
+    label: Years difference 
+    description: number of years between future and current
+    type: int 
+    example: 58
 outputs:
   output_tif:
     label: output metric

@@ -3,7 +3,7 @@
 #' @name climate_metrics
 #' @param cube_current, a GDAL data cube proxy object for current temperature
 #' @param cube_future, a GDAL data cube proxy object for  future temperature
-#' @param time_span, float difference in year between future and current
+#' @param years_dif, float difference in year between future and current
 #' @param t_match, float, plus/minus threshold to define climate match, by default 0.50
 #' @param metric, a character vector indicating climate metrics.  Options include: "local", "forward", "backward", "rarity"
 #' @param movingWindow, float indicating number of cells (must be an odd number) to search for similar climates
@@ -14,10 +14,10 @@
 # Local climate-change velocity
   climate_metrics <- function(cube_current,
                               cube_future,
-                              time_span=time_span,
+                              years_dif= NULL,
                               t_match=0.25,
                               metric= "local",
-                              movingWindow=11){
+                              ){
   
   # Calculate mean current temperature
     sum_bands <-  paste(names(cube_current), collapse="+")
@@ -38,7 +38,7 @@
     
     
   # Time span
-    time_span <- as.numeric(substr(gdalcubes::dimensions(cube_future)[[1]][2], 1,4)) - 
+    years_dif <- as.numeric(substr(gdalcubes::dimensions(cube_future)[[1]][2], 1,4)) - 
       as.numeric(substr(gdalcubes::dimensions(tmean_cube)[[1]][2], 1,4))
     
     
@@ -56,7 +56,7 @@
       spatial_tmean_current_0[spatial_tmean_current_0 <= 0.00001] <- 0.00001
       
   # Temporal gradient (?C/year)
-    Temporal_tmean <- (tmean_future_C - tmean_current_C)/time_span
+    Temporal_tmean <- (tmean_future_C - tmean_current_C)/years_dif
     
   
   # Local climate-change velocity (meters/year)
@@ -101,7 +101,7 @@
     # forward_velocity
       forward_velocity <- raster::rasterFromXYZ(out, res=10000, crs = srs.cube)%>%
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(time_span)%>%
+        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, 10000), right=10000)
       names(forward_velocity) <- "forward"
       
@@ -145,7 +145,7 @@
       # forward_velocity
       backward_velocity <- raster::rasterFromXYZ(out, res=10000, crs = srs.cube)%>%
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(time_span)%>%
+        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, 10000), right=10000)
       names(backward_velocity) <- "backward"
       

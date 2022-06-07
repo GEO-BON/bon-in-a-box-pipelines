@@ -66,6 +66,7 @@ srs.obs <- "EPSG:4326" # initial observations projection system
 srs.cube <- "EPSG:6623"  # targeted projected projection system
 obs.coords.proj <- create_projection(obs, lon = "lon", lat = "lat", 
                                        srs.obs, srs.cube)
+obs.coords.proj
 
 ```
 
@@ -82,9 +83,6 @@ stac("https://io.biodiversite-quebec.ca/stac/") %>%
 ``` 
 <br>
 
-```{r}
-get_info_collection("https://io.biodiversite-quebec.ca/stac/", collections = c("chelsa-monthly"), bbox = c(-47.02148, -42.53906, -12.98314,  -17.35063), limit = 5000)
-```
 
 #### Creating current climate cube
 
@@ -183,7 +181,7 @@ source("funcClimateMetrics.R")
 
 local_velocity <- climate_metrics(cube_current = cube_current,
                                   cube_future = cube_future,
-                                # time_span = 59, # you are able to manually set this value
+                                # years_dif = 59, # you are able to manually set this value
                                   metric = "local"
                                )
 
@@ -230,7 +228,7 @@ Here , we used  formula from <a href="https://journals.plos.org/plosone/article?
 forward_velocity <- climate_metrics(cube_current = cube_current,
                                     cube_future = cube_future,
                                     t_match = 0.25,
-                                  # time_span = 59, # you are able to manually set this value
+                                  # years_dif = 59, # you are able to manually set this value
                                     metric = "forward"
                                )
 forward_velocity
@@ -278,7 +276,7 @@ In other words, "given the projected future climate habitat of a grid cell, what
 backward_velocity <- climate_metrics(cube_current = cube_current,
                                      cube_future = cube_future,
                                      t_match = 0.1,
-                                   # time_span = 59, # you are able to manually set this value
+                                   # years_dif = 59, # you are able to manually set this value
                                      metric = "backward"
                                    )
 backward_velocity
