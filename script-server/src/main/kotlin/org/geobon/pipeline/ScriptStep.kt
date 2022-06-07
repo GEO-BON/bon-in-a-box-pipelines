@@ -20,6 +20,12 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
         return super.validateGraph()
     }
 
+    override fun validateStepInputs(): String {
+        val errorMsg = super.validateStepInputs()
+        if(errorMsg.isNotBlank()) return "$yamlFile: $errorMsg"
+        return ""
+    }
+
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
         val scriptRun = ScriptRun(
