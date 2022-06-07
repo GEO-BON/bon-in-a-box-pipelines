@@ -94,12 +94,9 @@ predictors_nc <- load_predictors(source = input$source,
 
 output_nc_predictors <- file.path(outputFolder, "nc_predictors.tsv")
 
-write.table(predictors_nc, output_nc_predictors, 
-             append = F, row.names = F, col.names = F, sep = "\t")
-
 
   output <- list(
-                  "nc_predictors" = output_nc_predictors
+                  "nc_predictors" = predictors_nc
                   ) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
