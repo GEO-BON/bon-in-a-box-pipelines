@@ -3,7 +3,7 @@ inputs:
   presence:
     label: presence points
     description: path to presence points dataframe
-    type: text
+    type: text/tab-separated-values
     example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
   proj_to:
     label: projection system
