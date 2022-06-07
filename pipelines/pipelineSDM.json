@@ -202,7 +202,7 @@
         "y": 120
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "Glyptemys insculpta"
       },
       "positionAbsolute": {
@@ -338,7 +338,7 @@
         "y": 319
       },
       "data": {
-        "type": "string/accepted_values:\"from_tif\" or \"from_cube\"",
+        "type": "text/accepted_values:\"from_tif\" or \"from_cube\"",
         "value": "from_cube"
       },
       "positionAbsolute": {
@@ -372,7 +372,7 @@
         "y": 279
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "mytiffolder/"
       },
       "positionAbsolute": {
@@ -444,7 +444,7 @@
         "y": 390
       },
       "data": {
-        "type": "string/vif.cor, vif.step, pearson, spearman or kendall",
+        "type": "text/vif.cor, vif.step, pearson, spearman or kendall",
         "value": "vif.cor"
       },
       "positionAbsolute": {
@@ -478,7 +478,7 @@
         "y": 423
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "EPSG:6623"
       },
       "positionAbsolute": {
@@ -546,7 +546,7 @@
         "y": 489
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "pearson"
       },
       "positionAbsolute": {
@@ -778,7 +778,7 @@
         "y": 159.99999999999991
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "mytiffolder/"
       },
       "positionAbsolute": {
@@ -854,7 +854,7 @@
         "y": 203.99999999999991
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "EPSG:6623"
       },
       "positionAbsolute": {
@@ -992,7 +992,7 @@
         "y": 341.77952318745923
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "EPSG:6623"
       },
       "positionAbsolute": {
@@ -1026,7 +1026,7 @@
         "y": 391.9630960156761
       },
       "data": {
-        "type": "string/accepted value \"box\", \"mcp\", \"buffer\"",
+        "type": "text/accepted value \"box\", \"mcp\", \"buffer\"",
         "value": "mcp"
       },
       "positionAbsolute": {
@@ -1176,7 +1176,7 @@
         "y": 510.50752724314475
       },
       "data": {
-        "type": "string/accepted_values \"random\", \"inclusion_buffer\"",
+        "type": "text/accepted_values \"random\", \"inclusion_buffer\"",
         "value": "random"
       },
       "positionAbsolute": {
@@ -1244,7 +1244,7 @@
         "y": 598.8279821826807
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "Glyptemys insculpta"
       },
       "positionAbsolute": {
@@ -1434,7 +1434,7 @@
         "y": 270.14610677512485
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "/output/loadPredictors/modLoadPredictors_R/446f714fcde6a956a32d31ae95555f08/nc_predictors.tsv"
       },
       "positionAbsolute": {
@@ -1467,7 +1467,7 @@
         "y": 284.658172629821
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "EPSG:6623"
       },
       "positionAbsolute": {
@@ -1531,7 +1531,7 @@
         "y": 316.10098198166264
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "bootstrap"
       },
       "positionAbsolute": {
@@ -1733,7 +1733,7 @@
         "y": 194.72149348351036
       },
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "EPSG:6623"
       },
       "positionAbsolute": {
