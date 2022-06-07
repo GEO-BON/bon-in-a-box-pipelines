@@ -44,14 +44,7 @@ study_extent <- sf::st_read(input$study_extent)
 
 bbox <- sf::st_bbox(study_extent, crs = input$proj_to)
 
-# layers
-if (file.exists(input$layers)) {
-
-layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
-
-  } else {
-    layers <- input$layers
-  }
+layers <- input$layers
 
 predictors <- 
   load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",

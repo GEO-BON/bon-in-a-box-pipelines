@@ -17,9 +17,9 @@ inputs:
     example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
   layers: 
     label: layers
-    description: layer names (predictors) as a list, or path to a list
-    type: text
-    example: "/output/loadPredictors/modLoadPredictors_R/446f714fcde6a956a32d31ae95555f08/nc_predictors.tsv"
+    description: layer names (predictors) as a text array
+    type: text[]
+    example: [bio2, bio4]
   proj_to:
     label: projection
     description: Projection system
@@ -52,13 +52,13 @@ inputs:
     example: 5
 outputs:
   presence_background:
-    label: presence_background
-    description: Some heat map that shows bla bla...
-    type: text
+    label: background presence
+    description: Background points for presence of species
+    type: text/tab-separated-values
   predictors:
     label: predictors
-    description: Some heat map that shows bla bla...
-    type: text
+    description: 
+    type: image/tiff;application=geotiff
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 references:
