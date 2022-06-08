@@ -43,12 +43,12 @@ proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lo
 mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
 
 # layers
-if (file.exists(input$layers)) {
-layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
+#if (file.exists(input$layers)) {
+#layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
 
-  } else {
+ # } else {
     layers <- input$layers
-  }
+ # }
 
 
 
@@ -79,8 +79,8 @@ predictors_nc <- load_predictors(source = "from_cube",
                            ouput_dir = getwd(),
                            as.list = F)
 
-tests <- strsplit(gsub("[^[:alnum:] ]", " ", input$tests ), " +")[[1]]
-tests <- tests[tests!=""]
+#tests <- strsplit(gsub("[^[:alnum:] ]", " ", input$tests ), " +")[[1]]
+#tests <- tests[tests!=""]
 
   clean_presence <- clean_coordinates(
       x = presence,
@@ -92,7 +92,7 @@ tests <- tests[tests!=""]
       lon = "lon",
       lat = "lat",
       species_col = "scientific_name",
-      tests = tests,
+      tests = input$tests,
       threshold_env = 0.8,
        report = F,
    value = "clean"

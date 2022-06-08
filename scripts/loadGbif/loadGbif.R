@@ -12,6 +12,7 @@ library("rgbif")
 library("dplyr")
 library("raster")
 library("rjson")
+
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder

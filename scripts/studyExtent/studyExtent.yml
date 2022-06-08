@@ -1,13 +1,13 @@
 script: studyExtent.R
 inputs:
   presence:
-    label: presence points
+    label: clean presence
     description: path to presence points dataframe
-    type: text
+    type: text/tab-separated-values
     example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
   proj_to:
-    label: projection system
-    description: Projection 
+    label: projection
+    description: projection 
     type: text
     example: "EPSG:6623"
   method: 
@@ -15,11 +15,11 @@ inputs:
     description: Method to create the study extent.
     type: text/accepted value "box", "mcp", "buffer"
     example: "mcp"
-  dist_buffer :
-    label: buffer length
-    description: buffer length (applied around the box, mcp or points depending on the method used) 
+  width_buffer :
+    label: buffer width
+    description: buffer width (applied around the box, mcp or points depending on the method used) 
     type: int
-    example: null  
+    example: 0  
 outputs:
   area_study_extent:
     label: study extent area
@@ -28,7 +28,7 @@ outputs:
     example: 100.52
   study_extent:
     label: study extent 
-    description: Study extent 
+    description: study extent 
     type: text
     example: 100.52 
 description: "This sample script shows how it works."

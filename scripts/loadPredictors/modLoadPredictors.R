@@ -96,8 +96,6 @@ output_nc_predictors <- file.path(outputFolder, "nc_predictors.tsv")
 
 write.table(predictors_nc, output_nc_predictors, 
              append = F, row.names = F, col.names = F, sep = "\t")
-
-
   output <- list(
                   "nc_predictors" = output_nc_predictors
                   ) 
