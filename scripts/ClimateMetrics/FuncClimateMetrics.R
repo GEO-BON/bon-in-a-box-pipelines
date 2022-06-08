@@ -3,7 +3,6 @@
 #' @name climate_metrics
 #' @param cube_current, a GDAL data cube proxy object for current temperature
 #' @param cube_future, a GDAL data cube proxy object for  future temperature
-#' @param years_dif, float difference in year between future and current
 #' @param t_match, float, plus/minus threshold to define climate match, by default 0.50
 #' @param metric, a character vector indicating climate metrics.  Options include: "local", "forward", "backward", "rarity"
 #' @param movingWindow, float indicating number of cells (must be an odd number) to search for similar climates
@@ -14,7 +13,6 @@
 # Local climate-change velocity
   climate_metrics <- function(cube_current,
                               cube_future,
-                              years_dif= NULL,
                               t_match=0.25,
                               metric= "local",
                               ){
