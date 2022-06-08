@@ -1,7 +1,8 @@
 script: modCleanCoordinates.R
 inputs:
   presence:
-    description: Occurrence data, some description here
+    label: presence
+    description: presence data
     type: text/tab-separated-values
     example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
   tif_folder:
@@ -11,8 +12,8 @@ inputs:
     example: "mytiffolder/"
   layers: 
     label: layers
-    description: "list of layers names (predictors) TODO: type text[]"
-    type: text
+    description: list of layers names (predictors)
+    type: text[]
     example: ["bio1", "bio2", "bio4"]
   tests: 
     labels: cleaning_tests
@@ -36,25 +37,25 @@ inputs:
     type: text
     example: "EPSG:6623"
   spatial_res :
-    label: spatial_res
+    label: spatial resolution
     description: spatial resolution, only used if predictors are loaded from a stac catalogue. 
     type: int
     example: 1000  
 outputs:
   n_presence:
-    label: n_presence
+    label: n presence
     description: Initial number of presences points.
     type: int
     example: 500
   n_clean:
-    label: n_clean_presence
+    label: n clean presence
     description: Final number of presences points after cleaning.
     type: int
     example: 400
   clean_presence:
-     label: clean presence table
-     description: CSV file containing a table with clean presence points.
-     type: text/csv
+     label: clean presence
+     description: TSV file containing a table with clean presence points.
+     type: text/tab-separated-values
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/cleanCoordinates
 references:

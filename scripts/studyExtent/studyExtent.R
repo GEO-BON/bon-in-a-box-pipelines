@@ -17,10 +17,10 @@ print(input)
 
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
 
-if (is.numeric(input$dist_buffer)) {
-dist_buffer <- input$dist_buffer
+if (is.numeric(input$width_buffer)) {
+width_buffer <- input$width_buffer
 } else { 
-		dist_buffer <- NULL
+		width_buffer <- NULL
 	
 }
 study_extent <- create_study_extent(presence, 
@@ -28,7 +28,7 @@ study_extent <- create_study_extent(presence,
                               lat = "lat",
                               proj = input$proj_to,
                               method = input$method,
-                              dist_buffer = dist_buffer,
+                              dist_buffer = width_buffer,
                               shapefile_path = NULL)
 
 

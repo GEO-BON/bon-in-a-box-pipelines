@@ -1,12 +1,12 @@
 script: selectBackground.R
 inputs:
   study_extent:
-    label: study_extent
+    label: study extent
     description: Path to a .shp file representing the extent to sample the background points from.
     type: text
     example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
   method_background: 
-    label: method_background
+    label: method background
     description: method used to sample background points
     type: text/accepted_values "random", "inclusion_buffer"
     example: "random"
@@ -16,7 +16,7 @@ inputs:
     type: int
     example: 10000
   species: 
-    label: species
+    label: species name
     description: scientific name of the species
     type: text
     example: "Glyptemys insculpta"
@@ -27,14 +27,14 @@ inputs:
     example: 1000  
 outputs:
   n_background:
-    label: n_background_clean
+    label: n clean background 
     description: Number of background points selected and cleaned
     type: int
     example: 20000
   clean_background:
-    label: clean background points
-    description: Clean background points
-    type: text
+    label: clean background
+    description: TSV file containing a table with background points.
+    type: text/tab-separated-values
     example:
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
