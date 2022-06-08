@@ -50,20 +50,25 @@ The script description is in a .yml file next to the script. It describes
 
 See [example](/scripts/HelloWorld/HelloR.yml)
 
-Each input and output must declare a type, *in lowercase.* The following are accepted:
-| "type" attribute               | UI rendering                 |
+Each input and output must declare a type, *in lowercase.* The following file types are accepted:
+| File type          | MIME type to use in the yaml   | UI rendering                 |
+| ------------------ |------------------------------- |------------------------------|
+| CSV                | text/csv                       | HTML table (partial content) |
+| GeoPackage         | application/geopackage+sqlite3 | Link                         |
+| GeoTIFF            | image/tiff;application=geotiff | Map widget (leaflet)         |
+| JPG                | image/jpg                      | \<img> tag                   |
+| Shapefile          | application/dbf                | Link                         |
+| Text               | text/plain                     | Plain text                   |
+| TSV                | text/tab-separated-values      | HTML table (partial content) |
+|                    | (any unknown type)             | Plain text or link           |
+
+The following primitive types are accepted:
+| "type" attribute in the yaml   | UI rendering                 |
 |--------------------------------|------------------------------|
-| application/dbf                | Link to the shape file       |
-| application/geopackage+sqlite3 | Link to the geopackage file  |
 | boolean                        | Plain text                   |
 | float, float[]                 | Plain text                   |
-| image/jpg                      | \<img> tag                   |
-| image/tiff;application=geotiff | Map widget (leaflet)         |
 | int, int[]                     | Plain text                   |
 | text, text[]                   | Plain text                   |
-| text/csv                       | HTML table (partial content) |
-| text/plain                     | Plain text file              |
-| text/tab-separated-values      | HTML table (partial content) |
 | (any unknown type)             | Plain text                   |
 
 #### Reporting problems
