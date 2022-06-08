@@ -54,6 +54,7 @@ Each input and output must declare a type, *in lowercase.* The following are acc
 | "type" attribute               | UI rendering                 |
 |--------------------------------|------------------------------|
 | application/dbf                | Link to the shape file       |
+| application/geopackage+sqlite3 | Link to the geopackage file  |
 | boolean                        | Plain text                   |
 | float, float[]                 | Plain text                   |
 | image/jpg                      | \<img> tag                   |
