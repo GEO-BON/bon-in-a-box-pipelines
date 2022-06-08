@@ -1,9 +1,12 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate")
+packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+
+library(remotes)
+install_git("https://github.com/appelmar/gdalcubes_R")
 
 ## Load required packages
 
@@ -94,10 +97,12 @@ predictors_nc <- load_predictors(source = input$source,
 
 output_nc_predictors <- file.path(outputFolder, "nc_predictors.tsv")
 
+
 write.table(predictors_nc, output_nc_predictors, 
              append = F, row.names = F, col.names = F, sep = "\t")
+
   output <- list(
-                  "nc_predictors" = output_nc_predictors
+                  "nc_predictors" = predictors_nc
                   ) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

@@ -1,6 +1,12 @@
 
 
 ## Install required packages
+packages <- c("terra", "rjson", "raster", "dplyr", "ENMeval", "remotes")
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+
+library(remotes)
+install_git("https://github.com/appelmar/gdalcubes_R")
 
 ## Load required packages
 
@@ -39,6 +45,8 @@ study_extent <- sf::st_read(input$study_extent)
 bbox <- sf::st_bbox(study_extent, crs = input$proj_to)
 
 # layers
+layers <- input$layers
+
 predictors <- 
   load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 

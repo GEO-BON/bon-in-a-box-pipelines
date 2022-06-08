@@ -3,12 +3,12 @@ inputs:
   presence_background:
     label: background
     description: Path to the background point
-    type: text
+    type: text/tab-separated-values
     example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/presence_background.tsv"
   predictors: 
     label: predictors
     description: layer names (predictors) as a list, or path to a list
-    type: text
+    type: image/tiff;application=geotiff
     example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/predictors.tif"
   proj_to:
     label: projection

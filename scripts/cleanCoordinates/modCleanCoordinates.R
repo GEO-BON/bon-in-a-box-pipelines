@@ -42,13 +42,7 @@ proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lo
 
 mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
 
-# layers
-#if (file.exists(input$layers)) {
-#layers <- read.table(file = input$layers, sep = '\t', header = F)[, 1]
-
- # } else {
-    layers <- input$layers
- # }
+layers <- input$layers
 
 
 

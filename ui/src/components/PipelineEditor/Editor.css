@@ -19,10 +19,12 @@ aside.scriptChooser .description {
 }
 
 .tooltip {
+    position:relative;
     margin: 5px;
     padding: 5px;
-    background-color: #00000088;
+    background-color: #222222bb;
     width: max-content;
+    z-index: 1500; /* Above the nodes, that have z-index 1000 */
 }
 
 .dndnode {
