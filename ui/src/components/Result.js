@@ -35,7 +35,11 @@ function RenderedFiles(props) {
     }
 
     function renderWithMime(key, content) {
-        let [type, subtype] = getMimeType(key).split('/');
+        let mime = getMimeType(key)
+        if(mime.endsWith('[]'))
+            return <p>{content.join(', ')}</p>
+
+        let [type, subtype] = mime.split('/');
         switch (type) {
             case "image":
                 // Match many MIME type possibilities for geotiffs
@@ -77,6 +81,10 @@ function RenderedFiles(props) {
         }
     }
 
+    function renderInline(content){
+        return Array.isArray(content) ? content.join(', ') : content
+    }
+
     if (props.files) {
         return Object.entries(props.files).map(entry => {
             const [key, value] = entry;
@@ -102,7 +110,7 @@ function RenderedFiles(props) {
             return (
                 <FoldableOutput key={key} title={title} description={description} componentId={key}
                     inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
-                    inlineCollapsed={!isLink && value}
+                    inlineCollapsed={!isLink && renderInline(value)}
                     className="foldableOutput">
                     {renderWithMime(key, value)}
                 </FoldableOutput>

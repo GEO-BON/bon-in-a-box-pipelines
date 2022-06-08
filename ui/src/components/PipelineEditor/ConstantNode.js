@@ -11,7 +11,7 @@ export default function ConstantNode({ id, data }) {
       <label htmlFor={id}>{data.type} </label>
       <input id={id} onChange={data.onChange} defaultValue={data.value}
         placeholder={data.type.endsWith('[]') ? ARRAY_PLACEHOLDER : CONSTANT_PLACEHOLDER}
-        type={data.type == 'boolean' ? 'checkbox' : 'text'}
+        type={data.type === 'boolean' ? 'checkbox' : 'text'}
         checked={data.value} />
 
       <Handle type="source" position={Position.Right} />

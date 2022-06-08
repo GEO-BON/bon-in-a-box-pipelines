@@ -62,10 +62,8 @@ RUN set -eux; \
 	\
 	apt-mark auto '.*' > /dev/null; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
-	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
-	\
-# smoke test
-	julia --version
+	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false;
+
 
 ## The following is copied from Dockerfile.dev, adapted to Debian architecture
 ## First RUN command to install R-base
@@ -114,7 +112,7 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends python3; \
     apt-get clean all;
 
-#INSTALL DOCKER CLI 
+#INSTALL DOCKER CLI
 ENV DOCKER_VERSION=20.10.9
 RUN curl -sfL -o docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" && \
   tar -xzf docker.tgz docker/docker --strip=1 && \
@@ -133,6 +131,10 @@ RUN gradle assemble
 
 ## This takes the build server and puts in on the R-script enabled image
 FROM base-image
+
+# Pre-compiling Julia dependencies
+RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots"]); Pkg.instantiate();'
+
 COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar
 WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "kotlin-server.jar"]

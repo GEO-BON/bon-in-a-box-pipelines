@@ -53,7 +53,7 @@ outputs:
     type: int
     example: 400
   clean_presence:
-     label: clean presence
+     label: clean presence table
      description: TSV file containing a table with clean presence points.
      type: text/tab-separated-values
 description: "This sample script shows how it works."

@@ -46,7 +46,7 @@ const getLayoutedElements = (nodes, edges) => {
   nodes.forEach(node => {
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
 
-    if (node.type == 'io') {
+    if (node.type === 'io') {
       inputOrderMap.set(node.id, node.data.inputs)
     }
   });
@@ -113,12 +113,12 @@ export function PipelineEditor(props) {
         }
 
         let value
-        if(event.target.type == 'checkbox') {
+        if(event.target.type === 'checkbox') {
           value = event.target.checked
         } else {
           value = event.target.value
 
-          if(event.target.placeholder == ARRAY_PLACEHOLDER) {
+          if(event.target.placeholder === ARRAY_PLACEHOLDER) {
             value = value.split(',')
           }
         }
