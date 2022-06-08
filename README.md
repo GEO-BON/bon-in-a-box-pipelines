@@ -62,7 +62,7 @@ Each input and output must declare a type, *in lowercase.* The following are acc
 | int, int[]                     | Plain text                   |
 | text, text[]                   | Plain text                   |
 | text/csv                       | HTML table (partial content) |
-| text/plain                     | Plain text                   |
+| text/plain                     | Plain text file              |
 | text/tab-separated-values      | HTML table (partial content) |
 | (any unknown type)             | Plain text                   |
 
