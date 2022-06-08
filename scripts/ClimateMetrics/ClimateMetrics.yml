@@ -1,5 +1,9 @@
 script: ClimateMetrics.R
 inputs:
+  aggregation:
+    label: aggregation
+    description: method of aggregation
+    type: text
   bbox:
     label: bbox
     description: bounding box created from funcStudyExtent.R
@@ -32,11 +36,15 @@ inputs:
     description: Representative Concentration Pathway scenarios (ssp126, ssp370, ssp585)
     type: text
     example: ssp126
+  resampling:
+    label: resampling
+    description: method for resampling continuous variable
+    type: text
   spatial.res:
     label: spatial resolution
     decription: pixel size
     type: int
-    example: 10000
+    example: 10000 (in meters)
   srs.cube: 
     label: srs cube
     description: target spatial reference system
@@ -61,10 +69,10 @@ inputs:
     label: temporal resolution
     description: size of pixels in time-direction, expressed as ISO8601
     type: text
-    example: P3Y
+    example: P3Y (see number of years t0 to t1)
   time.span:
     label: time span
-    description: period cliamte projection
+    description: period climate projection
     type: text
     example: 2041-2070
   use.obs:
