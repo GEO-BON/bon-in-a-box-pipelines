@@ -13,8 +13,9 @@
 # Local climate-change velocity
   climate_metrics <- function(cube_current,
                               cube_future,
-                              t_match=0.25,
-                              metric= "local",
+                              t_match = 0.25,
+                              metric = "local",
+                              movingWindow = 11
                               ){
   
   # Calculate mean current temperature

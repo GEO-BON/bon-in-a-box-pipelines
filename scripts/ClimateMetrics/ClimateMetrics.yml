@@ -1,22 +1,5 @@
 script: ClimateMetrics.R
 inputs:
-  aggregation:
-    label: aggregation
-    description: method of aggregation
-    type: text
-  bbox:
-    label: bbox
-    description: bounding box created from funcStudyExtent.R
-    type: application/dbf
-  buffer.box:
-    label: buffer box
-    description: buffer surronding box
-    type: int
-  collections:
-    label: collection
-    description: data set collection
-    type: text
-    example: chelsa-monthly
   metric:
     label: metric
     description: climate metric (e.g., local, forward, backward, rarity) 
@@ -27,39 +10,36 @@ inputs:
     description: number of cells (must be an odd number)
     type: int
     example: 11
-  obs:
-    label: obs
-    description: bouding box created from loadGbif
-    type: application/dbf
   rcp:
     label: rcp
     description: Representative Concentration Pathway scenarios (ssp126, ssp370, ssp585)
     type: text
     example: ssp126
-  resampling:
-    label: resampling
-    description: method for resampling continuous variable
-    type: text
   spatial.res:
     label: spatial resolution
-    decription: pixel size
+    decription: pixel size (in meters)
     type: int
-    example: 10000 (in meters)
+    example: 10000 
   srs.cube: 
     label: srs cube
     description: target spatial reference system
     type: text
     example: EPSG:6623
+  aggregation:
+    label: aggregation
+    description: method of aggregation for 
+    type: text
+    example: mean
   t0:
     label: t0
     description: start time 
     type: text
-    example: format is YYYY-MM-DD (1981-01-01)
+    example: "1981-01-01"
   t1:
     label: t1
     description: end time 
     type: text
-    example: format is YYYY-MM-DD (1983-12-31)
+    example: "1981-12-31"
   t_match: 
     label: threshold match
     description: plus/minus threshold mean temperature
@@ -69,7 +49,7 @@ inputs:
     label: temporal resolution
     description: size of pixels in time-direction, expressed as ISO8601
     type: text
-    example: P3Y (see number of years t0 to t1)
+    example: P1Y
   time.span:
     label: time span
     description: period climate projection
@@ -79,17 +59,42 @@ inputs:
     label: use obs
     description: use observations
     type: boolean
-    example: T 
-  variable:
-    label: variable
-    description: data type mean temperature
+    example: TRUE 
+  species:
+    label: species names
+    description: scientific name of the species
     type: text
-    example: tas, bio1
-  years_dif:
-    label: Years difference 
-    description: number of years between future and current
-    type: int 
-    example: 58
+    example: "Glyptemys insculpta"
+  species_year_start:
+    label: year start
+    description: starting year to load observations
+    type: int
+    example: 1980
+  species_year_end:
+    label: year end
+    description: ending year to load observations
+    type: int
+    example: 2020
+  limit:
+    label: limit
+    description: maximum number of observations to load
+    type: int
+    example: 2000
+  bbox:
+    label: bbox coordinates
+    description: coordinates of the bbox, in the order xmin, xmax, ymax, ymin.
+    type: float[]
+    example: null
+  buffer.box:
+    label: buffer box
+    description: buffer surronding box
+    type: int
+    example: null
+  shapefile_path:
+    label: shapefile path
+    description: Path to a .shp file representing the extent.
+    type: application/dbf
+    example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
 outputs:
   output_tif:
     label: output metric
