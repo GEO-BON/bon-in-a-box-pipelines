@@ -7,9 +7,10 @@ if(length(new.packages)) install.packages(new.packages)
 
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
-#remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
+remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
 #library(remotes)
 #devtools::install_github("https://github.com/appelmar/gdalcubes_R")
+
 
 
 ## Load required packages
@@ -48,7 +49,6 @@ print(input)
 source("/scripts/ClimateMetrics/funcClimateMetrics.R")
 source("/scripts/loadObservations/funcLoadObservations.R")
 
-source(devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue"))
 
 # Pb if buffer set to 0, transformed into empty string. Warn JM about this
 if (input$buffer.box == "...") buffer.box <- 0
