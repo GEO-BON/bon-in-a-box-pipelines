@@ -10,7 +10,7 @@ if(length(new.packages)) install.packages(new.packages)
 #remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac.functions.r")
 #library(remotes)
 #devtools::install_github("https://github.com/appelmar/gdalcubes_R")
-source(devtools::install_github("ReseauBiodiversiteQuebec/stac.functions.r/R/stac.functions.r"))
+source(devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue/R/stac.functions.r"))
 
 
 ## Load required packages
