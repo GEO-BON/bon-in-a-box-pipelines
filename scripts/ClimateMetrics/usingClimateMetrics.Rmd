@@ -49,8 +49,9 @@ Let's first define a study area.
 
 As a bounding box we used observations from GBIF fo this species: <a href="https://en.wikipedia.org/wiki/Wood_turtle" target="_blank">Glyptemys insculpta</a>.
 
-```{r}
+```{r cache=TRUE}
 obs <- rgbif::occ_data(scientificName = "Glyptemys insculpta", hasCoordinate = TRUE, limit = 1000)
+
 obs <- dplyr::select(obs$data, decimalLongitude, decimalLatitude) %>%
   dplyr::rename(lon = decimalLongitude) %>%
   dplyr::rename(lat = decimalLatitude) 
@@ -61,12 +62,19 @@ head(obs)
 
 We re-projected the decimal longitude and latitude to a user-specified projection system. This conversion to a projected system is essential to interact with the cube.
 
-```{r }
-srs.obs <- "EPSG:4326" # initial observations projection system
-srs.cube <- "EPSG:6623"  # targeted projected projection system
-obs.coords.proj <- create_projection(obs, lon = "lon", lat = "lat", 
-                                       srs.obs, srs.cube)
-obs.coords.proj
+```{r cache=TRUE}
+srs_obs <- "EPSG:4326" # initial observations projection system
+buffer=0
+
+srs_cube <- "EPSG:6623"  # targeted projected projection system
+# Reproject the obs to the data cube projection
+obs_pts <- project_coords(obs,
+                         lon = "lon",
+                         lat = "lat",
+                         proj_from = srs_obs,
+                         proj_to = srs_cube )
+# Create the extent (data cube projection)
+bbox <- points_to_bbox(obs_pts, buffer = buffer)
 
 ```
 
@@ -75,7 +83,7 @@ obs.coords.proj
 
 We used `chelsa-monthly` collection that spans from 1981 to 2010 at ~1Km^2 resolution.
 
-```{r}
+```{r cache=TRUE}
 stac("https://io.biodiversite-quebec.ca/stac/") %>%
   collections() %>%
   get_request()
@@ -83,24 +91,31 @@ stac("https://io.biodiversite-quebec.ca/stac/") %>%
 ``` 
 <br>
 
+```{r cache=TRUE}
 
+get_info_collection(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+                                limit = 50,
+                                collections = c("chelsa-monthly"),
+                                bbox =  NULL
+    ) 
+```
+
+<br>
 #### Creating current climate cube
 
 We load the cube from the collections `chelsa-monthly`,  using the observations points as an extent (option  use.obs = T and adding the observations points in parameter obs). 
 
 To save some time we used: spatial resolution = **~10,000 m** and  temporal resolution = **3 years** (1981 to 1983).
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, cache=TRUE}
 
 
 cube_current <- 
   load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
            limit = 5000, 
            collections = c('chelsa-monthly'), 
-           use.obs = T,
-           obs = obs.coords.proj,
-           buffer.box = 0,
-           srs.cube = srs.cube,
+           bbox = bbox,
+           srs.cube = srs_cube,
            t0 = "1981-01-01",
            t1 = "1983-12-31",
            variable = "tas",
@@ -133,18 +148,18 @@ To save some time we used: spatial resolution = **~10,000 m**
 
 we used `bio` layers from each GMC.
 
-```{r, warning=FALSE}
+```{r, warning=FALSE, cache=TRUE}
 cube_future <- load_cube_projection(stac_path = 
                                     "https://io.biodiversite-quebec.ca/stac/",
                                   limit = 5000, 
                                   collections = c('chelsa-clim-proj'), 
-                                  use.obs = T,
-                                  obs = obs.coords.proj,
-                                  buffer.box = 0,
+                                  #use.obs = T,
+                                 # obs = obs.coords.proj,
+                                 # buffer.box = 0,
                                   rcp = 'ssp126', #ssp126, ssp370, ssp585
-                                  bbox = NULL,
+                                  bbox = bbox,
                                   variable = "bio1",
-                                  srs.cube = srs.cube, 
+                                  srs.cube = srs_cube, 
                                   time.span = "2041-2070", #"2011-2040", 2041-2070 or 2071-2100
                                   spatial.res = 10000, 
                                   temporal.res  = "P1Y",
@@ -171,13 +186,13 @@ Let's source the function to calculate climate metrics:
 
 ```{r}
 
-source("funcClimateMetrics.R")
+source("FuncClimateMetrics.R")
 
 ```
 
 
 
-```{r message=FALSE, warning=FALSE, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
 
 local_velocity <- climate_metrics(cube_current = cube_current,
                                   cube_future = cube_future,
@@ -189,7 +204,7 @@ local_velocity <- climate_metrics(cube_current = cube_current,
 
 Plot shows `local climate velocity`.
 
-```{r message=FALSE, warning=FALSE, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.width=10,cache=TRUE}
 # Plotting
   breaks = seq(0, raster::maxValue(local_velocity), by=1)
   plot(local_velocity,
@@ -198,6 +213,7 @@ Plot shows `local climate velocity`.
        col=rev(viridis::viridis(length(breaks))),
        main="Local climate-change velocity")
   
+
 ```
 
 
@@ -223,7 +239,7 @@ In other words, "what is the rate at which an organism in the current landscape 
 
 Here , we used  formula from <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0140486" target="_blank">Carroll et al. (2015)</a>. Users have the option to set the matching plus/minus threshold mean temperature (`t_match`). If the matching temperature for a given pixels is not inside the extent of the area of study (i.e., Inf values) we assigned 10,000Km.
 
-```{r message=FALSE, warning=FALSE, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.width=10,cache=TRUE}
 
 forward_velocity <- climate_metrics(cube_current = cube_current,
                                     cube_future = cube_future,
@@ -236,7 +252,7 @@ forward_velocity
 
 Remember that pixels with matching mean temperature values (plus/minus threshold) beyond study area were set at 10,000Km. In the first plot we can see where those pixels (red color). The second plot on the right shows `forward climate change velocity` for all pixels with matching values inside the extent of the analysis (for visualization purposes we set 10,000 to NA).
 
-```{r message=FALSE, warning=FALSE, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
 
 par(mfrow = c(1,2))
 
@@ -271,7 +287,7 @@ In other words, "given the projected future climate habitat of a grid cell, what
 <br>
 
 
-```{r message=FALSE, warning=FALSE, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
 
 backward_velocity <- climate_metrics(cube_current = cube_current,
                                      cube_future = cube_future,
@@ -285,7 +301,7 @@ backward_velocity
 <br>
 The plot shows `backward climate change velocity`.
 
-```{r message=FALSE, warning=FALSE, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
 
   
  plot(backward_velocity,
@@ -301,7 +317,7 @@ The plot shows `backward climate change velocity`.
 
 Here we measure areas that are climatically distinct from their regional surroundings for current and future mean temperature values, using a threshold (+- t_match) and a moving window (e.g., it must be an odd number: 11 cells ~ 11,000Km). 
 
-```{r message=FALSE, warning=FALSE}
+```{r message=FALSE, warning=FALSE, cache=TRUE}
 
 climate_rarity <- climate_metrics(cube_current = cube_current,
                                   cube_future = cube_future,
@@ -316,7 +332,7 @@ climate_rarity
 The plot shows `climate rarity` 
 Values close to zero indicate that mean current temperature is rare compare with their surroundings. 
 
-```{r message=FALSE, warning=FALSE, fig.width=10}
+```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
 par(mfrow=c(1,2))
 plot(climate_rarity$current_rarity, main="Tmean-current rarity")
 plot(climate_rarity$future_rarity, main="Tmean-future rarity")
