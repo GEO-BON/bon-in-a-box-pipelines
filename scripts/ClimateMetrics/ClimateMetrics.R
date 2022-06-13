@@ -123,8 +123,7 @@ tif <- climate_metrics(cube_current,
                           cube_future,
                           metric=input$metric,
                            t_match = input$tmatch,
-                          movingWindow = input$movingWindow,
-                          spatial_resolution = input$spatial.res
+                          movingWindow = input$movingWindow
                           )
 
 output_tif <- file.path(outputFolder, paste0(input$metric, ".tif"))
