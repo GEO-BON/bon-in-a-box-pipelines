@@ -7,15 +7,15 @@ if(length(new.packages)) install.packages(new.packages)
 
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
-remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
+#remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac.functions.r")
 #library(remotes)
 #devtools::install_github("https://github.com/appelmar/gdalcubes_R")
-
+source(devtools::install_github("ReseauBiodiversiteQuebec/stac.functions.r/R/stac.functions.r"))
 
 
 ## Load required packages
 library("rjson")
-library("stac-catalogue")
+#library("stac.functions.r")
 library("gdalcubes")
 library("rstac")
 library("tibble")
@@ -63,21 +63,21 @@ if (input$use.obs) {
 
 # Reproject the obs to the data cube projection
 obs_pts <-
-          stac-catalogue::project_coords(obs,
+          stac.functions.r::project_coords(obs,
                          lon = "decimal_longitude",
                          lat = "decimal_latitude",
                          proj_from = "+proj=longlat +datum=WGS84",
                          proj_to = input$srs.cube)
 
 # Create the extent (data cube projection)
-bbox <- stac-catalogue::points_to_bbox(obs_pts, buffer = buffer.box)
+bbox <- stac.functions.r::points_to_bbox(obs_pts, buffer = buffer.box)
 
 
 # Case 2: we use a shapefile
 } else if (!is.null(input$shapefile_path)) {
     obs <- NULL
     shp <- sf::st_read(input$shapefile_path)
-    bbox <- stac-catalogue::shp_to_bbox(shp,
+    bbox <- stac.functions.r::shp_to_bbox(shp,
         proj_to = input$srs.cube)
 
 # Case 3: we use a vector
@@ -89,7 +89,7 @@ bbox <- st_bbox(c(xmin = bbox[1], xmax = bbox[2],
     } 
 
 print("Loading current climate...")
-cube_current <- stac-catalogue::load_cube(collections = 'chelsa-monthly', 
+cube_current <- stac.functions.r::load_cube(collections = 'chelsa-monthly', 
                           bbox = bbox,
                           t0 = input$t0,
                           t1 = input$t1,
@@ -103,7 +103,7 @@ cube_current <- stac-catalogue::load_cube(collections = 'chelsa-monthly',
 print("Loading current climate loaded.")
 
 print("Loading future climate...")
-cube_future <- stac-catalogue::load_cube_projection(collections = 'chelsa-clim-proj',            
+cube_future <- stac.functions.r::load_cube_projection(collections = 'chelsa-clim-proj',            
                           bbox = bbox,
                           limit = 5000,
                           srs.cube = input$srs.cube,
