@@ -41,6 +41,7 @@
       as.numeric(substr(gdalcubes::dimensions(tmean_cube)[[1]][2], 1,4))
     
     
+    
   if(metric == "local"){
   
   # Spatial gradient (meters/?C)
