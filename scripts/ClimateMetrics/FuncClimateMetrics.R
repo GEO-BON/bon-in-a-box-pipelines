@@ -15,8 +15,7 @@
                               cube_future,
                               t_match = 0.25,
                               metric = "local",
-                              movingWindow = 11,
-                              spatial_resolution = 1000
+                              movingWindow = 11
                               ){
   
   # Calculate mean current temperature
