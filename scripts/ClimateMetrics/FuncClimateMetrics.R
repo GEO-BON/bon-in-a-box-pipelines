@@ -98,10 +98,10 @@
       out=cbind(x,y, distance=d) 
     
     # forward_velocity
-      forward_velocity <- raster::rasterFromXYZ(out, res=10000, crs = srs.cube)%>%
+      forward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs.cube)%>%
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(years_dif)%>%
-        raster::reclassify(c(NA, NA, 10000), right=10000)
+        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
+        raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
       names(forward_velocity) <- "forward"
       
     return(forward_velocity)
@@ -142,10 +142,10 @@
       out=cbind(x,y, distance=d) 
       
       # forward_velocity
-      backward_velocity <- raster::rasterFromXYZ(out, res=10000, crs = srs.cube)%>%
+      backward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs.cube)%>%
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(years_dif)%>%
-        raster::reclassify(c(NA, NA, 10000), right=10000)
+        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
+        raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
       names(backward_velocity) <- "backward"
       
       return(backward_velocity)
