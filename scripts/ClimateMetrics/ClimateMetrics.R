@@ -47,6 +47,7 @@ print(input)
 
 source("/scripts/ClimateMetrics/funcClimateMetrics.R")
 source("/scripts/loadObservations/funcLoadObservations.R")
+
 source(devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue"))
 
 # Pb if buffer set to 0, transformed into empty string. Warn JM about this

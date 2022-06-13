@@ -49,7 +49,7 @@
     # Neighborhood Slope Algorithm, average maximum technique
       f <- matrix(1, nrow=3, ncol=3)
       x <- tmean_current_C$mean_tmean
-      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)%>%`/`(raster::res(x)[1]^2)
+      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)%>%`/`(raster::res(x)[1]/raster::res(x)[1])
       
     # Truncating zero values
       spatial_tmean_current_0 <- spatial_tmean_current
