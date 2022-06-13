@@ -15,7 +15,8 @@
                               cube_future,
                               t_match = 0.25,
                               metric = "local",
-                              movingWindow = 11
+                              movingWindow = 11,
+                              spatial_resolution = 1000
                               ){
   
   # Calculate mean current temperature
@@ -48,7 +49,7 @@
     # Neighborhood Slope Algorithm, average maximum technique
       f <- matrix(1, nrow=3, ncol=3)
       x <- tmean_current_C$mean_tmean
-      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)%>%`/`(raster::res(x)[1]/raster::res(x)[1])
+      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)%>%`/`(raster::res(x)[1]^2)
       
     # Truncating zero values
       spatial_tmean_current_0 <- spatial_tmean_current
@@ -98,10 +99,10 @@
       out=cbind(x,y, distance=d) 
     
     # forward_velocity
-      forward_velocity <- raster::rasterFromXYZ(out, res=10000, crs = srs.cube)%>%
+      forward_velocity <- raster::rasterFromXYZ(out, res = spatial_resolution, crs = srs.cube)%>%
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(years_dif)%>%
-        raster::reclassify(c(NA, NA, 10000), right=10000)
+        raster::reclassify(c(spatial_resolution, spatial_resolution, NA), right = NA)%>%`/`(years_dif)%>%
+        raster::reclassify(c(NA, NA, spatial_resolution), right = spatial_resolution)
       names(forward_velocity) <- "forward"
       
     return(forward_velocity)
@@ -142,10 +143,10 @@
       out=cbind(x,y, distance=d) 
       
       # forward_velocity
-      backward_velocity <- raster::rasterFromXYZ(out, res=10000, crs = srs.cube)%>%
+      backward_velocity <- raster::rasterFromXYZ(out, res = spatial_resolution, crs = srs.cube)%>%
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(10000, 10000, NA), right=NA)%>%`/`(years_dif)%>%
-        raster::reclassify(c(NA, NA, 10000), right=10000)
+        raster::reclassify(c(spatial_resolution, spatial_resolution, NA), right=NA)%>%`/`(years_dif)%>%
+        raster::reclassify(c(NA, NA, spatial_resolution), right = spatial_resolution)
       names(backward_velocity) <- "backward"
       
       return(backward_velocity)
