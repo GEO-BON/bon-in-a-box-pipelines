@@ -1,14 +1,15 @@
 
 
 # Install required packages
-packages <- c("rstac", "tibble", "sp", "sf", "dplyr", "rgbif", "tidyr", "stars", "raster", "terra", "rjson")
+packages <- c("rstac", "tibble", "sp", "sf", "dplyr", "rgbif", "tidyr", "stars", "raster", "terra", "rjson", "rgdal")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
-#remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
-#library(remotes)
+library(remotes)
+remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
+
 #devtools::install_github("https://github.com/appelmar/gdalcubes_R")
 
 
