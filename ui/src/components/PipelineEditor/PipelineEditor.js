@@ -153,6 +153,7 @@ export function PipelineEditor(props) {
       id: getId(),
       type: 'constant',
       position,
+      dragHandle: '.dragHandle',
       data: { 
         onChange: onConstantValueChange,
         type: dataType,
