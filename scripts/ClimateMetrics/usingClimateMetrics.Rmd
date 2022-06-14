@@ -78,12 +78,14 @@ bbox <- points_to_bbox(obs_pts, buffer = buffer)
 
 ```
 
+<br>
+
 
 ### Current climate
 
 We used `chelsa-monthly` collection that spans from 1981 to 2010 at ~1Km^2 resolution.
 
-```{r cache=TRUE}
+```{r}
 stac("https://io.biodiversite-quebec.ca/stac/") %>%
   collections() %>%
   get_request()
@@ -91,23 +93,22 @@ stac("https://io.biodiversite-quebec.ca/stac/") %>%
 ``` 
 <br>
 
-```{r cache=TRUE}
+```{r}
 
 get_info_collection(stac_path = "https://io.biodiversite-quebec.ca/stac/",
-                                limit = 50,
+                                limit = 20,
                                 collections = c("chelsa-monthly"),
                                 bbox =  NULL
     ) 
 ```
 
-<br>
 #### Creating current climate cube
 
 We load the cube from the collections `chelsa-monthly`,  using the observations points as an extent (option  use.obs = T and adding the observations points in parameter obs). 
 
 To save some time we used: spatial resolution = **~10,000 m** and  temporal resolution = **3 years** (1981 to 1983).
 
-```{r, warning=FALSE, cache=TRUE}
+```{r, warning=FALSE}
 
 
 cube_current <- 
@@ -148,7 +149,7 @@ To save some time we used: spatial resolution = **~10,000 m**
 
 we used `bio` layers from each GMC.
 
-```{r, warning=FALSE, cache=TRUE}
+```{r, warning=FALSE}
 cube_future <- load_cube_projection(stac_path = 
                                     "https://io.biodiversite-quebec.ca/stac/",
                                   limit = 5000, 
@@ -192,7 +193,7 @@ source("FuncClimateMetrics.R")
 
 
 
-```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
+```{r message=FALSE, warning=FALSE, fig.width=10}
 
 local_velocity <- climate_metrics(cube_current = cube_current,
                                   cube_future = cube_future,
@@ -204,7 +205,7 @@ local_velocity <- climate_metrics(cube_current = cube_current,
 
 Plot shows `local climate velocity`.
 
-```{r message=FALSE, warning=FALSE, fig.width=10,cache=TRUE}
+```{r message=FALSE, warning=FALSE, fig.width=10}
 # Plotting
   breaks = seq(0, raster::maxValue(local_velocity), by=1)
   plot(local_velocity,
@@ -239,7 +240,7 @@ In other words, "what is the rate at which an organism in the current landscape 
 
 Here , we used  formula from <a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0140486" target="_blank">Carroll et al. (2015)</a>. Users have the option to set the matching plus/minus threshold mean temperature (`t_match`). If the matching temperature for a given pixels is not inside the extent of the area of study (i.e., Inf values) we assigned 10,000Km.
 
-```{r message=FALSE, warning=FALSE, fig.width=10,cache=TRUE}
+```{r message=FALSE, warning=FALSE, fig.width=10}
 
 forward_velocity <- climate_metrics(cube_current = cube_current,
                                     cube_future = cube_future,
@@ -252,7 +253,7 @@ forward_velocity
 
 Remember that pixels with matching mean temperature values (plus/minus threshold) beyond study area were set at 10,000Km. In the first plot we can see where those pixels (red color). The second plot on the right shows `forward climate change velocity` for all pixels with matching values inside the extent of the analysis (for visualization purposes we set 10,000 to NA).
 
-```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
+```{r message=FALSE, warning=FALSE, fig.width=10}
 
 par(mfrow = c(1,2))
 
@@ -287,7 +288,7 @@ In other words, "given the projected future climate habitat of a grid cell, what
 <br>
 
 
-```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
+```{r message=FALSE, warning=FALSE, fig.width=10}
 
 backward_velocity <- climate_metrics(cube_current = cube_current,
                                      cube_future = cube_future,
@@ -301,7 +302,7 @@ backward_velocity
 <br>
 The plot shows `backward climate change velocity`.
 
-```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
+```{r message=FALSE, warning=FALSE, fig.width=10}
 
   
  plot(backward_velocity,
@@ -317,7 +318,7 @@ The plot shows `backward climate change velocity`.
 
 Here we measure areas that are climatically distinct from their regional surroundings for current and future mean temperature values, using a threshold (+- t_match) and a moving window (e.g., it must be an odd number: 11 cells ~ 11,000Km). 
 
-```{r message=FALSE, warning=FALSE, cache=TRUE}
+```{r message=FALSE, warning=FALSE}
 
 climate_rarity <- climate_metrics(cube_current = cube_current,
                                   cube_future = cube_future,
@@ -332,7 +333,7 @@ climate_rarity
 The plot shows `climate rarity` 
 Values close to zero indicate that mean current temperature is rare compare with their surroundings. 
 
-```{r message=FALSE, warning=FALSE, fig.width=10, cache=TRUE}
+```{r message=FALSE, warning=FALSE, fig.width=10}
 par(mfrow=c(1,2))
 plot(climate_rarity$current_rarity, main="Tmean-current rarity")
 plot(climate_rarity$future_rarity, main="Tmean-future rarity")
