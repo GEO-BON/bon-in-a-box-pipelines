@@ -1,7 +1,7 @@
 
 
 # Install required packages
-packages <- c("rstac", "tibble", "sp", "sf", "dplyr", "rgbif", "tidyr", "stars", "raster", "terra", "rjson")
+packages <- c("rstac", "tibble", "sp", "sf", "rgdal", "dplyr", "rgbif", "tidyr", "stars", "raster", "terra", "rjson")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -18,6 +18,7 @@ library("gdalcubes")
 library("rstac")
 library("tibble")
 library("sp")
+library("rgdal")
 library("sf")
 library("dplyr")
 library("rgbif")
