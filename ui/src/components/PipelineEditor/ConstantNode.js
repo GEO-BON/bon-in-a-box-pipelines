@@ -8,7 +8,7 @@ export default function ConstantNode({ id, data }) {
 
   return (
     <div className='constant'>
-      <label className='dragHandle' htmlFor={id}>{data.type} </label>
+      <span className='dragHandle'>{data.type} </span>
       <input id={id} onChange={data.onChange} defaultValue={data.value}
         placeholder={data.type.endsWith('[]') ? ARRAY_PLACEHOLDER : CONSTANT_PLACEHOLDER}
         type={data.type === 'boolean' ? 'checkbox' : 'text'}
