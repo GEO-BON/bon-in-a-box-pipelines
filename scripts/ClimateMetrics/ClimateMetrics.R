@@ -140,7 +140,7 @@ raster::writeRaster(x = tif,
 print("Metrics saved.")
 
 # Outputing result to JSON
-output <- list("climate_metrics" = output_tif,
+output <- list("output_tif" = output_tif,
                "metric" = input$metric)
 
 jsonData <- toJSON(output, indent=2)
