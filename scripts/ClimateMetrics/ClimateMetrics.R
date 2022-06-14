@@ -2,9 +2,11 @@
 
 # Install required packages
 
-packages <- c("rstac", "tibble", "sp", "sf", "rgdal",  "dplyr", "rgbif", "tidyr", "stars", "raster", "terra", "rjson")
+packages <- c("rstac", "tibble", "sp", "sf", "rgdal",  "lubridate", "dplyr",
+              "rgbif", "tidyr", "stars", "raster", "terra", "rjson", "RCurl")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+
 
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
@@ -20,6 +22,8 @@ library("rstac")
 library("tibble")
 library("sp")
 library("rgdal")
+library("lubridate")
+library("RCurl")
 library("sf")
 library("dplyr")
 library("rgbif")

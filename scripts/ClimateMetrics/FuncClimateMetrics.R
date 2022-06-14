@@ -27,7 +27,7 @@
     
     tmean_cube <- apply_pixel(cube_bands, mean_bands, names = "mean_tmean") # apply to each pixel the next function
     
-    tmean_cube_r <- cube_to_raster(tmean_cube, format = "raster")
+    tmean_cube_r <- stacatalogue::cube_to_raster(tmean_cube, format = "raster")
     
     tmean_current_C <- (tmean_cube_r/10) - 273.15
   
