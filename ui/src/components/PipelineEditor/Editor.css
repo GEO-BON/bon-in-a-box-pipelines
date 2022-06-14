@@ -54,10 +54,11 @@ aside.scriptChooser .description {
     padding: 1px 10px;
     border-radius: 3px;
     border: 2px solid #0041d0;
+    cursor:auto;
 }
 
-.constant label {
-    pointer-events: none;
+.dragHandle {
+    cursor: grab;
 }
 
 .react-flow__node-output {
