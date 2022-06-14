@@ -78,6 +78,7 @@
     {
       "id": "3",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": -64.59370835690285,
         "y": 117.29969161001281
