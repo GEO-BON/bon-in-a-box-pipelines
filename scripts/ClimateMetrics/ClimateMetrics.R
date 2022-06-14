@@ -11,7 +11,7 @@ if(length(new.packages)) install.packages(new.packages)
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
 #library(remotes)
-#devtools::install_github("https://github.com/appelmar/gdalcubes_R")
+devtools::install_github("https://github.com/appelmar/gdalcubes_R")
 devtools::install_github("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue/")
 
 
@@ -128,7 +128,7 @@ print("Calculating metrics...")
 tif <- climate_metrics(cube_current,
                           cube_future,
                           metric=input$metric,
-                           t_match = input$tmatch,
+                           t_match = input$t_match,
                           movingWindow = input$movingWindow
                           )
 
