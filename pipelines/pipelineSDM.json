@@ -197,6 +197,7 @@
     {
       "id": "137",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": -60.4921875,
         "y": 120
@@ -231,6 +232,7 @@
     {
       "id": "138",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": -56.49218750000001,
         "y": 154
@@ -265,6 +267,7 @@
     {
       "id": "139",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 80.5078125,
         "y": 212.5
@@ -299,6 +302,7 @@
     {
       "id": "140",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 71.5078125,
         "y": 241.5
@@ -333,6 +337,7 @@
     {
       "id": "141",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": -201.9921875,
         "y": 319
@@ -367,6 +372,7 @@
     {
       "id": "142",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 60.5078125,
         "y": 279
@@ -401,6 +407,7 @@
     {
       "id": "143",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 43.5078125,
         "y": 353.5
@@ -439,6 +446,7 @@
     {
       "id": "144",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": -302.4921875,
         "y": 390
@@ -473,6 +481,7 @@
     {
       "id": "145",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 21.0078125,
         "y": 423
@@ -507,6 +516,7 @@
     {
       "id": "146",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 40.0078125,
         "y": 458
@@ -541,6 +551,7 @@
     {
       "id": "147",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 17.0078125,
         "y": 489
@@ -575,6 +586,7 @@
     {
       "id": "148",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 40.0078125,
         "y": 522.5
@@ -609,6 +621,7 @@
     {
       "id": "149",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 30.5078125,
         "y": 558.5
@@ -643,6 +656,7 @@
     {
       "id": "150",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 46.5078125,
         "y": 594.5
@@ -773,6 +787,7 @@
     {
       "id": "152",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 698.0078125000002,
         "y": 159.99999999999991
@@ -805,6 +820,7 @@
     {
       "id": "153",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 699.0078125000002,
         "y": 191.99999999999991
@@ -849,6 +865,7 @@
     {
       "id": "154",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 693.0078125000002,
         "y": 203.99999999999991
@@ -881,6 +898,7 @@
     {
       "id": "155",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 695.0078125000002,
         "y": 220.99999999999991
@@ -987,6 +1005,7 @@
     {
       "id": "158",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1081.5680728486284,
         "y": 341.77952318745923
@@ -1021,6 +1040,7 @@
     {
       "id": "159",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 872.8106920517637,
         "y": 391.9630960156761
@@ -1055,6 +1075,7 @@
     {
       "id": "160",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1145.0533112548987,
         "y": 465.0876224689746
@@ -1171,6 +1192,7 @@
     {
       "id": "180",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1129.2350278545978,
         "y": 510.50752724314475
@@ -1205,6 +1227,7 @@
     {
       "id": "181",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1447.5397457288357,
         "y": 554.0841063508326
@@ -1239,6 +1262,7 @@
     {
       "id": "182",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1431.3180767579852,
         "y": 598.8279821826807
@@ -1273,6 +1297,7 @@
     {
       "id": "183",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1480.3180767579852,
         "y": 644.8674166423293
@@ -1429,6 +1454,7 @@
     {
       "id": "187",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.8407898309306,
         "y": 284.658172629821
@@ -1461,6 +1487,7 @@
     {
       "id": "188",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.0345639501143,
         "y": 302.39514200778297
@@ -1493,6 +1520,7 @@
     {
       "id": "189",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1976.4221121884816,
         "y": 316.10098198166264
@@ -1525,6 +1553,7 @@
     {
       "id": "190",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1980.4532415925637,
         "y": 330.61304783635876
@@ -1557,6 +1586,7 @@
     {
       "id": "191",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.0345639501143,
         "y": 344.31888781023844
@@ -1589,6 +1619,7 @@
     {
       "id": "192",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.0345639501143,
         "y": 363.6683089498333
@@ -1695,6 +1726,7 @@
     {
       "id": "195",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 2529.3109162818696,
         "y": 194.72149348351036
@@ -1727,6 +1759,7 @@
     {
       "id": "196",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 2529.3109162818696,
         "y": 206.84722601559355
