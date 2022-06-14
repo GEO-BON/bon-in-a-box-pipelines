@@ -6,14 +6,28 @@ export const CONSTANT_PLACEHOLDER = 'Constant';
 // props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
 export default function ConstantNode({ id, data }) {
 
+  function renderInput() {
+    switch(data.type) {
+      case 'options':
+        return <select id={id} onChange={data.onChange} defaultValue={data.value}>
+          {data.options.map(choice =>
+            <option key={choice} value={choice}>{choice}</option>
+          )}  
+        </select>
+      case 'boolean':
+        return <input id={id} onChange={data.onChange} defaultValue={data.value} 
+          type='checkbox' checked={data.value} />
+      default: 
+        return <input id={id} onChange={data.onChange} defaultValue={data.value}
+          placeholder={data.type.endsWith('[]') ? ARRAY_PLACEHOLDER : CONSTANT_PLACEHOLDER}
+          type='text' />
+    }
+  }
+
   return (
     <div className='constant'>
       <span className='dragHandle'>{data.type} </span>
-      <input id={id} onChange={data.onChange} defaultValue={data.value}
-        placeholder={data.type.endsWith('[]') ? ARRAY_PLACEHOLDER : CONSTANT_PLACEHOLDER}
-        type={data.type === 'boolean' ? 'checkbox' : 'text'}
-        checked={data.value} />
-
+      {renderInput()}
       <Handle type="source" position={Position.Right} />
     </div>
   );

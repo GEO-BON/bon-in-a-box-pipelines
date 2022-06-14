@@ -134,7 +134,7 @@ export function PipelineEditor(props) {
     );
   };
 
-  const injectConstant = useCallback((event, dataType, defaultValue, target, targetHandle) => {
+  const injectConstant = useCallback((event, fieldDescription, target, targetHandle) => {
     event.preventDefault()
 
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
@@ -149,16 +149,17 @@ export function PipelineEditor(props) {
     position.x = position.x - 350
     position.y = position.y - 15
 
-    const newNode = {
+      const newNode = {
       id: getId(),
       type: 'constant',
       position,
       dragHandle: '.dragHandle',
-      data: { 
+      data: {
         onChange: onConstantValueChange,
-        type: dataType,
-        value: defaultValue
-       },
+        type: fieldDescription.type,
+        value: fieldDescription.example,
+        options: fieldDescription.options,
+      },
     }
     setNodes((nds) => nds.concat(newNode))
 

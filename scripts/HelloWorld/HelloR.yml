@@ -20,6 +20,15 @@ inputs:
     description: The description of this value
     type: boolean
     example: true
+  options_example:
+    label: Fixed options
+    description: The user has to select between a fixed number of text options. The script receives the selected option as text.
+    type: options
+    options:
+      - first option
+      - second option
+      - third option
+    example: third option
 outputs:
   text:
     label: Text
