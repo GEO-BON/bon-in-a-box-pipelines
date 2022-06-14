@@ -57,7 +57,7 @@ aside.scriptChooser .description {
     cursor:auto;
 }
 
-.constant label {
+.dragHandle {
     cursor: grab;
 }
 
