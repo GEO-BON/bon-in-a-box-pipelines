@@ -14,11 +14,14 @@ Prerequisites :
 To run:
 1. Clone repository (Windows users: do not clone this in a folder under OneDrive.)
 2. Using a terminal, navigate to top-level folder.
-3. `docker compose build` (this needs to be re-run everytime the server code changes, or when using git pull if you are not certain.)
-4. `docker compose up -d`
-5. In browser:
+3. `docker compose build`
+  - This needs to be re-run everytime the server code changes, or when using git pull if you are not certain.
+  - The first execution will be very long. The next ones will be shorter or immediate, depending on the changes.
+  - Network problems may fail the process. First try running the command again. Intermediate states are saved so not everything will be redone even when there is a failure.
+5. `docker compose up -d`
+6. In browser:
     - http://localhost/ shows the UI
-6. `docker compose down` (to stop the server when done)
+7. `docker compose down` (to stop the server when done)
 
 Servers do not need to be restarted when modifying scripts in the /scripts folder:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
