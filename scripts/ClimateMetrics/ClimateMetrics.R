@@ -1,25 +1,25 @@
 
 
 # Install required packages
-packages <- c("rstac", "tibble", "sp", "sf", "dplyr", "rgbif", "tidyr", "stars", "raster", "terra", "rjson", "rgdal")
+
+packages <- c("rstac", "tibble", "sp", "sf", "rgdal",  "dplyr", "rgbif", "tidyr", "stars", "raster", "terra", "rjson")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
-library(remotes)
-remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
-
+#library(remotes)
 #devtools::install_github("https://github.com/appelmar/gdalcubes_R")
+devtools::install_github("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue/")
 
 
 ## Load required packages
 library("rjson")
-library("stacatalogue")
 library("gdalcubes")
 library("rstac")
 library("tibble")
 library("sp")
+library("rgdal")
 library("sf")
 library("dplyr")
 library("rgbif")
@@ -48,6 +48,7 @@ print(input)
 
 source("/scripts/ClimateMetrics/funcClimateMetrics.R")
 source("/scripts/loadObservations/funcLoadObservations.R")
+
 
 # Pb if buffer set to 0, transformed into empty string. Warn JM about this
 if (input$buffer.box == "...") buffer.box <- 0
