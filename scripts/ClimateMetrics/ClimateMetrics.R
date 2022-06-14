@@ -6,6 +6,7 @@ packages <- c("rstac", "tibble", "sp", "sf", "rgdal",  "lubridate", "dplyr", "rg
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
+
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
 #library(remotes)
