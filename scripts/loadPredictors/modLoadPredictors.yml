@@ -18,7 +18,10 @@ inputs:
   source:
     label: source
     description: type of source to load the predictors (either from tif, or from the stac catalogue)
-    type: text/accepted_values:"from_tif" or "from_cube" 
+    type: options
+    options:
+      - from_tif
+      - from_cube
     example: "from_cube"
   tif_folder:
     label: tif_folder
@@ -33,8 +36,14 @@ inputs:
   method: 
     label: method
     description: 
-    type: text/vif.cor, vif.step, pearson, spearman or kendall
-    example: "vif.cor"
+    type: options
+    options: 
+      - vif.cor
+      - vif.step
+      - pearson
+      - spearman
+      - kendall
+    example: vif.cor
   proj_to:
     label: projection system
     description: Projection 
