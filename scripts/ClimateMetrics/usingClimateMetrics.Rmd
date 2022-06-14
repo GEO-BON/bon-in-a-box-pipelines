@@ -14,6 +14,8 @@ library("tibble")
 library("sp")
 library("sf")
 library("rgdal")
+library("lubridate")
+library("RCurl")
 library("dplyr")
 library("rgbif")
 library("tidyr")
@@ -306,12 +308,24 @@ The plot shows `backward climate change velocity`.
 ```{r message=FALSE, warning=FALSE, fig.width=10}
 
   
- plot(backward_velocity,
+par(mfrow = c(1,2))
+
+  plot(backward_velocity,
+       breaks = c(0, 20, 10000),
+       col = c("yellow", "red"),
+       main="Red areas indicate\n tmean matching values beyond study area", cex.main=0.9
+      )
+
+ backward_velocity_NA <- backward_velocity
+ backward_velocity_NA[backward_velocity_NA == 10000]<-NA
+  
+ plot(backward_velocity_NA,
        legend.args = list(text = 'meters/year', cex=0.8),
     
        col = rev(viridis::viridis(10)),
        main="Backward climate-change velocity"
       )
+ 
  
 ```
 
