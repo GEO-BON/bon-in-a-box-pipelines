@@ -32,7 +32,7 @@
     tmean_current_C <- (tmean_cube_r/10) - 273.15
   
   # Calculate mean future temperature
-    raster_future <- cube_to_raster(cube_future, format = "raster")
+    raster_future <- stacatalogue::cube_to_raster(cube_future, format = "raster")
     tmean_future_C <- (raster::calc(raster_future, mean)/10) - 273.15
     
     
