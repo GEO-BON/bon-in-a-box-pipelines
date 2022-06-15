@@ -71,8 +71,22 @@ The following primitive types are accepted:
 | boolean                        | Plain text                   |
 | float, float[]                 | Plain text                   |
 | int, int[]                     | Plain text                   |
+| options *                      | Plain text                   |
 | text, text[]                   | Plain text                   |
 | (any unknown type)             | Plain text                   |
+
+\* `options` type require an additionnal `options` attribute to be added with the available options.
+```yml
+options_example:
+  label: Options example
+  description: The user has to select between a fixed number of text options. Also called select or enum. The script receives the selected option as text.
+  type: options
+  options:
+    - first option
+    - second option
+    - third option
+  example: third option
+```
 
 #### Reporting problems
 The output keys `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. Both will be displayed specially in the UI.
