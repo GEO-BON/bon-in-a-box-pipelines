@@ -8,6 +8,7 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
+  getConnectedEdges,
   Controls,
   MiniMap,
   Position,
@@ -133,6 +134,24 @@ export function PipelineEditor(props) {
       })
     );
   };
+
+  const onSelectionChange = useCallback((selected) => {
+    let connectedIds = []
+    if (selected.nodes && selected.nodes.length === 1) {
+      let connectedEdges = getConnectedEdges(selected.nodes, edges)
+      connectedIds = connectedEdges.map((i) => i.id)
+    }
+
+    setEdges(edges.map((edge) => {
+      console.log(edge)
+      edge.style = {
+        ...edge.style,
+        stroke: connectedIds.includes(edge.id) ? '#0000ff' : undefined
+      }
+
+      return edge
+    }))
+  }, [edges, setEdges])
 
   const injectConstant = useCallback((event, fieldDescription, target, targetHandle) => {
     event.preventDefault()
@@ -300,6 +319,7 @@ export function PipelineEditor(props) {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            onSelectionChange={onSelectionChange}
             deleteKeyCode='Delete'
           >
             {toolTip && <div className="tooltip">
