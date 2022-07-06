@@ -2,7 +2,7 @@ import 'react-flow-renderer/dist/style.css';
 import 'react-flow-renderer/dist/theme-default.css';
 import './Editor.css';
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -121,6 +121,15 @@ export function PipelineEditor(props) {
 
   const [toolTip, setToolTip] = useState(null);
 
+  // We need this since the functions passed through node data retain their old selectedNodes state.
+  // Note that the stratagem fails if trying to add edges from many sources at the same time.
+  const [pendingEdgeParams, addEdgeWithHighlight] = useState(null)
+  useEffect(()=>{
+    if(pendingEdgeParams) {
+      setEdges((edgesList) => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
+    }
+  }, [pendingEdgeParams, selectedNodes])
+
   const inputFile = useRef(null) 
 
   const onConnect = useCallback((params) => {
@@ -203,7 +212,7 @@ export function PipelineEditor(props) {
       target: target,
       targetHandle: targetHandle
     }
-    setEdges((edgesList) => addEdge(newEdge, edgesList))
+    addEdgeWithHighlight(newEdge)
   }, [reactFlowInstance])
 
   const onDrop = useCallback(
