@@ -956,7 +956,7 @@
             "height": 8
           },
           {
-            "id": "dist_buffer",
+            "id": "width_buffer",
             "position": "left",
             "x": -3.000063793897474,
             "y": 52.99997673308749,
@@ -1975,13 +1975,6 @@
       "target": "157",
       "targetHandle": "method",
       "id": "reactflow__edge-159-157method"
-    },
-    {
-      "source": "160",
-      "sourceHandle": null,
-      "target": "157",
-      "targetHandle": "dist_buffer",
-      "id": "reactflow__edge-160-157dist_buffer"
     },
     {
       "source": "157",
