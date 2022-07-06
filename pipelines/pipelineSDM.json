@@ -410,41 +410,6 @@
       "dragging": false
     },
     {
-      "width": 574,
-      "height": 27,
-      "id": "144",
-      "type": "constant",
-      "dragHandle": ".dragHandle",
-      "position": {
-        "x": -302.4921875,
-        "y": 390
-      },
-      "data": {
-        "type": "text/vif.cor, vif.step, pearson, spearman or kendall",
-        "value": "vif.cor"
-      },
-      "positionAbsolute": {
-        "x": -302.4921875,
-        "y": 390
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 563.984375,
-            "y": 10.5,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "selected": false,
-      "dragging": false
-    },
-    {
       "width": 243,
       "height": 27,
       "id": "145",
@@ -1806,10 +1771,38 @@
           "from_cube"
         ]
       },
-      "selected": true,
+      "selected": false,
       "positionAbsolute": {
         "x": 108,
         "y": 312
+      },
+      "dragging": false
+    },
+    {
+      "width": 165,
+      "height": 26,
+      "id": "199",
+      "type": "constant",
+      "position": {
+        "x": 109.67971300161787,
+        "y": 388.70543260176055
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "vif.cor",
+        "options": [
+          "vif.cor",
+          "vif.step",
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 109.67971300161787,
+        "y": 388.70543260176055
       },
       "dragging": false
     }
@@ -1863,13 +1856,6 @@
       "target": "136",
       "targetHandle": "layers",
       "id": "reactflow__edge-143-136layers"
-    },
-    {
-      "source": "144",
-      "sourceHandle": null,
-      "target": "136",
-      "targetHandle": "method",
-      "id": "reactflow__edge-144-136method"
     },
     {
       "source": "145",
@@ -2129,11 +2115,18 @@
       "target": "157",
       "targetHandle": "width_buffer",
       "id": "reactflow__edge-160-157width_buffer"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "136",
+      "targetHandle": "method",
+      "id": "reactflow__edge-199-136method"
     }
   ],
   "viewport": {
-    "x": -712,
-    "y": -29,
-    "zoom": 1
+    "x": 232.27424831855848,
+    "y": -34.48398515921576,
+    "zoom": 1.0762401247837976
   }
 }
