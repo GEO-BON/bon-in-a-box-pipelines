@@ -88,18 +88,46 @@ const getLayoutedElements = (nodes, edges) => {
   return { nodes, edges };
 };
 
+  /**
+   * 
+   * @param {Node[]} selectedNodes 
+   * @param {Edge[]} allEdges 
+   * @returns the edges, with added style for edges connected to the selected node.
+   */
+   const highlightConnectedEdges = (selectedNodes, allEdges) => {
+    let connectedIds = []
+    if (selectedNodes && selectedNodes.length === 1) {
+      let connectedEdges = getConnectedEdges(selectedNodes, allEdges)
+      connectedIds = connectedEdges.map((i) => i.id)
+    }
+
+    return allEdges.map((edge) => {
+      edge.style = {
+        ...edge.style,
+        stroke: connectedIds.includes(edge.id) ? '#0000ff' : undefined
+      }
+
+      return edge
+    })
+  }
+
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [selectedNodes, setSelectedNodes] = useState(null);
 
   const [toolTip, setToolTip] = useState(null);
 
   const inputFile = useRef(null) 
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  const onConnect = useCallback((params) => {
+    setEdges((edgesList) =>  
+      highlightConnectedEdges(selectedNodes, addEdge(params, edgesList))
+    )
+  }, [selectedNodes]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -136,22 +164,9 @@ export function PipelineEditor(props) {
   };
 
   const onSelectionChange = useCallback((selected) => {
-    let connectedIds = []
-    if (selected.nodes && selected.nodes.length === 1) {
-      let connectedEdges = getConnectedEdges(selected.nodes, edges)
-      connectedIds = connectedEdges.map((i) => i.id)
-    }
-
-    setEdges(edges.map((edge) => {
-      console.log(edge)
-      edge.style = {
-        ...edge.style,
-        stroke: connectedIds.includes(edge.id) ? '#0000ff' : undefined
-      }
-
-      return edge
-    }))
-  }, [edges, setEdges])
+    setSelectedNodes(selected.nodes)
+    setEdges(highlightConnectedEdges(selected.nodes, edges))
+  }, [edges, setEdges, setSelectedNodes])
 
   const injectConstant = useCallback((event, fieldDescription, target, targetHandle) => {
     event.preventDefault()
@@ -168,7 +183,7 @@ export function PipelineEditor(props) {
     position.x = position.x - 350
     position.y = position.y - 15
 
-      const newNode = {
+    const newNode = {
       id: getId(),
       type: 'constant',
       position,
