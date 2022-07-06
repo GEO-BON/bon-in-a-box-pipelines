@@ -285,6 +285,8 @@ export function PipelineEditor(props) {
               case 'constant':
                 node.data.onChange = onConstantValueChange
                 break;
+              default:
+               console.error("Unsupported type " + node.type)
             }
           })
           id++
