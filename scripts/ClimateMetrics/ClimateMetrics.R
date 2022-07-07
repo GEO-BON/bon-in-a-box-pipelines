@@ -11,8 +11,9 @@ if(length(new.packages)) install.packages(new.packages)
 #library(devtools)
 #devtools::install_github("appelmar/gdalcubes_R")
 #library(remotes)
-#devtools::install_github("https://github.com/appelmar/gdalcubes_R")
-#devtools::install_github("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue/")
+devtools::install_github("https://github.com/appelmar/gdalcubes_R")
+devtools::install_github("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue/")
+
 
 
 ## Load required packages
@@ -128,7 +129,7 @@ print("Calculating metrics...")
 tif <- climate_metrics(cube_current,
                           cube_future,
                           metric=input$metric,
-                           t_match = input$tmatch,
+                           t_match = input$t_match,
                           movingWindow = input$movingWindow
                           )
 
@@ -140,7 +141,7 @@ raster::writeRaster(x = tif,
 print("Metrics saved.")
 
 # Outputing result to JSON
-output <- list("climate_metrics" = output_tif,
+output <- list("output_tif" = output_tif,
                "metric" = input$metric)
 
 jsonData <- toJSON(output, indent=2)

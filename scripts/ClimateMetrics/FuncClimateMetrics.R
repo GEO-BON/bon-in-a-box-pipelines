@@ -23,9 +23,9 @@
     
     mean_bands <- sprintf("(%s)/%i", sum_bands, length(names(cube_current)))
    
-    cube_bands <-  select_bands(cube_current, bands =  names(cube_current)) # select bands
+    cube_bands <-  gdalcubes::select_bands(cube_current, bands =  names(cube_current)) # select bands
     
-    tmean_cube <- apply_pixel(cube_bands, mean_bands, names = "mean_tmean") # apply to each pixel the next function
+    tmean_cube <- gdalcubes::apply_pixel(cube_bands, mean_bands, names = "mean_tmean") # apply to each pixel the next function
     
     tmean_cube_r <- stacatalogue::cube_to_raster(tmean_cube, format = "raster")
     
@@ -71,6 +71,7 @@
   if(metric == "forward"){
     
     # t_match                                                         # plus/minus threshold to define climate match
+    t_match <- 1/(t_match*2)                                          # inverse for rounding, double for plus/minus
     
     x <-  raster::coordinates(tmean_current_C)[,1]                    # vector of grid cell x coordinates
     y <-  raster::coordinates(tmean_current_C)[,2]                    # vector of grid cell y coordinates
@@ -115,6 +116,7 @@
    # Let's swap `p` and `f` (i.e., tmean_current_C and tmean_future_C)
 
     # t_match                                                         # plus/minus threshold to define climate match
+    t_match <- 1/(t_match*2)                                          # inverse for rounding, double for plus/minus
     
     x <-  raster::coordinates(tmean_current_C)[,1]                    # vector of grid cell x coordinates
     y <-  raster::coordinates(tmean_current_C)[,2]                    # vector of grid cell y coordinates

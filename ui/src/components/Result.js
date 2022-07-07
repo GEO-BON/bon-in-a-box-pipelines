@@ -24,18 +24,24 @@ export function Result(props) {
 function RenderedFiles(props) {
     const metadata = props.metadata;
 
-    function getMimeType(key) {
-        if (metadata
-            && metadata.outputs
-            && metadata.outputs[key]
-            && metadata.outputs[key].type) {
-            return metadata.outputs[key].type;
-        }
-        return "unknown";
-    }
-
     function renderWithMime(key, content) {
-        let mime = getMimeType(key)
+        let mime = ""
+        let error = ""
+        if (metadata && metadata.outputs) {
+            if (metadata.outputs[key]) {
+                if (metadata.outputs[key].type) {
+                    mime = metadata.outputs[key].type;
+                } else {
+                    error = "Missing mime type in output description."
+                }
+            } else {
+                error = "Output description not found in this script's YML description file."
+            }
+        } else {
+            error = "YML description file for this script specifies no output."
+        }
+
+        // Special case for arrays
         if(mime.endsWith('[]'))
             return <p>{content.join(', ')}</p>
 
@@ -60,9 +66,9 @@ function RenderedFiles(props) {
                 else
                     return <p>{content}</p>;
 
-            case "unknown":
+            case "":
                 return <>
-                    <p className="error">Missing mime type in output description</p>
+                    <p className="error">{error}</p>
                     {// Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
                         isRelativeLink(content) ? (
                             // Match for tiff, TIFF, tif or TIF extensions
