@@ -5,7 +5,7 @@ inputs:
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
     example: local
-  movingWindow:
+  moving_window:
     label: search moving window
     description: number of cells (must be an odd number)
     type: int

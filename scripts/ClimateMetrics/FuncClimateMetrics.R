@@ -15,7 +15,7 @@
                               cube_future,
                               t_match = 0.25,
                               metric = "local",
-                              movingWindow = 11
+                              moving_window = 11
                               ){
   
   # Calculate mean current temperature
@@ -160,9 +160,9 @@
   if(metric == "rarity"){
     
     tmean_current_rarity <- raster::focal(tmean_current_C$mean_tmean,
-                                    w=matrix(1, movingWindow, movingWindow),
+                                    w=matrix(1, moving_window, moving_window),
                                     na.rm=TRUE,
-                                    fun=function(x, focalW=movingWindow, tol=t_match, ...) {
+                                    fun=function(x, focalW = moving_window, tol=t_match, ...) {
                                              focalCell <- ceiling((focalW)*(focalW)/2)
                                              sum((x[focalCell]-x) <= tol, ...)/sum(!is.na(x))
                                     }
@@ -170,9 +170,9 @@
     names(tmean_current_rarity) <- "current_rarity"
                                     
     tmean_future_rarity <- raster::focal(tmean_future_C,
-                                          w=matrix(1, movingWindow, movingWindow),
+                                          w=matrix(1, moving_window, moving_window),
                                           na.rm=TRUE,
-                                          fun=function(x, focalW=movingWindow, tol=t_match, ...) {
+                                          fun=function(x, focalW = moving_window, tol=t_match, ...) {
                                             focalCell <- ceiling((focalW)*(focalW)/2)
                                             sum((x[focalCell]-x) <= tol, ...)/sum(!is.na(x))
                                           }             

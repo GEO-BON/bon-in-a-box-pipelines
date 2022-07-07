@@ -8,17 +8,15 @@ new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
 
-#library(devtools)
-#devtools::install_github("appelmar/gdalcubes_R")
-#library(remotes)
-devtools::install_github("https://github.com/appelmar/gdalcubes_R")
-devtools::install_github("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue/")
-
+library("devtools")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 
 
 ## Load required packages
 library("rjson")
 library("gdalcubes")
+library("stacatalogue")
 library("rstac")
 library("tibble")
 library("sp")
