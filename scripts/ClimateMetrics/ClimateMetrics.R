@@ -12,7 +12,7 @@ if(length(new.packages)) install.packages(new.packages)
 #devtools::install_github("appelmar/gdalcubes_R")
 #library(remotes)
 #devtools::install_github("https://github.com/appelmar/gdalcubes_R")
-devtools::install_github("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue/")
+#devtools::install_github("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue/")
 
 
 ## Load required packages

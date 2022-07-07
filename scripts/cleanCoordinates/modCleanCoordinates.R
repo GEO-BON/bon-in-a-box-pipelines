@@ -2,26 +2,27 @@
 
 ## Install required packages
 packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
+packages_github <- c("gdalcubes", "stacatalogue")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+
 if(length(new.packages)) install.packages(new.packages)
 
-## Load required packages
+library("devtools")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 
+## Load required packages
 library("terra")
 library("rjson")
 library("raster")
 library("CoordinateCleaner")
 library("dplyr")
 library("gdalcubes")
-#library("devtools")
-#install.packages("ENMeval")
-#devtools::install_github("ReseauBiodiversiteQuebec/ratlas")
-#devtools::install_github("ReseauBiodiversiteQuebec/sdm-pipeline")
+library("stacatalogue")
 
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "cleanCoordinates/funcCleanCoordinates.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "stacCatalogue/stac_functions.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
 
 ## Receiving args
@@ -40,11 +41,9 @@ presence <- dplyr::rename(presence, scientific_name = scientificName)
 presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
 proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
-mask <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
+bbox <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
 
 layers <- input$layers
-
-
 
 #layers <- c("bio1", "bio2", "bio8")
 predictors_nc <- load_predictors(source = "from_cube",
@@ -56,25 +55,22 @@ predictors_nc <- load_predictors(source = "from_cube",
             spatial.res = input$spatial_res, # in meters
             temporal.res = "P1Y",
             aggregation = "mean",
-            resampling = "near",
-            buffer.box = NULL),
+            resampling = "near"),
+                          
                           predictors_dir = NULL,
                            subset_layers = layers,
                            remove_collinear = F,
                            method = "vif.cor",
                            method_cor_vif = "pearson",
-                           new_proj = input$proj_to,
-                           mask = mask,
+                           proj = input$proj_to,
+                           bbox = bbox,
                            sample = TRUE,
                            nb_points = 50000,
                            cutoff_cor = 0.7,
                            cutoff_vif = 3,
                            export = T,
                            ouput_dir = getwd(),
-                           as.list = F)
-
-#tests <- strsplit(gsub("[^[:alnum:] ]", " ", input$tests ), " +")[[1]]
-#tests <- tests[tests!=""]
+                           as_list = F)
 
   clean_presence <- clean_coordinates(
       x = presence,
