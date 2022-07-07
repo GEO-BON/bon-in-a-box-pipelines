@@ -2,7 +2,6 @@
 
 ## Install required packages
 packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner")
-packages_github <- c("gdalcubes", "stacatalogue")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 
 if(length(new.packages)) install.packages(new.packages)
@@ -43,9 +42,6 @@ proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lo
 
 bbox <- points_to_bbox(dplyr::select(presence, lon, lat), proj_from = input$proj_to)
 
-layers <- input$layers
-
-#layers <- c("bio1", "bio2", "bio8")
 predictors_nc <- load_predictors(source = "from_cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
@@ -58,7 +54,7 @@ predictors_nc <- load_predictors(source = "from_cube",
             resampling = "near"),
                           
                           predictors_dir = NULL,
-                           subset_layers = layers,
+                           subset_layers = input$layers,
                            remove_collinear = F,
                            method = "vif.cor",
                            method_cor_vif = "pearson",

@@ -1,12 +1,14 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "ENMeval", "remotes")
+packages <- c("terra", "rjson", "raster", "dplyr", "ENMeval", "devtools")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
-library(remotes)
-install_git("https://github.com/appelmar/gdalcubes_R")
+library("devtools")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
+
 
 ## Load required packages
 
@@ -16,6 +18,7 @@ library("raster")
 library("dplyr")
 library("gdalcubes")
 library("ENMeval")
+library("stacatalogue")
 #library("devtools")
 #install.packages("ENMeval")
 #devtools::install_github("ReseauBiodiversiteQuebec/ratlas")
@@ -24,7 +27,6 @@ library("ENMeval")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "setupDataSdm/funcSetupDataSdm.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "stacCatalogue/stac_functions.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
 
@@ -51,8 +53,6 @@ predictors <-
   load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
             collections = c("chelsa-clim"), 
-            use.obs = F,
-            buffer.box = 0,
             layers = input$layers,
             bbox = bbox,
             srs.cube = input$proj_to,

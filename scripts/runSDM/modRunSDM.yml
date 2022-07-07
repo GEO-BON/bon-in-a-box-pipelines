@@ -1,7 +1,7 @@
 script: modRunSDM.R
 inputs:
   presence_background:
-    label: background
+    label: presence background
     description: Path to the background point
     type: text/tab-separated-values
     example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/presence_background.tsv"
@@ -26,7 +26,7 @@ outputs:
      description: table with observations from GBIF
      type: image/tiff;application=geotiff
   output_runs:
-     label: runs
+     label: predictions
      description: table with observations from GBIF
      type: image/tiff;application=geotiff
 description: "This sample script shows how it works."
