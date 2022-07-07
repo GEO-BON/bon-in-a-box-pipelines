@@ -2,12 +2,13 @@ import 'react-flow-renderer/dist/style.css';
 import 'react-flow-renderer/dist/theme-default.css';
 import './Editor.css';
 
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
   useNodesState,
   useEdgesState,
+  getConnectedEdges,
   Controls,
   MiniMap,
   Position,
@@ -87,18 +88,55 @@ const getLayoutedElements = (nodes, edges) => {
   return { nodes, edges };
 };
 
+  /**
+   * 
+   * @param {Node[]} selectedNodes 
+   * @param {Edge[]} allEdges 
+   * @returns the edges, with added style for edges connected to the selected node.
+   */
+   const highlightConnectedEdges = (selectedNodes, allEdges) => {
+    let connectedIds = []
+    if (selectedNodes && selectedNodes.length === 1) {
+      let connectedEdges = getConnectedEdges(selectedNodes, allEdges)
+      connectedIds = connectedEdges.map((i) => i.id)
+    }
+
+    return allEdges.map((edge) => {
+      edge.style = {
+        ...edge.style,
+        stroke: connectedIds.includes(edge.id) ? '#0000ff' : undefined
+      }
+
+      return edge
+    })
+  }
+
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
+  const [selectedNodes, setSelectedNodes] = useState(null);
 
   const [toolTip, setToolTip] = useState(null);
 
+  // We need this since the functions passed through node data retain their old selectedNodes state.
+  // Note that the stratagem fails if trying to add edges from many sources at the same time.
+  const [pendingEdgeParams, addEdgeWithHighlight] = useState(null)
+  useEffect(()=>{
+    if(pendingEdgeParams) {
+      setEdges((edgesList) => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
+    }
+  }, [pendingEdgeParams, selectedNodes])
+
   const inputFile = useRef(null) 
 
-  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
+  const onConnect = useCallback((params) => {
+    setEdges((edgesList) =>  
+      highlightConnectedEdges(selectedNodes, addEdge(params, edgesList))
+    )
+  }, [selectedNodes]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
@@ -134,7 +172,12 @@ export function PipelineEditor(props) {
     );
   };
 
-  const injectConstant = useCallback((event, dataType, defaultValue, target, targetHandle) => {
+  const onSelectionChange = useCallback((selected) => {
+    setSelectedNodes(selected.nodes)
+    setEdges(highlightConnectedEdges(selected.nodes, edges))
+  }, [edges, setEdges, setSelectedNodes])
+
+  const injectConstant = useCallback((event, fieldDescription, target, targetHandle) => {
     event.preventDefault()
 
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
@@ -153,11 +196,13 @@ export function PipelineEditor(props) {
       id: getId(),
       type: 'constant',
       position,
-      data: { 
+      dragHandle: '.dragHandle',
+      data: {
         onChange: onConstantValueChange,
-        type: dataType,
-        value: defaultValue
-       },
+        type: fieldDescription.type,
+        value: fieldDescription.example,
+        options: fieldDescription.options,
+      },
     }
     setNodes((nds) => nds.concat(newNode))
 
@@ -167,7 +212,7 @@ export function PipelineEditor(props) {
       target: target,
       targetHandle: targetHandle
     }
-    setEdges((edgesList) => addEdge(newEdge, edgesList))
+    addEdgeWithHighlight(newEdge)
   }, [reactFlowInstance])
 
   const onDrop = useCallback(
@@ -231,6 +276,9 @@ export function PipelineEditor(props) {
       // No need to save the inputs (for sorting), the accurate info is fetched from server when loading graph.
       flow.nodes.forEach(node => delete node.data.inputs)
 
+      // No need to save the on-the-fly styling
+      flow.edges.forEach(edge => delete edge.style)
+
       navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
       alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
     }
@@ -264,6 +312,8 @@ export function PipelineEditor(props) {
               case 'constant':
                 node.data.onChange = onConstantValueChange
                 break;
+              default:
+               console.error("Unsupported type " + node.type)
             }
           })
           id++
@@ -298,6 +348,7 @@ export function PipelineEditor(props) {
             onInit={setReactFlowInstance}
             onDrop={onDrop}
             onDragOver={onDragOver}
+            onSelectionChange={onSelectionChange}
             deleteKeyCode='Delete'
           >
             {toolTip && <div className="tooltip">

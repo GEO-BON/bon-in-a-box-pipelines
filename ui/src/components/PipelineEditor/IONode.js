@@ -34,7 +34,7 @@ export default function IONode({ id, data }) {
     <tr>
       <td className='inputs'>
         {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
-          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip} onDoubleClick={(e)=>data.injectConstant(e, desc.type, desc.example, id, inputName)}>
+          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip} onDoubleClick={(e)=>data.injectConstant(e, desc, id, inputName)}>
             <Handle id={inputName} type="target" position={Position.Left} />
             <span>{desc.label ? desc.label : inputName}</span>
           </ScriptIO>
@@ -56,9 +56,17 @@ export default function IONode({ id, data }) {
 }
 
 function ScriptIO({children, desc, setToolTip, onDoubleClick}) {
+  function renderType(type) {
+    if(type === 'options') {
+      return "Options: " + desc.options.join(', ')
+    } else {
+      return type
+    }
+  }
+
   function onMouseEnter() {
     setToolTip(<>
-      {desc.type && <>{desc.type} <br /></>}
+      {desc.type && <>{renderType(desc.type)} <br /></>}
       {desc.description && <>{desc.description} <br /></>}
       {desc.example && <>Example: {desc.example.toString()}</>}
     </>)

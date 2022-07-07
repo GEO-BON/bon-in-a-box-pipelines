@@ -104,9 +104,12 @@ RUN set -ex; \
         r-cran-devtools \
         r-cran-rjson \
         r-cran-rcppeigen \
-        r-cran-rjava ;\
+        r-cran-rjava \
+				# Patch: until gdal_cubes is more stable, we are getting it from git
+				git; \
     apt-get clean all;
 
+# Installing python
 RUN set -ex; \
     apt-get update; \
     apt-get install -y --no-install-recommends python3; \

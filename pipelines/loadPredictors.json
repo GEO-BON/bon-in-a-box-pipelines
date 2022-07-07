@@ -1,18 +1,20 @@
 {
   "nodes": [
     {
+      "width": 317,
+      "height": 44,
       "id": "10",
       "type": "io",
       "position": {
-        "x": 302,
-        "y": 10.5
+        "x": 211.43466879209382,
+        "y": 6.6550144003437595
       },
       "data": {
         "descriptionFile": "loadGbif>loadGbif.yml"
       },
       "positionAbsolute": {
-        "x": 302,
-        "y": 10.5
+        "x": 211.43466879209382,
+        "y": 6.6550144003437595
       },
       "z": 0,
       "handleBounds": {
@@ -53,26 +55,28 @@
           }
         ]
       },
-      "width": 317,
-      "height": 45,
       "selected": false,
       "targetPosition": "left",
-      "sourcePosition": "right"
+      "sourcePosition": "right",
+      "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "12",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": -123.5,
-        "y": 38
+        "x": -110.5,
+        "y": 243.75
       },
       "data": {
         "type": "int",
         "value": 1000
       },
       "positionAbsolute": {
-        "x": -123.5,
-        "y": 38
+        "x": -110.5,
+        "y": 243.75
       },
       "z": 0,
       "handleBounds": {
@@ -88,24 +92,24 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 399,
+      "height": 172,
       "id": "13",
       "type": "io",
       "position": {
-        "x": 769,
-        "y": 170.5
+        "x": 580.9194815876249,
+        "y": 166.63753600085943
       },
       "data": {
         "descriptionFile": "loadPredictors>modLoadPredictors.yml"
       },
       "positionAbsolute": {
-        "x": 769,
-        "y": 170.5
+        "x": 580.9194815876249,
+        "y": 166.63753600085943
       },
       "z": 0,
       "handleBounds": {
@@ -226,26 +230,28 @@
           }
         ]
       },
-      "width": 400,
-      "height": 198,
       "selected": false,
       "targetPosition": "left",
-      "sourcePosition": "right"
+      "sourcePosition": "right",
+      "dragging": false
     },
     {
+      "width": 249,
+      "height": 27,
       "id": "14",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 344,
-        "y": 103.5
+        "x": 202.5,
+        "y": 101
       },
       "data": {
         "type": "bbox",
         "value": null
       },
       "positionAbsolute": {
-        "x": 344,
-        "y": 103.5
+        "x": 202.5,
+        "y": 101
       },
       "z": 0,
       "handleBounds": {
@@ -261,17 +267,18 @@
         ],
         "target": null
       },
-      "width": 275,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 254,
+      "height": 27,
       "id": "16",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 339,
-        "y": 217.5
+        "x": 197.5,
+        "y": 211
       },
       "data": {
         "type": "text[]",
@@ -281,8 +288,8 @@
         ]
       },
       "positionAbsolute": {
-        "x": 339,
-        "y": 217.5
+        "x": 197.5,
+        "y": 211
       },
       "z": 0,
       "handleBounds": {
@@ -298,25 +305,26 @@
         ],
         "target": null
       },
-      "width": 280,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "18",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 361,
-        "y": 331.5
+        "x": 219.5,
+        "y": 321
       },
       "data": {
         "type": "int",
         "value": 1000
       },
       "positionAbsolute": {
-        "x": 361,
-        "y": 331.5
+        "x": 219.5,
+        "y": 321
       },
       "z": 0,
       "handleBounds": {
@@ -332,27 +340,28 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "22",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 361,
-        "y": 407.5
+        "x": 219.5,
+        "y": 395
       },
       "data": {
         "type": "int",
         "value": 5000
       },
       "positionAbsolute": {
-        "x": 361,
-        "y": 407.5
+        "x": 219.5,
+        "y": 395
       },
       "z": 0,
       "handleBounds": {
@@ -368,25 +377,26 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 248,
+      "height": 27,
       "id": "23",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 345,
-        "y": 445.5
+        "x": 203.5,
+        "y": 432
       },
       "data": {
         "type": "float",
         "value": 0.75
       },
       "positionAbsolute": {
-        "x": 345,
-        "y": 445.5
+        "x": 203.5,
+        "y": 432
       },
       "z": 0,
       "handleBounds": {
@@ -402,25 +412,26 @@
         ],
         "target": null
       },
-      "width": 274,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "24",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 361,
-        "y": 483.5
+        "x": 219.5,
+        "y": 469
       },
       "data": {
         "type": "int",
         "value": 8
       },
       "positionAbsolute": {
-        "x": 361,
-        "y": 483.5
+        "x": 219.5,
+        "y": 469
       },
       "z": 0,
       "handleBounds": {
@@ -436,24 +447,24 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 150,
+      "height": 37,
       "id": "25",
       "type": "output",
       "position": {
-        "x": 1344,
-        "y": 250
+        "x": 1052.3974207981094,
+        "y": 158.8753600085937
       },
       "data": {
         "label": "Output"
       },
       "positionAbsolute": {
-        "x": 1344,
-        "y": 250
+        "x": 1052.3974207981094,
+        "y": 158.8753600085937
       },
       "z": 0,
       "handleBounds": {
@@ -469,25 +480,28 @@
           }
         ]
       },
-      "width": 150,
-      "height": 39,
       "targetPosition": "left",
-      "sourcePosition": "right"
+      "sourcePosition": "right",
+      "selected": false,
+      "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "27",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 361,
-        "y": 65.5
+        "x": 219.5,
+        "y": 64
       },
       "data": {
         "type": "int",
         "value": 0
       },
       "positionAbsolute": {
-        "x": 361,
-        "y": 65.5
+        "x": 219.5,
+        "y": 64
       },
       "z": 0,
       "handleBounds": {
@@ -503,25 +517,26 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "28",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 350,
-        "y": 293.5
+        "x": 208.5,
+        "y": 284
       },
       "data": {
         "type": "text",
         "value": "EPSG:6623"
       },
       "positionAbsolute": {
-        "x": 350,
-        "y": 293.5
+        "x": 208.5,
+        "y": 284
       },
       "z": 0,
       "handleBounds": {
@@ -537,18 +552,19 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "29",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": -134.5,
+        "x": -121.5,
         "y": 0
       },
       "data": {
@@ -556,7 +572,7 @@
         "value": "Panthera onca"
       },
       "positionAbsolute": {
-        "x": -134.5,
+        "x": -121.5,
         "y": 0
       },
       "z": 0,
@@ -573,26 +589,27 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "30",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 350,
-        "y": 179.5
+        "x": 208.5,
+        "y": 174
       },
       "data": {
         "type": "text",
         "value": "mytiffolder/"
       },
       "positionAbsolute": {
-        "x": 350,
-        "y": 179.5
+        "x": 208.5,
+        "y": 174
       },
       "z": 0,
       "handleBounds": {
@@ -608,27 +625,28 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "31",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
-        "x": 350,
-        "y": 369.5
+        "x": 208.5,
+        "y": 358
       },
       "data": {
         "type": "text",
         "value": "pearson"
       },
       "positionAbsolute": {
-        "x": 350,
-        "y": 369.5
+        "x": 208.5,
+        "y": 358
       },
       "z": 0,
       "handleBounds": {
@@ -644,82 +662,61 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
-      "id": "32",
+      "width": 168,
+      "height": 26,
+      "id": "34",
       "type": "constant",
       "position": {
-        "x": 19,
-        "y": 255.5
+        "x": 283.5,
+        "y": 138
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text/vif.cor, vif.step, pearson, spearman or kendall",
-        "value": "vif.cor"
+        "type": "options",
+        "value": "from_cube",
+        "options": [
+          "from_tif",
+          "from_cube"
+        ]
       },
-      "positionAbsolute": {
-        "x": 19,
-        "y": 255.5
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 595.63330078125,
-            "y": 10,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 600,
-      "height": 28,
-      "selected": false,
-      "dragging": false,
       "targetPosition": "left",
-      "sourcePosition": "right"
+      "sourcePosition": "right",
+      "positionAbsolute": {
+        "x": 283.5,
+        "y": 138
+      }
     },
     {
-      "id": "33",
+      "width": 165,
+      "height": 26,
+      "id": "35",
       "type": "constant",
       "position": {
-        "x": 32,
-        "y": 141.5
+        "x": 286.5,
+        "y": 248
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text/accepted_values:\"from_tif\" or \"from_cube\"",
-        "value": "from_cube"
+        "type": "options",
+        "value": "vif.cor",
+        "options": [
+          "vif.cor",
+          "vif.step",
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
       },
-      "positionAbsolute": {
-        "x": 32,
-        "y": 141.5
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 583.0166015625,
-            "y": 10,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 587,
-      "height": 28,
-      "selected": false,
-      "dragging": false,
       "targetPosition": "left",
-      "sourcePosition": "right"
+      "sourcePosition": "right",
+      "positionAbsolute": {
+        "x": 286.5,
+        "y": 248
+      }
     }
   ],
   "edges": [
@@ -766,11 +763,11 @@
       "id": "reactflow__edge-14-13bbox"
     },
     {
-      "source": "33",
+      "source": "34",
       "sourceHandle": null,
       "target": "13",
       "targetHandle": "source",
-      "id": "reactflow__edge-33-13source"
+      "id": "reactflow__edge-34-13source"
     },
     {
       "source": "30",
@@ -787,11 +784,11 @@
       "id": "reactflow__edge-16-13layers"
     },
     {
-      "source": "32",
+      "source": "35",
       "sourceHandle": null,
       "target": "13",
       "targetHandle": "method",
-      "id": "reactflow__edge-32-13method"
+      "id": "reactflow__edge-35-13method"
     },
     {
       "source": "28",
@@ -837,8 +834,8 @@
     }
   ],
   "viewport": {
-    "x": 235,
-    "y": 127,
-    "zoom": 1
+    "x": 212.820002093531,
+    "y": 226.03982541830078,
+    "zoom": 0.5979098983880623
   }
 }

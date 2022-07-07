@@ -12,7 +12,7 @@ inputs:
     example: 11
   rcp:
     label: rcp
-    description: Representative Concentration Pathway scenarios (ssp126, ssp370, ssp585)
+    description: Representative Concentration Pathway Scenarios (ssp126, ssp370, ssp585)
     type: text
     example: ssp126
   spatial.res:

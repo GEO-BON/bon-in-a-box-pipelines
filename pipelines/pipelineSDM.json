@@ -1,6 +1,8 @@
 {
   "nodes": [
     {
+      "width": 317,
+      "height": 44,
       "id": "135",
       "type": "io",
       "position": {
@@ -53,12 +55,12 @@
           }
         ]
       },
-      "width": 317,
-      "height": 45,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 399,
+      "height": 172,
       "id": "136",
       "type": "io",
       "position": {
@@ -191,12 +193,14 @@
           }
         ]
       },
-      "width": 400,
-      "height": 198
+      "selected": false
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "137",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": -60.4921875,
         "y": 120
@@ -223,14 +227,15 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "138",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": -56.49218750000001,
         "y": 154
@@ -257,14 +262,15 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "139",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 80.5078125,
         "y": 212.5
@@ -291,14 +297,15 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 249,
+      "height": 27,
       "id": "140",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 71.5078125,
         "y": 241.5
@@ -325,48 +332,15 @@
         ],
         "target": null
       },
-      "width": 275,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
-      "id": "141",
-      "type": "constant",
-      "position": {
-        "x": -201.9921875,
-        "y": 319
-      },
-      "data": {
-        "type": "text/accepted_values:\"from_tif\" or \"from_cube\"",
-        "value": "from_cube"
-      },
-      "positionAbsolute": {
-        "x": -201.9921875,
-        "y": 319
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 543.71875,
-            "y": 10.5,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 587,
-      "height": 28,
-      "selected": false,
-      "dragging": false
-    },
-    {
+      "width": 243,
+      "height": 27,
       "id": "142",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 60.5078125,
         "y": 279
@@ -393,14 +367,15 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 254,
+      "height": 27,
       "id": "143",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 43.5078125,
         "y": 353.5
@@ -431,48 +406,15 @@
         ],
         "target": null
       },
-      "width": 280,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
-      "id": "144",
-      "type": "constant",
-      "position": {
-        "x": -302.4921875,
-        "y": 390
-      },
-      "data": {
-        "type": "text/vif.cor, vif.step, pearson, spearman or kendall",
-        "value": "vif.cor"
-      },
-      "positionAbsolute": {
-        "x": -302.4921875,
-        "y": 390
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 563.984375,
-            "y": 10.5,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      },
-      "width": 600,
-      "height": 28,
-      "selected": false,
-      "dragging": false
-    },
-    {
+      "width": 243,
+      "height": 27,
       "id": "145",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 21.0078125,
         "y": 423
@@ -499,14 +441,15 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "146",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 40.0078125,
         "y": 458
@@ -533,14 +476,15 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "147",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 17.0078125,
         "y": 489
@@ -567,14 +511,15 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "148",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 40.0078125,
         "y": 522.5
@@ -601,14 +546,15 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 248,
+      "height": 27,
       "id": "149",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 30.5078125,
         "y": 558.5
@@ -635,14 +581,15 @@
         ],
         "target": null
       },
-      "width": 274,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "150",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 46.5078125,
         "y": 594.5
@@ -669,12 +616,12 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 400,
+      "height": 88,
       "id": "151",
       "type": "io",
       "position": {
@@ -766,13 +713,14 @@
             "height": 8
           }
         ]
-      },
-      "width": 367,
-      "height": 100
+      }
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "152",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 698.0078125000002,
         "y": 159.99999999999991
@@ -798,13 +746,14 @@
           }
         ],
         "target": null
-      },
-      "width": 269,
-      "height": 28
+      }
     },
     {
+      "width": 254,
+      "height": 27,
       "id": "153",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 699.0078125000002,
         "y": 191.99999999999991
@@ -842,13 +791,14 @@
           }
         ],
         "target": null
-      },
-      "width": 280,
-      "height": 28
+      }
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "154",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 693.0078125000002,
         "y": 203.99999999999991
@@ -874,13 +824,14 @@
           }
         ],
         "target": null
-      },
-      "width": 269,
-      "height": 28
+      }
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "155",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 695.0078125000002,
         "y": 220.99999999999991
@@ -906,11 +857,11 @@
           }
         ],
         "target": null
-      },
-      "width": 258,
-      "height": 28
+      }
     },
     {
+      "width": 330,
+      "height": 64,
       "id": "157",
       "type": "io",
       "position": {
@@ -970,7 +921,7 @@
             "height": 8
           },
           {
-            "id": "dist_buffer",
+            "id": "width_buffer",
             "position": "left",
             "x": -3.000063793897474,
             "y": 52.99997673308749,
@@ -979,14 +930,15 @@
           }
         ]
       },
-      "width": 331,
-      "height": 72,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "158",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1081.5680728486284,
         "y": 341.77952318745923
@@ -1013,14 +965,15 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 520,
+      "height": 27,
       "id": "159",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 872.8106920517637,
         "y": 391.9630960156761
@@ -1047,14 +1000,15 @@
         ],
         "target": null
       },
-      "width": 546,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "160",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1145.0533112548987,
         "y": 465.0876224689746
@@ -1081,12 +1035,12 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 424,
+      "height": 76,
       "id": "179",
       "type": "io",
       "position": {
@@ -1163,14 +1117,15 @@
           }
         ]
       },
-      "width": 450,
-      "height": 86,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 581,
+      "height": 27,
       "id": "180",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1129.2350278545978,
         "y": 510.50752724314475
@@ -1197,14 +1152,15 @@
         ],
         "target": null
       },
-      "width": 607,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "181",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1447.5397457288357,
         "y": 554.0841063508326
@@ -1231,14 +1187,15 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "182",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1431.3180767579852,
         "y": 598.8279821826807
@@ -1265,14 +1222,15 @@
         ],
         "target": null
       },
-      "width": 269,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "183",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1480.3180767579852,
         "y": 644.8674166423293
@@ -1299,12 +1257,12 @@
         ],
         "target": null
       },
-      "width": 258,
-      "height": 28,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 390,
+      "height": 136,
       "id": "185",
       "type": "io",
       "position": {
@@ -1421,14 +1379,15 @@
           }
         ]
       },
-      "width": 394,
-      "height": 156,
-      "selected": true,
+      "selected": false,
       "dragging": false
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "187",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.8407898309306,
         "y": 284.658172629821
@@ -1454,13 +1413,14 @@
           }
         ],
         "target": null
-      },
-      "width": 269,
-      "height": 28
+      }
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "188",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.0345639501143,
         "y": 302.39514200778297
@@ -1486,13 +1446,14 @@
           }
         ],
         "target": null
-      },
-      "width": 258,
-      "height": 28
+      }
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "189",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1976.4221121884816,
         "y": 316.10098198166264
@@ -1518,13 +1479,14 @@
           }
         ],
         "target": null
-      },
-      "width": 269,
-      "height": 28
+      }
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "190",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1980.4532415925637,
         "y": 330.61304783635876
@@ -1550,13 +1512,14 @@
           }
         ],
         "target": null
-      },
-      "width": 258,
-      "height": 28
+      }
     },
     {
+      "width": 248,
+      "height": 27,
       "id": "191",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.0345639501143,
         "y": 344.31888781023844
@@ -1582,13 +1545,14 @@
           }
         ],
         "target": null
-      },
-      "width": 274,
-      "height": 28
+      }
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "192",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 1978.0345639501143,
         "y": 363.6683089498333
@@ -1614,11 +1578,11 @@
           }
         ],
         "target": null
-      },
-      "width": 258,
-      "height": 28
+      }
     },
     {
+      "width": 287,
+      "height": 64,
       "id": "194",
       "type": "io",
       "position": {
@@ -1687,14 +1651,15 @@
           }
         ]
       },
-      "width": 288,
-      "height": 72,
       "selected": false,
       "dragging": false
     },
     {
+      "width": 243,
+      "height": 27,
       "id": "195",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 2529.3109162818696,
         "y": 194.72149348351036
@@ -1720,13 +1685,14 @@
           }
         ],
         "target": null
-      },
-      "width": 269,
-      "height": 28
+      }
     },
     {
+      "width": 232,
+      "height": 27,
       "id": "196",
       "type": "constant",
+      "dragHandle": ".dragHandle",
       "position": {
         "x": 2529.3109162818696,
         "y": 206.84722601559355
@@ -1752,11 +1718,11 @@
           }
         ],
         "target": null
-      },
-      "width": 258,
-      "height": 28
+      }
     },
     {
+      "width": 150,
+      "height": 37,
       "id": "197",
       "type": "output",
       "position": {
@@ -1784,9 +1750,60 @@
           }
         ]
       },
-      "width": 150,
-      "height": 39,
       "selected": false,
+      "dragging": false
+    },
+    {
+      "width": 168,
+      "height": 26,
+      "id": "198",
+      "type": "constant",
+      "position": {
+        "x": 108,
+        "y": 312
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "from_cube",
+        "options": [
+          "from_tif",
+          "from_cube"
+        ]
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 108,
+        "y": 312
+      },
+      "dragging": false
+    },
+    {
+      "width": 165,
+      "height": 26,
+      "id": "199",
+      "type": "constant",
+      "position": {
+        "x": 109.67971300161787,
+        "y": 388.70543260176055
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "vif.cor",
+        "options": [
+          "vif.cor",
+          "vif.step",
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 109.67971300161787,
+        "y": 388.70543260176055
+      },
       "dragging": false
     }
   ],
@@ -1827,13 +1844,6 @@
       "id": "reactflow__edge-140-136bbox"
     },
     {
-      "source": "141",
-      "sourceHandle": null,
-      "target": "136",
-      "targetHandle": "source",
-      "id": "reactflow__edge-141-136source"
-    },
-    {
       "source": "142",
       "sourceHandle": null,
       "target": "136",
@@ -1846,13 +1856,6 @@
       "target": "136",
       "targetHandle": "layers",
       "id": "reactflow__edge-143-136layers"
-    },
-    {
-      "source": "144",
-      "sourceHandle": null,
-      "target": "136",
-      "targetHandle": "method",
-      "id": "reactflow__edge-144-136method"
     },
     {
       "source": "145",
@@ -1958,13 +1961,6 @@
       "target": "157",
       "targetHandle": "method",
       "id": "reactflow__edge-159-157method"
-    },
-    {
-      "source": "160",
-      "sourceHandle": null,
-      "target": "157",
-      "targetHandle": "dist_buffer",
-      "id": "reactflow__edge-160-157dist_buffer"
     },
     {
       "source": "157",
@@ -2105,11 +2101,32 @@
       "target": "185",
       "targetHandle": "layers",
       "id": "reactflow__edge-136nc_predictors-185layers"
+    },
+    {
+      "source": "198",
+      "sourceHandle": null,
+      "target": "136",
+      "targetHandle": "source",
+      "id": "reactflow__edge-198-136source"
+    },
+    {
+      "source": "160",
+      "sourceHandle": null,
+      "target": "157",
+      "targetHandle": "width_buffer",
+      "id": "reactflow__edge-160-157width_buffer"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "136",
+      "targetHandle": "method",
+      "id": "reactflow__edge-199-136method"
     }
   ],
   "viewport": {
-    "x": -3603.5171255083496,
-    "y": -262.69943691298965,
-    "zoom": 1.8816522150275747
+    "x": 232.27424831855848,
+    "y": -34.48398515921576,
+    "zoom": 1.0762401247837976
   }
 }
