@@ -4,7 +4,7 @@ inputs:
     label: clean presence
     description: Path to the presence points
     type: text/tab-separated-values
-    example: "/output/cleanCoordinates/modCleanCoordinates_R/fe62eaec2b4e1eff8cbf6a49e15ee0d5/clean_presence.tsv"
+    example: "/output/cleanCoordinates/modCleanCoordinates_R/e1b92aec1a151661989314011a12cd26/clean_presence.tsv"
   clean_background:
     label: clean background
     description: Path to the background point

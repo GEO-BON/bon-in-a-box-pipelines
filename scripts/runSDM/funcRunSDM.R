@@ -246,6 +246,11 @@ predict_maxent_2 <- function(presence_background,
   
   runs <- names(presence_background %>% 
                   dplyr:: select(starts_with("run")))
+  if(length(runs) == 0) {
+presence_background$run_1 <- 1
+runs <- c("run_1")
+  }
+
   pred_runs <- NULL
   
   for (i in runs) {
@@ -305,7 +310,9 @@ predict_maxent_2 <- function(presence_background,
     pred_rasters <- terra::rast(path) 
 
     if (terra::nlyr(pred_rasters) == 1) message("one single prediction - not calculating uncertainty.")
-    
+    e <- terra::ext(pred_rasters)
+    raster_uncertainty <- terra::rast(e)
+    values(raster_uncertainty)<-1
     if (terra::nlyr(pred_rasters) > 1) {
       raster_uncertainty <- terra::app(pred_rasters, fun = function(i) {max(i) - min(i) })
       names(raster_uncertainty) <- "raw_uncertainty"

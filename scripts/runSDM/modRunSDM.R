@@ -10,15 +10,14 @@ library("raster")
 library("dplyr")
 library("gdalcubes")
 library("ENMeval")
-#library("devtools")
-#install.packages("ENMeval")
-#devtools::install_github("ReseauBiodiversiteQuebec/ratlas")
-#devtools::install_github("ReseauBiodiversiteQuebec/sdm-pipeline")
+library("devtools")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
+library("stacatalogue")
 
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "runSDM/funcRunSDM.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "stacCatalogue/stac_functions.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
 ## Receiving args
@@ -36,6 +35,7 @@ presence_background <- read.table(file = input$presence_background, sep = '\t', 
 predictors <- terra::rast(input$predictors)
 
 partition_type <-  c("block")
+
 mod_tuning <- run_maxent(presence_background, 
                          with_raster = F, # can be set to F to speed up
                          algorithm = "maxent.jar",
@@ -52,8 +52,6 @@ mod_tuning <- run_maxent(presence_background,
 
 res_tuning <- mod_tuning@results
 tuned_param <- select_param(res_tuning, method = "p10", list = F)
-
-
 
 predictors <- raster::stack(predictors)
 
