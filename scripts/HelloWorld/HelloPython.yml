@@ -1,4 +1,5 @@
 script: HelloPython.py
+description: "Sample python script that increments a number."
 inputs:
   some_int:
     label: Some int
@@ -11,4 +12,3 @@ outputs:
     description: bla bla
     type: int
     example: 4
-description: "Sample python script that increments a number."
