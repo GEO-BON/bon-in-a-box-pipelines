@@ -1,4 +1,6 @@
 script: HelloJulia.jl
+description: "This sample script shows how it works in Julia."
+external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
 outputs:
   number:
@@ -6,8 +8,6 @@ outputs:
     description: bla bla
     type: int
     example: 9
-description: "This sample script shows how it works in Julia."
-external_link: https://github.com/GEO-BON/biab-2.0
 references:
   - text: Rick Bonney, Expanding the Impact of Citizen Science, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
     doi: 10.1093/biosci/biab041
