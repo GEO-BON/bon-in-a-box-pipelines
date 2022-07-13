@@ -11,7 +11,7 @@ abstract class YMLStep(
     inputs: MutableMap<String, Pipe> = mutableMapOf()
 ) : Step(inputs, readOutputs(yamlParsed)) {
 
-    override fun validateStepInputs(): String {
+    override fun validateInputsConfiguration(): String {
         val inputsFromYml = readInputs(yamlParsed)
 
         if (inputs.size != inputsFromYml.size) {
