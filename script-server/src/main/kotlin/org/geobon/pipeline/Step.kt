@@ -29,6 +29,7 @@ abstract class Step(
                     launch { resolvedInputs[it.key] = it.value.pull() }
                 }
             }
+            validateInputsReceived(resolvedInputs)
 
             val results = execute(resolvedInputs)
             results.forEach { (key, value) ->
@@ -58,6 +59,13 @@ abstract class Step(
     open fun validateInputsConfiguration(): String {
         // Not all steps need input validation.
         return ""
+    }
+
+    /**
+     * Validates the received inputs and throws if something's wrong
+     */
+    open fun validateInputsReceived(resolvedInputs:Map<String, Any>) {
+        // Not all steps need input validation.
     }
 
     open fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
