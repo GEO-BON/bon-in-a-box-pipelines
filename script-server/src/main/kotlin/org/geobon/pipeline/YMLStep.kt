@@ -16,7 +16,11 @@ abstract class YMLStep(
         val inputsFromYml = readInputs(yamlParsed)
 
         if (inputs.size != inputsFromYml.size) {
-            return "Bad number of inputs.\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
+            return "Bad number of inputs." +
+                    "\n\tYAML spec: ${inputsFromYml.keys}" +
+                    "\n\tReceived:  ${inputs.keys}" +
+                    "\n\tExtra keys: ${inputs.mapNotNull { if (inputsFromYml.containsKey(it.key)) null else it.key }}" +
+                    "\n\tMissing keys: ${inputsFromYml.mapNotNull { if (inputs.containsKey(it.key)) null else it.key }}\n"
         }
 
         // Validate presence and type of each input
