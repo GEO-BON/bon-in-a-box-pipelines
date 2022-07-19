@@ -120,9 +120,42 @@ internal class ScriptStepTest {
         val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!
         files.filter { it.name == "output.json" }.let {
             assertEquals(1, it.size)
-            it[0]!!.readText().contains("\"error\"")
+            assertTrue(it[0]!!.readText().contains("\"error\""))
         }
 
+    }
+
+    @Test
+    fun givenOptionsInput_whenReceivedValueNotInOptions_thenThrowsAndOutputHasError() = runTest {
+        val step = ScriptStep(File(scriptRoot, "optionsInput.yml"),
+            mutableMapOf("options_in" to ConstantPipe("options", "four")))
+        step.validateGraph().apply { assertTrue(isEmpty(), "Validation error: $this") }
+
+        try {
+            step.execute()
+            fail("Exception should have been thrown")
+        } catch (_:Exception) {}
+
+        /*val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!
+        files.filter { it.name == "output.json" }.let {
+            assertEquals(1, it.size)
+            assertTrue(it[0]!!.readText().contains("\"error\""))
+        }*/
+    }
+
+    @Test
+    fun givenOptionsInput_whenReceivedValueInOptions_thenExecutes() = runTest {
+        val step = ScriptStep(File(scriptRoot, "optionsInput.yml"),
+            mutableMapOf("options_in" to ConstantPipe("options", "three")))
+        step.validateGraph().apply { assertTrue(isEmpty(), "Validation error: $this") }
+
+        step.execute()
+
+        val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!
+        files.filter { it.name == "output.json" }.let {
+            assertEquals(1, it.size)
+            assertFalse(it[0]!!.readText().contains("\"error\""))
+        }
     }
 
     // TODO with cache: If a script is ran in *another* pipeline with the same parameters, we should be able to listen to it!

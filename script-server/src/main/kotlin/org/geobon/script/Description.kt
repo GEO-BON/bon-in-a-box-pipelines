@@ -9,4 +9,5 @@ object Description {
     const val INPUTS = "inputs"
     const val OUTPUTS = "outputs"
     const val TYPE = "type"
+    const val TYPE_OPTIONS = "options"
 }

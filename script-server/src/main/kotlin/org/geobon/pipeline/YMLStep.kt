@@ -3,6 +3,7 @@ package org.geobon.pipeline
 import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
+import org.geobon.script.Description.TYPE_OPTIONS
 import org.yaml.snakeyaml.Yaml
 
 abstract class YMLStep(
@@ -30,13 +31,34 @@ abstract class YMLStep(
         return ""
     }
 
+    override fun validateInputsReceived(resolvedInputs:Map<String, Any>) {
+        inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
+            val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
+                ?: throw Exception("No options found for input parameter $key.")
+
+            if(!options.contains(resolvedInputs[key])){
+                throw Exception("Received value ${resolvedInputs[key]} not in options $options.")
+            }
+        }
+    }
+
+    private fun readIODescription(section:String, searchedKey:String) : Map<*,*>? {
+        (yamlParsed[section] as? Map<*, *>)?.forEach { (key, description) ->
+            if(key == searchedKey) {
+                return description as? Map<*, *>
+            }
+        } ?: println("$section is not a valid map")
+
+        return null
+    }
+
     companion object {
         /**
          * @return Map of input name to type
          */
         private fun readInputs(yamlParsed: Map<String, Any>): Map<String, String> {
             val inputs = mutableMapOf<String, String>()
-            readIO("inputs", yamlParsed, INPUTS) { key, type ->
+            readIO(yamlParsed, INPUTS) { key, type ->
                 inputs[key] = type
             }
             return inputs
@@ -47,7 +69,7 @@ abstract class YMLStep(
          */
         private fun readOutputs(yamlParsed: Map<String, Any>): Map<String, Output> {
             val outputs = mutableMapOf<String, Output>()
-            readIO("outputs", yamlParsed, OUTPUTS) { key, type ->
+            readIO(yamlParsed, OUTPUTS) { key, type ->
                 outputs[key] = Output(type)
             }
             return outputs
@@ -57,7 +79,6 @@ abstract class YMLStep(
          * Since both Input and output look alike, function to read key and type is in common.
          */
         private fun readIO(
-            label: String,
             yamlParsed: Map<String, Any>,
             section: String,
             toExecute: (String, String) -> Unit
@@ -74,14 +95,14 @@ abstract class YMLStep(
                                     toExecute(key.toString(), type.toString())
                                 } ?: println("Invalid type")
                             } else {
-                                println("$label description is not a map")
+                                println("$section description is not a map")
                             }
                         } ?: println("Invalid key")
                     }
                 } else {
-                    println("$label is not a map")
+                    println("$section is not a map")
                 }
-            } ?: println("No $label map")
+            } ?: println("No $section map")
         }
     }
 }
