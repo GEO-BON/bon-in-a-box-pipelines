@@ -8,9 +8,9 @@ class Output(override val type:String) : Pipe {
     override suspend fun pull(): Any {
         if(value == null) {
             step?.apply { execute() }
-                ?: throw Exception("Output disconnected from any step")
+                ?: throw RuntimeException("Output disconnected from any step")
         }
-        return value ?: throw Exception("Output has not been set by step")
+        return value ?: throw RuntimeException("Output has not been set by step")
     }
 
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
