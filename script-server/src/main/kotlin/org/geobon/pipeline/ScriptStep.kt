@@ -39,13 +39,13 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
             val results = mapOf(ScriptRun.ERROR_KEY to error)
             scriptRun.resultFile.parentFile.mkdirs()
             scriptRun.resultFile.writeText(Gson().toJson(results))
-            throw java.lang.Exception("Parameter validation detected an error")
+            throw RuntimeException(error)
         }
 
         scriptRun.execute()
 
         if (scriptRun.results.containsKey(ScriptRun.ERROR_KEY))
-            throw java.lang.Exception("Script run detected an error")
+            throw RuntimeException("Script run detected an error")
 
         return scriptRun.results
     }
