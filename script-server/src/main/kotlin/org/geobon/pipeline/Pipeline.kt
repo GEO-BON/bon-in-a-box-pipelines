@@ -86,7 +86,9 @@ class Pipeline(descriptionFile: File) {
                 } else {
                     steps[targetId]?.let { step ->
                         val targetInput = edge.getString(EDGE__TARGET_INPUT)
-                        step.inputs[targetInput] = sourcePipe
+                        step.inputs[targetInput] = step.inputs[targetInput].let {
+                            if(it == null) sourcePipe else AggregatePipe(listOf(it, sourcePipe))
+                        }
                     } ?: logger.warn("Dangling edge: could not find source $targetId")
                 }
 
