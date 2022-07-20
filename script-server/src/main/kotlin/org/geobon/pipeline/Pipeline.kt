@@ -102,10 +102,12 @@ class Pipeline(descriptionFile: File) {
             pipelineOutputs.mapNotNullTo(set) { if (it is Output) it.step else null }
         }
 
+        if(finalSteps.isEmpty())
+            throw Exception("Pipeline has no designated output")
+
         finalSteps.forEach {
             val message = it.validateGraph()
             if(message != "") {
-                logger.warn(message)
                 throw Exception("Pipeline validation failed:\n$message")
             }
         }
