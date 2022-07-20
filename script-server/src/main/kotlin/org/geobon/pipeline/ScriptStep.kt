@@ -1,5 +1,6 @@
 package org.geobon.pipeline
 
+import com.google.gson.Gson
 import org.geobon.script.Description.SCRIPT
 import org.geobon.script.ScriptRun
 import org.geobon.script.scriptRoot
@@ -33,6 +34,14 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
             if(resolvedInputs.isEmpty()) null else ScriptRun.toJson(resolvedInputs)
         )
         runId = scriptRun.id
+
+        validateInputsReceived(resolvedInputs)?.let { error ->
+            val results = mapOf(ScriptRun.ERROR_KEY to error)
+            scriptRun.resultFile.parentFile.mkdirs()
+            scriptRun.resultFile.writeText(Gson().toJson(results))
+            throw java.lang.Exception("Parameter validation detected an error")
+        }
+
         scriptRun.execute()
 
         if (scriptRun.results.containsKey(ScriptRun.ERROR_KEY))
