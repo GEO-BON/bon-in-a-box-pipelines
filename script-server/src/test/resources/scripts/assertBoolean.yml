@@ -6,7 +6,8 @@ inputs:
     example: false
 outputs:
   the_same:
-    label: The same boolean as in the inputs. But this crashes if not an array.
+    label: Same value
+    description: The same boolean as in the inputs. But this crashes if not a boolean.
     type: boolean
     example: false
 description: "Sample python script fail if it doesn't receive a boolean."
