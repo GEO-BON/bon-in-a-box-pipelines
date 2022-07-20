@@ -140,9 +140,9 @@ fun Route.ScriptApi(logger: Logger) {
 
                     outputFolder.mkdirs()
                     resultFile.writeText(content)
-                }
 
-                runningPipelines.remove(runId)
+                    runningPipelines.remove(runId)
+                }
             }
         } catch (e: Exception) {
             call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
