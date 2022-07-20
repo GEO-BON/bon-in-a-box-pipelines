@@ -35,15 +35,17 @@ abstract class YMLStep(
         return ""
     }
 
-    override fun validateInputsReceived(resolvedInputs:Map<String, Any>) {
+    fun validateInputsReceived(resolvedInputs:Map<String, Any>) : String? {
         inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
             val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
-                ?: throw Exception("No options found for input parameter $key.")
+                ?: return "No options found for input parameter $key."
 
             if(!options.contains(resolvedInputs[key])){
-                throw Exception("Received value ${resolvedInputs[key]} not in options $options.")
+                return "Received value ${resolvedInputs[key]} not in options $options."
             }
         }
+
+        return null
     }
 
     private fun readIODescription(section:String, searchedKey:String) : Map<*,*>? {
