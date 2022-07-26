@@ -65,21 +65,21 @@
       "id": "10",
       "type": "constant",
       "position": {
-        "x": 346,
-        "y": 362
+        "x": 349,
+        "y": 371
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int[]",
         "value": [
           "12",
-          " 13"
+          "13"
         ]
       },
       "selected": true,
       "positionAbsolute": {
-        "x": 346,
-        "y": 362
+        "x": 349,
+        "y": 371
       },
       "dragging": false
     }
