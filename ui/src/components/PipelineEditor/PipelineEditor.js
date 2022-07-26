@@ -8,25 +8,15 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
-  getConnectedEdges,
   Controls,
   MiniMap,
   Position,
 } from 'react-flow-renderer/nocss';
 
-import dagre from 'dagre';
-
 import IONode from './IONode'
 import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
-
-const initialNodes = [
-  /*{
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
-  },*/
-];
+import { getLayoutedElements } from './react-flow-utils/Layout'
+import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
 
 const nodeTypes = {
   io: IONode,
@@ -36,85 +26,10 @@ const nodeTypes = {
 let id = 0;
 const getId = () => `${id++}`;
 
-const getLayoutedElements = (nodes, edges) => {
-  const dagreGraph = new dagre.graphlib.Graph();
-  dagreGraph.setDefaultEdgeLabel(() => ({}));
-  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
-
-  // Map to record the order of the inputs on the script card
-  const inputOrderMap = new Map();
-
-  nodes.forEach(node => {
-    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
-
-    if (node.type === 'io') {
-      inputOrderMap.set(node.id, node.data.inputs)
-    }
-  });
-
-  // Sort the edges in the order that they appear on the card
-  edges.sort((edge1, edge2) => {
-    let edge1Value = 0
-    let nodeInputs = inputOrderMap.get(edge1.target)
-    if(nodeInputs) edge1Value += nodeInputs.indexOf(edge1.targetHandle)
-    
-    
-    let edge2Value = 0
-    nodeInputs = inputOrderMap.get(edge2.target)
-    if(nodeInputs) edge2Value += nodeInputs.indexOf(edge2.targetHandle)
-    
-    return edge1Value - edge2Value
-  });
-  
-  edges.forEach((edge) => {
-    dagreGraph.setEdge(edge.source, edge.target);
-  });
-
-  dagre.layout(dagreGraph);
-
-  nodes.forEach((node) => {
-    const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = 'left';
-    node.sourcePosition = 'right';
-
-    node.position = {
-      x: nodeWithPosition.x - node.width,
-      y: nodeWithPosition.y - node.height / 2
-    };
-
-    return node;
-  });
-
-  return { nodes, edges };
-};
-
-  /**
-   * 
-   * @param {Node[]} selectedNodes 
-   * @param {Edge[]} allEdges 
-   * @returns the edges, with added style for edges connected to the selected node.
-   */
-   const highlightConnectedEdges = (selectedNodes, allEdges) => {
-    let connectedIds = []
-    if (selectedNodes && selectedNodes.length === 1) {
-      let connectedEdges = getConnectedEdges(selectedNodes, allEdges)
-      connectedIds = connectedEdges.map((i) => i.id)
-    }
-
-    return allEdges.map((edge) => {
-      edge.style = {
-        ...edge.style,
-        stroke: connectedIds.includes(edge.id) ? '#0000ff' : undefined
-      }
-
-      return edge
-    })
-  }
-
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [selectedNodes, setSelectedNodes] = useState(null);
