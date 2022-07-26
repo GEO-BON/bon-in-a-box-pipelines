@@ -199,9 +199,7 @@ export function PipelineEditor(props) {
     }
   }, [reactFlowInstance]);
 
-  const loadFromFileBtnClick = () => {
-    inputFile.current.click() // will call onLoad
-  }
+  const onLoadFromFileBtnClick = () => inputFile.current.click() // will call onLoad
 
   const onLoad = (clickEvent) => {
     clickEvent.stopPropagation()
@@ -241,7 +239,7 @@ export function PipelineEditor(props) {
         }
       }
 
-      // Now that it's done, reset the value of the input.
+      // Now that it's done, reset the value of the input file.
       inputFile.current.value = ""
     }
   }
@@ -274,7 +272,7 @@ export function PipelineEditor(props) {
               <button onClick={() => onLayout()}>Layout</button>
               <input type='file' id='file' ref={inputFile} accept="application/json"
                 onChange={onLoad} style={{ display: 'none' }} />
-              <button onClick={loadFromFileBtnClick}>Load from file</button>
+              <button onClick={onLoadFromFileBtnClick}>Load from file</button>
               <button disabled={true}>Load from server</button>
               <button onClick={onSave}>Save</button>
             </div>
