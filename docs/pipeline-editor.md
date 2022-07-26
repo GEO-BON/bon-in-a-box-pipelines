@@ -26,6 +26,8 @@ A single value can also be combined with an array of the same type, to produce a
 Any **input** with no constant value assigned will be considered a pipeline input and user will have to fill the value.
 
 Drag and drop an **output** node and link it to a step output to specify that this output is an output of the pipeline. All other unmarked step outputs will still be available as intermediate results in the UI.
+![image](https://user-images.githubusercontent.com/6223744/181108988-97d988ca-8f4b-45b1-b4a3-32e90821b68b.png)
+
 
 ## Saving and loading
 The editor _does not_ allow you to edit files live on the server. Files need to be commit to the github repo using git.
