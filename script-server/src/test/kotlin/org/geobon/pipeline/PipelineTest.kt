@@ -87,7 +87,7 @@ internal class PipelineTest {
 
     @Test
     fun `given an int aggregation_when ran_then script receives array`() = runTest {
-        val pipeline = Pipeline("aggregateIntAndIntArray.json")
+        val pipeline = Pipeline("aggregateInt.json")
 
         pipeline.execute()
 
@@ -99,7 +99,7 @@ internal class PipelineTest {
 
     @Test
     fun `given an int and int array aggregation_when ran_then script receives single array`() = runTest {
-        val pipeline = Pipeline("aggregateInt.json")
+        val pipeline = Pipeline("aggregateIntAndIntArray.json")
 
         pipeline.execute()
 
