@@ -47,9 +47,27 @@ class Pipeline(descriptionFile: File) {
                         val type = nodeData.getString(NODE__DATA__TYPE)
 
                         constants[id] = if(type.endsWith("[]")) {
-                            ConstantPipe(type, nodeData.getJSONArray(NODE__DATA__VALUE).toList())
-                        } else {
+                            val jsonArray = nodeData.getJSONArray(NODE__DATA__VALUE)
+
                             ConstantPipe(type,
+                                when (type.removeSuffix("[]")) {
+                                    "int" -> mutableListOf<Int>().apply {
+                                        for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
+                                    }
+                                    "float" -> mutableListOf<Float>().apply {
+                                        for (i in 0 until jsonArray.length()) add(jsonArray.optFloat(i))
+                                    }
+                                    "boolean" -> mutableListOf<Boolean>().apply {
+                                        for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
+                                    }
+                                    // Everything else is read as text
+                                    else -> mutableListOf<String>().apply {
+                                        for (i in 0 until jsonArray.length()) add(jsonArray.optString(i))
+                                    }
+                                })
+                        } else {
+                            ConstantPipe(
+                                type,
                                 when (type) {
                                     "int" -> nodeData.getInt(NODE__DATA__VALUE)
                                     "float" -> nodeData.getFloat(NODE__DATA__VALUE)

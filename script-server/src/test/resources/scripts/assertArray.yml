@@ -9,6 +9,6 @@ outputs:
   the_same:
     label: Same value
     description: The same array as in the inputs. But this crashes if not an array
-    type: int
+    type: int[]
     example: [3,4,5]
 description: "Sample python script fail if it doesn't receive an array."
