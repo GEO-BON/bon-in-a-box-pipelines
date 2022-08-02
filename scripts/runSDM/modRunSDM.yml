@@ -21,11 +21,11 @@ inputs:
     type: int
     example: 1000  
 outputs:
-  output_uncertainty:
+  sdm_uncertainty:
      label: uncertainty
      description: table with observations from GBIF
      type: image/tiff;application=geotiff
-  output_runs:
+  sdm_pred:
      label: predictions
      description: table with observations from GBIF
      type: image/tiff;application=geotiff

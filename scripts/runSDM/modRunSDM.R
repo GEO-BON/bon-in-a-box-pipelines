@@ -56,7 +56,7 @@ tuned_param <- select_param(res_tuning, method = "p10", list = F)
 predictors <- raster::stack(predictors)
 
 
-pred_runs <- predict_maxent_2(presence_background, 
+sdm_pred <- predict_maxent_2(presence_background, 
   algorithm = "maxent.jar", 
                            predictors = predictors,
                            layers = names(predictors),
@@ -72,21 +72,21 @@ pred_runs <- predict_maxent_2(presence_background,
                            output_folder = outputFolder)
 
 
-output_runs <- file.path(outputFolder, "pred_runs.tif")
-raster::writeRaster(x = pred_runs,
-                          filename = output_runs,
+output_pred <- file.path(outputFolder, "sdm_pred.tif")
+raster::writeRaster(x = sdm_pred,
+                          filename = output_pred,
                           overwrite = TRUE)
 
 
-uncertainty <- do_uncertainty(output_runs)  
+uncertainty <- do_uncertainty(output_pred)  
 
 output_uncertainty <- file.path(outputFolder, "uncertainty.tif")
 raster::writeRaster(x = uncertainty,
                           output_uncertainty,
                           overwrite = TRUE)
  
-output <- list("pred_runs" = output_runs,
-  "uncertainty" =  output_uncertainty
+output <- list("sdm_pred" = output_pred,
+  "sdm_uncertainty" =  output_uncertainty
                   ) 
 
 jsonData <- toJSON(output, indent=2)

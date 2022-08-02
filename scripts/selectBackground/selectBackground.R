@@ -16,7 +16,6 @@ library("stars")
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "selectBackground/funcSelectBackground.R", sep = "/"))
 source("/scripts/utils/utils.R")
-#source("/scripts/utils/predictors_func.R")
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)

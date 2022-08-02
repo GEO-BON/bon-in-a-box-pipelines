@@ -439,7 +439,6 @@ cc_urb <- function (x, lon = "decimallongitude", lat = "decimallatitude",
 #' 4 predictors and threshold = 0.5, an observation is flagged as an outlier is it is an outlier for 2 or more predictors.
 #' @param value a character string defining the output value (clean or flagged). See return.
 #' @return df increased by n variables corresponding to the result of the Reverse Jackknife procedure for each tested variable in cols
-#' @import biogeo
 
 cc_env_out <- function(presvals,
                        cols = NULL,
@@ -486,6 +485,8 @@ flag_env_outlier <- function(x) {
 
 #' @param d, a vector of values to test with the Reverse Jackknife procedure
 #' @return a vector of element position considered as outliers
+# adapted from https://rdrr.io/cran/biogeo/man/rjack.html
+
 rjack <- function (d) 
 {
   xx <- d

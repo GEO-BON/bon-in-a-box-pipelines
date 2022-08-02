@@ -85,12 +85,13 @@ setup_presence_background <- function(
   
   presence_background <- dplyr::bind_rows(presence, background)
 
-  if (partition_type == "none") presence_background <- bind_cols("run1" = 1, presence_background)
-  if (exists("cv_0"))   presence_background <- data.frame(cv_0, presence_background)
-  if (exists("cv.matrix"))   presence_background <- data.frame(cv.matrix, presence_background)
-  if (exists("boot.matrix")) presence_background <- data.frame(boot.matrix, presence_background)
+  if (partition_type == "none" | runs_n == 1) presence_background <- bind_cols("run1" = 1, presence_background)
+  if (partition_type == "crossvalidation") presence_background <- data.frame(cv.matrix, presence_background)
+  if (partition_type == "bootstrap") presence_background <- data.frame(boot.matrix, presence_background)
 
-  presence_background <- add_predictors(obs = presence_background, predictors = predictors)
-
+  env_vals <- terra::extract(predictors, dplyr::select(presence_background, lon, lat))
+  presence_background <- dplyr::bind_cols(presence_background,
+                          env_vals) %>% dplyr::select(-ID)
+  
   return(presence_background)
 }
