@@ -1,4 +1,4 @@
-script: modCleanCoordinates.R
+script: cleanCoordinates.R
 inputs:
   presence:
     label: presence
@@ -17,7 +17,7 @@ inputs:
     example: ["bio1", "bio2", "bio4"]
   tests: 
     labels: cleaning_tests
-    description: tests to run from all tests available - capitals, centroids, equal, gbif, institutions, duplicates, urban, seas, zeros, env
+    description: tests to run from all tests available - capitals, centroids, same_pixel, equal, gbif, institutions, duplicates, urban, seas, zeros, env
     type: text[]
     example: 
      - equal
@@ -56,10 +56,12 @@ outputs:
      label: clean presence table
      description: TSV file containing a table with clean presence points.
      type: text/tab-separated-values
-description: "This sample script shows how it works."
+description: "This script enables to apply several cleaning filters to the observations. The tests equal,
+     zeros, duplicates, same_pixel, capitals, centroids, seas, urban, gbif and institutions are wrappers around CoordinateCleaner functions.
+     Test same_pixel remove points inside the same pixel, based on a provided raster or from a STAC catalogue. Test env allows removing environmental outliers using the 
+     the Reverse Jackknife procedure as described by Chapman (2005) and adapted from the package biogeo."
 external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/cleanCoordinates
 references:
-  - text: Rick Bonney, Expanding the Impact of Citizen Science, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
-    doi: 10.1093/biosci/biab041
-  - text: Ruiping Yang, Yongkui Qi, Li Yang, Tao Chen, Aixing Deng, Jun Zhang, Zhenwei Song, Baoming Ge, Rotation regimes lead to significant differences in soil macrofaunal biodiversity and trophic structure with the changed soil properties in a rice-based double cropping system, Geoderma, 405, (115424), (2022).
-    doi: 10.1016/j.geoderma.2021.115424
+  - text: Chapman, A.D. (2005) Principles and Methods of Data Cleaning - Primary Species and Species- Occurrence Data, version 1.0. Report for the Global Biodiversity Information Facility, Copenhagen.
+  - text: Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte Ritter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V & Antonelli A (2019) CoordinateCleaner, standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution, 10(5):744-751
+    doi: 10.1111/2041-210X.13152

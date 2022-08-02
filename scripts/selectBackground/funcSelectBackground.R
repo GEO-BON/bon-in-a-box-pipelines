@@ -21,9 +21,9 @@ create_background <- function(
   study_extent_rast <- terra::rast(ext = raster::extent(study_extent), res = resolution)
   terra::values(study_extent_rast) <- 1
   study_extent_rast <- fast_crop(study_extent_rast, study_extent)
-print(study_extent_rast)
+
   proj <- terra::crs(study_extent, proj = T)
-print(proj)
+
   if (!is.null(mask)) study_extent_rast <- fast_crop(study_extent_rast, mask)
 
   if (method == "random") {

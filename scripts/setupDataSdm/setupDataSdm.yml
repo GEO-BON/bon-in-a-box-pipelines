@@ -34,7 +34,7 @@ inputs:
     label: partition type
     description: partition type
     type: text
-    example: "boostrap" 
+    example: "bootstrap" 
   runs_n:
     label: number of runs
     description: number of runsn 
