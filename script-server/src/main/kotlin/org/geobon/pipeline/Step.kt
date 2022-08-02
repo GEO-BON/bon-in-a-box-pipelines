@@ -48,14 +48,14 @@ abstract class Step(
         if(validated)
             return "" // This avoids validating many times the same node in complex graphs
 
-        var problems = validateStepInputs()
+        var problems = validateInputsConfiguration()
         validated = true
 
         inputs.values.forEach { problems += it.validateGraph() }
         return problems
     }
 
-    open fun validateStepInputs(): String {
+    open fun validateInputsConfiguration(): String {
         // Not all steps need input validation.
         return ""
     }

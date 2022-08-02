@@ -6,6 +6,7 @@ data = json.load(inputFile)
 arrayIn = data['array']
 
 # Do stuff.
+print("Checking if this is an array...")
 if not isinstance(arrayIn, list) :
     sys.exit("This is not an array")
 

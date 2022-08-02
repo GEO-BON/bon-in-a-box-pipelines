@@ -53,7 +53,8 @@ class ApiClient {
          * @default {}
          */
         this.defaultHeaders = {
-            'User-Agent': 'OpenAPI-Generator/1.0.0/Javascript'
+            // JM Lord: This is an incorrect use of the user-agent header, plus issues warnings in chrome's console
+            // 'User-Agent': 'OpenAPI-Generator/1.0.0/Javascript'
         };
 
         /**

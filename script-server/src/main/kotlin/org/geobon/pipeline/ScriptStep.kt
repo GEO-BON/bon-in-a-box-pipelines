@@ -1,5 +1,6 @@
 package org.geobon.pipeline
 
+import com.google.gson.Gson
 import org.geobon.script.Description.SCRIPT
 import org.geobon.script.ScriptRun
 import org.geobon.script.scriptRoot
@@ -20,8 +21,8 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
         return super.validateGraph()
     }
 
-    override fun validateStepInputs(): String {
-        val errorMsg = super.validateStepInputs()
+    override fun validateInputsConfiguration(): String {
+        val errorMsg = super.validateInputsConfiguration()
         if(errorMsg.isNotBlank()) return "$yamlFile: $errorMsg"
         return ""
     }
@@ -33,10 +34,18 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
             if(resolvedInputs.isEmpty()) null else ScriptRun.toJson(resolvedInputs)
         )
         runId = scriptRun.id
+
+        validateInputsReceived(resolvedInputs)?.let { error ->
+            val results = mapOf(ScriptRun.ERROR_KEY to error)
+            scriptRun.resultFile.parentFile.mkdirs()
+            scriptRun.resultFile.writeText(Gson().toJson(results))
+            throw RuntimeException(error)
+        }
+
         scriptRun.execute()
 
         if (scriptRun.results.containsKey(ScriptRun.ERROR_KEY))
-            throw java.lang.Exception("Script run detected an error")
+            throw RuntimeException("Script run detected an error")
 
         return scriptRun.results
     }

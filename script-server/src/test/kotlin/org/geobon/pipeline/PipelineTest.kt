@@ -41,19 +41,6 @@ internal class PipelineTest {
     }
 
     @Test
-    fun `given a no-script pipeline_when built and ran_then constant is there_output can be retrieved`() = runTest {
-        val pipeline = Pipeline("0in1out_noStep.json")
-
-        val allOutputs = mutableMapOf<String, String>()
-        pipeline.dumpOutputFolders(allOutputs)
-
-        assertEquals(0, allOutputs.size)
-
-        pipeline.execute()
-        assertEquals(19, pipeline.getPipelineOutputs()[0].pull())
-    }
-
-    @Test
     fun `given a pipeline with outputs from many scripts_when ran_then all outputs satisfied_no step is duplicated in output dump`() = runTest {
         val pipeline = Pipeline("0in2out_twoBranches.json")
 
@@ -90,6 +77,29 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline with constant array_when ran_then input json created with array`() = runTest {
         val pipeline = Pipeline("arrayConst.json")
+
+        pipeline.execute()
+
+        assertEquals(
+            """{"array":[11,12,13]}""",
+            outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!.filter { it.name == "input.json" }[0].readText())
+    }
+
+    @Test
+    fun `given an int aggregation_when ran_then script receives array`() = runTest {
+        val pipeline = Pipeline("aggregateInt.json")
+
+        pipeline.execute()
+
+        assertEquals(
+            """{"array":[11,12,13]}""",
+            outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!.filter { it.name == "input.json" }[0].readText())
+    }
+
+
+    @Test
+    fun `given an int and int array aggregation_when ran_then script receives single array`() = runTest {
+        val pipeline = Pipeline("aggregateIntAndIntArray.json")
 
         pipeline.execute()
 

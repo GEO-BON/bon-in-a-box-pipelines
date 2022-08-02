@@ -28,6 +28,13 @@ export default function IONode({ id, data }) {
     }
   }, [descriptionFileLocation])
 
+  function showScriptTooltip() {
+    data.setToolTip(metadata.description)
+  }
+
+  function hideTooltip() {
+    data.setToolTip(null)
+  }
 
   if (!metadata) return null
   return <table className='ioNode'><tbody>
@@ -40,7 +47,7 @@ export default function IONode({ id, data }) {
           </ScriptIO>
         })}
       </td>
-      <td className='name'>
+      <td className='name' onMouseEnter={showScriptTooltip} onMouseLeave={hideTooltip}>
         {metadata.script}
       </td>
       <td className='outputs'>
