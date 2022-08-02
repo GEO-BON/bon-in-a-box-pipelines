@@ -25,7 +25,7 @@ function RenderedMap(props) {
             mapRef.current = L.map('map').setView([0, 0], 5);
 
             // add OpenStreetMap basemap
-            L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+            L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(mapRef.current);
         }

@@ -1,8 +1,8 @@
 script: HelloShell.sh
+description: "Sample shell script that outputs a number."
 outputs:
   a_number:
     label: A number
     description: bla bla
     type: int
     example: 234
-description: "Sample shell script that outputs a number."

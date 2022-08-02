@@ -129,6 +129,8 @@ fun Route.ScriptApi(logger: Logger) {
             launch {
                 try {
                     pipeline.execute()
+                } catch (ex: RuntimeException) {
+                    logger.debug(ex.message)
                 } catch (ex: Exception) {
                     logger.error(ex.stackTraceToString())
                 } finally {  // Write the results file, adding "skipped" to steps that were not run.
@@ -140,9 +142,9 @@ fun Route.ScriptApi(logger: Logger) {
 
                     outputFolder.mkdirs()
                     resultFile.writeText(content)
-                }
 
-                runningPipelines.remove(runId)
+                    runningPipelines.remove(runId)
+                }
             }
         } catch (e: Exception) {
             call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)

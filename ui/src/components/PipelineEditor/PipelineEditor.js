@@ -157,7 +157,7 @@ export function PipelineEditor(props) {
           value = event.target.value
 
           if(event.target.placeholder === ARRAY_PLACEHOLDER) {
-            value = value.split(',')
+            value = value.split(',').map(v => v.trim())
           }
         }
 

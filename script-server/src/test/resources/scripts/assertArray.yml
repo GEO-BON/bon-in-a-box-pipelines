@@ -7,8 +7,8 @@ inputs:
     example: [3,4,5]
 outputs:
   the_same:
-    label: The same array as in the inputs. But this crashes if no an array
-    description: bla bla
-    type: int
+    label: Same value
+    description: The same array as in the inputs. But this crashes if not an array
+    type: int[]
     example: [3,4,5]
 description: "Sample python script fail if it doesn't receive an array."
