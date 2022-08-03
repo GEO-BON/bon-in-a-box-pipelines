@@ -27,12 +27,24 @@ let id = 0;
 const getId = () => `${id++}`;
 
 
+function InputsList({inputList}) {
+  console.log(inputList)
+
+  return <div className='inputsList'>
+    {inputList.length > 0 && <>
+      <h3>User inputs</h3>
+      {inputList.map((input, i) => <p key={i}>{input}</p>)}
+    </>}
+  </div>
+}
+
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [selectedNodes, setSelectedNodes] = useState(null);
+  const [inputList, setInputList] = useState([])
 
   const [toolTip, setToolTip] = useState(null);
 
@@ -130,8 +142,7 @@ export function PipelineEditor(props) {
     addEdgeWithHighlight(newEdge)
   }, [reactFlowInstance])
 
-  const onDrop = useCallback(
-    (event) => {
+  const onDrop = useCallback((event) => {
       event.preventDefault();
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
@@ -174,6 +185,26 @@ export function PipelineEditor(props) {
     },
     [reactFlowInstance]
   )
+
+  /**
+   * Refresh the list of "dangling" inputs that the user will need to provide.
+   */
+  useEffect(() => {
+    console.trace()
+    let newUserInputs = []
+    nodes.forEach(node => {
+      if (node.data && node.data.inputs) {
+        node.data.inputs.forEach(input => {
+          const pos = edges.findIndex(edge => edge.target === node.id && edge.targetHandle === input)
+          if (pos == -1) {
+            newUserInputs.push(input)
+          }
+        })
+      }
+    })
+  
+    setInputList(newUserInputs)
+  }, [nodes, edges])
 
   const onLayout = useCallback(() => {
       const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(nodes, edges);
@@ -278,6 +309,8 @@ export function PipelineEditor(props) {
             </div>
 
             <Controls />
+
+            <InputsList inputList={inputList} />
 
             <MiniMap
               nodeStrokeColor={(n) => {
