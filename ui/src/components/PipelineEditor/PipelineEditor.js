@@ -28,7 +28,6 @@ const getId = () => `${id++}`;
 
 
 function InputsList({inputList}) {
-  console.log(inputList)
 
   return <div className='inputsList'>
     {inputList.length > 0 && <>
@@ -54,6 +53,7 @@ export function PipelineEditor(props) {
   useEffect(()=>{
     if(pendingEdgeParams) {
       setEdges((edgesList) => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
+      addEdgeWithHighlight(null)
     }
   }, [pendingEdgeParams, selectedNodes])
 
@@ -190,7 +190,6 @@ export function PipelineEditor(props) {
    * Refresh the list of "dangling" inputs that the user will need to provide.
    */
   useEffect(() => {
-    console.trace()
     let newUserInputs = []
     nodes.forEach(node => {
       if (node.data && node.data.inputs) {
