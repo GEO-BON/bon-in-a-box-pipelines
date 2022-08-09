@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Handle, Position } from 'react-flow-renderer/nocss';
 
-
-const yaml = require('js-yaml');
-const BonInABoxScriptService = require('bon_in_a_box_script_service');
-const api = new BonInABoxScriptService.DefaultApi();
+import { fetchScriptDescription } from './ScriptDescriptionStore'
 
 // props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
 export default function IONode({ id, data }) {
@@ -13,18 +10,12 @@ export default function IONode({ id, data }) {
 
   useEffect(() => {
     if (descriptionFileLocation) {
-      var callback = function (error, callbackData, response) {
-        if (error) {
-          console.error("Loading " + descriptionFileLocation + ": " + error.toString())
-        } else {
-          const newMetadata = yaml.load(callbackData)
-          setMetadata(newMetadata)
-
-          data.inputs = Object.entries(newMetadata.inputs).map(([inputName]) => {return inputName})
+      fetchScriptDescription(descriptionFileLocation, (newMetadata) => {
+        setMetadata(newMetadata)
+        if(newMetadata) {
+          data.inputs = Object.entries(newMetadata.inputs).map(([inputName]) => { return inputName })
         }
-      };
-
-      api.getScriptInfo(descriptionFileLocation, callback);
+      })
     }
   }, [descriptionFileLocation])
 
