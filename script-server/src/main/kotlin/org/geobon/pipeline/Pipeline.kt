@@ -1,5 +1,7 @@
 package org.geobon.pipeline
 
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -138,7 +140,9 @@ class Pipeline(descriptionFile: File) {
     }
 
     suspend fun execute() {
-        finalSteps.forEach { it.execute() }
+        coroutineScope {
+            finalSteps.forEach { launch { it.execute() } }
+        }
     }
 
 }
