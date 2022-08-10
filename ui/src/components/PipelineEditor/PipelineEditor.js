@@ -28,18 +28,18 @@ let id = 0;
 const getId = () => `${id++}`;
 
 
-const InputsList = ({inputList}) => {
+const InputsList = ({inputList, selectedNodes}) => {
   function listInputs(metadata, inputs){
     return inputs.map((input, i)=> {
       return <p key={i}>{metadata.inputs[input].label}</p>
     })
   }
 
-  return <div className='inputsList'>
+  return <div className='missingInputs'>
     {inputList.length > 0 && <>
       <h3>User inputs</h3>
       {inputList.map((script, i) => {
-        return <div key={i}>
+        return <div key={i} className={selectedNodes.find(node => node.id === script.id) ? "selected" : ""}>
           {listInputs(getScriptDescription(script.file), script.missing)}
         </div>
       })}
@@ -324,7 +324,7 @@ export function PipelineEditor(props) {
 
             <Controls />
 
-            <InputsList inputList={inputList} />
+            <InputsList inputList={inputList} selectedNodes={selectedNodes} />
 
             <MiniMap
               nodeStrokeColor={(n) => {
