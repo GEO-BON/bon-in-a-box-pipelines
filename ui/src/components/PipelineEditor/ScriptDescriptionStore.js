@@ -28,3 +28,13 @@ export function fetchScriptDescription(descriptionFileLocation, callback) {
     }
   });
 }
+
+/**
+ * Provided we know the metadata is already fetched, this immediately returns the metadata.
+ * Otherwise it will return null without attempting to get the data.
+ * @param {String} descriptionFileLocation 
+ * @returns metadata, or null
+ */
+export function getScriptDescription(descriptionFileLocation) {
+  return descriptions[descriptionFileLocation]
+}
