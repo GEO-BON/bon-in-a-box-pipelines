@@ -17,6 +17,7 @@ import IONode from './IONode'
 import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
 import { getLayoutedElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
+import { getScriptDescription } from './ScriptDescriptionStore'
 
 const nodeTypes = {
   io: IONode,
@@ -27,12 +28,21 @@ let id = 0;
 const getId = () => `${id++}`;
 
 
-function InputsList({inputList}) {
+const InputsList = ({inputList}) => {
+  function listInputs(metadata, inputs){
+    return inputs.map((input, i)=> {
+      return <p key={i}>{metadata.inputs[input].label}</p>
+    })
+  }
 
   return <div className='inputsList'>
     {inputList.length > 0 && <>
       <h3>User inputs</h3>
-      {inputList.map((input, i) => <p key={i}>{JSON.stringify(input)}</p>)}
+      {inputList.map((script, i) => {
+        return <div key={i}>
+          {listInputs(getScriptDescription(script.file), script.missing)}
+        </div>
+      })}
     </>}
   </div>
 }
@@ -196,7 +206,7 @@ export function PipelineEditor(props) {
         let missingInputs = []
         node.data.inputs.forEach(input => {
           const pos = edges.findIndex(edge => edge.target === node.id && edge.targetHandle === input)
-          if (pos == -1) {
+          if (pos === -1) {
             missingInputs.push(input)
           }
         })
