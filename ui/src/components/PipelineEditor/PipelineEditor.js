@@ -31,7 +31,10 @@ const getId = () => `${id++}`;
 const InputsList = ({inputList, selectedNodes}) => {
   function listInputs(metadata, inputs){
     return inputs.map((input, i)=> {
-      return <p key={i}>{metadata.inputs[input].label}</p>
+      return <p key={i}>
+        {metadata.inputs[input].label}<br />
+        <span className='description'>{metadata.inputs[input].description}</span>
+      </p>
     })
   }
 

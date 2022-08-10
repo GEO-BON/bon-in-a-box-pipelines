@@ -171,6 +171,7 @@ aside.scriptChooser .description {
     background: #ffffffee;
     color:black;
 
+    padding-left: 1em;
     width:fit-content;
     max-width: 30%;
     overflow-y: auto;
@@ -182,4 +183,9 @@ aside.scriptChooser .description {
     bottom: 190px;
 
     z-index:10000;
+}
+
+.missingInputs .description {
+    font-size: small;
+    color: gray;
 }
