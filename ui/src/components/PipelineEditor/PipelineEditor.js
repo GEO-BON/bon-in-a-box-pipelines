@@ -38,15 +38,13 @@ const InputsList = ({inputList, selectedNodes}) => {
     })
   }
 
-  return <div className='missingInputs'>
-    {inputList.length > 0 && <>
+  return inputList.length > 0 && <div className='missingInputs'>
       <h3>User inputs</h3>
       {inputList.map((script, i) => {
         return <div key={i} className={selectedNodes.find(node => node.id === script.id) ? "selected" : ""}>
           {listInputs(getScriptDescription(script.file), script.missing)}
         </div>
       })}
-    </>}
   </div>
 }
 
