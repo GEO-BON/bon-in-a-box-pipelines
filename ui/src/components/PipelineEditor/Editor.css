@@ -90,8 +90,12 @@ aside.scriptChooser .description {
     color: black;
 }
 
-.selected .ioNode, .ioNode:hover {
+.ioNode:hover, .constant:hover {
     background-color: white;
+}
+
+.selected .ioNode, .selected .constant, .missingInputs .selected {
+    background-color: blanchedalmond;
 }
 
 .ioNode td {
@@ -161,7 +165,7 @@ aside.scriptChooser .description {
     }
 }
 
-.inputsList {
+.missingInputs {
     border: 1px solid black;
     border-radius: 3px;
     background: #ffffffee;
