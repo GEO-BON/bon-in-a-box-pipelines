@@ -32,7 +32,7 @@ function InputsList({inputList}) {
   return <div className='inputsList'>
     {inputList.length > 0 && <>
       <h3>User inputs</h3>
-      {inputList.map((input, i) => <p key={i}>{input}</p>)}
+      {inputList.map((input, i) => <p key={i}>{JSON.stringify(input)}</p>)}
     </>}
   </div>
 }
@@ -193,12 +193,17 @@ export function PipelineEditor(props) {
     let newUserInputs = []
     nodes.forEach(node => {
       if (node.data && node.data.inputs) {
+        let missingInputs = []
         node.data.inputs.forEach(input => {
           const pos = edges.findIndex(edge => edge.target === node.id && edge.targetHandle === input)
           if (pos == -1) {
-            newUserInputs.push(input)
+            missingInputs.push(input)
           }
         })
+
+        if(missingInputs.length > 0) {
+          newUserInputs.push({id:node.id, file:node.data.descriptionFile, missing:missingInputs})
+        }
       }
     })
   
