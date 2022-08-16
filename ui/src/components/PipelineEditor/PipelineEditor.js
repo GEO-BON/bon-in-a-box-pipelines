@@ -27,7 +27,9 @@ const nodeTypes = {
 let id = 0;
 const getId = () => `${id++}`;
 
-
+/**
+ * @returns rendered view of the pipeline inputs
+ */
 const InputsList = ({inputList, selectedNodes}) => {
   function listInputs(metadata, inputs){
     return inputs.map((input, i)=> {
@@ -38,7 +40,7 @@ const InputsList = ({inputList, selectedNodes}) => {
     })
   }
 
-  return inputList.length > 0 && <div className='missingInputs'>
+  return inputList.length > 0 && <div className='pipelineInputs'>
       <h3>User inputs</h3>
       {inputList.map((script, i) => {
         return <div key={i} className={selectedNodes.find(node => node.id === script.id) ? "selected" : ""}>

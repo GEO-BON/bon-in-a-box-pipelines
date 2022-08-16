@@ -94,7 +94,7 @@ aside.scriptChooser .description {
     background-color: white;
 }
 
-.selected .ioNode, .selected .constant, .missingInputs .selected {
+.selected .ioNode, .selected .constant, .pipelineInputs .selected {
     background-color: blanchedalmond;
 }
 
@@ -170,7 +170,7 @@ aside.scriptChooser .description {
     }
 }
 
-.missingInputs {
+.pipelineInputs {
     border: 1px solid black;
     border-radius: 3px;
     background: #ffffffee;
@@ -190,7 +190,7 @@ aside.scriptChooser .description {
     z-index:10000;
 }
 
-.missingInputs .description {
+.pipelineInputs .description {
     font-size: small;
     color: gray;
 }
