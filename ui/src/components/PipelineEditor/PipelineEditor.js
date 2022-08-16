@@ -242,10 +242,19 @@ export function PipelineEditor(props) {
       // No need to save the on-the-fly styling
       flow.edges.forEach(edge => delete edge.style)
 
+      // Save pipeline inputs
+      flow.inputs = {}
+      inputList.forEach(script => {
+        let description = getScriptDescription(script.file)
+        script.missing.forEach(missingInput => 
+          flow.inputs[script.file] = description.inputs[missingInput]
+        )
+      })
+
       navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
       alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
     }
-  }, [reactFlowInstance]);
+  }, [reactFlowInstance, inputList]);
 
   const onLoadFromFileBtnClick = () => inputFile.current.click() // will call onLoad
 
