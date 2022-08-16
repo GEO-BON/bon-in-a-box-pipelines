@@ -131,6 +131,8 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
+ - [BonInABoxScriptService.Info](docs/Info.md)
+ - [BonInABoxScriptService.InfoInputs](docs/InfoInputs.md)
  - [BonInABoxScriptService.ScriptRunResult](docs/ScriptRunResult.md)
 
 

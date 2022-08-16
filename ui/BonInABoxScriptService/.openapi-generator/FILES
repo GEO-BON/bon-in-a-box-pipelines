@@ -2,11 +2,16 @@
 .travis.yml
 README.md
 docs/DefaultApi.md
+docs/Info.md
+docs/InfoInputs.md
 docs/ScriptRunResult.md
 git_push.sh
 mocha.opts
 package.json
-src/ApiClient.js
 src/api/DefaultApi.js
 src/index.js
+src/model/Info.js
+src/model/InfoInputs.js
 src/model/ScriptRunResult.js
+test/model/Info.spec.js
+test/model/InfoInputs.spec.js
