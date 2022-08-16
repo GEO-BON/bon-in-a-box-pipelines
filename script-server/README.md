@@ -63,6 +63,8 @@ Class | Method | HTTP request | Description
 
  - [org.openapitools.server.models.Info](docs/Info.md)
  - [org.openapitools.server.models.InfoInputs](docs/InfoInputs.md)
+ - [org.openapitools.server.models.InfoOutputs](docs/InfoOutputs.md)
+ - [org.openapitools.server.models.InfoReferences](docs/InfoReferences.md)
  - [org.openapitools.server.models.ScriptRunResult](docs/ScriptRunResult.md)
 
 

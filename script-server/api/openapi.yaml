@@ -70,20 +70,11 @@ paths:
             type: string
       responses:
         "200":
-          description: Returns the metadata, in YAML format
+          description: Returns the metadata, in JSON format
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: "
-                          script:
-                          inputs:
-                          outputs:
-                          description:
-                          external_link:
-                          references:
-                          "
-                x-content-type: text/plain
+                $ref: '#/components/schemas/info'
         "400":
           description: Bad request
         "404":
@@ -125,7 +116,7 @@ paths:
         "400":
           description: Bad request
         "404":
-          description: Script not found
+          description: Pipeline not found
   /pipeline/{descriptionPath}/run:
     post:
       tags: []
@@ -206,6 +197,15 @@ components:
     info:
       type: object
       properties:
+        script: 
+          type: string
+          example: HelloR.R
+        description: 
+          type: string
+          example: This sample script shows how it works.
+        external_link: 
+          type: string
+          example: https://github.com/GEO-BON/biab-2.0
         inputs: 
           type: object
           additionalProperties: 
@@ -223,6 +223,34 @@ components:
               example: 
                 type: string
                 example: Glyptemys insculpta
+        outputs: 
+          type: object
+          additionalProperties: 
+            type: object
+            properties: 
+              description: 
+                type: string
+                example: coordinate of occurances in 
+              label: 
+                type: string
+                example: occurences
+              type: 
+                type: string
+                example: text/csv
+              example: 
+                type: string
+                example: file.csv
+        references: 
+          type: array
+          items: 
+            type: object
+            properties: 
+              text: 
+                type: string
+                example: Rick Bonney Expanding the Impact of Citizen Science BioScience Volume 71 Issue 5 May 2021 Pages 448–451
+              doi: 
+                type: string
+                example: 10.1093/biosci/biab041
   requestBodies:
     run_input_body:
       description: Content of input.json for this run

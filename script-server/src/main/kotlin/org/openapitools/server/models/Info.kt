@@ -12,12 +12,24 @@
 package org.openapitools.server.models
 
 import org.openapitools.server.models.InfoInputs
+import org.openapitools.server.models.InfoOutputs
+import org.openapitools.server.models.InfoReferences
 
 /**
  * 
+ * @param script 
+ * @param description 
+ * @param externalLink 
  * @param inputs 
+ * @param outputs 
+ * @param references 
  */
 data class Info(
-    val inputs: kotlin.collections.Map<kotlin.String, InfoInputs>? = null
+    val script: kotlin.String? = null,
+    val description: kotlin.String? = null,
+    val externalLink: kotlin.String? = null,
+    val inputs: kotlin.collections.Map<kotlin.String, InfoInputs>? = null,
+    val outputs: kotlin.collections.Map<kotlin.String, InfoOutputs>? = null,
+    val references: kotlin.collections.List<InfoReferences>? = null
 ) 
 
