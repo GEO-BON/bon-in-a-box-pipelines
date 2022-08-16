@@ -27,14 +27,23 @@ export default function IONode({ id, data }) {
     data.setToolTip(null)
   }
 
+  function checkForWarning(desc) {
+    return !desc.label ? "Label missing in script's description file" :
+      !desc.description ? "Description missing in script's description file" : null;
+  }
+
   if (!metadata) return null
   return <table className='ioNode'><tbody>
     <tr>
       <td className='inputs'>
         {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
-          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip} onDoubleClick={(e)=>data.injectConstant(e, desc, id, inputName)}>
+          let warning = checkForWarning(desc)
+
+          return <ScriptIO key={inputName} desc={desc} setToolTip={data.setToolTip}
+            onDoubleClick={(e) => data.injectConstant(e, desc, id, inputName)}
+            warning={warning}>
             <Handle id={inputName} type="target" position={Position.Left} />
-            <span>{desc.label ? desc.label : inputName}</span>
+            <span className={warning && 'ioWarning'}>{desc.label ? desc.label : { inputName }}</span>
           </ScriptIO>
         })}
       </td>
@@ -43,8 +52,10 @@ export default function IONode({ id, data }) {
       </td>
       <td className='outputs'>
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
-          return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip}>
-            <span>{desc.label ? desc.label : outputName}</span>
+          let warning = checkForWarning(desc)
+            
+          return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip} warning={warning}>
+            <span className={warning && 'ioWarning'}>{desc.label ? desc.label : {outputName}}</span>
             <Handle id={outputName} type="source" position={Position.Right} />
           </ScriptIO>
         })}
@@ -53,7 +64,7 @@ export default function IONode({ id, data }) {
   </tbody></table>
 }
 
-function ScriptIO({children, desc, setToolTip, onDoubleClick}) {
+function ScriptIO({children, desc, setToolTip, onDoubleClick, warning}) {
   function renderType(type) {
     if(type === 'options') {
       return "Options: " + desc.options.join(', ')
@@ -64,6 +75,7 @@ function ScriptIO({children, desc, setToolTip, onDoubleClick}) {
 
   function onMouseEnter() {
     setToolTip(<>
+      {warning && <><span className='warning'>{warning}</span><br/></>}
       {desc.type && <>{renderType(desc.type)} <br /></>}
       {desc.description && <>{desc.description} <br /></>}
       {desc.example && <>Example: {desc.example.toString()}</>}
