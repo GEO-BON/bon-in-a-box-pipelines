@@ -28,7 +28,7 @@ export function PipelinePage(props) {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
-          setHttpError(error.toString());
+          setHttpError(error.toString() + '\n' + response.text);
         } else {
           let allDone = Object.values(data).every(val => val !== "")
           if(!allDone) { // try again later
@@ -69,27 +69,28 @@ export function PipelinePage(props) {
   </>)
 }
 
-function PipelineForm(props) {
+function PipelineForm({pipelineMetadata, setPipelineMetadata, setPipelineMetadataRaw, setRunId, setHttpError}) {
   const formRef = useRef(null);
 
   const defaultPipeline = "HelloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {
-    props.setHttpError(null)
-    props.setRunId(null)
+    setHttpError(null)
+    setRunId(null)
   }
 
   function loadPipelineMetadata(choice) {
-    props.setPipelineMetadata(null);
-    props.setPipelineMetadataRaw(null);
+    clearPreviousRequest()
+    setPipelineMetadata(null);
+    setPipelineMetadataRaw(null);
 
     var callback = function (error, data, response) {
       if(error) {
-        props.setHttpError(error.toString());
+        setHttpError(error.toString() + '\n' + response.text);
       } else {
-        props.setPipelineMetadataRaw(data);
-        if(data) props.setPipelineMetadata(yaml.load(data));
+        setPipelineMetadataRaw(data);
+        if(data) setPipelineMetadata(data);
       }
     };
 
@@ -103,17 +104,15 @@ function PipelineForm(props) {
   };
 
   const runScript = () => {
-    clearPreviousRequest()
-
     var callback = function (error, data , response) {
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
-        props.setHttpError(error.toString() + '\n' + response.text);
+        setHttpError(error.toString() + '\n' + response.text);
 
       } else if (data) {
-        props.setRunId(data);
+        setRunId(data);
       } else {
-        props.setHttpError("Server returned empty result");
+        setHttpError("Server returned empty result");
       }
     };
 
@@ -153,7 +152,7 @@ function PipelineForm(props) {
         Content of input.json:
         <br />
         <InputFileWithExample defaultValue='{}'
-         metadata={props.pipelineMetadata} />
+         metadata={pipelineMetadata} />
       </label>
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
