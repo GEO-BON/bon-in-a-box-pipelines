@@ -102,7 +102,7 @@ No authorization required
 
 ## getScriptInfo
 
-> String getScriptInfo(scriptPath)
+> Info getScriptInfo(scriptPath)
 
 Get metadata about this script
 
@@ -131,7 +131,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+[**Info**](Info.md)
 
 ### Authorization
 
@@ -140,7 +140,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/plain
+- **Accept**: application/json
 
 
 ## pipelineListGet

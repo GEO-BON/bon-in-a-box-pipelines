@@ -4,6 +4,8 @@ README.md
 docs/DefaultApi.md
 docs/Info.md
 docs/InfoInputs.md
+docs/InfoOutputs.md
+docs/InfoReferences.md
 docs/ScriptRunResult.md
 git_push.sh
 mocha.opts
@@ -12,6 +14,6 @@ src/api/DefaultApi.js
 src/index.js
 src/model/Info.js
 src/model/InfoInputs.js
+src/model/InfoOutputs.js
+src/model/InfoReferences.js
 src/model/ScriptRunResult.js
-test/model/Info.spec.js
-test/model/InfoInputs.spec.js

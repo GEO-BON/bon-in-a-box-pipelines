@@ -123,7 +123,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the getScriptInfo operation.
      * @callback module:api/DefaultApi~getScriptInfoCallback
      * @param {String} error Error message, if any.
-     * @param {String} data The data returned by the service call.
+     * @param {module:model/Info} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -131,7 +131,7 @@ export default class DefaultApi {
      * Get metadata about this script
      * @param {String} scriptPath Where to find the script in ./script folder.
      * @param {module:api/DefaultApi~getScriptInfoCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link String}
+     * data is of type: {@link module:model/Info}
      */
     getScriptInfo(scriptPath, callback) {
       let postBody = null;
@@ -152,8 +152,8 @@ export default class DefaultApi {
 
       let authNames = [];
       let contentTypes = [];
-      let accepts = ['text/plain'];
-      let returnType = 'String';
+      let accepts = ['application/json'];
+      let returnType = Info;
       return this.apiClient.callApi(
         '/script/{scriptPath}/info', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,

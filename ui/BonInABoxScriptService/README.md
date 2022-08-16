@@ -133,6 +133,8 @@ Class | Method | HTTP request | Description
 
  - [BonInABoxScriptService.Info](docs/Info.md)
  - [BonInABoxScriptService.InfoInputs](docs/InfoInputs.md)
+ - [BonInABoxScriptService.InfoOutputs](docs/InfoOutputs.md)
+ - [BonInABoxScriptService.InfoReferences](docs/InfoReferences.md)
  - [BonInABoxScriptService.ScriptRunResult](docs/ScriptRunResult.md)
 
 

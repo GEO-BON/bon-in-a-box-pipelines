@@ -7,4 +7,6 @@ src/main/kotlin/org/openapitools/server/apis/DefaultApi.kt
 src/main/kotlin/org/openapitools/server/infrastructure/ApiKeyAuth.kt
 src/main/kotlin/org/openapitools/server/models/Info.kt
 src/main/kotlin/org/openapitools/server/models/InfoInputs.kt
+src/main/kotlin/org/openapitools/server/models/InfoOutputs.kt
+src/main/kotlin/org/openapitools/server/models/InfoReferences.kt
 src/main/kotlin/org/openapitools/server/models/ScriptRunResult.kt
