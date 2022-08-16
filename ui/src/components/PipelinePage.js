@@ -266,7 +266,7 @@ function DelayedResult(props) {
     if(logsAutoScroll && logsEndRef.current) {
       logsEndRef.current.scrollIntoView({ block: 'end' })
     }
-  }, [logs])
+  }, [logs, logsAutoScroll])
 
   let content, inline = null;
   let className = "foldableScriptResult"
