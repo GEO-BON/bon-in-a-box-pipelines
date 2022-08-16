@@ -16,6 +16,8 @@ import org.geobon.pipeline.*
 import org.geobon.script.ScriptRun
 import org.geobon.script.outputRoot
 import org.geobon.script.scriptRoot
+import org.json.JSONObject
+import org.json.JSONString
 import org.openapitools.server.Paths
 import org.openapitools.server.models.ScriptRunResult
 import org.openapitools.server.utils.toMD5
@@ -47,10 +49,9 @@ fun Route.ScriptApi(logger: Logger) {
             val ymlPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")
             val scriptFile = File(scriptRoot, ymlPath)
             call.respondText(scriptFile.readText())
-            logger.trace("200: Paths.getScriptInfo $scriptFile")
         } catch (ex: Exception) {
             call.respondText(text = ex.message!!, status = HttpStatusCode.NotFound)
-            logger.trace("Error 404: Paths.getScriptInfo ${parameters.scriptPath}")
+            logger.trace("404: Paths.getScriptInfo ${parameters.scriptPath}")
         }
     }
 
@@ -96,19 +97,22 @@ fun Route.ScriptApi(logger: Logger) {
     }
 
     get<Paths.getPipelineInfo> { parameters ->
-        // TODO some real implementation
-        call.respondText("Currently, no metadata is available.")
-        /*
         try {
-            // Put back the slashes and replace extension by .yml
-            val ymlPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")
-            val scriptFile = File(scriptRoot, ymlPath)
-            call.respondText(scriptFile.readText())
-            logger.trace("200: Paths.getScriptInfo $scriptFile")
+            // Put back the slashes before reading
+            val descriptionFile = File(pipelinesRoot, parameters.descriptionPath.replace(FILE_SEPARATOR, '/'))
+            if(descriptionFile.exists()) {
+                val descriptionJSON = JSONObject(descriptionFile.readText())
+                descriptionJSON.optJSONObject("inputs")
+                    ?.apply { call.respondText(toString(2)) }
+                    ?: call.respondText("No inputs")
+            } else {
+                call.respondText(text="$descriptionFile does not exist", status=HttpStatusCode.NotFound)
+                logger.trace("404: Paths.getScriptInfo ${parameters.descriptionPath}")
+            }
         } catch (ex:Exception) {
-            call.respondText(text=ex.message!!, status=HttpStatusCode.NotFound)
-            logger.trace("Error 404: Paths.getScriptInfo ${parameters.scriptPath}")
-        }*/
+            call.respondText(text=ex.message!!, status=HttpStatusCode.InternalServerError)
+            ex.printStackTrace()
+        }
     }
 
 
