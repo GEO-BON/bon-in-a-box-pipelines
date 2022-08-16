@@ -43,7 +43,7 @@ export default function IONode({ id, data }) {
             onDoubleClick={(e) => data.injectConstant(e, desc, id, inputName)}
             warning={warning}>
             <Handle id={inputName} type="target" position={Position.Left} />
-            <span className={warning && 'ioWarning'}>{desc.label ? desc.label : { inputName }}</span>
+            <span className={warning && 'ioWarning'}>{desc.label ? desc.label : inputName}</span>
           </ScriptIO>
         })}
       </td>
@@ -53,9 +53,9 @@ export default function IONode({ id, data }) {
       <td className='outputs'>
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
           let warning = checkForWarning(desc)
-            
+
           return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip} warning={warning}>
-            <span className={warning && 'ioWarning'}>{desc.label ? desc.label : {outputName}}</span>
+            <span className={warning && 'ioWarning'}>{desc.label ? desc.label : outputName}</span>
             <Handle id={outputName} type="source" position={Position.Right} />
           </ScriptIO>
         })}
