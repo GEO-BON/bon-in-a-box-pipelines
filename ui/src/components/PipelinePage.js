@@ -64,7 +64,7 @@ export function PipelinePage(props) {
       setRunId={setRunId}
       setHttpError={setHttpError} />
     {httpError && <p key="httpError" className="error">{httpError}</p>}
-    {pipelineMetadataRaw && <pre key="metadata">{pipelineMetadataRaw.toString()}</pre>}
+    {pipelineMetadataRaw && <pre key="metadata">{yaml.dump(pipelineMetadataRaw)}</pre>}
     <PipelineResults key="results" resultsData={resultsData} setHttpError={setHttpError} />
   </>)
 }

@@ -20,6 +20,7 @@ import org.openapitools.server.Paths
 import io.ktor.locations.*
 import io.ktor.routing.*
 import org.openapitools.server.infrastructure.ApiPrincipal
+import org.openapitools.server.models.Info
 import org.openapitools.server.models.ScriptRunResult
 
 @KtorExperimentalLocationsAPI
@@ -28,8 +29,17 @@ fun Route.DefaultApi() {
     val empty = mutableMapOf<String, Any?>()
 
     get<Paths.getPipelineInfo> {
-        val exampleContentType = ""
-        val exampleContentString = """"""
+        val exampleContentType = "application/json"
+        val exampleContentString = """{
+          "inputs" : {
+            "key" : {
+              "description" : "scientific name of the species",
+              "label" : "species names",
+              "type" : "text",
+              "example" : "Glyptemys insculpta"
+            }
+          }
+        }"""
         
         when (exampleContentType) {
             "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))

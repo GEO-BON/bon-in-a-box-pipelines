@@ -13,6 +13,8 @@
 
 
 import ApiClient from './ApiClient';
+import Info from './model/Info';
+import InfoInputs from './model/InfoInputs';
 import ScriptRunResult from './model/ScriptRunResult';
 import DefaultApi from './api/DefaultApi';
 
@@ -54,6 +56,18 @@ export {
      * @property {module:ApiClient}
      */
     ApiClient,
+
+    /**
+     * The Info model constructor.
+     * @property {module:model/Info}
+     */
+    Info,
+
+    /**
+     * The InfoInputs model constructor.
+     * @property {module:model/InfoInputs}
+     */
+    InfoInputs,
 
     /**
      * The ScriptRunResult model constructor.

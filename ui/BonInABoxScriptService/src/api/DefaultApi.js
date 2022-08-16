@@ -13,6 +13,7 @@
 
 
 import ApiClient from "../ApiClient";
+import Info from '../model/Info';
 import ScriptRunResult from '../model/ScriptRunResult';
 
 /**
@@ -38,7 +39,7 @@ export default class DefaultApi {
      * Callback function to receive the result of the getPipelineInfo operation.
      * @callback module:api/DefaultApi~getPipelineInfoCallback
      * @param {String} error Error message, if any.
-     * @param {String} data The data returned by the service call.
+     * @param {module:model/Info} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
@@ -46,7 +47,7 @@ export default class DefaultApi {
      * Get metadata about this pipeline
      * @param {String} descriptionPath Where to find the pipeline in ./pipeline folder.
      * @param {module:api/DefaultApi~getPipelineInfoCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link String}
+     * data is of type: {@link module:model/Info}
      */
     getPipelineInfo(descriptionPath, callback) {
       let postBody = null;
@@ -67,8 +68,8 @@ export default class DefaultApi {
 
       let authNames = [];
       let contentTypes = [];
-      let accepts = ['text/plain'];
-      let returnType = 'String';
+      let accepts = ['application/json'];
+      let returnType = Info;
       return this.apiClient.callApi(
         '/pipeline/{descriptionPath}/info', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,

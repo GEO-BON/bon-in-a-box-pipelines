@@ -108,7 +108,7 @@ fun Route.ScriptApi(logger: Logger) {
                     remove("viewport")
                 }
 
-                call.respondText(descriptionJSON.toString(2))
+                call.respondText(descriptionJSON.toString(), ContentType.parse("application/json"))
             } else {
                 call.respondText(text="$descriptionFile does not exist", status=HttpStatusCode.NotFound)
                 logger.trace("404: Paths.getScriptInfo ${parameters.descriptionPath}")
