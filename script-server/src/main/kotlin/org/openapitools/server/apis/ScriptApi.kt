@@ -101,10 +101,14 @@ fun Route.ScriptApi(logger: Logger) {
             // Put back the slashes before reading
             val descriptionFile = File(pipelinesRoot, parameters.descriptionPath.replace(FILE_SEPARATOR, '/'))
             if(descriptionFile.exists()) {
-                val descriptionJSON = JSONObject(descriptionFile.readText())
-                descriptionJSON.optJSONObject("inputs")
-                    ?.apply { call.respondText(toString(2)) }
-                    ?: call.respondText("No inputs")
+                val descriptionJSON = JSONObject(descriptionFile.readText()).apply {
+                    // Remove the pipeline structure to leave only the metadata
+                    remove("nodes")
+                    remove("edges")
+                    remove("viewport")
+                }
+
+                call.respondText(descriptionJSON.toString(2))
             } else {
                 call.respondText(text="$descriptionFile does not exist", status=HttpStatusCode.NotFound)
                 logger.trace("404: Paths.getScriptInfo ${parameters.descriptionPath}")
