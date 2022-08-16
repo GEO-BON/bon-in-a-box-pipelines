@@ -142,6 +142,11 @@ aside.scriptChooser .description {
     margin-right:-4px;
 }
 
+.ioWarning {
+    color: hsl(0, 100%, 27%);
+    font-weight: bold;
+}
+
 .save__controls {
     position: absolute;
     right: 10px;

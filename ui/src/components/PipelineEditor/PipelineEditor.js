@@ -32,7 +32,7 @@ const InputsList = ({inputList, selectedNodes}) => {
   function listInputs(metadata, inputs){
     return inputs.map((input, i)=> {
       return <p key={i}>
-        {metadata.inputs[input].label}<br />
+        {metadata.inputs[input].label ? metadata.inputs[input].label : input}<br />
         <span className='description'>{metadata.inputs[input].description}</span>
       </p>
     })
