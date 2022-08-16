@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-export function InputFileWithExample(props) {
+export function InputFileWithExample({defaultValue, metadata}) {
   const textareaRef = useRef(null);
 
   /**
@@ -19,10 +19,9 @@ export function InputFileWithExample(props) {
     // Generate example input.json
     let inputExamples = {};
 
-    let meta = props.metadata;
-    if (meta && meta.inputs) {
-      Object.keys(meta.inputs).forEach((inputKey) => {
-        let input = meta.inputs[inputKey];
+    if (metadata && metadata.inputs) {
+      Object.keys(metadata.inputs).forEach((inputKey) => {
+        let input = metadata.inputs[inputKey];
         if (input) {
           const example = input.example;
           inputExamples[inputKey] = example ? example : "...";
@@ -32,8 +31,8 @@ export function InputFileWithExample(props) {
 
     textareaRef.current.value = JSON.stringify(inputExamples, null, 2);
     resize(textareaRef.current);
-  }, [props.metadata]);
+  }, [metadata]);
 
-  return <textarea ref={textareaRef} name="inputFile" className="inputFile" type="text" defaultValue={props.defaultValue}
+  return <textarea ref={textareaRef} name="inputFile" className="inputFile" type="text" defaultValue={defaultValue}
     onInput={(e) => resize(e.target)}></textarea>;
 }
