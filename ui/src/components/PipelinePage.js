@@ -56,7 +56,7 @@ export function PipelinePage(props) {
 
  return (
   <>
-    <h2>Single script run</h2>
+    <h2>Pipeline run</h2>
     <PipelineForm
       pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
       setRunId={setRunId}
