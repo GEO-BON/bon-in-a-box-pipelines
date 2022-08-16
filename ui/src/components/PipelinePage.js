@@ -21,7 +21,6 @@ export function PipelinePage(props) {
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
-  const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState(null);
 
   let timeout
   function loadPipelineOutputs() {
@@ -60,16 +59,15 @@ export function PipelinePage(props) {
     <h2>Single script run</h2>
     <PipelineForm
       pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
-      setPipelineMetadataRaw={setPipelineMetadataRaw}
       setRunId={setRunId}
       setHttpError={setHttpError} />
     {httpError && <p key="httpError" className="error">{httpError}</p>}
-    {pipelineMetadataRaw && <pre key="metadata">{yaml.dump(pipelineMetadataRaw)}</pre>}
+    {pipelineMetadata && <pre key="metadata">{yaml.dump(pipelineMetadata)}</pre>}
     <PipelineResults key="results" resultsData={resultsData} setHttpError={setHttpError} />
   </>)
 }
 
-function PipelineForm({pipelineMetadata, setPipelineMetadata, setPipelineMetadataRaw, setRunId, setHttpError}) {
+function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, setHttpError}) {
   const formRef = useRef(null);
 
   const defaultPipeline = "HelloWorld.json";
@@ -83,14 +81,12 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setPipelineMetadat
   function loadPipelineMetadata(choice) {
     clearPreviousRequest()
     setPipelineMetadata(null);
-    setPipelineMetadataRaw(null);
 
     var callback = function (error, data, response) {
       if(error) {
         setHttpError(error.toString() + '\n' + response.text);
-      } else {
-        setPipelineMetadataRaw(data);
-        if(data) setPipelineMetadata(data);
+      } else if(data) {
+        setPipelineMetadata(data);
       }
     };
 
