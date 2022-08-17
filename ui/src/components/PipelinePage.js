@@ -42,6 +42,14 @@ export function PipelinePage(props) {
     }
   }
 
+  function showMetadata(){
+    if(pipelineMetadata) {
+      let yamlString = yaml.dump(pipelineMetadata)
+      return <pre key="metadata">{yamlString.startsWith('{}') ? "No metadata" : yamlString}</pre>;
+    }
+    return ""
+  }
+
   // Called when ID changes
   useEffect(() => {
     setResultsData(null);
@@ -54,17 +62,17 @@ export function PipelinePage(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runId])
 
- return (
-  <>
-    <h2>Pipeline run</h2>
-    <PipelineForm
-      pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
-      setRunId={setRunId}
-      setHttpError={setHttpError} />
-    {httpError && <p key="httpError" className="error">{httpError}</p>}
-    {pipelineMetadata && <pre key="metadata">{yaml.dump(pipelineMetadata)}</pre>}
-    <PipelineResults key="results" resultsData={resultsData} setHttpError={setHttpError} />
-  </>)
+  return (
+    <>
+      <h2>Pipeline run</h2>
+      <PipelineForm
+        pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
+        setRunId={setRunId}
+        setHttpError={setHttpError} />
+      {httpError && <p key="httpError" className="error">{httpError}</p>}
+      {showMetadata()}
+      <PipelineResults key="results" resultsData={resultsData} setHttpError={setHttpError} />
+    </>)
 }
 
 function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, setHttpError}) {
