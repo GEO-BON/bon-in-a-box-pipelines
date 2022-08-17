@@ -1,5 +1,4 @@
 
-const yaml = require('js-yaml');
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
 
@@ -23,7 +22,7 @@ export function fetchScriptDescription(descriptionFileLocation, callback) {
       console.error("Error loading " + descriptionFileLocation + ": " + JSON.stringify(error))
       callback(null)
     } else {
-      descriptions[descriptionFileLocation] = yaml.load(callbackData)
+      descriptions[descriptionFileLocation] = callbackData
       callback(descriptions[descriptionFileLocation])
     }
   });

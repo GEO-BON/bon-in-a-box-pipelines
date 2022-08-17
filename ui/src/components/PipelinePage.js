@@ -251,7 +251,7 @@ function DelayedResult(props) {
 
   useEffect(() => { // Script metadata
     var callback = function (error, data, response) {
-      setScriptMetadata(yaml.load(data))
+      setScriptMetadata(data)
     };
 
     api.getScriptInfo(script, callback);
