@@ -19,11 +19,12 @@ aside.scriptChooser .description {
 }
 
 .tooltip {
-    position:relative;
+    position:absolute;
     margin: 5px;
     padding: 5px;
     background-color: #222222bb;
     width: max-content;
+    max-width: 65%;
     z-index: 1500; /* Above the nodes, that have z-index 1000 */
 }
 
@@ -177,6 +178,7 @@ aside.scriptChooser .description {
     color:black;
 
     padding-left: 1em;
+    padding-right: 1em;
     width:fit-content;
     max-width: 30%;
     overflow-y: auto;
