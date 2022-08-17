@@ -27,7 +27,7 @@ export function PipelinePage(props) {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
-          setHttpError(error.toString() + '\n' + response.text);
+          setHttpError(error.toString());
         } else {
           let allDone = Object.values(data).every(val => val !== "")
           if(!allDone) { // try again later
@@ -84,7 +84,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, setHttpE
 
     var callback = function (error, data, response) {
       if(error) {
-        setHttpError(error.toString() + '\n' + response.text);
+        setHttpError(error.toString());
       } else if(data) {
         setPipelineMetadata(data);
       }
@@ -103,7 +103,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, setHttpE
     var callback = function (error, data , response) {
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
-        setHttpError(error.toString() + '\n' + response.text);
+        setHttpError(error.toString());
 
       } else if (data) {
         setRunId(data);
