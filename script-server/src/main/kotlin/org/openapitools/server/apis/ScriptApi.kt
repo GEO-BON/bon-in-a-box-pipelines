@@ -162,6 +162,7 @@ fun Route.ScriptApi(logger: Logger) {
             }
         } catch (e: Exception) {
             call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
+            logger.trace(e.message)
         }
     }
 
