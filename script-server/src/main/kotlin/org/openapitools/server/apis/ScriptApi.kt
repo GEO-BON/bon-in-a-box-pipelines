@@ -109,9 +109,9 @@ fun Route.ScriptApi(logger: Logger) {
             if (descriptionFile.exists()) {
                 val descriptionJSON = JSONObject(descriptionFile.readText()).apply {
                     // Remove the pipeline structure to leave only the metadata
-                    remove("nodes")
-                    remove("edges")
-                    remove("viewport")
+                    remove(NODES_LIST)
+                    remove(EDGES_LIST)
+                    remove(VIEWPORT)
                 }
 
                 call.respondText(descriptionJSON.toString(), ContentType.parse("application/json"))
@@ -136,7 +136,7 @@ fun Route.ScriptApi(logger: Logger) {
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 
         try {
-            val pipeline = Pipeline(descriptionPath)
+            val pipeline = Pipeline(descriptionPath, inputFileContent)
             runningPipelines[runId] = pipeline
             call.respondText(runId)
 
