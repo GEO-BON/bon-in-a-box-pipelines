@@ -57,7 +57,9 @@ class InfoOutputs {
                 obj['type'] = ApiClient.convertToType(data['type'], 'String');
             }
             if (data.hasOwnProperty('example')) {
-                obj['example'] = ApiClient.convertToType(data['example'], 'String');
+                // JM Lord: Current version of the generator does not work when type is "oneOf" in OpenAPI spec.
+                // We want the default convertToType clause to execute.
+                obj['example'] = ApiClient.convertToType(data['example'], 'depends on type');
             }
         }
         return obj;
