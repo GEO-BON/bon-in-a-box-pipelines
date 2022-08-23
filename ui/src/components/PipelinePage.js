@@ -22,12 +22,21 @@ export function PipelinePage(props) {
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
 
+  function showHttpError(error, response){
+    if(response && response.text) 
+      setHttpError(response.text)
+    else if(error)
+      setHttpError(error.toString())
+    else 
+      setHttpError(null)
+  }
+
   let timeout
   function loadPipelineOutputs() {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
-          setHttpError(error.toString());
+          showHttpError(error, response)
         } else {
           let allDone = Object.values(data).every(val => val !== "")
           if(!allDone) { // try again later
@@ -68,21 +77,21 @@ export function PipelinePage(props) {
       <PipelineForm
         pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
         setRunId={setRunId}
-        setHttpError={setHttpError} />
+        showHttpError={showHttpError} />
       {httpError && <p key="httpError" className="error">{httpError}</p>}
       {showMetadata()}
-      <PipelineResults key="results" resultsData={resultsData} setHttpError={setHttpError} />
+      <PipelineResults key="results" resultsData={resultsData} showHttpError={showHttpError} />
     </>)
 }
 
-function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, setHttpError}) {
+function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
   const formRef = useRef(null);
 
   const defaultPipeline = "HelloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {
-    setHttpError(null)
+    showHttpError(null)
     setRunId(null)
   }
 
@@ -92,7 +101,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, setHttpE
 
     var callback = function (error, data, response) {
       if(error) {
-        setHttpError(error.toString());
+        showHttpError(error, response)
       } else if(data) {
         setPipelineMetadata(data);
       }
@@ -111,12 +120,12 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, setHttpE
     var callback = function (error, data , response) {
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
-        setHttpError(error.toString());
+        showHttpError(error, response)
 
       } else if (data) {
         setRunId(data);
       } else {
-        setHttpError("Server returned empty result");
+        showHttpError("Server returned empty result");
       }
     };
 
