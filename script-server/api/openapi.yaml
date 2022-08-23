@@ -221,8 +221,17 @@ components:
                 type: string
                 example: text
               example: 
-                type: string
                 example: Glyptemys insculpta
+                oneOf:
+                - type: string
+                - type: number
+                - type: boolean
+                - type: array
+                  items:
+                    oneOf:
+                    - type: string
+                    - type: number
+                    - type: boolean
         outputs: 
           type: object
           additionalProperties: 
@@ -238,8 +247,17 @@ components:
                 type: string
                 example: text/csv
               example: 
-                type: string
                 example: file.csv
+                oneOf:
+                - type: string
+                - type: number
+                - type: boolean
+                - type: array
+                  items:
+                    oneOf:
+                    - type: string
+                    - type: number
+                    - type: boolean
         references: 
           type: array
           items: 

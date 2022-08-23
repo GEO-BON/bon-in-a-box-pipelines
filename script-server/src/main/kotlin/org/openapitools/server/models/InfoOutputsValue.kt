@@ -11,7 +11,6 @@
 */
 package org.openapitools.server.models
 
-
 /**
  * 
  * @param description 
@@ -19,10 +18,11 @@ package org.openapitools.server.models
  * @param type 
  * @param example 
  */
-data class InfoOutputs(
+data class InfoOutputsValue(
     val description: kotlin.String? = null,
     val label: kotlin.String? = null,
     val type: kotlin.String? = null,
-    val example: kotlin.String? = null
+    // Any, since oneOf is not correctly supported by generator
+    val example: Any? = null
 ) 
 

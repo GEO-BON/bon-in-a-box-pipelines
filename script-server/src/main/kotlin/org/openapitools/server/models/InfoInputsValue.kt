@@ -11,14 +11,18 @@
 */
 package org.openapitools.server.models
 
-
 /**
  * 
- * @param text 
- * @param doi 
+ * @param description 
+ * @param label 
+ * @param type 
+ * @param example 
  */
-data class InfoReferences(
-    val text: kotlin.String? = null,
-    val doi: kotlin.String? = null
+data class InfoInputsValue(
+    val description: kotlin.String? = null,
+    val label: kotlin.String? = null,
+    val type: kotlin.String? = null,
+    // Any, since oneOf is not correctly supported by generator
+    val example: Any? = null
 ) 
 
