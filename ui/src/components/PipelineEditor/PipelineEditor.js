@@ -247,7 +247,7 @@ export function PipelineEditor(props) {
       inputList.forEach(script => {
         let description = getScriptDescription(script.file)
         script.missing.forEach(missingInput => 
-          flow.inputs[script.file+">"+missingInput] = description.inputs[missingInput]
+          flow.inputs[script.file + "@" + script.id + "." + missingInput] = description.inputs[missingInput]
         )
       })
 
