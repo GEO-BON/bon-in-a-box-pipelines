@@ -14,15 +14,11 @@ package org.openapitools.server.models
 
 /**
  * 
- * @param description 
- * @param label 
- * @param type 
- * @param example 
+ * @param text 
+ * @param doi 
  */
-data class InfoInputs(
-    val description: kotlin.String? = null,
-    val label: kotlin.String? = null,
-    val type: kotlin.String? = null,
-    val example: kotlin.String? = null
+data class InfoReferencesInner(
+    val text: kotlin.String? = null,
+    val doi: kotlin.String? = null
 ) 
 

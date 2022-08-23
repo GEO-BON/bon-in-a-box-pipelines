@@ -11,9 +11,9 @@
 */
 package org.openapitools.server.models
 
-import org.openapitools.server.models.InfoInputs
-import org.openapitools.server.models.InfoOutputs
-import org.openapitools.server.models.InfoReferences
+import org.openapitools.server.models.InfoInputsValue
+import org.openapitools.server.models.InfoOutputsValue
+import org.openapitools.server.models.InfoReferencesInner
 
 /**
  * 
@@ -28,8 +28,8 @@ data class Info(
     val script: kotlin.String? = null,
     val description: kotlin.String? = null,
     val externalLink: kotlin.String? = null,
-    val inputs: kotlin.collections.Map<kotlin.String, InfoInputs>? = null,
-    val outputs: kotlin.collections.Map<kotlin.String, InfoOutputs>? = null,
-    val references: kotlin.collections.List<InfoReferences>? = null
+    val inputs: kotlin.collections.Map<kotlin.String, InfoInputsValue>? = null,
+    val outputs: kotlin.collections.Map<kotlin.String, InfoOutputsValue>? = null,
+    val references: kotlin.collections.List<InfoReferencesInner>? = null
 ) 
 
