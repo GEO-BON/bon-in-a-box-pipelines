@@ -1,4 +1,4 @@
-# BonInABoxScriptService.InfoReferences
+# BonInABoxScriptService.InfoReferencesInner
 
 ## Properties
 

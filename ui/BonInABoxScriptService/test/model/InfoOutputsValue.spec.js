@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new BonInABoxScriptService.InfoInputs();
+    instance = new BonInABoxScriptService.InfoOutputsValue();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,34 +47,34 @@
       object[property] = value;
   }
 
-  describe('InfoInputs', function() {
-    it('should create an instance of InfoInputs', function() {
-      // uncomment below and update the code to test InfoInputs
-      //var instance = new BonInABoxScriptService.InfoInputs();
-      //expect(instance).to.be.a(BonInABoxScriptService.InfoInputs);
+  describe('InfoOutputsValue', function() {
+    it('should create an instance of InfoOutputsValue', function() {
+      // uncomment below and update the code to test InfoOutputsValue
+      //var instance = new BonInABoxScriptService.InfoOutputsValue();
+      //expect(instance).to.be.a(BonInABoxScriptService.InfoOutputsValue);
     });
 
     it('should have the property description (base name: "description")', function() {
       // uncomment below and update the code to test the property description
-      //var instance = new BonInABoxScriptService.InfoInputs();
+      //var instance = new BonInABoxScriptService.InfoOutputsValue();
       //expect(instance).to.be();
     });
 
     it('should have the property label (base name: "label")', function() {
       // uncomment below and update the code to test the property label
-      //var instance = new BonInABoxScriptService.InfoInputs();
+      //var instance = new BonInABoxScriptService.InfoOutputsValue();
       //expect(instance).to.be();
     });
 
     it('should have the property type (base name: "type")', function() {
       // uncomment below and update the code to test the property type
-      //var instance = new BonInABoxScriptService.InfoInputs();
+      //var instance = new BonInABoxScriptService.InfoOutputsValue();
       //expect(instance).to.be();
     });
 
     it('should have the property example (base name: "example")', function() {
       // uncomment below and update the code to test the property example
-      //var instance = new BonInABoxScriptService.InfoInputs();
+      //var instance = new BonInABoxScriptService.InfoOutputsValue();
       //expect(instance).to.be();
     });
 

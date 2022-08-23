@@ -14,18 +14,18 @@
 import ApiClient from '../ApiClient';
 
 /**
- * The InfoReferences model module.
- * @module model/InfoReferences
+ * The InfoReferencesInner model module.
+ * @module model/InfoReferencesInner
  * @version 1.0.0
  */
-class InfoReferences {
+class InfoReferencesInner {
     /**
-     * Constructs a new <code>InfoReferences</code>.
-     * @alias module:model/InfoReferences
+     * Constructs a new <code>InfoReferencesInner</code>.
+     * @alias module:model/InfoReferencesInner
      */
     constructor() { 
         
-        InfoReferences.initialize(this);
+        InfoReferencesInner.initialize(this);
     }
 
     /**
@@ -37,15 +37,15 @@ class InfoReferences {
     }
 
     /**
-     * Constructs a <code>InfoReferences</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>InfoReferencesInner</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/InfoReferences} obj Optional instance to populate.
-     * @return {module:model/InfoReferences} The populated <code>InfoReferences</code> instance.
+     * @param {module:model/InfoReferencesInner} obj Optional instance to populate.
+     * @return {module:model/InfoReferencesInner} The populated <code>InfoReferencesInner</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new InfoReferences();
+            obj = obj || new InfoReferencesInner();
 
             if (data.hasOwnProperty('text')) {
                 obj['text'] = ApiClient.convertToType(data['text'], 'String');
@@ -63,17 +63,17 @@ class InfoReferences {
 /**
  * @member {String} text
  */
-InfoReferences.prototype['text'] = undefined;
+InfoReferencesInner.prototype['text'] = undefined;
 
 /**
  * @member {String} doi
  */
-InfoReferences.prototype['doi'] = undefined;
+InfoReferencesInner.prototype['doi'] = undefined;
 
 
 
 
 
 
-export default InfoReferences;
+export default InfoReferencesInner;
 
