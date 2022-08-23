@@ -14,9 +14,12 @@
 
 import ApiClient from './ApiClient';
 import Info from './model/Info';
-import InfoInputs from './model/InfoInputs';
-import InfoOutputs from './model/InfoOutputs';
-import InfoReferences from './model/InfoReferences';
+import InfoInputsValue from './model/InfoInputsValue';
+import InfoInputsValueExample from './model/InfoInputsValueExample';
+import InfoInputsValueExampleOneOfInner from './model/InfoInputsValueExampleOneOfInner';
+import InfoOutputsValue from './model/InfoOutputsValue';
+import InfoOutputsValueExample from './model/InfoOutputsValueExample';
+import InfoReferencesInner from './model/InfoReferencesInner';
 import ScriptRunResult from './model/ScriptRunResult';
 import DefaultApi from './api/DefaultApi';
 
@@ -66,22 +69,40 @@ export {
     Info,
 
     /**
-     * The InfoInputs model constructor.
-     * @property {module:model/InfoInputs}
+     * The InfoInputsValue model constructor.
+     * @property {module:model/InfoInputsValue}
      */
-    InfoInputs,
+    InfoInputsValue,
 
     /**
-     * The InfoOutputs model constructor.
-     * @property {module:model/InfoOutputs}
+     * The InfoInputsValueExample model constructor.
+     * @property {module:model/InfoInputsValueExample}
      */
-    InfoOutputs,
+    InfoInputsValueExample,
 
     /**
-     * The InfoReferences model constructor.
-     * @property {module:model/InfoReferences}
+     * The InfoInputsValueExampleOneOfInner model constructor.
+     * @property {module:model/InfoInputsValueExampleOneOfInner}
      */
-    InfoReferences,
+    InfoInputsValueExampleOneOfInner,
+
+    /**
+     * The InfoOutputsValue model constructor.
+     * @property {module:model/InfoOutputsValue}
+     */
+    InfoOutputsValue,
+
+    /**
+     * The InfoOutputsValueExample model constructor.
+     * @property {module:model/InfoOutputsValueExample}
+     */
+    InfoOutputsValueExample,
+
+    /**
+     * The InfoReferencesInner model constructor.
+     * @property {module:model/InfoReferencesInner}
+     */
+    InfoReferencesInner,
 
     /**
      * The ScriptRunResult model constructor.

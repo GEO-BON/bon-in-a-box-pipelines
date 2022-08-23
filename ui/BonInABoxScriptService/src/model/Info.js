@@ -12,9 +12,9 @@
  */
 
 import ApiClient from '../ApiClient';
-import InfoInputs from './InfoInputs';
-import InfoOutputs from './InfoOutputs';
-import InfoReferences from './InfoReferences';
+import InfoInputsValue from './InfoInputsValue';
+import InfoOutputsValue from './InfoOutputsValue';
+import InfoReferencesInner from './InfoReferencesInner';
 
 /**
  * The Info model module.
@@ -60,13 +60,13 @@ class Info {
                 obj['external_link'] = ApiClient.convertToType(data['external_link'], 'String');
             }
             if (data.hasOwnProperty('inputs')) {
-                obj['inputs'] = ApiClient.convertToType(data['inputs'], {'String': InfoInputs});
+                obj['inputs'] = ApiClient.convertToType(data['inputs'], {'String': InfoInputsValue});
             }
             if (data.hasOwnProperty('outputs')) {
-                obj['outputs'] = ApiClient.convertToType(data['outputs'], {'String': InfoOutputs});
+                obj['outputs'] = ApiClient.convertToType(data['outputs'], {'String': InfoOutputsValue});
             }
             if (data.hasOwnProperty('references')) {
-                obj['references'] = ApiClient.convertToType(data['references'], [InfoReferences]);
+                obj['references'] = ApiClient.convertToType(data['references'], [InfoReferencesInner]);
             }
         }
         return obj;
@@ -91,17 +91,17 @@ Info.prototype['description'] = undefined;
 Info.prototype['external_link'] = undefined;
 
 /**
- * @member {Object.<String, module:model/InfoInputs>} inputs
+ * @member {Object.<String, module:model/InfoInputsValue>} inputs
  */
 Info.prototype['inputs'] = undefined;
 
 /**
- * @member {Object.<String, module:model/InfoOutputs>} outputs
+ * @member {Object.<String, module:model/InfoOutputsValue>} outputs
  */
 Info.prototype['outputs'] = undefined;
 
 /**
- * @member {Array.<module:model/InfoReferences>} references
+ * @member {Array.<module:model/InfoReferencesInner>} references
  */
 Info.prototype['references'] = undefined;
 

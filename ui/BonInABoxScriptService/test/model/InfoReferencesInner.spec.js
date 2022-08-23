@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new BonInABoxScriptService.InfoReferences();
+    instance = new BonInABoxScriptService.InfoReferencesInner();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,22 +47,22 @@
       object[property] = value;
   }
 
-  describe('InfoReferences', function() {
-    it('should create an instance of InfoReferences', function() {
-      // uncomment below and update the code to test InfoReferences
-      //var instance = new BonInABoxScriptService.InfoReferences();
-      //expect(instance).to.be.a(BonInABoxScriptService.InfoReferences);
+  describe('InfoReferencesInner', function() {
+    it('should create an instance of InfoReferencesInner', function() {
+      // uncomment below and update the code to test InfoReferencesInner
+      //var instance = new BonInABoxScriptService.InfoReferencesInner();
+      //expect(instance).to.be.a(BonInABoxScriptService.InfoReferencesInner);
     });
 
     it('should have the property text (base name: "text")', function() {
       // uncomment below and update the code to test the property text
-      //var instance = new BonInABoxScriptService.InfoReferences();
+      //var instance = new BonInABoxScriptService.InfoReferencesInner();
       //expect(instance).to.be();
     });
 
     it('should have the property doi (base name: "doi")', function() {
       // uncomment below and update the code to test the property doi
-      //var instance = new BonInABoxScriptService.InfoReferences();
+      //var instance = new BonInABoxScriptService.InfoReferencesInner();
       //expect(instance).to.be();
     });
 

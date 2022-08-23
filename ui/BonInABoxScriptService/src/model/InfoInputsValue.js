@@ -12,20 +12,21 @@
  */
 
 import ApiClient from '../ApiClient';
+import InfoInputsValueExample from './InfoInputsValueExample';
 
 /**
- * The InfoInputs model module.
- * @module model/InfoInputs
+ * The InfoInputsValue model module.
+ * @module model/InfoInputsValue
  * @version 1.0.0
  */
-class InfoInputs {
+class InfoInputsValue {
     /**
-     * Constructs a new <code>InfoInputs</code>.
-     * @alias module:model/InfoInputs
+     * Constructs a new <code>InfoInputsValue</code>.
+     * @alias module:model/InfoInputsValue
      */
     constructor() { 
         
-        InfoInputs.initialize(this);
+        InfoInputsValue.initialize(this);
     }
 
     /**
@@ -37,15 +38,15 @@ class InfoInputs {
     }
 
     /**
-     * Constructs a <code>InfoInputs</code> from a plain JavaScript object, optionally creating a new instance.
+     * Constructs a <code>InfoInputsValue</code> from a plain JavaScript object, optionally creating a new instance.
      * Copies all relevant properties from <code>data</code> to <code>obj</code> if supplied or a new instance if not.
      * @param {Object} data The plain JavaScript object bearing properties of interest.
-     * @param {module:model/InfoInputs} obj Optional instance to populate.
-     * @return {module:model/InfoInputs} The populated <code>InfoInputs</code> instance.
+     * @param {module:model/InfoInputsValue} obj Optional instance to populate.
+     * @return {module:model/InfoInputsValue} The populated <code>InfoInputsValue</code> instance.
      */
     static constructFromObject(data, obj) {
         if (data) {
-            obj = obj || new InfoInputs();
+            obj = obj || new InfoInputsValue();
 
             if (data.hasOwnProperty('description')) {
                 obj['description'] = ApiClient.convertToType(data['description'], 'String');
@@ -71,27 +72,27 @@ class InfoInputs {
 /**
  * @member {String} description
  */
-InfoInputs.prototype['description'] = undefined;
+InfoInputsValue.prototype['description'] = undefined;
 
 /**
  * @member {String} label
  */
-InfoInputs.prototype['label'] = undefined;
+InfoInputsValue.prototype['label'] = undefined;
 
 /**
  * @member {String} type
  */
-InfoInputs.prototype['type'] = undefined;
+InfoInputsValue.prototype['type'] = undefined;
 
 /**
- * @member {String} example
+ * @member {module:model/InfoInputsValueExample} example
  */
-InfoInputs.prototype['example'] = undefined;
+InfoInputsValue.prototype['example'] = undefined;
 
 
 
 
 
 
-export default InfoInputs;
+export default InfoInputsValue;
 
