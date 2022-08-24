@@ -291,8 +291,10 @@ export function PipelineEditor(props) {
           id++
 
           // Load the graph
+          const { x = 0, y = 0, zoom = 1 } = flow.viewport;
           setNodes(flow.nodes || []);
           setEdges(flow.edges || []);
+          reactFlowInstance.setViewport({ x, y, zoom });
         } else {
           console.error("Error parsing flow")
         }
