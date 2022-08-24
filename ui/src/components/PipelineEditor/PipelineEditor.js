@@ -208,15 +208,15 @@ export function PipelineEditor(props) {
       if (node.data) {
         let scriptDescription = getScriptDescription(node.data.descriptionFile)
         if(scriptDescription) {
-        let missingInputs = []
+          let missingInputs = []
           Object.keys(scriptDescription.inputs).forEach(inputId => {
             if (-1 === edges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
               missingInputs.push(inputId)
-          }
-        })
-
-        if(missingInputs.length > 0) {
-          newUserInputs.push({id:node.id, file:node.data.descriptionFile, missing:missingInputs})
+            }
+          })
+  
+          if(missingInputs.length > 0) {
+            newUserInputs.push({id:node.id, file:node.data.descriptionFile, missing:missingInputs})
           }
         }
       }
@@ -226,20 +226,29 @@ export function PipelineEditor(props) {
   }, [nodes, edges])
 
   const onLayout = useCallback(() => {
-      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(nodes, edges);
+    const { nodes: layoutedNodes, edges: layoutedEdges } =
+      getLayoutedElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges());
 
-      setNodes([...layoutedNodes]);
-      setEdges([...layoutedEdges]);
-    },
-    [nodes, edges]
-  );
+    setNodes([...layoutedNodes]);
+    setEdges([...layoutedEdges]);
+  }, [reactFlowInstance, setNodes, setEdges]);
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
 
-      // No need to save the inputs (for sorting), the accurate info is fetched from server when loading graph.
-      flow.nodes.forEach(node => delete node.data.inputs)
+      // react-flow properties that are not necessary to rebuild graph when loading
+      flow.nodes.forEach(node => {
+        delete node.selected
+        delete node.dragging
+        delete node.positionAbsolute
+        delete node.width
+        delete node.height
+
+        // These we will reinject when loading
+        delete node.targetPosition
+        delete node.sourcePosition
+      })
 
       // No need to save the on-the-fly styling
       flow.edges.forEach(edge => delete edge.style)
@@ -276,6 +285,11 @@ export function PipelineEditor(props) {
             // Make sure next id doesn't overlap
             id = Math.max(id, parseInt(node.id))
 
+            // Reinjecting deleted properties
+            node.targetPosition = "left"
+            node.sourcePosition = "right"
+
+            // Reinjecting functions
             switch (node.type) {
               case 'io':
                 node.data.setToolTip = setToolTip
