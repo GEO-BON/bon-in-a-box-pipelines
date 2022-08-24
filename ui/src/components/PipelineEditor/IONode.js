@@ -12,9 +12,6 @@ export default function IONode({ id, data }) {
     if (descriptionFileLocation) {
       fetchScriptDescription(descriptionFileLocation, (newMetadata) => {
         setMetadata(newMetadata)
-        if(newMetadata && newMetadata.inputs) {
-          data.inputs = Object.entries(newMetadata.inputs).map(([inputName]) => { return inputName })
-        }
       })
     }
   }, [descriptionFileLocation])
