@@ -27,16 +27,16 @@
       "id": "300",
       "type": "io",
       "position": {
-        "x": 1726.5,
-        "y": 266
+        "x": 1728.3816522150273,
+        "y": 264.11834778497246
       },
       "data": {
         "descriptionFile": "selectBackground>selectBackground.yml"
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 1726.5,
-        "y": 266
+        "x": 1728.3816522150273,
+        "y": 264.11834778497246
       },
       "dragging": false,
       "targetPosition": "left",
@@ -62,52 +62,6 @@
       "dragging": false,
       "targetPosition": "left",
       "sourcePosition": "right"
-    },
-    {
-      "width": 269,
-      "height": 28,
-      "id": "302",
-      "type": "constant",
-      "position": {
-        "x": -138.0136305436564,
-        "y": 0.07280293246643055
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Glyptemys insculpta"
-      },
-      "positionAbsolute": {
-        "x": -138.0136305436564,
-        "y": 0.07280293246643055
-      },
-      "targetPosition": "left",
-      "sourcePosition": "right",
-      "selected": false,
-      "dragging": false
-    },
-    {
-      "width": 258,
-      "height": 28,
-      "id": "303",
-      "type": "constant",
-      "position": {
-        "x": -125.84242036243762,
-        "y": 44.05751561778311
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": "1000"
-      },
-      "positionAbsolute": {
-        "x": -125.84242036243762,
-        "y": 44.05751561778311
-      },
-      "targetPosition": "left",
-      "sourcePosition": "right",
-      "selected": false,
-      "dragging": false
     },
     {
       "width": 269,
@@ -194,8 +148,8 @@
       "id": "307",
       "type": "constant",
       "position": {
-        "x": 208.5,
-        "y": 187.25
+        "x": 196.5,
+        "y": 322.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -203,11 +157,13 @@
         "value": "EPSG:6623"
       },
       "positionAbsolute": {
-        "x": 208.5,
-        "y": 187.25
+        "x": 196.5,
+        "y": 322.25
       },
       "targetPosition": "left",
-      "sourcePosition": "right"
+      "sourcePosition": "right",
+      "selected": false,
+      "dragging": false
     },
     {
       "width": 258,
@@ -215,8 +171,8 @@
       "id": "308",
       "type": "constant",
       "position": {
-        "x": 219.5,
-        "y": 225.25
+        "x": 209.5,
+        "y": 237.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -224,11 +180,13 @@
         "value": 1000
       },
       "positionAbsolute": {
-        "x": 219.5,
-        "y": 225.25
+        "x": 209.5,
+        "y": 237.25
       },
       "targetPosition": "left",
-      "sourcePosition": "right"
+      "sourcePosition": "right",
+      "selected": false,
+      "dragging": false
     },
     {
       "width": 331,
@@ -248,27 +206,6 @@
         "y": 428
       },
       "dragging": false,
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
-      "width": 269,
-      "height": 28,
-      "id": "310",
-      "type": "constant",
-      "position": {
-        "x": 690,
-        "y": 416.25
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      },
-      "positionAbsolute": {
-        "x": 690,
-        "y": 416.25
-      },
       "targetPosition": "left",
       "sourcePosition": "right"
     },
@@ -317,29 +254,6 @@
       "sourcePosition": "right"
     },
     {
-      "width": 607,
-      "height": 28,
-      "id": "313",
-      "type": "constant",
-      "position": {
-        "x": 976.1575796375623,
-        "y": 105.3364334761228
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text/accepted_values \"random\", \"inclusion_buffer\"",
-        "value": "random"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 976.1575796375623,
-        "y": 105.3364334761228
-      },
-      "dragging": false,
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
       "width": 258,
       "height": 28,
       "id": "314",
@@ -361,48 +275,6 @@
       "sourcePosition": "right"
     },
     {
-      "width": 269,
-      "height": 28,
-      "id": "315",
-      "type": "constant",
-      "position": {
-        "x": 1316.5,
-        "y": 333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Glyptemys insculpta"
-      },
-      "positionAbsolute": {
-        "x": 1316.5,
-        "y": 333
-      },
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
-      "width": 258,
-      "height": 28,
-      "id": "316",
-      "type": "constant",
-      "position": {
-        "x": 1327.5,
-        "y": 371
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1000
-      },
-      "positionAbsolute": {
-        "x": 1327.5,
-        "y": 371
-      },
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
       "width": 391,
       "height": 156,
       "id": "317",
@@ -414,7 +286,7 @@
       "data": {
         "descriptionFile": "setupDataSdm>setupDataSdm.yml"
       },
-      "selected": true,
+      "selected": false,
       "positionAbsolute": {
         "x": 2229.04089163097,
         "y": 134.67420362437622
@@ -443,48 +315,6 @@
       "positionAbsolute": {
         "x": 1871.5,
         "y": 0
-      },
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
-      "width": 269,
-      "height": 28,
-      "id": "319",
-      "type": "constant",
-      "position": {
-        "x": 1882.5,
-        "y": 38
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      },
-      "positionAbsolute": {
-        "x": 1882.5,
-        "y": 38
-      },
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
-      "width": 258,
-      "height": 28,
-      "id": "320",
-      "type": "constant",
-      "position": {
-        "x": 1893.5,
-        "y": 76
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1000
-      },
-      "positionAbsolute": {
-        "x": 1893.5,
-        "y": 76
       },
       "targetPosition": "left",
       "sourcePosition": "right"
@@ -579,69 +409,23 @@
       "id": "325",
       "type": "io",
       "position": {
-        "x": 2701,
-        "y": 308.25
+        "x": 2690.513964965392,
+        "y": 373.303949270408
       },
       "data": {
         "descriptionFile": "runSDM>modRunSDM.yml"
       },
       "selected": false,
       "positionAbsolute": {
-        "x": 2701,
-        "y": 308.25
+        "x": 2690.513964965392,
+        "y": 373.303949270408
       },
       "dragging": false,
       "targetPosition": "left",
       "sourcePosition": "right"
     },
     {
-      "width": 269,
-      "height": 28,
-      "id": "326",
-      "type": "constant",
-      "position": {
-        "x": 2340.5,
-        "y": 330.25
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      },
-      "positionAbsolute": {
-        "x": 2340.5,
-        "y": 330.25
-      },
-      "selected": false,
-      "dragging": false,
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
-      "width": 258,
-      "height": 28,
-      "id": "327",
-      "type": "constant",
-      "position": {
-        "x": 2351.5,
-        "y": 368.25
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1000
-      },
-      "positionAbsolute": {
-        "x": 2351.5,
-        "y": 368.25
-      },
-      "selected": false,
-      "dragging": false,
-      "targetPosition": "left",
-      "sourcePosition": "right"
-    },
-    {
-      "width": 319,
+      "width": 324,
       "height": 45,
       "id": "329",
       "type": "io",
@@ -793,23 +577,30 @@
         "y": 226.75
       },
       "sourcePosition": "right"
+    },
+    {
+      "width": 607,
+      "height": 28,
+      "id": "340",
+      "type": "constant",
+      "position": {
+        "x": 1022.5570220879238,
+        "y": 50.01832433477773
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/accepted_values \"random\", \"inclusion_buffer\"",
+        "value": "random"
+      },
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1022.5570220879238,
+        "y": 50.01832433477773
+      },
+      "dragging": false
     }
   ],
   "edges": [
-    {
-      "source": "302",
-      "sourceHandle": null,
-      "target": "299",
-      "targetHandle": "species",
-      "id": "reactflow__edge-302-299species"
-    },
-    {
-      "source": "303",
-      "sourceHandle": null,
-      "target": "299",
-      "targetHandle": "limit",
-      "id": "reactflow__edge-303-299limit"
-    },
     {
       "source": "299",
       "sourceHandle": "presence",
@@ -861,13 +652,6 @@
       "id": "reactflow__edge-301clean_presence-309presence"
     },
     {
-      "source": "310",
-      "sourceHandle": null,
-      "target": "309",
-      "targetHandle": "proj_to",
-      "id": "reactflow__edge-310-309proj_to"
-    },
-    {
       "source": "311",
       "sourceHandle": null,
       "target": "309",
@@ -889,32 +673,11 @@
       "id": "reactflow__edge-309study_extent-300study_extent"
     },
     {
-      "source": "313",
-      "sourceHandle": null,
-      "target": "300",
-      "targetHandle": "method_background",
-      "id": "reactflow__edge-313-300method_background"
-    },
-    {
       "source": "314",
       "sourceHandle": null,
       "target": "300",
       "targetHandle": "n_background",
       "id": "reactflow__edge-314-300n_background"
-    },
-    {
-      "source": "315",
-      "sourceHandle": null,
-      "target": "300",
-      "targetHandle": "species",
-      "id": "reactflow__edge-315-300species"
-    },
-    {
-      "source": "316",
-      "sourceHandle": null,
-      "target": "300",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-316-300spatial_res"
     },
     {
       "source": "309",
@@ -943,20 +706,6 @@
       "target": "317",
       "targetHandle": "layers",
       "id": "reactflow__edge-318-317layers"
-    },
-    {
-      "source": "319",
-      "sourceHandle": null,
-      "target": "317",
-      "targetHandle": "proj_to",
-      "id": "reactflow__edge-319-317proj_to"
-    },
-    {
-      "source": "320",
-      "sourceHandle": null,
-      "target": "317",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-320-317spatial_res"
     },
     {
       "source": "321",
@@ -1001,20 +750,6 @@
       "targetHandle": "presence_background",
       "id": "reactflow__edge-317presence_background-325presence_background",
       "selected": false
-    },
-    {
-      "source": "326",
-      "sourceHandle": null,
-      "target": "325",
-      "targetHandle": "proj_to",
-      "id": "reactflow__edge-326-325proj_to"
-    },
-    {
-      "source": "327",
-      "sourceHandle": null,
-      "target": "325",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-327-325spatial_res"
     },
     {
       "source": "325",
@@ -1072,11 +807,80 @@
       "target": "337",
       "targetHandle": null,
       "id": "reactflow__edge-335consensus-337"
+    },
+    {
+      "source": "307",
+      "sourceHandle": null,
+      "target": "309",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-307-309proj_to"
+    },
+    {
+      "source": "307",
+      "sourceHandle": null,
+      "target": "325",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-307-325proj_to"
+    },
+    {
+      "source": "308",
+      "sourceHandle": null,
+      "target": "300",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-308-300spatial_res"
+    },
+    {
+      "source": "308",
+      "sourceHandle": null,
+      "target": "325",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-308-325spatial_res"
+    },
+    {
+      "source": "307",
+      "sourceHandle": null,
+      "target": "317",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-307-317proj_to"
+    },
+    {
+      "source": "308",
+      "sourceHandle": null,
+      "target": "317",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-308-317spatial_res"
+    },
+    {
+      "source": "340",
+      "sourceHandle": null,
+      "target": "300",
+      "targetHandle": "method_background",
+      "id": "reactflow__edge-340-300method_background"
     }
   ],
   "viewport": {
-    "x": -1813.8077122785508,
-    "y": 33.5433029270643,
-    "zoom": 0.8538177143912447
+    "x": -318.39107884339273,
+    "y": 39.40610007080261,
+    "zoom": 0.6858666442952986
+  },
+  "inputs": {
+    "loadGbif>loadGbif.yml@299.species": {
+      "description": "scientific name of the species",
+      "label": "species names",
+      "type": "text",
+      "example": "Glyptemys insculpta"
+    },
+    "loadGbif>loadGbif.yml@299.limit": {
+      "description": "maximum number of observations to load",
+      "label": "limit",
+      "type": "int",
+      "example": 2000
+    },
+    "selectBackground>selectBackground.yml@300.species": {
+      "description": "scientific name of the species",
+      "label": "species name",
+      "type": "text",
+      "example": "Glyptemys insculpta"
+    }
   }
 }
