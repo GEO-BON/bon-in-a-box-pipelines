@@ -6,11 +6,11 @@ import { InputFileWithExample } from './InputFileWithExample';
 import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
 
 import { useInterval } from '../UseInterval';
-import { isVisible } from '../utils/IsVisible';
 
 import spinnerImg from '../img/spinner.svg';
 import errorImg from '../img/error.svg';
 import warningImg from '../img/warning.svg';
+import { LogViewer } from './LogViewer';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -197,10 +197,6 @@ function DelayedResult(props) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
 
-  const [logs, setLogs] = useState("")
-  const [logsAutoScroll, setLogsAutoScroll] = useState(true)
-  const logsEndRef = useRef()
-
   const script = props.id.substring(0, props.id.indexOf('@'))
 
   useEffect(() => {
@@ -232,37 +228,6 @@ function DelayedResult(props) {
         setResultData({ error: response.status + " (" + response.statusText + ")" })
       });
 
-    // Fetch the logs
-    // TODO: Don't fetch if section is folded.
-    let start = new Blob([logs]).size
-    fetch("output/" + props.folder + "/logs.txt", {
-      headers: { 'range': `bytes=${start}-` },
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.text();
-        } else if(response.status === 416) { // Range not satifiable
-          return Promise.resolve(null) // Wait for next try
-        } else {
-          return Promise.reject(response)
-        }
-      })
-      .then(responseText => {
-        if(responseText) {
-
-          if(logsEndRef.current) {
-            let visible = isVisible(logsEndRef.current, logsEndRef.current.parentNode)
-            setLogsAutoScroll(visible)
-          }
-
-          setLogs(logs + responseText);
-        }
-      })
-      .catch(response => {
-        clearInterval(interval);
-        setResultData({ error: response.status + " (" + response.statusText + ")" })
-      });
-
   // Will start when folder has value, and continue the until resultData also has a value
   }, props.folder && !resultData ? 1000 : null);
 
@@ -273,13 +238,6 @@ function DelayedResult(props) {
 
     api.getScriptInfo(script, callback);
   }, [script]);
-
-  // Logs auto-scrolling
-  useEffect(() => {
-    if(logsAutoScroll && logsEndRef.current) {
-      logsEndRef.current.scrollIntoView({ block: 'end' })
-    }
-  }, [logs, logsAutoScroll])
 
   let content, inline = null;
   let className = "foldableScriptResult"
@@ -303,13 +261,13 @@ function DelayedResult(props) {
     className += " gray"
   }
 
+  let logsAddress = props.folder && "output/" + props.folder + "/logs.txt"
+
   return (
     <FoldableOutput title={script} componentId={props.id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
-      {props.folder &&
-          <pre className='logs'>{logs}<span ref={logsEndRef}/></pre>
-      }
+      {props.folder && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutput>
   )
 }
