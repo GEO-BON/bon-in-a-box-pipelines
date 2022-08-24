@@ -67,7 +67,7 @@ export default function IONode({ id, data }) {
 function ScriptIO({children, desc, setToolTip, onDoubleClick, warning}) {
   function renderType(type) {
     if(type === 'options') {
-      return "Options: " + desc.options.join(', ')
+      return "Options: " + (desc.options && desc.options.join(', '))
     } else {
       return type
     }
