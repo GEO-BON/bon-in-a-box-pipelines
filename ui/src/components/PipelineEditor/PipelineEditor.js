@@ -205,17 +205,19 @@ export function PipelineEditor(props) {
   useEffect(() => {
     let newUserInputs = []
     nodes.forEach(node => {
-      if (node.data && node.data.inputs) {
+      if (node.data) {
+        let scriptDescription = getScriptDescription(node.data.descriptionFile)
+        if(scriptDescription) {
         let missingInputs = []
-        node.data.inputs.forEach(input => {
-          const pos = edges.findIndex(edge => edge.target === node.id && edge.targetHandle === input)
-          if (pos === -1) {
-            missingInputs.push(input)
+          Object.keys(scriptDescription.inputs).forEach(inputId => {
+            if (-1 === edges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
+              missingInputs.push(inputId)
           }
         })
 
         if(missingInputs.length > 0) {
           newUserInputs.push({id:node.id, file:node.data.descriptionFile, missing:missingInputs})
+          }
         }
       }
     })
