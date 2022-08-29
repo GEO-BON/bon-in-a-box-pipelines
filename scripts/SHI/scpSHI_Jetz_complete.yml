@@ -1,0 +1,69 @@
+script: scpSHI_Jetz_complete.R
+description: "This script loads the data needed to calculate the area and connectivity score that are the base to calculate the Species Habitat Index (SHI)"
+inputs:
+  species:
+    label: species
+    description: Scientific name of the species
+    type: text
+    example: "Panthera onca"
+  ref_system:
+    label: Projection
+    description: Reference system for the area of interest
+    type: int
+    example: 3116
+  elev_margin:
+    label: Elevation buffer
+    description: Magnitude of buffer to add to the elevation ranges of the species (usualy in meters)
+    type: int
+    example: 100
+  forest_threshold:
+    label: Tree cover percentage 
+    description: Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species 
+    type: int
+    example: 50
+  country_code:
+    label: Country code
+    description: Three letter code (ISO_3166-1_alpha-3) for the country where the analysis will be done.
+    type: text
+    example: "COL"
+  spat_res:
+    label: Spatial resolution
+    description: Spatial resolution for the analysis
+    type: int
+    example: 1000
+  expert_source:
+    label: Expert range source
+    description: Source of the expert range map
+    type: options
+    options:
+      - "MOL"
+      - "IUCN"
+    example: "MOL"
+  t_0:
+    label: Initial time
+    description: Year where the analysis should start
+    type: int
+    example: 2000
+  t_n:
+    label: Final time
+    description: Year where the analysis should end (it should be larger than Initial time).
+    type: int
+    example: 2020
+  time_step:
+    label: Time step
+    description: Time range between each time step
+    type: int
+    example: 1
+outputs:
+  df_SHI:
+    label: SHI values
+    description: This CSV (Comma Separated Values) data shows the values of the SHI according to the parameters entered
+    type: text/csv
+    example: /output/.../some_data.csv
+  img_SHI_time_period:
+    label: SHI for the selected period
+    description: Figure with the map of changes through the years selected to calculate the SHI
+    type: image/png
+    example: ./SHI_figure.png
+references:
+  - text: Jetz et al., Species Habitat Index (accessed on 24/8/2022) [https://mol.org/indicators/habitat/background]
