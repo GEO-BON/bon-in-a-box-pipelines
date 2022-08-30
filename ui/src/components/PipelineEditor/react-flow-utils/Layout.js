@@ -11,18 +11,36 @@ import { getScriptDescription } from '../ScriptDescriptionStore'
 export const getLayoutedElements = (nodes, edges) => {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
-  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
+  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10, align: undefined });
+
+  // To be able to align right, we need to know the with of the longest constant value attached to a node.
+  let longestConstantMap = {}
 
   // Map to record the order of the inputs on the script card
   const inputOrderMap = new Map();
   nodes.forEach(node => {
-    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
+    let nodeProperties = { width: node.width, height: node.height }
 
     if (node.type === 'io') {
       let inputList = []
       Object.keys(getScriptDescription(node.data.descriptionFile).inputs).forEach(inputKey => inputList.push(inputKey))
       inputOrderMap.set(node.id, inputList)
+
+    } else if (node.type === 'constant') {
+      edges.forEach((edge) => {
+        // record width if this is the longest constant
+        if (edge.source === node.id) {
+          if (!longestConstantMap[edge.target] || longestConstantMap[edge.target] < node.width) {
+            longestConstantMap[edge.target] = node.width
+          }
+
+          // record connected ids to be able to find the above
+          nodeProperties.connectedTo ? nodeProperties.connectedTo.push(edge.target) : nodeProperties.connectedTo = [edge.target]
+        }
+      })
     }
+
+    dagreGraph.setNode(node.id, nodeProperties);
   });
 
   // Sort the edges in the order that they appear on the card
@@ -43,19 +61,29 @@ export const getLayoutedElements = (nodes, edges) => {
     dagreGraph.setEdge(edge.source, edge.target);
   });
 
+  // Layout
   dagre.layout(dagreGraph);
 
-  nodes.forEach((node) => {
-    const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = 'left';
-    node.sourcePosition = 'right';
+  // Transfer result to react-flow graph
+  nodes.forEach((renderNode) => {
+    const dagreNode = dagreGraph.node(renderNode.id);
+    renderNode.targetPosition = 'left';
+    renderNode.sourcePosition = 'right';
 
-    node.position = {
-      x: nodeWithPosition.x - node.width,
-      y: nodeWithPosition.y - node.height / 2
-    };
+    if (renderNode.type === 'constant' && dagreNode.connectedTo && dagreNode.connectedTo.length === 1) {
+      let maxWidth = longestConstantMap[dagreNode.connectedTo[0]]
+      renderNode.position = {
+        x: dagreNode.x + maxWidth / 2 - renderNode.width, // right align
+        y: dagreNode.y - renderNode.height / 2
+      };
+    } else {
+      renderNode.position = {
+        x: dagreNode.x - renderNode.width / 2,
+        y: dagreNode.y - renderNode.height / 2
+      };
+    }
 
-    return node;
+    return renderNode;
   });
 
   return { nodes, edges };
