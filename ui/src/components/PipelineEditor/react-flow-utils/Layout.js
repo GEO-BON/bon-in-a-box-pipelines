@@ -1,4 +1,5 @@
 import dagre from 'dagre';
+import { getScriptDescription } from '../ScriptDescriptionStore'
 
 /**
  * Reposition nodes using dagree graph. 
@@ -14,12 +15,13 @@ export const getLayoutedElements = (nodes, edges) => {
 
   // Map to record the order of the inputs on the script card
   const inputOrderMap = new Map();
-
   nodes.forEach(node => {
     dagreGraph.setNode(node.id, { width: node.width, height: node.height });
 
     if (node.type === 'io') {
-      inputOrderMap.set(node.id, node.data.inputs)
+      let inputList = []
+      Object.keys(getScriptDescription(node.data.descriptionFile).inputs).forEach(inputKey => inputList.push(inputKey))
+      inputOrderMap.set(node.id, inputList)
     }
   });
 
