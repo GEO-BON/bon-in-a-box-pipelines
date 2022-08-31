@@ -1,2 +1,5 @@
 .env
 .Rproj.user
+.Rhistory
+**/.cache
+**/.config

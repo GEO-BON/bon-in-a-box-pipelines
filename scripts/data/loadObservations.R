@@ -16,7 +16,7 @@ library("ratlas")
 library("rgbif")
 
 # Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadObservations/funcLoadObservations.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadObservations/loadObservationsFunc.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
 
 
