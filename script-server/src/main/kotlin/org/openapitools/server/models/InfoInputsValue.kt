@@ -11,18 +11,22 @@
 */
 package org.openapitools.server.models
 
+//import org.openapitools.server.models.InfoInputsValueExample
+
 /**
  * 
  * @param description 
  * @param label 
  * @param type 
+ * @param options 
  * @param example 
  */
 data class InfoInputsValue(
     val description: kotlin.String? = null,
     val label: kotlin.String? = null,
     val type: kotlin.String? = null,
-    // Any, since oneOf is not correctly supported by generator
+    val options: kotlin.collections.List<kotlin.String>? = null,
+    // JM Lord: Any, since oneOf is not correctly supported by generator
     val example: Any? = null
 ) 
 
