@@ -33,6 +33,7 @@ fun Route.DefaultApi() {
         val exampleContentString = """{
           "outputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
               "label" : "occurences",
               "type" : "text/csv",
@@ -48,6 +49,7 @@ fun Route.DefaultApi() {
           } ],
           "inputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
@@ -85,6 +87,7 @@ fun Route.DefaultApi() {
         val exampleContentString = """{
           "outputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
               "label" : "occurences",
               "type" : "text/csv",
@@ -100,6 +103,7 @@ fun Route.DefaultApi() {
           } ],
           "inputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
