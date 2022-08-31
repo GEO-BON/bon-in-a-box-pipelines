@@ -49,7 +49,7 @@ print(input)
 # Load functions
 
 source("/scripts/ClimateMetrics/funcClimateMetrics.R")
-source("/scripts/loadObservations/funcLoadObservations.R")
+source("/scripts/data/funcLoadObservations.R")
 
 
 # Pb if buffer set to 0, transformed into empty string. Warn JM about this

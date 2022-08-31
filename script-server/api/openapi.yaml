@@ -220,6 +220,13 @@ components:
               type: 
                 type: string
                 example: text
+              options: 
+                type: array
+                items:
+                  type: string
+                example:
+                - Option 1
+                - Option 2
               example: 
                 example: Glyptemys insculpta
                 oneOf:
@@ -246,6 +253,13 @@ components:
               type: 
                 type: string
                 example: text/csv
+              options: 
+                type: array
+                items:
+                  type: string
+                example:
+                - Option 1
+                - Option 2
               example: 
                 example: file.csv
                 oneOf:
