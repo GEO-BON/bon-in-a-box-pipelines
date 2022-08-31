@@ -6,11 +6,11 @@ import { InputFileWithExample } from './InputFileWithExample';
 import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
 
 import { useInterval } from '../UseInterval';
-import { isVisible } from '../utils/IsVisible';
 
 import spinnerImg from '../img/spinner.svg';
 import errorImg from '../img/error.svg';
 import warningImg from '../img/warning.svg';
+import { LogViewer } from './LogViewer';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -21,14 +21,22 @@ export function PipelinePage(props) {
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
-  const [pipelineMetadataRaw, setPipelineMetadataRaw] = useState(null);
+
+  function showHttpError(error, response){
+    if(response && response.text) 
+      setHttpError(response.text)
+    else if(error)
+      setHttpError(error.toString())
+    else 
+      setHttpError(null)
+  }
 
   let timeout
   function loadPipelineOutputs() {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
-          setHttpError(error.toString());
+          showHttpError(error, response)
         } else {
           let allDone = Object.values(data).every(val => val !== "")
           if(!allDone) { // try again later
@@ -43,6 +51,14 @@ export function PipelinePage(props) {
     }
   }
 
+  function showMetadata(){
+    if(pipelineMetadata) {
+      let yamlString = yaml.dump(pipelineMetadata)
+      return <pre key="metadata">{yamlString.startsWith('{}') ? "No metadata" : yamlString}</pre>;
+    }
+    return ""
+  }
+
   // Called when ID changes
   useEffect(() => {
     setResultsData(null);
@@ -55,41 +71,39 @@ export function PipelinePage(props) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runId])
 
- return (
-  <>
-    <h2>Single script run</h2>
-    <PipelineForm
-      pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
-      setPipelineMetadataRaw={setPipelineMetadataRaw}
-      setRunId={setRunId}
-      setHttpError={setHttpError} />
-    {httpError && <p key="httpError" className="error">{httpError}</p>}
-    {pipelineMetadataRaw && <pre key="metadata">{pipelineMetadataRaw.toString()}</pre>}
-    <PipelineResults key="results" resultsData={resultsData} setHttpError={setHttpError} />
-  </>)
+  return (
+    <>
+      <h2>Pipeline run</h2>
+      <PipelineForm
+        pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
+        setRunId={setRunId}
+        showHttpError={showHttpError} />
+      {httpError && <p key="httpError" className="error">{httpError}</p>}
+      {showMetadata()}
+      <PipelineResults key="results" resultsData={resultsData} showHttpError={showHttpError} />
+    </>)
 }
 
-function PipelineForm(props) {
+function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
   const formRef = useRef(null);
 
   const defaultPipeline = "HelloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {
-    props.setHttpError(null)
-    props.setRunId(null)
+    showHttpError(null)
+    setRunId(null)
   }
 
   function loadPipelineMetadata(choice) {
-    props.setPipelineMetadata(null);
-    props.setPipelineMetadataRaw(null);
+    clearPreviousRequest()
+    setPipelineMetadata(null);
 
     var callback = function (error, data, response) {
       if(error) {
-        props.setHttpError(error.toString());
-      } else {
-        props.setPipelineMetadataRaw(data);
-        if(data) props.setPipelineMetadata(yaml.load(data));
+        showHttpError(error, response)
+      } else if(data) {
+        setPipelineMetadata(data);
       }
     };
 
@@ -103,17 +117,15 @@ function PipelineForm(props) {
   };
 
   const runScript = () => {
-    clearPreviousRequest()
-
     var callback = function (error, data , response) {
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
-        props.setHttpError(error.toString() + '\n' + response.text);
+        showHttpError(error, response)
 
       } else if (data) {
-        props.setRunId(data);
+        setRunId(data);
       } else {
-        props.setHttpError("Server returned empty result");
+        showHttpError("Server returned empty result");
       }
     };
 
@@ -153,7 +165,7 @@ function PipelineForm(props) {
         Content of input.json:
         <br />
         <InputFileWithExample defaultValue='{}'
-         metadata={props.pipelineMetadata} />
+         metadata={pipelineMetadata} />
       </label>
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
@@ -184,10 +196,6 @@ function PipelineResults(props) {
 function DelayedResult(props) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
-
-  const [logs, setLogs] = useState("")
-  const [logsAutoScroll, setLogsAutoScroll] = useState(true)
-  const logsEndRef = useRef()
 
   const script = props.id.substring(0, props.id.indexOf('@'))
 
@@ -220,54 +228,16 @@ function DelayedResult(props) {
         setResultData({ error: response.status + " (" + response.statusText + ")" })
       });
 
-    // Fetch the logs
-    // TODO: Don't fetch if section is folded.
-    let start = new Blob([logs]).size
-    fetch("output/" + props.folder + "/logs.txt", {
-      headers: { 'range': `bytes=${start}-` },
-    })
-      .then(response => {
-        if (response.ok) {
-          return response.text();
-        } else if(response.status === 416) { // Range not satifiable
-          return Promise.resolve(null) // Wait for next try
-        } else {
-          return Promise.reject(response)
-        }
-      })
-      .then(responseText => {
-        if(responseText) {
-
-          if(logsEndRef.current) {
-            let visible = isVisible(logsEndRef.current, logsEndRef.current.parentNode)
-            setLogsAutoScroll(visible)
-          }
-
-          setLogs(logs + responseText);
-        }
-      })
-      .catch(response => {
-        clearInterval(interval);
-        setResultData({ error: response.status + " (" + response.statusText + ")" })
-      });
-
   // Will start when folder has value, and continue the until resultData also has a value
   }, props.folder && !resultData ? 1000 : null);
 
   useEffect(() => { // Script metadata
     var callback = function (error, data, response) {
-      setScriptMetadata(yaml.load(data))
+      setScriptMetadata(data)
     };
 
     api.getScriptInfo(script, callback);
   }, [script]);
-
-  // Logs auto-scrolling
-  useEffect(() => {
-    if(logsAutoScroll && logsEndRef.current) {
-      logsEndRef.current.scrollIntoView({ block: 'end' })
-    }
-  }, [logs])
 
   let content, inline = null;
   let className = "foldableScriptResult"
@@ -291,13 +261,13 @@ function DelayedResult(props) {
     className += " gray"
   }
 
+  let logsAddress = props.folder && "output/" + props.folder + "/logs.txt"
+
   return (
     <FoldableOutput title={script} componentId={props.id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
-      {props.folder &&
-          <pre className='logs'>{logs}<span ref={logsEndRef}/></pre>
-      }
+      {props.folder && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutput>
   )
 }

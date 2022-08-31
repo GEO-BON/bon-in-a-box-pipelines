@@ -20,6 +20,7 @@ import org.openapitools.server.Paths
 import io.ktor.locations.*
 import io.ktor.routing.*
 import org.openapitools.server.infrastructure.ApiPrincipal
+import org.openapitools.server.models.Info
 import org.openapitools.server.models.ScriptRunResult
 
 @KtorExperimentalLocationsAPI
@@ -28,8 +29,35 @@ fun Route.DefaultApi() {
     val empty = mutableMapOf<String, Any?>()
 
     get<Paths.getPipelineInfo> {
-        val exampleContentType = ""
-        val exampleContentString = """"""
+        val exampleContentType = "application/json"
+        val exampleContentString = """{
+          "outputs" : {
+            "key" : {
+              "description" : "coordinate of occurances in",
+              "label" : "occurences",
+              "type" : "text/csv",
+              "example" : "file.csv"
+            }
+          },
+          "references" : [ {
+            "text" : "Rick Bonney Expanding the Impact of Citizen Science BioScience Volume 71 Issue 5 May 2021 Pages 448–451",
+            "doi" : "10.1093/biosci/biab041"
+          }, {
+            "text" : "Rick Bonney Expanding the Impact of Citizen Science BioScience Volume 71 Issue 5 May 2021 Pages 448–451",
+            "doi" : "10.1093/biosci/biab041"
+          } ],
+          "inputs" : {
+            "key" : {
+              "description" : "scientific name of the species",
+              "label" : "species names",
+              "type" : "text",
+              "example" : "Glyptemys insculpta"
+            }
+          },
+          "description" : "This sample script shows how it works.",
+          "script" : "HelloR.R",
+          "external_link" : "https://github.com/GEO-BON/biab-2.0"
+        }"""
         
         when (exampleContentType) {
             "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
@@ -53,8 +81,35 @@ fun Route.DefaultApi() {
     }
 
     get<Paths.getScriptInfo> {
-        val exampleContentType = ""
-        val exampleContentString = """"""
+        val exampleContentType = "application/json"
+        val exampleContentString = """{
+          "outputs" : {
+            "key" : {
+              "description" : "coordinate of occurances in",
+              "label" : "occurences",
+              "type" : "text/csv",
+              "example" : "file.csv"
+            }
+          },
+          "references" : [ {
+            "text" : "Rick Bonney Expanding the Impact of Citizen Science BioScience Volume 71 Issue 5 May 2021 Pages 448–451",
+            "doi" : "10.1093/biosci/biab041"
+          }, {
+            "text" : "Rick Bonney Expanding the Impact of Citizen Science BioScience Volume 71 Issue 5 May 2021 Pages 448–451",
+            "doi" : "10.1093/biosci/biab041"
+          } ],
+          "inputs" : {
+            "key" : {
+              "description" : "scientific name of the species",
+              "label" : "species names",
+              "type" : "text",
+              "example" : "Glyptemys insculpta"
+            }
+          },
+          "description" : "This sample script shows how it works.",
+          "script" : "HelloR.R",
+          "external_link" : "https://github.com/GEO-BON/biab-2.0"
+        }"""
         
         when (exampleContentType) {
             "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))

@@ -18,3 +18,8 @@ const val EDGE__SOURCE_ID = "source"
 const val EDGE__SOURCE_OUTPUT = "sourceHandle"
 const val EDGE__TARGET_ID = "target"
 const val EDGE__TARGET_INPUT = "targetHandle"
+
+const val VIEWPORT = "viewport"
+
+const val INPUTS = "inputs"
+const val INPUTS__TYPE = "type"

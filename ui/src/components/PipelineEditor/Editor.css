@@ -19,11 +19,12 @@ aside.scriptChooser .description {
 }
 
 .tooltip {
-    position:relative;
+    position:absolute;
     margin: 5px;
     padding: 5px;
     background-color: #222222bb;
     width: max-content;
+    max-width: 65%;
     z-index: 1500; /* Above the nodes, that have z-index 1000 */
 }
 
@@ -90,8 +91,12 @@ aside.scriptChooser .description {
     color: black;
 }
 
-.selected .ioNode, .ioNode:hover {
+.ioNode:hover, .constant:hover {
     background-color: white;
+}
+
+.selected .ioNode, .selected .constant, .pipelineInputs .selected {
+    background-color: blanchedalmond;
 }
 
 .ioNode td {
@@ -138,6 +143,11 @@ aside.scriptChooser .description {
     margin-right:-4px;
 }
 
+.ioWarning {
+    color: hsl(0, 100%, 27%);
+    font-weight: bold;
+}
+
 .save__controls {
     position: absolute;
     right: 10px;
@@ -159,4 +169,30 @@ aside.scriptChooser .description {
         width: 20%;
         max-width: 250px;
     }
+}
+
+.pipelineInputs {
+    border: 1px solid black;
+    border-radius: 3px;
+    background: #ffffffee;
+    color:black;
+
+    padding-left: 1em;
+    padding-right: 1em;
+    width:fit-content;
+    max-width: 30%;
+    overflow-y: auto;
+    
+    
+    position: absolute;
+    top: 3em;
+    right: 0px;
+    bottom: 190px;
+
+    z-index:10000;
+}
+
+.pipelineInputs .description {
+    font-size: small;
+    color: gray;
 }

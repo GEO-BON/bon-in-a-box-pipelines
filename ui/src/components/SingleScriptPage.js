@@ -28,7 +28,7 @@ export function SingleScriptPage(props) {
     ) : (
       <>
         {resultData && resultData.httpError && <p key="httpError" className="error">{resultData.httpError}</p>}
-        {resultData && resultData.rawMetadata && <pre key="metadata">{resultData.rawMetadata.toString()}</pre>}
+        {scriptMetadata && <pre key="metadata">{yaml.dump(scriptMetadata)}</pre>}
         {resultData && <Result data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
       </>
     )}
@@ -48,8 +48,8 @@ function SingleScriptForm(props) {
     props.setResultData(null);
 
     var callback = function (error, data, response) {
-      props.setScriptMetadata(yaml.load(data));
-      props.setResultData({ httpError: error ? error.toString() : null, rawMetadata: data });
+      props.setScriptMetadata(data);
+      props.setResultData({ httpError: error ? error.toString() : null });
     };
 
     api.getScriptInfo(choice, callback);

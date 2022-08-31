@@ -8,25 +8,16 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
-  getConnectedEdges,
   Controls,
   MiniMap,
   Position,
 } from 'react-flow-renderer/nocss';
 
-import dagre from 'dagre';
-
 import IONode from './IONode'
 import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
-
-const initialNodes = [
-  /*{
-    id: '1',
-    type: 'input',
-    data: { label: 'input node' },
-    position: { x: 250, y: 5 },
-  },*/
-];
+import { getLayoutedElements } from './react-flow-utils/Layout'
+import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
+import { getScriptDescription } from './ScriptDescriptionStore'
 
 const nodeTypes = {
   io: IONode,
@@ -36,88 +27,36 @@ const nodeTypes = {
 let id = 0;
 const getId = () => `${id++}`;
 
-const getLayoutedElements = (nodes, edges) => {
-  const dagreGraph = new dagre.graphlib.Graph();
-  dagreGraph.setDefaultEdgeLabel(() => ({}));
-  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10 });
-
-  // Map to record the order of the inputs on the script card
-  const inputOrderMap = new Map();
-
-  nodes.forEach(node => {
-    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
-
-    if (node.type === 'io') {
-      inputOrderMap.set(node.id, node.data.inputs)
-    }
-  });
-
-  // Sort the edges in the order that they appear on the card
-  edges.sort((edge1, edge2) => {
-    let edge1Value = 0
-    let nodeInputs = inputOrderMap.get(edge1.target)
-    if(nodeInputs) edge1Value += nodeInputs.indexOf(edge1.targetHandle)
-    
-    
-    let edge2Value = 0
-    nodeInputs = inputOrderMap.get(edge2.target)
-    if(nodeInputs) edge2Value += nodeInputs.indexOf(edge2.targetHandle)
-    
-    return edge1Value - edge2Value
-  });
-  
-  edges.forEach((edge) => {
-    dagreGraph.setEdge(edge.source, edge.target);
-  });
-
-  dagre.layout(dagreGraph);
-
-  nodes.forEach((node) => {
-    const nodeWithPosition = dagreGraph.node(node.id);
-    node.targetPosition = 'left';
-    node.sourcePosition = 'right';
-
-    node.position = {
-      x: nodeWithPosition.x - node.width,
-      y: nodeWithPosition.y - node.height / 2
-    };
-
-    return node;
-  });
-
-  return { nodes, edges };
-};
-
-  /**
-   * 
-   * @param {Node[]} selectedNodes 
-   * @param {Edge[]} allEdges 
-   * @returns the edges, with added style for edges connected to the selected node.
-   */
-   const highlightConnectedEdges = (selectedNodes, allEdges) => {
-    let connectedIds = []
-    if (selectedNodes && selectedNodes.length === 1) {
-      let connectedEdges = getConnectedEdges(selectedNodes, allEdges)
-      connectedIds = connectedEdges.map((i) => i.id)
-    }
-
-    return allEdges.map((edge) => {
-      edge.style = {
-        ...edge.style,
-        stroke: connectedIds.includes(edge.id) ? '#0000ff' : undefined
-      }
-
-      return edge
+/**
+ * @returns rendered view of the pipeline inputs
+ */
+const InputsList = ({inputList, selectedNodes}) => {
+  function listInputs(metadata, inputs){
+    return inputs.map((input, i)=> {
+      return <p key={i}>
+        {metadata.inputs[input].label ? metadata.inputs[input].label : input}<br />
+        <span className='description'>{metadata.inputs[input].description}</span>
+      </p>
     })
   }
 
+  return inputList.length > 0 && <div className='pipelineInputs'>
+      <h3>User inputs</h3>
+      {inputList.map((script, i) => {
+        return <div key={i} className={selectedNodes.find(node => node.id === script.id) ? "selected" : ""}>
+          {listInputs(getScriptDescription(script.file), script.missing)}
+        </div>
+      })}
+  </div>
+}
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [selectedNodes, setSelectedNodes] = useState(null);
+  const [inputList, setInputList] = useState([])
 
   const [toolTip, setToolTip] = useState(null);
 
@@ -127,6 +66,7 @@ export function PipelineEditor(props) {
   useEffect(()=>{
     if(pendingEdgeParams) {
       setEdges((edgesList) => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
+      addEdgeWithHighlight(null)
     }
   }, [pendingEdgeParams, selectedNodes])
 
@@ -215,8 +155,7 @@ export function PipelineEditor(props) {
     addEdgeWithHighlight(newEdge)
   }, [reactFlowInstance])
 
-  const onDrop = useCallback(
-    (event) => {
+  const onDrop = useCallback((event) => {
       event.preventDefault();
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
@@ -260,33 +199,75 @@ export function PipelineEditor(props) {
     [reactFlowInstance]
   )
 
-  const onLayout = useCallback(() => {
-      const { nodes: layoutedNodes, edges: layoutedEdges } = getLayoutedElements(nodes, edges);
+  /**
+   * Refresh the list of "dangling" inputs that the user will need to provide.
+   */
+  useEffect(() => {
+    let newUserInputs = []
+    nodes.forEach(node => {
+      if (node.data) {
+        let scriptDescription = getScriptDescription(node.data.descriptionFile)
+        if(scriptDescription && scriptDescription.inputs) {
+          let missingInputs = []
+          Object.keys(scriptDescription.inputs).forEach(inputId => {
+            if (-1 === edges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
+              missingInputs.push(inputId)
+            }
+          })
+  
+          if(missingInputs.length > 0) {
+            newUserInputs.push({id:node.id, file:node.data.descriptionFile, missing:missingInputs})
+          }
+        }
+      }
+    })
+  
+    setInputList(newUserInputs)
+  }, [nodes, edges])
 
-      setNodes([...layoutedNodes]);
-      setEdges([...layoutedEdges]);
-    },
-    [nodes, edges]
-  );
+  const onLayout = useCallback(() => {
+    const { nodes: layoutedNodes, edges: layoutedEdges } =
+      getLayoutedElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges());
+
+    setNodes([...layoutedNodes]);
+    setEdges([...layoutedEdges]);
+  }, [reactFlowInstance, setNodes, setEdges]);
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
 
-      // No need to save the inputs (for sorting), the accurate info is fetched from server when loading graph.
-      flow.nodes.forEach(node => delete node.data.inputs)
+      // react-flow properties that are not necessary to rebuild graph when loading
+      flow.nodes.forEach(node => {
+        delete node.selected
+        delete node.dragging
+        delete node.positionAbsolute
+        delete node.width
+        delete node.height
+
+        // These we will reinject when loading
+        delete node.targetPosition
+        delete node.sourcePosition
+      })
 
       // No need to save the on-the-fly styling
       flow.edges.forEach(edge => delete edge.style)
 
+      // Save pipeline inputs
+      flow.inputs = {}
+      inputList.forEach(script => {
+        let description = getScriptDescription(script.file)
+        script.missing.forEach(missingInput => 
+          flow.inputs[script.file + "@" + script.id + "." + missingInput] = description.inputs[missingInput]
+        )
+      })
+
       navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
       alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
     }
-  }, [reactFlowInstance]);
+  }, [reactFlowInstance, inputList]);
 
-  const loadFromFileBtnClick = () => {
-    inputFile.current.click() // will call onLoad
-  }
+  const onLoadFromFileBtnClick = () => inputFile.current.click() // will call onLoad
 
   const onLoad = (clickEvent) => {
     clickEvent.stopPropagation()
@@ -304,6 +285,11 @@ export function PipelineEditor(props) {
             // Make sure next id doesn't overlap
             id = Math.max(id, parseInt(node.id))
 
+            // Reinjecting deleted properties
+            node.targetPosition = "left"
+            node.sourcePosition = "right"
+
+            // Reinjecting functions
             switch (node.type) {
               case 'io':
                 node.data.setToolTip = setToolTip
@@ -312,6 +298,8 @@ export function PipelineEditor(props) {
               case 'constant':
                 node.data.onChange = onConstantValueChange
                 break;
+              case 'output':
+                break;
               default:
                console.error("Unsupported type " + node.type)
             }
@@ -319,14 +307,16 @@ export function PipelineEditor(props) {
           id++
 
           // Load the graph
+          const { x = 0, y = 0, zoom = 1 } = flow.viewport;
           setNodes(flow.nodes || []);
           setEdges(flow.edges || []);
+          reactFlowInstance.setViewport({ x, y, zoom });
         } else {
           console.error("Error parsing flow")
         }
       }
 
-      // Now that it's done, reset the value of the input.
+      // Now that it's done, reset the value of the input file.
       inputFile.current.value = ""
     }
   }
@@ -359,12 +349,14 @@ export function PipelineEditor(props) {
               <button onClick={() => onLayout()}>Layout</button>
               <input type='file' id='file' ref={inputFile} accept="application/json"
                 onChange={onLoad} style={{ display: 'none' }} />
-              <button onClick={loadFromFileBtnClick}>Load from file</button>
+              <button onClick={onLoadFromFileBtnClick}>Load from file</button>
               <button disabled={true}>Load from server</button>
               <button onClick={onSave}>Save</button>
             </div>
 
             <Controls />
+
+            <InputsList inputList={inputList} selectedNodes={selectedNodes} />
 
             <MiniMap
               nodeStrokeColor={(n) => {

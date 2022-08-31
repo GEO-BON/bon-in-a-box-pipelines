@@ -16,7 +16,7 @@ Method | HTTP request | Description
 
 ## getPipelineInfo
 
-> String getPipelineInfo(descriptionPath)
+> Info getPipelineInfo(descriptionPath)
 
 Get metadata about this pipeline
 
@@ -45,7 +45,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+[**Info**](Info.md)
 
 ### Authorization
 
@@ -54,7 +54,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/plain
+- **Accept**: application/json
 
 
 ## getPipelineOutputs
@@ -102,7 +102,7 @@ No authorization required
 
 ## getScriptInfo
 
-> String getScriptInfo(scriptPath)
+> Info getScriptInfo(scriptPath)
 
 Get metadata about this script
 
@@ -131,7 +131,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**String**
+[**Info**](Info.md)
 
 ### Authorization
 
@@ -140,7 +140,7 @@ No authorization required
 ### HTTP request headers
 
 - **Content-Type**: Not defined
-- **Accept**: text/plain
+- **Accept**: application/json
 
 
 ## pipelineListGet
@@ -245,10 +245,7 @@ import BonInABoxScriptService from 'bon_in_a_box_script_service';
 let apiInstance = new BonInABoxScriptService.DefaultApi();
 let scriptPath = "scriptPath_example"; // String | Where to find the script in ./script folder
 let opts = {
-  'body': '{ 
-              "occurence":"/output/result/from/previous/script", 
-              "intensity":3
-            } ' // String | Content of input.json for this run
+  'body': "body_example" // String | Content of input.json for this run
 };
 apiInstance.runScript(scriptPath, opts, (error, data, response) => {
   if (error) {

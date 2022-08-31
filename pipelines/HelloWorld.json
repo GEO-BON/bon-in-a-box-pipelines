@@ -10,10 +10,6 @@
       "data": {
         "descriptionFile": "HelloWorld>HelloPython.yml"
       },
-      "positionAbsolute": {
-        "x": 163.5,
-        "y": 0
-      },
       "z": 0,
       "handleBounds": {
         "source": [
@@ -36,13 +32,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 287,
-      "height": 45,
-      "selected": false,
-      "dragging": false,
-      "targetPosition": "left",
-      "sourcePosition": "right"
+      }
     },
     {
       "id": "4",
@@ -53,11 +43,6 @@
       },
       "data": {
         "label": "Output"
-      },
-      "targetPosition": "left",
-      "positionAbsolute": {
-        "x": 569,
-        "y": -8
       },
       "z": 1000,
       "handleBounds": {
@@ -72,12 +57,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 150,
-      "height": 39,
-      "sourcePosition": "right",
-      "selected": true,
-      "dragging": false
+      }
     },
     {
       "id": "5",
@@ -90,10 +70,6 @@
       "data": {
         "type": "int",
         "value": 3
-      },
-      "positionAbsolute": {
-        "x": -135,
-        "y": -3
       },
       "z": 0,
       "handleBounds": {
@@ -108,11 +84,7 @@
           }
         ],
         "target": null
-      },
-      "width": 258,
-      "height": 28,
-      "selected": false,
-      "dragging": false
+      }
     }
   ],
   "edges": [
@@ -135,5 +107,6 @@
     "x": 291,
     "y": 157,
     "zoom": 1
-  }
+  },
+  "inputs": {}
 }

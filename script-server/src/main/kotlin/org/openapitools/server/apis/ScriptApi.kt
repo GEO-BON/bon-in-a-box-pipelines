@@ -16,11 +16,14 @@ import org.geobon.pipeline.*
 import org.geobon.script.ScriptRun
 import org.geobon.script.outputRoot
 import org.geobon.script.scriptRoot
+import org.json.JSONObject
 import org.openapitools.server.Paths
 import org.openapitools.server.models.ScriptRunResult
 import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
+import org.yaml.snakeyaml.Yaml
 import java.io.File
+
 
 /**
  * Used to transport paths through path param.
@@ -46,11 +49,15 @@ fun Route.ScriptApi(logger: Logger) {
             // Put back the slashes and replace extension by .yml
             val ymlPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")
             val scriptFile = File(scriptRoot, ymlPath)
-            call.respondText(scriptFile.readText())
-            logger.trace("200: Paths.getScriptInfo $scriptFile")
+            if (scriptFile.exists()) {
+                call.respond(Yaml().load(scriptFile.readText()) as Map<String, Any>)
+            } else {
+                call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
+                logger.trace("404: Paths.getPipelineInfo ${parameters.scriptPath}")
+            }
         } catch (ex: Exception) {
-            call.respondText(text = ex.message!!, status = HttpStatusCode.NotFound)
-            logger.trace("Error 404: Paths.getScriptInfo ${parameters.scriptPath}")
+            call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
+            ex.printStackTrace()
         }
     }
 
@@ -96,19 +103,26 @@ fun Route.ScriptApi(logger: Logger) {
     }
 
     get<Paths.getPipelineInfo> { parameters ->
-        // TODO some real implementation
-        call.respondText("Currently, no metadata is available.")
-        /*
         try {
-            // Put back the slashes and replace extension by .yml
-            val ymlPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")
-            val scriptFile = File(scriptRoot, ymlPath)
-            call.respondText(scriptFile.readText())
-            logger.trace("200: Paths.getScriptInfo $scriptFile")
-        } catch (ex:Exception) {
-            call.respondText(text=ex.message!!, status=HttpStatusCode.NotFound)
-            logger.trace("Error 404: Paths.getScriptInfo ${parameters.scriptPath}")
-        }*/
+            // Put back the slashes before reading
+            val descriptionFile = File(pipelinesRoot, parameters.descriptionPath.replace(FILE_SEPARATOR, '/'))
+            if (descriptionFile.exists()) {
+                val descriptionJSON = JSONObject(descriptionFile.readText()).apply {
+                    // Remove the pipeline structure to leave only the metadata
+                    remove(NODES_LIST)
+                    remove(EDGES_LIST)
+                    remove(VIEWPORT)
+                }
+
+                call.respondText(descriptionJSON.toString(), ContentType.parse("application/json"))
+            } else {
+                call.respondText(text = "$descriptionFile does not exist", status = HttpStatusCode.NotFound)
+                logger.trace("404: Paths.getPipelineInfo ${parameters.descriptionPath}")
+            }
+        } catch (ex: Exception) {
+            call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
+            ex.printStackTrace()
+        }
     }
 
 
@@ -122,7 +136,7 @@ fun Route.ScriptApi(logger: Logger) {
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 
         try {
-            val pipeline = Pipeline(descriptionPath)
+            val pipeline = Pipeline(descriptionPath, inputFileContent)
             runningPipelines[runId] = pipeline
             call.respondText(runId)
 
@@ -148,6 +162,7 @@ fun Route.ScriptApi(logger: Logger) {
             }
         } catch (e: Exception) {
             call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
+            logger.trace(e.message)
         }
     }
 

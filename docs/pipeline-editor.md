@@ -20,7 +20,7 @@ A single value can also be combined with an array of the same type, to produce a
 
 <img src="https://user-images.githubusercontent.com/6223744/181106278-f6db6af5-764a-4775-b196-48feac940eec.png" width="300">
 
-
+**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the input.json sample file when running the pipeline.
 
 ## Pipeline inputs and outputs
 Any **input** with no constant value assigned will be considered a pipeline input and user will have to fill the value.

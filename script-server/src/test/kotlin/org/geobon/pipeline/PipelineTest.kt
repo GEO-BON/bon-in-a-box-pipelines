@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.io.File
 import kotlin.test.assertContains
 
@@ -119,4 +120,38 @@ internal class PipelineTest {
             outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!.filter { it.name == "input.json" }[0].readText())
     }
 
+    @Test
+    fun `given a pipeline with an input_when ran_then the provided input is used`() = runTest {
+        val pipeline = Pipeline("1in1out_1step.json", """{ "HelloWorld>HelloPython.yml@0.some_int": 5 }""")
+        pipeline.execute()
+
+        assertEquals(6.0, pipeline.getPipelineOutputs()[0].pull())
+    }
+
+    @Test
+    fun `given a pipeline with a malformed input name_when built_then an exception is thrown`() = runTest {
+        assertThrows<RuntimeException> { // missing @
+            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml0.some_int": 5 }""")
+        }
+
+        assertThrows<RuntimeException> { // missing step id
+            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml@.some_int": 5 }""")
+        }
+
+        assertThrows<RuntimeException> { // missing everything
+            Pipeline("1in1out_1step.json", """ { "@.": 5 }""")
+        }
+
+        assertThrows<RuntimeException> { // plausible case where a non-existant script path is used
+            Pipeline("1in1out_1step.json", """ { "HelloWorld>BAD@0.some_int": 5 }""")
+        }
+
+        assertThrows<RuntimeException> { // non-numeric step id
+            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml@BAD.some_int": 5 }""")
+        }
+
+        assertThrows<RuntimeException> { // plausible case where a non-existent step id is used
+            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml@72.some_int": 5 }""")
+        }
+    }
 }
