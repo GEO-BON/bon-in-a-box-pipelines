@@ -9,11 +9,15 @@ export default function ConstantNode({ id, data }) {
   function renderInput() {
     switch(data.type) {
       case 'options':
-        return <select id={id} onChange={data.onChange} defaultValue={data.value}>
-          {data.options.map(choice =>
-            <option key={choice} value={choice}>{choice}</option>
-          )}  
-        </select>
+        if (data.options)
+          return <select id={id} onChange={data.onChange} defaultValue={data.value}>
+            {data.options.map(choice =>
+              <option key={choice} value={choice}>{choice}</option>
+            )}
+          </select>
+
+        else
+          return <span className='ioWarning'>Options not defined</span>
       case 'boolean':
         return <input id={id} onChange={data.onChange} defaultValue={data.value} 
           type='checkbox' checked={data.value} />
