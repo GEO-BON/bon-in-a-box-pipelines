@@ -207,7 +207,7 @@ export function PipelineEditor(props) {
     nodes.forEach(node => {
       if (node.data) {
         let scriptDescription = getScriptDescription(node.data.descriptionFile)
-        if(scriptDescription) {
+        if(scriptDescription && scriptDescription.inputs) {
           let missingInputs = []
           Object.keys(scriptDescription.inputs).forEach(inputId => {
             if (-1 === edges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
