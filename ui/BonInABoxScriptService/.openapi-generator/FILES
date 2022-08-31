@@ -23,6 +23,6 @@ src/model/InfoOutputsValue.js
 src/model/InfoOutputsValueExample.js
 src/model/InfoReferencesInner.js
 src/model/ScriptRunResult.js
+test/model/InfoInputsValue.spec.js
 test/model/InfoInputsValueExample.spec.js
 test/model/InfoInputsValueExampleOneOfInner.spec.js
-test/model/InfoOutputsValueExample.spec.js
