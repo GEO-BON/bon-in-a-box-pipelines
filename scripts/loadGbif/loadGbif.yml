@@ -10,6 +10,11 @@ inputs:
     description: maximum number of observations to load
     type: int
     example: 2000
+  country:
+    label: country
+    description: 2-letter country code (as per ISO-3166-1) of the country in which the occurrence was recorded.
+    type: string
+    example: NULL
 outputs:
   n_presence:
     label: number of presence points

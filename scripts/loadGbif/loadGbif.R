@@ -25,7 +25,12 @@ print(input)
 
 # Loading data from GBIF (https://www.gbif.org/)
 warning <- ""
-gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, limit=input$limit) 
+country <- input$country
+if(country == "...") country <- NULL
+  
+
+gbifData <- occ_data(scientificName = input$species, hasCoordinate = T, 
+  limit=input$limit, country = country) 
   data <- gbifData$data
   
   if (is.null(data)) {
