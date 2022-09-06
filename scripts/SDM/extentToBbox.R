@@ -25,11 +25,10 @@ print(input)
 shp <- sf::st_read(input$extent)
 bbox <- shp_to_bbox(shp, proj_to = "EPSG:4326")
 bbox.df <- bbox_to_df(bbox)
-
 bbox.df.path <- file.path(outputFolder, "bbox.tsv")
 write.table(bbox.df, bbox.df.path,
-             append = F, row.names = F, col.names = F, sep = "\t")
+             append = F, row.names = F, col.names = T, sep = "\t")
 
-output <- list("bbox" =  bbox.df)
+output <- list("bbox" =  bbox.df.path)
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
