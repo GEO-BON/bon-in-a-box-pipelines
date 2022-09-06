@@ -65,7 +65,7 @@ The script description is in a .yml file next to the script. It describes
 - External link (optional)
 - References
 
-See [example](/scripts/HelloWorld/HelloR.yml)
+See [example](/scripts/helloWorld/helloR.yml)
 
 Each input and output must declare a type, *in lowercase.* The following file types are accepted:
 | File type          | MIME type to use in the yaml   | UI rendering                 |

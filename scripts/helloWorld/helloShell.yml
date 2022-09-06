@@ -1,4 +1,4 @@
-script: HelloShell.sh
+script: helloShell.sh
 description: "Sample shell script that outputs a number."
 outputs:
   a_number:
