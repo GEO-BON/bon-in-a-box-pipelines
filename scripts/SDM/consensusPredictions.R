@@ -12,7 +12,7 @@ library("raster")
 library("dplyr")
 library("dismo")
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "consensusPredictions/funcConsensus.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/consensusPredictionsFunc.R", sep = "/"))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)

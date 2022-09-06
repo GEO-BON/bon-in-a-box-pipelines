@@ -26,9 +26,9 @@ library("stacatalogue")
 
 
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "setupDataSdm/funcSetupDataSdm.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/setupDataSdmFunc.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/loadPredictorsFunc.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -40,32 +40,11 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-presence <- read.table(file = input$clean_presence, sep = '\t', header = TRUE) 
-background <- read.table(file = input$clean_background, sep = '\t', header = TRUE) 
-study_extent <- sf::st_read(input$study_extent)
+presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
+background <- read.table(file = input$background, sep = '\t', header = TRUE) 
+predictors <- terra::rast(input$predictors)
 
-bbox <- sf::st_bbox(study_extent, crs = input$proj_to)
-
-# layers
-layers <- input$layers
-
-predictors <- 
-  load_cube(stac_path = "http://io.biodiversite-quebec.ca/stac/",
-            limit = 5000, 
-            collections = c("chelsa-clim"), 
-            layers = input$layers,
-            bbox = bbox,
-            srs.cube = input$proj_to,
-            t0 = "1981-01-01",
-            t1 = "1981-01-01",
-            spatial.res = input$spatial_res, # in meters
-            temporal.res = "P1Y",
-            aggregation = "mean",
-            resampling = "near") 
-
-predictors <- cube_to_raster(predictors, format = "terra")
-predictors <- fast_crop(predictors, study_extent)
-names(predictors) <- input$layers
+# names(predictors) <- input$layers
 
 presence_bg_vals <- setup_presence_background(
   presence = presence,
@@ -77,15 +56,12 @@ presence_bg_vals <- setup_presence_background(
   cv_partitions = input$cv_partitions,
   seed=NULL)
 
-output_presence_background <- file.path(outputFolder, "presence_background.tsv")
-output_predictors <- file.path(outputFolder, "predictors.tif")
+presence_background.output <- file.path(outputFolder, "presence_background.tsv")
 
-terra::writeRaster(predictors, output_predictors, overwrite = T)
-write.table(presence_bg_vals, output_presence_background,
+write.table(presence_bg_vals, presence_background.output,
              append = F, row.names = F, col.names = T, sep = "\t")
 
-output <- list("presence_background" =  output_presence_background,
-  "predictors" = output_predictors
+output <- list("presence_background" =  presence_background.output
                   ) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

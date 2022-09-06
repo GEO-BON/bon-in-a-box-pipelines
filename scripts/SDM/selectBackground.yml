@@ -1,10 +1,17 @@
 script: selectBackground.R
+description: "This script creates a set of pseudo-absences/background points."
+
 inputs:
-  study_extent:
-    label: study extent
-    description: Path to a .shp file representing the extent to sample the background points from.
+  presence:
+    label: presence
+    description: Dataframe, presence data.
+    type: text/tab-separated-values
+    example: "/scripts/SDM/selectBackground_presence.tsv"
+  extent:
+    label: extent
+    description: shapefile, representing a study extent
     type: application/dbf
-    example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
+    example: "/scripts/SDM/extentToBbox_extent.shp"
   method_background: 
     label: method background
     description: method used to sample background points
@@ -15,26 +22,20 @@ inputs:
     description: number of background points
     type: int
     example: 10000
-  species: 
-    label: species name
-    description: scientific name of the species
-    type: text
-    example: "Glyptemys insculpta"
-  spatial_res :
-    label: spatial resolution
-    description: spatial resolution, only used if predictors are loaded from a stac catalogue. 
-    type: int
-    example: 1000  
+  predictors: 
+    label: predictors
+    description: Raster, predictors. 
+    type: image/tiff;application=geotiff
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
 outputs:
   n_background:
     label: n clean background 
     description: Number of background points selected and cleaned
     type: int
     example: 20000
-  clean_background:
-    label: clean background
+  background:
+    label: background
     description: TSV file containing a table with background points.
     type: text/tab-separated-values
     example:
-description: "This script creata a set of pseudo-absences/background points."
-external_link: https://github.com/GEO-BON/biab-2.0
+
