@@ -30,11 +30,12 @@ inputs:
   bbox_table:
     label: bbox table
     description: table, storing the bbox coordinates
-    type: float[]
+    type: text/tab-separated-values
     example: "/scripts/data/getObservations_bbox.tsv"
   occurrence_status:
     label: occurrence status
     description: vector, in the format
+    type: options
     options:
       - present
       - absent

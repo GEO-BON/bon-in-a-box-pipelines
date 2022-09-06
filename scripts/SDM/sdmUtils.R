@@ -138,7 +138,7 @@ shp_to_bbox <- function(shp, proj_from = NULL, proj_to = NULL) {
 
 bbox_to_df <- function(bbox) {
   df <- data.frame(names(bbox), as.numeric(bbox))
-  names(df) <- c()
+  names(df) <- c("coordinates", "value")
   return(df)
   
 }
