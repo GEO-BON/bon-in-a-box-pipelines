@@ -10,7 +10,7 @@
         "y": 212.00808201479722
       },
       "data": {
-        "descriptionFile": "HelloWorld>HelloPython.yml"
+        "descriptionFile": "helloWorld>helloPython.yml"
       },
       "selected": false,
       "positionAbsolute": {
@@ -55,7 +55,7 @@
     "zoom": 1.1712101812188096
   },
   "inputs": {
-    "HelloWorld>HelloPython.yml@0.some_int": {
+    "helloWorld>helloPython.yml@0.some_int": {
       "description": "A number that we will increment",
       "label": "Some int",
       "type": "int",

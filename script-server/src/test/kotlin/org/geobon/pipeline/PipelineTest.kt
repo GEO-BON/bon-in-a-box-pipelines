@@ -35,7 +35,7 @@ internal class PipelineTest {
         pipeline.dumpOutputFolders(allOutputs)
 
         assertEquals(1, allOutputs.size)
-        assertTrue(allOutputs.any { it.key.contains("HelloPython.yml") })
+        assertTrue(allOutputs.any { it.key.contains("helloPython.yml") })
 
         pipeline.execute()
         assertEquals(19 + 1.0, pipeline.getPipelineOutputs()[0].pull())
@@ -122,7 +122,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with an input_when ran_then the provided input is used`() = runTest {
-        val pipeline = Pipeline("1in1out_1step.json", """{ "HelloWorld>HelloPython.yml@0.some_int": 5 }""")
+        val pipeline = Pipeline("1in1out_1step.json", """{ "helloWorld>helloPython.yml@0.some_int": 5 }""")
         pipeline.execute()
 
         assertEquals(6.0, pipeline.getPipelineOutputs()[0].pull())
@@ -131,11 +131,11 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline with a malformed input name_when built_then an exception is thrown`() = runTest {
         assertThrows<RuntimeException> { // missing @
-            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml0.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml0.some_int": 5 }""")
         }
 
         assertThrows<RuntimeException> { // missing step id
-            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml@.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@.some_int": 5 }""")
         }
 
         assertThrows<RuntimeException> { // missing everything
@@ -147,11 +147,11 @@ internal class PipelineTest {
         }
 
         assertThrows<RuntimeException> { // non-numeric step id
-            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml@BAD.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@BAD.some_int": 5 }""")
         }
 
         assertThrows<RuntimeException> { // plausible case where a non-existent step id is used
-            Pipeline("1in1out_1step.json", """ { "HelloWorld>HelloPython.yml@72.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72.some_int": 5 }""")
         }
     }
 }

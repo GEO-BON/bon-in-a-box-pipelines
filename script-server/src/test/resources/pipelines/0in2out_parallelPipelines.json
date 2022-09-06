@@ -75,7 +75,7 @@
         "y": 162.39999389648438
       },
       "data": {
-        "descriptionFile": "HelloWorld>HelloPython.yml"
+        "descriptionFile": "helloWorld>helloPython.yml"
       },
       "positionAbsolute": {
         "x": 199,
@@ -117,7 +117,7 @@
         "y": 110.36905671527575
       },
       "data": {
-        "descriptionFile": "HelloWorld>HelloPython.yml"
+        "descriptionFile": "helloWorld>helloPython.yml"
       },
       "positionAbsolute": {
         "x": 531.2093167415944,
@@ -159,7 +159,7 @@
         "y": 291.47306241997455
       },
       "data": {
-        "descriptionFile": "HelloWorld>HelloPython.yml"
+        "descriptionFile": "helloWorld>helloPython.yml"
       },
       "positionAbsolute": {
         "x": 456.73943935904254,
@@ -201,7 +201,7 @@
         "y": 111.8234655072233
       },
       "data": {
-        "descriptionFile": "HelloWorld>HelloPython.yml"
+        "descriptionFile": "helloWorld>helloPython.yml"
       },
       "positionAbsolute": {
         "x": 862.23809573488,
