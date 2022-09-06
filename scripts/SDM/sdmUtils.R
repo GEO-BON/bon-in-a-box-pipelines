@@ -120,7 +120,7 @@ shp_to_bbox <- function(shp, proj_from = NULL, proj_to = NULL) {
   }
   
   if(is.na(sf::st_crs(shp))) {
-    crs(shp) <- proj_from
+    sf::st_crs(shp) <- proj_from
     shp <- shp %>% sf::st_set_crs(proj_from)
   }
   
@@ -136,7 +136,12 @@ shp_to_bbox <- function(shp, proj_from = NULL, proj_to = NULL) {
 }
 
 
-
+bbox_to_df <- function(bbox) {
+  df <- data.frame(names(bbox), as.numeric(bbox))
+  names(df) <- c()
+  return(df)
+  
+}
 
 
 #' @name create_density_plots
