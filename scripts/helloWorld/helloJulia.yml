@@ -1,4 +1,4 @@
-script: HelloJulia.jl
+script: helloJulia.jl
 description: "This sample script shows how it works in Julia."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:

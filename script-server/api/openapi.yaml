@@ -25,7 +25,7 @@ paths:
                 type: array
                 items:
                   type: string
-                  example: ["HelloWorld.yml", "RunSDM.yml","SHI.yml"]
+                  example: ["helloWorld.yml", "runSDM.yml","SHI.yml"]
   /script/{scriptPath}/run:
     post:
       tags: []
@@ -199,7 +199,7 @@ components:
       properties:
         script: 
           type: string
-          example: HelloR.R
+          example: helloR.R
         description: 
           type: string
           example: This sample script shows how it works.
@@ -220,6 +220,13 @@ components:
               type: 
                 type: string
                 example: text
+              options: 
+                type: array
+                items:
+                  type: string
+                example:
+                - Option 1
+                - Option 2
               example: 
                 example: Glyptemys insculpta
                 oneOf:
@@ -246,6 +253,13 @@ components:
               type: 
                 type: string
                 example: text/csv
+              options: 
+                type: array
+                items:
+                  type: string
+                example:
+                - Option 1
+                - Option 2
               example: 
                 example: file.csv
                 oneOf:
