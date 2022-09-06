@@ -7,6 +7,39 @@ inputs:
     description: scientific name of the species
     type: text
     example: "Glyptemys insculpta"
+  country:
+    label: country
+    description: country to retrieve the occurrences from
+    type: text
+    example: ""  
+  year_start:
+    label: start year
+    description: integer, 4 digit year, start date to retrieve occurrences
+    type: int
+    example: 1990
+  year_end:
+    label: end year
+    description: integer, 4 digit year, end date to retrieve occurrences
+    type: int
+    example: 2020
+  bbox:
+    label: bbox
+    description: vector, in the format
+    type: float[]
+    example: 
+  bbox_table:
+    label: bbox table
+    description: table, storing the bbox coordinates
+    type: float[]
+    example: "/scripts/data/getObservations_bbox.tsv"
+  occurrence_status:
+    label: occurrence status
+    description: vector, in the format
+    options:
+      - present
+      - absent
+      - present absent
+    example: "present"
   limit:
     label: limit
     description: maximum number of observations to load

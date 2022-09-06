@@ -34,5 +34,5 @@ outputs:
      type: image/tiff;application=geotiff
   sdm_uncertainty:
      label: uncertainty
-     description: credible interval of the posterio distribution
+     description: credible interval of the posterior distribution
      type: image/tiff;application=geotiff

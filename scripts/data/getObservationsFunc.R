@@ -1,5 +1,5 @@
-#' Load observations from GBIF or ATLAS databases
-#' @name load_observations
+#' Get observations from GBIF or ATLAS databases
+#' @name get_observations
 #' 
 #' @param species, a character, scientific name of the species.
 #' @param data_source, an integer, "gbif" or "atlas", source to use
@@ -21,15 +21,16 @@
 # add spatial filter when loading data from atlas (after import)
 # Vincent is fixing a bug to be able to use other filters (month, day)
 # add other columns such as species group
-
-load_observations <-
+get_observations <-
   function(species,
            database,
            year_start,
+           occurrence_status = "present",
            year_end = NULL,
            extent_wkt = NULL,
            extent_shp = NULL,
            proj_shp = NULL,
+           country= NULL,
            source = NULL,
            xmin = NA,
            ymin = NA,
@@ -55,14 +56,13 @@ load_observations <-
       
     }
     
-    # SPATIAL RANGE
+      # SPATIAL RANGE
     if (!is.null(extent_shp)) {
       bbox <-
         shp_to_bbox(shp, proj.from = proj_shp, proj.to = "EPSG:4326")
       if (is.null(bbox)) stop()
       extent_wkt <- bbox_to_wkt(bbox)
-    } else if (!is.null(bbox) ||
-               (!is.na(xmin) &
+    } else if (!is.null(bbox) || (!is.na(xmin) &
                 !is.na(ymin) & !is.na(xmax) &  !is.na(ymax))) {
       extent_wkt <-
         bbox_to_wkt(
@@ -72,23 +72,31 @@ load_observations <-
           ymax = ymax,
           bbox = bbox
         )
+    } else {
+      extent_wkt <- NULL
     }
-    
+
     if (database == "gbif") {
       data <- rgbif::occ_data(
         scientificName = species,
         year = year_range_gbif,
         geometry = extent_wkt,
         hasCoordinate = TRUE,
+        country = country,
         limit = limit
       )
       data <- data$data
-      if (is.null(data)) {
-        warning(sprintf("No observation found for species %s", species))
+
+        if(!is.null(data)) {
+          data <- data %>% dplyr::filter(occurrenceStatus %in% toupper(occurrence_status))
+        }
+
+      if (is.null(data) || nrow(data) == 0) {
+        warning(sprintf("No observation found for species %s with the selected parameters.", species))
         data <- data.frame()
       } else {
-        data <-
-          data %>% dplyr::select(
+        
+          data <- data %>% dplyr::select(
             key,
             species,
             decimalLongitude,
@@ -96,14 +104,16 @@ load_observations <-
             year,
             month,
             day,
-            basisOfRecord
+            basisOfRecord,
+            occurrenceStatus
           ) %>%
           dplyr::rename(
             id = key,
             scientific_name = species,
             decimal_longitude = decimalLongitude,
             decimal_latitude = decimalLatitude,
-            basis_of_record = basisOfRecord
+            basis_of_record = basisOfRecord,
+            occurrence_status = occurrenceStatus
           ) %>%
           dplyr::mutate(basis_of_record = tolower(basis_of_record))%>%
           dplyr::mutate(id = as.character(id))
