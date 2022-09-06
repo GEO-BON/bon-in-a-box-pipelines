@@ -29,7 +29,7 @@ print("Inputs: ")
 print(input)
 
 if (!is.null(input$bbox_table) && input$bbox_table !="...") {
-  bbox <- read.table(file = input$bbox_table, sep = '\t', header = FALSE) 
+  bbox <- read.table(file = input$bbox_table, sep = '\t', header = TRUE) 
   bbox <- bbox[,2]
 } else if (length(input$bbox) == 4) {
   bbox <- input$bbox
