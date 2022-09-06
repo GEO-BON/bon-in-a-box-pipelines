@@ -1,0 +1,26 @@
+script: getObservations.R
+description: "This script gets observations from GBIF database, using the package RGIF."
+link: https://github.com/ropensci/rgbif
+inputs:
+  species:
+    label: species names
+    description: scientific name of the species
+    type: text
+    example: "Glyptemys insculpta"
+  limit:
+    label: limit
+    description: maximum number of observations to load
+    type: int
+    example: 2000
+outputs:
+  n_presence:
+    label: number of presence points
+    description: number of presence points
+    type: int
+    example: 8
+  presence:
+     label: presence
+     description: table with observations from GBIF
+     type: text/tab-separated-values
+     example: 
+

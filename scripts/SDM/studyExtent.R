@@ -2,8 +2,8 @@
 library(rjson)
 library(sf)
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "studyExtent/funcStudyExtent.R", sep = "/"))
-source("/scripts/utils/utils.R")
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/studyExtentFunc.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -16,6 +16,8 @@ print("Inputs: ")
 print(input)
 
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
+presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
+proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
 if (is.numeric(input$width_buffer)) {
 width_buffer <- input$width_buffer

@@ -1,0 +1,67 @@
+script: loadPredictors.R
+description: "This sample script shows how it works."
+inputs:
+  extent:
+    label: extent
+    description: shapefile, representing a study extent
+    type: application/dbf
+    example: "/scripts/SDM/extentToBbox_extent.shp"
+  source:
+    label: source
+    description: type of source to load the predictors (either from tif, or from the stac catalogue)
+    type: options
+    options:
+      - from_tif
+      - from_cube
+    example: "from_cube"
+  layers: 
+    label: layers
+    description: names of layers to select, if empty all the layers from the collection will be used
+    type: text[]
+    example: []
+  remove_collinearity:
+    label: remove collinearity
+    description: boolean
+    type: boolean
+    example: True
+  method: 
+    label: method
+    description: 
+    type: options
+    options: 
+      - vif.cor
+      - vif.step
+      - pearson
+      - spearman
+      - kendall
+    example: vif.cor
+  proj_to:
+    label: projection system
+    description: Projection 
+    type: text
+    example: "EPSG:6623"
+  spatial_res:
+    description: Projection 
+    type: int
+    example: 1000
+  method_cor_vif :
+    description: Projection 
+    type: text
+    example: "pearson" 
+  nb_sample :
+    description: Projection 
+    type: int
+    example: 5000
+  cutoff_cor :
+    description: Projection 
+    type: float
+    example: 0.75
+  cutoff_vif :
+    description: Projection 
+    type: int
+    example: 8
+outputs:
+  predictors:
+    label: predictors
+    description: raster, predictors 
+    type: image/tiff;application=geotiff

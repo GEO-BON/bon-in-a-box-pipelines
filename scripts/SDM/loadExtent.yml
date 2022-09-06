@@ -1,0 +1,21 @@
+description: "This script imports files within a .zip folder stored in Google Drive."
+external_link: https://googledrive.tidyverse.org/
+
+script: loadExtent.R
+inputs:
+  url:
+    label: url
+    description: String, link to the GoogleDrive file.
+    type: string
+    example: "https://drive.google.com/file/d/1QiArDpwDu59o-YIvGXA8SjCjG77pe9qv/view?usp=sharing"
+  shp_name:
+    label: shapefile name
+    description: String, name of the shapefile.
+    type: string
+    example: quebec_nad83
+outputs:
+  extent:
+    label: extent
+    description: Shape file representing the study extent 
+    type: application/dbf
+    example: /output/studyExtent/studyExtent_R/9ab734795ba757bdabb32ae6708e18d1/study_extent.shp

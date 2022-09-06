@@ -31,8 +31,6 @@ clean_coordinates <- function(x,
                               lon = "lon", 
                               lat = "lat", 
                               species_col = "scientificName",
-                              srs = NULL,
-                              spatial_res = NULL,
                               tests = c( 
                                 "equal",
                                 "zeros", 
@@ -80,8 +78,10 @@ clean_coordinates <- function(x,
   
   # If proj is not lon/lat, transform coordinates to lon/lat to ensure further tests
   
+  proj <- terra::crs(predictors) 
+
   x <- create_projection(x, lon, lat,
-                         proj_from = srs,
+                         proj_from = proj,
                          proj_to = "EPSG:4326", 
                          new_lon = "decimalLongitude",
                          new_lat = "decimalLatitude")
@@ -100,26 +100,13 @@ clean_coordinates <- function(x,
   
   ## Remove NA in predictors
   message("cleaning occurrences with no environmental data")
-  if (inherits(predictors, "SpatRaster")) {
+  
     
     presvals <- terra::extract(predictors, dplyr::select(x, all_of(c(lon, lat ))) %>%
                                  data.frame()) 
     comp <-  complete.cases(presvals)
     x <-  x[comp, ]
     presvals <-  presvals[comp, ]
-    
-  } else if (inherits(predictors, "cube")){
-  
-    presvals <- gdalcubes::extract_geom(predictors, sf::st_as_sf(x, coords = c("lon", "lat"),
-                                                         crs = srs)) %>% dplyr::select(-time)
-
-    x <- x %>% dplyr::mutate(FID = as.integer(rownames(x)))
-    x <- dplyr::right_join(x, presvals, by = c("FID")) %>%
-       dplyr::select(-FID)
-    presvals <- presvals %>% dplyr::select(-FID)
-    
-
-  }
   
   covars <- names(predictors)
   presvals <- dplyr::select(presvals, 
@@ -167,21 +154,9 @@ clean_coordinates <- function(x,
       message("Testing observations in the same pixel")
     }
     
-    if (inherits(predictors, "SpatRaster")) {
-    
-      mask <- predictors[[1]]
-      
-    } else {
-      
-      xy <- dplyr::select(x, dplyr::all_of(c(lon, lat)))
+       
+    mask <- predictors[[1]]
    
-      sp::coordinates(xy) <-  c(lon, lat)
-      sp::proj4string(xy) <- srs
-      
-      mask <- terra::rast(raster::raster(xy, resolution = spatial_res))
-      
-    }
-
     cell <- terra::cellFromXY(mask, 
                               xy <- as.matrix(dplyr::select(x, dplyr::all_of(c(lon, lat)))))
     dup <- duplicated(cell)
