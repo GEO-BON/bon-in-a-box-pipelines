@@ -33,6 +33,7 @@ fun Route.DefaultApi() {
         val exampleContentString = """{
           "outputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
               "label" : "occurences",
               "type" : "text/csv",
@@ -48,6 +49,7 @@ fun Route.DefaultApi() {
           } ],
           "inputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
@@ -55,7 +57,7 @@ fun Route.DefaultApi() {
             }
           },
           "description" : "This sample script shows how it works.",
-          "script" : "HelloR.R",
+          "script" : "helloR.R",
           "external_link" : "https://github.com/GEO-BON/biab-2.0"
         }"""
         
@@ -85,6 +87,7 @@ fun Route.DefaultApi() {
         val exampleContentString = """{
           "outputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
               "label" : "occurences",
               "type" : "text/csv",
@@ -100,6 +103,7 @@ fun Route.DefaultApi() {
           } ],
           "inputs" : {
             "key" : {
+              "options" : [ "Option 1", "Option 2" ],
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
@@ -107,7 +111,7 @@ fun Route.DefaultApi() {
             }
           },
           "description" : "This sample script shows how it works.",
-          "script" : "HelloR.R",
+          "script" : "helloR.R",
           "external_link" : "https://github.com/GEO-BON/biab-2.0"
         }"""
         
@@ -159,7 +163,7 @@ fun Route.DefaultApi() {
 
     get<Paths.scriptListGet> {
         val exampleContentType = "application/json"
-        val exampleContentString = """"[\"HelloWorld.yml\",\"RunSDM.yml\",\"SHI.yml\"]""""
+        val exampleContentString = """"[\"helloWorld.yml\",\"RunSDM.yml\",\"SHI.yml\"]""""
         
         when (exampleContentType) {
             "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))

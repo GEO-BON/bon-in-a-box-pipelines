@@ -1,4 +1,4 @@
-script: HelloR.R
+script: helloR.R
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
