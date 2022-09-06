@@ -39,7 +39,7 @@ function SingleScriptForm(props) {
   const formRef = useRef(null);
   const api = new BonInABoxScriptService.DefaultApi();
 
-  const defaultScript = "HelloWorld>HelloR.yml";
+  const defaultScript = "helloWorld>helloR.yml";
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
 
   function loadScriptMetadata(choice) {
