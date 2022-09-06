@@ -12,7 +12,7 @@ library("rjson")
 library("raster")
 library("dplyr")
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "rangePredictions/funcRangePredictions.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/rangePredictionsFunc.R", sep = "/"))
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)

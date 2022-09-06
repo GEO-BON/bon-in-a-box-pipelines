@@ -1,15 +1,16 @@
 script: consensusPredictions.R
+description: "This script computes the consensus of a set of predictions rasters."
 inputs:
   predictions:
     label: predictions
     description: predictions rasters
     type: image/tiff;application=geotiff
-    example: "/output/runSDM/modRunSDM_R/a2cb00aa7fb8278599666812601a9c76/sdm_pred.tif"
+    example: "/scripts/consensusPredictions_predictions.tif"
   presence_background:
     label: presence background
     description: presence background point
     type: text/tab-separated-values
-    example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/presence_background.tsv"
+    example: "/scripts/consensusPredictions_presence_background.tsv"
   consensus_method:
     label: consensus method
     type: options
@@ -33,5 +34,4 @@ outputs:
     label: consensus
     description: consensus
     type: image/tiff;application=geotiff
-description: "This script computes the consensus of a set of predictions rasters."
-external_link: https://github.com/GEO-BON/biab-2.0
+

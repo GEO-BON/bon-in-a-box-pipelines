@@ -1,3 +1,5 @@
+description: "This script computes the range (max - min) of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures)."
+
 script: rangePredictions.R
 inputs:
   predictions:
@@ -10,5 +12,4 @@ outputs:
     label: range_predictions
     description: 
     type: image/tiff;application=geotiff
-description: "This script computes the range (max - min) of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures)."
-external_link: https://github.com/GEO-BON/biab-2.0
+
