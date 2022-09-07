@@ -21,12 +21,12 @@ inputs:
     example: []
   remove_collinearity:
     label: remove collinearity
-    description: boolean
+    description: boolean, remove or not collinear variables from the set of predictors
     type: boolean
     example: True
   method: 
     label: method
-    description: 
+    description: method used to compute collinearity between variables
     type: options
     options: 
       - vif.cor
@@ -37,27 +37,36 @@ inputs:
     example: vif.cor
   proj_to:
     label: projection system
-    description: Projection 
+    description: projection of the predictors
     type: text
     example: "EPSG:6623"
   spatial_res:
-    description: Projection 
+    label: spatial resolution
+    description: spatial resolution of the predictors 
     type: int
     example: 1000
   method_cor_vif :
-    description: Projection 
-    type: text
-    example: "pearson" 
+    label: correlation coefficient for vif.cor method
+    description: method to calculate the coefficient of collinearity, only used if method == vif.cor 
+    type: option
+    options:
+      - pearson
+      - spearman
+      - kendall
+    example: pearson
   nb_sample :
-    description: Projection 
+    label: nb sample
+    description: number of points to select to calculate collinearity
     type: int
     example: 5000
   cutoff_cor :
-    description: Projection 
+    label: cutoff correlation
+    description: correlation cutoff (used with vif.cor, pearson spearman and kendall method)
     type: float
     example: 0.75
   cutoff_vif :
-    description: Projection 
+    label: vif correlation
+    description: vif correlation cutoff (used with vif.step method)
     type: int
     example: 8
 outputs:

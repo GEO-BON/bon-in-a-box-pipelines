@@ -15,8 +15,11 @@ inputs:
   method_background: 
     label: method background
     description: method used to sample background points
-    type: text/accepted_values "random", "inclusion_buffer"
-    example: "random"
+    type: options
+    options: 
+      - random
+      - inclusion_buffer
+    example: random
   n_background: 
     label: number of background points
     description: number of background points
@@ -24,13 +27,13 @@ inputs:
     example: 10000
   predictors: 
     label: predictors
-    description: Raster, predictors. 
+    description: raster, predictors variables 
     type: image/tiff;application=geotiff
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
 outputs:
   n_background:
-    label: n clean background 
-    description: Number of background points selected and cleaned
+    label: nb background 
+    description: number of background points selected
     type: int
     example: 20000
   background:

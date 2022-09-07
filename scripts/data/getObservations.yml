@@ -26,7 +26,7 @@ inputs:
     label: bbox
     description: vector, in the format
     type: float[]
-    example: 
+    example: []
   bbox_table:
     label: bbox table
     description: table, storing the bbox coordinates
