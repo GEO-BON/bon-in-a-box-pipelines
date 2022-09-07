@@ -68,6 +68,9 @@ sdms <- predict_maxent(presence_background,
                            output_folder = outputFolder)
 
 sdm_pred <- sdms[["pred_all"]][[1]]
+sdm_pred[sdm_pred < 0] <- 0.0001
+names(sdm_pred) <- "prediction"
+print(sdm_pred)
 sdm_runs <- sdms[["pred_runs"]]
 
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
