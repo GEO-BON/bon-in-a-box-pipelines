@@ -120,32 +120,33 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         // Link inputs from the input file to the pipeline
         inputs?.let {
             val inputsJSON = JSONObject(inputs)
-            val inputsSpec = pipelineJSON.getJSONObject(INPUTS)
-            val regex = """([.>\w]+)@(\d+)\.(\w+)""".toRegex()
-            inputsJSON.keySet().forEach { key ->
-                val inputSpec = inputsSpec.optJSONObject(key)
-                    ?: throw RuntimeException ("Input received \"$key\" is not listed pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
-                val type = inputSpec.getString(INPUTS__TYPE)
+            pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
+                val regex = """([.>\w]+)@(\d+)\.(\w+)""".toRegex()
+                inputsJSON.keySet().forEach { key ->
+                    val inputSpec = inputsSpec.optJSONObject(key)
+                        ?: throw RuntimeException("Input received \"$key\" is not listed pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
+                    val type = inputSpec.getString(INPUTS__TYPE)
 
-                val groups = regex.matchEntire(key)?.groups
-                    ?: throw RuntimeException("Input id \"$key\" is malformed")
-                //val path = groups[1]!!.value
-                val stepId = groups[2]!!.value
-                val inputId = groups[3]!!.value
+                    val groups = regex.matchEntire(key)?.groups
+                        ?: throw RuntimeException("Input id \"$key\" is malformed")
+                    //val path = groups[1]!!.value
+                    val stepId = groups[2]!!.value
+                    val inputId = groups[3]!!.value
 
-                val step = steps[stepId]
-                    ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
+                    val step = steps[stepId]
+                        ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
 
-                step.inputs[inputId] = ConstantPipe(
-                    type,
-                    when (type) {
-                        "int" -> inputsJSON.getInt(key)
-                        "float" -> inputsJSON.getFloat(key)
-                        "boolean" -> inputsJSON.getBoolean(key)
-                        // Everything else is read as text
-                        else -> inputsJSON.getString(key)
-                    }
-                )
+                    step.inputs[inputId] = ConstantPipe(
+                        type,
+                        when (type) {
+                            "int" -> inputsJSON.getInt(key)
+                            "float" -> inputsJSON.getFloat(key)
+                            "boolean" -> inputsJSON.getBoolean(key)
+                            // Everything else is read as text
+                            else -> inputsJSON.getString(key)
+                        }
+                    )
+                }
             }
 
             println(inputsJSON.toString(2))
