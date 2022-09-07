@@ -20,8 +20,11 @@ inputs:
   partition_type :
     label: partition type
     description: partition type
-    type: text
-    example: "bootstrap" 
+    type: options
+    options: 
+      - bootstrap
+      - crossvalidation
+      - none
   runs_n:
     label: number of runs
     description: number of runs
