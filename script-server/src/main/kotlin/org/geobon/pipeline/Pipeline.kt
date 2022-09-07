@@ -57,7 +57,12 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                                         for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
                                     }
                                     "float" -> mutableListOf<Float>().apply {
-                                        for (i in 0 until jsonArray.length()) add(jsonArray.optFloat(i))
+                                        for (i in 0 until jsonArray.length()) {
+                                            val float = jsonArray.optFloat(i)
+                                            if(!float.isNaN()) {
+                                                add(float)
+                                            }
+                                        }
                                     }
                                     "boolean" -> mutableListOf<Boolean>().apply {
                                         for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
