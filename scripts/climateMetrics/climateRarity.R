@@ -48,7 +48,7 @@ print(input)
 
 # Load functions
 
-source("/scripts/ClimateMetrics/funcClimateMetrics.R")
+source("/scripts/climateMetrics/funcClimateMetrics.R")
 source("/scripts/data/funcLoadObservations.R")
 
 
