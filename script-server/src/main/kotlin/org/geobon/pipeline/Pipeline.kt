@@ -49,7 +49,12 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                         val type = nodeData.getString(NODE__DATA__TYPE)
 
                         constants[id] = if(type.endsWith("[]")) {
-                            val jsonArray = nodeData.getJSONArray(NODE__DATA__VALUE)
+                            val jsonArray = try {
+                                nodeData.getJSONArray(NODE__DATA__VALUE)
+                            } catch (e:Exception) {
+                                e.printStackTrace()
+                                throw RuntimeException("Constant #$id has no value in JSON file.")
+                            }
 
                             ConstantPipe(type,
                                 when (type.removeSuffix("[]")) {
@@ -73,16 +78,21 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                                     }
                                 })
                         } else {
-                            ConstantPipe(
-                                type,
-                                when (type) {
-                                    "int" -> nodeData.getInt(NODE__DATA__VALUE)
-                                    "float" -> nodeData.getFloat(NODE__DATA__VALUE)
-                                    "boolean" -> nodeData.getBoolean(NODE__DATA__VALUE)
-                                    // Everything else is read as text
-                                    else -> nodeData.getString(NODE__DATA__VALUE)
-                                }
-                            )
+                            try {
+                                ConstantPipe(
+                                    type,
+                                    when (type) {
+                                        "int" -> nodeData.getInt(NODE__DATA__VALUE)
+                                        "float" -> nodeData.getFloat(NODE__DATA__VALUE)
+                                        "boolean" -> nodeData.getBoolean(NODE__DATA__VALUE)
+                                        // Everything else is read as text
+                                        else -> nodeData.getString(NODE__DATA__VALUE)
+                                    }
+                                )
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                                throw RuntimeException("Constant #$id has no value in JSON file.")
+                            }
                         }
                     }
                     NODE__TYPE_OUTPUT -> outputIds.add(id)
