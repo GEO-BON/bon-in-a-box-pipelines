@@ -38,7 +38,7 @@ if (!is.null(input$bbox_table) && input$bbox_table !="...") {
 }
 
 
-if (input$country == "...") {
+if (input$country == "..." | length(input$country) < 2) {
   country <- NULL
 } else {
   country <- input$country
@@ -54,7 +54,7 @@ obs <- get_observations(database = "gbif",
            bbox = bbox,
            occurrence_status = occurrence_status,
            limit = input$limit)
-print(obs)
+
 obs.data <- file.path(outputFolder, "obs_data.tsv")
 write.table(obs, obs.data,
              append = F, row.names = F, col.names = T, sep = "\t")
