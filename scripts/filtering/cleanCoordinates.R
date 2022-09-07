@@ -21,7 +21,7 @@ library("stacatalogue")
 
 
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "cleanCoordinates/funcCleanCoordinates.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "cleanCoordinates/cleanCoordinatesFunc.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadPredictors/funcLoadPredictors.R", sep = "/"))
 
 ## Receiving args

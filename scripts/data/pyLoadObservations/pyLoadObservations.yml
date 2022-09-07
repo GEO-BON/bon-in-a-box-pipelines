@@ -1,0 +1,37 @@
+script: pyLoadObservations.sh
+description: Load complete GBIF data from GBIF download API or Planetary Computer
+inputs:
+  data_source:
+    description: Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)
+    label: Data source
+    type: options
+    options:
+      - gbif_pc
+      - gbif_api
+    example: gbif_pc
+  taxa:
+    description: Array of taxa values
+    label: Taxa list
+    type: text[]
+    example: [Acer saccharum, Bubo scandiacus]
+  bbox:
+    description: Bounding box [long_min, lat_min, long_max, lat_ymax] in decimal degrees WGS84
+    label: Bounding box
+    type: float[]
+    example: [-77.3, 45.2, -60.3, 62.3]
+  min_year:
+    description: Min year observations wanted
+    label: minimum year
+    type: int
+    example: 2010
+  max_year:
+    description: Max year observations wanted
+    label: maximum year
+    type: int
+    example: 2020
+outputs:
+  observations_file:
+    label: Observations
+    description: Output file with observations
+    type: text/tab-separated-values
+    example: hfn7s62sq.csv
