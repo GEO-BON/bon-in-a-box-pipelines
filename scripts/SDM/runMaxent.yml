@@ -64,9 +64,9 @@ inputs:
 outputs:
   sdm_pred:
      label: predictions
-     description: table with observations from GBIF
+     description: model predictions while trained on the whole dataset
      type: image/tiff;application=geotiff
   sdm_runs:
      label: runs predictions
-     description: table with observations from GBIF
+     description: model predictions among the several runs (if boostrapping or kfolds performed)
      type: image/tiff;application=geotiff
