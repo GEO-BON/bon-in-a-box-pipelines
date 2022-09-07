@@ -8,7 +8,7 @@ references:
 inputs:
   presence_background:
     label: presence background
-    description: path to the background point
+    description: presence 
     type: text/tab-separated-values
     example: "/scripts/SDM/runModel_presence_background.tsv"
   predictors: 

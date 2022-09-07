@@ -38,7 +38,7 @@ predictors <- terra::rast(input$predictors)
 proj <- terra::crs(predictors)
 
 # Projecting observations into predictors projection
-presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
+presence <- create_projection(presence, lon = "decimal_longitude", lat = "decimal_latitude", 
 proj_from = "+proj=longlat +datum=WGS84", proj_to = proj, new_lon = "lon", new_lat = "lat") 
 
 # Cleaning the data

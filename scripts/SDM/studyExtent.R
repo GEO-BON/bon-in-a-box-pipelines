@@ -16,8 +16,8 @@ print("Inputs: ")
 print(input)
 
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
-presence <- create_projection(presence, lon = "decimalLongitude", lat = "decimalLatitude", 
-proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
+#presence <- create_projection(presence, lon = "decimal_longitude", lat = "decimal_latitude", 
+#proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
 if (is.numeric(input$width_buffer)) {
 width_buffer <- input$width_buffer
