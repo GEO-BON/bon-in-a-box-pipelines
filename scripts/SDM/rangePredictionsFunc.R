@@ -1,0 +1,31 @@
+  range_predictions_old <- function(folder) {
+    
+    files <- list.files(folder, pattern = "*.tif$", full.names = TRUE)
+    range <- NULL
+    if (length(files) == 0) {
+      stop(sprintf("No tif files found in the directory %s", folder))
+      
+    } else if (length(files) == 1) {
+      stop("One single prediction - not calculating uncertainty.")
+   } else if (length(files) > 1) {
+    #Load rasterss
+    predictions <- lapply(files,
+                             terra::rast)
+    predictions <- terra::rast(predictions)
+    range <- terra::app(predictions, fun = function(i) {max(i) - min(i) })
+      names(range) <- "range_predictions"
+     
+    }
+
+return(range)
+  }
+  
+
+  range_predictions <- function(predictions) {
+    # transform the list into a terra rast object
+    predictions <- terra::rast(predictions)
+    range <- terra::app(predictions, fun = function(i) {max(i) - min(i) })
+      names(range) <- "range_predictions"
+ return(range)
+  }
+  

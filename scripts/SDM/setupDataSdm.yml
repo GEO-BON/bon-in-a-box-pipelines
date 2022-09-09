@@ -1,0 +1,49 @@
+description: "This script creates a dataset ready to feed any SDM model."
+
+script: setupDataSdm.R
+inputs:
+  presence:
+    label: presence
+    description: Dataframe, presence data.
+    type: text/tab-separated-values
+    example: "/scripts/SDM/selectBackground_presence.tsv"
+  background:
+    label: background
+    description: Dataframe, background data.
+    type: text/tab-separated-values
+    example: "/scripts/SDM/setupDataSdm_background.tsv"
+  predictors: 
+    label: predictors
+    description: Raster, predictors. 
+    type: image/tiff;application=geotiff
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+  partition_type :
+    label: partition type
+    description: partition type
+    type: options
+    options: 
+      - bootstrap
+      - crossvalidation
+      - none
+  runs_n:
+    label: number of runs
+    description: number of runs
+    type: int
+    example: 2
+  boot_proportion:
+    label: bootstrap proportion
+    description: proportion of points to be sampled for bootstrap
+    type: float
+    example: 0.7
+  cv_partitions:
+    label: crossvalidation partitions
+    description: number of partitions in the crossvalidation
+    type: int
+    example: 5
+outputs:
+  presence_background:
+    label: background presence
+    description: Background points for presence of species
+    type: text/tab-separated-values
+
+
