@@ -1,5 +1,5 @@
 script: studyExtent.R
-description: "This script compute as study area around presence points."
+description: "This script computes a study area around presence points."
 inputs:
   presence:
     label: clean presence
