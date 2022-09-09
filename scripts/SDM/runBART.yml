@@ -1,6 +1,5 @@
 script: runBART.R
 description: "This script creates an SDM and credible interval based on Bayesian additive regression trees (BARTs)."
-external_link: https://github.com/GEO-BON/biab-2.0
 references:
   - text: https://github.com/cjcarlson/embarcadero/
   - text: Carlson, Colin J. embarcadero Species distribution modelling with Bayesian additive regression trees in r, Methods in Ecology and Evolution (2022).
