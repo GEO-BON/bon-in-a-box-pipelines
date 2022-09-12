@@ -22,6 +22,7 @@ services:
       - GBIF_PWD=${GBIF_PWD}
       - GBIF_EMAIL=${GBIF_EMAIL}
       - HOST_PATH=${PWD}
+      - IUCN_TOKEN=${IUCN_TOKEN}
 
   http-gateway:
     container_name: http-rev-prox
