@@ -109,6 +109,8 @@ RUN set -ex; \
 				git; \
     apt-get clean all;
 
+RUN R -e 'install.packages("pak")'
+
 # Installing python
 RUN set -ex; \
     apt-get update; \
@@ -134,10 +136,10 @@ RUN gradle assemble
 
 ## This takes the build server and puts in on the R-script enabled image
 FROM base-image
+COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar
 
 # Pre-compiling Julia dependencies
 RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots"]); Pkg.instantiate();'
 
-COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar
 WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "kotlin-server.jar"]
