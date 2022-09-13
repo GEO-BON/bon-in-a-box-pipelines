@@ -1,8 +1,6 @@
 
 ## Install required packages
-packages <- c("rjson", "googledrive")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+pak::pkg_install(c("rjson", "sf", "terra", "googledrive"))
 
 ## Load required packages
 

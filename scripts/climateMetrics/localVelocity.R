@@ -2,14 +2,12 @@
 
 # Install required packages
 
-packages <- c("rstac", "tibble", "sp", "sf", "rgdal",  "lubridate", "dplyr",
-              "rgbif", "tidyr", "stars", "raster", "terra", "rjson", "RCurl")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-
+pak::pkg_install(c("rstac", "tibble", "sp", "sf", "rgdal",  "lubridate", "dplyr",
+              "rgbif", "tidyr", "stars", "raster", "terra", "rjson", "RCurl"))
+pak::pkg_install("ReseauBiodiversiteQuebec/stac-catalogue")
 
 library("devtools")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+pak::pkg_install(c("RCurl", "stars")) # appelmar/gdalcubes_R dependencies
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 
 ## Load required packages

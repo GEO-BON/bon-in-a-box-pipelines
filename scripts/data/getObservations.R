@@ -3,7 +3,7 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-install.packages(c("rgbif", "rjson", "raster", "dplyr", "stringr"))
+pak::pkg_install(c("raster", "rgbif", "rjson", "dplyr", "stringr"))
 
 ## Load required packages
 library("rgbif")

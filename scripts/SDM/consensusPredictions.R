@@ -1,8 +1,7 @@
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "dismo")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+pak::pkg_install(c("terra", "rjson", "raster", "dplyr", "dismo"))
+
 
 ## Load required packages
 
