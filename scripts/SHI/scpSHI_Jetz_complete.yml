@@ -13,9 +13,9 @@ inputs:
     example: 3116
   elev_margin:
     label: Elevation buffer
-    description: Magnitude of buffer to add to the elevation ranges of the species (usualy in meters)
+    description: Magnitude of buffer to add to the elevation ranges of the species (usualy in meters), if no buffer then 0
     type: int
-    example: 100
+    example: 0
   forest_threshold:
     label: Tree cover percentage 
     description: Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species 
@@ -57,9 +57,9 @@ inputs:
 outputs:
   df_SHI:
     label: SHI values
-    description: This CSV (Comma Separated Values) data shows the values of the SHI according to the parameters entered
-    type: text/csv
-    example: /output/.../some_data.csv
+    description: This TSV (Tab Separated Values) data shows the values of the SHI according to the parameters entered
+    type: text/tsv
+    example: /output/.../SP_SHI_table.tsv
   img_SHI_time_period:
     label: SHI for the selected period
     description: Figure with the map of changes through the years selected to calculate the SHI
