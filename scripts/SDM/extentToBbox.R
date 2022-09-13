@@ -1,8 +1,7 @@
 
 ## Install required packages
-packages <- c("rjson", "dplyr")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+pak::pkg_install(c("rjson", "dplyr"))
+
 
 ## Load required packages
 
