@@ -131,7 +131,7 @@ fun Route.ScriptApi(logger: Logger) {
         val descriptionPath = parameters.descriptionPath
         logger.info("Pipeline: $descriptionPath\nBody:$inputFileContent")
 
-        // Unique   to this pipeline                                               and to these params
+        // Unique   to this pipeline                                         and to these params
         val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 
