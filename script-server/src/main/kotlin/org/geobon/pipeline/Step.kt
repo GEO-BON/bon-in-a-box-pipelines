@@ -20,25 +20,27 @@ abstract class Step(
     suspend fun execute() {
         executeMutex.withLock {
             if(executed)
-                return // this has already been executed!
+                return // this has already been executed! (success or failure)
 
-            val resolvedInputs = mutableMapOf<String, Any>()
-            coroutineScope {
-                inputs.forEach {
-                    // This can happen in parallel coroutines
-                    launch { resolvedInputs[it.key] = it.value.pull() }
+            try {
+                val resolvedInputs = mutableMapOf<String, Any>()
+                coroutineScope {
+                    inputs.forEach {
+                        // This can happen in parallel coroutines
+                        launch { resolvedInputs[it.key] = it.value.pull() }
+                    }
                 }
-            }
-
-            val results = execute(resolvedInputs)
-            results.forEach { (key, value) ->
-                // Undocumented outputs will simply be discarded by the "?"
-                outputs[key]?.let { output ->
-                    output.value = value
+    
+                val results = execute(resolvedInputs)
+                results.forEach { (key, value) ->
+                    // Undocumented outputs will simply be discarded by the "?"
+                    outputs[key]?.let { output ->
+                        output.value = value
+                    }
                 }
+            } finally {
+                executed = true
             }
-
-            executed = true
         }
     }
 
