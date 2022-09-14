@@ -5,7 +5,7 @@ inputs:
     label: species
     description: Scientific name of the species
     type: text
-    example: "Panthera onca"
+    example: "Saguinus oedipus"
   ref_system:
     label: Projection
     description: Reference system for the area of interest
@@ -59,11 +59,11 @@ outputs:
     label: SHI values
     description: This TSV (Tab Separated Values) data shows the values of the SHI according to the parameters entered
     type: text/tsv
-    example: /output/.../SP_SHI_table.tsv
+    example: /output/SHI/scpSHI_Jetz_complete_R/SP_SHI_table.tsv
   img_SHI_time_period:
     label: SHI for the selected period
     description: Figure with the map of changes through the years selected to calculate the SHI
     type: image/png
-    example: ./SHI_figure.png
+    example: /output/SHI/scpSHI_Jetz_complete_R//SHI_figure.png
 references:
   - text: Jetz et al., Species Habitat Index (accessed on 24/8/2022) [https://mol.org/indicators/habitat/background]

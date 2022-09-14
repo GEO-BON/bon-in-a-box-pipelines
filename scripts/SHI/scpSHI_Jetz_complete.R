@@ -182,165 +182,176 @@ df_IUCN_to_LC_categories <- read.csv("./IUCN_to_LC_categories.csv",colClasses = 
 df_IUCN_habitat_LC_cat <- left_join(df_IUCN_habitat_cat,df_IUCN_to_LC_categories, by="code")
 LC_codes <- as.numeric(unique(df_IUCN_habitat_LC_cat$ESA_cod))
 
-#2.3 Hydrological features---------------------------------------------
+print(outputFolder)
 
-
-#-------------------------------------------------------------------------------------------------------------------
-#3. Land Cover Values
-#-------------------------------------------------------------------------------------------------------------------
-#This script needs the suitability map, the polygon for the limits
-#this script requires sh_suitability_bbox (from scpRunMaxentModel), sf_area_lim (from scpLoadWorldClim), epsg_crs,
-#-------------------------------------------------------------------------------
-#3.1 GFW data
-#-------------------------------------------------------------------------------
-#forest base map
-cube_GFW_TC <- 
-  load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
-            limit = 1000, 
-            collections = c("gfw-treecover2000"), 
-            use.obs = F,
-            buffer.box = 0,
-            bbox = sf_ext_crs,
-            srs.cube = srs_cube,
-            spatial.res = spat_res,
-            temporal.res = "P1Y",
-            t0 = "2000-01-01",
-            t1 = "2000-01-01",
-            resampling = "bilinear")
-
-cube_GFW_TC_range <- cube_GFW_TC |>
-  gdalcubes::filter_pixel(paste0("data >=", forest_threshold)) |>#filter to forest threshold 0-100
-  gdalcubes::apply_pixel(paste0("data/data")) # turn into a forest presence map
-
-r_GFW_TC_range <- cube_to_raster(cube_GFW_TC_range , format="terra") # convert to raster format
-
-r_suitability_map_rescaled <- terra::resample(terra::rast(r_suitability_map),r_GFW_TC_range,method="bilinear") #Adjust scale of suitability map
-r_GFW_TC_range_mask <- r_GFW_TC_range |> 
-  terra::classify(rcl=matrix(c(NA,0),ncol=2,byrow=T)) |> # turn NA to 0
-  terra::mask(r_suitability_map_rescaled) # crop to suitability map
-
-#Download loss maps and create different layers for each year to remove from forest
-s_obj <- stac("https://io.biodiversite-quebec.ca/stac/")
-
-it_obj <- s_obj |>
-  stac_search(collections = "gfw-lossyear",
-              bbox = sf_ext) |>
-  get_request()
-
-st <- gdalcubes::stac_image_collection(it_obj$features, asset_names = c("data")) # create image collection
-
-v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-01-01", # create cube according to area of interest
-                                             left = sf_ext_crs['xmin'], right =sf_ext_crs['xmax'],  
-                                             top = sf_ext_crs['ymin'], bottom =  sf_ext_crs['ymax']),
-               dx=spat_res, dy=spat_res, dt="P1Y",
-               resampling = "near") # TO CHANGE to proportions
-
-times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4)) #get year of change by selected time step to mask map by year of change
-l_r_year_loss <- map(times, function(x) {
-  layer <- raster_cube(image_collection=st, view=v, 
-                       mask=image_mask("data", values = times[times<=x],invert=T)) # to remove it to the following years
-  
-  layer <- layer |>
-    stars::st_as_stars() |>
-    terra::rast()
-  return(layer)
-})
-
-#add background and mask to suitable area
-s_year_loss <- terra::classify(terra::rast(l_r_year_loss), rcl=matrix(c(NA,NA,0,1,Inf,1),ncol=3,byrow=T),include.lowest=T)
-names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>2000])
-s_year_loss_mask <- terra::mask(s_year_loss,r_suitability_map_rescaled)
-
-#update reference forest layer if t_0 different of 2000
-if(t_0!=2000){
-  r_GFW_TC_range_mask <- terra::classify(r_GFW_TC_range_mask - s_year_loss_mask[[paste0("Loss_",t_0)]],rcl=matrix(c(-1,0),ncol=2,byrow=T))
-}
-
-cube_GFW_gain <- 
-  load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac",
-            limit = 1000, 
-            collections = c("gfw-gain"), 
-            use.obs = F,
-            buffer.box = 0,
-            bbox = sf_ext_crs,
-            srs.cube = srs_cube,
-            spatial.res = spat_res,
-            temporal.res = "P1Y",
-            t0 = "2000-01-01",
-            t1 = "2000-12-31",
-            resampling = "near")
-
-r_GFW_gain <- cube_to_raster(cube_GFW_gain %>%
-                               stars::st_as_stars(), format="terra") # convert to raster format
-r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_suitability_map_rescaled),matrix(c(0,NA),ncol=2,byrow = T))
-
-#-------------------------- figure ----------------------------------------------
-osm <- read_osm(sf_area_lim, ext=1.1)
-
-s_year_loss_mask_plot <- terra::classify(s_year_loss_mask,matrix(c(0,NA),ncol=2,byrow=T)) # turn 0 to NA
-
-# tmap_mode("view")
-img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
-  tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#0000FF00","blue"))+
-  tm_shape(terra::merge(s_year_loss_mask_plot))+tm_raster(style="cat",alpha=0.4,palette = c("#FF000080"))+#tm_facets(ncol=1,nrow=1)+
-  tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"))+
+img_map_habitat_changes <- tm_shape(r_suitability_map)+tm_raster()+
   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
-  # tm_shape(sf_GBIFData)+tm_dots(alpha=0.5)+
   tm_scale_bar()+tm_legend(show=F)
 
 # img_map_habitat_changes
 
 tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
 
-#create layers of forest removing loss by year
-s_HabitatArea <- terra::classify(r_GFW_TC_range_mask-s_year_loss_mask , rcl=matrix(c(-1,0),ncol=2))
-s_HabitatArea <- c(r_GFW_TC_range_mask, s_HabitatArea) # if t0 is 2000
-names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
-
-s_Habitat <- terra::classify(s_HabitatArea , rcl=matrix(c(0,NA),ncol=2))
-
-r_HabitatFull <- terra::classify(terra::app(s_HabitatArea,fun=sum), matrix(c(-Inf,0,NA,1,Inf,1),ncol=3,byrow=T))
-
-writeRaster(s_Habitat,filename = paste0(outputFolder,sp,"_habitat_GFW.tif"),overwrite=T)
-
-#----------------------- 3.1.1. Get average distance to edge -------------------
-#patch distances
-df_SnS_dist <- landscapemetrics::lsm_p_enn(s_Habitat)
-df_conn_score <- df_SnS_dist %>% group_by(layer) %>% 
-  summarise(mean_distance=mean(value),median_distance=median(value),min_distance=min(value),max_distance=max(value)) 
-
-df_conn_score_gfw <- df_conn_score %>% 
-  mutate(ref_value=df_conn_score$mean_distance[1], diff=mean_distance-ref_value, percentage=100-(diff*100/ref_value), info="GFW", Year=v_time_steps)
-
-# write.csv(df_conn_score_gfw,file=paste0(outputFolder,sp,"_AreaScore_table.csv")) # table of summary values for distance to patches by year
 # 
-# img_Connectivity_TS <- ggplot(df_conn_score_gfw,aes(x=layer,y=percentage))+geom_line()
-# img_Connectivity_TS # time series for mean distance to patch
+# #2.3 Hydrological features---------------------------------------------
+# 
+# 
+# #-------------------------------------------------------------------------------------------------------------------
+# #3. Land Cover Values
+# #-------------------------------------------------------------------------------------------------------------------
+# #This script needs the suitability map, the polygon for the limits
+# #this script requires sh_suitability_bbox (from scpRunMaxentModel), sf_area_lim (from scpLoadWorldClim), epsg_crs,
+# #-------------------------------------------------------------------------------
+# #3.1 GFW data
+# #-------------------------------------------------------------------------------
+# #forest base map
+# cube_GFW_TC <- 
+#   load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+#             limit = 1000, 
+#             collections = c("gfw-treecover2000"), 
+#             use.obs = F,
+#             buffer.box = 0,
+#             bbox = sf_ext_crs,
+#             srs.cube = srs_cube,
+#             spatial.res = spat_res,
+#             temporal.res = "P1Y",
+#             t0 = "2000-01-01",
+#             t1 = "2000-01-01",
+#             resampling = "bilinear")
+# 
+# cube_GFW_TC_range <- cube_GFW_TC |>
+#   gdalcubes::filter_pixel(paste0("data >=", forest_threshold)) |>#filter to forest threshold 0-100
+#   gdalcubes::apply_pixel(paste0("data/data")) # turn into a forest presence map
+# 
+# r_GFW_TC_range <- cube_to_raster(cube_GFW_TC_range , format="terra") # convert to raster format
+# 
+# r_suitability_map_rescaled <- terra::resample(terra::rast(r_suitability_map),r_GFW_TC_range,method="bilinear") #Adjust scale of suitability map
+# r_GFW_TC_range_mask <- r_GFW_TC_range |> 
+#   terra::classify(rcl=matrix(c(NA,0),ncol=2,byrow=T)) |> # turn NA to 0
+#   terra::mask(r_suitability_map_rescaled) # crop to suitability map
+# 
+# #Download loss maps and create different layers for each year to remove from forest
+# s_obj <- stac("https://io.biodiversite-quebec.ca/stac/")
+# 
+# it_obj <- s_obj |>
+#   stac_search(collections = "gfw-lossyear",
+#               bbox = sf_ext) |>
+#   get_request()
+# 
+# st <- gdalcubes::stac_image_collection(it_obj$features, asset_names = c("data")) # create image collection
+# 
+# v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-01-01", # create cube according to area of interest
+#                                              left = sf_ext_crs['xmin'], right =sf_ext_crs['xmax'],  
+#                                              top = sf_ext_crs['ymin'], bottom =  sf_ext_crs['ymax']),
+#                dx=spat_res, dy=spat_res, dt="P1Y",
+#                resampling = "near") # TO CHANGE to proportions
+# 
+# times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4)) #get year of change by selected time step to mask map by year of change
+# l_r_year_loss <- map(times, function(x) {
+#   layer <- raster_cube(image_collection=st, view=v, 
+#                        mask=image_mask("data", values = times[times<=x],invert=T)) # to remove it to the following years
+#   
+#   layer <- layer |>
+#     stars::st_as_stars() |>
+#     terra::rast()
+#   return(layer)
+# })
+# 
+# #add background and mask to suitable area
+# s_year_loss <- terra::classify(terra::rast(l_r_year_loss), rcl=matrix(c(NA,NA,0,1,Inf,1),ncol=3,byrow=T),include.lowest=T)
+# names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>2000])
+# s_year_loss_mask <- terra::mask(s_year_loss,r_suitability_map_rescaled)
+# 
+# #update reference forest layer if t_0 different of 2000
+# if(t_0!=2000){
+#   r_GFW_TC_range_mask <- terra::classify(r_GFW_TC_range_mask - s_year_loss_mask[[paste0("Loss_",t_0)]],rcl=matrix(c(-1,0),ncol=2,byrow=T))
+# }
+# 
+# cube_GFW_gain <- 
+#   load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac",
+#             limit = 1000, 
+#             collections = c("gfw-gain"), 
+#             use.obs = F,
+#             buffer.box = 0,
+#             bbox = sf_ext_crs,
+#             srs.cube = srs_cube,
+#             spatial.res = spat_res,
+#             temporal.res = "P1Y",
+#             t0 = "2000-01-01",
+#             t1 = "2000-12-31",
+#             resampling = "near")
+# 
+# r_GFW_gain <- cube_to_raster(cube_GFW_gain %>%
+#                                stars::st_as_stars(), format="terra") # convert to raster format
+# r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_suitability_map_rescaled),matrix(c(0,NA),ncol=2,byrow = T))
+# 
+# #-------------------------- figure ----------------------------------------------
+# osm <- read_osm(sf_area_lim, ext=1.1)
+# 
+# s_year_loss_mask_plot <- terra::classify(s_year_loss_mask,matrix(c(0,NA),ncol=2,byrow=T)) # turn 0 to NA
+# 
+# # tmap_mode("view")
+# img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
+#   tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#0000FF00","blue"))+
+#   tm_shape(terra::merge(s_year_loss_mask_plot))+tm_raster(style="cat",alpha=0.4,palette = c("#FF000080"))+#tm_facets(ncol=1,nrow=1)+
+#   tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"))+
+#   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
+#   # tm_shape(sf_GBIFData)+tm_dots(alpha=0.5)+
+#   tm_scale_bar()+tm_legend(show=F)
+# 
+# # img_map_habitat_changes
+# 
+# tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
+# 
+# #create layers of forest removing loss by year
+# s_HabitatArea <- terra::classify(r_GFW_TC_range_mask-s_year_loss_mask , rcl=matrix(c(-1,0),ncol=2))
+# s_HabitatArea <- c(r_GFW_TC_range_mask, s_HabitatArea) # if t0 is 2000
+# names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
+# 
+# s_Habitat <- terra::classify(s_HabitatArea , rcl=matrix(c(0,NA),ncol=2))
+# 
+# r_HabitatFull <- terra::classify(terra::app(s_HabitatArea,fun=sum), matrix(c(-Inf,0,NA,1,Inf,1),ncol=3,byrow=T))
+# 
+# writeRaster(s_Habitat,filename = paste0(outputFolder,sp,"_habitat_GFW.tif"),overwrite=T)
+# 
+# #----------------------- 3.1.1. Get average distance to edge -------------------
+# #patch distances
+# df_SnS_dist <- landscapemetrics::lsm_p_enn(s_Habitat)
+# df_conn_score <- df_SnS_dist %>% group_by(layer) %>% 
+#   summarise(mean_distance=mean(value),median_distance=median(value),min_distance=min(value),max_distance=max(value)) 
+# 
+# df_conn_score_gfw <- df_conn_score %>% 
+#   mutate(ref_value=df_conn_score$mean_distance[1], diff=mean_distance-ref_value, percentage=100-(diff*100/ref_value), info="GFW", Year=v_time_steps)
+# 
+# # write.csv(df_conn_score_gfw,file=paste0(outputFolder,sp,"_AreaScore_table.csv")) # table of summary values for distance to patches by year
+# # 
+# # img_Connectivity_TS <- ggplot(df_conn_score_gfw,aes(x=layer,y=percentage))+geom_line()
+# # img_Connectivity_TS # time series for mean distance to patch
+# 
+# #---------------------- 3.1.2. Calculate areas ---------------------------------
+# #create raster of areas by pixel
+# r_areas <- terra::cellSize(s_HabitatArea[[1]],unit="km")
+# 
+# l_Suitable_area <- set_names(map(as.list(s_Habitat * r_areas),function(x) {
+#   x<-x[!is.na(x)]
+#   data.frame(Area=units::set_units(sum(x),"km2"))
+# }),v_time_steps)
+# 
+# df_area_score <- l_Suitable_area %>% bind_rows(.id="Year")
+# 
+# df_area_score_gfw <-  df_area_score %>% dplyr::group_by(Year) %>% 
+#   dplyr::mutate(ref_area=df_area_score$Area[1], diff=ref_area-Area, percentage=100-as.numeric(100*diff/ref_area), info="GFW")
+# 
+# # write.csv(df_area_score_gfw,file=paste0(outputFolder,sp,"_AreaScore_table.csv"))
+# 
+# # img_Area_TS <- ggplot( df_area_score_gfw %>% ungroup(),aes(x=as.numeric(Year),y=percentage))+geom_line()+xlab("Year")
+# # img_Area_TS
+# 
+# #------------------------ 3.1.3. SHI -------------------------------------------
+# df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
+# df_SHI_gfw <- df_SHI_gfw %>% mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
 
-#---------------------- 3.1.2. Calculate areas ---------------------------------
-#create raster of areas by pixel
-r_areas <- terra::cellSize(s_HabitatArea[[1]],unit="km")
-
-l_Suitable_area <- set_names(map(as.list(s_Habitat * r_areas),function(x) {
-  x<-x[!is.na(x)]
-  data.frame(Area=units::set_units(sum(x),"km2"))
-}),v_time_steps)
-
-df_area_score <- l_Suitable_area %>% bind_rows(.id="Year")
-
-df_area_score_gfw <-  df_area_score %>% dplyr::group_by(Year) %>% 
-  dplyr::mutate(ref_area=df_area_score$Area[1], diff=ref_area-Area, percentage=100-as.numeric(100*diff/ref_area), info="GFW")
-
-# write.csv(df_area_score_gfw,file=paste0(outputFolder,sp,"_AreaScore_table.csv"))
-
-# img_Area_TS <- ggplot( df_area_score_gfw %>% ungroup(),aes(x=as.numeric(Year),y=percentage))+geom_line()+xlab("Year")
-# img_Area_TS
-
-#------------------------ 3.1.3. SHI -------------------------------------------
-df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
-df_SHI_gfw <- df_SHI_gfw %>% mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
-
-write_tsv(df_SHI_gfw,file=paste0(outputFolder,sp,"_SHI_table.tsv"))
+write_tsv(df_IUCN_habitat_cat,file=paste0(outputFolder,sp,"_SHI_table.tsv"))
 
 # #-------------------------------------------------------------------------------
 # #3.2 ESA data
