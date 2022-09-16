@@ -6,14 +6,19 @@
 #-------------------------------------------------------------------------------------------------------------------
 # Script location can be used to access other scripts
 print(Sys.getenv("SCRIPT_LOCATION"))
+options(timeout = max(60000000, getOption("timeout")))
 
 ## Install required packages
-packages <- c("devtools","tidyverse","remotes","purrr","tmap","raster","ggsci","readr",
+install.packages("pak")
+packages <- c("devtools","dplyr","tidyr","ggplot2","remotes","purrr","tmap","raster","ggsci","readr",
               "rgbif","rgdal","sf","httr","jsonlite","landscapemetrics","rjson","stars",
-              "gdalcubes","rstac","RColorBrewer","RCurl","stacatalogue","tmaptools")
+              "stacatalogue","gdalcubes","ellipsis","rstac","RColorBrewer","RCurl","tmaptools")
+
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) pak::pkg_install("ReseauBiodiversiteQuebec/stac-catalogue")
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) pak::pkg_install("appelmar/gdalcubes_R")
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+if(length(new.packages)) pak::pkg_install(new.packages)
 
 lapply(packages,require,character.only=T)
 
@@ -133,10 +138,10 @@ df_IUCN_sheet_condition <- df_IUCN_sheet |> mutate(
 )
 
 with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are provided then the suitability map stays the same
-  r_suitability_map <- terra::rast(r_suitability_map)
+  r_suitability_map <<- terra::rast(r_suitability_map)
 }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
   # STRM from Copernicus
-  cube_STRM <- 
+  cube_STRM <<- 
     load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
               limit = 1000, 
               collections = c("cop-dem-glo-90"), 
@@ -150,26 +155,26 @@ with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are p
               t1 = "2021-04-22",
               resampling = "bilinear")
   if(condition == 2){ # if both values exist
-    cube_STRM_range <- cube_STRM |> 
-      gdalcubes::filter_pixel(paste0("data <=", df_IUCN_sheet_condition$max_elev)) |> 
+    cube_STRM_range <<- cube_STRM |> 
+      gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> 
       gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
   }else{ # if only one value exist
     if(condition == 3){ # if just maximum elevation available filter by that
-      cube_STRM_range <- cube_STRM |> 
+      cube_STRM_range <<- cube_STRM |> 
         gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> select_bands("data")
     }
     if(condition == 4){ # if just minimum elevation available filter by that
-      cube_STRM_range <- cube_STRM |> 
+      cube_STRM_range <<- cube_STRM |> 
         gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
     }
   }
   #convert to raster
-  r_STRM_range <- cube_STRM_range  |> st_as_stars() |> terra::rast()
+  r_STRM_range <<- cube_STRM_range  |> st_as_stars() |> terra::rast()
   
   #resample to raster of SDM
-  r_STRM_range_res <- terra::resample(r_STRM_range, terra::rast(r_suitability_map))
-  r_suitability_map <- terra::mask(terra::crop(terra::rast(r_suitability_map),r_STRM_range_res),r_STRM_range_res) #Crop LC to suitability extent
-  }
+  r_STRM_range_res <<- terra::resample(r_STRM_range, terra::rast(r_suitability_map))
+  r_suitability_map <<- terra::mask(terra::crop(terra::rast(r_suitability_map),r_STRM_range_res),r_STRM_range_res) #Crop LC to suitability extent
+}
 )
 
 #2.2 Load habitat preferences---------------------------------------------
@@ -177,20 +182,20 @@ habitat <- GET(paste0("https://apiv3.iucnredlist.org/api/v3/habitats/species/nam
 js_IUCN_habitat_cat <- rawToChar(habitat$content)
 df_IUCN_habitat_cat <- do.call(rbind,fromJSON(js_IUCN_habitat_cat)$result) |> as.data.frame() |> mutate_if(is.list,as.character)
 
+df_IUCN_habitat_cat
+
 #Load table with land cover equivalences need to be updated with Jung et al
 df_IUCN_to_LC_categories <- read.csv("./IUCN_to_LC_categories.csv",colClasses = "character") # PENDING PUT 0.5 TO MARGINAL HABITATS
 df_IUCN_habitat_LC_cat <- left_join(df_IUCN_habitat_cat,df_IUCN_to_LC_categories, by="code")
 LC_codes <- as.numeric(unique(df_IUCN_habitat_LC_cat$ESA_cod))
 
-print(outputFolder)
-
 img_map_habitat_changes <- tm_shape(r_suitability_map)+tm_raster()+
   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
   tm_scale_bar()+tm_legend(show=F)
 
-# img_map_habitat_changes
+img_map_habitat_changes
 
-tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
+# tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
 
 # 
 # #2.3 Hydrological features---------------------------------------------
@@ -242,7 +247,7 @@ tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
 # 
 # v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-01-01", # create cube according to area of interest
 #                                              left = sf_ext_crs['xmin'], right =sf_ext_crs['xmax'],  
-#                                              top = sf_ext_crs['ymin'], bottom =  sf_ext_crs['ymax']),
+#                                              top = sf_ext_crs['ymax'], bottom =  sf_ext_crs['ymin']),
 #                dx=spat_res, dy=spat_res, dt="P1Y",
 #                resampling = "near") # TO CHANGE to proportions
 # 
@@ -293,13 +298,11 @@ tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
 # # tmap_mode("view")
 # img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
 #   tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#0000FF00","blue"))+
-#   tm_shape(terra::merge(s_year_loss_mask_plot))+tm_raster(style="cat",alpha=0.4,palette = c("#FF000080"))+#tm_facets(ncol=1,nrow=1)+
+#   tm_shape(s_year_loss_mask_plot)+tm_raster(style="cat",palette = c("#FF000080"))+
 #   tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"))+
 #   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
 #   # tm_shape(sf_GBIFData)+tm_dots(alpha=0.5)+
 #   tm_scale_bar()+tm_legend(show=F)
-# 
-# # img_map_habitat_changes
 # 
 # tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
 # 
@@ -351,7 +354,7 @@ tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
 # df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
 # df_SHI_gfw <- df_SHI_gfw %>% mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
 
-write_tsv(df_IUCN_habitat_cat,file=paste0(outputFolder,sp,"_SHI_table.tsv"))
+# write_tsv(df_SHI_gfw,file=paste0(outputFolder,sp,"_SHI_table.tsv"))
 
 # #-------------------------------------------------------------------------------
 # #3.2 ESA data
