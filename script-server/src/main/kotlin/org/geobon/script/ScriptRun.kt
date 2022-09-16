@@ -12,7 +12,6 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 import java.util.SortedMap
 
-val scriptRoot = File(System.getenv("SCRIPT_LOCATION"))
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
 class ScriptRun (private val scriptFile: File, private val inputFileContent:String?) {
@@ -46,6 +45,9 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         private val gson = Gson()
 
         fun toJson(src: Any): String = gson.toJson(src)
+
+        val scriptRoot:File
+            get() = File(System.getenv("SCRIPT_LOCATION"))
     }
 
     suspend fun execute() {
