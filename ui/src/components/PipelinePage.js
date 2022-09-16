@@ -129,6 +129,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
       }
     };
 
+    clearPreviousRequest()
     let opts = {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };

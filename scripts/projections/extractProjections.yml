@@ -1,0 +1,64 @@
+script: extractProjections.R
+inputs:
+  stac_path:
+    description: Path to species observation tsv file
+    type: text
+    example:  "http://io.biodiversite-quebec.ca/stac/"
+  limit:
+    description: Path to species observation tsv file
+    type: int
+    example: 5000
+  collections:
+    description: Path to species observation tsv file
+    type: text
+    example: 'chelsa-clim'                  
+  obs:
+    description: Path to species observation tsv file
+    type: text
+    example: "/scripts/extractPredictors/obs_data.tsv"
+  srs.obs:
+    description: Projection 
+    type: text
+    example: "EPSG:4326"
+  layers:
+    description: Projection 
+    type: text[]
+    example: "bio4"
+  buffer.box :
+    description: Projection 
+    type: integer
+    example: 400
+  srs.cube:
+    description: Projection 
+    type: text
+    example: "EPSG:4326"
+  t0 :
+    description: Projection 
+    type: text
+    example: '1981-01-01'
+  t1 :
+    description: Projection 
+    type: text
+    example: '1981-01-01'
+  spatial.res :
+    description: Projection 
+    type: integer
+    example: 2000
+  temporal.res :
+    description: Projection 
+    type: text
+    example: "P1Y"
+
+outputs:
+  obs.values:
+     label: Observation data
+     description: table with observations from GBIF
+     type: text/tab-separated-values
+     example: 
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+references:
+  - text: John Doe, The ins and outs of copy-pasting, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
+    doi: 10.1093/biosci/biab041
+  - text: Ruiping Yang, Yongkui Qi, Li Yang, Tao Chen, Aixing Deng, Jun Zhang, Zhenwei Song, Baoming Ge, Rotation regimes lead to significant differences in soil macrofaunal biodiversity and trophic structure with the changed soil properties in a rice-based double cropping system, Geoderma, 405, (115424), (2022).
+    doi: 10.1016/j.biab.2021.115424
