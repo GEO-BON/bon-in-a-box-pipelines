@@ -1,0 +1,15 @@
+description: "This script computes the range (max - min) of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures)."
+
+script: rangePredictions.R
+inputs:
+  predictions:
+    label: predictions
+    description: predictions rasters
+    type: image/tiff;application=geotiff
+    example: "/output/runSDM/modRunSDM_R/a2cb00aa7fb8278599666812601a9c76/sdm_pred.tif"
+outputs:
+  range_predictions:
+    label: range_predictions
+    description: 
+    type: image/tiff;application=geotiff
+

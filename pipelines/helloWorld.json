@@ -1,0 +1,85 @@
+{
+  "nodes": [
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 163.5,
+        "y": 0
+      },
+      "data": {
+        "descriptionFile": "helloWorld>helloPython.yml"
+      },
+      "z": 0,
+      "handleBounds": {
+        "source": [
+          {
+            "id": "increment",
+            "position": "right",
+            "x": 282.3499755859375,
+            "y": 7,
+            "width": 8,
+            "height": 8
+          }
+        ],
+        "target": [
+          {
+            "id": "some_int",
+            "position": "left",
+            "x": -3,
+            "y": 7,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "type": "output",
+      "position": {
+        "x": 569,
+        "y": -8
+      },
+      "data": {
+        "label": "Output"
+      },
+      "z": 1000,
+      "handleBounds": {
+        "source": null,
+        "target": [
+          {
+            "id": null,
+            "position": "left",
+            "x": -2,
+            "y": 15.5,
+            "width": 8,
+            "height": 8
+          }
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "2",
+      "sourceHandle": "increment",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-2increment-4"
+    }
+  ],
+  "viewport": {
+    "x": 291,
+    "y": 157,
+    "zoom": 1
+  },
+  "inputs": {
+    "helloWorld>helloPython.yml@2.some_int": {
+      "description": "A number that we will increment",
+      "label": "Some int",
+      "type": "int",
+      "example": 3
+    }
+  }
+}

@@ -4,15 +4,15 @@ import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
 import { FoldableOutput, RenderContext, createContext } from "./FoldableOutput";
 
-export function Result(props) {
+export function Result({data, metadata, logs}) {
     const [activeRenderer, setActiveRenderer] = useState({});
 
-    if (props.data || props.logs) {
+    if (data || logs) {
         return (
             <div>
                 <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
-                    <RenderedFiles key="files" files={props.data} metadata={props.metadata} />
-                    <RenderedLogs key="logs" logs={props.logs} />
+                    <RenderedFiles key="files" files={data} metadata={metadata} />
+                    <RenderedLogs key="logs" logs={logs} />
                 </RenderContext.Provider>
             </div>
         );
@@ -21,8 +21,7 @@ export function Result(props) {
     return null;
 }
 
-function RenderedFiles(props) {
-    const metadata = props.metadata;
+function RenderedFiles({files, metadata}) {
 
     function renderWithMime(key, content) {
         let mime = ""
@@ -91,8 +90,8 @@ function RenderedFiles(props) {
         return Array.isArray(content) ? content.join(', ') : content
     }
 
-    if (props.files) {
-        return Object.entries(props.files).map(entry => {
+    if (files) {
+        return Object.entries(files).map(entry => {
             const [key, value] = entry;
 
             if (key === "warning" || key === "error") {
@@ -127,13 +126,13 @@ function RenderedFiles(props) {
     }
 }
 
-function RenderedLogs(props) {
+function RenderedLogs({logs}) {
     const myId = "logs";
 
-    if (props.logs) {
+    if (logs) {
         return (
             <FoldableOutput title="Logs" componentId={myId} className="foldableOutput">
-                <pre>{props.logs}</pre>
+                <pre>{logs}</pre>
             </FoldableOutput>
         );
     }

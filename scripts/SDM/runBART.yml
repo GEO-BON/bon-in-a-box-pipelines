@@ -1,0 +1,37 @@
+script: runBART.R
+description: "This script creates an SDM and credible interval based on Bayesian additive regression trees (BARTs)."
+references:
+  - text: https://github.com/cjcarlson/embarcadero/
+  - text: Carlson, Colin J. embarcadero Species distribution modelling with Bayesian additive regression trees in r, Methods in Ecology and Evolution (2022).
+    doi: 10.1111/2041-210X.13389
+
+inputs:
+  presence_background:
+    label: presence background
+    description: Path to the background point
+    type: text/tab-separated-values
+    example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/presence_background.tsv"
+  predictors: 
+    label: predictors
+    description: layer names (predictors) as a list, or path to a list
+    type: image/tiff;application=geotiff
+    example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/predictors.tif"
+  quantile_min:
+    label: quantile min
+    description: lower bound for credible interval calculation
+    type: float
+    example: 0.025
+  quantile_max :
+    label: quantile max
+    description: upper bound for credible interval calculation 
+    type: float
+    example: 0.095  
+outputs:
+  sdm_pred:
+     label: predictions
+     description: mean posterior distribution of probability of presence
+     type: image/tiff;application=geotiff
+  sdm_uncertainty:
+     label: uncertainty
+     description: credible interval of the posterior distribution
+     type: image/tiff;application=geotiff

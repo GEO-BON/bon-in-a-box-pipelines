@@ -1,0 +1,44 @@
+script: selectBackground.R
+description: "This script creates a set of pseudo-absences/background points."
+
+inputs:
+  presence:
+    label: presence
+    description: Dataframe, presence data.
+    type: text/tab-separated-values
+    example: "/scripts/SDM/selectBackground_presence.tsv"
+  extent:
+    label: extent
+    description: shapefile, representing a study extent
+    type: application/dbf
+    example: "/scripts/SDM/extentToBbox_extent.shp"
+  method_background: 
+    label: method background
+    description: method used to sample background points
+    type: options
+    options: 
+      - random
+      - inclusion_buffer
+    example: random
+  n_background: 
+    label: number of background points
+    description: number of background points
+    type: int
+    example: 10000
+  predictors: 
+    label: predictors
+    description: raster, predictors variables 
+    type: image/tiff;application=geotiff
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+outputs:
+  n_background:
+    label: nb background 
+    description: number of background points selected
+    type: int
+    example: 20000
+  background:
+    label: background
+    description: TSV file containing a table with background points.
+    type: text/tab-separated-values
+    example:
+

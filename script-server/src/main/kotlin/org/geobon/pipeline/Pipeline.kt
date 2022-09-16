@@ -49,7 +49,11 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                         val type = nodeData.getString(NODE__DATA__TYPE)
 
                         constants[id] = if(type.endsWith("[]")) {
-                            val jsonArray = nodeData.getJSONArray(NODE__DATA__VALUE)
+                            val jsonArray = try {
+                                nodeData.getJSONArray(NODE__DATA__VALUE)
+                            } catch (e:Exception) {
+                                throw RuntimeException("Constant #$id has no value in JSON file.")
+                            }
 
                             ConstantPipe(type,
                                 when (type.removeSuffix("[]")) {
@@ -57,7 +61,12 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                                         for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
                                     }
                                     "float" -> mutableListOf<Float>().apply {
-                                        for (i in 0 until jsonArray.length()) add(jsonArray.optFloat(i))
+                                        for (i in 0 until jsonArray.length()) {
+                                            val float = jsonArray.optFloat(i)
+                                            if(!float.isNaN()) {
+                                                add(float)
+                                            }
+                                        }
                                     }
                                     "boolean" -> mutableListOf<Boolean>().apply {
                                         for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
@@ -68,16 +77,20 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                                     }
                                 })
                         } else {
-                            ConstantPipe(
-                                type,
-                                when (type) {
-                                    "int" -> nodeData.getInt(NODE__DATA__VALUE)
-                                    "float" -> nodeData.getFloat(NODE__DATA__VALUE)
-                                    "boolean" -> nodeData.getBoolean(NODE__DATA__VALUE)
-                                    // Everything else is read as text
-                                    else -> nodeData.getString(NODE__DATA__VALUE)
-                                }
-                            )
+                            try {
+                                ConstantPipe(
+                                    type,
+                                    when (type) {
+                                        "int" -> nodeData.getInt(NODE__DATA__VALUE)
+                                        "float" -> nodeData.getFloat(NODE__DATA__VALUE)
+                                        "boolean" -> nodeData.getBoolean(NODE__DATA__VALUE)
+                                        // Everything else is read as text
+                                        else -> nodeData.getString(NODE__DATA__VALUE)
+                                    }
+                                )
+                            } catch (e: Exception) {
+                                throw RuntimeException("Constant #$id has no value in JSON file.")
+                            }
                         }
                     }
                     NODE__TYPE_OUTPUT -> outputIds.add(id)
@@ -120,32 +133,33 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         // Link inputs from the input file to the pipeline
         inputs?.let {
             val inputsJSON = JSONObject(inputs)
-            val inputsSpec = pipelineJSON.getJSONObject(INPUTS)
-            val regex = """([.>\w]+)@(\d+)\.(\w+)""".toRegex()
-            inputsJSON.keySet().forEach { key ->
-                val inputSpec = inputsSpec.optJSONObject(key)
-                    ?: throw RuntimeException ("Input received \"$key\" is not listed pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
-                val type = inputSpec.getString(INPUTS__TYPE)
+            pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
+                val regex = """([.>\w]+)@(\d+)\.(\w+)""".toRegex()
+                inputsJSON.keySet().forEach { key ->
+                    val inputSpec = inputsSpec.optJSONObject(key)
+                        ?: throw RuntimeException("Input received \"$key\" is not listed pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
+                    val type = inputSpec.getString(INPUTS__TYPE)
 
-                val groups = regex.matchEntire(key)?.groups
-                    ?: throw RuntimeException("Input id \"$key\" is malformed")
-                //val path = groups[1]!!.value
-                val stepId = groups[2]!!.value
-                val inputId = groups[3]!!.value
+                    val groups = regex.matchEntire(key)?.groups
+                        ?: throw RuntimeException("Input id \"$key\" is malformed")
+                    //val path = groups[1]!!.value
+                    val stepId = groups[2]!!.value
+                    val inputId = groups[3]!!.value
 
-                val step = steps[stepId]
-                    ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
+                    val step = steps[stepId]
+                        ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
 
-                step.inputs[inputId] = ConstantPipe(
-                    type,
-                    when (type) {
-                        "int" -> inputsJSON.getInt(key)
-                        "float" -> inputsJSON.getFloat(key)
-                        "boolean" -> inputsJSON.getBoolean(key)
-                        // Everything else is read as text
-                        else -> inputsJSON.getString(key)
-                    }
-                )
+                    step.inputs[inputId] = ConstantPipe(
+                        type,
+                        when (type) {
+                            "int" -> inputsJSON.getInt(key)
+                            "float" -> inputsJSON.getFloat(key)
+                            "boolean" -> inputsJSON.getBoolean(key)
+                            // Everything else is read as text
+                            else -> inputsJSON.getString(key)
+                        }
+                    )
+                }
             }
 
             println(inputsJSON.toString(2))

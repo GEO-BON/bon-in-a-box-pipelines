@@ -1,10 +1,9 @@
 ## Environment variables available
 # Script location can be used to access other scripts
 ## Install required packages
-packages <- c("rjson", "raster", "dplyr", "tibble", "sp", "sf", "ratlas", "rgbif")
+pak::pkg_install(c("rjson", "raster", "dplyr", "tibble", "sp", "sf", "ratlas", "rgbif"))
 
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+
 ## Load required packages
 library("rjson")
 library("raster")
@@ -16,8 +15,8 @@ library("ratlas")
 library("rgbif")
 
 # Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "loadObservations/loadObservationsFunc.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "utils/utils.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "data/loadObservationsFunc.R", sep = "/"))
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
 
 ## Receiving args
