@@ -73,8 +73,9 @@ RUN set -ex; \
     apt-get install --no-install-recommends -y \
         # Remove "debconf: delaying package configuration, since apt-utils is not installed"
         apt-utils \
-        # Next 2 necessary to call add-apt-repository
+        # Next 3 necessary to call add-apt-repository
         lsb-release \
+		gpg-agent \
         software-properties-common; \
     # As per https://cloud.r-project.org/bin/linux/debian/
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key '95C0FAF38DB3CCAD0C080A7BDC78B2DDEABC47B7'; \
