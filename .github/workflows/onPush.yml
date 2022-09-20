@@ -23,7 +23,9 @@ jobs:
         arguments: build
         build-root-directory: script-server
 
-    - uses: actions/upload-artifact@v3
+    - name: Save test results
+      uses: actions/upload-artifact@v3
+      if: always()
       with:
         name: Test result
         path: script-server/build/reports/tests/test/index.html
