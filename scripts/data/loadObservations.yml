@@ -11,18 +11,18 @@ inputs:
     example: 5000
 outputs:
   n.observations:
-    label: n.observations
-    description: We can add plain text
+    label: Number of observations
+    description:
     type: int
     example: 8
   species:
     label: species
-    description: We can add plain text
+    description:
     type: text
     example: "Panthera onca"
   warning:
      label: warning
-     description: We can add plain text
+     description:
      type: text
      example: "Some warning"
   data:

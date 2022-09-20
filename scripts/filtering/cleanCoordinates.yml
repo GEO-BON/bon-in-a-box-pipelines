@@ -21,7 +21,7 @@ inputs:
     type: image/tiff;application=geotiff
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
   tests: 
-    labels: cleaning_tests
+    label: cleaning_tests
     description: tests to run from all tests available - capitals, centroids, same_pixel, equal, gbif, institutions, duplicates, urban, seas, zeros, env
     type: text[]
     example: 
