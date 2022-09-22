@@ -109,8 +109,6 @@ RUN set -ex; \
 				git; \
     apt-get clean all;
 
-RUN R -e 'install.packages("pak")'
-
 # Installing python
 RUN set -ex; \
     apt-get update; \

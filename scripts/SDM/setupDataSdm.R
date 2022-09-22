@@ -1,12 +1,17 @@
+
+
 ## Install required packages
-pak::pkg_install(c("terra", "rjson", "raster", "dplyr", "ENMeval"))
-pak::pkg_install("ReseauBiodiversiteQuebec/stac-catalogue")
+packages <- c("terra", "rjson", "raster", "dplyr", "ENMeval", "devtools")
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 
 library("devtools")
-pak::pkg_install(c("RCurl", "stars")) # appelmar/gdalcubes_R dependencies
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 
+
 ## Load required packages
+
 library("terra")
 library("rjson")
 library("raster")
@@ -14,6 +19,11 @@ library("dplyr")
 library("gdalcubes")
 library("ENMeval")
 library("stacatalogue")
+#library("devtools")
+#install.packages("ENMeval")
+#devtools::install_github("ReseauBiodiversiteQuebec/ratlas")
+#devtools::install_github("ReseauBiodiversiteQuebec/sdm-pipeline")
+
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/setupDataSdmFunc.R", sep = "/"))
