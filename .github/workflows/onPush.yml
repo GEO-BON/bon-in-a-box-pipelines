@@ -20,5 +20,13 @@ jobs:
     - name: Gradle build & test
       uses: gradle/gradle-build-action@v2
       with:
-        arguments: build
+        arguments: build --info
         build-root-directory: script-server
+
+    - name: Save test results
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: Test results
+        path: script-server/build/reports/tests/test/
+
