@@ -1,9 +1,10 @@
 ## Environment variables available
 # Script location can be used to access other scripts
 ## Install required packages
-pak::pkg_install(c("rjson", "raster", "dplyr", "tibble", "sp", "sf", "ratlas", "rgbif"))
+packages <- c("rjson", "raster", "dplyr", "tibble", "sp", "sf", "ratlas", "rgbif")
 
-
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 ## Load required packages
 library("rjson")
 library("raster")

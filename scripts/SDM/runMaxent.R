@@ -1,17 +1,18 @@
-## Install required packages
-pak::pkg_install("ReseauBiodiversiteQuebec/stac-catalogue")
 
-library("devtools")
-pak::pkg_install(c("RCurl", "stars")) # appelmar/gdalcubes_R dependencies
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
+
+## Install required packages
 
 ## Load required packages
+
 library("terra")
 library("rjson")
 library("raster")
 library("dplyr")
 library("gdalcubes")
 library("ENMeval")
+library("devtools")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 library("stacatalogue")
 
 
