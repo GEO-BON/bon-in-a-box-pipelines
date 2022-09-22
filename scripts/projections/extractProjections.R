@@ -41,18 +41,18 @@ cube <-
            collections = c(input$collections), 
            use.obs = T,
            obs = obs.coords,
-           srs.obs = input$srs.obs,
+           srs.obs = input$srs_obs,
            lon = "decimalLongitude",
            lat = "decimalLatitude",
            buffer.box = input$buffer.box,
            layers= input$layers,
-           srs.cube = input$srs.cube,
+           srs.cube = input$srs_cube,
            t0 = input$t0,
            t1 = input$t1,
-           spatial.res = input$spatial.res,
-           temporal.res = input$temporal.res) 
+           spatial.res = input$spatial_res,
+           temporal.res = input$temporal_res) 
 
-obs.proj <-  projectCoords(obs.coords, lon = "decimalLongitude", lat = "decimalLatitude", proj.from = input$srs.obs, proj.to = input$srs.cube)
+obs.proj <-  projectCoords(obs.coords, lon = "decimalLongitude", lat = "decimalLatitude", proj.from = input$srs_obs, proj.to = input$srs_cube)
 obs <- bind_cols(obs, 
                  setNames(data.frame(obs.proj), c("lon", "lat"))) 
 

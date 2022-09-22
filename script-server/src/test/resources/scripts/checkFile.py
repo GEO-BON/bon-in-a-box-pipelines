@@ -5,8 +5,7 @@ inputFile = open(sys.argv[1] + '/input.json')
 data = json.load(inputFile)
 pathIn = data['file']
 
-# Do stuff.
-print(pathIn)
+# Checking if this is a file...
 present = os.path.isfile(pathIn)
 
 # Serializing output.json
