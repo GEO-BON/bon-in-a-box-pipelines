@@ -19,7 +19,7 @@ inputs:
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
   partition_type :
     label: partition type
-    description: partition type
+    description: method to partition into test and training sets to perform model fitting and validation.
     type: options
     options: 
       - bootstrap
@@ -27,23 +27,23 @@ inputs:
       - none
   runs_n:
     label: number of runs
-    description: number of runs
+    description: number of runs (in bootstrap or crossvalidation method)
     type: int
     example: 2
   boot_proportion:
     label: bootstrap proportion
-    description: proportion of points to be sampled for bootstrap
+    description: proportion of presences and absences in the dataset that will be used as training data with bootstrap method.
     type: float
     example: 0.7
   cv_partitions:
-    label: crossvalidation partitions
-    description: number of partitions in the crossvalidation
+    label: number of crossvalidation partitions
+    description: number of partitions for each run with crossvalidation method.
     type: int
     example: 5
 outputs:
   presence_background:
     label: background presence
-    description: Presence-background points with covariates values.
+    description: presence-background points with covariates values.
     type: text/tab-separated-values
 
 
