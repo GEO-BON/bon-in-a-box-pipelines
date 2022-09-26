@@ -144,7 +144,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
             }
 
             val command = when (scriptFile.extension) {
-                "jl", "JL" -> mutableListOf("julia")
+                "jl", "JL" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-julia", "julia")
                 "r", "R" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-r", "Rscript")
                 "sh" -> mutableListOf("sh")
                 "py", "PY" -> mutableListOf("python3")
