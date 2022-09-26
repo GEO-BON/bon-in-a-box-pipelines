@@ -65,37 +65,6 @@ RUN set -eux; \
 	[ -z "$savedAptMark" ] || apt-mark manual $savedAptMark; \
 	apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false;
 
-## Install R
-# First RUN command to install R-base
-ENV R_BASE_VERSION 4.1.2
-RUN set -ex; \
-    apt-get update; \
-    apt-get install --no-install-recommends -y \
-        # Remove "debconf: delaying package configuration, since apt-utils is not installed"
-        apt-utils \
-        # Next 3 necessary to call add-apt-repository
-        lsb-release \
-		gpg-agent \
-        software-properties-common; \
-    # As per https://cloud.r-project.org/bin/linux/ubuntu/
-    wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc; \
-    add-apt-repository "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/"; \
-    add-apt-repository ppa:c2d4u.team/c2d4u4.0+; \
-    apt-get update; \
-    \
-    # R installation \
-    apt-get install -y --no-install-recommends \
-        r-base=${R_BASE_VERSION}-* \
-		r-base-dev=${R_BASE_VERSION}-* \
-        r-base-core=${R_BASE_VERSION}-* \
-		r-recommended=${R_BASE_VERSION}-* \
-    Rscript --version; \
-    apt-get clean all;
-
-# Second RUN command to be able to compile some packages on the fly
-RUN apt-get update; \
-    apt-get install -y --no-install-recommends build-essential gfortran;
-
 #INSTALL DOCKER CLI
 ENV DOCKER_VERSION=20.10.9
 RUN curl -sfL -o docker.tgz "https://download.docker.com/linux/static/stable/x86_64/docker-${DOCKER_VERSION}.tgz" && \
@@ -103,25 +72,10 @@ RUN curl -sfL -o docker.tgz "https://download.docker.com/linux/static/stable/x86
   mv docker /usr/local/bin && \
   rm docker.tgz
 
-
 RUN curl -L "https://github.com/docker/compose/releases/download/v2.3.3/docker-compose-linux-x86_64" -o /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker-compose
+RUN chmod +x /usr/local/bin/docker
 
-# Third RUN command to install some pre-built r libs
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends \
-        libgdal-dev \
-        libproj-dev \
-        libudunits2-dev \
-        r-cran-devtools \
-        r-cran-rjson \
-        r-cran-rcppeigen \
-        r-cran-rjava ;\
-    apt-get clean all;
-
-# If there is something missing in the R installation, we can check what is done here for inspiration:
-# https://github.com/rocker-org/rocker/blob/master/r-base/latest/Dockerfile
 
 RUN set -ex; \
     apt-get update; \

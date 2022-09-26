@@ -17,11 +17,24 @@ services:
       - SCRIPT_LOCATION=/scripts
       - PIPELINES_LOCATION=/pipelines
       - OUTPUT_LOCATION=/output
+      - HOST_PATH=${PWD}
+    depends_on:
+      - runner-r
+
+
+  runner-r:
+    container_name: biab-runner-r
+    image: rocker/geospatial
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./output:/output:rw
+    environment:
+      - SCRIPT_LOCATION=/scripts
+      - OUTPUT_LOCATION=/output
       - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
       - GBIF_USER=${GBIF_USER}
       - GBIF_PWD=${GBIF_PWD}
       - GBIF_EMAIL=${GBIF_EMAIL}
-      - HOST_PATH=${PWD}
 
   http-gateway:
     container_name: http-rev-prox
