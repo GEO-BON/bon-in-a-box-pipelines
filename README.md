@@ -18,10 +18,24 @@ To run:
   - This needs to be re-run everytime the server code changes, or when using git pull if you are not certain.
   - The first execution will be very long. The next ones will be shorter or immediate, depending on the changes.
   - Network problems may fail the process. First try running the command again. Intermediate states are saved so not everything will be redone even when there is a failure.
-5. `docker compose up -d`
-6. In browser:
+5. Provide an environment file (.env) in the root folder with the following keys
+```
+# Access the planetary computer APIs
+JUPYTERHUB_API_TOKEN=
+DASK_GATEWAY__AUTH__TYPE=
+DASK_GATEWAY__CLUSTER__OPTIONS__IMAGE=
+DASK_GATEWAY__ADDRESS=
+DASK_GATEWAY__PROXY_ADDRESS=
+
+# Access GBIF API
+GBIF_USER=
+GBIF_PWD=
+GBIF_EMAIL=
+```
+6. `docker compose up -d`
+7. In browser:
     - http://localhost/ shows the UI
-7. `docker compose down` (to stop the server when done)
+8. `docker compose down` (to stop the server when done) 
 
 Servers do not need to be restarted when modifying scripts in the /scripts folder:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
