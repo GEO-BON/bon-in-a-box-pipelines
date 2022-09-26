@@ -15,7 +15,7 @@ packages <- c("devtools","dplyr","tidyr","ggplot2","remotes","purrr","tmap","ras
               "stacatalogue","gdalcubes","ellipsis","rstac","RColorBrewer","RCurl","tmaptools")
 
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) pak::pkg_install("ReseauBiodiversiteQuebec/stac-catalogue")
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) pak::pkg_install("appelmar/gdalcubes_R")
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) pak::pkg_install(new.packages)
