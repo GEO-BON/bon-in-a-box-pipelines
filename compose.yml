@@ -25,7 +25,9 @@ services:
 
   runner-r:
     container_name: biab-runner-r
-    image: rocker/geospatial:4.2.1
+    build:
+      context: ./runners
+      dockerfile: r-dockerfile
     command: sh # Override default command to avoid launching R-studio server.
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
