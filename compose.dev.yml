@@ -38,8 +38,6 @@ services:
     volumes:
       - ./script-server:/home/gradle/project:rw
     working_dir: /home/gradle/project
-    environment:
-      - R_LIBS_USER=/home/gradle/project/r-libs-dev
     command: gradle run
 
 ## Server to use when making changes to the OpenAPI specification.
