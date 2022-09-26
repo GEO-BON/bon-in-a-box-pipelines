@@ -182,4 +182,8 @@ fun Route.ScriptApi(logger: Logger) {
         }
     }
 
+    get<Paths.stopPipeline> {
+        call.respond(HttpStatusCode.NotImplemented)
+    }
+
 }

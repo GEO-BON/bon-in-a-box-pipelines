@@ -127,6 +127,7 @@ Class | Method | HTTP request | Description
 *BonInABoxScriptService.DefaultApi* | [**runPipeline**](docs/DefaultApi.md#runPipeline) | **POST** /pipeline/{descriptionPath}/run | Run this pipeline
 *BonInABoxScriptService.DefaultApi* | [**runScript**](docs/DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
 *BonInABoxScriptService.DefaultApi* | [**scriptListGet**](docs/DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
+*BonInABoxScriptService.DefaultApi* | [**stopPipeline**](docs/DefaultApi.md#stopPipeline) | **GET** /pipeline/{id}/stop | Stop the specified pipeline run
 
 
 ## Documentation for Models
