@@ -8,194 +8,214 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 options(timeout = max(60000000, getOption("timeout")))
 
-## Install required packages
-install.packages("pak")
-packages <- c("devtools","dplyr","tidyr","ggplot2","remotes","purrr","tmap","raster","ggsci","readr",
-              "rgbif","rgdal","sf","httr","jsonlite","landscapemetrics","rjson","stars",
-              "stacatalogue","gdalcubes","ellipsis","rstac","RColorBrewer","RCurl","tmaptools")
+# update.packages(.libPaths()[3],ask=F)
+# print(packageDescription("rlang"))
+# print(.libPaths())
+# remove.packages("rlang",lib = .libPaths()[3])
 
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) pak::pkg_install("ReseauBiodiversiteQuebec/stac-catalogue")
+# install.packages("rlang",lib=.libPaths()[3])
+
+## Install required packages
+packages <- c("devtools","rlang","dplyr","tidyr","ggplot2","remotes","purrr","tmap","raster","ggsci","readr",
+              "rgbif","rgdal","sf","httr","jsonlite","landscapemetrics","rjson","stars",
+              "stacatalogue","gdalcubes","rstac","RColorBrewer","RCurl","tmaptools")
+install.packages('devtools', dependecies=TRUE)
+devtools::install_github("r-lib/ellipsis")
+
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) pak::pkg_install(new.packages)
+if(length(new.packages)) install.packages(new.packages)
 
+
+# install.packages("rlang")
+print(packageDescription("rlang")$Version)
 lapply(packages,require,character.only=T)
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
-
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
-print("Inputs: ")
-print(input)
-
-#Define species
-sp <- input$species
-
-#Define CRS 
-ref_system <- input$ref_system
-epsg <- make_EPSG()
-epsg_crs <- CRS(na.exclude(epsg$prj4[epsg$code==ref_system])[1]) 
-sf_crs <- st_crs(ref_system)
-srs_cube <- paste0("EPSG:",ref_system)
-
-#margin for elevation range
-elev_margin <- input$elev_margin
-#forest threshold for GFW
-forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
-#define country if the area of analysis will be restricted to a specific country
-country_code <- input$country_code
-
-#spatial resolution
-spat_res <- input$spat_res
-
-#Define source of expert range maps
-expert_source <- input$expert_source
-
-#define time steps
-t_0 <- input$t_0
-t_n <- input$t_n # should be larger than t_0 at least 2 years needed
-time_step <- input$time_step
-t_range <- ((t_n - t_0)/time_step)
-v_time_steps <- seq(t_0,t_n,time_step)
-
-#credentials
-token <- Sys.getenv("IUCN_TOKEN")
-
-#Filter source for land cover, global or colombia
-# LC_source <- input$lc_source
-
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
-
-#-------------------------------------------------------------------------------------------------------------------
-#1. Species distribution range
-#-------------------------------------------------------------------------------------------------------------------
-#1.1 Load expert range maps-------------------------------------------------------------
-#Define species class
-res <- GET(paste0("https://apiv3.iucnredlist.org/api/v3/species/",sp,"?token=",token))
-js_IUCN_sheet <- rawToChar(res$content)
-df_IUCN_sheet <- do.call(rbind,fromJSON(js_IUCN_sheet)$result) |> as.data.frame() 
-
-class <- stringr::str_to_sentence(df_IUCN_sheet$class) # taxonomic group to choose data source to download maps for IUCN
-order <- stringr::str_to_sentence(df_IUCN_sheet$order) # taxonomic group to choose data source to download maps for MOL
-
-#Get range map #filter by expert source missing
-if(expert_source=="IUCN"){
-  sf_range_map <- sf::st_read(paste0("https://object-arbutus.cloud.computecanada.ca/bq-io/io/",expert_source,"_rangemaps/",gsub(" ","%20",sp),".gpkg"))
-}else{
-  sf_range_map <- sf::st_read(paste0("https://object-arbutus.cloud.computecanada.ca/bq-io/io/",expert_source,"_rangemaps/",gsub(" ","%20",sp),".gpkg"))
-}
 
 
-#get bounding box cropped by country if needed
-if(!is.na(country_code)){
-  sf_area_lim1 <- getData('GADM', country=country_code, level=0) %>% st_as_sf() %>% st_make_valid()# %>% st_transform(st_crs("wgs84"))
-  sf_area_lim1_crs <- sf_area_lim1 %>% st_transform(sf_crs)
-  
-  sf_area_lim2 <- sf_range_map %>% st_make_valid
-  sf_area_lim2_crs <- sf_area_lim2 %>% st_transform(sf_crs)
-  
-  sf_area_lim <- st_intersection(sf_area_lim2,sf_area_lim1 %>% st_transform(st_crs(sf_area_lim1)))#issue NOT SOLVED
-  sf_area_lim_crs <- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs) %>% st_make_valid()
-  
-  sf_ext <- st_bbox(sf_area_lim %>% st_buffer(10))
-  sf_ext_crs <- st_bbox(sf_area_lim_crs %>% st_buffer(10))
-}else{
-  sf_area_lim <- sf_range_map
-  sf_area_lim_crs <- sf_area_lim %>% st_transform(sf_crs)
-  sf_ext <- st_bbox(sf_area_lim %>% st_buffer(10)) 
-  sf_ext_crs <- st_bbox(sf_area_lim_crs %>% st_buffer(10))
-}
-
-#1.4 Final range----------------------------------------------------------------
-#Create raster
-r_frame <- raster(raster::extent(sf_ext_crs),resolution=spat_res,crs=epsg_crs)
-values(r_frame) <- rep(1,ncell(r_frame))
-r_suitability_map <- raster::mask(r_frame,as(sf_area_lim_crs,"Spatial"))
-
-#-------------------------------------------------------------------------------------------------------------------
-#2. Habitat Preferences
-#-------------------------------------------------------------------------------------------------------------------
-#2.1 Load elevation preferences---------------------------------------------
-df_IUCN_sheet_condition <- df_IUCN_sheet |> mutate(
-  min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
-  is.null(elevation_lower) ~ NA_real_,
-  !is.null(elevation_lower) & as.numeric(elevation_lower) < elev_margin ~ 0,
-  !is.null(elevation_lower) & as.numeric(elevation_lower) >= elev_margin ~ as.numeric(elevation_lower) - elev_margin),
-  max_elev= case_when(
-  is.null(elevation_upper) ~ NA_real_,
-  !is.null(elevation_upper) ~ as.numeric(elevation_upper) + elev_margin),
-  condition= case_when( #generate possible options according to availability of minimum and maximum elevation values
-  is.na(min_elev)  & is.na(max_elev)  ~ 1, # when there is no data for elevation ranges
-  !is.na(min_elev) & !is.na(max_elev) ~ 2, # when the elevation ranges are available
-  !is.na(min_elev) & is.na(max_elev)  ~ 3, # when there is just data for the maximum elevation
-  is.na(min_elev)  & !is.na(max_elev) ~ 4) # when there is just data for the minimum elevation
-)
-
-with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are provided then the suitability map stays the same
-  r_suitability_map <<- terra::rast(r_suitability_map)
-}else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
-  # STRM from Copernicus
-  cube_STRM <<- 
-    load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
-              limit = 1000, 
-              collections = c("cop-dem-glo-90"), 
-              use.obs = F,
-              buffer.box = 0,
-              bbox = sf_ext_crs,
-              srs.cube = srs_cube,
-              spatial.res = spat_res,
-              temporal.res = "P1Y",
-              t0 = "2021-04-22",
-              t1 = "2021-04-22",
-              resampling = "bilinear")
-  if(condition == 2){ # if both values exist
-    cube_STRM_range <<- cube_STRM |> 
-      gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> 
-      gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
-  }else{ # if only one value exist
-    if(condition == 3){ # if just maximum elevation available filter by that
-      cube_STRM_range <<- cube_STRM |> 
-        gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> select_bands("data")
-    }
-    if(condition == 4){ # if just minimum elevation available filter by that
-      cube_STRM_range <<- cube_STRM |> 
-        gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
-    }
-  }
-  #convert to raster
-  r_STRM_range <<- cube_STRM_range  |> st_as_stars() |> terra::rast()
-  
-  #resample to raster of SDM
-  r_STRM_range_res <<- terra::resample(r_STRM_range, terra::rast(r_suitability_map))
-  r_suitability_map <<- terra::mask(terra::crop(terra::rast(r_suitability_map),r_STRM_range_res),r_STRM_range_res) #Crop LC to suitability extent
-}
-)
-
-#2.2 Load habitat preferences---------------------------------------------
-habitat <- GET(paste0("https://apiv3.iucnredlist.org/api/v3/habitats/species/name/",sp,"?token=",token))
-js_IUCN_habitat_cat <- rawToChar(habitat$content)
-df_IUCN_habitat_cat <- do.call(rbind,fromJSON(js_IUCN_habitat_cat)$result) |> as.data.frame() |> mutate_if(is.list,as.character)
-
-df_IUCN_habitat_cat
-
-#Load table with land cover equivalences need to be updated with Jung et al
-df_IUCN_to_LC_categories <- read.csv("./IUCN_to_LC_categories.csv",colClasses = "character") # PENDING PUT 0.5 TO MARGINAL HABITATS
-df_IUCN_habitat_LC_cat <- left_join(df_IUCN_habitat_cat,df_IUCN_to_LC_categories, by="code")
-LC_codes <- as.numeric(unique(df_IUCN_habitat_LC_cat$ESA_cod))
-
-img_map_habitat_changes <- tm_shape(r_suitability_map)+tm_raster()+
-  tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
-  tm_scale_bar()+tm_legend(show=F)
-
-img_map_habitat_changes
-
-# tmap_save(img_map_habitat_changes, paste0(outputFolder,sp,"_GFW_change.png"))
+# ## Receiving args
+# args <- commandArgs(trailingOnly=TRUE)
+# outputFolder <- args[1] # Arg 1 is always the output folder
+# cat(args, sep = "\n")
+# 
+# input <- fromJSON(file=file.path(outputFolder, "input.json"))
+# print("Inputs: ")
+# print(input)
+# 
+# #Define species
+# sp <- input$species
+# 
+# #Define CRS 
+# ref_system <- input$ref_system
+# epsg <- make_EPSG()
+# epsg_crs <- CRS(na.exclude(epsg$prj4[epsg$code==ref_system])[1]) 
+# sf_crs <- st_crs(ref_system)
+# srs_cube <- paste0("EPSG:",ref_system)
+# 
+# #margin for elevation range
+# elev_margin <- input$elev_margin
+# #forest threshold for GFW
+# forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
+# #define country if the area of analysis will be restricted to a specific country
+# country_code <- input$country_code
+# 
+# #spatial resolution
+# spat_res <- input$spat_res
+# 
+# #Define source of expert range maps
+# expert_source <- input$expert_source
+# 
+# #define time steps
+# t_0 <- input$t_0
+# t_n <- input$t_n # should be larger than t_0 at least 2 years needed
+# time_step <- input$time_step
+# t_range <- ((t_n - t_0)/time_step)
+# v_time_steps <- seq(t_0,t_n,time_step)
+# 
+# #credentials
+# token <- Sys.getenv("IUCN_TOKEN")
+# 
+# #Filter source for land cover, global or colombia
+# # LC_source <- input$lc_source
+# 
+# ## Receiving args
+# args <- commandArgs(trailingOnly=TRUE)
+# outputFolder <- args[1] # Arg 1 is always the output folder
+# cat(args, sep = "\n")
+# 
+# #-------------------------------------------------------------------------------------------------------------------
+# #1. Species distribution range
+# #-------------------------------------------------------------------------------------------------------------------
+# #1.1 Load expert range maps-------------------------------------------------------------
+# #Define species class
+# res <- GET(paste0("https://apiv3.iucnredlist.org/api/v3/species/",sp,"?token=",token))
+# js_IUCN_sheet <- rawToChar(res$content)
+# df_IUCN_sheet <- do.call(rbind,fromJSON(js_IUCN_sheet)$result) |> as.data.frame() 
+# 
+# class <- stringr::str_to_sentence(df_IUCN_sheet$class) # taxonomic group to choose data source to download maps for IUCN
+# order <- stringr::str_to_sentence(df_IUCN_sheet$order) # taxonomic group to choose data source to download maps for MOL
+# 
+# print(class)
+# 
+# #Get range map #filter by expert source missing
+# if(expert_source=="IUCN"){
+#   sf_range_map <- sf::st_read(paste0("https://object-arbutus.cloud.computecanada.ca/bq-io/io/",expert_source,"_rangemaps/",gsub(" ","%20",sp),".gpkg"))
+# }else{
+#   sf_range_map <- sf::st_read(paste0("https://object-arbutus.cloud.computecanada.ca/bq-io/io/",expert_source,"_rangemaps/",gsub(" ","%20",sp),".gpkg"))
+# }
+# 
+# 
+# #get bounding box cropped by country if needed
+# if(!is.na(country_code)){
+#   sf_area_lim1 <- getData('GADM', country=country_code, level=0) %>% st_as_sf() %>% st_make_valid()# %>% st_transform(st_crs("wgs84"))
+#   sf_area_lim1_crs <- sf_area_lim1 %>% st_transform(sf_crs)
+#   
+#   sf_area_lim2 <- sf_range_map %>% st_make_valid
+#   sf_area_lim2_crs <- sf_area_lim2 %>% st_transform(sf_crs)
+#   
+#   sf_area_lim <- st_intersection(sf_area_lim2,sf_area_lim1 %>% st_transform(st_crs(sf_area_lim1)))#issue NOT SOLVED
+#   sf_area_lim_crs <- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs) %>% st_make_valid()
+#   
+#   sf_ext <- st_bbox(sf_area_lim %>% st_buffer(10))
+#   sf_ext_crs <- st_bbox(sf_area_lim_crs %>% st_buffer(10))
+# }else{
+#   sf_area_lim <- sf_range_map
+#   sf_area_lim_crs <- sf_area_lim %>% st_transform(sf_crs)
+#   sf_ext <- st_bbox(sf_area_lim %>% st_buffer(10)) 
+#   sf_ext_crs <- st_bbox(sf_area_lim_crs %>% st_buffer(10))
+# }
+# 
+# #1.4 Final range----------------------------------------------------------------
+# #Create raster
+# r_frame <- raster(raster::extent(sf_ext_crs),resolution=spat_res,crs=epsg_crs)
+# values(r_frame) <- rep(1,ncell(r_frame))
+# r_suitability_map <- raster::mask(r_frame,as(sf_area_lim_crs,"Spatial"))
+# 
+# #-------------------------------------------------------------------------------------------------------------------
+# #2. Habitat Preferences
+# #-------------------------------------------------------------------------------------------------------------------
+# #2.1 Load elevation preferences---------------------------------------------
+# df_IUCN_sheet_condition <- df_IUCN_sheet |> mutate(
+#   min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
+#   is.null(elevation_lower) ~ NA_real_,
+#   !is.null(elevation_lower) & as.numeric(elevation_lower) < elev_margin ~ 0,
+#   !is.null(elevation_lower) & as.numeric(elevation_lower) >= elev_margin ~ as.numeric(elevation_lower) - elev_margin),
+#   max_elev= case_when(
+#   is.null(elevation_upper) ~ NA_real_,
+#   !is.null(elevation_upper) ~ as.numeric(elevation_upper) + elev_margin),
+#   condition= case_when( #generate possible options according to availability of minimum and maximum elevation values
+#   is.na(min_elev)  & is.na(max_elev)  ~ 1, # when there is no data for elevation ranges
+#   !is.na(min_elev) & !is.na(max_elev) ~ 2, # when the elevation ranges are available
+#   !is.na(min_elev) & is.na(max_elev)  ~ 3, # when there is just data for the maximum elevation
+#   is.na(min_elev)  & !is.na(max_elev) ~ 4) # when there is just data for the minimum elevation
+# )
+# 
+# with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are provided then the suitability map stays the same
+#   r_suitability_map <<- terra::rast(r_suitability_map)
+# }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
+#   # STRM from Copernicus
+#   cube_STRM <<- 
+#     load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
+#               limit = 1000, 
+#               collections = c("cop-dem-glo-90"), 
+#               use.obs = F,
+#               buffer.box = 0,
+#               bbox = sf_ext_crs,
+#               srs.cube = srs_cube,
+#               spatial.res = spat_res,
+#               temporal.res = "P1Y",
+#               t0 = "2021-04-22",
+#               t1 = "2021-04-22",
+#               resampling = "bilinear")
+#   if(condition == 2){ # if both values exist
+#     cube_STRM_range <<- cube_STRM |> 
+#       gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> 
+#       gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
+#   }else{ # if only one value exist
+#     if(condition == 3){ # if just maximum elevation available filter by that
+#       cube_STRM_range <<- cube_STRM |> 
+#         gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> select_bands("data")
+#     }
+#     if(condition == 4){ # if just minimum elevation available filter by that
+#       cube_STRM_range <<- cube_STRM |> 
+#         gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
+#     }
+#   }
+#   #convert to raster
+#   r_STRM_range <<- cube_STRM_range  |> st_as_stars() |> terra::rast()
+#   
+#   #resample to raster of SDM
+#   r_STRM_range_res <<- terra::resample(r_STRM_range, terra::rast(r_suitability_map))
+#   r_suitability_map <<- terra::mask(terra::crop(terra::rast(r_suitability_map),r_STRM_range_res),r_STRM_range_res) #Crop LC to suitability extent
+# }
+# )
+# 
+# #2.2 Load habitat preferences---------------------------------------------
+# habitat <- GET(paste0("https://apiv3.iucnredlist.org/api/v3/habitats/species/name/",sp,"?token=",token))
+# js_IUCN_habitat_cat <- rawToChar(habitat$content)
+# df_IUCN_habitat_cat <- do.call(rbind,fromJSON(js_IUCN_habitat_cat)$result) |> as.data.frame() |> mutate_if(is.list,as.character)
+# 
+# write_tsv(df_IUCN_habitat_cat,file=file.path(outputFolder, "_SHI_table.tsv"))
+# 
+# print(file.path(outputFolder, "_SHI_table.tsv"))
+# 
+# # #Load table with land cover equivalences need to be updated with Jung et al
+# # df_IUCN_to_LC_categories <- read.csv("./IUCN_to_LC_categories.csv",colClasses = "character") # PENDING PUT 0.5 TO MARGINAL HABITATS
+# # df_IUCN_habitat_LC_cat <- left_join(df_IUCN_habitat_cat,df_IUCN_to_LC_categories, by="code")
+# # LC_codes <- as.numeric(unique(df_IUCN_habitat_LC_cat$ESA_cod))
+# # 
+# # img_map_habitat_changes <- tm_shape(r_suitability_map)+tm_raster()+
+# #   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
+# #   tm_scale_bar()+tm_legend(show=F)
+# # 
+# # tmap_save(img_map_habitat_changes, file.path(outputFolder, "_GFW_change.png"))
+# 
+# output <- list("df_SHI" = file.path(outputFolder, "_SHI_table.tsv")) 
+# 
+# jsonData <- toJSON(output, indent=2)
+# write(jsonData, file.path(outputFolder,"output.json"))
 
 # 
 # #2.3 Hydrological features---------------------------------------------
