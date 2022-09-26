@@ -25,7 +25,9 @@ services:
 
   runner-r:
     container_name: biab-runner-r
-    image: rocker/geospatial
+    image: rocker/geospatial:4.2.1
+    command: sh # Override default command to avoid launching R-studio server.
+    tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
       - ./scripts:/scripts:ro
       - ./output:/output:rw
@@ -42,7 +44,8 @@ services:
     build:
       context: ./runners
       dockerfile: julia-dockerfile
-    tty: true # This is needed to keep the container alive, waiting for requests.
+    command: sh # Avoids launching julia session that will not be used.
+    tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
       - ./scripts:/scripts:ro
       - ./output:/output:rw
