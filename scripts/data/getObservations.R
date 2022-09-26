@@ -3,9 +3,7 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-packages <- c("rgbif", "rjson", "raster", "dplyr", "stringr")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+install.packages(c("rgbif", "rjson", "raster", "dplyr", "stringr"))
 
 ## Load required packages
 library("rgbif")

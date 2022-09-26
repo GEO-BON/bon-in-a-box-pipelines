@@ -7,10 +7,11 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
-val pipelinesRoot = File(System.getenv("PIPELINES_LOCATION"))
-
 class Pipeline(descriptionFile: File, inputs: String? = null) {
-    constructor(relPath: String, inputs: String? = null) : this(File(pipelinesRoot, relPath), inputs)
+    constructor(relPath: String, inputs: String? = null) : this(
+        File(System.getenv("PIPELINES_LOCATION"), relPath),
+        inputs
+    )
 
     companion object {
         private val logger: Logger = LoggerFactory.getLogger("Pipeline")
@@ -52,7 +53,6 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                             val jsonArray = try {
                                 nodeData.getJSONArray(NODE__DATA__VALUE)
                             } catch (e:Exception) {
-                                e.printStackTrace()
                                 throw RuntimeException("Constant #$id has no value in JSON file.")
                             }
 
@@ -90,7 +90,6 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                                     }
                                 )
                             } catch (e: Exception) {
-                                e.printStackTrace()
                                 throw RuntimeException("Constant #$id has no value in JSON file.")
                             }
                         }

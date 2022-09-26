@@ -12,10 +12,13 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import kotlinx.coroutines.launch
-import org.geobon.pipeline.*
+import org.geobon.pipeline.EDGES_LIST
+import org.geobon.pipeline.NODES_LIST
+import org.geobon.pipeline.Pipeline
+import org.geobon.pipeline.VIEWPORT
 import org.geobon.script.ScriptRun
+import org.geobon.script.ScriptRun.Companion.scriptRoot
 import org.geobon.script.outputRoot
-import org.geobon.script.scriptRoot
 import org.json.JSONObject
 import org.openapitools.server.Paths
 import org.openapitools.server.models.ScriptRunResult
@@ -31,15 +34,16 @@ import java.io.File
  */
 const val FILE_SEPARATOR = '>'
 
-val runningPipelines = mutableMapOf<String, Pipeline>()
+private val gson = Gson()
+private val pipelinesRoot = File(System.getenv("PIPELINES_LOCATION"))
+
+private val runningPipelines = mutableMapOf<String, Pipeline>()
 
 private fun getLiveOutput(pipeline: Pipeline): Map<String, String> {
     val allOutputs = mutableMapOf<String, String>()
     pipeline.dumpOutputFolders(allOutputs)
     return allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
 }
-
-private val gson = Gson()
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptApi(logger: Logger) {
@@ -131,7 +135,7 @@ fun Route.ScriptApi(logger: Logger) {
         val descriptionPath = parameters.descriptionPath
         logger.info("Pipeline: $descriptionPath\nBody:$inputFileContent")
 
-        // Unique   to this pipeline                                               and to these params
+        // Unique   to this pipeline                                         and to these params
         val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
 

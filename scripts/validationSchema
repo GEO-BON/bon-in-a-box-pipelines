@@ -1,0 +1,93 @@
+script:
+  required: true
+  type: string
+
+description:
+  required: true
+  type: string
+
+external_link:
+  required: false
+  nullable: true
+  type: string
+  regex: '^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$'
+
+inputs:
+  required: false
+  nullable: true
+  type: dict
+  keysrules: 
+   type: string
+   regex: "[a-z0-9_]+"
+  valuesrules: 
+    schema: 
+      label:
+        required: true
+        type: string
+      description:
+        required: true
+        type: string
+      type:
+        required: true
+        type: string
+      options:
+        required: false
+        type: list
+        dependencies:
+          type: options
+      example:
+        required: true
+        nullable: true
+        oneof:
+        - type: number
+        - type: string
+          nullable: true
+        - type: boolean
+        - type: list
+
+outputs:
+  required: false
+  nullable: true
+  type: dict
+  keysrules: 
+   type: string
+   regex: "[a-z_]+"
+  valuesrules: 
+    schema: 
+      label:
+        required: true
+        type: string
+      description:
+        required: true
+        type: string
+      type:
+        required: true
+        type: string
+      options:
+        required: false
+        type: list
+        dependencies:
+          type: options
+      example:
+        required: false
+        nullable: true
+        oneof:
+        - type: number
+        - type: string
+          nullable: true
+        - type: boolean
+        - type: list
+
+references:
+  required: false
+  nullable: true
+  type: list
+  schema:
+    type: dict
+    schema: 
+      text: 
+        required: true
+        type: string
+      doi:
+        required: false
+        type: string

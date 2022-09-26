@@ -87,7 +87,7 @@ export function PipelinePage(props) {
 function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
   const formRef = useRef(null);
 
-  const defaultPipeline = "HelloWorld.json";
+  const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {
@@ -129,6 +129,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
       }
     };
 
+    clearPreviousRequest()
     let opts = {
       'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
     };
