@@ -1,0 +1,76 @@
+script: loadPredictors.R
+description: "This sample script shows how it works."
+inputs:
+  extent:
+    label: extent
+    description: shapefile, representing a study extent
+    type: application/dbf
+    example: "/scripts/SDM/extentToBbox_extent.shp"
+  source:
+    label: source
+    description: type of source to load the predictors (either from tif, or from the stac catalogue)
+    type: options
+    options:
+      - from_tif
+      - from_cube
+    example: "from_cube"
+  layers: 
+    label: layers
+    description: names of layers to select, if empty all the layers from the collection will be used
+    type: text[]
+    example: []
+  remove_collinearity:
+    label: remove collinearity
+    description: boolean, remove or not collinear variables from the set of predictors
+    type: boolean
+    example: True
+  method: 
+    label: method
+    description: method used to compute collinearity between variables
+    type: options
+    options: 
+      - vif.cor
+      - vif.step
+      - pearson
+      - spearman
+      - kendall
+    example: vif.cor
+  proj_to:
+    label: projection system
+    description: projection of the predictors
+    type: text
+    example: "EPSG:6623"
+  spatial_res:
+    label: spatial resolution
+    description: spatial resolution of the predictors 
+    type: int
+    example: 1000
+  method_cor_vif :
+    label: correlation coefficient for vif.cor method
+    description: method to calculate the coefficient of collinearity, only used if method == vif.cor 
+    type: options
+    options:
+      - pearson
+      - spearman
+      - kendall
+    example: pearson
+  nb_sample :
+    label: nb sample
+    description: number of points to select to calculate collinearity
+    type: int
+    example: 5000
+  cutoff_cor :
+    label: cutoff correlation
+    description: correlation cutoff (used with vif.cor, pearson spearman and kendall method)
+    type: float
+    example: 0.75
+  cutoff_vif :
+    label: vif correlation
+    description: vif correlation cutoff (used with vif.step method)
+    type: int
+    example: 8
+outputs:
+  predictors:
+    label: predictors
+    description: raster, predictors 
+    type: image/tiff;application=geotiff

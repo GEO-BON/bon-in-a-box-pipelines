@@ -1,0 +1,13 @@
+script: extentToBbox.R
+description: "This script convert an extent (shapefile format) to a bbox in the WGS84 format."
+inputs:
+  extent:
+    label: extent
+    description: shapefile, representing a study extent
+    type: application/dbf
+    example: "/scripts/SDM/extentToBbox_extent.shp"
+outputs:
+  bbox:
+    label: bbox
+    description: dataframe, containing the coordinates of the bbox
+    type: text/tab-separated-values

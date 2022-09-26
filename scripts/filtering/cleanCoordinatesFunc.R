@@ -31,8 +31,6 @@ clean_coordinates <- function(x,
                               lon = "lon", 
                               lat = "lat", 
                               species_col = "scientificName",
-                              srs = NULL,
-                              spatial_res = NULL,
                               tests = c( 
                                 "equal",
                                 "zeros", 
@@ -80,15 +78,17 @@ clean_coordinates <- function(x,
   
   # If proj is not lon/lat, transform coordinates to lon/lat to ensure further tests
   
+  proj <- terra::crs(predictors) 
+
   x <- create_projection(x, lon, lat,
-                         proj_from = srs,
+                         proj_from = proj,
                          proj_to = "EPSG:4326", 
-                         new_lon = "decimalLongitude",
-                         new_lat = "decimalLatitude")
+                         new_lon = "decimal_longitude",
+                         new_lat = "decimal_latitude")
   
   # Run tests Validity, check if coordinates fit to lat/long system, this has
   # to be run all the time, as otherwise the other tests don't work
-  val <- CoordinateCleaner::cc_val(x, lon = "decimalLongitude", lat =  "decimalLatitude", 
+  val <- CoordinateCleaner::cc_val(x, lon = "decimal_longitude", lat =  "decimal_latitude", 
                                    verbose = verbose, value = "flagged")
   
   x1 <- x[!val,]
@@ -100,26 +100,13 @@ clean_coordinates <- function(x,
   
   ## Remove NA in predictors
   message("cleaning occurrences with no environmental data")
-  if (inherits(predictors, "SpatRaster")) {
+  
     
     presvals <- terra::extract(predictors, dplyr::select(x, all_of(c(lon, lat ))) %>%
                                  data.frame()) 
     comp <-  complete.cases(presvals)
     x <-  x[comp, ]
     presvals <-  presvals[comp, ]
-    
-  } else if (inherits(predictors, "cube")){
-  
-    presvals <- gdalcubes::extract_geom(predictors, sf::st_as_sf(x, coords = c("lon", "lat"),
-                                                         crs = srs)) %>% dplyr::select(-time)
-
-    x <- x %>% dplyr::mutate(FID = as.integer(rownames(x)))
-    x <- dplyr::right_join(x, presvals, by = c("FID")) %>%
-       dplyr::select(-FID)
-    presvals <- presvals %>% dplyr::select(-FID)
-    
-
-  }
   
   covars <- names(predictors)
   presvals <- dplyr::select(presvals, 
@@ -141,7 +128,7 @@ clean_coordinates <- function(x,
   ## Equal coordinates
   if ("equal" %in% tests) {
     out$equ <- CoordinateCleaner::cc_equ(x,
-                                         lon = "decimalLongitude", lat = "decimalLatitude", verbose = verbose, value = "flagged",
+                                         lon = "decimal_longitude", lat = "decimal_latitude", verbose = verbose, value = "flagged",
                                          test = "absolute"
     )
   }
@@ -149,14 +136,14 @@ clean_coordinates <- function(x,
   ## Zero coordinates
   if ("zeros" %in% tests) {
     out$zer <- CoordinateCleaner::cc_zero(x,
-                                          lon = "decimalLongitude", lat = "decimalLatitude", buffer = zeros_rad, verbose = verbose,
+                                          lon = "decimal_longitude", lat = "decimal_latitude", buffer = zeros_rad, verbose = verbose,
                                           value = "flagged"
     )
   }
   
   ## Duplicates
   if ("duplicates" %in% tests) {
-    out$dup <-CoordinateCleaner::cc_dupl(x, lon = "decimalLongitude" , lat = "decimalLatitude", species = species_col, additions = additions,
+    out$dup <-CoordinateCleaner::cc_dupl(x, lon = "decimal_longitude" , lat = "decimal_latitude", species = species_col, additions = additions,
                                          value = "flagged")
     
   }
@@ -167,21 +154,9 @@ clean_coordinates <- function(x,
       message("Testing observations in the same pixel")
     }
     
-    if (inherits(predictors, "SpatRaster")) {
-    
-      mask <- predictors[[1]]
-      
-    } else {
-      
-      xy <- dplyr::select(x, dplyr::all_of(c(lon, lat)))
+       
+    mask <- predictors[[1]]
    
-      sp::coordinates(xy) <-  c(lon, lat)
-      sp::proj4string(xy) <- srs
-      
-      mask <- terra::rast(raster::raster(xy, resolution = spatial_res))
-      
-    }
-
     cell <- terra::cellFromXY(mask, 
                               xy <- as.matrix(dplyr::select(x, dplyr::all_of(c(lon, lat)))))
     dup <- duplicated(cell)
@@ -195,7 +170,7 @@ clean_coordinates <- function(x,
   ## Capitals
   if ("capitals" %in% tests) {
     out$cap <- CoordinateCleaner::cc_cap(x,
-                                         lon = "decimalLongitude", lat = "decimalLatitude", buffer = capitals_rad, ref = capitals_ref,
+                                         lon = "decimal_longitude", lat = "decimal_latitude", buffer = capitals_rad, ref = capitals_ref,
                                          value = "flagged", verbose = verbose
     )
   }
@@ -204,7 +179,7 @@ clean_coordinates <- function(x,
   if ("centroids" %in% tests) {
     out$cen <- CoordinateCleaner::cc_cen(x,
                                          species = species_col,
-                                         lon = "decimalLongitude", lat = "decimalLatitude", buffer = centroids_rad, test = centroids_detail,
+                                         lon = "decimal_longitude", lat = "decimal_latitude", buffer = centroids_rad, test = centroids_detail,
                                          ref = country_ref, value = "flagged", verbose = verbose
     )
   }
@@ -212,7 +187,7 @@ clean_coordinates <- function(x,
   ## Seas
   if ("seas" %in% tests) {
     out$sea <- CoordinateCleaner::cc_sea(x,
-                                         lon = "decimalLongitude", lat = "decimalLatitude", ref = seas_ref, 
+                                         lon = "decimal_longitude", lat = "decimal_latitude", ref = seas_ref, 
                                          scale = seas_scale,
                                          verbose = verbose,
                                          value = "flagged"
@@ -223,21 +198,21 @@ clean_coordinates <- function(x,
   if ("urban" %in% tests) {
     out$urb <- cc_urb(x,
                       
-                      lon = "decimalLongitude", lat = "decimalLatitude", ref = urban_ref, verbose = verbose,
+                      lon = "decimal_longitude", lat = "decimal_latitude", ref = urban_ref, verbose = verbose,
                       value = "flagged"
     )
   }
   
   ## GBIF headquarters
   if ("gbif" %in% tests) {
-    out$gbf <- CoordinateCleaner::cc_gbif(x, lon = "decimalLongitude", lat = "decimalLatitude", 
+    out$gbf <- CoordinateCleaner::cc_gbif(x, lon = "decimal_longitude", lat = "decimal_latitude", 
                                           verbose = verbose, value = "flagged")
   }
   
   ## Biodiversity institution
   if ("institutions" %in% tests) {
     out$inst <- CoordinateCleaner::cc_inst(x,
-                                           lon = "decimalLongitude", lat = "decimalLatitude", ref = inst_ref, buffer = inst_rad,
+                                           lon = "decimal_longitude", lat = "decimal_latitude", ref = inst_ref, buffer = inst_rad,
                                            verbose = verbose, value = "flagged"
     )
   }
@@ -326,7 +301,7 @@ clean_coordinates <- function(x,
 }
 
 # Impoirted and modified from CoordinateCleaner
-cc_urb <- function (x, lon = "decimallongitude", lat = "decimallatitude", 
+cc_urb <- function (x, lon = "decimal_longitude", lat = "decimal_latitude", 
                     ref = NULL, value = "clean", verbose = TRUE) {
   match.arg(value, choices = c("clean", "flagged"))
   if (verbose) {
@@ -378,7 +353,7 @@ cc_urb <- function (x, lon = "decimallongitude", lat = "decimallatitude",
 
 
 # Impoirted and modified from CoordinateCleaner
-cc_urb <- function (x, lon = "decimallongitude", lat = "decimallatitude", 
+cc_urb <- function (x, lon = "decimal_longitude", lat = "decimal_latitude", 
                     ref = NULL, value = "clean", verbose = TRUE) {
   match.arg(value, choices = c("clean", "flagged"))
   if (verbose) {

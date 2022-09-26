@@ -1,0 +1,72 @@
+script: runMaxent.R
+description: "This script runs MaxEnt algorithm based on ENMeval package."
+external_link: https://github.com/jamiemkass/ENMeval
+references:
+  - text: ENMeval 2.0 Redesigned for customizable and reproducible modeling of species’ niches and distributions
+    doi: doi.org/10.1111/2041-210X.13628
+
+inputs:
+  presence_background:
+    label: presence background
+    description: presence 
+    type: text/tab-separated-values
+    example: "/scripts/SDM/runModel_presence_background.tsv"
+  predictors: 
+    label: predictors
+    description: layer names (predictors) as a list, or path to a list
+    type: image/tiff;application=geotiff
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+  fc:
+    label: feature classes
+    description: Vector of strings, feature classes for MaxEnt algorithm.
+    type: text[]
+    example: ["L", "LQ", "LQHP"]
+  rm:
+    label: regularization multiplier
+    description: Vector of numbers, regularization multipliers for MaxEnt algorithm.
+    type: float[]
+    example: [0.5, 1, 2]
+  partition_type:
+    label: partition type
+    description: String, name of partitioning technique.
+    type: options
+    options:
+      - randomkfold
+      - jackknife
+      - block
+      - checkerboard1
+      - checkerboard2
+    example: "block"
+  orientation_block:
+    label: orientation block
+    description: String, order of spatial partitioning for block technique..
+    type: options
+    options:
+      - lat_lon
+      - lon_lat
+      - lon_lon
+      - lat_lat
+    example: lat_lon
+  n_folds:
+    label: number of folds
+    description: Integer, number of random k-folds for randomkfold technique.
+    type: int
+    example: 5 
+  method_select_params:
+    label: params selection method
+    description: String, method to select the best combination of MaxEnt parameters.
+    type: options
+    options:
+      - p10
+      - AIC
+      - AUC
+    example: p10
+outputs:
+  sdm_pred:
+     label: predictions
+     description: model predictions while trained on the whole dataset
+     type: image/tiff;application=geotiff
+  sdm_runs:
+     label: runs predictions
+     description: model predictions among the several runs (if boostrapping or kfolds performed)
+     type: image/tiff;application=geotiff

@@ -3,7 +3,7 @@ package org.geobon.pipeline
 import com.google.gson.Gson
 import org.geobon.script.Description.SCRIPT
 import org.geobon.script.ScriptRun
-import org.geobon.script.scriptRoot
+import org.geobon.script.ScriptRun.Companion.scriptRoot
 import java.io.File
 
 
@@ -29,10 +29,7 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
 
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
-        val scriptRun = ScriptRun(
-            scriptFile,
-            if(resolvedInputs.isEmpty()) null else ScriptRun.toJson(resolvedInputs)
-        )
+        val scriptRun = ScriptRun(scriptFile, resolvedInputs.toSortedMap())
         runId = scriptRun.id
 
         validateInputsReceived(resolvedInputs)?.let { error ->
