@@ -38,7 +38,7 @@ inputs:
     options:
       - "MOL"
       - "IUCN"
-    example: "MOL"
+    example: "IUCN"
   t_0:
     label: Initial time
     description: Year where the analysis should start
