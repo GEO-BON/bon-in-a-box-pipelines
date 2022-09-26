@@ -176,6 +176,26 @@ paths:
           description: Bad request
         "404":
           description: id not found
+  /pipeline/{id}/stop:
+    get:
+      summary: Stop the specified pipeline run
+      operationId: stopPipeline
+      parameters:
+        - name: id
+          in: path
+          description: Where to find the pipeline in ./script folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pipeline run is stopped (or was already stopped)
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
 components:
   schemas:
     script_run_result:

@@ -324,5 +324,46 @@ export default class DefaultApi {
       );
     }
 
+    /**
+     * Callback function to receive the result of the stopPipeline operation.
+     * @callback module:api/DefaultApi~stopPipelineCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Stop the specified pipeline run
+     * @param {String} id Where to find the pipeline in ./script folder.
+     * @param {module:api/DefaultApi~stopPipelineCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    stopPipeline(id, callback) {
+      let postBody = null;
+      // verify the required parameter 'id' is set
+      if (id === undefined || id === null) {
+        throw new Error("Missing the required parameter 'id' when calling stopPipeline");
+      }
+
+      let pathParams = {
+        'id': id
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = [];
+      let returnType = null;
+      return this.apiClient.callApi(
+        '/pipeline/{id}/stop', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
 
 }
