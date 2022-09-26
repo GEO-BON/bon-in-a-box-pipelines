@@ -4,8 +4,8 @@ external_link: https://googledrive.tidyverse.org/
 script: loadExtent.R
 inputs:
   url:
-    label: url
-    description: String, link to the GoogleDrive file.
+    label: link
+    description: String, link to the file.
     type: string 
     example: "https://drive.google.com/file/d/1KKFOBKInnroe452Y7P8uu-h42QbHM6ff/view?usp=sharing"
   shp_name:
