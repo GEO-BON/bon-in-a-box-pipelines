@@ -1,0 +1,14 @@
+script: helloPython.py
+description: "Sample python script that increments a number."
+inputs:
+  some_int:
+    label: Some int
+    description: A number that we will increment
+    type: int
+    example: 3
+outputs:
+  increment:
+    label: A number (input++)
+    description: bla bla
+    type: int
+    example: 4

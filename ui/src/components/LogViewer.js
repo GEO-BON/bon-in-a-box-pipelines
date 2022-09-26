@@ -41,8 +41,8 @@ export function LogViewer({ address, autoUpdate }) {
 
   }
 
-  // First fetch
-  useEffect(() => fetchLogs(), [address])
+  // First and last fetch
+  useEffect(() => fetchLogs(), [autoUpdate])
   // Auto-update
   const interval = useInterval(() => {
     fetchLogs(interval)

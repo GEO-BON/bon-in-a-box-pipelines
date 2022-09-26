@@ -1,22 +1,27 @@
 script: cleanCoordinates.R
+description: "This script enables to apply several cleaning filters to the observations. The tests equal,
+     zeros, duplicates, same_pixel, capitals, centroids, seas, urban, gbif and institutions are wrappers around CoordinateCleaner functions.
+     Test same_pixel remove points inside the same pixel, based on a provided raster or from a STAC catalogue. Test env allows removing environmental outliers using the 
+     the Reverse Jackknife procedure as described by Chapman (2005) and adapted from the package biogeo."
+external_link: https://github.com/ropensci/CoordinateCleaner
+references:
+  - text: Chapman, A.D. (2005) Principles and Methods of Data Cleaning - Primary Species and Species- Occurrence Data, version 1.0. Report for the Global Biodiversity Information Facility, Copenhagen.
+  - text: Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte Ritter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V & Antonelli A (2019) CoordinateCleaner, standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution, 10(5):744-751
+    doi: 10.1111/2041-210X.13152
+
 inputs:
   presence:
     label: presence
-    description: presence data
+    description: Dataframe, presence data.
     type: text/tab-separated-values
-    example: "/output/loadGbif/loadGbif_R/2105be89474391e9611f2cbe4d003b97/obs_data.tsv"
-  tif_folder:
-    label: tiff folder
-    description: path to predictors tif file
-    type: text
-    example: "mytiffolder/"
-  layers: 
-    label: layers
-    description: list of layers names (predictors)
-    type: text[]
-    example: ["bio1", "bio2", "bio4"]
+    example: "/scripts/filtering/cleanCoordinates_presence.tsv"
+  predictors: 
+    label: predictors
+    description: Raster, predictors. 
+    type: image/tiff;application=geotiff
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
   tests: 
-    labels: cleaning_tests
+    label: cleaning_tests
     description: tests to run from all tests available - capitals, centroids, same_pixel, equal, gbif, institutions, duplicates, urban, seas, zeros, env
     type: text[]
     example: 
@@ -31,37 +36,19 @@ inputs:
      - gbif
      - institutions
      - env
-  proj_to:
-    label: projection
-    description: Projection 
-    type: text
-    example: "EPSG:6623"
-  spatial_res :
-    label: spatial resolution
-    description: spatial resolution, only used if predictors are loaded from a stac catalogue. 
-    type: int
-    example: 1000  
 outputs:
   n_presence:
     label: n presence
-    description: Initial number of presences points.
+    description: Integer, initial number of presences points.
     type: int
     example: 500
   n_clean:
     label: n clean presence
-    description: Final number of presences points after cleaning.
+    description: Integer, final number of presences points after cleaning.
     type: int
     example: 400
   clean_presence:
-     label: clean presence table
-     description: TSV file containing a table with clean presence points.
+     label: clean presences
+     description: Dataframe, table with clean presence points.
      type: text/tab-separated-values
-description: "This script enables to apply several cleaning filters to the observations. The tests equal,
-     zeros, duplicates, same_pixel, capitals, centroids, seas, urban, gbif and institutions are wrappers around CoordinateCleaner functions.
-     Test same_pixel remove points inside the same pixel, based on a provided raster or from a STAC catalogue. Test env allows removing environmental outliers using the 
-     the Reverse Jackknife procedure as described by Chapman (2005) and adapted from the package biogeo."
-external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/cleanCoordinates
-references:
-  - text: Chapman, A.D. (2005) Principles and Methods of Data Cleaning - Primary Species and Species- Occurrence Data, version 1.0. Report for the Global Biodiversity Information Facility, Copenhagen.
-  - text: Zizka A, Silvestro D, Andermann T, Azevedo J, Duarte Ritter C, Edler D, Farooq H, Herdean A, Ariza M, Scharn R, Svanteson S, Wengtrom N, Zizka V & Antonelli A (2019) CoordinateCleaner, standardized cleaning of occurrence records from biological collection databases. Methods in Ecology and Evolution, 10(5):744-751
-    doi: 10.1111/2041-210X.13152
+
