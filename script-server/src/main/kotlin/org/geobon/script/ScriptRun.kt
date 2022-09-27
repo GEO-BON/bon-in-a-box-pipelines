@@ -1,7 +1,8 @@
 package org.geobon.script
 
-import com.google.gson.Gson
+import com.google.gson.*
 import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.MalformedJsonException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -9,8 +10,10 @@ import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.SortedMap
+import kotlin.math.floor
+
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
@@ -42,7 +45,26 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
     companion object {
         const val ERROR_KEY = "error"
 
-        private val gson = Gson()
+        private val gson = GsonBuilder()
+            .setObjectToNumberStrategy(ToNumberStrategy { reader ->
+                val value: String = reader.nextString()
+                try {
+                    val d = value.toDouble()
+                    if ((d.isInfinite() || d.isNaN()) && !reader.isLenient) {
+                        throw MalformedJsonException("JSON forbids NaN and infinities: " + d + "; at path " + reader.previousPath)
+                    }
+
+                    if(floor(d) == d) {
+                        if (d > Integer.MAX_VALUE) d.toLong() else d.toInt()
+                    } else {
+                        d
+                    }
+
+                } catch (doubleE: NumberFormatException) {
+                    throw JsonParseException("Cannot parse " + value + "; at path " + reader.previousPath, doubleE)
+                }
+            })
+            .create()
 
         fun toJson(src: Any): String = gson.toJson(src)
 

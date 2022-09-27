@@ -38,7 +38,7 @@ internal class PipelineTest {
         assertTrue(allOutputs.any { it.key.contains("helloPython.yml") })
 
         pipeline.execute()
-        assertEquals(19 + 1.0, pipeline.getPipelineOutputs()[0].pull())
+        assertEquals(19 + 1, pipeline.getPipelineOutputs()[0].pull())
     }
 
     @Test
@@ -53,8 +53,8 @@ internal class PipelineTest {
         pipeline.execute()
 
         with(listOf(pipeline.getPipelineOutputs()[0].pull(), pipeline.getPipelineOutputs()[1].pull())) {
-            assertContains(this, 21.0)
-            assertContains(this, 22.0)
+            assertContains(this, 21)
+            assertContains(this, 22)
         }
     }
 
@@ -70,8 +70,8 @@ internal class PipelineTest {
         pipeline.execute()
 
         with(listOf(pipeline.getPipelineOutputs()[0].pull(), pipeline.getPipelineOutputs()[1].pull())) {
-            assertContains(this, 5.0)
-            assertContains(this, 22.0)
+            assertContains(this, 5)
+            assertContains(this, 22)
         }
     }
 
@@ -125,7 +125,7 @@ internal class PipelineTest {
         val pipeline = Pipeline("1in1out_1step.json", """{ "helloWorld>helloPython.yml@0.some_int": 5 }""")
         pipeline.execute()
 
-        assertEquals(6.0, pipeline.getPipelineOutputs()[0].pull())
+        assertEquals(6, pipeline.getPipelineOutputs()[0].pull())
     }
 
     @Test
@@ -153,5 +153,17 @@ internal class PipelineTest {
         assertThrows<RuntimeException> { // plausible case where a non-existent step id is used
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72.some_int": 5 }""")
         }
+    }
+
+    @Test
+    fun `given a pipeline passing float_when ran_then a float value is received`() = runTest {
+        val pipeline = Pipeline("assertFloat.json")
+        pipeline.execute()
+    }
+
+    @Test
+    fun `given a pipeline passing int_when ran_then an int value is received`() = runTest {
+        val pipeline = Pipeline("assertInt.json")
+        pipeline.execute()
     }
 }
