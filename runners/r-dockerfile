@@ -1,0 +1,4 @@
+FROM rocker/geospatial:4.2.1
+
+# Additionnal R packages
+RUN R -e 'install.packages(c("rjson", "RCurl"))'

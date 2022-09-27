@@ -25,7 +25,3 @@ services:
     build:
       context: ./script-server/
       dockerfile: Dockerfile.prod
-    volumes:
-      - ./script-server/r-libs:/r-libs:rw
-    environment:
-      - R_LIBS_USER=/r-libs
