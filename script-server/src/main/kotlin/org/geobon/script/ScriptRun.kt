@@ -14,11 +14,11 @@ import java.util.SortedMap
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
-class ScriptRun (private val scriptFile: File, private val inputFileContent:String?) {
+class ScriptRun(private val scriptFile: File, private val inputFileContent: String?) {
     constructor(scriptFile: File, inputMap: SortedMap<String, Any>)
-      : this (scriptFile, if(inputMap.isEmpty()) null else toJson(inputMap))
+            : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap))
 
-    lateinit var results:Map<String, Any>
+    lateinit var results: Map<String, Any>
         private set
 
     /**
@@ -46,7 +46,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
         fun toJson(src: Any): String = gson.toJson(src)
 
-        val scriptRoot:File
+        val scriptRoot: File
             get() = File(System.getenv("SCRIPT_LOCATION"))
     }
 
@@ -58,7 +58,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
     private fun loadFromCache(): Map<String, Any>? {
         // Looking for a cached result most recent than the script
         if (resultFile.exists()) {
-            if(scriptFile.lastModified() < resultFile.lastModified()) {
+            if (scriptFile.lastModified() < resultFile.lastModified()) {
                 kotlin.runCatching {
                     gson.fromJson<Map<String, Any>>(
                         resultFile.readText().also { logger.trace("Cached outputs: $it") },
@@ -67,8 +67,9 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 }.onSuccess { previousOutputs ->
                     // Use this result only if there was no error and inputs have not changed
                     if (previousOutputs[ERROR_KEY] == null
-                        && inputsOlderThanCache()) {
-                        logger.info("Loading from cache")
+                        && inputsOlderThanCache()
+                    ) {
+                        logger.debug("Loading from cache")
                         return previousOutputs
                     }
                 }.onFailure { e ->
@@ -87,8 +88,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
      * @return true if all inputs are older than cached result
      */
     private fun inputsOlderThanCache(): Boolean {
-        if(inputFile.exists())
-        {
+        if (inputFile.exists()) {
             val cacheTime = resultFile.lastModified()
             kotlin.runCatching {
                 gson.fromJson<Map<String, Any>>(
@@ -96,13 +96,13 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                     object : TypeToken<Map<String, Any>>() {}.type
                 )
             }.onSuccess { inputs ->
-                inputs.forEach{(_,value) ->
+                inputs.forEach { (_, value) ->
                     val stringValue = value.toString()
                     // We assume that all local paths start with / and that URLs won't.
-                    if(stringValue.startsWith('/')){
+                    if (stringValue.startsWith('/')) {
                         with(File(stringValue)) {
                             // check if missing or newer than cache
-                            if(!exists() || cacheTime < lastModified()){
+                            if (!exists() || cacheTime < lastModified()) {
                                 return false
                             }
                         }
@@ -112,7 +112,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                 logger.warn("Error reading previous inputs: ${e.message}")
                 return false // We could not validate inputs, discard the cache.
             }
-            
+
             return true
 
         } else {
@@ -120,9 +120,9 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         }
     }
 
-    private suspend fun runScript():Map<String, Any> {
+    private suspend fun runScript(): Map<String, Any> {
         // TODO Wait if already running
-        if(!scriptFile.exists()) {
+        if (!scriptFile.exists()) {
             val message = "Script $scriptFile not found"
             logger.warn(message)
             return flagError(mapOf(ERROR_KEY to message), true)
@@ -130,7 +130,7 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
 
         // Run the script
         var error = false
-        var outputs:Map<String, Any>? = null
+        var outputs: Map<String, Any>? = null
 
         runCatching {
             withContext(Dispatchers.IO) {
@@ -183,25 +183,27 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
                     }
                 }
         }.onSuccess { process -> // completed, with success or failure
-            if(process.exitValue() != 0) {
+            if (process.exitValue() != 0) {
                 error = true
                 log(logger::warn, "Error: script returned non-zero value")
             }
 
-            if(resultFile.exists()) {
+            if (resultFile.exists()) {
                 val type = object : TypeToken<Map<String, Any>>() {}.type
                 val result = resultFile.readText()
                 try {
                     outputs = gson.fromJson<Map<String, Any>>(result, type)
                     logger.trace("Output: $result")
-                } catch (e:Exception) {
+                } catch (e: Exception) {
                     error = true
-                    log(logger::warn, """
+                    log(
+                        logger::warn, """
                         ${e.message}
                         Error: Malformed JSON file.
                         Make sure complex results are saved in a separate file (csv, geojson, etc.).
                         Contents of output.json:
-                    """.trimIndent() + "\n$result")
+                    """.trimIndent() + "\n$result"
+                    )
                 }
             } else {
                 error = true
@@ -218,14 +220,14 @@ class ScriptRun (private val scriptFile: File, private val inputFileContent:Stri
         return flagError(outputs ?: mapOf(), error)
     }
 
-    private fun log(func: (String?)->Unit, line: String) {
+    private fun log(func: (String?) -> Unit, line: String) {
         func(line) // realtime logging
         logFile.appendText("$line\n") // record
     }
 
-    private fun flagError(results: Map<String, Any>, error:Boolean) : Map<String, Any> {
-        if(error || results.isEmpty()) {
-            if(!results.containsKey(ERROR_KEY)) {
+    private fun flagError(results: Map<String, Any>, error: Boolean): Map<String, Any> {
+        if (error || results.isEmpty()) {
+            if (!results.containsKey(ERROR_KEY)) {
                 val outputs = results.toMutableMap()
                 outputs[ERROR_KEY] = "An error occurred. Check logs for details."
 
