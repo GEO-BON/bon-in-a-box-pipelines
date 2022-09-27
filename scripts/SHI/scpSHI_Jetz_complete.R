@@ -14,13 +14,14 @@ options(timeout = max(60000000, getOption("timeout")))
 # remove.packages("rlang",lib = .libPaths()[3])
 
 # install.packages("rlang",lib=.libPaths()[3])
+print(packageDescription("devtools")$Version)
 
 ## Install required packages
 packages <- c("devtools","rlang","dplyr","tidyr","ggplot2","remotes","purrr","tmap","raster","ggsci","readr",
               "rgbif","rgdal","sf","httr","jsonlite","landscapemetrics","rjson","stars",
               "stacatalogue","gdalcubes","rstac","RColorBrewer","RCurl","tmaptools")
-install.packages('devtools', dependecies=TRUE)
-devtools::install_github("r-lib/ellipsis")
+# install.packages('devtools', dependecies=TRUE)
+# devtools::install_github("r-lib/ellipsis")
 
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
@@ -28,10 +29,12 @@ if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_git
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
-
+print("Installed")
 # install.packages("rlang")
 print(packageDescription("rlang")$Version)
 lapply(packages,require,character.only=T)
+
+print("Loaded")
 
 
 
