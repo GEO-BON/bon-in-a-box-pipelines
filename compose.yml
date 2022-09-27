@@ -17,12 +17,44 @@ services:
       - SCRIPT_LOCATION=/scripts
       - PIPELINES_LOCATION=/pipelines
       - OUTPUT_LOCATION=/output
+      - HOST_PATH=${PWD}
+    depends_on:
+      - runner-r
+      - runner-julia
+
+
+  runner-r:
+    container_name: biab-runner-r
+    build:
+      context: ./runners
+      dockerfile: r-dockerfile
+    command: sh # Override default command to avoid launching R-studio server.
+    tty: true # Needed to keep the container alive, waiting for requests.
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./output:/output:rw
+    environment:
+      - SCRIPT_LOCATION=/scripts
+      - OUTPUT_LOCATION=/output
       - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
       - GBIF_USER=${GBIF_USER}
       - GBIF_PWD=${GBIF_PWD}
       - GBIF_EMAIL=${GBIF_EMAIL}
-      - HOST_PATH=${PWD}
       - IUCN_TOKEN=${IUCN_TOKEN}
+
+  runner-julia:
+    container_name: biab-runner-julia
+    build:
+      context: ./runners
+      dockerfile: julia-dockerfile
+    command: sh # Avoids launching julia session that will not be used.
+    tty: true # Needed to keep the container alive, waiting for requests.
+    volumes:
+      - ./scripts:/scripts:ro
+      - ./output:/output:rw
+    environment:
+      - SCRIPT_LOCATION=/scripts
+      - OUTPUT_LOCATION=/output
 
   http-gateway:
     container_name: http-rev-prox

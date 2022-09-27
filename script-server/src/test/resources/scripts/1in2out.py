@@ -3,7 +3,6 @@ import sys, json;
 # Reading json
 inputFile = open(sys.argv[1] + '/input.json')
 data = json.load(inputFile)
-print(data)
 intIn = data['some_int']
 
 intIn += 1

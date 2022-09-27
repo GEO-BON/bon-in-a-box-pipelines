@@ -87,7 +87,7 @@ export function PipelinePage(props) {
 function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
   const formRef = useRef(null);
 
-  const defaultPipeline = "HelloWorld.json";
+  const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {

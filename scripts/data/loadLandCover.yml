@@ -21,6 +21,7 @@ inputs:
     type: text
     example: "EPSG:6623"
   spatial_res:
+    label: Spatial resolution
     description: Projection 
     type: int
     example: 1000

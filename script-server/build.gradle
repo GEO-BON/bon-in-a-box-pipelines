@@ -7,7 +7,7 @@ wrapper {
 }
 
 buildscript {
-    ext.kotlin_version = "1.6.10"
+    ext.kotlin_version = '1.7.10'
     ext.ktor_version = "1.5.4"
     ext.shadow_version = "6.1.0"
 
@@ -59,14 +59,13 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation('ch.qos.logback:logback-classic:1.2.11')
+    implementation('ch.qos.logback:logback-classic:1.4.0')
     implementation("io.ktor:ktor-auth:$ktor_version")
     implementation("io.ktor:ktor-gson:$ktor_version")
     implementation("io.ktor:ktor-locations:$ktor_version")
     //implementation("io.dropwizard.metrics:metrics-core:4.1.18")
     implementation("io.ktor:ktor-metrics:$ktor_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
-    implementation 'org.junit.jupiter:junit-jupiter:5.8.2'
 
     // https://mvnrepository.com/artifact/org.json/json
     implementation group: 'org.json', name: 'json', version: '20220320'
@@ -74,7 +73,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.30'
 
-    testImplementation 'io.mockk:mockk:1.12.3'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
+    testImplementation 'io.mockk:mockk:1.12.7'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0'
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
+    testImplementation 'io.kotest:kotest-runner-junit5:5.4.2'
 }

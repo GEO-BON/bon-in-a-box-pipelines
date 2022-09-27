@@ -3,7 +3,7 @@ package org.geobon.pipeline
 import com.google.gson.Gson
 import org.geobon.script.Description.SCRIPT
 import org.geobon.script.ScriptRun
-import org.geobon.script.scriptRoot
+import org.geobon.script.ScriptRun.Companion.scriptRoot
 import java.io.File
 
 
