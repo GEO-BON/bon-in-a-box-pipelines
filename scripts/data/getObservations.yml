@@ -9,7 +9,7 @@ inputs:
     example: "Glyptemys insculpta"
   country:
     label: country
-    description: country to retrieve the occurrences from
+    description: Optional, country to retrieve the occurrences from. Leave blank to ignore administrative boundaries.
     type: text
     example: ""  
   year_start:
