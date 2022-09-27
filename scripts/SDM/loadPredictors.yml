@@ -48,7 +48,7 @@ inputs:
   method_cor_vif :
     label: correlation coefficient for vif.cor method
     description: method to calculate the coefficient of collinearity, only used if method == vif.cor 
-    type: option
+    type: options
     options:
       - pearson
       - spearman

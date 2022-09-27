@@ -3,7 +3,10 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-pak::pkg_install(c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "crul"))
+#packages <- c("gdalcubes", "rjson", "raster", "dplyr", "rstac", "tibble", "sp", "sf", "rgdal", "curl", "RCurl")
+
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
 ## Load required packages
 library("gdalcubes")
@@ -14,6 +17,7 @@ library("rstac")
 library("tibble")
 library("sp")
 library("sf")
+#library("RCurl")
 library("crul")
 options(timeout = max(60000000, getOption("timeout")))
 
@@ -41,18 +45,18 @@ cube <-
            collections = c(input$collections), 
            use.obs = T,
            obs = obs.coords,
-           srs.obs = input$srs.obs,
+           srs.obs = input$srs_obs,
            lon = "decimalLongitude",
            lat = "decimalLatitude",
            buffer.box = input$buffer.box,
            layers= input$layers,
-           srs.cube = input$srs.cube,
+           srs.cube = input$srs_cube,
            t0 = input$t0,
            t1 = input$t1,
-           spatial.res = input$spatial.res,
-           temporal.res = input$temporal.res) 
+           spatial.res = input$spatial_res,
+           temporal.res = input$temporal_res) 
 
-obs.proj <-  projectCoords(obs.coords, lon = "decimalLongitude", lat = "decimalLatitude", proj.from = input$srs.obs, proj.to = input$srs.cube)
+obs.proj <-  projectCoords(obs.coords, lon = "decimalLongitude", lat = "decimalLatitude", proj.from = input$srs_obs, proj.to = input$srs_cube)
 obs <- bind_cols(obs, 
                  setNames(data.frame(obs.proj), c("lon", "lat"))) 
 
