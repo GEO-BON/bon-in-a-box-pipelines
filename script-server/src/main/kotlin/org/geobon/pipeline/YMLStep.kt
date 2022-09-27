@@ -4,16 +4,20 @@ import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
 import org.geobon.script.Description.TYPE_OPTIONS
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 
 abstract class YMLStep(
     yamlString: String = "",
     protected val yamlParsed: Map<String, Any> = Yaml().load(yamlString),
-    inputs: MutableMap<String, Pipe> = mutableMapOf()
-) : Step(inputs, readOutputs(yamlParsed)) {
+    inputs: MutableMap<String, Pipe> = mutableMapOf(),
+    private val logger: Logger = LoggerFactory.getLogger("YMLStep")
+) : Step(inputs, readOutputs(yamlParsed, logger)) {
+
 
     override fun validateInputsConfiguration(): String {
-        val inputsFromYml = readInputs(yamlParsed)
+        val inputsFromYml = readInputs(yamlParsed, logger)
 
         if (inputs.size != inputsFromYml.size) {
             return "Bad number of inputs." +
@@ -62,9 +66,9 @@ abstract class YMLStep(
         /**
          * @return Map of input name to type
          */
-        private fun readInputs(yamlParsed: Map<String, Any>): Map<String, String> {
+        private fun readInputs(yamlParsed: Map<String, Any>, logger: Logger): Map<String, String> {
             val inputs = mutableMapOf<String, String>()
-            readIO(yamlParsed, INPUTS) { key, type ->
+            readIO(yamlParsed, INPUTS, logger) { key, type ->
                 inputs[key] = type
             }
             return inputs
@@ -73,9 +77,9 @@ abstract class YMLStep(
         /**
          * @return Map of output name to type
          */
-        private fun readOutputs(yamlParsed: Map<String, Any>): Map<String, Output> {
+        private fun readOutputs(yamlParsed: Map<String, Any>, logger: Logger): Map<String, Output> {
             val outputs = mutableMapOf<String, Output>()
-            readIO(yamlParsed, OUTPUTS) { key, type ->
+            readIO(yamlParsed, OUTPUTS, logger) { key, type ->
                 outputs[key] = Output(type)
             }
             return outputs
@@ -87,28 +91,26 @@ abstract class YMLStep(
         private fun readIO(
             yamlParsed: Map<String, Any>,
             section: String,
-            toExecute: (String, String) -> Unit
+            logger: Logger,
+            toExecute: (String, String) -> Unit,
         ) {
             yamlParsed[section]?.let {
                 if (it is Map<*, *>) {
                     it.forEach { (key, description) ->
                         key?.let {
-                            //println("Key valid: $key")
                             if (description is Map<*, *>) {
-                                //println("description is a map")
                                 description[TYPE]?.let { type ->
-                                    //println("Type valid: $type")
                                     toExecute(key.toString(), type.toString())
-                                } ?: println("Invalid type")
+                                } ?: logger.error("Invalid type")
                             } else {
-                                println("$section description is not a map")
+                                logger.error("$section description is not a map")
                             }
-                        } ?: println("Invalid key")
+                        } ?: logger.error("Invalid key")
                     }
                 } else {
-                    println("$section is not a map")
+                    logger.error("$section is not a map")
                 }
-            } ?: println("No $section map")
+            } ?: logger.error("No $section map")
         }
     }
 }
