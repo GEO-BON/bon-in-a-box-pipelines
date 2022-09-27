@@ -1,0 +1,13 @@
+script: assertInt.py
+inputs:
+  input:
+    label: Some int
+    type: int
+    example: 42
+outputs:
+  the_same:
+    label: Same value
+    description: The same integer as in the inputs. But this crashes if not an integer.
+    type: int
+    example: false
+description: "Test python script that fails if it doesn't receive an integer."
