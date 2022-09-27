@@ -1,4 +1,6 @@
-FROM rocker/geospatial:4.2.1
+FROM rocker/geospatial:dev-osgeo
 
 # Additionnal R packages
-RUN R -e 'install.packages(c("rjson", "RCurl"))'
+RUN R -e 'install.packages(c("rjson", "RCurl", "rstac", "rgbif", "CoordinateCleaner", "dismo", "ENMeval"))'
+RUN R -e 'devtools::install_github("appelmar/gdalcubes_R")'
+RUN R -e 'devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")'
