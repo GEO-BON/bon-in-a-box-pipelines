@@ -150,17 +150,17 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
             val command = when (scriptFile.extension) {
-                "jl", "JL" -> "julia"
-                "r", "R" -> "Rscript"
-                "sh" -> "sh"
-                "py", "PY" -> "python3"
+                "jl", "JL" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-julia", "julia")
+                "r", "R" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-r", "Rscript")
+                "sh" -> mutableListOf("sh")
+                "py", "PY" -> mutableListOf("python3")
                 else -> {
                     log(logger::warn, "Unsupported script extension ${scriptFile.extension}")
                     return flagError(mapOf(), true)
                 }
             }
 
-            ProcessBuilder(listOf(command, scriptFile.absolutePath, outputFolder.absolutePath))
+            ProcessBuilder(command + scriptFile.absolutePath + outputFolder.absolutePath)
                 .directory(scriptRoot)
                 .redirectOutput(ProcessBuilder.Redirect.PIPE)
                 .redirectErrorStream(true) // Merges stderr into stdout
