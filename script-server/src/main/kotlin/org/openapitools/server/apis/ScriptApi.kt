@@ -133,11 +133,11 @@ fun Route.ScriptApi(logger: Logger) {
     post<Paths.runPipeline> { parameters ->
         val inputFileContent = call.receive<String>()
         val descriptionPath = parameters.descriptionPath
-        logger.info("Pipeline: $descriptionPath\nBody:$inputFileContent")
 
-        // Unique   to this pipeline                                         and to these params
+        // Unique   to this pipeline                                               and to these params
         val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
         val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
+        logger.info("Pipeline: $descriptionPath\nFolder:$outputFolder\nBody:$inputFileContent")
 
         try {
             val pipeline = Pipeline(descriptionPath, inputFileContent)
@@ -156,7 +156,7 @@ fun Route.ScriptApi(logger: Logger) {
                     val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
                         if (value == "") "skipped" else value
                     })
-                    println("Outputting to $resultFile")
+                    logger.trace("Outputting to $resultFile")
 
                     outputFolder.mkdirs()
                     resultFile.writeText(content)
@@ -166,7 +166,7 @@ fun Route.ScriptApi(logger: Logger) {
             }
         } catch (e: Exception) {
             call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
-            logger.trace(e.message)
+            logger.debug(e.message)
         }
     }
 

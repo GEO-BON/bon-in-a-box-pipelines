@@ -162,8 +162,6 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                     )
                 }
             }
-
-            println(inputsJSON.toString(2))
         }
 
         // Call validate graph
