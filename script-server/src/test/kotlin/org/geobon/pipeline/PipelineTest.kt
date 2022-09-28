@@ -166,4 +166,12 @@ internal class PipelineTest {
         val pipeline = Pipeline("assertInt.json")
         pipeline.execute()
     }
+
+    @Test
+    fun `given a pipeline passing int to float_when ran_then float input accepts int input`() = runTest {
+        val pipeline = Pipeline("intToFloat.json", """ { "1in1out.yml@1.some_int": 3, "divideFloat.yml@0.divider": 2 }""")
+        pipeline.execute()
+        assertTrue(pipeline.getPipelineOutputs()[0].pull() == 2)
+    }
+
 }
