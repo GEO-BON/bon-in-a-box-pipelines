@@ -43,7 +43,7 @@ inputs:
 outputs:
   presence_background:
     label: background presence
-    description: Presence-background points with covariates values.
+    description: Presence-background points with covariates values
     type: text/tab-separated-values
 
 
