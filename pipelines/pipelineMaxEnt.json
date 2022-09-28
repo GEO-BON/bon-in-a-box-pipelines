@@ -269,7 +269,7 @@
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "option",
+        "type": "options",
         "value": "pearson",
         "options": [
           "pearson",

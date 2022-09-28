@@ -5,6 +5,7 @@ import { isVisible } from '../utils/IsVisible';
 export function LogViewer({ address, autoUpdate }) {
   const [logs, setLogs] = useState("");
   const [logsAutoScroll, setLogsAutoScroll] = useState(true);
+  const logsRef = useRef();
   const logsEndRef = useRef();
 
   function fetchLogs(intervalRef) {
@@ -40,8 +41,8 @@ export function LogViewer({ address, autoUpdate }) {
 
   }
 
-  // First fetch
-  useEffect(() => fetchLogs(), [address])
+  // First and last fetch
+  useEffect(() => fetchLogs(), [autoUpdate])
   // Auto-update
   const interval = useInterval(() => {
     fetchLogs(interval)
@@ -49,10 +50,13 @@ export function LogViewer({ address, autoUpdate }) {
 
   // Logs auto-scrolling
   useEffect(() => {
-    if (logsAutoScroll && logsEndRef.current) {
-      logsEndRef.current.scrollIntoView({ block: 'end' });
+    if (logsAutoScroll) {
+      let logsElem = logsRef.current
+      if(logsElem) {
+        logsElem.scroll({ top: logsElem.scrollHeight });
+      }
     }
   }, [logs, logsAutoScroll]);
 
-  return <pre className='logs'>{logs}<span ref={logsEndRef} /></pre>;
+  return <pre ref={logsRef} className='logs'>{logs}<span ref={logsEndRef} /></pre>;
 }

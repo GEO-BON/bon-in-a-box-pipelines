@@ -58,33 +58,6 @@
           }
         ]
       }
-    },
-    {
-      "id": "5",
-      "type": "constant",
-      "position": {
-        "x": -135,
-        "y": -3
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 3
-      },
-      "z": 0,
-      "handleBounds": {
-        "source": [
-          {
-            "id": null,
-            "position": "right",
-            "x": 254.36669921875,
-            "y": 10,
-            "width": 8,
-            "height": 8
-          }
-        ],
-        "target": null
-      }
     }
   ],
   "edges": [
@@ -94,13 +67,6 @@
       "target": "4",
       "targetHandle": null,
       "id": "reactflow__edge-2increment-4"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "some_int",
-      "id": "reactflow__edge-5-2some_int"
     }
   ],
   "viewport": {
@@ -108,5 +74,12 @@
     "y": 157,
     "zoom": 1
   },
-  "inputs": {}
+  "inputs": {
+    "helloWorld>helloPython.yml@2.some_int": {
+      "description": "A number that we will increment",
+      "label": "Some int",
+      "type": "int",
+      "example": 3
+    }
+  }
 }
