@@ -172,7 +172,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                                 process.destroy()
                             } catch (_:CancellationException) {
                                 if(process.isAlive) {
-                                    log(logger::warn, "Cancelled by user: killing running process")
+                                    log(logger::info, "Cancelled by user: killing running process...")
                                     process.destroy()
                                 }
                             }
@@ -220,8 +220,14 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
         }.onFailure { ex ->
-            log(logger::warn, "An error occurred when running the script: ${ex.message}")
-            logger.warn(ex.stackTraceToString())
+            when(ex) {
+                is CancellationException -> log(logger::info, "Cancelled by user: done.")
+                else ->  {
+                    log(logger::warn, "An error occurred when running the script: ${ex.message}")
+                    logger.warn(ex.stackTraceToString())
+                }
+            }
+
             error = true
         }
 
