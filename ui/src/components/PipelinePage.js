@@ -59,6 +59,12 @@ export function PipelinePage(props) {
     return ""
   }
 
+  const stop = () => {
+    api.stopPipeline(runId, (error, data, response) => {
+        console.log(error, data, response)
+    })
+  }
+
   // Called when ID changes
   useEffect(() => {
     setResultsData(null);
@@ -78,6 +84,7 @@ export function PipelinePage(props) {
         pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
         setRunId={setRunId}
         showHttpError={showHttpError} />
+      {runId && <button onClick={stop}>Stop</button>}
       {httpError && <p key="httpError" className="error">{httpError}</p>}
       {showMetadata()}
       <PipelineResults key="results" resultsData={resultsData} showHttpError={showHttpError} />
