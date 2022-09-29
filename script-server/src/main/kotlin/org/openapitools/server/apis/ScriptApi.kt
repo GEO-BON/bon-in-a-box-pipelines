@@ -145,24 +145,18 @@ fun Route.ScriptApi(logger: Logger) {
             call.respondText(runId)
 
             launch {
-                try {
-                    pipeline.execute()
-                } catch (ex: RuntimeException) {
-                    logger.debug(ex.message)
-                } catch (ex: Exception) {
-                    logger.error(ex.stackTraceToString())
-                } finally {  // Write the results file, adding "skipped" to steps that were not run.
-                    val resultFile = File(outputFolder, "output.json")
-                    val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
-                        if (value == "") "skipped" else value
-                    })
-                    logger.trace("Outputting to $resultFile")
+                pipeline.execute()
 
-                    outputFolder.mkdirs()
-                    resultFile.writeText(content)
+                val resultFile = File(outputFolder, "output.json")
+                val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
+                    if (value == "") "skipped" else value
+                })
+                logger.trace("Outputting to $resultFile")
 
-                    runningPipelines.remove(runId)
-                }
+                outputFolder.mkdirs()
+                resultFile.writeText(content)
+
+                runningPipelines.remove(runId)
             }
         } catch (e: Exception) {
             call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
@@ -171,19 +165,26 @@ fun Route.ScriptApi(logger: Logger) {
     }
 
     get<Paths.getPipelineOutputs> { parameters ->
-        val finalStep = runningPipelines[parameters.id]
-        if (finalStep == null) {
+        val pipeline = runningPipelines[parameters.id]
+        if (pipeline == null) {
             val outputFolder = File(outputRoot, parameters.id.replace(FILE_SEPARATOR, '/'))
             val outputFile = File(outputFolder, "output.json")
             val type = object : TypeToken<Map<String, Any>>() {}.type
             call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
         } else {
-            call.respond(getLiveOutput(finalStep))
+            call.respond(getLiveOutput(pipeline))
         }
     }
 
-    get<Paths.stopPipeline> {
-        call.respond(HttpStatusCode.NotImplemented)
+    get<Paths.stopPipeline> { parameters ->
+        runningPipelines[parameters.id]?.let { pipeline ->
+            // the pipeline is running, we need to stop it
+            println("Cancelling ${parameters.id}...")
+            pipeline.stop()
+            println("Cancelled ${parameters.id}")
+        }
+
+        call.respond(HttpStatusCode.OK)
     }
 
 }
