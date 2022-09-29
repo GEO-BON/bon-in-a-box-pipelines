@@ -38,8 +38,8 @@ export function PipelinePage(props) {
         if (error) {
           showHttpError(error, response)
         } else {
-          let allDone = Object.values(data).every(val => val !== "")
-          if(!allDone) { // try again later
+          let allOutputFoldersKnown = Object.values(data).every(val => val !== "")
+          if(!allOutputFoldersKnown) { // try again later
             timeout = setTimeout(loadPipelineOutputs, 1000)
           }
 
