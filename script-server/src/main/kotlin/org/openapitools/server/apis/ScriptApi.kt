@@ -182,9 +182,8 @@ fun Route.ScriptApi(logger: Logger) {
             println("Cancelling ${parameters.id}...")
             pipeline.stop()
             println("Cancelled ${parameters.id}")
-        }
-
-        call.respond(HttpStatusCode.OK)
+            call.respond(HttpStatusCode.OK)
+        } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
     }
 
 }
