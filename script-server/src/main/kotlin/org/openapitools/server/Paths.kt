@@ -65,4 +65,11 @@ object Paths {
      */
     @Location("/script/list") object scriptListGet
 
+    /**
+     * Stop the specified pipeline run
+     * 
+     * @param id Where to find the pipeline in ./script folder. 
+     */
+    @Location("/pipeline/{id}/stop") class stopPipeline(val id: kotlin.String)
+
 }
