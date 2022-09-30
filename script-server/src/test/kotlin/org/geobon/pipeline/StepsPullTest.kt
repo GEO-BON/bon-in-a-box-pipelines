@@ -1,7 +1,9 @@
 package org.geobon.pipeline
 
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.utils.runReliableTest
 import org.geobon.pipeline.teststeps.ConcatenateStep
 import org.geobon.pipeline.teststeps.EchoStep
 import org.geobon.pipeline.teststeps.EchoStep.Companion.ECHO
@@ -78,16 +80,21 @@ internal class StepsPullTest {
     }
 
     @Test
-    fun `given pipeline_when script fails_then pipeline is halted with exception`() = runTest {
+    fun `given pipeline_when script fails_then pipeline is halted with exception`() {
         // Note: in non-test code: surround whole block with try/catch, there are so many !! in there
         val step1 = ScriptStep("0in1out.yml") // 234
         val step2 = ScriptStep("1in1out_fail.yml", mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235
         val finalStep = ScriptStep("1in1out.yml", mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
 
         try {
-            finalStep.outputs["increment"]!!.pull()
-            fail("It should have crashed")
-        } catch (_:Exception) {}
+            runReliableTest {
+                finalStep.outputs["increment"]!!.pull()
+                fail("It should have crashed")
+            }
+        } catch (_:Exception) {
+            // Success!
+            // println("got: ${ex.message}")
+        }
 
         // Script results left as they were before crash
         assertEquals(234, step1.outputs["randomness"]!!.value)
