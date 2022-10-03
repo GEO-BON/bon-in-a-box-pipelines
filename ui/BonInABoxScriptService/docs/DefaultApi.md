@@ -11,6 +11,7 @@ Method | HTTP request | Description
 [**runPipeline**](DefaultApi.md#runPipeline) | **POST** /pipeline/{descriptionPath}/run | Run this pipeline
 [**runScript**](DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
 [**scriptListGet**](DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
+[**stopPipeline**](DefaultApi.md#stopPipeline) | **GET** /pipeline/{id}/stop | Stop the specified pipeline run
 
 
 
@@ -315,4 +316,47 @@ No authorization required
 
 - **Content-Type**: Not defined
 - **Accept**: application/json
+
+
+## stopPipeline
+
+> stopPipeline(id)
+
+Stop the specified pipeline run
+
+### Example
+
+```javascript
+import BonInABoxScriptService from 'bon_in_a_box_script_service';
+
+let apiInstance = new BonInABoxScriptService.DefaultApi();
+let id = "id_example"; // String | Where to find the pipeline in ./script folder.
+apiInstance.stopPipeline(id, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully.');
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **String**| Where to find the pipeline in ./script folder. | 
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: Not defined
 

@@ -1,16 +1,16 @@
 package org.geobon.script
 
-import com.google.gson.Gson
+import com.google.gson.*
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.google.gson.stream.MalformedJsonException
+import kotlinx.coroutines.*
 import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.SortedMap
+import kotlin.math.floor
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
@@ -42,7 +42,26 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
     companion object {
         const val ERROR_KEY = "error"
 
-        private val gson = Gson()
+        private val gson = GsonBuilder()
+            .setObjectToNumberStrategy(ToNumberStrategy { reader ->
+                val value: String = reader.nextString()
+                try {
+                    val d = value.toDouble()
+                    if ((d.isInfinite() || d.isNaN()) && !reader.isLenient) {
+                        throw MalformedJsonException("JSON forbids NaN and infinities: " + d + "; at path " + reader.previousPath)
+                    }
+
+                    if(floor(d) == d) {
+                        if (d > Integer.MAX_VALUE) d.toLong() else d.toInt()
+                    } else {
+                        d
+                    }
+
+                } catch (doubleE: NumberFormatException) {
+                    throw JsonParseException("Cannot parse " + value + "; at path " + reader.previousPath, doubleE)
+                }
+            })
+            .create()
 
         fun toJson(src: Any): String = gson.toJson(src)
 
@@ -166,6 +185,21 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                 .redirectErrorStream(true) // Merges stderr into stdout
                 .start().also { process ->
                     withContext(Dispatchers.IO) { // More info on this context switching : https://elizarov.medium.com/blocking-threads-suspending-coroutines-d33e11bf4761
+                        // The watchdog will terminate the process in two cases :
+                        // if the user cancels or is 60 minutes delay expires.
+                        val watchdog = launch {
+                            try {
+                                delay(1000 * 60 * 60) // 60 minutes timeout
+                                log(logger::warn, "TIMEOUT occurred after 1h")
+                                process.destroy()
+                            } catch (_:CancellationException) {
+                                if(process.isAlive) {
+                                    log(logger::info, "Cancelled by user: killing running process...")
+                                    process.destroy()
+                                }
+                            }
+                        }
+
                         launch {
                             process.inputStream.bufferedReader().run {
                                 while (true) { // Breaks when readLine returns null
@@ -175,11 +209,8 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                             }
                         }
 
-                        process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
-                        if (process.isAlive) {
-                            log(logger::warn, "TIMEOUT occurred after 1h")
-                            process.destroy()
-                        }
+                        process.waitFor()
+                        watchdog.cancel()
                     }
                 }
         }.onSuccess { process -> // completed, with success or failure
@@ -211,8 +242,14 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
         }.onFailure { ex ->
-            log(logger::warn, "An error occurred when running the script: ${ex.message}")
-            logger.warn(ex.stackTraceToString())
+            when(ex) {
+                is CancellationException -> log(logger::info, "Cancelled by user: done.")
+                else ->  {
+                    log(logger::warn, "An error occurred when running the script: ${ex.message}")
+                    logger.warn(ex.stackTraceToString())
+                }
+            }
+
             error = true
         }
 
