@@ -35,9 +35,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: navikt/yaml-validator@v3 # should use v4 if PR accepted
+    - uses: navikt/yaml-validator@v4
       with:
         schema_path: scripts/validationSchema
         document_path: scripts
         validate_file_extension: no
-        # filter_extensions: .yml ## This will be added in v4
+        filter_extensions: .yml
