@@ -37,7 +37,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: navikt/yaml-validator@v4
       with:
-        schema_path: scripts/validationSchema
+        schema_path: scripts/cerberusValidationSchema
         document_path: scripts
         validate_file_extension: no
         filter_extensions: .yml
