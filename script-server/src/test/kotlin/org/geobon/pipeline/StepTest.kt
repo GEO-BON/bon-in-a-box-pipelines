@@ -4,9 +4,12 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.teststeps.ConcatenateStep
+import org.geobon.pipeline.teststeps.DelayPipe
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -15,17 +18,6 @@ import kotlin.test.assertTrue
 
 @ExperimentalCoroutinesApi
 internal class StepTest {
-
-    class DelayPipe(private val finishLine: MutableList<String>, private val delay:Long, value: String) :
-        ConstantPipe("text/plain", value) {
-
-        override suspend fun pull(): Any {
-            delay(delay)
-
-            return super.pull()
-                .also { finishLine.add(it.toString()) }
-        }
-    }
 
     @Test
     fun givenNoInOneOut_whenExecuted_thenInputsAreCalledAndOutputReceivesValue() = runTest {
@@ -63,10 +55,10 @@ internal class StepTest {
         val finishLine = mutableListOf<String>()
 
         val step = ConcatenateStep(mutableMapOf(
-            "1" to DelayPipe(finishLine, 2000, "!"),
-            "2" to DelayPipe(finishLine, 500, " "),
-            "3" to DelayPipe(finishLine, 1000, "world"),
-            "4" to DelayPipe(finishLine, 0, "Hello")))
+            "1" to DelayPipe(2000, "!", finishLine),
+            "2" to DelayPipe(500, " ", finishLine),
+            "3" to DelayPipe(1000, "world", finishLine),
+            "4" to DelayPipe(0, "Hello", finishLine)))
 
         step.execute()
 
@@ -76,6 +68,29 @@ internal class StepTest {
 
         // This happens to be true, but could vary with map implementation:
         assertEquals("Hello world!", step.outputs[ConcatenateStep.STRING]!!.value)
+    }
+
+    @Test
+    fun givenARunningPipeline_whenStopped_thenNextStepNotRan() = runTest {
+        val finishLine = mutableListOf<String>()
+        val step = ConcatenateStep(mutableMapOf(
+            "1" to DelayPipe(2000, "!", finishLine),
+            "2" to DelayPipe(500, " ", finishLine),
+            "3" to DelayPipe(1000, "world", finishLine),
+            "4" to DelayPipe(0, "Hello", finishLine)))
+
+        val job = launch {
+            step.execute()
+        }
+        delay(100)
+        job.cancelAndJoin()
+
+        // Only one "pull" should have time to finish
+        val expectedFinishLine = listOf("Hello")
+        assertEquals(expectedFinishLine, finishLine)
+
+        // And the next step should have no output
+        assertNull(step.outputs[ConcatenateStep.STRING]!!.value)
     }
 
 }

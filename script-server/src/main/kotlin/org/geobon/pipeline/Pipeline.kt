@@ -1,7 +1,6 @@
 package org.geobon.pipeline
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -13,9 +12,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         inputs
     )
 
-    companion object {
-        private val logger: Logger = LoggerFactory.getLogger("Pipeline")
-    }
+    private val logger: Logger = LoggerFactory.getLogger(descriptionFile.nameWithoutExtension)
 
     /**
      * All outputs that should be presented to the client as pipeline outputs.
@@ -25,7 +22,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
 
     private val finalSteps: Set<Step>
 
-
+    var job: Job? = null
 
     init {
         val steps = mutableMapOf<String, ScriptStep>()
@@ -185,10 +182,27 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         finalSteps.forEach { it.dumpOutputFolders(allOutputs) }
     }
 
-    suspend fun execute() {
-        coroutineScope {
-            finalSteps.forEach { launch { it.execute() } }
+    suspend fun execute() = coroutineScope {
+        job = launch {
+            try {
+                supervisorScope {
+                    this.coroutineContext
+                    finalSteps.forEach { launch { it.execute() } }
+                }
+            } catch (ex: RuntimeException) {
+                logger.debug(ex.message)
+            } catch (ex: Exception) {
+                logger.error(ex.stackTraceToString())
+            }
         }
+    }
+
+    suspend fun stop() {
+        job?.apply {
+            cancel("Cancelled by user")
+            join()
+        }
+        job = null
     }
 
 }
