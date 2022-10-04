@@ -25,6 +25,11 @@ jobs:
       uses: docker/metadata-action@v4
       with:
         images: geobon/bon-in-a-box
+        tags: |
+          # Image used in compose file
+          type=raw,value=runner-r
+          # In case we want to replicate a specific legacy setup
+          type=schedule,pattern=runner-r_{{date 'YYYY-MM-DD_hh:ss'}}
     
     # - name: Build and push Docker image
     #   uses: docker/build-push-action@v3
