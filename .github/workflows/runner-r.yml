@@ -1,4 +1,4 @@
-name: R Runner modified on main branch
+name: R Runner, main branch
 
 on:
   push:
@@ -29,7 +29,8 @@ jobs:
           # Image used in compose file
           type=raw,value=runner-r
           # In case we want to replicate a specific legacy setup
-          type=schedule,pattern=runner-r_{{date 'YYYY-MM-DD_hh:ss'}}
+          type=raw,prefix=runner-r_,value={{date 'YYYY-MM-DD_hh:ss'}}
+    
     
     # - name: Build and push Docker image
     #   uses: docker/build-push-action@v3
