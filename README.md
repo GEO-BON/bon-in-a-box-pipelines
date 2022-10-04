@@ -36,6 +36,7 @@ GBIF_EMAIL=
 7. In browser:
     - http://localhost/ shows the UI
 8. `docker compose down` (to stop the server when done) 
+9. On Windows, to completely stop the processes, you might have to run `wsl --shutdown`
 
 Servers do not need to be restarted when modifying scripts in the /scripts folder:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
@@ -102,7 +103,14 @@ options_example:
   example: third option
 ```
 
-#### Reporting problems
+### Script validation
+The structure of the script description file will be validated on push. To run the validation locally,
+- On Windows: Make sure docker is running, then run [validateScripts.bat](/scripts/validateScripts.bat)
+- On Linux: Run [validateScripts.sh](/scripts/validateScripts.sh)
+
+This validates that the structure is correct, but not that it is correct. Hence, peer review of the scripts and the description files is mandatory before accepting a pull requests.
+
+### Reporting problems
 The output keys `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. Both will be displayed specially in the UI.
 
 ## Pipelines
