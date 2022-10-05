@@ -13,7 +13,7 @@ const numtargs = 2
 W = zeros(length(layerpaths), numtargs)
 
 for i in 1:length(layerpaths)
-    W[:,i] .= layerweights
+    W[:,i] .= layerweights[i]
 end 
 
 layers = stack([geotiff(lp) for lp in layerpaths])
