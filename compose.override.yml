@@ -7,9 +7,10 @@ services:
 ## UI server to use when you just want to use the UI
   ui-prod:
     container_name: biab-ui-prod
-    build:
-      context: ./ui
-      dockerfile: Dockerfile.prod
+    image: geobon/bon-in-a-box:ui
+    # build:
+    #   context: ./ui
+    #   dockerfile: Dockerfile.prod
     expose:
       - '80'
     depends_on:
@@ -22,6 +23,7 @@ services:
       - ui-prod
 
   script-server:
-    build:
-      context: ./script-server/
-      dockerfile: Dockerfile.prod
+    image: geobon/bon-in-a-box:script-server
+    # build:
+    #   context: ./script-server/
+    #   dockerfile: Dockerfile.prod

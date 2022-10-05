@@ -20,6 +20,8 @@ This command enables:
 - Script-server: Kotlin hot-swapping by launching [./script-server/hotswap.sh](../script-server/hotswap.sh)
 - NGINX: [http-proxy/conf.d/ngnix.conf](../http-proxy/conf.d/ngnix.conf) will be loaded
 
+Once in a while you should use `docker compose -f compose.yml -f compose.dev.yml pull` to have the latest base images.
+
 ## Microservice infrastructure
 
 ```mermaid
