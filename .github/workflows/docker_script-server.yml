@@ -26,13 +26,13 @@ jobs:
       with:
         images: geobon/bon-in-a-box
         tags: |
-          type=raw,value=biab-script-server
+          type=raw,value=script-server
     
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
-        context: .
-        file: script-server/Dockerfile.prod
+        context: ./script-server
+        file: Dockerfile.prod
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
