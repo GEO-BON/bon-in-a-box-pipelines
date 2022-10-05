@@ -18,7 +18,7 @@ end
 
 layers = stack([geotiff(lp) for lp in layerpaths])
 
-priority = squish(layers, 𝐖, α);
+priority = squish(layers, W, targetbalance);
 
 
 # TODO
