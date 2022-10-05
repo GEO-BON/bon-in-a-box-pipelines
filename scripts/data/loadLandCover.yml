@@ -1,3 +1,4 @@
+description: "This script loads land cover values given a study area"
 script: loadLandCover.R
 inputs:
   use_obs:
