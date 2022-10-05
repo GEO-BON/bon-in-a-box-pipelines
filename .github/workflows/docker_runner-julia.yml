@@ -2,10 +2,10 @@ name: Julia Runner, main branch
 
 on:
   push:
-    branches:
-      - main
-    paths:
-      - 'runners/julia-dockerfile'
+    # branches:
+    #   - main
+    # paths:
+    #   - 'runners/julia-dockerfile'
 
 jobs:
   runner-julia:
@@ -35,7 +35,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .
-        file: runners/r-dockerfile
+        file: runners/julia-dockerfile
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
