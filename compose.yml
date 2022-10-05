@@ -25,9 +25,10 @@ services:
 
   runner-r:
     container_name: biab-runner-r
-    build:
-      context: ./runners
-      dockerfile: r-dockerfile
+    image: geobon/bon-in-a-box:runner-r
+    # build:
+    #   context: ./runners
+    #   dockerfile: r-dockerfile
     command: sh # Override default command to avoid launching R-studio server.
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
@@ -43,9 +44,10 @@ services:
 
   runner-julia:
     container_name: biab-runner-julia
-    build:
-      context: ./runners
-      dockerfile: julia-dockerfile
+    image: geobon/bon-in-a-box:runner-julia
+    # build:
+    #   context: ./runners
+    #   dockerfile: julia-dockerfile
     command: sh # Avoids launching julia session that will not be used.
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:

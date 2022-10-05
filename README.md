@@ -14,9 +14,9 @@ Prerequisites :
 To run:
 1. Clone repository (Windows users: do not clone this in a folder under OneDrive.)
 2. Using a terminal, navigate to top-level folder.
-3. `docker compose build`
+3. `docker compose pull`
   - This needs to be re-run everytime the server code changes, or when using git pull if you are not certain.
-  - The first execution will be very long. The next ones will be shorter or immediate, depending on the changes.
+  - The first execution will be long. The next ones will be shorter or immediate, depending on the changes.
   - Network problems may fail the process. First try running the command again. Intermediate states are saved so not everything will be redone even when there is a failure.
 5. Provide an environment file (.env) in the root folder with the following keys
 ```
