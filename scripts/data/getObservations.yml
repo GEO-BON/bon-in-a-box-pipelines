@@ -1,6 +1,6 @@
 script: getObservations.R
 description: "This script gets observations from GBIF database, using the package RGIF."
-link: https://github.com/ropensci/rgbif
+external_link: https://github.com/ropensci/rgbif
 inputs:
   species:
     label: species names
