@@ -14,8 +14,18 @@ inputs:
       - from_tif
       - from_cube
     example: "from_cube"
+  collection:
+    label: collection
+    description: type of source to load the predictors (either from tif, or from the stac catalogue)
+    type: string
+    example: "chelsa-clim"
   layers: 
     label: layers
+    description: names of layers to select, if empty all the layers from the collection will be used
+    type: text[]
+    example: []
+  variables: 
+    label: variables
     description: names of layers to select, if empty all the layers from the collection will be used
     type: text[]
     example: []

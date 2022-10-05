@@ -1,10 +1,10 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes")
+packages <- c("terra", "rjson", "raster", "stars", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes", "RCurl")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
-
+Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true")
 library("devtools")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
@@ -54,20 +54,22 @@ if(is.null(input$nb_sample)) {
   }
 
 
-if(length(input$layers) == 0) layers <- NULL else layers <- input$layers
+if(length(input$layers) == 0 || input$layers == "") layers <- NULL else layers <- input$layers
+if(length(input$variables) == 0 || input$variables == "") variables <- NULL else variables <- input$variables
 
 predictors <- load_predictors(source = "cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
-            collections = c("chelsa-clim"),     
-            t0 = "1981-01-01",
-            t1 = "1981-01-01",
+            collections = input$collection,     
+         #   t0 = "1981-01-01",
+           # t1 = "1981-01-01",
             spatial.res = input$spatial_res, # in meters
             temporal.res = "P1Y",
             aggregation = "mean",
             resampling = "near"),
                           
                            subset_layers = layers,
+                           variables = variables,
                            remove_collinear = input$remove_collinearity,
                            method = input$method,
                            method_cor_vif = input$method_cor_vif,
