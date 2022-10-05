@@ -2,10 +2,10 @@ name: UI, main branch
 
 on:
   push:
-    # branches:
-    #   - main
-    # paths:
-    #   - 'ui/'
+    branches:
+      - main
+    paths:
+      - 'ui/'
 
 jobs:
   ui:

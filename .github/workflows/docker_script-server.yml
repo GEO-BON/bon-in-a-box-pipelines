@@ -2,10 +2,10 @@ name: Script server, main branch
 
 on:
   push:
-    # branches:
-    #   - main
-    # paths:
-    #   - 'script-server/'
+    branches:
+      - main
+    paths:
+      - 'script-server/'
 
 jobs:
   script-server:
