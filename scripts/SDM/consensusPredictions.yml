@@ -13,6 +13,7 @@ inputs:
     example: "/scripts/consensusPredictions_presence_background.tsv"
   consensus_method:
     label: consensus method
+    description: method to compute a consensus between several predictions (median, mean or weighted average)
     type: options
     options:
       - median
