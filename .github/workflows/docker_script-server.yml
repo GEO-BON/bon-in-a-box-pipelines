@@ -8,7 +8,7 @@ on:
     #   - 'script-server/'
 
 jobs:
-  ui:
+  script-server:
     runs-on: ubuntu-latest
     steps:
     - name: Check out the repo
@@ -31,8 +31,8 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
       with:
-        context: ./script-server
-        file: Dockerfile.prod
+        context: script-server
+        file: script-server/Dockerfile.prod
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
