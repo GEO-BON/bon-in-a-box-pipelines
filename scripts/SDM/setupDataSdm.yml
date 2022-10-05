@@ -25,6 +25,7 @@ inputs:
       - bootstrap
       - crossvalidation
       - none
+    example: none
   runs_n:
     label: number of runs
     description: number of runs (in bootstrap or crossvalidation method)
