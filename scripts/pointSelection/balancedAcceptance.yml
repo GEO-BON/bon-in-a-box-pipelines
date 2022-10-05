@@ -1,0 +1,13 @@
+script: balancedAcceptance.jl
+inputs:
+    priority_map_path:
+        description: Path to the priority map that Balanced-Acceptance Sampling will run on
+        type: text
+        example: "./foo/bar/priority.tiff"
+    bias_toward_high_priority:
+        description: A real number between 0 and infty
+        type: float
+        example: 3.14159
+outputs:
+    points:
+        
