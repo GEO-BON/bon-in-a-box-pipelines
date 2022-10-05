@@ -1,14 +1,14 @@
-name: R Runner, main branch
+name: Julia Runner, main branch
 
 on:
   push:
-    # branches:
-    #   - main
-    # paths:
-    #   - 'runners/r-dockerfile'
+    branches:
+      - main
+    paths:
+      - 'runners/julia-dockerfile'
 
 jobs:
-  runner-r:
+  runner-julia:
     runs-on: ubuntu-latest
     steps:
     - name: Check out the repo
@@ -27,9 +27,9 @@ jobs:
         images: geobon/bon-in-a-box
         tags: |
           # Image used in compose file
-          type=raw,value=runner-r
+          type=raw,value=runner-julia
           # In case we want to replicate a specific legacy setup
-          type=sha
+          type=sha,prefix=runner-julia-
     
     - name: Build and push Docker image
       uses: docker/build-push-action@v3
