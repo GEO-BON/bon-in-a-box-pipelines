@@ -93,7 +93,7 @@ load_predictors <- function(source = "from_cube",
     
     all_predictors <- do.call(stacatalogue::load_cube, cube_args_c)
     
-  #  bbox_geom <- bbox %>% sf::st_as_sfc() %>% sf::st_as_sf()
+  #  bbox_geom <- bbox |> sf::st_as_sfc() |> sf::st_as_sf()
     
    # all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(bbox_geom, srs = proj))
     all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(mask))
@@ -184,7 +184,7 @@ sample_spatial_obj <- function(obj_to_sample, nb_points = 5000) {
   } else if (inherits(obj_to_sample, "SpatRaster")) {
     if (terra::ncell(obj_to_sample) > nb_points) {
       env_df <- terra::spatSample(obj_to_sample, size = nb_points, na.rm = TRUE,
-                                  method="random", replace=FALSE) %>% as.matrix()
+                                  method="random", replace=FALSE) |> as.matrix()
       
     } else {
       env_df <- terra::values(obj_to_sample, matrix = T)
