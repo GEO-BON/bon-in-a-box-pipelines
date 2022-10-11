@@ -1,0 +1,59 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 426.1166687011719,
+        "y": 276
+      },
+      "data": {
+        "descriptionFile": "0in1out.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 712.1166687011719,
+        "y": 276
+      },
+      "data": {
+        "descriptionFile": "assertArray.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "output",
+      "position": {
+        "x": 1026.1166687011719,
+        "y": 271
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "randomness",
+      "target": "1",
+      "targetHandle": "array",
+      "id": "reactflow__edge-0randomness-1array"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "the_same",
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-1the_same-2"
+    }
+  ],
+  "viewport": {
+    "x": -245,
+    "y": 78,
+    "zoom": 1
+  },
+  "inputs": {}
+}
