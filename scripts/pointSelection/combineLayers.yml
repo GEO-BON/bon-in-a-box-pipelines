@@ -18,7 +18,7 @@ inputs:
         type: float[]
         example: [0.3, 0.7]
 outputs:
-    priority_map_path:
-        description: Path to the priority map created based on layers and weights
-        type: text
+    priority_map:
+        description: Priority map created based on layers and weights
+        type: image/tiff;application=geotiff
        

@@ -4,6 +4,9 @@ using SimpleSDMLayers
 # TODO 
 # Get `priority_map_path`, `bias`, and `numpoints` from the input JSON
 
+#= outputFolder = ARGS[1]
+input =  =#
+
 priority_map_path = "foo"
 bias = 1.0 
 numpoints = 50

@@ -1,15 +1,19 @@
 script: balancedAcceptance.jl
 inputs:
-    priority_map_path:
-        description: Path to the priority map that Balanced-Acceptance Sampling will run on
-        type: text
+    priority_map:
+        description: Priority map that Balanced-Acceptance Sampling will run on
+        type: image/tiff;application=geotiff
         example: "./foo/bar/priority.tiff"
     bias_toward_high_priority:
         description: A real number between 0 and infty
         type: float
         example: 3.14159
+    num_points:
+        description: Number of points to select
+        type: integer
+        example: 50
 outputs:
-    points:
-        description: Points chosen by balancedAcceptance
+    points_path:
+        description: Csv of selected points
         type: text/csv
         
