@@ -1,0 +1,24 @@
+script: combineLayers.jl
+description: Combines the layers and associate wieghts to create a priority map balanced across targets.
+
+inputs:
+    layerpaths:
+        label: layerpaths
+        description: List of paths to the input layers
+        type: text[]
+        example: ["./foo/bar/layer1.tiff", ./foo/bar/layer2.tiff"]
+    layerweights:
+        label: layerweights
+        description: Weights for each input layer and target
+        type: text/csv
+        example: [(0.5,0.5), (0.3,0.7)]
+    targetbalance:
+        label: targetbalance
+        description: List of weights for each target, should sum to 1
+        type: float[]
+        example: [0.3, 0.7]
+outputs:
+    priority_map_path:
+        description: Path to the priority map created based on layers and weights
+        type: text
+       

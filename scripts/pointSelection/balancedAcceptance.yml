@@ -10,4 +10,6 @@ inputs:
         example: 3.14159
 outputs:
     points:
+        description: Points chosen by balancedAcceptance
+        type: text/csv
         
