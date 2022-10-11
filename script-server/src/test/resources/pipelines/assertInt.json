@@ -1,0 +1,79 @@
+{
+  "nodes": [
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 852,
+        "y": 3
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "7",
+      "type": "io",
+      "position": {
+        "x": 308,
+        "y": 0
+      },
+      "data": {
+        "descriptionFile": "assertInt.yml"
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 8.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 42
+      }
+    },
+    {
+      "id": "9",
+      "type": "io",
+      "position": {
+        "x": 580,
+        "y": 0
+      },
+      "data": {
+        "descriptionFile": "assertInt.yml"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "7",
+      "targetHandle": "input",
+      "id": "reactflow__edge-8-7input"
+    },
+    {
+      "source": "7",
+      "sourceHandle": "the_same",
+      "target": "9",
+      "targetHandle": "input",
+      "id": "reactflow__edge-7the_same-9input"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "the_same",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-9the_same-6"
+    }
+  ],
+  "viewport": {
+    "x": 213,
+    "y": 215,
+    "zoom": 1
+  },
+  "inputs": {}
+}

@@ -40,7 +40,7 @@ internal class ScriptStepTest {
 
         assertNotNull(step.outputs["randomness"])
         assertNotNull(step.outputs["randomness"]!!.value)
-        assertEquals(234.toDouble(), step.outputs["randomness"]!!.value as Double)
+        assertEquals(234, step.outputs["randomness"]!!.value)
     }
 
     @Test
@@ -59,7 +59,7 @@ internal class ScriptStepTest {
 
         assertEquals(1, files.filter { it.name == "output.json" }.size)
         assertNotNull(step.outputs["increment"])
-        assertEquals((input + 1).toDouble(), step.outputs["increment"]!!.value as Double)
+        assertEquals(input + 1, step.outputs["increment"]!!.value)
     }
 
     @Test
@@ -76,7 +76,7 @@ internal class ScriptStepTest {
 
         assertNotNull(step.outputs["randomness"])
         assertNotNull(step.outputs["randomness"]!!.value)
-        assertEquals(234.toDouble(), step.outputs["randomness"]!!.value as Double)
+        assertEquals(234, step.outputs["randomness"]!!.value)
     }
 
     @Test
