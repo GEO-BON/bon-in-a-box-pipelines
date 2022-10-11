@@ -28,18 +28,28 @@ abstract class YMLStep(
         }
 
         // Validate presence and type of each input
+        var errorMessages = ""
         inputsFromYml.forEach { (inputKey, expectedType) ->
-            inputs[inputKey]?.let {
-                if (it.type != expectedType) {
-                    // Check for convertible types (currently only int to float, use a map/when if more conversions are possible)
-                    if(!(it.type == "int" && expectedType == "float")) {
-                        return "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected.\n"
+            errorMessages += inputs[inputKey]?.let {
+                if (it.type == expectedType) ""
+                // Check for convertible types (currently only int to float, use a map/when if more conversions are possible)
+                else when {
+                    // int to float accepted
+                    it.type == "int" && expectedType == "float" -> ""
+
+                    // Non-array to single-element array accepted
+                    expectedType.endsWith("[]") && it.type == expectedType.dropLast(2) -> {
+                        inputs[inputKey] = AggregatePipe(listOf(it))
+                        return@let ""
                     }
+
+                    // Everything else refused
+                    else -> "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected.\n"
                 }
-            } ?: return "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
+            } ?: "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
         }
 
-        return ""
+        return errorMessages
     }
 
     fun validateInputsReceived(resolvedInputs:Map<String, Any>) : String? {
@@ -113,7 +123,7 @@ abstract class YMLStep(
                 } else {
                     logger.error("$section is not a map")
                 }
-            } ?: logger.error("No $section map")
+            } ?: logger.trace("No $section map")
         }
     }
 }
