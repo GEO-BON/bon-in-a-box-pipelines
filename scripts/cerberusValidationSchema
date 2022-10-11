@@ -46,8 +46,8 @@ inputs:
         - type: list
 
 outputs:
-  required: false
-  nullable: true
+  required: true
+  nullable: false
   type: dict
   keysrules: 
    type: string

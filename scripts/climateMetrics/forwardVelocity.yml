@@ -1,4 +1,5 @@
 script: forwardVelocity.R
+description: This script calculates forward velocity, using methods from Carroll et. al. (2015) and Hamann et. al. (2015).
 inputs:
   rcp:
     label: rcp
