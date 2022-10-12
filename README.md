@@ -20,6 +20,10 @@ To run:
   - Network problems may fail the process. First try running the command again. Intermediate states are saved so not everything will be redone even when there is a failure.
 5. Provide an environment file (.env) in the root folder with the following keys
 ```
+# Windows only - path to the root directory of the project with forward slashes
+# such as /c/User/me/biab-2.0
+PWD=
+
 # Access the planetary computer APIs
 JUPYTERHUB_API_TOKEN=
 DASK_GATEWAY__AUTH__TYPE=

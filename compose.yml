@@ -18,6 +18,10 @@ services:
       - PIPELINES_LOCATION=/pipelines
       - OUTPUT_LOCATION=/output
       - HOST_PATH=${PWD}
+      - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
+      - GBIF_USER=${GBIF_USER}
+      - GBIF_PWD=${GBIF_PWD}
+      - GBIF_EMAIL=${GBIF_EMAIL}
     depends_on:
       - runner-r
       - runner-julia
