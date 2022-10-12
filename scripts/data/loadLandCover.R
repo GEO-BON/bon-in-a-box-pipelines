@@ -2,10 +2,6 @@
 
 ## Install required packages
 
-library("devtools")
-#devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue", upgrade = "never")
-remotes::install_github("appelmar/gdalcubes_R")
-
 packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -23,6 +19,7 @@ library("dplyr")
 library("stacatalogue")
 library("gdalcubes")
 library("RCurl")
+library(sf)
 options(timeout = max(60000000, getOption("timeout")))
 
 ## Receiving args
@@ -35,43 +32,9 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-
-# Case 1: we create an extent from a set of observations
-if (input$use_obs) {
-obs <- read.table(file = input$bbox_obs, sep = '\t', header = TRUE) 
-
-obs <- CoordinateCleaner::cc_val(obs, lon = "decimalLongitude", 
-                                 lat = "decimalLatitude", verbose = T, value = "clean")
-
-obs <- CoordinateCleaner::cc_zero(obs, lon = "decimalLongitude", 
-                                        lat = "decimalLatitude", buffer = 0.5, 
-                                        verbose = T, value = "clean")
-
-
-# Reproject the obs to the data cube projection
-obs_pts <-
-          stacatalogue::project_coords(obs,
-                         lon = "decimalLongitude",
-                         lat = "decimalLatitude",
-                         proj_from = "+proj=longlat +datum=WGS84",
-                         proj_to = input$proj_to)
-
-# Create the extent (data cube projection)
-bbox <- stacatalogue::points_to_bbox(obs_pts, buffer = input$bbox_buffer)
-print(bbox)
-
-# Case 2: we use a shapefile
-} else if (!is.null(input$bbox_shapefile_path)) {
-    shp <- sf::st_read(input$bbox_shapefile_path)
-    bbox <- stacatalogue::shp_to_bbox(shp,
-        proj_to = input$proj_to, buffer = input$bbox_buffer)
-
-# Case 3: we use a vector
-} else if (!is.null(input$bbox_coordinates)) {
-bbox <- st_bbox(c(xmin = bbox_coordinates[1], xmax = bbox_coordinates[2], 
-            ymax = bbox_coordinates[3], ymin = bbox_coordinates[4]), crs = st_crs(input$proj_to))
-    } 
-
+# Tranform the vector to a bbox object
+bbox <- sf::st_bbox(c(xmin = input$bbox_coordinates[1], xmax = input$bbox_coordinates[2], 
+            ymax = input$bbox_coordinates[3], ymin = input$bbox_coordinates[4]), crs = st_crs(input$proj_to))
 
 n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)) + 1 
 temporal_res <- paste0("P", n_year, "Y")
@@ -81,7 +44,7 @@ if (input$stac_source == "IO") {
                                 collections = c("esacci-lc"), 
                               bbox = bbox,
                                srs.cube = input$proj_to,
-                               limit = input$stac_limit,
+                               limit = 5000,
                                 t0 = input$t0,
                                 t1 = input$t1,
                                 spatial.res = input$spatial_res, # in meters
@@ -96,7 +59,7 @@ if (input$stac_source == "IO") {
                                srs.cube = input$proj_to,
                                 t0 = input$t0,
                                 t1 = input$t1,
-                                limit = input$stac_limit,
+                                limit = 5000,
                                 spatial.res = input$spatial_res, # in meters
                                 prop = input$proportion,
                                 prop.res = input$proportion_res,
