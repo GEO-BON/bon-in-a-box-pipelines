@@ -1,35 +1,21 @@
 description: "This script loads land cover values given a study area"
 script: loadLandCover.R
 inputs:
-  use_obs:
-    label: use observations
-    description: 
-    type: boolean
-    example: TRUE
-  bbox_buffer:
-    label: buffer
-    description: buffer around presence points (used to create an extent for collinearity measurement). Unit depends on the projection system.
-    type: int
-    example: 100
-  bbox_obs: 
-    label: presence
-    description: path to presence data file
-    type: text/tab-separated-values
-    example: "/output/loadGbif/loadGbif_R/59c8e9365bd395051ba4b8d04644ca4e/obs_data.tsv"
+  bbox_coordinates:
+    label: bbox
+    description: bbox, in the sequence xmin, xmax, ymax, ymin
+    type: float[]
+    example: [-1956349, -12116,  689585, -600697]
   proj_to:
     label: projection system
-    description: Projection 
+    description: projection system 
     type: text
     example: "EPSG:6623"
   spatial_res:
-    label: Spatial resolution
-    description: Projection 
+    label: spatial resolution
+    description: spatial resolution
     type: int
     example: 1000
-  stac_limit:
-    description: Projection 
-    type: int
-    example: 5000
   stac_source:
     label: STAC source
     description: source of the STAC catalogue
@@ -50,17 +36,17 @@ inputs:
     example: "2010-12-31"
   proportion: 
     label: proportion
-    description: 
+    description: compute the proportion of each class (yes) or return the class (no)
     type: boolean
     example: TRUE
   proportion_res: 
     label: proportion_res
-    description: 
+    description: spatial resolution to calculate the proportion of each land cover class
     type: integer
     example: 1000
   lc_classes: 
     label: lc_classes
-    description: 
+    description: land cover classes to select
     type: integer[]
     example: 
       - 11
