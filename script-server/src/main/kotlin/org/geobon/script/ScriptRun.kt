@@ -96,7 +96,9 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                 }
 
             } else { // Script was updated, flush the whole cache for this script
-                outputFolder.parentFile.deleteRecursively()
+                if (!outputFolder.parentFile.deleteRecursively()) {
+                    throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                }
             }
         }
 
@@ -154,7 +156,9 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
         runCatching {
             withContext(Dispatchers.IO) {
                 // If loading from cache didn't succeed, make sure we have a clean slate.
-                outputFolder.deleteRecursively()
+                if (outputFolder.exists() && !outputFolder.deleteRecursively()) {
+                    throw RuntimeException("Failed to delete directory of previous run ${outputFolder.path}")
+                }
 
                 // Create the output folder for this invocation
                 outputFolder.mkdirs()
