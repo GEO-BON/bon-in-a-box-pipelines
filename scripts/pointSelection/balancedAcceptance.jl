@@ -1,21 +1,32 @@
 using BiodiversityObservationNetworks
 using SimpleSDMLayers
 
-# TODO 
-# Get `priority_map_path`, `bias`, and `numpoints` from the input JSON
+outputFolder = ARGS[1]
+filepath = joinpath(outputFolder,"input.json")
+outputFilepath = joinpath(outputFolder,"data/")
+mkdir(outputFilepath)
 
-#= outputFolder = ARGS[1]
-input =  =#
+print(filepath)
+print(outputFilepath)
 
-priority_map_path = "foo"
-bias = 1.0 
-numpoints = 50
+input = JSON.parsefile(filepath)
+print(keys(input))
+
+priority_map_path = input["priority_map"]
+bias = input["bias_toward_high_priority"]
+numpoints = input["num_points"]
 
 priority_map = geotiff(priority_map_path)
 
 selected_points = priority_map |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first 
 
-# TODO
-# figure out how we want to output selected_points 
+selected_points_path = joinpath(outputFilepath, "selected_points.csv")
+# write out the csv
+
+outputDict = Dict("points" => selected_points_path)
+open(joinpath(outputFolder, "output.json"),"w") do f
+    JSON.print(f, JSON.json(outputDict)) 
+end
+
 
 

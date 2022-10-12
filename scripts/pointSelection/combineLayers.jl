@@ -1,14 +1,22 @@
 using BiodiversityObservationNetworks
 using SimpleSDMLayers
+using JSON
 
+outputFolder = ARGS[1]
+filepath = joinpath(outputFolder,"input.json")
+outputFilepath = joinpath(outputFolder,"data/")
+mkdir(outputFilepath)
 
-# TODO 
-# Read the input JSONs to get `layerpaths`, `layerweights`, and
-# `targetbalance`
-layerpaths = ["foo", "bar", "etc"]
-layerweights = [(0.5,0.5), (0.3,0.7), (0.25,0.75)]
-targetbalance = [0.3, 0.7] # this is the same as α
+print(filepath)
+print(outputFilepath)
 
+input = JSON.parsefile(filepath)
+print(keys(input))
+
+layerpaths = input["layerpaths"]
+layerweights = input["layerweights"]
+targetbalance = input["targetbalance"] # this is the same as α
+#= 
 const numtargs = 2
 W = zeros(length(layerpaths), numtargs)
 
@@ -19,7 +27,13 @@ end
 layers = stack([geotiff(lp) for lp in layerpaths])
 
 priority = squish(layers, W, targetbalance);
-
+ =#
+priority_path = joinpath(outputFilepath, "priority_map.tiff")
 
 # TODO
-# write priority map and store path in output JSON
+# write out the priority map as a tiff file
+
+outputDict = Dict("priority_map" => priority_path)
+open(joinpath(outputFolder, "output.json"),"w") do f
+    JSON.print(f, JSON.json(outputDict)) 
+end
