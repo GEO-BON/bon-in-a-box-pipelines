@@ -83,4 +83,4 @@ outputs:
   predictors:
     label: predictors
     description: raster, predictors 
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]

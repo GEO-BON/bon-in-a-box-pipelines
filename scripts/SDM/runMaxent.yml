@@ -14,7 +14,7 @@ inputs:
   predictors: 
     label: predictors
     description: layer names (predictors) as a list, or path to a list
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
   fc:
     label: feature classes
