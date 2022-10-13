@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'ui/'
+      - 'ui/**'
 
 jobs:
   ui:
