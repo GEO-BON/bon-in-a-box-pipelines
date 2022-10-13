@@ -6,7 +6,7 @@ inputs:
         label: layerpaths
         description: List of paths to the input layers
         type: text[]
-        example: ["./foo/bar/layer1.tiff", ./foo/bar/layer2.tiff"]
+        example: ["scripts/pointSelection/chelsa_clim_bio11981.tif", "scripts/pointSelection/chelsa_clim_bio121981.tif"]
     layerweights:
         label: layerweights
         description: Weights for each input layer and target
