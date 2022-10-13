@@ -1,4 +1,6 @@
 import React, { useEffect, useRef } from 'react'
+import parseGeoraster from "georaster";
+import GeoRasterLayer from "georaster-layer-for-leaflet";
 import chroma from "chroma-js";
 import * as L from "leaflet";
 
@@ -17,8 +19,6 @@ function RenderedMap(props) {
 
     // UseEffect to execute code after map div is inserted
     useEffect(() => {
-        var parse_georaster = require("georaster");
-        var GeoRasterLayer = require("georaster-layer-for-leaflet");
 
         // initalize leaflet map
         if (!mapRef.current) {
@@ -36,7 +36,7 @@ function RenderedMap(props) {
         fetch(url_to_geotiff_file)
             .then(response => response.arrayBuffer())
             .then(arrayBuffer => {
-                parse_georaster(arrayBuffer).then(georaster => {
+                parseGeoraster(arrayBuffer).then(georaster => {
                     console.log("Using min " + georaster.mins[0])
                     console.log("Using max " + georaster.maxs[0])
                     const colorDomain = scale.domain([georaster.mins[0], georaster.maxs[0]]);
