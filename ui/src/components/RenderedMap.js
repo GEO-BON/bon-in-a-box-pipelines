@@ -20,11 +20,11 @@ function RenderedMap(props) {
     // UseEffect to execute code after map div is inserted
     useEffect(() => {
 
-        // initalize leaflet map
+        // Initalize leaflet map
         if (!mapRef.current) {
             mapRef.current = L.map('map').setView([0, 0], 5);
 
-            // add OpenStreetMap basemap
+            // Add OpenStreetMap basemap
             L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
             }).addTo(mapRef.current);
