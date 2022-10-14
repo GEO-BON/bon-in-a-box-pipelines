@@ -35,9 +35,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: navikt/yaml-validator@v4
+    - name: YML file syntax validation
+      uses: navikt/yaml-validator@v4
       with:
         schema_path: scripts/cerberusValidationSchema
         document_path: scripts
         validate_file_extension: no
         filter_extensions: .yml
+    - name: Find duplicate lines inside same YML file
+      working-directory: ./scripts
+      run: ./scripts/findDuplicates.sh
+      shell: bash
