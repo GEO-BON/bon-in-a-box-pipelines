@@ -30,6 +30,10 @@ inputs:
       type:
         required: true
         type: string
+        oneof:
+        - forbidden: [options]
+        - allowed: [options]
+          dependencies: options
       options:
         required: false
         type: list
@@ -63,6 +67,10 @@ outputs:
       type:
         required: true
         type: string
+        oneof:
+        - forbidden: [options]
+        - allowed: [options]
+          dependencies: options
       options:
         required: false
         type: list
