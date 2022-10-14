@@ -44,5 +44,5 @@ jobs:
         filter_extensions: .yml
     - name: Find duplicate lines inside same YML file
       working-directory: ./scripts
-      run: ./scripts/findDuplicates.sh
+      run: ./findDuplicates.sh
       shell: bash
