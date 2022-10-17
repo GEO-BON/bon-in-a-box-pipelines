@@ -6,6 +6,7 @@ import {
   BrowserRouter,
   Routes,
   Route,
+  useLocation,
 } from "react-router-dom";
 
 import { SingleScriptPage } from "./components/SingleScriptPage";
@@ -13,6 +14,15 @@ import { PipelinePage } from "./components/PipelinePage";
 import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
 import ScriptChooser from "./components/PipelineEditor/ScriptChooser";
 import { Layout } from './Layout.js';
+
+function NotFound() {
+  const location = useLocation()
+  return <main style={{ padding: "1rem" }}>
+    <h2>404 - Page not found</h2>
+    <p>{location.pathname}</p>
+    <p>Lost in the wilderness?</p>
+  </main>
+}
 
 const root = createRoot(document.getElementById('root'));
 root.render(
@@ -34,10 +44,8 @@ root.render(
       } />
 
       <Route path="*" element={
-        <main style={{ padding: "1rem" }}>
-          <h2>404 - Page not found</h2>
-          <p>Lost in the wilderness?</p>
-        </main>
+        <Layout left={<ScriptChooser />}
+          right={<NotFound />} />
       } />
 
     </Routes>
