@@ -41,6 +41,12 @@ Servers do not need to be restarted when modifying scripts in the /scripts folde
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
 - When adding/renaming/removing scripts, refresh the browser page.
 
+## Running the servers remotely
+1. Launch a first instance using the [ansible playbook](https://github.com/GEO-BON/biab-server/tree/main/ansible)
+2. Check that the servers run with a browser.
+3. Create a .env file on the server, as above.
+4. Take dockers down and up to load the .env file (this allows accessing GBIF, etc.)
+
 ## Scripts
 The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
 
