@@ -26,7 +26,7 @@ print(input)
 presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE) 
 
 # Format for bart() function
-presence_background <- presence_background %>% data.frame()
+presence_background <- presence_background |> data.frame()
 predictors <- raster::stack(input$predictors)
 
 covars <- names(predictors)

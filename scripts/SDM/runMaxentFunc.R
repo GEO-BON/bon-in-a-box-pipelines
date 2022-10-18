@@ -22,8 +22,8 @@ run_maxent <- function(presence.bg, with_raster = F,
                         parallelType = "doParallel"
 ) {
   
-  presence <- presence.bg %>% dplyr::filter(pa == 1) %>% data.frame()
-  background <- presence.bg %>% dplyr::filter(pa == 0) %>% data.frame()
+  presence <- presence.bg |> dplyr::filter(pa == 1) |> data.frame()
+  background <- presence.bg |> dplyr::filter(pa == 0) |> data.frame()
   
   if (with_raster) {
     ENMmodel <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat")],
@@ -69,26 +69,26 @@ run_maxent <- function(presence.bg, with_raster = F,
 #' @export
 select_param <- function(res, method = "AIC", auc_min = 0, list = T) {
   
-  res <- res %>% 
+  res <- res |> 
         filter(auc.val.avg >= auc_min)
   if (nrow(res) == 0) {
     stop(sprintf("All models have AUC lower than %f", auc_min))
   }
   if (method == "AIC") {
     
-    if (nrow(res %>% dplyr::filter(delta.AICc <= 2) ) > 0) {
-      res <- res %>% dplyr::filter(delta.AICc <= 2) %>% 
-        dplyr::filter(or.10p.avg == min(or.10p.avg))  %>% 
+    if (nrow(res |> dplyr::filter(delta.AICc <= 2) ) > 0) {
+      res <- res |> dplyr::filter(delta.AICc <= 2) |> 
+        dplyr::filter(or.10p.avg == min(or.10p.avg))  |> 
         dplyr::filter(auc.val.avg == max(auc.val.avg)) 
     } else {
-      res <- res %>% dplyr::filter(delta.AICc == min(delta.AICc))
+      res <- res |> dplyr::filter(delta.AICc == min(delta.AICc))
       }
     
   } else if (method == "p10") {
-      res <- res %>% filter(or.10p.avg == min(or.10p.avg))
+      res <- res |> filter(or.10p.avg == min(or.10p.avg))
     
     } else if (method == "AUC") {
-      res <- res %>% filter(auc.val.avg == max(auc.val.avg))
+      res <- res |> filter(auc.val.avg == max(auc.val.avg))
     
     } 
  
@@ -246,7 +246,7 @@ predict_maxent <- function(presence_background,
                            output_folder = getwd()) {
   
   layers <- names(predictors)
-  runs <- names(presence_background %>% 
+  runs <- names(presence_background |> 
                   dplyr:: select(starts_with("run")))
   
   fc <- as.character(fc)
@@ -256,8 +256,8 @@ predict_maxent <- function(presence_background,
 
   # We calculate the prediction with the whole dataset
 
-      presence <- presence_background %>% dplyr::filter(pa == 1) %>% data.frame()
-      background <- presence_background %>% dplyr::filter(pa == 0) %>% data.frame()
+      presence <- presence_background |> dplyr::filter(pa == 1) |> data.frame()
+      background <- presence_background |> dplyr::filter(pa == 0) |> data.frame()
       
 
       mod_tuning <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat", layers)], 
@@ -283,7 +283,7 @@ runs <- c("run_1")
   pred_runs <- NULL
   
   for (i in runs) {
-    group.all <- presence_background %>% dplyr::select(all_of(c(i, "scientific_name", "lon", "lat", "pa", layers)))
+    group.all <- presence_background |> dplyr::select(all_of(c(i, "scientific_name", "lon", "lat", "pa", layers)))
     group_folds <- group.all[,1]
     group  <- group_folds[presence_background$pa == 1]
     bg.grp <- group_folds[presence_background$pa == 0]
@@ -301,8 +301,8 @@ runs <- c("run_1")
       backg_test <- backgr[bg.grp == g, ]
       presence_bg_train <- group.all[which(group.all[,1] == g),]
       
-      presence <- presence_bg_train %>% dplyr::filter(pa == 1) %>% data.frame()
-      background <- presence_bg_train %>% dplyr::filter(pa == 0) %>% data.frame()
+      presence <- presence_bg_train |> dplyr::filter(pa == 1) |> data.frame()
+      background <- presence_bg_train |> dplyr::filter(pa == 0) |> data.frame()
       
 
       mod_tuning <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat", layers)], 
