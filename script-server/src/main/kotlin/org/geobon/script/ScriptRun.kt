@@ -9,6 +9,7 @@ import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.io.IOException
 import java.util.*
 import kotlin.math.floor
 
@@ -171,8 +172,8 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
             val command = when (scriptFile.extension) {
-                "jl", "JL" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-julia", "julia")
-                "r", "R" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-r", "Rscript")
+                "jl", "JL" -> mutableListOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-julia", "julia")
+                "r", "R" -> mutableListOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-r", "Rscript")
                 "sh" -> mutableListOf("sh")
                 "py", "PY" -> mutableListOf("python3")
                 else -> {
@@ -198,15 +199,23 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                                 if (process.isAlive) {
                                     log(logger::info, "Cancelled by user: killing running process...")
                                     process.destroy()
+                                    if (!process.waitFor(1, TimeUnit.MINUTES)) {
+                                        log(logger::info, "Cancelled by user: timeout elapsed.")
+                                    }
                                 }
                             }
                         }
 
                         launch {
                             process.inputStream.bufferedReader().run {
+                                try {
                                 while (true) { // Breaks when readLine returns null
                                     readLine()?.let { log(logger::trace, it) }
                                         ?: break
+                                }
+                                } catch (ex: IOException) {
+                                    if (ex.message != "Stream closed") // This is normal when cancelling the script
+                                        log(logger::trace, ex.message!!)
                                 }
                             }
                         }
