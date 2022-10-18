@@ -84,10 +84,10 @@ predictors <- load_predictors(source = "cube",
                            ouput_dir = getwd(),
                            as_list = F)
 
-is.null(input$mask)
-print(1)
+
 # Mask
-if(!is.null(input$mask)) {
+if(!is.null(input$mask) && length(input$mask)>1) {
+
   mask <- terra::vect(input$mask)
   predictors <- fast_crop(predictors, mask)
   }
