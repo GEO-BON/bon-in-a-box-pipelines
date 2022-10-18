@@ -10,8 +10,8 @@ setup_presence_background <- function(
   
   
   #creates metadata for this run
-  presence <- presence %>% dplyr::mutate(pa = 1)
-  background <- background %>% dplyr::mutate(pa = 0)
+  presence <- presence |> dplyr::mutate(pa = 1)
+  background <- background |> dplyr::mutate(pa = 0)
   
   # Data partition-----
   message("performing data partition")
@@ -91,7 +91,7 @@ setup_presence_background <- function(
 
   env_vals <- terra::extract(predictors, dplyr::select(presence_background, lon, lat))
   presence_background <- dplyr::bind_cols(presence_background,
-                          env_vals) %>% dplyr::select(-ID)
+                          env_vals) |> dplyr::select(-ID)
   
   return(presence_background)
 }

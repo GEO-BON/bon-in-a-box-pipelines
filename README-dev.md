@@ -15,7 +15,7 @@ For the script-server (Kotlin code), IntelliJ Idea. Note that on Linux there wil
 `docker compose -f compose.yml -f compose.dev.yml up`
 
 This command enables:
-- OpenAPI editor at http://localhost/swagger
+- OpenAPI editor at http://localhost/swagger/
 - UI server: React automatic hot-swapping
 - Script-server: Kotlin hot-swapping by launching [./script-server/hotswap.sh](../script-server/hotswap.sh)
 - NGINX: [http-proxy/conf.d/ngnix.conf](../http-proxy/conf.d/ngnix.conf) will be loaded

@@ -101,8 +101,7 @@ load_predictors <- function(source = "from_cube",
         
       }
     
-
-  }
+ }
   
   nc_names <- names(all_predictors)
   
@@ -188,7 +187,7 @@ sample_spatial_obj <- function(obj_to_sample, nb_points = 5000) {
   } else if (inherits(obj_to_sample, "SpatRaster")) {
     if (terra::ncell(obj_to_sample) > nb_points) {
       env_df <- terra::spatSample(obj_to_sample, size = nb_points, na.rm = TRUE,
-                                  method="random", replace=FALSE) %>% as.matrix()
+                                  method="random", replace=FALSE) |> as.matrix()
       
     } else {
       env_df <- terra::values(obj_to_sample, matrix = T)
