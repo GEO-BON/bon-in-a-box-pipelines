@@ -28,7 +28,7 @@ inputs:
   predictors: 
     label: predictors
     description: raster, predictors variables 
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
 outputs:
   n_background:

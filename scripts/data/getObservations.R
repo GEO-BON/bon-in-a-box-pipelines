@@ -28,14 +28,11 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-if (!is.null(input$bbox_table) && input$bbox_table !="...") {
-  bbox <- read.table(file = input$bbox_table, sep = '\t', header = TRUE) 
-  bbox <- bbox[,2]
-} else if (length(input$bbox) == 4) {
-  bbox <- input$bbox
-} else {
-  bbox <- NULL
-}
+
+# Tranform the vector to a bbox object
+bbox_wgs84 <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) %>% sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% 
+        sf::st_bbox()
 
 
 if (input$country == "..." | length(input$country) < 2) {
@@ -51,7 +48,7 @@ obs <- get_observations(database = "gbif",
            year_start = input$year_start,
            year_end = input$year_end,
            country = country,
-           bbox = bbox,
+           bbox = bbox_wgs84,
            occurrence_status = occurrence_status,
            limit = input$limit)
 

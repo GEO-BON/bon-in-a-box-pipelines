@@ -15,7 +15,7 @@ inputs:
   predictors: 
     label: predictors
     description: Raster, predictors. 
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
   partition_type :
     label: partition type
@@ -25,6 +25,7 @@ inputs:
       - bootstrap
       - crossvalidation
       - none
+    example: none
   runs_n:
     label: number of runs
     description: number of runs (in bootstrap or crossvalidation method)

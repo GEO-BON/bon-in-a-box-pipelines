@@ -1,6 +1,7 @@
 package org.geobon.script
 
-import com.google.gson.*
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.MalformedJsonException
 import kotlinx.coroutines.*
@@ -9,7 +10,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.util.*
-import java.util.concurrent.TimeUnit
 import kotlin.math.floor
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
@@ -32,7 +32,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
         inputFileContent?.toMD5() ?: "no_params"
     ).path.replace('.', '_')
 
-    internal val outputFolder = File(outputRoot, id)
+    private val outputFolder = File(outputRoot, id)
     private val inputFile = File(outputFolder, "input.json")
     internal val resultFile = File(outputFolder, "output.json")
 
@@ -43,7 +43,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
         const val ERROR_KEY = "error"
 
         private val gson = GsonBuilder()
-            .setObjectToNumberStrategy(ToNumberStrategy { reader ->
+            .setObjectToNumberStrategy { reader ->
                 val value: String = reader.nextString()
                 try {
                     val d = value.toDouble()
@@ -51,7 +51,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                         throw MalformedJsonException("JSON forbids NaN and infinities: " + d + "; at path " + reader.previousPath)
                     }
 
-                    if(floor(d) == d) {
+                    if (floor(d) == d) {
                         if (d > Integer.MAX_VALUE) d.toLong() else d.toInt()
                     } else {
                         d
@@ -60,7 +60,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                 } catch (doubleE: NumberFormatException) {
                     throw JsonParseException("Cannot parse " + value + "; at path " + reader.previousPath, doubleE)
                 }
-            })
+            }
             .create()
 
         fun toJson(src: Any): String = gson.toJson(src)
@@ -194,8 +194,8 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                                 delay(1000 * 60 * 60) // 60 minutes timeout
                                 log(logger::warn, "TIMEOUT occurred after 1h")
                                 process.destroy()
-                            } catch (_:CancellationException) {
-                                if(process.isAlive) {
+                            } catch (_: CancellationException) {
+                                if (process.isAlive) {
                                     log(logger::info, "Cancelled by user: killing running process...")
                                     process.destroy()
                                 }
@@ -244,9 +244,9 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
         }.onFailure { ex ->
-            when(ex) {
+            when (ex) {
                 is CancellationException -> log(logger::info, "Cancelled by user: done.")
-                else ->  {
+                else -> {
                     log(logger::warn, "An error occurred when running the script: ${ex.message}")
                     logger.warn(ex.stackTraceToString())
                 }

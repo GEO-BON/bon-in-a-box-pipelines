@@ -34,6 +34,7 @@ load_predictors <- function(source = "from_cube",
                                              resampling = "near"),
                             predictors_dir = NULL,
                             subset_layers = NULL,
+                            variables = NULL,
                             remove_collinear = T,
                             method = "vif.cor",
                             method_cor_vif = NULL,
@@ -89,16 +90,18 @@ load_predictors <- function(source = "from_cube",
 
     cube_args_c <- append(cube_args, list(layers = subset_layers, 
                                           srs.cube = proj, 
-                                          bbox = bbox))
+                                          bbox = bbox,
+                                          variable = variables))
     
     all_predictors <- do.call(stacatalogue::load_cube, cube_args_c)
-    
-  #  bbox_geom <- bbox |> sf::st_as_sfc() |> sf::st_as_sf()
-    
-   # all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(bbox_geom, srs = proj))
-    all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(mask))
 
-  }
+     if(!is.null(mask)) {
+        
+        all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(mask))
+        
+      }
+    
+ }
   
   nc_names <- names(all_predictors)
   
