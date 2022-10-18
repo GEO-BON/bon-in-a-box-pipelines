@@ -110,6 +110,15 @@ internal class PipelineTest {
     }
 
     @Test
+    fun `given an int while step awaits an array_when ran_then int wrapped in array`() = runTest {
+        val pipeline = Pipeline("wrapIntTowardsArray.json")
+
+        pipeline.execute()
+
+        assertEquals(listOf(234), pipeline.getPipelineOutputs()[0].pull())
+    }
+
+    @Test
     fun `given a pipeline with boolean constant_when ran_then script input json created with boolean`() = runTest {
         val pipeline = Pipeline("boolConst.json")
 
