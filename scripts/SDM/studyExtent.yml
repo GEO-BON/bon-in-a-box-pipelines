@@ -7,7 +7,7 @@ inputs:
     type: text/tab-separated-values
     example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
   proj:
-    label: projection
+    label: projection system
     description: String, projection system
     type: text
     example: "EPSG:6623"

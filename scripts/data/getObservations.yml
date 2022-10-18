@@ -28,7 +28,7 @@ inputs:
     type: float[]
     example: [-2316297, -1971146,  1015207,  1511916]
   proj:
-    label: proj
+    label: projection system
     description: String, projection system of the coordinates in bbox
     type: string
     example: "EPSG:6623"

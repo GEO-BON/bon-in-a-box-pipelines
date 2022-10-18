@@ -27,7 +27,7 @@ inputs:
     example: 0.5
   top_k_auc:
     label: number of selected models
-    description: Integer, minimum AUC to select the models before calculating the consensus
+    description: Integer, number of selected models (ranked by decreasing AUC)
     type: int
     example: 10
 outputs:
