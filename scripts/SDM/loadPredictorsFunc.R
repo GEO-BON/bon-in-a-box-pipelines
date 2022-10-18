@@ -94,11 +94,13 @@ load_predictors <- function(source = "from_cube",
                                           variable = variables))
     
     all_predictors <- do.call(stacatalogue::load_cube, cube_args_c)
+
+     if(!is.null(mask)) {
+        
+        all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(mask))
+        
+      }
     
-  #  bbox_geom <- bbox %>% sf::st_as_sfc() %>% sf::st_as_sf()
-    
-   # all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(bbox_geom, srs = proj))
-    all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(mask))
 
   }
   

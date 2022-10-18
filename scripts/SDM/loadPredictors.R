@@ -37,15 +37,9 @@ print(input)
 
 
 # Case 1: we create an extent from a set of observations
-extent <- sf::st_read(input$extent)
-extent <- sf::st_transform(extent, input$proj_to)
-bbox <- stacatalogue::shp_to_bbox(extent)
+bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
 
-
-# Case 3: we use a vector
-# bbox <- st_bbox(c(xmin = bbox_coordinates[1], xmax = bbox_coordinates[2], 
-#             ymax = bbox_coordinates[3], ymin = bbox_coordinates[4]), crs = st_crs(input$proj_to))
- #    } 
 
 if(is.null(input$nb_sample)) {
   sample <- FALSE 
@@ -53,9 +47,16 @@ if(is.null(input$nb_sample)) {
     sample <- TRUE
   }
 
-
-if(length(input$layers) == 0 || input$layers == "") layers <- NULL else layers <- input$layers
-if(length(input$variables) == 0 || input$variables == "") variables <- NULL else variables <- input$variables
+if(length(input$layers) == 0) {
+  layers <- NULL 
+  } else {
+    layers <- input$layers
+  }
+if(length(input$variables) == 0) {
+  variables <- NULL 
+  } else {
+    variables <- input$variables
+  }
 
 predictors <- load_predictors(source = "cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
@@ -68,14 +69,13 @@ predictors <- load_predictors(source = "cube",
             aggregation = "mean",
             resampling = "near"),
                           
-                           subset_layers = layers,
+                           subset_layers = input$layers,
                            variables = variables,
                            remove_collinear = input$remove_collinearity,
                            method = input$method,
                            method_cor_vif = input$method_cor_vif,
-                           proj = input$proj_to,
+                           proj = input$proj,
                            bbox = bbox,
-                           mask = extent,
                            sample = sample,
                            nb_points = input$nb_sample,
                            cutoff_cor = input$cutoff_cor,
@@ -84,11 +84,14 @@ predictors <- load_predictors(source = "cube",
                            ouput_dir = getwd(),
                            as_list = F)
 
-#output_nc_predictors <- file.path(outputFolder, "nc_predictors.tsv")
+is.null(input$mask)
+print(1)
+# Mask
+if(!is.null(input$mask)) {
+  mask <- terra::vect(input$mask)
+  predictors <- fast_crop(predictors, mask)
+  }
 
-
-#write.table(predictors_nc, output_nc_predictors, 
- #            append = F, row.names = F, col.names = F, sep = "\t")
 output_predictors <- file.path(outputFolder, "predictors.tif")
 
 terra::writeRaster(predictors, output_predictors, overwrite = T)

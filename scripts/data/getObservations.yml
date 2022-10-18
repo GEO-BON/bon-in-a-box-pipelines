@@ -24,7 +24,7 @@ inputs:
     example: 2020
   bbox:
     label: bbox
-    description: Vector of float, bbox coordinates of the bbox in the order xmin, xmax, ymin, ymax
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297, -1971146,  1015207,  1511916]
   proj:
