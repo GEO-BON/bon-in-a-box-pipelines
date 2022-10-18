@@ -27,7 +27,7 @@ create_study_extent <- function(obs,
     
     
     # Creating box extent around obs
-    study_extent <-  sf::st_as_sfc(sf::st_bbox(obs_points, crs = sp::CRS(proj))) %>%
+    study_extent <-  sf::st_as_sfc(sf::st_bbox(obs_points, crs = sp::CRS(proj))) |>
       sf::st_as_sf()
     
     if (!is.null(dist_buffer)) {
@@ -52,15 +52,15 @@ create_study_extent <- function(obs,
     study_extent_multi <- rgeos::gBuffer(spgeom = obs_points,
                                          byid = T, width = dist_buffer)
     
-    study_extent <-  study_extent_multi %>% 
-      sf::st_as_sfc(crs = sp::CRS(proj)) %>% 
+    study_extent <-  study_extent_multi |> 
+      sf::st_as_sfc(crs = sp::CRS(proj)) |> 
       sf::st_union(by_feature = F)
     
   } else if (method == "user_shapefile") {
     
     study_extent <- sf::st_read(shapefile_path) 
   }
-  study_extent <- study_extent %>% sf::st_set_crs(proj)
+  study_extent <- study_extent |> sf::st_set_crs(proj)
  
   return(study_extent)
   
@@ -72,7 +72,7 @@ mcp <- function(obs_points) {
   coords.t <- chull(xy[, 1], xy[, 2])
   xy.bord <- xy[coords.t, ]
   xy.bord <- rbind(xy.bord[nrow(xy.bord), ], xy.bord)
-  mcp <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(as.matrix(xy.bord))), 1))) %>%
+  mcp <- sp::SpatialPolygons(list(sp::Polygons(list(sp::Polygon(as.matrix(xy.bord))), 1))) |>
     sf::st_as_sf()  
   return(mcp)
 }
