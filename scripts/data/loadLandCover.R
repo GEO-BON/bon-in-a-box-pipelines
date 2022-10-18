@@ -2,6 +2,10 @@
 
 ## Install required packages
 
+library("devtools")
+#devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue", upgrade = "never")
+remotes::install_github("appelmar/gdalcubes_R")
+
 packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -19,7 +23,6 @@ library("dplyr")
 library("stacatalogue")
 library("gdalcubes")
 library("RCurl")
-library(sf)
 options(timeout = max(60000000, getOption("timeout")))
 
 ## Receiving args
@@ -32,9 +35,10 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
+
 # Tranform the vector to a bbox object
-bbox <- sf::st_bbox(c(xmin = input$bbox_coordinates[1], xmax = input$bbox_coordinates[2], 
-            ymax = input$bbox_coordinates[3], ymin = input$bbox_coordinates[4]), crs = st_crs(input$proj_to))
+bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
+            xmax = input$bbox[3], ymax = input$bbox[4]), sf::crs = st_crs(input$proj)) 
 
 n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)) + 1 
 temporal_res <- paste0("P", n_year, "Y")
@@ -43,8 +47,8 @@ if (input$stac_source == "IO") {
   lc_raster <- stacatalogue::load_prop_values(stac_path = "https://io.biodiversite-quebec.ca/stac/",
                                 collections = c("esacci-lc"), 
                               bbox = bbox,
-                               srs.cube = input$proj_to,
-                               limit = 5000,
+                               srs.cube = input$proj,
+                               limit = input$stac_limit,
                                 t0 = input$t0,
                                 t1 = input$t1,
                                 spatial.res = input$spatial_res, # in meters
@@ -56,10 +60,10 @@ if (input$stac_source == "IO") {
   lc_raster <- stacatalogue::load_prop_values_pc(stac_path =  "https://planetarycomputer.microsoft.com/api/stac/v1/",
                                 collections = c("io-lulc-9-class"), 
                               bbox = bbox,
-                               srs.cube = input$proj_to,
+                               srs.cube = input$proj,
                                 t0 = input$t0,
                                 t1 = input$t1,
-                                limit = 5000,
+                                limit = input$stac_limit,
                                 spatial.res = input$spatial_res, # in meters
                                 prop = input$proportion,
                                 prop.res = input$proportion_res,

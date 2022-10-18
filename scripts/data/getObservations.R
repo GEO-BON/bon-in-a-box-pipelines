@@ -3,7 +3,9 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 
 ## Install required packages
-install.packages(c("rgbif", "rjson", "raster", "dplyr", "stringr"))
+packages <- c("rgbif", "rjson", "raster", "dplyr", "stringr")
+new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
 
 ## Load required packages
 library("rgbif")
@@ -28,8 +30,8 @@ print(input)
 
 
 # Tranform the vector to a bbox object
-bbox_wgs84 <- sf::st_bbox(c(xmin = input$bbox[1], xmax = input$bbox[2], 
-            ymin = input$bbox[3], ymax = input$bbox[4]), crs = st_crs(input$proj)) sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% 
+bbox_wgs84 <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) %>% sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% 
         sf::st_bbox()
 
 
