@@ -62,14 +62,12 @@ export function PipelinePage(props) {
   }
 
   useEffect(() => {
-    console.log("Running scripts", runningScripts)
     setStoppable(runningScripts.size > 0)
   }, [runningScripts])
 
   const stop = () => {
     setStoppable(false)
     api.stopPipeline(runId, (error, data, response) => {
-        console.log(error, data, response)
         if(response.status === 200) {
           setHttpError("Cancelled by user")
         }
