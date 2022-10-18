@@ -1,3 +1,4 @@
+description: This script load land cover rasters from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
 script: loadLandCover.R
 inputs:
   bbox:
