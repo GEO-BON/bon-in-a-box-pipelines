@@ -33,7 +33,6 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
         val scriptRun = ScriptRun(scriptFile, resolvedInputs.toSortedMap())
-        runId = scriptRun.id
 
         validateInputsReceived(resolvedInputs)?.let { error ->
             val results = mapOf(ScriptRun.ERROR_KEY to error)
@@ -42,6 +41,7 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
             throw RuntimeException(error)
         }
 
+        runId = scriptRun.id // TODO: This is premature. A client could access the cache before we invalidate it.
         scriptRun.execute()
 
         if (scriptRun.results.containsKey(ScriptRun.ERROR_KEY))
