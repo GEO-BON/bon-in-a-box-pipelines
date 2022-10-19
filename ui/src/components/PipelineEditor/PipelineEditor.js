@@ -262,8 +262,14 @@ export function PipelineEditor(props) {
         )
       })
 
-      navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
-      alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
+      navigator.clipboard
+        .writeText(JSON.stringify(flow, null, 2))
+        .then(() => {
+          alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
+        })
+        .catch(() => {
+          alert("Error: Failed to copy content to clipboard.");
+        });
     }
   }, [reactFlowInstance, inputList]);
 
