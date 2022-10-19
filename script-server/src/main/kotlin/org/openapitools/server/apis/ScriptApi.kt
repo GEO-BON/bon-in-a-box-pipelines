@@ -160,7 +160,7 @@ fun Route.ScriptApi(logger: Logger) {
             }
         } catch (e: Exception) {
             call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
-            logger.debug(e.message)
+            logger.debug("runPipeline: ${e.message}")
         }
     }
 
@@ -179,9 +179,8 @@ fun Route.ScriptApi(logger: Logger) {
     get<Paths.stopPipeline> { parameters ->
         runningPipelines[parameters.id]?.let { pipeline ->
             // the pipeline is running, we need to stop it
-            println("Cancelling ${parameters.id}...")
             pipeline.stop()
-            println("Cancelled ${parameters.id}")
+            logger.trace("Cancelled ${parameters.id}")
             call.respond(HttpStatusCode.OK)
         } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
     }
