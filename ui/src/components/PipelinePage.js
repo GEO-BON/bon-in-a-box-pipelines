@@ -209,6 +209,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
   const [running, setRunning] = useState(false)
+  const [skipped, setSkipped] = useState(false)
 
   const script = id.substring(0, id.indexOf('@'))
 
@@ -225,8 +226,14 @@ function DelayedResult({id, folder, setRunningScripts}) {
   }, [setRunningScripts, folder, resultData])
 
   useEffect(() => {
-    if (folder && folder === "skipped") {
-      setResultData({ warning: "Skipped due to previous failure" })
+    if (folder) {
+      if(folder === "skipped") {
+        setResultData({ warning: "Skipped due to previous failure" })
+        setSkipped(true)
+      } else if (folder === "cancelled") {
+        setResultData({ warning: "Skipped when pipeline stopped" })
+        setSkipped(true)
+      }
     }
   // Execute only when folder changes (omitting resultData on purpose)
   }, [folder]) 
@@ -274,7 +281,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
       } else if(resultData.warning) {
         inline = <>
           <img src={warningImg} alt="Warning" className="error-inline" />
-          {folder === "skipped" && <i>Skipped</i>}
+          {skipped && <i>Skipped</i>}
         </>
       }
     } else {
@@ -292,7 +299,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
     <FoldableOutput title={script} componentId={id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
-      {folder && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
+      {folder && !skipped && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutput>
   )
 }

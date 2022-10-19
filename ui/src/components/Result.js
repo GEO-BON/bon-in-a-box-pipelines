@@ -41,7 +41,7 @@ function RenderedFiles({files, metadata}) {
         }
 
         // Special case for arrays
-        if(mime.endsWith('[]'))
+        if(mime.endsWith('[]') && Array.isArray(content))
             return <p>{content.join(', ')}</p>
 
         let [type, subtype] = mime.split('/');

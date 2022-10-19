@@ -255,14 +255,17 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
 
         }.onFailure { ex ->
             when (ex) {
-                is CancellationException -> log(logger::info, "Cancelled by user: done.")
+                is CancellationException -> {
+                    log(logger::info, "Cancelled by user: done.")
+                    outputs = mapOf(ERROR_KEY to "Cancelled by user")
+                    resultFile.writeText(gson.toJson(outputs))
+                }
                 else -> {
                     log(logger::warn, "An error occurred when running the script: ${ex.message}")
                     logger.warn(ex.stackTraceToString())
+                    error = true
                 }
             }
-
-            error = true
         }
 
         // Format log output
