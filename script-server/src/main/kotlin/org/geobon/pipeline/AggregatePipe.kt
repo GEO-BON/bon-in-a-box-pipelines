@@ -1,7 +1,7 @@
 package org.geobon.pipeline
 
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.coroutineScope
 
 class AggregatePipe(pipesToAggregate: List<Pipe>) : Pipe {
     override val type: String
@@ -31,7 +31,7 @@ class AggregatePipe(pipesToAggregate: List<Pipe>) : Pipe {
 
     override suspend fun pull(): Any {
         val resultList = mutableListOf<Any>()
-        supervisorScope {
+        coroutineScope {
             pipes.forEach {
                 // This can happen in parallel coroutines
                 launch {

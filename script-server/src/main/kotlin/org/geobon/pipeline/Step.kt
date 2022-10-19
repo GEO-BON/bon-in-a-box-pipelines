@@ -1,7 +1,7 @@
 package org.geobon.pipeline
 
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -24,7 +24,7 @@ abstract class Step(
 
             try {
                 val resolvedInputs = mutableMapOf<String, Any>()
-                supervisorScope {
+                coroutineScope {
                     inputs.forEach {
                         // This can happen in parallel coroutines
                         launch { resolvedInputs[it.key] = it.value.pull() }

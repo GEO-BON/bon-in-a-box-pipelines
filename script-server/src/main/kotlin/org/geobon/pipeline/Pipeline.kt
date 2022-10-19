@@ -185,12 +185,12 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
     suspend fun execute() = coroutineScope {
         job = launch {
             try {
-                supervisorScope {
+                coroutineScope {
                     this.coroutineContext
                     finalSteps.forEach { launch { it.execute() } }
                 }
             } catch (ex: RuntimeException) {
-                logger.debug(ex.message)
+                logger.debug("execute: ${ex.message}")
             } catch (ex: Exception) {
                 logger.error(ex.stackTraceToString())
             }
