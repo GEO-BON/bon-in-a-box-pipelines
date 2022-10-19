@@ -1,6 +1,7 @@
 using BiodiversityObservationNetworks
 using SimpleSDMLayers
 using JSON
+using Downloads
 
 # Read in input arguments and json
 outputFolder = ARGS[1]
@@ -20,6 +21,16 @@ print(layerpaths)
 layerweights = input["layerweights"]
 targetbalance = input["targetbalance"] # this is the same as α
 
+# read in layers
+using GeoArrays: read
+function get_simplesdmlayer(path)
+    geoarray = read(path)
+    SimpleSDMPredictor(geoarray.A[:,:,begin])
+end
+
+temppath = Downloads.download.(layerpaths)
+layers = stack(get_simplesdmlayer.(temppath))
+
 ### Computation ###
 const numtargs = length(targetbalance)
 W = zeros(length(layerpaths), numtargs)
@@ -28,15 +39,17 @@ for i in 1:length(layerpaths)
     W[:,i] .= layerweights[i]
 end 
 
-layers = stack([geotiff(SimpleSDMPredictor, lp) for lp in layerpaths])
+#layers = stack([geotiff(SimpleSDMPredictor, lp) for lp in layerpaths])
 
-priority = squish(layers, W, targetbalance);
+priority = SimpleSDMPredictor(squish(layers, W, targetbalance))
 
 priority_path = joinpath(outputFilepath, "priority_map.tiff")
 ###################
 
 # write out the priority map
 geotiff(priority_path, priority)
+
+print("pre_json save")
 
 # write out json
 outputDict = Dict("priority_map" => priority_path)
