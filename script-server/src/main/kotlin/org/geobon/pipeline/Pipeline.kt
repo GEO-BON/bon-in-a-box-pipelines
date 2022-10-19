@@ -135,7 +135,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 val regex = """([.>\w]+)@(\d+)\.(\w+)""".toRegex()
                 inputsJSON.keySet().forEach { key ->
                     val inputSpec = inputsSpec.optJSONObject(key)
-                        ?: throw RuntimeException("Input received \"$key\" is not listed pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
+                        ?: throw RuntimeException("Input received \"$key\" is not listed in pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
                     val type = inputSpec.getString(INPUTS__TYPE)
 
                     val groups = regex.matchEntire(key)?.groups
