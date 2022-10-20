@@ -1,4 +1,4 @@
 FROM julia:1.8.1
 
 # Pre-compiling Julia dependencies
-RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["BiodiversityObservationNetworks", "YAML", "JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots"]); Pkg.instantiate();'
+RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["BiodiversityObservationNetworks", "YAML", "JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots", "GeoArrays", "Downloads", "GeoArrays"]); Pkg.instantiate();'
