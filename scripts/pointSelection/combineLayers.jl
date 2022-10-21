@@ -23,7 +23,7 @@ print(layerdata)
 
 
 #layerweights = input["layerweights"]
-targetbalance = input["targetbalance"] # this is the same as α
+targetbalance = convert(Vector{Float64}, input["targetbalance"]) # this is the same as α
 
 # hacky way to get the number of layers based on number of weights 
 nlayers = trunc(Int, length(layerdata) / (1 + length(targetbalance)))
@@ -73,5 +73,5 @@ print("pre_json save")
 # write out json
 outputDict = Dict("priority_map" => priority_path)
 open(joinpath(outputFolder, "output.json"),"w") do f
-    JSON.print(f, JSON.json(outputDict)) 
+    JSON.print(f, outputDict) 
 end 
