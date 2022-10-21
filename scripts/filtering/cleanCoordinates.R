@@ -55,7 +55,7 @@ proj_from = "+proj=longlat +datum=WGS84", proj_to = proj, new_lon = "lon", new_l
        report = F,
    value = "clean"
     )
-    clean_presence <-  clean_presence %>% # summary = TRUE means the observations was identified as an outlier at least once during the cleaning procedure
+    clean_presence <-  clean_presence |> # summary = TRUE means the observations was identified as an outlier at least once during the cleaning procedure
       dplyr::select(id, scientific_name, lon, lat)
 
 

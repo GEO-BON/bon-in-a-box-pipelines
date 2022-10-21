@@ -34,6 +34,7 @@ load_predictors <- function(source = "from_cube",
                                              resampling = "near"),
                             predictors_dir = NULL,
                             subset_layers = NULL,
+                            variables = NULL,
                             remove_collinear = T,
                             method = "vif.cor",
                             method_cor_vif = NULL,
@@ -89,16 +90,18 @@ load_predictors <- function(source = "from_cube",
 
     cube_args_c <- append(cube_args, list(layers = subset_layers, 
                                           srs.cube = proj, 
-                                          bbox = bbox))
+                                          bbox = bbox,
+                                          variable = variables))
     
     all_predictors <- do.call(stacatalogue::load_cube, cube_args_c)
-    
-  #  bbox_geom <- bbox %>% sf::st_as_sfc() %>% sf::st_as_sf()
-    
-   # all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(bbox_geom, srs = proj))
-    all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(mask))
 
-  }
+     if(!is.null(mask)) {
+        
+        all_predictors <- gdalcubes::filter_geom(all_predictors,  sf::st_geometry(mask))
+        
+      }
+    
+ }
   
   nc_names <- names(all_predictors)
   
@@ -184,7 +187,7 @@ sample_spatial_obj <- function(obj_to_sample, nb_points = 5000) {
   } else if (inherits(obj_to_sample, "SpatRaster")) {
     if (terra::ncell(obj_to_sample) > nb_points) {
       env_df <- terra::spatSample(obj_to_sample, size = nb_points, na.rm = TRUE,
-                                  method="random", replace=FALSE) %>% as.matrix()
+                                  method="random", replace=FALSE) |> as.matrix()
       
     } else {
       env_df <- terra::values(obj_to_sample, matrix = T)
