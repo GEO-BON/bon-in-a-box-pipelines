@@ -11,7 +11,6 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.coroutines.launch
 import org.geobon.pipeline.EDGES_LIST
 import org.geobon.pipeline.NODES_LIST
 import org.geobon.pipeline.Pipeline
@@ -38,12 +37,6 @@ private val gson = Gson()
 private val pipelinesRoot = File(System.getenv("PIPELINES_LOCATION"))
 
 private val runningPipelines = mutableMapOf<String, Pipeline>()
-
-private fun getLiveOutput(pipeline: Pipeline): Map<String, String> {
-    val allOutputs = mutableMapOf<String, String>()
-    pipeline.dumpOutputFolders(allOutputs)
-    return allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
-}
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptApi(logger: Logger) {
@@ -136,31 +129,30 @@ fun Route.ScriptApi(logger: Logger) {
 
         // Unique   to this pipeline                                               and to these params
         val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
-        val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
-        logger.info("Pipeline: $descriptionPath\nFolder:$outputFolder\nBody:$inputFileContent")
+        val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
+        logger.info("Pipeline: $descriptionPath\nFolder:$pipelineOutputFolder\nBody:$inputFileContent")
 
-        try {
-            val pipeline = Pipeline(descriptionPath, inputFileContent)
+        runCatching {
+            Pipeline(descriptionPath, inputFileContent)
+        }.onSuccess { pipeline ->
             runningPipelines[runId] = pipeline
-            call.respondText(runId)
+            try {
+                call.respondText(runId)
 
-            launch {
-                pipeline.execute()
-
-                val resultFile = File(outputFolder, "output.json")
-                val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
-                    if (value == "") "skipped" else value
-                })
+                val scriptOutputFolders = pipeline.execute().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
+                pipelineOutputFolder.mkdirs()
+                val resultFile = File(pipelineOutputFolder, "output.json")
                 logger.trace("Outputting to $resultFile")
-
-                outputFolder.mkdirs()
-                resultFile.writeText(content)
-
+                resultFile.writeText(gson.toJson(scriptOutputFolders))
+            } catch (ex:Exception) {
+                ex.printStackTrace()
+            } finally {
                 runningPipelines.remove(runId)
             }
-        } catch (e: Exception) {
-            call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
-            logger.debug(e.message)
+
+        }.onFailure {
+            call.respondText(text = it.message ?: "", status = HttpStatusCode.InternalServerError)
+            logger.debug("runPipeline: ${it.message}")
         }
     }
 
@@ -172,16 +164,15 @@ fun Route.ScriptApi(logger: Logger) {
             val type = object : TypeToken<Map<String, Any>>() {}.type
             call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
         } else {
-            call.respond(getLiveOutput(pipeline))
+            call.respond(pipeline.getLiveOutput().mapKeys { it.key.replace('/', FILE_SEPARATOR) })
         }
     }
 
     get<Paths.stopPipeline> { parameters ->
         runningPipelines[parameters.id]?.let { pipeline ->
             // the pipeline is running, we need to stop it
-            println("Cancelling ${parameters.id}...")
             pipeline.stop()
-            println("Cancelled ${parameters.id}")
+            logger.trace("Cancelled ${parameters.id}")
             call.respond(HttpStatusCode.OK)
         } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
     }

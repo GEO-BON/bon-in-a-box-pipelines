@@ -19,13 +19,21 @@ RUN chmod +x /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker
 
 ## This image builds the server code
-FROM gradle:6.9.2-jdk11-alpine as builder
+FROM gradle:6.9.2-jdk11 as builder
 COPY . /home/gradle/project
 WORKDIR /home/gradle/project
 RUN gradle assemble
 
+# The signal proxy lets us cancel processes in other dockers
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends gcc libc6-dev; \
+    apt-get clean all;
+RUN gcc -Wall -O2 -o docker-exec-sigproxy docker-exec-sigproxy.c
+
 ## This takes the build server and puts in on the R-script enabled image
 FROM base-image
 COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar
+COPY --from=builder /home/gradle/project/docker-exec-sigproxy /root/docker-exec-sigproxy
 WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "kotlin-server.jar"]
