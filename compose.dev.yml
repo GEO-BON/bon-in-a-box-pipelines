@@ -51,3 +51,8 @@ services:
       BASE_URL: /swagger
     volumes:
       - ./script-server/api/:/app
+
+  http-gateway:
+    depends_on:
+      - ui
+      - openapi_swagger
