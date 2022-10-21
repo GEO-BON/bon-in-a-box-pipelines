@@ -135,7 +135,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 val regex = """([.>\w]+)@(\d+)\.(\w+)""".toRegex()
                 inputsJSON.keySet().forEach { key ->
                     val inputSpec = inputsSpec.optJSONObject(key)
-                        ?: throw RuntimeException("Input received \"$key\" is not listed pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
+                        ?: throw RuntimeException("Input received \"$key\" is not listed in pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
                     val type = inputSpec.getString(INPUTS__TYPE)
 
                     val groups = regex.matchEntire(key)?.groups
@@ -182,17 +182,40 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         finalSteps.forEach { it.dumpOutputFolders(allOutputs) }
     }
 
-    suspend fun execute() = coroutineScope {
-        job = launch {
-            try {
-                supervisorScope {
-                    this.coroutineContext
-                    finalSteps.forEach { launch { it.execute() } }
+    fun getLiveOutput(): Map<String, String> {
+        return mutableMapOf<String, String>().also { dumpOutputFolders(it) }
+    }
+
+    /**
+     * @return the output folders for each step.
+     * If the step was not executed, one of these special keywords will be used:
+     * - skipped
+     * - canceled
+     */
+    suspend fun execute(): Map<String, String> {
+        var cancelled = false
+        try {
+            coroutineScope {
+                job = launch {
+                    coroutineScope {
+                        finalSteps.forEach { launch { it.execute() } }
+                    } // exits when all final steps have their results
                 }
-            } catch (ex: RuntimeException) {
-                logger.debug(ex.message)
-            } catch (ex: Exception) {
-                logger.error(ex.stackTraceToString())
+            }
+
+            job?.apply { cancelled = isCancelled }
+        } catch (ex: RuntimeException) {
+            logger.debug("in execute \"${ex.message}\"")
+        } catch (ex: Exception) {
+            logger.error(ex.stackTraceToString())
+        } finally {
+            job = null
+        }
+
+        return getLiveOutput().mapValues { (_, value) ->
+            when(value){
+                "" -> if(cancelled) "cancelled" else "skipped"
+                else -> value
             }
         }
     }
@@ -200,9 +223,8 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
     suspend fun stop() {
         job?.apply {
             cancel("Cancelled by user")
-            join()
+            join() // wait so the user receives response when really cancelled
         }
-        job = null
     }
 
 }

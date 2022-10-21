@@ -1,4 +1,5 @@
 script: climateRarity.R
+description: This script calculates cliamte rarity, using a moving window approach.
 inputs:
   rcp:
     label: rcp

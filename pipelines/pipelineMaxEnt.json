@@ -1,54 +1,6 @@
 {
   "nodes": [
     {
-      "id": "2",
-      "type": "io",
-      "position": {
-        "x": 676,
-        "y": 200
-      },
-      "data": {
-        "descriptionFile": "SDM>extentToBbox.yml"
-      }
-    },
-    {
-      "id": "3",
-      "type": "io",
-      "position": {
-        "x": 376,
-        "y": 257
-      },
-      "data": {
-        "descriptionFile": "SDM>loadExtent.yml"
-      }
-    },
-    {
-      "id": "5",
-      "type": "constant",
-      "position": {
-        "x": 43.5,
-        "y": 266
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "string",
-        "value": "https://drive.google.com/file/d/1KKFOBKInnroe452Y7P8uu-h42QbHM6ff/view?usp=sharing"
-      }
-    },
-    {
-      "id": "6",
-      "type": "constant",
-      "position": {
-        "x": 43.5,
-        "y": 306
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "string",
-        "value": "shape_study_area_nolakes_nad83"
-      }
-    },
-    {
       "id": "15",
       "type": "io",
       "position": {
@@ -109,24 +61,6 @@
       "data": {
         "type": "int",
         "value": 2020
-      }
-    },
-    {
-      "id": "20",
-      "type": "constant",
-      "position": {
-        "x": 654.5,
-        "y": 160
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          "[0",
-          "0",
-          "0",
-          "0]"
-        ]
       }
     },
     {
@@ -198,7 +132,11 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": []
+        "value": [
+          "bio1",
+          "bio2",
+          "bio4"
+        ]
       }
     },
     {
@@ -232,19 +170,6 @@
           "spearman",
           "kendall"
         ]
-      }
-    },
-    {
-      "id": "28",
-      "type": "constant",
-      "position": {
-        "x": 662,
-        "y": 470.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
       }
     },
     {
@@ -288,7 +213,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int",
-        "value": "10000"
+        "value": "4000"
       }
     },
     {
@@ -628,36 +553,111 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "57",
+      "type": "constant",
+      "position": {
+        "x": 603.8894262511232,
+        "y": 202.798349357995
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "string",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 568.2797772462152,
+        "y": 157.99911351311067
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 600.1651833944313,
+        "y": 475.3434047583403
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "string",
+        "value": "chelsa-clim"
+      }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": 595.8124305779506,
+        "y": 497.9777194040395
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": []
+      }
+    },
+    {
+      "id": "61",
+      "type": "constant",
+      "position": {
+        "x": 594.9418800146545,
+        "y": 547.5991015119185
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "62",
+      "type": "constant",
+      "position": {
+        "x": 1394.107297120496,
+        "y": 322.1265056182225
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "63",
+      "type": "constant",
+      "position": {
+        "x": 594.0713294513589,
+        "y": 865.3500571150037
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf",
+        "value": ""
+      }
     }
   ],
   "edges": [
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "3",
-      "targetHandle": "url",
-      "id": "reactflow__edge-5-3url"
-    },
-    {
-      "source": "3",
-      "sourceHandle": "extent",
-      "target": "2",
-      "targetHandle": "extent",
-      "id": "reactflow__edge-3extent-2extent"
-    },
     {
       "source": "16",
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "species",
       "id": "reactflow__edge-16-15species"
-    },
-    {
-      "source": "3",
-      "sourceHandle": "extent",
-      "target": "23",
-      "targetHandle": "extent",
-      "id": "reactflow__edge-3extent-23extent"
     },
     {
       "source": "15",
@@ -688,13 +688,6 @@
       "id": "reactflow__edge-34clean_presence-44presence"
     },
     {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "3",
-      "targetHandle": "shp_name",
-      "id": "reactflow__edge-6-3shp_name"
-    },
-    {
       "source": "17",
       "sourceHandle": null,
       "target": "15",
@@ -714,13 +707,6 @@
       "target": "34",
       "targetHandle": "predictors",
       "id": "reactflow__edge-23predictors-34predictors"
-    },
-    {
-      "source": "28",
-      "sourceHandle": null,
-      "target": "37",
-      "targetHandle": "proj_to",
-      "id": "reactflow__edge-28-37proj_to"
     },
     {
       "source": "37",
@@ -814,13 +800,6 @@
       "id": "reactflow__edge-45-44partition_type"
     },
     {
-      "source": "20",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-20-15bbox"
-    },
-    {
       "source": "27",
       "sourceHandle": null,
       "target": "23",
@@ -840,20 +819,6 @@
       "target": "44",
       "targetHandle": "runs_n",
       "id": "reactflow__edge-46-44runs_n"
-    },
-    {
-      "source": "2",
-      "sourceHandle": "bbox",
-      "target": "15",
-      "targetHandle": "bbox_table",
-      "id": "reactflow__edge-2bbox-15bbox_table"
-    },
-    {
-      "source": "28",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "proj_to",
-      "id": "reactflow__edge-28-23proj_to"
     },
     {
       "source": "47",
@@ -980,11 +945,67 @@
       "target": "56",
       "targetHandle": null,
       "id": "reactflow__edge-49sdm_pred-56"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-15proj"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-15bbox"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "collection",
+      "id": "reactflow__edge-59-23collection"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "variables",
+      "id": "reactflow__edge-60-23variables"
+    },
+    {
+      "source": "61",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-61-23proj"
+    },
+    {
+      "source": "62",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-62-37proj"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-23bbox"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-63-23mask"
     }
   ],
   "viewport": {
-    "x": -1939.8048208509917,
-    "y": 150.7288525285017,
+    "x": 102.34968233198651,
+    "y": 140.9347667804068,
     "zoom": 0.8705505632961245
   },
   "inputs": {}
