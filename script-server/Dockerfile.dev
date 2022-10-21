@@ -20,4 +20,4 @@ RUN set -ex; \
 # The signal proxy lets us cancel processes in other dockers
 COPY docker-exec-sigproxy.c docker-exec-sigproxy.c
 RUN gcc -Wall -O2 -o /root/docker-exec-sigproxy docker-exec-sigproxy.c
-RUN apt-get purge -y gcc libc6-dev
+RUN apt-get purge -y gcc
