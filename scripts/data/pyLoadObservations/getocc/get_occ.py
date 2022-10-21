@@ -11,8 +11,8 @@ inputFile = open(sys.argv[1] + '/input.json')
 data = json.load(inputFile)
 
 data_source = data['data_source']
-taxa = data['taxa'].replace(', ',',').split(',')
-bbox = data['bbox'].replace(', ',',').split(',')
+taxa = data['taxa']
+bbox = data['bbox']
 min_year = data['min_year']
 max_year = data['max_year']
 
