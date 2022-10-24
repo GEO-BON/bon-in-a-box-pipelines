@@ -1,0 +1,149 @@
+{
+    "nodes": [
+      {
+        "id": "0",
+        "type": "io",
+        "position": {
+          "x": 619,
+          "y": 51
+        },
+        "data": {
+          "descriptionFile": "pointSelection>balancedAcceptance.yml"
+        }
+      },
+      {
+        "id": "1",
+        "type": "io",
+        "position": {
+          "x": 269,
+          "y": 10.5
+        },
+        "data": {
+          "descriptionFile": "pointSelection>combineLayers.yml"
+        }
+      },
+      {
+        "id": "2",
+        "type": "constant",
+        "position": {
+          "x": 5,
+          "y": 0
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif",
+            0.5,
+            0.5,
+            "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif",
+            0.3,
+            0.7
+          ]
+        }
+      },
+      {
+        "id": "3",
+        "type": "constant",
+        "position": {
+          "x": 0,
+          "y": 38
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "float[]",
+          "value": [
+            0.3,
+            0.7
+          ]
+        }
+      },
+      {
+        "id": "4",
+        "type": "constant",
+        "position": {
+          "x": 306,
+          "y": 103.5
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "integer",
+          "value": 50
+        }
+      },
+      {
+        "id": "5",
+        "type": "constant",
+        "position": {
+          "x": 324,
+          "y": 65.5
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "float",
+          "value": 3.14159
+        }
+      },
+      {
+        "id": "6",
+        "type": "output",
+        "position": {
+          "x": 1094.4640705638237,
+          "y": 165.83762085049958
+        },
+        "data": {
+          "label": "Output"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "2",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "layerdata",
+        "id": "reactflow__edge-2-1layerdata"
+      },
+      {
+        "source": "1",
+        "sourceHandle": "priority_map",
+        "target": "0",
+        "targetHandle": "priority_map",
+        "id": "reactflow__edge-1priority_map-0priority_map"
+      },
+      {
+        "source": "3",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "targetbalance",
+        "id": "reactflow__edge-3-1targetbalance"
+      },
+      {
+        "source": "5",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "bias_toward_high_priority",
+        "id": "reactflow__edge-5-0bias_toward_high_priority"
+      },
+      {
+        "source": "4",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "num_points",
+        "id": "reactflow__edge-4-0num_points"
+      },
+      {
+        "source": "0",
+        "sourceHandle": "points",
+        "target": "6",
+        "targetHandle": null,
+        "id": "reactflow__edge-0points-6"
+      }
+    ],
+    "viewport": {
+      "x": 110.07974742876263,
+      "y": 245.619723752432,
+      "zoom": 0.7620724151698857
+    },
+    "inputs": {}
+  }
