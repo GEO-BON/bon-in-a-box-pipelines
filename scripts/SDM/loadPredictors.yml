@@ -1,32 +1,42 @@
 script: loadPredictors.R
 description: "This sample script shows how it works."
 inputs:
-  extent:
-    label: extent
-    description: shapefile, representing a study extent
-    type: application/dbf
-    example: "/scripts/SDM/extentToBbox_extent.shp"
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297, -1971146,  1015207,  1511916]
   source:
     label: source
-    description: type of source to load the predictors (either from tif, or from the stac catalogue)
+    description: String, type of source to load the predictors from (either from tif, or from the stac catalogue)
     type: options
     options:
       - from_tif
       - from_cube
     example: "from_cube"
+  collection:
+    label: collection
+    description: String, name of the collection containing the predictors in the STAC catalogue
+    type: string
+    example: "chelsa-clim"
   layers: 
     label: layers
-    description: names of layers to select, if empty all the layers from the collection will be used
+    description: Vector of string, names of layers to select. If empty, all the layers from the collection will be used
+    type: text[]
+    example: []
+  variables: 
+    label: variables
+    description: Vector of string, names of variables to select. If empty, all the variables from the collection will be used
     type: text[]
     example: []
   remove_collinearity:
     label: remove collinearity
-    description: boolean, remove or not collinear variables from the set of predictors
+    description: Boolean, remove or not collinear variables from the set of predictors
     type: boolean
     example: True
   method: 
     label: method
-    description: method used to compute collinearity between variables
+    description: Option, method used to compute collinearity between variables
     type: options
     options: 
       - vif.cor
@@ -35,19 +45,19 @@ inputs:
       - spearman
       - kendall
     example: vif.cor
-  proj_to:
+  proj:
     label: projection system
-    description: projection of the predictors
+    description: String, projection of the predictors
     type: text
     example: "EPSG:6623"
   spatial_res:
     label: spatial resolution
-    description: spatial resolution of the predictors 
+    description: Integer, spatial resolution of the predictors 
     type: int
     example: 1000
   method_cor_vif :
     label: correlation coefficient for vif.cor method
-    description: method to calculate the coefficient of collinearity, only used if method == vif.cor 
+    description: Option, method to calculate the coefficient of collinearity, only used if method == vif.cor 
     type: options
     options:
       - pearson
@@ -56,21 +66,26 @@ inputs:
     example: pearson
   nb_sample :
     label: nb sample
-    description: number of points to select to calculate collinearity
+    description: Integer, number of points to select to calculate collinearity
     type: int
     example: 5000
   cutoff_cor :
     label: cutoff correlation
-    description: correlation cutoff (used with vif.cor, pearson spearman and kendall method)
+    description: Float, correlation cutoff (used with vif.cor, pearson spearman and kendall method)
     type: float
     example: 0.75
   cutoff_vif :
-    label: vif correlation
-    description: vif correlation cutoff (used with vif.step method)
+    label: VIF correlation
+    description: Integer, VIF correlation cutoff (used with vif.step method)
     type: int
     example: 8
+  mask:
+    label: mask
+    description: Shapefile, used to mask the output predictors
+    type: application/dbf
+    example: "/scripts/SDM/extentToBbox_extent.shp"
 outputs:
   predictors:
     label: predictors
     description: raster, predictors 
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]

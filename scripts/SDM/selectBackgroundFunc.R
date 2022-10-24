@@ -34,7 +34,7 @@ create_background <- function(
         ncellr,
         " background-points will be sampled"
       )
-      backgr <- terra::as.data.frame(predictors, na.rm = TRUE, xy = TRUE) %>% dplyr::select(x, y)
+      backgr <- terra::as.data.frame(predictors, na.rm = TRUE, xy = TRUE) |> dplyr::select(x, y)
 
     } else {
       
@@ -99,7 +99,7 @@ create_background <- function(
       
       message("Buffer distance not provided. Using the 95% quantile 
       of the minimum distance between each point.")
-      dist_buffer <- calculate_dist_buffer(obs %>% dplyr::select(lon, lat))
+      dist_buffer <- calculate_dist_buffer(obs |> dplyr::select(lon, lat))
       message(sprintf("Buffer distance: %s (unit of projection)", dist_buffer))
       
     }
@@ -129,7 +129,7 @@ create_background <- function(
    species <- unique(obs$scientific_name) 
    backgr <- dplyr::bind_cols(id = 1:nrow(backgr),
                       scientific_name = species,
-                      backgr %>% data.frame()) %>%
+                      backgr |> data.frame()) |>
     setNames(c("id", "scientific_name", "lon", "lat"))
   
   

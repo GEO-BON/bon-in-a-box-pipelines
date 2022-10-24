@@ -20,6 +20,10 @@ To run:
   - Network problems may fail the process. First try running the command again. Intermediate states are saved so not everything will be redone even when there is a failure.
 5. Provide an environment file (.env) in the root folder with the following keys
 ```
+# Windows only - path to the root directory of the project with forward slashes
+# such as /c/User/me/biab-2.0
+PWD=
+
 # Access the planetary computer APIs
 JUPYTERHUB_API_TOKEN=
 DASK_GATEWAY__AUTH__TYPE=
@@ -36,10 +40,17 @@ GBIF_EMAIL=
 7. In browser:
     - http://localhost/ shows the UI
 8. `docker compose down` (to stop the server when done) 
+9. On Windows, to completely stop the processes, you might have to run `wsl --shutdown`
 
 Servers do not need to be restarted when modifying scripts in the /scripts folder:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
 - When adding/renaming/removing scripts, refresh the browser page.
+
+## Running the servers remotely
+1. Launch a first instance using the [ansible playbook](https://github.com/GEO-BON/biab-server/tree/main/ansible)
+2. Check that the servers run with a browser.
+3. Create a .env file on the server, as above.
+4. Take dockers down and up to load the .env file (this allows accessing GBIF, etc.)
 
 ## Scripts
 The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
@@ -122,6 +133,13 @@ options_example:
     - third option
   example: third option
 ```
+
+### Script validation
+The structure of the script description file will be validated on push. To run the validation locally,
+- On Windows: Make sure docker is running, then run [validateScripts.bat](/scripts/validateScripts.bat)
+- On Linux: Run [validateScripts.sh](/scripts/validateScripts.sh)
+
+This validates that the structure is correct, but not that it is correct. Hence, peer review of the scripts and the description files is mandatory before accepting a pull requests.
 
 ### Reporting problems
 The output keys `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. Both will be displayed specially in the UI.

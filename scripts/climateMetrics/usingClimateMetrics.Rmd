@@ -55,8 +55,8 @@ As a bounding box we used observations from GBIF fo this species: <a href="https
 ```{r cache=TRUE}
 obs <- rgbif::occ_data(scientificName = "Glyptemys insculpta", hasCoordinate = TRUE, limit = 1000)
 
-obs <- dplyr::select(obs$data, decimalLongitude, decimalLatitude) %>%
-  dplyr::rename(lon = decimalLongitude) %>%
+obs <- dplyr::select(obs$data, decimalLongitude, decimalLatitude) |>
+  dplyr::rename(lon = decimalLongitude) |>
   dplyr::rename(lat = decimalLatitude) 
 head(obs)
 
@@ -89,8 +89,8 @@ bbox <- points_to_bbox(obs_pts, buffer = buffer)
 We used `chelsa-monthly` collection that spans from 1981 to 2010 at ~1Km^2 resolution.
 
 ```{r}
-stac("https://io.biodiversite-quebec.ca/stac/") %>%
-  collections() %>%
+stac("https://io.biodiversite-quebec.ca/stac/") |>
+  collections() |>
   get_request()
 
 ``` 
