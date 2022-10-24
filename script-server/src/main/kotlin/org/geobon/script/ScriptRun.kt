@@ -196,12 +196,14 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                                 delay(1000 * 60 * 60) // 60 minutes timeout
                                 log(logger::warn, "TIMEOUT occurred after 1h")
                                 process.destroy()
-                            } catch (_: CancellationException) {
+                            } catch (ex: CancellationException) {
                                 if (process.isAlive) {
                                     log(logger::info, "Cancelled by user: killing running process...")
                                     process.destroy()
                                     if (!process.waitFor(1, TimeUnit.MINUTES)) {
                                         log(logger::info, "Cancelled by user: timeout elapsed.")
+                                        process.destroyForcibly()
+                                        throw ex
                                     }
                                 }
                             }
@@ -222,6 +224,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                         }
 
                         process.waitFor()
+                        log(logger::trace, "Process exited")
                         watchdog.cancel()
                     }
                 }
