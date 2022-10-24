@@ -1,5 +1,7 @@
 using BiodiversityObservationNetworks
 using SimpleSDMLayers
+using JSON
+using CSV
 
 # Read in input arguments and json
 outputFolder = ARGS[1]
@@ -18,10 +20,13 @@ priority_map_path = input["priority_map"]
 bias = input["bias_toward_high_priority"]
 numpoints = input["num_points"]
 
-### Computation ###
-priority_map = geotiff(priority_map_path)
+print(priority_map_path)
+print(isfile(priority_map_path))
 
-selected_points = priority_map |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first 
+### Computation ###
+priority_map = geotiff(SimpleSDMPredictor, priority_map_path)
+
+selected_points = stack([priority_map])[:,:,1] |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
 ###################
 
 # Write out points csv
@@ -31,7 +36,7 @@ CSV.write(selected_points_path, selected_points)
 # Write out json
 outputDict = Dict("points" => selected_points_path)
 open(joinpath(outputFolder, "output.json"),"w") do f
-    JSON.print(f, JSON.json(outputDict)) 
+    JSON.print(f, outputDict)
 end
 
 

@@ -3,7 +3,8 @@ inputs:
     priority_map:
         description: Priority map that Balanced-Acceptance Sampling will run on
         type: image/tiff;application=geotiff
-        example: "./foo/bar/priority.tiff"
+        #example: "./foo/bar/priority_map.tiff"
+        example: "/output/pointSelection/combineLayers_jl/73492edb740412f10ee367bda95eb04e/data/priority_map.tiff"
     bias_toward_high_priority:
         description: A real number between 0 and infty
         type: float
