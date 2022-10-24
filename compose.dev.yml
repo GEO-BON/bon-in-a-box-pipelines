@@ -28,6 +28,7 @@ services:
       - ./http-proxy/conf.d:/etc/nginx/conf.d:rw
     depends_on:
       - ui
+      - openapi_swagger
 
 ## In the DEV version, using a volume and a single docker. To rebuild without restarting everything, use
 ## docker exec -it biab-script-server sh -c "cd /home/gradle/project/ && gradle build"
@@ -51,8 +52,3 @@ services:
       BASE_URL: /swagger
     volumes:
       - ./script-server/api/:/app
-
-  http-gateway:
-    depends_on:
-      - ui
-      - openapi_swagger
