@@ -18,7 +18,7 @@ print(keys(input))
 # Assign json objects to variables
 priority_map_path = input["priority_map"]
 bias = input["bias_toward_high_priority"]
-numpoints = input["num_points"]
+numpoints = parse(Int64, input["num_points"])
 
 print(priority_map_path)
 print(isfile(priority_map_path))

@@ -33,9 +33,9 @@ temppath = Downloads.download.(layermat[:, 1])
 layers = stack(get_simplesdmlayer.(temppath))
 
 # get weights with weights for a layer in columns 
-W = convert(Array{Float64}, transpose(layermat[:, 2:end]))
+W = map((x) -> parse(Float64, x), layermat[:, 2:end])
 
-priority = SimpleSDMPredictor(squish(layers, W, targetbalance))
+priority = SimpleSDMPredictor(squish(layers, convert(Array{Float64}, transpose(W)), targetbalance))
 
 priority_path = joinpath(outputFilepath, "priority_map.tiff")
 ###################

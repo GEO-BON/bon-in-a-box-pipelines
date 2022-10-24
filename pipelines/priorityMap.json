@@ -4,8 +4,8 @@
         "id": "0",
         "type": "io",
         "position": {
-          "x": 619,
-          "y": 51
+          "x": 613,
+          "y": 50
         },
         "data": {
           "descriptionFile": "pointSelection>balancedAcceptance.yml"
@@ -15,8 +15,8 @@
         "id": "1",
         "type": "io",
         "position": {
-          "x": 269,
-          "y": 10.5
+          "x": 275,
+          "y": 10
         },
         "data": {
           "descriptionFile": "pointSelection>combineLayers.yml"
@@ -47,7 +47,7 @@
         "type": "constant",
         "position": {
           "x": 0,
-          "y": 38
+          "y": 37
         },
         "dragHandle": ".dragHandle",
         "data": {
@@ -62,21 +62,21 @@
         "id": "4",
         "type": "constant",
         "position": {
-          "x": 306,
-          "y": 103.5
+          "x": 303,
+          "y": 101
         },
         "dragHandle": ".dragHandle",
         "data": {
           "type": "integer",
-          "value": 50
+          "value": "50"
         }
       },
       {
         "id": "5",
         "type": "constant",
         "position": {
-          "x": 324,
-          "y": 65.5
+          "x": 321,
+          "y": 64
         },
         "dragHandle": ".dragHandle",
         "data": {
@@ -88,8 +88,8 @@
         "id": "6",
         "type": "output",
         "position": {
-          "x": 1094.4640705638237,
-          "y": 165.83762085049958
+          "x": 1031,
+          "y": 58
         },
         "data": {
           "label": "Output"
@@ -112,6 +112,13 @@
         "id": "reactflow__edge-1priority_map-0priority_map"
       },
       {
+        "source": "0",
+        "sourceHandle": "points",
+        "target": "6",
+        "targetHandle": null,
+        "id": "reactflow__edge-0points-6"
+      },
+      {
         "source": "3",
         "sourceHandle": null,
         "target": "1",
@@ -131,17 +138,10 @@
         "target": "0",
         "targetHandle": "num_points",
         "id": "reactflow__edge-4-0num_points"
-      },
-      {
-        "source": "0",
-        "sourceHandle": "points",
-        "target": "6",
-        "targetHandle": null,
-        "id": "reactflow__edge-0points-6"
       }
     ],
     "viewport": {
-      "x": 110.07974742876263,
+      "x": 109.07974742876263,
       "y": 245.619723752432,
       "zoom": 0.7620724151698857
     },
