@@ -212,10 +212,10 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                         launch {
                             process.inputStream.bufferedReader().run {
                                 try {
-                                while (true) { // Breaks when readLine returns null
-                                    readLine()?.let { log(logger::trace, it) }
-                                        ?: break
-                                }
+                                    while (true) { // Breaks when readLine returns null
+                                        readLine()?.let { log(logger::trace, it) }
+                                            ?: break
+                                    }
                                 } catch (ex: IOException) {
                                     if (ex.message != "Stream closed") // This is normal when cancelling the script
                                         log(logger::trace, ex.message!!)
