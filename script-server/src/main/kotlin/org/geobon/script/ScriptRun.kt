@@ -12,6 +12,7 @@ import java.io.File
 import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.concurrent.TimeoutException
 import kotlin.math.floor
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
@@ -193,19 +194,21 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                         // if the user cancels or is 60 minutes delay expires.
                         val watchdog = launch {
                             try {
-                                delay(1000 * 60 * 60) // 60 minutes timeout
-                                log(logger::warn, "TIMEOUT occurred after 1h")
-                                process.destroy()
-                            } catch (ex: CancellationException) {
+                                delay(1000 * 60 * 60) // 1 hour timeout
+                                throw TimeoutException("Timeout occurred after 1h")
+
+                            } catch (ex: Exception) {
                                 if (process.isAlive) {
-                                    log(logger::info, "Cancelled by user: killing running process...")
+                                    val event = ex.message ?: ex.javaClass.name
+                                    log(logger::info, "$event: killing running process...")
                                     process.destroy()
                                     if (!process.waitFor(1, TimeUnit.MINUTES)) {
-                                        log(logger::info, "Cancelled by user: timeout elapsed.")
+                                        log(logger::info, "$event: cancellation timeout elapsed.")
                                         process.destroyForcibly()
-                                        throw ex
                                     }
                                 }
+
+                                throw ex
                             }
                         }
 
@@ -224,7 +227,6 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                         }
 
                         process.waitFor()
-                        log(logger::trace, "Process exited")
                         watchdog.cancel()
                     }
                 }
@@ -258,9 +260,11 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
 
         }.onFailure { ex ->
             when (ex) {
+                is TimeoutException,
                 is CancellationException -> {
-                    log(logger::info, "Cancelled by user: done.")
-                    outputs = mapOf(ERROR_KEY to "Cancelled by user")
+                    val event = ex.message ?: ex.javaClass.name
+                    log(logger::info, "$event: done.")
+                    outputs = mapOf(ERROR_KEY to event)
                     resultFile.writeText(gson.toJson(outputs))
                 }
                 else -> {
