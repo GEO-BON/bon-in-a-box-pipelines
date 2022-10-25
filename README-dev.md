@@ -146,6 +146,9 @@ In case stop feature seems not to work, we can test that the signal is properly 
     tick
     trapped SIGINT
     ```
+    
+Another technique could be to use a script integrated in a fake pipeline. However, one must modify RunScript.kt to run sh on the desired runner. Here is such a script : 
+[signals.zip](https://github.com/GEO-BON/biab-2.0/files/9862588/signals.zip)
 
 ### Further debugging
 You can uncomment `#define DEBUG (1)` in [docker-exec-sigproxy.c](./script-server/docker-exec-sigproxy.c).
