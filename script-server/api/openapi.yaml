@@ -247,6 +247,13 @@ components:
                 example:
                 - Option 1
                 - Option 2
+              range: 
+                type: array
+                items:
+                  type: number
+                minItems: 2
+                maxItems: 2
+                example: [0, 1]
               example: 
                 example: Glyptemys insculpta
                 oneOf:
