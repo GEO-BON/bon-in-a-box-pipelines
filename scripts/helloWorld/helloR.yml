@@ -45,6 +45,7 @@ outputs:
     label: Heat map
     description: Some heat map that shows bla bla...
     type: image/tiff;application=geotiff
+    range: [0, 254]
     example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
   some_csv_data:
     label: Some CSV data

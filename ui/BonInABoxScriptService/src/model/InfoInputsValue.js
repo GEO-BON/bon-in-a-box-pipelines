@@ -60,6 +60,9 @@ class InfoInputsValue {
             if (data.hasOwnProperty('options')) {
                 obj['options'] = ApiClient.convertToType(data['options'], ['String']);
             }
+            if (data.hasOwnProperty('range')) {
+                obj['range'] = ApiClient.convertToType(data['range'], ['Number']);
+            }
             if (data.hasOwnProperty('example')) {
                 // JM Lord: Current version of the generator does not work when type is "oneOf" in OpenAPI spec.
                 // We want the default convertToType clause to execute.
@@ -91,6 +94,11 @@ InfoInputsValue.prototype['type'] = undefined;
  * @member {Array.<String>} options
  */
 InfoInputsValue.prototype['options'] = undefined;
+
+/**
+ * @member {Array.<Number>} range
+ */
+InfoInputsValue.prototype['range'] = undefined;
 
 /**
  * @member {module:model/InfoInputsValueExample} example
