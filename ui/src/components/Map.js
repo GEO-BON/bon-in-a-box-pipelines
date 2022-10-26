@@ -29,10 +29,11 @@ function COGLayer({ url }) {
         console.log("got my raster", georaster)
         rasterRef.current = georaster
 
-        const options = { left: 0, top: 0, right: 4000, bottom: 4000, width: 10, height: 10 };
+        // Uncomment to debug values in the geotiff
+        /*const options = { left: 0, top: 0, right: 4000, bottom: 4000, width: 10, height: 10 };
         georaster.getValues(options).then(values => {
           console.log("clipped values are", values);
-        });
+        });*/
 
         const layer = new GeoRasterLayer({
           attribution: "Planet",
