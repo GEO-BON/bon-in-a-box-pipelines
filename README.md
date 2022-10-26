@@ -100,16 +100,16 @@ references: # 0 to many
 See [example](/scripts/helloWorld/helloR.yml)
 
 Each input and output must declare a type, *in lowercase.* The following file types are accepted:
-| File type            | MIME type to use in the yaml   | UI rendering                 |
-| -------------------- |------------------------------- |------------------------------|
-| CSV                  | text/csv                       | HTML table (partial content) |
-| GeoPackage           | application/geopackage+sqlite3 | Link                         |
-| <sup>1</sup> GeoTIFF | image/tiff;application=geotiff | Map widget (leaflet)         |
-| JPG                  | image/jpg                      | \<img> tag                   |
-| Shapefile            | application/dbf                | Link                         |
-| Text                 | text/plain                     | Plain text                   |
-| TSV                  | text/tab-separated-values      | HTML table (partial content) |
-|                      | (any unknown type)             | Plain text or link           |
+| File type                    | MIME type to use in the yaml   | UI rendering                 |
+| ---------------------------- |------------------------------- |------------------------------|
+| CSV                          | text/csv                       | HTML table (partial content) |
+| GeoPackage                   | application/geopackage+sqlite3 | Link                         |
+| GeoTIFF <sup>[1](#io1)</sup> | image/tiff;application=geotiff | Map widget (leaflet)         |
+| JPG                          | image/jpg                      | \<img> tag                   |
+| Shapefile                    | application/dbf                | Link                         |
+| Text                         | text/plain                     | Plain text                   |
+| TSV                          | text/tab-separated-values      | HTML table (partial content) |
+|                              | (any unknown type)             | Plain text or link           |
 
 The following primitive types are accepted:
 | "type" attribute in the yaml   | UI rendering                 |
@@ -117,11 +117,11 @@ The following primitive types are accepted:
 | boolean                        | Plain text                   |
 | float, float[]                 | Plain text                   |
 | int, int[]                     | Plain text                   |
-| <sup>2</sup> options           | Plain text                   |
+| options <sup>[2](#io2)</sup>   | Plain text                   |
 | text, text[]                   | Plain text                   |
 | (any unknown type)             | Plain text                   |
 
-<sup>1</sup> `image/tiff;application=geotiff` type require an additionnal `range` attribute to be added with the min and max values that the tiff should hold. This will be used for display purposes.
+<a name="io1"></a><sup>1</sup> `image/tiff;application=geotiff` type require an additionnal `range` attribute to be added with the min and max values that the tiff should hold. This will be used for display purposes.
 ```yml
 map:
   label: My map
@@ -131,7 +131,7 @@ map:
   example: https://example.com/mytiff.tif
 ```
 
-<sup>2</sup> `options` type require an additionnal `options` attribute to be added with the available options.
+<a name="io2"></a><sup>2</sup> `options` type require an additionnal `options` attribute to be added with the available options.
 ```yml
 options_example:
   label: Options example
