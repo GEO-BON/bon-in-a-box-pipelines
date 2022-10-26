@@ -77,9 +77,13 @@ pred.output <- file.path(outputFolder, "sdm_pred.tif")
 runs.output <- file.path(outputFolder, "sdm_runs.tif")
 raster::writeRaster(x = sdm_pred,
                           filename = pred.output,
+                          format='COG',
+                          options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
  raster::writeRaster(x = sdm_runs,
                           filename = runs.output,
+                          format='COG',
+                          options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
 
 output <- list("sdm_pred" = pred.output,
