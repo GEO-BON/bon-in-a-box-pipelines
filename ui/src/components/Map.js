@@ -14,19 +14,19 @@ const scale = chroma.scale([
   "#FFD700",
   "#FF0000",
   "#8B0000",
-]).domain([0.001, 1]);
+]);
 
-function COGLayer({ url }) {
+function COGLayer({ url, range }) {
   const rasterRef = useRef()
   const map = useMap()
 
   // UseEffect to execute code after map div is inserted
   useEffect(() => {
-    console.log("url=" + url)
+    if(!map || !range || !url)
+      return
 
     parseGeoraster(window.location.origin + url).then((georaster) => {
       if (georaster) {
-        console.log("got my raster", georaster)
         rasterRef.current = georaster
 
         // Uncomment to debug values in the geotiff
@@ -35,13 +35,15 @@ function COGLayer({ url }) {
           console.log("clipped values are", values);
         });*/
 
+        const colorTransform = scale.domain([range[0], range[1]])
+
         const layer = new GeoRasterLayer({
           attribution: "Planet",
           type: "coglayer",
           georaster: georaster,
           debugLevel: 0,
           resolution: 128,
-          pixelValuesToColorFn: (values) => values[0] ? scale(values[0]).hex() : "#ffffff00"
+          pixelValuesToColorFn: (values) => values[0] ? colorTransform(values[0]).hex() : "#ffffff00"
         });
         layer.addTo(map)
         map.fitBounds(layer.getBounds());
@@ -51,18 +53,25 @@ function COGLayer({ url }) {
       }
     });
 
-    return () => { if (rasterRef.current) map.removeLayer(rasterRef.current) };
-  }, [map]);
+    return () => {
+      if (rasterRef.current) {
+        map.removeLayer(rasterRef.current)
+        rasterRef.current = null
+      }
+    };
+  }, [map, range, url]);
 
   return null;
 }
 
-export default function Map({ tiff }) {
+export default function Map({ tiff, range }) {
+  console.log("Tiff range=",range)
+
   return <MapContainer className="map" >
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
     />
-    <COGLayer url={tiff} />
+    <COGLayer url={tiff} range={range} />
   </MapContainer>
 }

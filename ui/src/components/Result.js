@@ -53,7 +53,7 @@ function RenderedFiles({files, metadata}) {
                 // See https://github.com/opengeospatial/geotiff/issues/34
                 // Plus covering a common typo when second F omitted
                 if (subtype && subtype.includes("tif") && subtype.includes("geo")) {
-                    return <Map tiff={content} />;
+                    return <Map tiff={content} range={metadata.outputs[key].range} />;
                 }
                 return <img src={content} alt={key} />;
 
@@ -72,7 +72,7 @@ function RenderedFiles({files, metadata}) {
                         isRelativeLink(content) ? (
                             // Match for tiff, TIFF, tif or TIF extensions
                             content.search(/.tiff?$/i) !== -1 ? (
-                                <Map tiff={content} />
+                                <Map tiff={content} range={[0,1]} />
                             ) : (
                                 <img src={content} alt={key} />
                             )
