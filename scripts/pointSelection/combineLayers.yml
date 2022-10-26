@@ -3,7 +3,7 @@ description: Combines the layers and associate wieghts to create a priority map 
 
 inputs:
     layerdata:
-        label: layerdata
+        label: Layer csv
         description: Array with layer url in the first column, and weights for each layer and target in subsequent columns. One row for each layer.
         type: text[]
         example: ["https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif", 0.5,0.5, "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif", 0.3,0.7]
@@ -18,13 +18,13 @@ inputs:
 #        type: float[]
 #        example: [(0.5,0.5), (0.3,0.7)]
     targetbalance:
-        label: targetbalance
+        label: Balance between targets
         description: List of weights for each target, should sum to 1
         type: float[]
         example: [0.3, 0.7]
 outputs:
     priority_map:
-        label: prioritymap
+        label: Priority map
         description: Priority map created based on layers and weights
         type: image/tiff;application=geotiff
        
