@@ -1,5 +1,5 @@
 import { useState } from "react";
-import RenderedMap from './RenderedMap';
+import Map from './Map';
 import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
 import { FoldableOutput, RenderContext, createContext } from "./FoldableOutput";
@@ -53,7 +53,7 @@ function RenderedFiles({files, metadata}) {
                 // See https://github.com/opengeospatial/geotiff/issues/34
                 // Plus covering a common typo when second F omitted
                 if (subtype && subtype.includes("tif") && subtype.includes("geo")) {
-                    return <RenderedMap tiff={content} />;
+                    return <Map tiff={content} />;
                 }
                 return <img src={content} alt={key} />;
 
@@ -72,7 +72,7 @@ function RenderedFiles({files, metadata}) {
                         isRelativeLink(content) ? (
                             // Match for tiff, TIFF, tif or TIF extensions
                             content.search(/.tiff?$/i) !== -1 ? (
-                                <RenderedMap tiff={content} />
+                                <Map tiff={content} />
                             ) : (
                                 <img src={content} alt={key} />
                             )
