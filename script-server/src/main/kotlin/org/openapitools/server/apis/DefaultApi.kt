@@ -35,6 +35,7 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
+              "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
               "example" : "file.csv"
@@ -51,7 +52,6 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "scientific name of the species",
-              "range" : [ 0, 1 ],
               "label" : "species names",
               "type" : "text",
               "example" : "Glyptemys insculpta"
@@ -90,6 +90,7 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
+              "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
               "example" : "file.csv"
@@ -106,7 +107,6 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "scientific name of the species",
-              "range" : [ 0, 1 ],
               "label" : "species names",
               "type" : "text",
               "example" : "Glyptemys insculpta"
