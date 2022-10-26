@@ -94,7 +94,7 @@ if(!is.null(input$mask) && length(input$mask)>1) {
 
 output_predictors <- file.path(outputFolder, "predictors.tif")
 
-terra::writeRaster(predictors, output_predictors, overwrite = T)
+terra::writeRaster(predictors, output_predictors, overwrite = T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
 output <- list("predictors" = output_predictors) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
