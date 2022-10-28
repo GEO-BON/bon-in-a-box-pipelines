@@ -206,9 +206,9 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                                         log(logger::info, "$event: cancellation timeout elapsed.")
                                         process.destroyForcibly()
                                     }
-                                }
 
-                                throw ex
+                                    throw ex
+                                }
                             }
                         }
 
@@ -227,7 +227,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                         }
 
                         process.waitFor()
-                        watchdog.cancel()
+                        watchdog.cancel("Watched task normal completion")
                     }
                 }
         }.onSuccess { process -> // completed, with success or failure
