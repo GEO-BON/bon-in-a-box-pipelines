@@ -116,3 +116,43 @@ Every second, the UI polls for:
 3. Use [ui/BonInABoxScriptService/generate-client.sh](../ui/BonInABoxScriptService/generate-client.sh) and  [script-server/generate-server-openapitools.sh](../script-server/generate-server-openapitools.sh) to regenerate the client and the server.
 4. Merge carefully, not all generated code is to be kept.
 5. Implement the gaps.
+
+## Debugging signal forwarding
+Since runner-r and runner-julia run in a separate docker, when the user stops the pipeline, the signal must go from the script-server, to the runner, to the running script. Docker does not allow this by default, this is why we use docker-exec-sigproxy.
+
+In case stop feature seems not to work, we can test that the signal is properly forwarded in an environment with the following:
+
+1. Launch the server as usual (up)
+2. Open a shell in the script-server `docker exec -it biab-script-server bash`
+3. In the script-server, launch a signal trap on the runner and let it complete
+
+    `/root/docker-exec-sigproxy exec -i biab-runner-r bash -c "trap \"echo 'trapped SIGINT' | tee -a /output/trapped; exit 1;\" INT; echo 'start' | tee -a /output/trapped; for i in {1..5}; do sleep 1; echo 'tick' | tee -a /output/trapped; done; echo 'stop' | tee -a /output/trapped"`
+
+    This will echo the following to the console and to /output/trapped:
+    ```
+    start
+    tick
+    tick
+    tick
+    tick
+    tick
+    stop
+    ```
+
+4. Run the command once more but quickly hit ctrl+c to interrupt (SIGINT). You should have something like that:
+    ```
+    start
+    tick
+    tick
+    trapped SIGINT
+    ```
+    
+Another technique could be to use a script integrated in a fake pipeline. However, one must modify RunScript.kt to run sh on the desired runner. Here is such a script : 
+[signals.zip](https://github.com/GEO-BON/biab-2.0/files/9862588/signals.zip)
+
+### Further debugging
+You can uncomment `#define DEBUG (1)` in [docker-exec-sigproxy.c](./script-server/docker-exec-sigproxy.c).
+
+Recompile it by installing gcc on the script-server dev docker and run
+
+`RUN gcc -Wall -O2 -o /root/docker-exec-sigproxy docker-exec-sigproxy.c`
