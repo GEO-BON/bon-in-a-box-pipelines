@@ -242,13 +242,14 @@ cb_signal(int sig)
 
 #ifdef SIGPROXY_INSIDE_CONTAINER
 	// NOTE: This docker-cli is inside a docker already. Thus we need to break out:
-	snprintf(cmd, sizeof cmd, "docker run --rm --pid=host -v "DFL_CONTAINER_DIR"/%s/%s.pid:/pid alpine sh -c 'kill -%d $(cat /pid)'", container_id, exec_id, sig);
+	snprintf(cmd, sizeof cmd, "docker run --rm --pid=host --net=host -v "DFL_CONTAINER_DIR"/%s/%s.pid:/pid alpine sh -c 'kill -%d $(cat /pid)'", container_id, exec_id, sig);
 #else
 	snprintf(cmd, sizeof cmd, "kill -%d $(cat "DFL_CONTAINER_DIR"/%s/%s.pid)", sig, container_id, exec_id);
 #endif
 	DEBUGF("cmd=%s\n", cmd);
 	signal(SIGCHLD, SIG_IGN);
-	system(cmd);
+	int returnValue = system(cmd);
+	DEBUGF("returnValue=%d\n", returnValue);
 	signal(SIGCHLD, cb_signal);
 
 	// Forward signal to child.
