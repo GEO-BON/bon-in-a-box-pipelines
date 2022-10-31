@@ -1,10 +1,23 @@
 script: climateMetrics.R
-description: This script calculates climate rarity, using a moving window approach.
+description: Climate velocity can be defined as the rate and direction that climate shifts across the landscape.
 inputs:
+  metric:
+    label: Metric
+    description: "Choice of local velocity (see Loarie et. al. (2009) and Sandel et. al. (2011).),
+      forward or backward velocity (see Carroll et. al. (2015) and Hamann et. al. (2015).)"
+    type: options
+    options: 
+      - local
+      - forward
+      - backward
   rcp:
     label: rcp
-    description: Representative Concentration Pathway Scenarios (ssp126, ssp370, ssp585)
-    type: text
+    description: Representative Concentration Pathway Scenarios (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
+    type: options
+    options: 
+      - ssp126
+      - ssp370
+      - ssp585
     example: ssp126
   spatial_res:
     label: spatial resolution
@@ -12,55 +25,50 @@ inputs:
     type: int
     example: 10000 
   srs_cube: 
-    label: srs cube
-    description: target spatial reference system
+    label: Target SRS
+    description: Target spatial reference system
     type: text
     example: EPSG:6623
   aggregation:
     label: aggregation
-    description: method of aggregation for 
-    type: text
+    description: method of aggregation for the temperature data
+    type: options
+    options: [min, max, mean, median, first]
     example: mean
-  moving_window:
-    label: search moving window
-    description: number of cells (must be an odd number)
-    type: int
-    example: 11
   t0:
-    label: t0
-    description: start time 
+    label: Current climate start
+    description: Current climate start time, in format aaaa-mm-dd
     type: text
     example: "1981-01-01"
   t1:
-    label: t1
-    description: end time 
+    label: Current climate end
+    description: Current climate end time, in format aaaa-mm-dd
     type: text
     example: "1981-12-31"
   t_match: 
     label: threshold match
-    description: plus/minus threshold mean temperature
+    description: Acceptable difference of mean temperature to consider that the climate is similar.
     type: float
     example: 0.25
   time_span:
-    label: time span
-    description: period climate projection
-    type: text
+    label: Future time span
+    description: period for climate projection, start year to end year
+    type: options
+    options:
+      - 2011-2040 
+      - 2041-2070
+      - 2071-2100
     example: 2041-2070
   bbox:
-    label: bbox coordinates
-    description: coordinates of the bbox, in the order xmin, xmax, ymax, ymin.
+    label: Bounding box
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
-    example: null
+    example: [-2316297,-1971146,1015207,1511916]
   buffer_box:
-    label: buffer box
-    description: buffer surronding box
+    label: Buffer box
+    description: Buffer surronding the bounding box, in meter
     type: int
     example: null
-  shapefile_path:
-    label: shapefile path
-    description: Path to a .shp file representing the extent.
-    type: application/dbf
-    example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
 outputs:
   output_tif:
     label: output metric
