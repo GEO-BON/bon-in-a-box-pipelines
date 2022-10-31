@@ -68,21 +68,14 @@ outputs:
         required: true
         type: string
         oneof:
-        - forbidden: [options, image/tiff;application=geotiff]
+        - forbidden: [options]
         - allowed: [options]
           dependencies: options
-        - allowed: [image/tiff;application=geotiff]
-          dependencies: range
       options:
         required: false
         type: list
         dependencies:
           type: options
-      range:
-        required: false
-        type: list
-        dependencies:
-          type: image/tiff;application=geotiff
       example:
         required: false
         nullable: true
