@@ -563,7 +563,7 @@
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "EPSG:6623"
       }
     },
@@ -594,7 +594,7 @@
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "string",
+        "type": "text",
         "value": "chelsa-clim"
       }
     },
