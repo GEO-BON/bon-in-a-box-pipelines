@@ -10,6 +10,7 @@ inputs:
       - local
       - forward
       - backward
+    example: forward
   rcp:
     label: rcp
     description: Representative Concentration Pathway Scenarios (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
