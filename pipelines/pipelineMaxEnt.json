@@ -4,8 +4,8 @@
       "id": "15",
       "type": "io",
       "position": {
-        "x": 954.5,
-        "y": 55.5
+        "x": 382,
+        "y": 69.75
       },
       "data": {
         "descriptionFile": "data>getObservations.yml"
@@ -15,7 +15,7 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 669.5,
+        "x": 48.5,
         "y": 0
       },
       "dragHandle": ".dragHandle",
@@ -28,8 +28,8 @@
       "id": "17",
       "type": "constant",
       "position": {
-        "x": 669.5,
-        "y": 40
+        "x": 48.5,
+        "y": 37
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -41,8 +41,8 @@
       "id": "18",
       "type": "constant",
       "position": {
-        "x": 677.5,
-        "y": 80
+        "x": 59.5,
+        "y": 74
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -54,8 +54,8 @@
       "id": "19",
       "type": "constant",
       "position": {
-        "x": 677.5,
-        "y": 120
+        "x": 59.5,
+        "y": 111
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -67,8 +67,8 @@
       "id": "21",
       "type": "constant",
       "position": {
-        "x": 699.5,
-        "y": 258
+        "x": 97.5,
+        "y": 148
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -85,8 +85,8 @@
       "id": "22",
       "type": "constant",
       "position": {
-        "x": 677.5,
-        "y": 296
+        "x": 59.5,
+        "y": 224.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -98,8 +98,8 @@
       "id": "23",
       "type": "io",
       "position": {
-        "x": 947,
-        "y": 446.25
+        "x": 374,
+        "y": 587.25
       },
       "data": {
         "descriptionFile": "SDM>loadPredictors.yml"
@@ -109,8 +109,8 @@
       "id": "24",
       "type": "constant",
       "position": {
-        "x": 728,
-        "y": 382.5
+        "x": 156,
+        "y": 350.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -126,8 +126,8 @@
       "id": "25",
       "type": "constant",
       "position": {
-        "x": 662,
-        "y": 420.5
+        "x": 70,
+        "y": 423.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -143,8 +143,8 @@
       "id": "26",
       "type": "constant",
       "position": {
-        "x": 791,
-        "y": 510.5
+        "x": 217,
+        "y": 497.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -156,8 +156,8 @@
       "id": "27",
       "type": "constant",
       "position": {
-        "x": 731,
-        "y": 548.5
+        "x": 159,
+        "y": 665.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -176,8 +176,8 @@
       "id": "29",
       "type": "constant",
       "position": {
-        "x": 680,
-        "y": 587
+        "x": 92,
+        "y": 701.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -189,8 +189,8 @@
       "id": "30",
       "type": "constant",
       "position": {
-        "x": 652,
-        "y": 627
+        "x": 159,
+        "y": 738.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -207,8 +207,8 @@
       "id": "31",
       "type": "constant",
       "position": {
-        "x": 680,
-        "y": 667
+        "x": 92,
+        "y": 774.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -220,8 +220,8 @@
       "id": "32",
       "type": "constant",
       "position": {
-        "x": 667,
-        "y": 707
+        "x": 76,
+        "y": 811.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -233,8 +233,8 @@
       "id": "33",
       "type": "constant",
       "position": {
-        "x": 680,
-        "y": 747
+        "x": 92,
+        "y": 848.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -246,8 +246,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1393,
-        "y": 147.5
+        "x": 835,
+        "y": 447.5
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -257,8 +257,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1027.5,
-        "y": 286
+        "x": 452.5,
+        "y": 460
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -282,8 +282,8 @@
       "id": "37",
       "type": "io",
       "position": {
-        "x": 1743,
-        "y": 306.5
+        "x": 1215,
+        "y": 293.5
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -293,8 +293,8 @@
       "id": "38",
       "type": "constant",
       "position": {
-        "x": 1514.5,
-        "y": 382.25
+        "x": 988.5,
+        "y": 306.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -311,8 +311,8 @@
       "id": "39",
       "type": "constant",
       "position": {
-        "x": 1438.5,
-        "y": 420.25
+        "x": 895.5,
+        "y": 342.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -324,8 +324,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 2108,
-        "y": 408
+        "x": 1595,
+        "y": 347.5
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -335,8 +335,8 @@
       "id": "41",
       "type": "constant",
       "position": {
-        "x": 1810,
-        "y": 413.75
+        "x": 1297,
+        "y": 390
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -352,8 +352,8 @@
       "id": "42",
       "type": "constant",
       "position": {
-        "x": 1792,
-        "y": 451.75
+        "x": 1264,
+        "y": 426
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -365,8 +365,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 2552,
-        "y": 510.5
+        "x": 2047,
+        "y": 460.75
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -376,8 +376,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 2225,
-        "y": 589.75
+        "x": 1726,
+        "y": 465.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -394,8 +394,8 @@
       "id": "46",
       "type": "constant",
       "position": {
-        "x": 2203,
-        "y": 627.75
+        "x": 1688,
+        "y": 501.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -407,8 +407,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 2190,
-        "y": 667.75
+        "x": 1672,
+        "y": 538.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -420,8 +420,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 2203,
-        "y": 707.75
+        "x": 1688,
+        "y": 575.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -433,8 +433,8 @@
       "id": "49",
       "type": "io",
       "position": {
-        "x": 3034.6367549929237,
-        "y": 407.2471216771674
+        "x": 2543,
+        "y": 619.75
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -444,8 +444,8 @@
       "id": "50",
       "type": "constant",
       "position": {
-        "x": 2685.610027442371,
-        "y": 436.287240259907
+        "x": 2145.5,
+        "y": 570.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -461,8 +461,8 @@
       "id": "51",
       "type": "constant",
       "position": {
-        "x": 2682.1639323773798,
-        "y": 452.36901722986545
+        "x": 2140.5,
+        "y": 607.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -477,8 +477,8 @@
       "id": "52",
       "type": "constant",
       "position": {
-        "x": 2689.056122507362,
-        "y": 468.450794199824
+        "x": 2205.5,
+        "y": 644.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -497,8 +497,8 @@
       "id": "53",
       "type": "constant",
       "position": {
-        "x": 2689.056122507362,
-        "y": 481.08647610479136
+        "x": 2251.5,
+        "y": 680.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -516,8 +516,8 @@
       "id": "54",
       "type": "constant",
       "position": {
-        "x": 2684.461329087374,
-        "y": 493.72215800975874
+        "x": 2167.5,
+        "y": 716.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -529,8 +529,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 2683.312630732377,
-        "y": 513.2500300447083
+        "x": 2265.5,
+        "y": 753.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -547,8 +547,8 @@
       "id": "56",
       "type": "output",
       "position": {
-        "x": 3503.130257926164,
-        "y": 446.69244683991883
+        "x": 2929,
+        "y": 657.25
       },
       "data": {
         "label": "Output"
@@ -558,8 +558,8 @@
       "id": "57",
       "type": "constant",
       "position": {
-        "x": 603.8894262511232,
-        "y": 202.798349357995
+        "x": 34.5,
+        "y": 288.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -571,8 +571,8 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 568.2797772462152,
-        "y": 157.99911351311067
+        "x": 32.5,
+        "y": 185.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -589,8 +589,8 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 600.1651833944313,
-        "y": 475.3434047583403
+        "x": 69,
+        "y": 386.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -602,8 +602,8 @@
       "id": "60",
       "type": "constant",
       "position": {
-        "x": 595.8124305779506,
-        "y": 497.9777194040395
+        "x": 70,
+        "y": 460.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -612,37 +612,11 @@
       }
     },
     {
-      "id": "61",
-      "type": "constant",
-      "position": {
-        "x": 594.9418800146545,
-        "y": 547.5991015119185
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      }
-    },
-    {
-      "id": "62",
-      "type": "constant",
-      "position": {
-        "x": 1394.107297120496,
-        "y": 322.1265056182225
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      }
-    },
-    {
       "id": "63",
       "type": "constant",
       "position": {
-        "x": 594.0713294513589,
-        "y": 865.3500571150037
+        "x": 0,
+        "y": 921.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -688,6 +662,27 @@
       "id": "reactflow__edge-34clean_presence-44presence"
     },
     {
+      "source": "44",
+      "sourceHandle": "presence_background",
+      "target": "49",
+      "targetHandle": "presence_background",
+      "id": "reactflow__edge-44presence_background-49presence_background"
+    },
+    {
+      "source": "49",
+      "sourceHandle": "sdm_pred",
+      "target": "56",
+      "targetHandle": null,
+      "id": "reactflow__edge-49sdm_pred-56"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-23bbox"
+    },
+    {
       "source": "17",
       "sourceHandle": null,
       "target": "15",
@@ -723,18 +718,25 @@
       "id": "reactflow__edge-40background-44background"
     },
     {
+      "source": "23",
+      "sourceHandle": "predictors",
+      "target": "49",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-23predictors-49predictors"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-37proj"
+    },
+    {
       "source": "18",
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "year_start",
       "id": "reactflow__edge-18-15year_start"
-    },
-    {
-      "source": "25",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "layers",
-      "id": "reactflow__edge-25-23layers"
     },
     {
       "source": "35",
@@ -765,18 +767,32 @@
       "id": "reactflow__edge-23predictors-44predictors"
     },
     {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "fc",
+      "id": "reactflow__edge-50-49fc"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "collection",
+      "id": "reactflow__edge-59-23collection"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-25-23layers"
+    },
+    {
       "source": "19",
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "year_end",
       "id": "reactflow__edge-19-15year_end"
-    },
-    {
-      "source": "26",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "remove_collinearity",
-      "id": "reactflow__edge-26-23remove_collinearity"
     },
     {
       "source": "39",
@@ -800,11 +816,11 @@
       "id": "reactflow__edge-45-44partition_type"
     },
     {
-      "source": "27",
+      "source": "51",
       "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "method",
-      "id": "reactflow__edge-27-23method"
+      "target": "49",
+      "targetHandle": "rm",
+      "id": "reactflow__edge-51-49rm"
     },
     {
       "source": "23",
@@ -821,11 +837,60 @@
       "id": "reactflow__edge-46-44runs_n"
     },
     {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "partition_type",
+      "id": "reactflow__edge-52-49partition_type"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-15bbox"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "variables",
+      "id": "reactflow__edge-60-23variables"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "remove_collinearity",
+      "id": "reactflow__edge-26-23remove_collinearity"
+    },
+    {
       "source": "47",
       "sourceHandle": null,
       "target": "44",
       "targetHandle": "boot_proportion",
       "id": "reactflow__edge-47-44boot_proportion"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "orientation_block",
+      "id": "reactflow__edge-53-49orientation_block"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-15proj"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "method",
+      "id": "reactflow__edge-27-23method"
     },
     {
       "source": "21",
@@ -835,13 +900,6 @@
       "id": "reactflow__edge-21-15occurrence_status"
     },
     {
-      "source": "29",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-29-23spatial_res"
-    },
-    {
       "source": "48",
       "sourceHandle": null,
       "target": "44",
@@ -849,11 +907,39 @@
       "id": "reactflow__edge-48-44cv_partitions"
     },
     {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "n_folds",
+      "id": "reactflow__edge-54-49n_folds"
+    },
+    {
       "source": "22",
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "limit",
       "id": "reactflow__edge-22-15limit"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "method_select_params",
+      "id": "reactflow__edge-55-49method_select_params"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-23proj"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-29-23spatial_res"
     },
     {
       "source": "30",
@@ -884,118 +970,6 @@
       "id": "reactflow__edge-33-23cutoff_vif"
     },
     {
-      "source": "44",
-      "sourceHandle": "presence_background",
-      "target": "49",
-      "targetHandle": "presence_background",
-      "id": "reactflow__edge-44presence_background-49presence_background"
-    },
-    {
-      "source": "23",
-      "sourceHandle": "predictors",
-      "target": "49",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-23predictors-49predictors"
-    },
-    {
-      "source": "50",
-      "sourceHandle": null,
-      "target": "49",
-      "targetHandle": "fc",
-      "id": "reactflow__edge-50-49fc"
-    },
-    {
-      "source": "51",
-      "sourceHandle": null,
-      "target": "49",
-      "targetHandle": "rm",
-      "id": "reactflow__edge-51-49rm"
-    },
-    {
-      "source": "52",
-      "sourceHandle": null,
-      "target": "49",
-      "targetHandle": "partition_type",
-      "id": "reactflow__edge-52-49partition_type"
-    },
-    {
-      "source": "53",
-      "sourceHandle": null,
-      "target": "49",
-      "targetHandle": "orientation_block",
-      "id": "reactflow__edge-53-49orientation_block"
-    },
-    {
-      "source": "54",
-      "sourceHandle": null,
-      "target": "49",
-      "targetHandle": "n_folds",
-      "id": "reactflow__edge-54-49n_folds"
-    },
-    {
-      "source": "55",
-      "sourceHandle": null,
-      "target": "49",
-      "targetHandle": "method_select_params",
-      "id": "reactflow__edge-55-49method_select_params"
-    },
-    {
-      "source": "49",
-      "sourceHandle": "sdm_pred",
-      "target": "56",
-      "targetHandle": null,
-      "id": "reactflow__edge-49sdm_pred-56"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-15proj"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-15bbox"
-    },
-    {
-      "source": "59",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "collection",
-      "id": "reactflow__edge-59-23collection"
-    },
-    {
-      "source": "60",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "variables",
-      "id": "reactflow__edge-60-23variables"
-    },
-    {
-      "source": "61",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-61-23proj"
-    },
-    {
-      "source": "62",
-      "sourceHandle": null,
-      "target": "37",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-62-37proj"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-23bbox"
-    },
-    {
       "source": "63",
       "sourceHandle": null,
       "target": "23",
@@ -1004,9 +978,9 @@
     }
   ],
   "viewport": {
-    "x": 102.34968233198651,
-    "y": 140.9347667804068,
-    "zoom": 0.8705505632961245
+    "x": 145.7375926132304,
+    "y": 89.72149680050074,
+    "zoom": 0.8088813483617394
   },
   "inputs": {}
 }
