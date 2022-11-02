@@ -21,7 +21,7 @@ inputs:
     description: pixel size (in meters)
     type: int
     example: 1000
- habitat type:
+ habitat_type:
     label: Habitat type
     description:  type of habitat c("terrestrial", "marine", "partial"), by default is c("terrestrial")."partial" is a protected area or OECM is that partially within the marine environment and partially within the terrestrial (or freshwater) environments
     type: text
