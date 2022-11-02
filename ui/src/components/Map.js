@@ -16,42 +16,95 @@ const scale = chroma.scale([
   "#8B0000",
 ]);
 
+function minMax2d(array2d) {
+  var min = Number.MAX_VALUE;
+  var max = Number.MIN_VALUE;
+  array2d.forEach(array1d => {
+    array1d.forEach(v => {
+      min = Math.min(v, min)
+      max = Math.max(v, max)
+    })
+  });
+
+  return { min, max };
+}
+
+function standardRange({ min, max }) {
+  console.log("Range in thumbnail:", min, max)
+  if (min < 0) { // probably a something like [-1,1], [-256,256], etc.
+    // This is slightly inexact because normally singed range should be like [-256,255], but is good enough for visualisation purpose.
+    let maxAbs = Math.max(-min, max)
+    let power = 1;
+    while (power < maxAbs)
+      power *= 2;
+
+    console.log("Estimated range:", -power, power)
+    return { min: -power, max: power }
+
+  } else { // probably something like [0,1], [0,255], etc.
+    let power = 1;
+    while (power - 1 < max)
+      power *= 2;
+
+    power -= 1
+    console.log("Estimated range:", 0, power)
+    return { min: 0, max: power }
+  }
+}
+// Tests
+// standardRange({ min: -0.1, max: 0.5 })
+// standardRange({ min: -1, max: 1 })
+// standardRange({ min: -1.1, max: 0.5 })
+// standardRange({ min: -0.1, max: 1.5 })
+// standardRange({ min: -100, max: 120 })
+// standardRange({ min: 0, max: 0.9 })
+// standardRange({ min: 2, max: 200 })
+
 function COGLayer({ url, range }) {
   const rasterRef = useRef()
   const map = useMap()
 
   // UseEffect to execute code after map div is inserted
   useEffect(() => {
-    if(!map || !range || !url)
+    if (!map || !url)
       return
 
-    parseGeoraster(window.location.origin + url).then((georaster) => {
+    const fullUrl = window.location.origin + url
+    parseGeoraster(fullUrl).then((georaster) => {
       if (georaster) {
         rasterRef.current = georaster
 
-        // Uncomment to debug values in the geotiff
-        /*const options = { left: 0, top: 0, right: 4000, bottom: 4000, width: 10, height: 10 };
+        // To get an idea of min and max, reduce the whole image to 100x100
+        const options = { left: 0, top: 0, right: georaster.width, bottom: georaster.height, width: 1000, height: 1000 };
+        
         georaster.getValues(options).then(values => {
-          console.log("clipped values are", values);
-        });*/
+          var colorTransform
+          if (range) {
+            console.log("Using prescribed range", range)
+            colorTransform = scale.domain([range[0], range[1]])
+          } else {
+            // Accessing index 0 since the 2d array is in another array, for some reason...
+            const range = standardRange(minMax2d(values[0]))
+            colorTransform = scale.domain([range.min, range.max])
+          }
 
-        const colorTransform = scale.domain([range[0], range[1]])
-
-        const layer = new GeoRasterLayer({
-          attribution: "Planet",
-          type: "coglayer",
-          georaster: georaster,
-          debugLevel: 0,
-          resolution: 128,
-          pixelValuesToColorFn: (values) => values[0] ? colorTransform(values[0]).hex() : "#ffffff00"
-        });
-        layer.addTo(map)
-        map.fitBounds(layer.getBounds());
+          const layer = new GeoRasterLayer({
+            attribution: "Planet",
+            type: "coglayer",
+            georaster: georaster,
+            debugLevel: 0,
+            opacity: 0.7,
+            resolution: 128,
+            pixelValuesToColorFn: (values) => values[0] ? colorTransform(values[0]).hex() : "#ffffff00"
+          });
+          layer.addTo(map)
+          map.fitBounds(layer.getBounds());
+        })
 
       } else {
         console.error("Failed to fetch raster")
       }
-    });
+    })
 
     return () => {
       if (rasterRef.current) {
