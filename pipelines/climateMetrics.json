@@ -5,7 +5,7 @@
       "type": "io",
       "position": {
         "x": 290,
-        "y": 81.5
+        "y": 120.5
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateVelocity.yml"
@@ -124,7 +124,7 @@
       "type": "constant",
       "position": {
         "x": 70,
-        "y": 274
+        "y": 314
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -142,7 +142,7 @@
       "type": "constant",
       "position": {
         "x": 0,
-        "y": 312
+        "y": 352
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -153,6 +153,31 @@
           "63",
           "-57"
         ]
+      }
+    },
+    {
+      "id": "30",
+      "type": "constant",
+      "position": {
+        "x": 10,
+        "y": 274
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.25
+      }
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": 23,
+        "y": 392
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int"
       }
     }
   ],
@@ -207,6 +232,13 @@
       "id": "reactflow__edge-26-19t1"
     },
     {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-30-19t_match"
+    },
+    {
       "source": "28",
       "sourceHandle": null,
       "target": "19",
@@ -219,6 +251,13 @@
       "target": "19",
       "targetHandle": "bbox",
       "id": "reactflow__edge-29-19bbox"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "buffer_box",
+      "id": "reactflow__edge-31-19buffer_box"
     }
   ],
   "viewport": {
@@ -226,17 +265,5 @@
     "y": 0,
     "zoom": 1
   },
-  "inputs": {
-    "ClimateMetrics>climateVelocity.yml@19.t_match": {
-      "description": "Acceptable difference of mean temperature to consider that the climate is similar.",
-      "label": "threshold match",
-      "type": "float",
-      "example": 0.25
-    },
-    "ClimateMetrics>climateVelocity.yml@19.buffer_box": {
-      "description": "Buffer surronding the bounding box, in meter",
-      "label": "Buffer box",
-      "type": "int"
-    }
-  }
+  "inputs": {}
 }
