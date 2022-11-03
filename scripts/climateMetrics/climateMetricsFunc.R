@@ -49,7 +49,7 @@
     # Neighborhood Slope Algorithm, average maximum technique
       f <- matrix(1, nrow=3, ncol=3)
       x <- tmean_current_C$mean_tmean
-      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)|>`/`(raster::res(x)[1]/raster::res(x)[1])
+      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)%>%`/`(raster::res(x)[1]/raster::res(x)[1])
       
     # Truncating zero values
       spatial_tmean_current_0 <- spatial_tmean_current
@@ -100,9 +100,9 @@
       out=cbind(x,y, distance=d) 
     
     # forward_velocity
-      forward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)|>
-        raster::setExtent(tmean_current_C)|>`/`(1000)|>
-        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)|>`/`(years_dif)|>
+      forward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
+        raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
+        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
       names(forward_velocity) <- "forward"
       
@@ -145,9 +145,9 @@
       out=cbind(x,y, distance=d) 
       
       # forward_velocity
-      backward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)|>
-        raster::setExtent(tmean_current_C)|>`/`(1000)|>
-        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)|>`/`(years_dif)|>
+      backward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
+        raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
+        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
       names(backward_velocity) <- "backward"
       
