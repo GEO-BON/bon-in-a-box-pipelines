@@ -1,0 +1,242 @@
+{
+  "nodes": [
+    {
+      "id": "19",
+      "type": "io",
+      "position": {
+        "x": 290,
+        "y": 81.5
+      },
+      "data": {
+        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+      }
+    },
+    {
+      "id": "20",
+      "type": "constant",
+      "position": {
+        "x": 77,
+        "y": 0
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "local",
+        "options": [
+          "local",
+          "forward",
+          "backward"
+        ]
+      }
+    },
+    {
+      "id": "21",
+      "type": "constant",
+      "position": {
+        "x": 91,
+        "y": 38
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "ssp126",
+        "options": [
+          "ssp126",
+          "ssp370",
+          "ssp585"
+        ]
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 23,
+        "y": 76
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "1000"
+      }
+    },
+    {
+      "id": "23",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 116
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "24",
+      "type": "constant",
+      "position": {
+        "x": 90,
+        "y": 156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mean",
+        "options": [
+          "min",
+          "max",
+          "mean",
+          "median",
+          "first"
+        ]
+      }
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 194
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1981-01-01"
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 234
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1990-12-31"
+      }
+    },
+    {
+      "id": "28",
+      "type": "constant",
+      "position": {
+        "x": 70,
+        "y": 274
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "2041-2070",
+        "options": [
+          "2011-2040",
+          "2041-2070",
+          "2071-2100"
+        ]
+      }
+    },
+    {
+      "id": "29",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 312
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          "-80",
+          "45",
+          "63",
+          "-57"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "metric",
+      "id": "reactflow__edge-20-19metric"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-21-19rcp"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-22-19spatial_res"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-23-19srs_cube"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-24-19aggregation"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-25-19t0"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-26-19t1"
+    },
+    {
+      "source": "28",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-28-19time_span"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-29-19bbox"
+    }
+  ],
+  "viewport": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "inputs": {
+    "ClimateMetrics>climateVelocity.yml@19.t_match": {
+      "description": "Acceptable difference of mean temperature to consider that the climate is similar.",
+      "label": "threshold match",
+      "type": "float",
+      "example": 0.25
+    },
+    "ClimateMetrics>climateVelocity.yml@19.buffer_box": {
+      "description": "Buffer surronding the bounding box, in meter",
+      "label": "Buffer box",
+      "type": "int"
+    }
+  }
+}
