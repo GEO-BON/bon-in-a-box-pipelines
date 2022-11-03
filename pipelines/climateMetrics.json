@@ -180,6 +180,28 @@
         "type": "int",
         "value": "1"
       }
+    },
+    {
+      "id": "32",
+      "type": "output",
+      "position": {
+        "x": 880.28125,
+        "y": 154.3333282470703
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "33",
+      "type": "output",
+      "position": {
+        "x": 973.28125,
+        "y": 244.3333282470703
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -259,6 +281,20 @@
       "target": "19",
       "targetHandle": "buffer_box",
       "id": "reactflow__edge-31-19buffer_box"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "output_tif",
+      "target": "32",
+      "targetHandle": null,
+      "id": "reactflow__edge-19output_tif-32"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "metric",
+      "target": "33",
+      "targetHandle": null,
+      "id": "reactflow__edge-19metric-33"
     }
   ],
   "viewport": {
