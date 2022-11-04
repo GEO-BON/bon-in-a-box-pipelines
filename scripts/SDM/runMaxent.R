@@ -75,18 +75,15 @@ sdm_runs <- sdms[["pred_runs"]]
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
 runs.output <- file.path(outputFolder, "sdm_runs.tif")
 
-output <- list("predictors" = output_predictors) 
-
-
 terra::writeRaster(x = sdm_pred,
                           filename = pred.output,
                           format='COG',
-                          options=c("COMPRESS=DEFLATE"),
+                         # options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
  terra::writeRaster(x = sdm_runs,
                           filename = runs.output,
                           format='COG',
-                          options=c("COMPRESS=DEFLATE"),
+                        #  options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
 
 output <- list("sdm_pred" = pred.output,
