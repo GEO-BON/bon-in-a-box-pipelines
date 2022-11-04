@@ -70,17 +70,20 @@ sdms <- predict_maxent(presence_background,
 sdm_pred <- sdms[["pred_all"]][[1]]
 sdm_pred[sdm_pred < 0] <- 0.0001
 names(sdm_pred) <- "prediction"
-print(sdm_pred)
 sdm_runs <- sdms[["pred_runs"]]
 
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
 runs.output <- file.path(outputFolder, "sdm_runs.tif")
-raster::writeRaster(x = sdm_pred,
+
+output <- list("predictors" = output_predictors) 
+
+
+terra::writeRaster(x = sdm_pred,
                           filename = pred.output,
                           format='COG',
                           options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
- raster::writeRaster(x = sdm_runs,
+ terra::writeRaster(x = sdm_runs,
                           filename = runs.output,
                           format='COG',
                           options=c("COMPRESS=DEFLATE"),
