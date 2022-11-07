@@ -149,7 +149,7 @@ load_predictors <- function(source = "from_cube",
     
         
       }
-      output <- cube_to_raster(output, format = "terra")
+    #  output <- cube_to_raster(output, format = "terra")
       
     }
   }

@@ -31,8 +31,7 @@ print(input)
 
 
 presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE) 
-predictors <- terra::rast(input$predictors)
-
+predictors <- terra::rast(unlist(input$predictors))
 mod_tuning <- run_maxent(presence_background, 
                          with_raster = F, # can be set to F to speed up
                          algorithm = "maxent.jar",
@@ -75,16 +74,16 @@ sdm_runs <- sdms[["pred_runs"]]
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
 runs.output <- file.path(outputFolder, "sdm_runs.tif")
 
-terra::writeRaster(x = sdm_pred,
+raster::writeRaster(x = sdm_pred,
                           filename = pred.output,
                           format='COG',
-                         # options=c("COMPRESS=DEFLATE"),
+                          options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
- terra::writeRaster(x = sdm_runs,
-                          filename = runs.output,
-                          format='COG',
-                        #  options=c("COMPRESS=DEFLATE"),
-                          overwrite = TRUE)
+ #terra::writeRaster(x = sdm_runs,
+  #                        filename = runs.output,
+  #                        format='COG',
+  #                        options=c("COMPRESS=DEFLATE"),
+  #                        overwrite = TRUE)
 
 output <- list("sdm_pred" = pred.output,
   "sdm_runs" = runs.output) 
