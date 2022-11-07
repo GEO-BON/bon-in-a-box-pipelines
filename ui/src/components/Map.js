@@ -29,8 +29,7 @@ function minMax2d(array2d) {
   return { min, max };
 }
 
-function standardRange({ min, max }) {
-  console.log("Range in thumbnail:", min, max)
+function nextPowerRange({ min, max }) {
   if (min < 0) { // probably a something like [-1,1], [-256,256], etc.
     // This is slightly inexact because normally singed range should be like [-256,255], but is good enough for visualisation purpose.
     let maxAbs = Math.max(-min, max)
@@ -38,7 +37,6 @@ function standardRange({ min, max }) {
     while (power < maxAbs)
       power *= 2;
 
-    console.log("Estimated range:", -power, power)
     return { min: -power, max: power }
 
   } else { // probably something like [0,1], [0,255], etc.
@@ -47,7 +45,6 @@ function standardRange({ min, max }) {
       power *= 2;
 
     power -= 1
-    console.log("Estimated range:", 0, power)
     return { min: 0, max: power }
   }
 }
@@ -75,19 +72,9 @@ function COGLayer({ url, range }) {
         rasterRef.current = georaster
 
         // To get an idea of min and max, reduce the whole image to 100x100
-        const options = { left: 0, top: 0, right: georaster.width, bottom: georaster.height, width: 1000, height: 1000 };
-        
-        georaster.getValues(options).then(values => {
-          var colorTransform
-          if (range) {
-            console.log("Using prescribed range", range)
-            colorTransform = scale.domain([range[0], range[1]])
-          } else {
-            // Accessing index 0 since the 2d array is in another array, for some reason...
-            const range = standardRange(minMax2d(values[0]))
-            colorTransform = scale.domain([range.min, range.max])
-          }
+        const options = { left: 0, top: 0, right: georaster.width, bottom: georaster.height, width: 100, height: 100 };
 
+        const addLayer = (colorTransform) => {
           const layer = new GeoRasterLayer({
             attribution: "Planet",
             type: "coglayer",
@@ -99,7 +86,31 @@ function COGLayer({ url, range }) {
           });
           layer.addTo(map)
           map.fitBounds(layer.getBounds());
-        })
+        }
+
+        if (range) {
+          console.log("Using prescribed range", range)
+          addLayer(scale.domain([range[0], range[1]]))
+
+        } else { // Find out range that fits
+          console.log("getting thumbnail")
+          georaster.getValues(options).then(values => {
+            console.log("got thumbnail")
+
+            // Accessing index 0 since the 2d array is in another array, for some reason...
+            const thumbnailRange = minMax2d(values[0])
+            const standardRange = nextPowerRange(thumbnailRange)
+
+            // We use standard range if if holds more than hald of the thumbnail values
+            const chosenRange = thumbnailRange.max - thumbnailRange.min < (standardRange.max - standardRange.min) / 2
+              ? { min: Math.floor(thumbnailRange.min), max: Math.ceil(thumbnailRange.max) }
+              : standardRange
+
+            // const range = VarianceRange(values[0])
+            console.log("Using calculated range:", chosenRange)
+            addLayer(scale.domain([Math.floor(chosenRange.min), Math.ceil(chosenRange.max)]))
+          })
+        } 
 
       } else {
         console.error("Failed to fetch raster")
@@ -118,8 +129,6 @@ function COGLayer({ url, range }) {
 }
 
 export default function Map({ tiff, range }) {
-  console.log("Tiff range=",range)
-
   return <MapContainer className="map" >
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
