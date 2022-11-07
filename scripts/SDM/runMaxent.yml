@@ -66,7 +66,9 @@ outputs:
      label: predictions
      description: model predictions while trained on the whole dataset
      type: image/tiff;application=geotiff
+     range: [0, 1]
   sdm_runs:
      label: runs predictions
      description: model predictions among the several runs (if boostrapping or kfolds performed)
      type: image/tiff;application=geotiff
+     range: [0, 1]
