@@ -15,7 +15,7 @@ inputs:
     label: predictors
     description: layer names (predictors) as a list, or path to a list
     type: image/tiff;application=geotiff[]
-    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+    example: ["/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif"]
   fc:
     label: feature classes
     description: Vector of strings, feature classes for MaxEnt algorithm.

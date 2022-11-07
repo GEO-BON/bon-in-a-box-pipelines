@@ -135,7 +135,8 @@
         "value": [
           "bio1",
           "bio2",
-          "bio4"
+          "bio4",
+          "bio12"
         ]
       }
     },
@@ -149,7 +150,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "boolean",
-        "value": true
+        "value": false
       }
     },
     {
@@ -273,8 +274,7 @@
           "seas",
           "urban",
           "gbif",
-          "institutions",
-          "env"
+          "institutions"
         ]
       }
     },
@@ -468,8 +468,7 @@
       "data": {
         "type": "float[]",
         "value": [
-          "1",
-          "2"
+          "1"
         ]
       }
     },
@@ -622,6 +621,19 @@
       "data": {
         "type": "application/dbf",
         "value": ""
+      }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 483.15035994101936,
+        "y": 490.4085337837803
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.8
       }
     }
   ],
@@ -975,12 +987,19 @@
       "target": "23",
       "targetHandle": "mask",
       "id": "reactflow__edge-63-23mask"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "env_threshold",
+      "id": "reactflow__edge-64-34env_threshold"
     }
   ],
   "viewport": {
-    "x": 145.7375926132304,
-    "y": 89.72149680050074,
-    "zoom": 0.8088813483617394
+    "x": 168.98633866090975,
+    "y": -195.75280851751864,
+    "zoom": 0.8088813483617395
   },
   "inputs": {}
 }
