@@ -1,5 +1,5 @@
 script: protectedAreasProp.R
-description: This script calculates the proportion of protected areas within a pixel size
+description: This script creates a raster layer showing the proportion of protected areas (PAs)within a given pixel size
 inputs:
  country:
     label: Country
@@ -35,5 +35,8 @@ outputs:
 references:
   - text: World database on protected areas (wdpa)
     doi: https://www.protectedplanet.net/en
-  - text: wdpar, Interface to the World Database on Protected Areas (Fetch and clean data from the wdpa)
-    doi: https://cran.r-project.org/web/packages/wdpar/vignettes/wdpar.html and vignette (https://cran.r-project.org/web/packages/wdpar/vignettes/wdpar.html))
+  - text: wdpar R package, it is a interface to the World Database on Protected Areas (Fetch and clean data from the wdpa)
+    doi: https://cran.r-project.org/web/packages/wdpar/vignettes/wdpar.html.
+         vignette (https://cran.r-project.org/web/packages/wdpar/vignettes/wdpar.html).
+         "Hanson JO (2022). wdpar, Interface to the World Database on Protected Areas. R package version 1.3.3, https://CRAN.R-project.org/package=wdpar; UNEP-WCMC, IUCN (2022). Protected Planet, The World Database on Protected Areas (WDPA). https://www.protectedplanet.net/en; UNEP-WCMC, IUCN (2022). Protected Planet, The world database on other effective area-based conservation measures. https://www.protectedplanet.net/en."
+  - text: perpr R package to augment data cleaning procedures (available at <https://github.com/dickoa/prepr>).
