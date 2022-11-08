@@ -100,6 +100,6 @@ for (i in names(predictors)) {
 print(list.files(outputFolder, pattern="*.tif"))
 file.rename(paste(outputFolder, list.files(outputFolder, pattern="*.tif"),sep="/"), paste(outputFolder, paste0(names(predictors), ".tif"),sep="/"))
 
-output <- list("predictors" = list(paste0(file.path(outputFolder, names(predictors)), ".tif"))) 
+output <- list("predictors" = paste0(file.path(outputFolder, names(predictors)), ".tif"))
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
