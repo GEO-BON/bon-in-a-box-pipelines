@@ -1,16 +1,12 @@
 
-
-
 # Calculating proportion of Protected Areas (polygons) within a raster pixel (e.g., 1000m)
 
 # world database on protected areas (wdpa) source: https://www.protectedplanet.net/en
 
-
-# Packages
-
-packages <- c("sf", "wdpar", "terra", "exactextractr", "dplyr", "raster", "rjson")
+packages <- c("sf", "wdpar", "terra", "exactextractr", "dplyr", "raster", "rjson", "Rcpp", "remotes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+
 
 # libraries
 library("rjson")
@@ -20,8 +16,17 @@ library("terra")
 library("exactextractr")
 library("dplyr")
 library("raster")
+library("Rcpp")
+
+library("remotes")
+
+remotes::install_github("dickoa/prepr")
+library("prepr")
+
 options(timeout = max(60000000, getOption("timeout")))
 
+
+file.path(R.home("bin"), "R")
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -41,7 +46,7 @@ bbox <- st_bbox(c(xmin = input$bbox[1], xmax = input$bbox[2],
                     ymax = input$bbox[3], ymin = input$bbox[4]), crs = st_crs(input$crs))
 
 
-print("This script creates a raster layer showing the proprotion of protected areas within a given pixel size...")
+print("This script creates a raster layer showing the proportion of protected areas (PAs) within a given pixel size...")
 
 tif <- protected_areas(country = input$country,
                        bbox = bbox,
@@ -52,7 +57,7 @@ tif <- protected_areas(country = input$country,
 
 
 
-output_tif <- file.path(outputFolder, "Protected_areas_prop.tif")
+output_tif <- file.path(outputFolder, paste0("Protected_areas_prop.tif", input$country))
 raster::writeRaster(x = tif,
                     output_tif,
                     overwrite = TRUE,
@@ -61,7 +66,6 @@ raster::writeRaster(x = tif,
 )
 
 
-print("PAs propotion saved.")
 
 
 
