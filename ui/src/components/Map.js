@@ -49,13 +49,13 @@ function nextPowerRange({ min, max }) {
   }
 }
 // Tests
-// standardRange({ min: -0.1, max: 0.5 })
-// standardRange({ min: -1, max: 1 })
-// standardRange({ min: -1.1, max: 0.5 })
-// standardRange({ min: -0.1, max: 1.5 })
-// standardRange({ min: -100, max: 120 })
-// standardRange({ min: 0, max: 0.9 })
-// standardRange({ min: 2, max: 200 })
+// console.log(standardRange({ min: -0.1, max: 0.5 }))
+// console.log(standardRange({ min: -1, max: 1 }))
+// console.log(standardRange({ min: -1.1, max: 0.5 }))
+// console.log(standardRange({ min: -0.1, max: 1.5 }))
+// console.log(standardRange({ min: -100, max: 120 }))
+// console.log(standardRange({ min: 0, max: 0.9 }))
+// console.log(standardRange({ min: 2, max: 200 }))
 
 function COGLayer({ url, range }) {
   const rasterRef = useRef()
@@ -93,9 +93,7 @@ function COGLayer({ url, range }) {
           addLayer(scale.domain([range[0], range[1]]))
 
         } else { // Find out range that fits
-          console.log("getting thumbnail")
           georaster.getValues(options).then(values => {
-            console.log("got thumbnail")
 
             // Accessing index 0 since the 2d array is in another array, for some reason...
             const thumbnailRange = minMax2d(values[0])
