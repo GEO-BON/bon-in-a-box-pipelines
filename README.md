@@ -121,7 +121,7 @@ The following primitive types are accepted:
 | text, text[]                   | Plain text                   |
 | (any unknown type)             | Plain text                   |
 
-<a name="io1"></a><sup>1</sup> When used as an output, `image/tiff;application=geotiff` type require an additionnal `range` attribute to be added with the min and max values that the tiff should hold. This will be used for display purposes.
+<a name="io1"></a><sup>1</sup> When used as an output, `image/tiff;application=geotiff` type allows an additionnal `range` attribute to be added with the min and max values that the tiff should hold. This will be used for display purposes.
 ```yml
 map:
   label: My map
@@ -131,7 +131,7 @@ map:
   example: https://example.com/mytiff.tif
 ```
 
-<a name="io2"></a><sup>2</sup> `options` type require an additionnal `options` attribute to be added with the available options.
+<a name="io2"></a><sup>2</sup> `options` type requires an additionnal `options` attribute to be added with the available options.
 ```yml
 options_example:
   label: Options example
