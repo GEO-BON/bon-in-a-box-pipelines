@@ -4,9 +4,9 @@ import GeoRasterLayer from "georaster-layer-for-leaflet";
 import chroma from "chroma-js";
 import { MapContainer, TileLayer, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
+import {createRangeLegendControl} from "./Legend"
 
-
-const scale = chroma.scale([
+const scaleColors = [
   "#E5E5E5",
   "#36648B",
   "#5CACEE",
@@ -14,7 +14,8 @@ const scale = chroma.scale([
   "#FFD700",
   "#FF0000",
   "#8B0000",
-]);
+]
+const scale = chroma.scale(scaleColors);
 
 function minMax2d(array2d) {
   var min = Number.MAX_VALUE;
@@ -66,16 +67,21 @@ function COGLayer({ url, range }) {
     if (!map || !url)
       return
 
+    let layer
+    let legend
+
     const fullUrl = window.location.origin + url
     parseGeoraster(fullUrl).then((georaster) => {
       if (georaster) {
-        rasterRef.current = georaster
+        rasterRef.current = georaster 
 
         // To get an idea of min and max, reduce the whole image to 100x100
         const options = { left: 0, top: 0, right: georaster.width, bottom: georaster.height, width: 100, height: 100 };
 
-        const addLayer = (colorTransform) => {
-          const layer = new GeoRasterLayer({
+        const addLayer = (min, max) => {
+          const colorTransform = scale.domain([min, max])
+
+          layer = new GeoRasterLayer({
             attribution: "Planet",
             type: "coglayer",
             georaster: georaster,
@@ -86,11 +92,14 @@ function COGLayer({ url, range }) {
           });
           layer.addTo(map)
           map.fitBounds(layer.getBounds());
+
+          legend = createRangeLegendControl(min, max, scaleColors)
+          legend.addTo(map);
         }
 
         if (range) {
           console.log("Using prescribed range", range)
-          addLayer(scale.domain([range[0], range[1]]))
+          addLayer(range[0], range[1])
 
         } else { // Find out range that fits
           georaster.getValues(options).then(values => {
@@ -106,7 +115,7 @@ function COGLayer({ url, range }) {
 
             // const range = VarianceRange(values[0])
             console.log("Using calculated range:", chosenRange)
-            addLayer(scale.domain([Math.floor(chosenRange.min), Math.ceil(chosenRange.max)]))
+            addLayer(Math.floor(chosenRange.min), Math.ceil(chosenRange.max))
           })
         } 
 
@@ -116,10 +125,11 @@ function COGLayer({ url, range }) {
     })
 
     return () => {
-      if (rasterRef.current) {
-        map.removeLayer(rasterRef.current)
-        rasterRef.current = null
-      }
+      if (layer)
+        layer.remove()
+
+      if(legend)
+        legend.remove()
     };
   }, [map, range, url]);
 
