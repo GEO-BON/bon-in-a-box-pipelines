@@ -96,7 +96,6 @@ protected_areas <- function(country = "Canada",
       print("Cropping raster template using the area of interest and project it ...")
       r_template <- terra::crop(r1, study_area_wgs84)%>%
       terra::project(res=pixel_size, mask=T,align = T, gdal=T, 
-                     #"+proj=aea +lat_0=44 +lon_0=-68.5 +lat_1=60 +lat_2=46 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs",
                      crs,
                      method="near")
       
@@ -106,7 +105,8 @@ protected_areas <- function(country = "Canada",
       
       pas_dissolved <- sf::st_union(pa_data$geometry, by_feature = FALSE)
     
-   
+      
+    
     # Calculate the fraction of raster cells covered by a polygon
       print("Calculating the fraction of raster cells covered by a protected area polygon ....") 
       

@@ -26,8 +26,6 @@ library("prepr")
 options(timeout = max(60000000, getOption("timeout")))
 
 
-file.path(R.home("bin"), "R")
-
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
@@ -57,7 +55,7 @@ tif <- protected_areas(country = input$country,
 
 
 
-output_tif <- file.path(outputFolder, paste0("Protected_areas_prop.tif", input$country))
+output_tif <- file.path(outputFolder, "Protected_areas_prop.tif")
 raster::writeRaster(x = tif,
                     output_tif,
                     overwrite = TRUE,
