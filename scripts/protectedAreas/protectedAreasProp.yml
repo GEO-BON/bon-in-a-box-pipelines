@@ -8,7 +8,7 @@ inputs:
     example: Canada
  bbox:
     label: bbox coordinates
-    description: coordinates of the bbox, in the order xmin, xmax, ymax, ymin.
+    description: coordinates of the bbox, in the order xmin, ymin, xmax, ymax.
     type: float[]
     example: [-79.76281,  44.99137, -57.10549, 62.58277]
  crs: 
@@ -18,7 +18,7 @@ inputs:
     example: EPSG:6623
  pixel_size:
     label: Spatial resolution
-    description: pixel size (in meters)
+    description: Pixel size (in meters)
     type: int
     example: 1000
  habitat_type:
