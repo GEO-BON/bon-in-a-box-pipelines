@@ -23,14 +23,7 @@ abstract class Step(
                 return // this has already been executed! (success or failure)
 
             try {
-                val resolvedInputs = mutableMapOf<String, Any>()
-                coroutineScope {
-                    inputs.forEach {
-                        // This can happen in parallel coroutines
-                        launch { resolvedInputs[it.key] = it.value.pull() }
-                    }
-                }
-    
+                val resolvedInputs = resolveInputs()
                 val results = execute(resolvedInputs)
                 results.forEach { (key, value) ->
                     // Undocumented outputs will simply be discarded by the "?"
@@ -45,6 +38,17 @@ abstract class Step(
     }
 
     protected abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
+
+    protected suspend fun resolveInputs(): Map<String, Any> {
+        val resolvedInputs = mutableMapOf<String, Any>()
+        coroutineScope {
+            inputs.forEach {
+                // This can happen in parallel coroutines
+                launch { resolvedInputs[it.key] = it.value.pull() }
+            }
+        }
+        return resolvedInputs
+    }
 
     open fun validateGraph():String {
         if(validated)
