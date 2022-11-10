@@ -3,7 +3,10 @@ package org.geobon.pipeline.teststeps
 import kotlinx.coroutines.delay
 import org.geobon.pipeline.ConstantPipe
 
-class DelayPipe(private val delay: Long, value: String, private val finishLine: MutableList<String>? = null) :
+/**
+ * Records the order in which pull results crossed the finish line.
+ */
+class RecordPipe(value: String, private val finishLine: MutableList<String>?, private val delay: Long = 0) :
     ConstantPipe("text/plain", value) {
 
     override suspend fun pull(): Any {
