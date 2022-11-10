@@ -10,7 +10,7 @@ options(timeout = max(60000000, getOption("timeout")))
 
 ## Install required packages
 packages <- c("devtools","rlang","dplyr","tidyr","ggplot2","remotes","purrr","tmap","raster","ggsci","readr",
-              "rgbif","rgdal","sf","httr","jsonlite","landscapemetrics","rjson","stars",
+              "rgbif","rgdal","sf","httr","jsonlite","landscapemetrics","rjson","stars","geodata",
               "stacatalogue","gdalcubes","rstac","RColorBrewer","RCurl","tmaptools","gdalUtilities")
 
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git", update="never")
@@ -83,19 +83,21 @@ df_IUCN_sheet <- do.call(rbind,fromJSON(js_IUCN_sheet)$result) |> as.data.frame(
 class <- stringr::str_to_sentence(df_IUCN_sheet$class) # taxonomic group to choose data source to download maps for IUCN
 order <- stringr::str_to_sentence(df_IUCN_sheet$order) # taxonomic group to choose data source to download maps for MOL
 
-print(class)
-
 #Get range map #filter by expert source missing
-if(expert_source=="IUCN"){
-  get_iucn_range_map(species_name=sp)
-  sf_range_map <- st_read(paste0(sp,'_range.gpkg'))
-}else if (expert_source=="MOL"){
-  get_mol_range_map(species_name=sp)
-  sf_range_map <- st_read(paste0(sp,'_range.gpkg'))
-} else {
-  get_qc_range_map(species_name=sp)
-  sf_range_map <- st_read(paste0(sp,'_range.gpkg'))
-}
+source_range_maps <- data.frame(expert_source=expert_source) |> 
+  mutate(function_name=case_when(
+    expert_source=="IUCN"~ "get_iucn_range_map",
+    expert_source=="MOL"~ "get_mol_range_map",
+    expert_source=="QC" ~ "get_qc_range_map"), 
+    species_name= case_when(
+      expert_source=="IUCN"~ sp,
+      expert_source=="MOL"~ paste0(sp,"_mol"),
+      expert_source=="QC" ~ paste0(sp,"_qc")
+    ))
+
+with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
+sf_range_map <- st_read(paste0(source_range_maps$species_name,'_range.gpkg'))
+
 
 
 #get bounding box cropped by country if needed
