@@ -1,0 +1,36 @@
+script: PullLayersById.kt
+description:
+inputs:
+  with_ids:
+    label: With IDs
+    description: Config containing
+    type: text
+    example:
+      "layer, current, change
+      firstId, 0.2, 0.5
+      secondId, 0.5, 0.2
+      thirdId, 0.3, 0.3"
+
+  identified_layers:
+    label: id+layer
+    description: A list of objects containing an id (text) and a layer (image/tiff;application=geotiff)
+    type: object[]
+    fields:
+      - id
+      - layer
+    example: [
+      { id: "firstId", layer: "path/to/my/layer1.tiff" },
+      { id: "secondId", layer: "path/to/my/layer2.tiff" },
+      { id: "thirdId", layer: "path/to/my/layer3.tiff" }
+    ]
+
+outputs:
+  with_layers:
+    label: With layers
+    description:
+    type: text
+    example:
+      "layer, current, change
+      firstId, 0.2, 0.5
+      secondId, 0.5, 0.2
+      thirdId, 0.3, 0.3"

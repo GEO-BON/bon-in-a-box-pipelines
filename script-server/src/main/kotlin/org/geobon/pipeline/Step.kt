@@ -39,7 +39,7 @@ abstract class Step(
 
     protected abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
 
-    protected suspend fun resolveInputs(): Map<String, Any> {
+    protected open suspend fun resolveInputs(): Map<String, Any> {
         val resolvedInputs = mutableMapOf<String, Any>()
         coroutineScope {
             inputs.forEach {
