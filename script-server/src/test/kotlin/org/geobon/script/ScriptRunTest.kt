@@ -24,7 +24,7 @@ internal class ScriptRunTest {
 
     @AfterEach
     fun removeOutputFolder() {
-        assertTrue(File(System.getenv("OUTPUT_LOCATION")).deleteRecursively())
+        assertTrue(outputRoot.deleteRecursively())
     }
 
 
