@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import kotlin.test.assertContains
+import kotlin.test.assertFailsWith
 
 @ExperimentalCoroutinesApi
 internal class PullLayersByIdTest {
@@ -27,19 +28,19 @@ internal class PullLayersByIdTest {
         finishLine = mutableListOf()
 
         step = PullLayersById(mutableMapOf(
-            "identified_layers" to AggregatePipe(listOf(
+            PullLayersById.IN_IDENTIFIED_LAYERS to AggregatePipe(listOf(
                 AssignId(mutableMapOf(
-                    "id" to ConstantPipe("text", "first"),
-                    "layer" to RecordPipe("1.tiff", finishLine, type = "image/tiff;application=geotiff")
-                )).outputs["identified_layer"]!!,
+                    AssignId.IN_ID to ConstantPipe("text", "first"),
+                    AssignId.IN_LAYER to RecordPipe("1.tiff", finishLine, type = "image/tiff;application=geotiff")
+                )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!,
                 AssignId(mutableMapOf(
-                    "id" to ConstantPipe("text", "second"),
-                    "layer" to RecordPipe("2.tiff", finishLine, type = "image/tiff;application=geotiff")
-                )).outputs["identified_layer"]!!,
+                    AssignId.IN_ID to ConstantPipe("text", "second"),
+                    AssignId.IN_LAYER to RecordPipe("2.tiff", finishLine, type = "image/tiff;application=geotiff")
+                )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!,
                 AssignId(mutableMapOf(
-                    "id" to ConstantPipe("text", "third"),
-                    "layer" to RecordPipe("3.tiff", finishLine, type = "image/tiff;application=geotiff")
-                )).outputs["identified_layer"]!!
+                    AssignId.IN_ID to ConstantPipe("text", "third"),
+                    AssignId.IN_LAYER to RecordPipe("3.tiff", finishLine, type = "image/tiff;application=geotiff")
+                )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!
             ))
         ))
     }
@@ -52,7 +53,7 @@ internal class PullLayersByIdTest {
 
     @Test
     fun whenPullingAllLayer_thenAllLayersPulled() = runTest {
-        step.inputs["with_ids"] = ConstantPipe("text", """
+        step.inputs[PullLayersById.IN_WITH_IDS] = ConstantPipe("text", """
             layer, current, change
             first, 0.2, 0.5
             second, 0.5, 0.2
@@ -69,7 +70,7 @@ internal class PullLayersByIdTest {
             1.tiff, 0.2, 0.5
             2.tiff, 0.5, 0.2
             3.tiff, 0.3, 0.3
-        """.trimIndent(), step.outputs["with_layers"]!!.pull())
+        """.trimIndent(), step.outputs[PullLayersById.OUT_WITH_LAYERS]!!.pull())
 
         assertContains(finishLine, "1.tiff")
         assertContains(finishLine, "2.tiff")

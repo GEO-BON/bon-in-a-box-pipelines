@@ -7,11 +7,20 @@ class AssignId(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(File(System.getenv("SCRIPT_LOCATION"),"pipeline/AssignId.yml").readText(), inputs = inputs) {
 
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
-        val obj = JSONObject(mapOf(
-            "id" to resolvedInputs["id"],
-            "layer" to resolvedInputs["layer"]
-        ))
+        return mapOf(OUT_IDENTIFIED_LAYER to JSONObject(mapOf(
+            OUT_IDENTIFIED_LAYER_ID to resolvedInputs[IN_ID],
+            OUT_IDENTIFIED_LAYER_LAYER to resolvedInputs[IN_LAYER]
+        )))
+    }
 
-        return mapOf("identified_layer" to obj)
+    companion object {
+        // Inputs
+        val IN_ID = "id"
+        val IN_LAYER = "layer"
+
+        // Outputs
+        val OUT_IDENTIFIED_LAYER = "identified_layer"
+        val OUT_IDENTIFIED_LAYER_ID = "id"
+        val OUT_IDENTIFIED_LAYER_LAYER = "layer"
     }
 }
