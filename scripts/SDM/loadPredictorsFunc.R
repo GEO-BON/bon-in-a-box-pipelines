@@ -139,14 +139,17 @@ load_predictors <- function(source = "from_cube",
                                              srs.cube = proj,
                                              bbox = bbox))
       output <- do.call(stacatalogue::load_cube, cube_args_nc)
-      output <- cube_to_raster(output, format = "terra")
+      #
       
       if(!is.null(mask)) {
         
-        output <- fast_crop(output, mask)
+      
+     output <- gdalcubes::filter_geom(cube,  sf::st_geometry(sf::st_as_sf(mask)), srs=proj)
+        
+    
         
       }
-      
+    #  output <- cube_to_raster(output, format = "terra")
       
     }
   }

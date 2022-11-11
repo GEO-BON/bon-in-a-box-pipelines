@@ -76,6 +76,11 @@ outputs:
         type: list
         dependencies:
           type: options
+      range:
+        required: false
+        type: list
+        dependencies:
+          type: image/tiff;application=geotiff
       example:
         required: false
         nullable: true

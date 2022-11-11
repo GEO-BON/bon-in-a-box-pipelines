@@ -93,6 +93,11 @@ InfoInputsValue.prototype['type'] = undefined;
 InfoInputsValue.prototype['options'] = undefined;
 
 /**
+ * @member {Array.<Number>} range
+ */
+InfoInputsValue.prototype['range'] = undefined;
+
+/**
  * @member {module:model/InfoInputsValueExample} example
  */
 InfoInputsValue.prototype['example'] = undefined;
