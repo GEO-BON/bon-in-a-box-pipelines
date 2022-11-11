@@ -5,9 +5,10 @@ inputs:
     label: extent
     description: shapefile, representing a study extent
     type: application/dbf
-    example: "/scripts/SDM/shpToBbox_extent.shp"
+    example: "/scripts/extent/shpToBbox_extent.shp"
 outputs:
   bbox:
     label: bbox
-    description: dataframe, containing the coordinates of the bbox
-    type: text/tab-separated-values
+    description: array containing the coordinates of the bbox (xmin, ymin, xmax, ymax)
+    type: float[]
+    example: [-2316297,-1971146,1015207,1511916]
