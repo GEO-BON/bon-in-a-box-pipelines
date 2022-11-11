@@ -30,7 +30,7 @@ inputs:
   proj:
     label: projection system
     description: String, projection system of the coordinates in bbox
-    type: string
+    type: text
     example: "EPSG:6623"
   occurrence_status:
     label: occurrence status

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import RenderedMap from './RenderedMap';
+import Map from './Map';
 import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
-import { FoldableOutput, RenderContext, createContext } from "./FoldableOutput";
+import { FoldableOutputWithContext, RenderContext, createContext, FoldableOutput } from "./FoldableOutput";
 
 export function Result({data, metadata, logs}) {
     const [activeRenderer, setActiveRenderer] = useState({});
@@ -21,15 +21,28 @@ export function Result({data, metadata, logs}) {
     return null;
 }
 
+/**
+ * Match many MIME type possibilities for geotiffs
+ * Official IANA format: image/tiff; application=geotiff
+ * Others out there: image/geotiff, image/tiff;subtype=geotiff, image/geo+tiff
+ * See https://github.com/opengeospatial/geotiff/issues/34
+ * Plus covering a common typo when second F omitted
+ * 
+ * @param {string} mime subtype 
+ * @return True if subtype image is a geotiff
+ */
+function isGeotiff(subtype) {
+    return subtype && subtype.includes("tif") && subtype.includes("geo")
+}
+
 function RenderedFiles({files, metadata}) {
 
-    function renderWithMime(key, content) {
-        let mime = ""
+    function renderContent(outputKey, content) {
         let error = ""
         if (metadata && metadata.outputs) {
-            if (metadata.outputs[key]) {
-                if (metadata.outputs[key].type) {
-                    mime = metadata.outputs[key].type;
+            if (metadata.outputs[outputKey]) {
+                if (metadata.outputs[outputKey].type) { // Got our mime type!
+                    return renderWithMime(outputKey, content, metadata.outputs[outputKey].type)
                 } else {
                     error = "Missing mime type in output description."
                 }
@@ -40,22 +53,52 @@ function RenderedFiles({files, metadata}) {
             error = "YML description file for this script specifies no output."
         }
 
-        // Special case for arrays
-        if(mime.endsWith('[]') && Array.isArray(content))
-            return <p>{content.join(', ')}</p>
+        return <>
+            <p className="error">{error}</p>
+            {// Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
+                isRelativeLink(content) ? (
+                    // Match for tiff, TIFF, tif or TIF extensions
+                    content.search(/.tiff?$/i) !== -1 ? (
+                        <Map tiff={content} />
+                    ) : (
+                        <img src={content} alt={outputKey} />
+                    )
+                ) : ( // Plain text or numeric value
+                    <p>{content}</p>
+                )}
+        </>;
+    }
 
+    function renderWithMime(outputKey, content, mime) {
         let [type, subtype] = mime.split('/');
+
+        // Special case for arrays. Recursive call to render non-trivial types.
+        if (mime.endsWith('[]') && Array.isArray(content)) {
+            if (type === "image"
+                || mime.startsWith("text/csv")
+                || mime.startsWith("text/tab-separated-values")) {
+
+                let splitMime = mime.slice(0, -2);
+                return content.map((splitContent, i) => {
+                    return <FoldableOutput key={i}
+                        inline={<a href={splitContent} target="_blank" rel="noreferrer">{splitContent}</a>}
+                        className="foldableOutput">
+                        {renderWithMime(outputKey, splitContent, splitMime)}
+                    </FoldableOutput>
+                })
+
+            } else { // Trivial types are printed with a comma
+                return <p>{content.join(', ')}</p>
+            }
+        }
+
+        
         switch (type) {
             case "image":
-                // Match many MIME type possibilities for geotiffs
-                // Official IANA format: image/tiff; application=geotiff
-                // Others out there: image/geotiff, image/tiff;subtype=geotiff, image/geo+tiff
-                // See https://github.com/opengeospatial/geotiff/issues/34
-                // Plus covering a common typo when second F omitted
-                if (subtype && subtype.includes("tif") && subtype.includes("geo")) {
-                    return <RenderedMap tiff={content} />;
+                if (isGeotiff(subtype)) {
+                    return <Map tiff={content} range={metadata.outputs[outputKey].range} />;
                 }
-                return <img src={content} alt={key} />;
+                return <img src={content} alt={outputKey} />;
 
             case "text":
                 if (subtype === "csv")
@@ -64,22 +107,6 @@ function RenderedFiles({files, metadata}) {
                     return <RenderedCSV url={content} delimiter="&#9;" />;
                 else
                     return <p>{content}</p>;
-
-            case "":
-                return <>
-                    <p className="error">{error}</p>
-                    {// Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
-                        isRelativeLink(content) ? (
-                            // Match for tiff, TIFF, tif or TIF extensions
-                            content.search(/.tiff?$/i) !== -1 ? (
-                                <RenderedMap tiff={content} />
-                            ) : (
-                                <img src={content} alt={key} />
-                            )
-                        ) : ( // Plain text or numeric value
-                            <p>{content}</p>
-                        )}
-                </>;
 
             default:
                 return <p>{content}</p>;
@@ -113,12 +140,12 @@ function RenderedFiles({files, metadata}) {
 
             let isLink = isRelativeLink(value)
             return (
-                <FoldableOutput key={key} title={title} description={description} componentId={key}
+                <FoldableOutputWithContext key={key} title={title} description={description} componentId={key}
                     inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
                     inlineCollapsed={!isLink && renderInline(value)}
                     className="foldableOutput">
-                    {renderWithMime(key, value)}
-                </FoldableOutput>
+                    {renderContent(key, value)}
+                </FoldableOutputWithContext>
             );
         });
     } else {
@@ -131,9 +158,9 @@ function RenderedLogs({logs}) {
 
     if (logs) {
         return (
-            <FoldableOutput title="Logs" componentId={myId} className="foldableOutput">
+            <FoldableOutputWithContext title="Logs" componentId={myId} className="foldableOutput">
                 <pre>{logs}</pre>
-            </FoldableOutput>
+            </FoldableOutputWithContext>
         );
     }
     return null;

@@ -35,6 +35,7 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
+              "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
               "example" : "file.csv"
@@ -89,6 +90,7 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
+              "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
               "example" : "file.csv"
