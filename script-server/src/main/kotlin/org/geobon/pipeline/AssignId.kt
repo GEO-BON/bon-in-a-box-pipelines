@@ -1,10 +1,26 @@
 package org.geobon.pipeline
 
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.io.File
 
 class AssignId(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(File(System.getenv("SCRIPT_LOCATION"),"pipeline/AssignId.yml").readText(), inputs = inputs) {
+
+    var id:String? = null
+
+    override fun validateInputsConfiguration(): String {
+        val res =  super.validateInputsConfiguration()
+
+        runBlocking {
+            launch{
+                id = inputs[IN_ID]?.pull().toString()
+            }
+        }
+
+        return res
+    }
 
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         return mapOf(OUT_IDENTIFIED_LAYER to JSONObject(mapOf(
@@ -15,12 +31,12 @@ class AssignId(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
 
     companion object {
         // Inputs
-        val IN_ID = "id"
-        val IN_LAYER = "layer"
+        const val IN_ID = "id"
+        const val IN_LAYER = "layer"
 
         // Outputs
-        val OUT_IDENTIFIED_LAYER = "identified_layer"
-        val OUT_IDENTIFIED_LAYER_ID = "id"
-        val OUT_IDENTIFIED_LAYER_LAYER = "layer"
+        const val OUT_IDENTIFIED_LAYER = "identified_layer"
+        const val OUT_IDENTIFIED_LAYER_ID = "id"
+        const val OUT_IDENTIFIED_LAYER_LAYER = "layer"
     }
 }

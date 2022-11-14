@@ -2,6 +2,7 @@ package org.geobon.pipeline.teststeps
 
 import kotlinx.coroutines.delay
 import org.geobon.pipeline.ConstantPipe
+import org.geobon.pipeline.Step
 
 /**
  * Records the order in which pull results crossed the finish line.
@@ -19,5 +20,9 @@ class RecordPipe(
 
         return super.pull()
             .also { finishLine?.add(it.toString()) }
+    }
+
+    override suspend fun pullIf(condition: (step: Step) -> Boolean): Any {
+        return pull()
     }
 }
