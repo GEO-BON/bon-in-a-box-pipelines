@@ -1,25 +1,28 @@
 package org.geobon.pipeline
 
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import org.json.JSONObject
 import java.io.File
-import org.geobon.pipeline.AssignId
 
 
 class PullLayersById(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(File(System.getenv("SCRIPT_LOCATION"), "pipeline/PullLayersById.yml").readText(), inputs = inputs) {
 
     override suspend fun resolveInputs(): Map<String, Any> {
-        val identifiedLayers = inputs[IN_IDENTIFIED_LAYERS]
-
         val resolvedInputs = mutableMapOf<String, Any>()
-        coroutineScope {
-            inputs.forEach {
-                // This can happen in parallel coroutines
-                launch { resolvedInputs[it.key] = it.value.pull() }
-            }
-        }
+
+        // Only the ids present here will need to be pulled (!! is safe since input list was validated)
+        val withIds = inputs[IN_WITH_IDS]!!.pull().toString()
+        resolvedInputs[IN_WITH_IDS] = withIds
+
+        // Pulling only if id found in above variable (!! is safe singe input list was validated)
+        resolvedInputs[IN_IDENTIFIED_LAYERS] = inputs[IN_IDENTIFIED_LAYERS]!!.pullIf { step -> 
+            if(step is AssignId) {
+                step.id?.let { withIds.contains(it) }
+                    ?: false
+
+            } else true
+        } ?: throw RuntimeException("No id was found to replace in:\n$withIds")
+   
         return resolvedInputs
     }
 
