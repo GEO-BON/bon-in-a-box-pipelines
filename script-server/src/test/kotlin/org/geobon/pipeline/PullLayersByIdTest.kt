@@ -157,5 +157,7 @@ internal class PullLayersByIdTest {
        assertFailsWith<RuntimeException>{
            step.execute()
        }
+
+       assertTrue(finishLine.isEmpty())
    }
 }
