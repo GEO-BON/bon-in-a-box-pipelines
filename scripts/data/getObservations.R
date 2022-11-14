@@ -41,6 +41,11 @@ if (input$country == "..." | length(input$country) < 2) {
   country <- input$country
 }
 
+if (input$bbox_buffer == "...") {
+  bbox_buffer <- 0
+} else {
+  bbox_buffer <- input$bbox_buffer }
+
 occurrence_status <- str_split(input$occurrence_status, " ")[[1]]
 
 # Loading data from GBIF (https://www.gbif.org/)
@@ -59,7 +64,7 @@ obs <- get_observations(database = "gbif",
                             lat = "decimal_latitude",
                             proj_from = "+proj=longlat +datum=WGS84",
                             proj_to = input$proj)
-bbox <- stacatalogue::points_to_bbox(obs_pts, buffer = input$bbox_bufer)
+bbox <- stacatalogue::points_to_bbox(obs_pts, buffer = bbox_buffer)
 bbox <-c(bbox$xmin, bbox$ymin, bbox$xmax, bbox$ymax)
 
 # Outputs
