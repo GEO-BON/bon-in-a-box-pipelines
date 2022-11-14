@@ -1,9 +1,11 @@
 script: PullLayersById.kt
 description:
+  Will pull only the layers found in with_ids. Useful to execute only part of a pipeline depending on an initial configuration.
+  To be used in conjunction with AssignId.
 inputs:
   with_ids:
     label: With IDs
-    description: Config containing
+    description: Config containing the ids. The an id will be replaced by the corresponding layer in with_layers output.
     type: text
     example:
       "layer, current, change
@@ -13,7 +15,7 @@ inputs:
 
   identified_layers:
     label: id+layer
-    description: A list of objects containing an id (text) and a layer (image/tiff;application=geotiff)
+    description: A list of objects containing an id (text) and a layer (image/tiff;application=geotiff) as produced by AssignId.
     type: object[]
     fields:
       - id
@@ -27,7 +29,7 @@ inputs:
 outputs:
   with_layers:
     label: With layers
-    description:
+    description: The initial config, where ids have been replaced by layers.
     type: text
     example:
       "layer, current, change
