@@ -7,7 +7,7 @@ using CSV
 outputFolder = ARGS[1]
 filepath = joinpath(outputFolder,"input.json")
 outputFilepath = joinpath(outputFolder,"data/")
-mkdir(outputFilepath)
+isdir(outputFilepath) || mkdir(outputFilepath)
 
 print(filepath)
 print(outputFilepath)
@@ -29,15 +29,25 @@ priority_map = geotiff(SimpleSDMPredictor, priority_map_path)
 selected_points = stack([priority_map])[:,:,1] |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
 ###################
 
-# Write out points csv
-selected_points_path = joinpath(outputFilepath, "selected_points.csv")
-CSV.write(selected_points_path, selected_points)
-
-# Write out json
-outputDict = Dict("points" => selected_points_path)
-open(joinpath(outputFolder, "output.json"),"w") do f
-    JSON.print(f, outputDict)
+# Write out as a geoJSON multipoint object
+points_string = Vector{String}(undef,size(selected_points)[1])
+for i in eachindex(selected_points)
+    x = selected_points[i][1]
+    y = selected_points[i][2]
+    points_string[i] = "[$x, $y]"
 end
 
+points_string_join = join(points_string, ",\n\t\t")
 
+json_string = ("{
+    \"type\": \"MultiPoint\",
+    \"coordinates\": [
+        $points_string_join
+    ]
+}")
 
+JSONoutputPath = joinpath(outputFolder, "output.json")
+touch(JSONoutputPath)
+file = open(JSONoutputPath, "w")
+write(file, json_string)
+close(file)
