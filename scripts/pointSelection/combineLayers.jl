@@ -1,27 +1,25 @@
-using GeoArrays: read 
 using BiodiversityObservationNetworks
 using SimpleSDMLayers
 using JSON
 using Downloads
 using GeoArrays: read 
+using DataFrames
+using CSV
 
 # Read in input arguments and json
 outputFolder = ARGS[1]
 filepath = joinpath(outputFolder,"input.json")
 outputFilepath = joinpath(outputFolder,"data/")
-mkdir(outputFilepath)
+isdir(outputFilepath) || mkdir(outputFilepath)
 
 input = JSON.parsefile(filepath)
 
 # Assign json objects to variables
-layerdata = input["layerdata"]
+print(input["layerdata"])
+layermat = CSV.read(input["layerdata"], DataFrame)
+print(layermat)
 
-#layerweights = input["layerweights"]
 targetbalance = convert(Vector{Float64}, input["targetbalance"]) # this is the same as α
-
-# hacky way to get the number of layers based on number of weights 
-nlayers = trunc(Int, length(layerdata) / (1 + length(targetbalance)))
-layermat = permutedims(reshape(layerdata, (1 + length(targetbalance)), nlayers), (2,1))
 
 #read in layers
 function get_simplesdmlayer(path)
@@ -30,10 +28,10 @@ function get_simplesdmlayer(path)
 end
 
 temppath = Downloads.download.(layermat[:, 1])
-layers = stack(get_simplesdmlayer.(temppath))
+layers = BiodiversityObservationNetworks.stack(get_simplesdmlayer.(temppath))
 
 # get weights with weights for a layer in columns 
-W = map((x) -> parse(Float64, x), layermat[:, 2:end])
+W = Matrix(layermat[:, 2:end])
 
 priority = SimpleSDMPredictor(squish(layers, convert(Array{Float64}, transpose(W)), targetbalance))
 
