@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useInterval } from '../UseInterval';
-import { isVisible } from '../utils/IsVisible';
+import { isVisible } from '../utils/isVisible';
 
 export function LogViewer({ address, autoUpdate }) {
   const [logs, setLogs] = useState("");
