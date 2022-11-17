@@ -21,6 +21,6 @@ inputs:
 outputs:
     points:
         label: points 
-        description: Csv of selected points 
-        type: text/csv
+        description: GeoJSON multipoint object of selected points
+        type: application/geo+json
         
