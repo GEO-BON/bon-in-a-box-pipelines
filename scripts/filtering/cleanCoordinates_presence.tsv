@@ -1,4 +1,4 @@
-"id"	"scientific_name"	"decimalLongitude"	"decimalLatitude"	"year"	"month"	"day"	"datasetName"	"basisOfRecord"	"created_by"
+"id"	"scientific_name"	"decimal_longitude"	"decimal_latitude"	"year"	"month"	"day"	"datasetName"	"basisOfRecord"	"created_by"
 3759312902	"Glyptemys insculpta"	-78.034556	39.488225	2022	4	14	"iNaturalist research-grade observations"	"HUMAN_OBSERVATION"	"GBIF"
 3759336078	"Glyptemys insculpta"	-72.303097	42.280758	2022	4	14	"iNaturalist research-grade observations"	"HUMAN_OBSERVATION"	"GBIF"
 3759376843	"Glyptemys insculpta"	-78.469682	39.243446	2022	4	14	"iNaturalist research-grade observations"	"HUMAN_OBSERVATION"	"GBIF"

@@ -6,12 +6,12 @@ inputs:
   url:
     label: link
     description: String, link to the file.
-    type: string 
+    type: text 
     example: "https://drive.google.com/file/d/1KKFOBKInnroe452Y7P8uu-h42QbHM6ff/view?usp=sharing"
   shp_name:
     label: shapefile name
     description: String, name of the shapefile.
-    type: string
+    type: text
     example: shape_study_area_nolakes_nad83
 outputs:
   extent:

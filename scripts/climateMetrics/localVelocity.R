@@ -136,6 +136,8 @@ tif <- climate_metrics(cube_current,
 output_tif <- file.path(outputFolder, "local_velocity.tif")
 raster::writeRaster(x = tif,
                           output_tif,
+                          format='COG',
+                          options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
 
 print("Metrics saved.")
