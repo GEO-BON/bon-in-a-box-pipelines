@@ -81,11 +81,16 @@ function ScriptIO({children, desc, setToolTip, onDoubleClick, warning}) {
   }
 
   function renderExample(example){
-    if(Array.isArray(example)) {
+    if(Array.isArray(example))
       return example.map((v, i) => renderExample(v) + (i === example.length - 1 ? "" : ", "))
-    }
 
-    return isObject(example) ? JSON.stringify(example) : example.toString()
+    if(isObject(example))
+      return JSON.stringify(example)
+
+    if(example.includes("\n"))
+      return <span style={{whiteSpace: "pre-wrap"}}>{"\n"+example.toString()}</span>
+
+    return example.toString()
   }
 
   function onMouseLeave() {
