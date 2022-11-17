@@ -103,6 +103,7 @@ Each input and output must declare a type, *in lowercase.* The following file ty
 | File type                    | MIME type to use in the yaml   | UI rendering                 |
 | ---------------------------- |------------------------------- |------------------------------|
 | CSV                          | text/csv                       | HTML table (partial content) |
+| GeoJSON                      | application/geo+json           | Plain text (Map TBD)         |
 | GeoPackage                   | application/geopackage+sqlite3 | Link                         |
 | GeoTIFF <sup>[1](#io1)</sup> | image/tiff;application=geotiff | Map widget (leaflet)         |
 | JPG                          | image/jpg                      | \<img> tag                   |
