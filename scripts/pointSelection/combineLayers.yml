@@ -6,6 +6,7 @@ inputs:
         label: Layer csv
         description: Array with layer url in the first column, and weights for each layer and target in subsequent columns. One row for each layer.
         type: text/csv
+        example: ["/path/layer.csv"]
     targetbalance:
         label: Balance between targets
         description: List of weights for each target, should sum to 1
