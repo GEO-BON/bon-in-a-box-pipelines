@@ -17,7 +17,7 @@ inputs:
     label: id+layer
     description: A list of objects containing an id (text) and a layer (image/tiff;application=geotiff) as produced by AssignId.
     type: object[]
-    fields:
+    properties:
       - id
       - layer
     example: [

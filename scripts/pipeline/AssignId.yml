@@ -17,7 +17,7 @@ outputs:
     label: id+layer
     description: An object containing the id and the layer
     type: object
-    fields:
+    properties:
       - id
       - layer
     example: { id: "myId", layer: "path/to/my/layer.tiff" }
