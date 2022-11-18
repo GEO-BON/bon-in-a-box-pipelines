@@ -649,6 +649,19 @@
         "type": "application/dbf",
         "value": ""
       }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 613.1807174755917,
+        "y": 254.55636680794174
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
     }
   ],
   "edges": [
@@ -1001,11 +1014,18 @@
       "target": "23",
       "targetHandle": "mask",
       "id": "reactflow__edge-63-23mask"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "bbox_buffer",
+      "id": "reactflow__edge-64-15bbox_buffer"
     }
   ],
   "viewport": {
-    "x": 102.34968233198651,
-    "y": 140.9347667804068,
+    "x": -340.6503176680135,
+    "y": 83.93476678040679,
     "zoom": 0.8705505632961245
   },
   "inputs": {}
