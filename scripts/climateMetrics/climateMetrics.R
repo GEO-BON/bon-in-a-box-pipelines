@@ -49,11 +49,8 @@ print(input)
 source("/scripts/climateMetrics/climateMetricsFunc.R")
 
 
-# Pb if buffer set to 0, transformed into empty string. Warn JM about this
-if (input$buffer_box == "...") buffer_box <- 0
-
-bbox <- st_bbox(c(xmin = input$bbox[1], xmax = input$bbox[2], 
-        ymax = input$bbox[3], ymin = input$bbox[4]), crs = st_crs(input$srs_cube))
+bbox <- st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
+        xmax = input$bbox[3], ymax = input$bbox[4]), crs = st_crs(input$srs_cube))
 
 n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)) + 1 
 temporal_res <- paste0("P", n_year, "Y")
@@ -82,7 +79,7 @@ cube_future <- stacatalogue::load_cube_projection(collections = 'chelsa-clim-pro
                           time.span =input$time_span, #"2011-2040", 2041-2070 or 2071-2100
                           variable = "bio1",
                         spatial.res = input$spatial_res,# in meters
-                           temporal.res = temporal_res, 
+                           temporal.res = "P1Y",  
                            aggregation = input$aggregation,
                            resampling = "bilinear"
   
@@ -93,6 +90,8 @@ print("Future climate loaded.")
 
 print("Calculating metrics...")
 metric <- input$metric
+
+if (is.null(metric)) metric <- "rarity"
 
 tif <- climate_metrics(cube_current,
                           cube_future,
