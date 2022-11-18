@@ -37,7 +37,7 @@ function renderTree(splitPathBefore, splitPathLeft) {
   })
 
   // Sort and output
-  let sortedKeys = Array.from(groupedFiles.keys()).sort()
+  let sortedKeys = Array.from(groupedFiles.keys()).sort((a, b) => a.localeCompare(b, 'en', {sensitivity: 'base'}))
   return sortedKeys.map((key) => {
     if(key === "") { // leaf
       return groupedFiles.get(key).map(name => {
