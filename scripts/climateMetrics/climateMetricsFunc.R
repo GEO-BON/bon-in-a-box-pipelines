@@ -40,7 +40,7 @@
     years_dif <- as.numeric(substr(gdalcubes::dimensions(cube_future)[[1]][2], 1,4)) - 
       as.numeric(substr(gdalcubes::dimensions(tmean_cube)[[1]][2], 1,4))
     
-    
+   srs_cube <- raster::crs(raster_future) 
     
   if(metric == "local"){
   
