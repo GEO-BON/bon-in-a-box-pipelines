@@ -65,11 +65,6 @@ inputs:
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297,-1971146,1015207,1511916]
-  buffer_box:
-    label: Buffer box
-    description: Buffer surronding the bounding box, in meter
-    type: int
-    example: null
 outputs:
   output_tif:
     label: output metric
