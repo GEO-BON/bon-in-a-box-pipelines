@@ -96,7 +96,7 @@ function RenderedFiles({files, metadata}) {
         switch (type) {
             case "image":
                 if (isGeotiff(subtype)) {
-                    return <Map tiff={content} range={metadata.outputs[outputKey].range} />;
+                    return <Map tiff={content} range={metadata.outputs[outputKey].range} />
                 }
                 return <img src={content} alt={outputKey} />;
 
@@ -105,12 +105,17 @@ function RenderedFiles({files, metadata}) {
                     return <RenderedCSV url={content} delimiter="," />;
                 if (subtype === "tab-separated-values")
                     return <RenderedCSV url={content} delimiter="&#9;" />;
-                else
-                    return <p>{content}</p>;
 
-            default:
-                return <p>{content}</p>;
+                break;
+
+            case "application":
+                if (subtype === "geo+json")
+                    return <Map json={content} />
+
+                break;
         }
+
+        return <p>{content}</p>;
     }
 
     function renderInline(content){

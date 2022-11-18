@@ -28,6 +28,11 @@ if(!file.exists(example_tiff)) {
     download.file("https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif", example_tiff, "auto")
 }
 
+example_json = file.path(outputFolder, "sample.json")
+if(!file.exists(example_json)) {
+    download.file("https://gist.githubusercontent.com/wavded/1200773/raw/e122cf709898c09758aecfef349964a8d73a83f3/sample.json", example_json, "auto")
+}
+
 some_csv_data = file.path(outputFolder, "some_data.csv")
 write("Model,mpg,cyl,disp,hp,drat,wt,qsec,vs,am,gear,carb
 Mazda RX4,21,6,160,110,3.9,2.62,16.46,0,1,4,4
@@ -53,6 +58,7 @@ output <- list(#"error" = "Some error", # Use error key to stop the rest of the 
                 "text" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long text it will need to be unfolded to see it all.",
                 "number" = input$intensity * 3,
                 "heat_map" = example_tiff, 
+                "geo_json" = example_json,
                 "some_csv_data" = some_csv_data,
                 "some_tsv_data" = some_tsv_data,
                 "some_picture" = example_jpg,

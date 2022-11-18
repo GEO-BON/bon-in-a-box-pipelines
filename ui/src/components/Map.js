@@ -1,10 +1,20 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import parseGeoraster from "georaster";
 import GeoRasterLayer from "georaster-layer-for-leaflet";
 import chroma from "chroma-js";
-import { MapContainer, TileLayer, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import {createRangeLegendControl} from "./Legend"
+import L from 'leaflet';
+
+// This is to make sure leaflet icons show up.
+// see https://github.com/PaulLeCam/react-leaflet/issues/453#issuecomment-410450387
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+})
 
 const scaleColors = [
   "#E5E5E5",
@@ -132,16 +142,38 @@ function COGLayer({ url, range }) {
         legend.remove()
     };
   }, [map, range, url]);
-
-  return null;
 }
 
-export default function Map({ tiff, range }) {
-  return <MapContainer className="map" >
+export default function MapResult({ tiff, range, json }) {
+
+  const [jsonContent, setJsonContent] = useState()
+
+  useEffect(() => {
+    if (json) {
+      fetch(json)
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        }).then((result) => {
+          console.log(result)
+          setJsonContent(result)
+        })
+    }
+  }, [json])
+
+  return <MapContainer className="map" center={[50.5, 30.5]} zoom={13}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
     />
-    <COGLayer url={tiff} range={range} />
+    {jsonContent &&
+      <GeoJSON data={jsonContent}
+        eventHandlers={{
+          add: (e) => e.target._map.fitBounds(e.target.getBounds())
+        }}
+      />
+    }
+    {tiff && <COGLayer url={tiff} range={range} />}
   </MapContainer>
 }
