@@ -19,8 +19,7 @@ export function fetchScriptDescription(descriptionFileLocation, callback) {
 
   api.getScriptInfo(descriptionFileLocation, (error, callbackData, response) => {
     if (error) {
-      console.error("Error loading " + descriptionFileLocation + ": " + JSON.stringify(error))
-      callback(null)
+      console.error("Error loading " + descriptionFileLocation + ": ", error)
     } else {
       descriptions[descriptionFileLocation] = callbackData
       callback(descriptions[descriptionFileLocation])

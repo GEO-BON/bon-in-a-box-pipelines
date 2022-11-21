@@ -49,10 +49,9 @@ function renderTree(splitPathBefore, splitPathLeft) {
     }
     
     // branch
-    splitPathBefore.push(key)
     return <div key={key}>
       <p>{key}</p>
-      <div className='inFolder'>{renderTree(splitPathBefore, groupedFiles.get(key))}</div>
+      <div className='inFolder'>{renderTree([...splitPathBefore, key], groupedFiles.get(key))}</div>
     </div>
   })
 }
