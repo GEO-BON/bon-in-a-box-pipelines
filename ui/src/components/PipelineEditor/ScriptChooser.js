@@ -42,7 +42,7 @@ function renderTree(splitPathBefore, splitPathLeft) {
     if(key === "") { // leaf
       return groupedFiles.get(key).map(name => {
         let descriptionFile = [...splitPathBefore, name].join('>')
-        return <div className="dndnode" onDragStart={(event) => onDragStart(event, 'io', descriptionFile)} draggable>
+        return <div key={name} className="dndnode" onDragStart={(event) => onDragStart(event, 'io', descriptionFile)} draggable>
           <pre>{name}</pre>
         </div>
       })
