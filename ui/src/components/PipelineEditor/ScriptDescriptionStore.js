@@ -22,7 +22,7 @@ export function fetchScriptDescription(descriptionFileLocation, callback) {
       console.error("Error loading " + descriptionFileLocation + ": ", error)
     } else {
       descriptions[descriptionFileLocation] = callbackData
-      callback(descriptions[descriptionFileLocation])
+      callback(callbackData)
     }
   });
 }
