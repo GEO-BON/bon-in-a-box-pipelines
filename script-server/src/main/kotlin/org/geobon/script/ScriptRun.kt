@@ -5,7 +5,6 @@ import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.MalformedJsonException
 import kotlinx.coroutines.*
-import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -17,30 +16,18 @@ import kotlin.math.floor
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
-class ScriptRun(private val scriptFile: File, private val inputFileContent: String?) {
-    constructor(scriptFile: File, inputMap: SortedMap<String, Any>)
-            : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap))
+class ScriptRun(private val scriptFile: File, private val inputFileContent: String?, private val outputFolder: File) {
+    constructor(scriptFile: File, inputMap: SortedMap<String, Any>, outputFolder: File)
+            : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), outputFolder)
 
     lateinit var results: Map<String, Any>
         private set
 
-    /**
-     * A unique string identifier representing a run of this script with these specific parameters.
-     * i.e. Calling the same script with the same param would result in the same ID.
-     */
-    val id = File(
-        // Unique to this script
-        scriptFile.relativeTo(scriptRoot).path,
-        // Unique to these params
-        inputFileContent?.toMD5() ?: "no_params"
-    ).path.replace('.', '_')
-
-    private val outputFolder = File(outputRoot, id)
     private val inputFile = File(outputFolder, "input.json")
     internal val resultFile = File(outputFolder, "output.json")
 
     private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
-    val logFile = File(outputFolder, "logs.txt")
+    private val logFile = File(outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"

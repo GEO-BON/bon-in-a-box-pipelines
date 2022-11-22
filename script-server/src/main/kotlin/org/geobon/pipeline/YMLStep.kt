@@ -4,18 +4,32 @@ import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
 import org.geobon.script.Description.TYPE_OPTIONS
+import org.geobon.script.outputRoot
+import org.openapitools.server.utils.toMD5
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import java.io.File
 
+val scriptRoot: File = File(System.getenv("SCRIPT_LOCATION"))
+
 abstract class YMLStep(
     protected val yamlFile: File,
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
-    private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName),
+    private val logger: Logger = LoggerFactory.getLogger(yamlFile.name),
     protected val yamlParsed: Map<String, Any> = Yaml().load(yamlFile.readText())
 ) : Step(inputs, readOutputs(yamlParsed, logger)) {
 
+    /**
+     * A unique string identifier representing a run of this step with these specific parameters.
+     * i.e. Calling the same script with the same param would result in the same ID.
+     *
+     * It becomes set in validateInputsReceived(), once the invocation inputs are known.
+     */
+    protected var runId:String? = null
+
+    protected val outputFolder
+        get() = runId?.let { id -> File(outputRoot, id) }
 
     override fun validateInputsConfiguration(): String {
         val inputsFromYml = readInputs(yamlParsed, logger)
@@ -54,12 +68,21 @@ abstract class YMLStep(
     }
 
     fun validateInputsReceived(resolvedInputs:Map<String, Any>) : String? {
+        // Now that we know the inputs are valid, record the id.
+        runId = File(
+            // Unique to this script
+            yamlFile.relativeTo(scriptRoot).path.removeSuffix(".yml"),
+            // Unique to these params
+            if (resolvedInputs.isEmpty()) "no_params" else resolvedInputs.toString().toMD5()
+        ).path
+
+        // Validation
         inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
             val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
-                ?: return "No options found for input parameter $key."
+                ?: return "$yamlFile: No options found for input parameter $key."
 
             if(!options.contains(resolvedInputs[key])){
-                return "Received value ${resolvedInputs[key]} not in options $options."
+                return "$yamlFile: Received value ${resolvedInputs[key]} not in options $options."
             }
         }
 
@@ -74,6 +97,19 @@ abstract class YMLStep(
         } ?: println("$section is not a valid map")
 
         return null
+    }
+
+    /**
+     * @param allOutputs Map of Step identifier to output folder.
+     */
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        val relPath = yamlFile.relativeTo(scriptRoot).path
+        val previousValue = allOutputs.put("$relPath@${hashCode()}", runId ?: "")
+
+        // Pass it on only if not already been there (avoids duplication for more complex graphs)
+        if (previousValue == null) {
+            super.dumpOutputFolders(allOutputs)
+        }
     }
 
     companion object {
