@@ -174,4 +174,30 @@ internal class PullLayersByIdTest {
             assertTrue(finishLine.isEmpty())
         }
     }
+
+    @Test
+    fun givenObjectWithMissingParam_whenExecuted_thenErrorMessageSent() = runTest {
+        withProductionPaths {
+            step.inputs[PullLayersById.IN_IDENTIFIED_LAYERS] = AggregatePipe(listOf(
+                step.inputs[PullLayersById.IN_IDENTIFIED_LAYERS]!!,
+                ConstantPipe("object", JSONObject(
+                    """{id:"second"}"""
+                ))
+            ))
+
+            // Normal input map
+            step.inputs[PullLayersById.IN_WITH_IDS] = ConstantPipe("text", """
+                    layer, current, change
+                    first, 0.2, 0.5
+                    second, 0.5, 0.2
+                    third, 0.3, 0.3
+                    fourth, 0, 0
+                    """.trimIndent()
+            )
+
+            assertFailsWith<RuntimeException> {
+                step.execute()
+            }
+        }
+    }
 }
