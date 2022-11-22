@@ -7,8 +7,8 @@ import org.geobon.script.ScriptRun.Companion.scriptRoot
 import java.io.File
 
 
-class ScriptStep(private val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
-    YMLStep(yamlString = yamlFile.readText(), inputs = inputs) {
+class ScriptStep(yamlFile: File, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
+    YMLStep(yamlFile, inputs = inputs) {
 
     var runId: String? = null
 

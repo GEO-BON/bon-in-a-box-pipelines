@@ -6,16 +6,16 @@ import org.json.JSONObject
 import java.io.File
 
 class AssignId(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
-    YMLStep(File(System.getenv("SCRIPT_LOCATION"),"pipeline/AssignId.yml").readText(), inputs = inputs) {
+    YMLStep(File(System.getenv("SCRIPT_LOCATION"),"pipeline/AssignId.yml"), inputs = inputs) {
 
-    var id:String? = null
+    var idForLayer:String? = null
 
     override fun validateInputsConfiguration(): String {
         val res =  super.validateInputsConfiguration()
 
         runBlocking {
             launch{
-                id = inputs[IN_ID]?.pull().toString()
+                idForLayer = inputs[IN_ID]?.pull().toString()
             }
         }
 

@@ -5,7 +5,7 @@ import java.io.File
 
 
 class PullLayersById(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
-    YMLStep(File(System.getenv("SCRIPT_LOCATION"), "pipeline/PullLayersById.yml").readText(), inputs = inputs) {
+    YMLStep(File(System.getenv("SCRIPT_LOCATION"), "pipeline/PullLayersById.yml"), inputs = inputs) {
 
     override suspend fun resolveInputs(): Map<String, Any> {
         val resolvedInputs = mutableMapOf<String, Any>()
@@ -17,7 +17,7 @@ class PullLayersById(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
         // Pulling only if id found in above variable (!! is safe since input list was validated)
         resolvedInputs[IN_IDENTIFIED_LAYERS] = inputs[IN_IDENTIFIED_LAYERS]!!.pullIf { step -> 
             if(step is AssignId) {
-                step.id?.let { withIds.contains(it) }
+                step.idForLayer?.let { withIds.contains(it) }
                     ?: false
 
             } else true
