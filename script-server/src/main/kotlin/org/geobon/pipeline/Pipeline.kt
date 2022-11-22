@@ -25,7 +25,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
     var job: Job? = null
 
     init {
-        val steps = mutableMapOf<String, ScriptStep>()
+        val steps = mutableMapOf<String, Step>()
         val constants = mutableMapOf<String, ConstantPipe>()
         val outputIds = mutableListOf<String>()
 
@@ -36,11 +36,20 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 val id = node.getString(NODE__ID)
                 when (node.getString(NODE__TYPE)) {
                     NODE__TYPE_SCRIPT -> {
-                        steps[id] = ScriptStep(
-                            node.getJSONObject(NODE__DATA)
-                                .getString(NODE__DATA__FILE)
-                                .replace('>', '/')
-                        )
+                        val scriptFile = node.getJSONObject(NODE__DATA)
+                            .getString(NODE__DATA__FILE)
+                            .replace('>', '/')
+
+                        steps[id] = when (scriptFile) {
+                            // Instantiating kotlin "special steps".
+                            // Not done with reflection on purpose, since this could allow someone to instantiate any class,
+                            // resulting in a security breach.
+                            "pipeline/AssignId.yml" -> AssignId()
+                            "pipeline/PullLayersById.yml" -> PullLayersById()
+
+                            // Regular script steps
+                            else -> ScriptStep(scriptFile)
+                        }
                     }
                     NODE__TYPE_CONSTANT -> {
                         val nodeData = node.getJSONObject(NODE__DATA)
@@ -107,7 +116,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 val sourcePipe = constants[sourceId] ?: steps[sourceId]?.let { sourceStep ->
                     val sourceOutput = edge.getString(EDGE__SOURCE_OUTPUT)
                     sourceStep.outputs[sourceOutput]
-                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep.yamlFile}.\"")
+                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}.\"")
                 } ?: throw Exception("Could not find step with ID: $sourceId")
 
                 // Find the target and connect them

@@ -24,3 +24,13 @@ inline fun <T> withProductionPaths(block: () -> T): T {
         }
     }
 }
+
+/**
+ * Use script production paths.
+ * This does NOT include pipeline and output path on purpose
+ */
+inline fun <T> withProductionScripts(block: () -> T): T {
+    return withEnvironment("SCRIPT_LOCATION", productionScriptsRoot.absolutePath, OverrideMode.SetOrOverride) {
+        block()
+    }
+}
