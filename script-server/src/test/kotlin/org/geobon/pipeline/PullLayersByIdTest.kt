@@ -3,7 +3,6 @@ package org.geobon.pipeline
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.teststeps.RecordPipe
-import org.geobon.script.outputRoot
 import org.geobon.utils.withProductionPaths
 import org.geobon.utils.withProductionScripts
 import org.json.JSONObject

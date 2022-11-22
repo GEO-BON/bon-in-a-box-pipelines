@@ -5,6 +5,7 @@ import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.MalformedJsonException
 import kotlinx.coroutines.*
+import org.geobon.pipeline.RunContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -14,20 +15,28 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 import kotlin.math.floor
 
-val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
-class ScriptRun(private val scriptFile: File, private val inputFileContent: String?, private val outputFolder: File) {
-    constructor(scriptFile: File, inputMap: SortedMap<String, Any>, outputFolder: File)
-            : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), outputFolder)
+class ScriptRun(
+    private val scriptFile: File,
+    private val inputFileContent: String?,
+    context: RunContext = RunContext(scriptFile, inputFileContent)) {
+
+    // Constructor used in tests to provide a handcrafted input map
+    constructor(
+        scriptFile: File,
+        inputMap: SortedMap<String, Any>,
+        context: RunContext = RunContext(scriptFile, inputMap.toString())
+    ) : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), context)
 
     lateinit var results: Map<String, Any>
         private set
 
-    private val inputFile = File(outputFolder, "input.json")
-    internal val resultFile = File(outputFolder, "output.json")
+    private val outputFolder = context.outputFolder
+    private val inputFile = context.inputFile
+    val resultFile = context.resultFile
 
     private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
-    private val logFile = File(outputFolder, "logs.txt")
+    internal val logFile = File(outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"
@@ -54,9 +63,6 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             .create()
 
         fun toJson(src: Any): String = gson.toJson(src)
-
-        val scriptRoot: File
-            get() = File(System.getenv("SCRIPT_LOCATION"))
     }
 
     suspend fun execute() {
@@ -172,7 +178,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
             ProcessBuilder(command + scriptFile.absolutePath + outputFolder.absolutePath)
-                .directory(scriptRoot)
+                .directory(RunContext.scriptRoot)
                 .redirectOutput(ProcessBuilder.Redirect.PIPE)
                 .redirectErrorStream(true) // Merges stderr into stdout
                 .start().also { process ->

@@ -1,17 +1,17 @@
 package org.geobon.pipeline
 
+import com.google.gson.Gson
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
 import org.geobon.script.Description.TYPE_OPTIONS
-import org.geobon.script.outputRoot
-import org.openapitools.server.utils.toMD5
+import org.geobon.script.ScriptRun
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import java.io.File
 
-val scriptRoot: File = File(System.getenv("SCRIPT_LOCATION"))
 
 abstract class YMLStep(
     protected val yamlFile: File,
@@ -21,15 +21,9 @@ abstract class YMLStep(
 ) : Step(inputs, readOutputs(yamlParsed, logger)) {
 
     /**
-     * A unique string identifier representing a run of this step with these specific parameters.
-     * i.e. Calling the same script with the same param would result in the same ID.
-     *
-     * It becomes set in validateInputsReceived(), once the invocation inputs are known.
+     * Context becomes set in validateInputsReceived(), once the invocation inputs are known.
      */
-    protected var runId:String? = null
-
-    protected val outputFolder
-        get() = runId?.let { id -> File(outputRoot, id) }
+    protected var context:RunContext? = null
 
     override fun validateInputsConfiguration(): String {
         val inputsFromYml = readInputs(yamlParsed, logger)
@@ -67,26 +61,33 @@ abstract class YMLStep(
         return errorMessages
     }
 
-    fun validateInputsReceived(resolvedInputs:Map<String, Any>) : String? {
-        // Now that we know the inputs are valid, record the id.
-        runId = File(
-            // Unique to this script
-            yamlFile.relativeTo(scriptRoot).path.removeSuffix(".yml"),
-            // Unique to these params
-            if (resolvedInputs.isEmpty()) "no_params" else resolvedInputs.toString().toMD5()
-        ).path
+    override fun onInputsReceived(resolvedInputs:Map<String, Any>) {
+        // Now that we know the inputs are valid, record the id
+        context = RunContext(yamlFile, resolvedInputs.toString())
 
-        // Validation
-        inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
-            val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
-                ?: return "$yamlFile: No options found for input parameter $key."
+        try { // Validation
+            inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
+                val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
+                    ?: throw RuntimeException("$yamlFile: No options found for input parameter $key.")
 
-            if(!options.contains(resolvedInputs[key])){
-                return "$yamlFile: Received value ${resolvedInputs[key]} not in options $options."
+                if (!options.contains(resolvedInputs[key])) {
+                    throw RuntimeException("$yamlFile: Received value ${resolvedInputs[key]} not in options $options.")
+                }
             }
+        } catch (e:RuntimeException) {
+            record(mapOf(ScriptRun.ERROR_KEY to e.message))
+            throw e
         }
+    }
 
-        return null
+    protected fun record(results: Map<String, String?>) {
+        context?.apply {
+            if(outputFolder.exists())
+                outputFolder.deleteRecursively()
+
+            outputFolder.mkdirs()
+            resultFile.writeText(Gson().toJson(results))
+        }
     }
 
     private fun readIODescription(section:String, searchedKey:String) : Map<*,*>? {
@@ -104,7 +105,7 @@ abstract class YMLStep(
      */
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         val relPath = yamlFile.relativeTo(scriptRoot).path
-        val previousValue = allOutputs.put("$relPath@${hashCode()}", runId ?: "")
+        val previousValue = allOutputs.put("$relPath@${hashCode()}", context?.id ?: "")
 
         // Pass it on only if not already been there (avoids duplication for more complex graphs)
         if (previousValue == null) {

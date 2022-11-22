@@ -11,13 +11,9 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import org.geobon.pipeline.EDGES_LIST
-import org.geobon.pipeline.NODES_LIST
-import org.geobon.pipeline.Pipeline
-import org.geobon.pipeline.VIEWPORT
+import org.geobon.pipeline.*
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.ScriptRun
-import org.geobon.script.ScriptRun.Companion.scriptRoot
-import org.geobon.script.outputRoot
 import org.json.JSONObject
 import org.openapitools.server.Paths
 import org.openapitools.server.models.ScriptRunResult
@@ -63,7 +59,8 @@ fun Route.ScriptApi(logger: Logger) {
         logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
 
         val scriptRelPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/')
-        val run = ScriptRun(File(scriptRoot, scriptRelPath), inputFileContent)
+        val scriptFile = File(scriptRoot, scriptRelPath)
+        val run = ScriptRun(scriptFile, inputFileContent, RunContext(scriptFile, inputFileContent))
         run.execute()
         call.respond(
             HttpStatusCode.OK, ScriptRunResult(
