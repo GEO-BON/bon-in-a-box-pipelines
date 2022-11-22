@@ -24,6 +24,7 @@ abstract class Step(
 
             try {
                 val resolvedInputs = resolveInputs()
+                onInputsReceived(resolvedInputs)
                 val results = execute(resolvedInputs)
                 results.forEach { (key, value) ->
                     // Undocumented outputs will simply be discarded by the "?"
@@ -35,6 +36,10 @@ abstract class Step(
                 executed = true
             }
         }
+    }
+
+    open fun onInputsReceived(resolvedInputs: Map<String, Any>) {
+        // Default nothing
     }
 
     protected abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
