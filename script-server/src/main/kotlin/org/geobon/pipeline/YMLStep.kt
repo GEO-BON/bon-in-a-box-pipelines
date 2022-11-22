@@ -7,12 +7,13 @@ import org.geobon.script.Description.TYPE_OPTIONS
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
+import java.io.File
 
 abstract class YMLStep(
-    yamlString: String = "",
-    protected val yamlParsed: Map<String, Any> = Yaml().load(yamlString),
+    protected val yamlFile: File,
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
-    private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName)
+    private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName),
+    protected val yamlParsed: Map<String, Any> = Yaml().load(yamlFile.readText())
 ) : Step(inputs, readOutputs(yamlParsed, logger)) {
 
 
