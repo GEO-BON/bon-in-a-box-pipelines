@@ -14,7 +14,7 @@ class PullLayersById(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
         val withIds = inputs[IN_WITH_IDS]!!.pull().toString()
         resolvedInputs[IN_WITH_IDS] = withIds
 
-        // Pulling only if id found in above variable (!! is safe singe input list was validated)
+        // Pulling only if id found in above variable (!! is safe since input list was validated)
         resolvedInputs[IN_IDENTIFIED_LAYERS] = inputs[IN_IDENTIFIED_LAYERS]!!.pullIf { step -> 
             if(step is AssignId) {
                 step.id?.let { withIds.contains(it) }
@@ -45,12 +45,11 @@ class PullLayersById(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
 
     companion object {
         // Inputs
-        val IN_IDENTIFIED_LAYERS = "identified_layers"
-        val IN_WITH_IDS = "with_ids"
-
+        const val IN_IDENTIFIED_LAYERS = "identified_layers"
+        const val IN_WITH_IDS = "with_ids"
 
         // Outputs
-        val OUT_WITH_LAYERS = "with_layers"
+        const val OUT_WITH_LAYERS = "with_layers"
     }
 
 }
