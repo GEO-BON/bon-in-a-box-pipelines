@@ -12,7 +12,7 @@ abstract class YMLStep(
     yamlString: String = "",
     protected val yamlParsed: Map<String, Any> = Yaml().load(yamlString),
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
-    private val logger: Logger = LoggerFactory.getLogger("YMLStep")
+    private val logger: Logger = LoggerFactory.getLogger(this::class.simpleName)
 ) : Step(inputs, readOutputs(yamlParsed, logger)) {
 
 

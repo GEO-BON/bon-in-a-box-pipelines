@@ -5,6 +5,7 @@ import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.teststeps.RecordPipe
 import org.geobon.script.outputRoot
 import org.geobon.utils.withProductionPaths
+import org.geobon.utils.withProductionScripts
 import org.json.JSONObject
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
@@ -198,6 +199,23 @@ internal class PullLayersByIdTest {
             assertFailsWith<RuntimeException> {
                 step.execute()
             }
+        }
+    }
+
+    @Test
+    fun `given a pipeline with PullLayersById_when ran_then replaces the expected layer`() = runTest {
+        withProductionScripts {
+            val pipeline = Pipeline("pullLayersByIdTest.json",
+            """{
+                "pipeline>PullLayersById.yml@9.with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
+            }""".trimIndent())
+
+            pipeline.execute()
+
+            val result = pipeline.getPipelineOutputs()[0].pull().toString()
+            assertFalse(result.contains("https://object-arbutus.cloud.computecanada.ca/bq-io/io/GFW/lossyear/Hansen_GFC-2020-v1.8_lossyear_80N_180W.tif"))
+            assertFalse(result.contains("https://object-arbutus.cloud.computecanada.ca/bq-io/io/GFW/lossyear/Hansen_GFC-2020-v1.8_lossyear_80N_170W.tif"))
+            assertTrue(result.contains("https://object-arbutus.cloud.computecanada.ca/bq-io/io/GFW/lossyear/Hansen_GFC-2020-v1.8_lossyear_80N_170E.tif"))
         }
     }
 }
