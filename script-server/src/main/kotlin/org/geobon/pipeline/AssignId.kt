@@ -26,7 +26,7 @@ class AssignId(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
         return mapOf(OUT_IDENTIFIED_LAYER to JSONObject(mapOf(
             OUT_IDENTIFIED_LAYER_ID to resolvedInputs[IN_ID],
             OUT_IDENTIFIED_LAYER_LAYER to resolvedInputs[IN_LAYER]
-        )))
+        ))).also{ record(it) }
     }
 
     companion object {
