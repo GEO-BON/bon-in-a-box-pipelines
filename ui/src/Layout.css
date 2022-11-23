@@ -96,6 +96,10 @@ a.active {
   font-style: italic;
 }
 
+.resultText {
+  white-space: pre-wrap;
+}
+
 .map {
   height: 70vmin;
   border: 1px solid red;
@@ -142,6 +146,8 @@ th, td {
 .inputFile {
   overflow: hidden;
   white-space: pre; /*don't break horizontal lines in two*/
+  padding:1em;
+  padding-bottom: 0em;
 }
 
 .blackText {
