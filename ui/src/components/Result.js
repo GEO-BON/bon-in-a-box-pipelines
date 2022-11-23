@@ -50,7 +50,7 @@ function FallbackDisplay({content}) {
     }
 
     // Plain text or numeric value
-    return <p>{content}</p>    
+    return <p className="resultText">{content}</p>    
 }
 
 function RenderedFiles({files, metadata}) {
@@ -114,7 +114,7 @@ function RenderedFiles({files, metadata}) {
                 if (subtype === "tab-separated-values")
                     return <RenderedCSV url={content} delimiter="&#9;" />;
                 else
-                    return <p>{content}</p>;
+                    return <p className="resultText">{content}</p>;
 
             case "object":
                 return Object.entries(content).map(entry => {
@@ -133,7 +133,7 @@ function RenderedFiles({files, metadata}) {
                 return <FallbackDisplay content={content} />
 
             default:
-                return <p>{content}</p>;
+                return <p className="resultText">{content}</p>;
         }
     }
 

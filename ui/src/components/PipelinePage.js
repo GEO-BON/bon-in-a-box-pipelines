@@ -101,7 +101,8 @@ export function PipelinePage(props) {
 }
 
 function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
-  const formRef = useRef(null);
+  const formRef = useRef()
+  const inputRef = useRef();
 
   const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
@@ -147,7 +148,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
 
     clearPreviousRequest()
     let opts = {
-      'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
+      'body': inputRef.current.getValue() // String | Content of input.json for this run
     };
     api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
   };
@@ -178,11 +179,11 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
           defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
           onChange={(v) => loadPipelineMetadata(v.value)} />
       </label>
+      <br />
       <label>
-        Content of input.json:
+        Pipeline inputs:
         <br />
-        <InputFileWithExample defaultValue='{}'
-         metadata={pipelineMetadata} />
+        <InputFileWithExample ref={inputRef} metadata={pipelineMetadata} />
       </label>
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
