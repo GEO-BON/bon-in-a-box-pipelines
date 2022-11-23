@@ -156,13 +156,12 @@ export default function MapResult({ tiff, range, json }) {
             return response.json();
           }
         }).then((result) => {
-          console.log(result)
           setJsonContent(result)
         })
     }
   }, [json])
 
-  return <MapContainer className="map" center={[50.5, 30.5]} zoom={13}>
+  return <MapContainer className="map" center={[0,0]} zoom={5}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
