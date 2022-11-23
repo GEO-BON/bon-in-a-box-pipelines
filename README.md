@@ -2,7 +2,7 @@
 
 Mapping Post-2020 Global Biodiversity Framework indicators and their uncertainty.
 
-A Geo BON project, born from a collaboration between Microsoft, McGill, Humbolt institue, Université de Sherbrooke, Université Concordia and Université de Montréal.
+A Geo BON project, born from a collaboration between Microsoft, McGill, Humbolt institute, Université de Sherbrooke, Université Concordia and Université de Montréal.
 
 ## Running the servers locally
 Prerequisites : 
@@ -100,16 +100,17 @@ references: # 0 to many
 See [example](/scripts/helloWorld/helloR.yml)
 
 Each input and output must declare a type, *in lowercase.* The following file types are accepted:
-| File type          | MIME type to use in the yaml   | UI rendering                 |
-| ------------------ |------------------------------- |------------------------------|
-| CSV                | text/csv                       | HTML table (partial content) |
-| GeoPackage         | application/geopackage+sqlite3 | Link                         |
-| GeoTIFF            | image/tiff;application=geotiff | Map widget (leaflet)         |
-| JPG                | image/jpg                      | \<img> tag                   |
-| Shapefile          | application/dbf                | Link                         |
-| Text               | text/plain                     | Plain text                   |
-| TSV                | text/tab-separated-values      | HTML table (partial content) |
-|                    | (any unknown type)             | Plain text or link           |
+| File type                    | MIME type to use in the yaml   | UI rendering                 |
+| ---------------------------- |------------------------------- |------------------------------|
+| CSV                          | text/csv                       | HTML table (partial content) |
+| GeoJSON                      | application/geo+json           | Plain text (Map TBD)         |
+| GeoPackage                   | application/geopackage+sqlite3 | Link                         |
+| GeoTIFF <sup>[1](#io1)</sup> | image/tiff;application=geotiff | Map widget (leaflet)         |
+| JPG                          | image/jpg                      | \<img> tag                   |
+| Shapefile                    | application/dbf                | Link                         |
+| Text                         | text/plain                     | Plain text                   |
+| TSV                          | text/tab-separated-values      | HTML table (partial content) |
+|                              | (any unknown type)             | Plain text or link           |
 
 The following primitive types are accepted:
 | "type" attribute in the yaml   | UI rendering                 |
@@ -117,11 +118,21 @@ The following primitive types are accepted:
 | boolean                        | Plain text                   |
 | float, float[]                 | Plain text                   |
 | int, int[]                     | Plain text                   |
-| options *                      | Plain text                   |
+| options <sup>[2](#io2)</sup>   | Plain text                   |
 | text, text[]                   | Plain text                   |
 | (any unknown type)             | Plain text                   |
 
-\* `options` type require an additionnal `options` attribute to be added with the available options.
+<a name="io1"></a><sup>1</sup> When used as an output, `image/tiff;application=geotiff` type allows an additionnal `range` attribute to be added with the min and max values that the tiff should hold. This will be used for display purposes.
+```yml
+map:
+  label: My map
+  description: Some map that shows bla bla...
+  type: image/tiff;application=geotiff
+  range: [0.1, 254]
+  example: https://example.com/mytiff.tif
+```
+
+<a name="io2"></a><sup>2</sup> `options` type requires an additionnal `options` attribute to be added with the available options.
 ```yml
 options_example:
   label: Options example
