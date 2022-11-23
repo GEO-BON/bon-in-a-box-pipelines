@@ -21,7 +21,9 @@ export function Layout(props) {
   return (
     <>
       <div className="left-pane">
-        <img id="logo" src={BiaBLogo} alt="BON in a Box logo" />
+        <div>
+          <img id="logo" src={BiaBLogo} alt="BON in a Box logo" />
+        </div>
         {props.left}
       </div>
 
