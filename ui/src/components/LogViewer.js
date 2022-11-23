@@ -36,7 +36,9 @@ export function LogViewer({ address, autoUpdate }) {
       })
       .catch(response => {
         if(intervalRef) clearInterval(intervalRef);
-        setLogs(logs + "\n" + response.status + " (" + response.statusText + ")");
+        if(response.status != 404) { // 404 error can be normal if script has no logs.
+          setLogs(logs + "\n" + response.status + " (" + response.statusText + ")");
+        }
       });
 
   }
@@ -58,5 +60,5 @@ export function LogViewer({ address, autoUpdate }) {
     }
   }, [logs, logsAutoScroll]);
 
-  return <pre ref={logsRef} className='logs'>{logs}<span ref={logsEndRef} /></pre>;
+  return logs && <pre ref={logsRef} className='logs'>{logs}<span ref={logsEndRef} /></pre>;
 }

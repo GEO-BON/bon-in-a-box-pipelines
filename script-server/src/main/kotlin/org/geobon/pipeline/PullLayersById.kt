@@ -40,7 +40,7 @@ class PullLayersById(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
             }
         }
 
-        return mapOf(OUT_WITH_LAYERS to content)
+        return mapOf(OUT_WITH_LAYERS to content).also{ record(it) }
     }
 
     companion object {

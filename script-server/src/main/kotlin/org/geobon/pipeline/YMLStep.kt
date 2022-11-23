@@ -1,6 +1,6 @@
 package org.geobon.pipeline
 
-import com.google.gson.Gson
+import org.json.JSONObject
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
@@ -75,18 +75,18 @@ abstract class YMLStep(
                 }
             }
         } catch (e:RuntimeException) {
-            record(mapOf(ScriptRun.ERROR_KEY to e.message))
+            record(mapOf(ScriptRun.ERROR_KEY to (e.message ?: e.toString())))
             throw e
         }
     }
 
-    protected fun record(results: Map<String, String?>) {
+    protected fun record(results: Map<String, Any>) {
         context?.apply {
             if(outputFolder.exists())
                 outputFolder.deleteRecursively()
 
             outputFolder.mkdirs()
-            resultFile.writeText(Gson().toJson(results))
+            resultFile.writeText(JSONObject(results).toString(2))
         }
     }
 
