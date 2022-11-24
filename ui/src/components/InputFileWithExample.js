@@ -7,7 +7,10 @@ export const InputFileWithExample = forwardRef(({metadata}, ref) => {
 
   useImperativeHandle(ref, () => ({
     getValue() {
-      return JSON.stringify(yaml.load(textareaRef.current.value))
+      if (textareaRef.current.value === '')
+        return '{}'
+      else
+        return JSON.stringify(yaml.load(textareaRef.current.value))
     },
   }));
 
