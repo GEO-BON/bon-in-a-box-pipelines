@@ -231,10 +231,12 @@ function DelayedResult({id, folder, setRunningScripts}) {
     if (folder) {
       if(folder === "skipped") {
         setResultData({ info: "Skipped: not necessary with the given parameters" })
-        setSkippedMessage("Skipped")  
+        setSkippedMessage("Skipped")
+
       } else if(folder === "aborted") {
         setResultData({ warning: "Skipped due to previous failure" })
         setSkippedMessage("Aborted")
+        
       } else if (folder === "cancelled") {
         setResultData({ warning: "Skipped when pipeline stopped" })
         setSkippedMessage("Cancelled")
