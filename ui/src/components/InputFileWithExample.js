@@ -37,10 +37,18 @@ export const InputFileWithExample = forwardRef(({metadata}, ref) => {
       });
     }
 
-    if(!isEmptyObject(inputExamples)) {
-      textareaRef.current.value = yaml.dump(inputExamples, {'lineWidth': 124})
-      resize(textareaRef.current)
+    const textarea = textareaRef.current;
+    if(isEmptyObject(inputExamples)) {
+      textarea.disabled = true
+      textarea.placeholder = "No inputs"
+      textarea.value = ""
+    } else {
+      textarea.disabled = false
+      textarea.placeholder = ""
+      textarea.value = yaml.dump(inputExamples, {'lineWidth': 124})
     }
+
+    resize(textarea)
   }, [metadata]);
 
   return <textarea ref={textareaRef} className="inputFile" type="text"
