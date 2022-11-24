@@ -36,14 +36,15 @@ export function LogViewer({ address, autoUpdate }) {
       })
       .catch(response => {
         if(intervalRef) clearInterval(intervalRef);
-        if(response.status != 404) { // 404 error can be normal if script has no logs.
+        if(response.status !== 404) { // 404 error can be normal if script has no logs.
           setLogs(logs + "\n" + response.status + " (" + response.statusText + ")");
         }
       });
 
   }
 
-  // First and last fetch
+  // First and last fetch (fetchLogs not a dependency since it depends on logs. This would make it loop.)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => fetchLogs(), [autoUpdate])
   // Auto-update
   const interval = useInterval(() => {
