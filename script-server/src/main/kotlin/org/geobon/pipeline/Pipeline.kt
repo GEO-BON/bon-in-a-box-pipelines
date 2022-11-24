@@ -1,6 +1,9 @@
 package org.geobon.pipeline
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -203,6 +206,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
      */
     suspend fun execute(): Map<String, String> {
         var cancelled = false
+        var failure = false
         try {
             coroutineScope {
                 job = launch {
@@ -214,7 +218,8 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
 
             job?.apply { cancelled = isCancelled }
         } catch (ex: RuntimeException) {
-            logger.debug("in execute \"${ex.message}\"")
+            logger.debug("In execute \"${ex.message}\"")
+            if (!cancelled) failure = true
         } catch (ex: Exception) {
             logger.error(ex.stackTraceToString())
         } finally {
@@ -222,9 +227,11 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         }
 
         return getLiveOutput().mapValues { (_, value) ->
-            when(value){
-                "" -> if(cancelled) "cancelled" else "skipped"
-                else -> value
+            when {
+                value.isNotEmpty() -> value
+                cancelled -> "cancelled"
+                failure -> "aborted"
+                else -> "skipped"
             }
         }
     }

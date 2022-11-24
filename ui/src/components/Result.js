@@ -148,7 +148,7 @@ function RenderedFiles({files, metadata}) {
         return Object.entries(files).map(entry => {
             const [key, value] = entry;
 
-            if (key === "warning" || key === "error") {
+            if (key === "warning" || key === "error" || key === "info") {
                 return value && <p key={key} className={key}>{value}</p>;
             }
 
