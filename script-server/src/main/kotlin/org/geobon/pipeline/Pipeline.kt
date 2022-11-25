@@ -62,7 +62,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                             val jsonArray = try {
                                 nodeData.getJSONArray(NODE__DATA__VALUE)
                             } catch (e:Exception) {
-                                throw RuntimeException("Constant #$id has no value in JSON file.")
+                                throw RuntimeException("Constant array #$id has no value in JSON file.")
                             }
 
                             ConstantPipe(type,
