@@ -1,20 +1,29 @@
 package org.geobon.pipeline
 
+import org.json.JSONObject
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
 import org.geobon.script.Description.TYPE_OPTIONS
+import org.geobon.script.ScriptRun
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
+import java.io.File
+
 
 abstract class YMLStep(
-    yamlString: String = "",
-    protected val yamlParsed: Map<String, Any> = Yaml().load(yamlString),
+    protected val yamlFile: File,
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
-    private val logger: Logger = LoggerFactory.getLogger("YMLStep")
+    private val logger: Logger = LoggerFactory.getLogger(yamlFile.name),
+    protected val yamlParsed: Map<String, Any> = Yaml().load(yamlFile.readText())
 ) : Step(inputs, readOutputs(yamlParsed, logger)) {
 
+    /**
+     * Context becomes set in validateInputsReceived(), once the invocation inputs are known.
+     */
+    protected var context:RunContext? = null
 
     override fun validateInputsConfiguration(): String {
         val inputsFromYml = readInputs(yamlParsed, logger)
@@ -52,17 +61,33 @@ abstract class YMLStep(
         return errorMessages
     }
 
-    fun validateInputsReceived(resolvedInputs:Map<String, Any>) : String? {
-        inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
-            val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
-                ?: return "No options found for input parameter $key."
+    override fun onInputsReceived(resolvedInputs:Map<String, Any>) {
+        // Now that we know the inputs are valid, record the id
+        context = RunContext(yamlFile, resolvedInputs.toString())
 
-            if(!options.contains(resolvedInputs[key])){
-                return "Received value ${resolvedInputs[key]} not in options $options."
+        try { // Validation
+            inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
+                val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
+                    ?: throw RuntimeException("$yamlFile: No options found for input parameter $key.")
+
+                if (!options.contains(resolvedInputs[key])) {
+                    throw RuntimeException("$yamlFile: Received value ${resolvedInputs[key]} not in options $options.")
+                }
             }
+        } catch (e:RuntimeException) {
+            record(mapOf(ScriptRun.ERROR_KEY to (e.message ?: e.toString())))
+            throw e
         }
+    }
 
-        return null
+    protected fun record(results: Map<String, Any>) {
+        context?.apply {
+            if(outputFolder.exists())
+                outputFolder.deleteRecursively()
+
+            outputFolder.mkdirs()
+            resultFile.writeText(JSONObject(results).toString(2))
+        }
     }
 
     private fun readIODescription(section:String, searchedKey:String) : Map<*,*>? {
@@ -73,6 +98,19 @@ abstract class YMLStep(
         } ?: println("$section is not a valid map")
 
         return null
+    }
+
+    /**
+     * @param allOutputs Map of Step identifier to output folder.
+     */
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        val relPath = yamlFile.relativeTo(scriptRoot).path
+        val previousValue = allOutputs.put("$relPath@${hashCode()}", context?.id ?: "")
+
+        // Pass it on only if not already been there (avoids duplication for more complex graphs)
+        if (previousValue == null) {
+            super.dumpOutputFolders(allOutputs)
+        }
     }
 
     companion object {

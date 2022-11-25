@@ -35,6 +35,24 @@ function isGeotiff(subtype) {
     return subtype && subtype.includes("tif") && subtype.includes("geo")
 }
 
+// Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
+function FallbackDisplay({content}) {
+    if(isRelativeLink(content) || content.startsWith("http")) {
+        // Match for tiff, TIFF, tif or TIF extensions
+        if(content.search(/.tiff?$/i) !== -1)
+            return <Map tiff={content} />
+        else if(content.search(/.csv$/i))
+            return <RenderedCSV url={content} delimiter="," />
+        else if(content.search(/.tsv$/i))
+            return <RenderedCSV url={content} delimiter="&#9;" />
+        else 
+            return <img src={content} alt={content} />
+    }
+
+    // Plain text or numeric value
+    return <p className="resultText">{content}</p>    
+}
+
 function RenderedFiles({files, metadata}) {
 
     function renderContent(outputKey, content) {
@@ -55,17 +73,7 @@ function RenderedFiles({files, metadata}) {
 
         return <>
             <p className="error">{error}</p>
-            {// Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
-                isRelativeLink(content) ? (
-                    // Match for tiff, TIFF, tif or TIF extensions
-                    content.search(/.tiff?$/i) !== -1 ? (
-                        <Map tiff={content} />
-                    ) : (
-                        <img src={content} alt={outputKey} />
-                    )
-                ) : ( // Plain text or numeric value
-                    <p>{content}</p>
-                )}
+            <FallbackDisplay content={content} />
         </>;
     }
 
@@ -92,7 +100,7 @@ function RenderedFiles({files, metadata}) {
             }
         }
 
-        
+
         switch (type) {
             case "image":
                 if (isGeotiff(subtype)) {
@@ -105,20 +113,40 @@ function RenderedFiles({files, metadata}) {
                     return <RenderedCSV url={content} delimiter="," />;
                 if (subtype === "tab-separated-values")
                     return <RenderedCSV url={content} delimiter="&#9;" />;
-
+                
                 break;
+
+            case "object":
+                return Object.entries(content).map(entry => {
+                    console.log("entry", entry)
+                    const [key, value] = entry;
+                    let isLink = isRelativeLink(value)
+                    return <FoldableOutput key={key} title={key}
+                        inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
+                        inlineCollapsed={!isLink && renderInline(value)}
+                        className="foldableOutput">
+                        {renderWithMime(outputKey, value, "unknown")}
+                    </FoldableOutput>
+                })
 
             case "application":
                 if (subtype === "geo+json")
                     return <Map json={content} />
 
                 break;
+
+            case "unknown":
+                return <FallbackDisplay content={content} />
+
         }
 
-        return <p>{content}</p>;
+        return <p className="resultText">{content}</p>;
     }
 
     function renderInline(content){
+        if(typeof content === 'object')
+            content = Object.keys(content)
+
         return Array.isArray(content) ? content.join(', ') : content
     }
 
@@ -126,7 +154,7 @@ function RenderedFiles({files, metadata}) {
         return Object.entries(files).map(entry => {
             const [key, value] = entry;
 
-            if (key === "warning" || key === "error") {
+            if (key === "warning" || key === "error" || key === "info") {
                 return value && <p key={key} className={key}>{value}</p>;
             }
 
@@ -173,7 +201,7 @@ function RenderedLogs({logs}) {
 
 
 function isRelativeLink(value) {
-    if (typeof value.startsWith === "function") { 
+    if (value && typeof value.startsWith === "function") { 
         return value.startsWith('/')
     }
     return false

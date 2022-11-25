@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useInterval } from '../UseInterval';
-import { isVisible } from '../utils/IsVisible';
+import { isVisible } from '../utils/isVisible';
 
 export function LogViewer({ address, autoUpdate }) {
   const [logs, setLogs] = useState("");
@@ -36,12 +36,15 @@ export function LogViewer({ address, autoUpdate }) {
       })
       .catch(response => {
         if(intervalRef) clearInterval(intervalRef);
-        setLogs(logs + "\n" + response.status + " (" + response.statusText + ")");
+        if(response.status !== 404) { // 404 error can be normal if script has no logs.
+          setLogs(logs + "\n" + response.status + " (" + response.statusText + ")");
+        }
       });
 
   }
 
-  // First and last fetch
+  // First and last fetch (fetchLogs not a dependency since it depends on logs. This would make it loop.)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => fetchLogs(), [autoUpdate])
   // Auto-update
   const interval = useInterval(() => {
@@ -58,5 +61,5 @@ export function LogViewer({ address, autoUpdate }) {
     }
   }, [logs, logsAutoScroll]);
 
-  return <pre ref={logsRef} className='logs'>{logs}<span ref={logsEndRef} /></pre>;
+  return logs && <pre ref={logsRef} className='logs'>{logs}<span ref={logsEndRef} /></pre>;
 }

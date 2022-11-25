@@ -10,6 +10,7 @@ import { useInterval } from '../UseInterval';
 import spinnerImg from '../img/spinner.svg';
 import errorImg from '../img/error.svg';
 import warningImg from '../img/warning.svg';
+import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
@@ -101,7 +102,8 @@ export function PipelinePage(props) {
 }
 
 function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
-  const formRef = useRef(null);
+  const formRef = useRef()
+  const inputRef = useRef();
 
   const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
@@ -147,7 +149,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
 
     clearPreviousRequest()
     let opts = {
-      'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
+      'body': inputRef.current.getValue() // String | Content of input.json for this run
     };
     api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
   };
@@ -178,11 +180,11 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
           defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
           onChange={(v) => loadPipelineMetadata(v.value)} />
       </label>
+      <br />
       <label>
-        Content of input.json:
+        Pipeline inputs:
         <br />
-        <InputFileWithExample defaultValue='{}'
-         metadata={pipelineMetadata} />
+        <InputFileWithExample ref={inputRef} metadata={pipelineMetadata} />
       </label>
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
@@ -209,7 +211,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
   const [running, setRunning] = useState(false)
-  const [skipped, setSkipped] = useState(false)
+  const [skippedMessage, setSkippedMessage] = useState()
 
   const script = id.substring(0, id.indexOf('@'))
 
@@ -228,11 +230,16 @@ function DelayedResult({id, folder, setRunningScripts}) {
   useEffect(() => {
     if (folder) {
       if(folder === "skipped") {
+        setResultData({ info: "Skipped: not necessary with the given parameters" })
+        setSkippedMessage("Skipped")
+
+      } else if(folder === "aborted") {
         setResultData({ warning: "Skipped due to previous failure" })
-        setSkipped(true)
+        setSkippedMessage("Aborted")
+        
       } else if (folder === "cancelled") {
         setResultData({ warning: "Skipped when pipeline stopped" })
-        setSkipped(true)
+        setSkippedMessage("Cancelled")
       }
     }
   // Execute only when folder changes (omitting resultData on purpose)
@@ -276,14 +283,12 @@ function DelayedResult({id, folder, setRunningScripts}) {
   if (folder) {
     if (resultData) {
       content = <Result data={resultData} metadata={scriptMetadata} />
-      if(resultData.error) {
-        inline = <img src={errorImg} alt="Error" className="error-inline" />
-      } else if(resultData.warning) {
-        inline = <>
-          <img src={warningImg} alt="Warning" className="error-inline" />
-          {skipped && <i>Skipped</i>}
-        </>
-      }
+      inline = <>
+        {resultData.error && <img src={errorImg} alt="Error" className="error-inline" />}
+        {resultData.warning && <img src={warningImg} alt="Warning" className="error-inline" />}
+        {resultData.info && <img src={infoImg} alt="Info" className="info-inline" />}
+        {skippedMessage && <i>{skippedMessage}</i>}
+      </>
     } else {
       content = <p>Running...</p>
       inline = <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
@@ -299,7 +304,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
     <FoldableOutputWithContext title={script} componentId={id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
-      {folder && !skipped && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
+      {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutputWithContext>
   )
 }

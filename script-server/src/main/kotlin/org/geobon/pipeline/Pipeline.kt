@@ -1,6 +1,9 @@
 package org.geobon.pipeline
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -25,7 +28,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
     var job: Job? = null
 
     init {
-        val steps = mutableMapOf<String, ScriptStep>()
+        val steps = mutableMapOf<String, Step>()
         val constants = mutableMapOf<String, ConstantPipe>()
         val outputIds = mutableListOf<String>()
 
@@ -36,11 +39,20 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 val id = node.getString(NODE__ID)
                 when (node.getString(NODE__TYPE)) {
                     NODE__TYPE_SCRIPT -> {
-                        steps[id] = ScriptStep(
-                            node.getJSONObject(NODE__DATA)
-                                .getString(NODE__DATA__FILE)
-                                .replace('>', '/')
-                        )
+                        val scriptFile = node.getJSONObject(NODE__DATA)
+                            .getString(NODE__DATA__FILE)
+                            .replace('>', '/')
+
+                        steps[id] = when (scriptFile) {
+                            // Instantiating kotlin "special steps".
+                            // Not done with reflection on purpose, since this could allow someone to instantiate any class,
+                            // resulting in a security breach.
+                            "pipeline/AssignId.yml" -> AssignId()
+                            "pipeline/PullLayersById.yml" -> PullLayersById()
+
+                            // Regular script steps
+                            else -> ScriptStep(scriptFile)
+                        }
                     }
                     NODE__TYPE_CONSTANT -> {
                         val nodeData = node.getJSONObject(NODE__DATA)
@@ -50,7 +62,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                             val jsonArray = try {
                                 nodeData.getJSONArray(NODE__DATA__VALUE)
                             } catch (e:Exception) {
-                                throw RuntimeException("Constant #$id has no value in JSON file.")
+                                throw RuntimeException("Constant array #$id has no value in JSON file.")
                             }
 
                             ConstantPipe(type,
@@ -107,7 +119,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 val sourcePipe = constants[sourceId] ?: steps[sourceId]?.let { sourceStep ->
                     val sourceOutput = edge.getString(EDGE__SOURCE_OUTPUT)
                     sourceStep.outputs[sourceOutput]
-                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep.yamlFile}.\"")
+                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}.\"")
                 } ?: throw Exception("Could not find step with ID: $sourceId")
 
                 // Find the target and connect them
@@ -194,6 +206,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
      */
     suspend fun execute(): Map<String, String> {
         var cancelled = false
+        var failure = false
         try {
             coroutineScope {
                 job = launch {
@@ -205,7 +218,8 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
 
             job?.apply { cancelled = isCancelled }
         } catch (ex: RuntimeException) {
-            logger.debug("in execute \"${ex.message}\"")
+            logger.debug("In execute \"${ex.message}\"")
+            if (!cancelled) failure = true
         } catch (ex: Exception) {
             logger.error(ex.stackTraceToString())
         } finally {
@@ -213,9 +227,11 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         }
 
         return getLiveOutput().mapValues { (_, value) ->
-            when(value){
-                "" -> if(cancelled) "cancelled" else "skipped"
-                else -> value
+            when {
+                value.isNotEmpty() -> value
+                cancelled -> "cancelled"
+                failure -> "aborted"
+                else -> "skipped"
             }
         }
     }

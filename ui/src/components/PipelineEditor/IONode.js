@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Handle, Position } from 'react-flow-renderer/nocss';
+import isObject from '../../utils/isObject'
 
 import { fetchScriptDescription } from './ScriptDescriptionStore'
 
@@ -75,8 +76,21 @@ function ScriptIO({children, desc, setToolTip, onDoubleClick, warning}) {
       {warning && <><span className='warning'>{warning}</span><br/></>}
       {desc.type && <>{renderType(desc.type)} <br /></>}
       {desc.description && <>{desc.description} <br /></>}
-      {desc.example && <>Example: {desc.example.toString()}</>}
+      {desc.example && <>Example: {renderExample(desc.example)}</>}
     </>)
+  }
+
+  function renderExample(example){
+    if(Array.isArray(example))
+      return example.map((v, i) => renderExample(v) + (i === example.length - 1 ? "" : ", "))
+
+    if(isObject(example))
+      return JSON.stringify(example)
+
+    if(example.includes("\n"))
+      return <span style={{whiteSpace: "pre-wrap"}}>{"\n"+example.toString()}</span>
+
+    return example.toString()
   }
 
   function onMouseLeave() {

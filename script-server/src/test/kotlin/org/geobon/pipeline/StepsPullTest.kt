@@ -1,19 +1,19 @@
 package org.geobon.pipeline
 
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.geobon.utils.runReliableTest
 import org.geobon.pipeline.teststeps.ConcatenateStep
 import org.geobon.pipeline.teststeps.EchoStep
 import org.geobon.pipeline.teststeps.EchoStep.Companion.ECHO
 import org.geobon.pipeline.teststeps.EchoStep.Companion.SOUND
-import org.geobon.script.outputRoot
+import org.geobon.utils.runReliableTest
 import org.junit.jupiter.api.AfterEach
-import kotlin.test.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import java.io.File
+import kotlin.test.assertEquals
+import kotlin.test.assertNull
+import kotlin.test.assertTrue
+import kotlin.test.fail
 
 @ExperimentalCoroutinesApi
 internal class StepsPullTest {
@@ -29,7 +29,7 @@ internal class StepsPullTest {
 
     @AfterEach
     fun removeOutputFolder() {
-        assertTrue(File(System.getenv("OUTPUT_LOCATION")).deleteRecursively())
+        assertTrue(outputRoot.deleteRecursively())
     }
 
     @Test
