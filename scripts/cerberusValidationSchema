@@ -48,11 +48,9 @@ inputs:
           type: [object, "object[]"]
       example:
         required: true
-        nullable: true
         oneof:
         - type: number
         - type: string
-          nullable: true
         - type: boolean
         - type: list
         - type: dict

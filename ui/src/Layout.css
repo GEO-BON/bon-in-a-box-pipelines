@@ -33,6 +33,10 @@ a.active {
   padding-right:30px;
 }
 
+img#logo {
+  max-width: 10vw;
+}
+
 .spinner {
   height: 2em;
   margin: 1em;

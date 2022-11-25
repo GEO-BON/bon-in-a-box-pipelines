@@ -104,7 +104,7 @@ function RenderedFiles({files, metadata}) {
         switch (type) {
             case "image":
                 if (isGeotiff(subtype)) {
-                    return <Map tiff={content} range={metadata.outputs[outputKey].range} />;
+                    return <Map tiff={content} range={metadata.outputs[outputKey].range} />
                 }
                 return <img src={content} alt={outputKey} />;
 
@@ -113,8 +113,8 @@ function RenderedFiles({files, metadata}) {
                     return <RenderedCSV url={content} delimiter="," />;
                 if (subtype === "tab-separated-values")
                     return <RenderedCSV url={content} delimiter="&#9;" />;
-                else
-                    return <p className="resultText">{content}</p>;
+                
+                break;
 
             case "object":
                 return Object.entries(content).map(entry => {
@@ -129,12 +129,18 @@ function RenderedFiles({files, metadata}) {
                     </FoldableOutput>
                 })
 
+            case "application":
+                if (subtype === "geo+json")
+                    return <Map json={content} />
+
+                break;
+
             case "unknown":
                 return <FallbackDisplay content={content} />
 
-            default:
-                return <p className="resultText">{content}</p>;
         }
+
+        return <p className="resultText">{content}</p>;
     }
 
     function renderInline(content){
