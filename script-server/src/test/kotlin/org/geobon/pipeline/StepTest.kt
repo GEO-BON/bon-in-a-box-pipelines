@@ -9,7 +9,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.teststeps.ConcatenateStep
-import org.geobon.pipeline.teststeps.DelayPipe
+import org.geobon.pipeline.teststeps.RecordPipe
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
@@ -55,10 +55,10 @@ internal class StepTest {
         val finishLine = mutableListOf<String>()
 
         val step = ConcatenateStep(mutableMapOf(
-            "1" to DelayPipe(2000, "!", finishLine),
-            "2" to DelayPipe(500, " ", finishLine),
-            "3" to DelayPipe(1000, "world", finishLine),
-            "4" to DelayPipe(0, "Hello", finishLine)))
+            "1" to RecordPipe("!", finishLine, 2000),
+            "2" to RecordPipe(" ", finishLine, 500),
+            "3" to RecordPipe("world", finishLine, 1000),
+            "4" to RecordPipe("Hello", finishLine, 0)))
 
         step.execute()
 
@@ -74,10 +74,10 @@ internal class StepTest {
     fun givenARunningPipeline_whenStopped_thenNextStepNotRan() = runTest {
         val finishLine = mutableListOf<String>()
         val step = ConcatenateStep(mutableMapOf(
-            "1" to DelayPipe(2000, "!", finishLine),
-            "2" to DelayPipe(500, " ", finishLine),
-            "3" to DelayPipe(1000, "world", finishLine),
-            "4" to DelayPipe(0, "Hello", finishLine)))
+            "1" to RecordPipe("!", finishLine, 2000),
+            "2" to RecordPipe(" ", finishLine, 500),
+            "3" to RecordPipe("world", finishLine, 1000),
+            "4" to RecordPipe("Hello", finishLine, 0)))
 
         val job = launch {
             step.execute()
