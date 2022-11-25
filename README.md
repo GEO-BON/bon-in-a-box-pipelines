@@ -2,7 +2,7 @@
 
 Mapping Post-2020 Global Biodiversity Framework indicators and their uncertainty.
 
-A Geo BON project, born from a collaboration between Microsoft, McGill, Humbolt institue, Université de Sherbrooke, Université Concordia and Université de Montréal.
+A Geo BON project, born from a collaboration between Microsoft, McGill, Humbolt institute, Université de Sherbrooke, Université Concordia and Université de Montréal.
 
 ## Running the servers locally
 Prerequisites : 
@@ -103,6 +103,7 @@ Each input and output must declare a type, *in lowercase.* The following file ty
 | File type                    | MIME type to use in the yaml   | UI rendering                 |
 | ---------------------------- |------------------------------- |------------------------------|
 | CSV                          | text/csv                       | HTML table (partial content) |
+| GeoJSON                      | application/geo+json           | Plain text (Map TBD)         |
 | GeoPackage                   | application/geopackage+sqlite3 | Link                         |
 | GeoTIFF <sup>[1](#io1)</sup> | image/tiff;application=geotiff | Map widget (leaflet)         |
 | JPG                          | image/jpg                      | \<img> tag                   |

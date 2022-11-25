@@ -35,7 +35,7 @@ export const InputFileWithExample = forwardRef(({metadata}, ref) => {
         let input = metadata.inputs[inputKey];
         if (input) {
           const example = input.example;
-          inputExamples[inputKey] = example ? example : "...";
+          inputExamples[inputKey] = example === undefined ? null : example;
         }
       });
     }
