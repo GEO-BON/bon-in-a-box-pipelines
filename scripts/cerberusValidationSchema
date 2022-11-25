@@ -63,7 +63,8 @@ outputs:
   type: dict
   keysrules: 
    type: string
-   regex: "[a-z_]+"
+   regex: "[a-z0-9_]+"
+   forbidden: [info, warning, error]
   valuesrules: 
     schema: 
       label:
