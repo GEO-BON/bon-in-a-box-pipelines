@@ -60,7 +60,7 @@ fun Route.ScriptApi(logger: Logger) {
 
         val scriptRelPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/')
         val scriptFile = File(scriptRoot, scriptRelPath)
-        val run = ScriptRun(scriptFile, inputFileContent, RunContext(scriptFile, inputFileContent))
+        val run = ScriptRun(scriptFile, inputFileContent)
         run.execute()
         call.respond(
             HttpStatusCode.OK, ScriptRunResult(

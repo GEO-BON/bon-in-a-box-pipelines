@@ -24,7 +24,8 @@ inputs:
     example: [
       { id: "firstId", layer: "path/to/my/layer1.tiff" },
       { id: "secondId", layer: "path/to/my/layer2.tiff" },
-      { id: "thirdId", layer: "path/to/my/layer3.tiff" }
+      { id: "thirdId", layer: "path/to/my/layer3.tiff" },
+      { id: "fourthId", layer: "path/to/my/layer4.tiff" }
     ]
 
 outputs:
@@ -34,6 +35,6 @@ outputs:
     type: text
     example: |
       layer, current, change
-      firstId, 0.2, 0.5
-      secondId, 0.5, 0.2
-      thirdId, 0.3, 0.3
+      path/to/my/layer1.tiff, 0.2, 0.5
+      path/to/my/layer2.tiff, 0.5, 0.2
+      path/to/my/layer3.tiff, 0.3, 0.3

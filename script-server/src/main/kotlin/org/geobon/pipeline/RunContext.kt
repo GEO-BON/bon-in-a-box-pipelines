@@ -9,7 +9,7 @@ val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
  * @param id A unique string identifier representing a run of this step with these specific parameters.
  *           i.e. Calling the same script with the same param would result in the same ID.
  */
-data class RunContext (val id:String) {
+data class RunContext(val id: String) {
     constructor(descriptionFile: File, inputs: String?) : this(
         File(
             // Unique to this script
