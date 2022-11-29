@@ -33,6 +33,10 @@ a.active {
   padding-right:30px;
 }
 
+img#logo {
+  max-width: 10vw;
+}
+
 .spinner {
   height: 2em;
   margin: 1em;
@@ -60,7 +64,7 @@ a.active {
   font-size: calc(10px + 2vmin);
 }
 
-.error, .warning {
+.error, .warning, .info {
   background-color: lightgray;
   font-weight: bold;
   white-space: pre;
@@ -81,6 +85,13 @@ a.active {
   margin: 0em 0em -0.55em -0.5em;
 }
 
+.info-inline {
+  height: 1.5em;
+  display:inline;
+  /* Compensate for margins that are in the vector graphic */
+  margin: 0em .5em -.3em -.5em; 
+}
+
 .error {
   color: hsl(0, 100%, 27%);
   background-image: url(img/error.svg);
@@ -91,9 +102,20 @@ a.active {
   background-image: url(img/warning.svg);
 }
 
+.info {
+  color: #115CA2;
+  background-image: url(img/info.svg);
+  background-position: 0.3em;
+  background-size: 1.4em 1.6em;
+}
+
 .outputDescription {
   font-size: small;
   font-style: italic;
+}
+
+.resultText {
+  white-space: pre-wrap;
 }
 
 .map {
@@ -142,6 +164,8 @@ th, td {
 .inputFile {
   overflow: hidden;
   white-space: pre; /*don't break horizontal lines in two*/
+  padding:1em;
+  padding-bottom: 0em;
 }
 
 .blackText {

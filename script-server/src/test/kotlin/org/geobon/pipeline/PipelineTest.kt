@@ -2,13 +2,11 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.geobon.script.outputRoot
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.io.File
 import kotlin.test.assertContains
 
 @ExperimentalCoroutinesApi
@@ -24,7 +22,7 @@ internal class PipelineTest {
 
     @AfterEach
     fun removeOutputFolder() {
-        assertTrue(File(System.getenv("OUTPUT_LOCATION")).deleteRecursively())
+        assertTrue(outputRoot.deleteRecursively())
     }
 
     @Test

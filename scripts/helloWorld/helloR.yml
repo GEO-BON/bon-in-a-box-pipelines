@@ -47,6 +47,10 @@ outputs:
     type: image/tiff;application=geotiff
     range: [0, 255]
     example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
+  geo_json:
+    label: Sample GeoJSON
+    description: This random file will show a GeoJSON
+    type: application/geo+json
   some_csv_data:
     label: Some CSV data
     description: This CSV (Comma Separated Values) data is rendered as an HTML table when unfolded. If you do not unfold, it is not loaded at all... Note that only the first kilobyte of the file is retrieved.

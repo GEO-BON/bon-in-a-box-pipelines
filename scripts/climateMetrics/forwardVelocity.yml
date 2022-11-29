@@ -70,12 +70,12 @@ inputs:
     label: bbox coordinates
     description: coordinates of the bbox, in the order xmin, xmax, ymax, ymin.
     type: float[]
-    example: null
+    example: [-2316297,-1971146,1015207,1511916]
   buffer_box:
     label: buffer box
     description: buffer surronding box
     type: int
-    example: null
+    example: 0
   shapefile_path:
     label: shapefile path
     description: Path to a .shp file representing the extent.

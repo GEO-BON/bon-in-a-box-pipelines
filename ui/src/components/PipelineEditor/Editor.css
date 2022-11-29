@@ -49,6 +49,10 @@ aside.scriptChooser .description {
     border-color: #ff0072;
 }
 
+.inFolder {
+    padding-left: 1em;
+}
+
 .constant  {
     color: black;
     background-color: whitesmoke;
