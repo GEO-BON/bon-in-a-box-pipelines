@@ -57,8 +57,28 @@ class InfoReferencesInner {
         return obj;
     }
 
+    /**
+     * Validates the JSON data with respect to <code>InfoReferencesInner</code>.
+     * @param {Object} data The plain JavaScript object bearing properties of interest.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>InfoReferencesInner</code>.
+     */
+    static validateJSON(data) {
+        // ensure the json data is a string
+        if (data['text'] && !(typeof data['text'] === 'string' || data['text'] instanceof String)) {
+            throw new Error("Expected the field `text` to be a primitive type in the JSON string but got " + data['text']);
+        }
+        // ensure the json data is a string
+        if (data['doi'] && !(typeof data['doi'] === 'string' || data['doi'] instanceof String)) {
+            throw new Error("Expected the field `doi` to be a primitive type in the JSON string but got " + data['doi']);
+        }
+
+        return true;
+    }
+
 
 }
+
+
 
 /**
  * @member {String} text

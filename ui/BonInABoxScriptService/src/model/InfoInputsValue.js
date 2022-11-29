@@ -12,7 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
-//import InfoInputsValueExample from './InfoInputsValueExample';
+import InfoInputsValueExample from './InfoInputsValueExample';
 
 /**
  * The InfoInputsValue model module.
@@ -60,6 +60,9 @@ class InfoInputsValue {
             if (data.hasOwnProperty('options')) {
                 obj['options'] = ApiClient.convertToType(data['options'], ['String']);
             }
+            if (data.hasOwnProperty('properties')) {
+                obj['properties'] = ApiClient.convertToType(data['properties'], ['String']);
+            }
             if (data.hasOwnProperty('example')) {
                 // JM Lord: Current version of the generator does not work when type is "oneOf" in OpenAPI spec.
                 // We want the default convertToType clause to execute.
@@ -69,8 +72,45 @@ class InfoInputsValue {
         return obj;
     }
 
+    /**
+     * Validates the JSON data with respect to <code>InfoInputsValue</code>.
+     * @param {Object} data The plain JavaScript object bearing properties of interest.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>InfoInputsValue</code>.
+     */
+    static validateJSON(data) {
+        // ensure the json data is a string
+        if (data['description'] && !(typeof data['description'] === 'string' || data['description'] instanceof String)) {
+            throw new Error("Expected the field `description` to be a primitive type in the JSON string but got " + data['description']);
+        }
+        // ensure the json data is a string
+        if (data['label'] && !(typeof data['label'] === 'string' || data['label'] instanceof String)) {
+            throw new Error("Expected the field `label` to be a primitive type in the JSON string but got " + data['label']);
+        }
+        // ensure the json data is a string
+        if (data['type'] && !(typeof data['type'] === 'string' || data['type'] instanceof String)) {
+            throw new Error("Expected the field `type` to be a primitive type in the JSON string but got " + data['type']);
+        }
+        // ensure the json data is an array
+        if (!Array.isArray(data['options'])) {
+            throw new Error("Expected the field `options` to be an array in the JSON data but got " + data['options']);
+        }
+        // ensure the json data is an array
+        if (!Array.isArray(data['properties'])) {
+            throw new Error("Expected the field `properties` to be an array in the JSON data but got " + data['properties']);
+        }
+        // validate the optional field `example`
+        if (data['example']) { // data not null
+          // JM Lord: Current version of the generator does not work when type is "oneOf" in OpenAPI spec.
+          //InfoInputsValueExample.validateJSON(data['example']);
+        }
+
+        return true;
+    }
+
 
 }
+
+
 
 /**
  * @member {String} description
@@ -93,9 +133,9 @@ InfoInputsValue.prototype['type'] = undefined;
 InfoInputsValue.prototype['options'] = undefined;
 
 /**
- * @member {Array.<Number>} range
+ * @member {Array.<String>} properties
  */
-InfoInputsValue.prototype['range'] = undefined;
+InfoInputsValue.prototype['properties'] = undefined;
 
 /**
  * @member {module:model/InfoInputsValueExample} example

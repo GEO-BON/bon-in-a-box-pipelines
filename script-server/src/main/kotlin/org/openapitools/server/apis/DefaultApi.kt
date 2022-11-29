@@ -38,6 +38,7 @@ fun Route.DefaultApi() {
               "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
+              "properties" : [ "id", "layer" ],
               "example" : "file.csv"
             }
           },
@@ -54,11 +55,13 @@ fun Route.DefaultApi() {
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
+              "properties" : [ "id", "layer" ],
               "example" : "Glyptemys insculpta"
             }
           },
           "description" : "This sample script shows how it works.",
           "script" : "helloR.R",
+          "timeout" : 60,
           "external_link" : "https://github.com/GEO-BON/biab-2.0"
         }"""
         
@@ -93,6 +96,7 @@ fun Route.DefaultApi() {
               "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
+              "properties" : [ "id", "layer" ],
               "example" : "file.csv"
             }
           },
@@ -109,11 +113,13 @@ fun Route.DefaultApi() {
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
+              "properties" : [ "id", "layer" ],
               "example" : "Glyptemys insculpta"
             }
           },
           "description" : "This sample script shows how it works.",
           "script" : "helloR.R",
+          "timeout" : 60,
           "external_link" : "https://github.com/GEO-BON/biab-2.0"
         }"""
         

@@ -226,6 +226,9 @@ components:
         external_link: 
           type: string
           example: https://github.com/GEO-BON/biab-2.0
+        timeout:
+          type: number
+          example: 60
         inputs: 
           type: object
           additionalProperties: 
@@ -247,6 +250,13 @@ components:
                 example:
                 - Option 1
                 - Option 2
+              properties:
+                type: array
+                items: 
+                  type: string
+                example: 
+                  - id
+                  - layer
               example: 
                 example: Glyptemys insculpta
                 oneOf:
@@ -287,6 +297,13 @@ components:
                 example:
                 - Option 1
                 - Option 2
+              properties:
+                type: array
+                items: 
+                  type: string
+                example: 
+                  - id
+                  - layer
               example: 
                 example: file.csv
                 oneOf:
