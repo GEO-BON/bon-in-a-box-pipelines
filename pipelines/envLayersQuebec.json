@@ -579,8 +579,8 @@
       "source": "17",
       "sourceHandle": null,
       "target": "41",
-      "targetHandle": "srs.cube",
-      "id": "reactflow__edge-17-41srs.cube"
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-17-41srs_cube"
     },
     {
       "source": "52",
@@ -726,8 +726,8 @@
       "source": "16",
       "sourceHandle": null,
       "target": "41",
-      "targetHandle": "prop.res",
-      "id": "reactflow__edge-16-41prop.res"
+      "targetHandle": "prop_res",
+      "id": "reactflow__edge-16-41prop_res"
     },
     {
       "source": "23",
