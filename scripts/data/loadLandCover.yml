@@ -1,26 +1,31 @@
 description: This script load land cover rasters from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
 script: loadLandCover.R
 inputs:
+  stac_path:
+    label: stac_path
+    description: url
+    type: text
+    example: "https://io.biodiversite-quebec.ca/stac/"
+  collections:
+    label: collections
+    description: collections
+    type: text
+    example: c("esacci-lc")
   bbox:
     label: bbox
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
-    example: [-2316297, -1971146,  1015207,  1511916]
-  proj:
+    example: [-831561.2, 116773.2, 784438.8, 2103773]
+  srs.cube:
     label: projection system
     description: String, projection system of the coordinates in bbox
     type: text
-    example: "EPSG:6623"
+    example: EPSG:6623
   spatial_res:
     label: spatial resolution
-    description: Integer, spatial resolution 
+    description: spatial resolution 
     type: int
     example: 1000
-  stac_limit:
-    label: STAC limit
-    description: Integer, limit number of tiles retrieved from the STAC catalogue
-    type: int
-    example: 5000
   stac_source:
     label: STAC source
     description: Option, STAC catalogue to use
@@ -39,24 +44,29 @@ inputs:
     description: String (YYYY-MM-DD), end time of study period
     type: text
     example: "2010-12-31"
-  proportion: 
+  prop: 
     label: proportion
     description: Boolean, should a proportion of land cover classes be calculated
     type: boolean
     example: TRUE
-  proportion_res: 
+  prop.res: 
     label: proportion_res
     description: Integer, if proportion is TRUE, resolution to calculate the proportion from
-    type: integer
+    type: int
     example: 1000
-  lc_classes: 
+  select_values: 
     label: lc_classes
     description: Vector of integers, list of land cover classes to select
-    type: integer[]
-    example: 
-      - 11
+    type: int[]
+    example: [190, 210]
 outputs:
-    output_lc:
-     label: land cover
-     description: table with observations from GBIF
-     type: image/tiff;application=geotiff
+  output_tif:
+    label: output metric
+    description: metric raster file 
+    type: image/tiff;application=geotiff
+    example: prop_lancover.tif
+  metric:
+    label: metric
+    description: landcover class proportion  
+    type: text
+    example: local
