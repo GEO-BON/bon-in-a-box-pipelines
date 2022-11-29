@@ -16,7 +16,7 @@ inputs:
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-831561.2, 116773.2, 784438.8, 2103773]
-  srs.cube:
+  srs_cube:
     label: projection system
     description: String, projection system of the coordinates in bbox
     type: text

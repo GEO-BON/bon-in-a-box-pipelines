@@ -44,7 +44,7 @@ print(input)
 # Tranform the vector to a bbox object
 
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
-                  xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$srs.cube))
+                  xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$srs_cube))
 
 
 n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)) + 1 
@@ -54,7 +54,7 @@ if (input$stac_source == "IO") {
   lc_raster <- stacatalogue::load_prop_values(stac_path = "https://io.biodiversite-quebec.ca/stac/",
                                 collections = "esacci-lc", 
                               bbox = bbox,
-                               srs.cube = input$srs.cube,
+                               srs.cube = input$srs_cube,
                                limit = 5000,
                                 t0 = input$t0,
                                 t1 = input$t1,
@@ -67,7 +67,7 @@ if (input$stac_source == "IO") {
   lc_raster <- stacatalogue::load_prop_values_pc(stac_path =  "https://planetarycomputer.microsoft.com/api/stac/v1/",
                                 collections = c("io-lulc-9-class"), 
                               bbox = bbox,
-                               srs.cube = input$srs.cube,
+                               srs.cube = input$srs_cube,
                                 t0 = input$t0,
                                 t1 = input$t1,
                                 limit = 5000,
