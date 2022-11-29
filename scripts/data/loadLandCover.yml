@@ -49,7 +49,7 @@ inputs:
     description: Boolean, should a proportion of land cover classes be calculated
     type: boolean
     example: TRUE
-  prop.res: 
+  prop_res: 
     label: proportion_res
     description: Integer, if proportion is TRUE, resolution to calculate the proportion from
     type: int

@@ -60,7 +60,7 @@ if (input$stac_source == "IO") {
                                 t1 = input$t1,
                                 spatial.res = input$spatial_res, # in meters
                                 prop = input$prop,
-                                prop.res = input$prop.res,
+                                prop.res = input$prop_res,
                                 select_values = input$select_values,
                                 temporal.res =  temporal_res)
   } else if (input$stac_source == "PC") {
@@ -73,7 +73,7 @@ if (input$stac_source == "IO") {
                                 limit = 5000,
                                 spatial.res = input$spatial_res, # in meters
                                 prop = input$prop,
-                                prop.res = input$prop.res,
+                                prop.res = input$prop_res,
                                 select_values = input$select_values,
                                 temporal.res =  temporal_res)
 }
@@ -83,16 +83,10 @@ if (input$stac_source == "IO") {
 output_nc_predictors <- file.path(outputFolder, "lc.tif")
 raster::writeRaster(x = lc_raster,
                           output_nc_predictors,
-<<<<<<< HEAD
                     format='COG',
                     options=c("COMPRESS=DEFLATE"),
                     overwrite = TRUE)
-=======
-                          format='COG',
-                          options=c("COMPRESS=DEFLATE"),
-                          overwrite = TRUE)
->>>>>>> a33c38ff7a3db5c7b1cd8ea4b0153cb45a5bd3b5
- 
+
 output <- list(
   "output_lc" =  output_nc_predictors
                   ) 
