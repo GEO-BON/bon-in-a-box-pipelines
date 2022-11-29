@@ -20,6 +20,7 @@ import org.openapitools.server.models.InfoReferencesInner
  * @param script 
  * @param description 
  * @param externalLink 
+ * @param timeout 
  * @param inputs 
  * @param outputs 
  * @param references 
@@ -28,6 +29,7 @@ data class Info(
     val script: kotlin.String? = null,
     val description: kotlin.String? = null,
     val externalLink: kotlin.String? = null,
+    val timeout: Int? = null,
     val inputs: kotlin.collections.Map<kotlin.String, InfoInputsValue>? = null,
     val outputs: kotlin.collections.Map<kotlin.String, InfoOutputsValue>? = null,
     val references: kotlin.collections.List<InfoReferencesInner>? = null
