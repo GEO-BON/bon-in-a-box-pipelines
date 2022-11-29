@@ -28,7 +28,7 @@ print("Inputs: ")
 print(input)
 
 study_extent <- sf::st_read(input$extent)
-predictors <- terra::rast(input$predictors)
+predictors <- terra::rast(unlist(input$predictors))
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE)
 
 background <- create_background(

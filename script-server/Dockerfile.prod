@@ -26,12 +26,6 @@ COPY . /home/gradle/project
 WORKDIR /home/gradle/project
 RUN gradle assemble
 
-# The signal proxy lets us cancel processes in other dockers
-RUN set -ex; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends; \
-    apt-get clean all;
-
 ## This takes the build server and puts in on the R-script enabled image
 FROM base-image
 COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar

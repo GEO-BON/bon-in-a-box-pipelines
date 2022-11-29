@@ -85,7 +85,7 @@ select_param <- function(res, method = "AIC", auc_min = 0, list = T) {
       }
     
   } else if (method == "p10") {
-      res <- res |> filter(or.10p.avg == min(or.10p.avg))
+      res <- res |> filter(or.10p.avg == min(or.10p.avg)) |> filter(auc.val.avg == max(auc.val.avg))
     
     } else if (method == "AUC") {
       res <- res |> filter(auc.val.avg == max(auc.val.avg))

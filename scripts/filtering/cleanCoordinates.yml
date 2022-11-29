@@ -19,7 +19,7 @@ inputs:
     label: predictors
     description: Raster, predictors. 
     type: image/tiff;application=geotiff[]
-    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+    example: ["/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif"]
   tests: 
     label: cleaning_tests
     description: Vector of strings, tests to run from all tests available - capitals, centroids, same_pixel, equal, gbif, institutions, duplicates, urban, seas, zeros, env
@@ -36,6 +36,11 @@ inputs:
      - gbif
      - institutions
      - env
+  env_threshold:
+    label: threshold_env
+    description: Float, proportion of predictors to consider the observation as an outlier.
+    type: float
+    example: 0.8
 outputs:
   n_presence:
     label: n presence

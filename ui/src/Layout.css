@@ -33,6 +33,10 @@ a.active {
   padding-right:30px;
 }
 
+img#logo {
+  max-width: 10vw;
+}
+
 .spinner {
   height: 2em;
   margin: 1em;
@@ -175,4 +179,36 @@ th, td {
 @keyframes inflate {
   from { transform: scale(0); }
   to { transform: scale(1); }
+}
+
+div.legend {
+  display: inline-block;
+  margin: 1em;
+  border-radius: 10px;
+  z-index: 1000;
+  background: #f3f3f1;
+
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
+  font-size: 1em;
+  color: #555;
+}
+
+div.legendItem {
+  display: flex;
+  justify-content: left;
+  background: transparent;
+  gap: 1em;
+}
+
+div.legendItemColorBox {
+  min-width: 20px;
+  min-height: 20px;
+}
+
+div.legendItemText {
+  flex-grow: 1;
+  text-align: left;
+  white-space: nowrap;
+
+  padding-right: 0.5em;
 }
