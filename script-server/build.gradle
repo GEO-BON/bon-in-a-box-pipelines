@@ -7,7 +7,7 @@ wrapper {
 }
 
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext.kotlin_version = '1.7.21'
     ext.ktor_version = "1.5.4"
     ext.shadow_version = "6.1.0"
 
@@ -59,7 +59,7 @@ repositories {
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version")
-    implementation('ch.qos.logback:logback-classic:1.4.0')
+    implementation('ch.qos.logback:logback-classic:1.4.5')
     implementation("io.ktor:ktor-auth:$ktor_version")
     implementation("io.ktor:ktor-gson:$ktor_version")
     implementation("io.ktor:ktor-locations:$ktor_version")
@@ -73,11 +73,11 @@ dependencies {
     // https://mvnrepository.com/artifact/org.yaml/snakeyaml
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.30'
 
-    implementation 'com.google.code.gson:gson:2.9.1'
+    implementation 'com.google.code.gson:gson:2.10'
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
-    testImplementation 'io.mockk:mockk:1.12.7'
+    testImplementation 'io.mockk:mockk:1.13.2'
     testImplementation 'org.jetbrains.kotlin:kotlin-test'
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4'
-    testImplementation 'io.kotest:kotest-runner-junit5:5.4.2'
+    testImplementation 'io.kotest:kotest-runner-junit5:5.5.4'
 }
