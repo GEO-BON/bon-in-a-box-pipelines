@@ -57,6 +57,9 @@ class InfoOutputsValue {
             if (data.hasOwnProperty('type')) {
                 obj['type'] = ApiClient.convertToType(data['type'], 'String');
             }
+            if (data.hasOwnProperty('range')) {
+                obj['range'] = ApiClient.convertToType(data['range'], ['Number']);
+            }
             if (data.hasOwnProperty('options')) {
                 obj['options'] = ApiClient.convertToType(data['options'], ['String']);
             }
@@ -86,6 +89,11 @@ InfoOutputsValue.prototype['label'] = undefined;
  * @member {String} type
  */
 InfoOutputsValue.prototype['type'] = undefined;
+
+/**
+ * @member {Array.<Number>} range
+ */
+InfoOutputsValue.prototype['range'] = undefined;
 
 /**
  * @member {Array.<String>} options

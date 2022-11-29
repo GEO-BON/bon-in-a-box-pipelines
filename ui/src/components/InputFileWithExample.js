@@ -24,7 +24,7 @@ export function InputFileWithExample({defaultValue, metadata}) {
         let input = metadata.inputs[inputKey];
         if (input) {
           const example = input.example;
-          inputExamples[inputKey] = example ? example : "...";
+          inputExamples[inputKey] = example === undefined ? null : example;
         }
       });
     }

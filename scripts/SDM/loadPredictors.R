@@ -47,7 +47,7 @@ if(is.null(input$nb_sample)) {
     sample <- TRUE
   }
 
-if(length(input$layers) == 0) {
+if(length(input$layers) == 0 || input$layers == "") {
   layers <- NULL 
   } else {
     layers <- input$layers
@@ -62,14 +62,14 @@ predictors <- load_predictors(source = "cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
             limit = 5000, 
             collections = input$collection,     
-         #   t0 = "1981-01-01",
-           # t1 = "1981-01-01",
+            t0 = "1981-01-01",
+            t1 = "1981-01-01",
             spatial.res = input$spatial_res, # in meters
             temporal.res = "P1Y",
             aggregation = "mean",
             resampling = "near"),
                           
-                           subset_layers = input$layers,
+                           subset_layers = layers,
                            variables = variables,
                            remove_collinear = input$remove_collinearity,
                            method = input$method,
@@ -86,15 +86,20 @@ predictors <- load_predictors(source = "cube",
 
 
 # Mask
-if(!is.null(input$mask) && length(input$mask)>1) {
+#if(!is.null(input$mask) && length(input$mask)>1) {
 
-  mask <- terra::vect(input$mask)
-  predictors <- fast_crop(predictors, mask)
-  }
+ # mask <- terra::vect(input$mask)
+ # predictors <- fast_crop(predictors, mask)
+#  }
 
-output_predictors <- file.path(outputFolder, "predictors.tif")
+output_predictors <- file.path(outputFolder)
+for (i in names(predictors)) {
+  gdalcubes::write_tif(predictors[i], dir = output_predictors, prefix = i, creation_options = list("COMPRESS" = "DEFLATE"), COG=T)
+}
 
-terra::writeRaster(predictors, output_predictors, overwrite = T)
-output <- list("predictors" = output_predictors) 
+print(list.files(outputFolder, pattern="*.tif"))
+file.rename(paste(outputFolder, list.files(outputFolder, pattern="*.tif"),sep="/"), paste(outputFolder, paste0(names(predictors), ".tif"),sep="/"))
+
+output <- list("predictors" = paste0(file.path(outputFolder, names(predictors)), ".tif"))
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

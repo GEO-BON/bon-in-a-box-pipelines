@@ -41,11 +41,15 @@ CI <- map[[3]]-map[[2]]  #Credible interval width
 output_pred <- file.path(outputFolder, "sdm_pred.tif")
 raster::writeRaster(x = map,
                           filename = output_pred,
+                          format='COG',
+                          options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
 
 output_uncertainty <- file.path(outputFolder, "uncertainty.tif")
 raster::writeRaster(x = CI,
                           output_uncertainty,
+                          format='COG',
+                          options=c("COMPRESS=DEFLATE"),
                           overwrite = TRUE)
  
 output <- list("sdm_pred" = output_pred,

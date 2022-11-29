@@ -17,7 +17,7 @@ inputs:
   collection:
     label: collection
     description: String, name of the collection containing the predictors in the STAC catalogue
-    type: string
+    type: text
     example: "chelsa-clim"
   layers: 
     label: layers

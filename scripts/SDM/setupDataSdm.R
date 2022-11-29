@@ -42,8 +42,7 @@ print(input)
 
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
 background <- read.table(file = input$background, sep = '\t', header = TRUE) 
-predictors <- terra::rast(input$predictors)
-
+predictors <- terra::rast(unlist(input$predictors))
 # names(predictors) <- input$layers
 
 presence_bg_vals <- setup_presence_background(

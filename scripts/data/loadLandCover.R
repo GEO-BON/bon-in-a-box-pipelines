@@ -83,9 +83,15 @@ if (input$stac_source == "IO") {
 output_nc_predictors <- file.path(outputFolder, "lc.tif")
 raster::writeRaster(x = lc_raster,
                           output_nc_predictors,
+<<<<<<< HEAD
                     format='COG',
                     options=c("COMPRESS=DEFLATE"),
                     overwrite = TRUE)
+=======
+                          format='COG',
+                          options=c("COMPRESS=DEFLATE"),
+                          overwrite = TRUE)
+>>>>>>> a33c38ff7a3db5c7b1cd8ea4b0153cb45a5bd3b5
  
 output <- list(
   "output_lc" =  output_nc_predictors

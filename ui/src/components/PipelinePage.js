@@ -3,7 +3,7 @@ import Select from 'react-select';
 
 import { Result } from "./Result";
 import { InputFileWithExample } from './InputFileWithExample';
-import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
+import { FoldableOutputWithContext, RenderContext, createContext } from './FoldableOutput'
 
 import { useInterval } from '../UseInterval';
 
@@ -296,10 +296,10 @@ function DelayedResult({id, folder, setRunningScripts}) {
   let logsAddress = folder && "output/" + folder + "/logs.txt"
 
   return (
-    <FoldableOutput title={script} componentId={id} inline={inline} className={className}
+    <FoldableOutputWithContext title={script} componentId={id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
       {folder && !skipped && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
-    </FoldableOutput>
+    </FoldableOutputWithContext>
   )
 }

@@ -30,9 +30,9 @@ consensus <- model_consensus(predictions, presence_background, input$consensus_m
     input$min_auc, input$top_k_auc)
 output_consensus<- file.path(outputFolder, "consensus.tif")
 
- if(!is.null(output_consensus)) {
-terra::writeRaster(consensus, output_consensus, overwrite = T)
- }
+if(!is.null(output_consensus)) {
+    terra::writeRaster(consensus, output_consensus, overwrite = T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
+}
 
 output <- list("consensus" =  output_consensus)
 jsonData <- toJSON(output, indent=2)

@@ -28,9 +28,9 @@ print(input)
 range <- range_predictions(input$predictions)
 output_range <- file.path(outputFolder, "range_predictions.tif")
 
- if(!is.null(output_range)) {
-terra::writeRaster(range, output_range, overwrite = T)
- }
+if(!is.null(output_range)) {
+  terra::writeRaster(range, output_range, overwrite = T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
+}
 
 output <- list("range_predictions" =  output_range)
 jsonData <- toJSON(output, indent=2)
