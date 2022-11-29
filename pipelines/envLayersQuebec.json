@@ -1,0 +1,772 @@
+{
+  "nodes": [
+    {
+      "id": "13",
+      "type": "io",
+      "position": {
+        "x": 296.5,
+        "y": 222
+      },
+      "data": {
+        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+      }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 77,
+        "y": 0
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "local",
+        "options": [
+          "local",
+          "forward",
+          "backward"
+        ]
+      }
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": 46,
+        "y": 90
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "ssp126",
+        "options": [
+          "ssp126",
+          "ssp370",
+          "ssp585"
+        ]
+      }
+    },
+    {
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": 11.5,
+        "y": 756.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "1000"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": 7.5,
+        "y": 676.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "18",
+      "type": "constant",
+      "position": {
+        "x": 45.5,
+        "y": 221
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mean",
+        "options": [
+          "min",
+          "max",
+          "mean",
+          "median",
+          "first"
+        ]
+      }
+    },
+    {
+      "id": "19",
+      "type": "constant",
+      "position": {
+        "x": 7.5,
+        "y": 301
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1981-01-01"
+      }
+    },
+    {
+      "id": "20",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 39
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1990-12-31"
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 35.5,
+        "y": 578.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "2041-2070",
+        "options": [
+          "2011-2040",
+          "2041-2070",
+          "2071-2100"
+        ]
+      }
+    },
+    {
+      "id": "23",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 876.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          "-831561.2",
+          "116773.2",
+          "784438.8",
+          "2103773"
+        ]
+      }
+    },
+    {
+      "id": "24",
+      "type": "output",
+      "position": {
+        "x": 669,
+        "y": 286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "37",
+      "type": "io",
+      "position": {
+        "x": 296.5,
+        "y": 578
+      },
+      "data": {
+        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+      }
+    },
+    {
+      "id": "38",
+      "type": "constant",
+      "position": {
+        "x": 77,
+        "y": 817.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "forward",
+        "options": [
+          "local",
+          "forward",
+          "backward"
+        ]
+      }
+    },
+    {
+      "id": "40",
+      "type": "output",
+      "position": {
+        "x": 669,
+        "y": 642
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "41",
+      "type": "io",
+      "position": {
+        "x": 301.5,
+        "y": 943
+      },
+      "data": {
+        "descriptionFile": "data>loadLandCover.yml"
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 928
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://io.biodiversite-quebec.ca/stac/"
+      }
+    },
+    {
+      "id": "43",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 969
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "c(\"esacci-lc\")"
+      }
+    },
+    {
+      "id": "44",
+      "type": "constant",
+      "position": {
+        "x": 23,
+        "y": 1010
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "250"
+      }
+    },
+    {
+      "id": "45",
+      "type": "constant",
+      "position": {
+        "x": 116,
+        "y": 1051
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "IO",
+        "options": [
+          "IO",
+          "PC"
+        ]
+      }
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 1090
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2010-01-01"
+      }
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 1131
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2010-12-31"
+      }
+    },
+    {
+      "id": "48",
+      "type": "constant",
+      "position": {
+        "x": 134,
+        "y": 1172
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean",
+        "value": true
+      }
+    },
+    {
+      "id": "50",
+      "type": "constant",
+      "position": {
+        "x": 13,
+        "y": 1210
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          "0",
+          "10",
+          "20",
+          "30",
+          "40",
+          "50",
+          "60",
+          "70",
+          "80",
+          "90",
+          "100",
+          "110",
+          "120",
+          "130",
+          "140",
+          "150",
+          "160",
+          "170",
+          "180",
+          "190",
+          "200",
+          "210",
+          "220"
+        ]
+      }
+    },
+    {
+      "id": "51",
+      "type": "io",
+      "position": {
+        "x": 290,
+        "y": 400
+      },
+      "data": {
+        "descriptionFile": "ClimateMetrics>climateRarity.yml"
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 139
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "mean"
+      }
+    },
+    {
+      "id": "53",
+      "type": "constant",
+      "position": {
+        "x": 23,
+        "y": 180
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 11
+      }
+    },
+    {
+      "id": "54",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 260
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1981-01-01"
+      }
+    },
+    {
+      "id": "55",
+      "type": "constant",
+      "position": {
+        "x": 15,
+        "y": 410.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1981-12-31"
+      }
+    },
+    {
+      "id": "56",
+      "type": "constant",
+      "position": {
+        "x": 9,
+        "y": 527.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.25
+      }
+    },
+    {
+      "id": "58",
+      "type": "output",
+      "position": {
+        "x": 669,
+        "y": 464
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "59",
+      "type": "output",
+      "position": {
+        "x": 669,
+        "y": 1014.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "metric",
+      "id": "reactflow__edge-14-13metric"
+    },
+    {
+      "source": "13",
+      "sourceHandle": "output_tif",
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-13output_tif-24"
+    },
+    {
+      "source": "38",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "metric",
+      "id": "reactflow__edge-38-37metric"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "output_tif",
+      "target": "40",
+      "targetHandle": null,
+      "id": "reactflow__edge-37output_tif-40"
+    },
+    {
+      "source": "42",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "stac_path",
+      "id": "reactflow__edge-42-41stac_path"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-15-51rcp"
+    },
+    {
+      "source": "51",
+      "sourceHandle": "output_tif",
+      "target": "58",
+      "targetHandle": null,
+      "id": "reactflow__edge-51output_tif-58"
+    },
+    {
+      "source": "41",
+      "sourceHandle": "output_tif",
+      "target": "59",
+      "targetHandle": null,
+      "id": "reactflow__edge-41output_tif-59"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-15-13rcp"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-15-37rcp"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "collections",
+      "id": "reactflow__edge-43-41collections"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-16-51spatial_res"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-16-13spatial_res"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-16-37spatial_res"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-23-41bbox"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-17-51srs_cube"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-17-13srs_cube"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-17-37srs_cube"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "srs.cube",
+      "id": "reactflow__edge-17-41srs.cube"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-52-51aggregation"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-18-13aggregation"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-18-37aggregation"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-44-41spatial_res"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "moving_window",
+      "id": "reactflow__edge-53-51moving_window"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-19-13t0"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-19-37t0"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "stac_source",
+      "id": "reactflow__edge-45-41stac_source"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-54-51t0"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-20-13t1"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-46-41t0"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-55-51t1"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-47-41t1"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-56-51t_match"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-22-13time_span"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-22-37time_span"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "prop",
+      "id": "reactflow__edge-48-41prop"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-22-51time_span"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-23-13bbox"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-23-37bbox"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "prop.res",
+      "id": "reactflow__edge-16-41prop.res"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-23-51bbox"
+    },
+    {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "select_values",
+      "id": "reactflow__edge-50-41select_values"
+    }
+  ],
+  "viewport": {
+    "x": 132.40759199481988,
+    "y": -67.45793274700549,
+    "zoom": 0.7071067811865475
+  },
+  "inputs": {
+    "ClimateMetrics>climateVelocity.yml@13.t_match": {
+      "description": "Acceptable difference of mean temperature to consider that the climate is similar.",
+      "label": "threshold match",
+      "type": "float",
+      "example": 0.25
+    },
+    "ClimateMetrics>climateVelocity.yml@37.t1": {
+      "description": "Current climate end time, in format aaaa-mm-dd",
+      "label": "Current climate end",
+      "type": "text",
+      "example": "1981-12-31"
+    },
+    "ClimateMetrics>climateVelocity.yml@37.t_match": {
+      "description": "Acceptable difference of mean temperature to consider that the climate is similar.",
+      "label": "threshold match",
+      "type": "float",
+      "example": 0.25
+    }
+  }
+}
