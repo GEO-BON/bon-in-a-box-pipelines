@@ -2,8 +2,11 @@ package org.geobon.pipeline
 
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.SCRIPT
+import org.geobon.script.Description.TIMEOUT
 import org.geobon.script.ScriptRun
+import org.geobon.script.ScriptRun.Companion.DEFAULT_TIMEOUT
 import java.io.File
+import kotlin.time.Duration.Companion.minutes
 
 
 class ScriptStep(yamlFile: File, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
@@ -23,7 +26,8 @@ class ScriptStep(yamlFile: File, inputs: MutableMap<String, Pipe> = mutableMapOf
 
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
-        val scriptRun = ScriptRun(scriptFile, resolvedInputs.toSortedMap(), context!!)
+        val specificTimeout = (yamlParsed[TIMEOUT] as? Int)?.minutes
+        val scriptRun = ScriptRun(scriptFile, resolvedInputs.toSortedMap(), context!!, specificTimeout ?: DEFAULT_TIMEOUT)
 
         scriptRun.execute()
 

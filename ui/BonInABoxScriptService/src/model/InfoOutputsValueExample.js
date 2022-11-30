@@ -23,18 +23,78 @@ class InfoOutputsValueExample {
     /**
      * Constructs a new <code>InfoOutputsValueExample</code>.
      * @alias module:model/InfoOutputsValueExample
+     * @param {(module:model/Boolean|module:model/Number|module:model/String|module:model/[InfoInputsValueExampleOneOfInner])} instance The actual instance to initialize InfoOutputsValueExample.
      */
-    constructor() { 
-        
-        InfoOutputsValueExample.initialize(this);
-    }
+    constructor(instance = null) {
+        if (instance === null) {
+            this.actualInstance = null;
+            return;
+        }
+        var match = 0;
+        var errorMessages = [];
+        try {
+            // validate array of string
+            if (!(typeof instance === 'string')) {
+                throw new Error("Invalid input. Must be string. Input: " + JSON.stringify(instance));
+            }
+            this.actualInstance = instance;
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into String
+            errorMessages.push("Failed to construct String: " + err)
+        }
 
-    /**
-     * Initializes the fields of this object.
-     * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
-     * Only for internal use.
-     */
-    static initialize(obj) { 
+        try {
+            // JM: that condition was != instead of ==
+            // validate array of string
+            if (!(typeof instance === 'number' && instance % 1 == 0)) {
+                throw new Error("Invalid array items. Must be number. Input: " + JSON.stringify(instance));
+            }
+            this.actualInstance = instance;
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into Number
+            errorMessages.push("Failed to construct Number: " + err)
+        }
+
+        try {
+            // JM: that condition code was missing, it made it crash.
+            // validate array of string
+            if (!(typeof instance === 'boolean')) {
+                throw new Error("Invalid input. Must be boolean. Input: " + JSON.stringify(instance));
+            }
+            this.actualInstance = instance;
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into Boolean
+            errorMessages.push("Failed to construct Boolean: " + err)
+        }
+
+        try {
+            if (typeof instance === "[InfoInputsValueExampleOneOfInner]") {
+                this.actualInstance = instance;
+            } else {
+                // plain JS object
+                // validate the object
+                [InfoInputsValueExampleOneOfInner].validateJSON(instance); // throw an exception if no match
+                // create [InfoInputsValueExampleOneOfInner] from JS object
+                this.actualInstance = [InfoInputsValueExampleOneOfInner].constructFromObject(instance);
+            }
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into [InfoInputsValueExampleOneOfInner]
+            errorMessages.push("Failed to construct [InfoInputsValueExampleOneOfInner]: " + err)
+        }
+
+        if (match > 1) {
+            throw new Error("Multiple matches found constructing `InfoOutputsValueExample` with oneOf schemas Boolean, Number, String, [InfoInputsValueExampleOneOfInner]. Input: " + JSON.stringify(instance));
+        } else if (match === 0) {
+            this.actualInstance = null; // clear the actual instance in case there are multiple matches
+            throw new Error("No match found constructing `InfoOutputsValueExample` with oneOf schemas Boolean, Number, String, [InfoInputsValueExampleOneOfInner]. Details: " +
+                            errorMessages.join(", "));
+        } else { // only 1 match
+            // the input is valid
+        }
     }
 
     /**
@@ -45,20 +105,45 @@ class InfoOutputsValueExample {
      * @return {module:model/InfoOutputsValueExample} The populated <code>InfoOutputsValueExample</code> instance.
      */
     static constructFromObject(data, obj) {
-        if (data) {
-            obj = obj || new InfoOutputsValueExample();
-
-        }
-        return obj;
+        return new InfoOutputsValueExample(data);
     }
 
+    /**
+     * Gets the actual instance, which can be <code>Boolean</code>, <code>Number</code>, <code>String</code>, <code>[InfoInputsValueExampleOneOfInner]</code>.
+     * @return {(module:model/Boolean|module:model/Number|module:model/String|module:model/[InfoInputsValueExampleOneOfInner])} The actual instance.
+     */
+    getActualInstance() {
+        return this.actualInstance;
+    }
 
+    /**
+     * Sets the actual instance, which can be <code>Boolean</code>, <code>Number</code>, <code>String</code>, <code>[InfoInputsValueExampleOneOfInner]</code>.
+     * @param {(module:model/Boolean|module:model/Number|module:model/String|module:model/[InfoInputsValueExampleOneOfInner])} obj The actual instance.
+     */
+    setActualInstance(obj) {
+       this.actualInstance = InfoOutputsValueExample.constructFromObject(obj).getActualInstance();
+    }
+
+    /**
+     * Returns the JSON representation of the actual instance.
+     * @return {string}
+     */
+    toJSON = function(){
+        return this.getActualInstance();
+    }
+
+    /**
+     * Create an instance of InfoOutputsValueExample from a JSON string.
+     * @param {string} json_string JSON string.
+     * @return {module:model/InfoOutputsValueExample} An instance of InfoOutputsValueExample.
+     */
+    static fromJSON = function(json_string){
+        return InfoOutputsValueExample.constructFromObject(JSON.parse(json_string));
+    }
 }
 
 
-
-
-
+InfoOutputsValueExample.OneOf = ["Boolean", "Number", "String", "[InfoInputsValueExampleOneOfInner]"];
 
 export default InfoOutputsValueExample;
 

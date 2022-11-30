@@ -20,6 +20,7 @@ package org.openapitools.server.models
  * @param type 
  * @param range 
  * @param options 
+ * @param properties 
  * @param example 
  */
 data class InfoOutputsValue(
@@ -28,6 +29,7 @@ data class InfoOutputsValue(
     val type: kotlin.String? = null,
     val range: kotlin.collections.List<java.math.BigDecimal>? = null,
     val options: kotlin.collections.List<kotlin.String>? = null,
+    val properties: kotlin.collections.List<kotlin.String>? = null,
     // JM Lord: Any, since oneOf is not correctly supported by generator
     val example: Any? = null
 ) 
