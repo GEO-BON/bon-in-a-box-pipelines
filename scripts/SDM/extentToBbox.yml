@@ -9,7 +9,7 @@ inputs:
       - df_coordinates
       - box_coordinates
       - shapefile
-    example: 
+    example: box_coordinates
   df_coordinates:
     label: df coordinates
     description: dataframe, containing coordinates
@@ -41,8 +41,8 @@ inputs:
     type: float
     example: 1015207
   ymax:
-    label: xmax
-    description: xmax
+    label: ymax
+    description: ymax
     type: float
     example: 1511916
   path_shp:
