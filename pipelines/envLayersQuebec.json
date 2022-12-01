@@ -8,7 +8,7 @@
         "y": 222
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
@@ -174,7 +174,7 @@
         "y": 578
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
@@ -357,7 +357,7 @@
         "y": 400
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateRarity.yml"
+        "descriptionFile": "climateMetrics>climateRarity.yml"
       }
     },
     {
@@ -750,19 +750,19 @@
     "zoom": 0.7071067811865475
   },
   "inputs": {
-    "ClimateMetrics>climateVelocity.yml@13.t_match": {
+    "climateMetrics>climateVelocity.yml@13.t_match": {
       "description": "Acceptable difference of mean temperature to consider that the climate is similar.",
       "label": "threshold match",
       "type": "float",
       "example": 0.25
     },
-    "ClimateMetrics>climateVelocity.yml@37.t1": {
+    "climateMetrics>climateVelocity.yml@37.t1": {
       "description": "Current climate end time, in format aaaa-mm-dd",
       "label": "Current climate end",
       "type": "text",
       "example": "1981-12-31"
     },
-    "ClimateMetrics>climateVelocity.yml@37.t_match": {
+    "climateMetrics>climateVelocity.yml@37.t_match": {
       "description": "Acceptable difference of mean temperature to consider that the climate is similar.",
       "label": "threshold match",
       "type": "float",
