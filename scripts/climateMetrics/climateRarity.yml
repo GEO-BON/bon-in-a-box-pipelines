@@ -3,8 +3,12 @@ description: This script calculates climate rarity, using a moving window approa
 inputs:
   rcp:
     label: rcp
-    description: Representative Concentration Pathway Scenarios (ssp126, ssp370, ssp585)
-    type: text
+    description: Representative Concentration Pathway Scenarios (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
+    type: options
+    options: 
+      - ssp126
+      - ssp370
+      - ssp585
     example: ssp126
   spatial_res:
     label: spatial resolution
@@ -42,9 +46,13 @@ inputs:
     type: float
     example: 0.25
   time_span:
-    label: time span
-    description: period climate projection
-    type: text
+    label: Future time span
+    description: period for climate projection, start year to end year
+    type: options
+    options:
+      - 2011-2040 
+      - 2041-2070
+      - 2071-2100
     example: 2041-2070
   bbox:
     label: Bounding box
