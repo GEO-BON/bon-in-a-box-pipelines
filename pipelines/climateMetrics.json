@@ -8,7 +8,7 @@
         "y": 222
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
@@ -174,7 +174,7 @@
         "y": 578
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
@@ -357,7 +357,7 @@
         "y": 400
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateRarity.yml"
+        "descriptionFile": "climateMetrics>climateRarity.yml"
       }
     },
     {
