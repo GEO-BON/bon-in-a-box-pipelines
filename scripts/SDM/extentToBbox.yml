@@ -59,7 +59,7 @@ inputs:
     label: output bbox projection system 
     description: string, projection of output bbox
     type: string
-    example: null  
+    example: "EPSG:6623"  
 
 outputs:
   bbox:
