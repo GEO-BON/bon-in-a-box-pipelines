@@ -627,19 +627,6 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 483.15035994101936,
-        "y": 490.4085337837803
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0.8
-      }
-    },
-    {
-      "id": "64",
-      "type": "constant",
-      "position": {
         "x": 613.1807174755917,
         "y": 254.55636680794174
       },
@@ -647,6 +634,19 @@
       "data": {
         "type": "int",
         "value": 0
+      }
+    },
+    {
+      "id": "65",
+      "type": "constant",
+      "position": {
+        "x": 482.22910500592945,
+        "y": 490.0395295823338
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.8
       }
     }
   ],
@@ -1007,11 +1007,18 @@
       "target": "15",
       "targetHandle": "bbox_buffer",
       "id": "reactflow__edge-64-15bbox_buffer"
+    },
+    {
+      "source": "65",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "env_threshold",
+      "id": "reactflow__edge-65-34env_threshold"
     }
   ],
   "viewport": {
-    "x": -340.6503176680135,
-    "y": 83.93476678040679,
+    "x": 7.349682331986742,
+    "y": 53.93476678040679,
     "zoom": 0.8705505632961245
   },
   "inputs": {}
