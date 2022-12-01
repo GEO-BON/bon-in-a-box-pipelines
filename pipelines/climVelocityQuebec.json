@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 636,
-        "y": 145.5
+        "x": 798,
+        "y": 87
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateVelocity.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "constant",
       "position": {
-        "x": 423,
-        "y": 0
+        "x": 540.5,
+        "y": 118
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -33,8 +33,8 @@
       "id": "2",
       "type": "constant",
       "position": {
-        "x": 437,
-        "y": 38
+        "x": 554.5,
+        "y": 156
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -51,8 +51,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 369,
-        "y": 76
+        "x": 487.5,
+        "y": 194
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,8 +64,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 361,
-        "y": 116
+        "x": 479.5,
+        "y": 234
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 436,
-        "y": 156
+        "x": 553.5,
+        "y": 274
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -97,8 +97,8 @@
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 361,
-        "y": 194
+        "x": 479.5,
+        "y": 312
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -110,8 +110,8 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 361,
-        "y": 234
+        "x": 479.5,
+        "y": 352
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -123,8 +123,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 416,
-        "y": 274
+        "x": 533.5,
+        "y": 432
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -138,22 +138,11 @@
       }
     },
     {
-      "id": "10",
-      "type": "io",
-      "position": {
-        "x": 382.5,
-        "y": 312
-      },
-      "data": {
-        "descriptionFile": "extent>shpToBbox.yml"
-      }
-    },
-    {
       "id": "11",
       "type": "constant",
       "position": {
-        "x": 0,
-        "y": 320.5
+        "x": 74,
+        "y": 604.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -162,37 +151,11 @@
       }
     },
     {
-      "id": "12",
-      "type": "constant",
-      "position": {
-        "x": 369,
-        "y": 407
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": "0"
-      }
-    },
-    {
-      "id": "13",
-      "type": "constant",
-      "position": {
-        "x": 369,
-        "y": 447
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 11
-      }
-    },
-    {
       "id": "14",
       "type": "constant",
       "position": {
-        "x": 356,
-        "y": 487
+        "x": 474.5,
+        "y": 392
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -204,29 +167,144 @@
       "id": "16",
       "type": "output",
       "position": {
-        "x": 1015,
-        "y": 229
+        "x": 1164,
+        "y": 149
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "17",
+      "id": "19",
       "type": "constant",
       "position": {
-        "x": 437,
-        "y": 369
+        "x": 176,
+        "y": 286.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
-        "value": "bilinear",
+        "value": "shapefile",
         "options": [
-          "bilinear",
-          "near",
-          "bicubic"
+          "df_coordinates",
+          "box_coordinates",
+          "shapefile"
         ]
+      }
+    },
+    {
+      "id": "20",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 324.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/tab-separated-values",
+        "value": "/scripts/SDM/runModel_presence_background.tsv"
+      }
+    },
+    {
+      "id": "21",
+      "type": "constant",
+      "position": {
+        "x": 142,
+        "y": 364.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "string",
+        "value": "lon"
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 142,
+        "y": 404.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "string",
+        "value": "lat"
+      }
+    },
+    {
+      "id": "23",
+      "type": "constant",
+      "position": {
+        "x": 151,
+        "y": 444.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": -2316297
+      }
+    },
+    {
+      "id": "24",
+      "type": "constant",
+      "position": {
+        "x": 151,
+        "y": 484.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": -1971146
+      }
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": 151,
+        "y": 524.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1015207
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 151,
+        "y": 564.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1511916
+      }
+    },
+    {
+      "id": "29",
+      "type": "io",
+      "position": {
+        "x": 431,
+        "y": 470
+      },
+      "data": {
+        "descriptionFile": "SDM>extentToBbox.yml"
+      }
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": 71,
+        "y": 644.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "string",
+        "value": "EPSG:6623"
       }
     }
   ],
@@ -239,18 +317,18 @@
       "id": "reactflow__edge-1-0metric"
     },
     {
-      "source": "11",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "extent",
-      "id": "reactflow__edge-11-10extent"
-    },
-    {
       "source": "0",
       "sourceHandle": "output_tif",
       "target": "16",
       "targetHandle": null,
       "id": "reactflow__edge-0output_tif-16"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "source",
+      "id": "reactflow__edge-19-29source"
     },
     {
       "source": "2",
@@ -260,11 +338,25 @@
       "id": "reactflow__edge-2-0rcp"
     },
     {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "df_coordinates",
+      "id": "reactflow__edge-20-29df_coordinates"
+    },
+    {
       "source": "3",
       "sourceHandle": null,
       "target": "0",
       "targetHandle": "spatial_res",
       "id": "reactflow__edge-3-0spatial_res"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "lon",
+      "id": "reactflow__edge-21-29lon"
     },
     {
       "source": "4",
@@ -274,11 +366,25 @@
       "id": "reactflow__edge-4-0srs_cube"
     },
     {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "lat",
+      "id": "reactflow__edge-22-29lat"
+    },
+    {
       "source": "5",
       "sourceHandle": null,
       "target": "0",
       "targetHandle": "aggregation",
       "id": "reactflow__edge-5-0aggregation"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "xmin",
+      "id": "reactflow__edge-23-29xmin"
     },
     {
       "source": "6",
@@ -288,11 +394,39 @@
       "id": "reactflow__edge-6-0t0"
     },
     {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "ymin",
+      "id": "reactflow__edge-24-29ymin"
+    },
+    {
       "source": "7",
       "sourceHandle": null,
       "target": "0",
       "targetHandle": "t1",
       "id": "reactflow__edge-7-0t1"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "xmax",
+      "id": "reactflow__edge-25-29xmax"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-14-0t_match"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "ymax",
+      "id": "reactflow__edge-26-29ymax"
     },
     {
       "source": "8",
@@ -302,44 +436,37 @@
       "id": "reactflow__edge-8-0time_span"
     },
     {
-      "source": "10",
+      "source": "11",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "path_shp",
+      "id": "reactflow__edge-11-29path_shp"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "29",
+      "targetHandle": "proj_from",
+      "id": "reactflow__edge-31-29proj_from"
+    },
+    {
+      "source": "29",
       "sourceHandle": "bbox",
       "target": "0",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-10bbox-0bbox"
+      "id": "reactflow__edge-29bbox-0bbox"
     },
     {
-      "source": "17",
+      "source": "31",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-17-0resampling"
-    },
-    {
-      "source": "12",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "buffer_box",
-      "id": "reactflow__edge-12-0buffer_box"
-    },
-    {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "moving_window",
-      "id": "reactflow__edge-13-0moving_window"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "t_match",
-      "id": "reactflow__edge-14-0t_match"
+      "target": "29",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-31-29proj_to"
     }
   ],
   "viewport": {
-    "x": 0,
-    "y": 0,
+    "x": -499,
+    "y": -41,
     "zoom": 1
   },
   "inputs": {}
