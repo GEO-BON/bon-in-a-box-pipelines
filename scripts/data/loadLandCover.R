@@ -88,7 +88,7 @@ raster::writeRaster(x = lc_raster,
                     overwrite = TRUE)
 
 output <- list(
-  "output_lc" =  output_nc_predictors
+  "output_tif" =  output_nc_predictors
                   ) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
