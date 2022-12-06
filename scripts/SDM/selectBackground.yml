@@ -19,6 +19,8 @@ inputs:
     options: 
       - random
       - inclusion_buffer
+      - weighted_raster
+      - unweighted_raster
     example: random
   n_background: 
     label: number of background points
@@ -29,7 +31,19 @@ inputs:
     label: predictors
     description: raster, predictors variables 
     type: image/tiff;application=geotiff[]
-    example: ["/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif"]
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+  raster:
+    label: raster
+    description: taxa-specific raster of sampling, used in weighted_raster and unweighted_raster methods, if using from_stac then the corresponding taxa (e.g., 'reptiles')
+    type: image/tiff;application=geotiff[]
+    example: "/scripts/SDM/selectBackground-Reptiles-QC.tif"
+  raster_source:
+    label: raster source
+    description: String, whether to access script from .tif, or STAC catalogue
+    options:
+      - from_tif
+      - from_cube
+    example: "from_tif"
 outputs:
   n_background:
     label: nb background 

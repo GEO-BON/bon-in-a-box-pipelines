@@ -1,7 +1,8 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "stars")
+packages <- c("terra", "rjson", "raster", "dplyr", "rstac",
+              "CoordinateCleaner", "stars", "gdalcubes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -12,6 +13,8 @@ library("raster")
 library("CoordinateCleaner")
 library("dplyr")
 library("stars")
+library("rstac")
+library("gdalcubes")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/selectBackgroundFunc.R", sep = "/"))
@@ -23,22 +26,33 @@ outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
 
 setwd(outputFolder)
+# Does this make sense with setwd()? -Dat
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
 study_extent <- sf::st_read(input$extent)
-predictors <- terra::rast(unlist(input$predictors))
+predictors <- terra::rast(input$predictors)
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE)
+
+# Optional.. so without input it should be NULL
+if(!is.null(input$raster)){
+  heatmap <- readRaster(raster = input$raster, source = input$raster_source, 
+                        ref = predictors)
+}else{
+  heatmap <- NULL
+}
+
 
 background <- create_background(
   predictors = predictors, 
   obs = presence,
   mask = study_extent,
-  method = "random", #will select random points in predictors_study_extent area
+  method = input$method_background, #will select random points in predictors_study_extent area
   n = input$n_background,
   width_buffer = input$width_buffer,
-  density_bias = input$density) 
+  density_bias = input$density,
+  raster = heatmap)
 
  
 background.output <- file.path(outputFolder, "background.tsv")
@@ -47,11 +61,8 @@ write.table(background, background.output,
   output <- list(
                   "n_background" =  nrow(background),
                   "background"= background.output
-                  
-                  ) 
+                  )
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
-
-  
 
