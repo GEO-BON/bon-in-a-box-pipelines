@@ -1,0 +1,21 @@
+script: obsToHeatmap.R
+description: "Converts occurrence points to raster, conforming to resolution and projection of the predictors raster."
+
+inputs:
+  presence:
+    label: presence
+    description: Dataframe, presence data.
+    type: text/tab-separated-values
+    example: "/scripts/SDM/selectBackground_presence.tsv"
+  predictors: 
+    label: predictors
+    description: raster, predictors variables 
+    type: image/tiff;application=geotiff[]
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+outputs:
+  heatmap:
+    label: heatmap
+    description: raster, heatmap of occurrences
+    type: image/tiff;application=geotiff[]
+    example:
+
