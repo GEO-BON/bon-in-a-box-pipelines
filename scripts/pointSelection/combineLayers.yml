@@ -3,10 +3,10 @@ description: Combines the layers and associate wieghts to create a priority map 
 
 inputs:
     layerdata:
-        label: Layer csv
+        label: Layer matrix
         description: Array with layer url in the first column, and weights for each layer and target in subsequent columns. One row for each layer.
-        type: text/csv
-        example: ["/path/layer.csv"]
+        type: text[]
+        example: ["layer, current, change\nfirstId, 0.2, 0.5\nhttps://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif, 0.5, 0.2\nthirdId, 0.3, 0.3\n"]
     targetbalance:
         label: Balance between targets
         description: List of weights for each target, should sum to 1

@@ -4,41 +4,178 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 80.140625,
-        "y": 300
+        "x": 435,
+        "y": 10.5
       },
       "data": {
-        "descriptionFile": "pointSelection>layerData.yml"
+        "descriptionFile": "pipeline>AssignId.yml"
       }
     },
     {
       "id": "1",
       "type": "io",
       "position": {
-        "x": 370.140625,
-        "y": 305
+        "x": 435,
+        "y": 86.5
       },
       "data": {
-        "descriptionFile": "pointSelection>combineLayers.yml"
+        "descriptionFile": "pipeline>AssignId.yml"
       }
     },
     {
       "id": "2",
       "type": "io",
       "position": {
-        "x": 764.5807338929219,
-        "y": 358.03266787658805
+        "x": 435,
+        "y": 162.5
       },
       "data": {
-        "descriptionFile": "pointSelection>balancedAcceptance.yml"
+        "descriptionFile": "pipeline>AssignId.yml"
       }
     },
     {
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 96.95278470961887,
-        "y": 379.81578947368416
+        "x": 182,
+        "y": 0
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "backwards_velocity1"
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 38
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif"
+      }
+    },
+    {
+      "id": "5",
+      "type": "constant",
+      "position": {
+        "x": 182,
+        "y": 76
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "backwards_velocity2"
+      }
+    },
+    {
+      "id": "6",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 114
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif"
+      }
+    },
+    {
+      "id": "7",
+      "type": "constant",
+      "position": {
+        "x": 182,
+        "y": 152
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "soilgrids"
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 190
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": "https://object-arbutus.cloud.computecanada.ca/bq-io/io/soilgrids/wv1500_5-15cm_mean_1000.tif"
+      }
+    },
+    {
+      "id": "9",
+      "type": "io",
+      "position": {
+        "x": 705,
+        "y": 78
+      },
+      "data": {
+        "descriptionFile": "pipeline>PullLayersById.yml"
+      }
+    },
+    {
+      "id": "10",
+      "type": "io",
+      "position": {
+        "x": 1015,
+        "y": 109.75
+      },
+      "data": {
+        "descriptionFile": "pointSelection>combineLayers.yml"
+      }
+    },
+    {
+      "id": "11",
+      "type": "io",
+      "position": {
+        "x": 1415,
+        "y": 150.25
+      },
+      "data": {
+        "descriptionFile": "pointSelection>balancedAcceptance.yml"
+      }
+    },
+    {
+      "id": "12",
+      "type": "constant",
+      "position": {
+        "x": 1095,
+        "y": 164.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 3.14159
+      }
+    },
+    {
+      "id": "13",
+      "type": "constant",
+      "position": {
+        "x": 1077,
+        "y": 202.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "integer",
+        "value": "50"
+      }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 725.5,
+        "y": 133
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,48 +187,11 @@
       }
     },
     {
-      "id": "4",
-      "type": "constant",
-      "position": {
-        "x": 498.0934380671506,
-        "y": 384.1411070780399
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 3.14159
-      }
-    },
-    {
-      "id": "5",
-      "type": "constant",
-      "position": {
-        "x": 499.0934380671506,
-        "y": 438.5453720508167
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "integer",
-        "value": "50"
-      }
-    },
-    {
-      "id": "6",
+      "id": "15",
       "type": "output",
       "position": {
-        "x": 1207.9983686345697,
-        "y": 341.442676909629
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "7",
-      "type": "output",
-      "position": {
-        "x": 807.075145798806,
-        "y": 245.11380940889075
+        "x": 1836,
+        "y": 159.75
       },
       "data": {
         "label": "Output"
@@ -100,59 +200,122 @@
   ],
   "edges": [
     {
-      "source": "0",
-      "sourceHandle": "layerdata",
-      "target": "1",
-      "targetHandle": "layerdata",
-      "id": "reactflow__edge-0layerdata-1layerdata"
-    },
-    {
       "source": "3",
       "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "targetbalance",
-      "id": "reactflow__edge-3-1targetbalance"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "priority_map",
-      "target": "2",
-      "targetHandle": "priority_map",
-      "id": "reactflow__edge-1priority_map-2priority_map"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "bias_toward_high_priority",
-      "id": "reactflow__edge-4-2bias_toward_high_priority"
+      "target": "0",
+      "targetHandle": "id",
+      "id": "reactflow__edge-3-0id"
     },
     {
       "source": "5",
       "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "num_points",
-      "id": "reactflow__edge-5-2num_points"
+      "target": "1",
+      "targetHandle": "id",
+      "id": "reactflow__edge-5-1id"
     },
     {
-      "source": "2",
+      "source": "7",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "id",
+      "id": "reactflow__edge-7-2id"
+    },
+    {
+      "source": "10",
+      "sourceHandle": "priority_map",
+      "target": "11",
+      "targetHandle": "priority_map",
+      "id": "reactflow__edge-10priority_map-11priority_map"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "with_layers",
+      "target": "10",
+      "targetHandle": "layerdata",
+      "id": "reactflow__edge-9with_layers-10layerdata"
+    },
+    {
+      "source": "11",
       "sourceHandle": "points",
-      "target": "6",
+      "target": "15",
       "targetHandle": null,
-      "id": "reactflow__edge-2points-6"
+      "id": "reactflow__edge-11points-15"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "layer",
+      "id": "reactflow__edge-4-0layer"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "layer",
+      "id": "reactflow__edge-6-1layer"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "layer",
+      "id": "reactflow__edge-8-2layer"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "identified_layer",
+      "target": "9",
+      "targetHandle": "identified_layers",
+      "id": "reactflow__edge-0identified_layer-9identified_layers"
     },
     {
       "source": "1",
-      "sourceHandle": "priority_map",
-      "target": "7",
-      "targetHandle": null,
-      "id": "reactflow__edge-1priority_map-7"
+      "sourceHandle": "identified_layer",
+      "target": "9",
+      "targetHandle": "identified_layers",
+      "id": "reactflow__edge-1identified_layer-9identified_layers"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "identified_layer",
+      "target": "9",
+      "targetHandle": "identified_layers",
+      "id": "reactflow__edge-2identified_layer-9identified_layers"
+    },
+    {
+      "source": "12",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "bias_toward_high_priority",
+      "id": "reactflow__edge-12-11bias_toward_high_priority"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "targetbalance",
+      "id": "reactflow__edge-14-10targetbalance"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "num_points",
+      "id": "reactflow__edge-13-11num_points"
     }
   ],
   "viewport": {
-    "x": 88.37764568549528,
-    "y": 14.552049112410486,
-    "zoom": 0.6749842095252769
+    "x": -137.40633745807247,
+    "y": 203.78138763685263,
+    "zoom": 0.8633395585744134
   },
-  "inputs": {}
+  "inputs": {
+    "pipeline>PullLayersById.yml@9.with_ids": {
+      "description": "Config containing the ids. The an id will be replaced by the corresponding layer in with_layers output.",
+      "label": "With IDs",
+      "type": "text",
+      "example": "layer, current, change\nbackwards_velocity1, 0.2, 0.8\nbackwards_velocity2, 0.8, 0.2\nthirdId, 0.7, 0.3\n"
+    }
+  }
 }

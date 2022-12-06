@@ -16,10 +16,12 @@ input = JSON.parsefile(filepath)
 
 # Assign json objects to variables
 print(input["layerdata"])
-layermat = CSV.read(input["layerdata"], DataFrame)
+layermat = CSV.read(IOBuffer(input["layerdata"][1]), DataFrame)
 print(layermat)
 
 targetbalance = convert(Vector{Float64}, input["targetbalance"]) # this is the same as α
+layer_col = layermat[:, :layer]
+keep_rows = startswith.(layermat[:, :layer], "https:")
 
 #read in layers
 function get_simplesdmlayer(path)
@@ -27,13 +29,14 @@ function get_simplesdmlayer(path)
     SimpleSDMPredictor(geoarray.A[:,:,begin])
 end
 
-temppath = Downloads.download.(layermat[:, 1])
+temppath = Downloads.download.(layermat[keep_rows, 1])
 layers = BiodiversityObservationNetworks.stack(get_simplesdmlayer.(temppath))
 
 # get weights with weights for a layer in columns 
-W = Matrix(layermat[:, 2:end])
+W = Matrix(layermat[keep_rows, 2:end])
 
-priority = SimpleSDMPredictor(squish(layers, convert(Array{Float64}, transpose(W)), targetbalance))
+#priority = SimpleSDMPredictor(squish(layers, convert(Array{Float64}, transpose(W)), targetbalance))
+priority = SimpleSDMPredictor(squish(layers, W, targetbalance))
 
 priority_path = joinpath(outputFilepath, "priority_map.tiff")
 ###################
