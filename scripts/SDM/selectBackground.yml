@@ -43,7 +43,7 @@ inputs:
     options:
       - from_tif
       - from_cube
-    example: "from_tif"
+    example: from_tif
 outputs:
   n_background:
     label: nb background 
