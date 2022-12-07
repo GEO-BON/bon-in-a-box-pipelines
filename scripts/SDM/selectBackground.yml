@@ -40,7 +40,8 @@ inputs:
   raster_source:
     label: raster source
     description: String, whether to access script from .tif, or STAC catalogue
-    options:
+    type: options
+    options: 
       - from_tif
       - from_cube
     example: from_tif
