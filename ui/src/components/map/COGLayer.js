@@ -1,20 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
-import parseGeoraster from "georaster";
-import GeoRasterLayer from "georaster-layer-for-leaflet";
+
+import { useEffect, useRef } from "react";
+
 import chroma from "chroma-js";
-import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
+import { useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import {createRangeLegendControl} from "./Legend"
-import L from 'leaflet';
-
-// This is to make sure leaflet icons show up.
-// see https://github.com/PaulLeCam/react-leaflet/issues/453#issuecomment-410450387
-delete L.Icon.Default.prototype._getIconUrl;
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-})
+import parseGeoraster from "georaster";
+import GeoRasterLayer from "georaster-layer-for-leaflet";
 
 const scaleColors = [
   "#E5E5E5",
@@ -68,7 +60,7 @@ function nextPowerRange({ min, max }) {
 // console.log(standardRange({ min: 0, max: 0.9 }))
 // console.log(standardRange({ min: 2, max: 200 }))
 
-function COGLayer({ url, range }) {
+export default function COGLayer({ url, range }) {
   const rasterRef = useRef()
   const map = useMap()
 
@@ -83,7 +75,7 @@ function COGLayer({ url, range }) {
     const fullUrl = url.startsWith("http") ? url : window.location.origin + url
     parseGeoraster(fullUrl).then((georaster) => {
       if (georaster) {
-        rasterRef.current = georaster 
+        rasterRef.current = georaster
 
         // To get an idea of min and max, reduce the whole image to 100x100
         const options = { left: 0, top: 0, right: georaster.width, bottom: georaster.height, width: 100, height: 100 };
@@ -127,7 +119,7 @@ function COGLayer({ url, range }) {
             console.log("Using calculated range:", chosenRange)
             addLayer(Math.floor(chosenRange.min), Math.ceil(chosenRange.max))
           })
-        } 
+        }
 
       } else {
         console.error("Failed to fetch raster")
@@ -138,41 +130,8 @@ function COGLayer({ url, range }) {
       if (layer)
         layer.remove()
 
-      if(legend)
+      if (legend)
         legend.remove()
     };
   }, [map, range, url]);
-}
-
-export default function MapResult({ tiff, range, json }) {
-
-  const [jsonContent, setJsonContent] = useState()
-
-  useEffect(() => {
-    if (json) {
-      fetch(json)
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        }).then((result) => {
-          setJsonContent(result)
-        })
-    }
-  }, [json])
-
-  return <MapContainer className="map" center={[0,0]} zoom={5}>
-    <TileLayer
-      attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
-    />
-    {jsonContent &&
-      <GeoJSON data={jsonContent}
-        eventHandlers={{
-          add: (e) => e.target._map.fitBounds(e.target.getBounds())
-        }}
-      />
-    }
-    {tiff && <COGLayer url={tiff} range={range} />}
-  </MapContainer>
 }

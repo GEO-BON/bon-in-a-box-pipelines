@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Map from './Map';
+import Map from './map/Map';
 import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
 import { FoldableOutputWithContext, RenderContext, createContext, FoldableOutput } from "./FoldableOutput";
