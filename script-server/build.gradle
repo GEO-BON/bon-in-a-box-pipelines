@@ -51,6 +51,11 @@ test {
     environment "SCRIPT_LOCATION", "${projectDir}/src/test/resources/scripts/"
     environment "PIPELINES_LOCATION", "${projectDir}/src/test/resources/pipelines/"
     environment "OUTPUT_LOCATION", "${projectDir}/src/test/resources/outputs/"
+
+    testLogging {
+		events "failed"
+		exceptionFormat "full"
+	}
 }
 
 repositories {
