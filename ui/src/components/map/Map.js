@@ -15,19 +15,18 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
-function addTiffLayer(tiff, range) {
-  if(window.location.origin.startsWith("http://localhost")) {
-    if(!tiff.startsWith("http")) {
-      // For relative paths on localhost, we cannot use the online tiler. 
-      // This will be easy to see since a completely different color map will be used.
-      return <COGLayer url={tiff} range={range} />
-    }
+function addTiffLayer(url, range) {
+  const fullUrl = url.startsWith("http") ? url : window.location.origin + url
+  if(fullUrl.startsWith("http://localhost")) {
+    // For relative paths on localhost, we cannot use the online tiler. 
+    // This will be easy to see since a completely different color map will be used.
+    return <COGLayer url={fullUrl} range={range} />
   }
 
   // There is a bug with georaster that overlaps tiles when using a remote COG.
   // Our workaround is to use TiTiler to serve it as a tile layer instead.
   // see https://matplotlib.org/stable/tutorials/colors/colormaps.html
-  return <TiTilerLayer url={tiff} range={range} />
+  return <TiTilerLayer url={fullUrl} range={range} />
 }
 
 export default function MapResult({ tiff, range, json }) {

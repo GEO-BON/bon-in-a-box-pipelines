@@ -72,8 +72,7 @@ export default function COGLayer({ url, range }) {
     let layer
     let legend
 
-    const fullUrl = url.startsWith("http") ? url : window.location.origin + url
-    parseGeoraster(fullUrl).then((georaster) => {
+    parseGeoraster(url).then((georaster) => {
       if (georaster) {
         rasterRef.current = georaster
 

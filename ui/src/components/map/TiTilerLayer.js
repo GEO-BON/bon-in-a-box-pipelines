@@ -6,8 +6,9 @@ import { createRangeLegendControl } from "./Legend"
 import L from 'leaflet';
 import { extractLegend } from "../../utils/ColorMapping";
 
-const TILER_URL = 'https://tiler.biodiversite-quebec.ca/cog'
-const COLORMAP_NAME = "inferno" // see available in ColorMapping
+const TILER_URL = 'https://titiler.xyz/cog'
+// const TILER_URL = 'https://tiler.biodiversite-quebec.ca/cog'
+const COLORMAP_NAME = 'hot' // see available in ColorMapping
 
 function fetchStats(url) {
   return fetch(`${TILER_URL}/statistics?url=${url}`)
@@ -18,8 +19,10 @@ function fetchStats(url) {
         return Promise.reject(new Error('Failed to get statistics'))
     })
     .then(statArray => {
-      if (statArray[1])
-        return statArray[1]
+      const values = Object.values(statArray)
+      if (values.length > 0) {
+        return values[0]
+      }
       else
         return Promise.reject(new Error('Statistics array is empty'))
     })
@@ -65,18 +68,10 @@ export default function TiTilerLayer({ url, range }) {
     }
 
     if(range) {
-      addLayer(range.min, range.max)
+      addLayer(range[0], range[1])
     } else {
       fetchStats(url)
         .then(statistics => {
-          /*let data = []; 
-          const selectedLayerAssetName = ""
-          if (Object.keys(layerInfo).includes("data")) {
-            data = layerInfo.data[1];
-          } else {
-            data = layerInfo[selectedLayerAssetName][1];
-          }*/
-
           addLayer(statistics.percentile_2, statistics.percentile_98)
         })
         .catch(err => console.error(err))
@@ -88,7 +83,5 @@ export default function TiTilerLayer({ url, range }) {
     };
   }, [url])
 
-  return tileLayerUrl && <TileLayer url={tileLayerUrl} /*eventHandlers={{
-    add: (e) => console.log(e)
-  }}*/ />
+  return tileLayerUrl && <TileLayer url={tileLayerUrl} />
 }
