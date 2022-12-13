@@ -213,7 +213,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
   const [running, setRunning] = useState(false)
   const [skippedMessage, setSkippedMessage] = useState()
 
-  const script = id.substring(0, id.indexOf('@'))
+  const step = id.substring(0, id.indexOf('@'))
 
   useEffect(() => { 
     // A script is running when we know it's folder but have yet no result nor error message
@@ -275,8 +275,8 @@ function DelayedResult({id, folder, setRunningScripts}) {
       setScriptMetadata(data)
     };
 
-    api.getScriptInfo(script, callback);
-  }, [script]);
+    api.getScriptInfo(step, callback);
+  }, [step]);
 
   let content, inline = null;
   let className = "foldableScriptResult"
@@ -299,12 +299,18 @@ function DelayedResult({id, folder, setRunningScripts}) {
   }
 
   let logsAddress = folder && "output/" + folder + "/logs.txt"
+  const codeLink = scriptMetadata && getCodeLink(step, scriptMetadata.script)
 
   return (
-    <FoldableOutputWithContext title={script} componentId={id} inline={inline} className={className}>
+    <FoldableOutputWithContext title={step} componentId={id} inline={inline} className={className}>
       {scriptMetadata && <div className='stepDescription'>
         {scriptMetadata.description && <p className="outputDescription">{scriptMetadata.description}</p>}
-        {scriptMetadata.external_link && <p>See <a href={scriptMetadata.external_link} target="_blank">{scriptMetadata.external_link}</a></p>}
+        {(scriptMetadata.external_link || codeLink) &&
+          <p>See&nbsp;
+            {scriptMetadata.external_link && <a href={scriptMetadata.external_link} target="_blank">{scriptMetadata.external_link}</a>}
+            {scriptMetadata.external_link && codeLink && <>&nbsp;and&nbsp;</>}
+            {codeLink}
+          </p>}
         {scriptMetadata.references && <div>
           <p className='noMargin'>References: </p>
           <ul>{scriptMetadata.references.map(r => {
@@ -317,4 +323,19 @@ function DelayedResult({id, folder, setRunningScripts}) {
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutputWithContext>
   )
+}
+
+function getCodeLink(ymlPath, scriptFileName) {
+  if(!scriptFileName || scriptFileName.endsWith(".kt")) {
+    return null
+  }
+
+  const url = 'https://github.com/GEO-BON/biab-2.0/tree/main/scripts/' + removeLastSlash(ymlPath.replaceAll('>', '/')) + scriptFileName
+  return <a href={url} target="_blank">code</a>
+}
+
+function removeLastSlash(s) {
+  const i = s.lastIndexOf('/');
+  if(i == -1) return s
+  return s.substring(0, i + 1);
 }
