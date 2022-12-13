@@ -302,7 +302,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
   const codeLink = scriptMetadata && getCodeLink(step, scriptMetadata.script)
 
   return (
-    <FoldableOutputWithContext title={step} componentId={id} inline={inline} className={className}>
+    <FoldableOutputWithContext title={step.replaceAll('>', ' > ').replace(/.yml$/, '')} componentId={id} inline={inline} className={className}>
       {scriptMetadata && <div className='stepDescription'>
         {scriptMetadata.description && <p className="outputDescription">{scriptMetadata.description}</p>}
         {(scriptMetadata.external_link || codeLink) &&
