@@ -109,6 +109,18 @@ img#logo {
   background-size: 1.4em 1.6em;
 }
 
+.stepDescription {
+  font-size: small;
+}
+
+.stepDescription ul {
+  margin-top: 0;
+}
+
+.noMargin {
+  margin: 0;
+}
+
 .outputDescription {
   font-size: small;
   font-style: italic;
