@@ -168,15 +168,16 @@ function RenderedFiles({files, metadata}) {
                     title = output.label;
 
                 if (output.description)
-                    description = output.description;
+                    description = <p className="outputDescription">{output.description}</p>;
             }
 
             let isLink = isRelativeLink(value)
             return (
-                <FoldableOutputWithContext key={key} title={title} description={description} componentId={key}
+                <FoldableOutputWithContext key={key} title={title} componentId={key}
                     inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
                     inlineCollapsed={!isLink && renderInline(value)}
                     className="foldableOutput">
+                    {description}
                     {renderContent(key, value)}
                 </FoldableOutputWithContext>
             );

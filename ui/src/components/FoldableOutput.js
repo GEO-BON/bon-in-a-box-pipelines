@@ -9,22 +9,22 @@ export function createContext(activeRenderer, setActiveRenderer) {
     }
 }
 
-export function FoldableOutputWithContext({className, title, componentId, inline, inlineCollapsed, description, children}) {
+export function FoldableOutputWithContext({className, title, componentId, inline, inlineCollapsed, children}) {
     const renderContext = useContext(RenderContext);
     let active = renderContext.active === componentId;
 
     return <FoldableOutputInternal toggle={() => renderContext.toggleVisibility(componentId)} active={active}
-        className={className} title={title} inline={inline} inlineCollapsed={inlineCollapsed} description={description} children={children} />
+        className={className} title={title} inline={inline} inlineCollapsed={inlineCollapsed} children={children} />
 }
 
-export function FoldableOutput({className, title, inline, inlineCollapsed, description, children}) {
+export function FoldableOutput({className, title, inline, inlineCollapsed, children}) {
     const [active, setActive] = useState(false)
 
     return <FoldableOutputInternal toggle={() => setActive(prev => !prev)} active={active}
-        className={className} title={title} inline={inline} inlineCollapsed={inlineCollapsed} description={description} children={children} />
+        className={className} title={title} inline={inline} inlineCollapsed={inlineCollapsed} children={children} />
 }
 
-function FoldableOutputInternal({toggle, active, className, title, inline, inlineCollapsed, description, children}) {
+function FoldableOutputInternal({toggle, active, className, title, inline, inlineCollapsed, children}) {
     const titleRef = useRef(null);
 
     useEffect(() => {
@@ -43,7 +43,6 @@ function FoldableOutputInternal({toggle, active, className, title, inline, inlin
         </div>
         {active &&
             <div className="outputContent">
-                {description && <p className="outputDescription">{description}</p>}
                 {children}
             </div>}
     </div>

@@ -301,8 +301,18 @@ function DelayedResult({id, folder, setRunningScripts}) {
   let logsAddress = folder && "output/" + folder + "/logs.txt"
 
   return (
-    <FoldableOutputWithContext title={script} componentId={id} inline={inline} className={className}
-      description={scriptMetadata && scriptMetadata.description}>
+    <FoldableOutputWithContext title={script} componentId={id} inline={inline} className={className}>
+      {scriptMetadata && <div className='stepDescription'>
+        {scriptMetadata.description && <p className="outputDescription">{scriptMetadata.description}</p>}
+        {scriptMetadata.external_link && <p>See <a href={scriptMetadata.external_link} target="_blank">{scriptMetadata.external_link}</a></p>}
+        {scriptMetadata.references && <div>
+          <p className='noMargin'>References: </p>
+          <ul>{scriptMetadata.references.map(r => {
+            return <li>{r.text} {r.doi && <><br /><a href={r.doi} target="_blank">{r.doi}</a></>}</li>
+          })}
+          </ul>
+        </div>}
+      </div>}
       {content}
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutputWithContext>
