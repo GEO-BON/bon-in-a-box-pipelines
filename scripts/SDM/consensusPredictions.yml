@@ -3,16 +3,17 @@ description: "This script computes the consensus of a set of predictions rasters
 inputs:
   predictions:
     label: predictions
-    description: predictions rasters
+    description: Rasters, predictions computed by several models or runs.
     type: image/tiff;application=geotiff
     example: "/scripts/consensusPredictions_predictions.tif"
   presence_background:
     label: presence background
-    description: presence background point
+    description: Table, presence-background points
     type: text/tab-separated-values
     example: "/scripts/consensusPredictions_presence_background.tsv"
   consensus_method:
     label: consensus method
+    description: Option, method to compute a consensus between several predictions (median, mean or weighted average)
     type: options
     options:
       - median
@@ -21,12 +22,12 @@ inputs:
     example: median
   min_auc:
     label: min AUC
-    description: minimum AUC to select the models before calculating the consensus
+    description: Float, minimum AUC to select the models before calculating the consensus
     type: float
     example: 0.5
   top_k_auc:
     label: number of selected models
-    description: minimum AUC to select the models before calculating the consensus
+    description: Integer, number of selected models (ranked by decreasing AUC)
     type: int
     example: 10
 outputs:

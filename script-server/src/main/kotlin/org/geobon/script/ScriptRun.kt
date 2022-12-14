@@ -1,53 +1,74 @@
 package org.geobon.script
 
-import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import org.openapitools.server.utils.toMD5
+import com.google.gson.stream.MalformedJsonException
+import kotlinx.coroutines.*
+import org.geobon.pipeline.RunContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
+import java.io.IOException
+import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.SortedMap
+import java.util.concurrent.TimeoutException
+import kotlin.math.floor
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.DurationUnit
 
-val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
-class ScriptRun(private val scriptFile: File, private val inputFileContent: String?) {
-    constructor(scriptFile: File, inputMap: SortedMap<String, Any>)
-            : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap))
+class ScriptRun( // Constructor used in single script run
+    private val scriptFile: File,
+    private val inputFileContent: String?,
+    context: RunContext = RunContext(scriptFile, inputFileContent),
+    private val timeout: Duration = DEFAULT_TIMEOUT) {
+
+    // Constructor used in pipelines & tests
+    constructor(
+        scriptFile: File,
+        inputMap: SortedMap<String, Any>,
+        context: RunContext = RunContext(scriptFile, inputMap.toString()),
+        timeout: Duration = DEFAULT_TIMEOUT
+    ) : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), context, timeout)
 
     lateinit var results: Map<String, Any>
         private set
 
-    /**
-     * A unique string identifier representing a run of this script with these specific parameters.
-     * i.e. Calling the same script with the same param would result in the same ID.
-     */
-    val id = File(
-        // Unique to this script
-        scriptFile.relativeTo(scriptRoot).path,
-        // Unique to these params
-        inputFileContent?.toMD5() ?: "no_params"
-    ).path.replace('.', '_')
-
-    internal val outputFolder = File(outputRoot, id)
-    private val inputFile = File(outputFolder, "input.json")
-    internal val resultFile = File(outputFolder, "output.json")
+    private val outputFolder = context.outputFolder
+    private val inputFile = context.inputFile
+    val resultFile = context.resultFile
 
     private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
-    val logFile = File(outputFolder, "logs.txt")
+    internal val logFile = File(outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"
+        val DEFAULT_TIMEOUT = 1.hours
 
-        private val gson = Gson()
+        private val gson = GsonBuilder()
+            .setObjectToNumberStrategy { reader ->
+                val value: String = reader.nextString()
+                try {
+                    val d = value.toDouble()
+                    if ((d.isInfinite() || d.isNaN()) && !reader.isLenient) {
+                        throw MalformedJsonException("JSON forbids NaN and infinities: " + d + "; at path " + reader.previousPath)
+                    }
+
+                    if (floor(d) == d) {
+                        if (d > Integer.MAX_VALUE) d.toLong() else d.toInt()
+                    } else {
+                        d
+                    }
+
+                } catch (doubleE: NumberFormatException) {
+                    throw JsonParseException("Cannot parse " + value + "; at path " + reader.previousPath, doubleE)
+                }
+            }
+            .create()
 
         fun toJson(src: Any): String = gson.toJson(src)
-
-        val scriptRoot: File
-            get() = File(System.getenv("SCRIPT_LOCATION"))
     }
 
     suspend fun execute() {
@@ -66,9 +87,7 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                     )
                 }.onSuccess { previousOutputs ->
                     // Use this result only if there was no error and inputs have not changed
-                    if (previousOutputs[ERROR_KEY] == null
-                        && inputsOlderThanCache()
-                    ) {
+                    if (previousOutputs[ERROR_KEY] == null && inputsOlderThanCache()) {
                         logger.debug("Loading from cache")
                         return previousOutputs
                     }
@@ -77,7 +96,9 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
                 }
 
             } else { // Script was updated, flush the whole cache for this script
-                outputFolder.parentFile.deleteRecursively()
+                if (!outputFolder.parentFile.deleteRecursively()) {
+                    throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                }
             }
         }
 
@@ -135,7 +156,9 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
         runCatching {
             withContext(Dispatchers.IO) {
                 // If loading from cache didn't succeed, make sure we have a clean slate.
-                outputFolder.deleteRecursively()
+                if (outputFolder.exists() && !outputFolder.deleteRecursively()) {
+                    throw RuntimeException("Failed to delete directory of previous run ${outputFolder.path}")
+                }
 
                 // Create the output folder for this invocation
                 outputFolder.mkdirs()
@@ -150,8 +173,8 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
             val command = when (scriptFile.extension) {
-                "jl", "JL" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-julia", "julia")
-                "r", "R" -> mutableListOf("/usr/local/bin/docker", "exec", "biab-runner-r", "Rscript")
+                "jl", "JL" -> mutableListOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-julia", "julia")
+                "r", "R" -> mutableListOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-r", "Rscript")
                 "sh" -> mutableListOf("sh")
                 "py", "PY" -> mutableListOf("python3")
                 else -> {
@@ -161,25 +184,49 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
             ProcessBuilder(command + scriptFile.absolutePath + outputFolder.absolutePath)
-                .directory(scriptRoot)
+                .directory(RunContext.scriptRoot)
                 .redirectOutput(ProcessBuilder.Redirect.PIPE)
                 .redirectErrorStream(true) // Merges stderr into stdout
                 .start().also { process ->
                     withContext(Dispatchers.IO) { // More info on this context switching : https://elizarov.medium.com/blocking-threads-suspending-coroutines-d33e11bf4761
-                        launch {
-                            process.inputStream.bufferedReader().run {
-                                while (true) { // Breaks when readLine returns null
-                                    readLine()?.let { log(logger::trace, it) }
-                                        ?: break
+                        // The watchdog will terminate the process in two cases :
+                        // if the user cancels or is 60 minutes delay expires.
+                        val watchdog = launch {
+                            try {
+                                delay(timeout.toLong(DurationUnit.MILLISECONDS))
+                                throw TimeoutException("Timeout occurred after $timeout")
+
+                            } catch (ex: Exception) {
+                                if (process.isAlive) {
+                                    val event = ex.message ?: ex.javaClass.name
+                                    log(logger::info, "$event: killing running process...")
+                                    process.destroy()
+                                    if (!process.waitFor(1, TimeUnit.MINUTES)) {
+                                        log(logger::info, "$event: cancellation timeout elapsed.")
+                                        process.destroyForcibly()
+                                    }
+
+                                    throw ex
                                 }
                             }
                         }
 
-                        process.waitFor(60, TimeUnit.MINUTES) // TODO: is this timeout OK/Needed?
-                        if (process.isAlive) {
-                            log(logger::warn, "TIMEOUT occurred after 1h")
-                            process.destroy()
+                        launch {
+                            process.inputStream.bufferedReader().run {
+                                try {
+                                    while (true) { // Breaks when readLine returns null
+                                        readLine()?.let { log(logger::trace, it) }
+                                            ?: break
+                                    }
+                                } catch (ex: IOException) {
+                                    if (ex.message != "Stream closed") // This is normal when cancelling the script
+                                        log(logger::trace, ex.message!!)
+                                }
+                            }
                         }
+
+                        process.waitFor()
+                        watchdog.cancel("Watched task normal completion")
                     }
                 }
         }.onSuccess { process -> // completed, with success or failure
@@ -211,9 +258,20 @@ class ScriptRun(private val scriptFile: File, private val inputFileContent: Stri
             }
 
         }.onFailure { ex ->
-            log(logger::warn, "An error occurred when running the script: ${ex.message}")
-            logger.warn(ex.stackTraceToString())
-            error = true
+            when (ex) {
+                is TimeoutException,
+                is CancellationException -> {
+                    val event = ex.message ?: ex.javaClass.name
+                    log(logger::info, "$event: done.")
+                    outputs = mapOf(ERROR_KEY to event)
+                    resultFile.writeText(gson.toJson(outputs))
+                }
+                else -> {
+                    log(logger::warn, "An error occurred when running the script: ${ex.message}")
+                    logger.warn(ex.stackTraceToString())
+                    error = true
+                }
+            }
         }
 
         // Format log output

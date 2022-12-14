@@ -11,14 +11,9 @@ import io.ktor.locations.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
-import kotlinx.coroutines.launch
-import org.geobon.pipeline.EDGES_LIST
-import org.geobon.pipeline.NODES_LIST
-import org.geobon.pipeline.Pipeline
-import org.geobon.pipeline.VIEWPORT
+import org.geobon.pipeline.*
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.ScriptRun
-import org.geobon.script.ScriptRun.Companion.scriptRoot
-import org.geobon.script.outputRoot
 import org.json.JSONObject
 import org.openapitools.server.Paths
 import org.openapitools.server.models.ScriptRunResult
@@ -38,12 +33,6 @@ private val gson = Gson()
 private val pipelinesRoot = File(System.getenv("PIPELINES_LOCATION"))
 
 private val runningPipelines = mutableMapOf<String, Pipeline>()
-
-private fun getLiveOutput(pipeline: Pipeline): Map<String, String> {
-    val allOutputs = mutableMapOf<String, String>()
-    pipeline.dumpOutputFolders(allOutputs)
-    return allOutputs.mapKeys { it.key.replace('/', FILE_SEPARATOR) }
-}
 
 @KtorExperimentalLocationsAPI
 fun Route.ScriptApi(logger: Logger) {
@@ -70,7 +59,8 @@ fun Route.ScriptApi(logger: Logger) {
         logger.info("scriptPath: ${parameters.scriptPath}\nbody:$inputFileContent")
 
         val scriptRelPath = parameters.scriptPath.replace(FILE_SEPARATOR, '/')
-        val run = ScriptRun(File(scriptRoot, scriptRelPath), inputFileContent)
+        val scriptFile = File(scriptRoot, scriptRelPath)
+        val run = ScriptRun(scriptFile, inputFileContent)
         run.execute()
         call.respond(
             HttpStatusCode.OK, ScriptRunResult(
@@ -136,50 +126,52 @@ fun Route.ScriptApi(logger: Logger) {
 
         // Unique   to this pipeline                                               and to these params
         val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
-        val outputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
-        logger.info("Pipeline: $descriptionPath\nFolder:$outputFolder\nBody:$inputFileContent")
+        val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
+        logger.info("Pipeline: $descriptionPath\nFolder:$pipelineOutputFolder\nBody:$inputFileContent")
 
-        try {
-            val pipeline = Pipeline(descriptionPath, inputFileContent)
+        runCatching {
+            Pipeline(descriptionPath, inputFileContent)
+        }.onSuccess { pipeline ->
             runningPipelines[runId] = pipeline
-            call.respondText(runId)
+            try {
+                call.respondText(runId)
 
-            launch {
-                try {
-                    pipeline.execute()
-                } catch (ex: RuntimeException) {
-                    logger.debug(ex.message)
-                } catch (ex: Exception) {
-                    logger.error(ex.stackTraceToString())
-                } finally {  // Write the results file, adding "skipped" to steps that were not run.
-                    val resultFile = File(outputFolder, "output.json")
-                    val content = gson.toJson(getLiveOutput(pipeline).mapValues { (_, value) ->
-                        if (value == "") "skipped" else value
-                    })
-                    logger.trace("Outputting to $resultFile")
-
-                    outputFolder.mkdirs()
-                    resultFile.writeText(content)
-
-                    runningPipelines.remove(runId)
-                }
+                val scriptOutputFolders = pipeline.execute().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
+                pipelineOutputFolder.mkdirs()
+                val resultFile = File(pipelineOutputFolder, "output.json")
+                logger.trace("Outputting to $resultFile")
+                resultFile.writeText(gson.toJson(scriptOutputFolders))
+            } catch (ex:Exception) {
+                ex.printStackTrace()
+            } finally {
+                runningPipelines.remove(runId)
             }
-        } catch (e: Exception) {
-            call.respondText(text = e.message ?: "", status = HttpStatusCode.InternalServerError)
-            logger.debug(e.message)
+
+        }.onFailure {
+            call.respondText(text = it.message ?: "", status = HttpStatusCode.InternalServerError)
+            logger.debug("runPipeline: ${it.message}")
         }
     }
 
     get<Paths.getPipelineOutputs> { parameters ->
-        val finalStep = runningPipelines[parameters.id]
-        if (finalStep == null) {
+        val pipeline = runningPipelines[parameters.id]
+        if (pipeline == null) {
             val outputFolder = File(outputRoot, parameters.id.replace(FILE_SEPARATOR, '/'))
             val outputFile = File(outputFolder, "output.json")
             val type = object : TypeToken<Map<String, Any>>() {}.type
             call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
         } else {
-            call.respond(getLiveOutput(finalStep))
+            call.respond(pipeline.getLiveOutput().mapKeys { it.key.replace('/', FILE_SEPARATOR) })
         }
+    }
+
+    get<Paths.stopPipeline> { parameters ->
+        runningPipelines[parameters.id]?.let { pipeline ->
+            // the pipeline is running, we need to stop it
+            pipeline.stop()
+            logger.trace("Cancelled ${parameters.id}")
+            call.respond(HttpStatusCode.OK)
+        } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
     }
 
 }

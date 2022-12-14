@@ -45,11 +45,11 @@ create_projection <- function(obs, lon, lat, proj_from,
   }
   
   new.coords <- project_coords(obs, lon, lat, proj_from, proj_to)
-  new.coords.df <- data.frame(new.coords) %>% 
+  new.coords.df <- data.frame(new.coords) |> 
     setNames(c(new_lon, new_lat))
   
-  suppressWarnings(obs <- obs %>%
-                     dplyr::select(-one_of(c(new_lon, new_lat))) %>% dplyr::bind_cols(new.coords.df))
+  suppressWarnings(obs <- obs |>
+                     dplyr::select(-one_of(c(new_lon, new_lat))) |> dplyr::bind_cols(new.coords.df))
   
   return(obs)
 }
@@ -92,11 +92,11 @@ points_to_bbox <- function(xy, buffer = 0, proj_from = NULL, proj_to = NULL) {
   bbox <-  sf::st_buffer(sf::st_as_sfc(sf::st_bbox(xy)), dist =  buffer)
   
   if (!is.null(proj_to) ) {
-    bbox <- bbox  %>%
+    bbox <- bbox  |>
       sf::st_transform(crs = sp::CRS(proj_to))
   }
   
-  bbox %>% sf::st_bbox()
+  bbox |> sf::st_bbox()
 }
 
 
@@ -121,11 +121,11 @@ shp_to_bbox <- function(shp, proj_from = NULL, proj_to = NULL) {
   
   if(is.na(sf::st_crs(shp))) {
     sf::st_crs(shp) <- proj_from
-    shp <- shp %>% sf::st_set_crs(proj_from)
+    shp <- shp |> sf::st_set_crs(proj_from)
   }
   
   if (!is.null(proj_to) ) {
-    shp <- shp %>%
+    shp <- shp |>
       sf::st_transform(crs = sp::CRS(proj_to))
   }
   
@@ -184,11 +184,11 @@ create_density_plots <- function(df, factors = NULL, export = T, path = "./densi
 
 plot_density_cont <- function(df, var) {
   vars <- c("pa", var)
-  df <- df %>% dplyr::select(dplyr::all_of(vars))
+  df <- df |> dplyr::select(dplyr::all_of(vars))
   df <- df[complete.cases(df), ]       
   
-  mu <- df %>%
-    dplyr::group_by(pa) %>%
+  mu <- df |>
+    dplyr::group_by(pa) |>
     dplyr::summarise_at(all_of(var), list(name = mean))
   
   
@@ -208,7 +208,7 @@ add_predictors <- function(obs, lon = "lon", lat = "lat", predictors){
   }
   env.vals <- terra::extract(predictors, dplyr::select(obs, dplyr::all_of(c(lon, lat))))
   obs <- dplyr::bind_cols(obs,
-                          env.vals) %>% dplyr::select(-ID)
+                          env.vals) |> dplyr::select(-ID)
   
   return(obs)
   }

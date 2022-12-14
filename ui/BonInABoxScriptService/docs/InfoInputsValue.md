@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **label** | **String** |  | [optional] 
 **type** | **String** |  | [optional] 
 **options** | **[String]** |  | [optional] 
+**properties** | **[String]** |  | [optional] 
 **example** | [**InfoInputsValueExample**](InfoInputsValueExample.md) |  | [optional] 
 
 

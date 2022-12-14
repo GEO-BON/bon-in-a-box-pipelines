@@ -1,4 +1,5 @@
 script: localVelocity.R
+description: This script calculates local velocity, using methods in Loarie et. al. (2009) and  Sandel et. al. (2011).
 inputs:
   rcp:
     label: rcp
@@ -69,12 +70,12 @@ inputs:
     label: bbox coordinates
     description: coordinates of the bbox, in the order xmin, xmax, ymax, ymin.
     type: float[]
-    example: null
+    example: [-2316297,-1971146,1015207,1511916]
   buffer_box:
     label: buffer box
     description: buffer surronding box
     type: int
-    example: null
+    example: 0
   shapefile_path:
     label: shapefile path
     description: Path to a .shp file representing the extent.

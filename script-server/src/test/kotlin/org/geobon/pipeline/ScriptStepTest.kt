@@ -2,8 +2,7 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.geobon.script.ScriptRun.Companion.scriptRoot
-import org.geobon.script.outputRoot
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -24,7 +23,7 @@ internal class ScriptStepTest {
 
     @AfterEach
     fun removeOutputFolder() {
-        assertTrue(File(System.getenv("OUTPUT_LOCATION")).deleteRecursively())
+        assertTrue(outputRoot.deleteRecursively())
     }
 
     @Test
@@ -40,7 +39,7 @@ internal class ScriptStepTest {
 
         assertNotNull(step.outputs["randomness"])
         assertNotNull(step.outputs["randomness"]!!.value)
-        assertEquals(234.toDouble(), step.outputs["randomness"]!!.value as Double)
+        assertEquals(234, step.outputs["randomness"]!!.value)
     }
 
     @Test
@@ -59,7 +58,7 @@ internal class ScriptStepTest {
 
         assertEquals(1, files.filter { it.name == "output.json" }.size)
         assertNotNull(step.outputs["increment"])
-        assertEquals((input + 1).toDouble(), step.outputs["increment"]!!.value as Double)
+        assertEquals(input + 1, step.outputs["increment"]!!.value)
     }
 
     @Test
@@ -76,7 +75,7 @@ internal class ScriptStepTest {
 
         assertNotNull(step.outputs["randomness"])
         assertNotNull(step.outputs["randomness"]!!.value)
-        assertEquals(234.toDouble(), step.outputs["randomness"]!!.value as Double)
+        assertEquals(234, step.outputs["randomness"]!!.value)
     }
 
     @Test

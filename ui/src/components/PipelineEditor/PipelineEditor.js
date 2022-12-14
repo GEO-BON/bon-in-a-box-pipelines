@@ -8,6 +8,7 @@ import ReactFlow, {
   addEdge,
   useNodesState,
   useEdgesState,
+  getConnectedEdges,
   Controls,
   MiniMap,
   Position,
@@ -17,6 +18,7 @@ import IONode from './IONode'
 import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
 import { getLayoutedElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
+import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
 import { getScriptDescription } from './ScriptDescriptionStore'
 
 const nodeTypes = {
@@ -155,6 +157,21 @@ export function PipelineEditor(props) {
     addEdgeWithHighlight(newEdge)
   }, [reactFlowInstance])
 
+  const onNodesDelete = useCallback((deletedNodes) => {
+    // We delete constants that are connected to no other node
+    const upstreamNodes = getUpstreamNodes(deletedNodes, reactFlowInstance)
+    const allEdges = reactFlowInstance.getEdges()
+    let toDelete = upstreamNodes.filter(n => n.type === 'constant' && getConnectedEdges([n], allEdges).length === 1)
+    
+    // We delete outputs that are connected to no other node
+    const downstreamNodes = getDownstreamNodes(deletedNodes, reactFlowInstance)
+    toDelete = toDelete.concat(downstreamNodes.filter(n => n.type === 'output' && getConnectedEdges([n], allEdges).length === 1))
+
+    //version 11.2 will allow reactFlowInstance.deleteElements(toDelete)
+    const deleteIds = toDelete.map(n => n.id)
+    setNodes(nodes => nodes.filter(n => !deleteIds.includes(n.id)))
+  }, [reactFlowInstance])
+
   const onDrop = useCallback((event) => {
       event.preventDefault();
 
@@ -262,8 +279,14 @@ export function PipelineEditor(props) {
         )
       })
 
-      navigator.clipboard.writeText(JSON.stringify(flow, null, 2))
-      alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
+      navigator.clipboard
+        .writeText(JSON.stringify(flow, null, 2))
+        .then(() => {
+          alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
+        })
+        .catch(() => {
+          alert("Error: Failed to copy content to clipboard.");
+        });
     }
   }, [reactFlowInstance, inputList]);
 
@@ -339,6 +362,7 @@ export function PipelineEditor(props) {
             onDrop={onDrop}
             onDragOver={onDragOver}
             onSelectionChange={onSelectionChange}
+            onNodesDelete={onNodesDelete}
             deleteKeyCode='Delete'
           >
             {toolTip && <div className="tooltip">
