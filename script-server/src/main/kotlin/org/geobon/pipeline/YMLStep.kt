@@ -1,20 +1,29 @@
 package org.geobon.pipeline
 
+import org.json.JSONObject
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
 import org.geobon.script.Description.TYPE_OPTIONS
+import org.geobon.script.ScriptRun
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
+import java.io.File
+
 
 abstract class YMLStep(
-    yamlString: String = "",
-    protected val yamlParsed: Map<String, Any> = Yaml().load(yamlString),
+    protected val yamlFile: File,
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
-    private val logger: Logger = LoggerFactory.getLogger("YMLStep")
+    private val logger: Logger = LoggerFactory.getLogger(yamlFile.name),
+    protected val yamlParsed: Map<String, Any> = Yaml().load(yamlFile.readText())
 ) : Step(inputs, readOutputs(yamlParsed, logger)) {
 
+    /**
+     * Context becomes set in validateInputsReceived(), once the invocation inputs are known.
+     */
+    protected var context:RunContext? = null
 
     override fun validateInputsConfiguration(): String {
         val inputsFromYml = readInputs(yamlParsed, logger)
@@ -28,28 +37,57 @@ abstract class YMLStep(
         }
 
         // Validate presence and type of each input
+        var errorMessages = ""
         inputsFromYml.forEach { (inputKey, expectedType) ->
-            inputs[inputKey]?.let {
-                if (it.type != expectedType) {
-                    return "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected.\n"
+            errorMessages += inputs[inputKey]?.let {
+                if (it.type == expectedType) ""
+                // Check for convertible types (currently only int to float, use a map/when if more conversions are possible)
+                else when {
+                    // int to float accepted
+                    it.type == "int" && expectedType == "float" -> ""
+
+                    // Non-array to single-element array accepted
+                    expectedType.endsWith("[]") && it.type == expectedType.dropLast(2) -> {
+                        inputs[inputKey] = AggregatePipe(listOf(it))
+                        return@let ""
+                    }
+
+                    // Everything else refused
+                    else -> "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected.\n"
                 }
-            } ?: return "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
+            } ?: "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
         }
 
-        return ""
+        return errorMessages
     }
 
-    fun validateInputsReceived(resolvedInputs:Map<String, Any>) : String? {
-        inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
-            val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
-                ?: return "No options found for input parameter $key."
+    override fun onInputsReceived(resolvedInputs:Map<String, Any>) {
+        // Now that we know the inputs are valid, record the id
+        context = RunContext(yamlFile, resolvedInputs.toString())
 
-            if(!options.contains(resolvedInputs[key])){
-                return "Received value ${resolvedInputs[key]} not in options $options."
+        try { // Validation
+            inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
+                val options = readIODescription(INPUTS, key)?.get(TYPE_OPTIONS) as? List<*>
+                    ?: throw RuntimeException("$yamlFile: No options found for input parameter $key.")
+
+                if (!options.contains(resolvedInputs[key])) {
+                    throw RuntimeException("$yamlFile: Received value ${resolvedInputs[key]} not in options $options.")
+                }
             }
+        } catch (e:RuntimeException) {
+            record(mapOf(ScriptRun.ERROR_KEY to (e.message ?: e.toString())))
+            throw e
         }
+    }
 
-        return null
+    protected fun record(results: Map<String, Any>) {
+        context?.apply {
+            if(outputFolder.exists())
+                outputFolder.deleteRecursively()
+
+            outputFolder.mkdirs()
+            resultFile.writeText(JSONObject(results).toString(2))
+        }
     }
 
     private fun readIODescription(section:String, searchedKey:String) : Map<*,*>? {
@@ -60,6 +98,19 @@ abstract class YMLStep(
         } ?: println("$section is not a valid map")
 
         return null
+    }
+
+    /**
+     * @param allOutputs Map of Step identifier to output folder.
+     */
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        val relPath = yamlFile.relativeTo(scriptRoot).path
+        val previousValue = allOutputs.put("$relPath@${hashCode()}", context?.id ?: "")
+
+        // Pass it on only if not already been there (avoids duplication for more complex graphs)
+        if (previousValue == null) {
+            super.dumpOutputFolders(allOutputs)
+        }
     }
 
     companion object {
@@ -110,7 +161,7 @@ abstract class YMLStep(
                 } else {
                     logger.error("$section is not a map")
                 }
-            } ?: logger.error("No $section map")
+            } ?: logger.trace("No $section map")
         }
     }
 }

@@ -1,37 +1,29 @@
+description: This script load land cover rasters from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
 script: loadLandCover.R
 inputs:
-  use_obs:
-    label: use observations
-    description: 
-    type: boolean
-    example: TRUE
-  bbox_buffer:
-    label: buffer
-    description: buffer around presence points (used to create an extent for collinearity measurement). Unit depends on the projection system.
-    type: int
-    example: 100
-  bbox_obs: 
-    label: presence
-    description: path to presence data file
-    type: text/tab-separated-values
-    example: "/output/loadGbif/loadGbif_R/59c8e9365bd395051ba4b8d04644ca4e/obs_data.tsv"
-  proj_to:
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297, -1971146,  1015207,  1511916]
+  proj:
     label: projection system
-    description: Projection 
+    description: String, projection system of the coordinates in bbox
     type: text
     example: "EPSG:6623"
   spatial_res:
-    label: Spatial resolution
-    description: Projection 
+    label: spatial resolution
+    description: Integer, spatial resolution 
     type: int
     example: 1000
   stac_limit:
-    description: Projection 
+    label: STAC limit
+    description: Integer, limit number of tiles retrieved from the STAC catalogue
     type: int
     example: 5000
   stac_source:
     label: STAC source
-    description: source of the STAC catalogue
+    description: Option, STAC catalogue to use
     type: options
     options:
       - IO
@@ -39,27 +31,27 @@ inputs:
     example: "IO"
   t0:
     label: t0
-    description: start time 
+    description: String (YYYY-MM-DD), start time of study period
     type: text
     example: "2010-01-01"
   t1:
     label: t1
-    description: end time 
+    description: String (YYYY-MM-DD), end time of study period
     type: text
     example: "2010-12-31"
   proportion: 
     label: proportion
-    description: 
+    description: Boolean, should a proportion of land cover classes be calculated
     type: boolean
     example: TRUE
   proportion_res: 
     label: proportion_res
-    description: 
+    description: Integer, if proportion is TRUE, resolution to calculate the proportion from
     type: integer
     example: 1000
   lc_classes: 
     label: lc_classes
-    description: 
+    description: Vector of integers, list of land cover classes to select
     type: integer[]
     example: 
       - 11

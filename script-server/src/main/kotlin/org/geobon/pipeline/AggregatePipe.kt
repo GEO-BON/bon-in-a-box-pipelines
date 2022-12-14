@@ -32,13 +32,13 @@ class AggregatePipe(pipesToAggregate: List<Pipe>) : Pipe {
     override suspend fun pull(): Any {
         val resultList = mutableListOf<Any>()
         coroutineScope {
-            pipes.forEach {
+            pipes.forEach { pipe ->
                 // This can happen in parallel coroutines
                 launch {
-                    val result = it.pull()
+                    val result = pipe.pull()
                     @Suppress("UNCHECKED_CAST")
                     (result as? Collection<Any>)?.let{
-                        resultList.addAll(it)
+                        resultList.addAll(result)
                     } ?: resultList.add(result)
                 }
             }
@@ -47,7 +47,31 @@ class AggregatePipe(pipesToAggregate: List<Pipe>) : Pipe {
         return resultList
     }
 
+    override suspend fun pullIf(condition: (step: Step) -> Boolean): Any? {
+        val resultList = mutableListOf<Any>()
+        coroutineScope {
+            pipes.forEach { pipe ->
+                // This can happen in parallel coroutines
+                launch {
+                    val result = pipe.pullIf(condition)
+                    if(result != null) {
+                        @Suppress("UNCHECKED_CAST")
+                        (result as? Collection<Any>)?.let{
+                            resultList.addAll(result)
+                        } ?: resultList.add(result)
+                    }
+                }
+            }
+        }
+
+        return if(resultList.isEmpty()) null else resultList
+    }
+
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         pipes.forEach { it.dumpOutputFolders(allOutputs) }
+    }
+
+    override fun validateGraph(): String {
+        return pipes.fold("") { acc, pipe -> acc + pipe.validateGraph() }
     }
 }

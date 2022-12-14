@@ -1,5 +1,5 @@
 
-FROM node:16.13.1-alpine3.13 as builder
+FROM node:current-alpine3.15 as builder
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH

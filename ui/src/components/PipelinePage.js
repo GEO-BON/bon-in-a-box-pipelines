@@ -3,13 +3,14 @@ import Select from 'react-select';
 
 import { Result } from "./Result";
 import { InputFileWithExample } from './InputFileWithExample';
-import { FoldableOutput, RenderContext, createContext } from './FoldableOutput'
+import { FoldableOutputWithContext, RenderContext, createContext } from './FoldableOutput'
 
 import { useInterval } from '../UseInterval';
 
 import spinnerImg from '../img/spinner.svg';
 import errorImg from '../img/error.svg';
 import warningImg from '../img/warning.svg';
+import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
@@ -18,6 +19,8 @@ const api = new BonInABoxScriptService.DefaultApi();
 
 export function PipelinePage(props) {
   const [runId, setRunId] = useState(null);
+  const [stoppable, setStoppable] = useState(null);
+  const [runningScripts, setRunningScripts] = useState(new Set());
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
@@ -38,8 +41,8 @@ export function PipelinePage(props) {
         if (error) {
           showHttpError(error, response)
         } else {
-          let allDone = Object.values(data).every(val => val !== "")
-          if(!allDone) { // try again later
+          let allOutputFoldersKnown = Object.values(data).every(val => val !== "")
+          if(!allOutputFoldersKnown) { // try again later
             timeout = setTimeout(loadPipelineOutputs, 1000)
           }
 
@@ -57,6 +60,19 @@ export function PipelinePage(props) {
       return <pre key="metadata">{yamlString.startsWith('{}') ? "No metadata" : yamlString}</pre>;
     }
     return ""
+  }
+
+  useEffect(() => {
+    setStoppable(runningScripts.size > 0)
+  }, [runningScripts])
+
+  const stop = () => {
+    setStoppable(false)
+    api.stopPipeline(runId, (error, data, response) => {
+        if(response.status === 200) {
+          setHttpError("Cancelled by user")
+        }
+    })
   }
 
   // Called when ID changes
@@ -78,14 +94,16 @@ export function PipelinePage(props) {
         pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
         setRunId={setRunId}
         showHttpError={showHttpError} />
+      {runId && <button onClick={stop} disabled={!stoppable}>Stop</button>}
       {httpError && <p key="httpError" className="error">{httpError}</p>}
       {showMetadata()}
-      <PipelineResults key="results" resultsData={resultsData} showHttpError={showHttpError} />
+      <PipelineResults key="results" resultsData={resultsData} setRunningScripts={setRunningScripts} />
     </>)
 }
 
 function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
-  const formRef = useRef(null);
+  const formRef = useRef()
+  const inputRef = useRef();
 
   const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
@@ -131,7 +149,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
 
     clearPreviousRequest()
     let opts = {
-      'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
+      'body': inputRef.current.getValue() // String | Content of input.json for this run
     };
     api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
   };
@@ -162,11 +180,11 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
           defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
           onChange={(v) => loadPipelineMetadata(v.value)} />
       </label>
+      <br />
       <label>
-        Content of input.json:
+        Pipeline inputs:
         <br />
-        <InputFileWithExample defaultValue='{}'
-         metadata={pipelineMetadata} />
+        <InputFileWithExample ref={inputRef} metadata={pipelineMetadata} />
       </label>
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
@@ -174,42 +192,62 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
   );
 }
 
-function PipelineResults(props) {
+function PipelineResults({resultsData, setRunningScripts}) {
   const [activeRenderer, setActiveRenderer] = useState({});
 
-  if (props.resultsData) {
+  if (resultsData) {
     return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
-      {Object.entries(props.resultsData).map((entry, i) => {
+      {Object.entries(resultsData).map((entry, i) => {
         const [key, value] = entry;
 
-        if (!key.startsWith("Constant@")) {
-          return <DelayedResult key={key} id={key} folder={value} />
-        } else {
-          return <pre key={key}>{key} : {value}</pre>
-        }
+        return <DelayedResult key={key} id={key} folder={value} setRunningScripts={setRunningScripts} />
       })}
     </RenderContext.Provider>
-
   }
   else return null
 }
 
-function DelayedResult(props) {
+function DelayedResult({id, folder, setRunningScripts}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
+  const [running, setRunning] = useState(false)
+  const [skippedMessage, setSkippedMessage] = useState()
 
-  const script = props.id.substring(0, props.id.indexOf('@'))
+  const script = id.substring(0, id.indexOf('@'))
+
+  useEffect(() => { 
+    // A script is running when we know it's folder but have yet no result nor error message
+    let nowRunning = folder && !resultData
+    setRunning(nowRunning)
+
+    setRunningScripts((oldSet) => {
+      let newSet = new Set(oldSet)
+      nowRunning ? newSet.add(folder) : newSet.delete(folder)
+      return newSet
+    })
+  }, [setRunningScripts, folder, resultData])
 
   useEffect(() => {
-    if (props.folder && props.folder === "skipped") {
-      setResultData({ warning: "Skipped due to previous failure" })
+    if (folder) {
+      if(folder === "skipped") {
+        setResultData({ info: "Skipped: not necessary with the given parameters" })
+        setSkippedMessage("Skipped")
+
+      } else if(folder === "aborted") {
+        setResultData({ warning: "Skipped due to previous failure" })
+        setSkippedMessage("Aborted")
+        
+      } else if (folder === "cancelled") {
+        setResultData({ warning: "Skipped when pipeline stopped" })
+        setSkippedMessage("Cancelled")
+      }
     }
   // Execute only when folder changes (omitting resultData on purpose)
-  }, [props.folder]) 
+  }, [folder]) 
 
   const interval = useInterval(() => {
     // Fetch the output
-    fetch("output/" + props.folder + "/output.json")
+    fetch("output/" + folder + "/output.json")
       .then((response) => {
         if (response.ok) {
           clearInterval(interval);
@@ -230,7 +268,7 @@ function DelayedResult(props) {
       });
 
   // Will start when folder has value, and continue the until resultData also has a value
-  }, props.folder && !resultData ? 1000 : null);
+  }, running ? 1000 : null)
 
   useEffect(() => { // Script metadata
     var callback = function (error, data, response) {
@@ -242,17 +280,15 @@ function DelayedResult(props) {
 
   let content, inline = null;
   let className = "foldableScriptResult"
-  if (props.folder) {
+  if (folder) {
     if (resultData) {
       content = <Result data={resultData} metadata={scriptMetadata} />
-      if(resultData.error) {
-        inline = <img src={errorImg} alt="Error" className="error-inline" />
-      } else if(resultData.warning) {
-        inline = <>
-          <img src={warningImg} alt="Warning" className="error-inline" />
-          {props.folder === "skipped" && <i>Skipped</i>}
-        </>
-      }
+      inline = <>
+        {resultData.error && <img src={errorImg} alt="Error" className="error-inline" />}
+        {resultData.warning && <img src={warningImg} alt="Warning" className="error-inline" />}
+        {resultData.info && <img src={infoImg} alt="Info" className="info-inline" />}
+        {skippedMessage && <i>{skippedMessage}</i>}
+      </>
     } else {
       content = <p>Running...</p>
       inline = <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
@@ -262,13 +298,13 @@ function DelayedResult(props) {
     className += " gray"
   }
 
-  let logsAddress = props.folder && "output/" + props.folder + "/logs.txt"
+  let logsAddress = folder && "output/" + folder + "/logs.txt"
 
   return (
-    <FoldableOutput title={script} componentId={props.id} inline={inline} className={className}
+    <FoldableOutputWithContext title={script} componentId={id} inline={inline} className={className}
       description={scriptMetadata && scriptMetadata.description}>
       {content}
-      {props.folder && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
-    </FoldableOutput>
+      {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
+    </FoldableOutputWithContext>
   )
 }

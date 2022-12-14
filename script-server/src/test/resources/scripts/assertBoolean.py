@@ -7,7 +7,7 @@ boolIn = data['input_bool']
 
 # Do stuff.
 if not isinstance(boolIn, bool) :
-    sys.exit("This is not an array")
+    sys.exit("This is not a boolean")
 
 # Serializing output.json
 dictionary = {

@@ -18,14 +18,18 @@ package org.openapitools.server.models
  * @param description 
  * @param label 
  * @param type 
+ * @param range 
  * @param options 
+ * @param properties 
  * @param example 
  */
 data class InfoOutputsValue(
     val description: kotlin.String? = null,
     val label: kotlin.String? = null,
     val type: kotlin.String? = null,
+    val range: kotlin.collections.List<java.math.BigDecimal>? = null,
     val options: kotlin.collections.List<kotlin.String>? = null,
+    val properties: kotlin.collections.List<kotlin.String>? = null,
     // JM Lord: Any, since oneOf is not correctly supported by generator
     val example: Any? = null
 ) 

@@ -176,6 +176,26 @@ paths:
           description: Bad request
         "404":
           description: id not found
+  /pipeline/{id}/stop:
+    get:
+      summary: Stop the specified pipeline run
+      operationId: stopPipeline
+      parameters:
+        - name: id
+          in: path
+          description: Where to find the pipeline in ./script folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Pipeline run is stopped (or was already stopped)
+        "400":
+          description: Bad request
+        "404":
+          description: id not found
 components:
   schemas:
     script_run_result:
@@ -206,6 +226,9 @@ components:
         external_link: 
           type: string
           example: https://github.com/GEO-BON/biab-2.0
+        timeout:
+          type: number
+          example: 60
         inputs: 
           type: object
           additionalProperties: 
@@ -227,6 +250,13 @@ components:
                 example:
                 - Option 1
                 - Option 2
+              properties:
+                type: array
+                items: 
+                  type: string
+                example: 
+                  - id
+                  - layer
               example: 
                 example: Glyptemys insculpta
                 oneOf:
@@ -253,6 +283,13 @@ components:
               type: 
                 type: string
                 example: text/csv
+              range: 
+                type: array
+                items:
+                  type: number
+                minItems: 2
+                maxItems: 2
+                example: [0, 1]
               options: 
                 type: array
                 items:
@@ -260,6 +297,13 @@ components:
                 example:
                 - Option 1
                 - Option 2
+              properties:
+                type: array
+                items: 
+                  type: string
+                example: 
+                  - id
+                  - layer
               example: 
                 example: file.csv
                 oneOf:

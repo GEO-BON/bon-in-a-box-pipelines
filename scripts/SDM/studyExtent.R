@@ -16,8 +16,6 @@ print("Inputs: ")
 print(input)
 
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
-#presence <- create_projection(presence, lon = "decimal_longitude", lat = "decimal_latitude", 
-#proj_from = "+proj=longlat +datum=WGS84", proj_to = input$proj_to, new_lon = "lon", new_lat = "lat") 
 
 if (is.numeric(input$width_buffer)) {
 width_buffer <- input$width_buffer
@@ -28,7 +26,7 @@ width_buffer <- input$width_buffer
 study_extent <- create_study_extent(presence, 
                               lon = "lon",
                               lat = "lat",
-                              proj = input$proj_to,
+                              proj = input$proj,
                               method = input$method,
                               dist_buffer = width_buffer,
                               shapefile_path = NULL)

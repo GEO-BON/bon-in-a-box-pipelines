@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {
   BrowserRouter,
   Routes,
   Route,
+  useLocation,
 } from "react-router-dom";
 
 import { SingleScriptPage } from "./components/SingleScriptPage";
@@ -14,7 +15,17 @@ import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
 import ScriptChooser from "./components/PipelineEditor/ScriptChooser";
 import { Layout } from './Layout.js';
 
-ReactDOM.render(
+function NotFound() {
+  const location = useLocation()
+  return <main style={{ padding: "1rem" }}>
+    <h2>404 - Page not found</h2>
+    <p>{location.pathname}</p>
+    <p>Lost in the wilderness?</p>
+  </main>
+}
+
+const root = createRoot(document.getElementById('root'));
+root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Layout />} />
@@ -33,15 +44,12 @@ ReactDOM.render(
       } />
 
       <Route path="*" element={
-        <main style={{ padding: "1rem" }}>
-          <h2>404 - Page not found</h2>
-          <p>Lost in the wilderness?</p>
-        </main>
+        <Layout left={<ScriptChooser />}
+          right={<NotFound />} />
       } />
 
     </Routes>
-  </BrowserRouter>,
-  document.getElementById('root')
+  </BrowserRouter>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -88,7 +88,7 @@ get_observations <-
       data <- data$data
 
         if(!is.null(data)) {
-          data <- data %>% dplyr::filter(occurrenceStatus %in% toupper(occurrence_status))
+          data <- data |> dplyr::filter(occurrenceStatus %in% toupper(occurrence_status))
         }
 
       if (is.null(data) || nrow(data) == 0) {
@@ -96,7 +96,7 @@ get_observations <-
         data <- data.frame()
       } else {
         
-          data <- data %>% dplyr::select(
+          data <- data |> dplyr::select(
             key,
             species,
             decimalLongitude,
@@ -106,7 +106,7 @@ get_observations <-
             day,
             basisOfRecord,
             occurrenceStatus
-          ) %>%
+          ) |>
           dplyr::rename(
             id = key,
             scientific_name = species,
@@ -114,8 +114,8 @@ get_observations <-
             decimal_latitude = decimalLatitude,
             basis_of_record = basisOfRecord,
             occurrence_status = occurrenceStatus
-          ) %>%
-          dplyr::mutate(basis_of_record = tolower(basis_of_record))%>%
+          ) |>
+          dplyr::mutate(basis_of_record = tolower(basis_of_record))|>
           dplyr::mutate(id = as.character(id))
         
         if (nrow(data) == limit) {
@@ -145,13 +145,13 @@ get_observations <-
             data <- data.frame()
 
           } else {
-          coords <- data.frame(data$geom %>% sf::st_coordinates()) %>%
+          coords <- data.frame(data$geom |> sf::st_coordinates()) |>
             dplyr::rename(decimal_longitude = X,
                    decimal_latitude = Y)
           
           if (simplify) {
             data <- dplyr::bind_cols(data,
-                                     coords) %>%
+                                     coords) |>
               dplyr::select(
                 id,
                 taxa_valid_scientific_name,
@@ -166,14 +166,14 @@ get_observations <-
             data <- dplyr::bind_cols(data,
                                      coords)
           }
-data <- data %>%
+data <- data |>
             dplyr::rename(
               scientific_name = taxa_valid_scientific_name,
               year = year_obs,
               month = month_obs,
               day = day_obs,
               basis_of_record = variable
-            ) %>%
+            ) |>
             dplyr::mutate(id = as.character(id))
           
         }

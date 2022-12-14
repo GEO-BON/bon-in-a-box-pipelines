@@ -35,8 +35,10 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
+              "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
+              "properties" : [ "id", "layer" ],
               "example" : "file.csv"
             }
           },
@@ -53,11 +55,13 @@ fun Route.DefaultApi() {
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
+              "properties" : [ "id", "layer" ],
               "example" : "Glyptemys insculpta"
             }
           },
           "description" : "This sample script shows how it works.",
           "script" : "helloR.R",
+          "timeout" : 60,
           "external_link" : "https://github.com/GEO-BON/biab-2.0"
         }"""
         
@@ -89,8 +93,10 @@ fun Route.DefaultApi() {
             "key" : {
               "options" : [ "Option 1", "Option 2" ],
               "description" : "coordinate of occurances in",
+              "range" : [ 0, 1 ],
               "label" : "occurences",
               "type" : "text/csv",
+              "properties" : [ "id", "layer" ],
               "example" : "file.csv"
             }
           },
@@ -107,11 +113,13 @@ fun Route.DefaultApi() {
               "description" : "scientific name of the species",
               "label" : "species names",
               "type" : "text",
+              "properties" : [ "id", "layer" ],
               "example" : "Glyptemys insculpta"
             }
           },
           "description" : "This sample script shows how it works.",
           "script" : "helloR.R",
+          "timeout" : 60,
           "external_link" : "https://github.com/GEO-BON/biab-2.0"
         }"""
         
@@ -163,13 +171,17 @@ fun Route.DefaultApi() {
 
     get<Paths.scriptListGet> {
         val exampleContentType = "application/json"
-        val exampleContentString = """"[\"helloWorld.yml\",\"RunSDM.yml\",\"SHI.yml\"]""""
+        val exampleContentString = """"[\"helloWorld.yml\",\"runSDM.yml\",\"SHI.yml\"]""""
         
         when (exampleContentType) {
             "application/json" -> call.respond(gson.fromJson(exampleContentString, empty::class.java))
             "application/xml" -> call.respondText(exampleContentString, ContentType.Text.Xml)
             else -> call.respondText(exampleContentString)
         }
+    }
+
+    get<Paths.stopPipeline> {
+        call.respond(HttpStatusCode.NotImplemented)
     }
 
 }
