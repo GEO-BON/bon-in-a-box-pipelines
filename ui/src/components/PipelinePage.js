@@ -313,8 +313,8 @@ function DelayedResult({id, folder, setRunningScripts}) {
           </p>}
         {scriptMetadata.references && <div>
           <p className='noMargin'>References: </p>
-          <ul>{scriptMetadata.references.map(r => {
-            return <li>{r.text} {r.doi && <><br /><a href={r.doi} target="_blank">{r.doi}</a></>}</li>
+          <ul>{scriptMetadata.references.map((r, i) => {
+            return <li key={i}>{r.text} {r.doi && <><br /><a href={r.doi} target="_blank">{r.doi}</a></>}</li>
           })}
           </ul>
         </div>}
