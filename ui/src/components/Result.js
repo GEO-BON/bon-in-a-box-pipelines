@@ -37,7 +37,7 @@ function isGeotiff(subtype) {
 
 // Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
 function FallbackDisplay({content}) {
-    if(isRelativeLink(content) || content.startsWith("http")) {
+    if(isRelativeLink(content) || (typeof content.startsWith === "function" && content.startsWith("http"))) {
         // Match for tiff, TIFF, tif or TIF extensions
         if(content.search(/.tiff?$/i) !== -1)
             return <Map tiff={content} />
