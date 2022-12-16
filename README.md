@@ -174,7 +174,7 @@ The left pane shows the available steps, the right pane shows the canvas.
 
 **To add a step:** drag and drop from the left pane to the canvas.
 
-**To connect steps:** drag and drop from one output handle to an input handle. Input handles are on the left, and output handles are on the right.
+**To connect steps:** drag to connect an output and an input handle. Input handles are on the left, output handles are on the right.
 
 **To add a constant value:** double-click on any input to add a constant value linked to this input. It is pre-filled with the example value.
 
