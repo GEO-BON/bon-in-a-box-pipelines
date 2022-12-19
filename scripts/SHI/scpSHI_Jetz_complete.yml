@@ -26,6 +26,9 @@ inputs:
     description: Three letter code (ISO_3166-1_alpha-3) for the country where the analysis will be done.
     type: text
     example: "COL"
+  region:
+    label: Region
+    description: Name of the region according to the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1
   spat_res:
     label: Spatial resolution
     description: Spatial resolution for the analysis

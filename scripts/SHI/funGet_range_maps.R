@@ -1,4 +1,4 @@
-if (!"gdalUtils" %in% installed.packages()[,"Package"]) install.packages("gdalUtils")
+if (!"gdalUtils" %in% installed.packages()[,"Package"]) library(devtools) ; devtools:::install_github("gearslaboratory/gdalUtils")
 library(gdalUtils)
 
 get_iucn_range_map <- function(species_name){
