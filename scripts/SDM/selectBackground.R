@@ -26,7 +26,7 @@ outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
 
 setwd(outputFolder)
-# Does this make sense with setwd()? -Dat
+
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
@@ -37,7 +37,8 @@ presence <- read.table(file = input$presence, sep = '\t', header = TRUE)
 
 # Optional.. so without input it should be NULL
 if(!is.null(input$raster)){
-  heatmap <- readRaster(raster = input$raster, source = input$raster_source, 
+  heatmap <- readRaster(file = input$raster, 
+                        source = input$raster_source, 
                         ref = predictors)
 }else{
   heatmap <- NULL
@@ -48,20 +49,20 @@ background <- create_background(
   predictors = predictors, 
   obs = presence,
   mask = study_extent,
-  method = input$method_background, #will select random points in predictors_study_extent area
+  method = input$method_background,
   n = input$n_background,
   width_buffer = input$width_buffer,
   density_bias = input$density,
   raster = heatmap)
 
- 
+
 background.output <- file.path(outputFolder, "background.tsv")
 write.table(background, background.output,
-             append = F, row.names = F, col.names = T, sep = "\t")
-  output <- list(
-                  "n_background" =  nrow(background),
-                  "background"= background.output
-                  )
+            append = F, row.names = F, col.names = T, sep = "\t")
+output <- list(
+  "n_background" =  nrow(background),
+  "background"= background.output
+)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

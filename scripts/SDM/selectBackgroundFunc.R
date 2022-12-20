@@ -1,48 +1,45 @@
 #' @title Read raster from STAC or local
 #' 
 #' @name readRaster
-#' @param raster string, STAC catalogue heatmap taxa, or path to file
+#' @param file string, STAC catalogue heatmap taxa, or path to file
 #' @param source string, from_cube or from_tif
 #' @param ref spat raster, reference for projection
 #' @param stacURL string, URL to stac catalogue, if using (default is biodiversity-quebec)
 #' @return read in and projected raster
 #' @export
 
-readRaster <- function(raster, source, ref, 
-                         stacURL = "https://io.biodiversite-quebec.ca/stac/"){
-
+readRaster <- function(file, source, ref, 
+                       stacURL = "https://io.biodiversite-quebec.ca/stac/"){
+  
   if(source == "from_tif"){
     
     # 'from_tif' selected; simply read in path to file
-    raster.out <- terra::rast(raster)
+    raster.out <- terra::rast(file)
     # This step is *slow*; an alternative would be better
     # The same is applied to 'loadPredictorsFunc.R' as well
     raster.out <- terra::project(raster.out, ref)
     
   }else if(source == "from_cube"){
     s <- stac(stacURL)
-
+    
     it_obj <- s |>
       stac_search(collections=c('gbif_heatmaps'),limit=5000) |> get_request()
     
     st <- gdalcubes::stac_image_collection(it_obj$features,asset_names=c("data"), 
-                              property_filter=function(f){f$taxa==raster})
-    
-    #### WORK IN PROGRESS ####
-    ## The issue is that currently this does not match terra::project
-    
+                                           property_filter=function(f){f$taxa==file})
+
     # Get extent
     ee = as.list(ext(ref))
     names(ee) = c("left", "right", "bottom", "top")
     # Add time
     ee[["t0"]] = "2006-01-01"
     ee[["t1"]] = "2006-01-01"
-
+    
     v = cube_view(srs = crs(ref, proj = T),
-      extent = ee,
-      dx = xres(ref), dy = yres(ref), dt = "P1D", 
-      aggregation= "mean", resampling = "bilinear")
-
+                  extent = ee,
+                  dx = xres(ref), dy = yres(ref), dt = "P1D", 
+                  aggregation= "mean", resampling = "bilinear")
+    
     gdalcubes_options(parallel=TRUE)
     
     raster_cube(st, v) |> 
@@ -81,25 +78,25 @@ create_background <- function(
     raster = NULL) {
   
   proj <- terra::crs(predictors, proj = T)
-
+  
   ## New method: If we use raster, we re-project our raster and add it as an additional layer
   if (grepl("raster", method)) {
     if (is.null(raster)) stop(paste("No raster included with method:", method))
-
+    
     # Bilinear interpolation when projecting in this manner
     # Exclude 0s, since we don't want to sample areas with no sightings
     raster[raster==0] <- NA
     
     add(predictors) <- raster
-
+    
   }
   
   if (!is.null(mask)) {
     predictors <- fast_crop(predictors, mask)
   }
-
+  
   sum_na_layer <-  terra::tapp(predictors, index = rep(1, terra::nlyr(predictors)), fun = sum, na.rm = F)
-
+  
   ncellr <- terra::global(!is.na(sum_na_layer), sum)
   
   if (ncellr < n) {
@@ -132,7 +129,7 @@ create_background <- function(
         # cells only retrieves non-NA cells
         backgr <- sample(cells(sum_na_layer), n)
         backgr <- xyFromCell(sum_na_layer,backgr)
-
+        
       }
     } else if (any(method == "thickening")) {
       
@@ -210,11 +207,11 @@ create_background <- function(
       values(predictors[[dim(predictors)[3]]])[which(is.na(values(sum_na_layer)))] <- NA
       tgb_weights <- predictors[[dim(predictors)[3]]]
       tgb_weights <- tgb_weights/sum(values(tgb_weights), na.rm = T)
-
+      
       # Sampling using density as probabilities
       backgr <- sample(cells(tgb_weights), n, prob = unlist(extract(tgb_weights, cells(tgb_weights))))
       backgr <- xyFromCell(tgb_weights, backgr)
-
+      
     }
   }
   message(sprintf("%s selected", nrow(backgr)))

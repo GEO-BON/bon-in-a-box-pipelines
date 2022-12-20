@@ -33,10 +33,10 @@ inputs:
     type: image/tiff;application=geotiff[]
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
   raster:
-    label: raster
-    description: taxa-specific raster of sampling, used in weighted_raster and unweighted_raster methods, if using from_stac then the corresponding taxa (e.g., 'reptiles')
-    type: image/tiff;application=geotiff[]
-    example: "/scripts/SDM/selectBackground-Reptiles-QC.tif"
+    label: raster file or taxa
+    description: taxa-specific raster of sampling, used in weighted_raster and unweighted_raster methods, if using from_cube then the corresponding taxa (e.g., 'reptiles')
+    type: text;image/tiff;application=geotiff[]
+    example: "reptiles"
   raster_source:
     label: raster source
     description: String, whether to access script from .tif, or STAC catalogue
@@ -44,7 +44,7 @@ inputs:
     options: 
       - from_tif
       - from_cube
-    example: from_tif
+    example: from_cube
 outputs:
   n_background:
     label: nb background 
