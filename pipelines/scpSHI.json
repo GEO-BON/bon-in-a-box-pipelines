@@ -1,0 +1,112 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 73.390625,
+        "y": 264
+      },
+      "data": {
+        "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "output",
+      "position": {
+        "x": 748.1486406627141,
+        "y": 318.00000000000006
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "df_shi",
+      "target": "1",
+      "targetHandle": null,
+      "id": "reactflow__edge-0df_shi-1"
+    }
+  ],
+  "viewport": {
+    "x": 117.25674213187841,
+    "y": 97.76759457036295,
+    "zoom": 0.6925547340554624
+  },
+  "inputs": {
+    "SHI>scpSHI_Jetz_complete.yml@0.species": {
+      "description": "Scientific name of the species",
+      "label": "species",
+      "type": "text",
+      "example": "Saguinus oedipus"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.ref_system": {
+      "description": "Reference system for the area of interest",
+      "label": "Projection",
+      "type": "int",
+      "example": 3116
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.elev_margin": {
+      "description": "Magnitude of buffer to add to the elevation ranges of the species (usualy in meters), if no buffer then 0",
+      "label": "Elevation buffer",
+      "type": "int",
+      "example": 0
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.forest_threshold": {
+      "description": "Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species",
+      "label": "Tree cover percentage",
+      "type": "int",
+      "example": 50
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.country_code": {
+      "description": "Three letter code (ISO_3166-1_alpha-3) for the country where the analysis will be done.",
+      "label": "Country code",
+      "type": "text",
+      "example": "COL"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.region": {
+      "description": "Name of the region according to the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1",
+      "label": "Region",
+      "type": "text",
+      "example": ""
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.spat_res": {
+      "description": "Spatial resolution for the analysis",
+      "label": "Spatial resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.expert_source": {
+      "description": "Source of the expert range map",
+      "label": "Expert range source",
+      "type": "options",
+      "options": [
+        "MOL",
+        "IUCN"
+      ],
+      "example": "IUCN"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.t_0": {
+      "description": "Year where the analysis should start",
+      "label": "Initial time",
+      "type": "int",
+      "example": 2000
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.t_n": {
+      "description": "Year where the analysis should end (it should be larger than Initial time).",
+      "label": "Final time",
+      "type": "int",
+      "example": 2020
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.time_step": {
+      "description": "Time range between each time step",
+      "label": "Time step",
+      "type": "int",
+      "example": 1
+    }
+  }
+}
