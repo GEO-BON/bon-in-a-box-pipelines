@@ -87,10 +87,12 @@ function ScriptIO({children, desc, setToolTip, onDoubleClick, warning}) {
     if(isObject(example))
       return JSON.stringify(example)
 
-    if(example.includes("\n"))
-      return <span style={{whiteSpace: "pre-wrap"}}>{"\n"+example.toString()}</span>
+    const asString = example.toString()
 
-    return example.toString()
+    if (asString.includes("\n"))
+      return <span style={{ whiteSpace: "pre-wrap" }}>{"\n" + asString}</span>
+
+    return asString
   }
 
   function onMouseLeave() {
