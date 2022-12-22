@@ -1,0 +1,154 @@
+{
+    "nodes": [
+      {
+        "id": "0",
+        "type": "io",
+        "position": {
+          "x": 73.390625,
+          "y": 264
+        },
+        "data": {
+          "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
+        }
+      },
+      {
+        "id": "1",
+        "type": "output",
+        "position": {
+          "x": 748.1486406627141,
+          "y": 318.00000000000006
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "2",
+        "type": "constant",
+        "position": {
+          "x": -272.2505186331307,
+          "y": 352.6729428340608
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "options",
+          "value": "MOL",
+          "options": [
+            "MOL",
+            "IUCN"
+          ]
+        }
+      },
+      {
+        "id": "3",
+        "type": "constant",
+        "position": {
+          "x": -275.0518056202638,
+          "y": 259.8785550540415
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "Panthera onca"
+        }
+      },
+      {
+        "id": "4",
+        "type": "constant",
+        "position": {
+          "x": -275.0518056202638,
+          "y": 312.61432116844753
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "COL"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "0",
+        "sourceHandle": "df_shi",
+        "target": "1",
+        "targetHandle": null,
+        "id": "reactflow__edge-0df_shi-1"
+      },
+      {
+        "source": "2",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "expert_source",
+        "id": "reactflow__edge-2-0expert_source"
+      },
+      {
+        "source": "3",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "species",
+        "id": "reactflow__edge-3-0species"
+      },
+      {
+        "source": "4",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "country_code",
+        "id": "reactflow__edge-4-0country_code"
+      }
+    ],
+    "viewport": {
+      "x": 602.7517101762357,
+      "y": 1.593656448869865,
+      "zoom": 0.9291606742509138
+    },
+    "inputs": {
+      "SHI>scpSHI_Jetz_complete.yml@0.ref_system": {
+        "description": "Reference system for the area of interest",
+        "label": "Projection",
+        "type": "int",
+        "example": 3116
+      },
+      "SHI>scpSHI_Jetz_complete.yml@0.elev_margin": {
+        "description": "Magnitude of buffer to add to the elevation ranges of the species (usualy in meters), if no buffer then 0",
+        "label": "Elevation buffer",
+        "type": "int",
+        "example": 0
+      },
+      "SHI>scpSHI_Jetz_complete.yml@0.forest_threshold": {
+        "description": "Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species",
+        "label": "Tree cover percentage",
+        "type": "int",
+        "example": 50
+      },
+      "SHI>scpSHI_Jetz_complete.yml@0.region": {
+        "description": "Name of the region according to the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1",
+        "label": "Region",
+        "type": "text",
+        "example": ""
+      },
+      "SHI>scpSHI_Jetz_complete.yml@0.spat_res": {
+        "description": "Spatial resolution for the analysis",
+        "label": "Spatial resolution",
+        "type": "int",
+        "example": 1000
+      },
+      "SHI>scpSHI_Jetz_complete.yml@0.t_0": {
+        "description": "Year where the analysis should start",
+        "label": "Initial time",
+        "type": "int",
+        "example": 2000
+      },
+      "SHI>scpSHI_Jetz_complete.yml@0.t_n": {
+        "description": "Year where the analysis should end (it should be larger than Initial time).",
+        "label": "Final time",
+        "type": "int",
+        "example": 2020
+      },
+      "SHI>scpSHI_Jetz_complete.yml@0.time_step": {
+        "description": "Time range between each time step",
+        "label": "Time step",
+        "type": "int",
+        "example": 1
+      }
+    }
+  }

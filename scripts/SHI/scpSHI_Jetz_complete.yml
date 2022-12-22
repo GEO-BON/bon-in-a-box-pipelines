@@ -43,6 +43,7 @@ inputs:
     options:
       - "MOL"
       - "IUCN"
+      - "QC"
     example: "IUCN"
   t_0:
     label: Initial time
