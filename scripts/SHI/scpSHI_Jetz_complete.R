@@ -116,11 +116,24 @@ if(!is.null(country_code)){
   sf_area_lim2 <- sf_range_map %>% st_make_valid
   sf_area_lim2_crs <- sf_area_lim2 %>% st_transform(sf_crs)
   
-  sf_area_lim <<- st_intersection(sf_area_lim2,sf_area_lim1 %>% st_transform(st_crs(sf_area_lim1)))
-  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs) %>% st_make_valid()
+  sf_area_lim <<- st_intersection(sf_area_lim2 %>% st_transform(st_crs(sf_area_lim1)),sf_area_lim1,dimension="polygon")
+  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") %>% st_make_valid() %>% 
+    st_collection_extract("POLYGON")
   
-  sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(10))
-  sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(10))
+  if(all(st_is_valid(sf_area_lim))){
+    sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(10))
+    }else{
+      sf::sf_use_s2(FALSE)
+      sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(0.0001))
+    }
+  
+  if(all(st_is_valid(sf_area_lim_crs))){
+    sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(10))
+  }else{
+    sf::sf_use_s2(FALSE)
+    sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(0.0001))
+  }
+
 }else{
   sf_area_lim <<- sf_range_map
   sf_area_lim_crs <<- sf_area_lim %>% st_transform(sf_crs)
@@ -299,7 +312,7 @@ img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
   tm_shape(s_year_loss_mask_plot)+tm_raster(style="cat",palette = c("#FF000080"))+
   tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"))+
   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
-  tm_scale_bar()+tm_legend(show=F)+tm_compass()
+  tm_compass()+tm_scale_bar()+tm_legend(show=F)
 
 print("Map of changes in suitable area generated")
 

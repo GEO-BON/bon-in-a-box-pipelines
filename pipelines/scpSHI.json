@@ -21,6 +21,23 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "2",
+      "type": "constant",
+      "position": {
+        "x": -272.2505186331307,
+        "y": 352.6729428340608
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "MOL",
+        "options": [
+          "MOL",
+          "IUCN"
+        ]
+      }
     }
   ],
   "edges": [
@@ -30,12 +47,19 @@
       "target": "1",
       "targetHandle": null,
       "id": "reactflow__edge-0df_shi-1"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-2-0expert_source"
     }
   ],
   "viewport": {
-    "x": 117.25674213187841,
-    "y": 97.76759457036295,
-    "zoom": 0.6925547340554624
+    "x": 602.7517101762357,
+    "y": 1.593656448869865,
+    "zoom": 0.9291606742509138
   },
   "inputs": {
     "SHI>scpSHI_Jetz_complete.yml@0.species": {
@@ -79,16 +103,6 @@
       "label": "Spatial resolution",
       "type": "int",
       "example": 1000
-    },
-    "SHI>scpSHI_Jetz_complete.yml@0.expert_source": {
-      "description": "Source of the expert range map",
-      "label": "Expert range source",
-      "type": "options",
-      "options": [
-        "MOL",
-        "IUCN"
-      ],
-      "example": "IUCN"
     },
     "SHI>scpSHI_Jetz_complete.yml@0.t_0": {
       "description": "Year where the analysis should start",

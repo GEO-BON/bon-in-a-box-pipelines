@@ -1,182 +1,183 @@
 {
-    "nodes": [
-      {
-        "id": "6",
-        "type": "io",
-        "position": {
-          "x": 158.390625,
-          "y": 200
-        },
-        "data": {
-          "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
-        }
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 356.390625,
+        "y": 242.25464480660054
       },
-      {
-        "id": "7",
-        "type": "output",
-        "position": {
-          "x": 872.8629220872804,
-          "y": 192.77026806436973
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "8",
-        "type": "constant",
-        "position": {
-          "x": -133.3232341835082,
-          "y": 96.39777013957996
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text",
-          "value": "Martes americana"
-        }
-      },
-      {
-        "id": "9",
-        "type": "constant",
-        "position": {
-          "x": -163.3232341835081,
-          "y": 125.39777013957993
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": "21138"
-        }
-      },
-      {
-        "id": "10",
-        "type": "constant",
-        "position": {
-          "x": -190.32323418350813,
-          "y": 232.39777013957985
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 50
-        }
-      },
-      {
-        "id": "11",
-        "type": "constant",
-        "position": {
-          "x": -187.32323418350813,
-          "y": 262.39777013957985
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text",
-          "value": "Québec"
-        }
-      },
-      {
-        "id": "12",
-        "type": "constant",
-        "position": {
-          "x": -164.32323418350813,
-          "y": 251.39777013957985
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text",
-          "value": "CAN"
-        }
+      "data": {
+        "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
       }
-    ],
-    "edges": [
-      {
-        "source": "6",
-        "sourceHandle": "df_shi",
-        "target": "7",
-        "targetHandle": null,
-        "id": "reactflow__edge-6df_shi-7"
-      },
-      {
-        "source": "8",
-        "sourceHandle": null,
-        "target": "6",
-        "targetHandle": "species",
-        "id": "reactflow__edge-8-6species"
-      },
-      {
-        "source": "9",
-        "sourceHandle": null,
-        "target": "6",
-        "targetHandle": "ref_system",
-        "id": "reactflow__edge-9-6ref_system"
-      },
-      {
-        "source": "10",
-        "sourceHandle": null,
-        "target": "6",
-        "targetHandle": "forest_threshold",
-        "id": "reactflow__edge-10-6forest_threshold"
-      },
-      {
-        "source": "11",
-        "sourceHandle": null,
-        "target": "6",
-        "targetHandle": "region",
-        "id": "reactflow__edge-11-6region"
-      },
-      {
-        "source": "12",
-        "sourceHandle": null,
-        "target": "6",
-        "targetHandle": "country_code",
-        "id": "reactflow__edge-12-6country_code"
-      }
-    ],
-    "viewport": {
-      "x": 339.24188306253575,
-      "y": 11.511872619393841,
-      "zoom": 1.0762401247837978
     },
-    "inputs": {
-      "SHI>scpSHI_Jetz_complete.yml@6.elev_margin": {
-        "description": "Magnitude of buffer to add to the elevation ranges of the species (usualy in meters), if no buffer then 0",
-        "label": "Elevation buffer",
-        "type": "int",
-        "example": 0
+    {
+      "id": "1",
+      "type": "constant",
+      "position": {
+        "x": 24.281129747190562,
+        "y": 369.34473777084423
       },
-      "SHI>scpSHI_Jetz_complete.yml@6.spat_res": {
-        "description": "Spatial resolution for the analysis",
-        "label": "Spatial resolution",
-        "type": "int",
-        "example": 1000
-      },
-      "SHI>scpSHI_Jetz_complete.yml@6.expert_source": {
-        "description": "Source of the expert range map",
-        "label": "Expert range source",
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "options",
+        "value": "MOL",
         "options": [
           "MOL",
-          "IUCN"
-        ],
-        "example": "IUCN"
+          "IUCN",
+          "QC"
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "type": "output",
+      "position": {
+        "x": 1015.4908842016903,
+        "y": 227.51467659412071
       },
-      "SHI>scpSHI_Jetz_complete.yml@6.t_0": {
-        "description": "Year where the analysis should start",
-        "label": "Initial time",
-        "type": "int",
-        "example": 2000
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "3",
+      "type": "constant",
+      "position": {
+        "x": 33.44690830375549,
+        "y": 240.43358600236454
       },
-      "SHI>scpSHI_Jetz_complete.yml@6.t_n": {
-        "description": "Year where the analysis should end (it should be larger than Initial time).",
-        "label": "Final time",
-        "type": "int",
-        "example": 2020
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Martes americana"
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 48.38006740340063,
+        "y": 278.0366481756573
       },
-      "SHI>scpSHI_Jetz_complete.yml@6.time_step": {
-        "description": "Time range between each time step",
-        "label": "Time step",
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "int",
-        "example": 1
+        "value": "2138"
+      }
+    },
+    {
+      "id": "5",
+      "type": "constant",
+      "position": {
+        "x": 23.011935596163028,
+        "y": 313.06834226543185
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "CAN"
+      }
+    },
+    {
+      "id": "6",
+      "type": "constant",
+      "position": {
+        "x": 25.749247177237066,
+        "y": 338.6936108810213
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Québec"
       }
     }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-1-0expert_source"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "df_shi",
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-0df_shi-2"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "species",
+      "id": "reactflow__edge-3-0species"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "ref_system",
+      "id": "reactflow__edge-4-0ref_system"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "country_code",
+      "id": "reactflow__edge-5-0country_code"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "region",
+      "id": "reactflow__edge-6-0region"
+    }
+  ],
+  "viewport": {
+    "x": 245.18170864115473,
+    "y": -33.94047953015189,
+    "zoom": 0.8021811663524869
+  },
+  "inputs": {
+    "SHI>scpSHI_Jetz_complete.yml@0.elev_margin": {
+      "description": "Magnitude of buffer to add to the elevation ranges of the species (usualy in meters), if no buffer then 0",
+      "label": "Elevation buffer",
+      "type": "int",
+      "example": 0
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.forest_threshold": {
+      "description": "Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species",
+      "label": "Tree cover percentage",
+      "type": "int",
+      "example": 50
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.spat_res": {
+      "description": "Spatial resolution for the analysis",
+      "label": "Spatial resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.t_0": {
+      "description": "Year where the analysis should start",
+      "label": "Initial time",
+      "type": "int",
+      "example": 2000
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.t_n": {
+      "description": "Year where the analysis should end (it should be larger than Initial time).",
+      "label": "Final time",
+      "type": "int",
+      "example": 2020
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0.time_step": {
+      "description": "Time range between each time step",
+      "label": "Time step",
+      "type": "int",
+      "example": 1
+    }
   }
+}
