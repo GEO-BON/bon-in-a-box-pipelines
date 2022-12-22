@@ -1,11 +1,14 @@
 script: scpSHI_Jetz_complete.R
-description: "This script loads the data needed to calculate the area and connectivity scores to calculate the Species Habitat Index (SHI) using Global Forest Watch data to measure changes in the habitat of the species"
+description: 
+  This script loads the data needed to calculate the area and connectivity scores 
+  to calculate the Species Habitat Index (SHI) using Global Forest Watch data to measure 
+  changes in the habitat of the species
 inputs:
   species:
     label: species
     description: Scientific name of the species
     type: text
-    example: "Saguinus oedipus"
+    example: Saguinus oedipus
   ref_system:
     label: Projection
     description: Reference system for the area of interest
@@ -18,14 +21,17 @@ inputs:
     example: 0
   forest_threshold:
     label: Tree cover percentage 
-    description: Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species. This value is given according to suitable habitat of the species. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
+    description: 
+      Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species. 
+      This value is given according to suitable habitat of the species. If not available, use Map of Life Values 
+      (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
     type: int
     example: 50
   country_code:
     label: Country code
     description: Three letter code (ISO_3166-1_alpha-3) for the country where the analysis will be done.
     type: text
-    example: "COL"
+    example: COL
   region:
     label: Region
     description: Name of the region according to the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1
@@ -33,7 +39,7 @@ inputs:
     example: ""
   spat_res:
     label: Spatial resolution
-    description: Spatial resolution for the analysis
+    description: Spatial resolution for the analysis, in meters
     type: int
     example: 1000
   expert_source:
@@ -41,10 +47,10 @@ inputs:
     description: Source of the expert range map
     type: options
     options:
-      - "MOL"
-      - "IUCN"
-      - "QC"
-    example: "IUCN"
+      - MOL
+      - IUCN
+      - QC
+    example: IUCN
   t_0:
     label: Initial time
     description: Year where the analysis should start
@@ -52,33 +58,35 @@ inputs:
     example: 2000
   t_n:
     label: Final time
-    description: Year where the analysis should end (it should be larger than Initial time).
+    description: Year where the analysis should end (it should be later than Initial time).
     type: int
     example: 2020
   time_step:
     label: Time step
-    description: Time range between each time step. It can be one to get change every year or two if the change is going to be evaluated every two years and so on.
+    description:
+      Time range between each time step. It can be one to get change every year or two if the change 
+      is going to be evaluated every two years and so on.
     type: int
     example: 1
 outputs:
   df_shi:
     label: SHI values
-    description: This TSV (Tab Separated Values) data shows the values of the SHI according to the parameters entered
+    description: This TSV (Tab Separated Values) data shows the values of the SHI according to the parameters entered.
     type: text/tab-separated-values
 #    example: /Saguinus oedipus_SHI_table.tsv
   img_shi_time_period:
     label: SHI for the selected period
-    description: Figure with the map of changes through the years selected to calculate the SHI
+    description: Figure with the map of changes through the years selected to calculate the SHI.
     type: image/png
  #   example: /Saguinus oedipus_GFW_change.png
   img_shi_timeseries:
     label: Time series of the SHI and score values for the selected period
-    description: Figure with the time series of the years selected and the scores to calculate SHI
+    description: Figure with the time series of the years selected and the scores to calculate SHI.
     type: image/png
  #   example: /Saguinus oedipus_SHI_timeseries.png
   r_habitat_by_year:
     label: Raster of available habitat by year
-    description: Raster with 1 where there is available habitat for the species and leaves the rest empty
+    description: Raster with 1 where there is available habitat for the species and leaves the rest empty.
     type: image/tiff;application=geotiff
  #    example: /Saguinus oedipus_habitat_byYear.tif
 references:
