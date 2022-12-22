@@ -143,6 +143,11 @@ img#logo {
   margin-top:0px;
 }
 
+.outputContent img {
+  max-width: 100%;
+  max-height: 90vh;
+}
+
 .foldableScriptResult .outputContent {
   border-left: 0.4em solid #71AAB0;
 }
