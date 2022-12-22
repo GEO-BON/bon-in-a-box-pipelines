@@ -231,7 +231,7 @@ cube_GFW_TC <-
             spatial.res = spat_res,
             temporal.res = "P1Y",
             t0 = "2000-01-01",
-            t1 = "2000-01-01",
+            t1 = "2000-12-31",
             resampling = "bilinear")
 
 cube_GFW_TC_range <- cube_GFW_TC |>
@@ -307,11 +307,12 @@ s_year_loss_mask_plot <- terra::classify(s_year_loss_mask,matrix(c(0,NA),ncol=2,
 s_year_loss_mask_plot <- terra::app(s_year_loss_mask_plot,sum)>0
 
 img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
-  tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"))+
-  tm_shape(s_year_loss_mask_plot)+tm_raster(style="cat",palette = c("#FF000080"))+
-  tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"))+
+  tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
+  tm_shape(s_year_loss_mask_plot)+tm_raster(style="cat",palette = c("#FF000080"), legend.show = FALSE)+
+  tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"), legend.show = FALSE)+
   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
-  tm_compass()+tm_scale_bar()+tm_legend(show=F)
+  tm_compass()+tm_scale_bar()+tm_layout(legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = T)+
+  tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Suitable Habitat")
 
 print("Map of changes in suitable area generated")
 
@@ -325,7 +326,7 @@ names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
 s_Habitat <- terra::classify(s_HabitatArea , rcl=matrix(c(0,NA),ncol=2))
 r_habitat_by_year_path <- file.path(outputFolder,paste0(sp,"_habitat_GFW.tif"))
-writeRaster(s_Habitat,filename = r_habitat_by_year_path,overwrite=T)
+terra::writeRaster(s_Habitat,filename = r_habitat_by_year_path,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
 
 #----------------------- 3.1.1. Get average distance to edge -------------------
 #patch distances
@@ -353,22 +354,17 @@ df_area_score_gfw <-  df_area_score %>% dplyr::group_by(Year) %>%
   dplyr::mutate(ref_area=df_area_score$Area[1], diff=ref_area-Area, percentage=100-as.numeric(100*diff/ref_area), info="GFW")
 
 print("Habitat Score generated")
-# 
-# # write.csv(df_area_score_gfw,file=paste0(outputFolder,sp,"_AreaScore_table.csv"))
-# 
-# # img_Area_TS <- ggplot( df_area_score_gfw %>% ungroup(),aes(x=as.numeric(Year),y=percentage))+geom_line()+xlab("Year")
-# # img_Area_TS
-# 
+
 #------------------------ 3.1.3. SHI -------------------------------------------
 df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
 df_SHI_gfw <- df_SHI_gfw %>% mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
+df_SHI_gfw_tidy <- df_SHI_gfw %>% pivot_longer(c("HS","CS","SHI"),names_to = "Index", values_to = "Value")
 
+colnames(df_SHI_gfw) <- c("Habitat Score","Connectivity Score","Species Habitat Index","Source","Year")
 df_SHI_path <- file.path(outputFolder,paste0(sp,"_SHI_table.tsv"))
 write_tsv(df_SHI_gfw,file= df_SHI_path)
 
 print("Species Habitat Index generated")
-
-df_SHI_gfw_tidy <- df_SHI_gfw %>% pivot_longer(c("HS","CS","SHI"),names_to = "Index", values_to = "Value")
 
 img_SHI_timeseries <- ggplot(df_SHI_gfw_tidy , aes(x=Year,y=Value,col=Index))+geom_line()+
   theme_bw()+ylab("Connectivity Score (CS), Habitat Score (HS), SHI")
