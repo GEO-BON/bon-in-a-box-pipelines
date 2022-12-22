@@ -45,7 +45,7 @@ export function Layout(props) {
           </div>
         }
 
-        <main style={{height: mainHeight}}>
+        <main style={{minHeight: mainHeight}}>
           {props.right}
         </main>
       </div>
