@@ -64,7 +64,7 @@ outputs:
   df_shi:
     label: SHI values
     description: This TSV (Tab Separated Values) data shows the values of the SHI according to the parameters entered
-    type: text/tsv
+    type: text/tab-separated-values
 #    example: /Saguinus oedipus_SHI_table.tsv
   img_shi_time_period:
     label: SHI for the selected period
