@@ -36,7 +36,7 @@ export function Layout(props) {
           <NavLink to="/pipeline-editor">Pipeline editor</NavLink>
         </nav>
 
-        <main style={{height: mainHeight}}>
+        <main style={{minHeight: mainHeight}}>
           {props.right}
         </main>
       </div>
