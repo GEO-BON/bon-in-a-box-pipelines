@@ -21,7 +21,8 @@ if(length(new.packages)) install.packages(new.packages)
 
 lapply(packages,require,character.only=T)
 
-source("./scripts/SHI/funGet_range_maps.R", echo=TRUE)
+path_script <- Sys.getenv("SCRIPT_LOCATION")
+source(file.path(path_script,"SHI/funGet_range_maps.R"), echo=TRUE)
 
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
@@ -76,7 +77,6 @@ outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
 
 setwd(outputFolder)
-path_script <- Sys.getenv("SCRIPT_LOCATION")
 
 #-------------------------------------------------------------------------------------------------------------------
 #1. Species distribution range
