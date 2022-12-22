@@ -48,7 +48,6 @@ elev_margin <- input$elev_margin
 #forest threshold for GFW
 forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
 #define country if the area of analysis will be restricted to a specific country
-# country_code <- ifelse(input$country_code== "" , NULL , input$country_code)
 if(input$country_code== "") country_code <-  NULL else country_code <- input$country_code
 if(input$region== "") region <-  NULL else region <- input$region
 
@@ -360,7 +359,7 @@ print("Habitat Score generated")
 # # img_Area_TS <- ggplot( df_area_score_gfw %>% ungroup(),aes(x=as.numeric(Year),y=percentage))+geom_line()+xlab("Year")
 # # img_Area_TS
 # 
-# #------------------------ 3.1.3. SHI -------------------------------------------
+#------------------------ 3.1.3. SHI -------------------------------------------
 df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
 df_SHI_gfw <- df_SHI_gfw %>% mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
 
