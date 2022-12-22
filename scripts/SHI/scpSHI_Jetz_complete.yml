@@ -1,5 +1,5 @@
 script: scpSHI_Jetz_complete.R
-description: "This script loads the data needed to calculate the area and connectivity score that are the base to calculate the Species Habitat Index (SHI)"
+description: "This script loads the data needed to calculate the area and connectivity scores to calculate the Species Habitat Index (SHI) using Global Forest Watch data to measure changes in the habitat of the species"
 inputs:
   species:
     label: species
@@ -18,7 +18,7 @@ inputs:
     example: 0
   forest_threshold:
     label: Tree cover percentage 
-    description: Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species 
+    description: Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species. This value is given according to suitable habitat of the species. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
     type: int
     example: 50
   country_code:
@@ -57,7 +57,7 @@ inputs:
     example: 2020
   time_step:
     label: Time step
-    description: Time range between each time step
+    description: Time range between each time step. It can be one to get change every year or two if the change is going to be evaluated every two years and so on.
     type: int
     example: 1
 outputs:
