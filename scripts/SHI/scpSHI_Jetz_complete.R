@@ -49,8 +49,8 @@ elev_margin <- input$elev_margin
 forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
 #define country if the area of analysis will be restricted to a specific country
 if(input$country_code== "") country_code <-  NULL else country_code <- input$country_code
-if(input$region== "") region <-  NULL else region <- input$region
-
+if(input$region== "") region <-  NULL else region <- input$region 
+print(region)
 #spatial resolution
 spat_res <- input$spat_res
 
@@ -125,14 +125,14 @@ if(!is.null(country_code)){
       sf::sf_use_s2(FALSE)
       sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(0.0001))
     }
-  
+  print(sf_ext)
   if(all(st_is_valid(sf_area_lim_crs))){
     sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(10))
   }else{
     sf::sf_use_s2(FALSE)
     sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(0.0001))
   }
-
+ print(sf_ext_crs)
 }else{
   sf_area_lim <<- sf_range_map
   sf_area_lim_crs <<- sf_area_lim %>% st_transform(sf_crs)
@@ -207,12 +207,12 @@ with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are p
 print("Map of suitable area generated")
 
 #2.2 Load habitat preferences---------------------------------------------
-df_IUCN_habitat_cat <- rl_habitats(sp,key = token)$result
-
-#Load table with land cover equivalences need to be updated with Jung et al
-df_IUCN_to_LC_categories <- read.csv(file.path(path_script,"SHI","IUCN_to_LC_categories.csv"),colClasses = "character") # PENDING PUT 0.5 TO MARGINAL HABITATS
-df_IUCN_habitat_LC_cat <- left_join(df_IUCN_habitat_cat,df_IUCN_to_LC_categories, by="code")
-LC_codes <- as.numeric(unique(df_IUCN_habitat_LC_cat$ESA_cod))
+# df_IUCN_habitat_cat <- rl_habitats(sp,key = token)$result
+# 
+# #Load table with land cover equivalences need to be updated with Jung et al
+# df_IUCN_to_LC_categories <- read.csv(file.path(path_script,"SHI","IUCN_to_LC_categories.csv"),colClasses = "character") # PENDING PUT 0.5 TO MARGINAL HABITATS
+# df_IUCN_habitat_LC_cat <- left_join(df_IUCN_habitat_cat,df_IUCN_to_LC_categories, by="code")
+# LC_codes <- as.numeric(unique(df_IUCN_habitat_LC_cat$ESA_cod))
 
 #2.3 Hydrological features------------------------------------------------------
 
@@ -240,7 +240,7 @@ cube_GFW_TC_range <- cube_GFW_TC |>
 
 r_GFW_TC_range <- cube_to_raster(cube_GFW_TC_range , format="terra") # convert to raster format
 
-r_suitability_map_rescaled <- terra::resample(r_suitability_map,r_GFW_TC_range,method="bilinear") #Adjust scale of suitability map
+r_suitability_map_rescaled <- terra::resample(r_suitability_map,r_GFW_TC_range,method="mode") #Adjust scale of suitability map
 r_GFW_TC_range_mask <- r_GFW_TC_range |>
   terra::classify(rcl=matrix(c(NA,0),ncol=2,byrow=T)) |> # turn NA to 0
   terra::mask(r_suitability_map_rescaled) # crop to suitability map
@@ -261,7 +261,7 @@ v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-12-31
                                              left = sf_ext_crs['xmin'], right =sf_ext_crs['xmax'],
                                              top = sf_ext_crs['ymax'], bottom =  sf_ext_crs['ymin']),
                dx=spat_res, dy=spat_res, dt="P1Y",
-               resampling = "near") # TO CHANGE to proportions
+               resampling = "mode") # TO CHANGE to proportions
 
 times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4)) #get year of change by selected time step to mask map by year of change
 l_r_year_loss <- map(times, function(x) {
@@ -294,7 +294,7 @@ cube_GFW_gain <-
             temporal.res = "P1Y",
             t0 = "2000-01-01",
             t1 = "2000-12-31",
-            resampling = "near")
+            resampling = "mode")
 
 r_GFW_gain <- cube_to_raster(cube_GFW_gain %>%
                                stars::st_as_stars(), format="terra") # convert to raster format
@@ -303,15 +303,14 @@ r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_suitability_map_res
 #-------------------------- figure ----------------------------------------------
 osm <- read_osm(sf_area_lim, ext=1.1)
 
-s_year_loss_mask_plot <- terra::classify(s_year_loss_mask,matrix(c(0,NA),ncol=2,byrow=T)) # turn 0 to NA
-s_year_loss_mask_plot <- terra::app(s_year_loss_mask_plot,sum)>0
+r_year_loss_mask_plot <- terra::classify(s_year_loss_mask[[length(l_r_year_loss)]],matrix(c(0,NA),ncol=2,byrow=T)) # turn 0 to NA
 
 img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
   tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
-  tm_shape(s_year_loss_mask_plot)+tm_raster(style="cat",palette = c("#FF000080"), legend.show = FALSE)+
+  tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("#FF000080"), legend.show = FALSE)+
   tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"), legend.show = FALSE)+
   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
-  tm_compass()+tm_scale_bar()+tm_layout(legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = T)+
+  tm_compass()+tm_scale_bar()+tm_layout(legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
   tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Suitable Habitat")
 
 print("Map of changes in suitable area generated")
