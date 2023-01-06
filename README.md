@@ -165,7 +165,9 @@ Scripts can install their own dependencies directly (`install.packages` in R, `P
 To pre-compile the dependency in the image, add it to [runners/r-dockerfile](runners/r-dockerfile) or [runners/julia-dockerfile](runners/julia-dockerfile). When the pull request is merged to main, a new image will be available to `docker compose pull` with the added dependencies.
 
 ## Pipelines
-A pipeline is a collection of steps to acheive the desired processing.Each script becomes a pipeline step.
+A pipeline is a collection of steps to acheive the desired processing. Each script becomes a pipeline step.
+![image](https://user-images.githubusercontent.com/6223744/211096047-d1d205e3-2f5e-4af6-b8c5-015b002432cb.png)
+
 
 Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (red box in image above). It supports [the same types and UI rendering](#input-and-output-types) as individual scripts, since its inputs are directly fed to the steps, and outputs come from the step outputs.
 
