@@ -336,6 +336,6 @@ function getCodeLink(ymlPath, scriptFileName) {
 
 function removeLastSlash(s) {
   const i = s.lastIndexOf('/');
-  if(i == -1) return s
+  if(i === -1) return s
   return s.substring(0, i + 1);
 }
