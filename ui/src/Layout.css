@@ -33,6 +33,31 @@ a.active {
   padding-right:30px;
 }
 
+.fullScreenPopup {
+  position: absolute;
+  top: 100px;
+  bottom: 10px;
+  margin-left: -10px;
+  z-index: 10000;
+  min-width: 50%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  color: rgb(0, 0, 0);
+  background-color: #f3f3f1;
+  border-radius: 30px;
+  padding: 20px;
+}
+
+.close {
+  color: rgb(0, 0, 0);
+  text-decoration: none;
+  margin-top:-25px;
+  font-size: 60px;
+}
+
 img#logo {
   max-width: 10vw;
 }

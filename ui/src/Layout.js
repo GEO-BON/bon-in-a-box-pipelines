@@ -36,6 +36,15 @@ export function Layout(props) {
           <NavLink to="/pipeline-editor">Pipeline editor</NavLink>
         </nav>
 
+        {props.popupContent && 
+          <div className='fullScreenPopup'>
+            <div>
+              {props.popupContent}
+            </div>
+            <a href="#" title="Close" className='close' onClick={() => props.setPopupContent(null)}>×</a>
+          </div>
+        }
+
         <main style={{height: mainHeight}}>
           {props.right}
         </main>
