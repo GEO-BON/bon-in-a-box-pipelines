@@ -51,11 +51,17 @@ a.active {
   padding: 20px;
 }
 
-.close {
+.fullScreenPopup .close {
   color: rgb(0, 0, 0);
   text-decoration: none;
   margin-top:-25px;
   font-size: 60px;
+}
+
+.fullScreenPopup .content {
+  flex-grow: 1;
+  overflow-y: auto; 
+  margin-right: 10px;
 }
 
 img#logo {
@@ -134,11 +140,11 @@ img#logo {
   background-size: 1.4em 1.6em;
 }
 
-.stepDescription {
+.outputContent .stepDescription {
   font-size: small;
 }
 
-.stepDescription ul {
+.references ul {
   margin-top: 0;
 }
 
@@ -147,7 +153,6 @@ img#logo {
 }
 
 .outputDescription {
-  font-size: small;
   font-style: italic;
 }
 
