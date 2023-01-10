@@ -38,7 +38,7 @@ export function Layout(props) {
 
         {props.popupContent && 
           <div className='fullScreenPopup'>
-            <div>
+            <div className='content'>
               {props.popupContent}
             </div>
             <a href="#" title="Close" className='close' onClick={() => props.setPopupContent(null)}>×</a>

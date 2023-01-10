@@ -12,6 +12,7 @@ import errorImg from '../img/error.svg';
 import warningImg from '../img/warning.svg';
 import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
+import { GeneralDescription } from './ScriptDescription';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -299,43 +300,12 @@ function DelayedResult({id, folder, setRunningScripts}) {
   }
 
   let logsAddress = folder && "output/" + folder + "/logs.txt"
-  const codeLink = scriptMetadata && getCodeLink(step, scriptMetadata.script)
-
+  
   return (
     <FoldableOutputWithContext title={step.replaceAll('>', ' > ').replace(/.yml$/, '')} componentId={id} inline={inline} className={className}>
-      {scriptMetadata && <div className='stepDescription'>
-        {scriptMetadata.description && <p className="outputDescription">{scriptMetadata.description}</p>}
-        {(scriptMetadata.external_link || codeLink) &&
-          <p>See&nbsp;
-            {scriptMetadata.external_link && <a href={scriptMetadata.external_link} target="_blank">{scriptMetadata.external_link}</a>}
-            {scriptMetadata.external_link && codeLink && <>&nbsp;and&nbsp;</>}
-            {codeLink}
-          </p>}
-        {scriptMetadata.references && <div>
-          <p className='noMargin'>References: </p>
-          <ul>{scriptMetadata.references.map((r, i) => {
-            return <li key={i}>{r.text} {r.doi && <><br /><a href={r.doi} target="_blank">{r.doi}</a></>}</li>
-          })}
-          </ul>
-        </div>}
-      </div>}
+      <GeneralDescription ymlPath={step} metadata={scriptMetadata} />
       {content}
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutputWithContext>
   )
-}
-
-function getCodeLink(ymlPath, scriptFileName) {
-  if(!scriptFileName || scriptFileName.endsWith(".kt")) {
-    return null
-  }
-
-  const url = 'https://github.com/GEO-BON/biab-2.0/tree/main/scripts/' + removeLastSlash(ymlPath.replaceAll('>', '/')) + scriptFileName
-  return <a href={url} target="_blank">code</a>
-}
-
-function removeLastSlash(s) {
-  const i = s.lastIndexOf('/');
-  if(i === -1) return s
-  return s.substring(0, i + 1);
 }

@@ -2,6 +2,10 @@ import './Editor.css'
 
 import {React, useState, useEffect, useCallback} from 'react';
 
+import spinnerImg from '../../img/spinner.svg';
+import { fetchScriptDescription } from './ScriptDescriptionStore';
+import { GeneralDescription, InputsDescription, OutputsDescription } from '../ScriptDescription';
+
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 
 const onDragStart = (event, nodeType, descriptionFile) => {
@@ -37,16 +41,30 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
       setPopupContent(null) 
     } else {
       setSelectedStep(descriptionFile)
-      setPopupContent(descriptionFile) // TODO: TEMP
+      setPopupContent(<img src={spinnerImg} className="spinner" alt="Spinner" />)
+
+      fetchScriptDescription(descriptionFile, (metadata) => {
+        if(!metadata) {
+          setPopupContent(<p className='error'>Failed to fetch script description for {descriptionFile}</p>)
+          return
+        }
+
+        setPopupContent(<>
+          <h2>{descriptionFile.replaceAll('>', ' > ')}</h2>
+          <GeneralDescription ymlPath={descriptionFile} metadata={metadata} />
+          <InputsDescription metadata={metadata} />
+          <OutputsDescription metadata={metadata} />
+        </>)
+      })
     }
-  })
+  }, [selectedStep, setSelectedStep, setPopupContent])
 
   // Removes the highlighting if popup closed with the X, or by re-clicking the step
   useEffect(() => {
     if(popupContent === null && selectedStep !== null) {
       setSelectedStep(null)
     }
-  }, [popupContent])
+  }, [popupContent, selectedStep, setSelectedStep])
 
   /**
    *
