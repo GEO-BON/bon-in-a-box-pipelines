@@ -37,9 +37,11 @@ presence <- read.table(file = input$presence, sep = '\t', header = TRUE)
 
 # Optional.. so without input it should be NULL
 if(!is.null(input$raster)){
-  heatmap <- readRaster(file = input$raster, 
-                        source = input$raster_source, 
-                        ref = predictors)
+  # Read in path to file
+  heatmap <- terra::rast(input$raster)
+  # This step is *slow*; an alternative would be better
+  # The same is applied to 'loadPredictorsFunc.R' as well
+  heatmap <- terra::project(heatmap, predictors)
 }else{
   heatmap <- NULL
 }

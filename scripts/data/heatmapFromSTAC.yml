@@ -1,0 +1,27 @@
+script: heatmapFromSTAC.R
+description: "Download GBIF heatmap from STAC catalogue, specifying taxa."
+
+inputs:
+  taxa: 
+    label: taxa
+    description: taxonomic group to retrieve GBIF heatmap
+    type: options
+    options: 
+      - reptiles
+      - plants
+      - mammals
+      - birds
+      - arthropods
+      - amphibians
+      - all
+    example: reptiles
+  predictors: 
+    label: predictors
+    description: raster, optional predictors for re-projection and resolution
+    type: image/tiff;application=geotiff[]
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+outputs:
+  raster:
+    label: raster file
+    description: taxa-specific GBIF heatmap raster
+    type: image/tiff;application=geotiff
