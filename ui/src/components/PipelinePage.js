@@ -172,7 +172,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
   }, []);
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit} accept-charset="utf-8">
       <label>
         Pipeline:
         <br />
