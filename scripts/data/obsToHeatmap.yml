@@ -16,6 +16,6 @@ outputs:
   heatmap:
     label: heatmap
     description: raster, heatmap of occurrences
-    type: image/tiff;application=geotiff[]
+    type: image/tiff;application=geotiff
     example:
 
