@@ -4,4 +4,5 @@
 **/build
 
 **/Dockerfile*
-**/.dockerignore
+**/*ignore
+**/hotswap.sh

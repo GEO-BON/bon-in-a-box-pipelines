@@ -1,6 +1,6 @@
 package org.geobon.pipeline
 
-import org.openapitools.server.utils.toMD5
+import org.geobon.utils.toMD5
 import java.io.File
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))

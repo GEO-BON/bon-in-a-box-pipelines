@@ -4,9 +4,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.io.File
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 
 class AssignId(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
-    YMLStep(File(System.getenv("SCRIPT_LOCATION"),"pipeline/AssignId.yml"), inputs = inputs) {
+    YMLStep(File(scriptRoot,"pipeline/AssignId.yml"), inputs = inputs) {
 
     var idForLayer:String? = null
 

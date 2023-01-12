@@ -1,4 +1,4 @@
-package org.openapitools.server.utils
+package org.geobon.utils
 
 import java.security.MessageDigest
 
