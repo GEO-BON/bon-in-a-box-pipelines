@@ -23,5 +23,6 @@ inputs:
 outputs:
   raster:
     label: raster file
-    description: taxa-specific GBIF heatmap raster
+    description: raster, taxa-specific GBIF heatmap
     type: image/tiff;application=geotiff
+    example:
