@@ -23,8 +23,6 @@ repositories {
 }
 
 tasks.test {
-    useJUnitPlatform()
-println(projectDir)
     environment(mapOf(
         "SCRIPT_LOCATION" to "$projectDir/src/test/resources/scripts/",
         "PIPELINES_LOCATION" to "$projectDir/src/test/resources/pipelines/",
@@ -54,9 +52,6 @@ dependencies {
     
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
-
-    // TODO: there might be some redundancy with the two above
-    testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
     testImplementation("io.mockk:mockk:1.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     testImplementation("io.kotest:kotest-runner-junit5:5.5.4")
