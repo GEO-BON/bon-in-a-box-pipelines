@@ -100,6 +100,7 @@ references: # 0 to many
 
 See [example](/scripts/helloWorld/helloR.yml)
 
+#### Input and output types
 Each input and output must declare a type, *in lowercase.* The following file types are accepted:
 | File type                    | MIME type to use in the yaml   | UI rendering                 |
 | ---------------------------- |------------------------------- |------------------------------|
@@ -164,7 +165,11 @@ Scripts can install their own dependencies directly (`install.packages` in R, `P
 To pre-compile the dependency in the image, add it to [runners/r-dockerfile](runners/r-dockerfile) or [runners/julia-dockerfile](runners/julia-dockerfile). When the pull request is merged to main, a new image will be available to `docker compose pull` with the added dependencies.
 
 ## Pipelines
-Each script becomes a pipeline step. Pipelines support the same input and output types and UI rendering as individual scripts.
+A pipeline is a collection of steps to acheive the desired processing. Each script becomes a pipeline step.
+![image](https://user-images.githubusercontent.com/6223744/211096047-d1d205e3-2f5e-4af6-b8c5-015b002432cb.png)
+
+
+Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (red box in image above). It supports [the same types and UI rendering](#input-and-output-types) as individual scripts, since its inputs are directly fed to the steps, and outputs come from the step outputs.
 
 ### Pipeline editor
 
@@ -178,6 +183,8 @@ The left pane shows the available steps, the right pane shows the canvas.
 
 **To add a constant value:** double-click on any input to add a constant value linked to this input. It is pre-filled with the example value.
 
+**To add an output:** double-click on any *step* output to add a *pipeline* output linked to it, or drag and drop the red box from the left pane and link it manually.
+
 **To delete a step or a pipe:** select it and press the Delete key on your keyboard.
 
 **To make an array out of single value outputs:** if many outputs of the same type are connected to the same input, it will be received as an array by the script. 
@@ -188,12 +195,12 @@ A single value can also be combined with an array of the same type, to produce a
 
 <img src="https://user-images.githubusercontent.com/6223744/181106278-f6db6af5-764a-4775-b196-48feac940eec.png" width="300">
 
-**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the input.json sample file when running the pipeline.
+**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the sample input.json file when running the pipeline.
 
 ### Pipeline inputs and outputs
 Any **input** with no constant value assigned will be considered a pipeline input and user will have to fill the value.
 
-Drag and drop an **output** node and link it to a step output to specify that this output is an output of the pipeline. All other unmarked step outputs will still be available as intermediate results in the UI.
+Add an **output** node linked to a step output to specify that this output is an output of the pipeline. All other unmarked step outputs will still be available as intermediate results in the UI.
 ![image](https://user-images.githubusercontent.com/6223744/181108988-97d988ca-8f4b-45b1-b4a3-32e90821b68b.png)
 
 

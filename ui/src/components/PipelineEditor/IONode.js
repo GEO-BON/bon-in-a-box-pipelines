@@ -52,7 +52,9 @@ export default function IONode({ id, data }) {
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
           let warning = checkForWarning(desc)
 
-          return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip} warning={warning}>
+          return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip}
+            onDoubleClick={(e) => data.injectOutput(e, id, outputName)}
+            warning={warning}>
             <span className={warning && 'ioWarning'}>{desc.label ? desc.label : outputName}</span>
             <Handle id={outputName} type="source" position={Position.Right} />
           </ScriptIO>
