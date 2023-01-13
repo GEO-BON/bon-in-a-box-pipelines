@@ -77,7 +77,7 @@ Here is an empty commented sample:
 script: # script file with extension, such as "myScript.py".
 description: # Targetted to those who will interpret pipeline results and edit pipelines.
 external_link: # Optional, link to a separate project, github repo, etc.
-timeout: # Optional, by defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
+timeout: # Optional, in minutes. By defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
 
 inputs: # 0 to many
   key: # replace the word "key" by a snake case identifier for this input
