@@ -101,7 +101,10 @@ aside.scriptChooser .description {
     background-color: white;
 }
 
-.selected .ioNode, .selected .constant, .pipelineInputs .selected {
+.selected .ioNode,
+.selected .constant,
+.pipelineInputs .selected,
+.scriptChooser .selected {
     background-color: blanchedalmond;
 }
 
