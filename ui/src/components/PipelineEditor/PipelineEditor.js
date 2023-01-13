@@ -70,7 +70,7 @@ export function PipelineEditor(props) {
       setEdges((edgesList) => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
       addEdgeWithHighlight(null)
     }
-  }, [pendingEdgeParams, selectedNodes])
+  }, [pendingEdgeParams, selectedNodes, setEdges])
 
   const inputFile = useRef(null) 
 
@@ -78,14 +78,14 @@ export function PipelineEditor(props) {
     setEdges((edgesList) =>  
       highlightConnectedEdges(selectedNodes, addEdge(params, edgesList))
     )
-  }, [selectedNodes]);
+  }, [selectedNodes, setEdges]);
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
-  const onConstantValueChange = (event) => {
+  const onConstantValueChange = useCallback((event) => {
     setNodes((nds) =>
       nds.map((node) => {
         if(node.id !== event.target.id) {
@@ -112,7 +112,7 @@ export function PipelineEditor(props) {
         };
       })
     );
-  };
+  }, [setNodes]);
 
   const onSelectionChange = useCallback((selected) => {
     setSelectedNodes(selected.nodes)
@@ -155,7 +155,40 @@ export function PipelineEditor(props) {
       targetHandle: targetHandle
     }
     addEdgeWithHighlight(newEdge)
-  }, [reactFlowInstance])
+  }, [reactFlowInstance, onConstantValueChange, setNodes])
+
+  const injectOutput = useCallback((event, source, sourceHandle) => {
+    event.preventDefault()
+
+    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
+
+    // Offset from pointer event to canvas
+    const position = reactFlowInstance.project({
+      x: event.clientX - reactFlowBounds.left,
+      y: event.clientY - reactFlowBounds.top,
+    })
+
+    // Approx offset so the node appears near the input.
+    position.x = position.x + 100
+    position.y = position.y - 15
+
+    const newNode = {
+      id: getId(),
+      type: 'output',
+      position,
+      targetPosition: Position.Left,
+      data: { label: 'Output' }
+    };
+    setNodes((nds) => nds.concat(newNode))
+
+    const newEdge = {
+      source: source,
+      sourceHandle: sourceHandle,
+      target: newNode.id,
+      targetHandle: null
+    }
+    addEdgeWithHighlight(newEdge)
+  }, [reactFlowInstance, setNodes])
 
   const onNodesDelete = useCallback((deletedNodes) => {
     // We delete constants that are connected to no other node
@@ -170,7 +203,7 @@ export function PipelineEditor(props) {
     //version 11.2 will allow reactFlowInstance.deleteElements(toDelete)
     const deleteIds = toDelete.map(n => n.id)
     setNodes(nodes => nodes.filter(n => !deleteIds.includes(n.id)))
-  }, [reactFlowInstance])
+  }, [reactFlowInstance, setNodes])
 
   const onDrop = useCallback((event) => {
       event.preventDefault();
@@ -200,7 +233,8 @@ export function PipelineEditor(props) {
           newNode.data = { 
             descriptionFile: descriptionFile,
             setToolTip: setToolTip,
-            injectConstant: injectConstant
+            injectConstant: injectConstant,
+            injectOutput: injectOutput
            }
           break;
         case 'output':
@@ -213,7 +247,7 @@ export function PipelineEditor(props) {
 
       setNodes((nds) => nds.concat(newNode));
     },
-    [reactFlowInstance]
+    [reactFlowInstance, injectConstant, injectOutput, setNodes]
   )
 
   /**
@@ -317,6 +351,7 @@ export function PipelineEditor(props) {
               case 'io':
                 node.data.setToolTip = setToolTip
                 node.data.injectConstant = injectConstant
+                node.data.injectOutput = injectOutput
                 break;
               case 'constant':
                 node.data.onChange = onConstantValueChange
@@ -347,7 +382,7 @@ export function PipelineEditor(props) {
 
 
   return <div id='editorLayout'>
-    <p>Need help? Check out <a href="https://github.com/GEO-BON/biab-2.0/#pipelines" target='_blank'>the documentation</a></p>
+    <p>Need help? Check out <a href="https://github.com/GEO-BON/biab-2.0/#pipelines" target='_blank' rel='noreferrer'>the documentation</a></p>
     <div className="dndflow">
       <ReactFlowProvider>
         <div className="reactflow-wrapper" ref={reactFlowWrapper}>
