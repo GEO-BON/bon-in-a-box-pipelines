@@ -23,6 +23,11 @@ repositories {
 }
 
 tasks.test {
+    if (javaVersion.isCompatibleWith(JavaVersion.VERSION_17)) {
+        // See https://kotest.io/docs/next/extensions/system_extensions.html#system-environment.
+        jvmArgs("--add-opens=java.base/java.util=ALL-UNNAMED")
+    }
+
     environment(mapOf(
         "SCRIPT_LOCATION" to "$projectDir/src/test/resources/scripts/",
         "PIPELINES_LOCATION" to "$projectDir/src/test/resources/pipelines/",
