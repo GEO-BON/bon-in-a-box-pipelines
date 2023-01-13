@@ -4,9 +4,9 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.pipeline.outputRoot
-import kotlin.test.*
 import java.io.File
 import java.lang.System.currentTimeMillis
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class ScriptRunTest {
