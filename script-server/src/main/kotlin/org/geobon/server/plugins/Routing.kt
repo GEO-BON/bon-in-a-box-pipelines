@@ -38,10 +38,6 @@ data class ScriptRunResult(
 fun Application.configureRouting() {
 
     routing {
-        get("/") {
-            // TODO: Link to OpenAPI spec
-            call.respondText("Script run API")
-        }
 
         get("/script/list") {
             val possible = mutableListOf<String>()
@@ -91,11 +87,6 @@ fun Application.configureRouting() {
             } else {
                 call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
             }
-        }
-
-        get("/pipeline/") {
-            // TODO: Link to OpenAPI spec
-            call.respondText("Pipeline API")
         }
 
         get("/pipeline/list") {
