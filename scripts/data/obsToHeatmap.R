@@ -39,4 +39,3 @@ output <- list("heatmap" =  heatmap)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
-

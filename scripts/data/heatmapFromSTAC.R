@@ -30,7 +30,9 @@ print(input)
 stacURL <- "https://io.biodiversite-quebec.ca/stac/"
 taxa <- input$taxa
 
-if(is.null(input$predictors)){
+# Check if blank of NULL
+# Sometimes it has more than one raster provided, so check ind 1
+if(is.null(input$predictors[1]) || input$predictors[1]==""){
   predictors <- NULL
 }else{
   predictors <- terra::rast(input$predictors)
