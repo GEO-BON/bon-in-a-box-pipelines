@@ -35,8 +35,13 @@ study_extent <- sf::st_read(input$extent)
 predictors <- terra::rast(input$predictors)
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE)
 
+# Sometimes it is an empty character instead
+if(input$raster == ""){
+  input$raster = NULL
+}
+
 # Optional.. so without input it should be NULL
-if(!is.null(input$raster)){
+if(grepl("raster", input$method_background) & !is.null(input$raster)){
   # Read in path to file
   heatmap <- terra::rast(input$raster)
   # This step is *slow*; an alternative would be better
