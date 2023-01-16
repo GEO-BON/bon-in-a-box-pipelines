@@ -635,6 +635,19 @@
         "type": "float",
         "value": 0.8
       }
+    },
+    {
+      "id": "65",
+      "type": "constant",
+      "position": {
+        "x": 1185.1773320800928,
+        "y": 508.1906596086118
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": ""
+      }
     }
   ],
   "edges": [
@@ -994,12 +1007,19 @@
       "target": "34",
       "targetHandle": "env_threshold",
       "id": "reactflow__edge-64-34env_threshold"
+    },
+    {
+      "source": "65",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-65-40raster"
     }
   ],
   "viewport": {
-    "x": 168.98633866090975,
-    "y": -195.75280851751864,
-    "zoom": 0.8088813483617395
+    "x": -1131.5497151945244,
+    "y": -323.1862380473507,
+    "zoom": 1.0732602863934517
   },
   "inputs": {}
 }
