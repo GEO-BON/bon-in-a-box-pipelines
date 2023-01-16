@@ -19,6 +19,13 @@ const scaleColors = [
 ]
 const scale = chroma.scale(scaleColors);
 
+/**
+ * This is NOT the min and max of global raster, since it is averaged when creating the thumbnail. 
+ * However, it gives a good rough idea. Very local maximum or minimum are likely to be ignored.
+ * 
+ * @param Number[][] array2d a thumbnail
+ * @returns the min and max of the thumbnail
+ */
 function minMax2d(array2d) {
   var min = Number.MAX_VALUE;
   var max = Number.MIN_VALUE;
@@ -60,7 +67,7 @@ function nextPowerRange({ min, max }) {
 // console.log(standardRange({ min: 0, max: 0.9 }))
 // console.log(standardRange({ min: 2, max: 200 }))
 
-export default function COGLayer({ url, range }) {
+export default function COGLayer({ url, range, setError }) {
   const rasterRef = useRef()
   const map = useMap()
 
@@ -109,19 +116,18 @@ export default function COGLayer({ url, range }) {
             const thumbnailRange = minMax2d(values[0])
             const standardRange = nextPowerRange(thumbnailRange)
 
-            // We use standard range if if holds more than hald of the thumbnail values
+            // We use standard range if it spans more than half of the thumbnail values
             const chosenRange = thumbnailRange.max - thumbnailRange.min < (standardRange.max - standardRange.min) / 2
               ? { min: Math.floor(thumbnailRange.min), max: Math.ceil(thumbnailRange.max) }
               : standardRange
 
-            // const range = VarianceRange(values[0])
             console.log("Using calculated range:", chosenRange)
             addLayer(Math.floor(chosenRange.min), Math.ceil(chosenRange.max))
           })
         }
 
       } else {
-        console.error("Failed to fetch raster")
+        setError("Failed to fetch raster")
       }
     })
 

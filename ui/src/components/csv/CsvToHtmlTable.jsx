@@ -37,9 +37,7 @@ const CsvToHtmlTable = ({
           <tr>
             {
               row.map((column, i) => (
-                <th
-                  key={`header-${i}`}
-                >
+                <th key={`header-${i}`}>
                   {column}
                 </th>
               ))
