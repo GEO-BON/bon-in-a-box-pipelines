@@ -32,7 +32,7 @@ create_background <- function(
     
     # Bilinear interpolation when projecting in this manner
     # Exclude 0s, since we don't want to sample areas with no sightings
-    raster[raster==0] <- NA
+    raster[raster <= 0] <- NA
     
     add(predictors) <- raster
     
