@@ -2,24 +2,24 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.geobon.utils.withProductionPaths
 import org.geobon.utils.productionPipelinesRoot
+import org.geobon.utils.withProductionPaths
 import org.json.JSONObject
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlin.test.fail
 
 @ExperimentalCoroutinesApi
 internal class PipelineValidation {
 
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
 
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
     }
 
