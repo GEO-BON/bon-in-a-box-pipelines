@@ -56,6 +56,7 @@ a.active {
   text-decoration: none;
   margin-top:-25px;
   font-size: 60px;
+  cursor: pointer;
 }
 
 .fullScreenPopup .content {
