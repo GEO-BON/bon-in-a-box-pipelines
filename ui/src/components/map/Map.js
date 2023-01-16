@@ -15,38 +15,47 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
-function addTiffLayer(url, range) {
+function addTiffLayer(url, range, setError) {
   const fullUrl = url.startsWith("http") ? url : window.location.origin + url
   if(fullUrl.startsWith("http://localhost")) {
     // For relative paths on localhost, we cannot use the online tiler. 
     // This will be easy to see since a completely different color map will be used.
-    return <COGLayer url={fullUrl} range={range} />
+    return <COGLayer url={fullUrl} range={range} setError={setError} />
   }
 
   // There is a bug with georaster that overlaps tiles when using a remote COG.
   // Our workaround is to use TiTiler to serve it as a tile layer instead.
   // see https://matplotlib.org/stable/tutorials/colors/colormaps.html
-  return <TiTilerLayer url={fullUrl} range={range} />
+  return <TiTilerLayer url={fullUrl} range={range} setError={setError} />
 }
 
 export default function MapResult({ tiff, range, json }) {
-
+  const [error, setError] = useState()
   const [jsonContent, setJsonContent] = useState()
 
   useEffect(() => {
     if (json) {
       fetch(json)
         .then((response) => {
-          if (response.ok) {
+          if (response.ok)
             return response.json();
-          }
+          else
+            return Promise.reject("Error " + response.status);
+
         }).then((result) => {
           setJsonContent(result)
+        })
+        .catch(error => {
+          setError(error)
+          setJsonContent(null)
         })
     }
   }, [json])
 
-  return <MapContainer className="map" center={[0,0]} zoom={5}>
+  if (error)
+    return <p className='error'>{error}</p>
+
+  return <MapContainer className="map" center={[0, 0]} zoom={5}>
     <TileLayer
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
@@ -58,6 +67,6 @@ export default function MapResult({ tiff, range, json }) {
         }}
       />
     }
-    {tiff && addTiffLayer(tiff, range)}
+    {tiff && addTiffLayer(tiff, range, setError)}
   </MapContainer>
 }

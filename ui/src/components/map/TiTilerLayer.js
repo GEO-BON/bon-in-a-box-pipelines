@@ -16,7 +16,7 @@ function fetchStats(url) {
       if (response.ok)
         return response.json()
       else
-        return Promise.reject(new Error('Failed to get statistics'))
+        return Promise.reject('Failed to get statistics')
     })
     .then(statArray => {
       const values = Object.values(statArray)
@@ -24,23 +24,23 @@ function fetchStats(url) {
         return values[0]
       }
       else
-        return Promise.reject(new Error('Statistics array is empty'))
+        return Promise.reject('Statistics array is empty')
     })
 }
 
 function fetchBounds(url) {
   return fetch(`${TILER_URL}/bounds?url=${url}`)
     .then(response => {
-      if (!response.ok) throw 'Failed to get bounds'
+      if (!response.ok) return Promise.reject('Failed to get bounds')
       return response.json()
     })
     .then(json => {
-      if (!json.bounds) throw 'Bounds result is empty'
+      if (!json.bounds) return Promise.reject('Bounds result is empty')
       return json.bounds
     })
 }
 
-export default function TiTilerLayer({ url, range }) {
+export default function TiTilerLayer({ url, range, setError }) {
   const [tileLayerUrl, setTileLayerUrl] = useState()
   const map = useMap()
 
@@ -60,11 +60,13 @@ export default function TiTilerLayer({ url, range }) {
       legend = createRangeLegendControl(min, max, extractLegend(COLORMAP_NAME, 6))
       legend.addTo(map);
 
-      fetchBounds(url).then(bounds => {
-        let corner1 = L.latLng(bounds[1], bounds[0])
-        let corner2 = L.latLng(bounds[3], bounds[2])
-        map.fitBounds(L.latLngBounds(corner1, corner2))
-      })
+      fetchBounds(url)
+        .then(bounds => {
+          let corner1 = L.latLng(bounds[1], bounds[0])
+          let corner2 = L.latLng(bounds[3], bounds[2])
+          map.fitBounds(L.latLngBounds(corner1, corner2))
+        })
+        .catch(error => setError(error))
     }
 
     if(range) {
@@ -74,7 +76,7 @@ export default function TiTilerLayer({ url, range }) {
         .then(statistics => {
           addLayer(statistics.percentile_2, statistics.percentile_98)
         })
-        .catch(err => console.error(err))
+        .catch(error => setError(error))
     }
 
     return () => {

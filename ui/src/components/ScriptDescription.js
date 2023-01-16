@@ -66,8 +66,6 @@ export function InputsDescription({ metadata }) {
  * @param {object} Script metadata 
  */
 export function OutputsDescription({ metadata }) {
-    console.log(metadata.description)
-
     if (!metadata.outputs)
         return null
 
