@@ -84,15 +84,12 @@ setwd(outputFolder)
 df_IUCN_sheet <- rl_search(sp, key = token)$result
 print(getwd())
 #Get range map #filter by expert source missing
-source_range_maps <- data.frame(expert_source=expert_source) |>
+source_range_maps <- data.frame(expert_source=expert_source ,
+                                species_name = sp) |>
   mutate(function_name=case_when(
     expert_source=="IUCN"~ "get_iucn_range_map",
     expert_source=="MOL"~ "get_mol_range_map",
-    expert_source=="QC" ~ "get_qc_range_map"),
-    species_name= case_when(
-      expert_source=="IUCN"~ sp,
-      expert_source=="MOL"~ sp,
-      expert_source=="QC" ~ paste0(sp,"_qc")
+    expert_source=="QC" ~ "get_qc_range_map"
     ),
     species_path= case_when(
       expert_source=="IUCN"~ sp,
@@ -236,7 +233,7 @@ cube_GFW_TC <-
 
 cube_GFW_TC_range <- cube_GFW_TC |>
   gdalcubes::filter_pixel(paste0("data >=", forest_threshold)) |>#filter to forest threshold 0-100
-  gdalcubes::apply_pixel(paste0("data/data")) # turn into a forest presence map
+  gdalcubes::apply_pixel("data/data") # turn into a forest presence map
 
 r_GFW_TC_range <- cube_to_raster(cube_GFW_TC_range , format="terra") # convert to raster format
 
@@ -261,7 +258,7 @@ v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-12-31
                                              left = sf_ext_crs['xmin'], right =sf_ext_crs['xmax'],
                                              top = sf_ext_crs['ymax'], bottom =  sf_ext_crs['ymin']),
                dx=spat_res, dy=spat_res, dt="P1Y",
-               resampling = "mode") # TO CHANGE to proportions
+               resampling = "near") # TO CHANGE to proportions
 
 times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4)) #get year of change by selected time step to mask map by year of change
 l_r_year_loss <- map(times, function(x) {
@@ -294,7 +291,7 @@ cube_GFW_gain <-
             temporal.res = "P1Y",
             t0 = "2000-01-01",
             t1 = "2000-12-31",
-            resampling = "mode")
+            resampling = "near")
 
 r_GFW_gain <- cube_to_raster(cube_GFW_gain %>%
                                stars::st_as_stars(), format="terra") # convert to raster format
