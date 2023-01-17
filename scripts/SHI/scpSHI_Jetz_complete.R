@@ -45,17 +45,18 @@ srs_cube <- paste0("EPSG:",ref_system)
 
 #margin for elevation range
 elev_margin <- input$elev_margin
-#forest threshold for GFW
-forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
+#spatial resolution
+spat_res <- input$spat_res
+
 #define country if the area of analysis will be restricted to a specific country
 country_code <- ifelse(input$country_code== "" , NULL,input$country_code)
 region <- ifelse(input$region== "" , NULL ,input$region)
 print(region)
-#spatial resolution
-spat_res <- input$spat_res
 
 #Define source of expert range maps
 expert_source <- input$expert_source
+#forest threshold for GFW
+forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
 
 #define time steps
 t_0 <- input$t_0
@@ -99,6 +100,8 @@ source_range_maps <- data.frame(expert_source=expert_source ,
 
 with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
 sf_range_map <- st_read(paste0(source_range_maps$species_path,'_range.gpkg'))
+
+print("Expert range map successfully loaded")
 
 #get bounding box cropped by country if needed
 if(!is.null(country_code)){

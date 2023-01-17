@@ -21,14 +21,14 @@ RUN chmod +x /usr/local/bin/docker-compose
 RUN chmod +x /usr/local/bin/docker
 
 ## This image builds the server code
-FROM gradle:6.9.2-jdk11 as builder
+FROM gradle:7.5.1-jdk11 as builder
 COPY . /home/gradle/project
 WORKDIR /home/gradle/project
 RUN gradle assemble
 
 ## This takes the build server and puts in on the R-script enabled image
 FROM base-image
-COPY --from=builder /home/gradle/project/build/libs/kotlin-server.jar /root/kotlin-server.jar
+COPY --from=builder /home/gradle/project/build/libs/kotlin-server-all.jar /root/kotlin-server.jar
 
 COPY docker-exec-sigproxy.c /root/docker-exec-sigproxy.c
 RUN set -ex; \

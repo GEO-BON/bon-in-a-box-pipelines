@@ -1,12 +1,12 @@
 package org.geobon.pipeline
 
-import org.json.JSONObject
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
 import org.geobon.script.Description.TYPE_OPTIONS
 import org.geobon.script.ScriptRun
+import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
