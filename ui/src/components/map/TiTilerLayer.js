@@ -83,7 +83,7 @@ export default function TiTilerLayer({ url, range, setError }) {
       if (legend)
         legend.remove()
     };
-  }, [url])
+  }, [url, map, range, setError])
 
   return tileLayerUrl && <TileLayer key={tileLayerUrl /*https://stackoverflow.com/a/72552510/3519951*/} url={tileLayerUrl} />
 }
