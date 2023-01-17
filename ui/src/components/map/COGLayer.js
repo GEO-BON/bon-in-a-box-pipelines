@@ -138,5 +138,5 @@ export default function COGLayer({ url, range, setError }) {
       if (legend)
         legend.remove()
     };
-  }, [map, range, url]);
+  }, [map, range, url, setError]);
 }
