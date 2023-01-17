@@ -48,8 +48,8 @@ elev_margin <- input$elev_margin
 #forest threshold for GFW
 forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
 #define country if the area of analysis will be restricted to a specific country
-if(input$country_code== "") country_code <-  NULL else country_code <- input$country_code
-if(input$region== "") region <-  NULL else region <- input$region 
+country_code <- ifelse(input$country_code== "" , NULL,input$country_code)
+region <- ifelse(input$region== "" , NULL ,input$region)
 print(region)
 #spatial resolution
 spat_res <- input$spat_res
