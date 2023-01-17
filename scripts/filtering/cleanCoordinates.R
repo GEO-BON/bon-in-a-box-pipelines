@@ -66,8 +66,7 @@ write.table(clean_presence, clean_presence.output,
              append = F, row.names = F, col.names = T, sep = "\t")
 
 
-  output <- list("n_observations" =  nrow(presence),
-                 "n_clean" = nrow(clean_presence),
+  output <- list("n_clean" = nrow(clean_presence),
                   "clean_presence" = clean_presence.output
                   ) 
 jsonData <- toJSON(output, indent=2)

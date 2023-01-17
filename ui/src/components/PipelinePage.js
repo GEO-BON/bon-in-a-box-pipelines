@@ -12,6 +12,7 @@ import errorImg from '../img/error.svg';
 import warningImg from '../img/warning.svg';
 import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
+import { GeneralDescription } from './ScriptDescription';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -172,7 +173,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
   }, []);
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit} accept-charset="utf-8">
       <label>
         Pipeline:
         <br />
@@ -213,7 +214,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
   const [running, setRunning] = useState(false)
   const [skippedMessage, setSkippedMessage] = useState()
 
-  const script = id.substring(0, id.indexOf('@'))
+  const step = id.substring(0, id.indexOf('@'))
 
   useEffect(() => { 
     // A script is running when we know it's folder but have yet no result nor error message
@@ -275,8 +276,8 @@ function DelayedResult({id, folder, setRunningScripts}) {
       setScriptMetadata(data)
     };
 
-    api.getScriptInfo(script, callback);
-  }, [script]);
+    api.getScriptInfo(step, callback);
+  }, [step]);
 
   let content, inline = null;
   let className = "foldableScriptResult"
@@ -299,10 +300,10 @@ function DelayedResult({id, folder, setRunningScripts}) {
   }
 
   let logsAddress = folder && "output/" + folder + "/logs.txt"
-
+  
   return (
-    <FoldableOutputWithContext title={script} componentId={id} inline={inline} className={className}
-      description={scriptMetadata && scriptMetadata.description}>
+    <FoldableOutputWithContext title={step.replaceAll('>', ' > ').replace(/.yml$/, '')} componentId={id} inline={inline} className={className}>
+      <GeneralDescription ymlPath={step} metadata={scriptMetadata} />
       {content}
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutputWithContext>

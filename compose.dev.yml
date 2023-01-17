@@ -40,6 +40,8 @@ services:
       - ./script-server:/home/gradle/project:rw
     working_dir: /home/gradle/project
     command: gradle run
+    environment:
+      DEV: true
 
 ## Server to use when making changes to the OpenAPI specification.
   openapi_swagger:
