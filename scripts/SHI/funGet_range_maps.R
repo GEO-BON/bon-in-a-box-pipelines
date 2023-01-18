@@ -1,11 +1,11 @@
-if (!"gdalUtils" %in% installed.packages()[,"Package"]) library(devtools) ; devtools:::install_github("gearslaboratory/gdalUtils")
-library(gdalUtils)
+if (!"gdalUtilities" %in% installed.packages()[,"Package"]) install.packages("gdalUtilities")
+library(gdalUtilities)
 
 get_iucn_range_map <- function(species_name){
   species_map<-read.csv('https://object-arbutus.cloud.computecanada.ca/bq-io/io/IUCN_rangemaps/iucn_fid_binomials.csv')
   row=species_map |> subset(binomial == species_name)
   for(r in row$fid){
-    ogr2ogr(paste0('/vsicurl/https://object-arbutus.cloud.computecanada.ca/bq-io/io/IUCN_rangemaps/',row$FIELD_4),paste0(species_name,'_range.gpkg'),fid=r,append=TRUE,update=TRUE)
+    ogr2ogr(paste0('/vsicurl/https://object-arbutus.cloud.computecanada.ca/bq-io/io/IUCN_rangemaps/',row$FIELD_4),paste0(species_name,'_range.gpkg'),fid=r,append=TRUE)
   }
 }
 
