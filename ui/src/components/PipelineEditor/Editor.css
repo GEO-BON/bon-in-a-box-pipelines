@@ -103,7 +103,7 @@ aside.scriptChooser .description {
 
 .selected .ioNode,
 .selected .constant,
-.pipelineInputs .selected,
+.ioList .selected,
 .scriptChooser .selected {
     background-color: blanchedalmond;
 }
@@ -180,7 +180,7 @@ aside.scriptChooser .description {
     }
 }
 
-.pipelineInputs {
+.ioList {
     border: 1px solid black;
     border-radius: 3px;
     background: #ffffffee;
@@ -192,7 +192,6 @@ aside.scriptChooser .description {
     max-width: 30%;
     overflow-y: auto;
     
-    
     position: absolute;
     top: 3em;
     right: 0px;
@@ -201,7 +200,7 @@ aside.scriptChooser .description {
     z-index:10000;
 }
 
-.pipelineInputs .description {
+.ioList .description {
     font-size: small;
     color: gray;
 }

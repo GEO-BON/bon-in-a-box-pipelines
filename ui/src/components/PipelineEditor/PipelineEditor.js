@@ -21,7 +21,7 @@ import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEd
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
 import { getScriptDescription } from './ScriptDescriptionStore'
 
-const nodeTypes = {
+const customNodeTypes = {
   io: IONode,
   constant: ConstantNode
 }
@@ -32,7 +32,7 @@ const getId = () => `${id++}`;
 /**
  * @returns rendered view of the pipeline inputs
  */
-const InputsList = ({inputList, selectedNodes}) => {
+const IOList = ({inputList, outputList, selectedNodes}) => {
   function listInputs(metadata, inputs){
     return inputs.map((input, i)=> {
       return <p key={i}>
@@ -42,11 +42,21 @@ const InputsList = ({inputList, selectedNodes}) => {
     })
   }
 
-  return inputList.length > 0 && <div className='pipelineInputs'>
-      <h3>User inputs</h3>
-      {inputList.map((script, i) => {
-        return <div key={i} className={selectedNodes.find(node => node.id === script.id) ? "selected" : ""}>
-          {listInputs(getScriptDescription(script.file), script.missing)}
+  return <div className='ioList'>
+    <h3>User inputs</h3>
+    {inputList.length === 0 ? "No inputs" : inputList.map((script, i) => {
+      return <div key={i} className={selectedNodes.find(node => node.id === script.id) ? "selected" : ""}>
+        {listInputs(getScriptDescription(script.file), script.missing)}
+      </div>
+    })}
+    <h3>Pipeline outputs</h3>
+    {outputList.length === 0 ?
+      <p className='error'>At least one output is needed for the pipeline to run</p>
+      : outputList.map((output, i) => {
+        return <div key={i} className={selectedNodes.find(node => node.id === output.nodeId) ? "selected" : ""}>
+          <p>{output.label}<br />
+            <span className='description'>{output.description}</span>
+          </p>
         </div>
       })}
   </div>
@@ -59,6 +69,7 @@ export function PipelineEditor(props) {
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [selectedNodes, setSelectedNodes] = useState(null);
   const [inputList, setInputList] = useState([])
+  const [outputList, setOutputList] = useState([])
 
   const [toolTip, setToolTip] = useState(null);
 
@@ -168,7 +179,7 @@ export function PipelineEditor(props) {
       y: event.clientY - reactFlowBounds.top,
     })
 
-    // Approx offset so the node appears near the input.
+    // Approx offset so the node appears near the output.
     position.x = position.x + 100
     position.y = position.y - 15
 
@@ -256,25 +267,68 @@ export function PipelineEditor(props) {
   useEffect(() => {
     let newUserInputs = []
     nodes.forEach(node => {
-      if (node.data) {
+      if (node.type === 'io' && node.data) {
         let scriptDescription = getScriptDescription(node.data.descriptionFile)
-        if(scriptDescription && scriptDescription.inputs) {
+        if (scriptDescription && scriptDescription.inputs) {
           let missingInputs = []
           Object.keys(scriptDescription.inputs).forEach(inputId => {
             if (-1 === edges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
               missingInputs.push(inputId)
             }
           })
-  
-          if(missingInputs.length > 0) {
-            newUserInputs.push({id:node.id, file:node.data.descriptionFile, missing:missingInputs})
+
+          if (missingInputs.length > 0) {
+            newUserInputs.push({
+              id: node.id,
+              file: node.data.descriptionFile,
+              missing: missingInputs
+            })
           }
         }
       }
     })
-  
+
     setInputList(newUserInputs)
-  }, [nodes, edges])
+  }, [nodes, edges, setInputList])
+
+  /**
+   * Refresh the list of outputs.
+   */
+  useEffect(() => {
+    if(!reactFlowInstance)
+      return
+
+    let newPipelineOutputs = []
+    const allNodes = reactFlowInstance.getNodes()
+    allNodes.forEach(node => {
+      if (node.type === 'output') {
+        const connectedEdges = getConnectedEdges([node], edges)
+        const edgesUpstream = connectedEdges.filter(edge => edge.target === node.id) // 0..n
+        edgesUpstream.forEach(edge => {
+          const sourceNode = allNodes.find(n => n.id === edge.source) // Always 1
+          const stepDescription = getScriptDescription(sourceNode.data.descriptionFile)
+          const outputDescription = stepDescription.outputs[edge.sourceHandle]
+          newPipelineOutputs.push({
+            nodeId: edge.source,
+            output: edge.sourceHandle,
+            file: sourceNode.data.descriptionFile,
+            label: outputDescription.label,
+            description: outputDescription.description
+          })
+        })
+      }
+    })
+
+    setOutputList(previousOutputs =>
+      newPipelineOutputs.map(newOutput => {
+        const previousOutput = previousOutputs.find(prev =>
+          prev.nodeId === newOutput.nodeId && prev.output === newOutput.output
+        )
+        // The label and description of previous outputs might have been modified, so we keep them as is.
+        return previousOutput ? previousOutput : newOutput
+      })
+    )
+  }, [edges, reactFlowInstance, setOutputList])
 
   const onLayout = useCallback(() => {
     const { nodes: layoutedNodes, edges: layoutedEdges } =
@@ -313,6 +367,9 @@ export function PipelineEditor(props) {
         )
       })
 
+      // Save pipeline outputs
+      flow.outputs = outputList
+
       navigator.clipboard
         .writeText(JSON.stringify(flow, null, 2))
         .then(() => {
@@ -322,7 +379,7 @@ export function PipelineEditor(props) {
           alert("Error: Failed to copy content to clipboard.");
         });
     }
-  }, [reactFlowInstance, inputList]);
+  }, [reactFlowInstance, inputList, outputList]);
 
   const onLoadFromFileBtnClick = () => inputFile.current.click() // will call onLoad
 
@@ -389,7 +446,7 @@ export function PipelineEditor(props) {
           <ReactFlow
             nodes={nodes}
             edges={edges}
-            nodeTypes={nodeTypes}
+            nodeTypes={customNodeTypes}
             onNodesChange={onNodesChange}
             onEdgesChange={onEdgesChange}
             onConnect={onConnect}
@@ -415,7 +472,7 @@ export function PipelineEditor(props) {
 
             <Controls />
 
-            <InputsList inputList={inputList} selectedNodes={selectedNodes} />
+            <IOList inputList={inputList} outputList={outputList} selectedNodes={selectedNodes} />
 
             <MiniMap
               nodeStrokeColor={(n) => {
