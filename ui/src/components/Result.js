@@ -118,7 +118,6 @@ function RenderedFiles({files, metadata}) {
 
             case "object":
                 return Object.entries(content).map(entry => {
-                    console.log("entry", entry)
                     const [key, value] = entry;
                     let isLink = isRelativeLink(value)
                     return <FoldableOutput key={key} title={key}
@@ -136,6 +135,7 @@ function RenderedFiles({files, metadata}) {
                 break;
 
             case "unknown":
+            default:
                 return <FallbackDisplay content={content} />
 
         }
