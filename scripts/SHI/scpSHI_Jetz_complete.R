@@ -115,8 +115,8 @@ if(!is.na(country_code)){
   sf_area_lim2_crs <- sf_area_lim2 %>% st_transform(sf_crs)
   
   sf_area_lim <<- st_intersection(sf_area_lim2 %>% st_transform(st_crs(sf_area_lim1)),sf_area_lim1,dimension="polygon")
-  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") #%>% st_make_valid() %>% 
-    #st_collection_extract("POLYGON")
+  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") %>% st_make_valid() %>% 
+    st_collection_extract("POLYGON")
   
   if(all(st_is_valid(sf_area_lim))){
     sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(10))
@@ -187,11 +187,11 @@ with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are p
   }else{ # if only one value exist
     if(condition == 3){ # if just maximum elevation available filter by that
       cube_STRM_range <<- cube_STRM |>
-        gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> select_bands("data")
+        gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
     }
     if(condition == 4){ # if just minimum elevation available filter by that
       cube_STRM_range <<- cube_STRM |>
-        gdalcubes::filter_pixel(paste0("data >= ", min_elev)) |> select_bands("data")
+        gdalcubes::filter_pixel(paste0("data <=", max_elev)) |> select_bands("data")
     }
   }
   #convert to raster
