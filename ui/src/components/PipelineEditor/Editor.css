@@ -197,7 +197,7 @@ aside.scriptChooser .description {
     right: 0px;
     bottom: 190px;
 
-    z-index:10000;
+    z-index: 9000;
 }
 
 .ioList .description {
