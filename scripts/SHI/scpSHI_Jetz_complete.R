@@ -49,9 +49,8 @@ elev_margin <- input$elev_margin
 spat_res <- input$spat_res
 
 #define country if the area of analysis will be restricted to a specific country
-country_code <- ifelse(input$country_code== "" , NULL,input$country_code)
-region <- ifelse(input$region== "" , NULL ,input$region)
-print(region)
+country_code <- ifelse(input$country_code== "" , NA,input$country_code)
+region <- ifelse(input$region== "" , NA ,input$region)
 
 #Define source of expert range maps
 expert_source <- input$expert_source
@@ -82,7 +81,7 @@ setwd(outputFolder)
 #1. Species distribution range
 #-------------------------------------------------------------------------------------------------------------------
 #1.1 Load expert range maps-------------------------------------------------------------
-df_IUCN_sheet <- rl_search(sp, key = token)$result
+df_IUCN_sheet <- rredlist::rl_search(sp, key = token)$result
 print(getwd())
 #Get range map #filter by expert source missing
 source_range_maps <- data.frame(expert_source=expert_source ,
@@ -101,11 +100,11 @@ source_range_maps <- data.frame(expert_source=expert_source ,
 with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
 sf_range_map <- st_read(paste0(source_range_maps$species_path,'_range.gpkg'))
 
-print("Expert range map successfully loaded")
+print("========== Expert range map successfully loaded ==========")
 
 #get bounding box cropped by country if needed
-if(!is.null(country_code)){
-  ifelse(!is.null(region),
+if(!is.na(country_code)){
+  ifelse(!is.na(region),
          sf_area_lim1 <<- gadm(country=country_code, level=1, path=tempdir()) %>% st_as_sf() %>% st_make_valid() %>% filter(NAME_1==region),
          sf_area_lim1 <<- gadm(country=country_code, level=0, path=tempdir()) %>% st_as_sf() %>% st_make_valid()
   )
@@ -116,8 +115,8 @@ if(!is.null(country_code)){
   sf_area_lim2_crs <- sf_area_lim2 %>% st_transform(sf_crs)
   
   sf_area_lim <<- st_intersection(sf_area_lim2 %>% st_transform(st_crs(sf_area_lim1)),sf_area_lim1,dimension="polygon")
-  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") %>% st_make_valid() %>% 
-    st_collection_extract("POLYGON")
+  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") #%>% st_make_valid() %>% 
+    #st_collection_extract("POLYGON")
   
   if(all(st_is_valid(sf_area_lim))){
     sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(10))
@@ -204,7 +203,7 @@ with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are p
 }
 )
 
-print("Map of suitable area generated")
+print("========== Map of suitable area generated ==========")
 
 #2.2 Load habitat preferences---------------------------------------------
 # df_IUCN_habitat_cat <- rl_habitats(sp,key = token)$result
@@ -245,7 +244,7 @@ r_GFW_TC_range_mask <- r_GFW_TC_range |>
   terra::classify(rcl=matrix(c(NA,0),ncol=2,byrow=T)) |> # turn NA to 0
   terra::mask(r_suitability_map_rescaled) # crop to suitability map
 
-print("Base forest layer downloaded")
+print("========== Base forest layer downloaded ==========")
 
 # Download forest loss maps and create different layers for each year to remove from forest
 s_obj <- stac("https://io.biodiversite-quebec.ca/stac/")
@@ -277,7 +276,7 @@ l_r_year_loss <- map(times, function(x) {
 #add background and mask to suitable area
 s_year_loss <- terra::classify(terra::rast(l_r_year_loss), rcl=matrix(c(NA,NA,0,1,Inf,1),ncol=3,byrow=T),include.lowest=T)
 names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>2000])
-s_year_loss_mask <- terra::mask(s_year_loss,r_suitability_map_rescaled)
+s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_range_mask, maskvalues=1, inverse=TRUE)
 
 #update reference forest layer if t_0 different of 2000
 if(t_0!=2000){
@@ -307,19 +306,19 @@ r_year_loss_mask_plot <- terra::classify(s_year_loss_mask[[length(l_r_year_loss)
 
 img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
   tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
-  tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("#FF000080"), legend.show = FALSE)+
-  tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("#FFFF0080"), legend.show = FALSE)+
+  tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
+  tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
   tm_compass()+tm_scale_bar()+tm_layout(legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
   tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Suitable Habitat")
 
-print("Map of changes in suitable area generated")
+print("========== Map of changes in suitable area generated ==========")
 
 img_SHI_time_period_path <- file.path(outputFolder,paste0(sp,"_GFW_change.png"))
 tmap_save(img_map_habitat_changes, img_SHI_time_period_path )
 
 #create layers of forest removing loss by year
-s_HabitatArea <- terra::classify(r_GFW_TC_range_mask-s_year_loss_mask , rcl=matrix(c(-1,0),ncol=2))
+s_HabitatArea <- r_GFW_TC_range_mask-s_year_loss_mask
 s_HabitatArea <- c(r_GFW_TC_range_mask, s_HabitatArea)
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
@@ -336,11 +335,12 @@ df_conn_score <- df_SnS_dist %>% group_by(layer) %>%
 df_conn_score_gfw <- df_conn_score %>%
   mutate(ref_value=df_conn_score$mean_distance[1], diff=mean_distance-ref_value, percentage=100-(diff*100/ref_value), info="GFW", Year=v_time_steps)
 
-print("Connectivity Score generated")
+print("========== Connectivity Score generated ==========")
 
 #---------------------- 3.1.2. Calculate areas ---------------------------------
 #create raster of areas by pixel
 r_areas <- terra::cellSize(s_HabitatArea[[1]],unit="km")
+
 
 l_suitable_area <- set_names(map(as.list(s_Habitat * r_areas),function(x) {
   x<-x[!is.na(x)]
@@ -352,7 +352,7 @@ df_area_score <- l_suitable_area %>% bind_rows(.id="Year") # almost same as land
 df_area_score_gfw <-  df_area_score %>% dplyr::group_by(Year) %>%
   dplyr::mutate(ref_area=df_area_score$Area[1], diff=ref_area-Area, percentage=100-as.numeric(100*diff/ref_area), info="GFW")
 
-print("Habitat Score generated")
+print("========== Habitat Score generated ==========")
 
 #------------------------ 3.1.3. SHI -------------------------------------------
 df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
@@ -363,7 +363,7 @@ colnames(df_SHI_gfw) <- c("Habitat Score","Connectivity Score","Species Habitat 
 df_SHI_path <- file.path(outputFolder,paste0(sp,"_SHI_table.tsv"))
 write_tsv(df_SHI_gfw,file= df_SHI_path)
 
-print("Species Habitat Index generated")
+print("========== Species Habitat Index generated ==========")
 
 img_SHI_timeseries <- ggplot(df_SHI_gfw_tidy , aes(x=Year,y=Value,col=Index))+geom_line()+
   theme_bw()+ylab("Connectivity Score (CS), Habitat Score (HS), SHI")
