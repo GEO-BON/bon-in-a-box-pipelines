@@ -11,10 +11,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import java.io.File
+import java.lang.Math
 
 
 abstract class YMLStep(
     protected val yamlFile: File,
+    private val id:String = generateId(),
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
     private val logger: Logger = LoggerFactory.getLogger(yamlFile.name),
     protected val yamlParsed: Map<String, Any> = Yaml().load(yamlFile.readText())
@@ -103,9 +105,9 @@ abstract class YMLStep(
     /**
      * @param allOutputs Map of Step identifier to output folder.
      */
-    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) { // ici!
         val relPath = yamlFile.relativeTo(scriptRoot).path
-        val previousValue = allOutputs.put("$relPath@${hashCode()}", context?.id ?: "")
+        val previousValue = allOutputs.put("$relPath@$id", context?.id ?: "")
 
         // Pass it on only if not already been there (avoids duplication for more complex graphs)
         if (previousValue == null) {
@@ -114,6 +116,8 @@ abstract class YMLStep(
     }
 
     companion object {
+        fun generateId(): String = (Math.random()*10000).toString()
+
         /**
          * @return Map of input name to type
          */
