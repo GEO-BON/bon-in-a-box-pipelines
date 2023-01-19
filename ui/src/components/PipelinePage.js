@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 
-import { Result } from "./Result";
+import { StepResult } from "./StepResult";
 import { InputFileWithExample } from './InputFileWithExample';
 import { FoldableOutputWithContext, RenderContext, createContext } from './FoldableOutput'
 
@@ -283,7 +283,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
   let className = "foldableScriptResult"
   if (folder) {
     if (resultData) {
-      content = <Result data={resultData} metadata={scriptMetadata} />
+      content = <StepResult data={resultData} metadata={scriptMetadata} />
       inline = <>
         {resultData.error && <img src={errorImg} alt="Error" className="error-inline" />}
         {resultData.warning && <img src={warningImg} alt="Warning" className="error-inline" />}
