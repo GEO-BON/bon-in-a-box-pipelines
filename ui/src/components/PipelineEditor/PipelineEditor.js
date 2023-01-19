@@ -307,14 +307,15 @@ export function PipelineEditor(props) {
         edgesUpstream.forEach(edge => {
           const sourceNode = allNodes.find(n => n.id === edge.source) // Always 1
           const stepDescription = getScriptDescription(sourceNode.data.descriptionFile)
-          const outputDescription = stepDescription.outputs[edge.sourceHandle]
-          newPipelineOutputs.push({
-            nodeId: edge.source,
-            output: edge.sourceHandle,
-            file: sourceNode.data.descriptionFile,
-            label: outputDescription.label,
-            description: outputDescription.description
-          })
+          if(stepDescription && stepDescription.outputs) {
+            const outputDescription = stepDescription.outputs[edge.sourceHandle]
+            newPipelineOutputs.push({
+              ...outputDescription, // shallow clone
+              nodeId: edge.source,
+              outputId: edge.sourceHandle,
+              file: sourceNode.data.descriptionFile,
+            })
+          }
         })
       }
     })
@@ -322,7 +323,7 @@ export function PipelineEditor(props) {
     setOutputList(previousOutputs =>
       newPipelineOutputs.map(newOutput => {
         const previousOutput = previousOutputs.find(prev =>
-          prev.nodeId === newOutput.nodeId && prev.output === newOutput.output
+          prev.nodeId === newOutput.nodeId && prev.outputId === newOutput.outputId
         )
         // The label and description of previous outputs might have been modified, so we keep them as is.
         return previousOutput ? previousOutput : newOutput
@@ -368,7 +369,12 @@ export function PipelineEditor(props) {
       })
 
       // Save pipeline outputs
-      flow.outputs = outputList
+      flow.outputs = {}
+      outputList.forEach(output => {
+        // Destructuring copy to leave out fields that are not part of the output description spec.
+        let {file, nodeId, outputId, ...copy} = output
+        flow.outputs[output.file + "@" + output.nodeId + "." + output.outputId] = copy
+      })
 
       navigator.clipboard
         .writeText(JSON.stringify(flow, null, 2))
