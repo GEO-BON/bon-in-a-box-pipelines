@@ -4,21 +4,17 @@ import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
 import { FoldableOutputWithContext, RenderContext, createContext, FoldableOutput } from "./FoldableOutput";
 
-export function Result({data, metadata, logs}) {
+export function StepResult({data, metadata, logs}) {
     const [activeRenderer, setActiveRenderer] = useState({});
 
-    if (data || logs) {
-        return (
-            <div>
-                <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
-                    <RenderedFiles key="files" files={data} metadata={metadata} />
-                    <RenderedLogs key="logs" logs={logs} />
-                </RenderContext.Provider>
-            </div>
-        );
-    }
-
-    return null;
+    return (data || logs) && (
+        <div>
+            <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
+                <AllOutputsResults key="files" files={data} stepMetadata={metadata} />
+                <Logs key="logs" logs={logs} />
+            </RenderContext.Provider>
+        </div>
+    );
 }
 
 /**
@@ -53,23 +49,35 @@ function FallbackDisplay({content}) {
     return <p className="resultText">{content}</p>    
 }
 
-function RenderedFiles({files, metadata}) {
+function AllOutputsResults({ files, stepMetadata }) {
+    return files && Object.entries(files).map(entry => {
+        const [key, value] = entry;
+
+        if (key === "warning" || key === "error" || key === "info") {
+            return value && <p key={key} className={key}>{value}</p>;
+        }
+
+        const outputMetadata = stepMetadata && stepMetadata.outputs && stepMetadata.outputs[key]
+
+        return <SingleOutputResult outputKey={key} outputValue={value} outputMetadata={outputMetadata} />
+    });
+}
+
+export function SingleOutputResult({ outputKey, outputValue, outputMetadata }) {
+    console.log(outputMetadata)
 
     function renderContent(outputKey, content) {
         let error = ""
-        if (metadata && metadata.outputs) {
-            if (metadata.outputs[outputKey]) {
-                if (metadata.outputs[outputKey].type) { // Got our mime type!
-                    return renderWithMime(outputKey, content, metadata.outputs[outputKey].type)
-                } else {
-                    error = "Missing mime type in output description."
-                }
+        if (outputMetadata) {
+            if (outputMetadata.type) { // Got our mime type!
+                return renderWithMime(content, outputMetadata.type)
             } else {
-                error = "Output description not found in this script's YML description file."
+                error = "Missing mime type in output description."
             }
         } else {
-            error = "YML description file for this script specifies no output."
+            error = "Output description not found in this script's YML description file."
         }
+
 
         return <>
             <p className="error">{error}</p>
@@ -77,7 +85,7 @@ function RenderedFiles({files, metadata}) {
         </>;
     }
 
-    function renderWithMime(outputKey, content, mime) {
+    function renderWithMime(content, mime) {
         let [type, subtype] = mime.split('/');
 
         // Special case for arrays. Recursive call to render non-trivial types.
@@ -91,7 +99,7 @@ function RenderedFiles({files, metadata}) {
                     return <FoldableOutput key={i}
                         inline={<a href={splitContent} target="_blank" rel="noreferrer">{splitContent}</a>}
                         className="foldableOutput">
-                        {renderWithMime(outputKey, splitContent, splitMime)}
+                        {renderWithMime(splitContent, splitMime)}
                     </FoldableOutput>
                 })
 
@@ -104,9 +112,9 @@ function RenderedFiles({files, metadata}) {
         switch (type) {
             case "image":
                 if (isGeotiff(subtype)) {
-                    return <Map tiff={content} range={metadata.outputs[outputKey].range} />
+                    return <Map tiff={content} range={outputMetadata.range} />
                 }
-                return <img src={content} alt={outputKey} />;
+                return <img src={content} alt={outputMetadata.label} />;
 
             case "text":
                 if (subtype === "csv")
@@ -124,7 +132,7 @@ function RenderedFiles({files, metadata}) {
                         inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
                         inlineCollapsed={!isLink && renderInline(value)}
                         className="foldableOutput">
-                        {renderWithMime(outputKey, value, "unknown")}
+                        {renderWithMime(value, "unknown")}
                     </FoldableOutput>
                 })
 
@@ -150,54 +158,38 @@ function RenderedFiles({files, metadata}) {
         return Array.isArray(content) ? content.join(', ') : content
     }
 
-    if (files) {
-        return Object.entries(files).map(entry => {
-            const [key, value] = entry;
+    let title = outputKey;
+    let description = null;
+    if (outputMetadata) {
+        if (outputMetadata.label)
+            title = outputMetadata.label;
 
-            if (key === "warning" || key === "error" || key === "info") {
-                return value && <p key={key} className={key}>{value}</p>;
-            }
-
-            let title = key;
-            let description = null;
-            if (metadata
-                && metadata.outputs
-                && metadata.outputs[title]) {
-                let output = metadata.outputs[title];
-                if (output.label)
-                    title = output.label;
-
-                if (output.description)
-                    description = <p className="outputDescription">{output.description}</p>;
-            }
-
-            let isLink = isRelativeLink(value)
-            return (
-                <FoldableOutputWithContext key={key} title={title} componentId={key}
-                    inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
-                    inlineCollapsed={!isLink && renderInline(value)}
-                    className="foldableOutput">
-                    {description}
-                    {renderContent(key, value)}
-                </FoldableOutputWithContext>
-            );
-        });
-    } else {
-        return null;
+        if (outputMetadata.description)
+            description = <p className="outputDescription">{outputMetadata.description}</p>;
     }
+
+    let isLink = isRelativeLink(outputValue)
+    return (
+        <FoldableOutputWithContext key={outputKey} title={title} componentId={outputKey}
+            inline={isLink && <a href={outputValue} target="_blank" rel="noreferrer">{outputValue}</a>}
+            inlineCollapsed={!isLink && renderInline(outputValue)}
+            className="foldableOutput">
+            {description}
+            {renderContent(outputKey, outputValue)}
+        </FoldableOutputWithContext>
+    );
 }
 
-function RenderedLogs({logs}) {
-    const myId = "logs";
+function Logs({ logs }) {
+    if (!logs)
+        return null;
 
-    if (logs) {
-        return (
-            <FoldableOutputWithContext title="Logs" componentId={myId} className="foldableOutput">
-                <pre>{logs}</pre>
-            </FoldableOutputWithContext>
-        );
-    }
-    return null;
+    const myId = "logs";
+    return (
+        <FoldableOutputWithContext title="Logs" componentId={myId} className="foldableOutput">
+            <pre>{logs}</pre>
+        </FoldableOutputWithContext>
+    );
 }
 
 
