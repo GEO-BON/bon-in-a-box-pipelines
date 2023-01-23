@@ -59,14 +59,13 @@ function AllOutputsResults({ files, stepMetadata }) {
 
         const outputMetadata = stepMetadata && stepMetadata.outputs && stepMetadata.outputs[key]
 
-        return <SingleOutputResult outputKey={key} outputValue={value} outputMetadata={outputMetadata} />
+        return <SingleOutputResult key={key} outputId={key} outputValue={value} outputMetadata={outputMetadata} />
     });
 }
 
-export function SingleOutputResult({ outputKey, outputValue, outputMetadata }) {
-    console.log(outputMetadata)
+export function SingleOutputResult({ outputId, outputValue, outputMetadata }) { 
 
-    function renderContent(outputKey, content) {
+    function renderContent(content) {
         let error = ""
         if (outputMetadata) {
             if (outputMetadata.type) { // Got our mime type!
@@ -158,7 +157,7 @@ export function SingleOutputResult({ outputKey, outputValue, outputMetadata }) {
         return Array.isArray(content) ? content.join(', ') : content
     }
 
-    let title = outputKey;
+    let title = outputId;
     let description = null;
     if (outputMetadata) {
         if (outputMetadata.label)
@@ -170,12 +169,12 @@ export function SingleOutputResult({ outputKey, outputValue, outputMetadata }) {
 
     let isLink = isRelativeLink(outputValue)
     return (
-        <FoldableOutputWithContext key={outputKey} title={title} componentId={outputKey}
+        <FoldableOutputWithContext key={outputId} title={title} componentId={outputId}
             inline={isLink && <a href={outputValue} target="_blank" rel="noreferrer">{outputValue}</a>}
             inlineCollapsed={!isLink && renderInline(outputValue)}
             className="foldableOutput">
             {description}
-            {renderContent(outputKey, outputValue)}
+            {renderContent(outputValue)}
         </FoldableOutputWithContext>
     );
 }
