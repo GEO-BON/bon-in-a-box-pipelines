@@ -2,16 +2,11 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertContains
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class PipelineTest {
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
         with(outputRoot) {
             assertTrue(!exists())
@@ -20,7 +15,7 @@ internal class PipelineTest {
         }
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
         assertTrue(outputRoot.deleteRecursively())
     }
@@ -137,27 +132,27 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with a malformed input name_when built_then an exception is thrown`() = runTest {
-        assertThrows<RuntimeException> { // missing @
+        assertFailsWith<RuntimeException> { // missing @
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml0.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // missing step id
+        assertFailsWith<RuntimeException> { // missing step id
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // missing everything
+        assertFailsWith<RuntimeException> { // missing everything
             Pipeline("1in1out_1step.json", """ { "@.": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // plausible case where a non-existant script path is used
+        assertFailsWith<RuntimeException> { // plausible case where a non-existant script path is used
             Pipeline("1in1out_1step.json", """ { "HelloWorld>BAD@0.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // non-numeric step id
+        assertFailsWith<RuntimeException> { // non-numeric step id
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@BAD.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // plausible case where a non-existent step id is used
+        assertFailsWith<RuntimeException> { // plausible case where a non-existent step id is used
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72.some_int": 5 }""")
         }
     }

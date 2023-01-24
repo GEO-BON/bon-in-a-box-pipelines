@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -24,9 +24,10 @@ function NotFound() {
   </main>
 }
 
-const root = createRoot(document.getElementById('root'));
-root.render(
-  <BrowserRouter>
+function App() {
+  const [popupContent, setPopupContent] = useState();
+
+  return <BrowserRouter>
     <Routes>
       <Route path="/" element={<Layout />} />
 
@@ -39,8 +40,10 @@ root.render(
       } />
 
       <Route path="pipeline-editor" element={
-        <Layout left={<ScriptChooser />}
-          right={<PipelineEditor />} />
+        <Layout left={<ScriptChooser popupContent={popupContent} setPopupContent={setPopupContent} />}
+          right={<PipelineEditor />}
+          popupContent={popupContent}
+          setPopupContent={setPopupContent} />
       } />
 
       <Route path="*" element={
@@ -50,7 +53,10 @@ root.render(
 
     </Routes>
   </BrowserRouter>
-);
+}
+
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

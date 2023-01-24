@@ -7,18 +7,12 @@ import org.geobon.pipeline.teststeps.EchoStep
 import org.geobon.pipeline.teststeps.EchoStep.Companion.ECHO
 import org.geobon.pipeline.teststeps.EchoStep.Companion.SOUND
 import org.geobon.utils.runReliableTest
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import kotlin.test.assertEquals
-import kotlin.test.assertNull
-import kotlin.test.assertTrue
-import kotlin.test.fail
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class StepsPullTest {
 
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
         with(outputRoot) {
             assertTrue(!exists())
@@ -27,7 +21,7 @@ internal class StepsPullTest {
         }
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
         assertTrue(outputRoot.deleteRecursively())
     }

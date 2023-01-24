@@ -4,11 +4,11 @@ import Select from 'react-select';
 import { Result } from "./Result";
 import spinner from '../img/spinner.svg';
 import { InputFileWithExample } from './InputFileWithExample';
+import { GeneralDescription, InputsDescription, OutputsDescription } from './ScriptDescription';
 
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
-const yaml = require('js-yaml');
 
 export function SingleScriptPage(props) {
   const [requestState, setRequestState] = useState(RequestState.idle);
@@ -28,7 +28,11 @@ export function SingleScriptPage(props) {
     ) : (
       <>
         {resultData && resultData.httpError && <p key="httpError" className="error">{resultData.httpError}</p>}
-        {scriptMetadata && <pre key="metadata">{yaml.dump(scriptMetadata)}</pre>}
+        {scriptMetadata && <pre key="metadata">
+             <GeneralDescription ymlPath={null} metadata={scriptMetadata} />
+             <InputsDescription metadata={scriptMetadata} />
+             <OutputsDescription metadata={scriptMetadata} />
+           </pre>}
         {resultData && <Result data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
       </>
     )}
@@ -107,7 +111,7 @@ function SingleScriptForm(props) {
   }, []);
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit} accept-charset="utf-8">
       <label>
         Script file:
         <br />
