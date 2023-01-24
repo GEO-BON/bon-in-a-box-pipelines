@@ -306,27 +306,29 @@ export function PipelineEditor(props) {
         const edgesUpstream = connectedEdges.filter(edge => edge.target === node.id) // 0..n
         edgesUpstream.forEach(edge => {
           const sourceNode = allNodes.find(n => n.id === edge.source) // Always 1
+          
+          // outputDescription may be null if stepDescription not yet available.
+          // This is ok when loading since we rely on the saved description anyways. 
           const stepDescription = getScriptDescription(sourceNode.data.descriptionFile)
-          if(stepDescription && stepDescription.outputs) {
-            const outputDescription = stepDescription.outputs[edge.sourceHandle]
-            newPipelineOutputs.push({
-              ...outputDescription, // shallow clone
-              nodeId: edge.source,
-              outputId: edge.sourceHandle,
-              file: sourceNode.data.descriptionFile,
-            })
-          }
+          const outputDescription = stepDescription && stepDescription.outputs && stepDescription.outputs[edge.sourceHandle]
+
+          newPipelineOutputs.push({
+            ...outputDescription, // shallow clone
+            nodeId: edge.source,
+            outputId: edge.sourceHandle,
+            file: sourceNode.data.descriptionFile,
+          })
         })
       }
     })
 
-    setOutputList(previousOutputs =>
+    setOutputList(previousOutputs => 
       newPipelineOutputs.map(newOutput => {
         const previousOutput = previousOutputs.find(prev =>
           prev.nodeId === newOutput.nodeId && prev.outputId === newOutput.outputId
         )
         // The label and description of previous outputs might have been modified, so we keep them as is.
-        return previousOutput ? previousOutput : newOutput
+        return previousOutput && previousOutput.label ? previousOutput : newOutput
       })
     )
   }, [edges, reactFlowInstance, setOutputList])
@@ -403,6 +405,26 @@ export function PipelineEditor(props) {
       fr.onload = loadEvent => {
         const flow = JSON.parse(loadEvent.target.result);
         if (flow) {
+          // Read outputs
+          let outputsFromFile = []
+          if(flow.outputs) {
+            Object.entries(flow.outputs).forEach(entry => {
+              const [fullId, outputDescription] = entry
+              const atIx = fullId.indexOf('@')
+              const dotIx = fullId.lastIndexOf('.')
+  
+              outputsFromFile.push({
+                file: fullId.substring(0, atIx),
+                nodeId: fullId.substring(atIx + 1, dotIx),
+                outputId: fullId.substring(dotIx + 1),
+                ...outputDescription
+              })
+            })
+          }
+
+          setOutputList(outputsFromFile)
+
+          // Read nodes
           id = 0
           flow.nodes.forEach(node => {
             // Make sure next id doesn't overlap
