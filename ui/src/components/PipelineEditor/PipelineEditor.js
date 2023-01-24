@@ -357,7 +357,10 @@ export function PipelineEditor(props) {
       })
 
       // No need to save the on-the-fly styling
-      flow.edges.forEach(edge => delete edge.style)
+      flow.edges.forEach(edge => {
+        delete edge.selected
+        delete edge.style
+      })
 
       // Save pipeline inputs
       flow.inputs = {}
