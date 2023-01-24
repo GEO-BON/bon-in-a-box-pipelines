@@ -6,12 +6,7 @@ import org.geobon.pipeline.teststeps.RecordPipe
 import org.geobon.utils.withProductionPaths
 import org.geobon.utils.withProductionScripts
 import org.json.JSONObject
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import kotlin.test.assertContains
-import kotlin.test.assertFailsWith
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class PullLayersByIdTest {
@@ -19,7 +14,7 @@ internal class PullLayersByIdTest {
     private lateinit var finishLine: MutableList<String>
     private lateinit var step: Step
 
-    @BeforeEach
+    @BeforeTest
     fun setup() = withProductionPaths {
         with(outputRoot) {
             assertTrue(!exists())
@@ -47,7 +42,7 @@ internal class PullLayersByIdTest {
         ))
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
         assertTrue(outputRoot.deleteRecursively())
     }

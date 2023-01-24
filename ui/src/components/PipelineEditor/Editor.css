@@ -91,15 +91,20 @@ aside.scriptChooser .description {
   
 .ioNode {
     background-color: whitesmoke;
-    border: 1px solid black;
+    border-radius: 3px;
+    border: 2px solid rgb(52, 52, 52);
     color: black;
+    border-collapse: unset;
 }
 
 .ioNode:hover, .constant:hover {
     background-color: white;
 }
 
-.selected .ioNode, .selected .constant, .pipelineInputs .selected {
+.selected .ioNode,
+.selected .constant,
+.pipelineInputs .selected,
+.scriptChooser .selected {
     background-color: blanchedalmond;
 }
 

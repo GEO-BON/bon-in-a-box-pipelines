@@ -112,19 +112,20 @@ class ScriptRun( // Constructor used in single script run
         if (inputFile.exists()) {
             val cacheTime = resultFile.lastModified()
             kotlin.runCatching {
-                gson.fromJson<Map<String, Any>>(
+                gson.fromJson<Map<String, Any?>>(
                     inputFile.readText().also { logger.trace("Cached inputs: $it") },
-                    object : TypeToken<Map<String, Any>>() {}.type
+                    object : TypeToken<Map<String, Any?>>() {}.type
                 )
             }.onSuccess { inputs ->
                 inputs.forEach { (_, value) ->
-                    val stringValue = value.toString()
-                    // We assume that all local paths start with / and that URLs won't.
-                    if (stringValue.startsWith('/')) {
-                        with(File(stringValue)) {
-                            // check if missing or newer than cache
-                            if (!exists() || cacheTime < lastModified()) {
-                                return false
+                    value?.toString().let { stringValue ->
+                        // We assume that all local paths start with / and that URLs won't.
+                        if (stringValue?.startsWith('/') == true) {
+                            with(File(stringValue)) {
+                                // check if missing or newer than cache
+                                if (!exists() || cacheTime < lastModified()) {
+                                    return false
+                                }
                             }
                         }
                     }

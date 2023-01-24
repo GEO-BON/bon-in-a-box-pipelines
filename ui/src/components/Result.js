@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Map from './Map';
+import Map from './map/Map';
 import React from 'react';
 import RenderedCSV from './csv/RenderedCSV';
 import { FoldableOutputWithContext, RenderContext, createContext, FoldableOutput } from "./FoldableOutput";
@@ -37,7 +37,7 @@ function isGeotiff(subtype) {
 
 // Fallback code to render the best we can. This can be useful if temporary outputs are added when debugging a script.
 function FallbackDisplay({content}) {
-    if(isRelativeLink(content) || content.startsWith("http")) {
+    if(isRelativeLink(content) || (typeof content.startsWith === "function" && content.startsWith("http"))) {
         // Match for tiff, TIFF, tif or TIF extensions
         if(content.search(/.tiff?$/i) !== -1)
             return <Map tiff={content} />
@@ -168,15 +168,16 @@ function RenderedFiles({files, metadata}) {
                     title = output.label;
 
                 if (output.description)
-                    description = output.description;
+                    description = <p className="outputDescription">{output.description}</p>;
             }
 
             let isLink = isRelativeLink(value)
             return (
-                <FoldableOutputWithContext key={key} title={title} description={description} componentId={key}
+                <FoldableOutputWithContext key={key} title={title} componentId={key}
                     inline={isLink && <a href={value} target="_blank" rel="noreferrer">{value}</a>}
                     inlineCollapsed={!isLink && renderInline(value)}
                     className="foldableOutput">
+                    {description}
                     {renderContent(key, value)}
                 </FoldableOutputWithContext>
             );

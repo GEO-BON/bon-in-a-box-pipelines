@@ -3,16 +3,13 @@ package org.geobon.pipeline
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class ScriptStepTest {
 
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
         with(outputRoot) {
             assertTrue(!exists())
@@ -21,7 +18,7 @@ internal class ScriptStepTest {
         }
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
         assertTrue(outputRoot.deleteRecursively())
     }
