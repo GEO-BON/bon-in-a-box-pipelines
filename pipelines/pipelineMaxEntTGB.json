@@ -12,19 +12,6 @@
       }
     },
     {
-      "id": "16",
-      "type": "constant",
-      "position": {
-        "x": 48,
-        "y": 0
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Glyptemys insculpta"
-      }
-    },
-    {
       "id": "17",
       "type": "constant",
       "position": {
@@ -35,32 +22,6 @@
       "data": {
         "type": "text",
         "value": "\"\""
-      }
-    },
-    {
-      "id": "18",
-      "type": "constant",
-      "position": {
-        "x": 56,
-        "y": 78
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1990
-      }
-    },
-    {
-      "id": "19",
-      "type": "constant",
-      "position": {
-        "x": 56,
-        "y": 117
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2020
       }
     },
     {
@@ -648,38 +609,9 @@
       "data": {
         "descriptionFile": "data>heatmapFromSTAC.yml"
       }
-    },
-    {
-      "id": "68",
-      "type": "constant",
-      "position": {
-        "x": 866.5,
-        "y": 394
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "reptiles",
-        "options": [
-          "reptiles",
-          "plants",
-          "mammals",
-          "birds",
-          "arthropods",
-          "amphibians",
-          "all"
-        ]
-      }
     }
   ],
   "edges": [
-    {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "species",
-      "id": "reactflow__edge-16-15species"
-    },
     {
       "source": "15",
       "sourceHandle": "presence",
@@ -728,13 +660,6 @@
       "target": "23",
       "targetHandle": "bbox",
       "id": "reactflow__edge-58-23bbox"
-    },
-    {
-      "source": "68",
-      "sourceHandle": null,
-      "target": "67",
-      "targetHandle": "taxa",
-      "id": "reactflow__edge-68-67taxa"
     },
     {
       "source": "17",
@@ -793,13 +718,6 @@
       "id": "reactflow__edge-23predictors-67predictors"
     },
     {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "year_start",
-      "id": "reactflow__edge-18-15year_start"
-    },
-    {
       "source": "35",
       "sourceHandle": null,
       "target": "34",
@@ -847,13 +765,6 @@
       "target": "23",
       "targetHandle": "layers",
       "id": "reactflow__edge-25-23layers"
-    },
-    {
-      "source": "19",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "year_end",
-      "id": "reactflow__edge-19-15year_end"
     },
     {
       "source": "39",
@@ -1053,9 +964,43 @@
     }
   ],
   "viewport": {
-    "x": -3.871441101915366,
-    "y": 132.3425886335712,
-    "zoom": 0.5
+    "x": 169.08522850860118,
+    "y": 41.13768813478339,
+    "zoom": 0.8032939967570334
   },
-  "inputs": {}
+  "inputs": {
+    "data>getObservations.yml@15.species": {
+      "description": "Scientific name of the species",
+      "label": "species names",
+      "type": "text",
+      "example": "Glyptemys insculpta"
+    },
+    "data>getObservations.yml@15.year_start": {
+      "description": "Integer, 4 digit year, start date to retrieve occurrences",
+      "label": "start year",
+      "type": "int",
+      "example": 1990
+    },
+    "data>getObservations.yml@15.year_end": {
+      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "label": "end year",
+      "type": "int",
+      "example": 2020
+    },
+    "data>heatmapFromSTAC.yml@67.taxa": {
+      "description": "taxonomic group to retrieve GBIF heatmap",
+      "label": "taxa",
+      "type": "options",
+      "options": [
+        "reptiles",
+        "plants",
+        "mammals",
+        "birds",
+        "arthropods",
+        "amphibians",
+        "all"
+      ],
+      "example": "reptiles"
+    }
+  }
 }
