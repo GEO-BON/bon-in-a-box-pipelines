@@ -47,6 +47,6 @@ jobs:
       run: ../.github/findDuplicateDescriptions.sh
       shell: bash
     - name: Find duplicate lines inside same pipeline JSON file
-      working-directory: ./pipeline
+      working-directory: ./pipelines
       run: ../.github/findDuplicateIds.sh
       shell: bash
