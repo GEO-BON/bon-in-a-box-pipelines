@@ -44,9 +44,9 @@ jobs:
         filter_extensions: .yml
     - name: Find duplicate lines inside same step YML file
       working-directory: ./scripts
-      run: ./findDuplicates.sh
+      run: ../.github/findDuplicateDescriptions.sh
       shell: bash
     - name: Find duplicate lines inside same pipeline JSON file
       working-directory: ./pipeline
-      run: ./findDuplicatesIds.sh
+      run: ../.github/findDuplicateIds.sh
       shell: bash

@@ -4,12 +4,9 @@ RED="\033[31m"
 ENDCOLOR="\033[0m"
 
 echo "Checking for duplicate lines inside each yml files..."
-# This is a frequent error when adding an additionnal param : 
-# Copy paste the param above and forget to change the description!
-
-# Checking inside the same file only : 
-# some description duplication will occur naturally between files and it's OK.
-# ex. "Species name" description should always look the same!
+# A duplicate id in a pipeline JSON file can occur after a merge that went wrong.
+# The usual solution is to delete one of the two edges, but it needs careful manual validation
+# to check if the edges connected the same steps.
 
 RESULTS=$(find . -name "*.json" -exec sh -c "echo {}; \
 grep \"\\\"id\\\": \\\"\" '{}' \
