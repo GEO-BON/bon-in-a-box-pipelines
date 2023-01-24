@@ -42,7 +42,11 @@ jobs:
         document_path: scripts
         validate_file_extension: no
         filter_extensions: .yml
-    - name: Find duplicate lines inside same YML file
+    - name: Find duplicate lines inside same step YML file
       working-directory: ./scripts
       run: ./findDuplicates.sh
+      shell: bash
+    - name: Find duplicate lines inside same pipeline JSON file
+      working-directory: ./pipeline
+      run: ./findDuplicatesIds.sh
       shell: bash
