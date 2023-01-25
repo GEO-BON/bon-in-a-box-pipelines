@@ -46,7 +46,7 @@ class ApplicationTest {
 
             var id = ""
             client.post("/pipeline/helloWorld.json/run") {
-                setBody("{\"helloWorld>helloPython.yml@2.some_int\":1}")
+                setBody("{\"helloWorld>helloPython.yml@0.some_int\":1}")
             }.apply {
                 assertEquals(HttpStatusCode.OK, status)
                 id = bodyAsText()

@@ -51,7 +51,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                             "pipeline/PullLayersById.yml" -> PullLayersById()
 
                             // Regular script steps
-                            else -> ScriptStep(scriptFile)
+                            else -> ScriptStep(scriptFile, id)
                         }
                     }
                     NODE__TYPE_CONSTANT -> {
