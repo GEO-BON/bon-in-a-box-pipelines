@@ -3,7 +3,7 @@
 
 # world database on protected areas (wdpa) source: https://www.protectedplanet.net/en
 
-packages <- c("sf", "wdpar", "terra", "exactextractr", "dplyr", "raster", "rjson", "Rcpp", "remotes")
+packages <- c("sf", "wdpar", "terra", "exactextractr", "dplyr", "raster", "rjson", "Rcpp", "remotes", "wdman")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -17,11 +17,13 @@ library("exactextractr")
 library("dplyr")
 library("raster")
 library("Rcpp")
-
+library("wdman")
 library("remotes")
 
-remotes::install_github("dickoa/prepr")
-library("prepr")
+
+if (!"prepr" %in% installed.packages()[,"Package"]) remotes::install_github("dickoa/prepr")
+
+
 
 options(timeout = max(60000000, getOption("timeout")))
 
