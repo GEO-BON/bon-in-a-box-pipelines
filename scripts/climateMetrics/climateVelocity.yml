@@ -2,18 +2,18 @@ script: climateMetrics.R
 description: Climate velocity can be defined as the rate and direction that climate shifts across the landscape.
 inputs:
   metric:
-    label: Metric
-    description: "Choice of local velocity (see Loarie et. al. (2009) and Sandel et. al. (2011).),
-      forward or backward velocity (see Carroll et. al. (2015) and Hamann et. al. (2015).)"
+    label: metric
+    description: "Choice of local velocity (meters/year; see Loarie et. al. (2009) and Sandel et. al. (2011).),
+      forward or backward velocity (meters/year; see Carroll et. al. (2015) and Hamann et. al. (2015).)"
     type: options
     options: 
       - local
       - forward
       - backward
-    example: forward
-  rcp:
-    label: rcp
-    description: Representative Concentration Pathway Scenarios (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
+    example: local
+  ssp:
+    label: ssp
+    description: shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
     type: options
     options: 
       - ssp126
@@ -21,38 +21,33 @@ inputs:
       - ssp585
     example: ssp126
   spatial_res:
-    label: spatial resolution
+    label: spatial resolution output
     description: pixel size (in meters)
     type: int
-    example: 10000 
+    example: 1000 
   srs_cube: 
-    label: Target SRS
+    label: spatial reference output
     description: Target spatial reference system
     type: text
     example: EPSG:6623
   aggregation:
-    label: aggregation
+    label: aggregation method
     description: method of aggregation for the temperature data
     type: options
     options: [min, max, mean, median, first]
     example: mean
   t0:
-    label: Current climate start
+    label: current climate start
     description: Current climate start time, in format aaaa-mm-dd
     type: text
     example: "1981-01-01"
   t1:
-    label: Current climate end
+    label: current climate end
     description: Current climate end time, in format aaaa-mm-dd
     type: text
     example: "1981-12-31"
-  t_match: 
-    label: threshold match
-    description: Acceptable difference of mean temperature to consider that the climate is similar.
-    type: float
-    example: 0.25
   time_span:
-    label: Future time span
+    label: future time span
     description: period for climate projection, start year to end year
     type: options
     options:
@@ -61,8 +56,8 @@ inputs:
       - 2071-2100
     example: 2041-2070
   bbox:
-    label: Bounding box
-    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
+    label: bounding box
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax (use ExtentToBbox to add shapefiles and other formats)
     type: float[]
     example: [-2316297,-1971146,1015207,1511916]
 outputs:
