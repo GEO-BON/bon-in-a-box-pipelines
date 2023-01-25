@@ -1,0 +1,241 @@
+{
+  "nodes": [
+    {
+      "id": "64",
+      "type": "io",
+      "position": {
+        "x": 732,
+        "y": 200.5
+      },
+      "data": {
+        "descriptionFile": "protectedAreas>protectedAreasProp.yml"
+      }
+    },
+    {
+      "id": "65",
+      "type": "constant",
+      "position": {
+        "x": 411.5,
+        "y": 0
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Canada"
+      }
+    },
+    {
+      "id": "67",
+      "type": "constant",
+      "position": {
+        "x": 411.5,
+        "y": 233
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "68",
+      "type": "constant",
+      "position": {
+        "x": 419.5,
+        "y": 273
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "69",
+      "type": "constant",
+      "position": {
+        "x": 401.5,
+        "y": 313
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "terrestrial"
+        ]
+      }
+    },
+    {
+      "id": "70",
+      "type": "output",
+      "position": {
+        "x": 1176,
+        "y": 228
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "71",
+      "type": "io",
+      "position": {
+        "x": 356,
+        "y": 40
+      },
+      "data": {
+        "descriptionFile": "SDM>extentToBbox.yml"
+      }
+    },
+    {
+      "id": "72",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 135.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf",
+        "value": "/scripts/extent/Quebec.shp"
+      }
+    },
+    {
+      "id": "73",
+      "type": "constant",
+      "position": {
+        "x": 103,
+        "y": 98.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "shapefile",
+        "options": [
+          "df_coordinates",
+          "box_coordinates",
+          "shapefile"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "65",
+      "sourceHandle": null,
+      "target": "64",
+      "targetHandle": "country",
+      "id": "reactflow__edge-65-64country"
+    },
+    {
+      "source": "64",
+      "sourceHandle": "output_tif",
+      "target": "70",
+      "targetHandle": null,
+      "id": "reactflow__edge-64output_tif-70"
+    },
+    {
+      "source": "73",
+      "sourceHandle": null,
+      "target": "71",
+      "targetHandle": "source",
+      "id": "reactflow__edge-73-71source"
+    },
+    {
+      "source": "71",
+      "sourceHandle": "bbox",
+      "target": "64",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-71bbox-64bbox"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "64",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-67-64crs"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "64",
+      "targetHandle": "pixel_size",
+      "id": "reactflow__edge-68-64pixel_size"
+    },
+    {
+      "source": "69",
+      "sourceHandle": null,
+      "target": "64",
+      "targetHandle": "habitat_type",
+      "id": "reactflow__edge-69-64habitat_type"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "71",
+      "targetHandle": "path_shp",
+      "id": "reactflow__edge-72-71path_shp"
+    }
+  ],
+  "viewport": {
+    "x": 44.681818181818244,
+    "y": 470.9203345673934,
+    "zoom": 0.6739339092280268
+  },
+  "inputs": {
+    "SDM>extentToBbox.yml@71.df_coordinates": {
+      "description": "dataframe, containing coordinates",
+      "label": "df coordinates",
+      "type": "text/tab-separated-values",
+      "example": "/scripts/SDM/runModel_presence_background.tsv"
+    },
+    "SDM>extentToBbox.yml@71.lon": {
+      "description": "string, name of the longitude column in df_coordinates",
+      "label": "longitude column",
+      "type": "string",
+      "example": "lon"
+    },
+    "SDM>extentToBbox.yml@71.lat": {
+      "description": "string, name of the latitude column in df_coordinates",
+      "label": "latitude column",
+      "type": "string",
+      "example": "lat"
+    },
+    "SDM>extentToBbox.yml@71.xmin": {
+      "description": "xmin",
+      "label": "xmin",
+      "type": "float",
+      "example": -2316297
+    },
+    "SDM>extentToBbox.yml@71.ymin": {
+      "description": "ymin",
+      "label": "ymin",
+      "type": "float",
+      "example": -1971146
+    },
+    "SDM>extentToBbox.yml@71.xmax": {
+      "description": "xmax",
+      "label": "xmax",
+      "type": "float",
+      "example": 1015207
+    },
+    "SDM>extentToBbox.yml@71.ymax": {
+      "description": "ymax",
+      "label": "ymax",
+      "type": "float",
+      "example": 1511916
+    },
+    "SDM>extentToBbox.yml@71.proj_from": {
+      "description": "string, projection of the input spatial object",
+      "label": "input projection system",
+      "type": "string",
+      "example": "EPSG:6623"
+    },
+    "SDM>extentToBbox.yml@71.proj_to": {
+      "description": "string, projection of output bbox",
+      "label": "output bbox projection system",
+      "type": "string",
+      "example": "EPSG:6623"
+    }
+  }
+}
