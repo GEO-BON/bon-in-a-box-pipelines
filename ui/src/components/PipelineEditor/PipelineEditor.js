@@ -73,7 +73,7 @@ export function PipelineEditor(props) {
   const [pendingEdgeParams, addEdgeWithHighlight] = useState(null)
   useEffect(()=>{
     if(pendingEdgeParams) {
-      setEdges((edgesList) => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
+      setEdges(edgesList => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
       addEdgeWithHighlight(null)
     }
   }, [pendingEdgeParams, selectedNodes, setEdges])
@@ -304,8 +304,7 @@ export function PipelineEditor(props) {
     allNodes.forEach(node => {
       if (node.type === 'output') {
         const connectedEdges = getConnectedEdges([node], edges)
-        const edgesUpstream = connectedEdges.filter(edge => edge.target === node.id) // 0..n
-        edgesUpstream.forEach(edge => {
+        connectedEdges.forEach(edge => {
           const sourceNode = allNodes.find(n => n.id === edge.source) // Always 1
           
           // outputDescription may be null if stepDescription not yet available.
