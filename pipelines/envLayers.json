@@ -15,8 +15,8 @@
       "id": "1",
       "type": "constant",
       "position": {
-        "x": 468.5,
-        "y": 0
+        "x": 142.53782755705834,
+        "y": 12.128825021132712
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -33,8 +33,8 @@
       "id": "2",
       "type": "constant",
       "position": {
-        "x": 444.5,
-        "y": 170
+        "x": 388.40418427726115,
+        "y": 673.3462383770076
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -51,8 +51,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 410.5,
-        "y": 561.75
+        "x": 390.7906593406593,
+        "y": 378.3015215553677
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,8 +64,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 406.5,
-        "y": 601.75
+        "x": 391.338968723584,
+        "y": 636.6203719357567
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 444,
-        "y": 299
+        "x": 393.96859678782755,
+        "y": 417.256043956044
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -97,8 +97,8 @@
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 406.5,
-        "y": 336
+        "x": 398.9194843617921,
+        "y": 248.06601859678784
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -110,8 +110,8 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 406.5,
-        "y": 413
+        "x": 398.9194843617921,
+        "y": 293.22785291631436
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -123,8 +123,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 434,
-        "y": 453.75
+        "x": 397.61352493660195,
+        "y": 337.0100591715976
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -141,8 +141,8 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 356,
-        "y": 742
+        "x": 49.74716821639902,
+        "y": 801.1280219780219
       },
       "data": {
         "descriptionFile": "SDM>extentToBbox.yml"
@@ -152,8 +152,8 @@
       "id": "10",
       "type": "constant",
       "position": {
-        "x": 102,
-        "y": 800.75
+        "x": -199.70452240067624,
+        "y": 749.2024936601858
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -170,8 +170,8 @@
       "id": "11",
       "type": "constant",
       "position": {
-        "x": 0,
-        "y": 837.75
+        "x": -288.059594251902,
+        "y": 878.684784446323
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -183,8 +183,8 @@
       "id": "12",
       "type": "output",
       "position": {
-        "x": 1354,
-        "y": 63.5
+        "x": 1369.1610312764158,
+        "y": 13.46859678782755
       },
       "data": {
         "label": "Output"
@@ -194,8 +194,8 @@
       "id": "13",
       "type": "io",
       "position": {
-        "x": 800.5,
-        "y": 422.75
+        "x": 797.4677937447168,
+        "y": 183.2057058326289
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateVelocity.yml"
@@ -205,8 +205,8 @@
       "id": "14",
       "type": "constant",
       "position": {
-        "x": 468.5,
-        "y": 376
+        "x": 147.08613693998313,
+        "y": 201.64814032121728
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -223,8 +223,8 @@
       "id": "15",
       "type": "io",
       "position": {
-        "x": 800.5,
-        "y": 649.75
+        "x": 811.1127218934912,
+        "y": 407.17349957734575
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateVelocity.yml"
@@ -234,8 +234,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 468.5,
-        "y": 692.5
+        "x": 134.95731191885045,
+        "y": 468.1167371090446
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -252,8 +252,8 @@
       "id": "17",
       "type": "io",
       "position": {
-        "x": 800.5,
-        "y": 225.25
+        "x": 808.080515638208,
+        "y": 590.630853761623
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateRarity.yml"
@@ -263,8 +263,8 @@
       "id": "18",
       "type": "constant",
       "position": {
-        "x": 404,
-        "y": 247.75
+        "x": 393.3872781065088,
+        "y": 714.7097633136095
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -276,8 +276,8 @@
       "id": "19",
       "type": "output",
       "position": {
-        "x": 1354,
-        "y": 289.75
+        "x": 1372.193237531699,
+        "y": 589.9384192730347
       },
       "data": {
         "label": "Output"
@@ -287,8 +287,8 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 1354,
-        "y": 479.75
+        "x": 1364.6127218934912,
+        "y": 185.62599323753165
       },
       "data": {
         "label": "Output"
@@ -298,8 +298,8 @@
       "id": "21",
       "type": "output",
       "position": {
-        "x": 1354,
-        "y": 706.75
+        "x": 1378.2576500422651,
+        "y": 412.6259932375316
       },
       "data": {
         "label": "Output"
@@ -309,8 +309,8 @@
       "id": "22",
       "type": "io",
       "position": {
-        "x": 732,
-        "y": 1025.5
+        "x": 815.3856720202875,
+        "y": 884.5024091293324
       },
       "data": {
         "descriptionFile": "data>loadLandCover.yml"
@@ -432,8 +432,8 @@
       "id": "33",
       "type": "output",
       "position": {
-        "x": 1334,
-        "y": 973
+        "x": 1373.4186813186814,
+        "y": 854.7439560439561
       },
       "data": {
         "label": "Output"
@@ -443,8 +443,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 800.5,
-        "y": 1270
+        "x": 849.015300084531,
+        "y": 1344.289053254438
       },
       "data": {
         "descriptionFile": "accessibility>accessibility.yml"
@@ -454,8 +454,8 @@
       "id": "35",
       "type": "output",
       "position": {
-        "x": 1354,
-        "y": 1327
+        "x": 1400.9991969568891,
+        "y": 1349.7415469146238
       },
       "data": {
         "label": "Output"
@@ -543,8 +543,8 @@
       "id": "43",
       "type": "io",
       "position": {
-        "x": 1520,
-        "y": 1162
+        "x": 1388.099027895182,
+        "y": 1072.5499154691463
       },
       "data": {
         "descriptionFile": "binaryLayer>binaryLayer.yml"
@@ -554,8 +554,8 @@
       "id": "44",
       "type": "constant",
       "position": {
-        "x": 1238,
-        "y": 1204
+        "x": 1112.1634404057484,
+        "y": 1087.2600591715977
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -571,8 +571,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 1234,
-        "y": 1242
+        "x": 1117.2600591715975,
+        "y": 1140.4210904480137
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -584,11 +584,24 @@
       "id": "46",
       "type": "output",
       "position": {
-        "x": 1732,
-        "y": 1347
+        "x": 1780.5153000845307,
+        "y": 1052.8759932375317
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": 119.49192730346579,
+        "y": 596.8394893301208
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "rarity"
       }
     }
   ],
@@ -1070,12 +1083,19 @@
       "target": "22",
       "targetHandle": "select_values",
       "id": "reactflow__edge-32-22select_values"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "17",
+      "targetHandle": "metric",
+      "id": "reactflow__edge-47-17metric"
     }
   ],
   "viewport": {
-    "x": -273,
-    "y": 175.875,
-    "zoom": 0.5
+    "x": 316.3298207465641,
+    "y": 47.77272727272714,
+    "zoom": 0.6595857377826099
   },
   "inputs": {
     "ClimateMetrics>climateVelocity.yml@0.ssp": {
