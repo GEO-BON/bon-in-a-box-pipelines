@@ -364,6 +364,9 @@ export function PipelineEditor(props) {
         delete edge.style
       })
 
+      // Viewport is a source of merge conflicts
+      delete flow.viewport
+
       // Save pipeline inputs
       flow.inputs = {}
       inputList.forEach(input => {
@@ -470,10 +473,11 @@ export function PipelineEditor(props) {
           id++
 
           // Load the graph
-          const { x = 0, y = 0, zoom = 1 } = flow.viewport;
           setNodes(flow.nodes || []);
           setEdges(flow.edges || []);
-          reactFlowInstance.setViewport({ x, y, zoom });
+
+          // Reset viewport to top left
+          reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
         } else {
           console.error("Error parsing flow")
         }
