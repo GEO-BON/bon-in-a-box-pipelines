@@ -111,7 +111,7 @@ function SingleScriptForm(props) {
   }, []);
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} accept-charset="utf-8">
+    <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
       <label>
         Script file:
         <br />
