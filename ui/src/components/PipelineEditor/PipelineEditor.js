@@ -33,20 +33,15 @@ const getId = () => `${id++}`;
  * @returns rendered view of the pipeline inputs
  */
 const IOList = ({inputList, outputList, selectedNodes}) => {
-  function listInputs(metadata, inputs){
-    return inputs.map((input, i)=> {
-      return <p key={i}>
-        {metadata.inputs[input].label ? metadata.inputs[input].label : input}<br />
-        <span className='description'>{metadata.inputs[input].description}</span>
-      </p>
-    })
-  }
+
 
   return <div className='ioList'>
     <h3>User inputs</h3>
-    {inputList.length === 0 ? "No inputs" : inputList.map((script, i) => {
-      return <div key={i} className={selectedNodes.find(node => node.id === script.id) ? "selected" : ""}>
-        {listInputs(getScriptDescription(script.file), script.missing)}
+    {inputList.length === 0 ? "No inputs" : inputList.map((input, i) => {
+      return <div key={i} className={selectedNodes.find(node => node.id === input.nodeId) ? "selected" : ""}>
+        <p>{input.label}<br />
+          <span className='description'>{input.description}</span>
+        </p>
       </div>
     })}
     <h3>Pipeline outputs</h3>
@@ -270,25 +265,31 @@ export function PipelineEditor(props) {
       if (node.type === 'io' && node.data) {
         let scriptDescription = getScriptDescription(node.data.descriptionFile)
         if (scriptDescription && scriptDescription.inputs) {
-          let missingInputs = []
-          Object.keys(scriptDescription.inputs).forEach(inputId => {
+          Object.entries(scriptDescription.inputs).forEach(entry => {
+            const [inputId, inputDescription] = entry
+            // Find inputs with no incoming edges
             if (-1 === edges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
-              missingInputs.push(inputId)
+              newUserInputs.push({
+                ...inputDescription,
+                nodeId: node.id,
+                inputId: inputId,
+                file: node.data.descriptionFile
+              })
             }
           })
-
-          if (missingInputs.length > 0) {
-            newUserInputs.push({
-              id: node.id,
-              file: node.data.descriptionFile,
-              missing: missingInputs
-            })
-          }
         }
       }
     })
 
-    setInputList(newUserInputs)
+    setInputList(previousInputs => 
+      newUserInputs.map(newInput => {
+        const previousInput = previousInputs.find(prev =>
+          prev.nodeId === newInput.nodeId && prev.inputId === newInput.inputId
+        )
+        // The label and description of previous inputs might have been modified, so we keep them as is.
+        return previousInput && previousInput.label ? previousInput : newInput
+      })
+    )
   }, [nodes, edges, setInputList])
 
   /**
@@ -366,11 +367,10 @@ export function PipelineEditor(props) {
 
       // Save pipeline inputs
       flow.inputs = {}
-      inputList.forEach(script => {
-        let description = getScriptDescription(script.file)
-        script.missing.forEach(missingInput => 
-          flow.inputs[script.file + "@" + script.id + "." + missingInput] = description.inputs[missingInput]
-        )
+      inputList.forEach(input => {
+        // Destructuring copy to leave out fields that are not part of the input description spec.
+        let {file, nodeId, inputId, ...copy} = input
+        flow.inputs[input.file + "@" + input.nodeId + "." + input.inputId] = copy
       })
 
       // Save pipeline outputs
@@ -405,6 +405,24 @@ export function PipelineEditor(props) {
       fr.onload = loadEvent => {
         const flow = JSON.parse(loadEvent.target.result);
         if (flow) {
+          // Read inputs
+          let inputsFromFile = []
+          if(flow.inputs) {
+            Object.entries(flow.inputs).forEach(entry => {
+              const [fullId, inputDescription] = entry
+              const atIx = fullId.indexOf('@')
+              const dotIx = fullId.lastIndexOf('.')
+  
+              inputsFromFile.push({
+                file: fullId.substring(0, atIx),
+                nodeId: fullId.substring(atIx + 1, dotIx),
+                inputId: fullId.substring(dotIx + 1),
+                ...inputDescription
+              })
+            })
+          }
+          setInputList(inputsFromFile)
+
           // Read outputs
           let outputsFromFile = []
           if(flow.outputs) {
