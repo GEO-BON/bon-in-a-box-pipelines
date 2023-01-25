@@ -38,8 +38,6 @@ sp <- input$species
 
 #Define CRS
 ref_system <- input$ref_system
-epsg <- make_EPSG()
-epsg_crs <- suppressWarnings(CRS(na.exclude(epsg$prj4[epsg$code==ref_system])[1]))
 sf_crs <- st_crs(ref_system)
 srs_cube <- paste0("EPSG:",ref_system)
 
@@ -54,7 +52,7 @@ region <- ifelse(input$region== "" , NA ,input$region)
 
 #Define source of expert range maps
 expert_source <- input$expert_source
-#forest threshold for GFW
+#forest threshold for GFW (level of forest for the species)
 forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
 
 #define time steps
@@ -86,7 +84,7 @@ print(getwd())
 #Get range map #filter by expert source missing
 source_range_maps <- data.frame(expert_source=expert_source ,
                                 species_name = sp) |>
-  mutate(function_name=case_when(
+  dplyr::mutate(function_name=case_when(
     expert_source=="IUCN"~ "get_iucn_range_map",
     expert_source=="MOL"~ "get_mol_range_map",
     expert_source=="QC" ~ "get_qc_range_map"
@@ -142,15 +140,16 @@ if(!is.na(country_code)){
 
 #1.4 Final range----------------------------------------------------------------
 #Create raster
-r_frame <- raster(raster::extent(sf_ext_crs),resolution=spat_res,crs=epsg_crs)
+r_frame <- rast(terra::ext(sf_ext_crs),resolution=spat_res)
+crs(r_frame) <- srs_cube
 values(r_frame) <- rep(1,ncell(r_frame))
-r_suitability_map <- raster::mask(r_frame,as(sf_area_lim_crs,"Spatial"))
+r_suitability_map <- terra::mask(r_frame,vect(as(sf_area_lim_crs,"Spatial")))
 
 #-------------------------------------------------------------------------------------------------------------------
 #2. Habitat Preferences
 #-------------------------------------------------------------------------------------------------------------------
 #2.1 Load elevation preferences---------------------------------------------
-df_IUCN_sheet_condition <- df_IUCN_sheet |> mutate(
+df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
   min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
     is.na(elevation_lower) ~ NA_real_,
     !is.na(elevation_lower) & as.numeric(elevation_lower) < elev_margin ~ 0,
@@ -166,7 +165,7 @@ df_IUCN_sheet_condition <- df_IUCN_sheet |> mutate(
 )
 
 with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are provided then the suitability map stays the same
-  r_suitability_map <<- terra::rast(r_suitability_map)
+  r_suitability_map <<- r_suitability_map
 }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
   # STRM from Copernicus
   cube_STRM <<-
@@ -198,8 +197,8 @@ with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are p
   r_STRM_range <<- cube_STRM_range  |> st_as_stars() |> terra::rast()
 
   #resample to raster of SDM
-  r_STRM_range_res <<- terra::resample(r_STRM_range, terra::rast(r_suitability_map))
-  r_suitability_map <<- terra::mask(terra::crop(terra::rast(r_suitability_map),r_STRM_range_res),r_STRM_range_res) #Crop LC to suitability extent
+  r_STRM_range_res <<- terra::resample(r_STRM_range, r_suitability_map)
+  r_suitability_map <<- terra::mask(terra::crop(r_suitability_map,r_STRM_range_res),r_STRM_range_res) #Crop LC to suitability extent
 }
 )
 
@@ -333,7 +332,7 @@ df_conn_score <- df_SnS_dist %>% group_by(layer) %>%
   summarise(mean_distance=mean(value),median_distance=median(value),min_distance=min(value),max_distance=max(value))
 
 df_conn_score_gfw <- df_conn_score %>%
-  mutate(ref_value=df_conn_score$mean_distance[1], diff=mean_distance-ref_value, percentage=100-(diff*100/ref_value), info="GFW", Year=v_time_steps)
+  dplyr::mutate(ref_value=df_conn_score$mean_distance[1], diff=mean_distance-ref_value, percentage=100-(diff*100/ref_value), info="GFW", Year=v_time_steps)
 
 print("========== Connectivity Score generated ==========")
 
@@ -356,7 +355,7 @@ print("========== Habitat Score generated ==========")
 
 #------------------------ 3.1.3. SHI -------------------------------------------
 df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
-df_SHI_gfw <- df_SHI_gfw %>% mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
+df_SHI_gfw <- df_SHI_gfw %>% dplyr::mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
 df_SHI_gfw_tidy <- df_SHI_gfw %>% pivot_longer(c("HS","CS","SHI"),names_to = "Index", values_to = "Value")
 
 colnames(df_SHI_gfw) <- c("Habitat Score","Connectivity Score","Species Habitat Index","Source","Year")
