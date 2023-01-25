@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import L from "leaflet"
 import ReactDOMServer from "react-dom/server";
 
