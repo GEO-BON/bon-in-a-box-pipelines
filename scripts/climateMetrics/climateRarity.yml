@@ -1,9 +1,9 @@
 script: climateMetrics.R
-description: This script calculates climate rarity, using a moving window approach.
+description: This script calculates climate rarity, using a moving window approach. Values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
 inputs:
-  rcp:
-    label: rcp
-    description: Representative Concentration Pathway Scenarios (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
+  spp:
+    label: ssp
+    description: shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
     type: options
     options: 
       - ssp126
@@ -11,17 +11,17 @@ inputs:
       - ssp585
     example: ssp126
   spatial_res:
-    label: spatial resolution
+    label: spatial resolution output
     description: pixel size (in meters)
     type: int
-    example: 10000 
+    example: 1000 
   srs_cube: 
-    label: srs cube
+    label: spatial reference output
     description: target spatial reference system
     type: text
     example: EPSG:6623
   aggregation:
-    label: aggregation
+    label: aggregation method
     description: method of aggregation for 
     type: text
     example: mean
@@ -31,22 +31,22 @@ inputs:
     type: int
     example: 11
   t0:
-    label: t0
-    description: start time 
+    label: current climate start
+    description:  Current climate start time, in format aaaa-mm-dd
     type: text
     example: "1981-01-01"
   t1:
-    label: t1
-    description: end time 
+    label: current climate start
+    description: Current climate end time, in format aaaa-mm-dd 
     type: text
     example: "1981-12-31"
   t_match: 
-    label: threshold match
-    description: plus/minus threshold mean temperature
+    label: threshold climate match
+    description: Acceptable difference of climate (e.g.,mean temperature in °C) to consider that the climate is similar.
     type: float
-    example: 0.25
+    example: 1
   time_span:
-    label: Future time span
+    label: future time span
     description: period for climate projection, start year to end year
     type: options
     options:
@@ -55,7 +55,7 @@ inputs:
       - 2071-2100
     example: 2041-2070
   bbox:
-    label: Bounding box
+    label: bounding box
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297,-1971146,1015207,1511916]
