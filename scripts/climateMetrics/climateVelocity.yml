@@ -2,7 +2,7 @@ script: climateMetrics.R
 description: Climate velocity can be defined as the rate and direction that climate shifts across the landscape.
 inputs:
   metric:
-    label: metric
+    label: climate metric
     description: "Choice of local velocity (meters/year; see Loarie et. al. (2009) and Sandel et. al. (2011).),
       forward or backward velocity (meters/year; see Carroll et. al. (2015) and Hamann et. al. (2015).)"
     type: options
