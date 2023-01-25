@@ -3,7 +3,9 @@
 ## Install required packages
 
 library("devtools")
-devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue", upgrade = "never")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
+
+#devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue", upgrade = "never")
 #devtools::install_local("C:/stac-catalogue", upgrade = "never")
 #source("C:/stac-catalogue/R/stac_functions.R")
 
@@ -12,8 +14,9 @@ new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
 library("remotes")
+if (!"gdalcubes_R" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 
-remotes::install_github("appelmar/gdalcubes_R")
+
 
 
 ##devtools::install_local("loadLandCover/stac-catalogue-main.zip", 
@@ -79,16 +82,17 @@ if (input$stac_source == "IO") {
 }
 
 
-
-output_nc_predictors <- file.path(outputFolder, "lc.tif")
 raster::writeRaster(x = lc_raster,
-                          output_nc_predictors,
+                    paste0(outputFolder, "/", names(lc_raster), ".tif"),
+                    bylayer=T,
+                    suffix= 'names',
                     format='COG',
-                    options=c("COMPRESS=DEFLATE"),
-                    overwrite = TRUE)
+                    #options=c("COMPRESS=DEFLATE"),
+                    overwrite = TRUE
+                    )
+lc_classes <- list.files(outputFolder, pattern="*.tif$", full.names = T)
 
-output <- list(
-  "output_tif" =  output_nc_predictors
-                  ) 
+output <- list("output_tif" = lc_classes)
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
+
