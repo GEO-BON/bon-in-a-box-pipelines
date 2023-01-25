@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 
-import { Result } from "./Result";
+import { SingleOutputResult, StepResult } from "./StepResult";
 import { InputFileWithExample } from './InputFileWithExample';
 import { FoldableOutputWithContext, RenderContext, createContext } from './FoldableOutput'
 
@@ -98,7 +98,7 @@ export function PipelinePage(props) {
       {runId && <button onClick={stop} disabled={!stoppable}>Stop</button>}
       {httpError && <p key="httpError" className="error">{httpError}</p>}
       {showMetadata()}
-      <PipelineResults key="results" resultsData={resultsData} setRunningScripts={setRunningScripts} />
+      {pipelineMetadata && <PipelineResults key="results" pipelineMetadata={pipelineMetadata} resultsData={resultsData} setRunningScripts={setRunningScripts} />}
     </>)
 }
 
@@ -193,22 +193,59 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
   );
 }
 
-function PipelineResults({resultsData, setRunningScripts}) {
+function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
   const [activeRenderer, setActiveRenderer] = useState({});
+  const [outputResults, setOutputResults] = useState({});
 
+  useEffect(() => {
+    if (resultsData === null) {
+      // Put outputResults at initial value
+      const initialValue = {}
+      if (pipelineMetadata.outputs) {
+        Object.keys(pipelineMetadata.outputs).forEach(key => {
+          const script = key.substring(0, key.lastIndexOf('.'))
+          initialValue[script] = {}
+        })
+      }
+      setOutputResults(initialValue)
+    }
+  }, [resultsData])
+  
   if (resultsData) {
     return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
+      <h2>Pipeline outputs</h2>
+      {pipelineMetadata.outputs && Object.entries(pipelineMetadata.outputs).map(entry => {
+        const [key, stepDescription] = entry;
+        const lastDotIx = key.lastIndexOf('.')
+        const script = key.substring(0, lastDotIx)
+        const outputId = key.substring(lastDotIx+1)
+        const value = outputResults[script] && outputResults[script][outputId]
+
+        if(!value) {
+          return <div className="outputTitle">
+            <h3>{stepDescription.label}</h3>
+            <img src={spinnerImg} key={outputId} alt="Spinner" className="spinner-inline" />
+          </div>
+        }
+
+        return <SingleOutputResult key={outputId} outputId={outputId}
+          outputValue={value}
+          outputMetadata={stepDescription} />
+      })}
+
+      <h2>Detailled results</h2>
       {Object.entries(resultsData).map((entry, i) => {
         const [key, value] = entry;
 
-        return <DelayedResult key={key} id={key} folder={value} setRunningScripts={setRunningScripts} />
+        return <DelayedResult key={key} id={key} folder={value}
+          setRunningScripts={setRunningScripts} setOutputResults={setOutputResults} />
       })}
     </RenderContext.Provider>
   }
   else return null
 }
 
-function DelayedResult({id, folder, setRunningScripts}) {
+function DelayedResult({id, folder, setRunningScripts, setOutputResults}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
   const [running, setRunning] = useState(false)
@@ -259,10 +296,21 @@ function DelayedResult({id, folder, setRunningScripts}) {
         if (response.status === 404) {
           return Promise.resolve(null)
         }
-
+ 
         return Promise.reject(response);
       })
-      .then(json => setResultData(json))
+      .then(json => {
+        // Detailled results
+        setResultData(json)
+
+        // Contribute to pipeline outputs (if this script is relevant)
+        setOutputResults(results => {
+          if(id in results)
+            results[id] = json
+          
+          return results
+        })
+      })
       .catch(response => {
         clearInterval(interval);
         setResultData({ error: response.status + " (" + response.statusText + ")" })
@@ -283,7 +331,7 @@ function DelayedResult({id, folder, setRunningScripts}) {
   let className = "foldableScriptResult"
   if (folder) {
     if (resultData) {
-      content = <Result data={resultData} metadata={scriptMetadata} />
+      content = <StepResult data={resultData} metadata={scriptMetadata} />
       inline = <>
         {resultData.error && <img src={errorImg} alt="Error" className="error-inline" />}
         {resultData.warning && <img src={warningImg} alt="Warning" className="error-inline" />}
