@@ -1,0 +1,57 @@
+script: accessibility.R
+description: This script creates the accessibility layer (values close to zero indicate Poor access to opportunities and services offered by urban centres (Weiss et al 2018)).
+inputs:
+   stac_path:
+    label: STAC catalogue path
+    description: path to the STAC catalogue (url)
+    type: text
+    example: "https://io.biodiversite-quebec.ca/stac/"
+   collections:
+    label: collections
+    description: name of the collection
+    type: text
+    example: c("accessibility_to_cities")
+   bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-831561.2, 116773.2, 784438.8, 2103773]
+   spatial_res:
+    label: spatial resolution of the input
+    description: spatial resolution of the input in meters 
+    type: int
+    example: 1000
+   srs_cube:
+    label: spatial reference of the output
+    description: String, projection system of the coordinates
+    type: text
+    example: EPSG:6623
+   t0:
+    label: t0, year
+    description: String (YYYY-MM-DD), start time of study period
+    type: text
+    example: "2015-01-01"
+   t1:
+    label: t1, same year as t0 
+    description: String (YYYY-MM-DD), end time of study period
+    type: text
+    example: "2015-01-01"
+   aggregation:
+    label: aggregation
+    description: method of aggregation pixels 
+    type: text
+    example: "mean"
+   resampling:
+    label: resampling method
+    description: calculates the new pixel values from the original digital pixel values in the uncorrected image.
+    type: text
+    example: "near"
+outputs:
+  output_tif: 
+    label: accessibility
+    description: accesibility layer 
+    type: image/tiff;application=geotiff
+    example: accesibility.tif
+references:
+  - text: Weiss et. al. (2018). A global map of travel time to cities to assess inequalities in accessibility in 2015. Nature, 553, 333-336.
+    doi: https://doi.org/10.1038/nature25181
