@@ -1,0 +1,24 @@
+description: This script creates a binary layer from another layer using a threshold value (e.g.land cover class proportion above 0.8).
+script: binaryLayer.R
+inputs:
+  lc_classes: 
+    label: input list of layers
+    description: layer names (land cover classes) as a list, or path to a list
+    type: image/tiff;application=geotiff[]
+    example: ["/output/data/loadLandCover/9cbf6206cd62b38e0ccc6392559f488e/y2010_class210.tif", "/output/data/loadLandCover/9cbf6206cd62b38e0ccc6392559f488e/y2010_class220.tif"]
+  select_class:
+    label: select class to binary
+    description:  Vector of integers, list of land cover classes to select (in the example all ESA classes are presented)
+    type: int[]
+    example: [60, 210, 220]
+  threshold_prop:
+    label: threshold value
+    description: land cover class proportion  threshold value (e.g.land cover class proportion above 0.8 will be 1 and below 0).
+    type: float
+    example: 0.8
+outputs:
+  output_binary: 
+    label: binary layer output
+    description: land cover raster classes 
+    type: image/tiff;application=geotiff[]
+    example: y2000_class210_bin.tif
