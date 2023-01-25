@@ -195,7 +195,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
 
 function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
   const [activeRenderer, setActiveRenderer] = useState({});
-  const [outputResults, setOutputResults] = useState({});
+  const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
   useEffect(() => {
     if (resultsData === null) {
@@ -207,7 +207,7 @@ function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
           initialValue[script] = {}
         })
       }
-      setOutputResults(initialValue)
+      setPipelineOutputResults(initialValue)
     }
   }, [resultsData])
   
@@ -219,7 +219,7 @@ function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
         const lastDotIx = key.lastIndexOf('.')
         const script = key.substring(0, lastDotIx)
         const outputId = key.substring(lastDotIx+1)
-        const value = outputResults[script] && outputResults[script][outputId]
+        const value = pipelineOutputResults[script] && pipelineOutputResults[script][outputId]
 
         if(!value) {
           return <div className="outputTitle">
@@ -238,14 +238,14 @@ function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
         const [key, value] = entry;
 
         return <DelayedResult key={key} id={key} folder={value}
-          setRunningScripts={setRunningScripts} setOutputResults={setOutputResults} />
+          setRunningScripts={setRunningScripts} setPipelineOutputResults={setPipelineOutputResults} />
       })}
     </RenderContext.Provider>
   }
   else return null
 }
 
-function DelayedResult({id, folder, setRunningScripts, setOutputResults}) {
+function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
   const [running, setRunning] = useState(false)
@@ -304,7 +304,7 @@ function DelayedResult({id, folder, setRunningScripts, setOutputResults}) {
         setResultData(json)
 
         // Contribute to pipeline outputs (if this script is relevant)
-        setOutputResults(results => {
+        setPipelineOutputResults(results => {
           if(id in results)
             results[id] = json
           

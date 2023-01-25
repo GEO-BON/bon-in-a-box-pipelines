@@ -105,7 +105,7 @@ abstract class YMLStep(
     /**
      * @param allOutputs Map of Step identifier to output folder.
      */
-    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) { // ici!
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         val relPath = yamlFile.relativeTo(scriptRoot).path
         val previousValue = allOutputs.put("$relPath@$id", context?.id ?: "")
 
