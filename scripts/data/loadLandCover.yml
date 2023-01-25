@@ -1,31 +1,6 @@
-description: This script load land cover rasters from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
+description: This script calculate the proportion of each land cover class from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
 script: loadLandCover.R
 inputs:
-  stac_path:
-    label: stac_path
-    description: url
-    type: text
-    example: "https://io.biodiversite-quebec.ca/stac/"
-  collections:
-    label: collections
-    description: collections
-    type: text
-    example: c("esacci-lc")
-  bbox:
-    label: bbox
-    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
-    type: float[]
-    example: [-831561.2, 116773.2, 784438.8, 2103773]
-  srs_cube:
-    label: projection system
-    description: String, projection system of the coordinates in bbox
-    type: text
-    example: EPSG:6623
-  spatial_res:
-    label: spatial resolution
-    description: spatial resolution 
-    type: int
-    example: 1000
   stac_source:
     label: STAC source
     description: Option, STAC catalogue to use
@@ -34,39 +9,59 @@ inputs:
       - IO
       - PC
     example: "IO"
+  stac_path:
+    label: STAC catalogue path
+    description: path to the STAC catalogue (url)
+    type: text
+    example: "https://io.biodiversite-quebec.ca/stac/"
+  collections:
+    label: collections
+    description: name of the collection
+    type: text
+    example: c("esacci-lc")
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-831561.2, 116773.2, 784438.8, 2103773]
+  spatial_res:
+    label: spatial resolution of the input
+    description: spatial resolution of the input in meters (must be multiple of output spatialr resolution) 
+    type: int
+    example: 250
+  srs_cube:
+    label: spatial reference of the output
+    description: String, projection system of the coordinates in bbox
+    type: text
+    example: EPSG:6623
   t0:
-    label: t0
+    label: t0, year
     description: String (YYYY-MM-DD), start time of study period
     type: text
     example: "2010-01-01"
   t1:
-    label: t1
+    label: t1, same year as t0 but different month and day
     description: String (YYYY-MM-DD), end time of study period
     type: text
     example: "2010-12-31"
   prop: 
-    label: proportion
+    label: land cover proportion
     description: Boolean, should a proportion of land cover classes be calculated
     type: boolean
     example: TRUE
   prop_res: 
-    label: proportion_res
+    label: spatial resolution for the output in meters
     description: Integer, if proportion is TRUE, resolution to calculate the proportion from
     type: int
     example: 1000
   select_values: 
     label: lc_classes
-    description: Vector of integers, list of land cover classes to select
+    description: Vector of integers, list of land cover classes to select (in the example all ESA classes are presented)
     type: int[]
-    example: [190, 210]
+    example: [0, 10, 11, 12, 20, 30 ,40, 50, 60, 61, 62, 70, 71, 72, 80, 81, 82,  90, 100, 110, 120, 121, 122, 130, 140, 150, 151, 152, 160, 170, 180, 190, 200, 201, 202, 210, 220]
 outputs:
-  output_tif:
-    label: output metric
-    description: metric raster file 
-    type: image/tiff;application=geotiff
-    example: prop_lancover.tif
-  metric:
-    label: metric
-    description: landcover class proportion  
-    type: text
-    example: local
+  output_tif: 
+    label: land cover classes
+    description: land cover raster classes 
+    type: image/tiff;application=geotiff[]
+    example: prop_landcover.tif
