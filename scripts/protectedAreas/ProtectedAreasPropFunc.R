@@ -6,7 +6,7 @@
 #' @param crs, CRS object or a character string describing a projection and datum in the PROJ.4 format (e.g., "EPSG:6623" or "+proj=aea +lat_0=44 +lon_0=-68.5 +lat_1=60 +lat_2=46 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs" ).
 #' @param pixel_size, an integer defining the output pixel size in meters. Set at 1000m
 #' @param habitat_type,  a character vector of type of habitat c("terrestrial", "marine", "partial"), by default is c("terrestrial")."partial" is a protected area or OECM is that partially within the marine environment and partially within the terrestrial (or freshwater) environments. This value is applicable to polygons only. 
-#' @import sf wdpar terra exactextractr dplyr raster remotes Rcpp
+#' @import sf wdpar terra exactextractr dplyr raster remotes Rcpp wdman
 #' @return a raster
 #' @export
 
@@ -24,6 +24,8 @@ protected_areas <- function(country = "Canada",
 
     raw_pa_data <- wdpar::wdpa_fetch(country,
                               wait = TRUE,
+                              force_download = TRUE,
+                              page_wait = 5,
                               download_dir = rappdirs::user_data_dir("wdpar") # Since data are downloaded to a temporary directory by default,
                                                                               # we will specify that the data should be downloaded to a persistent directory. This means that R won't have to re-download the same dataset every time we restart our R session,
                                                                               # and R can simply re-load previously downloaded datasets as needed.
