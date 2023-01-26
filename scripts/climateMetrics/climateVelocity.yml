@@ -11,8 +11,8 @@ inputs:
       - forward
       - backward
     example: local
-  ssp:
-    label: ssp
+  rcp:
+    label: rcp
     description: shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
     type: options
     options: 
