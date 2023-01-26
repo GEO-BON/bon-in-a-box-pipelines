@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 800.5,
-        "y": 6.5
+        "x": 805.7642469709776,
+        "y": -19.8212348548887
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateVelocity.yml"
@@ -30,29 +30,11 @@
       }
     },
     {
-      "id": "2",
-      "type": "constant",
-      "position": {
-        "x": 388.40418427726115,
-        "y": 673.3462383770076
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "ssp126",
-        "options": [
-          "ssp126",
-          "ssp370",
-          "ssp585"
-        ]
-      }
-    },
-    {
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 390.7906593406593,
-        "y": 378.3015215553677
+        "x": 399.2134544942237,
+        "y": 375.14297337278106
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,8 +46,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 391.338968723584,
-        "y": 636.6203719357567
+        "x": 399.0458262890953,
+        "y": 489.85316638489724
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,7 +59,7 @@
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 393.96859678782755,
+        "x": 398.1799943646097,
         "y": 417.256043956044
       },
       "dragHandle": ".dragHandle",
@@ -97,8 +79,8 @@
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 398.9194843617921,
-        "y": 248.06601859678784
+        "x": 401.02518315018324,
+        "y": 247.01316920259234
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -110,7 +92,7 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 398.9194843617921,
+        "x": 397.8666349675966,
         "y": 293.22785291631436
       },
       "dragHandle": ".dragHandle",
@@ -123,8 +105,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 397.61352493660195,
-        "y": 337.0100591715976
+        "x": 391.2964285714286,
+        "y": 335.9572097774021
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -141,8 +123,8 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 49.74716821639902,
-        "y": 801.1280219780219
+        "x": 63.43421034094115,
+        "y": 797.9694737954353
       },
       "data": {
         "descriptionFile": "SDM>extentToBbox.yml"
@@ -194,8 +176,8 @@
       "id": "13",
       "type": "io",
       "position": {
-        "x": 797.4677937447168,
-        "y": 183.2057058326289
+        "x": 803.7848901098903,
+        "y": 182.15285643843333
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateVelocity.yml"
@@ -223,8 +205,8 @@
       "id": "15",
       "type": "io",
       "position": {
-        "x": 811.1127218934912,
-        "y": 407.17349957734575
+        "x": 802.6899267399267,
+        "y": 375.58801775147936
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateVelocity.yml"
@@ -234,8 +216,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 134.95731191885045,
-        "y": 468.1167371090446
+        "x": 144.85805866090527,
+        "y": 397.0972151603686
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -252,8 +234,8 @@
       "id": "17",
       "type": "io",
       "position": {
-        "x": 808.080515638208,
-        "y": 590.630853761623
+        "x": 804.9219674556214,
+        "y": 564.3096189067344
       },
       "data": {
         "descriptionFile": "ClimateMetrics>climateRarity.yml"
@@ -263,8 +245,8 @@
       "id": "18",
       "type": "constant",
       "position": {
-        "x": 393.3872781065088,
-        "y": 714.7097633136095
+        "x": 392.1238588334743,
+        "y": 649.0119611158073
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -309,8 +291,8 @@
       "id": "22",
       "type": "io",
       "position": {
-        "x": 815.3856720202875,
-        "y": 884.5024091293324
+        "x": 814.3328226260919,
+        "y": 878.1853127641591
       },
       "data": {
         "descriptionFile": "data>loadLandCover.yml"
@@ -561,9 +543,8 @@
       "data": {
         "type": "int[]",
         "value": [
-          60,
-          210,
-          220
+          "60",
+          "210"
         ]
       }
     },
@@ -603,30 +584,27 @@
         "type": "text",
         "value": "rarity"
       }
+    },
+    {
+      "id": "48",
+      "type": "constant",
+      "position": {
+        "x": 393.22239020938093,
+        "y": 455.0863901721609
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "ssp126",
+        "options": [
+          "ssp126",
+          "ssp370",
+          "ssp585"
+        ]
+      }
     }
   ],
   "edges": [
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-2-0rcp"
-    },
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-2-13rcp"
-    },
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-2-15rcp"
-    },
     {
       "source": "1",
       "sourceHandle": null,
@@ -661,13 +639,6 @@
       "target": "15",
       "targetHandle": "metric",
       "id": "reactflow__edge-16-15metric"
-    },
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "spp",
-      "id": "reactflow__edge-2-17spp"
     },
     {
       "source": "17",
@@ -1090,25 +1061,42 @@
       "target": "17",
       "targetHandle": "metric",
       "id": "reactflow__edge-47-17metric"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-48-0rcp"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-48-13rcp"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "17",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-48-17rcp"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-48-15rcp"
     }
   ],
   "viewport": {
-    "x": 316.3298207465641,
-    "y": 47.77272727272714,
-    "zoom": 0.6595857377826099
+    "x": 586.83556739159,
+    "y": 66.6895077582468,
+    "zoom": 0.6516637626304973
   },
   "inputs": {
-    "ClimateMetrics>climateVelocity.yml@0.ssp": {
-      "description": "shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)",
-      "label": "ssp",
-      "type": "options",
-      "options": [
-        "ssp126",
-        "ssp370",
-        "ssp585"
-      ],
-      "example": "ssp126"
-    },
     "SDM>extentToBbox.yml@9.df_coordinates": {
       "description": "dataframe, containing coordinates",
       "label": "df coordinates",
@@ -1162,28 +1150,6 @@
       "label": "output bbox projection system",
       "type": "string",
       "example": "EPSG:6623"
-    },
-    "ClimateMetrics>climateVelocity.yml@13.ssp": {
-      "description": "shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)",
-      "label": "ssp",
-      "type": "options",
-      "options": [
-        "ssp126",
-        "ssp370",
-        "ssp585"
-      ],
-      "example": "ssp126"
-    },
-    "ClimateMetrics>climateVelocity.yml@15.ssp": {
-      "description": "shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)",
-      "label": "ssp",
-      "type": "options",
-      "options": [
-        "ssp126",
-        "ssp370",
-        "ssp585"
-      ],
-      "example": "ssp126"
     },
     "ClimateMetrics>climateRarity.yml@17.moving_window": {
       "description": "number of cells (must be an odd number)",
