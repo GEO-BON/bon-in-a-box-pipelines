@@ -87,13 +87,13 @@
     
     m     <- sapply(u, match)                                         # list of climate matches for unique values
     
-    system.time(
+    
       for (i in 1:length(p)) {                                        # loop for all grid cells of p
         mi   <- m[[which(u==p[i])]]                                   # recalls list of climate matches for p[i]
         d[i] <- sqrt(min((x[i]-x[mi])^2 + (y[i]-y[mi])^2))            # distance to closest match
         
       }
-    )
+    
     
     # Create matrix with coordinates x and y and distance values
       d[d==Inf] <- 10000000                                           # sets no analogue to 10,000km
@@ -132,13 +132,13 @@
     
     m     <- sapply(u, match)                                         # list of climate matches for unique values
     
-    system.time(
+   
       for (i in 1:length(p)) {                                        # loop for all grid cells of p
         mi   <- m[[which(u==p[i])]]                                   # recalls list of climate matches for p[i]
         d[i] <- sqrt(min((x[i]-x[mi])^2 + (y[i]-y[mi])^2))            # distance to closest match
         
       }
-    )
+   
       
       # Create matrix with coordinates x and y and distance values
       d[d==Inf] <- 10000000                                           # sets no analogue to 10,000km
