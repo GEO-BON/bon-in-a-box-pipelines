@@ -6,8 +6,8 @@ inputs:
     description: how different is the temperature from its surroundings, using moving window and a temperature threshold.
     type: text
     example: rarity
-  spp:
-    label: ssp
+  rcp:
+    label: rcp
     description: shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
     type: options
     options: 
@@ -27,8 +27,9 @@ inputs:
     example: EPSG:6623
   aggregation:
     label: aggregation method
-    description: method of aggregation for 
-    type: text
+    description: method of aggregation for the temperature data
+    type: options
+    options: [min, max, mean, median, first]
     example: mean
   moving_window:
     label: search moving window
