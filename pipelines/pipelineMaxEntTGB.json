@@ -1002,5 +1002,16 @@
       ],
       "example": "reptiles"
     }
+  },
+  "outputs": {
+    "SDM>runMaxent.yml@49.sdm_pred": {
+      "description": "model predictions while trained on the whole dataset",
+      "label": "predictions",
+      "type": "image/tiff;application=geotiff",
+      "range": [
+        0,
+        1
+      ]
+    }
   }
 }
