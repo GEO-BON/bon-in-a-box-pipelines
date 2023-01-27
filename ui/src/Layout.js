@@ -41,7 +41,7 @@ export function Layout(props) {
             <div className='content'>
               {props.popupContent}
             </div>
-            <a title="Close" className='close' onClick={() => props.setPopupContent(null)}>×</a>
+            <button title="Close" className='close' onClick={() => props.setPopupContent(null)}>×</button>
           </div>
         }
 

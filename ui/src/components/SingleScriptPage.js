@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 
-import { Result } from "./Result";
+import { StepResult } from "./StepResult";
 import spinner from '../img/spinner.svg';
 import { InputFileWithExample } from './InputFileWithExample';
 import { GeneralDescription, InputsDescription, OutputsDescription } from './ScriptDescription';
@@ -33,7 +33,7 @@ export function SingleScriptPage(props) {
              <InputsDescription metadata={scriptMetadata} />
              <OutputsDescription metadata={scriptMetadata} />
            </pre>}
-        {resultData && <Result data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
+        {resultData && <StepResult data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
       </>
     )}
   </>)
@@ -111,7 +111,7 @@ function SingleScriptForm(props) {
   }, []);
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} accept-charset="utf-8">
+    <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
       <label>
         Script file:
         <br />
