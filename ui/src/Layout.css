@@ -49,20 +49,24 @@ a.active {
   background-color: #f3f3f1;
   border-radius: 30px;
   padding: 20px;
+  padding-right: 10px;
 }
 
 .fullScreenPopup .close {
-  color: rgb(0, 0, 0);
-  text-decoration: none;
+  vertical-align: top;
   margin-top:-25px;
+  height:fit-content;
+
+  color: rgb(0, 0, 0);
+  border: none;
+  background: none;
   font-size: 60px;
-  cursor: pointer;
+  cursor: pointer;  
 }
 
 .fullScreenPopup .content {
   flex-grow: 1;
   overflow-y: auto; 
-  margin-right: 10px;
 }
 
 img#logo {
@@ -104,6 +108,7 @@ img#logo {
 
   padding-left: 2em;
   padding-top: 0.4em;
+  padding-right: 0.4em;
 
   background-size: 2em 2em;
   background-repeat: no-repeat;
