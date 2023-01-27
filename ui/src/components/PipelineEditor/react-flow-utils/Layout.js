@@ -8,7 +8,7 @@ import { getScriptDescription } from '../ScriptDescriptionStore'
  * @param {Edge[]} edges 
  * @returns (Node[], Edge[]) the provided lists modified to layout the elements
  */
-export const getLayoutedElements = (nodes, edges) => {
+export const layoutElements = (nodes, edges) => {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
   dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10, align: undefined });
