@@ -16,7 +16,7 @@ import ReactFlow, {
 
 import IONode from './IONode'
 import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
-import { getLayoutedElements } from './react-flow-utils/Layout'
+import { layoutElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
 import { getScriptDescription } from './ScriptDescriptionStore'
@@ -334,11 +334,11 @@ export function PipelineEditor(props) {
   }, [edges, reactFlowInstance, setOutputList])
 
   const onLayout = useCallback(() => {
-    const { nodes: layoutedNodes, edges: layoutedEdges } =
-      getLayoutedElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges());
+    const { nodes: laidOutNodes, edges: laidOutEdges } =
+      layoutElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges());
 
-    setNodes([...layoutedNodes]);
-    setEdges([...layoutedEdges]);
+    setNodes([...laidOutNodes]);
+    setEdges([...laidOutEdges]);
   }, [reactFlowInstance, setNodes, setEdges]);
 
   const onSave = useCallback(() => {
