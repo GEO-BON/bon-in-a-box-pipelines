@@ -33,6 +33,7 @@ export default function ConstantNode({ id, data }) {
       <span className='dragHandle'>{data.type} </span>
       {renderInput()}
       <Handle type="source" position={Position.Right} />
+      <button className='arrowDownButton' title='options' onClick={data.onPopupMenu} />
     </div>
   );
 }

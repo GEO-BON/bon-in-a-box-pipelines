@@ -33,8 +33,6 @@ const getId = () => `${id++}`;
  * @returns rendered view of the pipeline inputs
  */
 const IOList = ({inputList, outputList, selectedNodes}) => {
-
-
   return <div className='ioList'>
     <h3>User inputs</h3>
     {inputList.length === 0 ? "No inputs" : inputList.map((input, i) => {
@@ -67,6 +65,8 @@ export function PipelineEditor(props) {
   const [outputList, setOutputList] = useState([])
 
   const [toolTip, setToolTip] = useState(null);
+
+  const popupMenuRef = useRef()
 
   // We need this since the functions passed through node data retain their old selectedNodes state.
   // Note that the stratagem fails if trying to add edges from many sources at the same time.
@@ -147,6 +147,7 @@ export function PipelineEditor(props) {
       dragHandle: '.dragHandle',
       data: {
         onChange: onConstantValueChange,
+        onPopupMenu,
         type: fieldDescription.type,
         value: fieldDescription.example,
         options: fieldDescription.options,
@@ -341,6 +342,34 @@ export function PipelineEditor(props) {
     setEdges([...laidOutEdges]);
   }, [reactFlowInstance, setNodes, setEdges]);
 
+
+  const onPopupMenuHide = useCallback(() => {
+    const popupMenu = popupMenuRef.current
+    if (popupMenu) {
+      if (popupMenu.style.display === 'block') {
+        console.log("pop out")
+        popupMenu.style.display = 'none'
+      }
+    }
+  }, [popupMenuRef])
+
+  const onPopupMenu = useCallback(event => {
+    const popupMenu = popupMenuRef.current
+    if (popupMenu) {
+      if (popupMenu.style.display !== 'block') {
+        console.log("pop up event: ", event)
+        event.stopPropagation()
+        event.preventDefault()
+        popupMenu.style.setProperty('--mouse-x', event.clientX + 'px')
+        popupMenu.style.setProperty('--mouse-y', event.clientY + 'px')
+        popupMenu.style.display = 'block'
+
+      } else {
+        onPopupMenuHide()
+      }
+    }
+  }, [popupMenuRef, onPopupMenuHide])
+
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
@@ -463,6 +492,7 @@ export function PipelineEditor(props) {
                 break;
               case 'constant':
                 node.data.onChange = onConstantValueChange
+                node.data.onPopupMenu = onPopupMenu
                 break;
               case 'output':
                 break;
@@ -508,6 +538,7 @@ export function PipelineEditor(props) {
             onSelectionChange={onSelectionChange}
             onNodesDelete={onNodesDelete}
             deleteKeyCode='Delete'
+            onMouseDownCapture={onPopupMenuHide}
           >
             {toolTip && <div className="tooltip">
               {toolTip}
@@ -541,6 +572,10 @@ export function PipelineEditor(props) {
           </ReactFlow>
         </div>
       </ReactFlowProvider>
+      <ul id='popupMenu' ref={popupMenuRef}>
+        <li>Option 1</li>
+        <li>Option 2</li>
+      </ul>
     </div>
   </div>
 };
