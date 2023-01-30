@@ -169,17 +169,6 @@ aside.scriptChooser .description {
     margin-left: 5px;
 }
 
-@media screen and (min-width: 768px) {
-    .dndflow {
-        flex-direction: row;
-    }
-
-    .dndflow aside {
-        width: 20%;
-        max-width: 250px;
-    }
-}
-
 .ioList {
     border: 1px solid black;
     border-radius: 3px;
