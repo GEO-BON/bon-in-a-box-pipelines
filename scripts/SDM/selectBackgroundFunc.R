@@ -149,16 +149,35 @@ create_background <- function(
                                   values=F)
       
     } else if (grepl("^weighted", method)) {
-      ## Replace sum_na_layer values with weighting from heatmap
+      ## Set heatmap cells to NA if they are NA in sum_na_layer
       ## Assumes the last layer of predictors is the heatmap, and that it is counts!
       values(predictors[[dim(predictors)[3]]])[which(is.na(values(sum_na_layer)))] <- NA
       tgb_weights <- predictors[[dim(predictors)[3]]]
       tgb_weights <- tgb_weights/sum(values(tgb_weights), na.rm = T)
       
+      #backgr <- sample(cells(tgb_weights), n, prob = unlist(extract(tgb_weights, cells(tgb_weights))))
+      #backgr <- xyFromCell(tgb_weights, backgr)
+
       # Sampling using density as probabilities
-      backgr <- sample(cells(tgb_weights), n, prob = unlist(extract(tgb_weights, cells(tgb_weights))))
-      backgr <- xyFromCell(tgb_weights, backgr)
-      
+      # We still run into NA values in the weights, which we should exclude
+      weightsVector <- unlist(extract(tgb_weights, cells(tgb_weights)))
+      names(weightsVector) <- cells(tgb_weights)
+      weightsVector <- na.omit(weightsVector)
+
+      if(length(weightsVector) < n){
+        message(
+          "Number of background-points exceeds number of cell. ",
+          ncellr,
+          " background-points will be sampled"
+        )
+        backgr <- names(weightsVector)
+    
+      }else{
+        backgr <- sample(names(weightsVector), n, prob = weightsVector)
+
+      }
+
+      backgr <- xyFromCell(tgb_weights, as.numeric(backgr))
     }
   }
   message(sprintf("%s selected", nrow(backgr)))
