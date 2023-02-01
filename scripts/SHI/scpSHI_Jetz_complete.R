@@ -107,34 +107,50 @@ if(!is.na(country_code)){
          sf_area_lim1 <<- gadm(country=country_code, level=0, path=tempdir()) %>% st_as_sf() %>% st_make_valid()
   )
   
-  sf_area_lim1_crs <- sf_area_lim1 %>% st_transform(sf_crs)
+  sf_area_lim1_crs <- sf_area_lim1 |> st_transform(sf_crs)
   
-  sf_area_lim2 <- sf_range_map %>% st_make_valid
-  sf_area_lim2_crs <- sf_area_lim2 %>% st_transform(sf_crs)
+  sf_area_lim2 <- sf_range_map |> st_make_valid()
+  sf_area_lim2_crs <- sf_area_lim2 |> st_transform(sf_crs)
   
-  sf_area_lim <<- st_intersection(sf_area_lim2 %>% st_transform(st_crs(sf_area_lim1)),sf_area_lim1,dimension="polygon")
-  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") %>% st_make_valid() %>% 
+  sf_area_lim <<- st_intersection(sf_area_lim2 |> st_transform(st_crs(sf_area_lim1)),sf_area_lim1,dimension="polygon")
+  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") |> st_make_valid() |> 
     st_collection_extract("POLYGON")
   
-  if(all(st_is_valid(sf_area_lim))){
-    sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(10))
-    }else{
-      sf::sf_use_s2(FALSE)
-      sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(0.0001))
-    }
-  print(sf_ext)
-  if(all(st_is_valid(sf_area_lim_crs))){
-    sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(10))
+  if(!is.null(st_crs(sf_area_lim)$units)){
+    sf_ext <<- st_bbox(sf_area_lim |> st_buffer(spat_res*10))
   }else{
     sf::sf_use_s2(FALSE)
-    sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(0.0001))
+    sf_ext <<- st_bbox(sf_area_lim |> st_buffer(spat_res*0.00001*10))
   }
- print(sf_ext_crs)
+  print(sf_ext)
+  
+  if(!is.null(st_crs(sf_area_lim_crs)$units)){
+    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*10))
+  }else{
+    sf::sf_use_s2(FALSE)
+    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*0.00001*10))
+  }
+  print(sf_ext_crs)
+
 }else{
   sf_area_lim <<- sf_range_map
-  sf_area_lim_crs <<- sf_area_lim %>% st_transform(sf_crs)
-  sf_ext <<- st_bbox(sf_area_lim %>% st_buffer(10)) # st_make_grid(sf_range_map,n=1) %>% st_buffer(10)
-  sf_ext_crs <<- st_bbox(sf_area_lim_crs %>% st_buffer(10))
+  sf_area_lim_crs <<- sf_area_lim |> st_transform(sf_crs)
+  
+  if(!is.null(st_crs(sf_area_lim)$units)){
+    sf_ext <<- st_bbox(sf_area_lim |> st_buffer(spat_res*10))
+  }else{
+    sf::sf_use_s2(FALSE)
+    sf_ext <<- st_bbox(sf_area_lim |> st_buffer(spat_res*0.00001*10))
+  }
+  print(sf_ext)
+  
+  if(!is.null(st_crs(sf_area_lim_crs)$units)){
+    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*10))
+  }else{
+    sf::sf_use_s2(FALSE)
+    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*0.00001*10))
+  }
+  print(sf_ext_crs)
 }
 
 
@@ -142,7 +158,7 @@ if(!is.na(country_code)){
 #Create raster
 r_frame <- rast(terra::ext(sf_ext_crs),resolution=spat_res)
 crs(r_frame) <- srs_cube
-values(r_frame) <- rep(1,ncell(r_frame))
+values(r_frame) <- 1
 r_suitability_map <- terra::mask(r_frame,vect(as(sf_area_lim_crs,"Spatial")))
 
 #-------------------------------------------------------------------------------------------------------------------
@@ -240,7 +256,7 @@ r_GFW_TC_range <- cube_to_raster(cube_GFW_TC_range , format="terra") # convert t
 
 r_suitability_map_rescaled <- terra::resample(r_suitability_map,r_GFW_TC_range,method="mode") #Adjust scale of suitability map
 r_GFW_TC_range_mask <- r_GFW_TC_range |>
-  terra::classify(rcl=matrix(c(NA,0),ncol=2,byrow=T)) |> # turn NA to 0
+  terra::classify(rcl=cbind(NA,0)) |> # turn NA to 0
   terra::mask(r_suitability_map_rescaled) # crop to suitability map
 
 print("========== Base forest layer downloaded ==========")
@@ -256,10 +272,10 @@ it_obj <- s_obj |>
 st <- gdalcubes::stac_image_collection(it_obj$features, asset_names = c("data")) # create image collection
 
 v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-12-31", # create cube according to area of interest
-                                             left = sf_ext_crs['xmin'], right =sf_ext_crs['xmax'],
+                                             left = sf_ext_crs['xmin'], right = sf_ext_crs['xmax'],
                                              top = sf_ext_crs['ymax'], bottom =  sf_ext_crs['ymin']),
                dx=spat_res, dy=spat_res, dt="P1Y",
-               resampling = "near") # TO CHANGE to proportions
+               resampling = "mode", aggregation = "mode") # TO CHANGE to proportions
 
 times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4)) #get year of change by selected time step to mask map by year of change
 l_r_year_loss <- map(times, function(x) {
@@ -273,13 +289,13 @@ l_r_year_loss <- map(times, function(x) {
 })
 
 #add background and mask to suitable area
-s_year_loss <- terra::classify(terra::rast(l_r_year_loss), rcl=matrix(c(NA,NA,0,1,Inf,1),ncol=3,byrow=T),include.lowest=T)
+s_year_loss <- terra::classify(terra::rast(l_r_year_loss), rcl=rbind(c(NA,NA,0),c(1,Inf,1)),include.lowest=T)
 names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>2000])
 s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_range_mask, maskvalues=1, inverse=TRUE)
 
 #update reference forest layer if t_0 different of 2000
 if(t_0!=2000){
-  r_GFW_TC_range_mask <- terra::classify(r_GFW_TC_range_mask - terra::subset(s_year_loss_mask,paste0("Loss_",t_0)),rcl=matrix(c(-1,0),ncol=2,byrow=T))
+  r_GFW_TC_range_mask <- terra::classify(r_GFW_TC_range_mask - terra::subset(s_year_loss_mask,paste0("Loss_",t_0)),rcl=cbind(-1,0))
 }
 
 cube_GFW_gain <-
@@ -294,14 +310,14 @@ cube_GFW_gain <-
             t1 = "2000-12-31",
             resampling = "near")
 
-r_GFW_gain <- cube_to_raster(cube_GFW_gain %>%
+r_GFW_gain <- cube_to_raster(cube_GFW_gain |>
                                stars::st_as_stars(), format="terra") # convert to raster format
-r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_suitability_map_rescaled),matrix(c(0,NA),ncol=2,byrow = T))
+r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_suitability_map_rescaled),rcl=cbind(0,NA))
 
 #-------------------------- figure ----------------------------------------------
 osm <- read_osm(sf_area_lim, ext=1.1)
 
-r_year_loss_mask_plot <- terra::classify(s_year_loss_mask[[length(l_r_year_loss)]],matrix(c(0,NA),ncol=2,byrow=T)) # turn 0 to NA
+r_year_loss_mask_plot <- terra::classify(s_year_loss_mask[[length(l_r_year_loss)]],rcl=cbind(0,NA)) # turn 0 to NA
 
 img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
   tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
@@ -321,7 +337,7 @@ s_HabitatArea <- r_GFW_TC_range_mask-s_year_loss_mask
 s_HabitatArea <- c(r_GFW_TC_range_mask, s_HabitatArea)
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
-s_Habitat <- terra::classify(s_HabitatArea , rcl=matrix(c(0,NA),ncol=2))
+s_Habitat <- terra::classify(s_HabitatArea , rcl=cbind(0,NA))
 r_habitat_by_year_path <- file.path(outputFolder,paste0(sp,"_habitat_GFW.tif"))
 terra::writeRaster(s_Habitat,filename = r_habitat_by_year_path,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
 
