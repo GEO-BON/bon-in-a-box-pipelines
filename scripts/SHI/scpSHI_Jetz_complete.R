@@ -103,8 +103,8 @@ print("========== Expert range map successfully loaded ==========")
 #get bounding box cropped by country if needed
 if(!is.na(country_code)){
   ifelse(!is.na(region),
-         sf_area_lim1 <<- gadm(country=country_code, level=1, path=tempdir()) %>% st_as_sf() %>% st_make_valid() %>% filter(NAME_1==region),
-         sf_area_lim1 <<- gadm(country=country_code, level=0, path=tempdir()) %>% st_as_sf() %>% st_make_valid()
+         sf_area_lim1 <<- gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region),
+         sf_area_lim1 <<- gadm(country=country_code, level=0, path=tempdir()) |> st_as_sf() |> st_make_valid()
   )
   
   sf_area_lim1_crs <- sf_area_lim1 |> st_transform(sf_crs)
@@ -344,10 +344,10 @@ terra::writeRaster(s_Habitat,filename = r_habitat_by_year_path,overwrite=T, gdal
 #----------------------- 3.1.1. Get average distance to edge -------------------
 #patch distances
 df_SnS_dist <- landscapemetrics::lsm_p_enn(s_Habitat) #same as landscapemetrics::lsm_l_enn_mn(s_Habitat)
-df_conn_score <- df_SnS_dist %>% group_by(layer) %>%
+df_conn_score <- df_SnS_dist |> group_by(layer) |>
   summarise(mean_distance=mean(value),median_distance=median(value),min_distance=min(value),max_distance=max(value))
 
-df_conn_score_gfw <- df_conn_score %>%
+df_conn_score_gfw <- df_conn_score |>
   dplyr::mutate(ref_value=df_conn_score$mean_distance[1], diff=mean_distance-ref_value, percentage=100-(diff*100/ref_value), info="GFW", Year=v_time_steps)
 
 print("========== Connectivity Score generated ==========")
@@ -362,17 +362,17 @@ l_suitable_area <- set_names(map(as.list(s_Habitat * r_areas),function(x) {
   data.frame(Area=units::set_units(sum(x),"km2"))
 }),v_time_steps)
 
-df_area_score <- l_suitable_area %>% bind_rows(.id="Year") # almost same as landscapemetrics::lsm_p_area(s_Habitat) but ?? units
+df_area_score <- l_suitable_area |> bind_rows(.id="Year") # almost same as landscapemetrics::lsm_p_area(s_Habitat) but ?? units
 
-df_area_score_gfw <-  df_area_score %>% dplyr::group_by(Year) %>%
+df_area_score_gfw <-  df_area_score |> dplyr::group_by(Year) |>
   dplyr::mutate(ref_area=df_area_score$Area[1], diff=ref_area-Area, percentage=100-as.numeric(100*diff/ref_area), info="GFW")
 
 print("========== Habitat Score generated ==========")
 
 #------------------------ 3.1.3. SHI -------------------------------------------
 df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
-df_SHI_gfw <- df_SHI_gfw %>% dplyr::mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
-df_SHI_gfw_tidy <- df_SHI_gfw %>% pivot_longer(c("HS","CS","SHI"),names_to = "Index", values_to = "Value")
+df_SHI_gfw <- df_SHI_gfw |> dplyr::mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
+df_SHI_gfw_tidy <- df_SHI_gfw |> pivot_longer(c("HS","CS","SHI"),names_to = "Index", values_to = "Value")
 
 colnames(df_SHI_gfw) <- c("Habitat Score","Connectivity Score","Species Habitat Index","Source","Year")
 df_SHI_path <- file.path(outputFolder,paste0(sp,"_SHI_table.tsv"))
