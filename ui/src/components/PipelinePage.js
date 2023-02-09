@@ -211,7 +211,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       }
       setPipelineOutputResults(initialValue)
     }
-  }, [resultsData])
+  }, [pipelineMetadata.outputs, resultsData])
   
   if (resultsData) {
     return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
@@ -238,7 +238,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
           outputMetadata={stepDescription} />
       })}
 
-      <h2>Detailled results</h2>
+      <h2>Detailed results</h2>
       {Object.entries(resultsData).map((entry, i) => {
         const [key, value] = entry;
 
@@ -305,7 +305,7 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
         return Promise.reject(response);
       })
       .then(json => {
-        // Detailled results
+        // Detailed results
         setResultData(json)
 
         // Contribute to pipeline outputs (if this script is relevant)
