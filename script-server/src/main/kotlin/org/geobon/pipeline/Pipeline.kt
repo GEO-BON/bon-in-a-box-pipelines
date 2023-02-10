@@ -36,14 +36,14 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         val pipelineJSON = JSONObject(descriptionFile.readText())
         pipelineJSON.getJSONArray(NODES_LIST).forEach { node ->
             if (node is JSONObject) {
-                val id = node.getString(NODE__ID)
+                val nodeId = node.getString(NODE__ID)
                 when (node.getString(NODE__TYPE)) {
                     NODE__TYPE_SCRIPT -> {
                         val scriptFile = node.getJSONObject(NODE__DATA)
                             .getString(NODE__DATA__FILE)
                             .replace('>', '/')
 
-                        steps[id] = when (scriptFile) {
+                        steps[nodeId] = when (scriptFile) {
                             // Instantiating kotlin "special steps".
                             // Not done with reflection on purpose, since this could allow someone to instantiate any class,
                             // resulting in a security breach.
@@ -51,18 +51,19 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                             "pipeline/PullLayersById.yml" -> PullLayersById()
 
                             // Regular script steps
-                            else -> ScriptStep(scriptFile, id)
+                            else -> ScriptStep(scriptFile, nodeId)
                         }
                     }
+
                     NODE__TYPE_CONSTANT -> {
                         val nodeData = node.getJSONObject(NODE__DATA)
                         val type = nodeData.getString(NODE__DATA__TYPE)
 
-                        constants[id] = if(type.endsWith("[]")) {
+                        constants[nodeId] = if(type.endsWith("[]")) {
                             val jsonArray = try {
                                 nodeData.getJSONArray(NODE__DATA__VALUE)
                             } catch (e:Exception) {
-                                throw RuntimeException("Constant array #$id has no value in JSON file.")
+                                throw RuntimeException("Constant array #$nodeId has no value in JSON file.")
                             }
 
                             ConstantPipe(type,
@@ -99,11 +100,19 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                                     }
                                 )
                             } catch (e: Exception) {
-                                throw RuntimeException("Constant #$id has no value in JSON file.")
+                                throw RuntimeException("Constant #$nodeId has no value in JSON file.")
                             }
                         }
                     }
-                    NODE__TYPE_OUTPUT -> outputIds.add(id)
+
+                    NODE__TYPE_USER_INPUT -> {
+                        val nodeData = node.getJSONObject(NODE__DATA)
+                        val type = nodeData.getString(NODE__DATA__TYPE)
+
+                        steps[nodeId] = UserInput(nodeId, type)
+                    }
+
+                    NODE__TYPE_OUTPUT -> outputIds.add(nodeId)
                     else -> logger.warn("Ignoring node type ${node.getString(NODE__TYPE)}")
                 }
             } else {
@@ -117,7 +126,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 // Find the source pipe
                 val sourceId = edge.getString(EDGE__SOURCE_ID)
                 val sourcePipe = constants[sourceId] ?: steps[sourceId]?.let { sourceStep ->
-                    val sourceOutput = edge.getString(EDGE__SOURCE_OUTPUT)
+                    val sourceOutput = edge.optString(EDGE__SOURCE_OUTPUT, sourceId)
                     sourceStep.outputs[sourceOutput]
                         ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}.\"")
                 } ?: throw Exception("Could not find step with ID: $sourceId")
@@ -144,7 +153,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         inputs?.let {
             val inputsJSON = JSONObject(inputs)
             pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
-                val regex = """([.>\w]+)@(\d+)\.(\w+)""".toRegex()
+                val regex = """([.>\w]+)@(\d+)(\.(\w+))?""".toRegex()
                 inputsJSON.keySet().forEach { key ->
                     val inputSpec = inputsSpec.optJSONObject(key)
                         ?: throw RuntimeException("Input received \"$key\" is not listed in pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
@@ -154,7 +163,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                         ?: throw RuntimeException("Input id \"$key\" is malformed")
                     //val path = groups[1]!!.value
                     val stepId = groups[2]!!.value
-                    val inputId = groups[3]!!.value
+                    val inputId = groups[4]?.value ?: stepId // inputId = stepId when step is a UserInput
 
                     val step = steps[stepId]
                         ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
