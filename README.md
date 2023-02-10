@@ -197,10 +197,24 @@ A single value can also be combined with an array of the same type, to produce a
 
 **User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the sample input.json file when running the pipeline.
 
+If an input is common to many step, a special user input node can be added to avoid duplication. First, link your nodes to a constant.
+
+<img src="https://user-images.githubusercontent.com/6223744/218197354-8a7bb46d-dbaa-4d7f-ad8d-b4dd521fb28f.png" height="52">
+
+Then, use the down arrow to pop the node's menu. Choose "Convert to user input".
+
+<img src="https://user-images.githubusercontent.com/6223744/218197468-142dcdfb-447f-4076-b6c5-59e8e448b32e.png" height="61">
+
+The node will change as below, and the details will appear on the right pane, along with the other user inputs.
+
+<img src="https://user-images.githubusercontent.com/6223744/218197580-d5e21247-0492-40d7-b527-add323abd6b4.png" height="51">
+
+
 ### Pipeline inputs and outputs
 Any **input** with no constant value assigned will be considered a pipeline input and user will have to fill the value.
 
 Add an **output** node linked to a step output to specify that this output is an output of the pipeline. All other unmarked step outputs will still be available as intermediate results in the UI.
+
 ![image](https://user-images.githubusercontent.com/6223744/181108988-97d988ca-8f4b-45b1-b4a3-32e90821b68b.png)
 
 
