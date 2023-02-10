@@ -16,6 +16,8 @@ import ReactFlow, {
 
 import IONode from './IONode'
 import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
+import UserInputNode from './UserInputNode';
+import PopupMenu from './PopupMenu';
 import { layoutElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
@@ -23,7 +25,8 @@ import { getScriptDescription } from './ScriptDescriptionStore'
 
 const customNodeTypes = {
   io: IONode,
-  constant: ConstantNode
+  constant: ConstantNode,
+  userInput: UserInputNode
 }
 
 let id = 0;
@@ -66,7 +69,8 @@ export function PipelineEditor(props) {
 
   const [toolTip, setToolTip] = useState(null);
 
-  const popupMenuRef = useRef()
+  const [popupMenuPos, setPopupMenuPos] = useState({x:0, y:0})
+  const [popupMenuOptions, setPopupMenuOptions] = useState()
 
   // We need this since the functions passed through node data retain their old selectedNodes state.
   // Note that the stratagem fails if trying to add edges from many sources at the same time.
@@ -125,6 +129,34 @@ export function PipelineEditor(props) {
     setEdges(highlightConnectedEdges(selected.nodes, edges))
   }, [edges, setEdges, setSelectedNodes])
 
+  const onPopupMenu = useCallback((event, id, type) => {
+    event.stopPropagation()
+    event.preventDefault()
+
+    setPopupMenuPos({ x: event.clientX, y: event.clientY })
+
+    if (type === 'constant') {
+      setPopupMenuOptions({
+        "Convert to user input": () => setNodes(nds => nds.map(node =>
+          node.id === id ? { ...node, type: 'userInput' } : node
+        ))
+      })
+    } else if (type === 'userInput') {
+      setPopupMenuOptions({
+        "Convert to constant": () => setNodes(nds => nds.map(node =>
+          node.id === id ? { ...node, type: 'constant' } : node
+        ))
+      })
+    }
+
+  }, [setPopupMenuPos, setPopupMenuOptions, setNodes])
+
+  const onPopupMenuHide = useCallback(() => {
+    if(popupMenuOptions) {
+      setPopupMenuOptions(null)
+    }
+  }, [popupMenuOptions, setPopupMenuOptions])
+
   const injectConstant = useCallback((event, fieldDescription, target, targetHandle) => {
     event.preventDefault()
 
@@ -162,7 +194,7 @@ export function PipelineEditor(props) {
       targetHandle: targetHandle
     }
     addEdgeWithHighlight(newEdge)
-  }, [reactFlowInstance, onConstantValueChange, setNodes])
+  }, [reactFlowInstance, onPopupMenu, onConstantValueChange, setNodes])
 
   const injectOutput = useCallback((event, source, sourceHandle) => {
     event.preventDefault()
@@ -260,38 +292,81 @@ export function PipelineEditor(props) {
   /**
    * Refresh the list of "dangling" inputs that the user will need to provide.
    */
-  useEffect(() => {
-    let newUserInputs = []
-    nodes.forEach(node => {
-      if (node.type === 'io' && node.data) {
-        let scriptDescription = getScriptDescription(node.data.descriptionFile)
-        if (scriptDescription && scriptDescription.inputs) {
-          Object.entries(scriptDescription.inputs).forEach(entry => {
-            const [inputId, inputDescription] = entry
-            // Find inputs with no incoming edges
-            if (-1 === edges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
+  const refreshInputList = useCallback((allNodes, allEdges) => {
+    setInputList(previousInputs => {
+      let newUserInputs = []
+
+      allNodes.forEach(node => {
+        if (node.data) {
+          if (node.type === 'userInput') {
+            const previousInput = previousInputs.find(prev => prev.nodeId === node.id)
+
+            // The label and description of previous inputs might have been modified, so we keep them as is.
+            if (previousInput) {
+              newUserInputs.push(previousInput)
+
+            } else { // No existing input, add a new one
+              let label = "Label"
+              let description = "Description"
+
+              // Descriptions may vary between all steps connected, we pick the one from the first outgoing edge.
+              const edgeFound = allEdges.find(edge => node.id === edge.source);
+              if(edgeFound) {
+                const nodeFound = allNodes.find(n => edgeFound.target === n.id)
+                const stepDescription = getScriptDescription(nodeFound.data.descriptionFile)
+
+                if(stepDescription && stepDescription.inputs) {
+                  const inputDescription = stepDescription.inputs[edgeFound.targetHandle]
+
+                  if(inputDescription) {
+                    label = inputDescription.label
+                    description = inputDescription.description
+                  }
+                }
+              }
+
               newUserInputs.push({
-                ...inputDescription,
+                label,
+                description,
+                type: node.data.type,
+                example: node.data.value,
                 nodeId: node.id,
-                inputId: inputId,
-                file: node.data.descriptionFile
               })
             }
-          })
-        }
-      }
-    })
 
-    setInputList(previousInputs => 
-      newUserInputs.map(newInput => {
-        const previousInput = previousInputs.find(prev =>
-          prev.nodeId === newInput.nodeId && prev.inputId === newInput.inputId
-        )
-        // The label and description of previous inputs might have been modified, so we keep them as is.
-        return previousInput && previousInput.label ? previousInput : newInput
+          } else if (node.type === 'io') {
+            let scriptDescription = getScriptDescription(node.data.descriptionFile)
+            if (scriptDescription && scriptDescription.inputs) {
+              Object.entries(scriptDescription.inputs).forEach(entry => {
+                const [inputId, inputDescription] = entry
+                // Find inputs with no incoming edges
+                if (-1 === allEdges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
+                  const previousInput = previousInputs.find(prev =>
+                    prev.nodeId === node.id && prev.inputId === inputId
+                  )
+
+                  // The label and description of previous inputs might have been modified, so we keep them as is.
+                  // Otherwise we add our new one.
+                  newUserInputs.push(previousInput && previousInput.label ? previousInput : {
+                    ...inputDescription,
+                    nodeId: node.id,
+                    inputId: inputId,
+                    file: node.data.descriptionFile
+                  })
+                }
+              })
+            }
+          }
+        }
       })
-    )
-  }, [nodes, edges, setInputList])
+
+      return newUserInputs
+    })
+  }, [setInputList])
+
+  useEffect(() => {
+    refreshInputList(nodes, edges)
+  }, [nodes, edges, refreshInputList])
 
   /**
    * Refresh the list of outputs.
@@ -342,34 +417,6 @@ export function PipelineEditor(props) {
     setEdges([...laidOutEdges]);
   }, [reactFlowInstance, setNodes, setEdges]);
 
-
-  const onPopupMenuHide = useCallback(() => {
-    const popupMenu = popupMenuRef.current
-    if (popupMenu) {
-      if (popupMenu.style.display === 'block') {
-        console.log("pop out")
-        popupMenu.style.display = 'none'
-      }
-    }
-  }, [popupMenuRef])
-
-  const onPopupMenu = useCallback(event => {
-    const popupMenu = popupMenuRef.current
-    if (popupMenu) {
-      if (popupMenu.style.display !== 'block') {
-        console.log("pop up event: ", event)
-        event.stopPropagation()
-        event.preventDefault()
-        popupMenu.style.setProperty('--mouse-x', event.clientX + 'px')
-        popupMenu.style.setProperty('--mouse-y', event.clientY + 'px')
-        popupMenu.style.display = 'block'
-
-      } else {
-        onPopupMenuHide()
-      }
-    }
-  }, [popupMenuRef, onPopupMenuHide])
-
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
@@ -400,8 +447,11 @@ export function PipelineEditor(props) {
       flow.inputs = {}
       inputList.forEach(input => {
         // Destructuring copy to leave out fields that are not part of the input description spec.
-        let {file, nodeId, inputId, ...copy} = input
-        flow.inputs[input.file + "@" + input.nodeId + "." + input.inputId] = copy
+        const { file, nodeId, inputId, ...copy } = input
+        const id = inputId === undefined ? 'pipeline@' + input.nodeId
+          : input.file + "@" + input.nodeId + "." + input.inputId
+
+        flow.inputs[id] = copy
       })
 
       // Save pipeline outputs
@@ -443,13 +493,21 @@ export function PipelineEditor(props) {
               const [fullId, inputDescription] = entry
               const atIx = fullId.indexOf('@')
               const dotIx = fullId.lastIndexOf('.')
-  
-              inputsFromFile.push({
-                file: fullId.substring(0, atIx),
-                nodeId: fullId.substring(atIx + 1, dotIx),
-                inputId: fullId.substring(dotIx + 1),
-                ...inputDescription
-              })
+
+              if (dotIx !== -1) { // Script input
+                inputsFromFile.push({
+                  file: fullId.substring(0, atIx),
+                  nodeId: fullId.substring(atIx + 1, dotIx),
+                  inputId: fullId.substring(dotIx + 1),
+                  ...inputDescription
+                })
+
+              } else { // Pipeline input
+                inputsFromFile.push({
+                  nodeId: fullId.substring(atIx + 1),
+                  ...inputDescription
+                })
+              }
             })
           }
           setInputList(inputsFromFile)
@@ -492,6 +550,9 @@ export function PipelineEditor(props) {
                 break;
               case 'constant':
                 node.data.onChange = onConstantValueChange
+                node.data.onPopupMenu = onPopupMenu
+                break;
+              case 'userInput':
                 node.data.onPopupMenu = onPopupMenu
                 break;
               case 'output':
@@ -559,23 +620,27 @@ export function PipelineEditor(props) {
 
             <MiniMap
               nodeStrokeColor={(n) => {
-                if (n.type === 'constant') return '#0041d0';
-                if (n.type === 'output') return '#ff0072';
-                return 'black'
+                switch (n.type) {
+                  case 'constant': return '#0041d0'
+                  case 'userInput': return '#36eb5a'
+                  case 'output': return '#ff0072'
+                  default: return 'black'
+                }
               }}
               nodeColor={(n) => {
-                if (n.type === 'constant') return '#0041d0';
-                if (n.type === 'output') return '#ff0072';
-                return '#ffffff';
+                switch (n.type) {
+                  case 'constant': return '#0041d0'
+                  case 'userInput': return '#36eb5a'
+                  case 'output': return '#ff0072'
+                  default: return 'white'
+                }
               }}
             />
           </ReactFlow>
         </div>
       </ReactFlowProvider>
-      <ul id='popupMenu' ref={popupMenuRef}>
-        <li>Option 1</li>
-        <li>Option 2</li>
-      </ul>
     </div>
+
+    <PopupMenu x={popupMenuPos.x} y={popupMenuPos.y} optionMapping={popupMenuOptions} onPopupMenuHide={onPopupMenuHide} />
   </div>
 };
