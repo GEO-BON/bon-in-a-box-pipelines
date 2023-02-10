@@ -53,13 +53,14 @@ aside.scriptChooser .description {
     padding-left: 1em;
 }
 
-.constant  {
-    color: black;
-    background-color: whitesmoke;
+.userInput {
     padding: 1px 2px 1px 10px;
-    border-radius: 3px;
-    border: 2px solid #0041d0;
-    cursor:auto;
+    border-color: #36eb5a;
+}
+
+.constant {
+    padding: 1px 2px 1px 10px;
+    border-color: #0041d0;
 }
 
 .dragHandle {
@@ -71,7 +72,7 @@ aside.scriptChooser .description {
 }
 
 .react-flow__node-output {
-    border: 2px solid #ff0072;
+    border-color: #ff0072;
 }
 
 .reactflow-wrapper {
@@ -94,19 +95,34 @@ aside.scriptChooser .description {
 }
   
 .ioNode {
-    background-color: whitesmoke;
-    border-radius: 3px;
-    border: 2px solid rgb(52, 52, 52);
+    border-color: rgb(52, 52, 52);
     color: black;
     border-collapse: unset;
 }
 
-.ioNode:hover, .constant:hover {
+.ioNode,
+.constant,
+.userInput,
+.react-flow__node-output {
+    color: black;
+    background-color: whitesmoke;
+
+    border-width: 2px;
+    border-radius: 3px;
+    border-style: solid;
+}
+
+.ioNode:hover,
+.constant:hover,
+.userInput:hover,
+.react-flow__node-output:hover {
     background-color: white;
 }
 
 .selected .ioNode,
 .selected .constant,
+.selected .userInput,
+.react-flow__node-output.selected,
 .ioList .selected,
 .scriptChooser .selected {
     background-color: blanchedalmond;
@@ -228,9 +244,6 @@ aside.scriptChooser .description {
 
 ul#popupMenu {
     /* see https://mionskowski.pl/posts/positioning-a-context-menu-using-pure-css/ */
-    --mouse-x: 0;
-    --mouse-y: 0;
-    display: none;
     position: fixed;
     margin: 0;
     left: 0;
