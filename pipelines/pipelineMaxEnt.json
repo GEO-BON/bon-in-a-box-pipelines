@@ -596,6 +596,19 @@
         "type": "int",
         "value": "10000"
       }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 1238.7453234144002,
+        "y": 458.68975067352227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": ""
+      }
     }
   ],
   "edges": [
@@ -953,12 +966,19 @@
       "target": "15",
       "targetHandle": "limit",
       "id": "reactflow__edge-65-15limit"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-66-40raster"
     }
   ],
   "viewport": {
-    "x": 224.98633866090972,
-    "y": 137.2471914824814,
-    "zoom": 0.8088813483617395
+    "x": -816.5073911918289,
+    "y": -191.96967266284946,
+    "zoom": 0.8802590135631507
   },
   "inputs": {
     "data>getObservations.yml@15.species": {
@@ -977,7 +997,7 @@
       "description": "Integer, 4 digit year, end date to retrieve occurrences",
       "label": "end year",
       "type": "int",
-      "example": 2020 
+      "example": 2020
     }
   },
   "outputs": {
