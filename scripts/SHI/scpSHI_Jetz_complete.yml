@@ -6,45 +6,45 @@ description:
 inputs:
   species:
     label: species
-    description: Scientific name of the species
+    description: Scientific name of the species.
     type: text
     example: Saguinus oedipus
-  ref_system:
-    label: Projection
-    description: Reference system for the area of interest
+  prj_code:
+    label: projection code
+    description: Reference system for the area of interest.
     type: int
     example: 3116
-  elev_margin:
-    label: Elevation buffer
-    description: Magnitude of buffer to add to the elevation ranges of the species (usualy in meters), if no buffer then 0
+  elev_buffer:
+    label: elevation buffer
+    description: Elevation buffer in meters to add (or substract) to the reported species elevation range. Defalut is zero. Positive values will increase the range in that magnitude and negative values will reduce the range in that magnitude.
     type: int
     example: 0
   forest_threshold:
-    label: Tree cover percentage 
+    label: forest threshold
     description: 
-      Percentage of tree cover of reference for the Global Forest Watch data according to the tolerance of the species. 
+      Percentage of tree cover required by the species, that will be used to filter the Global Forest Watch data. 
       This value is given according to suitable habitat of the species. If not available, use Map of Life Values 
       (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
     type: int
     example: 50
   country_code:
-    label: Country code
-    description: Three letter code (ISO_3166-1_alpha-3) for the country where the analysis will be done.
+    label: country code
+    description: Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.
     type: text
     example: COL
   region:
-    label: Region
-    description: Name of the region according to the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1
+    label: region
+    description: For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])
     type: text
     example: ""
   spat_res:
-    label: Spatial resolution
-    description: Spatial resolution for the analysis, in meters
+    label: output spatial resolution
+    description: Spatial resolution (in meters) for the output of the analysis.
     type: int
     example: 1000
   expert_source:
-    label: Expert range source
-    description: Source of the expert range map
+    label: source of expert range map
+    description: Source of the expert range map for the species.
     type: options
     options:
       - MOL
@@ -52,17 +52,17 @@ inputs:
       - QC
     example: IUCN
   t_0:
-    label: Initial time
-    description: Year where the analysis should start
+    label: initial time
+    description: Year where the analysis should start.
     type: int
     example: 2000
   t_n:
-    label: Final time
-    description: Year where the analysis should end (it should be later than Initial time).
+    label: final time
+    description: Year where the analysis should end (it should be later than Initial time)
     type: int
     example: 2020
   time_step:
-    label: Time step
+    label: time step
     description:
       Time range between each time step. It can be one to get change every year or two if the change 
       is going to be evaluated every two years and so on.
@@ -70,24 +70,24 @@ inputs:
     example: 1
 outputs:
   df_shi:
-    label: SHI values
-    description: This TSV (Tab Separated Values) data shows the values of the SHI according to the parameters entered.
+    label: shi table
+    description: This TSV (Tab Separated Values) data stores values for Habitat Score, Connectivity Score and SHI by time step.
     type: text/tab-separated-values
-#    example: /Saguinus oedipus_SHI_table.tsv
+    example: /Saguinus oedipus_SHI_table.tsv
   img_shi_time_period:
-    label: SHI for the selected period
-    description: Figure with the map of changes through the years selected to calculate the SHI.
+    label: shi map
+    description: Map showing changes in the habitat of the species.
     type: image/png
- #   example: /Saguinus oedipus_GFW_change.png
+    example: /Saguinus oedipus_GFW_change.png
   img_shi_timeseries:
-    label: Time series of the SHI and score values for the selected period
-    description: Figure with the time series of the years selected and the scores to calculate SHI.
+    label: shi time series
+    description: Figure showing a time series of SHI values for each time step.
     type: image/png
  #   example: /Saguinus oedipus_SHI_timeseries.png
-  r_habitat_by_year:
-    label: Raster of available habitat by year
-    description: Raster with 1 where there is available habitat for the species and leaves the rest empty.
+  r_habitat_by_tstep:
+    label: habitat raster
+    description: Raster of the habitat available for the species (1 values)
     type: image/tiff;application=geotiff
- #    example: /Saguinus oedipus_habitat_byYear.tif
+ #    example: /Saguinus oedipus_GFW_Habitat_2015.tiff
 references:
   - text: Jetz et al., Species Habitat Index (accessed on 24/8/2022) [https://mol.org/indicators/habitat/background]

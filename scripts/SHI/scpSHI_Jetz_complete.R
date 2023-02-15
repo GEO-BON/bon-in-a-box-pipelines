@@ -37,12 +37,12 @@ print(input)
 sp <- input$species
 
 #Define CRS
-ref_system <- input$ref_system
-sf_crs <- st_crs(ref_system)
-srs_cube <- paste0("EPSG:",ref_system)
+prj_code <- input$prj_code
+sf_crs <- st_crs(prj_code)
+srs_cube <- paste0("EPSG:",prj_code)
 
 #margin for elevation range
-elev_margin <- input$elev_margin
+elev_buffer <- input$elev_buffer
 #spatial resolution
 spat_res <- input$spat_res
 
@@ -73,6 +73,7 @@ args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
 cat(args, sep = "\n")
 
+# Set output folder as working directory which has permissions to save files
 setwd(outputFolder)
 
 #-------------------------------------------------------------------------------------------------------------------
@@ -109,10 +110,11 @@ if(!is.na(country_code)){
   
   sf_area_lim1_crs <- sf_area_lim1 |> st_transform(sf_crs)
   
-  sf_area_lim2 <- sf_range_map |> st_make_valid()
+  sf_area_lim2 <- sf_range_map |> st_make_valid() |> st_transform(st_crs(sf_area_lim1))
   sf_area_lim2_crs <- sf_area_lim2 |> st_transform(sf_crs)
   
-  sf_area_lim <<- st_intersection(sf_area_lim2 |> st_transform(st_crs(sf_area_lim1)),sf_area_lim1,dimension="polygon")
+  sf_area_lim <<- st_intersection(sf_area_lim2,sf_area_lim1,dimension="polygon") |> st_make_valid() |> 
+    st_collection_extract("POLYGON")
   sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") |> st_make_valid() |> 
     st_collection_extract("POLYGON")
   
@@ -159,7 +161,7 @@ if(!is.na(country_code)){
 r_frame <- rast(terra::ext(sf_ext_crs),resolution=spat_res)
 crs(r_frame) <- srs_cube
 values(r_frame) <- 1
-r_suitability_map <- terra::mask(r_frame,vect(as(sf_area_lim_crs,"Spatial")))
+r_range_map <- terra::mask(r_frame,vect(as(sf_area_lim_crs,"Spatial")))
 
 #-------------------------------------------------------------------------------------------------------------------
 #2. Habitat Preferences
@@ -168,11 +170,11 @@ r_suitability_map <- terra::mask(r_frame,vect(as(sf_area_lim_crs,"Spatial")))
 df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
   min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
     is.na(elevation_lower) ~ NA_real_,
-    !is.na(elevation_lower) & as.numeric(elevation_lower) < elev_margin ~ 0,
-    !is.na(elevation_lower) & as.numeric(elevation_lower) >= elev_margin ~ as.numeric(elevation_lower) - elev_margin),
+    !is.na(elevation_lower) & (as.numeric(elevation_lower) < elev_buffer)  ~ 0,
+    !is.na(elevation_lower) & (as.numeric(elevation_lower) >= elev_buffer) ~ as.numeric(elevation_lower) - elev_buffer),
   max_elev= case_when(
     is.na(elevation_upper) ~ NA_real_,
-    !is.na(elevation_upper) ~ as.numeric(elevation_upper) + elev_margin),
+    !is.na(elevation_upper) ~ as.numeric(elevation_upper) + elev_buffer),
   condition= case_when( #generate possible options according to availability of minimum and maximum elevation values
     is.na(min_elev)  & is.na(max_elev)  ~ 1, # when there is no data for elevation ranges
     !is.na(min_elev) & !is.na(max_elev) ~ 2, # when the elevation ranges are available
@@ -180,8 +182,8 @@ df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
     is.na(min_elev)  & !is.na(max_elev) ~ 4) # when there is just data for the minimum elevation
 )
 
-with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are provided then the suitability map stays the same
-  r_suitability_map <<- r_suitability_map
+with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are provided then the range map stays the same
+  r_range_map <<- r_range_map
 }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
   # STRM from Copernicus
   cube_STRM <<-
@@ -213,8 +215,8 @@ with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are p
   r_STRM_range <<- cube_STRM_range  |> st_as_stars() |> terra::rast()
 
   #resample to raster of SDM
-  r_STRM_range_res <<- terra::resample(r_STRM_range, r_suitability_map)
-  r_suitability_map <<- terra::mask(terra::crop(r_suitability_map,r_STRM_range_res),r_STRM_range_res) #Crop LC to suitability extent
+  r_STRM_range_res <<- terra::resample(r_STRM_range, r_range_map)
+  r_range_map <<- terra::mask(terra::crop(r_range_map,r_STRM_range_res),r_STRM_range_res) #Crop LC to range extent
 }
 )
 
@@ -248,16 +250,16 @@ cube_GFW_TC <-
             t1 = "2000-12-31",
             resampling = "bilinear")
 
-cube_GFW_TC_range <- cube_GFW_TC |>
+cube_GFW_TC_threshold <- cube_GFW_TC |>
   gdalcubes::filter_pixel(paste0("data >=", forest_threshold)) |>#filter to forest threshold 0-100
   gdalcubes::apply_pixel("data/data") # turn into a forest presence map
 
-r_GFW_TC_range <- cube_to_raster(cube_GFW_TC_range , format="terra") # convert to raster format
+r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold , format="terra") # convert to raster format
 
-r_suitability_map_rescaled <- terra::resample(r_suitability_map,r_GFW_TC_range,method="mode") #Adjust scale of suitability map
-r_GFW_TC_range_mask <- r_GFW_TC_range |>
+r_range_map_rescaled <- terra::resample(r_range_map,r_GFW_TC_threshold,method="mode") #Adjust scale of range map
+r_GFW_TC_threshold_mask <- r_GFW_TC_threshold |>
   terra::classify(rcl=cbind(NA,0)) |> # turn NA to 0
-  terra::mask(r_suitability_map_rescaled) # crop to suitability map
+  terra::mask(r_range_map_rescaled) # mask to range map
 
 print("========== Base forest layer downloaded ==========")
 
@@ -291,11 +293,11 @@ l_r_year_loss <- map(times, function(x) {
 #add background and mask to suitable area
 s_year_loss <- terra::classify(terra::rast(l_r_year_loss), rcl=rbind(c(NA,NA,0),c(1,Inf,1)),include.lowest=T)
 names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>2000])
-s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_range_mask, maskvalues=1, inverse=TRUE)
+s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
 
 #update reference forest layer if t_0 different of 2000
 if(t_0!=2000){
-  r_GFW_TC_range_mask <- terra::classify(r_GFW_TC_range_mask - terra::subset(s_year_loss_mask,paste0("Loss_",t_0)),rcl=cbind(-1,0))
+  r_GFW_TC_threshold_mask <- terra::classify(r_GFW_TC_threshold_mask - terra::subset(s_year_loss_mask,paste0("Loss_",t_0)),rcl=cbind(-1,0))
 }
 
 cube_GFW_gain <-
@@ -312,7 +314,7 @@ cube_GFW_gain <-
 
 r_GFW_gain <- cube_to_raster(cube_GFW_gain |>
                                stars::st_as_stars(), format="terra") # convert to raster format
-r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_suitability_map_rescaled),rcl=cbind(0,NA))
+r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_range_map_rescaled),rcl=cbind(0,NA))
 
 #-------------------------- figure ----------------------------------------------
 osm <- read_osm(sf_area_lim, ext=1.1)
@@ -320,7 +322,7 @@ osm <- read_osm(sf_area_lim, ext=1.1)
 r_year_loss_mask_plot <- terra::classify(s_year_loss_mask[[length(l_r_year_loss)]],rcl=cbind(0,NA)) # turn 0 to NA
 
 img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
-  tm_shape(r_GFW_TC_range_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
+  tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
   tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
   tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
   tm_shape(sf_area_lim)+tm_borders(lwd=0.5)+
@@ -333,13 +335,12 @@ img_SHI_time_period_path <- file.path(outputFolder,paste0(sp,"_GFW_change.png"))
 tmap_save(img_map_habitat_changes, img_SHI_time_period_path )
 
 #create layers of forest removing loss by year
-s_HabitatArea <- r_GFW_TC_range_mask-s_year_loss_mask
-s_HabitatArea <- c(r_GFW_TC_range_mask, s_HabitatArea)
+s_HabitatArea0 <- r_GFW_TC_threshold_mask-s_year_loss_mask
+s_HabitatArea <- c(r_GFW_TC_threshold_mask, s_HabitatArea0) ; rm(s_HabitatArea0)
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
 s_Habitat <- terra::classify(s_HabitatArea , rcl=cbind(0,NA))
-r_habitat_by_year_path <- file.path(outputFolder,paste0(sp,"_habitat_GFW.tif"))
-terra::writeRaster(s_Habitat,filename = r_habitat_by_year_path,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
+map2(list(s_Habitat),names(s_HabitatArea),  function(x,y) terra::writeRaster(x,filename = file.path(outputFolder,paste(sp,"GFW",y,".tiff",sep="_")),overwrite=T), gdal=c("COMPRESS=DEFLATE"), filetype="COG")
 
 #----------------------- 3.1.1. Get average distance to edge -------------------
 #patch distances
@@ -389,7 +390,7 @@ ggsave(img_SHI_timeseries_path,img_SHI_timeseries,dpi = 300)
 # Outputing result to JSON
 output <- list("img_shi_time_period" = img_SHI_time_period_path,
                "df_shi" = df_SHI_path ,
-               "r_habitat_by_year" = r_habitat_by_year_path,
+               "r_habitat_by_tstep" = r_habitat_by_tstep_path,
                "img_shi_timeseries" = img_SHI_timeseries_path)
 
 jsonData <- toJSON(output, indent=2)
