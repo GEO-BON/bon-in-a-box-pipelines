@@ -9,11 +9,11 @@ inputs:
     description: Scientific name of the species.
     type: text
     example: Saguinus oedipus
-  prj_code:
-    label: projection code
+  srs:
+    label: spatial reference system
     description: Reference system for the area of interest.
-    type: int
-    example: 3116
+    type: text
+    example: EPSG:3116
   elev_buffer:
     label: elevation buffer
     description: Elevation buffer in meters to add (or substract) to the reported species elevation range. Defalut is zero. Positive values will increase the range in that magnitude and negative values will reduce the range in that magnitude.
@@ -76,7 +76,7 @@ outputs:
     example: /Saguinus oedipus_SHI_table.tsv
   img_shi_time_period:
     label: shi map
-    description: Map showing changes in the habitat of the species.
+    description: Map showing species habitat changes (gain and loss) between t_0 and t_n.
     type: image/png
     example: /Saguinus oedipus_GFW_change.png
   img_shi_timeseries:
@@ -86,8 +86,8 @@ outputs:
  #   example: /Saguinus oedipus_SHI_timeseries.png
   r_habitat_by_tstep:
     label: habitat raster
-    description: Raster of the habitat available for the species (1 values)
-    type: image/tiff;application=geotiff
+    description: Habitat available for the species by time step.
+    type: image/tiff;application=geotiff[]
  #    example: /Saguinus oedipus_GFW_Habitat_2015.tiff
 references:
   - text: Jetz et al., Species Habitat Index (accessed on 24/8/2022) [https://mol.org/indicators/habitat/background]
