@@ -126,7 +126,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 // Find the source pipe
                 val sourceId = edge.getString(EDGE__SOURCE_ID)
                 val sourcePipe = constants[sourceId] ?: steps[sourceId]?.let { sourceStep ->
-                    val sourceOutput = edge.optString(EDGE__SOURCE_OUTPUT, sourceId)
+                    val sourceOutput = edge.optString(EDGE__SOURCE_OUTPUT, Step.DEFAULT_OUT)
                     sourceStep.outputs[sourceOutput]
                         ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}.\"")
                 } ?: throw Exception("Could not find step with ID: $sourceId")
@@ -163,7 +163,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                         ?: throw RuntimeException("Input id \"$key\" is malformed")
                     //val path = groups[1]!!.value
                     val stepId = groups[2]!!.value
-                    val inputId = groups[4]?.value ?: stepId // inputId = stepId when step is a UserInput
+                    val inputId = groups[4]?.value ?: Step.DEFAULT_IN // inputId = default when step is a UserInput
 
                     val step = steps[stepId]
                         ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
@@ -227,7 +227,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
 
             job?.apply { cancelled = isCancelled }
         } catch (ex: RuntimeException) {
-            logger.debug("In execute \"${ex.message}\"")
+            logger.debug("In execute \"${ex.message ?: ex.stackTraceToString()}\"")
             if (!cancelled) failure = true
         } catch (ex: Exception) {
             logger.error(ex.stackTraceToString())

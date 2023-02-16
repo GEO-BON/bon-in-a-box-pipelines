@@ -75,4 +75,9 @@ abstract class Step(
         // Not all steps have output folders. Default implementation just forwards to other steps.
         inputs.values.forEach{it.dumpOutputFolders(allOutputs)}
     }
+
+    companion object {
+        const val DEFAULT_IN = "defaultInput"
+        const val DEFAULT_OUT = "defaultOutput"
+    }
 }

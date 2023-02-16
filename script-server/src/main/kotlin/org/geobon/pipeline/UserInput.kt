@@ -5,13 +5,13 @@ package org.geobon.pipeline
  * JavaScript class equivalent: UserInputNode
  */
 class UserInput(private val id: String, type: String) : Step(
-    outputs = mapOf(id to Output(type))
+    outputs = mapOf(DEFAULT_OUT to Output(type))
 ) {
     override fun validateInputsConfiguration(): String {
-        return if(inputs.containsKey(id)) "" else "User input missing for pipeline@$id"
+        return if(inputs.containsKey(DEFAULT_IN)) "" else "User input missing for pipeline@$id"
     }
 
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
-        return mapOf(id to inputs[id]!!.pull())
+        return mapOf(DEFAULT_OUT to inputs[DEFAULT_IN]!!.pull())
     }
 }
