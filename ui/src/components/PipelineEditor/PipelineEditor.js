@@ -448,7 +448,7 @@ export function PipelineEditor(props) {
       inputList.forEach(input => {
         // Destructuring copy to leave out fields that are not part of the input description spec.
         const { file, nodeId, inputId, ...copy } = input
-        const id = inputId === undefined ? 'pipeline@' + input.nodeId
+        const id = file === undefined ? 'pipeline@' + input.nodeId
           : input.file + "@" + input.nodeId + "." + input.inputId
 
         flow.inputs[id] = copy
@@ -492,9 +492,14 @@ export function PipelineEditor(props) {
             Object.entries(flow.inputs).forEach(entry => {
               const [fullId, inputDescription] = entry
               const atIx = fullId.indexOf('@')
-              const dotIx = fullId.lastIndexOf('.')
 
-              if (dotIx !== -1) { // Script input
+              if (fullId.startsWith('pipeline@')) {
+                inputsFromFile.push({
+                  nodeId: fullId.substring(atIx + 1),
+                  ...inputDescription
+                })
+              } else { // Script input
+                const dotIx = fullId.lastIndexOf('.')
                 inputsFromFile.push({
                   file: fullId.substring(0, atIx),
                   nodeId: fullId.substring(atIx + 1, dotIx),
@@ -502,11 +507,6 @@ export function PipelineEditor(props) {
                   ...inputDescription
                 })
 
-              } else { // Pipeline input
-                inputsFromFile.push({
-                  nodeId: fullId.substring(atIx + 1),
-                  ...inputDescription
-                })
               }
             })
           }
