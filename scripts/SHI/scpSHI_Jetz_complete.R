@@ -36,10 +36,16 @@ print(input)
 #Define species
 sp <- input$species
 
-#Define CRS
-prj_code <- input$prj_code
-sf_crs <- st_crs(prj_code)
-srs_cube <- paste0("EPSG:",prj_code)
+#Define SRS
+srs <- input$srs
+check_srs <- grepl("^[[:digit:]]+$",srs)
+sf_srs  <-  if(check_srs) st_crs(as.numeric(srs)) else  st_crs(srs) # converts to numeric in case SRID is used
+srs_cube <- if(check_srs){
+  authorities <- c("EPSG","ESRI","IAU2000","SR-ORG")
+  auth_srid <- paste(authorities,srs,sep=":")
+  auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(try(st_crs(.x))))
+  if(sum(auth_srid_test)>1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
+}else  srs # paste Authority in case SRID is used 
 
 #margin for elevation range
 elev_buffer <- input$elev_buffer
@@ -103,19 +109,18 @@ print("========== Expert range map successfully loaded ==========")
 
 #get bounding box cropped by country if needed
 if(!is.na(country_code)){
-  ifelse(!is.na(region),
-         sf_area_lim1 <<- gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region),
-         sf_area_lim1 <<- gadm(country=country_code, level=0, path=tempdir()) |> st_as_sf() |> st_make_valid()
-  )
+  sf_area_lim1 <<- if(!is.na(region)){
+    gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region)
+  } else gadm(country=country_code, level=0, path=tempdir()) |> st_as_sf() |> st_make_valid()
   
-  sf_area_lim1_crs <- sf_area_lim1 |> st_transform(sf_crs)
+  sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
   
   sf_area_lim2 <- sf_range_map |> st_make_valid() |> st_transform(st_crs(sf_area_lim1))
-  sf_area_lim2_crs <- sf_area_lim2 |> st_transform(sf_crs)
+  sf_area_lim2_srs <- sf_area_lim2 |> st_transform(sf_srs)
   
   sf_area_lim <<- st_intersection(sf_area_lim2,sf_area_lim1,dimension="polygon") |> st_make_valid() |> 
     st_collection_extract("POLYGON")
-  sf_area_lim_crs <<- st_intersection(sf_area_lim2_crs,sf_area_lim1_crs,dimension="polygon") |> st_make_valid() |> 
+  sf_area_lim_srs <<- st_intersection(sf_area_lim2_srs,sf_area_lim1_srs,dimension="polygon") |> st_make_valid() |> 
     st_collection_extract("POLYGON")
   
   if(!is.null(st_crs(sf_area_lim)$units)){
@@ -126,17 +131,17 @@ if(!is.na(country_code)){
   }
   print(sf_ext)
   
-  if(!is.null(st_crs(sf_area_lim_crs)$units)){
-    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*10))
+  if(!is.null(st_crs(sf_area_lim_srs)$units)){
+    sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*10))
   }else{
     sf::sf_use_s2(FALSE)
-    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*0.00001*10))
+    sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*0.00001*10))
   }
-  print(sf_ext_crs)
+  print(sf_ext_srs)
 
 }else{
   sf_area_lim <<- sf_range_map
-  sf_area_lim_crs <<- sf_area_lim |> st_transform(sf_crs)
+  sf_area_lim_srs <<- sf_area_lim |> st_transform(sf_srs)
   
   if(!is.null(st_crs(sf_area_lim)$units)){
     sf_ext <<- st_bbox(sf_area_lim |> st_buffer(spat_res*10))
@@ -146,22 +151,22 @@ if(!is.na(country_code)){
   }
   print(sf_ext)
   
-  if(!is.null(st_crs(sf_area_lim_crs)$units)){
-    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*10))
+  if(!is.null(st_crs(sf_area_lim_srs)$units)){
+    sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*10))
   }else{
     sf::sf_use_s2(FALSE)
-    sf_ext_crs <<- st_bbox(sf_area_lim_crs |> st_buffer(spat_res*0.00001*10))
+    sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*0.00001*10))
   }
-  print(sf_ext_crs)
+  print(sf_ext_srs)
 }
 
 
 #1.4 Final range----------------------------------------------------------------
 #Create raster
-r_frame <- rast(terra::ext(sf_ext_crs),resolution=spat_res)
+r_frame <- rast(terra::ext(sf_ext_srs),resolution=spat_res)
 crs(r_frame) <- srs_cube
 values(r_frame) <- 1
-r_range_map <- terra::mask(r_frame,vect(as(sf_area_lim_crs,"Spatial")))
+r_range_map <- terra::mask(r_frame,vect(as(sf_area_lim_srs,"Spatial")))
 
 #-------------------------------------------------------------------------------------------------------------------
 #2. Habitat Preferences
@@ -190,7 +195,7 @@ with(df_IUCN_sheet_condition, if(condition == 1){ # if no elevation values are p
     load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
               limit = 1000,
               collections = c("cop-dem-glo-90"),
-              bbox = sf_ext_crs,
+              bbox = sf_ext_srs,
               srs.cube = srs_cube,
               spatial.res = spat_res,
               temporal.res = "P1Y",
@@ -242,7 +247,7 @@ cube_GFW_TC <-
   load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
             limit = 1000,
             collections = c("gfw-treecover2000"),
-            bbox = sf_ext_crs,
+            bbox = sf_ext_srs,
             srs.cube = srs_cube,
             spatial.res = spat_res,
             temporal.res = "P1Y",
@@ -274,8 +279,8 @@ it_obj <- s_obj |>
 st <- gdalcubes::stac_image_collection(it_obj$features, asset_names = c("data")) # create image collection
 
 v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-12-31", # create cube according to area of interest
-                                             left = sf_ext_crs['xmin'], right = sf_ext_crs['xmax'],
-                                             top = sf_ext_crs['ymax'], bottom =  sf_ext_crs['ymin']),
+                                             left = sf_ext_srs['xmin'], right = sf_ext_srs['xmax'],
+                                             top = sf_ext_srs['ymax'], bottom =  sf_ext_srs['ymin']),
                dx=spat_res, dy=spat_res, dt="P1Y",
                resampling = "mode", aggregation = "mode") # TO CHANGE to proportions
 
@@ -295,7 +300,7 @@ s_year_loss <- terra::classify(terra::rast(l_r_year_loss), rcl=rbind(c(NA,NA,0),
 names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>2000])
 s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
 
-#update reference forest layer if t_0 different of 2000
+#if t_0 different of 2000 update reference forest layer "r_GFW_TC_threshold_mask" 
 if(t_0!=2000){
   r_GFW_TC_threshold_mask <- terra::classify(r_GFW_TC_threshold_mask - terra::subset(s_year_loss_mask,paste0("Loss_",t_0)),rcl=cbind(-1,0))
 }
@@ -304,7 +309,7 @@ cube_GFW_gain <-
   load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac",
             limit = 1000,
             collections = c("gfw-gain"),
-            bbox = sf_ext_crs,
+            bbox = sf_ext_srs,
             srs.cube = srs_cube,
             spatial.res = spat_res,
             temporal.res = "P1Y",
@@ -340,7 +345,9 @@ s_HabitatArea <- c(r_GFW_TC_threshold_mask, s_HabitatArea0) ; rm(s_HabitatArea0)
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
 s_Habitat <- terra::classify(s_HabitatArea , rcl=cbind(0,NA))
-map2(list(s_Habitat),names(s_HabitatArea),  function(x,y) terra::writeRaster(x,filename = file.path(outputFolder,paste(sp,"GFW",y,".tiff",sep="_")),overwrite=T), gdal=c("COMPRESS=DEFLATE"), filetype="COG")
+r_habitat_by_tstep_path <- map(names(s_HabitatArea), ~file.path(outputFolder,paste(sp,"GFW",.x,".tiff",sep="_")))
+map2(list(s_Habitat), r_habitat_by_tstep_path, ~terra::writeRaster(.x,.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
+print(list.files(".", pattern = "Habitat", full.names = T))
 
 #----------------------- 3.1.1. Get average distance to edge -------------------
 #patch distances
