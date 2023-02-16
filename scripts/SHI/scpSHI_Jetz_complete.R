@@ -345,9 +345,9 @@ s_HabitatArea <- c(r_GFW_TC_threshold_mask, s_HabitatArea0) ; rm(s_HabitatArea0)
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
 s_Habitat <- terra::classify(s_HabitatArea , rcl=cbind(0,NA))
-r_habitat_by_tstep_path <- map(names(s_HabitatArea), ~file.path(outputFolder,paste(sp,"GFW",.x,".tiff",sep="_")))
-map2(list(s_Habitat), r_habitat_by_tstep_path, ~terra::writeRaster(.x,.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
-print(list.files(".", pattern = "Habitat", full.names = T))
+r_habitat_by_tstep_path <- file.path(outputFolder,paste(sp,"GFW",names(s_Habitat),".tiff",sep="_"))
+map2(as.list(s_Habitat), r_habitat_by_tstep_path, ~terra::writeRaster(.x,filename=.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
+print(list.files(outputFolder, pattern = "Habitat", full.names = T))
 
 #----------------------- 3.1.1. Get average distance to edge -------------------
 #patch distances
