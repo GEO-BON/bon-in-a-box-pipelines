@@ -38,7 +38,7 @@ mod_tuning <- run_maxent(presence_background,
                          layers = names(predictors),
                          predictors = NULL,
                          partition_type = input$partition_type,
-                         nfolds = input$nfolds,
+                         nfolds = input$n_folds,
                          orientation_block = input$orientation_block,
                          factors = NULL,
                          #used if partition_type is "randomkfold"
