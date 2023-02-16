@@ -490,8 +490,8 @@
       "id": "56",
       "type": "output",
       "position": {
-        "x": 2877,
-        "y": 759.75
+        "x": 2875,
+        "y": 669.75
       },
       "data": {
         "label": "Output"
@@ -609,6 +609,28 @@
       "data": {
         "descriptionFile": "data>heatmapFromSTAC.yml"
       }
+    },
+    {
+      "id": "68",
+      "type": "io",
+      "position": {
+        "x": 2882,
+        "y": 746.25
+      },
+      "data": {
+        "descriptionFile": "SDM>rangePredictions.yml"
+      }
+    },
+    {
+      "id": "69",
+      "type": "output",
+      "position": {
+        "x": 3264,
+        "y": 740.75
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -660,6 +682,20 @@
       "target": "23",
       "targetHandle": "bbox",
       "id": "reactflow__edge-58-23bbox"
+    },
+    {
+      "source": "49",
+      "sourceHandle": "sdm_runs",
+      "target": "68",
+      "targetHandle": "predictions",
+      "id": "reactflow__edge-49sdm_runs-68predictions"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "range_predictions",
+      "target": "69",
+      "targetHandle": null,
+      "id": "reactflow__edge-68range_predictions-69"
     },
     {
       "source": "17",
@@ -963,11 +999,6 @@
       "id": "reactflow__edge-63-23mask"
     }
   ],
-  "viewport": {
-    "x": 169.08522850860118,
-    "y": 41.13768813478339,
-    "zoom": 0.8032939967570334
-  },
   "inputs": {
     "data>getObservations.yml@15.species": {
       "description": "Scientific name of the species",
@@ -1012,6 +1043,11 @@
         0,
         1
       ]
+    },
+    "SDM>rangePredictions.yml@68.range_predictions": {
+      "description": "range (max - min) of a set of predictions",
+      "label": "range predictions",
+      "type": "image/tiff;application=geotiff"
     }
   }
 }
