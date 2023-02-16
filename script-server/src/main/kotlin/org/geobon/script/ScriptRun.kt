@@ -241,7 +241,7 @@ class ScriptRun( // Constructor used in single script run
                 val result = resultFile.readText()
                 try {
                     outputs = gson.fromJson<Map<String, Any>>(result, type)
-                    logger.trace("Output: $result")
+                    logger.debug("Output: $result")
                 } catch (e: Exception) {
                     error = true
                     log(

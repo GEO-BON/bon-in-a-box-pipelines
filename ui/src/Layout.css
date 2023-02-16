@@ -52,7 +52,7 @@ a.active {
   padding-right: 10px;
 }
 
-.fullScreenPopup .close {
+.fullScreenPopup button.close {
   vertical-align: top;
   margin-top:-25px;
   height:fit-content;
