@@ -98,7 +98,9 @@ export function PipelinePage(props) {
       {runId && <button onClick={stop} disabled={!stoppable}>Stop</button>}
       {httpError && <p key="httpError" className="error">{httpError}</p>}
       {showMetadata()}
-      {pipelineMetadata && <PipelineResults key="results" pipelineMetadata={pipelineMetadata} resultsData={resultsData} setRunningScripts={setRunningScripts} />}
+      {pipelineMetadata && <PipelineResults key="results"
+        pipelineMetadata={pipelineMetadata} resultsData={resultsData}
+        runningScripts={runningScripts} setRunningScripts={setRunningScripts} />}
     </>)
 }
 
@@ -193,7 +195,7 @@ function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttp
   );
 }
 
-function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
+function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunningScripts}) {
   const [activeRenderer, setActiveRenderer] = useState({});
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
@@ -209,7 +211,7 @@ function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
       }
       setPipelineOutputResults(initialValue)
     }
-  }, [resultsData])
+  }, [pipelineMetadata.outputs, resultsData])
   
   if (resultsData) {
     return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
@@ -221,10 +223,13 @@ function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
         const outputId = key.substring(lastDotIx+1)
         const value = pipelineOutputResults[script] && pipelineOutputResults[script][outputId]
 
-        if(!value) {
-          return <div className="outputTitle">
+        if (!value) {
+          return <div key={outputId} className="outputTitle">
             <h3>{stepDescription.label}</h3>
-            <img src={spinnerImg} key={outputId} alt="Spinner" className="spinner-inline" />
+            {runningScripts.size > 0 ?
+              <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
+              : <><img src={warningImg} alt="Warning" className="error-inline" />See detailed results</>
+            }
           </div>
         }
 
@@ -233,7 +238,7 @@ function PipelineResults({pipelineMetadata, resultsData, setRunningScripts}) {
           outputMetadata={stepDescription} />
       })}
 
-      <h2>Detailled results</h2>
+      <h2>Detailed results</h2>
       {Object.entries(resultsData).map((entry, i) => {
         const [key, value] = entry;
 
@@ -300,7 +305,7 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
         return Promise.reject(response);
       })
       .then(json => {
-        // Detailled results
+        // Detailed results
         setResultData(json)
 
         // Contribute to pipeline outputs (if this script is relevant)
