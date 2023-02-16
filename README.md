@@ -232,7 +232,7 @@ To save your modifications:
 3. Remove all the content of the target file.
 4. Paste content and save.
 
-To share your modifications, commit and push on a branch using git. Then,create a pull request for that branch through the github UI.
+To share your modifications, commit and push on a branch using git. Then, create a pull request for that branch through the github UI.
 
 ## Developer documentation
 The linked content is intended for those developing the microservice infrastructure supporting the pipelines.
