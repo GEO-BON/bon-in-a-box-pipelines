@@ -1,0 +1,1017 @@
+{
+  "nodes": [
+    {
+      "id": "15",
+      "type": "io",
+      "position": {
+        "x": 343.5,
+        "y": 64
+      },
+      "data": {
+        "descriptionFile": "data>getObservations.yml"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": 48,
+        "y": 39
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "\"\""
+      }
+    },
+    {
+      "id": "21",
+      "type": "constant",
+      "position": {
+        "x": 55,
+        "y": 156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "present",
+        "options": [
+          "present",
+          "absent",
+          "present absent"
+        ]
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 56,
+        "y": 235
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "10000"
+      }
+    },
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": 335,
+        "y": 699
+      },
+      "data": {
+        "descriptionFile": "SDM>loadPredictors.yml"
+      }
+    },
+    {
+      "id": "24",
+      "type": "constant",
+      "position": {
+        "x": 112,
+        "y": 421.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "from_cube",
+        "options": [
+          "from_tif",
+          "from_cube"
+        ]
+      }
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": 71,
+        "y": 499.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "bio1",
+          "bio2",
+          "bio4",
+          "bio12"
+        ]
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 178,
+        "y": 577.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean",
+        "value": false
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 116,
+        "y": 816.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "vif.cor",
+        "options": [
+          "vif.cor",
+          "vif.step",
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
+      }
+    },
+    {
+      "id": "29",
+      "type": "constant",
+      "position": {
+        "x": 89,
+        "y": 855.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "30",
+      "type": "constant",
+      "position": {
+        "x": 116,
+        "y": 894.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "pearson",
+        "options": [
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
+      }
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": 89,
+        "y": 933.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "4000"
+      }
+    },
+    {
+      "id": "32",
+      "type": "constant",
+      "position": {
+        "x": 76,
+        "y": 972.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.75
+      }
+    },
+    {
+      "id": "33",
+      "type": "constant",
+      "position": {
+        "x": 89,
+        "y": 1011.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "10"
+      }
+    },
+    {
+      "id": "34",
+      "type": "io",
+      "position": {
+        "x": 792,
+        "y": 525.75
+      },
+      "data": {
+        "descriptionFile": "filtering>cleanCoordinates.yml"
+      }
+    },
+    {
+      "id": "35",
+      "type": "constant",
+      "position": {
+        "x": 431.5,
+        "y": 386.25
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "equal",
+          "zeros",
+          "duplicates",
+          "same_pixel",
+          "capitals",
+          "centroids",
+          "seas",
+          "urban",
+          "gbif",
+          "institutions"
+        ]
+      }
+    },
+    {
+      "id": "37",
+      "type": "io",
+      "position": {
+        "x": 1168,
+        "y": 326.75
+      },
+      "data": {
+        "descriptionFile": "SDM>studyExtent.yml"
+      }
+    },
+    {
+      "id": "38",
+      "type": "constant",
+      "position": {
+        "x": 911,
+        "y": 316
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mcp",
+        "options": [
+          "box",
+          "mcp",
+          "buffer"
+        ]
+      }
+    },
+    {
+      "id": "39",
+      "type": "constant",
+      "position": {
+        "x": 861,
+        "y": 355
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "200000"
+      }
+    },
+    {
+      "id": "40",
+      "type": "io",
+      "position": {
+        "x": 1539,
+        "y": 396.5
+      },
+      "data": {
+        "descriptionFile": "SDM>selectBackground.yml"
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": 1242,
+        "y": 432.25
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": "30000"
+      }
+    },
+    {
+      "id": "44",
+      "type": "io",
+      "position": {
+        "x": 1995,
+        "y": 536.75
+      },
+      "data": {
+        "descriptionFile": "SDM>setupDataSdm.yml"
+      }
+    },
+    {
+      "id": "45",
+      "type": "constant",
+      "position": {
+        "x": 1650.5,
+        "y": 553.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "none",
+        "options": [
+          "bootstrap",
+          "crossvalidation",
+          "none"
+        ]
+      }
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": 1650.5,
+        "y": 592.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2
+      }
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": 1637.5,
+        "y": 631.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.7
+      }
+    },
+    {
+      "id": "48",
+      "type": "constant",
+      "position": {
+        "x": 1650.5,
+        "y": 670.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
+    },
+    {
+      "id": "49",
+      "type": "io",
+      "position": {
+        "x": 2493,
+        "y": 711.75
+      },
+      "data": {
+        "descriptionFile": "SDM>runMaxent.yml"
+      }
+    },
+    {
+      "id": "50",
+      "type": "constant",
+      "position": {
+        "x": 2114.5,
+        "y": 667.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "L",
+          "LQ",
+          "LQHP"
+        ]
+      }
+    },
+    {
+      "id": "51",
+      "type": "constant",
+      "position": {
+        "x": 2109.5,
+        "y": 706.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          "1"
+        ]
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": 2132.5,
+        "y": 745.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "block",
+        "options": [
+          "randomkfold",
+          "jackknife",
+          "block",
+          "checkerboard1",
+          "checkerboard2"
+        ]
+      }
+    },
+    {
+      "id": "53",
+      "type": "constant",
+      "position": {
+        "x": 2175.5,
+        "y": 784.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "lat_lon",
+        "options": [
+          "lat_lon",
+          "lon_lat",
+          "lon_lon",
+          "lat_lat"
+        ]
+      }
+    },
+    {
+      "id": "54",
+      "type": "constant",
+      "position": {
+        "x": 2132.5,
+        "y": 823.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
+    },
+    {
+      "id": "55",
+      "type": "constant",
+      "position": {
+        "x": 2192.5,
+        "y": 862.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "p10",
+        "options": [
+          "p10",
+          "AIC",
+          "AUC"
+        ]
+      }
+    },
+    {
+      "id": "56",
+      "type": "output",
+      "position": {
+        "x": 2877,
+        "y": 759.75
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "57",
+      "type": "constant",
+      "position": {
+        "x": 40.5,
+        "y": 306
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 33,
+        "y": 195.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 81,
+        "y": 460.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "chelsa-clim"
+      }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": 71,
+        "y": 538.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": []
+      }
+    },
+    {
+      "id": "63",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 1050.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf",
+        "value": ""
+      }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 436.5,
+        "y": 568.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.8
+      }
+    },
+    {
+      "id": "65",
+      "type": "constant",
+      "position": {
+        "x": 1219,
+        "y": 471.25
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "weighted_raster",
+        "options": [
+          "random",
+          "inclusion_buffer",
+          "weighted_raster",
+          "unweighted_raster"
+        ]
+      }
+    },
+    {
+      "id": "67",
+      "type": "io",
+      "position": {
+        "x": 1188.5,
+        "y": 560
+      },
+      "data": {
+        "descriptionFile": "data>heatmapFromSTAC.yml"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "15",
+      "sourceHandle": "presence",
+      "target": "34",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-15presence-34presence"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "37",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-34clean_presence-37presence"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "40",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-34clean_presence-40presence"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "44",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-34clean_presence-44presence"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "presence_background",
+      "target": "49",
+      "targetHandle": "presence_background",
+      "id": "reactflow__edge-44presence_background-49presence_background"
+    },
+    {
+      "source": "49",
+      "sourceHandle": "sdm_pred",
+      "target": "56",
+      "targetHandle": null,
+      "id": "reactflow__edge-49sdm_pred-56"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-23bbox"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "country",
+      "id": "reactflow__edge-17-15country"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "source",
+      "id": "reactflow__edge-24-23source"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "predictors",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-23predictors-34predictors"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "study_extent",
+      "target": "40",
+      "targetHandle": "extent",
+      "id": "reactflow__edge-37study_extent-40extent"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "background",
+      "target": "44",
+      "targetHandle": "background",
+      "id": "reactflow__edge-40background-44background"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "predictors",
+      "target": "49",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-23predictors-49predictors"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-37proj"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "predictors",
+      "target": "67",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-23predictors-67predictors"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "tests",
+      "id": "reactflow__edge-35-34tests"
+    },
+    {
+      "source": "38",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "method",
+      "id": "reactflow__edge-38-37method"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "predictors",
+      "target": "44",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-23predictors-44predictors"
+    },
+    {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "fc",
+      "id": "reactflow__edge-50-49fc"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "collection",
+      "id": "reactflow__edge-59-23collection"
+    },
+    {
+      "source": "65",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "method_background",
+      "id": "reactflow__edge-65-40method_background"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-25-23layers"
+    },
+    {
+      "source": "39",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "width_buffer",
+      "id": "reactflow__edge-39-37width_buffer"
+    },
+    {
+      "source": "42",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "n_background",
+      "id": "reactflow__edge-42-40n_background"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "partition_type",
+      "id": "reactflow__edge-45-44partition_type"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "rm",
+      "id": "reactflow__edge-51-49rm"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "env_threshold",
+      "id": "reactflow__edge-64-34env_threshold"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "predictors",
+      "target": "40",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-23predictors-40predictors"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "runs_n",
+      "id": "reactflow__edge-46-44runs_n"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "partition_type",
+      "id": "reactflow__edge-52-49partition_type"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-15bbox"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "variables",
+      "id": "reactflow__edge-60-23variables"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "remove_collinearity",
+      "id": "reactflow__edge-26-23remove_collinearity"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "boot_proportion",
+      "id": "reactflow__edge-47-44boot_proportion"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "orientation_block",
+      "id": "reactflow__edge-53-49orientation_block"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-15proj"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "raster",
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-67raster-40raster"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "method",
+      "id": "reactflow__edge-27-23method"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "occurrence_status",
+      "id": "reactflow__edge-21-15occurrence_status"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "cv_partitions",
+      "id": "reactflow__edge-48-44cv_partitions"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "n_folds",
+      "id": "reactflow__edge-54-49n_folds"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "limit",
+      "id": "reactflow__edge-22-15limit"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "method_select_params",
+      "id": "reactflow__edge-55-49method_select_params"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-23proj"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-29-23spatial_res"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "method_cor_vif",
+      "id": "reactflow__edge-30-23method_cor_vif"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "nb_sample",
+      "id": "reactflow__edge-31-23nb_sample"
+    },
+    {
+      "source": "32",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "cutoff_cor",
+      "id": "reactflow__edge-32-23cutoff_cor"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "cutoff_vif",
+      "id": "reactflow__edge-33-23cutoff_vif"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-63-23mask"
+    }
+  ],
+  "viewport": {
+    "x": 169.08522850860118,
+    "y": 41.13768813478339,
+    "zoom": 0.8032939967570334
+  },
+  "inputs": {
+    "data>getObservations.yml@15.species": {
+      "description": "Scientific name of the species",
+      "label": "species names",
+      "type": "text",
+      "example": "Glyptemys insculpta"
+    },
+    "data>getObservations.yml@15.year_start": {
+      "description": "Integer, 4 digit year, start date to retrieve occurrences",
+      "label": "start year",
+      "type": "int",
+      "example": 1990
+    },
+    "data>getObservations.yml@15.year_end": {
+      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "label": "end year",
+      "type": "int",
+      "example": 2020
+    },
+    "data>heatmapFromSTAC.yml@67.taxa": {
+      "description": "taxonomic group to retrieve GBIF heatmap",
+      "label": "taxa",
+      "type": "options",
+      "options": [
+        "reptiles",
+        "plants",
+        "mammals",
+        "birds",
+        "arthropods",
+        "amphibians",
+        "all"
+      ],
+      "example": "reptiles"
+    }
+  },
+  "outputs": {
+    "SDM>runMaxent.yml@49.sdm_pred": {
+      "description": "model predictions while trained on the whole dataset",
+      "label": "predictions",
+      "type": "image/tiff;application=geotiff",
+      "range": [
+        0,
+        1
+      ]
+    }
+  }
+}

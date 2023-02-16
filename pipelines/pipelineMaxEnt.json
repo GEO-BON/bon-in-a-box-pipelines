@@ -596,6 +596,19 @@
         "type": "int",
         "value": "10000"
       }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 1238.7453234144002,
+        "y": 458.68975067352227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": ""
+      }
     }
   ],
   "edges": [
@@ -934,6 +947,13 @@
       "target": "15",
       "targetHandle": "limit",
       "id": "reactflow__edge-65-15limit"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-66-40raster"
     }
   ],
   "inputs": {
