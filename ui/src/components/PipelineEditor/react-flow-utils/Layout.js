@@ -27,7 +27,10 @@ export const layoutElements = (nodes, edges) => {
       inputOrderMap.set(node.id, inputList)
 
     } else if (node.type === 'constant' || node.type === 'userInput') {
-      edges.forEach((edge) => {
+      const connectedEdges = edges.filter(edge => edge.source === node.id)
+      if(connectedEdges.length === 1) {
+        const edge = connectedEdges[0]
+        
         // record width if this is the longest constant
         if (edge.source === node.id) {
           if (!longestConstantMap[edge.target] || longestConstantMap[edge.target] < node.width) {
@@ -37,7 +40,7 @@ export const layoutElements = (nodes, edges) => {
           // record connected ids to be able to find the above
           nodeProperties.connectedTo ? nodeProperties.connectedTo.push(edge.target) : nodeProperties.connectedTo = [edge.target]
         }
-      })
+      }
     }
 
     dagreGraph.setNode(node.id, nodeProperties);
