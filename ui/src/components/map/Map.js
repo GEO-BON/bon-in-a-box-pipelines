@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { Marker, MapContainer, TileLayer, GeoJSON, Popup } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import COGLayer from "./COGLayer";
@@ -29,7 +29,7 @@ function addTiffLayer(url, range, setError) {
   return <TiTilerLayer url={fullUrl} range={range} setError={setError} />
 }
 
-export default function MapResult({ tiff, range, json }) {
+export default function MapResult({ tiff, range, json, markers }) {
   const [error, setError] = useState()
   const [jsonContent, setJsonContent] = useState()
 
@@ -60,6 +60,13 @@ export default function MapResult({ tiff, range, json }) {
       attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
     />
+
+    {markers && markers.map((marker, i) => marker.pos && marker.pos[0] && marker.pos[1] &&
+      <Marker key={i} position={marker.pos}>
+        <Popup>{marker.popup}</Popup>
+      </Marker>
+    )}
+
     {jsonContent &&
       <GeoJSON data={jsonContent}
         eventHandlers={{
@@ -67,6 +74,7 @@ export default function MapResult({ tiff, range, json }) {
         }}
       />
     }
+
     {tiff && addTiffLayer(tiff, range, setError)}
   </MapContainer>
 }
