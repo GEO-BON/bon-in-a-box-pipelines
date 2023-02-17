@@ -11,7 +11,7 @@ import { getScriptDescription } from '../ScriptDescriptionStore'
 export const layoutElements = (nodes, edges) => {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
-  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10, align: undefined });
+  dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10, align: undefined, ranksep: 150 });
 
   // To be able to align right, we need to know the with of the longest constant value attached to a node.
   let longestConstantMap = {}
