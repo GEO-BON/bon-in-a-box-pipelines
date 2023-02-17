@@ -1,6 +1,7 @@
 name: R Runner, main branch
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
