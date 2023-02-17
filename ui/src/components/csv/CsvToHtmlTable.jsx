@@ -4,7 +4,7 @@
  */
 import React from "react";
 
-function parseCsvToRowsAndColumn(csvText, csvColumnDelimiter = '\t') {
+export function parseCsvToRowsAndColumn(csvText, csvColumnDelimiter = '\t') {
     const rows = csvText.split('\n');
     if (!rows || rows.length === 0) {
         return [];
