@@ -13,37 +13,16 @@ export const layoutElements = (nodes, edges) => {
   dagreGraph.setDefaultEdgeLabel(() => ({}));
   dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10, align: undefined, ranksep: 150 });
 
-  // To be able to align right, we need to know the with of the longest constant value attached to a node.
-  let longestConstantMap = {}
-
   // Map to record the order of the inputs on the script card
   const inputOrderMap = new Map();
   nodes.forEach(node => {
-    let nodeProperties = { width: node.width, height: node.height }
-
     if (node.type === 'io') {
       let inputList = []
       Object.keys(getScriptDescription(node.data.descriptionFile).inputs).forEach(inputKey => inputList.push(inputKey))
       inputOrderMap.set(node.id, inputList)
-
-    } else if (node.type === 'constant' || node.type === 'userInput') {
-      const connectedEdges = edges.filter(edge => edge.source === node.id)
-      if(connectedEdges.length === 1) {
-        const edge = connectedEdges[0]
-        
-        // record width if this is the longest constant
-        if (edge.source === node.id) {
-          if (!longestConstantMap[edge.target] || longestConstantMap[edge.target] < node.width) {
-            longestConstantMap[edge.target] = node.width
-          }
-
-          // record connected ids to be able to find the above
-          nodeProperties.connectedTo ? nodeProperties.connectedTo.push(edge.target) : nodeProperties.connectedTo = [edge.target]
-        }
-      }
     }
 
-    dagreGraph.setNode(node.id, nodeProperties);
+    dagreGraph.setNode(node.id, { width: node.width, height: node.height });
   });
 
   // Sort the edges in the order that they appear on the card
@@ -67,26 +46,27 @@ export const layoutElements = (nodes, edges) => {
   // Layout
   dagre.layout(dagreGraph);
 
+  // In order to align right, we keep the width of the largest node in the rank. 
+  // Rank is not in the outputs, but all nodes from the same rank share the same x.
+  let centerToWitdh = {}
+  nodes.forEach((renderNode) => {
+    const dagreNode = dagreGraph.node(renderNode.id);
+    if(!centerToWitdh[dagreNode.x] || centerToWitdh[dagreNode.x] < dagreNode.width) {
+      centerToWitdh[dagreNode.x] = dagreNode.width
+    }
+  })
+
   // Transfer result to react-flow graph
   nodes.forEach((renderNode) => {
     const dagreNode = dagreGraph.node(renderNode.id);
     renderNode.targetPosition = 'left';
     renderNode.sourcePosition = 'right';
 
-    if ((renderNode.type === 'constant' || renderNode.type === 'userInput')
-      && dagreNode.connectedTo
-      && dagreNode.connectedTo.length === 1) {
-      let maxWidth = longestConstantMap[dagreNode.connectedTo[0]]
-      renderNode.position = {
-        x: dagreNode.x + maxWidth / 2 - renderNode.width, // right align
-        y: dagreNode.y - renderNode.height / 2
-      };
-    } else {
-      renderNode.position = {
-        x: dagreNode.x - renderNode.width / 2,
-        y: dagreNode.y - renderNode.height / 2
-      };
-    }
+    const rankOffset = centerToWitdh[dagreNode.x] / 2
+    renderNode.position = {
+      x: dagreNode.x + rankOffset - renderNode.width,
+      y: dagreNode.y - renderNode.height / 2
+    };
 
     return renderNode;
   });
