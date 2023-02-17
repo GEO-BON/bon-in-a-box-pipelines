@@ -177,7 +177,7 @@ internal class PipelineTest {
     }
 
     @Test
-    fun `given a pipeline with userInput node_when ran_then input fed to child steps`() = runTest {
+    fun `given a pipeline with userInput string_when ran_then input fed to child steps`() = runTest {
         val pipeline = Pipeline("userInput.json", """ { "pipeline@1": 10} """)
         pipeline.execute()
         assertTrue(pipeline.getPipelineOutputs()[0].pull() == 11)
@@ -185,17 +185,24 @@ internal class PipelineTest {
     }
 
     @Test
-    fun `given a pipeline with userInput node_when built with bad input id_then error message thrown`() = runTest {
+    fun `given a pipeline with userInput string_when built with bad input id_then error message thrown`() = runTest {
         assertFailsWith<RuntimeException> {
             Pipeline("userInput.json", """ { "pipeline@3": 10} """)
         }
     }
 
     @Test
-    fun `given a pipeline with userInput node_when built with bad input type_then error message thrown`() = runTest {
+    fun `given a pipeline with userInput string_when built with bad input type_then error message thrown`() = runTest {
         assertFailsWith<RuntimeException> {
             Pipeline("userInput.json", """ { "pipeline@1": "A string?"} """)
         }
+    }
+
+    @Test
+    fun `given a pipeline with userInput array_when ran_then input fed to child steps`() = runTest {
+        val pipeline = Pipeline("userInput_array.json", """ {"pipeline@1":[3,4,5]} """)
+        pipeline.execute()
+        assertEquals(listOf(3,4,5), pipeline.getPipelineOutputs()[0].pull())
     }
 
 }
