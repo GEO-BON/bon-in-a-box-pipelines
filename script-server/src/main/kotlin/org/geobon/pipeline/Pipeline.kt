@@ -58,51 +58,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                     NODE__TYPE_CONSTANT -> {
                         val nodeData = node.getJSONObject(NODE__DATA)
                         val type = nodeData.getString(NODE__DATA__TYPE)
-
-                        constants[nodeId] = if(type.endsWith("[]")) {
-                            val jsonArray = try {
-                                nodeData.getJSONArray(NODE__DATA__VALUE)
-                            } catch (e:Exception) {
-                                throw RuntimeException("Constant array #$nodeId has no value in JSON file.")
-                            }
-
-                            ConstantPipe(type,
-                                when (type.removeSuffix("[]")) {
-                                    "int" -> mutableListOf<Int>().apply {
-                                        for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
-                                    }
-                                    "float" -> mutableListOf<Float>().apply {
-                                        for (i in 0 until jsonArray.length()) {
-                                            val float = jsonArray.optFloat(i)
-                                            if(!float.isNaN()) {
-                                                add(float)
-                                            }
-                                        }
-                                    }
-                                    "boolean" -> mutableListOf<Boolean>().apply {
-                                        for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
-                                    }
-                                    // Everything else is read as text
-                                    else -> mutableListOf<String>().apply {
-                                        for (i in 0 until jsonArray.length()) add(jsonArray.optString(i))
-                                    }
-                                })
-                        } else {
-                            try {
-                                ConstantPipe(
-                                    type,
-                                    when (type) {
-                                        "int" -> nodeData.getInt(NODE__DATA__VALUE)
-                                        "float" -> nodeData.getFloat(NODE__DATA__VALUE)
-                                        "boolean" -> nodeData.getBoolean(NODE__DATA__VALUE)
-                                        // Everything else is read as text
-                                        else -> nodeData.getString(NODE__DATA__VALUE)
-                                    }
-                                )
-                            } catch (e: Exception) {
-                                throw RuntimeException("Constant #$nodeId has no value in JSON file.")
-                            }
-                        }
+                        constants[nodeId] = createConstant(nodeId, nodeData, type, NODE__DATA__VALUE)
                     }
 
                     NODE__TYPE_USER_INPUT -> {
@@ -168,16 +124,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                     val step = steps[stepId]
                         ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
 
-                    step.inputs[inputId] = ConstantPipe(
-                        type,
-                        when (type) {
-                            "int" -> inputsJSON.getInt(key)
-                            "float" -> inputsJSON.getFloat(key)
-                            "boolean" -> inputsJSON.getBoolean(key)
-                            // Everything else is read as text
-                            else -> inputsJSON.getString(key)
-                        }
-                    )
+                    step.inputs[inputId] = createConstant(key, inputsJSON, type, key)
                 }
             }
         }
@@ -195,6 +142,56 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
             val message = it.validateGraph()
             if(message != "") {
                 throw Exception("Pipeline validation failed:\n$message")
+            }
+        }
+    }
+
+
+    private fun createConstant(idForUser: String, obj: JSONObject, type:String, valueProperty:String): ConstantPipe {
+
+        return if (type.endsWith("[]")) {
+            val jsonArray = try {
+                obj.getJSONArray(valueProperty)
+            } catch (e: Exception) {
+                throw RuntimeException("Constant array #$idForUser has no value in JSON file.")
+            }
+
+            ConstantPipe(type,
+                when (type.removeSuffix("[]")) {
+                    "int" -> mutableListOf<Int>().apply {
+                        for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
+                    }
+                    "float" -> mutableListOf<Float>().apply {
+                        for (i in 0 until jsonArray.length()) {
+                            val float = jsonArray.optFloat(i)
+                            if (!float.isNaN()) {
+                                add(float)
+                            }
+                        }
+                    }
+                    "boolean" -> mutableListOf<Boolean>().apply {
+                        for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
+                    }
+                    // Everything else is read as text
+                    else -> mutableListOf<String>().apply {
+                        for (i in 0 until jsonArray.length()) add(jsonArray.optString(i))
+                    }
+                })
+        } else {
+            try {
+                ConstantPipe(
+                    type,
+                    when (type) {
+                        "int" -> obj.getInt(valueProperty)
+                        "float" -> obj.getFloat(valueProperty)
+                        "boolean" -> obj.getBoolean(valueProperty)
+                        // Everything else is read as text
+                        else -> obj.getString(valueProperty)
+                    }
+                )
+            } catch (e: Exception) {
+                e.printStackTrace()
+                throw RuntimeException("Constant #$idForUser has no value in JSON file.")
             }
         }
     }
