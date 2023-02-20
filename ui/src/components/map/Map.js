@@ -10,9 +10,17 @@ import TiTilerLayer from "./TiTilerLayer";
 // see https://github.com/PaulLeCam/react-leaflet/issues/453#issuecomment-410450387
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+  iconRetinaUrl: require('../../img/dot-2x.png'),
+  iconUrl: require('../../img/dot.png'),
+  iconSize: [11, 11],
+  iconAnchor: [6, 6],
+  popupAnchor: [0, -7],
+  shadowUrl: null,
+
+  // These are the default inversed drop icon:
+  // iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  // iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  // shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
 
 function addTiffLayer(url, range, setError) {
