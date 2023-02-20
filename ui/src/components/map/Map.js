@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Marker, MapContainer, TileLayer, GeoJSON, Popup } from "react-leaflet";
+import { Marker, MapContainer, TileLayer, GeoJSON, Popup, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import COGLayer from "./COGLayer";
@@ -27,6 +27,39 @@ function addTiffLayer(url, range, setError) {
   // Our workaround is to use TiTiler to serve it as a tile layer instead.
   // see https://matplotlib.org/stable/tutorials/colors/colormaps.html
   return <TiTilerLayer url={fullUrl} range={range} setError={setError} />
+}
+
+function MarkerGroup({markers}) {
+  const map = useMap()
+
+  if (!markers || !map)
+    return null
+
+  let bounds = [
+    [Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY],
+    [Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY]
+  ]
+  
+  const markerComponents = markers.map((marker, i) => {
+    if (marker.pos && marker.pos[0] && marker.pos[1]) {
+      bounds[0][0] = Math.min(bounds[0][0], marker.pos[0])
+      bounds[0][1] = Math.min(bounds[0][1], marker.pos[1])
+      bounds[1][0] = Math.max(bounds[1][0], marker.pos[0])
+      bounds[1][1] = Math.max(bounds[1][1], marker.pos[1])
+
+      return <Marker key={i} position={marker.pos}>
+        <Popup>{marker.popup}</Popup>
+      </Marker>
+    }
+
+    return null
+  })
+
+  if(bounds[0][0] !== Number.POSITIVE_INFINITY) { // This avoids a crash if no marker had a valid pos.
+    map.fitBounds(bounds)
+  }
+
+  return markerComponents
 }
 
 export default function MapResult({ tiff, range, json, markers }) {
@@ -61,11 +94,7 @@ export default function MapResult({ tiff, range, json, markers }) {
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
     />
 
-    {markers && markers.map((marker, i) => marker.pos && marker.pos[0] && marker.pos[1] &&
-      <Marker key={i} position={marker.pos}>
-        <Popup>{marker.popup}</Popup>
-      </Marker>
-    )}
+    <MarkerGroup markers={markers} />
 
     {jsonContent &&
       <GeoJSON data={jsonContent}
