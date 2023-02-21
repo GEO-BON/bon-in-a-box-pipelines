@@ -26,7 +26,7 @@ cat(args, sep = "\n")
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
-print("Inputs: ")
+print("Inputs : ")
 print(input)
 
 
@@ -53,11 +53,11 @@ tuned_param <- select_param(res_tuning, method = input$method_select_params, lis
 
 predictors <- raster::stack(predictors)
 
-sdms <- predict_maxent(presence_background, 
+sdms <- predict_maxent(presence_background,
   algorithm = "maxent.jar", 
-                           predictors = predictors,  
-                           fc = tuned_param[[1]],                         
-                           rm = tuned_param[[2]], 
+                           predictors = predictors,
+                           fc = tuned_param[[1]],
+                           rm = tuned_param[[2]],
                            type = "cloglog",
                            mask = NULL,
                            parallel = T,
@@ -72,18 +72,22 @@ names(sdm_pred) <- "prediction"
 sdm_runs <- sdms[["pred_runs"]]
 
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
-runs.output <- file.path(outputFolder, "sdm_runs.tif")
+runs.output <- paste0(outputFolder,"/sdm_runs_", 1:nlayers(sdm_runs), ".tif")
+#runs.output <- file.path(outputFolder, "sdm_runs.tif")
 
-raster::writeRaster(x = sdm_pred,
+terra::writeRaster(x = sdm_pred,
                           filename = pred.output,
-                          format='COG',
-                          options=c("COMPRESS=DEFLATE"),
+                          filetype = "COG",
+                          wopt = list(gdal = c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
- #terra::writeRaster(x = sdm_runs,
-  #                        filename = runs.output,
-  #                        format='COG',
-  #                        options=c("COMPRESS=DEFLATE"),
-  #                        overwrite = TRUE)
+for (i in 1:nlayers(sdm_runs)){
+    terra::writeRaster(x = sdm_runs[[i]],
+    filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),
+    format = "COG",
+    wopt = list(gdal = c("COMPRESS=DEFLATE")),
+    overwrite = TRUE)
+}
+
 
 output <- list("sdm_pred" = pred.output,
   "sdm_runs" = runs.output) 

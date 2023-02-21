@@ -35,6 +35,7 @@ load_predictors <- function(source = "from_cube",
                             predictors_dir = NULL,
                             subset_layers = NULL,
                             variables = NULL,
+                            ids = NULL,
                             remove_collinear = T,
                             method = "vif.cor",
                             method_cor_vif = NULL,
@@ -88,10 +89,12 @@ load_predictors <- function(source = "from_cube",
     
   } else {
 
+
     cube_args_c <- append(cube_args, list(layers = subset_layers, 
                                           srs.cube = proj, 
                                           bbox = bbox,
-                                          variable = variables))
+                                          variable = variables,
+                                          ids = ids))
     
     all_predictors <- do.call(stacatalogue::load_cube, cube_args_c)
 
