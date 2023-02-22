@@ -1,8 +1,16 @@
 FROM rocker/geospatial:dev-osgeo
 
 # Additionnal R packages
-RUN R -e 'install.packages(c("rjson", "RCurl", "rstac", "rgbif", "CoordinateCleaner", "dismo", "ENMeval"))'
+RUN R -e 'install.packages(c("rjson", "RCurl", "rstac", "rgbif", "CoordinateCleaner", "dismo", "ENMeval", \
+    "wdpar", # Used to extract protected areas raster in protectedAreas/protectedAreasProp.R \
+    "exactextractr", # Used by wdpar \
+    "wdman" # Used by wdpar \
+    ))'
 RUN R -e 'devtools::install_github("appelmar/gdalcubes_R")'
 RUN R -e 'devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")'
-RUN apt-get update; apt install -y --no-install-recommends libmpfrc++-dev libmpfr6 libmpfr-dev libgmp3-dev libgeos-dev; apt-get clean all;
+
+# For for installation of prepr for protectedAreas/protectedAreasProp.R
+RUN apt-get update; \
+    apt-get install -y libgmp3-dev libmpfr-dev libudunits2-dev libgdal-dev libgeos-dev libproj-dev; \
+    apt-get clean all;
 
