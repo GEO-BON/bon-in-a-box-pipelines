@@ -44,8 +44,8 @@ srs_cube <- if(check_srs){
   authorities <- c("EPSG","ESRI","IAU2000","SR-ORG")
   auth_srid <- paste(authorities,srs,sep=":")
   auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(try(st_crs(.x))))
-  if(sum(auth_srid_test)>1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
-}else  srs # paste Authority in case SRID is used 
+  if(sum(auth_srid_test)!=1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
+}else srs # paste Authority in case SRID is used 
 
 #margin for elevation range
 elev_buffer <- input$elev_buffer
