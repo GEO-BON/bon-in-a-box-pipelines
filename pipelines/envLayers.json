@@ -8,7 +8,7 @@
         "y": -19.8212348548887
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
@@ -180,7 +180,7 @@
         "y": 182.15285643843333
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
@@ -209,7 +209,7 @@
         "y": 375.58801775147936
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateVelocity.yml"
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
@@ -238,7 +238,7 @@
         "y": 564.3096189067344
       },
       "data": {
-        "descriptionFile": "ClimateMetrics>climateRarity.yml"
+        "descriptionFile": "climateMetrics>climateRarity.yml"
       }
     },
     {
@@ -1151,7 +1151,7 @@
       "type": "string",
       "example": "EPSG:6623"
     },
-    "ClimateMetrics>climateRarity.yml@17.moving_window": {
+    "climateMetrics>climateRarity.yml@17.moving_window": {
       "description": "number of cells (must be an odd number)",
       "label": "search moving window",
       "type": "int",
