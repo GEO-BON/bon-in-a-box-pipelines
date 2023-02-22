@@ -1,0 +1,303 @@
+{
+    "nodes": [
+      {
+        "id": "11",
+        "type": "io",
+        "position": {
+          "x": 332.390625,
+          "y": 303
+        },
+        "data": {
+          "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
+        }
+      },
+      {
+        "id": "12",
+        "type": "constant",
+        "position": {
+          "x": -0.609375,
+          "y": 306
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "Saguinus oedipus"
+        }
+      },
+      {
+        "id": "13",
+        "type": "constant",
+        "position": {
+          "x": 22.390625,
+          "y": 316
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "EPSG:3116"
+        }
+      },
+      {
+        "id": "14",
+        "type": "constant",
+        "position": {
+          "x": 22.390625,
+          "y": 332
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 0
+        }
+      },
+      {
+        "id": "15",
+        "type": "constant",
+        "position": {
+          "x": 8.390625,
+          "y": 340
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 50
+        }
+      },
+      {
+        "id": "16",
+        "type": "constant",
+        "position": {
+          "x": 18.390625,
+          "y": 357
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "COL"
+        }
+      },
+      {
+        "id": "17",
+        "type": "constant",
+        "position": {
+          "x": 24.390625,
+          "y": 384
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 1000
+        }
+      },
+      {
+        "id": "18",
+        "type": "constant",
+        "position": {
+          "x": 27.390625,
+          "y": 392
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "options",
+          "value": "IUCN",
+          "options": [
+            "MOL",
+            "IUCN",
+            "QC"
+          ]
+        }
+      },
+      {
+        "id": "19",
+        "type": "constant",
+        "position": {
+          "x": 22.390625,
+          "y": 408
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 2000
+        }
+      },
+      {
+        "id": "20",
+        "type": "constant",
+        "position": {
+          "x": 24.390625,
+          "y": 422
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 2020
+        }
+      },
+      {
+        "id": "21",
+        "type": "constant",
+        "position": {
+          "x": 18.390625,
+          "y": 432
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 1
+        }
+      },
+      {
+        "id": "22",
+        "type": "output",
+        "position": {
+          "x": 827.390625,
+          "y": 302
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "23",
+        "type": "output",
+        "position": {
+          "x": 826.390625,
+          "y": 319
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "24",
+        "type": "output",
+        "position": {
+          "x": 826.390625,
+          "y": 325
+        },
+        "data": {
+          "label": "Output"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "12",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "species",
+        "id": "reactflow__edge-12-11species"
+      },
+      {
+        "source": "13",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "srs",
+        "id": "reactflow__edge-13-11srs"
+      },
+      {
+        "source": "14",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "elev_buffer",
+        "id": "reactflow__edge-14-11elev_buffer"
+      },
+      {
+        "source": "15",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "forest_threshold",
+        "id": "reactflow__edge-15-11forest_threshold"
+      },
+      {
+        "source": "16",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "country_code",
+        "id": "reactflow__edge-16-11country_code"
+      },
+      {
+        "source": "17",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "spat_res",
+        "id": "reactflow__edge-17-11spat_res"
+      },
+      {
+        "source": "18",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "expert_source",
+        "id": "reactflow__edge-18-11expert_source"
+      },
+      {
+        "source": "19",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "t_0",
+        "id": "reactflow__edge-19-11t_0"
+      },
+      {
+        "source": "20",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "t_n",
+        "id": "reactflow__edge-20-11t_n"
+      },
+      {
+        "source": "21",
+        "sourceHandle": null,
+        "target": "11",
+        "targetHandle": "time_step",
+        "id": "reactflow__edge-21-11time_step"
+      },
+      {
+        "source": "11",
+        "sourceHandle": "df_shi",
+        "target": "22",
+        "targetHandle": null,
+        "id": "reactflow__edge-11df_shi-22"
+      },
+      {
+        "source": "11",
+        "sourceHandle": "img_shi_time_period",
+        "target": "23",
+        "targetHandle": null,
+        "id": "reactflow__edge-11img_shi_time_period-23"
+      },
+      {
+        "source": "11",
+        "sourceHandle": "img_shi_timeseries",
+        "target": "24",
+        "targetHandle": null,
+        "id": "reactflow__edge-11img_shi_timeseries-24"
+      }
+    ],
+    "inputs": {
+      "SHI>scpSHI_Jetz_complete.yml@11.region": {
+        "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
+        "label": "region",
+        "type": "text",
+        "example": ""
+      }
+    },
+    "outputs": {
+      "SHI>scpSHI_Jetz_complete.yml@11.df_shi": {
+        "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
+        "label": "shi table",
+        "type": "text/tab-separated-values",
+        "example": "/Saguinus oedipus_SHI_table.tsv"
+      },
+      "SHI>scpSHI_Jetz_complete.yml@11.img_shi_time_period": {
+        "description": "Map showing species habitat changes (gain and loss) between t_0 and t_n.",
+        "label": "shi map",
+        "type": "image/png",
+        "example": "/Saguinus oedipus_GFW_change.png"
+      },
+      "SHI>scpSHI_Jetz_complete.yml@11.img_shi_timeseries": {
+        "description": "Figure showing a time series of SHI values for each time step.",
+        "label": "shi time series",
+        "type": "image/png"
+      }
+    }
+  }
