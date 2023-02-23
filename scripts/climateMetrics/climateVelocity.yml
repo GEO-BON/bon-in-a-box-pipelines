@@ -55,11 +55,6 @@ inputs:
       - 2041-2070
       - 2071-2100
     example: 2041-2070
-  t_match: 
-    label: threshold climate match
-    description: Acceptable difference of climate (e.g.,mean temperature in °C) to consider that the climate is similar.
-    type: float
-    example: 1
   bbox:
     label: bounding box
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax (use ExtentToBbox to add shapefiles and other formats)
