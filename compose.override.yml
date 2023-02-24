@@ -23,7 +23,7 @@ services:
       - ui-prod
 
   script-server:
-    #image: geobon/bon-in-a-box:script-server
-    build:
-      context: ./script-server/
-      dockerfile: Dockerfile.prod
+    image: geobon/bon-in-a-box:script-server
+    # build:
+    #   context: ./script-server/
+    #   dockerfile: Dockerfile.prod
