@@ -3,16 +3,13 @@ package org.geobon.pipeline
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class ScriptStepTest {
 
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
         with(outputRoot) {
             assertTrue(!exists())
@@ -21,7 +18,7 @@ internal class ScriptStepTest {
         }
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
         assertTrue(outputRoot.deleteRecursively())
     }
@@ -45,7 +42,7 @@ internal class ScriptStepTest {
     @Test
     fun given1In1Out_whenExecute_thenInputFileIsGenerated_andOutputIsThere() = runTest {
         val input = 234
-        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), mutableMapOf("some_int" to ConstantPipe("int", input)))
+        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), inputs = mutableMapOf("some_int" to ConstantPipe("int", input)))
         assertTrue(step.validateGraph().isEmpty())
 
         step.execute()
@@ -108,7 +105,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenScriptStepThatHasRun_whenOutputFileEmpty_thenThrowsAndOutputHasError() = runTest {
-        val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), mutableMapOf("some_int" to ConstantPipe("int", 123)))
+        val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), inputs = mutableMapOf("some_int" to ConstantPipe("int", 123)))
         assertTrue(step.validateGraph().isEmpty())
 
         try {
@@ -127,7 +124,7 @@ internal class ScriptStepTest {
     @Test
     fun givenOptionsInput_whenReceivedValueNotInOptions_thenThrowsAndOutputHasError() = runTest {
         val step = ScriptStep(File(scriptRoot, "optionsInput.yml"),
-            mutableMapOf("options_in" to ConstantPipe("options", "four")))
+            inputs = mutableMapOf("options_in" to ConstantPipe("options", "four")))
         step.validateGraph().apply { assertTrue(isEmpty(), "Validation error: $this") }
 
         try {
@@ -145,7 +142,7 @@ internal class ScriptStepTest {
     @Test
     fun givenOptionsInput_whenReceivedValueInOptions_thenExecutes() = runTest {
         val step = ScriptStep(File(scriptRoot, "optionsInput.yml"),
-            mutableMapOf("options_in" to ConstantPipe("options", "three")))
+            inputs = mutableMapOf("options_in" to ConstantPipe("options", "three")))
         step.validateGraph().apply { assertTrue(isEmpty(), "Validation error: $this") }
 
         step.execute()

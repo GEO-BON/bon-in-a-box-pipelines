@@ -2,16 +2,11 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
-import kotlin.test.assertContains
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class PipelineTest {
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
         with(outputRoot) {
             assertTrue(!exists())
@@ -20,7 +15,7 @@ internal class PipelineTest {
         }
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
         assertTrue(outputRoot.deleteRecursively())
     }
@@ -137,27 +132,27 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with a malformed input name_when built_then an exception is thrown`() = runTest {
-        assertThrows<RuntimeException> { // missing @
+        assertFailsWith<RuntimeException> { // missing @
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml0.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // missing step id
+        assertFailsWith<RuntimeException> { // missing step id
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // missing everything
+        assertFailsWith<RuntimeException> { // missing everything
             Pipeline("1in1out_1step.json", """ { "@.": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // plausible case where a non-existant script path is used
+        assertFailsWith<RuntimeException> { // plausible case where a non-existant script path is used
             Pipeline("1in1out_1step.json", """ { "HelloWorld>BAD@0.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // non-numeric step id
+        assertFailsWith<RuntimeException> { // non-numeric step id
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@BAD.some_int": 5 }""")
         }
 
-        assertThrows<RuntimeException> { // plausible case where a non-existent step id is used
+        assertFailsWith<RuntimeException> { // plausible case where a non-existent step id is used
             Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72.some_int": 5 }""")
         }
     }
@@ -179,6 +174,35 @@ internal class PipelineTest {
         val pipeline = Pipeline("intToFloat.json", """ { "1in1out.yml@1.some_int": 3, "divideFloat.yml@0.divider": 2 }""")
         pipeline.execute()
         assertTrue(pipeline.getPipelineOutputs()[0].pull() == 2)
+    }
+
+    @Test
+    fun `given a pipeline with userInput string_when ran_then input fed to child steps`() = runTest {
+        val pipeline = Pipeline("userInput.json", """ { "pipeline@1": 10} """)
+        pipeline.execute()
+        assertTrue(pipeline.getPipelineOutputs()[0].pull() == 11)
+        assertTrue(pipeline.getPipelineOutputs()[1].pull() == 12)
+    }
+
+    @Test
+    fun `given a pipeline with userInput string_when built with bad input id_then error message thrown`() = runTest {
+        assertFailsWith<RuntimeException> {
+            Pipeline("userInput.json", """ { "pipeline@3": 10} """)
+        }
+    }
+
+    @Test
+    fun `given a pipeline with userInput string_when built with bad input type_then error message thrown`() = runTest {
+        assertFailsWith<RuntimeException> {
+            Pipeline("userInput.json", """ { "pipeline@1": "A string?"} """)
+        }
+    }
+
+    @Test
+    fun `given a pipeline with userInput array_when ran_then input fed to child steps`() = runTest {
+        val pipeline = Pipeline("userInput_array.json", """ {"pipeline@1":[3,4,5]} """)
+        pipeline.execute()
+        assertEquals(listOf(3,4,5), pipeline.getPipelineOutputs()[0].pull())
     }
 
 }

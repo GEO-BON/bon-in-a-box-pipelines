@@ -10,7 +10,7 @@ class Output(override val type:String) : Pipe {
             step?.apply { execute() }
                 ?: throw RuntimeException("Output of type $type disconnected from any step when pulling")
         }
-        return value ?: throw RuntimeException("Output of type $type has not been set by step")
+        return value ?: throw RuntimeException("Output of type $type has not been set by step $step")
     }
 
     override suspend fun pullIf(condition: (step: Step) -> Boolean): Any? {

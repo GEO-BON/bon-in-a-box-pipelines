@@ -2,10 +2,9 @@ package org.geobon.utils
 
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
+import java.util.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.EmptyCoroutineContext
-import java.util.Vector
-import kotlin.Throwable
 
 /**
  * From https://github.com/Kotlin/kotlinx.coroutines/issues/1205#issuecomment-1203174032

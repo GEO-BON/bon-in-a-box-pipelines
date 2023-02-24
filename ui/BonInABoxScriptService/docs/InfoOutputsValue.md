@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **type** | **String** |  | [optional] 
 **range** | **[Number]** |  | [optional] 
 **options** | **[String]** |  | [optional] 
+**properties** | **[String]** |  | [optional] 
 **example** | [**InfoOutputsValueExample**](InfoOutputsValueExample.md) |  | [optional] 
 
 

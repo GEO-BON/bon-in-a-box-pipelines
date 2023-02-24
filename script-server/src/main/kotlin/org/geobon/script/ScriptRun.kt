@@ -14,19 +14,24 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 import kotlin.math.floor
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.DurationUnit
 
 
-class ScriptRun(
+class ScriptRun( // Constructor used in single script run
     private val scriptFile: File,
     private val inputFileContent: String?,
-    context: RunContext = RunContext(scriptFile, inputFileContent)) {
+    context: RunContext = RunContext(scriptFile, inputFileContent),
+    private val timeout: Duration = DEFAULT_TIMEOUT) {
 
-    // Constructor used in tests to provide a handcrafted input map
+    // Constructor used in pipelines & tests
     constructor(
         scriptFile: File,
         inputMap: SortedMap<String, Any>,
-        context: RunContext = RunContext(scriptFile, inputMap.toString())
-    ) : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), context)
+        context: RunContext = RunContext(scriptFile, inputMap.toString()),
+        timeout: Duration = DEFAULT_TIMEOUT
+    ) : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), context, timeout)
 
     lateinit var results: Map<String, Any>
         private set
@@ -40,6 +45,7 @@ class ScriptRun(
 
     companion object {
         const val ERROR_KEY = "error"
+        val DEFAULT_TIMEOUT = 1.hours
 
         private val gson = GsonBuilder()
             .setObjectToNumberStrategy { reader ->
@@ -106,19 +112,20 @@ class ScriptRun(
         if (inputFile.exists()) {
             val cacheTime = resultFile.lastModified()
             kotlin.runCatching {
-                gson.fromJson<Map<String, Any>>(
+                gson.fromJson<Map<String, Any?>>(
                     inputFile.readText().also { logger.trace("Cached inputs: $it") },
-                    object : TypeToken<Map<String, Any>>() {}.type
+                    object : TypeToken<Map<String, Any?>>() {}.type
                 )
             }.onSuccess { inputs ->
                 inputs.forEach { (_, value) ->
-                    val stringValue = value.toString()
-                    // We assume that all local paths start with / and that URLs won't.
-                    if (stringValue.startsWith('/')) {
-                        with(File(stringValue)) {
-                            // check if missing or newer than cache
-                            if (!exists() || cacheTime < lastModified()) {
-                                return false
+                    value?.toString().let { stringValue ->
+                        // We assume that all local paths start with / and that URLs won't.
+                        if (stringValue?.startsWith('/') == true) {
+                            with(File(stringValue)) {
+                                // check if missing or newer than cache
+                                if (!exists() || cacheTime < lastModified()) {
+                                    return false
+                                }
                             }
                         }
                     }
@@ -187,8 +194,8 @@ class ScriptRun(
                         // if the user cancels or is 60 minutes delay expires.
                         val watchdog = launch {
                             try {
-                                delay(1000 * 60 * 60) // 1 hour timeout
-                                throw TimeoutException("Timeout occurred after 1h")
+                                delay(timeout.toLong(DurationUnit.MILLISECONDS))
+                                throw TimeoutException("Timeout occurred after $timeout")
 
                             } catch (ex: Exception) {
                                 if (process.isAlive) {
@@ -234,7 +241,7 @@ class ScriptRun(
                 val result = resultFile.readText()
                 try {
                     outputs = gson.fromJson<Map<String, Any>>(result, type)
-                    logger.trace("Output: $result")
+                    logger.debug("Output: $result")
                 } catch (e: Exception) {
                     error = true
                     log(

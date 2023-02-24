@@ -1,7 +1,7 @@
 package org.geobon.pipeline
 
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -74,5 +74,10 @@ abstract class Step(
     open fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         // Not all steps have output folders. Default implementation just forwards to other steps.
         inputs.values.forEach{it.dumpOutputFolders(allOutputs)}
+    }
+
+    companion object {
+        const val DEFAULT_IN = "defaultInput"
+        const val DEFAULT_OUT = "defaultOutput"
     }
 }
