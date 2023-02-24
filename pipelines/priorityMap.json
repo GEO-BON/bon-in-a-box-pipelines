@@ -4,7 +4,7 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 435,
+        "x": 506,
         "y": 10.5
       },
       "data": {
@@ -15,7 +15,7 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 435,
+        "x": 506,
         "y": 86.5
       },
       "data": {
@@ -26,7 +26,7 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 435,
+        "x": 506,
         "y": 162.5
       },
       "data": {
@@ -37,7 +37,7 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 182,
+        "x": 187,
         "y": 0
       },
       "dragHandle": ".dragHandle",
@@ -63,7 +63,7 @@
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 182,
+        "x": 187,
         "y": 76
       },
       "dragHandle": ".dragHandle",
@@ -89,7 +89,7 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 182,
+        "x": 187,
         "y": 152
       },
       "dragHandle": ".dragHandle",
@@ -115,7 +115,7 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 705,
+        "x": 787.5,
         "y": 78
       },
       "data": {
@@ -126,7 +126,7 @@
       "id": "10",
       "type": "io",
       "position": {
-        "x": 1015,
+        "x": 1108,
         "y": 109.75
       },
       "data": {
@@ -137,8 +137,8 @@
       "id": "11",
       "type": "io",
       "position": {
-        "x": 1415,
-        "y": 150.25
+        "x": 1501,
+        "y": 151.25
       },
       "data": {
         "descriptionFile": "pointSelection>balancedAcceptance.yml"
@@ -148,7 +148,7 @@
       "id": "12",
       "type": "constant",
       "position": {
-        "x": 1095,
+        "x": 1151.5,
         "y": 164.75
       },
       "dragHandle": ".dragHandle",
@@ -161,7 +161,7 @@
       "id": "13",
       "type": "constant",
       "position": {
-        "x": 1077,
+        "x": 1133.5,
         "y": 202.75
       },
       "dragHandle": ".dragHandle",
@@ -171,27 +171,22 @@
       }
     },
     {
-      "id": "14",
-      "type": "constant",
-      "position": {
-        "x": 725.5,
-        "y": 133
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          0.3,
-          0.7
-        ]
-      }
-    },
-    {
       "id": "15",
       "type": "output",
       "position": {
-        "x": 1836,
+        "x": 1913,
         "y": 159.75
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "17",
+      "type": "output",
+      "position": {
+        "x": 1501.2980487519187,
+        "y": 82.04173906113755
       },
       "data": {
         "label": "Output"
@@ -291,31 +286,40 @@
       "id": "reactflow__edge-12-11bias_toward_high_priority"
     },
     {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "targetbalance",
-      "id": "reactflow__edge-14-10targetbalance"
-    },
-    {
       "source": "13",
       "sourceHandle": null,
       "target": "11",
       "targetHandle": "num_points",
       "id": "reactflow__edge-13-11num_points"
+    },
+    {
+      "source": "10",
+      "sourceHandle": "priority_map",
+      "target": "17",
+      "targetHandle": null,
+      "id": "reactflow__edge-10priority_map-17"
     }
   ],
   "viewport": {
-    "x": -137.40633745807247,
-    "y": 203.78138763685263,
-    "zoom": 0.8633395585744134
+    "x": -304.7544465434182,
+    "y": 114.25256582901176,
+    "zoom": 0.9408261075137875
   },
   "inputs": {
     "pipeline>PullLayersById.yml@9.with_ids": {
       "description": "Config containing the ids. The an id will be replaced by the corresponding layer in with_layers output.",
       "label": "With IDs",
       "type": "text",
-      "example": "layer, current, change\nbackwards_velocity1, 0.2, 0.8\nbackwards_velocity2, 0.8, 0.2\nthirdId, 0.7, 0.3\n"
+      "example": "layer, current, change\nbackwards_velocity1, 0.2, 0.8\nbackwards_velocity2, 0.8, 0.2\n"
+    },
+    "pointSelection>combineLayers.yml@10.targetbalance": {
+      "description": "List of weights for each target, should sum to 1",
+      "label": "Balance between targets",
+      "type": "float[]",
+      "example": [
+        0.3,
+        0.7
+      ]
     }
   }
 }
