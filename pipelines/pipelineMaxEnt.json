@@ -503,10 +503,10 @@
     },
     {
       "id": "57",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": -7.714735175917099,
-        "y": 295.527449478158
+        "x": 124.2852648240829,
+        "y": 319.527449478158
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -596,6 +596,19 @@
         "type": "int",
         "value": "10000"
       }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 1238.7453234144002,
+        "y": 458.68975067352227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": ""
+      }
     }
   ],
   "edges": [
@@ -646,24 +659,21 @@
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-58-23bbox",
-      "selected": false
+      "id": "reactflow__edge-58-23bbox"
     },
     {
       "source": "17",
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "country",
-      "id": "reactflow__edge-17-15country",
-      "selected": false
+      "id": "reactflow__edge-17-15country"
     },
     {
       "source": "24",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "source",
-      "id": "reactflow__edge-24-23source",
-      "selected": false
+      "id": "reactflow__edge-24-23source"
     },
     {
       "source": "23",
@@ -698,8 +708,7 @@
       "sourceHandle": null,
       "target": "37",
       "targetHandle": "proj",
-      "id": "reactflow__edge-57-37proj",
-      "selected": false
+      "id": "reactflow__edge-57-37proj"
     },
     {
       "source": "35",
@@ -741,16 +750,14 @@
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "collection",
-      "id": "reactflow__edge-59-23collection",
-      "selected": false
+      "id": "reactflow__edge-59-23collection"
     },
     {
       "source": "25",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "layers",
-      "id": "reactflow__edge-25-23layers",
-      "selected": false
+      "id": "reactflow__edge-25-23layers"
     },
     {
       "source": "39",
@@ -813,24 +820,21 @@
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-58-15bbox",
-      "selected": false
+      "id": "reactflow__edge-58-15bbox"
     },
     {
       "source": "60",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "variables",
-      "id": "reactflow__edge-60-23variables",
-      "selected": false
+      "id": "reactflow__edge-60-23variables"
     },
     {
       "source": "26",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "remove_collinearity",
-      "id": "reactflow__edge-26-23remove_collinearity",
-      "selected": false
+      "id": "reactflow__edge-26-23remove_collinearity"
     },
     {
       "source": "47",
@@ -851,24 +855,21 @@
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "proj",
-      "id": "reactflow__edge-57-15proj",
-      "selected": false
+      "id": "reactflow__edge-57-15proj"
     },
     {
       "source": "27",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "method",
-      "id": "reactflow__edge-27-23method",
-      "selected": false
+      "id": "reactflow__edge-27-23method"
     },
     {
       "source": "21",
       "sourceHandle": null,
       "target": "15",
       "targetHandle": "occurrence_status",
-      "id": "reactflow__edge-21-15occurrence_status",
-      "selected": false
+      "id": "reactflow__edge-21-15occurrence_status"
     },
     {
       "source": "48",
@@ -896,56 +897,49 @@
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "proj",
-      "id": "reactflow__edge-57-23proj",
-      "selected": false
+      "id": "reactflow__edge-57-23proj"
     },
     {
       "source": "29",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "spatial_res",
-      "id": "reactflow__edge-29-23spatial_res",
-      "selected": false
+      "id": "reactflow__edge-29-23spatial_res"
     },
     {
       "source": "30",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "method_cor_vif",
-      "id": "reactflow__edge-30-23method_cor_vif",
-      "selected": false
+      "id": "reactflow__edge-30-23method_cor_vif"
     },
     {
       "source": "31",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "nb_sample",
-      "id": "reactflow__edge-31-23nb_sample",
-      "selected": false
+      "id": "reactflow__edge-31-23nb_sample"
     },
     {
       "source": "32",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "cutoff_cor",
-      "id": "reactflow__edge-32-23cutoff_cor",
-      "selected": false
+      "id": "reactflow__edge-32-23cutoff_cor"
     },
     {
       "source": "33",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "cutoff_vif",
-      "id": "reactflow__edge-33-23cutoff_vif",
-      "selected": false
+      "id": "reactflow__edge-33-23cutoff_vif"
     },
     {
       "source": "63",
       "sourceHandle": null,
       "target": "23",
       "targetHandle": "mask",
-      "id": "reactflow__edge-63-23mask",
-      "selected": false
+      "id": "reactflow__edge-63-23mask"
     },
     {
       "source": "65",
@@ -953,13 +947,15 @@
       "target": "15",
       "targetHandle": "limit",
       "id": "reactflow__edge-65-15limit"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-66-40raster"
     }
   ],
-  "viewport": {
-    "x": 224.98633866090972,
-    "y": 137.2471914824814,
-    "zoom": 0.8088813483617395
-  },
   "inputs": {
     "data>getObservations.yml@15.species": {
       "description": "Scientific name of the species",
@@ -977,7 +973,24 @@
       "description": "Integer, 4 digit year, end date to retrieve occurrences",
       "label": "end year",
       "type": "int",
-      "example": 2020 
+      "example": 2020
+    },
+    "pipeline@57": {
+      "label": "projection system",
+      "description": "String, projection system",
+      "type": "text",
+      "example": "EPSG:6623"
+    }
+  },
+  "outputs": {
+    "SDM>runMaxent.yml@49.sdm_pred": {
+      "description": "model predictions while trained on the whole dataset",
+      "label": "predictions",
+      "type": "image/tiff;application=geotiff",
+      "range": [
+        0,
+        1
+      ]
     }
   }
 }

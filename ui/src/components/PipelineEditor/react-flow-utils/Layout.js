@@ -8,7 +8,7 @@ import { getScriptDescription } from '../ScriptDescriptionStore'
  * @param {Edge[]} edges 
  * @returns (Node[], Edge[]) the provided lists modified to layout the elements
  */
-export const getLayoutedElements = (nodes, edges) => {
+export const layoutElements = (nodes, edges) => {
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
   dagreGraph.setGraph({ rankdir: 'LR', nodesep: 10, align: undefined });
@@ -26,7 +26,7 @@ export const getLayoutedElements = (nodes, edges) => {
       Object.keys(getScriptDescription(node.data.descriptionFile).inputs).forEach(inputKey => inputList.push(inputKey))
       inputOrderMap.set(node.id, inputList)
 
-    } else if (node.type === 'constant') {
+    } else if (node.type === 'constant' || node.type === 'userInput') {
       edges.forEach((edge) => {
         // record width if this is the longest constant
         if (edge.source === node.id) {
@@ -70,7 +70,9 @@ export const getLayoutedElements = (nodes, edges) => {
     renderNode.targetPosition = 'left';
     renderNode.sourcePosition = 'right';
 
-    if (renderNode.type === 'constant' && dagreNode.connectedTo && dagreNode.connectedTo.length === 1) {
+    if ((renderNode.type === 'constant' || renderNode.type === 'userInput')
+      && dagreNode.connectedTo
+      && dagreNode.connectedTo.length === 1) {
       let maxWidth = longestConstantMap[dagreNode.connectedTo[0]]
       renderNode.position = {
         x: dagreNode.x + maxWidth / 2 - renderNode.width, // right align
