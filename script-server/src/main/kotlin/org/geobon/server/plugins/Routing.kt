@@ -60,7 +60,7 @@ fun Application.configureRouting() {
                     call.respond(Yaml().load(scriptFile.readText()) as Map<String, Any>)
                 } else {
                     call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
-                    logger.trace("404: Paths.getPipelineInfo ${call.parameters["scriptPath"]}")
+                    logger.debug("404: Paths.getPipelineInfo ${call.parameters["scriptPath"]}")
                 }
             } catch (ex: Exception) {
                 call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
@@ -116,7 +116,7 @@ fun Application.configureRouting() {
                     call.respondText(descriptionJSON.toString(), ContentType.parse("application/json"))
                 } else {
                     call.respondText(text = "$descriptionFile does not exist", status = HttpStatusCode.NotFound)
-                    logger.trace("404: Paths.getPipelineInfo ${call.parameters["descriptionPath"]}")
+                    logger.debug("404: Paths.getPipelineInfo ${call.parameters["descriptionPath"]}")
                 }
             } catch (ex: Exception) {
                 call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
@@ -175,7 +175,7 @@ fun Application.configureRouting() {
             runningPipelines[id]?.let { pipeline ->
                 // the pipeline is running, we need to stop it
                 pipeline.stop()
-                logger.trace("Cancelled ${id}")
+                logger.debug("Cancelled ${id}")
                 call.respond(HttpStatusCode.OK)
             } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
         }
