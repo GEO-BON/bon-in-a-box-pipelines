@@ -29,12 +29,23 @@ priority_map = SimpleSDMPredictor(priority_map_path)
 selected_points = stack([priority_map])[:,:,1] |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
 ###################
 
+
+
 # Write out as a geoJSON multipoint object
 points_string = Vector{String}(undef,size(selected_points)[1])
+
 for i in eachindex(selected_points)
-    x = selected_points[i][1]
-    y = selected_points[i][2]
-    points_string[i] = "[$x, $y]"
+    x, y = selected_points[i][1], selected_points[i][2]
+
+    left, right, top, bottom = priority_map.left, priority_map.right, priority_map.top, priority_map.bottom
+    
+    Δx = (right - left)/size(priority_map)[1]
+    Δy = (top - bottom)/size(priority_map)[2]
+
+    long = left + x*Δx + Δx/2
+    lat = bottom + y*Δy + Δy/2
+
+    points_string[i] = "[$long, $lat]"
 end
 
 points_string_join = join(points_string, ",\n\t\t")
