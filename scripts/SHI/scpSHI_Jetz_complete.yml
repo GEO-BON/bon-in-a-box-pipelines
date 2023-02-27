@@ -27,7 +27,7 @@ inputs:
     type: int
     example: 50
   max_forest:
-    label: min forest
+    label: max forest
     description: 
       Maximum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values 
       (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
