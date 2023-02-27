@@ -59,7 +59,8 @@ region <- ifelse(input$region== "" , NA ,input$region)
 #Define source of expert range maps
 expert_source <- input$expert_source
 #forest threshold for GFW (level of forest for the species)
-forest_threshold <- input$forest_threshold #USE MAP OF LIFE VALUES!!*****
+min_forest <- ifelse(input$min_forest== "" , NA,input$min_forest)
+max_forest <- ifelse(input$max_forest== "" , NA,input$max_forest)
 
 #define time steps
 t_0 <- input$t_0
@@ -255,9 +256,31 @@ cube_GFW_TC <-
             t1 = "2000-12-31",
             resampling = "bilinear")
 
-cube_GFW_TC_threshold <- cube_GFW_TC |>
-  gdalcubes::filter_pixel(paste0("data >=", forest_threshold)) |>#filter to forest threshold 0-100
-  gdalcubes::apply_pixel("data/data") # turn into a forest presence map
+forest_condition= case_when( #generate possible options according to availability of minimum and maximum forest values
+  is.na(min_forest)  & is.na(max_forest)  ~ 1, # when there is no input for tree cover percentage
+  !is.na(min_forest) & !is.na(max_forest) ~ 2, # when two percentage for tree cover needed
+  !is.na(min_forest) & is.na(max_forest)  ~ 3, # when just maximum tree cover percentage is given
+  is.na(min_forest)  & !is.na(max_forest) ~ 4) # when just minimum tree cover percentage is given
+
+if(forest_condition == 1){
+  print("--- At least one level of tree cover percentage is needed ---")
+}else{
+  if(forest_condition == 2){ # if both values are given
+    cube_GFW_TC_threshold <<- cube_GFW_TC |>
+      gdalcubes::filter_pixel(paste0("data <=", max_forest)) |>
+      gdalcubes::filter_pixel(paste0("data >= ", min_forest)) |> gdalcubes::apply_pixel("data/data")
+  }else{ # if only one value exist
+    if(forest_condition == 3){ # when just maximum tree cover percentage is given
+      cube_GFW_TC_threshold <<- cube_GFW_TC |>
+        gdalcubes::filter_pixel(paste0("data >= ", min_forest)) |> gdalcubes::apply_pixel("data/data")
+    }
+    if(forest_condition == 4){ # when just minimum tree cover percentage is given
+      cube_GFW_TC_threshold <<- cube_GFW_TC |>
+        gdalcubes::filter_pixel(paste0("data <=", max_forest)) |> gdalcubes::apply_pixel("data/data")
+    }
+  }
+}
+
 
 r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold , format="terra") # convert to raster format
 
