@@ -1,5 +1,5 @@
 using BiodiversityObservationNetworks
-using SimpleSDMLayers
+using SpeciesDistributionToolkit
 using JSON
 using Downloads
 using GeoArrays: read 

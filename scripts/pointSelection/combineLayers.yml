@@ -1,5 +1,5 @@
 script: combineLayers.jl
-description: Combines the layers and associate wieghts to create a priority map balanced across targets.
+description: Combines the layers and associate weights to create a priority map balanced across targets.
 
 inputs:
     layerdata:
