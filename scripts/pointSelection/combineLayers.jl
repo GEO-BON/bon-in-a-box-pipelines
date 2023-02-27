@@ -42,7 +42,7 @@ priority_path = joinpath(outputFilepath, "priority_map.tiff")
 ###################
 println(priority_path)
 # write out the priority map
-geotiff(priority_path, priority)
+SpeciesDistributionToolkit.save(priority_path, priority)
 
 println("pre_json save")
 

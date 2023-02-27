@@ -1,5 +1,5 @@
 using BiodiversityObservationNetworks
-using SimpleSDMLayers
+using SpeciesDistributionToolkit
 using JSON
 using CSV
 
@@ -24,7 +24,7 @@ println(priority_map_path)
 println(isfile(priority_map_path))
 
 ### Computation ###
-priority_map = geotiff(SimpleSDMPredictor, priority_map_path)
+priority_map = SimpleSDMPredictor(priority_map_path)
 
 selected_points = stack([priority_map])[:,:,1] |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
 ###################
