@@ -9,19 +9,19 @@ filepath = joinpath(outputFolder,"input.json")
 outputFilepath = joinpath(outputFolder,"data/")
 isdir(outputFilepath) || mkdir(outputFilepath)
 
-print(filepath)
-print(outputFilepath)
+println(filepath)
+println(outputFilepath)
 
 input = JSON.parsefile(filepath)
-print(keys(input))
+println(keys(input))
 
 # Assign json objects to variables
 priority_map_path = input["priority_map"]
 bias = input["bias_toward_high_priority"]
 numpoints = parse(Int64, input["num_points"])
 
-print(priority_map_path)
-print(isfile(priority_map_path))
+println(priority_map_path)
+println(isfile(priority_map_path))
 
 ### Computation ###
 priority_map = geotiff(SimpleSDMPredictor, priority_map_path)

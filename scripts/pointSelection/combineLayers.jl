@@ -15,9 +15,9 @@ isdir(outputFilepath) || mkdir(outputFilepath)
 input = JSON.parsefile(filepath)
 
 # Assign json objects to variables
-print(input["layerdata"])
+println(input["layerdata"])
 layermat = CSV.read(IOBuffer(input["layerdata"][1]), DataFrame)
-print(layermat)
+println(layermat)
 
 targetbalance = convert(Vector{Float64}, input["targetbalance"]) # this is the same as α
 layer_col = layermat[:, :layer]
@@ -40,11 +40,11 @@ priority = SimpleSDMPredictor(squish(layers, W, targetbalance))
 
 priority_path = joinpath(outputFilepath, "priority_map.tiff")
 ###################
-print(priority_path)
+println(priority_path)
 # write out the priority map
 geotiff(priority_path, priority)
 
-print("pre_json save")
+println("pre_json save")
 
 # write out json
 outputDict = Dict("priority_map" => priority_path)
