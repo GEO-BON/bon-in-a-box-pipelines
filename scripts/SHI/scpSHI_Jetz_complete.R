@@ -40,12 +40,12 @@ sp <- input$species
 srs <- input$srs
 check_srs <- grepl("^[[:digit:]]+$",srs)
 sf_srs  <-  if(check_srs) st_crs(as.numeric(srs)) else  st_crs(srs) # converts to numeric in case SRID is used
-srs_cube <- if(check_srs){
+srs_cube <- suppressWarnings(if(check_srs){
   authorities <- c("EPSG","ESRI","IAU2000","SR-ORG")
   auth_srid <- paste(authorities,srs,sep=":")
   auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(try(st_crs(.x))))
   if(sum(auth_srid_test)!=1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
-}else srs # paste Authority in case SRID is used 
+}else srs )# paste Authority in case SRID is used 
 
 #margin for elevation range
 elev_buffer <- input$elev_buffer
@@ -282,7 +282,7 @@ v <- cube_view(srs = srs_cube, extent = list(t0 = "2000-01-01", t1 = "2000-12-31
                                              left = sf_ext_srs['xmin'], right = sf_ext_srs['xmax'],
                                              top = sf_ext_srs['ymax'], bottom =  sf_ext_srs['ymin']),
                dx=spat_res, dy=spat_res, dt="P1Y",
-               resampling = "mode", aggregation = "mode") # TO CHANGE to proportions
+               resampling = "mode", aggregation = "first") # TO CHANGE to proportions
 
 times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4)) #get year of change by selected time step to mask map by year of change
 l_r_year_loss <- map(times, function(x) {
