@@ -57,8 +57,14 @@ json_string = ("{
     ]
 }")
 
-JSONoutputPath = joinpath(outputFolder, "output.json")
-touch(JSONoutputPath)
-file = open(JSONoutputPath, "w")
+pointsOutputPath = joinpath(outputFolder, "points.json")
+touch(pointsOutputPath)
+file = open(pointsOutputPath, "w")
 write(file, json_string)
+close(file)
+
+scriptOutputPath = joinpath(outputFolder, "output.json")
+touch(scriptOutputPath)
+file = open(scriptOutputPath, "w")
+write(file, "{\"points\": \"$pointsOutputPath\"}")
 close(file)
