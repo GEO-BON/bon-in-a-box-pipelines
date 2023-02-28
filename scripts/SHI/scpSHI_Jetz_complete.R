@@ -43,7 +43,7 @@ sf_srs  <-  if(check_srs) st_crs(as.numeric(srs)) else  st_crs(srs) # converts t
 srs_cube <- suppressWarnings(if(check_srs){
   authorities <- c("EPSG","ESRI","IAU2000","SR-ORG")
   auth_srid <- paste(authorities,srs,sep=":")
-  auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(try(st_crs(.x))))
+  auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(try(st_crs(.x),silent=TRUE)))
   if(sum(auth_srid_test)!=1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
 }else srs )# paste Authority in case SRID is used 
 
@@ -109,6 +109,7 @@ sf_range_map <- st_read(paste0(source_range_maps$species_path,'_range.gpkg'))
 print("========== Expert range map successfully loaded ==========")
 
 #get bounding box cropped by country if needed
+suppressWarnings({
 if(!is.na(country_code)){
   sf_area_lim1 <<- if(!is.na(region)){
     gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region)
@@ -129,6 +130,7 @@ if(!is.na(country_code)){
   }else{
     sf::sf_use_s2(FALSE)
     sf_ext <<- st_bbox(sf_area_lim |> st_buffer(spat_res*0.00001*10))
+    print("--- Buffer defined for spherical geometry ---")
   }
   print(sf_ext)
   
@@ -137,6 +139,7 @@ if(!is.na(country_code)){
   }else{
     sf::sf_use_s2(FALSE)
     sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*0.00001*10))
+    print("--- Buffer defined for spherical geometry ---")
   }
   print(sf_ext_srs)
 
@@ -160,7 +163,7 @@ if(!is.na(country_code)){
   }
   print(sf_ext_srs)
 }
-
+})
 
 #1.4 Final range----------------------------------------------------------------
 #Create raster
