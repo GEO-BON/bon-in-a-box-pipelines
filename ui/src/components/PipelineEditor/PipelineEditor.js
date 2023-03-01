@@ -320,6 +320,7 @@ export function PipelineEditor(props) {
 
                   if(inputDescription) {
                     label = inputDescription.label
+                    node.data.label = label
                     description = inputDescription.description
                   }
                 }
@@ -428,6 +429,8 @@ export function PipelineEditor(props) {
         delete node.positionAbsolute
         delete node.width
         delete node.height
+        if(node.type === 'userInput' || node.type === 'constant')
+          delete node.data.label
 
         // These we will reinject when loading
         delete node.targetPosition
@@ -554,6 +557,7 @@ export function PipelineEditor(props) {
                 break;
               case 'userInput':
                 node.data.onPopupMenu = onPopupMenu
+                node.data.label = inputsFromFile.find(i => i.nodeId === node.id).label
                 break;
               case 'output':
                 break;
