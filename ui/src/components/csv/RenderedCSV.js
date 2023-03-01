@@ -72,10 +72,10 @@ function CsvToMap({url, delimiter}) {
         const rowsWithColumns = parseCsvToRowsAndColumn(data, delimiter)
         const headerRow = rowsWithColumns.splice(0, 1)[0];
 
-        const latRegEx = new RegExp('lat', 'i')
+        const latRegEx = new RegExp('latt?itude', 'i')
         const latColumn = headerRow.findIndex(h => latRegEx.test(h))
 
-        const lonRegEx = new RegExp('lon', 'i')
+        const lonRegEx = new RegExp('longitude', 'i')
         const lonColumn = headerRow.findIndex(h => lonRegEx.test(h))
         
         return rowsWithColumns.map(row =>
