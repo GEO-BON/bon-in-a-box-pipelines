@@ -173,13 +173,15 @@ class ScriptRun( // Constructor used in single script run
                 }
             }
 
+            val pidFile = File(outputFolder.absolutePath, "pid")
             val command = when (scriptFile.extension) {
                 "jl", "JL" -> listOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-julia", "julia", scriptFile.absolutePath, outputFolder.absolutePath)
                 "r", "R" -> listOf(
                         "/usr/local/bin/docker", "exec", "-i", "biab-runner-r", "Rscript",
-                        "-e", "fileConn<-file(\"${outputFolder.absolutePath}/pid\"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);",
+                        "-e", "fileConn<-file(\"${pidFile.absolutePath}\"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);",
                         "-e", "outputFolder<-\"${outputFolder.absolutePath}\";",
-                        "-e", "source(\"${scriptFile.absolutePath}\");"
+                        "-e", "source(\"${scriptFile.absolutePath}\");",
+                        "-e", "unlink(\"${pidFile.absolutePath}\")"
                     )
 
                 "sh" -> listOf("sh", scriptFile.absolutePath, outputFolder.absolutePath)
@@ -197,7 +199,7 @@ class ScriptRun( // Constructor used in single script run
                 .start().also { process ->
                     withContext(Dispatchers.IO) { // More info on this context switching : https://elizarov.medium.com/blocking-threads-suspending-coroutines-d33e11bf4761
                         // The watchdog will terminate the process in two cases :
-                        // if the user cancels or is 60 minutes delay expires.
+                        // if the user cancels or if 60 minutes delay expires.
                         val watchdog = launch {
                             try {
                                 delay(timeout.toLong(DurationUnit.MILLISECONDS))
@@ -205,12 +207,27 @@ class ScriptRun( // Constructor used in single script run
 
                             } catch (ex: Exception) {
                                 if (process.isAlive) {
-                                    val event = ex.message ?: ex.javaClass.name
-                                    log(logger::info, "$event: killing running process...")
-                                    process.destroy()
-                                    if (!process.waitFor(1, TimeUnit.MINUTES)) {
-                                        log(logger::info, "$event: cancellation timeout elapsed.")
-                                        process.destroyForcibly()
+                                    withContext(Dispatchers.IO) {
+                                        val event = ex.message ?: ex.javaClass.name
+
+                                        if (pidFile.exists()) {
+                                            val pid = pidFile.readText().trim()
+                                            log(logger::debug, "$event: killing runner process '$pid'")
+
+                                            ProcessBuilder(listOf(
+                                                    "/usr/local/bin/docker", "exec", "-i", "biab-runner-r",
+                                                    "kill", "-s", "TERM", pid
+                                            )).start()
+
+                                            pidFile.delete()
+                                        }
+
+                                        log(logger::info, "$event: killing server process...")
+                                        process.destroy()
+                                        if (!process.waitFor(1, TimeUnit.MINUTES)) {
+                                            log(logger::info, "$event: cancellation timeout elapsed.")
+                                            process.destroyForcibly()
+                                        }
                                     }
 
                                     throw ex
