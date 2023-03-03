@@ -174,17 +174,23 @@ class ScriptRun( // Constructor used in single script run
             }
 
             val command = when (scriptFile.extension) {
-                "jl", "JL" -> mutableListOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-julia", "julia")
-                "r", "R" -> mutableListOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-r", "Rscript")
-                "sh" -> mutableListOf("sh")
-                "py", "PY" -> mutableListOf("python3")
+                "jl", "JL" -> listOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-julia", "julia", scriptFile.absolutePath, outputFolder.absolutePath)
+                "r", "R" -> listOf(
+                        "/usr/local/bin/docker", "exec", "-i", "biab-runner-r", "Rscript",
+                        "-e", "fileConn<-file(\"${outputFolder.absolutePath}/pid\"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);",
+                        "-e", "outputFolder<-\"${outputFolder.absolutePath}\";",
+                        "-e", "source(\"${scriptFile.absolutePath}\");"
+                    )
+
+                "sh" -> listOf("sh", scriptFile.absolutePath, outputFolder.absolutePath)
+                "py", "PY" -> listOf("python3", scriptFile.absolutePath, outputFolder.absolutePath)
                 else -> {
                     log(logger::warn, "Unsupported script extension ${scriptFile.extension}")
                     return flagError(mapOf(), true)
                 }
             }
 
-            ProcessBuilder(command + scriptFile.absolutePath + outputFolder.absolutePath)
+            ProcessBuilder(command)
                 .directory(RunContext.scriptRoot)
                 .redirectOutput(ProcessBuilder.Redirect.PIPE)
                 .redirectErrorStream(true) // Merges stderr into stdout
