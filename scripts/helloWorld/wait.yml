@@ -1,0 +1,13 @@
+script: wait.R
+description: Counter to debug timeout issues
+inputs:
+  end:
+    label: End
+    description: End of count (seconds)
+    type: int
+    example: 700
+outputs:
+  end:
+    label: End
+    description: Same as input
+    type: int

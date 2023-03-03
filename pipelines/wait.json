@@ -1,0 +1,50 @@
+{
+    "nodes": [
+      {
+        "id": "0",
+        "type": "io",
+        "position": {
+          "x": 509.23333740234375,
+          "y": 501
+        },
+        "data": {
+          "descriptionFile": "helloWorld>wait.yml"
+        }
+      },
+      {
+        "id": "2",
+        "type": "output",
+        "position": {
+          "x": 717.2333374023438,
+          "y": 501
+        },
+        "data": {
+          "label": "Output"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "0",
+        "sourceHandle": "end",
+        "target": "2",
+        "targetHandle": null,
+        "id": "reactflow__edge-0end-2"
+      }
+    ],
+    "inputs": {
+      "helloWorld>wait.yml@0.end": {
+        "description": "End of count (seconds)",
+        "label": "End",
+        "type": "int",
+        "example": 700
+      }
+    },
+    "outputs": {
+      "helloWorld>wait.yml@0.end": {
+        "description": "Same as input",
+        "label": "End",
+        "type": "int"
+      }
+    }
+  }
