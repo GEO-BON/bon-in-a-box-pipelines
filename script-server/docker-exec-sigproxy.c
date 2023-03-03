@@ -91,6 +91,7 @@ docker_exec(int argc, char *argv[])
 	putenv(buf);
 	argv[0] = "docker";
 	execvp(argv[0], argv);
+	DEBUGF("Exit 1\n");
 	exit(255);
 }
 
@@ -142,13 +143,18 @@ ev_accept(void)
 
 	DEBUGF("Accept\n");
 	in = accept(lsox, NULL, NULL);
-	if (in < 0)
+	if (in < 0) {
+		DEBUGF("Exit 2\n");
 		exit(255);
+	}
 
 	// Connect to original socket.
 	out = socket(AF_UNIX, SOCK_STREAM| SOCK_CLOEXEC, 0);
-	if (connect(out, (struct sockaddr *)&addr, sizeof addr) != 0)
+
+	if (connect(out, (struct sockaddr *)&addr, sizeof addr) != 0) {
+		DEBUGF("Exit 3\n");
 		exit(254);
+	}
 
 	buddy_up(in, out);
 }
@@ -201,10 +207,12 @@ dispatch(struct epoll_event *evs, int count)
 			sz = read(p->fd, buf, sizeof buf - 1);
 			if (sz <= 0)
 				return -1;
+
 			buf[sz] = '\0';
 			// DEBUGF("read(%d)=%zd '%s'\n", p->fd, sz, buf);
 			if (write(buddy->fd, buf, sz) != sz)
-				return -1;
+				return -2;
+
 			if ((exec_id == NULL) && (p->flags == 0))
 			{
 				parse(buf, sz);
@@ -225,15 +233,19 @@ cb_signal(int sig)
 		// The child died. Exit the same way.
 		if (waitpid(pid, &wstatus, 0) == pid)
 		{
-			if (WIFEXITED(wstatus))
+			if (WIFEXITED(wstatus)) {
+				DEBUGF("Exit 4\n");
 				exit(WEXITSTATUS(wstatus));
+			}
 
 			// Disable signal handler for this signal.
 			signal(WTERMSIG(wstatus), SIG_DFL);
 			// Kill myself with the same signal.
+			DEBUGF("Child died, kill self.\n");
 			kill(getpid(), WTERMSIG(wstatus));
 			return; // On return the above signal will be delivered.
 		}
+		DEBUGF("Exit 5\n");
 		exit(252); // SHOULD NOT HAPPEN
 	}
 
@@ -312,7 +324,7 @@ int main(int argc, char *argv[])
 	ev.data.fd = lsox;
 	epoll_ctl(efd, EPOLL_CTL_ADD, lsox, &ev);
 
-	int nfds;
+	int nfds, res;
 	struct epoll_event events[4];
 	for (;;)
 	{
@@ -321,11 +333,18 @@ int main(int argc, char *argv[])
 		{
 			if (errno == EINTR)
 				continue;
+
+			DEBUGF("errno %d\n", errno);
 			break;
 		}
-		if (dispatch(events, nfds) != 0)
+
+		res = dispatch(events, nfds);
+		if (res != 0) {
+			DEBUGF("Dispatch returned %d\n", res);
 			break;
+		}
 	}
 
+	DEBUGF("Exit 6 - end of main\n");
 	return 0;
 }
