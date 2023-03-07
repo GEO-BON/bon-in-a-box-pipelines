@@ -178,7 +178,7 @@ class ScriptRun( // Constructor used in single script run
                     }
                 }
 
-                val pidFile = File(outputFolder.absolutePath, "pid")
+                val pidFile = File(outputFolder.absolutePath, ".pid")
                 val command = when (scriptFile.extension) {
                     "jl", "JL" -> listOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-julia", "julia", scriptFile.absolutePath, outputFolder.absolutePath)
                     "r", "R" -> listOf(
