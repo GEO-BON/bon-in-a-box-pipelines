@@ -158,6 +158,8 @@ class ScriptRun( // Constructor used in single script run
         var outputs: Map<String, Any>? = null
 
         val elapsed = measureTime {
+            val pidFile = File(outputFolder.absolutePath, ".pid")
+
             runCatching {
                 // TODO: Errors are using the log file. If this initial step fails, they might be appended to previous log.
                 withContext(Dispatchers.IO) {
@@ -178,19 +180,34 @@ class ScriptRun( // Constructor used in single script run
                     }
                 }
 
-                val pidFile = File(outputFolder.absolutePath, ".pid")
-                val command = when (scriptFile.extension) {
-                    "jl", "JL" -> listOf("/root/docker-exec-sigproxy", "exec", "-i", "biab-runner-julia", "julia", scriptFile.absolutePath, outputFolder.absolutePath)
-                    "r", "R" -> listOf(
-                            "/usr/local/bin/docker", "exec", "-i", "biab-runner-r", "Rscript",
+
+                var runner = ""
+                val command:List<String>
+                when (scriptFile.extension) {
+                    "jl", "JL" ->  {
+                        runner = "biab-runner-julia"
+                        command = listOf("/usr/local/bin/docker", "exec", "-i", runner, "julia", "-e",
+                            """
+                            open("${pidFile.absolutePath}", "w") do file write(file, string(getpid())) end;
+                            ARGS=["${outputFolder.absolutePath}"];
+                            include("${scriptFile.absolutePath}")
+                            """
+                        )
+                    }
+
+                    "r", "R" -> {
+                        runner = "biab-runner-r"
+                        command = listOf(
+                            "/usr/local/bin/docker", "exec", "-i", runner, "Rscript",
                             "-e", "fileConn<-file(\"${pidFile.absolutePath}\"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);",
                             "-e", "outputFolder<-\"${outputFolder.absolutePath}\";",
                             "-e", "source(\"${scriptFile.absolutePath}\");",
                             "-e", "unlink(\"${pidFile.absolutePath}\")"
                         )
+                    }
 
-                    "sh" -> listOf("sh", scriptFile.absolutePath, outputFolder.absolutePath)
-                    "py", "PY" -> listOf("python3", scriptFile.absolutePath, outputFolder.absolutePath)
+                    "sh" -> command = listOf("sh", scriptFile.absolutePath, outputFolder.absolutePath)
+                    "py", "PY" -> command = listOf("python3", scriptFile.absolutePath, outputFolder.absolutePath)
                     else -> {
                         log(logger::warn, "Unsupported script extension ${scriptFile.extension}")
                         return flagError(mapOf(), true)
@@ -212,27 +229,26 @@ class ScriptRun( // Constructor used in single script run
 
                                 } catch (ex: Exception) {
                                     if (process.isAlive) {
-                                        withContext(Dispatchers.IO) {
-                                            val event = ex.message ?: ex.javaClass.name
+                                        val event = ex.message ?: ex.javaClass.name
 
-                                            if (pidFile.exists()) {
-                                                val pid = pidFile.readText().trim()
-                                                log(logger::debug, "$event: killing runner process '$pid'")
+                                        if (pidFile.exists() && runner.isNotEmpty()) {
+                                            val pid = pidFile.readText().trim()
+                                            log(logger::debug, "$event: killing runner process '$pid'")
 
-                                                ProcessBuilder(listOf(
-                                                        "/usr/local/bin/docker", "exec", "-i", "biab-runner-r",
-                                                        "kill", "-s", "TERM", pid
-                                                )).start()
+                                            ProcessBuilder(listOf(
+                                                    "/usr/local/bin/docker", "exec", "-i", runner,
+                                                    "kill", "-s", "TERM", pid
+                                            )).start()
 
-                                                pidFile.delete()
-                                            }
 
+                                        } else {
                                             log(logger::info, "$event: killing server process...")
                                             process.destroy()
-                                            if (!process.waitFor(1, TimeUnit.MINUTES)) {
-                                                log(logger::info, "$event: cancellation timeout elapsed.")
-                                                process.destroyForcibly()
-                                            }
+                                        }
+
+                                        if (!process.waitFor(10, TimeUnit.SECONDS)) {
+                                            log(logger::info, "$event: cancellation timeout elapsed.")
+                                            process.destroyForcibly()
                                         }
 
                                         throw ex
@@ -302,6 +318,8 @@ class ScriptRun( // Constructor used in single script run
                     }
                 }
             }
+
+            pidFile.delete()
         }
         log(logger::info, "Elapsed: $elapsed")
 
