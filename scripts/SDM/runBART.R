@@ -3,6 +3,7 @@
 ## Install required packages
 
 ## Load required packages
+if (!"embarcadero" %in% installed.packages()[,"Package"]) devtools::install_github("cjcarlson/embarcadero")
 
 library("terra")
 library("rjson")
@@ -11,7 +12,7 @@ library("dplyr")
 library("embarcadero")
 
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "runSDM/funcRunSDM.R", sep = "/"))
+#source(paste(Sys.getenv("SCRIPT_LOCATION"), "runSDM/funcRunSDM.R", sep = "/"))
 ## Receiving args
 args <- commandArgs(trailingOnly=TRUE)
 outputFolder <- args[1] # Arg 1 is always the output folder
