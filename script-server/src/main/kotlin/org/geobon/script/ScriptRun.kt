@@ -240,6 +240,12 @@ class ScriptRun( // Constructor used in single script run
                                                     "kill", "-s", "TERM", pid
                                             )).start()
 
+                                            if (!process.waitFor(10, TimeUnit.SECONDS)) {
+                                                ProcessBuilder(listOf(
+                                                        "/usr/local/bin/docker", "exec", "-i", runner,
+                                                        "kill", "-s", "KILL", pid
+                                                )).start()
+                                            }
 
                                         } else {
                                             log(logger::info, "$event: killing server process...")
