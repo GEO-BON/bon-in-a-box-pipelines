@@ -2,10 +2,9 @@ FROM openjdk:11-jre-bullseye as base-image
 
 # Installing 
 # - python (to run python scripts directly on the server)
-# - gcc & libc6-dev (necessary for docker-exec-sigproxy.c to run)
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends python3 gcc libc6-dev; \
+    apt-get install -y --no-install-recommends python3 libc6-dev; \
     apt-get clean all;
 
 #INSTALL DOCKER CLI
@@ -28,13 +27,7 @@ RUN gradle assemble
 
 ## This takes the build server and puts in on the R-script enabled image
 FROM base-image
-COPY --from=builder /home/gradle/project/build/libs/kotlin-server-all.jar /root/kotlin-server.jar
-
-COPY docker-exec-sigproxy.c /root/docker-exec-sigproxy.c
-RUN set -ex; \
-    gcc -Wall -O2 -o /root/docker-exec-sigproxy /root/docker-exec-sigproxy.c; \
-    rm /root/docker-exec-sigproxy.c; \
-    apt-get purge -y gcc;
+COPY --from=builder /home/gradle/project/build/libs/biab-script-server-all.jar /root/biab-script-server.jar
     
 WORKDIR /root
-CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "kotlin-server.jar"]
+CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "biab-script-server.jar"]
