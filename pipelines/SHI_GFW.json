@@ -4,58 +4,19 @@
       "id": "8",
       "type": "io",
       "position": {
-        "x": 769.390625,
-        "y": 436
+        "x": 432,
+        "y": 115
       },
       "data": {
         "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
       }
     },
     {
-      "id": "9",
-      "type": "constant",
-      "position": {
-        "x": 454.390625,
-        "y": 436
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Saguinus oedipus"
-      }
-    },
-    {
-      "id": "10",
-      "type": "constant",
-      "position": {
-        "x": 468.390625,
-        "y": 452
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:3116"
-      }
-    },
-    {
-      "id": "11",
-      "type": "constant",
-      "position": {
-        "x": 468.390625,
-        "y": 467
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 50
-      }
-    },
-    {
       "id": "12",
       "type": "constant",
       "position": {
-        "x": 480.390625,
-        "y": 463
+        "x": 11,
+        "y": 76
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,37 +25,11 @@
       }
     },
     {
-      "id": "13",
-      "type": "constant",
-      "position": {
-        "x": 464.390625,
-        "y": 489
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 100
-      }
-    },
-    {
-      "id": "14",
-      "type": "constant",
-      "position": {
-        "x": 479.390625,
-        "y": 505
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "COL"
-      }
-    },
-    {
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 486.390625,
-        "y": 529
+        "x": 11,
+        "y": 228
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,55 +38,11 @@
       }
     },
     {
-      "id": "16",
-      "type": "constant",
-      "position": {
-        "x": 495.390625,
-        "y": 541
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "IUCN",
-        "options": [
-          "MOL",
-          "IUCN",
-          "QC"
-        ]
-      }
-    },
-    {
-      "id": "17",
-      "type": "constant",
-      "position": {
-        "x": 460.390625,
-        "y": 557
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2000
-      }
-    },
-    {
-      "id": "18",
-      "type": "constant",
-      "position": {
-        "x": 465.390625,
-        "y": 570
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2020
-      }
-    },
-    {
       "id": "19",
       "type": "constant",
       "position": {
-        "x": 468.390625,
-        "y": 580
+        "x": 11,
+        "y": 380
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -163,8 +54,8 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 1285.390625,
-        "y": 450
+        "x": 1012,
+        "y": 185
       },
       "data": {
         "label": "Output"
@@ -173,25 +64,11 @@
   ],
   "edges": [
     {
-      "source": "9",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "species",
-      "id": "reactflow__edge-9-8species"
-    },
-    {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-10-8srs"
-    },
-    {
-      "source": "11",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "min_forest",
-      "id": "reactflow__edge-11-8min_forest"
+      "source": "8",
+      "sourceHandle": "img_shi_time_period",
+      "target": "20",
+      "targetHandle": null,
+      "id": "reactflow__edge-8img_shi_time_period-20"
     },
     {
       "source": "12",
@@ -201,20 +78,6 @@
       "id": "reactflow__edge-12-8elev_buffer"
     },
     {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "max_forest",
-      "id": "reactflow__edge-13-8max_forest"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "country_code",
-      "id": "reactflow__edge-14-8country_code"
-    },
-    {
       "source": "15",
       "sourceHandle": null,
       "target": "8",
@@ -222,47 +85,72 @@
       "id": "reactflow__edge-15-8spat_res"
     },
     {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "expert_source",
-      "id": "reactflow__edge-16-8expert_source"
-    },
-    {
-      "source": "17",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "t_0",
-      "id": "reactflow__edge-17-8t_0"
-    },
-    {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "t_n",
-      "id": "reactflow__edge-18-8t_n"
-    },
-    {
       "source": "19",
       "sourceHandle": null,
       "target": "8",
       "targetHandle": "time_step",
       "id": "reactflow__edge-19-8time_step"
-    },
-    {
-      "source": "8",
-      "sourceHandle": "img_shi_time_period",
-      "target": "20",
-      "targetHandle": null,
-      "id": "reactflow__edge-8img_shi_time_period-20"
     }
   ],
   "inputs": {
+    "SHI>scpSHI_Jetz_complete.yml@8.species": {
+      "description": "Scientific name of the species.",
+      "label": "species",
+      "type": "text",
+      "example": "Saguinus oedipus"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8.srs": {
+      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
+      "label": "spatial reference system",
+      "type": "text",
+      "example": "EPSG:3116"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8.min_forest": {
+      "description": "Minimum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "min forest",
+      "type": "int",
+      "example": 50
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8.max_forest": {
+      "description": "Maximum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "max forest",
+      "type": "int",
+      "example": 100
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8.country_code": {
+      "description": "Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.",
+      "label": "country code",
+      "type": "text",
+      "example": "COL"
+    },
     "SHI>scpSHI_Jetz_complete.yml@8.region": {
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
       "label": "region",
       "type": "text",
       "example": ""
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8.expert_source": {
+      "description": "Source of the expert range map for the species.",
+      "label": "source of expert range map",
+      "type": "options",
+      "options": [
+        "MOL",
+        "IUCN",
+        "QC"
+      ],
+      "example": "IUCN"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8.t_0": {
+      "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
+      "label": "initial time",
+      "type": "int",
+      "example": 2000
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8.t_n": {
+      "description": "Year where the analysis should end (it should be later than Initial time)",
+      "label": "final time",
+      "type": "int",
+      "example": 2020
     }
   },
   "outputs": {
