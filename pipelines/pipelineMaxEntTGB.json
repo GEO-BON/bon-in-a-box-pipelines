@@ -963,11 +963,6 @@
       "id": "reactflow__edge-63-23mask"
     }
   ],
-  "viewport": {
-    "x": 169.08522850860118,
-    "y": 41.13768813478339,
-    "zoom": 0.8032939967570334
-  },
   "inputs": {
     "data>getObservations.yml@15.species": {
       "description": "Scientific name of the species",
@@ -986,6 +981,12 @@
       "label": "end year",
       "type": "int",
       "example": 2020
+    },
+    "data>getObservations.yml@15.bbox_buffer": {
+      "description": "Interger, width of the buffer around the bbox containing the presence points.",
+      "label": "bbox buffer",
+      "type": "int",
+      "example": 0
     },
     "data>heatmapFromSTAC.yml@67.taxa": {
       "description": "taxonomic group to retrieve GBIF heatmap",
