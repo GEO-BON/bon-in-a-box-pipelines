@@ -27,8 +27,8 @@ const scale = chroma.scale(scaleColors);
  * @returns the min and max of the thumbnail
  */
 function minMax2d(array2d) {
-  var min = Number.MAX_VALUE;
-  var max = Number.MIN_VALUE;
+  var min = Number.POSITIVE_INFINITY;
+  var max = Number.NEGATIVE_INFINITY;
   array2d.forEach(array1d => {
     array1d.forEach(v => {
       min = Math.min(v, min)
