@@ -24,11 +24,6 @@ lapply(packages,require,character.only=T)
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 source(file.path(path_script,"SHI/funGet_range_maps.R"), echo=TRUE)
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
-
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
@@ -74,11 +69,6 @@ token <- Sys.getenv("IUCN_TOKEN")
 
 #Filter source for land cover, global or colombia
 # LC_source <- input$lc_source
-
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 # Set output folder as working directory which has permissions to save files
 setwd(outputFolder)
