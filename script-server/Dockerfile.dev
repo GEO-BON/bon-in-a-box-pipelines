@@ -1,4 +1,4 @@
-FROM gradle:6.9.2-jdk11
+FROM gradle:7.5.1-jdk11
 
 #INSTALL DOCKER CLI
 ENV DOCKER_VERSION=20.10.9
@@ -14,10 +14,5 @@ RUN chmod +x /usr/local/bin/docker
 
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends python3 gcc libc6-dev; \
+    apt-get install -y --no-install-recommends python3 libc6-dev; \
     apt-get clean all;
-
-# The signal proxy lets us cancel processes in other dockers
-COPY docker-exec-sigproxy.c docker-exec-sigproxy.c
-RUN gcc -Wall -O2 -o /root/docker-exec-sigproxy docker-exec-sigproxy.c
-RUN apt-get purge -y gcc

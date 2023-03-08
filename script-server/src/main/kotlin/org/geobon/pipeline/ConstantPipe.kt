@@ -4,7 +4,13 @@ open class ConstantPipe(override val type: String, private val value: Any) : Pip
 
     override suspend fun pull(): Any = value
 
+    override suspend fun pullIf(condition: (step: Step) -> Boolean): Any? = pull()
+
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         // Not dumped
+    }
+
+    override fun validateGraph(): String {
+        return ""
     }
 }

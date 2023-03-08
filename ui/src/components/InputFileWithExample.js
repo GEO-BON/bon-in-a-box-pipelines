@@ -1,7 +1,18 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
 
-export function InputFileWithExample({defaultValue, metadata}) {
+const yaml = require('js-yaml');
+
+export const InputFileWithExample = forwardRef(({metadata}, ref) => {
   const textareaRef = useRef(null);
+
+  useImperativeHandle(ref, () => ({
+    getValue() {
+      if (textareaRef.current.value === '')
+        return '{}'
+      else
+        return JSON.stringify(yaml.load(textareaRef.current.value))
+    },
+  }));
 
   /**
    * Automatic horizontal and vertical resizing of textarea
@@ -29,10 +40,26 @@ export function InputFileWithExample({defaultValue, metadata}) {
       });
     }
 
-    textareaRef.current.value = JSON.stringify(inputExamples, null, 2);
-    resize(textareaRef.current);
+    const textarea = textareaRef.current;
+    if(isEmptyObject(inputExamples)) {
+      textarea.disabled = true
+      textarea.placeholder = "No inputs"
+      textarea.value = ""
+    } else {
+      textarea.disabled = false
+      textarea.placeholder = ""
+      textarea.value = yaml.dump(inputExamples, {'lineWidth': 124})
+    }
+
+    resize(textarea)
   }, [metadata]);
 
-  return <textarea ref={textareaRef} name="inputFile" className="inputFile" type="text" defaultValue={defaultValue}
+  return <textarea ref={textareaRef} className="inputFile" type="text"
     onInput={(e) => resize(e.target)}></textarea>;
+})
+
+// https://stackoverflow.com/a/34491966/3519951
+function isEmptyObject(obj) { 
+  for (var _ in obj) { return false; }
+  return true;
 }

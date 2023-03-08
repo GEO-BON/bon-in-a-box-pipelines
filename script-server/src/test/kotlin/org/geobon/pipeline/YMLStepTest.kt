@@ -2,14 +2,11 @@ package org.geobon.pipeline
 
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Test
-import kotlin.test.assertTrue
-import kotlin.test.assertEquals
-import kotlin.test.assertFalse
-import kotlin.test.assertNotNull
+import java.io.File
+import kotlin.test.*
 
 private class ResourceYml(resourcePath: String, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
-    YMLStep(yamlString = ResourceYml::class.java.classLoader.getResource(resourcePath)!!.readText(), inputs = inputs) {
+    YMLStep(File(ResourceYml::class.java.classLoader.getResource(resourcePath)!!.path), inputs = inputs) {
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         throw Exception("this is in YMLStep, should not be tested")
     }

@@ -77,6 +77,7 @@ Here is an empty commented sample:
 script: # script file with extension, such as "myScript.py".
 description: # Targetted to those who will interpret pipeline results and edit pipelines.
 external_link: # Optional, link to a separate project, github repo, etc.
+timeout: # Optional, in minutes. By defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
 
 inputs: # 0 to many
   key: # replace the word "key" by a snake case identifier for this input
@@ -99,6 +100,7 @@ references: # 0 to many
 
 See [example](/scripts/helloWorld/helloR.yml)
 
+#### Input and output types
 Each input and output must declare a type, *in lowercase.* The following file types are accepted:
 | File type                    | MIME type to use in the yaml   | UI rendering                 |
 | ---------------------------- |------------------------------- |------------------------------|
@@ -153,7 +155,9 @@ The structure of the script description file will be validated on push. To run t
 This validates that the structure is correct, but not that it is correct. Hence, peer review of the scripts and the description files is mandatory before accepting a pull requests.
 
 ### Reporting problems
-The output keys `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. Both will be displayed specially in the UI.
+The output keys `info`, `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. They will be displayed specially in the UI.
+
+Any `error` message will halt the rest of the pipeline.
 
 ### Script dependencies
 Scripts can install their own dependencies directly (`install.packages` in R, `Pkg.add` in Julia, etc). However, it will need to be reinstalled if the server is deployed on another computer or server.
@@ -161,7 +165,11 @@ Scripts can install their own dependencies directly (`install.packages` in R, `P
 To pre-compile the dependency in the image, add it to [runners/r-dockerfile](runners/r-dockerfile) or [runners/julia-dockerfile](runners/julia-dockerfile). When the pull request is merged to main, a new image will be available to `docker compose pull` with the added dependencies.
 
 ## Pipelines
-Each script becomes a pipeline step. Pipelines support the same input and output types and UI rendering as individual scripts.
+A pipeline is a collection of steps to acheive the desired processing. Each script becomes a pipeline step.
+![image](https://user-images.githubusercontent.com/6223744/211096047-d1d205e3-2f5e-4af6-b8c5-015b002432cb.png)
+
+
+Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (red box in image above). It supports [the same types and UI rendering](#input-and-output-types) as individual scripts, since its inputs are directly fed to the steps, and outputs come from the step outputs.
 
 ### Pipeline editor
 
@@ -171,9 +179,11 @@ The left pane shows the available steps, the right pane shows the canvas.
 
 **To add a step:** drag and drop from the left pane to the canvas.
 
-**To connect steps:** drag and drop from one output handle to an input handle. Input handles are on the left, and output handles are on the right.
+**To connect steps:** drag to connect an output and an input handle. Input handles are on the left, output handles are on the right.
 
 **To add a constant value:** double-click on any input to add a constant value linked to this input. It is pre-filled with the example value.
+
+**To add an output:** double-click on any *step* output to add a *pipeline* output linked to it, or drag and drop the red box from the left pane and link it manually.
 
 **To delete a step or a pipe:** select it and press the Delete key on your keyboard.
 
@@ -185,12 +195,26 @@ A single value can also be combined with an array of the same type, to produce a
 
 <img src="https://user-images.githubusercontent.com/6223744/181106278-f6db6af5-764a-4775-b196-48feac940eec.png" width="300">
 
-**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the input.json sample file when running the pipeline.
+**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the sample input.json file when running the pipeline.
+
+If an input is common to many step, a special user input node can be added to avoid duplication. First, link your nodes to a constant.
+
+<img src="https://user-images.githubusercontent.com/6223744/218197354-8a7bb46d-dbaa-4d7f-ad8d-b4dd521fb28f.png" height="52">
+
+Then, use the down arrow to pop the node's menu. Choose "Convert to user input".
+
+<img src="https://user-images.githubusercontent.com/6223744/218197468-142dcdfb-447f-4076-b6c5-59e8e448b32e.png" height="61">
+
+The node will change as below, and the details will appear on the right pane, along with the other user inputs.
+
+<img src="https://user-images.githubusercontent.com/6223744/218197580-d5e21247-0492-40d7-b527-add323abd6b4.png" height="51">
+
 
 ### Pipeline inputs and outputs
 Any **input** with no constant value assigned will be considered a pipeline input and user will have to fill the value.
 
-Drag and drop an **output** node and link it to a step output to specify that this output is an output of the pipeline. All other unmarked step outputs will still be available as intermediate results in the UI.
+Add an **output** node linked to a step output to specify that this output is an output of the pipeline. All other unmarked step outputs will still be available as intermediate results in the UI.
+
 ![image](https://user-images.githubusercontent.com/6223744/181108988-97d988ca-8f4b-45b1-b4a3-32e90821b68b.png)
 
 
@@ -208,7 +232,7 @@ To save your modifications:
 3. Remove all the content of the target file.
 4. Paste content and save.
 
-To share your modifications, commit and push on a branch using git. Then,create a pull request for that branch through the github UI.
+To share your modifications, commit and push on a branch using git. Then, create a pull request for that branch through the github UI.
 
 ## Developer documentation
 The linked content is intended for those developing the microservice infrastructure supporting the pipelines.

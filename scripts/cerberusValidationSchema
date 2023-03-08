@@ -12,6 +12,10 @@ external_link:
   type: string
   regex: '^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$'
 
+timeout:
+  required: false
+  type: number
+
 inputs:
   required: false
   nullable: true
@@ -31,14 +35,21 @@ inputs:
         required: true
         type: string
         oneof:
-        - forbidden: [options]
+        - forbidden: [options, object, "object[]"]
         - allowed: [options]
           dependencies: options
+        - allowed: [object, "object[]"]
+          dependencies: properties
       options:
         required: false
         type: list
         dependencies:
           type: options
+      properties:
+        required: false
+        type: list
+        dependencies:
+          type: [object, "object[]"]
       example:
         required: true
         oneof:
@@ -46,6 +57,9 @@ inputs:
         - type: string
         - type: boolean
         - type: list
+        - type: dict
+          dependencies:
+            type: [object]
 
 outputs:
   required: true
@@ -53,7 +67,8 @@ outputs:
   type: dict
   keysrules: 
    type: string
-   regex: "[a-z_]+"
+   regex: "[a-z0-9_]+"
+   forbidden: [info, warning, error]
   valuesrules: 
     schema: 
       label:
@@ -66,14 +81,21 @@ outputs:
         required: true
         type: string
         oneof:
-        - forbidden: [options]
+        - forbidden: [options, object, "object[]"]
         - allowed: [options]
           dependencies: options
+        - allowed: [object, "object[]"]
+          dependencies: properties
       options:
         required: false
         type: list
         dependencies:
           type: options
+      properties:
+        required: false
+        type: list
+        dependencies:
+          type: [object, "object[]"]
       range:
         required: false
         type: list
@@ -88,6 +110,9 @@ outputs:
           nullable: true
         - type: boolean
         - type: list
+        - type: dict
+          dependencies:
+            type: [object]
 
 references:
   required: false

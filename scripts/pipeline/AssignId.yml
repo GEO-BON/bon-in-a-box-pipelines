@@ -1,0 +1,26 @@
+script: AssignId.kt
+description: 
+  Creates an object carrying a layer and its identifier. 
+  To be used in conjunction with PullLayersById, inside a pipeline.
+  (Cannot be ran as a single script.)
+inputs:
+  id:
+    label: id
+    description: id that will be assigned to the layer
+    type: text
+    example: myId
+  layer:
+    label: Layer
+    description: Layer that will receive the id
+    type: image/tiff;application=geotiff
+    example: path/to/my/layer.tiff
+
+outputs:
+  identified_layer:
+    label: Identified layer
+    description: An object containing the id and the layer
+    type: object
+    properties:
+      - id
+      - layer
+    example: { id: "myId", layer: "path/to/my/layer.tiff" }

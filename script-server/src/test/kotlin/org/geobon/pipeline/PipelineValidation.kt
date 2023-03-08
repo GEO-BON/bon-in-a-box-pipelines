@@ -1,28 +1,25 @@
 package org.geobon.pipeline
 
-import io.kotest.extensions.system.OverrideMode
-import io.kotest.extensions.system.withEnvironment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.utils.productionPipelinesRoot
+import org.geobon.utils.withProductionPaths
 import org.json.JSONObject
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
 import java.io.File
+import kotlin.test.AfterTest
+import kotlin.test.BeforeTest
+import kotlin.test.Test
 import kotlin.test.fail
 
 @ExperimentalCoroutinesApi
 internal class PipelineValidation {
 
-    private val productionPipelinesRoot: File = File(File("").absoluteFile.parent, "pipelines")
-    private val productionScriptsRoot: File = File(File("").absoluteFile.parent, "scripts")
-
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
 
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
     }
 
@@ -57,14 +54,10 @@ internal class PipelineValidation {
 
     @Test
     fun runValidationOnAllPipelines() = runTest {
-        withEnvironment("PIPELINES_LOCATION", productionPipelinesRoot.absolutePath, OverrideMode.SetOrOverride) {
-            withEnvironment("SCRIPT_LOCATION", productionScriptsRoot.absolutePath, OverrideMode.SetOrOverride) {
-                println(File(System.getenv("PIPELINES_LOCATION")))
-                println(File(System.getenv("SCRIPT_LOCATION")))
-                val errorMessage = validateAllPipelines(productionPipelinesRoot)
-                if (errorMessage.isNotEmpty()) {
-                    fail(errorMessage)
-                }
+        withProductionPaths {
+            val errorMessage = validateAllPipelines(productionPipelinesRoot)
+            if (errorMessage.isNotEmpty()) {
+                fail(errorMessage)
             }
         }
     }

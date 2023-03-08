@@ -7,11 +7,6 @@ packages <- c("rjson")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
-
 library("rjson")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")

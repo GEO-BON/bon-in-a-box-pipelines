@@ -1,19 +1,20 @@
 package org.geobon.pipeline
 
-import com.google.gson.Gson
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.SCRIPT
+import org.geobon.script.Description.TIMEOUT
 import org.geobon.script.ScriptRun
-import org.geobon.script.ScriptRun.Companion.scriptRoot
+import org.geobon.script.ScriptRun.Companion.DEFAULT_TIMEOUT
 import java.io.File
+import kotlin.time.Duration.Companion.minutes
 
 
-class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
-    YMLStep(yamlString = yamlFile.readText(), inputs = inputs) {
+class ScriptStep(yamlFile: File, id: String = YMLStep.generateId(), inputs: MutableMap<String, Pipe> = mutableMapOf()) :
+    YMLStep(yamlFile, id, inputs = inputs) {
 
-    var runId: String? = null
-
-    constructor(fileName: String, inputs: MutableMap<String, Pipe> = mutableMapOf()) : this(
+    constructor(fileName: String, id: String = YMLStep.generateId(), inputs: MutableMap<String, Pipe> = mutableMapOf()) : this(
         File(scriptRoot, fileName),
+        id,
         inputs
     )
 
@@ -24,24 +25,11 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
         return super.validateGraph()
     }
 
-    override fun validateInputsConfiguration(): String {
-        val errorMsg = super.validateInputsConfiguration()
-        if (errorMsg.isNotBlank()) return "$yamlFile: $errorMsg"
-        return ""
-    }
-
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
-        val scriptRun = ScriptRun(scriptFile, resolvedInputs.toSortedMap())
+        val specificTimeout = (yamlParsed[TIMEOUT] as? Int)?.minutes
+        val scriptRun = ScriptRun(scriptFile, resolvedInputs.toSortedMap(), context!!, specificTimeout ?: DEFAULT_TIMEOUT)
 
-        validateInputsReceived(resolvedInputs)?.let { error ->
-            val results = mapOf(ScriptRun.ERROR_KEY to error)
-            scriptRun.resultFile.parentFile.mkdirs()
-            scriptRun.resultFile.writeText(Gson().toJson(results))
-            throw RuntimeException(error)
-        }
-
-        runId = scriptRun.id // TODO: This is premature. A client could access the cache before we invalidate it.
         scriptRun.execute()
 
         if (scriptRun.results.containsKey(ScriptRun.ERROR_KEY))
@@ -50,16 +38,8 @@ class ScriptStep(val yamlFile: File, inputs: MutableMap<String, Pipe> = mutableM
         return scriptRun.results
     }
 
-    /**
-     * @param allOutputs Map of Step identifier to output folder.
-     */
-    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
-        val relPath = yamlFile.relativeTo(scriptRoot).path
-        val previousValue = allOutputs.put("$relPath@${hashCode()}", runId ?: "")
-
-        // Pass it on only if not already been there (avoids duplication for more complex graphs)
-        if (previousValue == null) {
-            super.dumpOutputFolders(allOutputs)
-        }
+    override fun toString(): String {
+        return "ScriptStep(yamlFile=$yamlFile)"
     }
+
 }

@@ -18,10 +18,6 @@ library("stringr")
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "data/getObservationsFunc.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
