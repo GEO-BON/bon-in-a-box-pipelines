@@ -1,4 +1,4 @@
-rootProject.name = "BON in a Box script server"
+rootProject.name = "biab-script-server"
 
 pluginManagement {
     val ktorVersion: String by settings
