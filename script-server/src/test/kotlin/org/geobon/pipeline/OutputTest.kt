@@ -3,9 +3,9 @@ package org.geobon.pipeline
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.teststeps.EchoStep
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
+import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 
 @ExperimentalCoroutinesApi
 internal class OutputTest {
@@ -22,7 +22,7 @@ internal class OutputTest {
     fun givenDisconnectedOutput_whenPull_thenExceptionThrown() = runTest {
         val underTest = Output("text/plain")
 
-        assertThrows<Exception> {
+        assertFailsWith<Exception> {
             println(underTest.pull())
         }
     }
@@ -31,7 +31,7 @@ internal class OutputTest {
     fun givenOutputNotFulfilled_whenPull_thenExceptionThrown() = runTest {
         val step = EchoStep("Bouh!")
 
-        assertThrows<Exception> {
+        assertFailsWith<Exception> {
             println(step.outputs[EchoStep.NO_ECHO]!!.pull())
         }
     }

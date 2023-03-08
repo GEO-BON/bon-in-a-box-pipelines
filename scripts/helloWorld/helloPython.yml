@@ -1,5 +1,6 @@
 script: helloPython.py
 description: "Sample python script that increments a number."
+timeout: 1
 inputs:
   some_int:
     label: Some int

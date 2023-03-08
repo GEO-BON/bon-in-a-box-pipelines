@@ -26,6 +26,31 @@ paths:
                 items:
                   type: string
                   example: ["helloWorld.yml", "runSDM.yml","SHI.yml"]
+  /script/{scriptPath}/info:
+    get:
+      tags: []
+      summary: Get metadata about this script
+      operationId: getScriptInfo
+      parameters:
+        - name: scriptPath
+          in: path
+          description: Where to find the script in ./script folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Returns the metadata, in JSON format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/info'
+        "400":
+          description: Bad request
+        "404":
+          description: Script not found
   /script/{scriptPath}/run:
     post:
       tags: []
@@ -50,31 +75,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/script_run_result'
-        "400":
-          description: Bad request
-        "404":
-          description: Script not found
-  /script/{scriptPath}/info:
-    get:
-      tags: []
-      summary: Get metadata about this script
-      operationId: getScriptInfo
-      parameters:
-        - name: scriptPath
-          in: path
-          description: Where to find the script in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Returns the metadata, in JSON format
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/info'
         "400":
           description: Bad request
         "404":
@@ -226,6 +226,9 @@ components:
         external_link: 
           type: string
           example: https://github.com/GEO-BON/biab-2.0
+        timeout:
+          type: number
+          example: 60
         inputs: 
           type: object
           additionalProperties: 
@@ -247,6 +250,13 @@ components:
                 example:
                 - Option 1
                 - Option 2
+              properties:
+                type: array
+                items: 
+                  type: string
+                example: 
+                  - id
+                  - layer
               example: 
                 example: Glyptemys insculpta
                 oneOf:
@@ -287,6 +297,13 @@ components:
                 example:
                 - Option 1
                 - Option 2
+              properties:
+                type: array
+                items: 
+                  type: string
+                example: 
+                  - id
+                  - layer
               example: 
                 example: file.csv
                 oneOf:

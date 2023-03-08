@@ -1,13 +1,25 @@
 import React, { useEffect, useState } from 'react'
 import spinner from '../../img/spinner.svg';
-import CsvToHtmlTable from './CsvToHtmlTable.jsx'
+import CsvToHtmlTable, {parseCsvToRowsAndColumn} from './CsvToHtmlTable.jsx'
+import MapResult from '../map/Map';
 
 /**
  * Properties
  * - url: source of content
  * - delimiter: used to parse the CSV file
  */
-function RenderedCSV(props) {
+function RenderedCSV({url, delimiter}) {
+    const [asMap, setAsMap] = useState(false)
+
+    return <>
+        <button onClick={() => setAsMap(b => !b)}>{asMap ? "View in table" : "View on map"}</button>
+        {asMap ? <CsvToMap url={url} delimiter={delimiter} />
+            : <CsvToTable url={url} delimiter={delimiter} />}
+    </>
+}
+
+function CsvToTable({url, delimiter}) {
+    const [error, setError] = useState()
     const [data, setData] = useState(null)
     const [partial, setPartial] = useState(false)
 
@@ -15,29 +27,90 @@ function RenderedCSV(props) {
         const maxLength = 1024*6;
 
         var xhr = new XMLHttpRequest();
-        xhr.open("get", props.url);
+        xhr.open("get", url);
         xhr.setRequestHeader("Range", "bytes=0-" + maxLength);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
-                let responseLength = new TextEncoder().encode(xhr.responseText).length
-
-                let csv = xhr.responseText
-                if(responseLength >= maxLength){
-                    // Remove last line (99% chances it's incomplete...)
-                    csv = csv.substring(0, csv.lastIndexOf("\n"))
-                    setPartial(true)
+                if(xhr.status === 200 || xhr.status === 206) {
+                    let responseLength = new TextEncoder().encode(xhr.responseText).length
+    
+                    let csv = xhr.responseText
+                    if(responseLength >= maxLength){
+                        // Remove last line (99% chances it's incomplete...)
+                        csv = csv.substring(0, csv.lastIndexOf("\n"))
+                        setPartial(true)
+                    }
+    
+                    setData(csv)
+                } else {
+                    setError(xhr.statusText ? xhr.statusText : "Error " + xhr.status)
                 }
-
-                setData(csv)
             }
         };
         xhr.send();
-    }, [props.url]);
+    }, [url]);
 
-    if (data)
+    if (data || error)
         return <>
-            <CsvToHtmlTable data={data} csvDelimiter={props.delimiter} />
-            {partial && <p>Displaying partial data. <a href={props.url}>Download full csv file</a> for complete data.</p>}
+            {error && <p className='error'>{error}</p>}
+            {data && <CsvToHtmlTable data={data} csvDelimiter={delimiter} />}
+            {partial && <p>Displaying partial data. <a href={url}>Download full csv file</a> for complete data.</p>}
+        </>
+    else
+        return <img src={spinner} className="spinner" alt="Spinner" />
+}
+
+function CsvToMap({url, delimiter}) {
+    const [error, setError] = useState()
+    const [data, setData] = useState(null)
+
+    function stripQuotes(string) {
+        return string && string.startsWith('"') && string.endsWith('"') ? string.slice(1, -1) : string
+    }
+
+    function readCoordinates(data, delimiter){
+        const rowsWithColumns = parseCsvToRowsAndColumn(data, delimiter)
+        const headerRow = rowsWithColumns.splice(0, 1)[0];
+
+        const latRegEx = new RegExp('latt?itude', 'i')
+        const latColumn = headerRow.findIndex(h => latRegEx.test(h))
+
+        const lonRegEx = new RegExp('longitude', 'i')
+        const lonColumn = headerRow.findIndex(h => lonRegEx.test(h))
+        
+        return rowsWithColumns.map(row =>
+        ({
+            pos: [row[latColumn], row[lonColumn]],
+            popup: <>
+                {headerRow.map((header, i) => header &&
+                    <div key={header}>
+                        {stripQuotes(header)}: {stripQuotes(row[i])}
+                    </div>)}
+            </>
+        }))
+    }
+
+    useEffect(() => {
+        fetch(url)
+            .then((response) => {
+                if (response.ok)
+                    return response.text();
+                else
+                    return Promise.reject("Error " + response.status);
+
+            }).then((result) => {
+                setData(result)
+
+            }).catch(error => {
+                setError(error)
+            })
+
+    }, [url]);
+
+    if (data || error)
+        return <>
+            {error && <p className='error'>{error}</p>}
+            {data && <MapResult markers={readCoordinates(data, delimiter)} />}
         </>
     else
         return <img src={spinner} className="spinner" alt="Spinner" />

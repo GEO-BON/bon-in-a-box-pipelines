@@ -2,18 +2,16 @@ package org.geobon.script
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.geobon.script.ScriptRun.Companion.scriptRoot
-import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Test
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
+import org.geobon.pipeline.outputRoot
 import java.io.File
 import java.lang.System.currentTimeMillis
+import kotlin.test.*
 
 @ExperimentalCoroutinesApi
 internal class ScriptRunTest {
 
-    @BeforeEach
+    @BeforeTest
     fun setupOutputFolder() {
         with(outputRoot) {
             assertTrue(!exists())
@@ -22,9 +20,9 @@ internal class ScriptRunTest {
         }
     }
 
-    @AfterEach
+    @AfterTest
     fun removeOutputFolder() {
-        assertTrue(File(System.getenv("OUTPUT_LOCATION")).deleteRecursively())
+        assertTrue(outputRoot.deleteRecursively())
     }
 
 
