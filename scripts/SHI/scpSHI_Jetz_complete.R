@@ -357,7 +357,8 @@ tmap_save(img_map_habitat_changes, img_SHI_time_period_path )
 
 #create layers of forest removing loss by year
 s_HabitatArea0 <- r_GFW_TC_threshold_mask-s_year_loss_mask
-s_HabitatArea <- c(r_GFW_TC_threshold_mask, s_HabitatArea0) ; rm(s_HabitatArea0)
+s_habitatArea <- if(t_0!=2000)  s_HabitatArea0 else c(r_GFW_TC_threshold_mask, s_HabitatArea0) ; rm(s_HabitatArea0)
+
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
 s_Habitat <- terra::classify(s_HabitatArea , rcl=cbind(0,NA))
