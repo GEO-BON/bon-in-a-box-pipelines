@@ -1,0 +1,35 @@
+script: 01_pp.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dir_wkt_polygon:
+    label: dir_wkt_polygon
+    description: dir_wkt_polygon
+    type: text
+    example: '/scripts/IAvH_inputs/wkt_polygon_test.txt'
+  epsg_polygon:
+    label: epsg_polygon
+    description: epsg_polygon
+    type: numeric
+    example: 3395   
+  dir_colection:
+    label: dir_colection
+    description: dir_colection
+    type: text
+    example: '/scripts/IAvH_inputs/p&p_collection'
+  resolution:
+    label: resolution
+    description: value in meters
+    type: numeric
+    example: 1000
+  folder_output:
+    label: folder_output
+    description: folder_output
+    type: text
+    example: 'p_p_studyarea_1000m2'
+
+outputs:
+  folder_output:
+    label: folder_output
+    description: folder_output
+    type: text
