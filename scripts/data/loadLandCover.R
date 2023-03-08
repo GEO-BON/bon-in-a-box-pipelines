@@ -25,10 +25,6 @@ library("gdalcubes")
 library("RCurl")
 options(timeout = max(60000000, getOption("timeout")))
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))

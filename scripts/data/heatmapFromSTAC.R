@@ -15,10 +15,6 @@ library("rstac")
 library("gdalcubes")
 library("downloader")
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 setwd(outputFolder)
 

@@ -54,7 +54,7 @@ fun Application.configureRouting() {
         get("/script/{scriptPath}/info") {
             try {
                 // Put back the slashes and replace extension by .yml
-                val ymlPath = call.parameters["scriptPath"]?.run{replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")}
+                val ymlPath = call.parameters["scriptPath"]!!.run{replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")}
                 val scriptFile = File(scriptRoot, ymlPath)
                 if (scriptFile.exists()) {
                     call.respond(Yaml().load(scriptFile.readText()) as Map<String, Any>)
@@ -131,7 +131,7 @@ fun Application.configureRouting() {
             // Unique   to this pipeline                                               and to these params
             val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
             val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
-            logger.info("Pipeline: $descriptionPath\nFolder:$pipelineOutputFolder\nBody:$inputFileContent")
+            logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
             runCatching {
                 Pipeline(descriptionPath, inputFileContent)
@@ -175,7 +175,7 @@ fun Application.configureRouting() {
             runningPipelines[id]?.let { pipeline ->
                 // the pipeline is running, we need to stop it
                 pipeline.stop()
-                logger.debug("Cancelled ${id}")
+                logger.debug("Cancelled $id")
                 call.respond(HttpStatusCode.OK)
             } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
         }
