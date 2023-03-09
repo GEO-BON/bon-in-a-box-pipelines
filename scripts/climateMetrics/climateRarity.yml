@@ -71,6 +71,7 @@ outputs:
     description: metric raster file 
     type: image/tiff;application=geotiff
     example: local_velocity.tif
+    range: [0, 1]
   metric:
     label: metric
     description: climate metric (e.g., local, forward, backward, rarity) 
