@@ -33,9 +33,9 @@ class InfoOutputsValueExample {
         var match = 0;
         var errorMessages = [];
         try {
-            // validate array of string
+            // validate string
             if (!(typeof instance === 'string')) {
-                throw new Error("Invalid input. Must be string. Input: " + JSON.stringify(instance));
+                throw new Error("Invalid value. Must be string. Input: " + JSON.stringify(instance));
             }
             this.actualInstance = instance;
             match++;
@@ -46,9 +46,9 @@ class InfoOutputsValueExample {
 
         try {
             // JM: that condition was != instead of ==
-            // validate array of string
+            // validate number
             if (!(typeof instance === 'number' && instance % 1 == 0)) {
-                throw new Error("Invalid array items. Must be number. Input: " + JSON.stringify(instance));
+                throw new Error("Invalid value. Must be number. Input: " + JSON.stringify(instance));
             }
             this.actualInstance = instance;
             match++;
@@ -58,10 +58,9 @@ class InfoOutputsValueExample {
         }
 
         try {
-            // JM: that condition code was missing, it made it crash.
-            // validate array of string
+            // validate boolean
             if (!(typeof instance === 'boolean')) {
-                throw new Error("Invalid input. Must be boolean. Input: " + JSON.stringify(instance));
+                throw new Error("Invalid value. Must be boolean. Input: " + JSON.stringify(instance));
             }
             this.actualInstance = instance;
             match++;
