@@ -1,0 +1,16 @@
+Error in h(simpleError(msg, call)) : 
+  error in evaluating the argument 'x' in selecting a method for function 'as.polygons': [vect] file does not exist: D:/IAvH 2022/STAC/biab-2.0/scripts/IAvH_inputs/Amazonas.shp
+Calls: source ... <Anonymous> -> <Anonymous> -> .local -> messages -> error
+In addition: Warning messages:
+1: In gdalcubes::stac_image_collection(col_data$features, asset_names = col_layers,  :
+  STAC asset with name 'bio9' does not include eo:bands metadata and will be considered as a single band source
+2: In gdalcubes::stac_image_collection(col_data$features, asset_names = col_layers,  :
+  STAC asset with name 'bio8' does not include eo:bands metadata and will be considered as a single band source
+3: In gdalcubes::stac_image_collection(col_data$features, asset_names = col_layers,  :
+  STAC asset with name '_80N_180W' does not include eo:bands metadata and will be considered as a single band source
+4: In gdalcubes::stac_image_collection(col_data$features, asset_names = col_layers,  :
+  STAC asset with name 'data' does not include eo:bands metadata and will be considered as a single band source
+Execution halted
+Error: script returned non-zero value
+Error: output.json file not found
+Elapsed: 5.806494800s

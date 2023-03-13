@@ -1,0 +1,3 @@
+[1] "Conexión exitosa con  la colección 'chelsa-clim"
+[1] "Conexión exitosa con  la colección 'gfw-lossyear"
+Elapsed: 4.360074600s

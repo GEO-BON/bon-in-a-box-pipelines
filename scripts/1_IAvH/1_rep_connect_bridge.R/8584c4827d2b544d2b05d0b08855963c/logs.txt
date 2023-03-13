@@ -1,0 +1,5 @@
+[1] "outputFolder"
+[1] "/output/1_IAvH_functions/1_rep_connect_bridge.R/8584c4827d2b544d2b05d0b08855963c"
+Warning message:
+In dir.create(folder_results) : '/output/default' already exists
+Elapsed: 10.069866300s
