@@ -11,10 +11,6 @@ library("rjson")
 library("raster")
 library("stars")
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 setwd(outputFolder)
 # Does this make sense with setwd()? -Dat

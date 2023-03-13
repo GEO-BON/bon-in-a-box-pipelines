@@ -546,52 +546,6 @@
       "data": {
         "descriptionFile": "data>heatmapFromSTAC.yml"
       }
-    },
-    {
-      "id": "68",
-      "type": "io",
-      "position": {
-        "x": 3018,
-        "y": 761.25
-      },
-      "data": {
-        "descriptionFile": "SDM>rangePredictions.yml"
-      }
-    },
-    {
-      "id": "69",
-      "type": "output",
-      "position": {
-        "x": 3392,
-        "y": 767.25
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "70",
-      "type": "io",
-      "position": {
-        "x": 431.83167648560004,
-        "y": 1013.2218615829222
-      },
-      "data": {
-        "descriptionFile": "SDM>loadPredictors.yml"
-      }
-    },
-    {
-      "id": "76",
-      "type": "constant",
-      "position": {
-        "x": 100.2070003855194,
-        "y": 1066.7512889961808
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": []
-      }
     }
   ],
   "edges": [
@@ -643,27 +597,6 @@
       "target": "23",
       "targetHandle": "bbox",
       "id": "reactflow__edge-58-23bbox"
-    },
-    {
-      "source": "49",
-      "sourceHandle": "sdm_runs",
-      "target": "68",
-      "targetHandle": "predictions",
-      "id": "reactflow__edge-49sdm_runs-68predictions"
-    },
-    {
-      "source": "68",
-      "sourceHandle": "range_predictions",
-      "target": "69",
-      "targetHandle": null,
-      "id": "reactflow__edge-68range_predictions-69"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "70",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-70bbox"
     },
     {
       "source": "17",
@@ -1065,6 +998,11 @@
       "id": "reactflow__edge-76-70variables"
     }
   ],
+  "viewport": {
+    "x": 169.08522850860118,
+    "y": 41.13768813478339,
+    "zoom": 0.8032939967570334
+  },
   "inputs": {
     "data>getObservations.yml@15.species": {
       "description": "Scientific name of the species",

@@ -4,6 +4,7 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
+[**getPipeline**](DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline
 [**getPipelineInfo**](DefaultApi.md#getPipelineInfo) | **GET** /pipeline/{descriptionPath}/info | Get metadata about this pipeline
 [**getPipelineOutputs**](DefaultApi.md#getPipelineOutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
 [**getScriptInfo**](DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
@@ -13,6 +14,49 @@ Method | HTTP request | Description
 [**scriptListGet**](DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
 [**stopPipeline**](DefaultApi.md#stopPipeline) | **GET** /pipeline/{id}/stop | Stop the specified pipeline run
 
+
+
+## getPipeline
+
+> Object getPipeline(descriptionPath)
+
+Get JSON file that describes the pipeline
+
+### Example
+
+```javascript
+import BonInABoxScriptService from 'bon_in_a_box_script_service';
+
+let apiInstance = new BonInABoxScriptService.DefaultApi();
+let descriptionPath = "descriptionPath_example"; // String | Where to find the pipeline in ./pipeline folder.
+apiInstance.getPipeline(descriptionPath, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **descriptionPath** | **String**| Where to find the pipeline in ./pipeline folder. | 
+
+### Return type
+
+**Object**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 
 ## getPipelineInfo
