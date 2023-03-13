@@ -45,9 +45,8 @@ class InfoOutputsValueExample {
         }
 
         try {
-            // JM: that condition was != instead of ==
             // validate number
-            if (!(typeof instance === 'number' && instance % 1 == 0)) {
+            if (!(typeof instance === 'number' && instance % 1 != 0)) {
                 throw new Error("Invalid value. Must be number. Input: " + JSON.stringify(instance));
             }
             this.actualInstance = instance;
