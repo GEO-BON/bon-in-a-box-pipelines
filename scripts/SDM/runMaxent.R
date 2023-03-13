@@ -74,13 +74,13 @@ runs.output <- paste0(outputFolder,"/sdm_runs_", 1:nlayers(sdm_runs), ".tif")
 terra::writeRaster(x = sdm_pred,
                           filename = pred.output,
                           filetype = "COG",
-                          wopt = list(gdal = c("COMPRESS=DEFLATE")),
+                          wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
 for (i in 1:nlayers(sdm_runs)){
     terra::writeRaster(x = sdm_runs[[i]],
     filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),
-    format = "COG",
-    wopt = list(gdal = c("COMPRESS=DEFLATE")),
+    filetype = "COG",
+    wopt= list(gdal=c("COMPRESS=DEFLATE")),
     overwrite = TRUE)
 }
 

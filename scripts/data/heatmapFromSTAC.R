@@ -60,7 +60,7 @@ if(!is.null(predictors)){
   gdalcubes_options(parallel=TRUE)
 
   raster_cube(st, v) |> 
-    write_tif() |> 
+    write_tif(COG = TRUE, creation_options = list("COMPRESS" = "DEFLATE")) |> 
     terra::rast() -> raster.out
 
   writeRaster(raster.out, fout, overwrite = T)
