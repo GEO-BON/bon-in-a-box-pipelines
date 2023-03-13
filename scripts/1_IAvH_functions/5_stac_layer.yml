@@ -1,0 +1,29 @@
+script: 5_stac_layer.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  collection_layers:
+    label: collection_layers
+    description: collection_layers
+    type: collection_layers
+    example: stac_colections_layers
+  dir_polygon:
+    label: dir_polygon
+    description: dir_polygon
+    type: dir_polygon
+    example: /scripts/inputs_IAvH/Amazonas.shp
+  resolution:
+    label: resolution
+    description: resolution
+    type: resolution
+    example: 1000
+  folder_workflow:
+    label: folder_workflow
+    description: folder_workflow
+    type: text/plain
+    example: default
+outputs:
+  collection_rast:
+    label: collection_rast
+    description: We can add plain text
+    type: text/plain

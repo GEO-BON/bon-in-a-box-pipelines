@@ -1,0 +1,24 @@
+script: 1_rep_connect_bridge.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  repository_url:
+    label: repository_url
+    description: repository_stac
+    type: text
+    example: http://io.biodiversite-quebec.ca/stac/
+  folder_workflow:
+    label: folder_workflow
+    description: folder_workflow
+    type: text/plain	
+    example: default
+
+outputs:
+  repository_stac_txt:
+    label: repository_stac
+    description: repository_stac
+    type: text
+  repository_stac_RData:
+    label: repository_stac
+    description: repository_stac
+    type: text

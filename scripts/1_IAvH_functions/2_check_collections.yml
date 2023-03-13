@@ -1,0 +1,24 @@
+script: 2_check_collections.R
+description: This sample script shows how it works.
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dir_stac:
+    label: dir_stac
+    description: repository_stac
+    type: text/plain
+    example: repository_stac
+  folder_workflow:
+    label: folder_workflow
+    description: folder_workflow
+    type: text/plain
+    example: default
+outputs:
+  repository_collections_txt:
+    label: repository_collections
+    description: repository_collections
+    type: text
+  repository_collections_RData:
+    label: repository_collections
+    description: repository_collections
+    type: text
+

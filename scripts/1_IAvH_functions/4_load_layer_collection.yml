@@ -1,0 +1,28 @@
+script: 4_load_layer_collection.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  collection_object:
+    label: collection_object
+    description: collection_object
+    type: text/plain
+    example: colections_stac
+  collection_layers:
+    label: collection_layers
+    description: collection_layers
+    type: text/plain
+    example: list(colections_stac[[1]][1:2], colections_stac[[2]][c(1,3)])
+  folder_workflow:
+    label: folder_workflow
+    description: folder_workflow
+    type: text/plain
+    example: default
+outputs:
+  stac_colections_layers_txt:
+    label: stac_colections_layers_txt
+    description: stac_colections_layers_txt
+    type: text
+  stac_colections_layers_RData:
+    label: stac_colections_layers_RData
+    description: stac_colections_layers_RData
+    type: text
