@@ -19,10 +19,6 @@ library("stacatalogue")
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/runMaxentFunc.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
@@ -38,7 +34,7 @@ mod_tuning <- run_maxent(presence_background,
                          layers = names(predictors),
                          predictors = NULL,
                          partition_type = input$partition_type,
-                         nfolds = input$n_folds,
+                         nfolds = input$nfolds,
                          orientation_block = input$orientation_block,
                          factors = NULL,
                          #used if partition_type is "randomkfold"

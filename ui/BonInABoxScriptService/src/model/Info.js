@@ -100,7 +100,7 @@ class Info {
             }
             // validate the optional field `references` (array)
             for (const item of data['references']) {
-                InfoReferencesInner.validateJsonObject(item);
+                InfoReferencesInner.validateJSON(item);
             };
         }
 
