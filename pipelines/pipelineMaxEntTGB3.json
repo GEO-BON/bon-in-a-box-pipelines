@@ -78,7 +78,7 @@
       "type": "io",
       "position": {
         "x": 2566,
-        "y": 206.25
+        "y": 137.75
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -89,7 +89,7 @@
       "type": "io",
       "position": {
         "x": 3126,
-        "y": 362
+        "y": 349.5
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -100,7 +100,7 @@
       "type": "constant",
       "position": {
         "x": 2759,
-        "y": 398.5
+        "y": 386
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -114,7 +114,7 @@
       "type": "userInput",
       "position": {
         "x": 2794,
-        "y": 476.5
+        "y": 464
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -127,7 +127,7 @@
       "type": "constant",
       "position": {
         "x": 2689,
-        "y": 438.5
+        "y": 426
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -140,7 +140,7 @@
       "type": "constant",
       "position": {
         "x": 2705,
-        "y": 511.5
+        "y": 499
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -153,7 +153,7 @@
       "type": "io",
       "position": {
         "x": 3730,
-        "y": 583.75
+        "y": 571.25
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -164,7 +164,7 @@
       "type": "constant",
       "position": {
         "x": 3287,
-        "y": 569.5
+        "y": 557
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -177,7 +177,7 @@
       "type": "constant",
       "position": {
         "x": 3282,
-        "y": 607.5
+        "y": 595
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -190,7 +190,7 @@
       "type": "constant",
       "position": {
         "x": 3364,
-        "y": 645.5
+        "y": 633
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -210,7 +210,7 @@
       "type": "constant",
       "position": {
         "x": 3409,
-        "y": 683.5
+        "y": 671
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -224,7 +224,7 @@
       "type": "constant",
       "position": {
         "x": 3428,
-        "y": 741.5
+        "y": 729
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -238,7 +238,7 @@
       "type": "output",
       "position": {
         "x": 4398,
-        "y": 603.75
+        "y": 591.25
       },
       "data": {
         "label": "Output"
@@ -284,30 +284,11 @@
       }
     },
     {
-      "id": "65",
-      "type": "constant",
-      "position": {
-        "x": 2176,
-        "y": 259.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "unweighted_raster",
-        "options": [
-          "random",
-          "inclusion_buffer",
-          "weighted_raster",
-          "unweighted_raster"
-        ]
-      }
-    },
-    {
       "id": "67",
       "type": "io",
       "position": {
         "x": 2122,
-        "y": 317.5
+        "y": 305
       },
       "data": {
         "descriptionFile": "data>heatmapFromSTAC.yml"
@@ -318,7 +299,7 @@
       "type": "io",
       "position": {
         "x": 4224,
-        "y": 652.75
+        "y": 640.25
       },
       "data": {
         "descriptionFile": "SDM>rangePredictions.yml"
@@ -329,7 +310,7 @@
       "type": "output",
       "position": {
         "x": 4698,
-        "y": 658.75
+        "y": 646.25
       },
       "data": {
         "label": "Output"
@@ -428,8 +409,8 @@
       "id": "103",
       "type": "io",
       "position": {
-        "x": 307.00620109817294,
-        "y": 177.7061435103809
+        "x": 526,
+        "y": 175
       },
       "data": {
         "descriptionFile": "SDM>loadFromStac.yml"
@@ -492,6 +473,20 @@
       "target": "34",
       "targetHandle": "presence",
       "id": "reactflow__edge-96observations_file-34presence"
+    },
+    {
+      "source": "103",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-103rasters-97rasters"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "103",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-103bbox"
     },
     {
       "source": "37",
@@ -564,13 +559,6 @@
       "id": "reactflow__edge-50-49fc"
     },
     {
-      "source": "65",
-      "sourceHandle": null,
-      "target": "40",
-      "targetHandle": "method_background",
-      "id": "reactflow__edge-65-40method_background"
-    },
-    {
       "source": "58",
       "sourceHandle": null,
       "target": "96",
@@ -632,6 +620,13 @@
       "target": "97",
       "targetHandle": "nb_sample",
       "id": "reactflow__edge-100-97nb_sample"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "103",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-103proj"
     },
     {
       "source": "46",
@@ -709,30 +704,21 @@
       "target": "49",
       "targetHandle": "method_select_params",
       "id": "reactflow__edge-55-49method_select_params"
-    },
-    {
-      "source": "103",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-103rasters-97rasters"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "103",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-103bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "103",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-103proj"
     }
   ],
   "inputs": {
+    "SDM>selectBackground.yml@40.method_background": {
+      "description": "method used to sample background points",
+      "label": "method background",
+      "type": "options",
+      "options": [
+        "random",
+        "inclusion_buffer",
+        "weighted_raster",
+        "unweighted_raster"
+      ],
+      "example": "random"
+    },
     "SDM>selectBackground.yml@40.n_background": {
       "description": "number of background points",
       "label": "number of background points",
