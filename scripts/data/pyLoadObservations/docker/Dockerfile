@@ -1,6 +1,6 @@
-FROM mcr.microsoft.com/planetary-computer/python:2022.03.22
+FROM mcr.microsoft.com/planetary-computer/python
 SHELL ["conda", "run", "-n", "notebook", "/bin/bash", "-c"]
-RUN pip3 install appdirs geojson_rewind geomet requests_cache matplotlib python-dotenv
+RUN pip3 install appdirs geojson_rewind geomet requests_cache matplotlib python-dotenv pyproj
 RUN pip3 install git+https://github.com/sckott/pygbif.git#egg=pygbif
 
 # The code to run when container is started:

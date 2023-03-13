@@ -39,27 +39,33 @@ bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
 
 if(is.null(input$nb_sample)) {
   sample <- FALSE 
-  } else {
+} else {
     sample <- TRUE
-  }
+}
 
 if(length(input$layers) == 0 || input$layers == "") {
   layers <- NULL 
-  } else {
+} else {
     layers <- input$layers
-  }
+}
 if(length(input$variables) == 0) {
   variables <- NULL 
-  } else {
-    variables <- input$variables
-  }
+} else {
+  variables <- input$variables
+}
+
+if(length(input$ids) == 0) {
+  ids <- NULL
+} else {
+  ids <- input$ids
+}
 
 predictors <- load_predictors(source = "cube",
                             cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
-            limit = 5000, 
-            collections = input$collection,     
-            t0 = "1981-01-01",
-            t1 = "1981-01-01",
+            limit = 5000,
+            collections = input$collection,
+            t0 = NULL,
+            t1 = NULL,
             spatial.res = input$spatial_res, # in meters
             temporal.res = "P1Y",
             aggregation = "mean",
@@ -67,6 +73,7 @@ predictors <- load_predictors(source = "cube",
                           
                            subset_layers = layers,
                            variables = variables,
+                           ids = ids,
                            remove_collinear = input$remove_collinearity,
                            method = input$method,
                            method_cor_vif = input$method_cor_vif,
@@ -89,13 +96,20 @@ predictors <- load_predictors(source = "cube",
 #  }
 
 output_predictors <- file.path(outputFolder)
+
+#Avoid overwriting files called data
+new_names=c()
 for (i in names(predictors)) {
-  gdalcubes::write_tif(predictors[i], dir = output_predictors, prefix = i, creation_options = list("COMPRESS" = "DEFLATE"), COG=T)
+   new_names=cbind(new_names,paste0(i,'_',round(runif(1)*100000)))
+}
+
+for (i in 1:length(new_names)) {
+  gdalcubes::write_tif(predictors[i], dir = output_predictors, prefix = new_names[i], creation_options = list("COMPRESS" = "DEFLATE"), COG=T)
 }
 
 print(list.files(outputFolder, pattern="*.tif"))
-file.rename(paste(outputFolder, list.files(outputFolder, pattern="*.tif"),sep="/"), paste(outputFolder, paste0(names(predictors), ".tif"),sep="/"))
+file.rename(paste(outputFolder, list.files(outputFolder, pattern="*.tif"),sep="/"), paste(outputFolder, paste0(new_names, ".tif"),sep="/"))
 
-output <- list("predictors" = paste0(file.path(outputFolder, names(predictors)), ".tif"))
+output <- list("predictors" = paste0(file.path(outputFolder, new_names), ".tif"))
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
