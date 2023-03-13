@@ -357,7 +357,8 @@ tmap_save(img_map_habitat_changes, img_SHI_time_period_path )
 
 #create layers of forest removing loss by year
 s_HabitatArea0 <- r_GFW_TC_threshold_mask-s_year_loss_mask
-s_habitatArea <- if(t_0!=2000)  s_HabitatArea0 else c(r_GFW_TC_threshold_mask, s_HabitatArea0) ; rm(s_HabitatArea0)
+s_HabitatArea <- if(t_0!=2000)  s_HabitatArea0 else c(r_GFW_TC_threshold_mask, s_HabitatArea0) 
+rm(s_HabitatArea0)
 
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
@@ -380,7 +381,6 @@ print("========== Connectivity Score generated ==========")
 #---------------------- 3.1.2. Calculate areas ---------------------------------
 #create raster of areas by pixel
 r_areas <- terra::cellSize(s_HabitatArea[[1]],unit="km")
-
 
 l_suitable_area <- set_names(map(as.list(s_Habitat * r_areas),function(x) {
   x<-x[!is.na(x)]
