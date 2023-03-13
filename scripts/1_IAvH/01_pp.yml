@@ -29,7 +29,7 @@ inputs:
     example: 'p_p_studyarea_1000m2'
 
 outputs:
-  folder_output:
-    label: folder_output
-    description: folder_output
+  results:
+    label: results
+    description: results
     type: text
