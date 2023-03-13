@@ -48,11 +48,11 @@ export const layoutElements = (nodes, edges) => {
 
   // In order to align right, we keep the width of the largest node in the rank. 
   // Rank is not in the outputs, but all nodes from the same rank share the same x.
-  let centerToWitdh = {}
+  let centerToWidth = {}
   nodes.forEach((renderNode) => {
     const dagreNode = dagreGraph.node(renderNode.id);
-    if(!centerToWitdh[dagreNode.x] || centerToWitdh[dagreNode.x] < dagreNode.width) {
-      centerToWitdh[dagreNode.x] = dagreNode.width
+    if(!centerToWidth[dagreNode.x] || centerToWidth[dagreNode.x] < dagreNode.width) {
+      centerToWidth[dagreNode.x] = dagreNode.width
     }
   })
 
@@ -62,7 +62,7 @@ export const layoutElements = (nodes, edges) => {
     renderNode.targetPosition = 'left';
     renderNode.sourcePosition = 'right';
 
-    const rankOffset = centerToWitdh[dagreNode.x] / 2
+    const rankOffset = centerToWidth[dagreNode.x] / 2
     renderNode.position = {
       x: dagreNode.x + rankOffset - renderNode.width,
       y: dagreNode.y - renderNode.height / 2
