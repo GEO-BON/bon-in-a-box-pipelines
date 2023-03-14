@@ -363,7 +363,7 @@ rm(s_HabitatArea0)
 names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
 s_Habitat <- terra::classify(s_HabitatArea , rcl=cbind(0,NA))
-r_habitat_by_tstep_path <- file.path(outputFolder,paste(sp,"GFW",names(s_Habitat),".tiff",sep="_"))
+r_habitat_by_tstep_path <- file.path(outputFolder, paste0(paste(sub(" ", "_", sp),"GFW",names(s_Habitat),sep="_"), ".tiff"))
 map2(as.list(s_Habitat), r_habitat_by_tstep_path, ~terra::writeRaster(.x,filename=.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
 print(list.files(outputFolder, pattern = "Habitat", full.names = T))
 
