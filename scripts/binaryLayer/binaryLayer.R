@@ -19,20 +19,20 @@ lc_classes <- input$lc_classes
 
 
 # Running binary function
-lc_binary <- binary_layer(select_class =  c(210, 60),
+lc_binary <- binary_layer(select_class =  c(210,60),
              threshold_prop = 0.8)
   
-  
+
 # Saving rasters
-raster::writeRaster(x = lc_binary,
-                    paste0(outputFolder, "/", names(lc_binary), ".tif"),
-                    bylayer=T,
-                    suffix= 'names',
+
+for(i in 1:length(names(lc_binary))){
+raster::writeRaster(x = lc_binary[[i]],
+                    paste0(outputFolder, "/", names(lc_binary[[i]]), ".tif"),
                     format='COG',
-                    #options=c("COMPRESS=DEFLATE"),
+                    options=c("COMPRESS=DEFLATE"),
                     overwrite = TRUE
 )
-
+}
 print(list.files(outputFolder, pattern = ".tif$", full.names = T))
 
 lc_binary_layer <- list.files(outputFolder, pattern="*.tif$", full.names = T)
