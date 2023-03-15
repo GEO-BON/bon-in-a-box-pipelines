@@ -211,7 +211,7 @@ aside.scriptChooser .description {
     right: 0px;
     bottom: 190px;
 
-    z-index: 9000;
+    z-index: 1500;
 }
 
 .ioList .description {
@@ -252,7 +252,7 @@ ul#popupMenu {
     transform: translateX(min(var(--mouse-x), calc(100vw - 100%))) translateY(min(var(--mouse-y), calc(100vh - 100%)));
 
     /* Styling */
-    z-index: 1000;
+    z-index: 2000;
     color: black;
     background-color: whitesmoke;
     border: 2px solid rgb(52, 52, 52);
