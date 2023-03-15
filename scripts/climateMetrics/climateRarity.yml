@@ -3,7 +3,7 @@ description: This script calculates climate rarity, using a moving window approa
 inputs:
   metric:
     label: metric climate rarity
-    description: how different is the temperature from its surroundings, using moving window and a temperature threshold.
+    description: how different is the mean temperature from its surroundings, using moving window and a temperature threshold.
     type: text
     example: rarity
   rcp:
@@ -69,20 +69,10 @@ outputs:
   output_tif:
     label: output metric
     description: metric raster file 
-    type: image/tiff;application=geotiff
-    example: local_velocity.tif
-    range: [0, 1]
+    type: image/tiff;application=geotiff[]
+    example: climate_current_rarity.tif
   metric:
     label: metric
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
     example: local
-references:
-  - text: Carroll et. al. (2015). Biotic and climatic velocity identify contrasting areas of vulnerability to climate change. PloS one, 10(10), e0140486.
-    doi: https://doi.org/10.1371/journal.pone.0140486
-  - text: Hamann et. al. (2015). Velocity of climate change algorithms for guiding conservation and management. Global Change Biology, 21(2), 997-1004.
-    doi: https://doi.org/10.1111/gcb.12736
-  - text: Loarie et. al. (2009). The velocity of climate change. Nature, 462(7276), 1052-1055.
-    doi: https://doi.org/10.1038/nature08649
-  - text: Sandel et. al. (2011). The influence of Late Quaternary climate-change velocity on species endemism. Science, 334(6056), 660-664.
-    doi: https://doi.org/10.1126/science.1210173
