@@ -33,7 +33,6 @@ library("terra")
 options(timeout = max(60000000, getOption("timeout")))
 
 
-
 setwd(outputFolder)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
@@ -91,22 +90,33 @@ if (is.null(metric)) metric <- "rarity"
 
 tif <- climate_metrics(cube_current,
                           cube_future,
-                          metric,
+                          metric ,
                            t_match = input$t_match
                           )
 
-output_tif <- file.path(outputFolder, paste0(metric, ".tif"))
-raster::writeRaster(x = tif,
-                          output_tif,
-                          format='COG',
-                          options=c("COMPRESS=DEFLATE"),
-                          overwrite = TRUE)
+for(i in 1:length(names(tif))){
+ raster::writeRaster(x = tif[[i]],
+                      paste0(outputFolder, "/", names(tif[[i]]), ".tif"),
+                      format='COG',
+                     options=c("COMPRESS=DEFLATE"),
+                     overwrite = TRUE)
+}
+
+
+
+#output_tif <- file.path(outputFolder, paste0(metric, ".tif"))
+output_tif <- list.files(outputFolder, pattern="*.tif$", full.names = T)
+#raster::writeRaster(x = tif,
+  #                       output_tif,
+  #                        format='COG',
+  #                        options=c("COMPRESS=DEFLATE"),
+  #                       overwrite = TRUE)
 
 print("Metrics saved.")
 
+
 # Outputing result to JSON
-output <- list("output_tif" = output_tif,
-               "metric" = metric)
+output <- list("output_tif" = output_tif)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
