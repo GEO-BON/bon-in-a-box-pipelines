@@ -60,6 +60,11 @@ inputs:
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax (use ExtentToBbox to add shapefiles and other formats)
     type: float[]
     example: [-2316297,-1971146,1015207,1511916]
+  t_match: 
+    label: threshold climate match 
+    description: plus/minus threshold to define climate match in geographic space (only for forward and backward velocities).
+    type: float
+    example: 1
 outputs:
   output_tif:
     label: output metric
@@ -70,7 +75,7 @@ outputs:
     label: metric
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
-    example: local
+    example: local_climate_velocity
 references:
   - text: Carroll et. al. (2015). Biotic and climatic velocity identify contrasting areas of vulnerability to climate change. PloS one, 10(10), e0140486.
     doi: https://doi.org/10.1371/journal.pone.0140486
