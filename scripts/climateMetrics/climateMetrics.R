@@ -116,7 +116,10 @@ print("Metrics saved.")
 
 
 # Outputing result to JSON
-output <- list("output_tif" = output_tif)
+output <- list(
+  "output_tif" = output_tif,
+  "metric" = metric
+)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

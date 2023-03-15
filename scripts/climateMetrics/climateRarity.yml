@@ -67,12 +67,12 @@ inputs:
     example: [-2316297,-1971146,1015207,1511916]
 outputs:
   output_tif:
-    label: output metric
+    label: output
     description: metric raster file 
     type: image/tiff;application=geotiff[]
     example: climate_current_rarity.tif
   metric:
-    label: metric
+    label: metric name
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
     example: local
