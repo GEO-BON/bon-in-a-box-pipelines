@@ -67,12 +67,12 @@ inputs:
     example: 1
 outputs:
   output_tif:
-    label: output metric
+    label: output
     description: metric raster file 
     type: image/tiff;application=geotiff
     example: local_velocity.tif
   metric:
-    label: metric
+    label: metric name
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
     example: local_climate_velocity
