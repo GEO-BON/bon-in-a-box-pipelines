@@ -150,11 +150,26 @@ export function SingleOutputResult({ outputId, outputValue, outputMetadata }) {
         return <p className="resultText">{content}</p>;
     }
 
-    function renderInline(content){
-        if(typeof content === 'object')
-            content = Object.keys(content)
+    function renderInline(content) {
+        if (Array.isArray(content)) {
+            return content
+                .map(c => {
+                    if (typeof c !== 'string')
+                        return c
 
-        return Array.isArray(content) ? content.join(', ') : content
+                    if(!c.startsWith("/output/"))
+                        return c
+
+                    // This is a path, keep only the file
+                    return c.substring(c.lastIndexOf('/') + 1)
+                })
+                .join(', ')
+        }
+
+        if (typeof content === 'object')
+            return Object.keys(content).join(', ')
+
+        return content
     }
 
     let title = outputId;

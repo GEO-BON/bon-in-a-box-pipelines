@@ -23,6 +23,9 @@ import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEd
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
 import { getScriptDescription } from './ScriptDescriptionStore'
 
+const BonInABoxScriptService = require('bon_in_a_box_script_service');
+const api = new BonInABoxScriptService.DefaultApi();
+
 const customNodeTypes = {
   io: IONode,
   constant: ConstantNode,
@@ -478,7 +481,7 @@ export function PipelineEditor(props) {
 
   const onLoadFromFileBtnClick = () => inputFile.current.click() // will call onLoad
 
-  const onLoad = (clickEvent) => {
+  const onLoadFromFile = (clickEvent) => {
     clickEvent.stopPropagation()
     clickEvent.preventDefault()
 
@@ -486,103 +489,137 @@ export function PipelineEditor(props) {
     if (file) {
       var fr = new FileReader();
       fr.readAsText(file);
-      fr.onload = loadEvent => {
-        const flow = JSON.parse(loadEvent.target.result);
-        if (flow) {
-          // Read inputs
-          let inputsFromFile = []
-          if(flow.inputs) {
-            Object.entries(flow.inputs).forEach(entry => {
-              const [fullId, inputDescription] = entry
-              const atIx = fullId.indexOf('@')
-
-              if (fullId.startsWith('pipeline@')) {
-                inputsFromFile.push({
-                  nodeId: fullId.substring(atIx + 1),
-                  ...inputDescription
-                })
-              } else { // Script input
-                const dotIx = fullId.lastIndexOf('.')
-                inputsFromFile.push({
-                  file: fullId.substring(0, atIx),
-                  nodeId: fullId.substring(atIx + 1, dotIx),
-                  inputId: fullId.substring(dotIx + 1),
-                  ...inputDescription
-                })
-
-              }
-            })
-          }
-          setInputList(inputsFromFile)
-
-          // Read outputs
-          let outputsFromFile = []
-          if(flow.outputs) {
-            Object.entries(flow.outputs).forEach(entry => {
-              const [fullId, outputDescription] = entry
-              const atIx = fullId.indexOf('@')
-              const dotIx = fullId.lastIndexOf('.')
-  
-              outputsFromFile.push({
-                file: fullId.substring(0, atIx),
-                nodeId: fullId.substring(atIx + 1, dotIx),
-                outputId: fullId.substring(dotIx + 1),
-                ...outputDescription
-              })
-            })
-          }
-
-          setOutputList(outputsFromFile)
-
-          // Read nodes
-          id = 0
-          flow.nodes.forEach(node => {
-            // Make sure next id doesn't overlap
-            id = Math.max(id, parseInt(node.id))
-
-            // Reinjecting deleted properties
-            node.targetPosition = "left"
-            node.sourcePosition = "right"
-
-            // Reinjecting functions
-            switch (node.type) {
-              case 'io':
-                node.data.setToolTip = setToolTip
-                node.data.injectConstant = injectConstant
-                node.data.injectOutput = injectOutput
-                break;
-              case 'constant':
-                node.data.onChange = onConstantValueChange
-                node.data.onPopupMenu = onPopupMenu
-                break;
-              case 'userInput':
-                node.data.onPopupMenu = onPopupMenu
-                node.data.label = inputsFromFile.find(i => i.nodeId === node.id).label
-                break;
-              case 'output':
-                break;
-              default:
-               console.error("Unsupported type " + node.type)
-            }
-          })
-          id++
-
-          // Load the graph
-          setNodes(flow.nodes || []);
-          setEdges(flow.edges || []);
-
-          // Reset viewport to top left
-          reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
-        } else {
-          console.error("Error parsing flow")
-        }
-      }
+      fr.onload = loadEvent => onLoadFlow(JSON.parse(loadEvent.target.result))
 
       // Now that it's done, reset the value of the input file.
       inputFile.current.value = ""
     }
   }
 
+  const onLoadFromServerBtnClick = (event) => {
+    event.stopPropagation()
+    event.preventDefault()
+
+    setPopupMenuPos({ x: event.clientX, y: event.clientY })
+
+    api.pipelineListGet((error, data, response) => {
+      if (error) {
+        if (response && response.text)
+          alert(response.text)
+        else
+          alert(error.toString())
+      } else {
+        let options = {}
+        data.forEach(pipeline => 
+          options[pipeline] = () => {
+            api.getPipeline(pipeline, (error, data, response) => {
+              if (error) {
+                if (response && response.text)
+                  alert(response.text)
+                else
+                  alert(error.toString())
+              
+              } else {
+                onLoadFlow(data);
+              }
+            });
+          }
+        )
+        setPopupMenuOptions(options)
+      }
+    });
+  }
+
+  const onLoadFlow = (flow) => {
+    if (flow) {
+      // Read inputs
+      let inputsFromFile = []
+      if (flow.inputs) {
+        Object.entries(flow.inputs).forEach(entry => {
+          const [fullId, inputDescription] = entry
+          const atIx = fullId.indexOf('@')
+
+          if (fullId.startsWith('pipeline@')) {
+            inputsFromFile.push({
+              nodeId: fullId.substring(atIx + 1),
+              ...inputDescription
+            })
+          } else { // Script input
+            const dotIx = fullId.lastIndexOf('.')
+            inputsFromFile.push({
+              file: fullId.substring(0, atIx),
+              nodeId: fullId.substring(atIx + 1, dotIx),
+              inputId: fullId.substring(dotIx + 1),
+              ...inputDescription
+            })
+
+          }
+        })
+      }
+      setInputList(inputsFromFile)
+
+      // Read outputs
+      let outputsFromFile = []
+      if (flow.outputs) {
+        Object.entries(flow.outputs).forEach(entry => {
+          const [fullId, outputDescription] = entry
+          const atIx = fullId.indexOf('@')
+          const dotIx = fullId.lastIndexOf('.')
+
+          outputsFromFile.push({
+            file: fullId.substring(0, atIx),
+            nodeId: fullId.substring(atIx + 1, dotIx),
+            outputId: fullId.substring(dotIx + 1),
+            ...outputDescription
+          })
+        })
+      }
+
+      setOutputList(outputsFromFile)
+
+      // Read nodes
+      id = 0
+      flow.nodes.forEach(node => {
+        // Make sure next id doesn't overlap
+        id = Math.max(id, parseInt(node.id))
+
+        // Reinjecting deleted properties
+        node.targetPosition = "left"
+        node.sourcePosition = "right"
+
+        // Reinjecting functions
+        switch (node.type) {
+          case 'io':
+            node.data.setToolTip = setToolTip
+            node.data.injectConstant = injectConstant
+            node.data.injectOutput = injectOutput
+            break;
+          case 'constant':
+            node.data.onChange = onConstantValueChange
+            node.data.onPopupMenu = onPopupMenu
+            break;
+          case 'userInput':
+            node.data.onPopupMenu = onPopupMenu
+            node.data.label = inputsFromFile.find(i => i.nodeId === node.id).label
+            break;
+          case 'output':
+            break;
+          default:
+            console.error("Unsupported type " + node.type)
+        }
+      })
+      id++
+
+      // Load the graph
+      setNodes(flow.nodes || []);
+      setEdges(flow.edges || []);
+
+      // Reset viewport to top left
+      reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
+    } else {
+      console.error("Error parsing flow")
+    }
+  }
 
 
   return <div id='editorLayout'>
@@ -612,9 +649,9 @@ export function PipelineEditor(props) {
             <div className="save__controls">
               <button onClick={() => onLayout()}>Layout</button>
               <input type='file' id='file' ref={inputFile} accept="application/json"
-                onChange={onLoad} style={{ display: 'none' }} />
+                onChange={onLoadFromFile} style={{ display: 'none' }} />
               <button onClick={onLoadFromFileBtnClick}>Load from file</button>
-              <button disabled={true}>Load from server</button>
+              <button onClick={onLoadFromServerBtnClick}>Load from server</button>
               <button onClick={onSave}>Save</button>
             </div>
 
