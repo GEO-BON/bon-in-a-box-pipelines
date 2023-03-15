@@ -100,7 +100,9 @@ outputs:
         required: false
         type: list
         dependencies:
-          type: image/tiff;application=geotiff
+          type:
+            - image/tiff;application=geotiff
+            - image/tiff;application=geotiff[]
       example:
         required: false
         nullable: true
