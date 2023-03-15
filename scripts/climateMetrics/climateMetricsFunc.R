@@ -167,7 +167,7 @@
                                              sum((x[focalCell]-x) <= tol, ...)/sum(!is.na(x))
                                     }
     )
-    names(tmean_current_rarity) <- "current_rarity"
+    names(tmean_current_rarity) <- "climate_current_rarity"
                                     
     tmean_future_rarity <- raster::focal(tmean_future_C,
                                           w=matrix(1, moving_window, moving_window),
@@ -178,16 +178,16 @@
                                           }             
                                     
     )
-    names(tmean_future_rarity) <- "future_rarity"
+    names(tmean_future_rarity) <- "climate_future_rarity"
     
     climate_rarity <- raster::stack(tmean_current_rarity, tmean_future_rarity)
     
     
     return(climate_rarity)
     
-  }
     
- 
+  }
+   
    
   }
   
