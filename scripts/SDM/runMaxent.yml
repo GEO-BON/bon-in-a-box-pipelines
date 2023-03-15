@@ -8,23 +8,14 @@ references:
 inputs:
   presence_background:
     label: presence background
-    description: presence
+    description: presence 
     type: text/tab-separated-values
     example: "/scripts/SDM/runModel_presence_background.tsv"
-  predictors:
+  predictors: 
     label: predictors
     description: layer names (predictors) as a list, or path to a list
     type: image/tiff;application=geotiff[]
-    example:
-      [
-        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif",
-        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif",
-        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif",
-        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif",
-        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif",
-        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif",
-        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif",
-      ]
+    example: ["/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif"]
   fc:
     label: feature classes
     description: Vector of strings, feature classes for MaxEnt algorithm.
@@ -60,7 +51,7 @@ inputs:
     label: number of folds
     description: Integer, number of random k-folds for randomkfold technique.
     type: int
-    example: 5
+    example: 5 
   method_select_params:
     label: params selection method
     description: String, method to select the best combination of MaxEnt parameters.
@@ -72,12 +63,12 @@ inputs:
     example: p10
 outputs:
   sdm_pred:
-    label: predictions
-    description: model predictions while trained on the whole dataset
-    type: image/tiff;application=geotiff
-    range: [0, 1]
+     label: predictions
+     description: model predictions while trained on the whole dataset
+     type: image/tiff;application=geotiff
+     range: [0, 1]
   sdm_runs:
-    label: runs predictions
-    description: model predictions among the several runs (if boostrapping or kfolds performed)
-    type: image/tiff;application=geotiff[]
-    range: [0, 1]
+     label: runs predictions
+     description: model predictions among the several runs (if boostrapping or kfolds performed)
+     type: image/tiff;application=geotiff
+     range: [0, 1]
