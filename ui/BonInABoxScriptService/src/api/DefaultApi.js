@@ -36,6 +36,48 @@ export default class DefaultApi {
 
 
     /**
+     * Callback function to receive the result of the getPipeline operation.
+     * @callback module:api/DefaultApi~getPipelineCallback
+     * @param {String} error Error message, if any.
+     * @param {Object} data The data returned by the service call.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Get JSON file that describes the pipeline
+     * @param {String} descriptionPath Where to find the pipeline in ./pipeline folder.
+     * @param {module:api/DefaultApi~getPipelineCallback} callback The callback function, accepting three arguments: error, data, response
+     * data is of type: {@link Object}
+     */
+    getPipeline(descriptionPath, callback) {
+      let postBody = null;
+      // verify the required parameter 'descriptionPath' is set
+      if (descriptionPath === undefined || descriptionPath === null) {
+        throw new Error("Missing the required parameter 'descriptionPath' when calling getPipeline");
+      }
+
+      let pathParams = {
+        'descriptionPath': descriptionPath
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = [];
+      let accepts = ['application/json'];
+      let returnType = Object;
+      return this.apiClient.callApi(
+        '/pipeline/{descriptionPath}/get', 'GET',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the getPipelineInfo operation.
      * @callback module:api/DefaultApi~getPipelineInfoCallback
      * @param {String} error Error message, if any.
