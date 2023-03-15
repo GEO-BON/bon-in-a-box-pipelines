@@ -32,12 +32,14 @@ library("gdalcubes")
 library("RCurl")
 options(timeout = max(60000000, getOption("timeout")))
 
+setwd(outputFolder)
+
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
 
-# Tranform the vector to a bbox object
+# Transform the vector to a bbox object
 
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
                       xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$srs_cube))
@@ -56,8 +58,8 @@ temporal_res <- paste0("P", n_year, "Y")
                                         temporal.res =  "P1D",
                                       #  layers='data',
                                         aggregation = "mean",
-                                        resampling = "near")%>% cube_to_raster("raster")
-
+                                        resampling = "near")%>%write_tif()%>%
+    raster::raster() 
 
 
   
