@@ -64,4 +64,4 @@ outputs:
     label: land cover classes
     description: land cover raster classes 
     type: image/tiff;application=geotiff[]
-    example: prop_landcover.tif
+    example: y2010_class210.tif
