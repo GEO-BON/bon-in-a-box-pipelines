@@ -89,9 +89,9 @@ print(paste("Calculating", metric, "metric..."))
 
 tif <- climate_metrics(cube_current,
                           cube_future,
-                          metric ,
-                           t_match = input$t_match
-                          )
+                          metric,
+                          t_match = input$t_match,
+                          moving_window = input$moving_window)
 
 for(i in 1:length(names(tif))){
  raster::writeRaster(x = tif[[i]],
