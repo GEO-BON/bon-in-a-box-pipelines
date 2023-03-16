@@ -59,6 +59,9 @@ class Info {
             if (data.hasOwnProperty('external_link')) {
                 obj['external_link'] = ApiClient.convertToType(data['external_link'], 'String');
             }
+            if (data.hasOwnProperty('timeout')) {
+                obj['timeout'] = ApiClient.convertToType(data['timeout'], 'Number');
+            }
             if (data.hasOwnProperty('inputs')) {
                 obj['inputs'] = ApiClient.convertToType(data['inputs'], {'String': InfoInputsValue});
             }
@@ -72,8 +75,42 @@ class Info {
         return obj;
     }
 
+    /**
+     * Validates the JSON data with respect to <code>Info</code>.
+     * @param {Object} data The plain JavaScript object bearing properties of interest.
+     * @return {boolean} to indicate whether the JSON data is valid with respect to <code>Info</code>.
+     */
+    static validateJSON(data) {
+        // ensure the json data is a string
+        if (data['script'] && !(typeof data['script'] === 'string' || data['script'] instanceof String)) {
+            throw new Error("Expected the field `script` to be a primitive type in the JSON string but got " + data['script']);
+        }
+        // ensure the json data is a string
+        if (data['description'] && !(typeof data['description'] === 'string' || data['description'] instanceof String)) {
+            throw new Error("Expected the field `description` to be a primitive type in the JSON string but got " + data['description']);
+        }
+        // ensure the json data is a string
+        if (data['external_link'] && !(typeof data['external_link'] === 'string' || data['external_link'] instanceof String)) {
+            throw new Error("Expected the field `external_link` to be a primitive type in the JSON string but got " + data['external_link']);
+        }
+        if (data['references']) { // data not null
+            // ensure the json data is an array
+            if (!Array.isArray(data['references'])) {
+                throw new Error("Expected the field `references` to be an array in the JSON data but got " + data['references']);
+            }
+            // validate the optional field `references` (array)
+            for (const item of data['references']) {
+                InfoReferencesInner.validateJSON(item);
+            };
+        }
+
+        return true;
+    }
+
 
 }
+
+
 
 /**
  * @member {String} script
@@ -89,6 +126,11 @@ Info.prototype['description'] = undefined;
  * @member {String} external_link
  */
 Info.prototype['external_link'] = undefined;
+
+/**
+ * @member {Number} timeout
+ */
+Info.prototype['timeout'] = undefined;
 
 /**
  * @member {Object.<String, module:model/InfoInputsValue>} inputs

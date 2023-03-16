@@ -1,5 +1,5 @@
 script: accessibility.R
-description: This script creates the accessibility layer (values close to zero indicate Poor access to opportunities and services offered by urban centres (Weiss et al 2018)).
+description: This script creates the accessibility layer based on the global map of travel time to cities to assess inequalities in accessibility (values close to zero indicate poor access to opportunities and services offered by urban centres (Weiss et al 2018)).
 inputs:
    stac_path:
     label: STAC catalogue path

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Handle, Position } from 'react-flow-renderer/nocss';
+import isObject from '../../utils/isObject'
 
 import { fetchScriptDescription } from './ScriptDescriptionStore'
 
@@ -45,13 +46,15 @@ export default function IONode({ id, data }) {
         })}
       </td>
       <td className='name' onMouseEnter={showScriptTooltip} onMouseLeave={hideTooltip}>
-        {metadata.script}
+        {descriptionFileLocation.split('>').map((s, i) => <span key={i}>{s}<br/></span>)}
       </td>
       <td className='outputs'>
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
           let warning = checkForWarning(desc)
 
-          return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip} warning={warning}>
+          return <ScriptIO key={outputName} desc={desc} setToolTip={data.setToolTip}
+            onDoubleClick={(e) => data.injectOutput(e, id, outputName)}
+            warning={warning}>
             <span className={warning && 'ioWarning'}>{desc.label ? desc.label : outputName}</span>
             <Handle id={outputName} type="source" position={Position.Right} />
           </ScriptIO>
@@ -75,8 +78,23 @@ function ScriptIO({children, desc, setToolTip, onDoubleClick, warning}) {
       {warning && <><span className='warning'>{warning}</span><br/></>}
       {desc.type && <>{renderType(desc.type)} <br /></>}
       {desc.description && <>{desc.description} <br /></>}
-      {desc.example && <>Example: {desc.example.toString()}</>}
+      {desc.example && <>Example: {renderExample(desc.example)}</>}
     </>)
+  }
+
+  function renderExample(example){
+    if(Array.isArray(example))
+      return example.map((v, i) => renderExample(v) + (i === example.length - 1 ? "" : ", "))
+
+    if(isObject(example))
+      return JSON.stringify(example)
+
+    const asString = example.toString()
+
+    if (asString.includes("\n"))
+      return <span style={{ whiteSpace: "pre-wrap" }}>{"\n" + asString}</span>
+
+    return asString
   }
 
   function onMouseLeave() {

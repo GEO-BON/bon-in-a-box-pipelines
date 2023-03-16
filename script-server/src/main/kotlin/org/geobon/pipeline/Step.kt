@@ -1,7 +1,7 @@
 package org.geobon.pipeline
 
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
@@ -23,14 +23,8 @@ abstract class Step(
                 return // this has already been executed! (success or failure)
 
             try {
-                val resolvedInputs = mutableMapOf<String, Any>()
-                coroutineScope {
-                    inputs.forEach {
-                        // This can happen in parallel coroutines
-                        launch { resolvedInputs[it.key] = it.value.pull() }
-                    }
-                }
-    
+                val resolvedInputs = resolveInputs()
+                onInputsReceived(resolvedInputs)
                 val results = execute(resolvedInputs)
                 results.forEach { (key, value) ->
                     // Undocumented outputs will simply be discarded by the "?"
@@ -44,7 +38,22 @@ abstract class Step(
         }
     }
 
+    open fun onInputsReceived(resolvedInputs: Map<String, Any>) {
+        // Default nothing
+    }
+
     protected abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
+
+    protected open suspend fun resolveInputs(): Map<String, Any> {
+        val resolvedInputs = mutableMapOf<String, Any>()
+        coroutineScope {
+            inputs.forEach {
+                // This can happen in parallel coroutines
+                launch { resolvedInputs[it.key] = it.value.pull() }
+            }
+        }
+        return resolvedInputs
+    }
 
     open fun validateGraph():String {
         if(validated)
@@ -65,5 +74,10 @@ abstract class Step(
     open fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         // Not all steps have output folders. Default implementation just forwards to other steps.
         inputs.values.forEach{it.dumpOutputFolders(allOutputs)}
+    }
+
+    companion object {
+        const val DEFAULT_IN = "defaultInput"
+        const val DEFAULT_OUT = "defaultOutput"
     }
 }

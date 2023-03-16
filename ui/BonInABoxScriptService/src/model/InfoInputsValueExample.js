@@ -23,18 +23,76 @@ class InfoInputsValueExample {
     /**
      * Constructs a new <code>InfoInputsValueExample</code>.
      * @alias module:model/InfoInputsValueExample
+     * @param {(module:model/Boolean|module:model/Number|module:model/String|module:model/[InfoInputsValueExampleOneOfInner])} instance The actual instance to initialize InfoInputsValueExample.
      */
-    constructor() { 
-        
-        InfoInputsValueExample.initialize(this);
-    }
+    constructor(instance = null) {
+        if (instance === null) {
+            this.actualInstance = null;
+            return;
+        }
+        var match = 0;
+        var errorMessages = [];
+        try {
+            // validate string
+            if (!(typeof instance === 'string')) {
+                throw new Error("Invalid value. Must be string. Input: " + JSON.stringify(instance));
+            }
+            this.actualInstance = instance;
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into String
+            errorMessages.push("Failed to construct String: " + err)
+        }
 
-    /**
-     * Initializes the fields of this object.
-     * This method is used by the constructors of any subclasses, in order to implement multiple inheritance (mix-ins).
-     * Only for internal use.
-     */
-    static initialize(obj) { 
+        try {
+            // validate number
+            if (!(typeof instance === 'number' && instance % 1 != 0)) {
+                throw new Error("Invalid value. Must be number. Input: " + JSON.stringify(instance));
+            }
+            this.actualInstance = instance;
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into Number
+            errorMessages.push("Failed to construct Number: " + err)
+        }
+
+        try {
+            // validate boolean
+            if (!(typeof instance === 'boolean')) {
+                throw new Error("Invalid value. Must be boolean. Input: " + JSON.stringify(instance));
+            }
+            this.actualInstance = instance;
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into Boolean
+            errorMessages.push("Failed to construct Boolean: " + err)
+        }
+
+        try {
+            if (typeof instance === "[InfoInputsValueExampleOneOfInner]") {
+                this.actualInstance = instance;
+            } else {
+                // plain JS object
+                // validate the object
+                [InfoInputsValueExampleOneOfInner].validateJSON(instance); // throw an exception if no match
+                // create [InfoInputsValueExampleOneOfInner] from JS object
+                this.actualInstance = [InfoInputsValueExampleOneOfInner].constructFromObject(instance);
+            }
+            match++;
+        } catch(err) {
+            // json data failed to deserialize into [InfoInputsValueExampleOneOfInner]
+            errorMessages.push("Failed to construct [InfoInputsValueExampleOneOfInner]: " + err)
+        }
+
+        if (match > 1) {
+            throw new Error("Multiple matches found constructing `InfoInputsValueExample` with oneOf schemas Boolean, Number, String, [InfoInputsValueExampleOneOfInner]. Input: " + JSON.stringify(instance));
+        } else if (match === 0) {
+            this.actualInstance = null; // clear the actual instance in case there are multiple matches
+            throw new Error("No match found constructing `InfoInputsValueExample` with oneOf schemas Boolean, Number, String, [InfoInputsValueExampleOneOfInner]. Details: " +
+                            errorMessages.join(", "));
+        } else { // only 1 match
+            // the input is valid
+        }
     }
 
     /**
@@ -45,20 +103,45 @@ class InfoInputsValueExample {
      * @return {module:model/InfoInputsValueExample} The populated <code>InfoInputsValueExample</code> instance.
      */
     static constructFromObject(data, obj) {
-        if (data) {
-            obj = obj || new InfoInputsValueExample();
-
-        }
-        return obj;
+        return new InfoInputsValueExample(data);
     }
 
+    /**
+     * Gets the actual instance, which can be <code>Boolean</code>, <code>Number</code>, <code>String</code>, <code>[InfoInputsValueExampleOneOfInner]</code>.
+     * @return {(module:model/Boolean|module:model/Number|module:model/String|module:model/[InfoInputsValueExampleOneOfInner])} The actual instance.
+     */
+    getActualInstance() {
+        return this.actualInstance;
+    }
 
+    /**
+     * Sets the actual instance, which can be <code>Boolean</code>, <code>Number</code>, <code>String</code>, <code>[InfoInputsValueExampleOneOfInner]</code>.
+     * @param {(module:model/Boolean|module:model/Number|module:model/String|module:model/[InfoInputsValueExampleOneOfInner])} obj The actual instance.
+     */
+    setActualInstance(obj) {
+       this.actualInstance = InfoInputsValueExample.constructFromObject(obj).getActualInstance();
+    }
+
+    /**
+     * Returns the JSON representation of the actual instance.
+     * @return {string}
+     */
+    toJSON = function(){
+        return this.getActualInstance();
+    }
+
+    /**
+     * Create an instance of InfoInputsValueExample from a JSON string.
+     * @param {string} json_string JSON string.
+     * @return {module:model/InfoInputsValueExample} An instance of InfoInputsValueExample.
+     */
+    static fromJSON = function(json_string){
+        return InfoInputsValueExample.constructFromObject(JSON.parse(json_string));
+    }
 }
 
 
-
-
-
+InfoInputsValueExample.OneOf = ["Boolean", "Number", "String", "[InfoInputsValueExampleOneOfInner]"];
 
 export default InfoInputsValueExample;
 

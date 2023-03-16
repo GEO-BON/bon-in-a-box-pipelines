@@ -4,7 +4,7 @@ export const ARRAY_PLACEHOLDER = 'Array';
 export const CONSTANT_PLACEHOLDER = 'Constant';
 
 // props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
-export default function ConstantNode({ id, data }) {
+export default function ConstantNode({ id, data, type }) {
 
   function renderInput() {
     switch(data.type) {
@@ -33,6 +33,7 @@ export default function ConstantNode({ id, data }) {
       <span className='dragHandle'>{data.type} </span>
       {renderInput()}
       <Handle type="source" position={Position.Right} />
+      <button className='arrowDownButton' title='options' onClick={(e) => data.onPopupMenu(e, id, type)} />
     </div>
   );
 }

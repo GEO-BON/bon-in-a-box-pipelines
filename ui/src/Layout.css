@@ -33,6 +33,42 @@ a.active {
   padding-right:30px;
 }
 
+.fullScreenPopup {
+  position: absolute;
+  top: 100px;
+  bottom: 10px;
+  margin-left: -10px;
+  z-index: 10000;
+  min-width: 50%;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  color: rgb(0, 0, 0);
+  background-color: #f3f3f1;
+  border-radius: 30px;
+  padding: 20px;
+  padding-right: 10px;
+}
+
+.fullScreenPopup button.close {
+  vertical-align: top;
+  margin-top:-25px;
+  height:fit-content;
+
+  color: rgb(0, 0, 0);
+  border: none;
+  background: none;
+  font-size: 60px;
+  cursor: pointer;  
+}
+
+.fullScreenPopup .content {
+  flex-grow: 1;
+  overflow-y: auto; 
+}
+
 img#logo {
   max-width: 10vw;
 }
@@ -64,14 +100,15 @@ img#logo {
   font-size: calc(10px + 2vmin);
 }
 
-.error, .warning {
+.error, .warning, .info {
   background-color: lightgray;
   font-weight: bold;
-  white-space: pre;
+  white-space: pre-wrap;
   min-height: 1.6em;
 
   padding-left: 2em;
   padding-top: 0.4em;
+  padding-right: 0.4em;
 
   background-size: 2em 2em;
   background-repeat: no-repeat;
@@ -85,6 +122,13 @@ img#logo {
   margin: 0em 0em -0.55em -0.5em;
 }
 
+.info-inline {
+  height: 1.5em;
+  display:inline;
+  /* Compensate for margins that are in the vector graphic */
+  margin: 0em .5em -.3em -.5em; 
+}
+
 .error {
   color: hsl(0, 100%, 27%);
   background-image: url(img/error.svg);
@@ -95,9 +139,31 @@ img#logo {
   background-image: url(img/warning.svg);
 }
 
-.outputDescription {
+.info {
+  color: #115CA2;
+  background-image: url(img/info.svg);
+  background-position: 0.3em;
+  background-size: 1.4em 1.6em;
+}
+
+.outputContent .stepDescription {
   font-size: small;
+}
+
+.references ul {
+  margin-top: 0;
+}
+
+.noMargin {
+  margin: 0;
+}
+
+.outputDescription {
   font-style: italic;
+}
+
+.resultText {
+  white-space: pre-wrap;
 }
 
 .map {
@@ -146,6 +212,8 @@ th, td {
 .inputFile {
   overflow: hidden;
   white-space: pre; /*don't break horizontal lines in two*/
+  padding:1em;
+  padding-bottom: 0em;
 }
 
 .blackText {

@@ -21,10 +21,6 @@ library("dplyr")
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "filtering/cleanCoordinatesFunc.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
@@ -66,8 +62,7 @@ write.table(clean_presence, clean_presence.output,
              append = F, row.names = F, col.names = T, sep = "\t")
 
 
-  output <- list("n_observations" =  nrow(presence),
-                 "n_clean" = nrow(clean_presence),
+  output <- list("n_clean" = nrow(clean_presence),
                   "clean_presence" = clean_presence.output
                   ) 
 jsonData <- toJSON(output, indent=2)

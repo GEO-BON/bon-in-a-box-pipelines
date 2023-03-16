@@ -21,12 +21,12 @@ inputs:
       - ssp585
     example: ssp126
   spatial_res:
-    label: spatial resolution output
+    label: spatial resolution output of the output raster
     description: pixel size (in meters)
     type: int
     example: 1000 
   srs_cube: 
-    label: spatial reference output
+    label: spatial reference output of the output raster
     description: Target spatial reference system
     type: text
     example: EPSG:6623
@@ -55,27 +55,27 @@ inputs:
       - 2041-2070
       - 2071-2100
     example: 2041-2070
-  t_match: 
-    label: threshold climate match
-    description: Acceptable difference of climate (e.g.,mean temperature in °C) to consider that the climate is similar.
-    type: float
-    example: 1
   bbox:
     label: bounding box
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax (use ExtentToBbox to add shapefiles and other formats)
     type: float[]
     example: [-2316297,-1971146,1015207,1511916]
+  t_match: 
+    label: threshold climate match 
+    description: plus/minus threshold to define climate match in geographic space (only for forward and backward velocities).
+    type: float
+    example: 1
 outputs:
   output_tif:
-    label: output metric
+    label: output
     description: metric raster file 
     type: image/tiff;application=geotiff
     example: local_velocity.tif
   metric:
-    label: metric
+    label: metric name
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
-    example: local
+    example: local_climate_velocity
 references:
   - text: Carroll et. al. (2015). Biotic and climatic velocity identify contrasting areas of vulnerability to climate change. PloS one, 10(10), e0140486.
     doi: https://doi.org/10.1371/journal.pone.0140486

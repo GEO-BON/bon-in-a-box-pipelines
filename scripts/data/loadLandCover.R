@@ -17,8 +17,6 @@ library("remotes")
 if (!"gdalcubes_R" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 
 
-
-
 ##devtools::install_local("loadLandCover/stac-catalogue-main.zip", 
   #  repos = NULL, 
  #   type = "source")
@@ -33,11 +31,7 @@ library("gdalcubes")
 library("RCurl")
 options(timeout = max(60000000, getOption("timeout")))
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
-
+setwd(outputFolder)
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
@@ -82,14 +76,17 @@ if (input$stac_source == "IO") {
 }
 
 
-raster::writeRaster(x = lc_raster,
-                    paste0(outputFolder, "/", names(lc_raster), ".tif"),
-                    bylayer=T,
-                    suffix= 'names',
-                    format='COG',
-                    #options=c("COMPRESS=DEFLATE"),
-                    overwrite = TRUE
-                    )
+
+for(i in 1:length(names(lc_raster))){
+  raster::writeRaster(x = lc_raster[[i]],
+                      paste0(outputFolder, "/", names(lc_raster[[i]]), ".tif"),
+                      format='COG',
+                      options=c("COMPRESS=DEFLATE"),
+                      overwrite = TRUE)
+}
+
+
+
 lc_classes <- list.files(outputFolder, pattern="*.tif$", full.names = T)
 
 output <- list("output_tif" = lc_classes)

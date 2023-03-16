@@ -23,15 +23,6 @@ library("remotes")
 
 if (!"prepr" %in% installed.packages()[,"Package"]) remotes::install_github("dickoa/prepr")
 
-
-
-options(timeout = max(60000000, getOption("timeout")))
-
-
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-
 setwd(outputFolder)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")

@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 
-import { Result } from "./Result";
+import { StepResult } from "./StepResult";
 import spinner from '../img/spinner.svg';
 import { InputFileWithExample } from './InputFileWithExample';
+import { GeneralDescription, InputsDescription, OutputsDescription } from './ScriptDescription';
 
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
-const yaml = require('js-yaml');
 
 export function SingleScriptPage(props) {
   const [requestState, setRequestState] = useState(RequestState.idle);
@@ -28,15 +28,20 @@ export function SingleScriptPage(props) {
     ) : (
       <>
         {resultData && resultData.httpError && <p key="httpError" className="error">{resultData.httpError}</p>}
-        {scriptMetadata && <pre key="metadata">{yaml.dump(scriptMetadata)}</pre>}
-        {resultData && <Result data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
+        {scriptMetadata && <pre key="metadata">
+             <GeneralDescription ymlPath={null} metadata={scriptMetadata} />
+             <InputsDescription metadata={scriptMetadata} />
+             <OutputsDescription metadata={scriptMetadata} />
+           </pre>}
+        {resultData && <StepResult data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
       </>
     )}
   </>)
 }
 
 function SingleScriptForm(props) {
-  const formRef = useRef(null);
+  const formRef = useRef();
+  const inputRef = useRef();
   const api = new BonInABoxScriptService.DefaultApi();
 
   const defaultScript = "helloWorld>helloR.yml";
@@ -83,7 +88,7 @@ function SingleScriptForm(props) {
     }
 
     let opts = {
-      'body': formRef.current.elements["inputFile"].value // String | Content of input.json for this run
+      'body': inputRef.current.getValue() // String | Content of input.json for this run
     };
     api.runScript(scriptPath, opts, callback);
   };
@@ -106,7 +111,7 @@ function SingleScriptForm(props) {
   }, []);
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit}>
+    <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
       <label>
         Script file:
         <br />
@@ -114,11 +119,11 @@ function SingleScriptForm(props) {
           defaultValue={{ label: defaultScript, value: defaultScript }}
           onChange={(v) => loadScriptMetadata(v.value)} />
       </label>
+      <br />
       <label>
-        Content of input.json:
+        Script input:
         <br />
-        <InputFileWithExample defaultValue='{&#10;"occurence":"/output/result/from/previous/script",&#10;"intensity":3&#10;}'
-          metadata={props.scriptMetadata} />
+        <InputFileWithExample ref={inputRef} metadata={props.scriptMetadata} />
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />

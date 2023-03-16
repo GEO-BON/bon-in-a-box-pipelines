@@ -8,9 +8,19 @@ class Output(override val type:String) : Pipe {
     override suspend fun pull(): Any {
         if(value == null) {
             step?.apply { execute() }
-                ?: throw RuntimeException("Output disconnected from any step")
+                ?: throw RuntimeException("Output of type $type disconnected from any step when pulling")
         }
-        return value ?: throw RuntimeException("Output has not been set by step")
+        return value ?: throw RuntimeException("Output of type $type has not been set by step $step")
+    }
+
+    override suspend fun pullIf(condition: (step: Step) -> Boolean): Any? {
+        return step.let {
+            if (it == null)
+                throw RuntimeException("Output of type $type disconnected from any step when pulling conditionally")
+
+            if(condition(it)) pull()
+            else null
+        } 
     }
 
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
@@ -19,7 +29,7 @@ class Output(override val type:String) : Pipe {
 
     override fun validateGraph(): String {
         return step?.validateGraph()
-            ?: "Output has no associated step\n"
+            ?: "Output of type $type has no associated step\n"
     }
 
     override fun toString(): String {

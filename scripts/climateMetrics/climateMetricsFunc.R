@@ -61,7 +61,7 @@
   
   # Local climate-change velocity (meters/year)
     local_velocity <- Temporal_tmean/spatial_tmean_current_0
-      names(local_velocity) <- "local"
+      names(local_velocity) <- "local_climate_velocity"
       
     return(local_velocity)
   }
@@ -104,7 +104,7 @@
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
         raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
-      names(forward_velocity) <- "forward"
+      names(forward_velocity) <- "forward_climate_velocity"
       
     return(forward_velocity)
   
@@ -149,7 +149,7 @@
         raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
         raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
-      names(backward_velocity) <- "backward"
+      names(backward_velocity) <- "backward_climate_velocity"
       
       return(backward_velocity)
       
@@ -167,7 +167,7 @@
                                              sum((x[focalCell]-x) <= tol, ...)/sum(!is.na(x))
                                     }
     )
-    names(tmean_current_rarity) <- "current_rarity"
+    names(tmean_current_rarity) <- "climate_current_rarity"
                                     
     tmean_future_rarity <- raster::focal(tmean_future_C,
                                           w=matrix(1, moving_window, moving_window),
@@ -178,16 +178,16 @@
                                           }             
                                     
     )
-    names(tmean_future_rarity) <- "future_rarity"
+    names(tmean_future_rarity) <- "climate_future_rarity"
     
     climate_rarity <- raster::stack(tmean_current_rarity, tmean_future_rarity)
     
     
     return(climate_rarity)
     
-  }
     
- 
+  }
+   
    
   }
   

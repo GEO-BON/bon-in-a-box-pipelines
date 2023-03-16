@@ -58,7 +58,7 @@ inputs:
     label: lc_classes
     description: Vector of integers, list of land cover classes to select (in the example all ESA classes are presented)
     type: int[]
-    example: [0, 10, 11, 12, 20, 30 ,40, 50, 60, 61, 62, 70, 71, 72, 80, 81, 82,  90, 100, 110, 120, 121, 122, 130, 140, 150, 151, 152, 160, 170, 180, 190, 200, 201, 202, 210, 220]
+    example: [0, 10, 11, 12, 20, 30 ,40, 50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90, 100, 110, 120, 121, 122, 130, 140, 150, 151, 152, 160, 170, 180, 190, 200, 201, 202, 210, 220]
 outputs:
   output_tif: 
     label: land cover classes

@@ -10,35 +10,30 @@ library("raster")
 library("dplyr")
 
 
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
-
-
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
 source("/scripts/binaryLayer/binaryLayerFunc.R")
 lc_classes <- input$lc_classes
+select_class <- input$select_class
+threshold_prop <- input$threshold_prop
 
 
 # Running binary function
-lc_binary <- binary_layer(select_class =  c(210, 60),
-             threshold_prop = 0.8)
+lc_binary <- binary_layer(lc_classes, select_class, threshold_prop)
   
-  
+
 # Saving rasters
-raster::writeRaster(x = lc_binary,
-                    paste0(outputFolder, "/", names(lc_binary), ".tif"),
-                    bylayer=T,
-                    suffix= 'names',
+
+for(i in 1:length(names(lc_binary))){
+raster::writeRaster(x = lc_binary[[i]],
+                    paste0(outputFolder, "/", names(lc_binary[[i]]), ".tif"),
                     format='COG',
-                    #options=c("COMPRESS=DEFLATE"),
+                    options=c("COMPRESS=DEFLATE"),
                     overwrite = TRUE
 )
-
+}
 print(list.files(outputFolder, pattern = ".tif$", full.names = T))
 
 lc_binary_layer <- list.files(outputFolder, pattern="*.tif$", full.names = T)
