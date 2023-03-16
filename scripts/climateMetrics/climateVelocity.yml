@@ -21,12 +21,12 @@ inputs:
       - ssp585
     example: ssp126
   spatial_res:
-    label: spatial resolution output
+    label: spatial resolution output of the output raster
     description: pixel size (in meters)
     type: int
     example: 1000 
   srs_cube: 
-    label: spatial reference output
+    label: spatial reference output of the output raster
     description: Target spatial reference system
     type: text
     example: EPSG:6623
