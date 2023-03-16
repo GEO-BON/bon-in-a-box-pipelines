@@ -12,7 +12,6 @@ if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github
 
 ## Load required packages
 
-#install.packages("gdalcubes")
 library("terra")
 library("rjson")
 library("raster")
@@ -20,15 +19,6 @@ library("dplyr")
 library("stacatalogue")
 library("gdalcubes")
 
-
-## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/loadPredictorsFunc.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
-
-## Receiving args
-args <- commandArgs(trailingOnly=TRUE)
-outputFolder <- args[1] # Arg 1 is always the output folder
-cat(args, sep = "\n")
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
@@ -103,15 +93,13 @@ for (coll_it in collections_items){
 
 output_predictors <- file.path(outputFolder)
 
-id_rasters=list()
 for (i in 1:length(predictors)) {
   ff <- tempfile(pattern = paste0(names(predictors[i][[1]]),'_'))
-  id_rasters[[i]]<-list(id=names(predictors[i][[1]]),'layer'=file.path(outputFolder, paste0(basename(ff),".tif")))
   gdalcubes::write_tif(predictors[i][[1]], dir = output_predictors, prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=T)
 }
 
 fileslist=list.files(outputFolder, pattern="*.tif")
 
-output <- list("rasters" = paste0(file.path(outputFolder, fileslist)), "id_raster" = id_rasters)
+output <- list("rasters" = paste0(file.path(outputFolder, fileslist)))
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
