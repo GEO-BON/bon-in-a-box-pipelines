@@ -5,9 +5,10 @@
 #' @import raster dplyr 
 #' @export
 
-binary_layer <- function(select_class =  c(210, 60),
-                               threshold_prop = 0.8){ 
-
+binary_layer <- function(lc_classes, 
+                         select_class = c(210, 60),
+                         threshold_prop = 0.8){ 
+print(paste("TEMP lc_classes", lc_classes))
 # Creating reclassification matrix based on threshold_prop
   m <- c(0, threshold_prop, 0, threshold_prop, 1, 1)
   rclmat <- matrix(m, ncol=3, byrow=T)
@@ -20,11 +21,13 @@ binary_layer <- function(select_class =  c(210, 60),
   
   # Loop
     for(i in 1:length(select_class)){
-     
+        lc_stack <- raster::stack(lc_classes)
+
+        print(paste("TEMP names stack", names(lc_stack)))
       # Read list of input and create rasters
-        read_lc  <- raster::subset(raster::stack(input$lc_classes),
+        read_lc  <- raster::subset(lc_stack,
                                  grep(select_class[i],
-                                      names(raster::stack(input$lc_classes)),
+                                      names(lc_stack),
                                       ignore.case = TRUE))
         
       # Reclassify raster based on threshold

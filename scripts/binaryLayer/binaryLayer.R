@@ -16,11 +16,12 @@ print(input)
 
 source("/scripts/binaryLayer/binaryLayerFunc.R")
 lc_classes <- input$lc_classes
+select_class <- input$select_class
+threshold_prop <- input$threshold_prop
 
 
 # Running binary function
-lc_binary <- binary_layer(select_class =  c(210,60),
-             threshold_prop = 0.8)
+lc_binary <- binary_layer(lc_classes, select_class, threshold_prop)
   
 
 # Saving rasters
