@@ -573,19 +573,6 @@
       }
     },
     {
-      "id": "47",
-      "type": "constant",
-      "position": {
-        "x": 119.49192730346579,
-        "y": 596.8394893301208
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "rarity"
-      }
-    },
-    {
       "id": "48",
       "type": "constant",
       "position": {
@@ -1052,13 +1039,6 @@
       "target": "22",
       "targetHandle": "select_values",
       "id": "reactflow__edge-32-22select_values"
-    },
-    {
-      "source": "47",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "metric",
-      "id": "reactflow__edge-47-17metric"
     },
     {
       "source": "48",
