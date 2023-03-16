@@ -2,7 +2,7 @@
 
 # Cargar librerias
 packages_list<-list("magrittr", "terra", "raster")
-invisible(lapply(packages_list, library, character.only = TRUE))
+invisible(   lapply(packages_list, library, character.only = TRUE)   )
 
 # Organizar directorios
 args <- commandArgs(trailingOnly=TRUE)
@@ -11,8 +11,9 @@ outputFolder <- args[1]
 # Cargar archivos de entrada
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json"))
 
-vector_polygon<- input$dir_wkt_polygon
+dir_wkt<- input$dir_wkt_polygon
 dir_colection<- input$dir_colection
+
 
 epsg_polygon<- input$epsg_polygon
 resolution<- input$resolution
@@ -23,7 +24,7 @@ resolution<- raster(extent(seq(4)),crs= "+init=epsg:3395", res= resolution) %>% 
   raster::res()
 
 # Definir área de estudio
-vector_polygon<- terra::vect(wkt_polygon, crs= sf::st_crs(epsg_polygon)$proj4string ) %>% as.polygons()
+vector_polygon<- terra::vect(dir_wkt, crs= sf::st_crs(epsg_polygon)$proj4string ) %>% as.polygons()
 crs_polygon<- terra::crs(vector_polygon)
 box_polygon<-  sf::st_bbox(vector_polygon)
 
@@ -50,7 +51,7 @@ cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = gd
 cube <- gdalcubes::raster_cube(stac_collection, cube_collection)
 
 # Cortar cubo por area de estudio
-cube_mask<- gdalcubes::filter_geom(cube, geom= wkt_polygon, srs = crs_polygon )
+cube_mask<- gdalcubes::filter_geom(cube, geom= dir_wkt, srs = crs_polygon )
 
 # Convertir cubo a raster
 cube_stars <- stars::st_as_stars(cube_mask) %>% terra::rast() %>% setNames(names(cube_mask))
