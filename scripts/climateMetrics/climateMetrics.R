@@ -82,11 +82,10 @@ cube_future <- stacatalogue::load_cube_projection(collections = 'chelsa-clim-pro
 
 print("Future climate loaded.")
 
-
-print("Calculating metrics...")
 metric <- input$metric
-
 if (is.null(metric)) metric <- "rarity"
+
+print(paste("Calculating", metric, "metric..."))
 
 tif <- climate_metrics(cube_current,
                           cube_future,

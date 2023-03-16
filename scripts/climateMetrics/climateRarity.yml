@@ -1,11 +1,8 @@
 script: climateMetrics.R
-description: This script calculates climate rarity, using a moving window approach. Values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
+description: 
+  This script calculates climate rarity.
+  It shows how different the mean temperature is from its surroundings, using moving window and a temperature threshold.
 inputs:
-  metric:
-    label: metric climate rarity
-    description: how different is the mean temperature from its surroundings, using moving window and a temperature threshold.
-    type: text
-    example: rarity
   rcp:
     label: rcp
     description: shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
@@ -68,7 +65,7 @@ inputs:
 outputs:
   output_tif:
     label: output
-    description: metric raster file 
+    description: Raster file, values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
     type: image/tiff;application=geotiff[]
     example: climate_current_rarity.tif
   metric:
