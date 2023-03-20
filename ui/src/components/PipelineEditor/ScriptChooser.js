@@ -3,7 +3,7 @@ import './Editor.css'
 import {React, useState, useEffect, useCallback} from 'react';
 
 import spinnerImg from '../../img/spinner.svg';
-import { fetchScriptDescription } from './ScriptDescriptionStore';
+import { fetchStepDescription } from './ScriptDescriptionStore';
 import { GeneralDescription, InputsDescription, OutputsDescription } from '../ScriptDescription';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
@@ -49,7 +49,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
       setSelectedStep(descriptionFile)
       setPopupContent(<img src={spinnerImg} className="spinner" alt="Spinner" />)
 
-      fetchScriptDescription(descriptionFile, (metadata) => {
+      fetchStepDescription(descriptionFile, (metadata) => {
         if(!metadata) {
           setPopupContent(<p className='error'>Failed to fetch script description for {descriptionFile}</p>)
           return

@@ -21,7 +21,7 @@ import PopupMenu from './PopupMenu';
 import { layoutElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
-import { getScriptDescription } from './ScriptDescriptionStore'
+import { getStepDescription } from './ScriptDescriptionStore'
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -316,7 +316,7 @@ export function PipelineEditor(props) {
               const edgeFound = allEdges.find(edge => node.id === edge.source);
               if(edgeFound) {
                 const nodeFound = allNodes.find(n => edgeFound.target === n.id)
-                const stepDescription = getScriptDescription(nodeFound.data.descriptionFile)
+                const stepDescription = getStepDescription(nodeFound.data.descriptionFile)
 
                 if(stepDescription && stepDescription.inputs) {
                   const inputDescription = stepDescription.inputs[edgeFound.targetHandle]
@@ -339,7 +339,7 @@ export function PipelineEditor(props) {
             }
 
           } else if (node.type === 'io') {
-            let scriptDescription = getScriptDescription(node.data.descriptionFile)
+            let scriptDescription = getStepDescription(node.data.descriptionFile)
             if (scriptDescription && scriptDescription.inputs) {
               Object.entries(scriptDescription.inputs).forEach(entry => {
                 const [inputId, inputDescription] = entry
@@ -389,7 +389,7 @@ export function PipelineEditor(props) {
           
           // outputDescription may be null if stepDescription not yet available.
           // This is ok when loading since we rely on the saved description anyways. 
-          const stepDescription = getScriptDescription(sourceNode.data.descriptionFile)
+          const stepDescription = getStepDescription(sourceNode.data.descriptionFile)
           const outputDescription = stepDescription && stepDescription.outputs && stepDescription.outputs[edge.sourceHandle]
 
           newPipelineOutputs.push({

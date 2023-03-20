@@ -10,21 +10,35 @@ var descriptions = {}
  * @param {String} descriptionFileLocation 
  * @param {Function} callback function accepting metadata as a parameter, or null
  */
-export function fetchScriptDescription(descriptionFileLocation, callback) {
+export function fetchStepDescription(descriptionFileLocation, callback) {
   let existingDescription = descriptions[descriptionFileLocation]
   if (existingDescription) {
     callback(existingDescription)
     return
   }
 
-  api.getScriptInfo(descriptionFileLocation, (error, callbackData, response) => {
-    if (error) {
-      console.error("Error loading " + descriptionFileLocation + ": ", error)
-    } else {
-      descriptions[descriptionFileLocation] = callbackData
-      callback(callbackData)
-    }
-  });
+  // We know that Pipeline descriptions are json and Scripts are yaml...
+  if(descriptionFileLocation.endsWith('.json')) {
+    api.getPipelineInfo(descriptionFileLocation, (error, callbackData, response) => {
+      if (error) {
+        console.error("Error loading " + descriptionFileLocation + ":", error);
+      } else {
+        console.log('API called successfully. Returned data: ', callbackData);
+        descriptions[descriptionFileLocation] = callbackData
+        callback(callbackData)
+      }
+    });
+  } else {
+    api.getScriptInfo(descriptionFileLocation, (error, callbackData, response) => {
+      if (error) {
+        console.error("Error loading " + descriptionFileLocation + ":", error)
+      } else {
+        console.log('API called successfully. Returned data: ', callbackData);
+        descriptions[descriptionFileLocation] = callbackData
+        callback(callbackData)
+      }
+    });
+  }
 }
 
 /**
@@ -33,6 +47,6 @@ export function fetchScriptDescription(descriptionFileLocation, callback) {
  * @param {String} descriptionFileLocation 
  * @returns metadata, or null
  */
-export function getScriptDescription(descriptionFileLocation) {
+export function getStepDescription(descriptionFileLocation) {
   return descriptions[descriptionFileLocation]
 }
