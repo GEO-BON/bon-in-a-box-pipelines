@@ -24,7 +24,7 @@ binary_layer <- function(lc_classes,
       
   }
   
-  names(lc_classes_stack) <- c(unlist(c(shortnames)))
+  names(lc_classes_stack) <- c(unlist(shortnames))
 
 # Creating reclassification matrix based on threshold_prop
   m <- c(0, threshold_prop, 0, threshold_prop, 1, 1)
