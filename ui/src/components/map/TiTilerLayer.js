@@ -66,7 +66,7 @@ export default function TiTilerLayer({ url, range, setError }) {
           let corner2 = L.latLng(bounds[3], bounds[2])
           map.fitBounds(L.latLngBounds(corner1, corner2))
         })
-        .catch(error => setError(error))
+        .catch(error => setError(error.message))
     }
 
     if(range) {
@@ -76,7 +76,7 @@ export default function TiTilerLayer({ url, range, setError }) {
         .then(statistics => {
           addLayer(statistics.percentile_2, statistics.percentile_98)
         })
-        .catch(error => setError(error))
+        .catch(error => setError(error.message))
     }
 
     return () => {

@@ -1,11 +1,8 @@
 script: climateMetrics.R
-description: This script calculates climate rarity, using a moving window approach. Values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
+description: 
+  This script calculates climate rarity.
+  It shows how different the mean temperature is from its surroundings, using moving window and a temperature threshold.
 inputs:
-  metric:
-    label: metric climate rarity
-    description: how different is the mean temperature from its surroundings, using moving window and a temperature threshold.
-    type: text
-    example: rarity
   rcp:
     label: rcp
     description: shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
@@ -17,12 +14,12 @@ inputs:
     example: ssp126
   spatial_res:
     label: spatial resolution output
-    description: pixel size (in meters)
+    description: pixel size (in meters) of the output raster
     type: int
     example: 1000 
   srs_cube: 
     label: spatial reference output
-    description: target spatial reference system
+    description: target spatial reference system of the output raster
     type: text
     example: EPSG:6623
   aggregation:
@@ -42,13 +39,13 @@ inputs:
     type: text
     example: "1981-01-01"
   t1:
-    label: current climate start
+    label: current climate end
     description: Current climate end time, in format aaaa-mm-dd 
     type: text
     example: "1981-12-31"
   t_match: 
     label: threshold climate match
-    description: Acceptable difference of climate (e.g.,mean temperature in °C) to consider that the climate is similar.
+    description: Acceptable difference of climate (e.g., mean temperature in °C) to consider that the climate is similar.
     type: float
     example: 1
   time_span:
@@ -67,12 +64,13 @@ inputs:
     example: [-2316297,-1971146,1015207,1511916]
 outputs:
   output_tif:
-    label: output metric
-    description: metric raster file 
+    label: output
+    description: Raster file, values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
     type: image/tiff;application=geotiff[]
     example: climate_current_rarity.tif
+    range: [0,1]
   metric:
-    label: metric
+    label: metric name
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
     example: local
