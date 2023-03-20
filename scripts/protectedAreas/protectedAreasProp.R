@@ -3,10 +3,9 @@
 
 # world database on protected areas (wdpa) source: https://www.protectedplanet.net/en
 
-packages <- c("sf", "wdpar", "terra", "exactextractr", "dplyr", "raster", "rjson", "Rcpp", "remotes", "wdman")
+packages <- c("sf", "wdpar", "terra", "exactextractr", "dplyr", "raster", "rjson", "Rcpp", "remotes", "wdman", "webdriver")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
-
 
 # libraries
 library("rjson")
@@ -19,6 +18,7 @@ library("raster")
 library("Rcpp")
 library("wdman")
 library("remotes")
+library("webdriver")
 
 
 if (!"prepr" %in% installed.packages()[,"Package"]) remotes::install_github("dickoa/prepr")
@@ -27,6 +27,9 @@ setwd(outputFolder)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
+
+
+webdriver::install_phantomjs()
 
 
 # Load functions
@@ -48,7 +51,7 @@ tif <- protected_areas(country = input$country,
 
 
 
-output_tif <- file.path(outputFolder, "Protected_areas_prop.tif")
+output_tif <- file.path(outputFolder, paste0("Protected_areas_prop_", input$habitat_type, ".tif"))
 raster::writeRaster(x = tif,
                     output_tif,
                     overwrite = TRUE,
