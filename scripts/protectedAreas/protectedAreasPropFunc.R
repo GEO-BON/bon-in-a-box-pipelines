@@ -6,7 +6,7 @@
 #' @param crs, CRS object or a character string describing a projection and datum in the PROJ.4 format (e.g., "EPSG:6623" or "+proj=aea +lat_0=44 +lon_0=-68.5 +lat_1=60 +lat_2=46 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs" ).
 #' @param pixel_size, an integer defining the output pixel size in meters. Set at 1000m
 #' @param habitat_type,  a character vector of type of habitat c("terrestrial", "marine", "partial"), by default is c("terrestrial")."partial" is a protected area or OECM is that partially within the marine environment and partially within the terrestrial (or freshwater) environments. This value is applicable to polygons only. 
-#' @import sf wdpar terra exactextractr dplyr raster remotes Rcpp wdman
+#' @import sf wdpar terra exactextractr dplyr raster remotes Rcpp
 #' @return a raster
 #' @export
 
@@ -39,13 +39,8 @@ protected_areas <- function(country = "Canada",
                           crs = crs,
                           erase_overlaps = F)
   
- 
-    
-
-    
-    
-    lat <- c( bbox[4],  bbox[2])
-    lon <- c( bbox[1],  bbox[3])
+    lat <- c(input$bbox[2],  input$bbox[4])
+    lon <- c(input$bbox[1],  input$bbox[3])
    
     
     # Area of interest within the country (bbox)
@@ -56,7 +51,7 @@ protected_areas <- function(country = "Canada",
       poly <-
         data.frame(lon, lat)%>%
         st_as_sf(coords = c("lon", "lat"),
-                 crs = "EPSG:4326") %>%
+                 crs = crs) %>%
         st_bbox() %>%
         st_as_sfc()%>%
         st_set_precision(pixel_size) %>%
@@ -92,8 +87,10 @@ protected_areas <- function(country = "Canada",
       terra::values(r1) <- 1
       
     # Study area polygon
-      study_area_wgs84 <-  terra::vect(base::rbind(lon, lat), type = "polygons")
-
+      #study_area_wgs84 <-  terra::vect(base::rbind(lon, lat), type = "polygons")
+      study_area_wgs84 <-  terra::vect(poly)%>%
+        terra::project("EPSG:4326")
+      
     # Cropping raster template using study area polygon and project it.
       print("Cropping raster template using the area of interest and project it ...")
       r_template <- terra::crop(r1, study_area_wgs84)%>%
@@ -107,12 +104,13 @@ protected_areas <- function(country = "Canada",
       
       pas_dissolved <- sf::st_union(pa_data$geometry, by_feature = FALSE)
     
-      
-    
     # Calculate the fraction of raster cells covered by a polygon
       print("Calculating the fraction of raster cells covered by a protected area polygon ....") 
       
-      proportion_pas <- exactextractr::coverage_fraction(r_template, pas_dissolved, crop = T)
+      proportion_pas <- exactextractr::coverage_fraction(r_template,
+                                                         pas_dissolved,
+                                                         crop = T
+                                                         )
     
       print("Raster layer saved!")
     
