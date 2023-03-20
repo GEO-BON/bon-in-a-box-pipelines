@@ -1,5 +1,5 @@
 import dagre from 'dagre';
-import { getScriptDescription } from '../ScriptDescriptionStore'
+import { getStepDescription } from '../ScriptDescriptionStore'
 
 /**
  * Reposition nodes using dagree graph. 
@@ -18,7 +18,7 @@ export const layoutElements = (nodes, edges) => {
   nodes.forEach(node => {
     if (node.type === 'io') {
       let inputList = []
-      Object.keys(getScriptDescription(node.data.descriptionFile).inputs).forEach(inputKey => inputList.push(inputKey))
+      Object.keys(getStepDescription(node.data.descriptionFile).inputs).forEach(inputKey => inputList.push(inputKey))
       inputOrderMap.set(node.id, inputList)
     }
 
