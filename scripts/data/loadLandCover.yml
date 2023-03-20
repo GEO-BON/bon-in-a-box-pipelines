@@ -29,6 +29,11 @@ inputs:
     description: spatial resolution of the input in meters (must be multiple of output spatialr resolution) 
     type: int
     example: 250
+  prop_res: 
+    label: spatial resolution for the output in meters
+    description: Integer, if proportion is TRUE, resolution to calculate the proportion from
+    type: int
+    example: 1000
   srs_cube:
     label: spatial reference of the output
     description: String, projection system of the coordinates in bbox
@@ -49,11 +54,6 @@ inputs:
     description: Boolean, should a proportion of land cover classes be calculated
     type: boolean
     example: TRUE
-  prop_res: 
-    label: spatial resolution for the output in meters
-    description: Integer, if proportion is TRUE, resolution to calculate the proportion from
-    type: int
-    example: 1000
   select_values: 
     label: lc_classes
     description: Vector of integers, list of land cover classes to select (in the example all ESA classes are presented)
