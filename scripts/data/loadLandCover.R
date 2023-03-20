@@ -5,10 +5,6 @@
 library("devtools")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 
-#devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue", upgrade = "never")
-#devtools::install_local("C:/stac-catalogue", upgrade = "never")
-#source("C:/stac-catalogue/R/stac_functions.R")
-
 packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -16,10 +12,6 @@ if(length(new.packages)) install.packages(new.packages)
 library("remotes")
 if (!"gdalcubes_R" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 
-
-##devtools::install_local("loadLandCover/stac-catalogue-main.zip", 
-  #  repos = NULL, 
- #   type = "source")
 
 ## Load required packages
 library("terra")
