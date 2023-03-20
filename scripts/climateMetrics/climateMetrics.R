@@ -82,17 +82,16 @@ cube_future <- stacatalogue::load_cube_projection(collections = 'chelsa-clim-pro
 
 print("Future climate loaded.")
 
-
-print("Calculating metrics...")
 metric <- input$metric
-
 if (is.null(metric)) metric <- "rarity"
+
+print(paste("Calculating", metric, "metric..."))
 
 tif <- climate_metrics(cube_current,
                           cube_future,
-                          metric ,
-                           t_match = input$t_match
-                          )
+                          metric,
+                          t_match = input$t_match,
+                          moving_window = input$moving_window)
 
 for(i in 1:length(names(tif))){
  raster::writeRaster(x = tif[[i]],
@@ -116,7 +115,10 @@ print("Metrics saved.")
 
 
 # Outputing result to JSON
-output <- list("output_tif" = output_tif)
+output <- list(
+  "output_tif" = output_tif,
+  "metric" = metric
+)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

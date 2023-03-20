@@ -124,6 +124,16 @@ fun Application.configureRouting() {
             }
         }
 
+        get("/pipeline/{descriptionPath}/get") {
+            val descriptionFile = File(pipelinesRoot, call.parameters["descriptionPath"]!!.replace(FILE_SEPARATOR, '/'))
+            if (descriptionFile.exists()) {
+                call.respondText(descriptionFile.readText(), ContentType.parse("application/json"))
+            } else {
+                call.respondText(text = "$descriptionFile does not exist", status = HttpStatusCode.NotFound)
+                logger.debug("404: pipeline/${call.parameters["descriptionPath"]}/get")
+            }   
+        }
+
         post("/pipeline/{descriptionPath}/run") {
             val inputFileContent = call.receive<String>()
             val descriptionPath = call.parameters["descriptionPath"]!!

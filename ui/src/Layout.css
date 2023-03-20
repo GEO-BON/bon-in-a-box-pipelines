@@ -103,7 +103,7 @@ img#logo {
 .error, .warning, .info {
   background-color: lightgray;
   font-weight: bold;
-  white-space: pre;
+  white-space: pre-wrap;
   min-height: 1.6em;
 
   padding-left: 2em;

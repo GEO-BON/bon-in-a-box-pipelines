@@ -1,8 +1,8 @@
 script: climateMetrics.R
-description: Climate velocity can be defined as the rate and direction that climate shifts across the landscape.
+description: Climate-change velocity can be defined as the rate and direction of displacement of climatic conditions over Earth’s surface.
 inputs:
   metric:
-    label: climate metric
+    label: climate-change velocity metric
     description: "Choice of local velocity (meters/year; see Loarie et. al. (2009) and Sandel et. al. (2011).),
       forward or backward velocity (meters/year; see Carroll et. al. (2015) and Hamann et. al. (2015).)"
     type: options
@@ -21,12 +21,12 @@ inputs:
       - ssp585
     example: ssp126
   spatial_res:
-    label: spatial resolution output
+    label: spatial resolution of the output raster
     description: pixel size (in meters)
     type: int
     example: 1000 
   srs_cube: 
-    label: spatial reference output
+    label: spatial reference of the output raster
     description: Target spatial reference system
     type: text
     example: EPSG:6623
@@ -67,12 +67,12 @@ inputs:
     example: 1
 outputs:
   output_tif:
-    label: output metric
-    description: metric raster file 
+    label: output
+    description: climate-change velocity. 
     type: image/tiff;application=geotiff
     example: local_velocity.tif
   metric:
-    label: metric
+    label: metric name
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
     example: local_climate_velocity
