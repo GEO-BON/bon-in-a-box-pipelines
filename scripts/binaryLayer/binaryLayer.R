@@ -34,6 +34,7 @@ raster::writeRaster(x = lc_binary[[i]],
                     overwrite = TRUE
 )
 }
+
 print(list.files(outputFolder, pattern = ".tif$", full.names = T))
 
 lc_binary_layer <- list.files(outputFolder, pattern="*.tif$", full.names = T)
