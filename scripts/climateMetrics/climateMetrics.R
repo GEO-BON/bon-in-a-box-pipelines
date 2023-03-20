@@ -102,14 +102,7 @@ for(i in 1:length(names(tif))){
 }
 
 
-
-#output_tif <- file.path(outputFolder, paste0(metric, ".tif"))
 output_tif <- list.files(outputFolder, pattern="*.tif$", full.names = T)
-#raster::writeRaster(x = tif,
-  #                       output_tif,
-  #                        format='COG',
-  #                        options=c("COMPRESS=DEFLATE"),
-  #                       overwrite = TRUE)
 
 print("Metrics saved.")
 
@@ -118,7 +111,7 @@ print("Metrics saved.")
 output <- list(
   "output_tif" = output_tif,
   "metric" = metric
-)
+  )
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
