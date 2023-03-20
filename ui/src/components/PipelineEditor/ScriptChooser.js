@@ -7,6 +7,7 @@ import { fetchScriptDescription } from './ScriptDescriptionStore';
 import { GeneralDescription, InputsDescription, OutputsDescription } from '../ScriptDescription';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
+const api = new BonInABoxScriptService.DefaultApi();
 
 const onDragStart = (event, nodeType, descriptionFile) => {
   event.dataTransfer.setData('application/reactflow', nodeType);
@@ -17,24 +18,29 @@ const onDragStart = (event, nodeType, descriptionFile) => {
 
 
 export default function ScriptChooser({popupContent, setPopupContent}) {
-  const api = new BonInABoxScriptService.DefaultApi();
   const [scriptFiles, setScriptFiles] = useState([]);
+  const [pipelineFiles, setPipelineFiles] = useState([]);
   const [selectedStep, setSelectedStep] = useState([]);
 
   // Applied only once when first loaded  
   useEffect(() => {
-    // Load list of scripts into scriptFileOptions
-    api.scriptListGet((error, data, response) => {
+    api.pipelineListGet((error, pipelineList, response) => {
       if (error) {
-        // TODO: Client error
         console.error(error);
       } else {
-        setScriptFiles(data);
+        setPipelineFiles(pipelineList)
       }
     });
-    // Empty dependency array to get script list only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+
+    // Load list of scripts into scriptFileOptions
+    api.scriptListGet((error, scriptList, response) => {
+      if (error) {
+        console.error(error);
+      } else {
+        setScriptFiles(scriptList);
+      }
+    });
+  }, [setPipelineFiles, setScriptFiles]);
 
   const onStepClick = useCallback(descriptionFile => {
     if(selectedStep === descriptionFile) {
@@ -121,7 +127,13 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
         Pipeline output
       </div>
-      <div className="description">Available scripts:</div>
+      {pipelineFiles &&
+        <div key="Pipelines">
+          <p>Pipelines</p>
+          <div className='inFolder'>{renderTree([], pipelineFiles.map(file => file.split('>')))}</div>
+        </div>
+      }
+
       {scriptFiles && renderTree([], scriptFiles.map(file => file.split('>')))}
     </aside>
   );
