@@ -3,7 +3,7 @@ description: "Remove collinearity between a series of predictor rasters with the
 inputs:
   rasters:
     label: rasters
-    description: array of output raster paths
+    description: array of input raster paths
     type: image/tiff;application=geotiff[]
     example: []
   method:
