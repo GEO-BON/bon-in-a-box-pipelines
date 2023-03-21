@@ -15,10 +15,10 @@ inputs:
     type: text
     example: "https://io.biodiversite-quebec.ca/stac/"
   collections:
-    label: collections
+    label: collection
     description: name of the collection
     type: text
-    example: c("esacci-lc")
+    example: "esacci-lc"
   bbox:
     label: bbox
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
