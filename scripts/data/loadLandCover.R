@@ -54,7 +54,7 @@ if (input$stac_source == "IO") {
                                 temporal.res =  temporal_res)
   } else if (input$stac_source == "PC") {
   lc_raster <- stacatalogue::load_prop_values_pc(stac_path =  "https://planetarycomputer.microsoft.com/api/stac/v1/",
-                                collections = c("io-lulc-9-class"), 
+                                collections = "io-lulc-9-class", 
                               bbox = bbox,
                                srs.cube = input$srs_cube,
                                 t0 = input$t0,
