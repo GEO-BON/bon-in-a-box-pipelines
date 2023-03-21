@@ -375,7 +375,7 @@
         "y": 175
       },
       "data": {
-        "descriptionFile": "SDM>loadFromStac.yml"
+        "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
@@ -790,26 +790,26 @@
       "type": "int",
       "example": 2020
     },
-    "SDM>loadFromStac.yml@103.source": {
+    "data>loadFromStac.yml@103.source": {
       "description": "String, type of source to load the predictors from (either from tif, or from the stac catalogue)",
       "label": "source",
       "type": "options",
       "options": ["from_tif", "from_cube"],
       "example": "from_cube"
     },
-    "SDM>loadFromStac.yml@103.collections_items": {
+    "data>loadFromStac.yml@103.collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "label": "collections_items",
       "type": "text[]",
       "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
     },
-    "SDM>loadFromStac.yml@103.spatial_res": {
+    "data>loadFromStac.yml@103.spatial_res": {
       "description": "Integer, spatial resolution of the predictors",
       "label": "spatial resolution",
       "type": "int",
       "example": 1000
     },
-    "SDM>loadFromStac.yml@103.mask": {
+    "data>loadFromStac.yml@103.mask": {
       "description": "Shapefile, used to mask the output predictors",
       "label": "mask",
       "type": "application/dbf",
