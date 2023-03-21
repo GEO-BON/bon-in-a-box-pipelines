@@ -248,9 +248,6 @@ predict_maxent <- function(presence_background,
   layers <- names(predictors)
   runs <- names(presence_background |> 
                   dplyr:: select(starts_with("run")))
-
-  print("NUMBER OF RUNS :")
-  print(length(runs))
   
   fc <- as.character(fc)
   rm <- as.numeric(rm)
