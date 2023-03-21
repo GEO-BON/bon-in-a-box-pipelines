@@ -41,7 +41,7 @@ temporal_res <- paste0("P", n_year, "Y")
 
 if (input$stac_source == "IO") {
   lc_raster <- stacatalogue::load_prop_values(stac_path = "https://io.biodiversite-quebec.ca/stac/",
-                                collections = "esacci-lc", 
+                                collections = input$collections, 
                               bbox = bbox,
                                srs.cube = input$srs_cube,
                                limit = 5000,
@@ -54,7 +54,7 @@ if (input$stac_source == "IO") {
                                 temporal.res =  temporal_res)
   } else if (input$stac_source == "PC") {
   lc_raster <- stacatalogue::load_prop_values_pc(stac_path =  "https://planetarycomputer.microsoft.com/api/stac/v1/",
-                                collections = "io-lulc-9-class", 
+                                collections = input$collections, 
                               bbox = bbox,
                                srs.cube = input$srs_cube,
                                 t0 = input$t0,
