@@ -43,15 +43,18 @@ limit = 5000,
 t0 = NULL,
 t1 = NULL,
 spatial.res = input$spatial_res, # in meters
-temporal.res = "P1Y",
+temporal.res = "P1D",
 aggregation = "mean",
 resampling = "near")
-mask=NULL
 subset_layers = input$layers
 variables = input$variables
 proj = input$proj
 as_list = F
-  
+
+mask=input$mask
+if(mask==''){
+  mask=NULL
+}
 predictors=list()
 for (coll_it in collections_items){
     ci<-strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
