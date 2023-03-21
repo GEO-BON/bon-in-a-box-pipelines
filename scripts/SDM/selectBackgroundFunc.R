@@ -182,8 +182,7 @@ create_background <- function(
   }
   message(sprintf("%s selected", nrow(backgr)))
   
-  #species <- unique(obs$scientific_name) This didn't work if there are more than one equivalent species names
-  species <- obs$scientific_name[1]
+  species <- unique(obs$scientific_name) 
   backgr <- dplyr::bind_cols(id = 1:nrow(backgr),
                              scientific_name = species,
                              backgr |> data.frame()) |>

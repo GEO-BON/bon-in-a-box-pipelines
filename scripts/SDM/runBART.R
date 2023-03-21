@@ -3,7 +3,6 @@
 ## Install required packages
 
 ## Load required packages
-if (!"embarcadero" %in% installed.packages()[,"Package"]) devtools::install_github("cjcarlson/embarcadero")
 
 library("terra")
 library("rjson")
@@ -13,6 +12,7 @@ library("embarcadero")
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "runSDM/funcRunSDM.R", sep = "/"))
+
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
