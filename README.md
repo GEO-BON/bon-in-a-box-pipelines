@@ -35,6 +35,9 @@ To run:
     GBIF_USER=
     GBIF_PWD=
     GBIF_EMAIL=
+
+    # Access Red List Index
+    IUCN_TOKEN=
     ```
 6. `docker compose up -d`
 7. In browser:
