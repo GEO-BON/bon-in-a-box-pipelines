@@ -5,6 +5,9 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import COGLayer from "./COGLayer";
 import TiTilerLayer from "./TiTilerLayer";
+import 'leaflet.markercluster'
+import ReactDOMServer from 'react-dom/server'
+import './MarkerCluster.Default.css'
 
 // This is to make sure leaflet icons show up.
 // see https://github.com/PaulLeCam/react-leaflet/issues/453#issuecomment-410450387
@@ -35,6 +38,36 @@ function addTiffLayer(url, range, setError) {
   // Our workaround is to use TiTiler to serve it as a tile layer instead.
   // see https://matplotlib.org/stable/tutorials/colors/colormaps.html
   return <TiTilerLayer url={fullUrl} range={range} setError={setError} />
+}
+
+function MarkerCluster({ markers }) {
+  const map = useMap()
+
+  useEffect(() => {
+    if (!markers || !map)
+      return
+
+    var markerClusterLayer = L.markerClusterGroup({maxClusterRadius: 40});
+    markers.forEach(marker => {
+      if (marker.pos && marker.pos[0] && marker.pos[1]) {
+        const leafletMarker = L.marker(marker.pos)
+        leafletMarker.bindPopup(ReactDOMServer.renderToString(marker.popup))
+        markerClusterLayer.addLayer(leafletMarker);
+      }
+
+      return null
+    })
+
+    map.addLayer(markerClusterLayer);
+    map.fitBounds(markerClusterLayer.getBounds())
+
+    return () => {
+      if (markerClusterLayer)
+        markerClusterLayer.remove()
+    };
+  }, [markers])
+
+  return null
 }
 
 function MarkerGroup({markers}) {
@@ -102,7 +135,7 @@ export default function MapResult({ tiff, range, json, markers }) {
       url="https://{s}.tile.osm.org/{z}/{x}/{y}.png"
     />
 
-    <MarkerGroup markers={markers} />
+    <MarkerCluster markers={markers} />
 
     {jsonContent &&
       <GeoJSON data={jsonContent}

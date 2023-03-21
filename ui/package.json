@@ -13,6 +13,7 @@
     "georaster-layer-for-leaflet": "^3.10.0",
     "js-yaml": "^4.1.0",
     "leaflet": "^1.9.2",
+    "leaflet.markercluster": "^1.5.3",
     "npm": "^8.1.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

@@ -48,7 +48,11 @@ export const InputFileWithExample = forwardRef(({metadata}, ref) => {
     } else {
       textarea.disabled = false
       textarea.placeholder = ""
-      textarea.value = yaml.dump(inputExamples, {'lineWidth': 124})
+      textarea.value = yaml.dump(inputExamples,
+        {
+          'lineWidth': 124,
+          'sortKeys': true
+        })
     }
 
     resize(textarea)
