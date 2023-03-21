@@ -5,6 +5,7 @@ inputs:
     label: rasters
     description: array of output raster paths
     type: image/tiff;application=geotiff[]
+    example: []
   method:
     label: method
     description: Option, method used to compute collinearity between variables
