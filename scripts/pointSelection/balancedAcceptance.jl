@@ -54,7 +54,13 @@ json_string = ("{
     \"type\": \"MultiPoint\",
     \"coordinates\": [
         $points_string_join
-    ]
+    ],
+    \"crs\": {
+        \"type\": \"name\",
+        \"properties\": {
+            \"name\": \"EPSG:6622\"
+        }
+    }
 }")
 
 pointsOutputPath = joinpath(outputFolder, "points.json")
