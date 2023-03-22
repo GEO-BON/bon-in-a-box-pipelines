@@ -120,7 +120,7 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
         // Link inputs from the input file to the pipeline
         inputs?.let {
             pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
-                val regex = """([.>\w]+)@(\d+)(\.(\w+))?""".toRegex()
+                val regex = """([.>\w]+)@(\d+)(\|(\w+))?""".toRegex()
                 inputs.forEach { (key, pipe) ->
                     val groups = regex.matchEntire(key)?.groups
                         ?: throw RuntimeException("Input id \"$key\" is malformed")

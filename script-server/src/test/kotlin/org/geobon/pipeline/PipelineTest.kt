@@ -124,7 +124,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with an input_when ran_then the provided input is used`() = runTest {
-        val pipeline = Pipeline("1in1out_1step.json", """{ "helloWorld>helloPython.yml@0.some_int": 5 }""")
+        val pipeline = Pipeline("1in1out_1step.json", """{ "helloWorld>helloPython.yml@0|some_int": 5 }""")
         pipeline.execute()
 
         assertEquals(6, pipeline.getPipelineOutputs()[0].pull())
@@ -145,7 +145,7 @@ internal class PipelineTest {
         }
 
         assertFailsWith<RuntimeException> { // plausible case where a non-existant script path is used
-            Pipeline("1in1out_1step.json", """ { "HelloWorld>BAD@0.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "HelloWorld>BAD@0|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // non-numeric step id
@@ -171,7 +171,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline passing int to float_when ran_then float input accepts int input`() = runTest {
-        val pipeline = Pipeline("intToFloat.json", """ { "1in1out.yml@1.some_int": 3, "divideFloat.yml@0.divider": 2 }""")
+        val pipeline = Pipeline("intToFloat.json", """ { "1in1out.yml@1|some_int": 3, "divideFloat.yml@0|divider": 2 }""")
         pipeline.execute()
         assertTrue(pipeline.getPipelineOutputs()[0].pull() == 2)
     }
