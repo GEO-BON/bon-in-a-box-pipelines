@@ -201,7 +201,7 @@ internal class PullLayersByIdTest {
         withProductionScripts {
             val pipeline = Pipeline("pullLayersByIdTest.json",
             """{
-                "pipeline>PullLayersById.yml@9.with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
+                "pipeline>PullLayersById.yml@9|with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
             }""".trimIndent())
 
             pipeline.execute()
