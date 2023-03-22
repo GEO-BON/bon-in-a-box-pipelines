@@ -13,6 +13,7 @@ import warningImg from '../img/warning.svg';
 import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
 import { GeneralDescription } from './ScriptDescription';
+import {getScript, getStepOutput, toDisplayString} from '../utils/IOId';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -205,8 +206,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       const initialValue = {}
       if (pipelineMetadata.outputs) {
         Object.keys(pipelineMetadata.outputs).forEach(key => {
-          const script = key.substring(0, key.lastIndexOf('.'))
-          initialValue[script] = {}
+          initialValue[getScript(key)] = {}
         })
       }
       setPipelineOutputResults(initialValue)
@@ -218,9 +218,8 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       <h2>Pipeline outputs</h2>
       {pipelineMetadata.outputs && Object.entries(pipelineMetadata.outputs).map(entry => {
         const [key, stepDescription] = entry;
-        const lastDotIx = key.lastIndexOf('.')
-        const script = key.substring(0, lastDotIx)
-        const outputId = key.substring(lastDotIx+1)
+        const script = getScript(key)
+        const outputId = getStepOutput(key)
         const value = pipelineOutputResults[script] && pipelineOutputResults[script][outputId]
 
         if (!value) {
@@ -256,7 +255,7 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
   const [running, setRunning] = useState(false)
   const [skippedMessage, setSkippedMessage] = useState()
 
-  const step = id.substring(0, id.indexOf('@'))
+  const script = getScript(id)
 
   useEffect(() => { 
     // A script is running when we know it's folder but have yet no result nor error message
@@ -329,8 +328,8 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
       setScriptMetadata(data)
     };
 
-    api.getScriptInfo(step, callback);
-  }, [step]);
+    api.getScriptInfo(script, callback);
+  }, [script]);
 
   let content, inline = null;
   let className = "foldableScriptResult"
@@ -355,8 +354,9 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
   let logsAddress = folder && "output/" + folder + "/logs.txt"
   
   return (
-    <FoldableOutputWithContext title={step.replaceAll('>', ' > ').replace(/.yml$/, '')} componentId={id} inline={inline} className={className}>
-      <GeneralDescription ymlPath={step} metadata={scriptMetadata} />
+    <FoldableOutputWithContext title={toDisplayString(id)}
+      componentId={id} inline={inline} className={className}>
+      <GeneralDescription ymlPath={script} metadata={scriptMetadata} />
       {content}
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutputWithContext>
