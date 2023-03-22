@@ -20,14 +20,13 @@ resolution<- input$resolution
 folder_output<- input$folder_output
 
 # ajustar resolucion
-resolution<- raster(extent(seq(4)),crs= "+init=epsg:3395", res= resolution) %>% projectRaster( crs = sf::st_crs(epsg_polygon)$proj4string ) %>% 
+resolution<- raster::raster(raster::extent(seq(4)),crs= "+init=epsg:3395", res= input$resolution) %>% projectRaster( crs = sf::st_crs(epsg_polygon)$proj4string ) %>% 
   raster::res()
 
 # Definir área de estudio
-vector_polygon<- terra::vect(dir_wkt, crs= sf::st_crs(epsg_polygon)$proj4string ) %>% as.polygons()
+vector_polygon<- terra::vect(dir_wkt, crs= sf::st_crs(epsg_polygon)$proj4string ) 
 crs_polygon<- terra::crs(vector_polygon)
 box_polygon<-  sf::st_bbox(vector_polygon)
-
 
 # Cargar coleccion
 layers <- list.files(dir_colection, "\\.tif$", recursive = TRUE, full.names = TRUE)
@@ -60,7 +59,7 @@ collection_rast<- lapply(cube_stars, function(x) { if(any( is.na(summary(raster:
   {Filter(function(x) !is.null(x), .)} %>% {setNames(., unlist(sapply(., function(x) names(x))) )} %>% terra::rast()
 
 # estimar metricas de area
-data_sum<- terra::freq(cube_stars, usenames=T) %>% dplyr::mutate(area= count*resolution) %>% dplyr::select(-count) %>%
+data_sum<- terra::freq(cube_stars, usenames=T) %>% dplyr::mutate(area= (count*sqrt(prod(resolution)))/10000  ) %>% dplyr::select(-count) %>%
   dplyr::rename(collection= layer) %>% dplyr::mutate(layer= sapply(.$collection, function(x) stringr::str_split(x, "_B*time")[[1]][1]) ) %>%
   {list(metadata,.)} %>% plyr::join_all() %>% dplyr::group_by(layer)  %>% dplyr::mutate(percentaje=  area/sum(area) )
 
@@ -79,6 +78,7 @@ saveraster<- lapply( seq(nrow(data_sum)), function(i) {
   terra::writeRaster(raster_val, paste0( paste(c("forestLP", x$period, x$key), collapse = "-") ,  ".tif"), overwrite=T)
   
 } )
+
 
 
 # Organizar tabla de salida
