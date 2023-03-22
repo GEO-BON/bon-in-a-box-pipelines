@@ -23,7 +23,6 @@ export function fetchStepDescription(descriptionFileLocation, callback) {
       if (error) {
         console.error("Error loading " + descriptionFileLocation + ":", error);
       } else {
-        console.log('API called successfully. Returned data: ', callbackData);
         descriptions[descriptionFileLocation] = callbackData
         callback(callbackData)
       }
@@ -33,7 +32,6 @@ export function fetchStepDescription(descriptionFileLocation, callback) {
       if (error) {
         console.error("Error loading " + descriptionFileLocation + ":", error)
       } else {
-        console.log('API called successfully. Returned data: ', callbackData);
         descriptions[descriptionFileLocation] = callbackData
         callback(callbackData)
       }
