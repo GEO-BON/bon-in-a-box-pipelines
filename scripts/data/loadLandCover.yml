@@ -70,7 +70,6 @@ references:
     doi: http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf
   - text: ESRI (2017-2022, 10m) 10 land cover classes
     doi:
-  - text: ESA io path is "https://io.biodiversite-quebec.ca/stac/".
-  - text: ESA PC path is "https://planetarycomputer.microsoft.com/api/stac/v1/"
-  - text: ESRI PC path is "https://planetarycomputer.microsoft.com/api/stac/v1/"
+  - text: io path (ESA) is "https://io.biodiversite-quebec.ca/stac/".
+  - text: PC path (ESA and ESRI) is "https://planetarycomputer.microsoft.com/api/stac/v1/"
   - text: collectionS in PC are named "esa-cci-lc" for ESA (300m) and "io-lulc-9-class" (10m) for ESRI.
