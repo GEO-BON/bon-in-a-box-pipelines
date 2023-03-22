@@ -133,15 +133,15 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline with a malformed input name_when built_then an exception is thrown`() = runTest {
         assertFailsWith<RuntimeException> { // missing @
-            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml0.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml0|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // missing step id
-            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // missing everything
-            Pipeline("1in1out_1step.json", """ { "@.": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "@|": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // plausible case where a non-existant script path is used
@@ -149,11 +149,11 @@ internal class PipelineTest {
         }
 
         assertFailsWith<RuntimeException> { // non-numeric step id
-            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@BAD.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@BAD|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // plausible case where a non-existent step id is used
-            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72.some_int": 5 }""")
+            Pipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72|some_int": 5 }""")
         }
     }
 
