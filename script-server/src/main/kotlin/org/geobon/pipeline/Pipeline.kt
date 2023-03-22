@@ -9,10 +9,23 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
-class Pipeline(descriptionFile: File, inputs: String? = null) {
-    constructor(relPath: String, inputs: String? = null) : this(
+class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: File, inputs: Map<String, Pipe>? = null) {
+
+    private constructor(pipelineJSON:JSONObject, descriptionFile: File, inputsJSON: String? = null) : this(
+        pipelineJSON,
+        descriptionFile,
+        inputsToConstants(inputsJSON, pipelineJSON)
+    )
+
+    constructor(descriptionFile: File, inputsJSON: String? = null) : this(
+        JSONObject(descriptionFile.readText()),
+        descriptionFile,
+        inputsJSON
+    )
+
+    constructor(relPath: String, inputsJSON: String? = null) : this(
         File(System.getenv("PIPELINES_LOCATION"), relPath),
-        inputs
+        inputsJSON
     )
 
     private val logger: Logger = LoggerFactory.getLogger(descriptionFile.nameWithoutExtension)
@@ -33,7 +46,6 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         val outputIds = mutableListOf<String>()
 
         // Load all nodes and classify them as steps, constants or pipeline outputs
-        val pipelineJSON = JSONObject(descriptionFile.readText())
         pipelineJSON.getJSONArray(NODES_LIST).forEach { node ->
             if (node is JSONObject) {
                 val nodeId = node.getString(NODE__ID)
@@ -107,14 +119,9 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
 
         // Link inputs from the input file to the pipeline
         inputs?.let {
-            val inputsJSON = JSONObject(inputs)
             pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
                 val regex = """([.>\w]+)@(\d+)(\.(\w+))?""".toRegex()
-                inputsJSON.keySet().forEach { key ->
-                    val inputSpec = inputsSpec.optJSONObject(key)
-                        ?: throw RuntimeException("Input received \"$key\" is not listed in pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
-                    val type = inputSpec.getString(INPUTS__TYPE)
-
+                inputs.forEach { (key, pipe) ->
                     val groups = regex.matchEntire(key)?.groups
                         ?: throw RuntimeException("Input id \"$key\" is malformed")
                     //val path = groups[1]!!.value
@@ -124,7 +131,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                     val step = steps[stepId]
                         ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
 
-                    step.inputs[inputId] = createConstant(key, inputsJSON, type, key)
+                    step.inputs[inputId] = pipe
                 }
             }
         }
@@ -142,56 +149,6 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
             val message = it.validateGraph()
             if(message != "") {
                 throw Exception("Pipeline validation failed:\n$message")
-            }
-        }
-    }
-
-
-    private fun createConstant(idForUser: String, obj: JSONObject, type:String, valueProperty:String): ConstantPipe {
-
-        return if (type.endsWith("[]")) {
-            val jsonArray = try {
-                obj.getJSONArray(valueProperty)
-            } catch (e: Exception) {
-                throw RuntimeException("Constant array #$idForUser has no value in JSON file.")
-            }
-
-            ConstantPipe(type,
-                when (type.removeSuffix("[]")) {
-                    "int" -> mutableListOf<Int>().apply {
-                        for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
-                    }
-                    "float" -> mutableListOf<Float>().apply {
-                        for (i in 0 until jsonArray.length()) {
-                            val float = jsonArray.optFloat(i)
-                            if (!float.isNaN()) {
-                                add(float)
-                            }
-                        }
-                    }
-                    "boolean" -> mutableListOf<Boolean>().apply {
-                        for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
-                    }
-                    // Everything else is read as text
-                    else -> mutableListOf<String>().apply {
-                        for (i in 0 until jsonArray.length()) add(jsonArray.optString(i))
-                    }
-                })
-        } else {
-            try {
-                ConstantPipe(
-                    type,
-                    when (type) {
-                        "int" -> obj.getInt(valueProperty)
-                        "float" -> obj.getFloat(valueProperty)
-                        "boolean" -> obj.getBoolean(valueProperty)
-                        // Everything else is read as text
-                        else -> obj.getString(valueProperty)
-                    }
-                )
-            } catch (e: Exception) {
-                e.printStackTrace()
-                throw RuntimeException("Constant #$idForUser has no value in JSON file.")
             }
         }
     }
@@ -246,6 +203,76 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         job?.apply {
             cancel("Cancelled by user")
             join() // wait so the user receives response when really cancelled
+        }
+    }
+
+    companion object {
+        private fun inputsToConstants(inputsJSON:String?, pipelineJSON: JSONObject) : Map<String, Pipe> {
+            if(inputsJSON == null)
+                return mapOf()
+
+            val inputsParsed = JSONObject(inputsJSON)
+            val constants = mutableMapOf<String, Pipe>()
+            pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
+                inputsParsed.keySet().forEach { key ->
+                    val inputSpec = inputsSpec.optJSONObject(key)
+                        ?: throw RuntimeException("Input received \"$key\" is not listed in pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
+                    val type = inputSpec.getString(INPUTS__TYPE)
+
+                    constants[key] = createConstant(key, inputsParsed, type, key)
+                }
+            }
+
+            return constants
+        }
+
+        private fun createConstant(idForUser: String, obj: JSONObject, type:String, valueProperty:String): ConstantPipe {
+
+            return if (type.endsWith("[]")) {
+                val jsonArray = try {
+                    obj.getJSONArray(valueProperty)
+                } catch (e: Exception) {
+                    throw RuntimeException("Constant array #$idForUser has no value in JSON file.")
+                }
+
+                ConstantPipe(type,
+                    when (type.removeSuffix("[]")) {
+                        "int" -> mutableListOf<Int>().apply {
+                            for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
+                        }
+                        "float" -> mutableListOf<Float>().apply {
+                            for (i in 0 until jsonArray.length()) {
+                                val float = jsonArray.optFloat(i)
+                                if (!float.isNaN()) {
+                                    add(float)
+                                }
+                            }
+                        }
+                        "boolean" -> mutableListOf<Boolean>().apply {
+                            for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
+                        }
+                        // Everything else is read as text
+                        else -> mutableListOf<String>().apply {
+                            for (i in 0 until jsonArray.length()) add(jsonArray.optString(i))
+                        }
+                    })
+            } else {
+                try {
+                    ConstantPipe(
+                        type,
+                        when (type) {
+                            "int" -> obj.getInt(valueProperty)
+                            "float" -> obj.getFloat(valueProperty)
+                            "boolean" -> obj.getBoolean(valueProperty)
+                            // Everything else is read as text
+                            else -> obj.getString(valueProperty)
+                        }
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw RuntimeException("Constant #$idForUser has no value in JSON file.")
+                }
+            }
         }
     }
 
