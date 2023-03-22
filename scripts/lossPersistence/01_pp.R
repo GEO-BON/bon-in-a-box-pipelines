@@ -20,7 +20,7 @@ resolution<- input$resolution
 folder_output<- input$folder_output
 
 # ajustar resolucion
-resolution<- raster::raster(raster::extent(seq(4)),crs= "+init=epsg:3395", res= input$resolution) %>% projectRaster( crs = sf::st_crs(epsg_polygon)$proj4string ) %>% 
+resolution_crs<- raster::raster(raster::extent(seq(4)),crs= "+init=epsg:3395", res= input$resolution) %>% projectRaster( crs = sf::st_crs(epsg_polygon)$proj4string ) %>% 
   raster::res()
 
 # Definir área de estudio
@@ -45,9 +45,13 @@ stac_collection<- gdalcubes::create_image_collection(files= layers, format= json
 cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = gdalcubes::extent(stac_collection)$t0, t1 = gdalcubes::extent(stac_collection)$t1,
                                                                          left = box_polygon[1], right = box_polygon[3],
                                                                          top = box_polygon[4], bottom = box_polygon[2]),
-                                       dx = resolution[1], dy = resolution[2], dt = "P1Y", aggregation = "first", resampling = "first", keep.asp= F)
+                                       dx = resolution_crs[1], dy = resolution_crs[2], dt = "P1Y", aggregation = "first", resampling = "first", keep.asp= F)
 
 cube <- gdalcubes::raster_cube(stac_collection, cube_collection)
+
+
+
+
 
 # Cortar cubo por area de estudio
 cube_mask<- gdalcubes::filter_geom(cube, geom= dir_wkt, srs = crs_polygon )
@@ -59,11 +63,18 @@ collection_rast<- lapply(cube_stars, function(x) { if(any( is.na(summary(raster:
   {Filter(function(x) !is.null(x), .)} %>% {setNames(., unlist(sapply(., function(x) names(x))) )} %>% terra::rast()
 
 # estimar metricas de area
-data_sum<- terra::freq(cube_stars, usenames=T) %>% dplyr::mutate(area= (count*sqrt(prod(resolution)))/10000  ) %>% dplyr::select(-count) %>%
+data_sum<- terra::freq(cube_stars, usenames=T) %>% dplyr::mutate(area= (count* sqrt(prod(resolution)) ) /10  ) %>% dplyr::select(-count) %>%
   dplyr::rename(collection= layer) %>% dplyr::mutate(layer= sapply(.$collection, function(x) stringr::str_split(x, "_B*time")[[1]][1]) ) %>%
-  {list(metadata,.)} %>% plyr::join_all() %>% dplyr::group_by(layer)  %>% dplyr::mutate(percentaje=  area/sum(area) )
+  {list(metadata,.)} %>% plyr::join_all() %>%
+  dplyr::mutate(area= ifelse(is.na(area), 0, area)  ) %>% 
+  dplyr::group_by(layer)  %>% dplyr::mutate(percentage=  area/sum(area, na.rm=T) )
 
 data_sum$period<-  unlist(strsplit(data_sum$layer, "_") %>% sapply(function(x) paste(x[c(2:3)], collapse = "-")), recursive = T)
+
+
+
+
+
 
 # partir y guardar raster acorde a los valores
 setwd(folder_results)
