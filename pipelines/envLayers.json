@@ -51,8 +51,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 563,
-        "y": 551.25
+        "x": 564,
+        "y": 549.25
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -553,8 +553,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 676.7624755859379,
-        "y": 1187.4999938964838
+        "x": 675.7624755859379,
+        "y": 1253.4999938964838
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -566,8 +566,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 556.7624755859375,
-        "y": 1231.8999938964841
+        "x": 553.7624755859375,
+        "y": 1288.8999938964841
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -588,6 +588,32 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 556.8020629882812,
+        "y": 1177.3333282470703
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2010-01-01"
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 560.8020629882812,
+        "y": 1214.3333282470703
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2010-12-31"
       }
     }
   ],
@@ -1055,20 +1081,6 @@
       "id": "reactflow__edge-4-50srs_cube"
     },
     {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-50t0"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-7-50t1"
-    },
-    {
       "source": "55",
       "sourceHandle": null,
       "target": "50",
@@ -1095,6 +1107,20 @@
       "target": "36",
       "targetHandle": "lc_classes",
       "id": "reactflow__edge-50output_tif-36lc_classes"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-58-50t0"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-59-50t1"
     }
   ],
   "inputs": {
