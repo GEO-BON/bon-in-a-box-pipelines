@@ -223,7 +223,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
         const value = pipelineOutputResults[script] && pipelineOutputResults[script][outputId]
 
         if (!value) {
-          return <div key={outputId} className="outputTitle">
+          return <div key={key} className="outputTitle">
             <h3>{stepDescription.label}</h3>
             {runningScripts.size > 0 ?
               <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
