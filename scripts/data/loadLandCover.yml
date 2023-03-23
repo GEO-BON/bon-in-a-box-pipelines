@@ -58,17 +58,17 @@ inputs:
     label: lc_classes
     description: Vector of integers, list of land cover classes to select (in the example all ESA classes are presented, see references for descriptions)
     type: int[]
-    example: [0, 10, 11, 12, 20, 30 ,40, 50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90, 100, 110, 120, 121, 122, 130, 140, 150, 151, 152, 160, 170, 180, 190, 200, 201, 202, 210, 220]
+    example: [10, 11, 12, 20, 30 ,40, 50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90, 100, 110, 120, 121, 122, 130, 140, 150, 151, 152, 160, 170, 180, 190, 200, 201, 202, 210, 220]
 outputs:
   output_tif: 
     label: land cover classes
-    description: land cover raster classes (note that class=0 is NO DATA)
+    description: land cover raster classes (see references for link to descriptions).
     type: image/tiff;application=geotiff[]
     example: y2010_class210.tif
 references:
-  - text: ESA (1992-2020, 300m) 38 land cover classes (note that class=0 is NO DATA).
+  - text: ESA (1992-2020, 300m) 37 land cover classes.
     doi: http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf
-  - text: ESRI (2017-2022, 10m) 10 land cover classes
+  - text: ESRI (2017-2022, 10m) 9 land cover classes
     doi:
   - text: io path (ESA) is "https://io.biodiversite-quebec.ca/stac/".
   - text: PC path (ESA and ESRI) is "https://planetarycomputer.microsoft.com/api/stac/v1/"
