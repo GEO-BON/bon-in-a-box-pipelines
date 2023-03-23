@@ -73,7 +73,7 @@ outputs:
     example: local_velocity.tif
   metric:
     label: metric name
-    description: climate metric (e.g., local, forward, backward, rarity) 
+    description: climate metric (e.g., local, forward, backward, rarity). Note that for forward and backward velocity we set no-analogue climate within the region to 10,000.  
     type: text
     example: local_climate_velocity
 references:
