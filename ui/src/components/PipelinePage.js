@@ -13,7 +13,7 @@ import warningImg from '../img/warning.svg';
 import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
 import { GeneralDescription } from './ScriptDescription';
-import {getScript, getStepOutput, toDisplayString} from '../utils/IOId';
+import {getScript, getStepId, getStepOutput, toDisplayString} from '../utils/IOId';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -206,7 +206,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       const initialValue = {}
       if (pipelineMetadata.outputs) {
         Object.keys(pipelineMetadata.outputs).forEach(key => {
-          initialValue[getScript(key)] = {}
+          initialValue[getStepId(key)] = {}
         })
       }
       setPipelineOutputResults(initialValue)
@@ -218,9 +218,9 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       <h2>Pipeline outputs</h2>
       {pipelineMetadata.outputs && Object.entries(pipelineMetadata.outputs).map(entry => {
         const [key, stepDescription] = entry;
-        const script = getScript(key)
+        const stepId = getStepId(key)
         const outputId = getStepOutput(key)
-        const value = pipelineOutputResults[script] && pipelineOutputResults[script][outputId]
+        const value = pipelineOutputResults[stepId] && pipelineOutputResults[stepId][outputId]
 
         if (!value) {
           return <div key={key} className="outputTitle">
@@ -238,10 +238,10 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       })}
 
       <h2>Detailed results</h2>
-      {Object.entries(resultsData).map((entry, i) => {
+      {Object.entries(resultsData).map(entry => {
         const [key, value] = entry;
 
-        return <DelayedResult key={key} id={key} folder={value}
+        return <DelayedResult key={key} stepId={key} folder={value}
           setRunningScripts={setRunningScripts} setPipelineOutputResults={setPipelineOutputResults} />
       })}
     </RenderContext.Provider>
@@ -249,13 +249,13 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
   else return null
 }
 
-function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}) {
+function DelayedResult({stepId, folder, setRunningScripts, setPipelineOutputResults}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
   const [running, setRunning] = useState(false)
   const [skippedMessage, setSkippedMessage] = useState()
 
-  const script = getScript(id)
+  const script = getScript(stepId)
 
   useEffect(() => { 
     // A script is running when we know it's folder but have yet no result nor error message
@@ -309,8 +309,8 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
 
         // Contribute to pipeline outputs (if this script is relevant)
         setPipelineOutputResults(results => {
-          if(id in results)
-            results[id] = json
+          if(stepId in results)
+            results[stepId] = json
           
           return results
         })
@@ -354,8 +354,8 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
   let logsAddress = folder && "output/" + folder + "/logs.txt"
   
   return (
-    <FoldableOutputWithContext title={toDisplayString(id)}
-      componentId={id} inline={inline} className={className}>
+    <FoldableOutputWithContext title={toDisplayString(stepId)}
+      componentId={stepId} inline={inline} className={className}>
       <GeneralDescription ymlPath={script} metadata={scriptMetadata} />
       {content}
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
