@@ -4,10 +4,14 @@
  * 
  * from pipeline.json@12|pipeline.json@23|script.yml@31|output
  * returns script.yml
+ * 
+ * from script.yml@31|output
+ * returns script.yml
  */
 export function getScript(ioId) {
     const str = ioId.substring(0, ioId.lastIndexOf('@')) // pipeline@12|pipeline@23|script
-    return str.substring(str.lastIndexOf('|') + 1) // script
+    const lastPipe = str.lastIndexOf('|')
+    return lastPipe === -1 ? str : str.substring(lastPipe + 1) // script
 }
 
 /**
@@ -15,9 +19,16 @@ export function getScript(ioId) {
  * 
  * from pipeline.json@12|pipeline.json@23|script.yml@31|output
  * returns pipeline.json@12
+ * 
+ * from script.yml@31
+ * returns script.yml@31
  */
 export function getStepId(ioId) {
-    return ioId.substring(0, ioId.indexOf('|'))
+    const firstPipe = ioId.indexOf('|')
+    return ioId.substring(
+        0,
+        firstPipe === -1 ? ioId.length : firstPipe
+    )
 }
 
 /**
@@ -43,9 +54,9 @@ export function getStepFile(ioId) {
 export function getStepNodeId(ioId) {
     const firstPipe = ioId.indexOf('|')
     return ioId.substring(
-        ioId.indexOf('@') + 1, 
+        ioId.indexOf('@') + 1,
         firstPipe === -1 ? ioId.length : firstPipe
-        )
+    )
 }
 
 /**
