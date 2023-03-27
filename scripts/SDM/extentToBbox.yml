@@ -18,12 +18,12 @@ inputs:
   lon:
     label: longitude column
     description: string, name of the longitude column in df_coordinates
-    type: string
+    type: text
     example: "lon"
   lat:
     label: latitude column
     description: string, name of the latitude column in df_coordinates
-    type: string
+    type: text
     example: "lat"
   xmin:
     label: xmin
@@ -53,12 +53,12 @@ inputs:
   proj_from:
     label: input projection system 
     description: string, projection of the input spatial object
-    type: string
+    type: text
     example: "EPSG:6623"
   proj_to:
     label: output bbox projection system 
     description: string, projection of output bbox
-    type: string
+    type: text
     example: "EPSG:6623"  
 
 outputs:
