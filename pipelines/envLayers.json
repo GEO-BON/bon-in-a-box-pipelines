@@ -1,40 +1,11 @@
 {
   "nodes": [
     {
-      "id": "0",
-      "type": "io",
-      "position": {
-        "x": 1023,
-        "y": 19
-      },
-      "data": {
-        "descriptionFile": "climateMetrics>climateVelocity.yml"
-      }
-    },
-    {
-      "id": "1",
-      "type": "constant",
-      "position": {
-        "x": 314.87235841081986,
-        "y": 7.578191039729489
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "local",
-        "options": [
-          "local",
-          "forward",
-          "backward"
-        ]
-      }
-    },
-    {
       "id": "2",
       "type": "constant",
       "position": {
-        "x": 632,
-        "y": 217.25
+        "x": 680,
+        "y": 400
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -51,8 +22,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 564,
-        "y": 549.25
+        "x": 596,
+        "y": 576.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,8 +35,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 698.75
+        "x": 81,
+        "y": 917.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +48,8 @@
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 631,
-        "y": 277.25
+        "x": 679,
+        "y": 468
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -97,8 +68,8 @@
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 315
+        "x": 585,
+        "y": 613.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -110,8 +81,8 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 392
+        "x": 585,
+        "y": 650.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -123,8 +94,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 611,
-        "y": 432.75
+        "x": 659,
+        "y": 689.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -141,74 +112,19 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 469,
-        "y": 740.5
+        "x": 487,
+        "y": 798.5
       },
       "data": {
         "descriptionFile": "SDM>extentToBbox.yml"
       }
     },
     {
-      "id": "10",
-      "type": "constant",
-      "position": {
-        "x": 103,
-        "y": 780
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "shapefile",
-        "options": [
-          "df_coordinates",
-          "box_coordinates",
-          "shapefile"
-        ]
-      }
-    },
-    {
-      "id": "11",
-      "type": "constant",
-      "position": {
-        "x": 0,
-        "y": 817
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/dbf",
-        "value": "/scripts/extent/Quebec.shp"
-      }
-    },
-    {
-      "id": "12",
-      "type": "output",
-      "position": {
-        "x": 1751,
-        "y": 83.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "13",
-      "type": "constant",
-      "position": {
-        "x": 550,
-        "y": 107.75
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 1
-      }
-    },
-    {
       "id": "14",
       "type": "io",
       "position": {
-        "x": 1023,
-        "y": 293
+        "x": 1062,
+        "y": 22.75
       },
       "data": {
         "descriptionFile": "climateMetrics>climateVelocity.yml"
@@ -218,8 +134,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 317.9036348267117,
-        "y": 240.2039306846999
+        "x": 665,
+        "y": 0
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -236,8 +152,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 550,
-        "y": 591.25
+        "x": 580,
+        "y": 725.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -249,8 +165,8 @@
       "id": "17",
       "type": "output",
       "position": {
-        "x": 1751,
-        "y": 357.5
+        "x": 1855,
+        "y": 75.25
       },
       "data": {
         "label": "Output"
@@ -260,8 +176,8 @@
       "id": "18",
       "type": "io",
       "position": {
-        "x": 1023,
-        "y": 549
+        "x": 1062,
+        "y": 222.75
       },
       "data": {
         "descriptionFile": "climateMetrics>climateVelocity.yml"
@@ -271,8 +187,8 @@
       "id": "19",
       "type": "constant",
       "position": {
-        "x": 310.3254437869821,
-        "y": 511.1107354184278
+        "x": 665,
+        "y": 200
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -289,8 +205,8 @@
       "id": "21",
       "type": "output",
       "position": {
-        "x": 1751,
-        "y": 613.5
+        "x": 1855,
+        "y": 275.25
       },
       "data": {
         "label": "Output"
@@ -300,8 +216,8 @@
       "id": "24",
       "type": "io",
       "position": {
-        "x": 1086,
-        "y": 777.5
+        "x": 1143,
+        "y": 435
       },
       "data": {
         "descriptionFile": "climateMetrics>climateRarity.yml"
@@ -311,8 +227,8 @@
       "id": "25",
       "type": "constant",
       "position": {
-        "x": 563,
-        "y": 996
+        "x": 596,
+        "y": 504
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -324,8 +240,8 @@
       "id": "26",
       "type": "output",
       "position": {
-        "x": 1751,
-        "y": 842
+        "x": 1855,
+        "y": 487.5
       },
       "data": {
         "label": "Output"
@@ -335,8 +251,8 @@
       "id": "36",
       "type": "io",
       "position": {
-        "x": 1648.6,
-        "y": 1144.25
+        "x": 1649,
+        "y": 903
       },
       "data": {
         "descriptionFile": "binaryLayer>binaryLayer.yml"
@@ -346,8 +262,8 @@
       "id": "38",
       "type": "constant",
       "position": {
-        "x": 1184,
-        "y": 1294.4243448858833
+        "x": 1242,
+        "y": 754.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -362,8 +278,8 @@
       "id": "39",
       "type": "constant",
       "position": {
-        "x": 1180,
-        "y": 1347.25
+        "x": 1238,
+        "y": 791.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -375,8 +291,8 @@
       "id": "40",
       "type": "output",
       "position": {
-        "x": 2051,
-        "y": 1157.25
+        "x": 2155,
+        "y": 918.5
       },
       "data": {
         "label": "Output"
@@ -386,8 +302,8 @@
       "id": "41",
       "type": "io",
       "position": {
-        "x": 1080,
-        "y": 1418
+        "x": 1125,
+        "y": 1300.25
       },
       "data": {
         "descriptionFile": "accessibility>accessibility.yml"
@@ -397,8 +313,8 @@
       "id": "42",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 1360
+        "x": 585,
+        "y": 1036.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -410,8 +326,8 @@
       "id": "43",
       "type": "constant",
       "position": {
-        "x": 289.76331360946745,
-        "y": 1398.4843617920542
+        "x": 585,
+        "y": 1242.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -423,8 +339,8 @@
       "id": "44",
       "type": "constant",
       "position": {
-        "x": 563,
-        "y": 1440
+        "x": 596,
+        "y": 1282.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -436,8 +352,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 1480
+        "x": 585,
+        "y": 1339.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -449,8 +365,8 @@
       "id": "46",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 1520
+        "x": 585,
+        "y": 1376.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -462,8 +378,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 1600
+        "x": 585,
+        "y": 1450.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -475,8 +391,8 @@
       "id": "48",
       "type": "output",
       "position": {
-        "x": 1751,
-        "y": 1475
+        "x": 1855,
+        "y": 1048.75
       },
       "data": {
         "label": "Output"
@@ -486,8 +402,8 @@
       "id": "49",
       "type": "constant",
       "position": {
-        "x": 555,
-        "y": 1560
+        "x": 585,
+        "y": 1413.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -499,8 +415,8 @@
       "id": "50",
       "type": "io",
       "position": {
-        "x": 1085.8020629882812,
-        "y": 970.3333282470703
+        "x": 991,
+        "y": 880.75
       },
       "data": {
         "descriptionFile": "data>loadLandCover.yml"
@@ -510,8 +426,8 @@
       "id": "52",
       "type": "constant",
       "position": {
-        "x": 656.3624755859378,
-        "y": 1056.699993896484
+        "x": 704,
+        "y": 762.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -527,8 +443,8 @@
       "id": "53",
       "type": "constant",
       "position": {
-        "x": 557.9624755859376,
-        "y": 1103.499993896484
+        "x": 585,
+        "y": 962.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -540,8 +456,8 @@
       "id": "54",
       "type": "constant",
       "position": {
-        "x": 565.1624755859375,
-        "y": 1145.4999938964843
+        "x": 596,
+        "y": 999.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -553,8 +469,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 675.7624755859379,
-        "y": 1253.4999938964838
+        "x": 721,
+        "y": 1167.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -566,8 +482,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 553.7624755859375,
-        "y": 1288.8999938964841
+        "x": 584,
+        "y": 1202.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -583,8 +499,8 @@
       "id": "57",
       "type": "output",
       "position": {
-        "x": 1750.7624755859374,
-        "y": 942.6999938964842
+        "x": 1855,
+        "y": 1124.75
       },
       "data": {
         "label": "Output"
@@ -594,8 +510,8 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 556.8020629882812,
-        "y": 1177.3333282470703
+        "x": 585,
+        "y": 1093.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -607,38 +523,101 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 560.8020629882812,
-        "y": 1214.3333282470703
+        "x": 585,
+        "y": 1130.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "2010-12-31"
       }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": 121,
+        "y": 354.25
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "shapefile",
+        "options": [
+          "df_coordinates",
+          "box_coordinates",
+          "shapefile"
+        ]
+      }
+    },
+    {
+      "id": "61",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 662
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf",
+        "value": "/scripts/extent/Quebec.shp"
+      }
+    },
+    {
+      "id": "69",
+      "type": "io",
+      "position": {
+        "x": 1062,
+        "y": 1560.25
+      },
+      "data": {
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
+      }
+    },
+    {
+      "id": "70",
+      "type": "output",
+      "position": {
+        "x": 1855,
+        "y": 1612.75
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": 665,
+        "y": 1487.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "local",
+        "options": [
+          "local",
+          "forward",
+          "backward"
+        ]
+      }
+    },
+    {
+      "id": "72",
+      "type": "constant",
+      "position": {
+        "x": 587.4041901361404,
+        "y": 235.1453248249827
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1990-01-01"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "1",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "metric",
-      "id": "reactflow__edge-1-0metric"
-    },
-    {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "9",
-      "targetHandle": "source",
-      "id": "reactflow__edge-10-9source"
-    },
-    {
-      "source": "0",
-      "sourceHandle": "output_tif",
-      "target": "12",
-      "targetHandle": null,
-      "id": "reactflow__edge-0output_tif-12"
-    },
     {
       "source": "15",
       "sourceHandle": null,
@@ -703,11 +682,46 @@
       "id": "reactflow__edge-41output_tif-48"
     },
     {
-      "source": "2",
+      "source": "52",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-2-0rcp"
+      "target": "50",
+      "targetHandle": "stac_source",
+      "id": "reactflow__edge-52-50stac_source"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "output_tif",
+      "target": "57",
+      "targetHandle": null,
+      "id": "reactflow__edge-50output_tif-57"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "output_tif",
+      "target": "36",
+      "targetHandle": "lc_classes",
+      "id": "reactflow__edge-50output_tif-36lc_classes"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "source",
+      "id": "reactflow__edge-60-9source"
+    },
+    {
+      "source": "69",
+      "sourceHandle": "output_tif",
+      "target": "70",
+      "targetHandle": null,
+      "id": "reactflow__edge-69output_tif-70"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "metric",
+      "id": "reactflow__edge-71-69metric"
     },
     {
       "source": "2",
@@ -745,11 +759,18 @@
       "id": "reactflow__edge-43-41collections"
     },
     {
-      "source": "3",
+      "source": "42",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-3-0spatial_res"
+      "target": "50",
+      "targetHandle": "stac_path",
+      "id": "reactflow__edge-42-50stac_path"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-2-69rcp"
     },
     {
       "source": "3",
@@ -787,11 +808,18 @@
       "id": "reactflow__edge-9bbox-41bbox"
     },
     {
-      "source": "4",
+      "source": "53",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-0srs_cube"
+      "target": "50",
+      "targetHandle": "collections",
+      "id": "reactflow__edge-53-50collections"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-3-69spatial_res"
     },
     {
       "source": "4",
@@ -822,11 +850,18 @@
       "id": "reactflow__edge-44-41spatial_res"
     },
     {
-      "source": "5",
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "50",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-50bbox"
+    },
+    {
+      "source": "4",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-5-0aggregation"
+      "target": "69",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-69srs_cube"
     },
     {
       "source": "5",
@@ -857,25 +892,18 @@
       "id": "reactflow__edge-4-41srs_cube"
     },
     {
-      "source": "6",
+      "source": "54",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-0t0"
+      "target": "50",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-54-50spatial_res"
     },
     {
-      "source": "6",
+      "source": "5",
       "sourceHandle": null,
-      "target": "14",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-14t0"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-18t0"
+      "target": "69",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-5-69aggregation"
     },
     {
       "source": "6",
@@ -892,11 +920,18 @@
       "id": "reactflow__edge-45-41t0"
     },
     {
-      "source": "7",
+      "source": "3",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-7-0t1"
+      "target": "50",
+      "targetHandle": "prop_res",
+      "id": "reactflow__edge-3-50prop_res"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-6-69t0"
     },
     {
       "source": "7",
@@ -927,11 +962,18 @@
       "id": "reactflow__edge-46-41t1"
     },
     {
-      "source": "8",
+      "source": "4",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "time_span",
-      "id": "reactflow__edge-8-0time_span"
+      "target": "50",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-50srs_cube"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-7-69t1"
     },
     {
       "source": "8",
@@ -962,18 +1004,18 @@
       "id": "reactflow__edge-49-41aggregation"
     },
     {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "0",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-0bbox"
+      "source": "58",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-58-50t0"
     },
     {
-      "source": "11",
+      "source": "8",
       "sourceHandle": null,
-      "target": "9",
-      "targetHandle": "path_shp",
-      "id": "reactflow__edge-11-9path_shp"
+      "target": "69",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-8-69time_span"
     },
     {
       "source": "9",
@@ -1004,11 +1046,25 @@
       "id": "reactflow__edge-47-41resampling"
     },
     {
-      "source": "13",
+      "source": "59",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "t_match",
-      "id": "reactflow__edge-13-0t_match"
+      "target": "50",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-59-50t1"
+    },
+    {
+      "source": "61",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "path_shp",
+      "id": "reactflow__edge-61-9path_shp"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "69",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-69bbox"
     },
     {
       "source": "16",
@@ -1032,60 +1088,25 @@
       "id": "reactflow__edge-9bbox-24bbox"
     },
     {
-      "source": "52",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "stac_source",
-      "id": "reactflow__edge-52-50stac_source"
-    },
-    {
-      "source": "42",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "stac_path",
-      "id": "reactflow__edge-42-50stac_path"
-    },
-    {
-      "source": "53",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "collections",
-      "id": "reactflow__edge-53-50collections"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "50",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-50bbox"
-    },
-    {
-      "source": "54",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-54-50spatial_res"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "prop_res",
-      "id": "reactflow__edge-3-50prop_res"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-50srs_cube"
-    },
-    {
       "source": "55",
       "sourceHandle": null,
       "target": "50",
       "targetHandle": "prop",
       "id": "reactflow__edge-55-50prop"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "proj_from",
+      "id": "reactflow__edge-4-9proj_from"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-16-69t_match"
     },
     {
       "source": "56",
@@ -1095,32 +1116,25 @@
       "id": "reactflow__edge-56-50select_values"
     },
     {
-      "source": "50",
-      "sourceHandle": "output_tif",
-      "target": "57",
-      "targetHandle": null,
-      "id": "reactflow__edge-50output_tif-57"
-    },
-    {
-      "source": "50",
-      "sourceHandle": "output_tif",
-      "target": "36",
-      "targetHandle": "lc_classes",
-      "id": "reactflow__edge-50output_tif-36lc_classes"
-    },
-    {
-      "source": "58",
+      "source": "4",
       "sourceHandle": null,
-      "target": "50",
+      "target": "9",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-4-9proj_to"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "18",
       "targetHandle": "t0",
-      "id": "reactflow__edge-58-50t0"
+      "id": "reactflow__edge-72-18t0"
     },
     {
-      "source": "59",
+      "source": "72",
       "sourceHandle": null,
-      "target": "50",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-59-50t1"
+      "target": "14",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-72-14t0"
     }
   ],
   "inputs": {
@@ -1133,13 +1147,13 @@
     "SDM>extentToBbox.yml@9.lon": {
       "description": "string, name of the longitude column in df_coordinates",
       "label": "longitude column",
-      "type": "string",
+      "type": "text",
       "example": "lon"
     },
     "SDM>extentToBbox.yml@9.lat": {
       "description": "string, name of the latitude column in df_coordinates",
       "label": "latitude column",
-      "type": "string",
+      "type": "text",
       "example": "lat"
     },
     "SDM>extentToBbox.yml@9.xmin": {
@@ -1165,27 +1179,9 @@
       "label": "ymax",
       "type": "float",
       "example": 1511916
-    },
-    "SDM>extentToBbox.yml@9.proj_from": {
-      "description": "string, projection of the input spatial object",
-      "label": "input projection system",
-      "type": "string",
-      "example": "EPSG:6623"
-    },
-    "SDM>extentToBbox.yml@9.proj_to": {
-      "description": "string, projection of output bbox",
-      "label": "output bbox projection system",
-      "type": "string",
-      "example": "EPSG:6623"
     }
   },
   "outputs": {
-    "climateMetrics>climateVelocity.yml@0.output_tif": {
-      "description": "climate-change velocity.",
-      "label": "output",
-      "type": "image/tiff;application=geotiff",
-      "example": "local_velocity.tif"
-    },
     "climateMetrics>climateVelocity.yml@14.output_tif": {
       "description": "climate-change velocity.",
       "label": "output",
@@ -1225,6 +1221,12 @@
       "label": "land cover classes",
       "type": "image/tiff;application=geotiff[]",
       "example": "y2010_class210.tif"
+    },
+    "climateMetrics>climateVelocity.yml@69.output_tif": {
+      "description": "climate-change velocity.",
+      "label": "output",
+      "type": "image/tiff;application=geotiff",
+      "example": "local_velocity.tif"
     }
   }
 }
