@@ -45,19 +45,21 @@ stac_collection<- gdalcubes::create_image_collection(files= layers, format= json
 cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = gdalcubes::extent(stac_collection)$t0, t1 = gdalcubes::extent(stac_collection)$t1,
                                                                          left = box_polygon[1], right = box_polygon[3],
                                                                          top = box_polygon[4], bottom = box_polygon[2]),
-                                       dx = resolution_crs[1], dy = resolution_crs[2], dt = "P1Y", aggregation = "first", resampling = "first", keep.asp= F)
+                                       dx = resolution_crs[1], dy = resolution_crs[2], dt = "P1Y", aggregation = "first", resampling = "first",
+                                       keep.asp= F)
 
 cube <- gdalcubes::raster_cube(stac_collection, cube_collection)
-
-
-
-
 
 # Cortar cubo por area de estudio
 cube_mask<- gdalcubes::filter_geom(cube, geom= dir_wkt, srs = crs_polygon )
 
+# Cargar cubo en cache
+fn = tempfile(fileext = ".nc")
+gdalcubes::write_ncdf(cube_mask, fn)
+
+
 # Convertir cubo a raster
-cube_stars <- stars::st_as_stars(cube_mask) %>% terra::rast() %>% setNames(names(cube_mask))
+cube_stars <-  terra::rast(fn) %>% setNames(names(cube_mask))
 
 collection_rast<- lapply(cube_stars, function(x) { if(any( is.na(summary(raster::raster(x))) )){NULL}else{x} } ) %>%
   {Filter(function(x) !is.null(x), .)} %>% {setNames(., unlist(sapply(., function(x) names(x))) )} %>% terra::rast()
@@ -72,10 +74,6 @@ data_sum<- terra::freq(cube_stars, usenames=T) %>% dplyr::mutate(area= (count* s
 data_sum$period<-  unlist(strsplit(data_sum$layer, "_") %>% sapply(function(x) paste(x[c(2:3)], collapse = "-")), recursive = T)
 
 
-
-
-
-
 # partir y guardar raster acorde a los valores
 setwd(folder_results)
 saveraster<- lapply( seq(nrow(data_sum)), function(i) {
@@ -85,8 +83,8 @@ saveraster<- lapply( seq(nrow(data_sum)), function(i) {
   raster_val<- collection_rast[x$layer]
   raster_val[!raster_val %in% x$value]= NA
   raster_val[raster_val %in% x$value]= 1
-  
-  terra::writeRaster(raster_val, paste0( paste(c("forestLP", x$period, x$key), collapse = "-") ,  ".tif"), overwrite=T)
+
+  terra::writeRaster(raster_val, paste0( paste(c("forestLP", x$period, x$key), collapse = "-") ,  ".png"), overwrite=T, NAflag= F)
   
 } )
 
