@@ -32,7 +32,7 @@ mod_tuning <- run_maxent(presence_background,
                          with_raster = F, # can be set to F to speed up
                          algorithm = "maxent.jar",
                          layers = names(predictors),
-                         predictors = NULL,
+                         predictors = predictors,
                          partition_type = input$partition_type,
                          nfolds = input$nfolds,
                          orientation_block = input$orientation_block,
@@ -71,13 +71,15 @@ pred.output <- file.path(outputFolder, "sdm_pred.tif")
 runs.output <- paste0(outputFolder,"/sdm_runs_", 1:nlayers(sdm_runs), ".tif")
 #runs.output <- file.path(outputFolder, "sdm_runs.tif")
 
+sdm_pred<-project(rast(sdm_pred),crs(input$proj)) ##Temporary fix while maxent transitions to terra
 terra::writeRaster(x = sdm_pred,
                           filename = pred.output,
                           filetype = "COG",
                           wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
 for (i in 1:nlayers(sdm_runs)){
-    terra::writeRaster(x = sdm_runs[[i]],
+    thisrun<-project(rast(sdm_runs[[i]]),crs(input$proj))  ##Temporary fix while maxent transitions to terra
+    terra::writeRaster(x = thisrun,
     filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),
     filetype = "COG",
     wopt= list(gdal=c("COMPRESS=DEFLATE")),
