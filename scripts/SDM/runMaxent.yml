@@ -56,6 +56,11 @@ inputs:
       - lon_lon
       - lat_lat
     example: lat_lon
+  proj:
+    label: projection system
+    description: String, projection of the predictors
+    type: text
+    example: "EPSG:6623"
   n_folds:
     label: number of folds
     description: Integer, number of random k-folds for randomkfold technique.

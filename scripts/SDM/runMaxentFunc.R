@@ -42,7 +42,7 @@ run_maxent <- function(presence.bg, with_raster = F,
   } else {
     layers <- c("lon", "lat", layers)
     ENMmodel <- ENMeval::ENMevaluate(occs = presence[,layers], 
-                            bg = background[,layers],  
+                            bg = background[,layers],
                             algorithm = algorithm,
                             categoricals = factors,
                             partitions = partition_type, 
