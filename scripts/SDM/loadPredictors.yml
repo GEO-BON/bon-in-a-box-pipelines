@@ -5,7 +5,7 @@ inputs:
     label: bbox
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
     type: float[]
-    example: [-2316297, -1971146,  1015207,  1511916]
+    example: [-2316297, -1971146, 1015207, 1511916]
   source:
     label: source
     description: String, type of source to load the predictors from (either from tif, or from the stac catalogue)
@@ -19,14 +19,19 @@ inputs:
     description: String, name of the collection containing the predictors in the STAC catalogue
     type: text
     example: "chelsa-clim"
-  layers: 
+  layers:
     label: layers
     description: Vector of string, names of layers to select. If empty, all the layers from the collection will be used
     type: text[]
     example: []
-  variables: 
+  variables:
     label: variables
     description: Vector of string, names of variables to select. If empty, all the variables from the collection will be used
+    type: text[]
+    example: []
+  ids:
+    label: item_ids
+    description: Vector of string, ids of the items to select. If empty, all the items from the collection will be used
     type: text[]
     example: []
   remove_collinearity:
@@ -34,11 +39,11 @@ inputs:
     description: Boolean, remove or not collinear variables from the set of predictors
     type: boolean
     example: True
-  method: 
+  method:
     label: method
     description: Option, method used to compute collinearity between variables
     type: options
-    options: 
+    options:
       - vif.cor
       - vif.step
       - pearson
@@ -52,29 +57,29 @@ inputs:
     example: "EPSG:6623"
   spatial_res:
     label: spatial resolution
-    description: Integer, spatial resolution of the predictors 
+    description: Integer, spatial resolution of the predictors
     type: int
     example: 1000
-  method_cor_vif :
+  method_cor_vif:
     label: correlation coefficient for vif.cor method
-    description: Option, method to calculate the coefficient of collinearity, only used if method == vif.cor 
+    description: Option, method to calculate the coefficient of collinearity, only used if method == vif.cor
     type: options
     options:
       - pearson
       - spearman
       - kendall
     example: pearson
-  nb_sample :
+  nb_sample:
     label: nb sample
     description: Integer, number of points to select to calculate collinearity
     type: int
     example: 5000
-  cutoff_cor :
+  cutoff_cor:
     label: cutoff correlation
     description: Float, correlation cutoff (used with vif.cor, pearson spearman and kendall method)
     type: float
     example: 0.75
-  cutoff_vif :
+  cutoff_vif:
     label: VIF correlation
     description: Integer, VIF correlation cutoff (used with vif.step method)
     type: int
@@ -87,5 +92,5 @@ inputs:
 outputs:
   predictors:
     label: predictors
-    description: raster, predictors 
+    description: raster, predictors
     type: image/tiff;application=geotiff[]

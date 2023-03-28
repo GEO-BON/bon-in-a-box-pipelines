@@ -58,7 +58,6 @@ background <- create_background(
   density_bias = input$density,
   raster = heatmap)
 
-
 background.output <- file.path(outputFolder, "background.tsv")
 write.table(background, background.output,
             append = F, row.names = F, col.names = T, sep = "\t")
