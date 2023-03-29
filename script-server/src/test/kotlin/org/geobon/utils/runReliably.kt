@@ -1,5 +1,6 @@
 package org.geobon.utils
 
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import java.util.*
@@ -43,6 +44,7 @@ fun<T> runReliably(
 /**
  * Run a coroutine test, making sure the uncaught exceptions that happen during the execution of the test do get reported.
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 fun runReliableTest(
     context: CoroutineContext = EmptyCoroutineContext,
     dispatchTimeoutMs: Long = 30_000L,
