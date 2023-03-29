@@ -191,6 +191,7 @@ class ScriptRun( // Constructor used in single script run
                             open("${pidFile.absolutePath}", "w") do file write(file, string(getpid())) end;
                             ARGS=["${outputFolder.absolutePath}"];
                             include("${scriptFile.absolutePath}")
+                            rm("${pidFile.absolutePath}")
                             """
                         )
                     }
@@ -198,11 +199,19 @@ class ScriptRun( // Constructor used in single script run
                     "r", "R" -> {
                         runner = "biab-runner-r"
                         command = listOf(
-                            "/usr/local/bin/docker", "exec", "-i", runner, "Rscript",
-                            "-e", "fileConn<-file(\"${pidFile.absolutePath}\"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);",
-                            "-e", "outputFolder<-\"${outputFolder.absolutePath}\";",
-                            "-e", "source(\"${scriptFile.absolutePath}\");",
-                            "-e", "unlink(\"${pidFile.absolutePath}\")"
+                            "/usr/local/bin/docker", "exec", "-i", runner, "Rscript", "-e", 
+                            """
+                            fileConn<-file("${pidFile.absolutePath}"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);
+                            outputFolder<-"${outputFolder.absolutePath}";
+                            tryCatch(source("${scriptFile.absolutePath}"),
+                                error=function(e) if(grepl("ignoring SIGPIPE signal",e${"$"}message)) {
+                                        print("Suppressed: 'ignoring SIGPIPE signal'");
+                                    } else {
+                                        stop(e);
+                                    });
+                            unlink("${pidFile.absolutePath}");
+                            gc();
+                            """
                         )
                     }
 

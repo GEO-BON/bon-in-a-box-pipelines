@@ -42,7 +42,7 @@ run_maxent <- function(presence.bg, with_raster = F,
   } else {
     layers <- c("lon", "lat", layers)
     ENMmodel <- ENMeval::ENMevaluate(occs = presence[,layers], 
-                            bg = background[,layers],  
+                            bg = background[,layers],
                             algorithm = algorithm,
                             categoricals = factors,
                             partitions = partition_type, 
@@ -248,6 +248,9 @@ predict_maxent <- function(presence_background,
   layers <- names(predictors)
   runs <- names(presence_background |> 
                   dplyr:: select(starts_with("run")))
+
+  print("NUMBER OF RUNS :")
+  print(length(runs))
   
   fc <- as.character(fc)
   rm <- as.numeric(rm)

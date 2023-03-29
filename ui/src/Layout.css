@@ -103,7 +103,7 @@ img#logo {
 .error, .warning, .info {
   background-color: lightgray;
   font-weight: bold;
-  white-space: pre;
+  white-space: pre-wrap;
   min-height: 1.6em;
 
   padding-left: 2em;
@@ -171,6 +171,10 @@ img#logo {
   border: 1px solid red;
 }
 
+.marker-cluster span {
+  font-weight: bold;
+}
+
 .outputTitle {
   white-space: nowrap;
   overflow: hidden;
@@ -189,6 +193,11 @@ img#logo {
 
 .outputContent p {
   margin-top:0px;
+}
+
+.outputContent img {
+  max-width: 100%;
+  max-height: 90vh;
 }
 
 .foldableScriptResult .outputContent {

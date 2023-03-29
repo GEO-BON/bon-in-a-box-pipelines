@@ -110,7 +110,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getPipelineInfo(descriptionPath, callback);
+api.getPipeline(descriptionPath, callback);
 
 ```
 
@@ -120,6 +120,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*BonInABoxScriptService.DefaultApi* | [**getPipeline**](docs/DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline
 *BonInABoxScriptService.DefaultApi* | [**getPipelineInfo**](docs/DefaultApi.md#getPipelineInfo) | **GET** /pipeline/{descriptionPath}/info | Get metadata about this pipeline
 *BonInABoxScriptService.DefaultApi* | [**getPipelineOutputs**](docs/DefaultApi.md#getPipelineOutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
 *BonInABoxScriptService.DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
