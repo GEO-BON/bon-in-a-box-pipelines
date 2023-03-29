@@ -76,6 +76,7 @@ data_sum$period<-  unlist(strsplit(data_sum$layer, "_") %>% sapply(function(x) p
 
 # partir y guardar raster acorde a los valores
 setwd(folder_results)
+
 saveraster<- lapply( seq(nrow(data_sum)), function(i) {
   
   x<- data_sum[i, ]
@@ -84,7 +85,22 @@ saveraster<- lapply( seq(nrow(data_sum)), function(i) {
   raster_val[!raster_val %in% x$value]= NA
   raster_val[raster_val %in% x$value]= 1
 
-  terra::writeRaster(raster_val, paste0( paste(c("forestLP", x$period, x$key), collapse = "-") ,  ".png"), overwrite=T, NAflag= F)
+
+  # colorar plot y exportar con buena resolucion
+  r<- raster(raster_val)
+  w <- ncol(r)/max(dim(r))
+  h <- nrow(r)/max(dim(r))
+  dev.new(width=5*w, height=5*h)
+  plot.new()
+  par(mar=c(0,0,0,0), oma=c(0,0,0,0))
+  
+  plot.window(xlim=extent(r)[1:2], ylim=extent(r)[3:4], xaxs="i",yaxs="i")
+  plot(r, axes=FALSE, legend=FALSE, add=T, col= data_sum$col)
+
+  dev.copy(png, filename =  paste0( paste(c("forestLP", x$period, x$key), collapse = "-") ,  ".png"),
+           width = 1000, height = 1000, units = "px", res=300)
+  dev.off()
+  
   
 } )
 
