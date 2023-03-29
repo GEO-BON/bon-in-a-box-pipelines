@@ -162,12 +162,16 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
     }
 
     /**
+     * Pulls on the pipeline's outputs and returns the folder where we can find the results with cancelled,
+     * failed and skipped steps annotated.
+     * This function is meant to be called only on the root pipeline, in case of nested pipelines.
+     *
      * @return the output folders for each step.
      * If the step was not executed, one of these special keywords will be used:
      * - skipped
      * - canceled
      */
-    suspend fun execute(): Map<String, String> {
+    suspend fun pullFinalOutputs(): Map<String, String> {
         var cancelled = false
         var failure = false
         try {

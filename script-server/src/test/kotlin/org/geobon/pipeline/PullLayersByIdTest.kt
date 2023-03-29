@@ -204,7 +204,7 @@ internal class PullLayersByIdTest {
                 "pipeline>PullLayersById.yml@9|with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
             }""".trimIndent())
 
-            pipeline.execute()
+            pipeline.pullFinalOutputs()
 
             val result = pipeline.getPipelineOutputs()[0].pull().toString()
             assertFalse(result.contains("https://object-arbutus.cloud.computecanada.ca/bq-io/io/GFW/lossyear/Hansen_GFC-2020-v1.8_lossyear_80N_180W.tif"))

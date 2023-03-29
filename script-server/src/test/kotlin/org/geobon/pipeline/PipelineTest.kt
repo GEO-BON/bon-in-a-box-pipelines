@@ -30,7 +30,7 @@ internal class PipelineTest {
         assertEquals(1, allOutputs.size)
         assertTrue(allOutputs.any { it.key.contains("helloPython.yml") })
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
         assertEquals(19 + 1, pipeline.getPipelineOutputs()[0].pull())
     }
 
@@ -43,7 +43,7 @@ internal class PipelineTest {
 
         assertEquals(4, allOutputs.size)
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         with(listOf(pipeline.getPipelineOutputs()[0].pull(), pipeline.getPipelineOutputs()[1].pull())) {
             assertContains(this, 21)
@@ -60,7 +60,7 @@ internal class PipelineTest {
 
         assertEquals(4, allOutputs.size)
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         with(listOf(pipeline.getPipelineOutputs()[0].pull(), pipeline.getPipelineOutputs()[1].pull())) {
             assertContains(this, 5)
@@ -72,7 +72,7 @@ internal class PipelineTest {
     fun `given a pipeline with constant array_when ran_then input json created with array`() = runTest {
         val pipeline = Pipeline("arrayConst.json")
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         assertEquals(
             """{"array":[11,12,13]}""",
@@ -83,7 +83,7 @@ internal class PipelineTest {
     fun `given an int aggregation_when ran_then script receives array`() = runTest {
         val pipeline = Pipeline("aggregateInt.json")
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         assertEquals(
             """{"array":[11,12,13]}""",
@@ -95,7 +95,7 @@ internal class PipelineTest {
     fun `given an int and int array aggregation_when ran_then script receives single array`() = runTest {
         val pipeline = Pipeline("aggregateIntAndIntArray.json")
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         assertEquals(
             """{"array":[11,12,13]}""",
@@ -106,7 +106,7 @@ internal class PipelineTest {
     fun `given an int while step awaits an array_when ran_then int wrapped in array`() = runTest {
         val pipeline = Pipeline("wrapIntTowardsArray.json")
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         assertEquals(listOf(234), pipeline.getPipelineOutputs()[0].pull())
     }
@@ -115,7 +115,7 @@ internal class PipelineTest {
     fun `given a pipeline with boolean constant_when ran_then script input json created with boolean`() = runTest {
         val pipeline = Pipeline("boolConst.json")
 
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         assertEquals(
             """{"input_bool":true}""",
@@ -125,7 +125,7 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline with an input_when ran_then the provided input is used`() = runTest {
         val pipeline = Pipeline("1in1out_1step.json", """{ "helloWorld>helloPython.yml@0|some_int": 5 }""")
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
 
         assertEquals(6, pipeline.getPipelineOutputs()[0].pull())
     }
@@ -160,26 +160,26 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline passing float_when ran_then a float value is received`() = runTest {
         val pipeline = Pipeline("assertFloat.json")
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
     }
 
     @Test
     fun `given a pipeline passing int_when ran_then an int value is received`() = runTest {
         val pipeline = Pipeline("assertInt.json")
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
     }
 
     @Test
     fun `given a pipeline passing int to float_when ran_then float input accepts int input`() = runTest {
         val pipeline = Pipeline("intToFloat.json", """ { "1in1out.yml@1|some_int": 3, "divideFloat.yml@0|divider": 2 }""")
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
         assertTrue(pipeline.getPipelineOutputs()[0].pull() == 2)
     }
 
     @Test
     fun `given a pipeline with userInput string_when ran_then input fed to child steps`() = runTest {
         val pipeline = Pipeline("userInput.json", """ { "pipeline@1": 10} """)
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
         assertTrue(pipeline.getPipelineOutputs()[0].pull() == 11)
         assertTrue(pipeline.getPipelineOutputs()[1].pull() == 12)
     }
@@ -201,7 +201,7 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline with userInput array_when ran_then input fed to child steps`() = runTest {
         val pipeline = Pipeline("userInput_array.json", """ {"pipeline@1":[3,4,5]} """)
-        pipeline.execute()
+        pipeline.pullFinalOutputs()
         assertEquals(listOf(3,4,5), pipeline.getPipelineOutputs()[0].pull())
     }
 
