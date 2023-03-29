@@ -7,7 +7,7 @@ class Output(override val type:String) : Pipe {
 
     override suspend fun pull(): Any {
         if(value == null) {
-            step?.apply { execute() }
+            step?.execute()
                 ?: throw RuntimeException("Output of type $type disconnected from any step when pulling")
         }
         return value ?: throw RuntimeException("Output of type $type has not been set by step $step")
@@ -20,7 +20,7 @@ class Output(override val type:String) : Pipe {
 
             if(condition(it)) pull()
             else null
-        } 
+        }
     }
 
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
