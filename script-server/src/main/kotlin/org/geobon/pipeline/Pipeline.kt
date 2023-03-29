@@ -9,7 +9,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
-class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: File, inputs: Map<String, Pipe>? = null) {
+class Pipeline private constructor(
+    pipelineJSON: JSONObject,
+    descriptionFile: File,
+    override val inputs: MutableMap<String, Pipe>,
+    override val outputs: MutableMap<String, Output> = mutableMapOf()
+) : IStep {
 
     private constructor(pipelineJSON:JSONObject, descriptionFile: File, inputsJSON: String? = null) : this(
         pipelineJSON,
@@ -30,11 +35,7 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
 
     private val logger: Logger = LoggerFactory.getLogger(descriptionFile.nameWithoutExtension)
 
-    /**
-     * All outputs that should be presented to the client as pipeline outputs.
-     */
-    private val pipelineOutputs = mutableListOf<Pipe>()
-    fun getPipelineOutputs(): List<Pipe> = pipelineOutputs
+    fun getPipelineOutputs(): List<Pipe> = outputs.values.map { it }
 
     private val finalSteps: Set<Step>
 
@@ -102,7 +103,9 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
                 // Find the target and connect them
                 val targetId = edge.getString(EDGE__TARGET_ID)
                 if(outputIds.contains(targetId)) {
-                    pipelineOutputs.add(sourcePipe)
+                    if(sourcePipe is Output) {
+                        outputs[sourceId] = sourcePipe
+                    }
                 } else {
                     steps[targetId]?.let { step ->
                         val targetInput = edge.getString(EDGE__TARGET_INPUT)
@@ -118,42 +121,30 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
         }
 
         // Link inputs from the input file to the pipeline
-        inputs?.let {
-            pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
-                val regex = """([.>\w]+)@(\d+)(\|(\w+))?""".toRegex()
-                inputs.forEach { (key, pipe) ->
-                    val groups = regex.matchEntire(key)?.groups
-                        ?: throw RuntimeException("Input id \"$key\" is malformed")
-                    //val path = groups[1]!!.value
-                    val stepId = groups[2]!!.value
-                    val inputId = groups[4]?.value ?: Step.DEFAULT_IN // inputId = default when step is a UserInput
+        val regex = """([.>\w]+)@(\d+)(\|(\w+))?""".toRegex()
+        inputs.forEach { (key, pipe) ->
+            val groups = regex.matchEntire(key)?.groups
+                ?: throw RuntimeException("Input id \"$key\" is malformed")
+            //val path = groups[1]!!.value
+            val stepId = groups[2]!!.value
+            val inputId = groups[4]?.value ?: Step.DEFAULT_IN // inputId = default when step is a UserInput
 
-                    val step = steps[stepId]
-                        ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
+            val step = steps[stepId]
+                ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
 
-                    step.inputs[inputId] = pipe
-                }
-            }
+            step.inputs[inputId] = pipe
         }
 
         // Call validate graph
         // (Only once per final step since stored in a set. There might be some duplication lower down the tree...)
-        finalSteps = mutableSetOf<Step>().also { set ->
-            pipelineOutputs.mapNotNullTo(set) { if (it is Output) it.step else null }
-        }
+        finalSteps = outputs.values.mapNotNullTo(mutableSetOf()) { it.step }
 
         if(finalSteps.isEmpty())
             throw Exception("Pipeline has no designated output")
-
-        finalSteps.forEach {
-            val message = it.validateGraph()
-            if(message != "") {
-                throw Exception("Pipeline validation failed:\n$message")
-            }
-        }
     }
 
-    fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        // Not all steps have output folders. Default implementation just forwards to other steps.
         finalSteps.forEach { it.dumpOutputFolders(allOutputs) }
     }
 
@@ -172,14 +163,14 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
      * - canceled
      */
     suspend fun pullFinalOutputs(): Map<String, String> {
+        validateGraph()
+
         var cancelled = false
         var failure = false
         try {
             coroutineScope {
                 job = launch {
-                    coroutineScope {
-                        finalSteps.forEach { launch { it.execute() } }
-                    } // exits when all final steps have their results
+                    execute()
                 }
             }
 
@@ -203,6 +194,21 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
         }
     }
 
+    override fun validateGraph():String {
+        // Pipeline is valid if all its steps are
+        var problems = ""
+        finalSteps.forEach { problems += it.validateGraph() }
+        return problems
+    }
+
+    override suspend fun execute() {
+        coroutineScope {
+            finalSteps.forEach { launch { it.execute() } }
+        } // exits when all final steps have their results
+    }
+
+
+
     suspend fun stop() {
         job?.apply {
             cancel("Cancelled by user")
@@ -211,9 +217,9 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
     }
 
     companion object {
-        private fun inputsToConstants(inputsJSON:String?, pipelineJSON: JSONObject) : Map<String, Pipe> {
+        private fun inputsToConstants(inputsJSON:String?, pipelineJSON: JSONObject) : MutableMap<String, Pipe> {
             if(inputsJSON == null)
-                return mapOf()
+                return mutableMapOf()
 
             val inputsParsed = JSONObject(inputsJSON)
             val constants = mutableMapOf<String, Pipe>()

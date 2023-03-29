@@ -5,10 +5,15 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 
+/**
+ * A step in a Pipeline
+ * @param inputs A map of input id to input Pipe
+ * @param outputs A map of output id to Output Pipe
+ */
 abstract class Step(
-    val inputs: MutableMap<String, Pipe> = mutableMapOf(),
-    val outputs: Map<String, Output> = mapOf()
-) {
+    override val inputs: MutableMap<String, Pipe> = mutableMapOf(),
+    final override val outputs: Map<String, Output> = mapOf()
+) : IStep {
     private var validated = false
     private var executed = false
     private val executeMutex = Mutex()
@@ -17,7 +22,7 @@ abstract class Step(
         outputs.values.forEach { it.step = this }
     }
 
-    suspend fun execute() {
+    override suspend fun execute() {
         executeMutex.withLock {
             if(executed)
                 return // this has already been executed! (success or failure)
@@ -55,7 +60,7 @@ abstract class Step(
         return resolvedInputs
     }
 
-    open fun validateGraph():String {
+    override fun validateGraph():String {
         if(validated)
             return "" // This avoids validating many times the same node in complex graphs
 
@@ -71,7 +76,7 @@ abstract class Step(
         return ""
     }
 
-    open fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
         // Not all steps have output folders. Default implementation just forwards to other steps.
         inputs.values.forEach{it.dumpOutputFolders(allOutputs)}
     }
