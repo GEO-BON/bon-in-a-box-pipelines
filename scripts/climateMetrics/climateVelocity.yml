@@ -59,7 +59,7 @@ inputs:
     label: bounding box
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax (use ExtentToBbox to add shapefiles and other formats)
     type: float[]
-    example: [-2316297,-1971146,1015207,1511916]
+    example: [-465889, 506055, 38110, 1244055]
   t_match: 
     label: threshold climate match 
     description: plus/minus threshold to define climate match in geographic space (only for forward and backward velocities).
