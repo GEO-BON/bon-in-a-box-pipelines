@@ -50,7 +50,7 @@ class Pipeline private constructor(pipelineJSON:JSONObject, descriptionFile: Fil
             if (node is JSONObject) {
                 val nodeId = node.getString(NODE__ID)
                 when (node.getString(NODE__TYPE)) {
-                    NODE__TYPE_SCRIPT -> {
+                    NODE__TYPE_STEP -> {
                         val scriptFile = node.getJSONObject(NODE__DATA)
                             .getString(NODE__DATA__FILE)
                             .replace('>', '/')
