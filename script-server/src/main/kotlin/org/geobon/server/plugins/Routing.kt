@@ -144,7 +144,7 @@ fun Application.configureRouting() {
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
             runCatching {
-                Pipeline(descriptionPath, inputFileContent)
+                Pipeline(descriptionPath.replace(FILE_SEPARATOR, '/'), inputFileContent)
             }.onSuccess { pipeline ->
                 runningPipelines[runId] = pipeline
                 try {
