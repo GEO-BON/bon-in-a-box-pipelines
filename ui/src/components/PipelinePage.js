@@ -55,16 +55,14 @@ export function PipelinePage(props) {
     }
   }
 
-  function showMetadata(){
-    if(pipelineMetadata) {
+  function showMetadata() {
+    if (pipelineMetadata) {
       let yamlString = yaml.dump(pipelineMetadata)
-      return(
-        <FoldableOutput title="Pipeline description" isActive={!runId}>
-          <pre key="metadata">
-            {yamlString.startsWith("{}") ? "No metadata" : yamlString}
-          </pre>
-        </FoldableOutput>
-        )
+      return (
+        <pre key="metadata">
+          {yamlString.startsWith("{}") ? "No metadata" : yamlString}
+        </pre>
+      )
     }
     return ""
   }
@@ -97,13 +95,16 @@ export function PipelinePage(props) {
   return (
     <>
       <h2>Pipeline run</h2>
-      <PipelineForm
-        pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
-        setRunId={setRunId}
-        showHttpError={showHttpError} />
+      <FoldableOutput title="Input form" isActive={!runId} keepWhenHidden={true}>
+        <PipelineForm
+          pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
+          setRunId={setRunId}
+          showHttpError={showHttpError} />
+        {showMetadata()}
+      </FoldableOutput>
+      
       {runId && <button onClick={stop} disabled={!stoppable}>Stop</button>}
       {httpError && <p key="httpError" className="error">{httpError}</p>}
-      {showMetadata()}
       {pipelineMetadata && <PipelineResults key="results"
         pipelineMetadata={pipelineMetadata} resultsData={resultsData}
         runningScripts={runningScripts} setRunningScripts={setRunningScripts} />}
