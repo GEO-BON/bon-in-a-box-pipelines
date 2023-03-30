@@ -85,9 +85,11 @@ saveraster<- lapply( seq(nrow(data_sum)), function(i) {
   raster_val[!raster_val %in% x$value]= NA
   raster_val[raster_val %in% x$value]= 1
 
-
   # colorear plot y exportar con buena resolucion
   r<- raster(raster_val)
+  
+  png( paste0( paste(c("forestLP", x$period, x$key), collapse = "-") ,  ".png"),
+       width = 1000, height = 1000, units = "px", res=300 )
   
   plot.new()
   par(mar=c(0,0,0,0), oma=c(0,0,0,0), bg=NA)
@@ -96,9 +98,7 @@ saveraster<- lapply( seq(nrow(data_sum)), function(i) {
   plot.window(xlim=extent(r)[1:2], ylim=extent(r)[3:4], xaxs="i",yaxs="i")
   plot(r, axes=F, legend=F, add=T, col= x$col)
   
-  dev.copy(png, filename =  paste0( paste(c("forestLP", x$period, x$key), collapse = "-") ,  ".png"),
-           width = 1000, height = 1000, units = "px", res=300)
-  dev.off()
+  dev.off(); 
   
   
 } )
