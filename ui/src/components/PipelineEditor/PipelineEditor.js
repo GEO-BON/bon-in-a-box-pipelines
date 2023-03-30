@@ -22,6 +22,7 @@ import { layoutElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
 import { getScriptDescription } from './ScriptDescriptionStore'
+import sleep from '../../utils/Sleep';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -129,8 +130,8 @@ export function PipelineEditor(props) {
 
   const onSelectionChange = useCallback((selected) => {
     setSelectedNodes(selected.nodes)
-    setEdges(highlightConnectedEdges(selected.nodes, edges))
-  }, [edges, setEdges, setSelectedNodes])
+    setEdges(edges => highlightConnectedEdges(selected.nodes, edges))
+  }, [setEdges, setSelectedNodes])
 
   const onPopupMenu = useCallback((event, id, type) => {
     event.stopPropagation()
@@ -610,11 +611,16 @@ export function PipelineEditor(props) {
       id++
 
       // Load the graph
-      setNodes(flow.nodes || []);
-      setEdges(flow.edges || []);
+      setEdges([])
+      setNodes([])
+      sleep(1).then(() => {
+        // Reset viewport to top left
+        reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
 
-      // Reset viewport to top left
-      reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      });
+      
     } else {
       console.error("Error parsing flow")
     }
