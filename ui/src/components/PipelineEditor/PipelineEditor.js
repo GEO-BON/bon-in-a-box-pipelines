@@ -414,12 +414,11 @@ export function PipelineEditor(props) {
   }, [edges, reactFlowInstance, setOutputList])
 
   const onLayout = useCallback(() => {
-    const { nodes: laidOutNodes, edges: laidOutEdges } =
-      layoutElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges());
-
-    setNodes([...laidOutNodes]);
-    setEdges([...laidOutEdges]);
-  }, [reactFlowInstance, setNodes, setEdges]);
+    layoutElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges(),
+      laidOutNodes => {
+        setNodes([...laidOutNodes]);
+      });
+  }, [reactFlowInstance, setNodes]);
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
