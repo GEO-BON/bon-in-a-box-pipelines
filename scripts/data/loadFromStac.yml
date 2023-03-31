@@ -14,11 +14,11 @@ inputs:
       - from_tif
       - from_cube
     example: "from_cube"
-  collections_items:
-    label: collections_items
+  layer:
+    label: layer
     description: Vector of strings, collection name followed by '|' followed by item id
-    type: text[]
-    example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+    type: text
+    example: "chelsa-clim|bio2"
   proj:
     label: projection system
     description: String, projection of the predictors
@@ -36,6 +36,6 @@ inputs:
     example: ""
 outputs:
   rasters:
-    label: rasters
+    label: raster
     description: array of output raster paths
     type: image/tiff;application=geotiff[]

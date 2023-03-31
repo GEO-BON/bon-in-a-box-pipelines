@@ -25,27 +25,31 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
+print(c(input$layers, input$variables))
 
 # Case 1: we create an extent from a set of observations
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
+                      xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
 
 
-if(length(input$collections_items) == 0) {
-  stop('Please specify collections_items')
-} else {
-  collections_items <- input$collections_items
-}
+#if(length(input$collections_items) == 0) {
+#  stop('Please specify collections_items')
+#} else {
+#  collections_items <- input$collections_items
+#}
+
+layer = input$layer
 
 source = "cube"
 cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
-limit = 5000,
-t0 = NULL,
-t1 = NULL,
-spatial.res = input$spatial_res, # in meters
-temporal.res = "P1D",
-aggregation = "mean",
-resampling = "near")
+                 limit = 5000,
+                 t0 = NULL,
+                 t1 = NULL,
+                 spatial.res = input$spatial_res, # in meters
+                 temporal.res = "P1D",
+                 aggregation = "mean",
+                 resampling = "near")
+
 subset_layers = input$layers
 variables = input$variables
 proj = input$proj
@@ -55,54 +59,52 @@ mask=input$mask
 if(mask==''){
   mask=NULL
 }
-predictors=list()
-for (coll_it in collections_items){
-    ci<-strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
 
-    cube_args_c <- append(cube_args, list(collections=ci[1],
-                                          srs.cube = proj, 
-                                          bbox = bbox,
-                                          variable = variables,
-                                          ids=ci[2]))
-    pred <- do.call(stacatalogue::load_cube, cube_args_c)
+#predictors=list()
+ci<-strsplit(layer, split = "|", fixed=TRUE)[[1]]
 
-     if(!is.null(mask)) {
-        pred <- gdalcubes::filter_geom(pred,  sf::st_geometry(mask))
-      }
-      if(names(pred)=='data'){
-        pred=rename_bands(pred,data=ci[2])
-      }
-     print(pred)
+cube_args_c <- append(cube_args, list(collections=ci[1],
+                                      srs.cube = proj, 
+                                      bbox = bbox,
+                                      variable = variables,
+                                      ids=ci[2]))
 
-     predictors[[ci[2]]]=pred
+pred <- do.call(stacatalogue::load_cube, cube_args_c)
+
+if(!is.null(mask)) {
+  pred <- gdalcubes::filter_geom(pred,  sf::st_geometry(mask))
 }
-  print(names(predictors))
-  nc_names <- names(predictors)
+if(names(pred)=='data'){
+  pred=rename_bands(pred,data=ci[2])
+}
+
+print(pred)
+#predictors[[ci[2]]]=pred
+
+#print(names(predictors))
+nc_names <- names(pred)
+
+if (as_list) {
+  output <- nc_names
+} else {
   
-  if (as_list) {
-    output <- nc_names
-    
-  } else {
-    
-      cube_args_nc <- append(cube_args, list(layers = nc_names, 
-                                             srs.cube = proj,
-                                             bbox = bbox))
-      output <- do.call(stacatalogue::load_cube, cube_args_nc)
-      
-      if(!is.null(mask)) {
-        output <- gdalcubes::filter_geom(cube,  sf::st_geometry(sf::st_as_sf(mask)), srs=proj)
-      }
+  cube_args_nc <- append(cube_args, list(layers = nc_names, 
+                                         srs.cube = proj,
+                                         bbox = bbox))
+  output <- do.call(stacatalogue::load_cube, cube_args_nc)
+  
+  if(!is.null(mask)) {
+    output <- gdalcubes::filter_geom(cube,  sf::st_geometry(sf::st_as_sf(mask)), srs=proj)
   }
-
-output_predictors <- file.path(outputFolder)
-
-for (i in 1:length(predictors)) {
-  ff <- tempfile(pattern = paste0(names(predictors[i][[1]]),'_'))
-  gdalcubes::write_tif(predictors[i][[1]], dir = output_predictors, prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=T)
 }
+
+output_predictor <- file.path(outputFolder)
+
+ff <- tempfile(pattern = paste0(names(pred),'_'))
+gdalcubes::write_tif(pred, dir = output_predictor, prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=T)
 
 fileslist=list.files(outputFolder, pattern="*.tif")
 
-output <- list("rasters" = paste0(file.path(outputFolder, fileslist)))
+output <- list("raster" = paste0(file.path(outputFolder, fileslist)))
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
