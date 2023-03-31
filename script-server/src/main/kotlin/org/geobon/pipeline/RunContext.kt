@@ -6,10 +6,10 @@ import java.io.File
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
 
 /**
- * @param id A unique string identifier representing a run of this step with these specific parameters.
+ * @param runId A unique string identifier representing a run of this step with these specific parameters.
  *           i.e. Calling the same script with the same param would result in the same ID.
  */
-data class RunContext(val id: String) {
+data class RunContext(val runId: String) {
     constructor(descriptionFile: File, inputs: String?) : this(
         File(
             // Unique to this script
@@ -20,7 +20,7 @@ data class RunContext(val id: String) {
     )
 
     val outputFolder
-        get() = File(outputRoot, id)
+        get() = File(outputRoot, runId)
 
     val inputFile: File
         get() = File(outputFolder, "input.json")

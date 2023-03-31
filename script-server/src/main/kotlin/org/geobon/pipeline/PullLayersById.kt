@@ -4,8 +4,8 @@ import org.json.JSONObject
 import java.io.File
 
 
-class PullLayersById(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
-    YMLStep(File(System.getenv("SCRIPT_LOCATION"), "pipeline/PullLayersById.yml"), inputs = inputs) {
+class PullLayersById(stepId: String, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
+    YMLStep(File(System.getenv("SCRIPT_LOCATION"), "pipeline/PullLayersById.yml"), stepId, inputs = inputs) {
 
     override suspend fun resolveInputs(): Map<String, Any> {
         val resolvedInputs = mutableMapOf<String, Any>()

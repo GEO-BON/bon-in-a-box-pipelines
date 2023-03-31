@@ -14,7 +14,8 @@ class Pipeline private constructor(
     pipelineJSON: JSONObject,
     private val descriptionFile: File,
     override val inputs: MutableMap<String, Pipe>,
-    override val outputs: MutableMap<String, Output> = mutableMapOf()
+    override val outputs: MutableMap<String, Output> = mutableMapOf(),
+    override val id: String = "root"
 ) : IStep {
 
     private constructor(pipelineJSON:JSONObject, descriptionFile: File, inputsJSON: String? = null) : this(
@@ -57,15 +58,18 @@ class Pipeline private constructor(
                             .getString(NODE__DATA__FILE)
                             .replace('>', '/')
 
+                        val stepId = toIOId(scriptFile, nodeId)
+                        logger.debug("TEMP $stepId")
+
                         steps[nodeId] = when (scriptFile) {
                             // Instantiating kotlin "special steps".
                             // Not done with reflection on purpose, since this could allow someone to instantiate any class,
                             // resulting in a security breach.
-                            "pipeline/AssignId.yml" -> AssignId()
-                            "pipeline/PullLayersById.yml" -> PullLayersById()
+                            "pipeline/AssignId.yml" -> AssignId(stepId)
+                            "pipeline/PullLayersById.yml" -> PullLayersById(stepId)
 
                             // Regular script steps
-                            else -> ScriptStep(scriptFile, nodeId)
+                            else -> ScriptStep(scriptFile, stepId)
                         }
                     }
 
@@ -79,7 +83,7 @@ class Pipeline private constructor(
                         val nodeData = node.getJSONObject(NODE__DATA)
                         val type = nodeData.getString(NODE__DATA__TYPE)
 
-                        steps[nodeId] = UserInput(nodeId, type)
+                        steps[nodeId] = UserInput(toIOId("pipeline", nodeId), type)
                     }
 
                     NODE__TYPE_OUTPUT -> outputIds.add(nodeId)

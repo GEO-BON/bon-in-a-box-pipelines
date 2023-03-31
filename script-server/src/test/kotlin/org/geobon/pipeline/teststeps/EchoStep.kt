@@ -12,6 +12,7 @@ import org.geobon.pipeline.Step
  */
 class EchoStep(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     Step(
+        "EchoStep@${hashCode()}",
         inputs,
         mapOf(
             ECHO to Output("text/plain"),
