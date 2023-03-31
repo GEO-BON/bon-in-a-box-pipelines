@@ -9,7 +9,7 @@ import org.geobon.pipeline.Step
  */
 class ConcatenateStep(
     inputs: MutableMap<String, Pipe>
-) : Step(inputs, mapOf(STRING to Output("text/plain"))) {
+) : Step("concat@${hashCode()}", inputs, mapOf(STRING to Output("text/plain"))) {
 
     companion object {
         const val STRING = "concat"
