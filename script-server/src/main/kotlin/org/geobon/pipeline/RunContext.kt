@@ -31,5 +31,8 @@ data class RunContext(val id: String) {
     companion object {
         val scriptRoot
             get() = File(System.getenv("SCRIPT_LOCATION"))
+
+        val pipelineRoot
+            get() = File(System.getenv("PIPELINES_LOCATION"))
     }
 }

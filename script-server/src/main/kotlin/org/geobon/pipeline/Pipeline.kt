@@ -4,6 +4,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import org.geobon.pipeline.RunContext.Companion.pipelineRoot
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -11,7 +12,7 @@ import java.io.File
 
 class Pipeline private constructor(
     pipelineJSON: JSONObject,
-    descriptionFile: File,
+    private val descriptionFile: File,
     override val inputs: MutableMap<String, Pipe>,
     override val outputs: MutableMap<String, Output> = mutableMapOf()
 ) : IStep {
@@ -29,7 +30,7 @@ class Pipeline private constructor(
     )
 
     constructor(relPath: String, inputsJSON: String? = null) : this(
-        File(System.getenv("PIPELINES_LOCATION"), relPath),
+        File(pipelineRoot, relPath),
         inputsJSON
     )
 
@@ -202,13 +203,15 @@ class Pipeline private constructor(
         } // exits when all final steps have their results
     }
 
-
-
     suspend fun stop() {
         job?.apply {
             cancel("Cancelled by user")
             join() // wait so the user receives response when really cancelled
         }
+    }
+
+    override fun toString(): String {
+        return "Pipeline(descriptionFile=${descriptionFile.relativeTo(pipelineRoot)})"
     }
 
     companion object {
