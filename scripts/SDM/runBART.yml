@@ -11,27 +11,27 @@ inputs:
     description: Path to the background point
     type: text/tab-separated-values
     example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/presence_background.tsv"
-  predictors: 
+  predictors:
     label: predictors
     description: layer names (predictors) as a list, or path to a list
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]
     example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/predictors.tif"
   quantile_min:
     label: quantile min
     description: lower bound for credible interval calculation
     type: float
     example: 0.025
-  quantile_max :
+  quantile_max:
     label: quantile max
-    description: upper bound for credible interval calculation 
+    description: upper bound for credible interval calculation
     type: float
-    example: 0.095  
+    example: 0.095
 outputs:
   sdm_pred:
-     label: predictions
-     description: mean posterior distribution of probability of presence
-     type: image/tiff;application=geotiff
+    label: predictions
+    description: mean posterior distribution of probability of presence
+    type: image/tiff;application=geotiff
   sdm_uncertainty:
-     label: uncertainty
-     description: credible interval of the posterior distribution
-     type: image/tiff;application=geotiff
+    label: uncertainty
+    description: credible interval of the posterior distribution
+    type: image/tiff;application=geotiff
