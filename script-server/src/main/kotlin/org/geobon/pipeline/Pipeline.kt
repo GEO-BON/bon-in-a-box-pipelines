@@ -121,16 +121,11 @@ class Pipeline private constructor(
         }
 
         // Link inputs from the input file to the pipeline
-        val regex = """([.>\w]+)@(\d+)(\|(\w+))?""".toRegex()
         inputs.forEach { (key, pipe) ->
-            val groups = regex.matchEntire(key)?.groups
-                ?: throw RuntimeException("Input id \"$key\" is malformed")
-            //val path = groups[1]!!.value
-            val stepId = groups[2]!!.value
-            val inputId = groups[4]?.value ?: Step.DEFAULT_IN // inputId = default when step is a UserInput
-
-            val step = steps[stepId]
-                ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
+            val nodeId = getStepNodeId(key)
+            val inputId = getStepInput(key) ?: Step.DEFAULT_IN // inputId uses default when step is a UserInput
+            val step = steps[nodeId]
+                ?: throw RuntimeException("Step id \"$nodeId\" does not exist in pipeline")
 
             step.inputs[inputId] = pipe
         }
