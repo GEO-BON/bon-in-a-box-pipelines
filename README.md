@@ -7,7 +7,7 @@ A Geo BON project, born from a collaboration between Microsoft, McGill, Humbolt 
 ## Running the servers locally
 Prerequisites : 
  - Git
- - Linux: Docker with Docker Compose installed
+ - Linux: Docker with Docker Compose installed. It is recommended to [add your user to the docker group](https://docs.docker.com/engine/install/linux-postinstall/).
  - Windows/Mac: Docker Desktop
  - At least 6 GB of free space (this includes the installation of Docker Desktop)
 
@@ -65,10 +65,10 @@ Currently supported :
  - sh
 
 Script lifecycle:
-1. Script launched with output folder as a parameter.
-2. Script reads input.json to get execution parameters (ex. species, area, data source, etc.)
-3. Script performs its task
-4. Script generates output.json, containing links to result files, or native values (number, string, etc.)
+1. Script launched with output folder as a parameter. (In R, an `outputFolder` variable in the R session. In Julia, Shell and Python, the output folder is received as an argument.)
+3. Script reads input.json to get execution parameters (ex. species, area, data source, etc.)
+4. Script performs its task
+5. Script generates output.json, containing links to result files, or native values (number, string, etc.)
 
 See [empty R script](/scripts/helloWorld/empty.R) for a minimal script lifecycle example.
 

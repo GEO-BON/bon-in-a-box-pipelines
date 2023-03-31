@@ -23,6 +23,7 @@ import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEd
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
 import { getStepDescription } from './ScriptDescriptionStore'
 import {getStepNodeId, getStepOutput, getStepInput, getStepFile} from '../../utils/IOId'
+import sleep from '../../utils/Sleep';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -130,8 +131,8 @@ export function PipelineEditor(props) {
 
   const onSelectionChange = useCallback((selected) => {
     setSelectedNodes(selected.nodes)
-    setEdges(highlightConnectedEdges(selected.nodes, edges))
-  }, [edges, setEdges, setSelectedNodes])
+    setEdges(edges => highlightConnectedEdges(selected.nodes, edges))
+  }, [setEdges, setSelectedNodes])
 
   const onPopupMenu = useCallback((event, id, type) => {
     event.stopPropagation()
@@ -415,12 +416,11 @@ export function PipelineEditor(props) {
   }, [edges, reactFlowInstance, setOutputList])
 
   const onLayout = useCallback(() => {
-    const { nodes: laidOutNodes, edges: laidOutEdges } =
-      layoutElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges());
-
-    setNodes([...laidOutNodes]);
-    setEdges([...laidOutEdges]);
-  }, [reactFlowInstance, setNodes, setEdges]);
+    layoutElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges(),
+      laidOutNodes => {
+        setNodes([...laidOutNodes]);
+      });
+  }, [reactFlowInstance, setNodes]);
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
@@ -607,11 +607,16 @@ export function PipelineEditor(props) {
       id++
 
       // Load the graph
-      setNodes(flow.nodes || []);
-      setEdges(flow.edges || []);
+      setEdges([])
+      setNodes([])
+      sleep(1).then(() => {
+        // Reset viewport to top left
+        reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
 
-      // Reset viewport to top left
-      reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      });
+      
     } else {
       console.error("Error parsing flow")
     }

@@ -8,17 +8,22 @@ inputs:
     options:
       - gbif_pc
       - gbif_api
-    example: gbif_pc
+    example: gbif_api
   taxa:
     description: Array of taxa values
     label: Taxa list
     type: text[]
     example: [Acer saccharum, Bubo scandiacus]
   bbox:
-    description: Bounding box [long_min, lat_min, long_max, lat_ymax] in decimal degrees WGS84
-    label: Bounding box
+    label: bbox
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
-    example: [-77.3, 45.2, -60.3, 62.3]
+    example: [-2316297, -1971146, 1015207, 1511916]
+  proj:
+    label: projection system
+    description: String, projection system of the coordinates in bbox
+    type: text
+    example: "EPSG:6623"
   min_year:
     description: Min year observations wanted
     label: minimum year
@@ -35,3 +40,13 @@ outputs:
     description: Output file with observations
     type: text/tab-separated-values
     example: hfn7s62sq.csv
+  total_records:
+    label: Total number of occurrences
+    description: Total number of GBIF occurrences in csv file
+    type: int
+    example: 1234
+  gbif_doi:
+    label: DOI of GBIF download
+    description: DOI of GBIF download. Used for citing downloaded data.
+    type: text
+    example: 10.15468/dl.j644h5

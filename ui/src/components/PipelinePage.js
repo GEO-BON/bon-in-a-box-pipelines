@@ -3,7 +3,7 @@ import Select from 'react-select';
 
 import { SingleOutputResult, StepResult } from "./StepResult";
 import { InputFileWithExample } from './InputFileWithExample';
-import { FoldableOutputWithContext, RenderContext, createContext } from './FoldableOutput'
+import { FoldableOutputWithContext, RenderContext, createContext, FoldableOutput } from './FoldableOutput'
 
 import { useInterval } from '../UseInterval';
 
@@ -59,7 +59,13 @@ export function PipelinePage(props) {
   function showMetadata(){
     if(pipelineMetadata) {
       let yamlString = yaml.dump(pipelineMetadata)
-      return <pre key="metadata">{yamlString.startsWith('{}') ? "No metadata" : yamlString}</pre>;
+      return(
+        <FoldableOutput title="Pipeline description" isActive={!runId}>
+          <pre key="metadata">
+            {yamlString.startsWith("{}") ? "No metadata" : yamlString}
+          </pre>
+        </FoldableOutput>
+        )
     }
     return ""
   }
