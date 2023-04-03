@@ -1,18 +1,10 @@
-import React, { useRef, useEffect, forwardRef, useImperativeHandle } from 'react';
+import React, { useRef, useEffect } from 'react';
 
 const yaml = require('js-yaml');
 
-export const InputFileWithExample = forwardRef(({metadata}, ref) => {
+export const AutoResizeTextArea = (({data, setData}) => {
   const textareaRef = useRef(null);
 
-  useImperativeHandle(ref, () => ({
-    getValue() {
-      if (textareaRef.current.value === '')
-        return '{}'
-      else
-        return JSON.stringify(yaml.load(textareaRef.current.value))
-    },
-  }));
 
   /**
    * Automatic horizontal and vertical resizing of textarea
@@ -27,28 +19,15 @@ export const InputFileWithExample = forwardRef(({metadata}, ref) => {
   }
 
   useEffect(() => {
-    // Generate example input.json
-    let inputExamples = {};
-
-    if (metadata && metadata.inputs) {
-      Object.keys(metadata.inputs).forEach((inputKey) => {
-        let input = metadata.inputs[inputKey];
-        if (input) {
-          const example = input.example;
-          inputExamples[inputKey] = example === undefined ? null : example;
-        }
-      });
-    }
-
     const textarea = textareaRef.current;
-    if(isEmptyObject(inputExamples)) {
+    if(isEmptyObject(data)) {
       textarea.disabled = true
       textarea.placeholder = "No inputs"
       textarea.value = ""
     } else {
       textarea.disabled = false
       textarea.placeholder = ""
-      textarea.value = yaml.dump(inputExamples,
+      textarea.value = yaml.dump(data,
         {
           'lineWidth': 124,
           'sortKeys': true
@@ -56,10 +35,12 @@ export const InputFileWithExample = forwardRef(({metadata}, ref) => {
     }
 
     resize(textarea)
-  }, [metadata]);
+  }, [data]);
 
   return <textarea ref={textareaRef} className="inputFile" type="text"
-    onInput={(e) => resize(e.target)}></textarea>;
+    onInput={(e) => resize(e.target)} 
+    onBlur={(e) => setData(yaml.load(e.target.value))}>
+    </textarea>;
 })
 
 // https://stackoverflow.com/a/34491966/3519951
