@@ -46,7 +46,6 @@ aggregation = "mean",
 resampling = "near")
 
 subset_layers = input$layers
-variables = input$variables
 proj = input$proj
 as_list = F
 
@@ -55,40 +54,31 @@ if(mask==''){
   mask=NULL
 }
 predictors=list()
+nc_names=c()
 for (coll_it in collections_items){
     ci<-strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
 
     cube_args_c <- append(cube_args, list(collections=ci[1],
                                           srs.cube = proj, 
                                           bbox = bbox,
-                                          variable = variables,
+                                          layers=NULL,
+                                          variable = NULL,
                                           ids=ci[2]))
+    print(cube_args_c)
     pred <- do.call(stacatalogue::load_cube, cube_args_c)
 
      if(!is.null(mask)) {
         pred <- gdalcubes::filter_geom(pred, sf::st_geometry(mask))
       }
+      nc_names <- cbind(nc_names,names(pred))
       if(names(pred)=='data'){
-        pred=rename_bands(pred, data=ci[2])
+        pred <- rename_bands(pred, data=ci[2])
       }
      print(pred)
 
      predictors[[ci[2]]]=pred
 }
   print(names(predictors))
-  nc_names <- names(predictors)
-  
-  if (as_list) {
-    output <- nc_names
-  } else {
-      cube_args_nc <- append(cube_args, list(layers = nc_names,
-                                             srs.cube = proj,
-                                             bbox = bbox))
-      output <- do.call(stacatalogue::load_cube, cube_args_nc)
-      if(!is.null(mask)) {
-        output <- gdalcubes::filter_geom(cube,  sf::st_geometry(sf::st_as_sf(mask)), srs=proj)
-      }
-  }
 
 output_predictors <- file.path(outputFolder)
 
