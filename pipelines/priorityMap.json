@@ -43,7 +43,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "backwards_velocity1"
+        "value": "backwards_velocity"
       }
     },
     {
@@ -69,7 +69,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "backwards_velocity2"
+        "value": "local_velocity"
       }
     },
     {
@@ -95,7 +95,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "soilgrids"
+        "value": "lc_prop_y2000_class40"
       }
     },
     {
@@ -108,7 +108,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "image/tiff;application=geotiff",
-        "value": "https://object-arbutus.cloud.computecanada.ca/bq-io/io/soilgrids/wv1500_5-15cm_mean_1000.tif"
+        "value": "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/lc_prop_y2000_class40.tif"
       }
     },
     {
@@ -300,17 +300,12 @@
       "id": "reactflow__edge-10priority_map-17"
     }
   ],
-  "viewport": {
-    "x": -304.7544465434182,
-    "y": 114.25256582901176,
-    "zoom": 0.9408261075137875
-  },
   "inputs": {
     "pipeline>PullLayersById.yml@9.with_ids": {
       "description": "Config containing the ids. The an id will be replaced by the corresponding layer in with_layers output.",
       "label": "With IDs",
       "type": "text",
-      "example": "layer, current, change\nbackwards_velocity1, 0.2, 0.8\nbackwards_velocity2, 0.8, 0.2\n"
+      "example": "layer, current, change\nbackwards_velocity, 0.2, 0.5\nlocal_velocity, 0.5, 0.2\nlc_prop_y2000_class40, 0.3, 0.3\n"
     },
     "pointSelection>combineLayers.yml@10.targetbalance": {
       "description": "List of weights for each target, should sum to 1",
@@ -320,6 +315,18 @@
         0.3,
         0.7
       ]
+    }
+  },
+  "outputs": {
+    "pointSelection>balancedAcceptance.yml@11.points": {
+      "description": "GeoJSON multipoint object of selected points",
+      "label": "points",
+      "type": "application/geo+json"
+    },
+    "pointSelection>combineLayers.yml@10.priority_map": {
+      "description": "Priority map created based on layers and weights",
+      "label": "Priority map",
+      "type": "image/tiff;application=geotiff"
     }
   }
 }
