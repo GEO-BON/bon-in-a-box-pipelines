@@ -41,7 +41,6 @@ export function SingleScriptPage(props) {
 
 function SingleScriptForm(props) {
   const formRef = useRef();
-  const inputRef = useRef();
   const api = new BonInABoxScriptService.DefaultApi();
 
   const defaultScript = "helloWorld>helloR.yml";
