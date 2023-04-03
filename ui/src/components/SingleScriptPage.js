@@ -3,8 +3,8 @@ import Select from 'react-select';
 
 import { StepResult } from "./StepResult";
 import spinner from '../img/spinner.svg';
-import { InputFileWithExample } from './form/InputFileWithExample';
 import { GeneralDescription, InputsDescription, OutputsDescription } from './ScriptDescription';
+import InputFileInput from './form/InputFileInput';
 
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
@@ -47,6 +47,11 @@ function SingleScriptForm(props) {
   const defaultScript = "helloWorld>helloR.yml";
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
 
+  /**
+   * String: Content of input.json for this run
+   */
+  const [inputFileContent, setInputFileContent] = useState({});
+
   function loadScriptMetadata(choice) {
     // TODO: cancel previous pending request?
     props.setRequestState(RequestState.idle);
@@ -88,7 +93,7 @@ function SingleScriptForm(props) {
     }
 
     let opts = {
-      'body': inputRef.current.getValue() // String | Content of input.json for this run
+      'body': JSON.stringify(inputFileContent)
     };
     api.runScript(scriptPath, opts, callback);
   };
@@ -123,7 +128,9 @@ function SingleScriptForm(props) {
       <label>
         Script input:
         <br />
-        <InputFileWithExample ref={inputRef} metadata={props.scriptMetadata} />
+        <InputFileInput metadata={props.scriptMetadata}
+          inputFileContent={inputFileContent}
+          setInputFileContent={setInputFileContent} />
       </label>
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />

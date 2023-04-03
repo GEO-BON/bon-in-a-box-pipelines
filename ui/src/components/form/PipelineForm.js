@@ -1,16 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
-import { InputFileWithExample } from './InputFileWithExample';
+import InputFileInput from './InputFileInput';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 export const api = new BonInABoxScriptService.DefaultApi();
 
 export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, showHttpError }) {
   const formRef = useRef();
-  const inputRef = useRef();
 
   const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
+
+  /**
+   * String: Content of input.json for this run
+   */
+  const [inputFileContent, setInputFileContent] = useState({});
 
   function clearPreviousRequest() {
     showHttpError(null);
@@ -53,7 +57,7 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
 
     clearPreviousRequest();
     let opts = {
-      'body': inputRef.current.getValue() // String | Content of input.json for this run
+      'body': JSON.stringify(inputFileContent)
     };
     api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
   };
@@ -88,7 +92,10 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
       <label>
         Pipeline inputs:
         <br />
-        <InputFileWithExample ref={inputRef} metadata={pipelineMetadata} />
+        <InputFileInput
+          metadata={pipelineMetadata}
+          inputFileContent={inputFileContent}
+          setInputFileContent={setInputFileContent} />
       </label>
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
