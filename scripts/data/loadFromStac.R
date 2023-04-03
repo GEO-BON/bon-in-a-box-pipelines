@@ -20,7 +20,7 @@ library("stacatalogue")
 library("gdalcubes")
 
 
-
+print(outputFolder)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)

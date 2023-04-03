@@ -18,7 +18,7 @@ inputs:
     label: layer
     description: Vector of strings, collection name followed by '|' followed by item id
     type: text
-    example: "chelsa-clim|bio2"
+    example: "accessibility_to_cities|data"
   proj:
     label: projection system
     description: String, projection of the predictors
@@ -37,5 +37,5 @@ inputs:
 outputs:
   rasters:
     label: raster
-    description: array of output raster paths
-    type: image/tiff;application=geotiff[]
+    description: output raster path
+    type: image/tiff;application=geotiff
