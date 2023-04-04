@@ -6,7 +6,7 @@ import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.json.JSONObject
 import java.io.File
 
-class AssignId(stepId: String, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
+class AssignId(stepId: StepId, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(File(scriptRoot,"pipeline/AssignId.yml"), stepId, inputs = inputs) {
 
     var idForLayer:String? = null

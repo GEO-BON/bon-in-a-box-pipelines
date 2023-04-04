@@ -14,7 +14,7 @@ import java.io.File
 
 abstract class YMLStep(
     protected val yamlFile: File,
-    stepId:String,
+    stepId:StepId,
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
     private val logger: Logger = LoggerFactory.getLogger(yamlFile.name),
     protected val yamlParsed: Map<String, Any> = Yaml().load(yamlFile.readText())
@@ -104,7 +104,7 @@ abstract class YMLStep(
      * @param allOutputs Map of Step identifier to output folder.
      */
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
-        val previousValue = allOutputs.put(id, context?.runId ?: "")
+        val previousValue = allOutputs.put(id.toString(), context?.runId ?: "")
 
         // Pass it on only if not already been there (avoids duplication for more complex graphs)
         if (previousValue == null) {
