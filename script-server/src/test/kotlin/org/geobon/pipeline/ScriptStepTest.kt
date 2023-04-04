@@ -25,7 +25,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenNoInput_whenExecute_thenNoInputFileIsGenerated_andOutputIsThere() = runTest {
-        val step = ScriptStep(File(scriptRoot, "0in1out.yml"), "script@nodeId")
+        val step = ScriptStep(File(scriptRoot, "0in1out.yml"), StepId("script", "nodeId"))
         assertTrue(step.validateGraph().isEmpty())
 
         step.execute()
@@ -42,7 +42,7 @@ internal class ScriptStepTest {
     @Test
     fun given1In1Out_whenExecute_thenInputFileIsGenerated_andOutputIsThere() = runTest {
         val input = 234
-        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), "script@nodeId",
+        val step = ScriptStep(File(scriptRoot, "1in1out.yml"), StepId("script", "nodeId"),
             inputs = mutableMapOf("some_int" to ConstantPipe("int", input)))
         assertTrue(step.validateGraph().isEmpty())
 
@@ -61,7 +61,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenScriptInSubfolder_whenExecute_thenOutputInSubfolder() = runTest {
-        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"), "script@nodeId")
+        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"), StepId("script", "nodeId"))
         assertTrue(step.validateGraph().isEmpty())
 
         step.execute()
@@ -78,7 +78,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenScriptStepThatHasNotRun_whenGettingOutputFolder_thenEmptyStringIsReturned() {
-        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"), "script@nodeId")
+        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"), StepId("script", "nodeId"))
         assertTrue(step.validateGraph().isEmpty())
         val outputList = mutableMapOf<String, String>()
         step.dumpOutputFolders(outputList)
@@ -89,7 +89,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenScriptStepThatHasRun_whenGettingOutputFolder_thenGetOutputFolder() = runTest {
-        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"), "script@nodeId")
+        val step = ScriptStep(File(scriptRoot, "subfolder/inSubfolder.yml"), StepId("script", "nodeId"))
         assertTrue(step.validateGraph().isEmpty())
         val outputList = mutableMapOf<String, String>()
 
@@ -106,7 +106,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenScriptStepThatHasRun_whenOutputFileEmpty_thenThrowsAndOutputHasError() = runTest {
-        val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), "script@nodeId",
+        val step = ScriptStep(File(scriptRoot, "1in1out_noOutput.yml"), StepId("script", "nodeId"),
             inputs = mutableMapOf("some_int" to ConstantPipe("int", 123)))
         assertTrue(step.validateGraph().isEmpty())
 
@@ -125,7 +125,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenOptionsInput_whenReceivedValueNotInOptions_thenThrowsAndOutputHasError() = runTest {
-        val step = ScriptStep(File(scriptRoot, "optionsInput.yml"), "script@nodeId",
+        val step = ScriptStep(File(scriptRoot, "optionsInput.yml"), StepId("script", "nodeId"),
             inputs = mutableMapOf("options_in" to ConstantPipe("options", "four")))
         step.validateGraph().apply { assertTrue(isEmpty(), "Validation error: $this") }
 
@@ -143,7 +143,7 @@ internal class ScriptStepTest {
 
     @Test
     fun givenOptionsInput_whenReceivedValueInOptions_thenExecutes() = runTest {
-        val step = ScriptStep(File(scriptRoot, "optionsInput.yml"), "script@nodeId",
+        val step = ScriptStep(File(scriptRoot, "optionsInput.yml"), StepId("script", "nodeId"),
             inputs = mutableMapOf("options_in" to ConstantPipe("options", "three")))
         step.validateGraph().apply { assertTrue(isEmpty(), "Validation error: $this") }
 

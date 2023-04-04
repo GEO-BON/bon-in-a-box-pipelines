@@ -1,9 +1,6 @@
 package org.geobon.pipeline.teststeps
 
-import org.geobon.pipeline.ConstantPipe
-import org.geobon.pipeline.Output
-import org.geobon.pipeline.Pipe
-import org.geobon.pipeline.Step
+import org.geobon.pipeline.*
 
 /**
  * Dummy test step:
@@ -12,7 +9,7 @@ import org.geobon.pipeline.Step
  */
 class EchoStep(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     Step(
-        "EchoStep@${hashCode()}",
+        StepId("EchoStep", hashCode().toString()),
         inputs,
         mapOf(
             ECHO to Output("text/plain"),

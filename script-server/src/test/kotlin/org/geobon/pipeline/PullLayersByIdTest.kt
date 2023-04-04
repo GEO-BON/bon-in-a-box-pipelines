@@ -24,17 +24,17 @@ internal class PullLayersByIdTest {
 
         finishLine = mutableListOf()
 
-        step = PullLayersById("pull@0", mutableMapOf(
+        step = PullLayersById(StepId("pull", "0"), mutableMapOf(
             PullLayersById.IN_IDENTIFIED_LAYERS to AggregatePipe(listOf(
-                AssignId("assign@1", mutableMapOf(
+                AssignId(StepId("assign", "1"), mutableMapOf(
                     AssignId.IN_ID to ConstantPipe("text", "first"),
                     AssignId.IN_LAYER to RecordPipe("1.tiff", finishLine, type = "image/tiff;application=geotiff")
                 )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!,
-                AssignId("assign@2", mutableMapOf(
+                AssignId(StepId("assign", "2"), mutableMapOf(
                     AssignId.IN_ID to ConstantPipe("text", "second"),
                     AssignId.IN_LAYER to RecordPipe("2.tiff", finishLine, type = "image/tiff;application=geotiff")
                 )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!,
-                AssignId("assign@3", mutableMapOf(
+                AssignId(StepId("assign", "3"), mutableMapOf(
                     AssignId.IN_ID to ConstantPipe("text", "third"),
                     AssignId.IN_LAYER to RecordPipe("3.tiff", finishLine, type = "image/tiff;application=geotiff")
                 )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!
@@ -69,7 +69,7 @@ internal class PullLayersByIdTest {
     @Test
     fun whenPullingConditionally_thenTypesAreRespected() = runTest {
         withProductionPaths {
-            val singlePullIf = AssignId("assign@0", mutableMapOf(
+            val singlePullIf = AssignId(StepId("assign", "0"), mutableMapOf(
                 AssignId.IN_ID to ConstantPipe("text", "first"),
                 AssignId.IN_LAYER to RecordPipe("1.tiff", finishLine, type = "image/tiff;application=geotiff")
             )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!.pullIf { true }

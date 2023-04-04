@@ -11,7 +11,7 @@ import kotlinx.coroutines.sync.withLock
  * @param outputs A map of output id to Output Pipe
  */
 abstract class Step(
-    override val id: String,
+    override val id: StepId,
     override val inputs: MutableMap<String, Pipe> = mutableMapOf(),
     final override val outputs: Map<String, Output> = mapOf()
 ) : IStep {

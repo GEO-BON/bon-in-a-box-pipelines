@@ -9,10 +9,10 @@ import java.io.File
 import kotlin.time.Duration.Companion.minutes
 
 
-class ScriptStep(yamlFile: File, stepId: String, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
+class ScriptStep(yamlFile: File, stepId: StepId, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(yamlFile, stepId, inputs = inputs) {
 
-    constructor(fileName: String, stepId: String, inputs: MutableMap<String, Pipe> = mutableMapOf()) : this(
+    constructor(fileName: String, stepId: StepId, inputs: MutableMap<String, Pipe> = mutableMapOf()) : this(
         File(scriptRoot, fileName),
         stepId,
         inputs

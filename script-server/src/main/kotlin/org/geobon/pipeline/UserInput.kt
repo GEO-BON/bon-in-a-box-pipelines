@@ -4,7 +4,7 @@ package org.geobon.pipeline
  * Allows a user input to be fed to multiple steps.
  * JavaScript class equivalent: UserInputNode
  */
-class UserInput(stepId: String, type: String) : Step(stepId,
+class UserInput(stepId: StepId, type: String) : Step(stepId,
     outputs = mapOf(DEFAULT_OUT to Output(type))
 ) {
     override fun validateInputsConfiguration(): String {

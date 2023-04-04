@@ -5,15 +5,24 @@ import kotlin.test.*
 internal class IOIdTest {
 
     @Test
-    fun toIOIdTest() {
+    fun ioIdToStringTest() {
         // Regular script input or output
-        assertEquals("myStep@myNodeId|myOutputId", toIOId("myStep", "myNodeId", "myOutputId"))
+        assertEquals(
+            "myStep@myNodeId|myOutputId",
+            IOId("myStep", "myNodeId", "myOutputId").toString()
+        )
 
         // Pipeline input
-        assertEquals("pipeline@myNodeId", toIOId("pipeline", "myNodeId"))
+        assertEquals(
+            "pipeline@myNodeId",
+            IOId("pipeline", "myNodeId").toString()
+        )
 
         // Nested pipeline input
-        assertEquals("myPipeline@pipelineId|myStep@myNodeId|myOutputId", toIOId("myPipeline@pipelineId|myStep", "myNodeId", "myOutputId"))
+        assertEquals(
+            "myPipeline@pipelineId|myStep@myNodeId|myOutputId",
+            IOId("myPipeline@pipelineId|myStep", "myNodeId", "myOutputId").toString()
+        )
     }
 
     @Test

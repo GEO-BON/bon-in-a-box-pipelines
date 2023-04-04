@@ -1,17 +1,26 @@
 package org.geobon.pipeline
 
-// This file has a mirror in JS UI code.
-
 /**
- *
+ * Id for an input or outputString
  * @param {String} step
  * @param {String} nodeId
  * @param {String} inputOrOutput Optional, id of input or output in the yaml. Null for pipeline inputs.
- * @returns the IO id: step@nodeId|inputOrOutput
  */
-fun toIOId(step: String, nodeId: String, inputOrOutput: String? = null): String {
-    return "$step@$nodeId" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
+data class IOId(val step: String, val nodeId: String, val inputOrOutput: String? = null) {
+    constructor(stepId: StepId, inputOrOutput: String? = null) : this(stepId.step, stepId.nodeId, inputOrOutput)
+
+    override fun toString(): String {
+        return "$step@$nodeId" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
+    }
 }
+
+data class StepId(val step: String, val nodeId: String){
+    override fun toString(): String {
+        return "$step@$nodeId"
+    }
+}
+
+// -- The util functions below have a mirror in JS UI code.
 
 /**
  * @returns The path of the script that parses inputs / provides output.
