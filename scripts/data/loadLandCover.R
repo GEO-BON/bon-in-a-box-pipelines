@@ -5,10 +5,6 @@
 library("devtools")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 
-#devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue", upgrade = "never")
-#devtools::install_local("C:/stac-catalogue", upgrade = "never")
-#source("C:/stac-catalogue/R/stac_functions.R")
-
 packages <- c("terra", "rjson", "raster", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -16,10 +12,6 @@ if(length(new.packages)) install.packages(new.packages)
 library("remotes")
 if (!"gdalcubes_R" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 
-
-##devtools::install_local("loadLandCover/stac-catalogue-main.zip", 
-  #  repos = NULL, 
- #   type = "source")
 
 ## Load required packages
 library("terra")
@@ -49,7 +41,7 @@ temporal_res <- paste0("P", n_year, "Y")
 
 if (input$stac_source == "IO") {
   lc_raster <- stacatalogue::load_prop_values(stac_path = "https://io.biodiversite-quebec.ca/stac/",
-                                collections = "esacci-lc", 
+                                collections = input$collections, 
                               bbox = bbox,
                                srs.cube = input$srs_cube,
                                limit = 5000,
@@ -62,7 +54,7 @@ if (input$stac_source == "IO") {
                                 temporal.res =  temporal_res)
   } else if (input$stac_source == "PC") {
   lc_raster <- stacatalogue::load_prop_values_pc(stac_path =  "https://planetarycomputer.microsoft.com/api/stac/v1/",
-                                collections = c("io-lulc-9-class"), 
+                                collections = input$collections, 
                               bbox = bbox,
                                srs.cube = input$srs_cube,
                                 t0 = input$t0,

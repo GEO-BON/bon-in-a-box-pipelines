@@ -19,6 +19,6 @@ inputs:
 outputs:
   output_binary: 
     label: binary layer output
-    description: land cover raster classes, where 1 in above threshold and 0 below threshold.
+    description: land cover raster classes, where 1 is above threshold and 0 below threshold.
     type: image/tiff;application=geotiff[]
-    example: y2000_class210_bin.tif
+    example: y2000_class210_binary.tif

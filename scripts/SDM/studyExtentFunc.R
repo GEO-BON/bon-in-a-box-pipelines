@@ -3,6 +3,7 @@
 #' @param lon string, name of the longitude column
 #' @param lat string, name of the latitude column
 #' @param proj character, initial projection of the xy coordinates
+#' @param bbox vector, initial projection of the xy coordinates
 #' @return spatial points
 #' @export
 create_study_extent <- function(obs, 
@@ -12,6 +13,7 @@ create_study_extent <- function(obs,
                               method = "box",
                               dist_buffer = NULL,
                               shapefile_path = NULL,
+                              bbox = NULL,
                               export = NULL,
                               path = NULL,
                               species = NULL) {
@@ -57,9 +59,11 @@ create_study_extent <- function(obs,
       sf::st_union(by_feature = F)
     
   } else if (method == "user_shapefile") {
-    
     study_extent <- sf::st_read(shapefile_path) 
+  } else if (method == "bbox") {
+    study_extent <-st_as_sfc(st_bbox(c(xmin = bbox[1], xmax = bbox[3], ymax = bbox[4], ymin = bbox[2]), crs = st_crs(proj)))
   }
+
   study_extent <- study_extent |> sf::st_set_crs(proj)
  
   return(study_extent)

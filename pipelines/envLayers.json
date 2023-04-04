@@ -1,31 +1,20 @@
 {
   "nodes": [
     {
-      "id": "0",
-      "type": "io",
-      "position": {
-        "x": 805.7642469709776,
-        "y": -19.8212348548887
-      },
-      "data": {
-        "descriptionFile": "climateMetrics>climateVelocity.yml"
-      }
-    },
-    {
-      "id": "1",
+      "id": "2",
       "type": "constant",
       "position": {
-        "x": 142.53782755705834,
-        "y": 12.128825021132712
+        "x": 680,
+        "y": 400
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
-        "value": "local",
+        "value": "ssp126",
         "options": [
-          "local",
-          "forward",
-          "backward"
+          "ssp126",
+          "ssp370",
+          "ssp585"
         ]
       }
     },
@@ -33,8 +22,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 399.2134544942237,
-        "y": 375.14297337278106
+        "x": 596,
+        "y": 576.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -46,8 +35,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 399.0458262890953,
-        "y": 489.85316638489724
+        "x": 81,
+        "y": 917.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -59,8 +48,8 @@
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 398.1799943646097,
-        "y": 417.256043956044
+        "x": 679,
+        "y": 468
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -79,34 +68,34 @@
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 401.02518315018324,
-        "y": 247.01316920259234
+        "x": 585,
+        "y": 613.75
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "1982-01-01"
+        "value": "1981-01-01"
       }
     },
     {
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 397.8666349675966,
-        "y": 293.22785291631436
+        "x": 585,
+        "y": 650.75
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "1992-12-31"
+        "value": "1991-12-31"
       }
     },
     {
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 391.2964285714286,
-        "y": 335.9572097774021
+        "x": 659,
+        "y": 689.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -123,72 +112,30 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 63.43421034094115,
-        "y": 797.9694737954353
+        "x": 487,
+        "y": 798.5
       },
       "data": {
         "descriptionFile": "SDM>extentToBbox.yml"
       }
     },
     {
-      "id": "10",
-      "type": "constant",
-      "position": {
-        "x": -199.70452240067624,
-        "y": 749.2024936601858
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "shapefile",
-        "options": [
-          "df_coordinates",
-          "box_coordinates",
-          "shapefile"
-        ]
-      }
-    },
-    {
-      "id": "11",
-      "type": "constant",
-      "position": {
-        "x": -288.059594251902,
-        "y": 878.684784446323
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/dbf",
-        "value": "/scripts/extent/Quebec.shp"
-      }
-    },
-    {
-      "id": "12",
-      "type": "output",
-      "position": {
-        "x": 1369.1610312764158,
-        "y": 13.46859678782755
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "13",
+      "id": "14",
       "type": "io",
       "position": {
-        "x": 803.7848901098903,
-        "y": 182.15285643843333
+        "x": 1062,
+        "y": 22.75
       },
       "data": {
         "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
-      "id": "14",
+      "id": "15",
       "type": "constant",
       "position": {
-        "x": 147.08613693998313,
-        "y": 201.64814032121728
+        "x": 665,
+        "y": 0
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -202,22 +149,46 @@
       }
     },
     {
-      "id": "15",
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": 580,
+        "y": 725.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": "2"
+      }
+    },
+    {
+      "id": "17",
+      "type": "output",
+      "position": {
+        "x": 1855,
+        "y": 75.25
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "18",
       "type": "io",
       "position": {
-        "x": 802.6899267399267,
-        "y": 375.58801775147936
+        "x": 1062,
+        "y": 222.75
       },
       "data": {
         "descriptionFile": "climateMetrics>climateVelocity.yml"
       }
     },
     {
-      "id": "16",
+      "id": "19",
       "type": "constant",
       "position": {
-        "x": 144.85805866090527,
-        "y": 397.0972151603686
+        "x": 665,
+        "y": 200
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -231,79 +202,119 @@
       }
     },
     {
-      "id": "17",
+      "id": "21",
+      "type": "output",
+      "position": {
+        "x": 1855,
+        "y": 275.25
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "24",
       "type": "io",
       "position": {
-        "x": 804.9219674556214,
-        "y": 564.3096189067344
+        "x": 1143,
+        "y": 435
       },
       "data": {
         "descriptionFile": "climateMetrics>climateRarity.yml"
       }
     },
     {
-      "id": "18",
+      "id": "25",
       "type": "constant",
       "position": {
-        "x": 392.1238588334743,
-        "y": 649.0119611158073
+        "x": 596,
+        "y": 504
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 11
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 1855,
+        "y": 487.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "36",
+      "type": "io",
+      "position": {
+        "x": 1649,
+        "y": 903
+      },
+      "data": {
+        "descriptionFile": "binaryLayer>binaryLayer.yml"
+      }
+    },
+    {
+      "id": "38",
+      "type": "constant",
+      "position": {
+        "x": 1242,
+        "y": 754.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          "60",
+          "210"
+        ]
+      }
+    },
+    {
+      "id": "39",
+      "type": "constant",
+      "position": {
+        "x": 1238,
+        "y": 791.75
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
-        "value": "1"
+        "value": 0.8
       }
     },
     {
-      "id": "19",
+      "id": "40",
       "type": "output",
       "position": {
-        "x": 1372.193237531699,
-        "y": 589.9384192730347
+        "x": 2155,
+        "y": 918.5
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "20",
-      "type": "output",
-      "position": {
-        "x": 1364.6127218934912,
-        "y": 185.62599323753165
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "21",
-      "type": "output",
-      "position": {
-        "x": 1378.2576500422651,
-        "y": 412.6259932375316
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "22",
+      "id": "41",
       "type": "io",
       "position": {
-        "x": 814.3328226260919,
-        "y": 878.1853127641591
+        "x": 1125,
+        "y": 1300.25
       },
       "data": {
-        "descriptionFile": "data>loadLandCover.yml"
+        "descriptionFile": "accessibility>accessibility.yml"
       }
     },
     {
-      "id": "23",
+      "id": "42",
       "type": "constant",
       "position": {
-        "x": 406.5,
-        "y": 1172.75
+        "x": 585,
+        "y": 1036.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -312,24 +323,111 @@
       }
     },
     {
-      "id": "24",
+      "id": "43",
       "type": "constant",
       "position": {
-        "x": 407,
-        "y": 1042.75
+        "x": 585,
+        "y": 1242.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "c(\"esacci-lc\")"
+        "value": "c(\"accessibility_to_cities\")"
       }
     },
     {
-      "id": "26",
+      "id": "44",
       "type": "constant",
       "position": {
-        "x": 508,
-        "y": 1005
+        "x": 596,
+        "y": 1282.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "45",
+      "type": "constant",
+      "position": {
+        "x": 585,
+        "y": 1339.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2015-01-01"
+      }
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": 585,
+        "y": 1376.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2015-01-01"
+      }
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": 585,
+        "y": 1450.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "near"
+      }
+    },
+    {
+      "id": "48",
+      "type": "output",
+      "position": {
+        "x": 1855,
+        "y": 1048.75
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "49",
+      "type": "constant",
+      "position": {
+        "x": 585,
+        "y": 1413.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "mean"
+      }
+    },
+    {
+      "id": "50",
+      "type": "io",
+      "position": {
+        "x": 991,
+        "y": 880.75
+      },
+      "data": {
+        "descriptionFile": "data>loadLandCover.yml"
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": 704,
+        "y": 762.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -342,37 +440,37 @@
       }
     },
     {
-      "id": "27",
+      "id": "53",
       "type": "constant",
       "position": {
-        "x": 407,
-        "y": 1242.75
+        "x": 585,
+        "y": 962.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "1992-01-01"
+        "value": "esacci-lc"
       }
     },
     {
-      "id": "28",
+      "id": "54",
       "type": "constant",
       "position": {
-        "x": 407,
-        "y": 1282.75
+        "x": 596,
+        "y": 999.5
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "1992-12-31"
+        "type": "int",
+        "value": 250
       }
     },
     {
-      "id": "29",
+      "id": "55",
       "type": "constant",
       "position": {
-        "x": 526,
-        "y": 1322.75
+        "x": 721,
+        "y": 1167.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -381,721 +479,664 @@
       }
     },
     {
-      "id": "30",
+      "id": "56",
       "type": "constant",
       "position": {
-        "x": 415,
-        "y": 1082.75
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": "250"
-      }
-    },
-    {
-      "id": "32",
-      "type": "constant",
-      "position": {
-        "x": 406,
-        "y": 1360.5
+        "x": 584,
+        "y": 1202.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int[]",
         "value": [
           "60",
-          "210",
-          "220"
-        ]
-      }
-    },
-    {
-      "id": "33",
-      "type": "output",
-      "position": {
-        "x": 1373.4186813186814,
-        "y": 854.7439560439561
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "34",
-      "type": "io",
-      "position": {
-        "x": 849.015300084531,
-        "y": 1344.289053254438
-      },
-      "data": {
-        "descriptionFile": "accessibility>accessibility.yml"
-      }
-    },
-    {
-      "id": "35",
-      "type": "output",
-      "position": {
-        "x": 1400.9991969568891,
-        "y": 1349.7415469146238
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "36",
-      "type": "constant",
-      "position": {
-        "x": 406.5,
-        "y": 1400.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "c(\"accessibility_to_cities\")"
-      }
-    },
-    {
-      "id": "37",
-      "type": "constant",
-      "position": {
-        "x": 414.5,
-        "y": 1440.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1000
-      }
-    },
-    {
-      "id": "39",
-      "type": "constant",
-      "position": {
-        "x": 406.5,
-        "y": 1480.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "2015-01-01"
-      }
-    },
-    {
-      "id": "40",
-      "type": "constant",
-      "position": {
-        "x": 406.5,
-        "y": 1520.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "2015-01-01"
-      }
-    },
-    {
-      "id": "41",
-      "type": "constant",
-      "position": {
-        "x": 406.5,
-        "y": 1560.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "mean"
-      }
-    },
-    {
-      "id": "42",
-      "type": "constant",
-      "position": {
-        "x": 406.5,
-        "y": 1600.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "near"
-      }
-    },
-    {
-      "id": "43",
-      "type": "io",
-      "position": {
-        "x": 1388.099027895182,
-        "y": 1072.5499154691463
-      },
-      "data": {
-        "descriptionFile": "binaryLayer>binaryLayer.yml"
-      }
-    },
-    {
-      "id": "44",
-      "type": "constant",
-      "position": {
-        "x": 1112.1634404057484,
-        "y": 1087.2600591715977
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int[]",
-        "value": [
-          "60",
+          "70",
           "210"
         ]
       }
     },
     {
-      "id": "45",
-      "type": "constant",
-      "position": {
-        "x": 1117.2600591715975,
-        "y": 1140.4210904480137
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0.8
-      }
-    },
-    {
-      "id": "46",
+      "id": "57",
       "type": "output",
       "position": {
-        "x": 1780.5153000845307,
-        "y": 1052.8759932375317
+        "x": 1855,
+        "y": 1124.75
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "47",
+      "id": "58",
       "type": "constant",
       "position": {
-        "x": 119.49192730346579,
-        "y": 596.8394893301208
+        "x": 585,
+        "y": 1093.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "rarity"
+        "value": "2010-01-01"
       }
     },
     {
-      "id": "48",
+      "id": "59",
       "type": "constant",
       "position": {
-        "x": 393.22239020938093,
-        "y": 455.0863901721609
+        "x": 585,
+        "y": 1130.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2010-12-31"
+      }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": 121,
+        "y": 354.25
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
-        "value": "ssp126",
+        "value": "shapefile",
         "options": [
-          "ssp126",
-          "ssp370",
-          "ssp585"
+          "df_coordinates",
+          "box_coordinates",
+          "shapefile"
         ]
+      }
+    },
+    {
+      "id": "61",
+      "type": "constant",
+      "position": {
+        "x": 0,
+        "y": 662
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf",
+        "value": "/scripts/extent/Quebec.shp"
+      }
+    },
+    {
+      "id": "69",
+      "type": "io",
+      "position": {
+        "x": 1062,
+        "y": 1560.25
+      },
+      "data": {
+        "descriptionFile": "climateMetrics>climateVelocity.yml"
+      }
+    },
+    {
+      "id": "70",
+      "type": "output",
+      "position": {
+        "x": 1855,
+        "y": 1612.75
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": 665,
+        "y": 1487.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "local",
+        "options": [
+          "local",
+          "forward",
+          "backward"
+        ]
+      }
+    },
+    {
+      "id": "72",
+      "type": "constant",
+      "position": {
+        "x": 587.4041901361404,
+        "y": 235.1453248249827
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "1990-01-01"
       }
     }
   ],
   "edges": [
     {
-      "source": "1",
+      "source": "15",
       "sourceHandle": null,
-      "target": "0",
+      "target": "14",
       "targetHandle": "metric",
-      "id": "reactflow__edge-1-0metric"
-    },
-    {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "9",
-      "targetHandle": "source",
-      "id": "reactflow__edge-10-9source"
-    },
-    {
-      "source": "0",
-      "sourceHandle": "output_tif",
-      "target": "12",
-      "targetHandle": null,
-      "id": "reactflow__edge-0output_tif-12"
+      "id": "reactflow__edge-15-14metric"
     },
     {
       "source": "14",
+      "sourceHandle": "output_tif",
+      "target": "17",
+      "targetHandle": null,
+      "id": "reactflow__edge-14output_tif-17"
+    },
+    {
+      "source": "19",
       "sourceHandle": null,
-      "target": "13",
+      "target": "18",
       "targetHandle": "metric",
-      "id": "reactflow__edge-14-13metric"
-    },
-    {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "metric",
-      "id": "reactflow__edge-16-15metric"
-    },
-    {
-      "source": "17",
-      "sourceHandle": "output_tif",
-      "target": "19",
-      "targetHandle": null,
-      "id": "reactflow__edge-17output_tif-19"
-    },
-    {
-      "source": "13",
-      "sourceHandle": "output_tif",
-      "target": "20",
-      "targetHandle": null,
-      "id": "reactflow__edge-13output_tif-20"
-    },
-    {
-      "source": "15",
-      "sourceHandle": "output_tif",
-      "target": "21",
-      "targetHandle": null,
-      "id": "reactflow__edge-15output_tif-21"
-    },
-    {
-      "source": "26",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "stac_source",
-      "id": "reactflow__edge-26-22stac_source"
-    },
-    {
-      "source": "22",
-      "sourceHandle": "output_tif",
-      "target": "33",
-      "targetHandle": null,
-      "id": "reactflow__edge-22output_tif-33"
-    },
-    {
-      "source": "34",
-      "sourceHandle": "output_tif",
-      "target": "35",
-      "targetHandle": null,
-      "id": "reactflow__edge-34output_tif-35"
-    },
-    {
-      "source": "23",
-      "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "stac_path",
-      "id": "reactflow__edge-23-34stac_path"
-    },
-    {
-      "source": "22",
-      "sourceHandle": "output_tif",
-      "target": "43",
-      "targetHandle": "lc_classes",
-      "id": "reactflow__edge-22output_tif-43lc_classes"
-    },
-    {
-      "source": "43",
-      "sourceHandle": "output_binary",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-43output_binary-46"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-3-17spatial_res"
-    },
-    {
-      "source": "23",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "stac_path",
-      "id": "reactflow__edge-23-22stac_path"
-    },
-    {
-      "source": "36",
-      "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "collections",
-      "id": "reactflow__edge-36-34collections"
-    },
-    {
-      "source": "44",
-      "sourceHandle": null,
-      "target": "43",
-      "targetHandle": "select_class",
-      "id": "reactflow__edge-44-43select_class"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-3-0spatial_res"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-3-13spatial_res"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-3-15spatial_res"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-17srs_cube"
-    },
-    {
-      "source": "24",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "collections",
-      "id": "reactflow__edge-24-22collections"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "34",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-34bbox"
-    },
-    {
-      "source": "45",
-      "sourceHandle": null,
-      "target": "43",
-      "targetHandle": "threshold_prop",
-      "id": "reactflow__edge-45-43threshold_prop"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-0srs_cube"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-13srs_cube"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-15srs_cube"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-5-17aggregation"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "22",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-22bbox"
-    },
-    {
-      "source": "37",
-      "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-37-34spatial_res"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-5-0aggregation"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-5-13aggregation",
-      "selected": false
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-5-15aggregation"
-    },
-    {
-      "source": "30",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-30-22spatial_res"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-34srs_cube"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-0t0"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-13t0"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-15t0"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-6-17t0"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-4-22srs_cube"
-    },
-    {
-      "source": "39",
-      "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-39-34t0"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-7-0t1"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-7-13t1",
-      "selected": false
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-7-15t1"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-7-17t1"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-27-22t0"
-    },
-    {
-      "source": "40",
-      "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-40-34t1"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "time_span",
-      "id": "reactflow__edge-8-0time_span"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "time_span",
-      "id": "reactflow__edge-8-13time_span"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "time_span",
-      "id": "reactflow__edge-8-15time_span"
+      "id": "reactflow__edge-19-18metric"
     },
     {
       "source": "18",
+      "sourceHandle": "output_tif",
+      "target": "21",
+      "targetHandle": null,
+      "id": "reactflow__edge-18output_tif-21"
+    },
+    {
+      "source": "2",
       "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "t_match",
-      "id": "reactflow__edge-18-17t_match"
+      "target": "24",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-2-24rcp"
     },
     {
-      "source": "28",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "t1",
-      "id": "reactflow__edge-28-22t1"
+      "source": "24",
+      "sourceHandle": "output_tif",
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-24output_tif-26"
     },
     {
-      "source": "41",
-      "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-41-34aggregation"
-    },
-    {
-      "source": "11",
-      "sourceHandle": null,
-      "target": "9",
-      "targetHandle": "path_shp",
-      "id": "reactflow__edge-11-9path_shp"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "0",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-0bbox"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "13",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-13bbox"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "15",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-15bbox"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "time_span",
-      "id": "reactflow__edge-8-17time_span"
-    },
-    {
-      "source": "29",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "prop",
-      "id": "reactflow__edge-29-22prop"
+      "source": "36",
+      "sourceHandle": "output_binary",
+      "target": "40",
+      "targetHandle": null,
+      "id": "reactflow__edge-36output_binary-40"
     },
     {
       "source": "42",
       "sourceHandle": null,
-      "target": "34",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-42-34resampling"
+      "target": "41",
+      "targetHandle": "stac_path",
+      "id": "reactflow__edge-42-41stac_path"
     },
     {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "17",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-17bbox"
+      "source": "41",
+      "sourceHandle": "output_tif",
+      "target": "48",
+      "targetHandle": null,
+      "id": "reactflow__edge-41output_tif-48"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "stac_source",
+      "id": "reactflow__edge-52-50stac_source"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "output_tif",
+      "target": "57",
+      "targetHandle": null,
+      "id": "reactflow__edge-50output_tif-57"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "output_tif",
+      "target": "36",
+      "targetHandle": "lc_classes",
+      "id": "reactflow__edge-50output_tif-36lc_classes"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "source",
+      "id": "reactflow__edge-60-9source"
+    },
+    {
+      "source": "69",
+      "sourceHandle": "output_tif",
+      "target": "70",
+      "targetHandle": null,
+      "id": "reactflow__edge-69output_tif-70"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "metric",
+      "id": "reactflow__edge-71-69metric"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-2-14rcp"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-2-18rcp"
     },
     {
       "source": "3",
       "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "prop_res",
-      "id": "reactflow__edge-3-22prop_res"
+      "target": "24",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-3-24spatial_res"
     },
     {
-      "source": "32",
+      "source": "38",
       "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "select_values",
-      "id": "reactflow__edge-32-22select_values"
+      "target": "36",
+      "targetHandle": "select_class",
+      "id": "reactflow__edge-38-36select_class"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "collections",
+      "id": "reactflow__edge-43-41collections"
+    },
+    {
+      "source": "42",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "stac_path",
+      "id": "reactflow__edge-42-50stac_path"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-2-69rcp"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-3-14spatial_res"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-3-18spatial_res"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-24srs_cube"
+    },
+    {
+      "source": "39",
+      "sourceHandle": null,
+      "target": "36",
+      "targetHandle": "threshold_prop",
+      "id": "reactflow__edge-39-36threshold_prop"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "41",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-41bbox"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "collections",
+      "id": "reactflow__edge-53-50collections"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-3-69spatial_res"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-14srs_cube"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-18srs_cube"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-5-24aggregation"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-44-41spatial_res"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "50",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-50bbox"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-69srs_cube"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-5-14aggregation"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-5-18aggregation"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "moving_window",
+      "id": "reactflow__edge-25-24moving_window"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-41srs_cube"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-54-50spatial_res"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-5-69aggregation"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-6-24t0"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-45-41t0"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "prop_res",
+      "id": "reactflow__edge-3-50prop_res"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-6-69t0"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-7-14t1"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-7-18t1"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-7-24t1"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-46-41t1"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-4-50srs_cube"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-7-69t1"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-8-14time_span"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-8-18time_span"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-16-24t_match"
+    },
+    {
+      "source": "49",
+      "sourceHandle": null,
+      "target": "41",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-49-41aggregation"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-58-50t0"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-8-69time_span"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "14",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-14bbox"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "18",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-18bbox"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-8-24time_span"
     },
     {
       "source": "47",
       "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "metric",
-      "id": "reactflow__edge-47-17metric"
+      "target": "41",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-47-41resampling"
     },
     {
-      "source": "48",
+      "source": "59",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-48-0rcp"
+      "target": "50",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-59-50t1"
     },
     {
-      "source": "48",
+      "source": "61",
       "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-48-13rcp"
+      "target": "9",
+      "targetHandle": "path_shp",
+      "id": "reactflow__edge-61-9path_shp"
     },
     {
-      "source": "48",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-48-17rcp"
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "69",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-69bbox"
     },
     {
-      "source": "48",
+      "source": "16",
       "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "rcp",
-      "id": "reactflow__edge-48-15rcp"
+      "target": "14",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-16-14t_match"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-16-18t_match"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "24",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-24bbox"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "prop",
+      "id": "reactflow__edge-55-50prop"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "proj_from",
+      "id": "reactflow__edge-4-9proj_from"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "t_match",
+      "id": "reactflow__edge-16-69t_match"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "select_values",
+      "id": "reactflow__edge-56-50select_values"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "proj_to",
+      "id": "reactflow__edge-4-9proj_to"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-72-18t0"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-72-14t0"
     }
   ],
-  "viewport": {
-    "x": 586.83556739159,
-    "y": 66.6895077582468,
-    "zoom": 0.6516637626304973
-  },
   "inputs": {
     "SDM>extentToBbox.yml@9.df_coordinates": {
       "description": "dataframe, containing coordinates",
@@ -1106,13 +1147,13 @@
     "SDM>extentToBbox.yml@9.lon": {
       "description": "string, name of the longitude column in df_coordinates",
       "label": "longitude column",
-      "type": "string",
+      "type": "text",
       "example": "lon"
     },
     "SDM>extentToBbox.yml@9.lat": {
       "description": "string, name of the latitude column in df_coordinates",
       "label": "latitude column",
-      "type": "string",
+      "type": "text",
       "example": "lat"
     },
     "SDM>extentToBbox.yml@9.xmin": {
@@ -1138,24 +1179,54 @@
       "label": "ymax",
       "type": "float",
       "example": 1511916
+    }
+  },
+  "outputs": {
+    "climateMetrics>climateVelocity.yml@14.output_tif": {
+      "description": "climate-change velocity.",
+      "label": "output",
+      "type": "image/tiff;application=geotiff",
+      "example": "local_velocity.tif"
     },
-    "SDM>extentToBbox.yml@9.proj_from": {
-      "description": "string, projection of the input spatial object",
-      "label": "input projection system",
-      "type": "string",
-      "example": "EPSG:6623"
+    "climateMetrics>climateVelocity.yml@18.output_tif": {
+      "description": "climate-change velocity.",
+      "label": "output",
+      "type": "image/tiff;application=geotiff",
+      "example": "local_velocity.tif"
     },
-    "SDM>extentToBbox.yml@9.proj_to": {
-      "description": "string, projection of output bbox",
-      "label": "output bbox projection system",
-      "type": "string",
-      "example": "EPSG:6623"
+    "climateMetrics>climateRarity.yml@24.output_tif": {
+      "description": "Raster file, values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.",
+      "label": "output",
+      "type": "image/tiff;application=geotiff[]",
+      "range": [
+        0,
+        1
+      ],
+      "example": "climate_current_rarity.tif"
     },
-    "climateMetrics>climateRarity.yml@17.moving_window": {
-      "description": "number of cells (must be an odd number)",
-      "label": "search moving window",
-      "type": "int",
-      "example": 11
+    "binaryLayer>binaryLayer.yml@36.output_binary": {
+      "description": "land cover raster classes, where 1 in above threshold and 0 below threshold.",
+      "label": "binary layer output",
+      "type": "image/tiff;application=geotiff[]",
+      "example": "y2000_class210_binary.tif"
+    },
+    "accessibility>accessibility.yml@41.output_tif": {
+      "description": "accesibility layer, values close to zero indicate short travel time to cities.",
+      "label": "accessibility",
+      "type": "image/tiff;application=geotiff",
+      "example": "accesibility.tif"
+    },
+    "data>loadLandCover.yml@50.output_tif": {
+      "description": "land cover raster classes (note that class=0 is NO DATA)",
+      "label": "land cover classes",
+      "type": "image/tiff;application=geotiff[]",
+      "example": "y2010_class210.tif"
+    },
+    "climateMetrics>climateVelocity.yml@69.output_tif": {
+      "description": "climate-change velocity.",
+      "label": "output",
+      "type": "image/tiff;application=geotiff",
+      "example": "local_velocity.tif"
     }
   }
 }
