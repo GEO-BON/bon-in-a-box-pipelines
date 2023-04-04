@@ -46,7 +46,7 @@ export default function IONode({ id, data }) {
         })}
       </td>
       <td className='name' onMouseEnter={showScriptTooltip} onMouseLeave={hideTooltip}>
-        {metadata.script}
+        {descriptionFileLocation.split('>').map((s, i) => <span key={i}>{s}<br/></span>)}
       </td>
       <td className='outputs'>
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
