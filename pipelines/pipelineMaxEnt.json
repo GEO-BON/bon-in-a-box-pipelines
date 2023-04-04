@@ -718,12 +718,6 @@
       "type": "int",
       "example": 2
     },
-    "data>getObservations.yml@15.bbox_buffer": {
-      "description": "Interger, width of the buffer around the bbox containing the presence points.",
-      "label": "bbox buffer",
-      "type": "int",
-      "example": 0
-    },
     "pipeline@57": {
       "label": "projection system",
       "description": "String, projection system",
