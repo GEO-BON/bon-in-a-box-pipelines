@@ -17,8 +17,11 @@ export function FoldableOutputWithContext({className, title, componentId, inline
         className={className} title={title} inline={inline} inlineCollapsed={inlineCollapsed} children={children} />
 }
 
-export function FoldableOutput({className, title, inline, inlineCollapsed, children}) {
+export function FoldableOutput({className, title, inline, inlineCollapsed, children, isActive}) {
     const [active, setActive] = useState(false)
+    useEffect(() => {
+        setActive(isActive)
+    }, [isActive]);
 
     return <FoldableOutputInternal toggle={() => setActive(prev => !prev)} active={active}
         className={className} title={title} inline={inline} inlineCollapsed={inlineCollapsed} children={children} />
