@@ -85,5 +85,5 @@ export default function TiTilerLayer({ url, range, setError }) {
     };
   }, [url, map, range, setError])
 
-  return tileLayerUrl && <TileLayer key={tileLayerUrl /*https://stackoverflow.com/a/72552510/3519951*/} url={tileLayerUrl} />
+  return tileLayerUrl && <TileLayer key={tileLayerUrl /*https://stackoverflow.com/a/72552510/3519951*/} url={tileLayerUrl} opacity={0.7} />
 }

@@ -45,6 +45,7 @@ services:
       - GBIF_USER=${GBIF_USER}
       - GBIF_PWD=${GBIF_PWD}
       - GBIF_EMAIL=${GBIF_EMAIL}
+      - IUCN_TOKEN=${IUCN_TOKEN}
 
   runner-julia:
     container_name: biab-runner-julia

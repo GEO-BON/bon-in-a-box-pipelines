@@ -11,21 +11,26 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
+if(input$presence!=""){
+  presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
+}else{
+  presence = NULL
+}
 
 if (is.numeric(input$width_buffer)) {
-width_buffer <- input$width_buffer
+  width_buffer <- input$width_buffer
 } else { 
-		width_buffer <- NULL
-	
+	width_buffer <- NULL
 }
+
 study_extent <- create_study_extent(presence, 
                               lon = "lon",
                               lat = "lat",
                               proj = input$proj,
                               method = input$method,
                               dist_buffer = width_buffer,
-                              shapefile_path = NULL)
+                              shapefile_path = NULL,
+                              bbox = input$bbox)
 
 
 study_extent_shp <- file.path(outputFolder, "study_extent.shp")

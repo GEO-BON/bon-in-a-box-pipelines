@@ -1,0 +1,48 @@
+script: removeCollinearity.R
+description: "Remove collinearity between a series of predictor rasters with the exact same extent CRS and resolution"
+inputs:
+  rasters:
+    label: rasters
+    description: array of input raster paths
+    type: image/tiff;application=geotiff[]
+    example: []
+  method:
+    label: method
+    description: Option, method used to compute collinearity between variables
+    type: options
+    options:
+      - vif.cor
+      - vif.step
+      - pearson
+      - spearman
+      - kendall
+    example: vif.cor
+  method_cor_vif:
+    label: correlation coefficient for vif.cor method
+    description: Option, method to calculate the coefficient of collinearity, only used if method == vif.cor
+    type: options
+    options:
+      - pearson
+      - spearman
+      - kendall
+    example: pearson
+  nb_sample:
+    label: nb sample
+    description: Integer, number of points to select to calculate collinearity
+    type: int
+    example: 5000
+  cutoff_cor:
+    label: cutoff correlation
+    description: Float, correlation cutoff (used with vif.cor, pearson spearman and kendall method)
+    type: float
+    example: 0.75
+  cutoff_vif:
+    label: VIF correlation
+    description: Integer, VIF correlation cutoff (used with vif.step method)
+    type: int
+    example: 8
+outputs:
+  rasters_selected:
+    label: rasters_selected
+    description: array of output raster paths
+    type: image/tiff;application=geotiff[]
