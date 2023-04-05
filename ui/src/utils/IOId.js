@@ -1,6 +1,17 @@
 // This file has a mirror in Kotlin server code.
 
 /**
+ * 
+ * @param {String} step 
+ * @param {String} nodeId 
+ * @param {String} inputOrOutput Optional, id of input or output in the yaml. Null for pipeline inputs.
+ * @returns the IO id: step@nodeId|inputOrOutput
+ */
+export function toIOId(step, nodeId, inputOrOutput){
+    return step + '@' + nodeId + (inputOrOutput ? '|' + inputOrOutput : '')
+}
+
+/**
  * @returns The path of the script that parses inputs / provides output.
  * 
  * from pipeline.json@12|pipeline.json@23|script.yml@31|output

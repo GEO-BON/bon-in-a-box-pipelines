@@ -22,7 +22,7 @@ import { layoutElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
 import { getStepDescription } from './ScriptDescriptionStore'
-import {getStepNodeId, getStepOutput, getStepInput, getStepFile} from '../../utils/IOId'
+import {getStepNodeId, getStepOutput, getStepInput, getStepFile, toIOId} from '../../utils/IOId'
 import sleep from '../../utils/Sleep';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
@@ -455,8 +455,8 @@ export function PipelineEditor(props) {
       inputList.forEach(input => {
         // Destructuring copy to leave out fields that are not part of the input description spec.
         const { file, nodeId, inputId, ...copy } = input
-        const id = file === undefined ? 'pipeline@' + input.nodeId
-          : input.file + '@' + input.nodeId + '|' + input.inputId
+        const id = file === undefined ? toIOId('pipeline', input.nodeId)
+          : toIOId(input.file, input.nodeId, input.inputId)
 
         flow.inputs[id] = copy
       })
@@ -466,7 +466,7 @@ export function PipelineEditor(props) {
       outputList.forEach(output => {
         // Destructuring copy to leave out fields that are not part of the output description spec.
         let {file, nodeId, outputId, ...copy} = output
-        flow.outputs[output.file + '@' + output.nodeId + '|' + output.outputId] = copy
+        flow.outputs[toIOId(output.file, output.nodeId, output.outputId)] = copy
       })
 
       navigator.clipboard
