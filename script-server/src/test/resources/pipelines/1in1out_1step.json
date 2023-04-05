@@ -1,43 +1,26 @@
 {
   "nodes": [
     {
-      "width": 287,
-      "height": 45,
       "id": "0",
       "type": "io",
       "position": {
-        "x": 952.4043428953646,
-        "y": 212.00808201479722
+        "x": 236.8125,
+        "y": 287
       },
       "data": {
         "descriptionFile": "helloWorld>helloPython.yml"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 952.4043428953646,
-        "y": 212.00808201479722
-      },
-      "dragging": false
+      }
     },
     {
-      "width": 150,
-      "height": 39,
       "id": "1",
       "type": "output",
       "position": {
-        "x": 1301.870582960362,
-        "y": 204.2579424114708
+        "x": 593.8125,
+        "y": 289
       },
       "data": {
         "label": "Output"
-      },
-      "targetPosition": "left",
-      "selected": true,
-      "positionAbsolute": {
-        "x": 1301.870582960362,
-        "y": 204.2579424114708
-      },
-      "dragging": false
+      }
     }
   ],
   "edges": [
@@ -49,17 +32,20 @@
       "id": "reactflow__edge-0increment-1"
     }
   ],
-  "viewport": {
-    "x": -524.7640813924429,
-    "y": -61.22898174711986,
-    "zoom": 1.1712101812188096
-  },
   "inputs": {
     "helloWorld>helloPython.yml@0|some_int": {
       "description": "A number that we will increment",
       "label": "Some int",
       "type": "int",
       "example": 3
+    }
+  },
+  "outputs": {
+    "helloWorld>helloPython.yml@0.increment": {
+      "description": "bla bla",
+      "label": "A number (input++)",
+      "type": "int",
+      "example": 4
     }
   }
 }
