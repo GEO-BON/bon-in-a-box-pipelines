@@ -163,7 +163,10 @@ class Pipeline private constructor(
      * - canceled
      */
     suspend fun pullFinalOutputs(): Map<String, String> {
-        validateGraph()
+        val errors = validateGraph()
+        if(errors.isNotEmpty()) {
+            throw RuntimeException(errors)
+        }
 
         var cancelled = false
         var failure = false
