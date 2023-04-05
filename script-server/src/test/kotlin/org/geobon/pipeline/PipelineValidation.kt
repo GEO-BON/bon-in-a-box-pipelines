@@ -42,7 +42,7 @@ internal class PipelineValidation {
                 println(fakeInputs.toString(2))
 
                 try { // Run validation
-                    Pipeline(file, fakeInputs.toString(2))
+                    RootPipeline(file, fakeInputs.toString(2))
                 } catch (e: Exception) {
                     errorMessages += "${file.relativeTo(productionPipelinesRoot)}:\n\t${e.message}\n"
                 }

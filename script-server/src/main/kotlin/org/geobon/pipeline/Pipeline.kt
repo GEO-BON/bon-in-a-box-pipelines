@@ -10,27 +10,40 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
-class Pipeline private constructor(
+class RootPipeline(descriptionFile: File, inputsJSON: String? = null) :
+    Pipeline(StepId("root", ""), descriptionFile, inputsJSON) {
+
+    constructor(relPath: String, inputsJSON: String? = null) : this(File(pipelineRoot, relPath), inputsJSON)
+
+    init {
+        linkInputs()
+    }
+}
+
+open class Pipeline private constructor(
+    override val id: StepId,
     pipelineJSON: JSONObject,
     private val descriptionFile: File,
-    override val inputs: MutableMap<String, Pipe>,
-    override val outputs: MutableMap<String, Output> = mutableMapOf(),
-    override val id: StepId = StepId("root", "")
+    final override val inputs: MutableMap<String, Pipe>,
+    final override val outputs: MutableMap<String, Output> = mutableMapOf()
 ) : IStep {
 
-    private constructor(pipelineJSON:JSONObject, descriptionFile: File, inputsJSON: String? = null) : this(
+    private constructor(stepId: StepId, pipelineJSON:JSONObject, descriptionFile: File, inputsJSON: String? = null) : this(
+        stepId,
         pipelineJSON,
         descriptionFile,
-        inputsToConstants(inputsJSON, pipelineJSON)
+        inputsToConstants(inputsJSON, pipelineJSON),
     )
 
-    constructor(descriptionFile: File, inputsJSON: String? = null) : this(
+    constructor(stepId: StepId, descriptionFile: File, inputsJSON: String? = null) : this(
+        stepId,
         JSONObject(descriptionFile.readText()),
         descriptionFile,
         inputsJSON
     )
 
-    constructor(relPath: String, inputsJSON: String? = null) : this(
+    constructor(stepId: StepId, relPath: String, inputsJSON: String? = null) : this(
+        stepId,
         File(pipelineRoot, relPath),
         inputsJSON
     )
@@ -39,12 +52,12 @@ class Pipeline private constructor(
 
     fun getPipelineOutputs(): List<Pipe> = outputs.values.map { it }
 
+    private val steps = mutableMapOf<String, IStep>()
     private val finalSteps: Set<Step>
 
-    var job: Job? = null
+    private var job: Job? = null
 
     init {
-        val steps = mutableMapOf<String, Step>()
         val constants = mutableMapOf<String, ConstantPipe>()
         val outputIds = mutableListOf<String>()
 
@@ -54,19 +67,19 @@ class Pipeline private constructor(
                 val nodeId = node.getString(NODE__ID)
                 when (node.getString(NODE__TYPE)) {
                     NODE__TYPE_STEP -> {
-                        val scriptFile = node.getJSONObject(NODE__DATA)
+                        val script = node.getJSONObject(NODE__DATA)
                             .getString(NODE__DATA__FILE)
-                            .replace('>', '/')
+                        val scriptFile = script.replace('>', '/')
 
-                        val stepId = StepId(scriptFile, nodeId)
-                        logger.debug("TEMP $stepId")
+                        val stepId = StepId(script, nodeId)
+                        steps[nodeId] = when {
+                            scriptFile.endsWith(".json") -> Pipeline(stepId, scriptFile)
 
-                        steps[nodeId] = when (scriptFile) {
                             // Instantiating kotlin "special steps".
                             // Not done with reflection on purpose, since this could allow someone to instantiate any class,
                             // resulting in a security breach.
-                            "pipeline/AssignId.yml" -> AssignId(stepId)
-                            "pipeline/PullLayersById.yml" -> PullLayersById(stepId)
+                            scriptFile == "pipeline/AssignId.yml" -> AssignId(stepId)
+                            scriptFile == "pipeline/PullLayersById.yml" -> PullLayersById(stepId)
 
                             // Regular script steps
                             else -> ScriptStep(scriptFile, stepId)
@@ -102,14 +115,20 @@ class Pipeline private constructor(
                 val sourcePipe = constants[sourceId] ?: steps[sourceId]?.let { sourceStep ->
                     val sourceOutput = edge.optString(EDGE__SOURCE_OUTPUT, Step.DEFAULT_OUT)
                     sourceStep.outputs[sourceOutput]
-                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}.\"")
+                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}\".\n" +
+                                "Available outputs: ${sourceStep.outputs}")
                 } ?: throw Exception("Could not find step with ID: $sourceId")
 
                 // Find the target and connect them
                 val targetId = edge.getString(EDGE__TARGET_ID)
                 if(outputIds.contains(targetId)) {
                     if(sourcePipe is Output) {
-                        outputs[sourceId] = sourcePipe
+                        val step = steps[sourceId]
+                        val outputId =
+                            if (step is Pipeline) IOId(step.id, sourcePipe.getId())
+                            else sourcePipe.getId()
+
+                        outputs[outputId.toString()] = sourcePipe
                     }
                 } else {
                     steps[targetId]?.let { step ->
@@ -117,7 +136,7 @@ class Pipeline private constructor(
                         step.inputs[targetInput] = step.inputs[targetInput].let {
                             if(it == null) sourcePipe else AggregatePipe(listOf(it, sourcePipe))
                         }
-                    } ?: logger.warn("Dangling edge: could not find source $targetId")
+                    } ?: logger.warn("Dangling edge: could not find target $targetId")
                 }
 
             } else {
@@ -125,6 +144,15 @@ class Pipeline private constructor(
             }
         }
 
+        finalSteps = outputs.values.mapNotNullTo(mutableSetOf()) { it.step }
+        if(finalSteps.isEmpty())
+            throw Exception("Pipeline has no designated output")
+    }
+
+    /**
+     * Links the inputs of the parent pipeline first, then all the nested pipelines.
+     */
+    protected fun linkInputs() {
         // Link inputs from the input file to the pipeline
         inputs.forEach { (key, pipe) ->
             val nodeId = getStepNodeId(key)
@@ -135,12 +163,9 @@ class Pipeline private constructor(
             step.inputs[inputId] = pipe
         }
 
-        // Call validate graph
-        // (Only once per final step since stored in a set. There might be some duplication lower down the tree...)
-        finalSteps = outputs.values.mapNotNullTo(mutableSetOf()) { it.step }
-
-        if(finalSteps.isEmpty())
-            throw Exception("Pipeline has no designated output")
+        steps.forEach { entry ->
+            (entry.value as? Pipeline)?.linkInputs()
+        }
     }
 
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {

@@ -69,7 +69,9 @@ abstract class Step(
         validated = true
 
         inputs.values.forEach { problems += it.validateGraph() }
-        return problems
+
+        // Prepend id to better identify problem source
+        return if(problems.isEmpty()) "" else "$id: $problems"
     }
 
     open fun validateInputsConfiguration(): String {

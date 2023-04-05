@@ -1,0 +1,75 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 62,
+        "y": 41
+      },
+      "data": {
+        "descriptionFile": "userInput.json"
+      }
+    },
+    {
+      "id": "1",
+      "type": "output",
+      "position": {
+        "x": 370,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "2",
+      "type": "output",
+      "position": {
+        "x": 370,
+        "y": 83
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "helloWorld>helloPython.yml@5|increment",
+      "target": "1",
+      "targetHandle": null,
+      "id": "reactflow__edge-0helloWorld>helloPython.yml@5|increment-1"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "helloWorld>helloPython.yml@2|increment",
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-0helloWorld>helloPython.yml@2|increment-2"
+    }
+  ],
+  "inputs": {
+    "userInput.json@0|pipeline@1": {
+      "description": "A number that we will increment",
+      "label": "Some int",
+      "type": "int",
+      "example": 3
+    }
+  },
+  "outputs": {
+    "userInput.json@0|helloWorld>helloPython.yml@5|increment": {
+      "description": "bla bla",
+      "label": "A number (input++)",
+      "type": "int",
+      "example": 4
+    },
+    "userInput.json@0|helloWorld>helloPython.yml@2|increment": {
+      "description": "bla bla",
+      "label": "A number (input++)",
+      "type": "int",
+      "example": 4
+    }
+  }
+}

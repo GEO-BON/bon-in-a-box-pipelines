@@ -9,6 +9,11 @@ package org.geobon.pipeline
 data class IOId(val step: String, val nodeId: String, val inputOrOutput: String? = null) {
     constructor(stepId: StepId, inputOrOutput: String? = null) : this(stepId.step, stepId.nodeId, inputOrOutput)
 
+    /**
+     * Get an IOId for a pipeline, from the pipeline's ID and the IOId of the step.
+     */
+    constructor(pipelineId: StepId, stepIoId:IOId) : this(pipelineId.step, pipelineId.nodeId, stepIoId.toString())
+
     override fun toString(): String {
         return "$step@$nodeId" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
     }
@@ -34,7 +39,7 @@ data class StepId(val step: String, val nodeId: String){
 fun getScript(ioId: String): String {
     val str = ioId.substring(0, ioId.lastIndexOf('@')) // pipeline@12|pipeline@23|script
     val lastPipe = str.lastIndexOf('|')
-    return if(lastPipe == -1) str else str.substring(lastPipe + 1) // script
+    return if (lastPipe == -1) str else str.substring(lastPipe + 1) // script
 }
 
 /**
@@ -50,7 +55,7 @@ fun getStepId(ioId: String): String {
     val firstPipe = ioId.indexOf('|')
     return ioId.substring(
         0,
-        if(firstPipe == -1)  ioId.length else firstPipe
+        if (firstPipe == -1) ioId.length else firstPipe
     )
 }
 
@@ -78,7 +83,7 @@ fun getStepNodeId(ioId: String): String {
     val firstPipe = ioId.indexOf('|')
     return ioId.substring(
         ioId.indexOf('@') + 1,
-        if(firstPipe == -1)  ioId.length else firstPipe
+        if (firstPipe == -1) ioId.length else firstPipe
     )
 }
 
@@ -90,7 +95,7 @@ fun getStepNodeId(ioId: String): String {
  */
 fun getStepOutput(ioId: String): String? {
     val pipeIx = ioId.indexOf('|')
-    if(pipeIx == -1)
+    if (pipeIx == -1)
         return null
 
     return ioId.substring(pipeIx + 1)
