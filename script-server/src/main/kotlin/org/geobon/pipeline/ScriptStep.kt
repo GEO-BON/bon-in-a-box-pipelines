@@ -28,9 +28,23 @@ class ScriptStep(yamlFile: File, stepId: StepId, inputs: MutableMap<String, Pipe
     override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
         val specificTimeout = (yamlParsed[TIMEOUT] as? Int)?.minutes
-        val scriptRun = ScriptRun(scriptFile, resolvedInputs.toSortedMap(), context!!, specificTimeout ?: DEFAULT_TIMEOUT)
 
-        scriptRun.execute()
+        var runOwner = false
+        val scriptRun = synchronized(currentRuns) {
+            currentRuns.getOrPut(context!!.runId) {
+                runOwner = true
+                ScriptRun(scriptFile, resolvedInputs.toSortedMap(), context!!, specificTimeout ?: DEFAULT_TIMEOUT)
+            }
+        }
+        
+        if(runOwner) {
+            scriptRun.execute()
+            synchronized(currentRuns) {
+                currentRuns.remove(context!!.runId)
+            }
+        } else {
+            scriptRun.waitForResults()
+        }
 
         if (scriptRun.results.containsKey(ScriptRun.ERROR_KEY))
             throw RuntimeException("Script run detected an error: ${scriptRun.results[ScriptRun.ERROR_KEY]}")
@@ -40,6 +54,10 @@ class ScriptStep(yamlFile: File, stepId: StepId, inputs: MutableMap<String, Pipe
 
     override fun toString(): String {
         return "ScriptStep(yamlFile=$yamlFile)"
+    }
+
+    companion object {
+        val currentRuns = mutableMapOf<String, ScriptRun>()
     }
 
 }
