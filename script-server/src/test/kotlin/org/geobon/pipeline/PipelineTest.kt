@@ -209,6 +209,11 @@ internal class PipelineTest {
     fun `given a nested pipeline with input left blank_when ran_it behaves as a single pipeline`() = runTest {
         val pipeline = RootPipeline("pipelineInPipeline/inputLeftBlank.json",
             """ {"1in1out_1step.json@1|helloWorld>helloPython.yml@0|some_int":3} """)
+
+        val allOutputs = mutableMapOf<String, String>()
+        pipeline.dumpOutputFolders(allOutputs)
+        assertEquals(2, allOutputs.size)
+
         pipeline.pullFinalOutputs()
         assertEquals(5, pipeline.getPipelineOutputs()[0].pull())
     }
@@ -218,6 +223,10 @@ internal class PipelineTest {
     fun `given a nested pipeline with a user input_when ran_it behaves as a single pipeline`() = runTest {
         val pipeline = RootPipeline("pipelineInPipeline/userInputInside.json",
             """ {"userInput.json@0|pipeline@1":20} """)
+
+        val allOutputs = mutableMapOf<String, String>()
+        pipeline.dumpOutputFolders(allOutputs)
+        assertEquals(3, allOutputs.size)
 
         pipeline.pullFinalOutputs()
 
@@ -231,6 +240,11 @@ internal class PipelineTest {
     fun `given a nested pipeline receiving a user input_when ran_it behaves as a single pipeline`() = runTest {
         val pipeline = RootPipeline("pipelineInPipeline/userInputOutside.json",
             """ {"pipeline@3":5} """)
+
+        val allOutputs = mutableMapOf<String, String>()
+        pipeline.dumpOutputFolders(allOutputs)
+        assertEquals(3, allOutputs.size)
+
         pipeline.pullFinalOutputs()
 
         assertEquals(6, pipeline.outputs["helloWorld>helloPython.yml@4|increment"]!!.pull())
