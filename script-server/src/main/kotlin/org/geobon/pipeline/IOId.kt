@@ -24,14 +24,12 @@ data class IOId(val step: StepId, val inputOrOutput: String? = null) {
 
 data class StepId(val step: String, val nodeId: String, val parent:StepId? = null) {
     override fun toString(): String {
-        return 
-            if(parent == null && step.isEmpty() && nodeId.isEmpty()) "" // Special case for root pipeline
+        return if(parent == null && step.isEmpty() && nodeId.isEmpty()) "" // Special case for root pipeline
             else "$step@$nodeId"
     }
 
     fun toBreadcrumbs(): String {
-        return 
-            if(parent == null) toString() 
+        return if(parent == null) toString() 
             else "${parent.toBreadcrumbs()}|${toString()}"
     }
 }
