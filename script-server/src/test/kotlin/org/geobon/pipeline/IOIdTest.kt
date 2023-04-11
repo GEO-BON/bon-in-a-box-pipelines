@@ -9,19 +9,23 @@ internal class IOIdTest {
         // Regular script input or output
         assertEquals(
             "myStep@myNodeId|myOutputId",
-            IOId("myStep", "myNodeId", "myOutputId").toString()
+            IOId(StepId("myStep", "myNodeId"), "myOutputId").toString()
         )
 
         // Pipeline input
         assertEquals(
             "pipeline@myNodeId",
-            IOId("pipeline", "myNodeId").toString()
+            IOId(StepId("pipeline", "myNodeId")).toString()
         )
 
         // Nested pipeline input
         assertEquals(
             "myPipeline@pipelineId|myStep@myNodeId|myOutputId",
-            IOId("myPipeline@pipelineId|myStep", "myNodeId", "myOutputId").toString()
+            IOId(StepId("myPipeline", "pipelineId"), "myStep@myNodeId|myOutputId").toString()
+        )
+        assertEquals(
+            "myPipeline@pipelineId|myStep@myNodeId|myOutputId",
+            IOId(StepId("myPipeline", "pipelineId"), IOId(StepId("myStep", "myNodeId"), "myOutputId")).toString()
         )
     }
 

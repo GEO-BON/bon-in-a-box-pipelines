@@ -6,22 +6,33 @@ package org.geobon.pipeline
  * @param {String} nodeId
  * @param {String} inputOrOutput Optional, id of input or output in the yaml. Null for pipeline inputs.
  */
-data class IOId(val step: String, val nodeId: String, val inputOrOutput: String? = null) {
-    constructor(stepId: StepId, inputOrOutput: String? = null) : this(stepId.step, stepId.nodeId, inputOrOutput)
+data class IOId(val step: StepId, val inputOrOutput: String? = null) {
 
     /**
      * Get an IOId for a pipeline, from the pipeline's ID and the IOId of the step.
      */
-    constructor(pipelineId: StepId, stepIoId:IOId) : this(pipelineId.step, pipelineId.nodeId, stepIoId.toString())
+    constructor(pipelineId: StepId, stepIoId:IOId) : this(pipelineId, stepIoId.toString())
 
     override fun toString(): String {
-        return "$step@$nodeId" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
+        return "${step.toString()}" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
+    }
+
+    fun toBreadcrumbs(): String {
+        return "${step.toBreadcrumbs()}" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
     }
 }
 
-data class StepId(val step: String, val nodeId: String){
+data class StepId(val step: String, val nodeId: String, val parent:StepId? = null) {
     override fun toString(): String {
-        return "$step@$nodeId"
+        return 
+            if(parent == null && step.isEmpty() && nodeId.isEmpty()) "" // Special case for root pipeline
+            else "$step@$nodeId"
+    }
+
+    fun toBreadcrumbs(): String {
+        return 
+            if(parent == null) toString() 
+            else "${parent.toBreadcrumbs()}|${toString()}"
     }
 }
 

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory
 import java.io.File
 
 class RootPipeline(descriptionFile: File, inputsJSON: String? = null) :
-    Pipeline(StepId("root", ""), descriptionFile, inputsJSON) {
+    Pipeline(StepId("", ""), descriptionFile, inputsJSON) {
 
     constructor(relPath: String, inputsJSON: String? = null) : this(File(pipelineRoot, relPath), inputsJSON)
 
@@ -71,7 +71,7 @@ open class Pipeline private constructor(
                             .getString(NODE__DATA__FILE)
                         val scriptFile = script.replace('>', '/')
 
-                        val stepId = StepId(script, nodeId)
+                        val stepId = StepId(script, nodeId, id)
                         steps[nodeId] = when {
                             scriptFile.endsWith(".json") -> Pipeline(stepId, scriptFile)
 
@@ -96,7 +96,7 @@ open class Pipeline private constructor(
                         val nodeData = node.getJSONObject(NODE__DATA)
                         val type = nodeData.getString(NODE__DATA__TYPE)
 
-                        steps[nodeId] = UserInput(StepId("pipeline", nodeId), type)
+                        steps[nodeId] = UserInput(StepId("pipeline", nodeId, id), type)
                     }
 
                     NODE__TYPE_OUTPUT -> outputIds.add(nodeId)
