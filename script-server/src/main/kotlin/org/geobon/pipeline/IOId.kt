@@ -29,8 +29,11 @@ data class StepId(val step: String, val nodeId: String, val parent:StepId? = nul
     }
 
     fun toBreadcrumbs(): String {
-        return if(parent == null) toString() 
-            else "${parent.toBreadcrumbs()}|${toString()}"
+        var parentBreadcrumbs = parent?.toBreadcrumbs() ?: ""
+        if(parentBreadcrumbs.isNotEmpty())
+            parentBreadcrumbs += "|"
+
+        return parentBreadcrumbs + toString()
     }
 }
 
