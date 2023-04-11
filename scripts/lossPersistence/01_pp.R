@@ -1,7 +1,7 @@
 ### funci?n check_collections
 
 # Cargar librerias
-packages_list<-list("magrittr", "terra", "raster")
+packages_list<-list("magrittr", "terra", "raster", "jsonlite")
 invisible(   lapply(packages_list, library, character.only = TRUE)   )
 
 # Organizar directorios
@@ -11,7 +11,7 @@ outputFolder <- args[1]
 # Cargar archivos de entrada
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json"))
 
-dir_wkt<- input$dir_wkt_polygon
+wkt_polygon<- input$wkt_polygon
 dir_colection<- input$dir_colection
 
 
@@ -23,8 +23,8 @@ folder_output<- input$folder_output
 resolution_crs<- raster::raster(raster::extent(seq(4)),crs= "+init=epsg:3395", res= input$resolution) %>% projectRaster( crs = sf::st_crs(epsg_polygon)$proj4string ) %>% 
   raster::res()
 
-# Definir área de estudio
-vector_polygon<- terra::vect(dir_wkt, crs= sf::st_crs(epsg_polygon)$proj4string ) 
+# Definir ï¿½rea de estudio
+vector_polygon<- terra::vect(wkt_polygon, crs= sf::st_crs(epsg_polygon)$proj4string ) 
 crs_polygon<- terra::crs(vector_polygon)
 box_polygon<-  sf::st_bbox(vector_polygon)
 
@@ -51,7 +51,7 @@ cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = gd
 cube <- gdalcubes::raster_cube(stac_collection, cube_collection)
 
 # Cortar cubo por area de estudio
-cube_mask<- gdalcubes::filter_geom(cube, geom= dir_wkt, srs = crs_polygon )
+cube_mask<- gdalcubes::filter_geom(cube, geom= wkt_polygon, srs = crs_polygon )
 
 # Cargar cubo en cache
 fn = tempfile(fileext = ".nc")
@@ -120,9 +120,9 @@ write.csv(data_sum2, dir_table, row.names = F)
 
 
 # Imprimir resultado en logs
-print(data_sum)
+table_pp<-jsonlite::toJSON(data_sum2)
 
 ## Imprimir resultado - Formao json
-output <- list("folder_output" = folder_results, "table_pp"= dir_table)
+output <- list("folder_output" = folder_results, "table_pp"= table_pp)
 jsonData <- rjson::toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
