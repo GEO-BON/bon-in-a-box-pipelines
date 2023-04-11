@@ -104,7 +104,7 @@ abstract class YMLStep(
      * @param allOutputs Map of Step identifier to output folder.
      */
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
-        val previousValue = allOutputs.put(id.toString(), context?.runId ?: "")
+        val previousValue = allOutputs.put(id.toBreadcrumbs(), context?.runId ?: "")
 
         // Pass it on only if not already been there (avoids duplication for more complex graphs)
         if (previousValue == null) {
