@@ -30,7 +30,7 @@ presence_background <- read.table(file = input$presence_background, sep = '\t', 
 predictors <- terra::rast(unlist(input$predictors))
 mod_tuning <- run_maxent(presence_background, 
                          with_raster = F, # can be set to F to speed up
-                         algorithm = "maxent.jar",
+                         algorithm = "maxnet",
                          layers = names(predictors),
                          predictors = predictors,
                          partition_type = input$partition_type,
@@ -50,7 +50,7 @@ tuned_param <- select_param(res_tuning, method = input$method_select_params, lis
 predictors <- raster::stack(predictors)
 
 sdms <- predict_maxent(presence_background,
-  algorithm = "maxent.jar", 
+  algorithm = "maxnet", 
                            predictors = predictors,
                            fc = tuned_param[[1]],
                            rm = tuned_param[[2]],
