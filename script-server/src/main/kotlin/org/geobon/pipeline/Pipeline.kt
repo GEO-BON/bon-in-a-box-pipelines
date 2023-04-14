@@ -129,6 +129,8 @@ open class Pipeline private constructor(
                             else sourcePipe.getId()
 
                         outputs[outputId.toString()] = sourcePipe
+                    } else {
+                        throw Exception("output in json not of Output type: $targetId")
                     }
                 } else {
                     steps[targetId]?.let { step ->

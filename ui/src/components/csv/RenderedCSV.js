@@ -79,7 +79,7 @@ function CsvToMap({url, delimiter}) {
         const lonColumn = headerRow.findIndex(h => lonRegEx.test(h))
 
         if(latColumn === -1 || lonColumn === -1) {
-            setError("Both lattitude and longitude columns must be present to display on a map.")
+            setError("Both latitude and longitude columns must be present to display on a map.")
             return null
         }
         
