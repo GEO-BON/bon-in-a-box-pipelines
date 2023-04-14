@@ -21,7 +21,8 @@ import PopupMenu from './PopupMenu';
 import { layoutElements } from './react-flow-utils/Layout'
 import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
 import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
-import { getScriptDescription } from './ScriptDescriptionStore'
+import { getStepDescription } from './ScriptDescriptionStore'
+import {getStepNodeId, getStepOutput, getStepInput, getStepFile, toIOId} from '../../utils/IOId'
 import sleep from '../../utils/Sleep';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
@@ -317,7 +318,7 @@ export function PipelineEditor(props) {
               const edgeFound = allEdges.find(edge => node.id === edge.source);
               if(edgeFound) {
                 const nodeFound = allNodes.find(n => edgeFound.target === n.id)
-                const stepDescription = getScriptDescription(nodeFound.data.descriptionFile)
+                const stepDescription = getStepDescription(nodeFound.data.descriptionFile)
 
                 if(stepDescription && stepDescription.inputs) {
                   const inputDescription = stepDescription.inputs[edgeFound.targetHandle]
@@ -340,7 +341,7 @@ export function PipelineEditor(props) {
             }
 
           } else if (node.type === 'io') {
-            let scriptDescription = getScriptDescription(node.data.descriptionFile)
+            let scriptDescription = getStepDescription(node.data.descriptionFile)
             if (scriptDescription && scriptDescription.inputs) {
               Object.entries(scriptDescription.inputs).forEach(entry => {
                 const [inputId, inputDescription] = entry
@@ -390,7 +391,7 @@ export function PipelineEditor(props) {
           
           // outputDescription may be null if stepDescription not yet available.
           // This is ok when loading since we rely on the saved description anyways. 
-          const stepDescription = getScriptDescription(sourceNode.data.descriptionFile)
+          const stepDescription = getStepDescription(sourceNode.data.descriptionFile)
           const outputDescription = stepDescription && stepDescription.outputs && stepDescription.outputs[edge.sourceHandle]
 
           newPipelineOutputs.push({
@@ -454,8 +455,8 @@ export function PipelineEditor(props) {
       inputList.forEach(input => {
         // Destructuring copy to leave out fields that are not part of the input description spec.
         const { file, nodeId, inputId, ...copy } = input
-        const id = file === undefined ? 'pipeline@' + input.nodeId
-          : input.file + "@" + input.nodeId + "." + input.inputId
+        const id = file === undefined ? toIOId('pipeline', input.nodeId)
+          : toIOId(input.file, input.nodeId, input.inputId)
 
         flow.inputs[id] = copy
       })
@@ -465,7 +466,7 @@ export function PipelineEditor(props) {
       outputList.forEach(output => {
         // Destructuring copy to leave out fields that are not part of the output description spec.
         let {file, nodeId, outputId, ...copy} = output
-        flow.outputs[output.file + "@" + output.nodeId + "." + output.outputId] = copy
+        flow.outputs[toIOId(output.file, output.nodeId, output.outputId)] = copy
       })
 
       navigator.clipboard
@@ -537,19 +538,17 @@ export function PipelineEditor(props) {
       if (flow.inputs) {
         Object.entries(flow.inputs).forEach(entry => {
           const [fullId, inputDescription] = entry
-          const atIx = fullId.indexOf('@')
 
           if (fullId.startsWith('pipeline@')) {
             inputsFromFile.push({
-              nodeId: fullId.substring(atIx + 1),
+              nodeId: getStepNodeId(fullId),
               ...inputDescription
             })
           } else { // Script input
-            const dotIx = fullId.lastIndexOf('.')
             inputsFromFile.push({
-              file: fullId.substring(0, atIx),
-              nodeId: fullId.substring(atIx + 1, dotIx),
-              inputId: fullId.substring(dotIx + 1),
+              file: getStepFile(fullId),
+              nodeId: getStepNodeId(fullId),
+              inputId: getStepInput(fullId),
               ...inputDescription
             })
 
@@ -563,18 +562,15 @@ export function PipelineEditor(props) {
       if (flow.outputs) {
         Object.entries(flow.outputs).forEach(entry => {
           const [fullId, outputDescription] = entry
-          const atIx = fullId.indexOf('@')
-          const dotIx = fullId.lastIndexOf('.')
 
           outputsFromFile.push({
-            file: fullId.substring(0, atIx),
-            nodeId: fullId.substring(atIx + 1, dotIx),
-            outputId: fullId.substring(dotIx + 1),
+            file: getStepFile(fullId),
+            nodeId: getStepNodeId(fullId),
+            outputId: getStepOutput(fullId),
             ...outputDescription
           })
         })
       }
-
       setOutputList(outputsFromFile)
 
       // Read nodes
