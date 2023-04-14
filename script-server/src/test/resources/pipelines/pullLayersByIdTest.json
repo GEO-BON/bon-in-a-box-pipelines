@@ -212,7 +212,7 @@
     "zoom": 1
   },
   "inputs": {
-    "pipeline>PullLayersById.yml@9.with_ids": {
+    "pipeline>PullLayersById.yml@9|with_ids": {
       "description": "Config containing the ids. The an id will be replaced by the corresponding layer in with_layers output.",
       "label": "With IDs",
       "type": "text",

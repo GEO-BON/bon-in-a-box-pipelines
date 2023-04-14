@@ -3,13 +3,18 @@ package org.geobon.pipeline.teststeps
 import org.geobon.pipeline.Output
 import org.geobon.pipeline.Pipe
 import org.geobon.pipeline.Step
+import org.geobon.pipeline.StepId
 
 /**
  * Dummy step for testing purpose: Concatenates all inputs
  */
 class ConcatenateStep(
     inputs: MutableMap<String, Pipe>
-) : Step(inputs, mapOf(STRING to Output("text/plain"))) {
+) : Step(
+    StepId("concat", hashCode().toString()),
+    inputs,
+    mapOf(STRING to Output("text/plain"))
+) {
 
     companion object {
         const val STRING = "concat"

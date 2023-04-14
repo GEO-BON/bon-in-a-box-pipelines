@@ -1,4 +1,4 @@
-import { getScriptDescription } from '../ScriptDescriptionStore'
+import { getStepDescription } from '../ScriptDescriptionStore'
 
 // For ELK options, refer to https://www.eclipse.org/elk/reference/options.html
 // Some examples: http://rtsys.informatik.uni-kiel.de/elklive/examples.html?e=user-hints%2Flayered%2FverticalOrder
@@ -30,7 +30,7 @@ export const layoutElements = (nodes, edges, callback) => {
     }
 
     if (node.type === 'io') {
-      const desc = getScriptDescription(node.data.descriptionFile)
+      const desc = getStepDescription(node.data.descriptionFile)
       if(desc){
         elkjsNode.ports = Object.keys(desc.outputs).map((output, ix) => {
           return {

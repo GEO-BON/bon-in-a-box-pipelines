@@ -78,6 +78,18 @@ class ScriptRun( // Constructor used in single script run
             ?: runScript()
     }
 
+    /**
+     * It is possible that two scripts are executed with the same parameters at the same time.
+     * If so, we wait for the other one to complete and then use it's result as cache.
+     */
+    suspend fun waitForResults() {
+        // TODO: Could use join() on a job, if we had a job to join with...
+        logger.debug("Waiting for run completion... ${outputFolder}")
+        while(!this::results.isInitialized) {
+            delay(100L)
+        }
+    }
+
     private fun loadFromCache(): Map<String, Any>? {
         // Looking for a cached result most recent than the script
         if (resultFile.exists()) {
@@ -164,8 +176,11 @@ class ScriptRun( // Constructor used in single script run
                 // TODO: Errors are using the log file. If this initial step fails, they might be appended to previous log.
                 withContext(Dispatchers.IO) {
                     // If loading from cache didn't succeed, make sure we have a clean slate.
-                    if (outputFolder.exists() && !outputFolder.deleteRecursively()) {
-                        throw RuntimeException("Failed to delete directory of previous run ${outputFolder.path}")
+                    if (outputFolder.exists()) {
+                        outputFolder.deleteRecursively()
+
+                        if (outputFolder.exists())
+                            throw RuntimeException("Failed to delete directory of previous run ${outputFolder.path}")
                     }
 
                     // Create the output folder for this invocation
