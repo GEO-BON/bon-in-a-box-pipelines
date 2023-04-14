@@ -41,7 +41,7 @@
     }
   },
   "outputs": {
-    "helloWorld>helloPython.yml@0.increment": {
+    "helloWorld>helloPython.yml@0|increment": {
       "description": "bla bla",
       "label": "A number (input++)",
       "type": "int",
