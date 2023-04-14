@@ -57,6 +57,9 @@ class ScriptStep(yamlFile: File, stepId: StepId, inputs: MutableMap<String, Pipe
     }
 
     companion object {
+        /**
+         * runId to ScriptRun
+         */
         val currentRuns = mutableMapOf<String, ScriptRun>()
     }
 
