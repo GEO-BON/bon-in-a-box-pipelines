@@ -13,7 +13,7 @@ import warningImg from '../img/warning.svg';
 import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
 import { GeneralDescription } from './ScriptDescription';
-import {getScript, getStepId, getStepOutput, toDisplayString} from '../utils/IOId';
+import {getScript, getScriptOutput, toDisplayString, getBreadcrumbs} from '../utils/IOId';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const yaml = require('js-yaml');
@@ -212,7 +212,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       const initialValue = {}
       if (pipelineMetadata.outputs) {
         Object.keys(pipelineMetadata.outputs).forEach(key => {
-          initialValue[getStepId(key)] = {}
+          initialValue[getBreadcrumbs(key)] = {}
         })
       }
       setPipelineOutputResults(initialValue)
@@ -223,14 +223,13 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
     return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
       <h2>Pipeline outputs</h2>
       {pipelineMetadata.outputs && Object.entries(pipelineMetadata.outputs).map(entry => {
-        const [key, stepDescription] = entry;
-        const stepId = getStepId(key)
-        const outputId = getStepOutput(key)
-        const value = pipelineOutputResults[stepId] && pipelineOutputResults[stepId][outputId]
-
+        const [ioId, outputDescription] = entry;
+        const breadcrumbs = getBreadcrumbs(ioId)
+        const outputId = getScriptOutput(ioId)
+        const value = pipelineOutputResults[breadcrumbs] && pipelineOutputResults[breadcrumbs][outputId]
         if (!value) {
-          return <div key={key} className="outputTitle">
-            <h3>{stepDescription.label}</h3>
+          return <div key={ioId} className="outputTitle">
+            <h3>{outputDescription.label}</h3>
             {runningScripts.size > 0 ?
               <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
               : <><img src={warningImg} alt="Warning" className="error-inline" />See detailed results</>
@@ -238,16 +237,16 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
           </div>
         }
 
-        return <SingleOutputResult key={outputId} outputId={outputId}
-          outputValue={value}
-          outputMetadata={stepDescription} />
+        return <SingleOutputResult key={ioId} outputId={outputId} componentId={ioId}
+                outputValue={value}
+                outputMetadata={outputDescription} />
       })}
 
       <h2>Detailed results</h2>
       {Object.entries(resultsData).map(entry => {
         const [key, value] = entry;
 
-        return <DelayedResult key={key} stepId={key} folder={value}
+        return <DelayedResult key={key} breadcrumbs={key} folder={value}
           setRunningScripts={setRunningScripts} setPipelineOutputResults={setPipelineOutputResults} />
       })}
     </RenderContext.Provider>
@@ -255,13 +254,13 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
   else return null
 }
 
-function DelayedResult({stepId, folder, setRunningScripts, setPipelineOutputResults}) {
+function DelayedResult({breadcrumbs, folder, setRunningScripts, setPipelineOutputResults}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
   const [running, setRunning] = useState(false)
   const [skippedMessage, setSkippedMessage] = useState()
 
-  const script = getScript(stepId)
+  const script = getScript(breadcrumbs)
 
   useEffect(() => { 
     // A script is running when we know it's folder but have yet no result nor error message
@@ -315,8 +314,8 @@ function DelayedResult({stepId, folder, setRunningScripts, setPipelineOutputResu
 
         // Contribute to pipeline outputs (if this script is relevant)
         setPipelineOutputResults(results => {
-          if(stepId in results)
-            results[stepId] = json
+          if(breadcrumbs in results)
+            results[breadcrumbs] = json
           
           return results
         })
@@ -360,8 +359,8 @@ function DelayedResult({stepId, folder, setRunningScripts, setPipelineOutputResu
   let logsAddress = folder && "output/" + folder + "/logs.txt"
   
   return (
-    <FoldableOutputWithContext title={toDisplayString(stepId)}
-      componentId={stepId} inline={inline} className={className}>
+    <FoldableOutputWithContext title={toDisplayString(breadcrumbs)}
+      componentId={breadcrumbs} inline={inline} className={className}>
       <GeneralDescription ymlPath={script} metadata={scriptMetadata} />
       {content}
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}

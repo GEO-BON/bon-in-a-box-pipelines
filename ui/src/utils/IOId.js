@@ -7,7 +7,7 @@
  * @param {String} inputOrOutput Optional, id of input or output in the yaml. Null for pipeline inputs.
  * @returns the IO id: step@nodeId|inputOrOutput
  */
-export function toIOId(step, nodeId, inputOrOutput){
+export function toIOId(step, nodeId, inputOrOutput) {
     return step + '@' + nodeId + (inputOrOutput ? '|' + inputOrOutput : '')
 }
 
@@ -41,6 +41,31 @@ export function getStepId(ioId) {
         0,
         firstPipe === -1 ? ioId.length : firstPipe
     )
+}
+
+/**
+ * @returns Breadcrumbs from the outer pipeline to the script
+ * 
+ * from pipeline.json@12|pipeline.json@23|script.yml@31|output
+ * returns pipeline.json@12|pipeline.json@23|script.yml@31
+ * 
+ * from pipeline.json@12|pipeline.json@23|script.yml@31
+ * returns pipeline.json@12|pipeline.json@23|script.yml@31
+ * 
+ * from script.yml@31|output
+ * returns script.yml@31
+ * 
+ * from script.yml@31
+ * returns script.yml@31
+ */
+export function getBreadcrumbs(ioId) {
+    const lastPipe = ioId.lastIndexOf('|')
+    const lastAt = ioId.lastIndexOf('@')
+    if(lastAt < lastPipe) {
+        return ioId.substring(0, lastPipe)
+    }
+
+    return ioId
 }
 
 /**
@@ -79,6 +104,31 @@ export function getStepNodeId(ioId) {
  */
 export function getStepOutput(ioId) {
     return ioId.substring(ioId.indexOf('|') + 1)
+}
+
+/**
+ * @returns Output of the script (as defined in the script's yml)
+ * 
+ * from pipeline.json@12|pipeline.json@23|script.yml@31|output
+ * returns output
+ * 
+ * from pipeline.json@12|pipeline.json@23|script.yml@31
+ * returns ""
+ * 
+ * from script.yml@31|output
+ * returns output
+ * 
+ * from script.yml@31
+ * returns ""
+ */
+export function getScriptOutput(ioId) {
+    const lastPipe = ioId.lastIndexOf('|')
+    const lastAt = ioId.lastIndexOf('@')
+    if(lastAt < lastPipe) {
+        return ioId.substring(lastPipe + 1)
+    }
+
+    return ""
 }
 
 /**
