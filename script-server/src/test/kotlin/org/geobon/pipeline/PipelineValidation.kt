@@ -28,7 +28,7 @@ internal class PipelineValidation {
         directory.listFiles()?.forEach { file ->
             if (file.isDirectory) {
                 validateAllPipelines(file)
-            } else {
+            } else if (file.extension == "json") {
                 // Generate fake inputs
                 val fakeInputs = JSONObject()
                 val pipelineJSON = JSONObject(file.readText())
