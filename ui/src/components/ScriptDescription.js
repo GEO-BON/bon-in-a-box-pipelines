@@ -8,7 +8,7 @@ const yaml = require('js-yaml');
 export function GeneralDescription({ ymlPath, metadata }) {
     if (!metadata)
         return null
-// TODO check yml path for pipeline in pipeline
+
     const codeLink = getCodeLink(ymlPath, metadata.script)
 
     return <div className='stepDescription'>
