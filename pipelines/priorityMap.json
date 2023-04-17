@@ -82,7 +82,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "image/tiff;application=geotiff",
-        "value": "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif"
+        "value": "https://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/local_velocity.tif"
       }
     },
     {

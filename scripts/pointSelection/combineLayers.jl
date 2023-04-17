@@ -8,6 +8,7 @@ using CSV
 
 # Read in input arguments and json
 outputFolder = ARGS[1]
+print(outputFolder)
 filepath = joinpath(outputFolder,"input.json")
 outputFilepath = joinpath(outputFolder,"data/")
 isdir(outputFilepath) || mkdir(outputFilepath)
