@@ -1,5 +1,7 @@
 package org.geobon.script
 
+import io.kotest.extensions.system.OverrideMode
+import io.kotest.extensions.system.withEnvironment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
@@ -85,7 +87,7 @@ internal class ScriptRunTest {
     }
 
     @Test
-    fun `given cache removed for modified script_when other results existed_then all cache removed`() = runTest {
+    fun `given other results existed_when cache cleaned with option full_then all cache removed`() = runTest {
         val scriptFile = File(scriptRoot, "1in1out.py")
         scriptFile.setLastModified(currentTimeMillis())
 
@@ -100,6 +102,43 @@ internal class ScriptRunTest {
 
         // We expect cache was deleted and only one folder is left
         assertEquals(1, outputRoot.listFiles()!![0].listFiles()!!.size)
+    }
+
+    @Test
+    fun `given other results existed_when cache cleaned with option partial_then all cache removed`() = runTest {
+        withEnvironment("SCRIPT_SERVER_CACHE_CLEANER", "partial", OverrideMode.SetOrOverride) {
+            val scriptFile = File(scriptRoot, "1in1out.py")
+            scriptFile.setLastModified(currentTimeMillis())
+
+            val val5Run1 = ScriptRun(scriptFile, """{"some_int":5}""")
+            val5Run1.execute()
+            val val5Run1LastModified = val5Run1.resultFile.lastModified()
+            val val6Run1 = ScriptRun(scriptFile, """{"some_int":6}""")
+            val6Run1.execute()
+
+            // We expect two folder in the cache
+            assertEquals(2, outputRoot.listFiles()!![0].listFiles()!!.size)
+
+            scriptFile.setLastModified(currentTimeMillis())
+            val val5Run2 = ScriptRun(scriptFile, """{"some_int":5}""")
+            val5Run2.execute()
+
+            // We still expect two folders in the cache
+            assertEquals(2, outputRoot.listFiles()!![0].listFiles()!!.size)
+            assertTrue(val5Run2.resultFile.exists())
+            assertTrue(val6Run1.resultFile.exists())
+            assertEquals(val5Run1.resultFile, val5Run2.resultFile)
+
+            // The result has been overriden
+            assertTrue(val5Run1LastModified < val5Run2.resultFile.lastModified())
+        }
+    }
+
+    @Test
+    fun `given unset cache clean option_when ran_then cache cleaned with full option`() = runTest {
+        withEnvironment("SCRIPT_SERVER_CACHE_CLEANER", "", OverrideMode.SetOrOverride) {
+            `given other results existed_when cache cleaned with option full_then all cache removed`()
+        }
     }
 
     @Test
@@ -148,8 +187,4 @@ internal class ScriptRunTest {
         assertNotEquals(run1Time, run2Time)
     }
 
-    @Test
-    fun `given many outputs produced_when scripts completes_only final outputs are kept`() = runTest {
-        // TODO: Do we want this?
-    }
 }

@@ -43,6 +43,7 @@ class ScriptRun( // Constructor used in single script run
     val resultFile = context.resultFile
 
     private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
+    private var logBuffer: String = ""
     internal val logFile = File(outputFolder, "logs.txt")
 
     companion object {
@@ -106,12 +107,25 @@ class ScriptRun( // Constructor used in single script run
                         return previousOutputs
                     }
                 }.onFailure { e ->
-                    logger.warn("Cache could not be reused: ${e.message}")
+                    logBuffer += "Cache could not be reused: ${e.message}\n".also { logger.warn(it) }
                 }
 
-            } else { // Script was updated, flush the whole cache for this script
-                if (!outputFolder.parentFile.deleteRecursively()) {
-                    throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+            } else {
+                logBuffer += (
+                        "Script was updated, flushing the whole cache for this script.\n" +
+                        "Script time: ${scriptFile.lastModified()}\n" +
+                        "Result time: ${resultFile.lastModified()}\n"
+                        ).also { logger.debug(it) }
+
+                when(System.getenv("SCRIPT_SERVER_CACHE_CLEANER")) {
+                    "partial" ->
+                        if (!outputFolder.deleteRecursively()) {
+                            throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                        }
+                    else -> // "full" or unset
+                        if (!outputFolder.parentFile.deleteRecursively()) {
+                            throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                        }
                 }
             }
         }
@@ -137,7 +151,16 @@ class ScriptRun( // Constructor used in single script run
                         if (stringValue?.startsWith('/') == true) {
                             with(File(stringValue)) {
                                 // check if missing or newer than cache
-                                if (!exists() || cacheTime < lastModified()) {
+                                if (!exists()) {
+                                    logBuffer += "Cannot reuse cache: input file $this does not exist.\n".also { logger.warn(it) }
+                                    return false
+                                }
+
+                                if(cacheTime < lastModified()) {
+                                    logBuffer += ("Cannot reuse cache: input file has been modified.\n" +
+                                            "Cache time: $cacheTime\n" +
+                                            "File time:  ${lastModified()}\n" +
+                                            "File: $this \n").also { logger.warn(it) }
                                     return false
                                 }
                             }
@@ -188,7 +211,7 @@ class ScriptRun( // Constructor used in single script run
                     logger.debug("Script run outputting to $outputFolder")
 
                     // Script run pre-requisites
-                    logFile.createNewFile()
+                    logFile.writeText(logBuffer)
                     inputFileContent?.let {
                         // Create input.json
                         inputFile.writeText(inputFileContent)
