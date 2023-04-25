@@ -38,6 +38,13 @@ To run:
 
     # Access Red List Index
     IUCN_TOKEN=
+
+    # Script server cache option: 
+    # - full: when a script file changes, all related caches are cleared.
+    # - partial: when a script file changes, cache is only overriden when running with the same inputs. 
+    # NB: applied on next docker compose up
+    SCRIPT_SERVER_CACHE_CLEANER=full
+
     ```
 6. `docker compose up -d`
 7. In browser:
