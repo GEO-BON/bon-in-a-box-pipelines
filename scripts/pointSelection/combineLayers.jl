@@ -14,8 +14,6 @@ isdir(outputFilepath) || mkdir(outputFilepath)
 
 input = JSON.parsefile(filepath)
 
-# Assign json objects to variables
-println(input["layerdata"])
 layermat = CSV.read(IOBuffer(input["layerdata"][1]), DataFrame)
 println(layermat)
 
@@ -23,14 +21,11 @@ targetbalance = convert(Vector{Float64}, input["targetbalance"]) # this is the s
 layer_col = layermat[:, :layer]
 keep_rows = startswith.(layermat[:, :layer], "https:")
 
-#read in layers
-function get_simplesdmlayer(path)
-    geoarray = read(path)
-    SimpleSDMPredictor(geoarray.A[:,:,begin])
-end
-
 temppath = Downloads.download.(layermat[keep_rows, 1])
-layers = BiodiversityObservationNetworks.stack(get_simplesdmlayer.(temppath))
+
+l = SimpleSDMPredictor.(temppath)
+
+layers = BiodiversityObservationNetworks.stack(l)
 
 # get weights with weights for a layer in columns 
 W = Matrix(layermat[keep_rows, 2:end])
