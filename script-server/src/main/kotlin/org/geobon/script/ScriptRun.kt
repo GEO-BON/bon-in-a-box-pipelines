@@ -102,22 +102,27 @@ class ScriptRun( // Constructor used in single script run
                     )
                 }.onSuccess { previousOutputs ->
                     // Use this result only if there was no error and inputs have not changed
-                    if (previousOutputs[ERROR_KEY] == null && inputsOlderThanCache()) {
-                        logger.debug("Loading from cache")
-                        return previousOutputs
+                    if (previousOutputs[ERROR_KEY] == null) {
+                        if(inputsOlderThanCache()) {
+                            logger.debug("Loading from cache")
+                            return previousOutputs
+                        }
+                    } else {
+                        logBuffer += "There was an error in previous run: running again.\n".also { logger.debug(it) }
                     }
                 }.onFailure { e ->
                     logBuffer += "Cache could not be reused: ${e.message}\n".also { logger.warn(it) }
                 }
 
             } else {
+                val cleanOption = System.getenv("SCRIPT_SERVER_CACHE_CLEANER")
                 logBuffer += (
-                        "Script was updated, flushing the whole cache for this script.\n" +
+                        "Script was updated, flushing the cache for this script with option $cleanOption.\n" +
                         "Script time: ${scriptFile.lastModified()}\n" +
                         "Result time: ${resultFile.lastModified()}\n"
                         ).also { logger.debug(it) }
 
-                when(System.getenv("SCRIPT_SERVER_CACHE_CLEANER")) {
+                when(cleanOption) {
                     "partial" ->
                         if (!outputFolder.deleteRecursively()) {
                             throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
@@ -128,6 +133,8 @@ class ScriptRun( // Constructor used in single script run
                         }
                 }
             }
+        } else {
+            logBuffer += "Previous results not found: running for the first time.\n".also { logger.debug(it) }
         }
 
         return null
