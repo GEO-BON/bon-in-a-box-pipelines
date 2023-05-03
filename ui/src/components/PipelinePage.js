@@ -14,7 +14,6 @@ import { GeneralDescription } from './ScriptDescription';
 import { PipelineForm } from './form/PipelineForm';
 import { getScript, getScriptOutput, toDisplayString, getBreadcrumbs } from '../utils/IOId';
 
-const yaml = require('js-yaml');
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 export const api = new BonInABoxScriptService.DefaultApi();
 
@@ -55,18 +54,6 @@ export function PipelinePage(props) {
     }
   }
 
-  function showMetadata() {
-    if (pipelineMetadata) {
-      let yamlString = yaml.dump(pipelineMetadata)
-      return (
-        <pre key="metadata">
-          {yamlString.startsWith("{}") ? "No metadata" : yamlString}
-        </pre>
-      )
-    }
-    return ""
-  }
-
   useEffect(() => {
     setStoppable(runningScripts.size > 0)
   }, [runningScripts])
@@ -100,7 +87,6 @@ export function PipelinePage(props) {
           pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
           setRunId={setRunId}
           showHttpError={showHttpError} />
-        {showMetadata()}
       </FoldableOutput>
       
       {runId && <button onClick={stop} disabled={!stoppable}>Stop</button>}

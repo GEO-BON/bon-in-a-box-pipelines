@@ -90,8 +90,6 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
       </label>
       <br />
       <label>
-        Pipeline inputs:
-        <br />
         <InputFileInput
           metadata={pipelineMetadata}
           inputFileContent={inputFileContent}
