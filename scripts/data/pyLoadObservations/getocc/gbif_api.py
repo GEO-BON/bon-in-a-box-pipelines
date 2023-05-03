@@ -47,8 +47,8 @@ def process_gbif_download(link, key, outfile):
 	tempzip = urllib.request.urlretrieve(link, temp_input_path)
 	print('Extracting occurrence file from ZIP')
 	with ZipFile(temp_input_path, 'r') as zipObj:
-		zipObj.extract(key+'.csv', '.')
-	df = pd.read_csv(key+'.csv',sep='\t')
+		zipObj.extract('occurrence.txt', '.')
+	df = pd.read_csv('occurrence.txt', sep='\t')
 	#df = df[['gbifID','datasetKey','occurrenceID','kingdom','phylum','class','order','family','genus','species','infraspecificEpithet','taxonRank','scientificName','verbatimScientificName','countryCode','locality','stateProvince','occurrenceStatus','individualCount','decimalLatitude','decimalLongitude','coordinateUncertaintyInMeters','coordinatePrecision','elevation','elevationAccuracy','depth','depthAccuracy','eventDate','day','month','year','taxonKey','speciesKey','institutionCode','collectionCode','catalogNumber','recordNumber','basisOfRecord','identifiedBy','dateIdentified','license','rightsHolder','recordedBy','typeStatus','establishmentMeans','lastInterpreted','mediaType','issue']]
 	#Convert column names to snake_case
 	df.columns = (df.columns
