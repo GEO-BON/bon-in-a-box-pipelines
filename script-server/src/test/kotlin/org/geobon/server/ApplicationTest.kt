@@ -44,9 +44,9 @@ class ApplicationTest {
                 assertContains(jsonResult, "helloWorld.json")
             }
 
-            var id = ""
+            var id:String
             client.post("/pipeline/helloWorld.json/run") {
-                setBody("{\"helloWorld>helloPython.yml@0.some_int\":1}")
+                setBody("{\"helloWorld>helloPython.yml@0|some_int\":1}")
             }.apply {
                 assertEquals(HttpStatusCode.OK, status)
                 id = bodyAsText()
@@ -65,6 +65,35 @@ class ApplicationTest {
                 val files = folder.listFiles()
                 assertTrue(files!!.size >= 3, "Expected input, output and log files to be there.\nFound ${files.toList()}")
             }
+        }
+    }
+
+    @Test
+    fun testPipelineWithSubfolder() = testApplication {
+        application {
+            configureRouting()
+        }
+
+        var id: String
+        client.post("/pipeline/subfolder>in_subfolder.json/run") {
+            setBody("{\"helloWorld>helloPython.yml@0|some_int\":1}")
+        }.apply {
+            assertEquals(HttpStatusCode.OK, status)
+            id = bodyAsText()
+        }
+
+        client.get("/pipeline/$id/outputs").apply {
+            val result = JSONObject(bodyAsText())
+            println(result)
+
+            val folder = File(
+                outputRoot,
+                result.getString(result.keys().next())
+            )
+            assertTrue(folder.isDirectory)
+
+            val files = folder.listFiles()
+            assertTrue(files!!.size >= 3, "Expected input, output and log files to be there.\nFound ${files.toList()}")
         }
     }
 

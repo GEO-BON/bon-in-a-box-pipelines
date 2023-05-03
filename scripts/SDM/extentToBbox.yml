@@ -1,13 +1,68 @@
 script: extentToBbox.R
-description: "This script convert an extent (shapefile format) to a bbox in the WGS84 format."
+description: "This script convert a spatial object (a shapefile, a table of coordinates or the coordiantes of an extent) into a bbox."
 inputs:
-  extent:
-    label: extent
-    description: shapefile, representing a study extent
+  source:
+    label: source
+    description: string, source of the spatial object
+    type: options
+    options:
+      - df_coordinates
+      - box_coordinates
+      - shapefile
+    example: box_coordinates
+  df_coordinates:
+    label: df coordinates
+    description: dataframe, containing coordinates
+    type: text/tab-separated-values
+    example: "/scripts/SDM/runModel_presence_background.tsv"
+  lon:
+    label: longitude column
+    description: string, name of the longitude column in df_coordinates
+    type: text
+    example: "lon"
+  lat:
+    label: latitude column
+    description: string, name of the latitude column in df_coordinates
+    type: text
+    example: "lat"
+  xmin:
+    label: xmin
+    description: xmin
+    type: float
+    example: -2316297
+  ymin:
+    label: ymin
+    description: ymin
+    type: float
+    example: -1971146
+  xmax:
+    label: xmax
+    description: xmax
+    type: float
+    example: 1015207
+  ymax:
+    label: ymax
+    description: ymax
+    type: float
+    example: 1511916
+  path_shp:
+    label: shapefile path 
+    description: string, path to a shapefile
     type: application/dbf
     example: "/scripts/SDM/extentToBbox_extent.shp"
+  proj_from:
+    label: input projection system 
+    description: string, projection of the input spatial object
+    type: text
+    example: "EPSG:6623"
+  proj_to:
+    label: output bbox projection system 
+    description: string, projection of output bbox
+    type: text
+    example: "EPSG:6623"  
+
 outputs:
   bbox:
     label: bbox
-    description: dataframe, containing the coordinates of the bbox
-    type: text/tab-separated-values
+    description: vector of float, containing the coordinates of the bbox
+    type: float[]

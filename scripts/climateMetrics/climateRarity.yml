@@ -1,25 +1,32 @@
-script: climateRarity.R
-description: This script calculates cliamte rarity, using a moving window approach.
+script: climateMetrics.R
+description: 
+  This script calculates climate rarity.
+  It shows how different the mean temperature is from its surroundings, using moving window and a temperature threshold.
 inputs:
   rcp:
     label: rcp
-    description: Representative Concentration Pathway Scenarios (ssp126, ssp370, ssp585)
-    type: text
+    description: shared socioeconomic pathways (see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways)
+    type: options
+    options: 
+      - ssp126
+      - ssp370
+      - ssp585
     example: ssp126
   spatial_res:
-    label: spatial resolution
-    description: pixel size (in meters)
+    label: spatial resolution output
+    description: pixel size (in meters) of the output raster
     type: int
-    example: 10000 
+    example: 1000 
   srs_cube: 
-    label: srs cube
-    description: target spatial reference system
+    label: spatial reference output
+    description: target spatial reference system of the output raster
     type: text
     example: EPSG:6623
   aggregation:
-    label: aggregation
-    description: method of aggregation for 
-    type: text
+    label: aggregation method
+    description: method of aggregation for the temperature data
+    type: options
+    options: [min, max, mean, median, first]
     example: mean
   moving_window:
     label: search moving window
@@ -27,82 +34,43 @@ inputs:
     type: int
     example: 11
   t0:
-    label: t0
-    description: start time 
+    label: current climate start
+    description:  Current climate start time, in format aaaa-mm-dd
     type: text
     example: "1981-01-01"
   t1:
-    label: t1
-    description: end time 
+    label: current climate end
+    description: Current climate end time, in format aaaa-mm-dd 
     type: text
     example: "1981-12-31"
   t_match: 
-    label: threshold match
-    description: plus/minus threshold mean temperature
+    label: threshold climate match
+    description: Acceptable difference of climate (e.g., mean temperature in °C) to consider that the climate is similar.
     type: float
-    example: 0.25
+    example: 1
   time_span:
-    label: time span
-    description: period climate projection
-    type: text
+    label: future time span
+    description: period for climate projection, start year to end year
+    type: options
+    options:
+      - 2011-2040 
+      - 2041-2070
+      - 2071-2100
     example: 2041-2070
-  use_obs:
-    label: use obs
-    description: use observations
-    type: boolean
-    example: TRUE 
-  species:
-    label: species names
-    description: scientific name of the species
-    type: text
-    example: "Glyptemys insculpta"
-  species_year_start:
-    label: year start
-    description: starting year to load observations
-    type: int
-    example: 1980
-  species_year_end:
-    label: year end
-    description: ending year to load observations
-    type: int
-    example: 2020
-  species_limit:
-    label: limit
-    description: maximum number of observations to load
-    type: int
-    example: 2000
   bbox:
-    label: bbox coordinates
-    description: coordinates of the bbox, in the order xmin, xmax, ymax, ymin.
+    label: bounding box
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297,-1971146,1015207,1511916]
-  buffer_box:
-    label: buffer box
-    description: buffer surronding box
-    type: int
-    example: 0
-  shapefile_path:
-    label: shapefile path
-    description: Path to a .shp file representing the extent.
-    type: application/dbf
-    example: "/output/studyExtent/studyExtent_R/a3cb46ded0b02d361f7450f439dace86/study_extent.shp"
 outputs:
   output_tif:
-    label: output metric
-    description: metric raster file 
-    type: image/tiff;application=geotiff
-    example: local_velocity.tif
+    label: output
+    description: Raster file, values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
+    type: image/tiff;application=geotiff[]
+    example: climate_current_rarity.tif
+    range: [0,1]
   metric:
-    label: metric
+    label: metric name
     description: climate metric (e.g., local, forward, backward, rarity) 
     type: text
     example: local
-references:
-  - text: Carroll et. al. (2015). Biotic and climatic velocity identify contrasting areas of vulnerability to climate change. PloS one, 10(10), e0140486.
-    doi: https://doi.org/10.1371/journal.pone.0140486
-  - text: Hamann et. al. (2015). Velocity of climate change algorithms for guiding conservation and management. Global Change Biology, 21(2), 997-1004.
-    doi: https://doi.org/10.1111/gcb.12736
-  - text: Loarie et. al. (2009). The velocity of climate change. Nature, 462(7276), 1052-1055.
-    doi: https://doi.org/10.1038/nature08649
-  - text: Sandel et. al. (2011). The influence of Late Quaternary climate-change velocity on species endemism. Science, 334(6056), 660-664.
-    doi: https://doi.org/10.1126/science.1210173

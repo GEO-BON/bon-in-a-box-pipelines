@@ -19,11 +19,21 @@ internal class OutputTest {
     }
 
     @Test
-    fun givenDisconnectedOutput_whenPull_thenExceptionThrown() = runTest {
+    fun givenDisconnectedOutput_whenCallingFunction_thenExceptionThrown() = runTest {
         val underTest = Output("text/plain")
-
         assertFailsWith<Exception> {
             println(underTest.pull())
+        }
+
+        assertFailsWith<Exception> {
+            println(underTest.pullIf { true })
+        }
+
+        // In this case the error goes through the validation result
+        assert(underTest.validateGraph().isNotEmpty())
+
+        assertFailsWith<Exception> {
+            println(underTest.getId())
         }
     }
 
