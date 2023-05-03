@@ -40,7 +40,7 @@
     years_dif <- as.numeric(substr(gdalcubes::dimensions(cube_future)[[1]][2], 1,4)) - 
       as.numeric(substr(gdalcubes::dimensions(tmean_cube)[[1]][2], 1,4))
     
-    
+   srs_cube <- raster::crs(raster_future) 
     
   if(metric == "local"){
   
@@ -49,7 +49,7 @@
     # Neighborhood Slope Algorithm, average maximum technique
       f <- matrix(1, nrow=3, ncol=3)
       x <- tmean_current_C$mean_tmean
-      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)|>`/`(raster::res(x)[1]/raster::res(x)[1])
+      spatial_tmean_current <- raster::focal(x, w=f, fun=function(x, ...) sum(abs(x[-5]-x[5]))/8, pad=TRUE, padValue=NA)%>%`/`(raster::res(x)[1]/raster::res(x)[1])
       
     # Truncating zero values
       spatial_tmean_current_0 <- spatial_tmean_current
@@ -61,7 +61,7 @@
   
   # Local climate-change velocity (meters/year)
     local_velocity <- Temporal_tmean/spatial_tmean_current_0
-      names(local_velocity) <- "local"
+      names(local_velocity) <- "local_climate_velocity"
       
     return(local_velocity)
   }
@@ -87,24 +87,24 @@
     
     m     <- sapply(u, match)                                         # list of climate matches for unique values
     
-    system.time(
+    
       for (i in 1:length(p)) {                                        # loop for all grid cells of p
         mi   <- m[[which(u==p[i])]]                                   # recalls list of climate matches for p[i]
         d[i] <- sqrt(min((x[i]-x[mi])^2 + (y[i]-y[mi])^2))            # distance to closest match
         
       }
-    )
+    
     
     # Create matrix with coordinates x and y and distance values
       d[d==Inf] <- 10000000                                           # sets no analogue to 10,000km
       out=cbind(x,y, distance=d) 
     
     # forward_velocity
-      forward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)|>
-        raster::setExtent(tmean_current_C)|>`/`(1000)|>
-        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)|>`/`(years_dif)|>
+      forward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
+        raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
+        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
-      names(forward_velocity) <- "forward"
+      names(forward_velocity) <- "forward_climate_velocity"
       
     return(forward_velocity)
   
@@ -132,24 +132,24 @@
     
     m     <- sapply(u, match)                                         # list of climate matches for unique values
     
-    system.time(
+   
       for (i in 1:length(p)) {                                        # loop for all grid cells of p
         mi   <- m[[which(u==p[i])]]                                   # recalls list of climate matches for p[i]
         d[i] <- sqrt(min((x[i]-x[mi])^2 + (y[i]-y[mi])^2))            # distance to closest match
         
       }
-    )
+   
       
       # Create matrix with coordinates x and y and distance values
       d[d==Inf] <- 10000000                                           # sets no analogue to 10,000km
       out=cbind(x,y, distance=d) 
       
       # forward_velocity
-      backward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)|>
-        raster::setExtent(tmean_current_C)|>`/`(1000)|>
-        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)|>`/`(years_dif)|>
+      backward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
+        raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
+        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
         raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
-      names(backward_velocity) <- "backward"
+      names(backward_velocity) <- "backward_climate_velocity"
       
       return(backward_velocity)
       
@@ -167,7 +167,7 @@
                                              sum((x[focalCell]-x) <= tol, ...)/sum(!is.na(x))
                                     }
     )
-    names(tmean_current_rarity) <- "current_rarity"
+    names(tmean_current_rarity) <- "climate_current_rarity"
                                     
     tmean_future_rarity <- raster::focal(tmean_future_C,
                                           w=matrix(1, moving_window, moving_window),
@@ -178,16 +178,16 @@
                                           }             
                                     
     )
-    names(tmean_future_rarity) <- "future_rarity"
+    names(tmean_future_rarity) <- "climate_future_rarity"
     
     climate_rarity <- raster::stack(tmean_current_rarity, tmean_future_rarity)
     
     
     return(climate_rarity)
     
-  }
     
- 
+  }
+   
    
   }
   

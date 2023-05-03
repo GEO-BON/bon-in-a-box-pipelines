@@ -14,12 +14,9 @@ library("dplyr")
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/rangePredictionsFunc.R", sep = "/"))
 
-
-
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
-
 
 range <- range_predictions(input$predictions)
 output_range <- file.path(outputFolder, "range_predictions.tif")

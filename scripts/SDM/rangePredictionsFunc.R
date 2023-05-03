@@ -24,7 +24,7 @@ return(range)
   range_predictions <- function(predictions) {
     # transform the list into a terra rast object
     predictions <- terra::rast(predictions)
-    range <- terra::app(predictions, fun = function(i) {max(i) - min(i) })
+    range <- terra::app(predictions, fun = function(i) {quantile(i,0.975) - quantile(i,0.025) })
       names(range) <- "range_predictions"
  return(range)
   }
