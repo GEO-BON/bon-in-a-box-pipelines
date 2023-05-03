@@ -5,6 +5,9 @@ import { Tabs, Tab, TabList, TabPanel } from "react-tabs"
 
 import 'react-tabs/style/react-tabs.css';
 import './react-tabs-dark.css'
+import ScriptInput from "./ScriptInput";
+
+const yaml = require('js-yaml');
 
 /**
  * An input that we use to fill the input file's content. 
@@ -17,11 +20,11 @@ export default function InputFileInput({ metadata, inputFileContent, setInputFil
     let inputExamples = {};
 
     if (metadata && metadata.inputs) {
-      Object.keys(metadata.inputs).forEach((inputKey) => {
-        let input = metadata.inputs[inputKey];
+      Object.keys(metadata.inputs).forEach((inputId) => {
+        let input = metadata.inputs[inputId];
         if (input) {
           const example = input.example;
-          inputExamples[inputKey] = example === undefined ? null : example;
+          inputExamples[inputId] = example === undefined ? null : example;
         }
       });
     }
@@ -38,7 +41,7 @@ export default function InputFileInput({ metadata, inputFileContent, setInputFil
       </TabList>
 
       <TabPanel>
-        New form here
+        {metadata && <InputForm inputs={metadata.inputs} inputFileContent={inputFileContent} setInputFileContent={setInputFileContent} />}
       </TabPanel>
       <TabPanel>
         <AutoResizeTextArea data={inputFileContent} setData={setInputFileContent} />
@@ -46,4 +49,27 @@ export default function InputFileInput({ metadata, inputFileContent, setInputFil
       </TabPanel>
     </Tabs>
   </>
+}
+
+const InputForm = ({inputs, inputFileContent, setInputFileContent}) => {
+  if(!inputs)
+    return <p>No Inputs</p>
+
+  function updateInputFile(inputId, value) {
+    setInputFileContent(content => {
+      content[inputId] = value
+      return content
+    })
+  }
+
+  return Object.entries(inputs).map(([inputId, inputDescription]) => {
+    const { label, description, options, ...theRest } = inputDescription
+
+    return <div key={inputId}>
+      <label htmlFor={inputId}><strong>{label}</strong></label>&nbsp;
+      <ScriptInput id={inputId} type={inputDescription.type} options={options} value={inputFileContent && inputFileContent[inputId]}
+        onValueUpdated={value => updateInputFile(inputId, value)} />
+      <pre>{description + '\n' + yaml.dump(theRest)}</pre>
+    </div>
+  })
 }
