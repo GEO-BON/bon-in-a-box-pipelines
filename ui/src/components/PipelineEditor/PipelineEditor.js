@@ -15,7 +15,7 @@ import ReactFlow, {
 } from 'react-flow-renderer/nocss';
 
 import IONode from './IONode'
-import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
+import ConstantNode from './ConstantNode'
 import UserInputNode from './UserInputNode';
 import PopupMenu from './PopupMenu';
 import { layoutElements } from './react-flow-utils/Layout'
@@ -24,6 +24,7 @@ import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConn
 import { getStepDescription } from './ScriptDescriptionStore'
 import {getStepNodeId, getStepOutput, getStepInput, getStepFile, toIOId} from '../../utils/IOId'
 import sleep from '../../utils/Sleep';
+import { ARRAY_PLACEHOLDER } from '../form/ScriptInput';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
