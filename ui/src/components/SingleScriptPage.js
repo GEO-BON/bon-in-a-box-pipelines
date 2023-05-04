@@ -116,21 +116,14 @@ function SingleScriptForm(props) {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label>
-        Script file:
-        <br />
-        <Select name="scriptFile" className="blackText" options={scriptFileOptions}
-          defaultValue={{ label: defaultScript, value: defaultScript }}
-          onChange={(v) => loadScriptMetadata(v.value)} />
-      </label>
+      <label htmlFor='scriptFile'>Script file:</label>
+      <Select id="scriptFile" name="scriptFile" className="blackText" options={scriptFileOptions}
+        defaultValue={{ label: defaultScript, value: defaultScript }}
+        onChange={(v) => loadScriptMetadata(v.value)} />
       <br />
-      <label>
-        Script input:
-        <br />
-        <InputFileInput metadata={props.scriptMetadata}
-          inputFileContent={inputFileContent}
-          setInputFileContent={setInputFileContent} />
-      </label>
+      <InputFileInput metadata={props.scriptMetadata}
+        inputFileContent={inputFileContent}
+        setInputFileContent={setInputFileContent} />
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
     </form>
