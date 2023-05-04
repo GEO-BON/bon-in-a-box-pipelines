@@ -3,7 +3,7 @@ import Select from 'react-select';
 
 import { StepResult } from "./StepResult";
 import spinner from '../img/spinner.svg';
-import { GeneralDescription, InputsDescription, OutputsDescription } from './ScriptDescription';
+import { GeneralDescription } from './ScriptDescription';
 import InputFileInput from './form/InputFileInput';
 
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})

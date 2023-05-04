@@ -58,26 +58,29 @@ const InputForm = ({inputs, inputFileContent, setInputFileContent}) => {
 
   function updateInputFile(inputId, value) {
     setInputFileContent(content => {
-      content[inputId] = value
-      return content
+      const newContent = {...content}
+      newContent[inputId] = value
+      return newContent
     })
   }
 
-  return <table className="inputFileFields" >
-    {Object.entries(inputs).map(([inputId, inputDescription]) => {
-      const { label, description, options, ...theRest } = inputDescription
+  return <table className="inputFileFields">
+    <tbody>
+      {Object.entries(inputs).map(([inputId, inputDescription]) => {
+        const { label, description, options, ...theRest } = inputDescription
 
-      return <tr key={inputId}>
-        <td className="inputCell">
-          <label htmlFor={inputId}><strong>{label}</strong></label>
-          <ScriptInput id={inputId} type={inputDescription.type} options={options} value={inputFileContent && inputFileContent[inputId]}
-            onValueUpdated={value => updateInputFile(inputId, value)} />
-        </td>
-        <td className="descriptionCell">
-          {description + '\n' + yaml.dump(theRest)}
-        </td>
-      </tr>
-    })}
+        return <tr key={inputId}>
+          <td className="inputCell">
+            <label htmlFor={inputId}><strong>{label}</strong></label>
+            <ScriptInput id={inputId} type={inputDescription.type} options={options} value={inputFileContent && inputFileContent[inputId]}
+              onValueUpdated={value => updateInputFile(inputId, value)} />
+          </td>
+          <td className="descriptionCell">
+            {description + '\n' + yaml.dump(theRest)}
+          </td>
+        </tr>
+      })}
+    </tbody>
   </table>
     
 }
