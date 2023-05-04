@@ -5,6 +5,7 @@ import { Tabs, Tab, TabList, TabPanel } from "react-tabs"
 
 import 'react-tabs/style/react-tabs.css';
 import './react-tabs-dark.css'
+import './InputFileInputs.css'
 import ScriptInput from "./ScriptInput";
 
 const yaml = require('js-yaml');
@@ -62,14 +63,21 @@ const InputForm = ({inputs, inputFileContent, setInputFileContent}) => {
     })
   }
 
-  return Object.entries(inputs).map(([inputId, inputDescription]) => {
-    const { label, description, options, ...theRest } = inputDescription
+  return <table className="inputFileFields" >
+    {Object.entries(inputs).map(([inputId, inputDescription]) => {
+      const { label, description, options, ...theRest } = inputDescription
 
-    return <div key={inputId}>
-      <label htmlFor={inputId}><strong>{label}</strong></label>&nbsp;
-      <ScriptInput id={inputId} type={inputDescription.type} options={options} value={inputFileContent && inputFileContent[inputId]}
-        onValueUpdated={value => updateInputFile(inputId, value)} />
-      <pre>{description + '\n' + yaml.dump(theRest)}</pre>
-    </div>
-  })
+      return <tr key={inputId}>
+        <td className="inputCell">
+          <label htmlFor={inputId}><strong>{label}</strong></label>
+          <ScriptInput id={inputId} type={inputDescription.type} options={options} value={inputFileContent && inputFileContent[inputId]}
+            onValueUpdated={value => updateInputFile(inputId, value)} />
+        </td>
+        <td className="descriptionCell">
+          {description + '\n' + yaml.dump(theRest)}
+        </td>
+      </tr>
+    })}
+  </table>
+    
 }
