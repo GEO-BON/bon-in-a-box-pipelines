@@ -26,8 +26,8 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
 
     case 'boolean':
       return <input type='checkbox' {...passedProps}
-        defaultValue={value} checked={value}
-        onBlur={e => onValueUpdated(e.target.value)} />
+        defaultChecked={value}
+        onChange={e => onValueUpdated(e.target.checked)}  />
 
     case 'int':
       return <input type='text' {...passedProps} defaultValue={value}
