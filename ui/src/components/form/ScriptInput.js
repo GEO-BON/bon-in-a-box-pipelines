@@ -13,16 +13,19 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
 
   switch (type) {
     case 'options':
-      if (options)
-        return <select {...passedProps} defaultValue={value} onBlur={e => onValueUpdated(e.target.value)}>
+      if (options) {
+        return <select {...passedProps}
+          value={value}
+          onChange={e => onValueUpdated(e.target.value)}>
           <option hidden></option> {/* Allows the box to be empty when value not set */}
           {options.map(choice =>
-            <option key={choice} value={choice} selected={choice === value}>{choice}</option>
+            <option key={choice} value={choice}>{choice}</option>
           )}
         </select>
 
-      else
+      } else {
         return <span className='ioWarning'>Options not defined</span>
+      }
 
     case 'boolean':
       return <input type='checkbox' {...passedProps}
