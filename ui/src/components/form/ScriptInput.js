@@ -6,7 +6,7 @@ export const CONSTANT_PLACEHOLDER = 'Constant';
 export default function ScriptInput({ type, value, options, onValueUpdated, ...passedProps }) {
 
   if(type.endsWith('[]')) {
-    return <AutoResizeTextArea {...passedProps} defaultValue={value.join(', ')}
+    return <AutoResizeTextArea {...passedProps} defaultValue={value && value.join(', ')}
         placeholder={ARRAY_PLACEHOLDER}
         onBlur={e => onValueUpdated(e.target.value.split(',').map(v=>v.trim()))} />
   }
