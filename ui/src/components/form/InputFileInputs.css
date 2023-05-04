@@ -25,3 +25,9 @@ table.inputFileFields td.inputCell {
 table.inputFileFields td.descriptionCell {
     white-space: pre-wrap;
 }
+
+@media all and (max-width: 599px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+}
