@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { AutoResizeTextArea } from "./AutoResizeTextArea";
+import YAMLTextArea from "./YAMLTextArea";
 import { InputsDescription } from "../ScriptDescription";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs"
 
@@ -45,7 +45,7 @@ export default function InputFileInput({ metadata, inputFileContent, setInputFil
         {metadata && <InputForm inputs={metadata.inputs} inputFileContent={inputFileContent} setInputFileContent={setInputFileContent} />}
       </TabPanel>
       <TabPanel>
-        <AutoResizeTextArea data={inputFileContent} setData={setInputFileContent} />
+        <YAMLTextArea data={inputFileContent} setData={setInputFileContent} />
         <InputsDescription metadata={metadata} />
       </TabPanel>
     </Tabs>
