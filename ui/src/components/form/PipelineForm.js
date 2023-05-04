@@ -81,20 +81,15 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label>
-        Pipeline:
-        <br />
-        <Select name="pipelineChoice" className="blackText" options={pipelineOptions}
-          defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
-          onChange={(v) => loadPipelineMetadata(v.value)} />
-      </label>
+      <label htmlFor='pipelineChoice'>Pipeline:</label>
+      <Select id="pipelineChoice" name="pipelineChoice" className="blackText" options={pipelineOptions}
+        defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
+        onChange={(v) => loadPipelineMetadata(v.value)} />
       <br />
-      <label>
-        <InputFileInput
-          metadata={pipelineMetadata}
-          inputFileContent={inputFileContent}
-          setInputFileContent={setInputFileContent} />
-      </label>
+      <InputFileInput
+        metadata={pipelineMetadata}
+        inputFileContent={inputFileContent}
+        setInputFileContent={setInputFileContent} />
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
     </form>
