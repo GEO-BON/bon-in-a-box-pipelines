@@ -13,13 +13,13 @@ export default function AutoResizeTextArea({defaultValue, ...props}) {
    * @param {textarea} input
    */
   function resize(input) {
-    input.style.height = "auto";
-    input.style.height = (input.scrollHeight) + "px";
+    input.style.height = 0;
+    input.style.height = input.scrollHeight + "px";
 
     input.style.width = "auto";
-    input.style.width = (input.scrollWidth) + "px";
+    input.style.width = input.scrollWidth + "px";
   }
 
-  return <textarea ref={textAreaRef} defaultValue={defaultValue} {...props} 
-    onChange={(e) => resize(e.target)} />;
+  return <textarea className='autoResize' ref={textAreaRef} defaultValue={defaultValue} {...props} 
+    onChange={(e) => resize(e.target)} />;  
 }
