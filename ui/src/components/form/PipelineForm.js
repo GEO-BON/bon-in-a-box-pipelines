@@ -18,6 +18,7 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
 
   function clearPreviousRequest() {
     showHttpError(null);
+    setInputFileContent({})
     setRunId(null);
   }
 
