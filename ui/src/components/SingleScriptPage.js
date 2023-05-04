@@ -28,11 +28,6 @@ export function SingleScriptPage(props) {
     ) : (
       <>
         {resultData && resultData.httpError && <p key="httpError" className="error">{resultData.httpError}</p>}
-        {scriptMetadata && <pre key="metadata">
-             <GeneralDescription ymlPath={null} metadata={scriptMetadata} />
-             <InputsDescription metadata={scriptMetadata} />
-             <OutputsDescription metadata={scriptMetadata} />
-           </pre>}
         {resultData && <StepResult data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
       </>
     )}
@@ -120,6 +115,12 @@ function SingleScriptForm(props) {
       <Select id="scriptFile" name="scriptFile" className="blackText" options={scriptFileOptions}
         defaultValue={{ label: defaultScript, value: defaultScript }}
         onChange={(v) => loadScriptMetadata(v.value)} />
+      <br />
+      {props.scriptMetadata &&
+        <pre key="metadata">
+          <GeneralDescription ymlPath={null} metadata={props.scriptMetadata} />
+        </pre>
+      }
       <br />
       <InputFileInput metadata={props.scriptMetadata}
         inputFileContent={inputFileContent}
