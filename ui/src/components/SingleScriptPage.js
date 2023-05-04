@@ -49,6 +49,7 @@ function SingleScriptForm(props) {
   function loadScriptMetadata(choice) {
     // TODO: cancel previous pending request?
     props.setRequestState(RequestState.idle);
+    setInputFileContent({})
     props.setResultData(null);
 
     var callback = function (error, data, response) {
