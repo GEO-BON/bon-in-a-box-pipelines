@@ -1,11 +1,12 @@
+import AutoResizeTextArea from './AutoResizeTextArea'
 
-export const ARRAY_PLACEHOLDER = 'Array';
+export const ARRAY_PLACEHOLDER = 'Array (comma-separated)';
 export const CONSTANT_PLACEHOLDER = 'Constant';
 
 export default function ScriptInput({ type, value, options, onValueUpdated, ...passedProps }) {
 
   if(type.endsWith('[]')) {
-    return <input type='text' {...passedProps} defaultValue={value}
+    return <AutoResizeTextArea {...passedProps} defaultValue={value}
         placeholder={ARRAY_PLACEHOLDER}
         onBlur={e => onValueUpdated(e.target.value.split(','))} />
   }

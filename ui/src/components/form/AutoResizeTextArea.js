@@ -1,10 +1,12 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
-const yaml = require('js-yaml');
+export default function AutoResizeTextArea({defaultValue, ...props}) {
 
-export const AutoResizeTextArea = (({data, setData}) => {
-  const textareaRef = useRef(null);
+  const textAreaRef = useRef(null)
 
+  useEffect(() => {
+    resize(textAreaRef.current)
+  }, [defaultValue])
 
   /**
    * Automatic horizontal and vertical resizing of textarea
@@ -18,33 +20,6 @@ export const AutoResizeTextArea = (({data, setData}) => {
     input.style.width = (input.scrollWidth) + "px";
   }
 
-  useEffect(() => {
-    const textarea = textareaRef.current;
-    if(isEmptyObject(data)) {
-      textarea.disabled = true
-      textarea.placeholder = "No inputs"
-      textarea.value = ""
-    } else {
-      textarea.disabled = false
-      textarea.placeholder = ""
-      textarea.value = yaml.dump(data,
-        {
-          'lineWidth': 124,
-          'sortKeys': true
-        })
-    }
-
-    resize(textarea)
-  }, [data]);
-
-  return <textarea ref={textareaRef} className="inputFile" type="text"
-    onInput={(e) => resize(e.target)} 
-    onBlur={(e) => setData(yaml.load(e.target.value))}>
-    </textarea>;
-})
-
-// https://stackoverflow.com/a/34491966/3519951
-function isEmptyObject(obj) { 
-  for (var _ in obj) { return false; }
-  return true;
+  return <textarea ref={textAreaRef} defaultValue={defaultValue} {...props} 
+    onChange={(e) => resize(e.target)} />;
 }
