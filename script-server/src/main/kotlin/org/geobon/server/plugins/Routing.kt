@@ -144,13 +144,13 @@ fun Application.configureRouting() {
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
             runCatching {
-                Pipeline(descriptionPath, inputFileContent)
+                RootPipeline(descriptionPath.replace(FILE_SEPARATOR, '/'), inputFileContent)
             }.onSuccess { pipeline ->
                 runningPipelines[runId] = pipeline
                 try {
                     call.respondText(runId)
 
-                    val scriptOutputFolders = pipeline.execute().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
+                    val scriptOutputFolders = pipeline.pullFinalOutputs().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
                     pipelineOutputFolder.mkdirs()
                     val resultFile = File(pipelineOutputFolder, "output.json")
                     logger.trace("Outputting to $resultFile")
