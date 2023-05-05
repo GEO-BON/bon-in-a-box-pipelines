@@ -16,6 +16,14 @@ inputs:
     description: Vector of strings, collection name followed by '|' followed by item id
     type: text[]
     example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+  weight_matrix_with_ids:
+    label: Weight matrix with ids
+    description: Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set. 
+    type: text
+    example: |
+      layer, current, change
+      GBSTAC|chelsa-clim|bio1, 0.7, 0.6
+      GBSTAC|chelsa-clim|bio2, 0.3, 0.4
   proj:
     label: projection system
     description: String, projection of the rasters
@@ -36,3 +44,7 @@ outputs:
     label: rasters
     description: array of output raster paths
     type: image/tiff;application=geotiff[]
+  weight_matrix_with_layers:
+    label: Weight matrix with layers
+    description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
+    type: text
