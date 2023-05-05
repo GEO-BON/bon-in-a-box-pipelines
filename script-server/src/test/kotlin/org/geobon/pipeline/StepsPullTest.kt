@@ -29,9 +29,9 @@ internal class StepsPullTest {
     @Test
     fun `given pipeline with single flow_when pulling final step_then all nodes are pulled`() = runTest {
         // Note: in non-test code: surround whole block with try/catch, there are so many !! in there
-        val step1 = ScriptStep("0in1out.yml") // 234
-        val step2 = ScriptStep("1in1out.yml", inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235
-        val finalStep = ScriptStep("1in1out.yml", inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
+        val step1 = ScriptStep("0in1out.yml", StepId("script", "0")) // 234
+        val step2 = ScriptStep("1in1out.yml", StepId("script", "1"), inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235
+        val finalStep = ScriptStep("1in1out.yml", StepId("script", "2"), inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
 
         assertEquals(236, finalStep.outputs["increment"]!!.pull())
     }
@@ -39,10 +39,10 @@ internal class StepsPullTest {
     @Test
     fun `given pipeline with branches_when pulling final step_then both branches are executed`() = runTest {
         // Note: in non-test code: surround whole block with try/catch, there are so many !! in there
-        val step1 = ScriptStep("0in1out.yml") // 234
-        val step2 = ScriptStep("1in2out.yml", inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235, "What a wonderful "
+        val step1 = ScriptStep("0in1out.yml", StepId("script", "0")) // 234
+        val step2 = ScriptStep("1in2out.yml", StepId("script", "1"), inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235, "What a wonderful "
 
-        val intBranch = ScriptStep("1in1out.yml", inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
+        val intBranch = ScriptStep("1in1out.yml", StepId("script", "2"), inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
         val stringBranch = ConcatenateStep(mutableMapOf(
             "1" to step2.outputs["tell_me"]!!,
             "2" to ConstantPipe("text/plain", "world!"))) // "What a wonderful world!" or "world!What a wonderful "
@@ -60,14 +60,14 @@ internal class StepsPullTest {
     @Test
     fun `given pipeline dead branch_when pulling final step_then dead branch not executed`() = runTest {
         // Note: in non-test code: surround whole block with try/catch, there are so many !! in there
-        val step1 = ScriptStep("0in1out.yml") // 234
-        val step2 = ScriptStep("1in2out.yml", inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235, "What a wonderful "
-        val goodBranch = ScriptStep("1in1out.yml", inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
+        val step1 = ScriptStep("0in1out.yml", StepId("script", "0")) // 234
+        val step2 = ScriptStep("1in2out.yml", StepId("script", "1"), inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235, "What a wonderful "
+        val goodBranch = ScriptStep("1in1out.yml", StepId("script", "2"), inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
         val deadBranch = ConcatenateStep(mutableMapOf(
             "1" to step2.outputs["tell_me"]!!,
             "2" to ConstantPipe("text/plain", "world!"))) // "What a wonderful world!" or "world!What a wonderful "
 
-        val finalStep = ScriptStep("1in1out.yml", inputs = mutableMapOf("some_int" to goodBranch.outputs["increment"]!!)) // 237
+        val finalStep = ScriptStep("1in1out.yml", StepId("script", "3"), inputs = mutableMapOf("some_int" to goodBranch.outputs["increment"]!!)) // 237
 
         assertEquals(237, finalStep.outputs["increment"]!!.pull())
         assertNull(deadBranch.outputs[ConcatenateStep.STRING]!!.value)
@@ -76,9 +76,11 @@ internal class StepsPullTest {
     @Test
     fun `given pipeline_when script fails_then pipeline is halted with exception`() {
         // Note: in non-test code: surround whole block with try/catch, there are so many !! in there
-        val step1 = ScriptStep("0in1out.yml") // 234
-        val step2 = ScriptStep("1in1out_fail.yml", inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235
-        val finalStep = ScriptStep("1in1out.yml", inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
+        val step1 = ScriptStep("0in1out.yml", StepId("script", "0")) // 234
+        val step2 = ScriptStep("1in1out_fail.yml", StepId("script", "1"),
+            inputs = mutableMapOf("some_int" to step1.outputs["randomness"]!!)) // 235
+        val finalStep = ScriptStep("1in1out.yml", StepId("script", "2"),
+            inputs = mutableMapOf("some_int" to step2.outputs["increment"]!!)) // 236
 
         try {
             runReliableTest {

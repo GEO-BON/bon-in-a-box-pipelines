@@ -69,7 +69,7 @@
       }
     },
     "outputs": {
-      "assertArray.yml@0.the_same": {
+      "assertArray.yml@0|the_same": {
         "description": "The same array as in the inputs. But this crashes if not an array",
         "label": "Same value",
         "type": "int[]",
