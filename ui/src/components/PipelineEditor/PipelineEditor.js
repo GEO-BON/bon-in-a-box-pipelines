@@ -24,7 +24,6 @@ import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConn
 import { getStepDescription } from './ScriptDescriptionStore'
 import {getStepNodeId, getStepOutput, getStepInput, getStepFile, toIOId} from '../../utils/IOId'
 import sleep from '../../utils/Sleep';
-import { ARRAY_PLACEHOLDER } from '../form/ScriptInput';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -101,22 +100,11 @@ export function PipelineEditor(props) {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
-  const onConstantValueChange = useCallback((event) => {
+  const onConstantValueChange = useCallback((id, value) => {
     setNodes((nds) =>
       nds.map((node) => {
-        if(node.id !== event.target.id) {
+        if(node.id !== id) {
           return node
-        }
-
-        let value
-        if(event.target.type === 'checkbox') {
-          value = event.target.checked
-        } else {
-          value = event.target.value
-
-          if(event.target.placeholder === ARRAY_PLACEHOLDER) {
-            value = value.split(',').map(v => v.trim())
-          }
         }
 
         return {
@@ -125,10 +113,10 @@ export function PipelineEditor(props) {
             ...node.data,
             value,
           },
-        };
+        }
       })
-    );
-  }, [setNodes]);
+    )
+  }, [setNodes])
 
   const onSelectionChange = useCallback((selected) => {
     setSelectedNodes(selected.nodes)
@@ -184,7 +172,7 @@ export function PipelineEditor(props) {
       position,
       dragHandle: '.dragHandle',
       data: {
-        onChange: onConstantValueChange,
+        onConstantValueChange,
         onPopupMenu,
         type: fieldDescription.type,
         value: fieldDescription.example,
@@ -592,7 +580,7 @@ export function PipelineEditor(props) {
             node.data.injectOutput = injectOutput
             break;
           case 'constant':
-            node.data.onChange = onConstantValueChange
+            node.data.onConstantValueChange = onConstantValueChange
             node.data.onPopupMenu = onPopupMenu
             break;
           case 'userInput':
