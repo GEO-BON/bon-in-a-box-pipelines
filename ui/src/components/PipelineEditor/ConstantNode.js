@@ -6,7 +6,7 @@ export default function ConstantNode({ id, data, type }) {
 
   return (
     <div className='constant'>
-      <span className='dragHandle'>{data.type} </span>
+      <p className='dragHandle'>{data.type} </p>
       <ScriptInput id={id} type={data.type} value={data.value} options={data.options}
         onValueUpdated={v => data.onConstantValueChange(id, v)} />
       <Handle type="source" position={Position.Right} />
