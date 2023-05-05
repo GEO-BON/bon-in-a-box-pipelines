@@ -46,7 +46,7 @@ function FoldableOutputInternal({toggle, active, className, title, inline, inlin
         </div>
 
        
-        {keepWhenHidden ?  // If we need to keep it when hidden (such as not to lose the content of a form), then we se height to 0 when folded.
+        {keepWhenHidden ?  // If we need to keep it when hidden (such as not to lose the content of a form), then we set height to 0 when folded.
             <div className="outputContent" style={{
                 height: active ? "auto" : "0px",
                 overflow: 'hidden'
