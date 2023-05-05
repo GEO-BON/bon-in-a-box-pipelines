@@ -63,6 +63,12 @@ aside.scriptChooser .description {
     border-color: #0041d0;
 }
 
+.constant p {
+    display:inline-block;
+    vertical-align: top;
+    margin: 1px 10px 0 0;
+}
+
 .dragHandle {
     cursor: grab;
 }
