@@ -7,7 +7,8 @@ export default function ConstantNode({ id, data, type }) {
   return (
     <div className='constant'>
       <span className='dragHandle'>{data.type} </span>
-      <ScriptInput id={id} type={data.type} onChange={data.onChange} value={data.value} options={data.options} />
+      <ScriptInput id={id} type={data.type} value={data.value} options={data.options}
+        onValueUpdated={v => data.onConstantValueChange(id, v)} />
       <Handle type="source" position={Position.Right} />
       <button className='arrowDownButton' title='options' onClick={(e) => data.onPopupMenu(e, id, type)} />
     </div>
