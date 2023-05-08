@@ -9,7 +9,14 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
     return <AutoResizeTextArea {...passedProps}
         defaultValue={value && typeof value.join === 'function' ? value.join(', ') : value}
         placeholder={ARRAY_PLACEHOLDER}
-        onBlur={e => onValueUpdated(e.target.value.split(',').map(v=>v.trim()))} />
+        onBlur={e => {
+          const value = e.target.value
+          if(!value || value === "") {
+            onValueUpdated([])
+          } else {
+            onValueUpdated(e.target.value.split(',').map(v=>v.trim()))}
+          }
+        } />
   }
 
   switch (type) {
