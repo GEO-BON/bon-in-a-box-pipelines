@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1589,
-        "y": 43
+        "x": 1661,
+        "y": 44
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1146,
-        "y": 76
+        "x": 1218,
+        "y": 79
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +39,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 2566,
-        "y": 170.75
+        "x": 2638,
+        "y": 167.5
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -50,8 +50,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3126,
-        "y": 375.25
+        "x": 3198,
+        "y": 373
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -61,26 +61,22 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 2759,
-        "y": 403.75
+        "x": 2831,
+        "y": 411.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "bootstrap",
-        "options": [
-          "bootstrap",
-          "crossvalidation",
-          "none"
-        ]
+        "options": ["bootstrap", "crossvalidation", "none"]
       }
     },
     {
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 2794,
-        "y": 441.75
+        "x": 2866,
+        "y": 449.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -92,8 +88,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 2689,
-        "y": 476.75
+        "x": 2761,
+        "y": 484.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -105,8 +101,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 2705,
-        "y": 514.75
+        "x": 2777,
+        "y": 522.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -118,8 +114,8 @@
       "id": "56",
       "type": "output",
       "position": {
-        "x": 4165,
-        "y": 523
+        "x": 4237,
+        "y": 524.5
       },
       "data": {
         "label": "Output"
@@ -129,8 +125,8 @@
       "id": "57",
       "type": "userInput",
       "position": {
-        "x": 0,
-        "y": 215
+        "x": 72,
+        "y": 227
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -142,26 +138,21 @@
       "id": "58",
       "type": "userInput",
       "position": {
-        "x": 76,
-        "y": 149
+        "x": 148,
+        "y": 166
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
+        "value": [-2316297, -1971146, 1015207, 1511916]
       }
     },
     {
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1152,
-        "y": 114
+        "x": 1224,
+        "y": 117
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -173,8 +164,8 @@
       "id": "67",
       "type": "io",
       "position": {
-        "x": 2122,
-        "y": 322.75
+        "x": 2194,
+        "y": 330.5
       },
       "data": {
         "descriptionFile": "data>heatmapFromSTAC.yml"
@@ -184,7 +175,7 @@
       "id": "96",
       "type": "io",
       "position": {
-        "x": 360,
+        "x": 432,
         "y": 0
       },
       "data": {
@@ -195,8 +186,8 @@
       "id": "97",
       "type": "io",
       "position": {
-        "x": 956,
-        "y": 346.5
+        "x": 1028,
+        "y": 354.25
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -206,46 +197,36 @@
       "id": "98",
       "type": "constant",
       "position": {
-        "x": 621,
-        "y": 378
+        "x": 693,
+        "y": 387
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "vif.cor",
-        "options": [
-          "vif.cor",
-          "vif.step",
-          "pearson",
-          "spearman",
-          "kendall"
-        ]
+        "options": ["vif.cor", "vif.step", "pearson", "spearman", "kendall"]
       }
     },
     {
       "id": "99",
       "type": "constant",
       "position": {
-        "x": 621,
-        "y": 416
+        "x": 693,
+        "y": 425
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "pearson",
-        "options": [
-          "pearson",
-          "spearman",
-          "kendall"
-        ]
+        "options": ["pearson", "spearman", "kendall"]
       }
     },
     {
       "id": "100",
       "type": "constant",
       "position": {
-        "x": 535,
-        "y": 476.5
+        "x": 607,
+        "y": 487.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -257,8 +238,8 @@
       "id": "101",
       "type": "constant",
       "position": {
-        "x": 519,
-        "y": 514.5
+        "x": 591,
+        "y": 525.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -270,8 +251,8 @@
       "id": "102",
       "type": "constant",
       "position": {
-        "x": 535,
-        "y": 552.5
+        "x": 607,
+        "y": 563.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -280,22 +261,11 @@
       }
     },
     {
-      "id": "103",
-      "type": "io",
-      "position": {
-        "x": 526,
-        "y": 268
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2077,
-        "y": 140.5
+        "x": 2149,
+        "y": 142.5
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -305,27 +275,22 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 1763,
-        "y": 172
+        "x": 1835,
+        "y": 175
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "bbox",
-        "options": [
-          "box",
-          "mcp",
-          "buffer",
-          "bbox"
-        ]
+        "options": ["box", "mcp", "buffer", "bbox"]
       }
     },
     {
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 1656,
-        "y": 210
+        "x": 1728,
+        "y": 213
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -337,8 +302,8 @@
       "id": "108",
       "type": "io",
       "position": {
-        "x": 3730,
-        "y": 553
+        "x": 3802,
+        "y": 554
       },
       "data": {
         "descriptionFile": "SDM>runBART.yml"
@@ -348,8 +313,8 @@
       "id": "110",
       "type": "constant",
       "position": {
-        "x": 3293,
-        "y": 615.25
+        "x": 3365,
+        "y": 623
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -361,8 +326,8 @@
       "id": "111",
       "type": "constant",
       "position": {
-        "x": 3293,
-        "y": 577.25
+        "x": 3365,
+        "y": 585
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -374,11 +339,35 @@
       "id": "112",
       "type": "output",
       "position": {
-        "x": 4165,
-        "y": 571
+        "x": 4237,
+        "y": 573.5
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "114",
+      "type": "io",
+      "position": {
+        "x": 562.3638076156117,
+        "y": 185.10533060875855
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "115",
+      "type": "constant",
+      "position": {
+        "x": 218.3550717948067,
+        "y": 297.207281035391
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
       }
     }
   ],
@@ -403,20 +392,6 @@
       "target": "34",
       "targetHandle": "presence",
       "id": "reactflow__edge-96observations_file-34presence"
-    },
-    {
-      "source": "103",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-103rasters-97rasters"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "103",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-103bbox"
     },
     {
       "source": "34",
@@ -566,13 +541,6 @@
       "id": "reactflow__edge-100-97nb_sample"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "103",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-103proj"
-    },
-    {
       "source": "107",
       "sourceHandle": null,
       "target": "104",
@@ -641,10 +609,38 @@
       "target": "44",
       "targetHandle": "cv_partitions",
       "id": "reactflow__edge-48-44cv_partitions"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "114",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-114bbox"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "114",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-114proj"
+    },
+    {
+      "source": "114",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-114rasters-97rasters"
+    },
+    {
+      "source": "115",
+      "sourceHandle": null,
+      "target": "114",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-115-114weight_matrix_with_ids"
     }
   ],
   "inputs": {
-    "SDM>selectBackground.yml@40.method_background": {
+    "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
       "label": "method background",
       "type": "options",
@@ -656,7 +652,7 @@
       ],
       "example": "random"
     },
-    "SDM>selectBackground.yml@40.n_background": {
+    "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "number of background points",
       "type": "int",
@@ -678,14 +674,9 @@
       "label": "bbox",
       "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
       "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ]
+      "example": [-2316297, -1971146, 1015207, 1511916]
     },
-    "data>heatmapFromSTAC.yml@67.taxa": {
+    "data>heatmapFromSTAC.yml@67|taxa": {
       "description": "taxonomic group to retrieve GBIF heatmap",
       "label": "taxa",
       "type": "options",
@@ -700,76 +691,63 @@
       ],
       "example": "reptiles"
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.data_source": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
       "label": "Data source",
       "type": "options",
-      "options": [
-        "gbif_pc",
-        "gbif_api"
-      ],
+      "options": ["gbif_pc", "gbif_api"],
       "example": "gbif_api"
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.taxa": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|taxa": {
       "description": "Array of taxa values",
       "label": "Taxa list",
       "type": "text[]",
-      "example": [
-        "Acer saccharum",
-        "Bubo scandiacus"
-      ]
+      "example": ["Acer saccharum", "Bubo scandiacus"]
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.min_year": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.max_year": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2020
     },
-    "data>loadFromStac.yml@103.source": {
-      "description": "String, type of source to load the predictors from (either from tif, or from the stac catalogue)",
-      "label": "source",
-      "type": "options",
-      "options": [
-        "from_tif",
-        "from_cube"
-      ],
-      "example": "from_cube"
+    "data>loadFromStac.yml@114|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
     },
-    "data>loadFromStac.yml@103.collections_items": {
+    "data>loadFromStac.yml@114|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "label": "collections_items",
       "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ]
+      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
     },
-    "data>loadFromStac.yml@103.spatial_res": {
-      "description": "Integer, spatial resolution of the predictors",
+    "data>loadFromStac.yml@114|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
       "type": "int",
       "example": 1000
     },
-    "data>loadFromStac.yml@103.mask": {
-      "description": "Shapefile, used to mask the output predictors",
+    "data>loadFromStac.yml@114|mask": {
+      "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
       "type": "application/dbf",
-      "example": "/scripts/SDM/extentToBbox_extent.shp"
+      "example": ""
     }
   },
   "outputs": {
-    "SDM>runBART.yml@108.sdm_pred": {
+    "SDM>runBART.yml@108|sdm_pred": {
       "description": "mean posterior distribution of probability of presence",
       "label": "predictions",
       "type": "image/tiff;application=geotiff"
     },
-    "SDM>runBART.yml@108.sdm_uncertainty": {
+    "SDM>runBART.yml@108|sdm_uncertainty": {
       "description": "credible interval of the posterior distribution",
       "label": "uncertainty",
       "type": "image/tiff;application=geotiff"

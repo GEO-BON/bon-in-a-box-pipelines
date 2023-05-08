@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Handle, Position } from 'react-flow-renderer/nocss';
 import isObject from '../../utils/isObject'
 
-import { fetchScriptDescription } from './ScriptDescriptionStore'
+import { fetchStepDescription } from './ScriptDescriptionStore'
 
 // props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
 export default function IONode({ id, data }) {
@@ -11,7 +11,7 @@ export default function IONode({ id, data }) {
 
   useEffect(() => {
     if (descriptionFileLocation) {
-      fetchScriptDescription(descriptionFileLocation, (newMetadata) => {
+      fetchStepDescription(descriptionFileLocation, (newMetadata) => {
         setMetadata(newMetadata)
       })
     }
@@ -46,9 +46,9 @@ export default function IONode({ id, data }) {
         })}
       </td>
       <td className='name' onMouseEnter={showScriptTooltip} onMouseLeave={hideTooltip}>
-        {metadata.script}
+        {descriptionFileLocation.split('>').map((s, i) => <span key={i}>{s}<br/></span>)}
       </td>
-      <td className='outputs'>
+      <td className='outputs'> 
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {
           let warning = checkForWarning(desc)
 

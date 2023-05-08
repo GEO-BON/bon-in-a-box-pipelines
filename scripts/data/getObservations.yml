@@ -46,6 +46,11 @@ inputs:
     description: Integer, maximum number of observations to retrieve from GBIF database (upper limit 100000)
     type: int
     example: 2000
+  bbox_buffer:
+    label: bbox buffer
+    description: Interger, width of the buffer around the bbox containing the presence points.
+    type: int
+    example: 0
 outputs:
   n_presence:
     label: number of presence points
@@ -56,5 +61,10 @@ outputs:
      label: presence
      description: Table, observations retrieved from GBIF database
      type: text/tab-separated-values
-     example: 
+     example:
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297, -1971146,  1015207,  1511916]
 

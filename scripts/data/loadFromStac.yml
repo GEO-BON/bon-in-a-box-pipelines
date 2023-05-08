@@ -1,41 +1,50 @@
 script: loadFromStac.R
 description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
 inputs:
+  stac_url:
+    label: stac_url
+    description: URL of the Stac catalog
+    type: text
+    example: https://io.biodiversite-quebec.ca/stac/
   bbox:
     label: bbox
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297, -1971146, 1015207, 1511916]
-  source:
-    label: source
-    description: String, type of source to load the predictors from (either from tif, or from the stac catalogue)
-    type: options
-    options:
-      - from_tif
-      - from_cube
-    example: "from_cube"
-  layer:
-    label: layer
+  collections_items:
+    label: collections_items
     description: Vector of strings, collection name followed by '|' followed by item id
+    type: text[]
+    example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+  weight_matrix_with_ids:
+    label: Weight matrix with ids
+    description: Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set. 
     type: text
-    example: "accessibility_to_cities|data"
+    example: |
+      layer, current, change
+      GBSTAC|chelsa-clim|bio1, 0.7, 0.6
+      GBSTAC|chelsa-clim|bio2, 0.3, 0.4
   proj:
     label: projection system
-    description: String, projection of the predictors
+    description: String, projection of the rasters
     type: text
     example: "EPSG:6623"
   spatial_res:
     label: spatial resolution
-    description: Integer, spatial resolution of the predictors
+    description: Integer, spatial resolution of the rasters
     type: int
     example: 1000
   mask:
     label: mask
-    description: Shapefile, used to mask the output predictors
+    description: Shapefile, used to mask the output rasters
     type: application/dbf
     example: ""
 outputs:
   rasters:
-    label: raster
-    description: output raster path
-    type: image/tiff;application=geotiff
+    label: rasters
+    description: array of output raster paths
+    type: image/tiff;application=geotiff[]
+  weight_matrix_with_layers:
+    label: Weight matrix with layers
+    description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
+    type: text

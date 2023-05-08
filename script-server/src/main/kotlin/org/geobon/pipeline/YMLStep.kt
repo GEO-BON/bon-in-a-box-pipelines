@@ -1,6 +1,5 @@
 package org.geobon.pipeline
 
-import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.script.Description.INPUTS
 import org.geobon.script.Description.OUTPUTS
 import org.geobon.script.Description.TYPE
@@ -11,16 +10,15 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.yaml.snakeyaml.Yaml
 import java.io.File
-import java.lang.Math
 
 
 abstract class YMLStep(
     protected val yamlFile: File,
-    private val id:String = generateId(),
+    stepId:StepId,
     inputs: MutableMap<String, Pipe> = mutableMapOf(),
     private val logger: Logger = LoggerFactory.getLogger(yamlFile.name),
     protected val yamlParsed: Map<String, Any> = Yaml().load(yamlFile.readText())
-) : Step(inputs, readOutputs(yamlParsed, logger)) {
+) : Step(stepId, inputs, readOutputs(yamlParsed, logger)) {
 
     /**
      * Context becomes set in validateInputsReceived(), once the invocation inputs are known.
@@ -106,8 +104,7 @@ abstract class YMLStep(
      * @param allOutputs Map of Step identifier to output folder.
      */
     override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
-        val relPath = yamlFile.relativeTo(scriptRoot).path
-        val previousValue = allOutputs.put("$relPath@$id", context?.id ?: "")
+        val previousValue = allOutputs.put(id.toBreadcrumbs(), context?.runId ?: "")
 
         // Pass it on only if not already been there (avoids duplication for more complex graphs)
         if (previousValue == null) {
@@ -116,7 +113,6 @@ abstract class YMLStep(
     }
 
     companion object {
-        fun generateId(): String = (Math.random()*10000).toString()
 
         /**
          * @return Map of input name to type

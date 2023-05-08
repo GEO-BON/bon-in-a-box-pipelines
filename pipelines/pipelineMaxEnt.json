@@ -272,17 +272,6 @@
       }
     },
     {
-      "id": "103",
-      "type": "io",
-      "position": {
-        "x": 526,
-        "y": 575
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
       "id": "104",
       "type": "io",
       "position": {
@@ -395,6 +384,17 @@
         "value": "lat_lon",
         "options": ["lat_lon", "lon_lat", "lon_lon", "lat_lat"]
       }
+    },
+    {
+      "id": "119",
+      "type": "io",
+      "position": {
+        "x": 432.75995829186377,
+        "y": 629.9301905106913
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
     }
   ],
   "edges": [
@@ -425,20 +425,6 @@
       "target": "34",
       "targetHandle": "presence",
       "id": "reactflow__edge-96observations_file-34presence"
-    },
-    {
-      "source": "103",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-103rasters-97rasters"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "103",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-103bbox"
     },
     {
       "source": "34",
@@ -588,13 +574,6 @@
       "id": "reactflow__edge-100-97nb_sample"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "103",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-103proj"
-    },
-    {
       "source": "107",
       "sourceHandle": null,
       "target": "104",
@@ -691,10 +670,31 @@
       "target": "108",
       "targetHandle": "orientation_block",
       "id": "reactflow__edge-116-108orientation_block"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-119proj"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-119bbox"
+    },
+    {
+      "source": "119",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-119rasters-97rasters"
     }
   ],
   "inputs": {
-    "SDM>selectBackground.yml@40.method_background": {
+    "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
       "label": "method background",
       "type": "options",
@@ -706,31 +706,31 @@
       ],
       "example": "random"
     },
-    "SDM>selectBackground.yml@40.n_background": {
+    "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "number of background points",
       "type": "int",
       "example": 10000
     },
     "pipeline@46": {
-      "label": "number of runs",
-      "description": "number of runs (in bootstrap or crossvalidation method)",
+      "label": "Label",
+      "description": "Description",
       "type": "int",
       "example": 2
     },
     "pipeline@57": {
-      "label": "projection system",
-      "description": "String, projection system",
+      "label": "Label",
+      "description": "Description",
       "type": "text",
       "example": "EPSG:6623"
     },
     "pipeline@58": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+      "label": "Label",
+      "description": "Description",
       "type": "float[]",
       "example": [-2316297, -1971146, 1015207, 1511916]
     },
-    "data>heatmapFromSTAC.yml@67.taxa": {
+    "data>heatmapFromSTAC.yml@67|taxa": {
       "description": "taxonomic group to retrieve GBIF heatmap",
       "label": "taxa",
       "type": "options",
@@ -745,57 +745,32 @@
       ],
       "example": "reptiles"
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.data_source": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
       "label": "Data source",
       "type": "options",
       "options": ["gbif_pc", "gbif_api"],
       "example": "gbif_api"
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.taxa": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|taxa": {
       "description": "Array of taxa values",
       "label": "Taxa list",
       "type": "text[]",
       "example": ["Acer saccharum", "Bubo scandiacus"]
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.min_year": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96.max_year": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2020
     },
-    "data>loadFromStac.yml@103.source": {
-      "description": "String, type of source to load the predictors from (either from tif, or from the stac catalogue)",
-      "label": "source",
-      "type": "options",
-      "options": ["from_tif", "from_cube"],
-      "example": "from_cube"
-    },
-    "data>loadFromStac.yml@103.collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "collections_items",
-      "type": "text[]",
-      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
-    },
-    "data>loadFromStac.yml@103.spatial_res": {
-      "description": "Integer, spatial resolution of the predictors",
-      "label": "spatial resolution",
-      "type": "int",
-      "example": 1000
-    },
-    "data>loadFromStac.yml@103.mask": {
-      "description": "Shapefile, used to mask the output predictors",
-      "label": "mask",
-      "type": "application/dbf",
-      "example": ""
-    },
-    "SDM>runMaxent.yml@108.partition_type": {
+    "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
       "label": "partition type",
       "type": "options",
@@ -807,15 +782,45 @@
         "checkerboard2"
       ],
       "example": "block"
+    },
+    "data>loadFromStac.yml@119|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    },
+    "data>loadFromStac.yml@119|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+    },
+    "data>loadFromStac.yml@119|weight_matrix_with_ids": {
+      "description": "Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.",
+      "label": "Weight matrix with ids",
+      "type": "text",
+      "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+    },
+    "data>loadFromStac.yml@119|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters",
+      "label": "spatial resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "data>loadFromStac.yml@119|mask": {
+      "description": "Shapefile, used to mask the output rasters",
+      "label": "mask",
+      "type": "application/dbf",
+      "example": ""
     }
   },
   "outputs": {
-    "SDM>rangePredictions.yml@68.range_predictions": {
+    "SDM>rangePredictions.yml@68|range_predictions": {
       "description": "range (max - min) of a set of predictions",
       "label": "range predictions",
       "type": "image/tiff;application=geotiff"
     },
-    "SDM>runMaxent.yml@108.sdm_pred": {
+    "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "model predictions while trained on the whole dataset",
       "label": "predictions",
       "type": "image/tiff;application=geotiff",

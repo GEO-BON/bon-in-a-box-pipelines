@@ -37,7 +37,13 @@ if (input$country == "..." | length(input$country) < 2) {
   country <- input$country
 }
 
+if (input$bbox_buffer == "...") {
+  bbox_buffer <- 0
+} else {
+  bbox_buffer <- input$bbox_buffer }
+
 occurrence_status <- str_split(input$occurrence_status, " ")[[1]]
+
 # Loading data from GBIF (https://www.gbif.org/)
 obs <- get_observations(database = "gbif", 
   species = input$species,
@@ -48,14 +54,27 @@ obs <- get_observations(database = "gbif",
            occurrence_status = occurrence_status,
            limit = input$limit)
 
+# Creating the bbox
+  obs_pts <- stacatalogue::project_coords(obs,
+                            lon = "decimal_longitude",
+                            lat = "decimal_latitude",
+                            proj_from = "+proj=longlat +datum=WGS84",
+                            proj_to = input$proj)
+bbox <- stacatalogue::points_to_bbox(obs_pts, buffer = bbox_buffer)
+bbox <-c(bbox$xmin, bbox$ymin, bbox$xmax, bbox$ymax)
+
+# Outputs
 obs.data <- file.path(outputFolder, "obs_data.tsv")
 write.table(obs, obs.data,
              append = F, row.names = F, col.names = T, sep = "\t")
 
-
+obs.bbox <- file.path(outputFolder, "obs_bbox.tsv")
+write.table(bbox, obs.bbox,
+             append = F, row.names = F, col.names = T, sep = "\t")
   output <- list(
                   "n_presence" =  nrow(obs),
-                  "presence" = obs.data
+                  "presence" = obs.data,
+                  "bbox" = obs.bbox
                   ) 
   jsonData <- toJSON(output, indent=2)
   write(jsonData, file.path(outputFolder,"output.json"))
