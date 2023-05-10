@@ -26,15 +26,18 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-print(c(input$layers, input$variables))
+if(input$collections_items == ""){
+  collections_items = NULL
+  print("No collection items")
+} else {
+  collections_items = input$collections_items
+}
 
 # Case 1: we create an extent from a set of observations
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj))
 
-print(length(input$collections_items))
-
-if (length(input$collections_items)==0) {
+if (length(collections_items)==0) {
   if (length(input$weight_matrix_with_ids) == 0) {
     stop('Please specify collections_items')
   } else {
@@ -45,8 +48,8 @@ if (length(input$collections_items)==0) {
   }
 } else {
   weight_matrix=NULL
-  collections_items <- input$collections_items
 }
+
 cube_args = list(stac_path = input$stac_url,
 limit = 5000,
 t0 = NULL,
@@ -70,7 +73,7 @@ for (coll_it in collections_items){
     ci<-strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
 
     cube_args_c <- append(cube_args, list(collections=ci[1],
-                                          srs.cube = proj, 
+                                          srs.cube = proj,
                                           bbox = bbox,
                                           layers=NULL,
                                           variable = NULL,
@@ -89,7 +92,6 @@ for (coll_it in collections_items){
 
      predictors[[ci[2]]]=pred
 }
-  print(names(predictors))
 
 output_predictors <- file.path(outputFolder)
 
@@ -104,9 +106,11 @@ for (i in 1:length(predictors)) {
   }
 }
 
- if(is.null(weight_matrix)) { #Temporary fix
-  weight_matrix=''
- }
+if(is.null(weight_matrix)) { #Temporary fix
+ weight_matrix=''
+}
+
+print(weight_matrix)
 
 output <- list("rasters" = layer_paths,"weight_matrix_with_layers" = weight_matrix)
 jsonData <- toJSON(output, indent=2)
