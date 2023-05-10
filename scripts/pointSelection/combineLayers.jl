@@ -25,6 +25,9 @@ temppath = Downloads.download.(layermat[keep_rows, 1])
 
 l = SimpleSDMPredictor.(temppath)
 
+# This fails with the download method because the QC rasters and soil grids are not the same size
+# This will be fixed by the loadFromSTAC script.
+
 layers = BiodiversityObservationNetworks.stack(l)
 
 # get weights with weights for a layer in columns 
