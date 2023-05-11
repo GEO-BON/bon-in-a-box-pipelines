@@ -52,7 +52,7 @@ function removeLastSlash(s) {
  * @param {object} Script metadata 
  */
 export function InputsDescription({ metadata }) {
-    if (!metadata.inputs)
+    if (!metadata || !metadata.inputs)
         return null
 
     return <>
@@ -66,7 +66,7 @@ export function InputsDescription({ metadata }) {
  * @param {object} Script metadata 
  */
 export function OutputsDescription({ metadata }) {
-    if (!metadata.outputs)
+    if (!metadata || !metadata.outputs)
         return null
 
     return <>
