@@ -1,15 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Select from 'react-select';
 import InputFileInput from './InputFileInput';
+import { useNavigate, useParams } from "react-router-dom";
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 export const api = new BonInABoxScriptService.DefaultApi();
 
-export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, showHttpError }) {
+export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, runId, showHttpError }) {
   const formRef = useRef();
 
   const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
+  const navigate = useNavigate();
 
   /**
    * String: Content of input.json for this run
@@ -48,9 +50,9 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
       if (error) { // Server / connection errors. Data will be undefined.
         data = {};
         showHttpError(error, response);
-
       } else if (data) {
         setRunId(data);
+        navigate("/pipeline-form/"+data);
       } else {
         showHttpError("Server returned empty result");
       }
@@ -62,6 +64,11 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
     };
     api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
   };
+
+  useEffect(() => {
+    runScript()
+  },[runId])    
+
 
   // Applied only once when first loaded
   useEffect(() => {
