@@ -1,0 +1,23 @@
+.react-tabs__tab--selected {
+    background: #282c34; /*Matches our bg color*/
+    color: #f3f3f1;
+    
+    /* We use this to create a border (wider on top, and no bevel at the bottom)*/
+    box-shadow: inset 0 1px 0 1px #f3f3f1;
+    border: none;
+}
+
+.react-tabs__tab:focus:after {
+    /* Remove white artefact on the bottom of the selected tab */
+    background: transparent;
+}
+
+/* The two following change the single line below tabs to a line around the section */
+.react-tabs__tab-list {
+    border: none;
+    margin: 0;
+}
+.react-tabs__tab-panel {
+    border: 1px solid #f3f3f1;
+    padding: 10px;
+}

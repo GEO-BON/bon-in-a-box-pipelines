@@ -289,3 +289,7 @@ div.legendItemText {
 
   padding-right: 0.5em;
 }
+
+textarea.autoResize {
+  overflow: hidden;
+}

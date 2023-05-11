@@ -74,7 +74,6 @@ export const layoutElements = (nodes, edges, callback) => {
 
   elk.layout(graph)
    .then(result => {
-    console.log(result)
       // Transfer result to react-flow graph
       nodes.forEach((reactFlowNode) => {
         const elkjsNode = result.children.find(n => n.id === reactFlowNode.id)

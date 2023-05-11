@@ -15,7 +15,7 @@ import ReactFlow, {
 } from 'react-flow-renderer/nocss';
 
 import IONode from './IONode'
-import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
+import ConstantNode from './ConstantNode'
 import UserInputNode from './UserInputNode';
 import PopupMenu from './PopupMenu';
 import { layoutElements } from './react-flow-utils/Layout'
@@ -100,22 +100,11 @@ export function PipelineEditor(props) {
     event.dataTransfer.dropEffect = 'move';
   }, []);
 
-  const onConstantValueChange = useCallback((event) => {
+  const onConstantValueChange = useCallback((id, value) => {
     setNodes((nds) =>
       nds.map((node) => {
-        if(node.id !== event.target.id) {
+        if(node.id !== id) {
           return node
-        }
-
-        let value
-        if(event.target.type === 'checkbox') {
-          value = event.target.checked
-        } else {
-          value = event.target.value
-
-          if(event.target.placeholder === ARRAY_PLACEHOLDER) {
-            value = value.split(',').map(v => v.trim())
-          }
         }
 
         return {
@@ -124,10 +113,10 @@ export function PipelineEditor(props) {
             ...node.data,
             value,
           },
-        };
+        }
       })
-    );
-  }, [setNodes]);
+    )
+  }, [setNodes])
 
   const onSelectionChange = useCallback((selected) => {
     setSelectedNodes(selected.nodes)
@@ -183,7 +172,7 @@ export function PipelineEditor(props) {
       position,
       dragHandle: '.dragHandle',
       data: {
-        onChange: onConstantValueChange,
+        onConstantValueChange,
         onPopupMenu,
         type: fieldDescription.type,
         value: fieldDescription.example,
@@ -591,7 +580,7 @@ export function PipelineEditor(props) {
             node.data.injectOutput = injectOutput
             break;
           case 'constant':
-            node.data.onChange = onConstantValueChange
+            node.data.onConstantValueChange = onConstantValueChange
             node.data.onPopupMenu = onPopupMenu
             break;
           case 'userInput':
