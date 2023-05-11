@@ -13,6 +13,8 @@ import { LogViewer } from './LogViewer';
 import { GeneralDescription } from './ScriptDescription';
 import { PipelineForm } from './form/PipelineForm';
 import { getScript, getScriptOutput, toDisplayString, getBreadcrumbs } from '../utils/IOId';
+import { useNavigate, useParams } from "react-router-dom";
+
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -24,6 +26,9 @@ export function PipelinePage(props) {
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
+  
+  const {pipeline_run_id } = useParams();
+  const navigate = useNavigate();
 
   function showHttpError(error, response){
     if(response && response.text) 
@@ -58,6 +63,12 @@ export function PipelinePage(props) {
     setStoppable(runningScripts.size > 0)
   }, [runningScripts])
 
+  useEffect(() => { // set by the route
+    if(pipeline_run_id && pipeline_run_id !=='null' && pipeline_run_id !== runId){
+      setRunId(pipeline_run_id)
+    }
+  }, [pipeline_run_id])
+
   const stop = () => {
     setStoppable(false)
     api.stopPipeline(runId, (error, data, response) => {
@@ -71,10 +82,10 @@ export function PipelinePage(props) {
   useEffect(() => {
     setResultsData(null);
     loadPipelineOutputs()
-
     return function cleanup() {
       if(timeout) clearTimeout(timeout)
     };
+
   // Called only when ID changes. Including all deps would result in infinite loop.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runId])
@@ -86,6 +97,7 @@ export function PipelinePage(props) {
         <PipelineForm
           pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
           setRunId={setRunId}
+          runId={runId}
           showHttpError={showHttpError} />
       </FoldableOutput>
       
