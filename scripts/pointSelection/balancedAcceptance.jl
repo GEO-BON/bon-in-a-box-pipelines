@@ -26,7 +26,7 @@ println(isfile(priority_map_path))
 ### Computation ###
 priority_map = SimpleSDMPredictor(priority_map_path)
 
-selected_points = stack([priority_map])[:,:,1] |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
+selected_points = BiodiversityObservationNetworks.stack([priority_map])[:,:,1] |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
 ###################
 
 
@@ -50,6 +50,7 @@ end
 
 points_string_join = join(points_string, ",\n\t\t")
 
+#SimpleSDMPredictor always converts to WGS84, so we can hard code the projection here
 json_string = ("{
     \"type\": \"MultiPoint\",
     \"coordinates\": [
@@ -58,7 +59,7 @@ json_string = ("{
     \"crs\": {
         \"type\": \"name\",
         \"properties\": {
-            \"name\": \"EPSG:6622\"
+            \"name\": \"EPSG:4326\"
         }
     }
 }")
