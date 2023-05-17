@@ -23,10 +23,18 @@ numpoints = parse(Int64, input["num_points"])
 println(priority_map_path)
 println(isfile(priority_map_path))
 
+
 ### Computation ###
 priority_map = SimpleSDMPredictor(priority_map_path)
 
-selected_points = BiodiversityObservationNetworks.stack([priority_map])[:,:,1] |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
+nonnan = length(findall(!isnan, priority_map.grid))
+@info nonnan
+if nonnan <= numpoints
+    @info "Only $nonnan values in raster. Aborting"
+    exit(-1)
+end
+
+selected_points = Float32.(priority_map.grid) |> seed(BalancedAcceptance(numpoints=numpoints, α=bias)) |> first
 ###################
 
 

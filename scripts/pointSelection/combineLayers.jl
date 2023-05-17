@@ -23,6 +23,7 @@ layer_col = layermat[:, :layer]
 
 l = SimpleSDMPredictor.(layer_col)
 
+
 # This requires all rasters have same extent
 layers = BiodiversityObservationNetworks.stack(l)
 
@@ -30,7 +31,8 @@ layers = BiodiversityObservationNetworks.stack(l)
 W = Matrix(layermat[:, 2:end])
 
 #priority = SimpleSDMPredictor(squish(layers, convert(Array{Float64}, transpose(W)), targetbalance))
-priority = SimpleSDMPredictor(squish(layers, W, targetbalance))
+priority = similar(l[begin])
+priority.grid .= squish(layers, W, targetbalance)
 
 priority_path = joinpath(outputFilepath, "priority_map.tiff")
 ###################
