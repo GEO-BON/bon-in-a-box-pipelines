@@ -155,6 +155,7 @@ fun Application.configureRouting() {
                     val resultFile = File(pipelineOutputFolder, "output.json")
                     logger.trace("Outputting to $resultFile")
                     resultFile.writeText(gson.toJson(scriptOutputFolders))
+                    File(pipelineOutputFolder,"input.json").writeText(inputFileContent)
                 } catch (ex:Exception) {
                     ex.printStackTrace()
                 } finally {

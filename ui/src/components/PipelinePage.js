@@ -13,22 +13,28 @@ import { LogViewer } from './LogViewer';
 import { GeneralDescription } from './ScriptDescription';
 import { PipelineForm } from './form/PipelineForm';
 import { getScript, getScriptOutput, toDisplayString, getBreadcrumbs } from '../utils/IOId';
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 export const api = new BonInABoxScriptService.DefaultApi();
 
 export function PipelinePage(props) {
-  const [runId, setRunId] = useState(null);
   const [stoppable, setStoppable] = useState(null);
   const [runningScripts, setRunningScripts] = useState(new Set());
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
-  
-  const {pipeline_run_id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  /**
+   * String: Content of input.json for this run
+   */
+  const [inputFileContent, setInputFileContent] = useState({});
+  
+  const { pipelineRunId } = useParams();
+  const [runId, setRunId] = useState(pipelineRunId);//Prevent runId from being initially null when page is loaded with route. 
 
   function showHttpError(error, response){
     if(response && response.text) 
@@ -40,7 +46,7 @@ export function PipelinePage(props) {
   }
 
   let timeout
-  function loadPipelineOutputs() {
+  function loadPipelineOutputs(runId) {
     if (runId) {
       api.getPipelineOutputs(runId, (error, data, response) => {
         if (error) {
@@ -59,15 +65,44 @@ export function PipelinePage(props) {
     }
   }
 
+  function loadPipelineMetadata(choice) {
+    var callback = function (error, data, response) {
+      if (error) {
+        showHttpError(error, response);
+      } else if (data) {
+        setPipelineMetadata(data);
+      }
+    };
+    api.getPipelineInfo(choice, callback);
+  }
+
   useEffect(() => {
     setStoppable(runningScripts.size > 0)
   }, [runningScripts])
 
-  useEffect(() => { // set by the route
-    if(pipeline_run_id && pipeline_run_id !=='null' && pipeline_run_id !== runId){
-      setRunId(pipeline_run_id)
+  useEffect(() => { // existing run set by the route
+    if(pipelineRunId && pipelineRunId !=='null') {
+      const runIdParts = pipelineRunId.split(">")
+      fetch("/output/" + runIdParts[0] + "/" + runIdParts[1] + "/input.json")
+        .then((response) => {
+          if (response.ok) {
+            return response.json()
+          }
+          if (response.status === 404) {
+            return console.error("input.json not found")
+          }
+        }).then((json) => {
+          setInputFileContent(json)
+          if(pipelineRunId !== runId){
+            setRunId(pipelineRunId)
+          }
+          loadPipelineMetadata(runIdParts[0]+'.json')
+          loadPipelineOutputs(pipelineRunId)
+        });
+    } else {
+      loadPipelineOutputs(null)
     }
-  }, [pipeline_run_id])
+  }, [pipelineRunId])
 
   const stop = () => {
     setStoppable(false)
@@ -80,8 +115,13 @@ export function PipelinePage(props) {
 
   // Called when ID changes
   useEffect(() => {
-    setResultsData(null);
-    loadPipelineOutputs()
+    //setResultsData(null);
+    if(runId){
+      //const runIdParts = runId.split(">")
+      if(runId !== location.pathname.split('/').slice(-1)){
+        navigate("/pipeline-form/"+runId);
+      }
+    }
     return function cleanup() {
       if(timeout) clearTimeout(timeout)
     };
@@ -95,7 +135,11 @@ export function PipelinePage(props) {
       <h2>Pipeline run</h2>
       <FoldableOutput title="Input form" isActive={!runId} keepWhenHidden={true}>
         <PipelineForm
-          pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
+          pipelineMetadata={pipelineMetadata} 
+          setPipelineMetadata={setPipelineMetadata} 
+          setInputFileContent={setInputFileContent}
+          inputFileContent={inputFileContent}
+          loadPipelineMetadata={loadPipelineMetadata}
           setRunId={setRunId}
           runId={runId}
           showHttpError={showHttpError} />
@@ -114,7 +158,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
   useEffect(() => {
-    if (resultsData === null) {
+    if (resultsData === null || runningScripts.size ===0 ) {
       // Put outputResults at initial value
       const initialValue = {}
       if (pipelineMetadata.outputs) {
@@ -128,7 +172,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
   
   if (resultsData) {
     return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
-      <h2>Pipeline outputs</h2>
+      <h2>Pipeline</h2>
       {pipelineMetadata.outputs && Object.entries(pipelineMetadata.outputs).map(entry => {
         const [ioId, outputDescription] = entry;
         const breadcrumbs = getBreadcrumbs(ioId)
@@ -201,7 +245,7 @@ function DelayedResult({breadcrumbs, folder, setRunningScripts, setPipelineOutpu
 
   const interval = useInterval(() => {
     // Fetch the output
-    fetch("output/" + folder + "/output.json")
+    fetch("/output/" + folder + "/output.json")
       .then((response) => {
         if (response.ok) {
           clearInterval(interval);
@@ -263,7 +307,7 @@ function DelayedResult({breadcrumbs, folder, setRunningScripts, setPipelineOutpu
     className += " gray"
   }
 
-  let logsAddress = folder && "output/" + folder + "/logs.txt"
+  let logsAddress = folder && "/output/" + folder + "/logs.txt"
   
   return (
     <FoldableOutputWithContext title={toDisplayString(breadcrumbs)}

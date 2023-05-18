@@ -6,44 +6,32 @@ import { useNavigate, useParams } from "react-router-dom";
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 export const api = new BonInABoxScriptService.DefaultApi();
 
-export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, runId, showHttpError }) {
+export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, runId, loadPipelineMetadata, showHttpError, inputFileContent, setInputFileContent }) {
   const formRef = useRef();
-
+  const navigate = useNavigate();
   const defaultPipeline = "helloWorld.json";
   const [pipelineOptions, setPipelineOptions] = useState([]);
-  const navigate = useNavigate();
-
-  /**
-   * String: Content of input.json for this run
-   */
-  const [inputFileContent, setInputFileContent] = useState({});
+  const [selectedPipeline, setSelectedPipeline] = useState(defaultPipeline);
+  
 
   function clearPreviousRequest() {
     showHttpError(null);
     setInputFileContent({})
-    setRunId(null);
-  }
-
-  function loadPipelineMetadata(choice) {
-    clearPreviousRequest();
     setPipelineMetadata(null);
-
-    var callback = function (error, data, response) {
-      if (error) {
-        showHttpError(error, response);
-      } else if (data) {
-        setPipelineMetadata(data);
-      }
-    };
-
-    api.getPipelineInfo(choice, callback);
+    setRunId(null);
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     runScript();
   };
+
+  const handlePipelineChange = (value) => {
+    setSelectedPipeline(value)
+    loadPipelineMetadata(value);
+    clearPreviousRequest();
+    navigate('/pipeline-form');
+  }
 
   const runScript = () => {
     var callback = function (error, data, response) {
@@ -52,7 +40,6 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
         showHttpError(error, response);
       } else if (data) {
         setRunId(data);
-        navigate("/pipeline-form/"+data);
       } else {
         showHttpError("Server returned empty result");
       }
@@ -65,11 +52,6 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
     api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
   };
 
-  useEffect(() => {
-    runScript()
-  },[runId])    
-
-
   // Applied only once when first loaded
   useEffect(() => {
     // Load list of scripts into pipelineOptions
@@ -80,7 +62,9 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
         let newOptions = [];
         data.forEach(script => newOptions.push({ label: script, value: script }));
         setPipelineOptions(newOptions);
-        loadPipelineMetadata(defaultPipeline);
+        if(!runId){ //metadata will be loaded elsewhere when there is a route
+           loadPipelineMetadata(defaultPipeline);
+        }
       }
     });
     // Empty dependency array to get script list only once
@@ -91,8 +75,8 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
       <label htmlFor='pipelineChoice'>Pipeline:</label>
       <Select id="pipelineChoice" name="pipelineChoice" className="blackText" options={pipelineOptions}
-        defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
-        onChange={(v) => loadPipelineMetadata(v.value)} />
+        value={{ label: selectedPipeline, value: selectedPipeline }}
+        onChange={(v) => handlePipelineChange(v.value)} />
       <br />
       <InputFileInput
         metadata={pipelineMetadata}
