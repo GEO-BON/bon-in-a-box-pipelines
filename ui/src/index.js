@@ -43,7 +43,7 @@ function App() {
       <Layout right={<PipelinePage />} />
       } />
 
-      <Route path="pipeline-form/:pipeline_run_id" element={
+      <Route path="pipeline-form/:pipelineRunId/" element={
       <Layout right={<PipelinePage />} />
       } />
 
