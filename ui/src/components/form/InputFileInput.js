@@ -1,86 +1,88 @@
 import { useEffect } from "react";
 import YAMLTextArea from "./YAMLTextArea";
 import { InputsDescription } from "../ScriptDescription";
-import { Tabs, Tab, TabList, TabPanel } from "react-tabs"
+import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 
-import 'react-tabs/style/react-tabs.css';
-import './react-tabs-dark.css'
-import './InputFileInputs.css'
+import "react-tabs/style/react-tabs.css";
+import "./react-tabs-dark.css";
+import "./InputFileInputs.css";
 import ScriptInput from "./ScriptInput";
 
-const yaml = require('js-yaml');
+const yaml = require("js-yaml");
 
 /**
- * An input that we use to fill the input file's content. 
- * I agree, the name sounds weird. 
+ * An input that we use to fill the input file's content.
+ * I agree, the name sounds weird.
  */
-export default function InputFileInput({ metadata, inputFileContent, setInputFileContent }) {
+export default function InputFileInput({
+  metadata,
+  inputFileContent,
+  setInputFileContent,
+}) {
+  return (
+    <>
+      <Tabs>
+        <TabList>
+          <Tab>Input form</Tab>
+          <Tab>Input yaml</Tab>
+        </TabList>
 
-  // Everytime we choose a pipeline, generate example input.json
-  useEffect(() => {
-    let inputExamples = {};
-
-    if (metadata && metadata.inputs) {
-      Object.keys(metadata.inputs).forEach((inputId) => {
-        let input = metadata.inputs[inputId];
-        if (input) {
-          const example = input.example;
-          inputExamples[inputId] = example === undefined ? null : example;
-        }
-      });
-    }
-
-    setInputFileContent(inputExamples)
-
-  }, [metadata, setInputFileContent]);
-
-  return <>
-    <Tabs>
-      <TabList>
-        <Tab>Input form</Tab>
-        <Tab>Input yaml</Tab>
-      </TabList>
-
-      <TabPanel>
-        {metadata && <InputForm inputs={metadata.inputs} inputFileContent={inputFileContent} setInputFileContent={setInputFileContent} />}
-      </TabPanel>
-      <TabPanel>
-        <YAMLTextArea data={inputFileContent} setData={setInputFileContent} />
-        <InputsDescription metadata={metadata} />
-      </TabPanel>
-    </Tabs>
-  </>
+        <TabPanel>
+          {metadata && (
+            <InputForm
+              inputs={metadata.inputs}
+              inputFileContent={inputFileContent}
+              setInputFileContent={setInputFileContent}
+            />
+          )}
+        </TabPanel>
+        <TabPanel>
+          <YAMLTextArea data={inputFileContent} setData={setInputFileContent} />
+          <InputsDescription metadata={metadata} />
+        </TabPanel>
+      </Tabs>
+    </>
+  );
 }
 
-const InputForm = ({inputs, inputFileContent, setInputFileContent}) => {
-  if(!inputs)
-    return <p>No Inputs</p>
+const InputForm = ({ inputs, inputFileContent, setInputFileContent }) => {
+  if (!inputs) return <p>No Inputs</p>;
 
   function updateInputFile(inputId, value) {
-    setInputFileContent(content => {
-      const newContent = {...content}
-      newContent[inputId] = value
-      return newContent
-    })
+    setInputFileContent((content) => {
+      const newContent = { ...content };
+      newContent[inputId] = value;
+      return newContent;
+    });
   }
 
-  return <table className="inputFileFields">
-    <tbody>
-      {Object.entries(inputs).map(([inputId, inputDescription]) => {
-        const { label, description, options, ...theRest } = inputDescription
+  return (
+    <table className="inputFileFields">
+      <tbody>
+        {Object.entries(inputs).map(([inputId, inputDescription]) => {
+          const { label, description, options, ...theRest } = inputDescription;
 
-        return <tr key={inputId}>
-          <td className="inputCell">
-            <label htmlFor={inputId}><strong>{label}</strong></label>
-            <ScriptInput id={inputId} type={inputDescription.type} options={options} value={inputFileContent && inputFileContent[inputId]}
-              onValueUpdated={value => updateInputFile(inputId, value)} />
-          </td>
-          <td className="descriptionCell">
-            {description + '\n' + yaml.dump(theRest)}
-          </td>
-        </tr>
-      })}
-    </tbody>
-  </table>
-    
-}
+          return (
+            <tr key={inputId}>
+              <td className="inputCell">
+                <label htmlFor={inputId}>
+                  <strong>{label}</strong>
+                </label>
+                <ScriptInput
+                  id={inputId}
+                  type={inputDescription.type}
+                  options={options}
+                  value={inputFileContent && inputFileContent[inputId]}
+                  onValueUpdated={(value) => updateInputFile(inputId, value)}
+                />
+              </td>
+              <td className="descriptionCell">
+                {description + "\n" + yaml.dump(theRest)}
+              </td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+};
