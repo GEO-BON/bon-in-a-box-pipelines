@@ -18,6 +18,7 @@ library("raster")
 library("dplyr")
 library("stacatalogue")
 library("gdalcubes")
+library("stringr")
 
 
 
@@ -30,10 +31,19 @@ print(input)
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
             xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
 
+print(length(input$collections_items))
 
-if(length(input$collections_items) == 0) {
-  stop('Please specify collections_items')
+if (length(input$collections_items)==0) {
+  if (length(input$weight_matrix_with_ids) == 0) {
+    stop('Please specify collections_items')
+  } else {
+    weight_matrix<-input$weight_matrix_with_ids
+    stac_collections_items <- unlist(lapply((str_split(weight_matrix,'\n',simplify=T) |> str_split(','))[-1],function(l){l[1]}))
+    stac_collections_items <- stac_collections_items[startsWith(stac_collections_items,'GBSTAC')]
+    collections_items <- gsub('GBSTAC|','',stac_collections_items, fixed=TRUE)
+  }
 } else {
+  weight_matrix=NULL
   collections_items <- input$collections_items
 }
 cube_args = list(stac_path = input$stac_url,
@@ -82,13 +92,21 @@ for (coll_it in collections_items){
 
 output_predictors <- file.path(outputFolder)
 
+layer_paths<-c()
 for (i in 1:length(predictors)) {
   ff <- tempfile(pattern = paste0(names(predictors[i][[1]]),'_'))
-  gdalcubes::write_tif(predictors[i][[1]], dir = output_predictors, prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=T)
+  out<-gdalcubes::write_tif(predictors[i][[1]], dir = output_predictors, prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=TRUE)
+  fp <- paste0(out[1])
+  layer_paths <- cbind(layer_paths,fp)
+  if(!is.null(weight_matrix)) {
+    weight_matrix <- sub(stac_collections_items[i],fp[1], weight_matrix, fixed=TRUE)
+  }
 }
 
-fileslist=list.files(outputFolder, pattern="*.tif")
+ if(is.null(weight_matrix)) { #Temporary fix
+  weight_matrix=''
+ }
 
-output <- list("rasters" = paste0(file.path(outputFolder, fileslist)))
+output <- list("rasters" = layer_paths,"weight_matrix_with_layers" = weight_matrix)
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

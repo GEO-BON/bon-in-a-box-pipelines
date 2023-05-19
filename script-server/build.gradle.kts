@@ -31,7 +31,8 @@ tasks.test {
     environment(mapOf(
         "SCRIPT_LOCATION" to "$projectDir/src/test/resources/scripts/",
         "PIPELINES_LOCATION" to "$projectDir/src/test/resources/pipelines/",
-        "OUTPUT_LOCATION" to "$projectDir/src/test/resources/outputs/"
+        "OUTPUT_LOCATION" to "$projectDir/src/test/resources/outputs/",
+        "SCRIPT_SERVER_CACHE_CLEANER" to "full"
     ))
 
     testLogging {
