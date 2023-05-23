@@ -27,7 +27,6 @@ export function PipelineForm({
     setRunId(null);
     showHttpError(null);
     setInputFileContent({});
-    //setPipelineMetadata(null);
   }
 
   const handleSubmit = (event) => {

@@ -28,14 +28,13 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
-export function PipelinePage(props) {
+export function PipelinePage() {
   const [stoppable, setStoppable] = useState(null);
   const [runningScripts, setRunningScripts] = useState(new Set());
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
-  const defaultPipeline = "helloWorld.json";
-  const [selectedPipeline, setSelectedPipeline] = useState(defaultPipeline);
+  const [selectedPipeline, setSelectedPipeline] = useState("helloWorld.json");
   const navigate = useNavigate();
   const location = useLocation();
 
