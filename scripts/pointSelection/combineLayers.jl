@@ -1,47 +1,83 @@
 using BiodiversityObservationNetworks
 using SpeciesDistributionToolkit
 using JSON
-using Downloads
-#using GeoArrays: read 
 using DataFrames
 using CSV
 
-# Read in input arguments and json
-outputFolder = ARGS[1]
-print(outputFolder)
-filepath = joinpath(outputFolder,"input.json")
-outputFilepath = joinpath(outputFolder,"data/")
-isdir(outputFilepath) || mkdir(outputFilepath)
-
-input = JSON.parsefile(filepath)
-
-layermat = CSV.read(IOBuffer(input["layerdata"][1]), DataFrame)
-println(layermat)
-
-targetbalance = convert(Vector{Float64}, input["targetbalance"]) # this is the same as α
-layer_col = layermat[:, :layer]
-
-l = SimpleSDMPredictor.(layer_col)
-
-
-# This requires all rasters have same extent
-layers = BiodiversityObservationNetworks.stack(l)
-
-# get weights with weights for a layer in columns, url rows and path rows done seperately to preserve order 
-W = Matrix(layermat[:, 2:end])
-
-#priority = SimpleSDMPredictor(squish(layers, convert(Array{Float64}, transpose(W)), targetbalance))
-priority = similar(l[begin])
-priority.grid .= squish(layers, W, targetbalance)
-
-priority_path = joinpath(outputFilepath, "priority_map.tiff")
-###################
-println(priority_path)
-# write out the priority map
-SpeciesDistributionToolkit.save(priority_path, priority)
-
-# write out json
-outputDict = Dict("priority_map" => priority_path)
-open(joinpath(outputFolder, "output.json"),"w") do f
-    JSON.print(f, outputDict) 
+function read_inputs_dict(runtime_dir)
+    input_path = joinpath(runtime_dir, "input.json")
+    output_dir_path = joinpath(runtime_dir, "data/")
+    isdir(output_dir_path) || mkdir(output_dir_path)
+    return JSON.parsefile(input_path)
 end 
+
+function read_layers_and_weights(inputs)
+    layer_table = CSV.read(IOBuffer(inputs["layerdata"][1]), DataFrame)
+    layer_paths = layer_table[:, :layer]
+
+    W = Matrix(layer_table[:, 2:end])
+    layers = SimpleSDMPredictor.(layer_paths)
+    ϕ = convert(Vector{Float64}, inputs["targetbalance"]) 
+
+    check_validity(W) && check_validity(layers) && check_validity(ϕ)
+    return layers, W, ϕ
+end
+
+function check_validity(ϕ::Vector)
+    sum(ϕ) != 1 && @info "Target balance doesn't sum to one. Aborting." && exit(-1) 
+end
+
+function check_validity(W::Matrix)
+    !all([sum(x) ≈ 1 for x in eachcol(W)]) && @info "Not all columns in the weight matrix sum to one. Aborting." && exit(-1)
+end
+
+function check_validity(layers::Vector{T}) where T<:SimpleSDMLayer
+    if length(unique(size.(layers))) == 1
+        @info "Not all input layers are the same size. Aborting"
+        exit(-1)
+    end
+    if length(unique(boundingbox.(layers))) == 1
+        @info "Not all input layers have the same bounds. Aborting"
+        exit(-1)
+    end
+end 
+
+function mask_layers!(layers)
+    qcmask = SimpleSDMPredictor("scripts/mask.tif"; boundingbox(layers[1])...)
+    I = findall(x->isnothing(x) || iszero(x), qcmask.grid)
+    for l in layers
+        l.grid[I] .= nothing 
+    end
+
+end
+
+function make_priority_map(layers, W, ϕ)
+    mask_layers!(layers)
+
+    tensor = BiodiversityObservationNetworks.stack(layers)
+    priority = similar(layers[begin])
+    priority.grid .= squish(tensor, W, ϕ)
+    
+    return priority
+end
+
+function write_outputs(priority_map, output_dir)
+    priority_path = joinpath(output_dir, "priority_map.tiff")
+    SpeciesDistributionToolkit.save(priority_path, priority_map)
+    outputDict = Dict("priority_map" => priority_path)
+    output_path = joinpath(output_dir, "output.json")
+    touch(output_path)
+    open(output_path, "w") do f
+        JSON.print(f, outputDict)
+    end
+end 
+
+function main()
+    runtime_dir = ARGS[1]
+    inputs = read_inputs_dict(runtime_dir)
+    layers, W, ϕ = read_layers_and_weights(inputs)
+    priority_map = make_priority_map(layers, W, ϕ)
+    write_outputs(priority_map, runtime_dir) 
+end
+
+main()
