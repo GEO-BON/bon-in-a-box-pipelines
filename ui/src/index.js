@@ -34,11 +34,7 @@ function App() {
       <Route path="script-form" element={
         <Layout right={<SingleScriptPage />} />
       } />
-
-      <Route path="script-form/:script_run_id" element={
-        <Layout right={<SingleScriptPage />} />
-      } />
-
+      
       <Route path="pipeline-form" element={
       <Layout right={<PipelinePage />} />
       } />
