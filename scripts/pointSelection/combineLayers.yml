@@ -12,6 +12,10 @@ inputs:
         description: List of weights for each target, should sum to 1
         type: float[]
         example: [0.3, 0.7]
+    mask:
+        label: Mask of regions to include.
+        description: Should be a path to a binary mask.
+        type: image/tiff;application=geotiff
 outputs:
     priority_map:
         label: Priority map
