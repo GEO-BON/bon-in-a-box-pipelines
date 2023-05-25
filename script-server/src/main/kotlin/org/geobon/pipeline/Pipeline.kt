@@ -17,6 +17,11 @@ class RootPipeline(descriptionFile: File, inputsJSON: String? = null) :
 
     init {
         linkInputs()
+
+        val errors = validateGraph()
+        if(errors.isNotEmpty()) {
+            throw RuntimeException(errors)
+        }
     }
 }
 
@@ -190,11 +195,6 @@ open class Pipeline private constructor(
      * - canceled
      */
     suspend fun pullFinalOutputs(): Map<String, String> {
-        val errors = validateGraph()
-        if(errors.isNotEmpty()) {
-            throw RuntimeException(errors)
-        }
-
         var cancelled = false
         var failure = false
         try {
