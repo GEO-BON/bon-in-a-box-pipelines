@@ -19,7 +19,7 @@ inputs:
         properties:
             - id
             - path
-        example: {"id": "the_id", "path": "foo/bar/layer.tiff"} 
+        example: [{"id": "the_id", "path": "foo/bar/layer.tiff"}]
 outputs:
     priority_map:
         label: Priority map
