@@ -18,9 +18,12 @@ function read_layers_and_weights(inputs)
     W = Matrix(layer_table[:, 2:end])
     layers = SimpleSDMPredictor.(layer_paths)
     ϕ = convert(Vector{Float64}, inputs["targetbalance"]) 
+        
+    mask_path = inputs["mask"][1]["map"]["layer"]
+    mask = SimpleSDMPredictor(mask_path)
 
     check_validity(W) && check_validity(layers) && check_validity(ϕ)
-    return layers, W, ϕ
+    return layers, mask, W, ϕ
 end
 
 function check_validity(ϕ::Vector)
@@ -42,17 +45,15 @@ function check_validity(layers::Vector{T}) where T<:SimpleSDMLayer
     end
 end 
 
-function mask_layers!(layers)
-    qcmask = SimpleSDMPredictor("scripts/mask.tif"; boundingbox(layers[1])...)
-    I = findall(x->isnothing(x) || iszero(x), qcmask.grid)
+function mask_layers!(layers, mask_layer)
+    I = findall(x->!isnothing(x), mask_layer.grid) 
     for l in layers
         l.grid[I] .= nothing 
     end
-
 end
 
-function make_priority_map(layers, W, ϕ)
-    mask_layers!(layers)
+function make_priority_map(layers, mask_layer, W, ϕ)
+    mask_layers!(layers, mask_layer)
 
     tensor = BiodiversityObservationNetworks.stack(layers)
     priority = similar(layers[begin])
@@ -75,8 +76,8 @@ end
 function main()
     runtime_dir = ARGS[1]
     inputs = read_inputs_dict(runtime_dir)
-    layers, W, ϕ = read_layers_and_weights(inputs)
-    priority_map = make_priority_map(layers, W, ϕ)
+    layers, mask, W, ϕ = read_layers_and_weights(inputs)
+    priority_map = make_priority_map(layers, mask, W, ϕ)
     write_outputs(priority_map, runtime_dir) 
 end
 
