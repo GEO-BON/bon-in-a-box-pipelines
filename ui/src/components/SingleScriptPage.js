@@ -3,8 +3,8 @@ import Select from 'react-select';
 
 import { StepResult } from "./StepResult";
 import spinner from '../img/spinner.svg';
-import { InputFileWithExample } from './InputFileWithExample';
-import { GeneralDescription, InputsDescription, OutputsDescription } from './ScriptDescription';
+import { GeneralDescription } from './ScriptDescription';
+import InputFileInput from './form/InputFileInput';
 
 const RequestState = Object.freeze({"idle":1, "working":2, "done":3})
 
@@ -28,11 +28,6 @@ export function SingleScriptPage(props) {
     ) : (
       <>
         {resultData && resultData.httpError && <p key="httpError" className="error">{resultData.httpError}</p>}
-        {scriptMetadata && <pre key="metadata">
-             <GeneralDescription ymlPath={null} metadata={scriptMetadata} />
-             <InputsDescription metadata={scriptMetadata} />
-             <OutputsDescription metadata={scriptMetadata} />
-           </pre>}
         {resultData && <StepResult data={resultData.files} logs={resultData.logs} metadata={scriptMetadata} />}
       </>
     )}
@@ -41,15 +36,20 @@ export function SingleScriptPage(props) {
 
 function SingleScriptForm(props) {
   const formRef = useRef();
-  const inputRef = useRef();
   const api = new BonInABoxScriptService.DefaultApi();
 
   const defaultScript = "helloWorld>helloR.yml";
   const [scriptFileOptions, setScriptFileOptions] = useState([]);
 
+  /**
+   * String: Content of input.json for this run
+   */
+  const [inputFileContent, setInputFileContent] = useState({});
+
   function loadScriptMetadata(choice) {
     // TODO: cancel previous pending request?
     props.setRequestState(RequestState.idle);
+    setInputFileContent({})
     props.setResultData(null);
 
     var callback = function (error, data, response) {
@@ -88,7 +88,7 @@ function SingleScriptForm(props) {
     }
 
     let opts = {
-      'body': inputRef.current.getValue() // String | Content of input.json for this run
+      'body': JSON.stringify(inputFileContent)
     };
     api.runScript(scriptPath, opts, callback);
   };
@@ -112,19 +112,20 @@ function SingleScriptForm(props) {
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label>
-        Script file:
-        <br />
-        <Select name="scriptFile" className="blackText" options={scriptFileOptions}
-          defaultValue={{ label: defaultScript, value: defaultScript }}
-          onChange={(v) => loadScriptMetadata(v.value)} />
-      </label>
+      <label htmlFor='scriptFile'>Script file:</label>
+      <Select id="scriptFile" name="scriptFile" className="blackText" options={scriptFileOptions}
+        defaultValue={{ label: defaultScript, value: defaultScript }}
+        onChange={(v) => loadScriptMetadata(v.value)} />
       <br />
-      <label>
-        Script input:
-        <br />
-        <InputFileWithExample ref={inputRef} metadata={props.scriptMetadata} />
-      </label>
+      {props.scriptMetadata &&
+        <pre key="metadata">
+          <GeneralDescription ymlPath={null} metadata={props.scriptMetadata} />
+        </pre>
+      }
+      <br />
+      <InputFileInput metadata={props.scriptMetadata}
+        inputFileContent={inputFileContent}
+        setInputFileContent={setInputFileContent} />
       <br />
       <input type="submit" disabled={props.requestState === RequestState.working} value="Run script" />
     </form>
