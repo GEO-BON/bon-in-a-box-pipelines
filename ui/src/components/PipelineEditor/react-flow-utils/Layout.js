@@ -53,11 +53,12 @@ export const layoutElements = (nodes, edges, callback) => {
         }
   
         elkjsNode.properties = {
+          alignment: 'RIGHT',
           portConstraints: 'FIXED_ORDER',
           'portAlignment.default': 'BEGIN'
         }
       } else {
-        console.error('Failed ot get description for ' + node.data.descriptionFile)
+        console.error('Failed to get description for ' + node.data.descriptionFile)
       }
     }
 
