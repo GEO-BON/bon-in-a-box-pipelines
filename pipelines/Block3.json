@@ -472,7 +472,7 @@
         "dragHandle": ".dragHandle",
         "data": {
           "type": "float",
-          "value": 0.99
+          "value": 0.8
         }
       },
       {
@@ -840,10 +840,6 @@
     ],
     "inputs": {},
     "outputs": {
-      "pointSelection>balancedAcceptance.yml@100|points": {
-        "description": "GeoJSON multipoint object of selected points",
-        "label": "points",
-        "type": "application/geo+json"
-      }
+      "pointSelection>balancedAcceptance.yml@100|points": {}
     }
   }
