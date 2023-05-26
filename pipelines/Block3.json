@@ -840,6 +840,10 @@
     ],
     "inputs": {},
     "outputs": {
-      "pointSelection>balancedAcceptance.yml@100|points": {}
+        "pointSelection>balancedAcceptance.yml@100|points": {
+            "description": "GeoJSON multipoint object of selected points",
+            "label": "points",
+            "type": "application/geo+json"
+        }    
     }
   }

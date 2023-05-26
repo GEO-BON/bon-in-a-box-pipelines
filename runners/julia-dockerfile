@@ -1,4 +1,4 @@
-FROM julia:1.8.1
+FROM julia:1.9.0
 
 # Pre-compiling Julia dependencies
 RUN julia -e 'pwd(); using Pkg; Pkg.add.([ \
