@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 
 import { SingleOutputResult, StepResult } from "./StepResult";
 import {
@@ -25,8 +25,46 @@ import {
 } from "../utils/IOId";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
+
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
+
+
+function pipReducer(state, action) {
+  switch (action.type) {
+    case 'changed_draft': {
+      return {
+        draft: action.nextDraft,
+        todos: state.todos,
+      };
+    };
+    case 'added_todo': {
+      return {
+        draft: '',
+        todos: [{
+          id: state.todos.length,
+          text: state.draft
+        }, ...state.todos]
+      }
+    }
+  }
+  throw Error('Unknown action: ' + action.type);
+}
+
+function pipInitialState(pipelineRunId) {
+  const runHash = null;
+  const pipeline = 'helloWorld.json';
+  if(pipelineRunId){
+    const parts = pipelineRunId.split('>')
+    const runHash = parts.slice(-1);
+    const pipeline = parts.slice(-2)
+  }
+  return {
+    runHash: runHash,
+    pipeline: pipeline,
+  };
+}
+
 
 export function PipelinePage() {
   const [stoppable, setStoppable] = useState(null);
@@ -35,6 +73,7 @@ export function PipelinePage() {
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
   const [selectedPipeline, setSelectedPipeline] = useState("helloWorld.json");
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -45,7 +84,11 @@ export function PipelinePage() {
 
   const { pipelineRunId } = useParams();
   const [runId, setRunId] = useState(pipelineRunId); //Prevent runId from being initially null when page is loaded with route.
-
+  const [pipStates, setPipStates] = useReducer(
+    pipReducer,
+    pipelineRunId,
+    pipInitialState
+  );
   function showHttpError(error, response) {
     if (response && response.text) setHttpError(response.text);
     else if (error) setHttpError(error.toString());
