@@ -57,7 +57,15 @@ const IOList = ({ inputList, outputList, selectedNodes }) => {
         className="collapseTab"
         onClick={() => setCollapsedPane(!collapsedPane)}
       >
-        {collapsedPane ? "Inputs and outputs" : ">>"}
+        {collapsedPane ?
+          <span>
+            {inputList.length < 10 && <>&nbsp;</>}
+            {inputList.length}&nbsp;Inputs,&nbsp;
+            {outputList.length < 10 && <>&nbsp;</>}
+            {outputList.length}&nbsp;Outputs
+          </span>
+          : ">>"
+        }
       </div>
       <div className="ioListInner">
         <h3>User inputs</h3>
