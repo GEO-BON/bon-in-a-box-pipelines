@@ -246,15 +246,17 @@ aside.scriptChooser .description {
   color: gray;
 }
 
+.collapseTab {
+  text-align: center;
+}
+
 .paneOpen .collapseTab {
   writing-mode: horizontal-tb;
 }
 
-.paneCollapsed .collapseTab {
+.topToBottomText {
   writing-mode: vertical-rl;
   text-orientation: mixed;
-  background: #2c2c2c;
-  color: white;
 }
 
 .collapseTab {
