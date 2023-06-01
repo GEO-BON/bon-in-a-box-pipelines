@@ -205,8 +205,8 @@ aside.scriptChooser .description {
 
 .ioList {
   border: 1px solid black;
-  border-radius: 3px;
-  background: #ffffffee;
+  border-radius: 0px 0px 0px 3px;
+  background: whitesmoke;
   color: black;
 
   padding-left: 1em;
@@ -258,16 +258,17 @@ aside.scriptChooser .description {
 }
 
 .collapseTab {
-  width: 20px;
-  float: left;
-  margin-left: -43px;
-  padding: 6px;
-  background: white;
-  border-style: solid none solid solid;
+  position: absolute;
   width: 15px;
-  border-width: 1.5px 1.5px 1.5px 1.5px;
-  border-color: black white black black;
-  margin-top: -1px;
+  left: -28px; /*-width - padding - border*/
+  top: -1px;
+  padding: 6px;
+
+  background: whitesmoke;
+  border-style: solid none solid solid;
+  border-width: 1px;
+  border-color: black whitesmoke black black;
+  border-radius: 3px 0px 0px 3px;
   cursor: pointer;
 }
 
