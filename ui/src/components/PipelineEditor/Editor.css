@@ -205,15 +205,14 @@ aside.scriptChooser .description {
 
 .ioList {
   border: 1px solid black;
+  border-right: 0;
   border-radius: 0px 0px 0px 3px;
   background: whitesmoke;
   color: black;
 
-  padding-left: 1em;
-  padding-right: 1em;
+  overflow-x: visible;
   width: 30%;
   max-width: 400px;
-  overflow-x: visible;
 
   position: absolute;
   top: 3em;
@@ -226,19 +225,14 @@ aside.scriptChooser .description {
 
 .paneCollapsed.ioList {
   width: 0px !important;
-  margin-right: -33px;
 }
 
 .ioListInner {
-  float: left;
-  width: 100%;
-  position: relative;
-  overflow-y: scroll;
-  height: 95%;
-}
-
-.paneCollapsed .ioListInner {
-  width: 0px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .ioList .description {
