@@ -53,17 +53,18 @@ const IOList = ({ inputList, outputList, selectedNodes }) => {
   const [collapsedPane, setCollapsedPane] = useState(false);
   return (
     <div className={`ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
-      <div
-        className="collapseTab"
-        onClick={() => setCollapsedPane(!collapsedPane)}
-      >
+      <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
         {collapsedPane ?
-          <span>
+        <>
+          &lt;&lt;
+          <span className="topToBottomText">
+            &nbsp;&nbsp;
             {inputList.length < 10 && <>&nbsp;</>}
             {inputList.length}&nbsp;Inputs,&nbsp;
             {outputList.length < 10 && <>&nbsp;</>}
             {outputList.length}&nbsp;Outputs
           </span>
+        </>
           : ">>"
         }
       </div>
