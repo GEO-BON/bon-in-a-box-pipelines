@@ -69,7 +69,9 @@ references:
   - text: ESA (1992-2020, 300m) 37 land cover classes.
     doi: http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf
   - text: ESRI (2017-2022, 10m) 9 land cover classes
-    doi:
-  - text: io path (ESA) is "https://io.biodiversite-quebec.ca/stac/".
-  - text: PC path (ESA and ESRI) is "https://planetarycomputer.microsoft.com/api/stac/v1/"
-  - text: collectionS in PC are named "esa-cci-lc" for ESA (300m) and "io-lulc-9-class" (10m) for ESRI.
+    doi: https://livingatlas.arcgis.com/landcover/
+  - text: io path (ESA) is 
+    doi: https://io.biodiversite-quebec.ca/stac/
+  - text: PC path (ESA and ESRI) is 
+    doi: https://planetarycomputer.microsoft.com/api/stac/v1/
+  - text: collections in PC are named "esa-cci-lc" for ESA (300m) and "io-lulc-9-class" (10m) for ESRI.

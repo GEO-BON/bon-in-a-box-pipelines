@@ -24,17 +24,17 @@ internal class PullLayersByIdTest {
 
         finishLine = mutableListOf()
 
-        step = PullLayersById(mutableMapOf(
+        step = PullLayersById(StepId("pull", "0"), mutableMapOf(
             PullLayersById.IN_IDENTIFIED_LAYERS to AggregatePipe(listOf(
-                AssignId(mutableMapOf(
+                AssignId(StepId("assign", "1"), mutableMapOf(
                     AssignId.IN_ID to ConstantPipe("text", "first"),
                     AssignId.IN_LAYER to RecordPipe("1.tiff", finishLine, type = "image/tiff;application=geotiff")
                 )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!,
-                AssignId(mutableMapOf(
+                AssignId(StepId("assign", "2"), mutableMapOf(
                     AssignId.IN_ID to ConstantPipe("text", "second"),
                     AssignId.IN_LAYER to RecordPipe("2.tiff", finishLine, type = "image/tiff;application=geotiff")
                 )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!,
-                AssignId(mutableMapOf(
+                AssignId(StepId("assign", "3"), mutableMapOf(
                     AssignId.IN_ID to ConstantPipe("text", "third"),
                     AssignId.IN_LAYER to RecordPipe("3.tiff", finishLine, type = "image/tiff;application=geotiff")
                 )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!
@@ -69,7 +69,7 @@ internal class PullLayersByIdTest {
     @Test
     fun whenPullingConditionally_thenTypesAreRespected() = runTest {
         withProductionPaths {
-            val singlePullIf = AssignId(mutableMapOf(
+            val singlePullIf = AssignId(StepId("assign", "0"), mutableMapOf(
                 AssignId.IN_ID to ConstantPipe("text", "first"),
                 AssignId.IN_LAYER to RecordPipe("1.tiff", finishLine, type = "image/tiff;application=geotiff")
             )).outputs[AssignId.OUT_IDENTIFIED_LAYER]!!.pullIf { true }
@@ -199,12 +199,12 @@ internal class PullLayersByIdTest {
     @Test
     fun `given a pipeline with PullLayersById_when ran_then replaces the expected layer`() = runTest {
         withProductionScripts {
-            val pipeline = Pipeline("pullLayersByIdTest.json",
+            val pipeline = RootPipeline("pullLayersByIdTest.json",
             """{
-                "pipeline>PullLayersById.yml@9.with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
+                "pipeline>PullLayersById.yml@9|with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
             }""".trimIndent())
 
-            pipeline.execute()
+            pipeline.pullFinalOutputs()
 
             val result = pipeline.getPipelineOutputs()[0].pull().toString()
             assertFalse(result.contains("https://object-arbutus.cloud.computecanada.ca/bq-io/io/GFW/lossyear/Hansen_GFC-2020-v1.8_lossyear_80N_180W.tif"))

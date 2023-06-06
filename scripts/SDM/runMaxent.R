@@ -22,7 +22,7 @@ source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
-print("Inputs: ")
+print("Inputs : ")
 print(input)
 
 
@@ -30,9 +30,9 @@ presence_background <- read.table(file = input$presence_background, sep = '\t', 
 predictors <- terra::rast(unlist(input$predictors))
 mod_tuning <- run_maxent(presence_background, 
                          with_raster = F, # can be set to F to speed up
-                         algorithm = "maxent.jar",
+                         algorithm = "maxnet",
                          layers = names(predictors),
-                         predictors = NULL,
+                         predictors = predictors,
                          partition_type = input$partition_type,
                          nfolds = input$nfolds,
                          orientation_block = input$orientation_block,
@@ -49,11 +49,11 @@ tuned_param <- select_param(res_tuning, method = input$method_select_params, lis
 
 predictors <- raster::stack(predictors)
 
-sdms <- predict_maxent(presence_background, 
-  algorithm = "maxent.jar", 
-                           predictors = predictors,  
-                           fc = tuned_param[[1]],                         
-                           rm = tuned_param[[2]], 
+sdms <- predict_maxent(presence_background,
+  algorithm = "maxnet", 
+                           predictors = predictors,
+                           fc = tuned_param[[1]],
+                           rm = tuned_param[[2]],
                            type = "cloglog",
                            mask = NULL,
                            parallel = T,
@@ -68,18 +68,24 @@ names(sdm_pred) <- "prediction"
 sdm_runs <- sdms[["pred_runs"]]
 
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
-runs.output <- file.path(outputFolder, "sdm_runs.tif")
+runs.output <- paste0(outputFolder,"/sdm_runs_", 1:nlayers(sdm_runs), ".tif")
+#runs.output <- file.path(outputFolder, "sdm_runs.tif")
 
-raster::writeRaster(x = sdm_pred,
+sdm_pred<-project(rast(sdm_pred),crs(input$proj)) ##Temporary fix while maxent transitions to terra
+terra::writeRaster(x = sdm_pred,
                           filename = pred.output,
-                          format='COG',
-                          options=c("COMPRESS=DEFLATE"),
+                          filetype = "COG",
+                          wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
- #terra::writeRaster(x = sdm_runs,
-  #                        filename = runs.output,
-  #                        format='COG',
-  #                        options=c("COMPRESS=DEFLATE"),
-  #                        overwrite = TRUE)
+for (i in 1:nlayers(sdm_runs)){
+    thisrun<-project(rast(sdm_runs[[i]]),crs(input$proj))  ##Temporary fix while maxent transitions to terra
+    terra::writeRaster(x = thisrun,
+    filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),
+    filetype = "COG",
+    wopt= list(gdal=c("COMPRESS=DEFLATE")),
+    overwrite = TRUE)
+}
+
 
 output <- list("sdm_pred" = pred.output,
   "sdm_runs" = runs.output) 

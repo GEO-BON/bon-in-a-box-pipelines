@@ -1,8 +1,8 @@
-import 'react-flow-renderer/dist/style.css';
-import 'react-flow-renderer/dist/theme-default.css';
-import './Editor.css';
+import "react-flow-renderer/dist/style.css";
+import "react-flow-renderer/dist/theme-default.css";
+import "./Editor.css";
 
-import React, { useState, useRef, useCallback, useEffect } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import ReactFlow, {
   ReactFlowProvider,
   addEdge,
@@ -12,25 +12,36 @@ import ReactFlow, {
   Controls,
   MiniMap,
   Position,
-} from 'react-flow-renderer/nocss';
+} from "react-flow-renderer/nocss";
 
-import IONode from './IONode'
-import ConstantNode, { ARRAY_PLACEHOLDER } from './ConstantNode'
-import UserInputNode from './UserInputNode';
-import PopupMenu from './PopupMenu';
-import { layoutElements } from './react-flow-utils/Layout'
-import { highlightConnectedEdges } from './react-flow-utils/HighlightConnectedEdges'
-import { getUpstreamNodes, getDownstreamNodes } from './react-flow-utils/getConnectedNodes'
-import { getScriptDescription } from './ScriptDescriptionStore'
+import IONode from "./IONode";
+import ConstantNode from "./ConstantNode";
+import UserInputNode from "./UserInputNode";
+import PopupMenu from "./PopupMenu";
+import { layoutElements } from "./react-flow-utils/Layout";
+import { highlightConnectedEdges } from "./react-flow-utils/HighlightConnectedEdges";
+import {
+  getUpstreamNodes,
+  getDownstreamNodes,
+} from "./react-flow-utils/getConnectedNodes";
+import { getStepDescription } from "./ScriptDescriptionStore";
+import {
+  getStepNodeId,
+  getStepOutput,
+  getStepInput,
+  getStepFile,
+  toIOId,
+} from "../../utils/IOId";
+import sleep from "../../utils/Sleep";
 
-const BonInABoxScriptService = require('bon_in_a_box_script_service');
+const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();
 
 const customNodeTypes = {
   io: IONode,
   constant: ConstantNode,
-  userInput: UserInputNode
-}
+  userInput: UserInputNode,
+};
 
 let id = 0;
 const getId = () => `${id++}`;
@@ -38,28 +49,76 @@ const getId = () => `${id++}`;
 /**
  * @returns rendered view of the pipeline inputs
  */
-const IOList = ({inputList, outputList, selectedNodes}) => {
-  return <div className='ioList'>
-    <h3>User inputs</h3>
-    {inputList.length === 0 ? "No inputs" : inputList.map((input, i) => {
-      return <div key={i} className={selectedNodes.find(node => node.id === input.nodeId) ? "selected" : ""}>
-        <p>{input.label}<br />
-          <span className='description'>{input.description}</span>
-        </p>
+const IOList = ({ inputList, outputList, selectedNodes }) => {
+  const [collapsedPane, setCollapsedPane] = useState(false);
+  return (
+    <div className={`ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
+      <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
+        {collapsedPane ?
+        <>
+          &lt;&lt;
+          <span className="topToBottomText">
+            &nbsp;&nbsp;
+            {inputList.length < 10 && <>&nbsp;</>}
+            {inputList.length}&nbsp;Inputs,&nbsp;
+            {outputList.length < 10 && <>&nbsp;</>}
+            {outputList.length}&nbsp;Outputs
+          </span>
+        </>
+          : ">>"
+        }
       </div>
-    })}
-    <h3>Pipeline outputs</h3>
-    {outputList.length === 0 ?
-      <p className='error'>At least one output is needed for the pipeline to run</p>
-      : outputList.map((output, i) => {
-        return <div key={i} className={selectedNodes.find(node => node.id === output.nodeId) ? "selected" : ""}>
-          <p>{output.label}<br />
-            <span className='description'>{output.description}</span>
+      <div className="ioListInner">
+        <h3>User inputs</h3>
+        {inputList.length === 0
+          ? "No inputs"
+          : inputList.map((input, i) => {
+              return (
+                <div
+                  key={i}
+                  className={
+                    selectedNodes.find((node) => node.id === input.nodeId)
+                      ? "selected"
+                      : ""
+                  }
+                >
+                  <p>
+                    {input.label}
+                    <br />
+                    <span className="description">{input.description}</span>
+                  </p>
+                </div>
+              );
+            })}
+        <h3>Pipeline outputs</h3>
+        {outputList.length === 0 ? (
+          <p className="error">
+            At least one output is needed for the pipeline to run
           </p>
-        </div>
-      })}
-  </div>
-}
+        ) : (
+          outputList.map((output, i) => {
+            return (
+              <div
+                key={i}
+                className={
+                  selectedNodes.find((node) => node.id === output.nodeId)
+                    ? "selected"
+                    : ""
+                }
+              >
+                <p>
+                  {output.label}
+                  <br />
+                  <span className="description">{output.description}</span>
+                </p>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </div>
+  );
+};
 
 export function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
@@ -67,195 +126,227 @@ export function PipelineEditor(props) {
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const [reactFlowInstance, setReactFlowInstance] = useState(null);
   const [selectedNodes, setSelectedNodes] = useState(null);
-  const [inputList, setInputList] = useState([])
-  const [outputList, setOutputList] = useState([])
+  const [inputList, setInputList] = useState([]);
+  const [outputList, setOutputList] = useState([]);
 
   const [toolTip, setToolTip] = useState(null);
 
-  const [popupMenuPos, setPopupMenuPos] = useState({x:0, y:0})
-  const [popupMenuOptions, setPopupMenuOptions] = useState()
+  const [popupMenuPos, setPopupMenuPos] = useState({ x: 0, y: 0 });
+  const [popupMenuOptions, setPopupMenuOptions] = useState();
 
   // We need this since the functions passed through node data retain their old selectedNodes state.
   // Note that the stratagem fails if trying to add edges from many sources at the same time.
-  const [pendingEdgeParams, addEdgeWithHighlight] = useState(null)
-  useEffect(()=>{
-    if(pendingEdgeParams) {
-      setEdges(edgesList => highlightConnectedEdges(selectedNodes, addEdge(pendingEdgeParams, edgesList)))
-      addEdgeWithHighlight(null)
+  const [pendingEdgeParams, addEdgeWithHighlight] = useState(null);
+  useEffect(() => {
+    if (pendingEdgeParams) {
+      setEdges((edgesList) =>
+        highlightConnectedEdges(
+          selectedNodes,
+          addEdge(pendingEdgeParams, edgesList)
+        )
+      );
+      addEdgeWithHighlight(null);
     }
-  }, [pendingEdgeParams, selectedNodes, setEdges])
+  }, [pendingEdgeParams, selectedNodes, setEdges]);
 
-  const inputFile = useRef(null) 
+  const inputFile = useRef(null);
 
-  const onConnect = useCallback((params) => {
-    setEdges((edgesList) =>  
-      highlightConnectedEdges(selectedNodes, addEdge(params, edgesList))
-    )
-  }, [selectedNodes, setEdges]);
+  const onConnect = useCallback(
+    (params) => {
+      setEdges((edgesList) =>
+        highlightConnectedEdges(selectedNodes, addEdge(params, edgesList))
+      );
+    },
+    [selectedNodes, setEdges]
+  );
 
   const onDragOver = useCallback((event) => {
     event.preventDefault();
-    event.dataTransfer.dropEffect = 'move';
+    event.dataTransfer.dropEffect = "move";
   }, []);
 
-  const onConstantValueChange = useCallback((event) => {
-    setNodes((nds) =>
-      nds.map((node) => {
-        if(node.id !== event.target.id) {
-          return node
-        }
-
-        let value
-        if(event.target.type === 'checkbox') {
-          value = event.target.checked
-        } else {
-          value = event.target.value
-
-          if(event.target.placeholder === ARRAY_PLACEHOLDER) {
-            value = value.split(',').map(v => v.trim())
+  const onConstantValueChange = useCallback(
+    (id, value) => {
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (node.id !== id) {
+            return node;
           }
-        }
 
-        return {
-          ...node,
-          data: {
-            ...node.data,
-            value,
-          },
-        };
-      })
-    );
-  }, [setNodes]);
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              value,
+            },
+          };
+        })
+      );
+    },
+    [setNodes]
+  );
 
-  const onSelectionChange = useCallback((selected) => {
-    setSelectedNodes(selected.nodes)
-    setEdges(highlightConnectedEdges(selected.nodes, edges))
-  }, [edges, setEdges, setSelectedNodes])
+  const onSelectionChange = useCallback(
+    (selected) => {
+      setSelectedNodes(selected.nodes);
+      setEdges((edges) => highlightConnectedEdges(selected.nodes, edges));
+    },
+    [setEdges, setSelectedNodes]
+  );
 
-  const onPopupMenu = useCallback((event, id, type) => {
-    event.stopPropagation()
-    event.preventDefault()
+  const onPopupMenu = useCallback(
+    (event, id, type) => {
+      event.stopPropagation();
+      event.preventDefault();
 
-    setPopupMenuPos({ x: event.clientX, y: event.clientY })
+      setPopupMenuPos({ x: event.clientX, y: event.clientY });
 
-    if (type === 'constant') {
-      setPopupMenuOptions({
-        "Convert to user input": () => setNodes(nds => nds.map(node =>
-          node.id === id ? { ...node, type: 'userInput' } : node
-        ))
-      })
-    } else if (type === 'userInput') {
-      setPopupMenuOptions({
-        "Convert to constant": () => setNodes(nds => nds.map(node =>
-          node.id === id ? { ...node, type: 'constant' } : node
-        ))
-      })
-    }
-
-  }, [setPopupMenuPos, setPopupMenuOptions, setNodes])
+      if (type === "constant") {
+        setPopupMenuOptions({
+          "Convert to user input": () =>
+            setNodes((nds) =>
+              nds.map((node) =>
+                node.id === id ? { ...node, type: "userInput" } : node
+              )
+            ),
+        });
+      } else if (type === "userInput") {
+        setPopupMenuOptions({
+          "Convert to constant": () =>
+            setNodes((nds) =>
+              nds.map((node) =>
+                node.id === id ? { ...node, type: "constant" } : node
+              )
+            ),
+        });
+      }
+    },
+    [setPopupMenuPos, setPopupMenuOptions, setNodes]
+  );
 
   const onPopupMenuHide = useCallback(() => {
-    if(popupMenuOptions) {
-      setPopupMenuOptions(null)
+    if (popupMenuOptions) {
+      setPopupMenuOptions(null);
     }
-  }, [popupMenuOptions, setPopupMenuOptions])
+  }, [popupMenuOptions, setPopupMenuOptions]);
 
-  const injectConstant = useCallback((event, fieldDescription, target, targetHandle) => {
-    event.preventDefault()
-
-    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
-
-    // Offset from pointer event to canvas
-    const position = reactFlowInstance.project({
-      x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
-    })
-
-    // Approx offset so the node appears near the input.
-    position.x = position.x - 350
-    position.y = position.y - 15
-
-    const newNode = {
-      id: getId(),
-      type: 'constant',
-      position,
-      dragHandle: '.dragHandle',
-      data: {
-        onChange: onConstantValueChange,
-        onPopupMenu,
-        type: fieldDescription.type,
-        value: fieldDescription.example,
-        options: fieldDescription.options,
-      },
-    }
-    setNodes((nds) => nds.concat(newNode))
-
-    const newEdge = {
-      source: newNode.id,
-      sourceHandle: null,
-      target: target,
-      targetHandle: targetHandle
-    }
-    addEdgeWithHighlight(newEdge)
-  }, [reactFlowInstance, onPopupMenu, onConstantValueChange, setNodes])
-
-  const injectOutput = useCallback((event, source, sourceHandle) => {
-    event.preventDefault()
-
-    const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect()
-
-    // Offset from pointer event to canvas
-    const position = reactFlowInstance.project({
-      x: event.clientX - reactFlowBounds.left,
-      y: event.clientY - reactFlowBounds.top,
-    })
-
-    // Approx offset so the node appears near the output.
-    position.x = position.x + 100
-    position.y = position.y - 15
-
-    const newNode = {
-      id: getId(),
-      type: 'output',
-      position,
-      targetPosition: Position.Left,
-      data: { label: 'Output' }
-    };
-    setNodes((nds) => nds.concat(newNode))
-
-    const newEdge = {
-      source: source,
-      sourceHandle: sourceHandle,
-      target: newNode.id,
-      targetHandle: null
-    }
-    addEdgeWithHighlight(newEdge)
-  }, [reactFlowInstance, setNodes])
-
-  const onNodesDelete = useCallback((deletedNodes) => {
-    // We delete constants that are connected to no other node
-    const upstreamNodes = getUpstreamNodes(deletedNodes, reactFlowInstance)
-    const allEdges = reactFlowInstance.getEdges()
-    let toDelete = upstreamNodes.filter(n => n.type === 'constant' && getConnectedEdges([n], allEdges).length === 1)
-    
-    // We delete outputs that are connected to no other node
-    const downstreamNodes = getDownstreamNodes(deletedNodes, reactFlowInstance)
-    toDelete = toDelete.concat(downstreamNodes.filter(n => n.type === 'output' && getConnectedEdges([n], allEdges).length === 1))
-
-    //version 11.2 will allow reactFlowInstance.deleteElements(toDelete)
-    const deleteIds = toDelete.map(n => n.id)
-    setNodes(nodes => nodes.filter(n => !deleteIds.includes(n.id)))
-  }, [reactFlowInstance, setNodes])
-
-  const onDrop = useCallback((event) => {
+  const injectConstant = useCallback(
+    (event, fieldDescription, target, targetHandle) => {
       event.preventDefault();
 
       const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
-      const type = event.dataTransfer.getData('application/reactflow');
-      const descriptionFile = event.dataTransfer.getData('descriptionFile');
+
+      // Offset from pointer event to canvas
+      const position = reactFlowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+
+      // Approx offset so the node appears near the input.
+      position.x = position.x - 350;
+      position.y = position.y - 15;
+
+      const newNode = {
+        id: getId(),
+        type: "constant",
+        position,
+        dragHandle: ".dragHandle",
+        data: {
+          onConstantValueChange,
+          onPopupMenu,
+          type: fieldDescription.type,
+          value: fieldDescription.example,
+          options: fieldDescription.options,
+        },
+      };
+      setNodes((nds) => nds.concat(newNode));
+
+      const newEdge = {
+        source: newNode.id,
+        sourceHandle: null,
+        target: target,
+        targetHandle: targetHandle,
+      };
+      addEdgeWithHighlight(newEdge);
+    },
+    [reactFlowInstance, onPopupMenu, onConstantValueChange, setNodes]
+  );
+
+  const injectOutput = useCallback(
+    (event, source, sourceHandle) => {
+      event.preventDefault();
+
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+
+      // Offset from pointer event to canvas
+      const position = reactFlowInstance.project({
+        x: event.clientX - reactFlowBounds.left,
+        y: event.clientY - reactFlowBounds.top,
+      });
+
+      // Approx offset so the node appears near the output.
+      position.x = position.x + 100;
+      position.y = position.y - 15;
+
+      const newNode = {
+        id: getId(),
+        type: "output",
+        position,
+        targetPosition: Position.Left,
+        data: { label: "Output" },
+      };
+      setNodes((nds) => nds.concat(newNode));
+
+      const newEdge = {
+        source: source,
+        sourceHandle: sourceHandle,
+        target: newNode.id,
+        targetHandle: null,
+      };
+      addEdgeWithHighlight(newEdge);
+    },
+    [reactFlowInstance, setNodes]
+  );
+
+  const onNodesDelete = useCallback(
+    (deletedNodes) => {
+      // We delete constants that are connected to no other node
+      const upstreamNodes = getUpstreamNodes(deletedNodes, reactFlowInstance);
+      const allEdges = reactFlowInstance.getEdges();
+      let toDelete = upstreamNodes.filter(
+        (n) =>
+          n.type === "constant" && getConnectedEdges([n], allEdges).length === 1
+      );
+
+      // We delete outputs that are connected to no other node
+      const downstreamNodes = getDownstreamNodes(
+        deletedNodes,
+        reactFlowInstance
+      );
+      toDelete = toDelete.concat(
+        downstreamNodes.filter(
+          (n) =>
+            n.type === "output" && getConnectedEdges([n], allEdges).length === 1
+        )
+      );
+
+      //version 11.2 will allow reactFlowInstance.deleteElements(toDelete)
+      const deleteIds = toDelete.map((n) => n.id);
+      setNodes((nodes) => nodes.filter((n) => !deleteIds.includes(n.id)));
+    },
+    [reactFlowInstance, setNodes]
+  );
+
+  const onDrop = useCallback(
+    (event) => {
+      event.preventDefault();
+
+      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
+      const type = event.dataTransfer.getData("application/reactflow");
+      const descriptionFile = event.dataTransfer.getData("descriptionFile");
 
       // check if the dropped element is valid
-      if (typeof type === 'undefined' || !type) {
+      if (typeof type === "undefined" || !type) {
         return;
       }
 
@@ -271,207 +362,246 @@ export function PipelineEditor(props) {
       };
 
       switch (type) {
-        case 'io':
-          newNode.data = { 
+        case "io":
+          newNode.data = {
             descriptionFile: descriptionFile,
             setToolTip: setToolTip,
             injectConstant: injectConstant,
-            injectOutput: injectOutput
-           }
+            injectOutput: injectOutput,
+          };
           break;
-        case 'output':
-          newNode.data = { label: 'Output' }
-          newNode.targetPosition = Position.Left
+        case "output":
+          newNode.data = { label: "Output" };
+          newNode.targetPosition = Position.Left;
           break;
         default:
-          throw Error("unknown node type")
+          throw Error("unknown node type");
       }
 
       setNodes((nds) => nds.concat(newNode));
     },
     [reactFlowInstance, injectConstant, injectOutput, setNodes]
-  )
+  );
 
   /**
    * Refresh the list of "dangling" inputs that the user will need to provide.
    */
-  const refreshInputList = useCallback((allNodes, allEdges) => {
-    setInputList(previousInputs => {
-      let newUserInputs = []
+  const refreshInputList = useCallback(
+    (allNodes, allEdges) => {
+      setInputList((previousInputs) => {
+        let newUserInputs = [];
 
-      allNodes.forEach(node => {
-        if (node.data) {
-          if (node.type === 'userInput') {
-            const previousInput = previousInputs.find(prev => prev.nodeId === node.id)
+        allNodes.forEach((node) => {
+          if (node.data) {
+            if (node.type === "userInput") {
+              const previousInput = previousInputs.find(
+                (prev) => prev.nodeId === node.id
+              );
 
-            // The label and description of previous inputs might have been modified, so we keep them as is.
-            if (previousInput) {
-              newUserInputs.push(previousInput)
+              // The label and description of previous inputs might have been modified, so we keep them as is.
+              if (previousInput) {
+                newUserInputs.push(previousInput);
+              } else {
+                // No existing input, add a new one
+                let label = "Label";
+                let description = "Description";
 
-            } else { // No existing input, add a new one
-              let label = "Label"
-              let description = "Description"
+                // Descriptions may vary between all steps connected, we pick the one from the first outgoing edge.
+                const edgeFound = allEdges.find(
+                  (edge) => node.id === edge.source
+                );
+                if (edgeFound) {
+                  const nodeFound = allNodes.find(
+                    (n) => edgeFound.target === n.id
+                  );
+                  const stepDescription = getStepDescription(
+                    nodeFound.data.descriptionFile
+                  );
 
-              // Descriptions may vary between all steps connected, we pick the one from the first outgoing edge.
-              const edgeFound = allEdges.find(edge => node.id === edge.source);
-              if(edgeFound) {
-                const nodeFound = allNodes.find(n => edgeFound.target === n.id)
-                const stepDescription = getScriptDescription(nodeFound.data.descriptionFile)
+                  if (stepDescription && stepDescription.inputs) {
+                    const inputDescription =
+                      stepDescription.inputs[edgeFound.targetHandle];
 
-                if(stepDescription && stepDescription.inputs) {
-                  const inputDescription = stepDescription.inputs[edgeFound.targetHandle]
-
-                  if(inputDescription) {
-                    label = inputDescription.label
-                    node.data.label = label
-                    description = inputDescription.description
+                    if (inputDescription) {
+                      label = inputDescription.label;
+                      node.data.label = label;
+                      description = inputDescription.description;
+                    }
                   }
                 }
+
+                newUserInputs.push({
+                  label,
+                  description,
+                  type: node.data.type,
+                  example: node.data.value,
+                  nodeId: node.id,
+                });
               }
+            } else if (node.type === "io") {
+              let scriptDescription = getStepDescription(
+                node.data.descriptionFile
+              );
+              if (scriptDescription && scriptDescription.inputs) {
+                Object.entries(scriptDescription.inputs).forEach((entry) => {
+                  const [inputId, inputDescription] = entry;
+                  // Find inputs with no incoming edges
+                  if (
+                    -1 ===
+                    allEdges.findIndex(
+                      (edge) =>
+                        edge.target === node.id && edge.targetHandle === inputId
+                    )
+                  ) {
+                    const previousInput = previousInputs.find(
+                      (prev) =>
+                        prev.nodeId === node.id && prev.inputId === inputId
+                    );
 
-              newUserInputs.push({
-                label,
-                description,
-                type: node.data.type,
-                example: node.data.value,
-                nodeId: node.id,
-              })
-            }
-
-          } else if (node.type === 'io') {
-            let scriptDescription = getScriptDescription(node.data.descriptionFile)
-            if (scriptDescription && scriptDescription.inputs) {
-              Object.entries(scriptDescription.inputs).forEach(entry => {
-                const [inputId, inputDescription] = entry
-                // Find inputs with no incoming edges
-                if (-1 === allEdges.findIndex(edge => edge.target === node.id && edge.targetHandle === inputId)) {
-                  const previousInput = previousInputs.find(prev =>
-                    prev.nodeId === node.id && prev.inputId === inputId
-                  )
-
-                  // The label and description of previous inputs might have been modified, so we keep them as is.
-                  // Otherwise we add our new one.
-                  newUserInputs.push(previousInput && previousInput.label ? previousInput : {
-                    ...inputDescription,
-                    nodeId: node.id,
-                    inputId: inputId,
-                    file: node.data.descriptionFile
-                  })
-                }
-              })
+                    // The label and description of previous inputs might have been modified, so we keep them as is.
+                    // Otherwise we add our new one.
+                    newUserInputs.push(
+                      previousInput && previousInput.label
+                        ? previousInput
+                        : {
+                            ...inputDescription,
+                            nodeId: node.id,
+                            inputId: inputId,
+                            file: node.data.descriptionFile,
+                          }
+                    );
+                  }
+                });
+              }
             }
           }
-        }
-      })
+        });
 
-      return newUserInputs
-    })
-  }, [setInputList])
+        return newUserInputs;
+      });
+    },
+    [setInputList]
+  );
 
   useEffect(() => {
-    refreshInputList(nodes, edges)
-  }, [nodes, edges, refreshInputList])
+    refreshInputList(nodes, edges);
+  }, [nodes, edges, refreshInputList]);
 
   /**
    * Refresh the list of outputs.
    */
   useEffect(() => {
-    if(!reactFlowInstance)
-      return
+    if (!reactFlowInstance) return;
 
-    let newPipelineOutputs = []
-    const allNodes = reactFlowInstance.getNodes()
-    allNodes.forEach(node => {
-      if (node.type === 'output') {
-        const connectedEdges = getConnectedEdges([node], edges)
-        connectedEdges.forEach(edge => {
-          const sourceNode = allNodes.find(n => n.id === edge.source) // Always 1
-          
+    let newPipelineOutputs = [];
+    const allNodes = reactFlowInstance.getNodes();
+    allNodes.forEach((node) => {
+      if (node.type === "output") {
+        const connectedEdges = getConnectedEdges([node], edges);
+        connectedEdges.forEach((edge) => {
+          const sourceNode = allNodes.find((n) => n.id === edge.source); // Always 1
+
           // outputDescription may be null if stepDescription not yet available.
-          // This is ok when loading since we rely on the saved description anyways. 
-          const stepDescription = getScriptDescription(sourceNode.data.descriptionFile)
-          const outputDescription = stepDescription && stepDescription.outputs && stepDescription.outputs[edge.sourceHandle]
+          // This is ok when loading since we rely on the saved description anyways.
+          const stepDescription = getStepDescription(
+            sourceNode.data.descriptionFile
+          );
+          const outputDescription =
+            stepDescription &&
+            stepDescription.outputs &&
+            stepDescription.outputs[edge.sourceHandle];
 
           newPipelineOutputs.push({
             ...outputDescription, // shallow clone
             nodeId: edge.source,
             outputId: edge.sourceHandle,
             file: sourceNode.data.descriptionFile,
-          })
-        })
+          });
+        });
       }
-    })
+    });
 
-    setOutputList(previousOutputs => 
-      newPipelineOutputs.map(newOutput => {
-        const previousOutput = previousOutputs.find(prev =>
-          prev.nodeId === newOutput.nodeId && prev.outputId === newOutput.outputId
-        )
+    setOutputList((previousOutputs) =>
+      newPipelineOutputs.map((newOutput) => {
+        const previousOutput = previousOutputs.find(
+          (prev) =>
+            prev.nodeId === newOutput.nodeId &&
+            prev.outputId === newOutput.outputId
+        );
         // The label and description of previous outputs might have been modified, so we keep them as is.
-        return previousOutput && previousOutput.label ? previousOutput : newOutput
+        return previousOutput && previousOutput.label
+          ? previousOutput
+          : newOutput;
       })
-    )
-  }, [edges, reactFlowInstance, setOutputList])
+    );
+  }, [edges, reactFlowInstance, setOutputList]);
 
   const onLayout = useCallback(() => {
-    const { nodes: laidOutNodes, edges: laidOutEdges } =
-      layoutElements(reactFlowInstance.getNodes(), reactFlowInstance.getEdges());
-
-    setNodes([...laidOutNodes]);
-    setEdges([...laidOutEdges]);
-  }, [reactFlowInstance, setNodes, setEdges]);
+    layoutElements(
+      reactFlowInstance.getNodes(),
+      reactFlowInstance.getEdges(),
+      (laidOutNodes) => {
+        setNodes([...laidOutNodes]);
+      }
+    );
+  }, [reactFlowInstance, setNodes]);
 
   const onSave = useCallback(() => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
 
       // react-flow properties that are not necessary to rebuild graph when loading
-      flow.nodes.forEach(node => {
-        delete node.selected
-        delete node.dragging
-        delete node.positionAbsolute
-        delete node.width
-        delete node.height
-        if(node.type === 'userInput' || node.type === 'constant')
-          delete node.data.label
+      flow.nodes.forEach((node) => {
+        delete node.selected;
+        delete node.dragging;
+        delete node.positionAbsolute;
+        delete node.width;
+        delete node.height;
+        if (node.type === "userInput" || node.type === "constant")
+          delete node.data.label;
 
         // These we will reinject when loading
-        delete node.targetPosition
-        delete node.sourcePosition
-      })
+        delete node.targetPosition;
+        delete node.sourcePosition;
+      });
 
       // No need to save the on-the-fly styling
-      flow.edges.forEach(edge => {
-        delete edge.selected
-        delete edge.style
-      })
+      flow.edges.forEach((edge) => {
+        delete edge.selected;
+        delete edge.style;
+      });
 
       // Viewport is a source of merge conflicts
-      delete flow.viewport
+      delete flow.viewport;
 
       // Save pipeline inputs
-      flow.inputs = {}
-      inputList.forEach(input => {
+      flow.inputs = {};
+      inputList.forEach((input) => {
         // Destructuring copy to leave out fields that are not part of the input description spec.
-        const { file, nodeId, inputId, ...copy } = input
-        const id = file === undefined ? 'pipeline@' + input.nodeId
-          : input.file + "@" + input.nodeId + "." + input.inputId
+        const { file, nodeId, inputId, ...copy } = input;
+        const id =
+          file === undefined
+            ? toIOId("pipeline", input.nodeId)
+            : toIOId(input.file, input.nodeId, input.inputId);
 
-        flow.inputs[id] = copy
-      })
+        flow.inputs[id] = copy;
+      });
 
       // Save pipeline outputs
-      flow.outputs = {}
-      outputList.forEach(output => {
+      flow.outputs = {};
+      outputList.forEach((output) => {
         // Destructuring copy to leave out fields that are not part of the output description spec.
-        let {file, nodeId, outputId, ...copy} = output
-        flow.outputs[output.file + "@" + output.nodeId + "." + output.outputId] = copy
-      })
+        let { file, nodeId, outputId, ...copy } = output;
+        flow.outputs[toIOId(output.file, output.nodeId, output.outputId)] =
+          copy;
+      });
 
       navigator.clipboard
         .writeText(JSON.stringify(flow, null, 2))
         .then(() => {
-          alert("Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository.")
+          alert(
+            "Pipeline content copied to clipboard.\nUse git to add the code to BON in a Box's repository."
+          );
         })
         .catch(() => {
           alert("Error: Failed to copy content to clipboard.");
@@ -479,209 +609,240 @@ export function PipelineEditor(props) {
     }
   }, [reactFlowInstance, inputList, outputList]);
 
-  const onLoadFromFileBtnClick = () => inputFile.current.click() // will call onLoad
+  const onLoadFromFileBtnClick = () => inputFile.current.click(); // will call onLoad
 
   const onLoadFromFile = (clickEvent) => {
-    clickEvent.stopPropagation()
-    clickEvent.preventDefault()
+    clickEvent.stopPropagation();
+    clickEvent.preventDefault();
 
-    var file = clickEvent.target.files[0]
+    var file = clickEvent.target.files[0];
     if (file) {
       var fr = new FileReader();
       fr.readAsText(file);
-      fr.onload = loadEvent => onLoadFlow(JSON.parse(loadEvent.target.result))
+      fr.onload = (loadEvent) =>
+        onLoadFlow(JSON.parse(loadEvent.target.result));
 
       // Now that it's done, reset the value of the input file.
-      inputFile.current.value = ""
+      inputFile.current.value = "";
     }
-  }
+  };
 
   const onLoadFromServerBtnClick = (event) => {
-    event.stopPropagation()
-    event.preventDefault()
+    event.stopPropagation();
+    event.preventDefault();
 
-    setPopupMenuPos({ x: event.clientX, y: event.clientY })
+    setPopupMenuPos({ x: event.clientX, y: event.clientY });
 
     api.pipelineListGet((error, data, response) => {
       if (error) {
-        if (response && response.text)
-          alert(response.text)
-        else
-          alert(error.toString())
+        if (response && response.text) alert(response.text);
+        else alert(error.toString());
       } else {
-        let options = {}
-        data.forEach(pipeline => 
-          options[pipeline] = () => {
-            api.getPipeline(pipeline, (error, data, response) => {
-              if (error) {
-                if (response && response.text)
-                  alert(response.text)
-                else
-                  alert(error.toString())
-              
-              } else {
-                onLoadFlow(data);
-              }
-            });
-          }
-        )
-        setPopupMenuOptions(options)
+        let options = {};
+        data.forEach(
+          (pipeline) =>
+            (options[pipeline] = () => {
+              api.getPipeline(pipeline, (error, data, response) => {
+                if (error) {
+                  if (response && response.text) alert(response.text);
+                  else alert(error.toString());
+                } else {
+                  onLoadFlow(data);
+                }
+              });
+            })
+        );
+        setPopupMenuOptions(options);
       }
     });
-  }
+  };
 
   const onLoadFlow = (flow) => {
     if (flow) {
       // Read inputs
-      let inputsFromFile = []
+      let inputsFromFile = [];
       if (flow.inputs) {
-        Object.entries(flow.inputs).forEach(entry => {
-          const [fullId, inputDescription] = entry
-          const atIx = fullId.indexOf('@')
+        Object.entries(flow.inputs).forEach((entry) => {
+          const [fullId, inputDescription] = entry;
 
-          if (fullId.startsWith('pipeline@')) {
+          if (fullId.startsWith("pipeline@")) {
             inputsFromFile.push({
-              nodeId: fullId.substring(atIx + 1),
-              ...inputDescription
-            })
-          } else { // Script input
-            const dotIx = fullId.lastIndexOf('.')
+              nodeId: getStepNodeId(fullId),
+              ...inputDescription,
+            });
+          } else {
+            // Script input
             inputsFromFile.push({
-              file: fullId.substring(0, atIx),
-              nodeId: fullId.substring(atIx + 1, dotIx),
-              inputId: fullId.substring(dotIx + 1),
-              ...inputDescription
-            })
-
+              file: getStepFile(fullId),
+              nodeId: getStepNodeId(fullId),
+              inputId: getStepInput(fullId),
+              ...inputDescription,
+            });
           }
-        })
+        });
       }
-      setInputList(inputsFromFile)
+      setInputList(inputsFromFile);
 
       // Read outputs
-      let outputsFromFile = []
+      let outputsFromFile = [];
       if (flow.outputs) {
-        Object.entries(flow.outputs).forEach(entry => {
-          const [fullId, outputDescription] = entry
-          const atIx = fullId.indexOf('@')
-          const dotIx = fullId.lastIndexOf('.')
+        Object.entries(flow.outputs).forEach((entry) => {
+          const [fullId, outputDescription] = entry;
 
           outputsFromFile.push({
-            file: fullId.substring(0, atIx),
-            nodeId: fullId.substring(atIx + 1, dotIx),
-            outputId: fullId.substring(dotIx + 1),
-            ...outputDescription
-          })
-        })
+            file: getStepFile(fullId),
+            nodeId: getStepNodeId(fullId),
+            outputId: getStepOutput(fullId),
+            ...outputDescription,
+          });
+        });
       }
-
-      setOutputList(outputsFromFile)
+      setOutputList(outputsFromFile);
 
       // Read nodes
-      id = 0
-      flow.nodes.forEach(node => {
+      id = 0;
+      flow.nodes.forEach((node) => {
         // Make sure next id doesn't overlap
-        id = Math.max(id, parseInt(node.id))
+        id = Math.max(id, parseInt(node.id));
 
         // Reinjecting deleted properties
-        node.targetPosition = "left"
-        node.sourcePosition = "right"
+        node.targetPosition = "left";
+        node.sourcePosition = "right";
 
         // Reinjecting functions
         switch (node.type) {
-          case 'io':
-            node.data.setToolTip = setToolTip
-            node.data.injectConstant = injectConstant
-            node.data.injectOutput = injectOutput
+          case "io":
+            node.data.setToolTip = setToolTip;
+            node.data.injectConstant = injectConstant;
+            node.data.injectOutput = injectOutput;
             break;
-          case 'constant':
-            node.data.onChange = onConstantValueChange
-            node.data.onPopupMenu = onPopupMenu
+          case "constant":
+            node.data.onConstantValueChange = onConstantValueChange;
+            node.data.onPopupMenu = onPopupMenu;
             break;
-          case 'userInput':
-            node.data.onPopupMenu = onPopupMenu
-            node.data.label = inputsFromFile.find(i => i.nodeId === node.id).label
+          case "userInput":
+            node.data.onPopupMenu = onPopupMenu;
+            node.data.label = inputsFromFile.find(
+              (i) => i.nodeId === node.id
+            ).label;
             break;
-          case 'output':
+          case "output":
             break;
           default:
-            console.error("Unsupported type " + node.type)
+            console.error("Unsupported type " + node.type);
         }
-      })
-      id++
+      });
+      id++;
 
       // Load the graph
-      setNodes(flow.nodes || []);
-      setEdges(flow.edges || []);
+      setEdges([]);
+      setNodes([]);
+      sleep(1).then(() => {
+        // Reset viewport to top left
+        reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
 
-      // Reset viewport to top left
-      reactFlowInstance.setViewport({ x: 0, y: 0, zoom: 1 });
+        setNodes(flow.nodes || []);
+        setEdges(flow.edges || []);
+      });
     } else {
-      console.error("Error parsing flow")
+      console.error("Error parsing flow");
     }
-  }
+  };
 
+  return (
+    <div id="editorLayout">
+      <p>
+        Need help? Check out{" "}
+        <a
+          href="https://github.com/GEO-BON/biab-2.0/#pipelines"
+          target="_blank"
+          rel="noreferrer"
+        >
+          the documentation
+        </a>
+      </p>
+      <div className="dndflow">
+        <ReactFlowProvider>
+          <div className="reactflow-wrapper" ref={reactFlowWrapper}>
+            <ReactFlow
+              nodes={nodes}
+              edges={edges}
+              nodeTypes={customNodeTypes}
+              onNodesChange={onNodesChange}
+              onEdgesChange={onEdgesChange}
+              onConnect={onConnect}
+              onInit={setReactFlowInstance}
+              onDrop={onDrop}
+              onDragOver={onDragOver}
+              onSelectionChange={onSelectionChange}
+              onNodesDelete={onNodesDelete}
+              deleteKeyCode="Delete"
+              onMouseDownCapture={onPopupMenuHide}
+            >
+              {toolTip && <div className="tooltip">{toolTip}</div>}
 
-  return <div id='editorLayout'>
-    <p>Need help? Check out <a href="https://github.com/GEO-BON/biab-2.0/#pipelines" target='_blank' rel='noreferrer'>the documentation</a></p>
-    <div className="dndflow">
-      <ReactFlowProvider>
-        <div className="reactflow-wrapper" ref={reactFlowWrapper}>
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            nodeTypes={customNodeTypes}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onInit={setReactFlowInstance}
-            onDrop={onDrop}
-            onDragOver={onDragOver}
-            onSelectionChange={onSelectionChange}
-            onNodesDelete={onNodesDelete}
-            deleteKeyCode='Delete'
-            onMouseDownCapture={onPopupMenuHide}
-          >
-            {toolTip && <div className="tooltip">
-              {toolTip}
-            </div>}
-            
-            <div className="save__controls">
-              <button onClick={() => onLayout()}>Layout</button>
-              <input type='file' id='file' ref={inputFile} accept="application/json"
-                onChange={onLoadFromFile} style={{ display: 'none' }} />
-              <button onClick={onLoadFromFileBtnClick}>Load from file</button>
-              <button onClick={onLoadFromServerBtnClick}>Load from server</button>
-              <button onClick={onSave}>Save</button>
-            </div>
+              <div className="save__controls">
+                <button onClick={() => onLayout()}>Layout</button>
+                <input
+                  type="file"
+                  id="file"
+                  ref={inputFile}
+                  accept="application/json"
+                  onChange={onLoadFromFile}
+                  style={{ display: "none" }}
+                />
+                <button onClick={onLoadFromFileBtnClick}>Load from file</button>
+                <button onClick={onLoadFromServerBtnClick}>
+                  Load from server
+                </button>
+                <button onClick={onSave}>Save</button>
+              </div>
 
-            <Controls />
+              <Controls />
 
-            <IOList inputList={inputList} outputList={outputList} selectedNodes={selectedNodes} />
+              <IOList
+                inputList={inputList}
+                outputList={outputList}
+                selectedNodes={selectedNodes}
+              />
 
-            <MiniMap
-              nodeStrokeColor={(n) => {
-                switch (n.type) {
-                  case 'constant': return '#0041d0'
-                  case 'userInput': return '#36eb5a'
-                  case 'output': return '#ff0072'
-                  default: return 'black'
-                }
-              }}
-              nodeColor={(n) => {
-                switch (n.type) {
-                  case 'constant': return '#0041d0'
-                  case 'userInput': return '#36eb5a'
-                  case 'output': return '#ff0072'
-                  default: return 'white'
-                }
-              }}
-            />
-          </ReactFlow>
-        </div>
-      </ReactFlowProvider>
+              <MiniMap
+                nodeStrokeColor={(n) => {
+                  switch (n.type) {
+                    case "constant":
+                      return "#0041d0";
+                    case "userInput":
+                      return "#36eb5a";
+                    case "output":
+                      return "#ff0072";
+                    default:
+                      return "black";
+                  }
+                }}
+                nodeColor={(n) => {
+                  switch (n.type) {
+                    case "constant":
+                      return "#0041d0";
+                    case "userInput":
+                      return "#36eb5a";
+                    case "output":
+                      return "#ff0072";
+                    default:
+                      return "white";
+                  }
+                }}
+              />
+            </ReactFlow>
+          </div>
+        </ReactFlowProvider>
+      </div>
+
+      <PopupMenu
+        x={popupMenuPos.x}
+        y={popupMenuPos.y}
+        optionMapping={popupMenuOptions}
+        onPopupMenuHide={onPopupMenuHide}
+      />
     </div>
-
-    <PopupMenu x={popupMenuPos.x} y={popupMenuPos.y} optionMapping={popupMenuOptions} onPopupMenuHide={onPopupMenuHide} />
-  </div>
-};
+  );
+}

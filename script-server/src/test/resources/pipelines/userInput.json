@@ -115,13 +115,13 @@
     }
   },
   "outputs": {
-    "helloWorld>helloPython.yml@2.increment": {
+    "helloWorld>helloPython.yml@2|increment": {
       "description": "bla bla",
       "label": "A number (input++)",
       "type": "int",
       "example": 4
     },
-    "helloWorld>helloPython.yml@5.increment": {
+    "helloWorld>helloPython.yml@5|increment": {
       "description": "bla bla",
       "label": "A number (input++)",
       "type": "int",

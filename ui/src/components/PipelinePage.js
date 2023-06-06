@@ -1,9 +1,7 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Select from 'react-select';
+import React, { useState, useEffect } from 'react';
 
 import { SingleOutputResult, StepResult } from "./StepResult";
-import { InputFileWithExample } from './InputFileWithExample';
-import { FoldableOutputWithContext, RenderContext, createContext } from './FoldableOutput'
+import { FoldableOutputWithContext, RenderContext, createContext, FoldableOutput } from './FoldableOutput'
 
 import { useInterval } from '../UseInterval';
 
@@ -13,10 +11,11 @@ import warningImg from '../img/warning.svg';
 import infoImg from '../img/info.svg';
 import { LogViewer } from './LogViewer';
 import { GeneralDescription } from './ScriptDescription';
+import { PipelineForm } from './form/PipelineForm';
+import { getScript, getScriptOutput, toDisplayString, getBreadcrumbs } from '../utils/IOId';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
-const yaml = require('js-yaml');
-const api = new BonInABoxScriptService.DefaultApi();
+export const api = new BonInABoxScriptService.DefaultApi();
 
 export function PipelinePage(props) {
   const [runId, setRunId] = useState(null);
@@ -55,14 +54,6 @@ export function PipelinePage(props) {
     }
   }
 
-  function showMetadata(){
-    if(pipelineMetadata) {
-      let yamlString = yaml.dump(pipelineMetadata)
-      return <pre key="metadata">{yamlString.startsWith('{}') ? "No metadata" : yamlString}</pre>;
-    }
-    return ""
-  }
-
   useEffect(() => {
     setStoppable(runningScripts.size > 0)
   }, [runningScripts])
@@ -91,108 +82,19 @@ export function PipelinePage(props) {
   return (
     <>
       <h2>Pipeline run</h2>
-      <PipelineForm
-        pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
-        setRunId={setRunId}
-        showHttpError={showHttpError} />
+      <FoldableOutput title="Input form" isActive={!runId} keepWhenHidden={true}>
+        <PipelineForm
+          pipelineMetadata={pipelineMetadata} setPipelineMetadata={setPipelineMetadata}
+          setRunId={setRunId}
+          showHttpError={showHttpError} />
+      </FoldableOutput>
+      
       {runId && <button onClick={stop} disabled={!stoppable}>Stop</button>}
       {httpError && <p key="httpError" className="error">{httpError}</p>}
-      {showMetadata()}
       {pipelineMetadata && <PipelineResults key="results"
         pipelineMetadata={pipelineMetadata} resultsData={resultsData}
         runningScripts={runningScripts} setRunningScripts={setRunningScripts} />}
     </>)
-}
-
-function PipelineForm({pipelineMetadata, setPipelineMetadata, setRunId, showHttpError}) {
-  const formRef = useRef()
-  const inputRef = useRef();
-
-  const defaultPipeline = "helloWorld.json";
-  const [pipelineOptions, setPipelineOptions] = useState([]);
-
-  function clearPreviousRequest() {
-    showHttpError(null)
-    setRunId(null)
-  }
-
-  function loadPipelineMetadata(choice) {
-    clearPreviousRequest()
-    setPipelineMetadata(null);
-
-    var callback = function (error, data, response) {
-      if(error) {
-        showHttpError(error, response)
-      } else if(data) {
-        setPipelineMetadata(data);
-      }
-    };
-
-    api.getPipelineInfo(choice, callback);
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    runScript();
-  };
-
-  const runScript = () => {
-    var callback = function (error, data , response) {
-      if (error) { // Server / connection errors. Data will be undefined.
-        data = {};
-        showHttpError(error, response)
-
-      } else if (data) {
-        setRunId(data);
-      } else {
-        showHttpError("Server returned empty result");
-      }
-    };
-
-    clearPreviousRequest()
-    let opts = {
-      'body': inputRef.current.getValue() // String | Content of input.json for this run
-    };
-    api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
-  };
-
-  // Applied only once when first loaded
-  useEffect(() => {
-    // Load list of scripts into pipelineOptions
-    api.pipelineListGet((error, data, response) => {
-      if (error) {
-        console.error(error);
-      } else {
-        let newOptions = [];
-        data.forEach(script => newOptions.push({ label: script, value: script }));
-        setPipelineOptions(newOptions);
-        loadPipelineMetadata(defaultPipeline);
-      }
-    });
-    // Empty dependency array to get script list only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return (
-    <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label>
-        Pipeline:
-        <br />
-        <Select name="pipelineChoice" className="blackText" options={pipelineOptions}
-          defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
-          onChange={(v) => loadPipelineMetadata(v.value)} />
-      </label>
-      <br />
-      <label>
-        Pipeline inputs:
-        <br />
-        <InputFileWithExample ref={inputRef} metadata={pipelineMetadata} />
-      </label>
-      <br />
-      <input type="submit" disabled={false} value="Run pipeline" />
-    </form>
-  );
 }
 
 function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunningScripts}) {
@@ -205,8 +107,7 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
       const initialValue = {}
       if (pipelineMetadata.outputs) {
         Object.keys(pipelineMetadata.outputs).forEach(key => {
-          const script = key.substring(0, key.lastIndexOf('.'))
-          initialValue[script] = {}
+          initialValue[getBreadcrumbs(key)] = {}
         })
       }
       setPipelineOutputResults(initialValue)
@@ -217,15 +118,13 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
     return <RenderContext.Provider value={createContext(activeRenderer, setActiveRenderer)}>
       <h2>Pipeline outputs</h2>
       {pipelineMetadata.outputs && Object.entries(pipelineMetadata.outputs).map(entry => {
-        const [key, stepDescription] = entry;
-        const lastDotIx = key.lastIndexOf('.')
-        const script = key.substring(0, lastDotIx)
-        const outputId = key.substring(lastDotIx+1)
-        const value = pipelineOutputResults[script] && pipelineOutputResults[script][outputId]
-
+        const [ioId, outputDescription] = entry;
+        const breadcrumbs = getBreadcrumbs(ioId)
+        const outputId = getScriptOutput(ioId)
+        const value = pipelineOutputResults[breadcrumbs] && pipelineOutputResults[breadcrumbs][outputId]
         if (!value) {
-          return <div key={outputId} className="outputTitle">
-            <h3>{stepDescription.label}</h3>
+          return <div key={ioId} className="outputTitle">
+            <h3>{outputDescription.label}</h3>
             {runningScripts.size > 0 ?
               <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
               : <><img src={warningImg} alt="Warning" className="error-inline" />See detailed results</>
@@ -233,16 +132,16 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
           </div>
         }
 
-        return <SingleOutputResult key={outputId} outputId={outputId}
-          outputValue={value}
-          outputMetadata={stepDescription} />
+        return <SingleOutputResult key={ioId} outputId={outputId} componentId={ioId}
+                outputValue={value}
+                outputMetadata={outputDescription} />
       })}
 
       <h2>Detailed results</h2>
-      {Object.entries(resultsData).map((entry, i) => {
+      {Object.entries(resultsData).map(entry => {
         const [key, value] = entry;
 
-        return <DelayedResult key={key} id={key} folder={value}
+        return <DelayedResult key={key} breadcrumbs={key} folder={value}
           setRunningScripts={setRunningScripts} setPipelineOutputResults={setPipelineOutputResults} />
       })}
     </RenderContext.Provider>
@@ -250,13 +149,13 @@ function PipelineResults({pipelineMetadata, resultsData, runningScripts, setRunn
   else return null
 }
 
-function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}) {
+function DelayedResult({breadcrumbs, folder, setRunningScripts, setPipelineOutputResults}) {
   const [resultData, setResultData] = useState(null)
   const [scriptMetadata, setScriptMetadata] = useState(null)
   const [running, setRunning] = useState(false)
   const [skippedMessage, setSkippedMessage] = useState()
 
-  const step = id.substring(0, id.indexOf('@'))
+  const script = getScript(breadcrumbs)
 
   useEffect(() => { 
     // A script is running when we know it's folder but have yet no result nor error message
@@ -310,8 +209,8 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
 
         // Contribute to pipeline outputs (if this script is relevant)
         setPipelineOutputResults(results => {
-          if(id in results)
-            results[id] = json
+          if(breadcrumbs in results)
+            results[breadcrumbs] = json
           
           return results
         })
@@ -329,8 +228,8 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
       setScriptMetadata(data)
     };
 
-    api.getScriptInfo(step, callback);
-  }, [step]);
+    api.getScriptInfo(script, callback);
+  }, [script]);
 
   let content, inline = null;
   let className = "foldableScriptResult"
@@ -355,8 +254,9 @@ function DelayedResult({id, folder, setRunningScripts, setPipelineOutputResults}
   let logsAddress = folder && "output/" + folder + "/logs.txt"
   
   return (
-    <FoldableOutputWithContext title={step.replaceAll('>', ' > ').replace(/.yml$/, '')} componentId={id} inline={inline} className={className}>
-      <GeneralDescription ymlPath={step} metadata={scriptMetadata} />
+    <FoldableOutputWithContext title={toDisplayString(breadcrumbs)}
+      componentId={breadcrumbs} inline={inline} className={className}>
+      <GeneralDescription ymlPath={script} metadata={scriptMetadata} />
       {content}
       {folder && !skippedMessage && <LogViewer address={logsAddress} autoUpdate={!resultData} />}
     </FoldableOutputWithContext>

@@ -171,6 +171,10 @@ img#logo {
   border: 1px solid red;
 }
 
+.marker-cluster span {
+  font-weight: bold;
+}
+
 .outputTitle {
   white-space: nowrap;
   overflow: hidden;
@@ -189,6 +193,11 @@ img#logo {
 
 .outputContent p {
   margin-top:0px;
+}
+
+.outputContent img {
+  max-width: 100%;
+  max-height: 90vh;
 }
 
 .foldableScriptResult .outputContent {
@@ -279,4 +288,8 @@ div.legendItemText {
   white-space: nowrap;
 
   padding-right: 0.5em;
+}
+
+textarea.autoResize {
+  overflow: hidden;
 }

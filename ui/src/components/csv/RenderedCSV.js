@@ -72,11 +72,16 @@ function CsvToMap({url, delimiter}) {
         const rowsWithColumns = parseCsvToRowsAndColumn(data, delimiter)
         const headerRow = rowsWithColumns.splice(0, 1)[0];
 
-        const latRegEx = new RegExp('latt?itude', 'i')
+        const latRegEx = new RegExp('lat(itude)?', 'i')
         const latColumn = headerRow.findIndex(h => latRegEx.test(h))
 
-        const lonRegEx = new RegExp('longitude', 'i')
+        const lonRegEx = new RegExp('lon(gitude)?', 'i')
         const lonColumn = headerRow.findIndex(h => lonRegEx.test(h))
+
+        if(latColumn === -1 || lonColumn === -1) {
+            setError("Both latitude and longitude columns must be present to display on a map.")
+            return null
+        }
         
         return rowsWithColumns.map(row =>
         ({
@@ -110,7 +115,7 @@ function CsvToMap({url, delimiter}) {
     if (data || error)
         return <>
             {error && <p className='error'>{error}</p>}
-            {data && <MapResult markers={readCoordinates(data, delimiter)} />}
+            {!error && data && <MapResult markers={readCoordinates(data, delimiter)} />}
         </>
     else
         return <img src={spinner} className="spinner" alt="Spinner" />

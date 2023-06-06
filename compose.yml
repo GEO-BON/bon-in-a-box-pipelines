@@ -22,6 +22,7 @@ services:
       - GBIF_USER=${GBIF_USER}
       - GBIF_PWD=${GBIF_PWD}
       - GBIF_EMAIL=${GBIF_EMAIL}
+      - SCRIPT_SERVER_CACHE_CLEANER=${SCRIPT_SERVER_CACHE_CLEANER}
     depends_on:
       - runner-r
       - runner-julia
@@ -45,6 +46,7 @@ services:
       - GBIF_USER=${GBIF_USER}
       - GBIF_PWD=${GBIF_PWD}
       - GBIF_EMAIL=${GBIF_EMAIL}
+      - IUCN_TOKEN=${IUCN_TOKEN}
 
   runner-julia:
     container_name: biab-runner-julia

@@ -4,54 +4,90 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import org.geobon.pipeline.RunContext.Companion.pipelineRoot
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
-class Pipeline(descriptionFile: File, inputs: String? = null) {
-    constructor(relPath: String, inputs: String? = null) : this(
-        File(System.getenv("PIPELINES_LOCATION"), relPath),
-        inputs
+class RootPipeline(descriptionFile: File, inputsJSON: String? = null) :
+    Pipeline(StepId("", ""), descriptionFile, inputsJSON) {
+
+    constructor(relPath: String, inputsJSON: String? = null) : this(File(pipelineRoot, relPath), inputsJSON)
+
+    init {
+        linkInputs()
+
+        val errors = validateGraph()
+        if(errors.isNotEmpty()) {
+            throw RuntimeException(errors)
+        }
+    }
+}
+
+open class Pipeline private constructor(
+    override val id: StepId,
+    pipelineJSON: JSONObject,
+    private val descriptionFile: File,
+    final override val inputs: MutableMap<String, Pipe>,
+    final override val outputs: MutableMap<String, Output> = mutableMapOf()
+) : IStep {
+
+    private constructor(stepId: StepId, pipelineJSON:JSONObject, descriptionFile: File, inputsJSON: String? = null) : this(
+        stepId,
+        pipelineJSON,
+        descriptionFile,
+        inputsToConstants(inputsJSON, pipelineJSON),
+    )
+
+    constructor(stepId: StepId, descriptionFile: File, inputsJSON: String? = null) : this(
+        stepId,
+        JSONObject(descriptionFile.readText()),
+        descriptionFile,
+        inputsJSON
+    )
+
+    constructor(stepId: StepId, relPath: String, inputsJSON: String? = null) : this(
+        stepId,
+        File(pipelineRoot, relPath),
+        inputsJSON
     )
 
     private val logger: Logger = LoggerFactory.getLogger(descriptionFile.nameWithoutExtension)
 
-    /**
-     * All outputs that should be presented to the client as pipeline outputs.
-     */
-    private val pipelineOutputs = mutableListOf<Pipe>()
-    fun getPipelineOutputs(): List<Pipe> = pipelineOutputs
+    fun getPipelineOutputs(): List<Pipe> = outputs.values.map { it }
 
+    private val steps = mutableMapOf<String, IStep>()
     private val finalSteps: Set<Step>
 
-    var job: Job? = null
+    private var job: Job? = null
 
     init {
-        val steps = mutableMapOf<String, Step>()
         val constants = mutableMapOf<String, ConstantPipe>()
         val outputIds = mutableListOf<String>()
 
         // Load all nodes and classify them as steps, constants or pipeline outputs
-        val pipelineJSON = JSONObject(descriptionFile.readText())
         pipelineJSON.getJSONArray(NODES_LIST).forEach { node ->
             if (node is JSONObject) {
                 val nodeId = node.getString(NODE__ID)
                 when (node.getString(NODE__TYPE)) {
-                    NODE__TYPE_SCRIPT -> {
-                        val scriptFile = node.getJSONObject(NODE__DATA)
+                    NODE__TYPE_STEP -> {
+                        val script = node.getJSONObject(NODE__DATA)
                             .getString(NODE__DATA__FILE)
-                            .replace('>', '/')
+                        val scriptFile = script.replace('>', '/')
 
-                        steps[nodeId] = when (scriptFile) {
+                        val stepId = StepId(script, nodeId, id)
+                        steps[nodeId] = when {
+                            scriptFile.endsWith(".json") -> Pipeline(stepId, scriptFile)
+
                             // Instantiating kotlin "special steps".
                             // Not done with reflection on purpose, since this could allow someone to instantiate any class,
                             // resulting in a security breach.
-                            "pipeline/AssignId.yml" -> AssignId()
-                            "pipeline/PullLayersById.yml" -> PullLayersById()
+                            scriptFile == "pipeline/AssignId.yml" -> AssignId(stepId)
+                            scriptFile == "pipeline/PullLayersById.yml" -> PullLayersById(stepId)
 
                             // Regular script steps
-                            else -> ScriptStep(scriptFile, nodeId)
+                            else -> ScriptStep(scriptFile, stepId)
                         }
                     }
 
@@ -65,7 +101,7 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                         val nodeData = node.getJSONObject(NODE__DATA)
                         val type = nodeData.getString(NODE__DATA__TYPE)
 
-                        steps[nodeId] = UserInput(nodeId, type)
+                        steps[nodeId] = UserInput(StepId("pipeline", nodeId, id), type)
                     }
 
                     NODE__TYPE_OUTPUT -> outputIds.add(nodeId)
@@ -84,20 +120,30 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
                 val sourcePipe = constants[sourceId] ?: steps[sourceId]?.let { sourceStep ->
                     val sourceOutput = edge.optString(EDGE__SOURCE_OUTPUT, Step.DEFAULT_OUT)
                     sourceStep.outputs[sourceOutput]
-                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}.\"")
+                        ?: throw Exception("Could not find output \"$sourceOutput\" in \"${sourceStep}\".\n" +
+                                "Available outputs: ${sourceStep.outputs}")
                 } ?: throw Exception("Could not find step with ID: $sourceId")
 
                 // Find the target and connect them
                 val targetId = edge.getString(EDGE__TARGET_ID)
                 if(outputIds.contains(targetId)) {
-                    pipelineOutputs.add(sourcePipe)
+                    if(sourcePipe is Output) {
+                        val step = steps[sourceId]
+                        val outputId =
+                            if (step is Pipeline) IOId(step.id, sourcePipe.getId())
+                            else sourcePipe.getId()
+
+                        outputs[outputId.toString()] = sourcePipe
+                    } else {
+                        throw Exception("output in json not of Output type: $targetId")
+                    }
                 } else {
                     steps[targetId]?.let { step ->
                         val targetInput = edge.getString(EDGE__TARGET_INPUT)
                         step.inputs[targetInput] = step.inputs[targetInput].let {
                             if(it == null) sourcePipe else AggregatePipe(listOf(it, sourcePipe))
                         }
-                    } ?: logger.warn("Dangling edge: could not find source $targetId")
+                    } ?: logger.warn("Dangling edge: could not find target $targetId")
                 }
 
             } else {
@@ -105,98 +151,32 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
             }
         }
 
-        // Link inputs from the input file to the pipeline
-        inputs?.let {
-            val inputsJSON = JSONObject(inputs)
-            pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
-                val regex = """([.>\w]+)@(\d+)(\.(\w+))?""".toRegex()
-                inputsJSON.keySet().forEach { key ->
-                    val inputSpec = inputsSpec.optJSONObject(key)
-                        ?: throw RuntimeException("Input received \"$key\" is not listed in pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
-                    val type = inputSpec.getString(INPUTS__TYPE)
-
-                    val groups = regex.matchEntire(key)?.groups
-                        ?: throw RuntimeException("Input id \"$key\" is malformed")
-                    //val path = groups[1]!!.value
-                    val stepId = groups[2]!!.value
-                    val inputId = groups[4]?.value ?: Step.DEFAULT_IN // inputId = default when step is a UserInput
-
-                    val step = steps[stepId]
-                        ?: throw RuntimeException("Step id \"$stepId\" does not exist in pipeline")
-
-                    step.inputs[inputId] = createConstant(key, inputsJSON, type, key)
-                }
-            }
-        }
-
-        // Call validate graph
-        // (Only once per final step since stored in a set. There might be some duplication lower down the tree...)
-        finalSteps = mutableSetOf<Step>().also { set ->
-            pipelineOutputs.mapNotNullTo(set) { if (it is Output) it.step else null }
-        }
-
+        finalSteps = outputs.values.mapNotNullTo(mutableSetOf()) { it.step }
         if(finalSteps.isEmpty())
             throw Exception("Pipeline has no designated output")
+    }
 
-        finalSteps.forEach {
-            val message = it.validateGraph()
-            if(message != "") {
-                throw Exception("Pipeline validation failed:\n$message")
-            }
+    /**
+     * Links the inputs of the parent pipeline first, then all the nested pipelines.
+     */
+    protected fun linkInputs() {
+        // Link inputs from the input file to the pipeline
+        inputs.forEach { (key, pipe) ->
+            val nodeId = getStepNodeId(key)
+            val inputId = getStepInput(key) ?: Step.DEFAULT_IN // inputId uses default when step is a UserInput
+            val step = steps[nodeId]
+                ?: throw RuntimeException("Step id \"$nodeId\" does not exist in pipeline")
+
+            step.inputs[inputId] = pipe
+        }
+
+        steps.forEach { entry ->
+            (entry.value as? Pipeline)?.linkInputs()
         }
     }
 
-
-    private fun createConstant(idForUser: String, obj: JSONObject, type:String, valueProperty:String): ConstantPipe {
-
-        return if (type.endsWith("[]")) {
-            val jsonArray = try {
-                obj.getJSONArray(valueProperty)
-            } catch (e: Exception) {
-                throw RuntimeException("Constant array #$idForUser has no value in JSON file.")
-            }
-
-            ConstantPipe(type,
-                when (type.removeSuffix("[]")) {
-                    "int" -> mutableListOf<Int>().apply {
-                        for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
-                    }
-                    "float" -> mutableListOf<Float>().apply {
-                        for (i in 0 until jsonArray.length()) {
-                            val float = jsonArray.optFloat(i)
-                            if (!float.isNaN()) {
-                                add(float)
-                            }
-                        }
-                    }
-                    "boolean" -> mutableListOf<Boolean>().apply {
-                        for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
-                    }
-                    // Everything else is read as text
-                    else -> mutableListOf<String>().apply {
-                        for (i in 0 until jsonArray.length()) add(jsonArray.optString(i))
-                    }
-                })
-        } else {
-            try {
-                ConstantPipe(
-                    type,
-                    when (type) {
-                        "int" -> obj.getInt(valueProperty)
-                        "float" -> obj.getFloat(valueProperty)
-                        "boolean" -> obj.getBoolean(valueProperty)
-                        // Everything else is read as text
-                        else -> obj.getString(valueProperty)
-                    }
-                )
-            } catch (e: Exception) {
-                e.printStackTrace()
-                throw RuntimeException("Constant #$idForUser has no value in JSON file.")
-            }
-        }
-    }
-
-    fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+    override fun dumpOutputFolders(allOutputs: MutableMap<String, String>) {
+        // Not all steps have output folders. Default implementation just forwards to other steps.
         finalSteps.forEach { it.dumpOutputFolders(allOutputs) }
     }
 
@@ -205,20 +185,22 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
     }
 
     /**
+     * Pulls on the pipeline's outputs and returns the folder where we can find the results with cancelled,
+     * failed and skipped steps annotated.
+     * This function is meant to be called only on the root pipeline, in case of nested pipelines.
+     *
      * @return the output folders for each step.
      * If the step was not executed, one of these special keywords will be used:
      * - skipped
      * - canceled
      */
-    suspend fun execute(): Map<String, String> {
+    suspend fun pullFinalOutputs(): Map<String, String> {
         var cancelled = false
         var failure = false
         try {
             coroutineScope {
                 job = launch {
-                    coroutineScope {
-                        finalSteps.forEach { launch { it.execute() } }
-                    } // exits when all final steps have their results
+                    execute()
                 }
             }
 
@@ -242,10 +224,97 @@ class Pipeline(descriptionFile: File, inputs: String? = null) {
         }
     }
 
+    override fun validateGraph():String {
+        // Pipeline is valid if all its steps are
+        var problems = ""
+        finalSteps.forEach { problems += it.validateGraph() }
+        return problems
+    }
+
+    override suspend fun execute() {
+        coroutineScope {
+            finalSteps.forEach { launch { it.execute() } }
+        } // exits when all final steps have their results
+    }
+
     suspend fun stop() {
         job?.apply {
             cancel("Cancelled by user")
             join() // wait so the user receives response when really cancelled
+        }
+    }
+
+    override fun toString(): String {
+        return "Pipeline(descriptionFile=${descriptionFile.relativeTo(pipelineRoot)})"
+    }
+
+    companion object {
+        private fun inputsToConstants(inputsJSON:String?, pipelineJSON: JSONObject) : MutableMap<String, Pipe> {
+            if(inputsJSON == null)
+                return mutableMapOf()
+
+            val inputsParsed = JSONObject(inputsJSON)
+            val constants = mutableMapOf<String, Pipe>()
+            pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
+                inputsParsed.keySet().forEach { key ->
+                    val inputSpec = inputsSpec.optJSONObject(key)
+                        ?: throw RuntimeException("Input received \"$key\" is not listed in pipeline inputs. Listed inputs are ${inputsSpec.keySet()}")
+                    val type = inputSpec.getString(INPUTS__TYPE)
+
+                    constants[key] = createConstant(key, inputsParsed, type, key)
+                }
+            }
+
+            return constants
+        }
+
+        private fun createConstant(idForUser: String, obj: JSONObject, type:String, valueProperty:String): ConstantPipe {
+
+            return if (type.endsWith("[]")) {
+                val jsonArray = try {
+                    obj.getJSONArray(valueProperty)
+                } catch (e: Exception) {
+                    throw RuntimeException("Constant array #$idForUser has no value in JSON file.")
+                }
+
+                ConstantPipe(type,
+                    when (type.removeSuffix("[]")) {
+                        "int" -> mutableListOf<Int>().apply {
+                            for (i in 0 until jsonArray.length()) add(jsonArray.optInt(i))
+                        }
+                        "float" -> mutableListOf<Float>().apply {
+                            for (i in 0 until jsonArray.length()) {
+                                val float = jsonArray.optFloat(i)
+                                if (!float.isNaN()) {
+                                    add(float)
+                                }
+                            }
+                        }
+                        "boolean" -> mutableListOf<Boolean>().apply {
+                            for (i in 0 until jsonArray.length()) add(jsonArray.optBoolean(i))
+                        }
+                        // Everything else is read as text
+                        else -> mutableListOf<String>().apply {
+                            for (i in 0 until jsonArray.length()) add(jsonArray.optString(i))
+                        }
+                    })
+            } else {
+                try {
+                    ConstantPipe(
+                        type,
+                        when (type) {
+                            "int" -> obj.getInt(valueProperty)
+                            "float" -> obj.getFloat(valueProperty)
+                            "boolean" -> obj.getBoolean(valueProperty)
+                            // Everything else is read as text
+                            else -> obj.getString(valueProperty)
+                        }
+                    )
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    throw RuntimeException("Constant #$idForUser has no value in JSON file.")
+                }
+            }
         }
     }
 

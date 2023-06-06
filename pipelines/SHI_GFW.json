@@ -1,0 +1,164 @@
+{
+  "nodes": [
+    {
+      "id": "8",
+      "type": "io",
+      "position": {
+        "x": 432,
+        "y": 115
+      },
+      "data": {
+        "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
+      }
+    },
+    {
+      "id": "12",
+      "type": "constant",
+      "position": {
+        "x": 11,
+        "y": 76
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": 11,
+        "y": 228
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "19",
+      "type": "constant",
+      "position": {
+        "x": 11,
+        "y": 380
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1
+      }
+    },
+    {
+      "id": "20",
+      "type": "output",
+      "position": {
+        "x": 1012,
+        "y": 185
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "8",
+      "sourceHandle": "img_shi_time_period",
+      "target": "20",
+      "targetHandle": null,
+      "id": "reactflow__edge-8img_shi_time_period-20"
+    },
+    {
+      "source": "12",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "elev_buffer",
+      "id": "reactflow__edge-12-8elev_buffer"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-15-8spat_res"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "time_step",
+      "id": "reactflow__edge-19-8time_step"
+    }
+  ],
+  "inputs": {
+    "SHI>scpSHI_Jetz_complete.yml@8|species": {
+      "description": "Scientific name of the species.",
+      "label": "species",
+      "type": "text",
+      "example": "Saguinus oedipus"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|srs": {
+      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
+      "label": "spatial reference system",
+      "type": "text",
+      "example": "EPSG:3116"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|min_forest": {
+      "description": "Minimum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "min forest",
+      "type": "int",
+      "example": 50
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|max_forest": {
+      "description": "Maximum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "max forest",
+      "type": "int",
+      "example": 100
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|country_code": {
+      "description": "Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.",
+      "label": "country code",
+      "type": "text",
+      "example": "COL"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|region": {
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
+      "label": "region",
+      "type": "text",
+      "example": ""
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|expert_source": {
+      "description": "Source of the expert range map for the species.",
+      "label": "source of expert range map",
+      "type": "options",
+      "options": [
+        "MOL",
+        "IUCN",
+        "QC"
+      ],
+      "example": "IUCN"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|t_0": {
+      "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
+      "label": "initial time",
+      "type": "int",
+      "example": 2000
+    },
+    "SHI>scpSHI_Jetz_complete.yml@8|t_n": {
+      "description": "Year where the analysis should end (it should be later than Initial time)",
+      "label": "final time",
+      "type": "int",
+      "example": 2020
+    }
+  },
+  "outputs": {
+    "SHI>scpSHI_Jetz_complete.yml@8|img_shi_time_period": {
+      "description": "Map showing species habitat changes (gain and loss) between t_0 and t_n.",
+      "label": "shi map",
+      "type": "image/png",
+      "example": "/Saguinus oedipus_GFW_change.png"
+    }
+  }
+}
