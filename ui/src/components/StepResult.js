@@ -63,7 +63,9 @@ function AllOutputsResults({ files, stepMetadata }) {
     });
 }
 
-export function SingleOutputResult({ outputId, outputValue, outputMetadata }) { 
+export function SingleOutputResult({ outputId, outputValue, outputMetadata, componentId }) { 
+    if(!componentId)
+        componentId = outputId
 
     function renderContent(content) {
         let error = ""
@@ -184,7 +186,7 @@ export function SingleOutputResult({ outputId, outputValue, outputMetadata }) {
 
     let isLink = isRelativeLink(outputValue)
     return (
-        <FoldableOutputWithContext key={outputId} title={title} componentId={outputId}
+        <FoldableOutputWithContext key={outputId} title={title} componentId={componentId}
             inline={isLink && <a href={outputValue} target="_blank" rel="noreferrer">{outputValue}</a>}
             inlineCollapsed={!isLink && renderInline(outputValue)}
             className="foldableOutput">

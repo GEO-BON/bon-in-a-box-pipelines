@@ -43,6 +43,7 @@ class ScriptRun( // Constructor used in single script run
     val resultFile = context.resultFile
 
     private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
+    private var logBuffer: String = ""
     internal val logFile = File(outputFolder, "logs.txt")
 
     companion object {
@@ -78,6 +79,18 @@ class ScriptRun( // Constructor used in single script run
             ?: runScript()
     }
 
+    /**
+     * It is possible that two scripts are executed with the same parameters at the same time.
+     * If so, we wait for the other one to complete and then use it's result as cache.
+     */
+    suspend fun waitForResults() {
+        // TODO: Could use join() on a job, if we had a job to join with...
+        logger.debug("Waiting for run completion... ${outputFolder}")
+        while(!this::results.isInitialized) {
+            delay(100L)
+        }
+    }
+
     private fun loadFromCache(): Map<String, Any>? {
         // Looking for a cached result most recent than the script
         if (resultFile.exists()) {
@@ -89,19 +102,39 @@ class ScriptRun( // Constructor used in single script run
                     )
                 }.onSuccess { previousOutputs ->
                     // Use this result only if there was no error and inputs have not changed
-                    if (previousOutputs[ERROR_KEY] == null && inputsOlderThanCache()) {
-                        logger.debug("Loading from cache")
-                        return previousOutputs
+                    if (previousOutputs[ERROR_KEY] == null) {
+                        if(inputsOlderThanCache()) {
+                            logger.debug("Loading from cache")
+                            return previousOutputs
+                        }
+                    } else {
+                        logBuffer += "There was an error in previous run: running again.\n".also { logger.debug(it) }
                     }
                 }.onFailure { e ->
-                    logger.warn("Cache could not be reused: ${e.message}")
+                    logBuffer += "Cache could not be reused: ${e.message}\n".also { logger.warn(it) }
                 }
 
-            } else { // Script was updated, flush the whole cache for this script
-                if (!outputFolder.parentFile.deleteRecursively()) {
-                    throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+            } else {
+                val cleanOption = System.getenv("SCRIPT_SERVER_CACHE_CLEANER")
+                logBuffer += (
+                        "Script was updated, flushing the cache for this script with option $cleanOption.\n" +
+                        "Script time: ${scriptFile.lastModified()}\n" +
+                        "Result time: ${resultFile.lastModified()}\n"
+                        ).also { logger.debug(it) }
+
+                when(cleanOption) {
+                    "partial" ->
+                        if (!outputFolder.deleteRecursively()) {
+                            throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                        }
+                    else -> // "full" or unset
+                        if (!outputFolder.parentFile.deleteRecursively()) {
+                            throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                        }
                 }
             }
+        } else {
+            logBuffer += "Previous results not found: running for the first time.\n".also { logger.debug(it) }
         }
 
         return null
@@ -125,7 +158,16 @@ class ScriptRun( // Constructor used in single script run
                         if (stringValue?.startsWith('/') == true) {
                             with(File(stringValue)) {
                                 // check if missing or newer than cache
-                                if (!exists() || cacheTime < lastModified()) {
+                                if (!exists()) {
+                                    logBuffer += "Cannot reuse cache: input file $this does not exist.\n".also { logger.warn(it) }
+                                    return false
+                                }
+
+                                if(cacheTime < lastModified()) {
+                                    logBuffer += ("Cannot reuse cache: input file has been modified.\n" +
+                                            "Cache time: $cacheTime\n" +
+                                            "File time:  ${lastModified()}\n" +
+                                            "File: $this \n").also { logger.warn(it) }
                                     return false
                                 }
                             }
@@ -164,8 +206,11 @@ class ScriptRun( // Constructor used in single script run
                 // TODO: Errors are using the log file. If this initial step fails, they might be appended to previous log.
                 withContext(Dispatchers.IO) {
                     // If loading from cache didn't succeed, make sure we have a clean slate.
-                    if (outputFolder.exists() && !outputFolder.deleteRecursively()) {
-                        throw RuntimeException("Failed to delete directory of previous run ${outputFolder.path}")
+                    if (outputFolder.exists()) {
+                        outputFolder.deleteRecursively()
+
+                        if (outputFolder.exists())
+                            throw RuntimeException("Failed to delete directory of previous run ${outputFolder.path}")
                     }
 
                     // Create the output folder for this invocation
@@ -173,7 +218,7 @@ class ScriptRun( // Constructor used in single script run
                     logger.debug("Script run outputting to $outputFolder")
 
                     // Script run pre-requisites
-                    logFile.createNewFile()
+                    logFile.writeText(logBuffer)
                     inputFileContent?.let {
                         // Create input.json
                         inputFile.writeText(inputFileContent)

@@ -1,4 +1,4 @@
-import { getScriptDescription } from '../ScriptDescriptionStore'
+import { getStepDescription } from '../ScriptDescriptionStore'
 
 // For ELK options, refer to https://www.eclipse.org/elk/reference/options.html
 // Some examples: http://rtsys.informatik.uni-kiel.de/elklive/examples.html?e=user-hints%2Flayered%2FverticalOrder
@@ -30,7 +30,7 @@ export const layoutElements = (nodes, edges, callback) => {
     }
 
     if (node.type === 'io') {
-      const desc = getScriptDescription(node.data.descriptionFile)
+      const desc = getStepDescription(node.data.descriptionFile)
       if(desc){
         elkjsNode.ports = Object.keys(desc.outputs).map((output, ix) => {
           return {
@@ -53,11 +53,12 @@ export const layoutElements = (nodes, edges, callback) => {
         }
   
         elkjsNode.properties = {
+          alignment: 'RIGHT',
           portConstraints: 'FIXED_ORDER',
           'portAlignment.default': 'BEGIN'
         }
       } else {
-        console.error('Failed ot get description for ' + node.data.descriptionFile)
+        console.error('Failed to get description for ' + node.data.descriptionFile)
       }
     }
 
@@ -74,7 +75,6 @@ export const layoutElements = (nodes, edges, callback) => {
 
   elk.layout(graph)
    .then(result => {
-    console.log(result)
       // Transfer result to react-flow graph
       nodes.forEach((reactFlowNode) => {
         const elkjsNode = result.children.find(n => n.id === reactFlowNode.id)

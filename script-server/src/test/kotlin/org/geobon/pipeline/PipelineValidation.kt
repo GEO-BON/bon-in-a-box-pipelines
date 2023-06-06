@@ -28,7 +28,7 @@ internal class PipelineValidation {
         directory.listFiles()?.forEach { file ->
             if (file.isDirectory) {
                 validateAllPipelines(file)
-            } else {
+            } else if (file.extension == "json") {
                 // Generate fake inputs
                 val fakeInputs = JSONObject()
                 val pipelineJSON = JSONObject(file.readText())
@@ -42,7 +42,7 @@ internal class PipelineValidation {
                 println(fakeInputs.toString(2))
 
                 try { // Run validation
-                    Pipeline(file, fakeInputs.toString(2))
+                    RootPipeline(file, fakeInputs.toString(2))
                 } catch (e: Exception) {
                     errorMessages += "${file.relativeTo(productionPipelinesRoot)}:\n\t${e.message}\n"
                 }
