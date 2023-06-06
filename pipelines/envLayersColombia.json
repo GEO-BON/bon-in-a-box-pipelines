@@ -1124,81 +1124,81 @@
     }
   ],
   "inputs": {
-    "SDM>extentToBbox.yml@9.df_coordinates": {
+    "SDM>extentToBbox.yml@9|df_coordinates": {
       "description": "dataframe, containing coordinates",
       "label": "df coordinates",
       "type": "text/tab-separated-values",
       "example": "/scripts/SDM/runModel_presence_background.tsv"
     },
-    "SDM>extentToBbox.yml@9.lon": {
+    "SDM>extentToBbox.yml@9|lon": {
       "description": "string, name of the longitude column in df_coordinates",
       "label": "longitude column",
-      "type": "string",
+      "type": "text",
       "example": "lon"
     },
-    "SDM>extentToBbox.yml@9.lat": {
+    "SDM>extentToBbox.yml@9|lat": {
       "description": "string, name of the latitude column in df_coordinates",
       "label": "latitude column",
-      "type": "string",
+      "type": "text",
       "example": "lat"
     },
-    "SDM>extentToBbox.yml@9.xmin": {
+    "SDM>extentToBbox.yml@9|xmin": {
       "description": "xmin",
       "label": "xmin",
       "type": "float",
       "example": -2316297
     },
-    "SDM>extentToBbox.yml@9.ymin": {
+    "SDM>extentToBbox.yml@9|ymin": {
       "description": "ymin",
       "label": "ymin",
       "type": "float",
       "example": -1971146
     },
-    "SDM>extentToBbox.yml@9.xmax": {
+    "SDM>extentToBbox.yml@9|xmax": {
       "description": "xmax",
       "label": "xmax",
       "type": "float",
       "example": 1015207
     },
-    "SDM>extentToBbox.yml@9.ymax": {
+    "SDM>extentToBbox.yml@9|ymax": {
       "description": "ymax",
       "label": "ymax",
       "type": "float",
       "example": 1511916
     },
-    "SDM>extentToBbox.yml@9.proj_from": {
+    "SDM>extentToBbox.yml@9|proj_from": {
       "description": "string, projection of the input spatial object",
       "label": "input projection system",
-      "type": "string",
+      "type": "text",
       "example": "EPSG:6623"
     },
-    "SDM>extentToBbox.yml@9.proj_to": {
+    "SDM>extentToBbox.yml@9|proj_to": {
       "description": "string, projection of output bbox",
       "label": "output bbox projection system",
-      "type": "string",
+      "type": "text",
       "example": "EPSG:6623"
     }
   },
   "outputs": {
-    "climateMetrics>climateVelocity.yml@0.output_tif": {
+    "climateMetrics>climateVelocity.yml@0|output_tif": {
       "description": "climate-change velocity.",
       "label": "output",
       "type": "image/tiff;application=geotiff",
       "example": "local_velocity.tif"
     },
-    "climateMetrics>climateVelocity.yml@14.output_tif": {
+    "climateMetrics>climateVelocity.yml@14|output_tif": {
       "description": "climate-change velocity.",
       "label": "output",
       "type": "image/tiff;application=geotiff",
       "example": "local_velocity.tif"
     },
-    "climateMetrics>climateVelocity.yml@18.output_tif": {
+    "climateMetrics>climateVelocity.yml@18|output_tif": {
       "description": "climate-change velocity.",
       "label": "output",
       "type": "image/tiff;application=geotiff",
       "example": "local_velocity.tif"
     },
-    "climateMetrics>climateRarity.yml@24.output_tif": {
+    "climateMetrics>climateRarity.yml@24|output_tif": {
       "description": "Raster file, values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.",
       "label": "output",
       "type": "image/tiff;application=geotiff[]",
@@ -1208,20 +1208,20 @@
       ],
       "example": "climate_current_rarity.tif"
     },
-    "binaryLayer>binaryLayer.yml@36.output_binary": {
-      "description": "land cover raster classes, where 1 in above threshold and 0 below threshold.",
+    "binaryLayer>binaryLayer.yml@36|output_binary": {
+      "description": "land cover raster classes, where 1 is above threshold and 0 below threshold.",
       "label": "binary layer output",
       "type": "image/tiff;application=geotiff[]",
       "example": "y2000_class210_binary.tif"
     },
-    "accessibility>accessibility.yml@41.output_tif": {
+    "accessibility>accessibility.yml@41|output_tif": {
       "description": "accesibility layer, values close to zero indicate short travel time to cities.",
       "label": "accessibility",
       "type": "image/tiff;application=geotiff",
       "example": "accesibility.tif"
     },
-    "data>loadLandCover.yml@50.output_tif": {
-      "description": "land cover raster classes (note that class=0 is NO DATA)",
+    "data>loadLandCover.yml@50|output_tif": {
+      "description": "land cover raster classes (see references for link to descriptions).",
       "label": "land cover classes",
       "type": "image/tiff;application=geotiff[]",
       "example": "y2010_class210.tif"
