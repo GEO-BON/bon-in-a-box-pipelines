@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useReducer } from "react";
-
 import { SingleOutputResult, StepResult } from "./StepResult";
 import {
   FoldableOutputWithContext,
@@ -26,38 +25,54 @@ import {
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 
+const defaultPipeline = 'helloWorld';
+
+
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
 
 function pipReducer(state, action) {
   switch (action.type) {
-    case 'changed_draft': {
+    case 'run': {
       return {
-        draft: action.nextDraft,
-        todos: state.todos,
+        runHash: action.newHash,
+        pipeline: state.pipeline,
+        runId: state.pipeline+'>'+action.newHash
       };
     };
-    case 'added_todo': {
+    case 'select': {
       return {
-        draft: '',
-        todos: [{
-          id: state.todos.length,
-          text: state.draft
-        }, ...state.todos]
-      }
+        runHash: action.newHash,
+        pipeline: action.newPipeline,
+        runId: state.newPipeline+'>'+action.newHash
+      };
+    }
+    case 'url': {
+      return {
+        runHash: action.newHash,
+        pipeline: action.newPipeline,
+        runId: state.newPipeline+'>'+action.newHash
+      };
+    }
+    case 'reset': {
+      return {
+        runHash: null,
+        pipeline: defaultPipeline+'.json',
+        runId: null,
+      };
     }
   }
   throw Error('Unknown action: ' + action.type);
 }
 
 function pipInitialState(pipelineRunId) {
-  const runHash = null;
-  const pipeline = 'helloWorld.json';
+  let runHash = null;
+  let pipeline = defaultPipeline+'.json';
   if(pipelineRunId){
     const parts = pipelineRunId.split('>')
-    const runHash = parts.slice(-1);
-    const pipeline = parts.slice(-2)
+    runHash = parts.slice(-1);
+    pipeline = parts.slice(-2);
   }
   return {
     runHash: runHash,
@@ -83,7 +98,6 @@ export function PipelinePage() {
   const [inputFileContent, setInputFileContent] = useState({});
 
   const { pipelineRunId } = useParams();
-  const [runId, setRunId] = useState(pipelineRunId); //Prevent runId from being initially null when page is loaded with route.
   const [pipStates, setPipStates] = useReducer(
     pipReducer,
     pipelineRunId,
@@ -96,9 +110,9 @@ export function PipelinePage() {
   }
 
   let timeout;
-  function loadPipelineOutputs(init = false) {
-    if (runId && !init) {
-      api.getPipelineOutputs(runId, (error, data, response) => {
+  function loadPipelineOutputs() {
+    if (pipStates.runHash) {
+      api.getPipelineOutputs(pipStates.runId, (error, data, response) => {
         if (error) {
           showHttpError(error, response);
         } else {
@@ -118,13 +132,12 @@ export function PipelinePage() {
     }
   }
 
-  function loadPipelineMetadata(choice, init = false) {
+  function loadPipelineMetadata(choice) {
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
       } else if (data) {
         setPipelineMetadata(data);
-        if (init) {
           let inputExamples = {};
           if (data && data.inputs) {
             Object.keys(data.inputs).forEach((inputId) => {
@@ -136,7 +149,6 @@ export function PipelinePage() {
             });
           }
           setInputFileContent(inputExamples);
-        }
       }
     };
     api.getPipelineInfo(choice, callback);
@@ -147,43 +159,55 @@ export function PipelinePage() {
   }, [runningScripts]);
 
   useEffect(() => {
-    // existing run set by the route
-    if (pipelineRunId !== runId) {
-      setRunId(pipelineRunId);
+    // set by the route
+    if (pipelineRunId !== pipStates.runId) {
+      const runIdParts = pipelineRunId.split(">");
+      var hash = runIdParts.at(-1);
+      var pip = runIdParts.at(-2)+'.json';
+      setPipStates({
+        type: 'url',
+        newPipeline: pip,
+        newHash: hash
+      })
     }
     if (pipelineRunId && pipelineRunId !== "null") {
-      const runIdParts = pipelineRunId.split(">");
-      fetch("/output/" + runIdParts[0] + "/" + runIdParts[1] + "/input.json")
-        .then((response) => {
+      var inputJson = "/output/" + pip + "/" + hash + "/input.json";
+      fetch(inputJson)
+      .then((response) => {
           if (response.ok) {
             return response.json();
           }
           if (response.status === 404) {
-            return console.error("input.json not found");
+            // This is a new run
+            //loadPipelineMetadata(pip);
+            //setResultsData(null);
+            loadPipelineOutputs();
+            return false;
           }
-        })
-        .then((json) => {
-          loadPipelineMetadata(runIdParts[0] + ".json", false);
-          setSelectedPipeline(runIdParts[0] + ".json");
+      })
+      .then((json) => {
+        if(json){ // This has been run before
+          loadPipelineMetadata(pip);
           setInputFileContent(json);
           loadPipelineOutputs();
-        });
+        }
+      });
     } else {
-      loadPipelineOutputs(true);
-      loadPipelineMetadata(selectedPipeline, true);
+      loadPipelineOutputs();
+      loadPipelineMetadata(pipStates.pipeline);
     }
-  }, [pipelineRunId, setSelectedPipeline, setInputFileContent]);
+  }, [pipelineRunId]);
 
   const stop = () => {
     setStoppable(false);
-    api.stopPipeline(runId, (error, data, response) => {
+    api.stopPipeline(pipStates.runId, (error, data, response) => {
       if (response.status === 200) {
         setHttpError("Cancelled by user");
       }
     });
   };
 
-  // Called when ID changes
+/*  // Called when ID changes
   useEffect(() => {
     if (runId) {
       if (runId !== location.pathname.split("/").slice(-1)) {
@@ -197,13 +221,14 @@ export function PipelinePage() {
     // Called only when ID changes. Including all deps would result in infinite loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [runId]);
+*/
 
   return (
     <>
       <h2>Pipeline run</h2>
       <FoldableOutput
         title="Input form"
-        isActive={!runId}
+        isActive={!pipStates.runId}
         keepWhenHidden={true}
       >
         <PipelineForm
@@ -213,15 +238,15 @@ export function PipelinePage() {
           inputFileContent={inputFileContent}
           loadPipelineMetadata={loadPipelineMetadata}
           loadPipelineOutputs={loadPipelineOutputs}
-          setRunId={setRunId}
           setSelectedPipeline={setSelectedPipeline}
           selectedPipeline={selectedPipeline}
-          runId={runId}
+          pipStates={pipStates}
+          setPipStates={setPipStates}
           showHttpError={showHttpError}
         />
       </FoldableOutput>
 
-      {runId && (
+      {pipStates.runId && (
         <button onClick={stop} disabled={!stoppable}>
           Stop
         </button>

@@ -9,10 +9,9 @@ export const api = new BonInABoxScriptService.DefaultApi();
 export function PipelineForm({
   pipelineMetadata,
   setPipelineMetadata,
-  setRunId,
   runId,
-  setSelectedPipeline,
-  selectedPipeline,
+  pipStates,
+  setPipStates,
   loadPipelineMetadata,
   loadPipelineOutputs,
   showHttpError,
@@ -24,7 +23,9 @@ export function PipelineForm({
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {
-    setRunId(null);
+    setPipStates({
+      type: 'reset',
+    })
     showHttpError(null);
     setInputFileContent({});
   }
@@ -36,9 +37,13 @@ export function PipelineForm({
 
   const handlePipelineChange = (value) => {
     clearPreviousRequest();
-    setSelectedPipeline(value);
-    loadPipelineOutputs(true);
-    loadPipelineMetadata(value, true);
+    setPipStates({
+      type: 'select',
+      newPipeline: value,
+      newHash: null
+    })
+    loadPipelineOutputs();
+    loadPipelineMetadata(value);
     navigate("/pipeline-form");
   };
 
@@ -49,7 +54,8 @@ export function PipelineForm({
         data = {};
         showHttpError(error, response);
       } else if (data) {
-        setRunId(data);
+        //setRunId(data);
+        navigate("/pipeline-form/"+data)
       } else {
         showHttpError("Server returned empty result");
       }
@@ -80,13 +86,13 @@ export function PipelineForm({
         setPipelineOptions(newOptions);
         if (!runId) {
           //metadata will be loaded elsewhere when there is a route
-          loadPipelineMetadata(selectedPipeline, true);
+          loadPipelineMetadata(pipStates.pipeline, true);
         }
       }
     });
     // Empty dependency array to get script list only once
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [pipStates]);
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
@@ -96,7 +102,7 @@ export function PipelineForm({
         name="pipelineChoice"
         className="blackText"
         options={pipelineOptions}
-        value={{ label: selectedPipeline, value: selectedPipeline }}
+        value={{ label: pipStates.pipeline, value: pipStates.pipeline }}
         onChange={(v) => handlePipelineChange(v.value)}
       />
       <br />
