@@ -312,7 +312,7 @@ open class Pipeline private constructor(
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    throw RuntimeException("Constant #$idForUser has no value in JSON file.")
+                    throw RuntimeException("Constant $idForUser has no value in JSON file.")
                 }
             }
         }
