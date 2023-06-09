@@ -21,8 +21,8 @@ class PullLayersById(stepId: StepId, inputs: MutableMap<String, Pipe> = mutableM
                     ?: false
 
             } else true
-        } ?: throw RuntimeException("No id was found to replace in:\n$withIds")
-   
+        } ?: listOf<JSONObject>()
+
         return resolvedInputs
     }
 
@@ -40,7 +40,13 @@ class PullLayersById(stepId: StepId, inputs: MutableMap<String, Pipe> = mutableM
             }
         }
 
-        return mapOf(OUT_WITH_LAYERS to content).also{ record(it) }
+        val outputs = mutableMapOf(OUT_WITH_LAYERS to content)
+        if(identifiedLayers.isEmpty()) {
+            outputs["info"] = "No IDs were replaced."
+        }
+
+        record(outputs)
+        return outputs
     }
 
     companion object {
