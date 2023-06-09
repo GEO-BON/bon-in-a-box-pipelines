@@ -85,6 +85,7 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
       <label htmlFor='pipelineChoice'>Pipeline:</label>
       <Select id="pipelineChoice" name="pipelineChoice" className="blackText" options={pipelineOptions}
         defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
+        menuPortalTarget={document.body}
         onChange={(v) => loadPipelineMetadata(v.value)} />
       <br />
       <InputFileInput

@@ -115,6 +115,7 @@ function SingleScriptForm(props) {
       <label htmlFor='scriptFile'>Script file:</label>
       <Select id="scriptFile" name="scriptFile" className="blackText" options={scriptFileOptions}
         defaultValue={{ label: defaultScript, value: defaultScript }}
+        menuPortalTarget={document.body}
         onChange={(v) => loadScriptMetadata(v.value)} />
       <br />
       {props.scriptMetadata &&
