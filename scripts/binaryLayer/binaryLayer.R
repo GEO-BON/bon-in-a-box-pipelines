@@ -22,7 +22,12 @@ threshold_prop <- input$threshold_prop
 
 # Running binary function
 lc_binary <- binary_layer(lc_classes, select_class, threshold_prop)
-  
+
+if (isTRUE(input$single_mask)){  
+    comb_lc <- calc(lc_binary, sum)
+    lc_binary <- reclassify(comb_lc, rcl = matrix(c(1, 1000, 1), ncol = 3))
+    names(lc_binary) <- paste0(paste(select_class, collapse = "_"), "_mask")
+}
 
 # Saving rasters
 

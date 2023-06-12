@@ -16,6 +16,11 @@ inputs:
     description: land cover class proportion  threshold value (e.g.land cover class proportion above 0.8 will be 1 and below 0).
     type: float
     example: 0.8
+  single_mask: 
+    label: single mask
+    description: Boolean, should the layers be combined into a single binary mask
+    type: boolean
+    example: TRUE
 outputs:
   output_binary: 
     label: binary layer output
