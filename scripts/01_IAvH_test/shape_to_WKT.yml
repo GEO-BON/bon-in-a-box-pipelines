@@ -1,0 +1,27 @@
+script: shape_to_WKT.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  shape_dir:
+    label: shape_dir
+    description: shape_dir
+    type: text
+    example: "/output/0_inputs/Quindío.shp"
+  epsg:
+    label: epsg
+    description: epsg
+    type: int
+    example: 3395
+outputs:
+  dir_wkt:
+    label: dir_wkt
+    description: dir_wkt
+    type: text
+  epsg:
+    label: epsg
+    description: epsg
+    type: int
+  dir_GeoJSON:
+    label: dir_GeoJSON
+    description: dir_GeoJSON
+    type: application/geo+json	
