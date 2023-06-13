@@ -8,8 +8,8 @@ packagesList<-list("magrittr", "terra")
 lapply(packagesList, library, character.only = TRUE)
 
 # Definir output
-  outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
- # Sys.setenv(outputFolder = "/path/to/output/folder")
+ # outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
+ Sys.setenv(outputFolder = "/path/to/output/folder")
 
 # Definir input
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Cargar input
