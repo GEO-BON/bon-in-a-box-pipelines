@@ -123,19 +123,19 @@
     }
   ],
   "inputs": {
-    "01_IAvH_test>shape_to_WKT.yml@12.shape_dir": {
+    "01_IAvH_test>shape_to_WKT.yml@12|shape_dir": {
       "description": "shape_dir",
       "label": "shape_dir",
       "type": "text",
       "example": "/output/0_inputs/Quindío.shp"
     },
-    "01_IAvH_test>shape_to_WKT.yml@12.epsg": {
+    "01_IAvH_test>shape_to_WKT.yml@12|epsg": {
       "description": "epsg",
       "label": "epsg",
       "type": "int",
       "example": 3395
     },
-    "01_IAvH_test>area_layers.yml@19.group": {
+    "01_IAvH_test>area_layers.yml@19|group": {
       "description": "group",
       "label": "group",
       "type": "text",
@@ -143,7 +143,7 @@
     }
   },
   "outputs": {
-    "01_IAvH_test>area_layers.yml@19.dir_areas": {
+    "01_IAvH_test>area_layers.yml@19|dir_areas": {
       "description": "dir_areas",
       "label": "dir_areas",
       "type": "text/csv"
