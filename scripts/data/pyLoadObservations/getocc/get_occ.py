@@ -35,12 +35,15 @@ elif data_source=='gbif_pc':
 else:
 	print('Please specify proper data source')
 
-
-output = {
-  "observations_file": str(out['outfile']),
-  "gbif_doi": str(out['doi']),
-  "total_records": str(out['total_records'])
-}
+if out['error']:
+	print(out['error'])
+	output = { "error": out['error'] }
+else:
+	output = {
+    "observations_file": str(out['outfile']),
+    "gbif_doi": str(out['doi']),
+    "total_records": str(out['total_records'])
+  }
 
 json_object = json.dumps(output, indent = 2)
 

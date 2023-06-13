@@ -13,10 +13,14 @@ from pathlib import Path
 
 
 
-def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022],outfile=('out.csv')):
+def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 	GBIF_USER=os.environ['GBIF_USER']
 	GBIF_PWD=os.environ['GBIF_PWD']
 	GBIF_EMAIL=os.environ['GBIF_EMAIL']
+
+	if GBIF_USER=='' or GBIF_PWD=='' or GBIF_EMAIL=='':
+		return {'error':'GBIF_USER, GBIF_PWD and GBIF_EMAIL environment variable must be defined'}
+
 	keys = [ species.name_backbone(x)['usageKey'] for x in splist ]
 	counts = [ occ.search(taxonKey = x, limit=0)['count'] for x in keys ]
 	spcount = dict(zip(splist, counts))
