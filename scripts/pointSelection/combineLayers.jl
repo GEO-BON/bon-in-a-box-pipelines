@@ -19,7 +19,7 @@ function read_layers_and_weights(inputs)
     layers = SimpleSDMPredictor.(layer_paths)
     ϕ = convert(Vector{Float64}, inputs["targetbalance"]) 
         
-    mask_path = inputs["mask"][1]["map"]["layer"]
+    mask_path = inputs["mask"]
     mask = SimpleSDMPredictor(mask_path)
 
     check_validity(W) && check_validity(layers) && check_validity(ϕ)

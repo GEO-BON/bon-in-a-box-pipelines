@@ -15,11 +15,8 @@ inputs:
     mask:
         label: Mask of regions to include.
         description: Should be a path to a binary mask.
-        type: object[] 
-        properties:
-            - id
-            - path
-        example: [{"id": "the_id", "path": "foo/bar/layer.tiff"}]
+        type: image/tiff;application=geotiff
+        example: "./foo/bar/priority_map.tiff"
 outputs:
     priority_map:
         label: Priority map

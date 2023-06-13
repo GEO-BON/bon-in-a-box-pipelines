@@ -456,8 +456,8 @@
       "id": "113",
       "type": "io",
       "position": {
-        "x": 1157,
-        "y": 880.5
+        "x": 1418.9999999999998,
+        "y": 548.5
       },
       "data": {
         "descriptionFile": "binaryLayer>binaryLayer.yml"
@@ -490,30 +490,6 @@
           "210",
           "220"
         ]
-      }
-    },
-    {
-      "id": "116",
-      "type": "io",
-      "position": {
-        "x": 1673,
-        "y": 398.5
-      },
-      "data": {
-        "descriptionFile": "pipeline>AssignId.yml"
-      }
-    },
-    {
-      "id": "117",
-      "type": "constant",
-      "position": {
-        "x": 1296,
-        "y": 385
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "mask"
       }
     },
     {
@@ -825,27 +801,6 @@
       "id": "reactflow__edge-115-113select_class"
     },
     {
-      "source": "117",
-      "sourceHandle": null,
-      "target": "116",
-      "targetHandle": "id",
-      "id": "reactflow__edge-117-116id"
-    },
-    {
-      "source": "113",
-      "sourceHandle": "output_binary",
-      "target": "116",
-      "targetHandle": "layer",
-      "id": "reactflow__edge-113output_binary-116layer"
-    },
-    {
-      "source": "116",
-      "sourceHandle": "identified_layer",
-      "target": "88",
-      "targetHandle": "mask",
-      "id": "reactflow__edge-116identified_layer-88mask"
-    },
-    {
       "source": "118",
       "sourceHandle": null,
       "target": "70",
@@ -858,6 +813,13 @@
       "target": "113",
       "targetHandle": "single_mask",
       "id": "reactflow__edge-119-113single_mask"
+    },
+    {
+      "source": "113",
+      "sourceHandle": "output_binary",
+      "target": "88",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-113output_binary-88mask"
     }
   ],
   "inputs": {},
