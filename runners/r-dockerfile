@@ -3,10 +3,10 @@ FROM rocker/geospatial:dev-osgeo
 # Additionnal R packages
 RUN R -e 'install.packages(c( \
     "rjson", "RCurl", "rstac", "rgbif", "CoordinateCleaner", "dismo", "ENMeval", "gdalUtils", "ggsci", "landscapemetrics", "geodata", "rredlist", "gdalUtilities", "OpenStreetMap", \
-    
+    \
     # Used to extract protected areas raster in protectedAreas/protectedAreasProp.R
     "wdpar",  \
-
+    \
     # Used by wdpar
     "exactextractr",  \
     "wdman" \
