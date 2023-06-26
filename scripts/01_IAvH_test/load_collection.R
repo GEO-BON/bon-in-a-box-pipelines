@@ -8,7 +8,7 @@ packagesList<-list("magrittr", "terra")
 lapply(packagesList, library, character.only = TRUE)
 
 # Definir output
- # outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
+# outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
  Sys.setenv(outputFolder = "/path/to/output/folder")
 
 # Definir input
@@ -17,7 +17,7 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Cargar in
 input<- lapply(input, function(x) if( grepl("/output/", x) ){
   sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x} ) # Ajuste input 1
 
-input <- lapply(input, function(x) { 
+input <- lapply(input, function(x) {
   if(tools::file_ext(x) %in% 'json'){
     pattern<-  "/\\{\\{(.+?)\\}\\}/"
     element <-  stringr::str_extract(x, pattern) %>% {gsub("[\\{\\}/]", "", .)}
@@ -61,11 +61,34 @@ resolution_crs<- raster::raster(raster::extent(seq(4)),crs= paste0("+init=epsg:"
 # Cargar assests metadata
 assets_metadata<- STACItemCollection$features %>% purrr::map("assets") %>% {setNames(unlist(., recursive = F), sapply(., function(y) names(y)))}
 
+
+# Redondear temporaldiad del cubo
+type_period<- tryCatch({ sub(".*P", "", input$time_period) %>% {period= as.numeric(gsub("([0-9]+).*$", "\\1", .)); type= gsub(period,"", .); list(type=type, period=period) }
+}, error= function(e){ list(type=type, period=period) })
+  
+t0<- gdalcubes::extent(image_collection)$t0
+t1<- gdalcubes::extent(image_collection)$t1
+
+t0<-if(!input$time_start %in% "NA"){ tryCatch(as.Date(input$time_start), error= function(e){t0}) }else{t0}
+t0<- (if(type_period$type == "Y"){ lubridate::floor_date(as.Date(t0),  lubridate::years(type_period$period))
+} else if (type_period$type == "M") { lubridate::floor_date(as.Date(t0),  months(type_period$period) )
+} else if( type_period$type == "D"){ lubridate::floor_date(as.Date(t0),  lubridate::days(type_period$period) )
+  } else{as.Date(t0)}) %>% paste0("T00:00:00")
+
+t1<-if(!input$time_start %in% "NA"){ tryCatch(as.Date(input$time_end), error= function(e){t1}) }else{t1}
+t1<- (if(type_period$type == "Y"){ lubridate::ceiling_date(as.Date(t1),  lubridate::years(type_period$period))
+} else if (type_period$type == "M") { lubridate::ceiling_date(as.Date(t1),  months(type_period$period) )
+} else if( type_period$type == "D"){ lubridate::ceiling_date(as.Date(t1),  lubridate::days(type_period$period) )
+} else{as.Date(t1)}) %>% paste0("T00:00:00")
+
+
+
+
 # Establecer cube view
-cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = gdalcubes::extent(image_collection)$t0, t1 = gdalcubes::extent(image_collection)$t1,
+cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = t0, t1 = t1,
                                                                            left = box_polygon[1], right = box_polygon[3],
                                                                            top = box_polygon[4], bottom = box_polygon[2]),
-                                         dx = resolution_crs[1], dy = resolution_crs[2], dt = "P1Y", aggregation = "first", resampling = "first",
+                                         dx = resolution_crs[1], dy = resolution_crs[2], dt = input$time_period, aggregation = "max", resampling = "first",
                                          keep.asp= T)
 
 # Crear cubo
@@ -78,6 +101,9 @@ nc <-  ncdf4::nc_open(fn); vars <- names(nc$var)
 
 # Ordenar temporalidad del cubo
 cube_times<- as.data.frame(gdalcubes::dimension_bounds(cube_mask)[["t"]])
+cube_times
+
+
 nc_times<- if(nrow(cube_times)<2){"X0"}else{ paste0("X", ncdf4::ncvar_get(nc, "time_bnds")[1,]) }
 time_collection<- as.data.frame(gdalcubes::dimension_bounds(cube_mask)[["t"]]) %>% dplyr::mutate(time_id= nc_times, dim3=seq(nrow(.)))
 

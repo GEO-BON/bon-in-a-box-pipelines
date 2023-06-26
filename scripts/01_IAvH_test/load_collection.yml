@@ -22,6 +22,22 @@ inputs:
     description: resolution
     type: int
     example: 1000
+  time_period:
+    label: time_period
+    description: time_period
+    type: text
+    example: 'P10Y'
+  time_start:
+    label: time_start
+    description: time_start
+    type: text
+    example: 'NA'
+  time_end:
+    label: time_end
+    description: time_end
+    type: text
+    example: 'NA'
+
 outputs:
   area_stack:
     label: area_stack
