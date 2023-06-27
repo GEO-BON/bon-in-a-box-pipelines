@@ -1,0 +1,242 @@
+{
+  "nodes": [
+    {
+      "id": "12",
+      "type": "io",
+      "position": {
+        "x": 195,
+        "y": 39
+      },
+      "data": {
+        "descriptionFile": "01_IAvH_test>shape_to_WKT.yml"
+      }
+    },
+    {
+      "id": "13",
+      "type": "io",
+      "position": {
+        "x": 688,
+        "y": 197
+      },
+      "data": {
+        "descriptionFile": "01_IAvH_test>load_collection.yml"
+      }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 340,
+        "y": 239
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/output/0_inputs/Colecciones/AP_decada_collection"
+      }
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": 276,
+        "y": 279
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "19",
+      "type": "io",
+      "position": {
+        "x": 1075,
+        "y": 206
+      },
+      "data": {
+        "descriptionFile": "01_IAvH_test>area_layers.yml"
+      }
+    },
+    {
+      "id": "21",
+      "type": "constant",
+      "position": {
+        "x": 171,
+        "y": 337.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "P10Y"
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 782,
+        "y": 368.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "period, classes, start, end"
+      }
+    },
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": 1410,
+        "y": 187.5
+      },
+      "data": {
+        "descriptionFile": "01_IAvH_test>protcon_function.yml"
+      }
+    },
+    {
+      "id": "25",
+      "type": "output",
+      "position": {
+        "x": 1835,
+        "y": 183.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "12",
+      "sourceHandle": "epsg",
+      "target": "13",
+      "targetHandle": "epsg",
+      "id": "reactflow__edge-12epsg-13epsg"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "dir_wkt",
+      "target": "13",
+      "targetHandle": "WKT_area",
+      "id": "reactflow__edge-12dir_wkt-13WKT_area"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "collection_path",
+      "id": "reactflow__edge-14-13collection_path"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "resolution",
+      "id": "reactflow__edge-15-13resolution"
+    },
+    {
+      "source": "13",
+      "sourceHandle": "dir_stack",
+      "target": "19",
+      "targetHandle": "dir_stack",
+      "id": "reactflow__edge-13dir_stack-19dir_stack"
+    },
+    {
+      "source": "13",
+      "sourceHandle": "dir_data_layer",
+      "target": "19",
+      "targetHandle": "dir_data_layer",
+      "id": "reactflow__edge-13dir_data_layer-19dir_data_layer"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "time_period",
+      "id": "reactflow__edge-21-13time_period"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "19",
+      "targetHandle": "group",
+      "id": "reactflow__edge-22-19group"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "dir_areas",
+      "target": "23",
+      "targetHandle": "data_area",
+      "id": "reactflow__edge-19dir_areas-23data_area"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "dir_area_total",
+      "target": "23",
+      "targetHandle": "data_area_total",
+      "id": "reactflow__edge-19dir_area_total-23data_area_total"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "result_protcom",
+      "target": "25",
+      "targetHandle": null,
+      "id": "reactflow__edge-23result_protcom-25"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "dir_GeoJSON",
+      "target": "23",
+      "targetHandle": "dir_area",
+      "id": "reactflow__edge-12dir_GeoJSON-23dir_area"
+    }
+  ],
+  "inputs": {
+    "01_IAvH_test>shape_to_WKT.yml@12.shape_dir": {
+      "description": "shape_dir",
+      "label": "shape_dir",
+      "type": "text",
+      "example": "/output/0_inputs/Quindío.shp"
+    },
+    "01_IAvH_test>shape_to_WKT.yml@12.epsg": {
+      "description": "epsg",
+      "label": "epsg",
+      "type": "int",
+      "example": 3395
+    },
+    "01_IAvH_test>load_collection.yml@13.time_start": {
+      "description": "time_start",
+      "label": "time_start",
+      "type": "text",
+      "example": "NA"
+    },
+    "01_IAvH_test>load_collection.yml@13.time_end": {
+      "description": "time_end",
+      "label": "time_end",
+      "type": "text",
+      "example": "NA"
+    },
+    "01_IAvH_test>protcon_function.yml@23.dir_protected": {
+      "description": "dir_protected",
+      "label": "dir_protected",
+      "type": "text",
+      "example": "/output/0_inputs/geo_protected_areas_corrected_duplic.gpkg"
+    },
+    "01_IAvH_test>protcon_function.yml@23.distance": {
+      "description": "distance",
+      "label": "distance",
+      "type": "int",
+      "example": 3000
+    }
+  },
+  "outputs": {
+    "01_IAvH_test>protcon_function.yml@23.result_protcom": {
+      "description": "result_protcom",
+      "label": "result_protcom",
+      "type": "text/csv"
+    }
+  }
+}
