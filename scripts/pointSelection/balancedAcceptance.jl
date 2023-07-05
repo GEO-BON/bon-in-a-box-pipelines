@@ -52,15 +52,15 @@ function points_to_geojson(priority_map, points; EPSG="4326")
 
     json_string = ("{
         \"type\": \"MultiPoint\",
+        \"coordinates\": [
+            $points_string_join
+        ],
         \"crs\": {
             \"type\": \"name\",
             \"properties\": {
                 \"name\": \"EPSG:$EPSG\"
             }
-        },
-        \"coordinates\": [
-            $points_string_join
-        ]
+        }
     }")
     return json_string
 end
