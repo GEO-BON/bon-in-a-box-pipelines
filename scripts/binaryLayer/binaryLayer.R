@@ -9,6 +9,7 @@ library("rjson")
 library("raster")
 library("dplyr")
 
+#outputFolder = "./output/binaryLayer/binaryLayer/2dd2bd11e6564eec8459c3dc5ae537cc/"
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
@@ -24,24 +25,28 @@ threshold_prop <- input$threshold_prop
 lc_binary <- binary_layer(lc_classes, select_class, threshold_prop)
 
 if (isTRUE(input$single_mask)){  
-    comb_lc <- calc(lc_binary, sum)
-    lc_binary <- reclassify(comb_lc, rcl = matrix(c(1, 1000, 1), ncol = 3))
-    names(lc_binary) <- paste0(paste(select_class, collapse = "_"), "_mask")
-}
-
-# Saving rasters
-
-for(i in 1:length(names(lc_binary))){
-raster::writeRaster(x = lc_binary[[i]],
-                    paste0(outputFolder, "/", names(lc_binary[[i]]), ".tif"),
+    for (sc in select_class){
+        lc_binary[lc_binary == select_class] = 1
+    }
+    raster::writeRaster(x = lc_binary[[1]],
+                    paste0(outputFolder, "/", "mask.tif"),
                     format='COG',
                     options=c("COMPRESS=DEFLATE"),
-                    overwrite = TRUE
-)
+                    overwrite = TRUE)
+}  else {
+    for(i in 1:length(names(lc_binary))){
+    raster::writeRaster(x = lc_binary[[i]],
+                        paste0(outputFolder, "/", names(lc_binary[[i]]), ".tif"),
+                        format='COG',
+                        options=c("COMPRESS=DEFLATE"),
+                        overwrite = TRUE
+    )
+    }
 }
 
-print(list.files(outputFolder, pattern = ".tif$", full.names = T))
 
+
+print(list.files(outputFolder, pattern = ".tif$", full.names = T))
 lc_binary_layer <- list.files(outputFolder, pattern="*.tif$", full.names = T)
 
 output <- list("output_binary" = lc_binary_layer)
