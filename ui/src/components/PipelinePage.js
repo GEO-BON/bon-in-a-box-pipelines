@@ -36,6 +36,7 @@ function pipReducer(state, action) {
   switch (action.type) {
     case 'run': {
       return {
+        lastAction: 'run',
         runHash: action.newHash,
         pipeline: state.pipeline,
         runId: state.pipeline+'>'+action.newHash
@@ -43,22 +44,25 @@ function pipReducer(state, action) {
     };
     case 'select': {
       return {
-        runHash: action.newHash,
+        lastAction: 'select',
+        runHash: null,
         pipeline: action.newPipeline,
-        runId: state.newPipeline+'>'+action.newHash
+        runId: null
       };
     }
     case 'url': {
       return {
+        lastAction: 'url',
         runHash: action.newHash,
         pipeline: action.newPipeline,
-        runId: state.newPipeline+'>'+action.newHash
+        runId: action.newPipeline+'>'+action.newHash
       };
     }
     case 'reset': {
       return {
+        lastAction: 'reset',
         runHash: null,
-        pipeline: defaultPipeline+'.json',
+        pipeline: defaultPipeline,
         runId: null,
       };
     }
@@ -68,15 +72,17 @@ function pipReducer(state, action) {
 
 function pipInitialState(pipelineRunId) {
   let runHash = null;
-  let pipeline = defaultPipeline+'.json';
+  let pipeline = defaultPipeline;
   if(pipelineRunId){
     const parts = pipelineRunId.split('>')
-    runHash = parts.slice(-1);
-    pipeline = parts.slice(-2);
+    runHash = parts.at(-1);
+    pipeline = parts.at(-2);
   }
   return {
+    lastAction: 'reset',
     runHash: runHash,
     pipeline: pipeline,
+    runId: pipeline+'>'+runHash
   };
 }
 
@@ -96,6 +102,7 @@ export function PipelinePage() {
    * String: Content of input.json for this run
    */
   const [inputFileContent, setInputFileContent] = useState({});
+  const [inputExamples, setInputExamples] = useState({});
 
   const { pipelineRunId } = useParams();
   const [pipStates, setPipStates] = useReducer(
@@ -123,7 +130,6 @@ export function PipelinePage() {
             // try again later
             timeout = setTimeout(loadPipelineOutputs, 1000);
           }
-
           setResultsData(data);
         }
       });
@@ -133,44 +139,29 @@ export function PipelinePage() {
   }
 
   function loadPipelineMetadata(choice) {
+    choice = choice + '.json';
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
       } else if (data) {
         setPipelineMetadata(data);
-          let inputExamples = {};
-          if (data && data.inputs) {
-            Object.keys(data.inputs).forEach((inputId) => {
-              let input = data.inputs[inputId];
-              if (input) {
-                const example = input.example;
-                inputExamples[inputId] = example === undefined ? null : example;
-              }
-            });
-          }
-          setInputFileContent(inputExamples);
+        let inputExamples = {};
+        if (data && data.inputs) {
+          Object.keys(data.inputs).forEach((inputId) => {
+            let input = data.inputs[inputId];
+            if (input) {
+              const example = input.example;
+              inputExamples[inputId] = example === undefined ? null : example;
+            }
+          });
+        }
+        setInputExamples(inputExamples);
       }
     };
     api.getPipelineInfo(choice, callback);
   }
 
-  useEffect(() => {
-    setStoppable(runningScripts.size > 0);
-  }, [runningScripts]);
-
-  useEffect(() => {
-    // set by the route
-    if (pipelineRunId !== pipStates.runId) {
-      const runIdParts = pipelineRunId.split(">");
-      var hash = runIdParts.at(-1);
-      var pip = runIdParts.at(-2)+'.json';
-      setPipStates({
-        type: 'url',
-        newPipeline: pip,
-        newHash: hash
-      })
-    }
-    if (pipelineRunId && pipelineRunId !== "null") {
+  function loadInputJson(pip,hash) {
       var inputJson = "/output/" + pip + "/" + hash + "/input.json";
       fetch(inputJson)
       .then((response) => {
@@ -179,8 +170,8 @@ export function PipelinePage() {
           }
           if (response.status === 404) {
             // This is a new run
-            //loadPipelineMetadata(pip);
-            //setResultsData(null);
+            loadPipelineMetadata(pip);
+            setResultsData(null);
             loadPipelineOutputs();
             return false;
           }
@@ -192,7 +183,35 @@ export function PipelinePage() {
           loadPipelineOutputs();
         }
       });
+  }
+
+  useEffect(() => {
+    setStoppable(runningScripts.size > 0);
+  }, [runningScripts]);
+
+
+  useEffect(() => {
+    if(Object.keys(inputFileContent).length ===0){
+      setInputFileContent(inputExamples);
+    }
+  }, [inputExamples, inputFileContent]);
+
+  useEffect(() => {
+    // set by the route
+    if (pipelineRunId && pipelineRunId !== "null") {
+      const runIdParts = pipelineRunId.split(">");
+      var hash = runIdParts.at(-1);
+      var pip = runIdParts.at(-2);
+      setPipStates({
+        type: 'url',
+        newPipeline: pip,
+        newHash: hash
+      })
+      loadInputJson(pip, hash);
     } else {
+      setPipStates({
+        type: 'reset'
+      })
       loadPipelineOutputs();
       loadPipelineMetadata(pipStates.pipeline);
     }
@@ -206,22 +225,6 @@ export function PipelinePage() {
       }
     });
   };
-
-/*  // Called when ID changes
-  useEffect(() => {
-    if (runId) {
-      if (runId !== location.pathname.split("/").slice(-1)) {
-        navigate("/pipeline-form/" + runId);
-      }
-    }
-    return function cleanup() {
-      if (timeout) clearTimeout(timeout);
-    };
-
-    // Called only when ID changes. Including all deps would result in infinite loop.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [runId]);
-*/
 
   return (
     <>
@@ -240,6 +243,7 @@ export function PipelinePage() {
           loadPipelineOutputs={loadPipelineOutputs}
           setSelectedPipeline={setSelectedPipeline}
           selectedPipeline={selectedPipeline}
+          setResultsData={setResultsData}
           pipStates={pipStates}
           setPipStates={setPipStates}
           showHttpError={showHttpError}

@@ -14,6 +14,7 @@ export function PipelineForm({
   setPipStates,
   loadPipelineMetadata,
   loadPipelineOutputs,
+  setResultsData,
   showHttpError,
   inputFileContent,
   setInputFileContent,
@@ -36,11 +37,11 @@ export function PipelineForm({
   };
 
   const handlePipelineChange = (value) => {
+    value = value.replace('.json','')
     clearPreviousRequest();
     setPipStates({
       type: 'select',
       newPipeline: value,
-      newHash: null
     })
     loadPipelineOutputs();
     loadPipelineMetadata(value);
@@ -54,8 +55,9 @@ export function PipelineForm({
         data = {};
         showHttpError(error, response);
       } else if (data) {
-        //setRunId(data);
-        navigate("/pipeline-form/"+data)
+        navigate("/pipeline-form/"+data);
+        setResultsData(null)
+        loadPipelineOutputs();
       } else {
         showHttpError("Server returned empty result");
       }
@@ -66,7 +68,7 @@ export function PipelineForm({
       body: JSON.stringify(inputFileContent),
     };
     api.runPipeline(
-      formRef.current.elements["pipelineChoice"].value,
+      pipStates.pipeline+'.json',
       opts,
       callback
     );
@@ -84,15 +86,11 @@ export function PipelineForm({
           newOptions.push({ label: script, value: script })
         );
         setPipelineOptions(newOptions);
-        if (!runId) {
-          //metadata will be loaded elsewhere when there is a route
-          loadPipelineMetadata(pipStates.pipeline, true);
-        }
       }
     });
     // Empty dependency array to get script list only once
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pipStates]);
+  }, []);
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
@@ -102,7 +100,7 @@ export function PipelineForm({
         name="pipelineChoice"
         className="blackText"
         options={pipelineOptions}
-        value={{ label: pipStates.pipeline, value: pipStates.pipeline }}
+        value={{ label: pipStates.pipeline+'.json', value: pipStates.pipeline+'.json' }}
         onChange={(v) => handlePipelineChange(v.value)}
       />
       <br />
