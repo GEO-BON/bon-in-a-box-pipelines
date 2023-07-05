@@ -30,7 +30,7 @@ class ScriptRun( // Constructor used in single script run
     // Constructor used in pipelines & tests
     constructor(
         scriptFile: File,
-        inputMap: SortedMap<String, Any>,
+        inputMap: SortedMap<String, Any?>,
         context: RunContext = RunContext(scriptFile, inputMap.toString()),
         timeout: Duration = DEFAULT_TIMEOUT
     ) : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), context, timeout)
@@ -51,6 +51,7 @@ class ScriptRun( // Constructor used in single script run
         val DEFAULT_TIMEOUT = 1.hours
 
         private val gson = GsonBuilder()
+            .serializeNulls()
             .setObjectToNumberStrategy { reader ->
                 val value: String = reader.nextString()
                 try {

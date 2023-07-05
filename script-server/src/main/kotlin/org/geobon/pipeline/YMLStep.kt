@@ -61,7 +61,7 @@ abstract class YMLStep(
         return errorMessages
     }
 
-    override fun onInputsReceived(resolvedInputs:Map<String, Any>) {
+    override fun onInputsReceived(resolvedInputs: Map<String, Any?>) {
         // Now that we know the inputs are valid, record the id
         context = RunContext(yamlFile, resolvedInputs.toString())
 

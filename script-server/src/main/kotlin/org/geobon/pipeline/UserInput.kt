@@ -11,7 +11,7 @@ class UserInput(stepId: StepId, type: String) : Step(stepId,
         return if(inputs.containsKey(DEFAULT_IN)) "" else "User input missing for pipeline@$id"
     }
 
-    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
+    override suspend fun execute(resolvedInputs: Map<String, Any?>): Map<String, Any?> {
         return mapOf(DEFAULT_OUT to inputs[DEFAULT_IN]!!.pull())
     }
 }

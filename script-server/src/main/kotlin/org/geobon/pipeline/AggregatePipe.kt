@@ -30,7 +30,7 @@ class AggregatePipe(pipesToAggregate: List<Pipe>) : Pipe {
     }
 
     override suspend fun pull(): Any {
-        val resultList = mutableListOf<Any>()
+        val resultList = mutableListOf<Any?>()
         coroutineScope {
             pipes.forEach { pipe ->
                 // This can happen in parallel coroutines
