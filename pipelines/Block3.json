@@ -472,7 +472,7 @@
         "dragHandle": ".dragHandle",
         "data": {
           "type": "float",
-          "value": 0.8
+          "value": 0.01
         }
       },
       {

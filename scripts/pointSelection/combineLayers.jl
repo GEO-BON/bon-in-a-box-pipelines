@@ -64,7 +64,7 @@ end
 
 function write_outputs(priority_map, output_dir)
     priority_path = joinpath(output_dir, "priority_map.tiff")
-    SpeciesDistributionToolkit.save(priority_path, priority_map)
+    SpeciesDistributionToolkit.save(priority_path, priority_map, driver="COG")
     outputDict = Dict("priority_map" => priority_path)
     output_path = joinpath(output_dir, "output.json")
     touch(output_path)
