@@ -53,12 +53,12 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
     default:
       if (value && value.includes("\n")) {
         return <AutoResizeTextArea {...passedProps} defaultValue={value}
-          placeholder={CONSTANT_PLACEHOLDER}
-          onBlur={e => onValueUpdated(e.target.value)} />
+          placeholder='null'
+          onBlur={e => onValueUpdated(e.target.value == "" ? null : e.target.value)} />
       } else {
         return <input type='text' {...passedProps} defaultValue={value}
-          placeholder={CONSTANT_PLACEHOLDER}
-          onBlur={e => onValueUpdated(e.target.value)} />
+          placeholder='null'
+          onBlur={e => onValueUpdated(e.target.value == "" ? null : e.target.value)} />
       }
   }
 }
