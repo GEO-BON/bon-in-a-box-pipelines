@@ -1,13 +1,14 @@
 script: assertNull.py
 inputs:
   input:
-    label: Some input, we use text as an example but could be other type.
+    label: Text input
+    description: Some input, we use text as an example but could be other type.
     type: text
     example: null
 outputs:
   the_same:
     label: Same value
     description: The same value as in the inputs. But this crashes if not null!
-    type: string
+    type: text
     example: null
 description: "Test python script that fails if it doesn't receive a null string."
