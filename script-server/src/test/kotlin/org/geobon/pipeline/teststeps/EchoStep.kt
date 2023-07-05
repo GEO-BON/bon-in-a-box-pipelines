@@ -29,7 +29,7 @@ class EchoStep(inputs: MutableMap<String, Pipe> = mutableMapOf()) :
 
     var executeCount = 0
 
-    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
+    override suspend fun execute(resolvedInputs: Map<String, Any?>): Map<String, Any?> {
         executeCount++
         return mapOf(ECHO to resolvedInputs[SOUND]!!)
     }
