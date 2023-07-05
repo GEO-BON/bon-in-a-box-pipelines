@@ -4,8 +4,8 @@
       "id": "2",
       "type": "constant",
       "position": {
-        "x": 680,
-        "y": 400
+        "x": 660,
+        "y": 690.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -22,8 +22,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 596,
-        "y": 576.75
+        "x": 608,
+        "y": 773.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -35,8 +35,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 81,
-        "y": 917.75
+        "x": 93,
+        "y": 1307.4
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -48,8 +48,8 @@
       "id": "5",
       "type": "constant",
       "position": {
-        "x": 679,
-        "y": 468
+        "x": 659,
+        "y": 847.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,8 +68,8 @@
       "id": "6",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 613.75
+        "x": 599,
+        "y": 1426.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -81,8 +81,8 @@
       "id": "7",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 650.75
+        "x": 599,
+        "y": 894.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -94,8 +94,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 659,
-        "y": 689.5
+        "x": 639,
+        "y": 1005.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -112,8 +112,8 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 487,
-        "y": 798.5
+        "x": 470,
+        "y": 1193.9
       },
       "data": {
         "descriptionFile": "SDM>extentToBbox.yml"
@@ -123,8 +123,8 @@
       "id": "14",
       "type": "io",
       "position": {
-        "x": 1062,
-        "y": 22.75
+        "x": 1492,
+        "y": 213.5
       },
       "data": {
         "descriptionFile": "climateMetrics>climateVelocity.yml"
@@ -134,8 +134,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 665,
-        "y": 0
+        "x": 645,
+        "y": 302.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -152,8 +152,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 580,
-        "y": 725.5
+        "x": 594,
+        "y": 1076.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -165,8 +165,8 @@
       "id": "17",
       "type": "output",
       "position": {
-        "x": 1855,
-        "y": 75.25
+        "x": 2063,
+        "y": 184
       },
       "data": {
         "label": "Output"
@@ -176,8 +176,8 @@
       "id": "18",
       "type": "io",
       "position": {
-        "x": 1062,
-        "y": 222.75
+        "x": 1492,
+        "y": 41.5
       },
       "data": {
         "descriptionFile": "climateMetrics>climateVelocity.yml"
@@ -187,8 +187,8 @@
       "id": "19",
       "type": "constant",
       "position": {
-        "x": 665,
-        "y": 200
+        "x": 645,
+        "y": 28.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -205,8 +205,8 @@
       "id": "21",
       "type": "output",
       "position": {
-        "x": 1855,
-        "y": 275.25
+        "x": 2063,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -216,8 +216,8 @@
       "id": "24",
       "type": "io",
       "position": {
-        "x": 1143,
-        "y": 435
+        "x": 1587,
+        "y": 973.5
       },
       "data": {
         "descriptionFile": "climateMetrics>climateRarity.yml"
@@ -227,8 +227,8 @@
       "id": "25",
       "type": "constant",
       "position": {
-        "x": 596,
-        "y": 504
+        "x": 608,
+        "y": 1474.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -240,8 +240,8 @@
       "id": "26",
       "type": "output",
       "position": {
-        "x": 1855,
-        "y": 487.5
+        "x": 2063,
+        "y": 878
       },
       "data": {
         "label": "Output"
@@ -251,8 +251,8 @@
       "id": "36",
       "type": "io",
       "position": {
-        "x": 1649,
-        "y": 903
+        "x": 2063,
+        "y": 375.5
       },
       "data": {
         "descriptionFile": "binaryLayer>binaryLayer.yml"
@@ -262,8 +262,8 @@
       "id": "38",
       "type": "constant",
       "position": {
-        "x": 1242,
-        "y": 754.75
+        "x": 1670,
+        "y": 385.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -278,8 +278,8 @@
       "id": "39",
       "type": "constant",
       "position": {
-        "x": 1238,
-        "y": 791.75
+        "x": 1701,
+        "y": 429.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -291,8 +291,8 @@
       "id": "40",
       "type": "output",
       "position": {
-        "x": 2155,
-        "y": 918.5
+        "x": 2449,
+        "y": 440
       },
       "data": {
         "label": "Output"
@@ -302,8 +302,8 @@
       "id": "41",
       "type": "io",
       "position": {
-        "x": 1125,
-        "y": 1300.25
+        "x": 1549,
+        "y": 1397.9
       },
       "data": {
         "descriptionFile": "accessibility>accessibility.yml"
@@ -313,8 +313,8 @@
       "id": "42",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1036.5
+        "x": 599,
+        "y": 1379.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -326,8 +326,8 @@
       "id": "43",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1242.5
+        "x": 599,
+        "y": 1521.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -339,8 +339,8 @@
       "id": "44",
       "type": "constant",
       "position": {
-        "x": 596,
-        "y": 1282.5
+        "x": 608,
+        "y": 1568.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -352,8 +352,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1339.5
+        "x": 599,
+        "y": 1616.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -365,8 +365,8 @@
       "id": "46",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1376.5
+        "x": 599,
+        "y": 1653.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -378,8 +378,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1450.5
+        "x": 599,
+        "y": 1727.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -391,8 +391,8 @@
       "id": "48",
       "type": "output",
       "position": {
-        "x": 1855,
-        "y": 1048.75
+        "x": 2063,
+        "y": 1368.4
       },
       "data": {
         "label": "Output"
@@ -402,8 +402,8 @@
       "id": "49",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1413.5
+        "x": 599,
+        "y": 1690.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -415,8 +415,8 @@
       "id": "50",
       "type": "io",
       "position": {
-        "x": 991,
-        "y": 880.75
+        "x": 1406,
+        "y": 466.5
       },
       "data": {
         "descriptionFile": "data>loadLandCover.yml"
@@ -426,8 +426,8 @@
       "id": "52",
       "type": "constant",
       "position": {
-        "x": 704,
-        "y": 762.5
+        "x": 684,
+        "y": 453.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -443,8 +443,8 @@
       "id": "53",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 962.5
+        "x": 599,
+        "y": 726.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -456,8 +456,8 @@
       "id": "54",
       "type": "constant",
       "position": {
-        "x": 596,
-        "y": 999.5
+        "x": 608,
+        "y": 810.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -469,8 +469,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 721,
-        "y": 1167.5
+        "x": 701,
+        "y": 1041.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -482,8 +482,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 584,
-        "y": 1202.5
+        "x": 563,
+        "y": 1113.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -499,8 +499,8 @@
       "id": "57",
       "type": "output",
       "position": {
-        "x": 1855,
-        "y": 1124.75
+        "x": 2063,
+        "y": 657
       },
       "data": {
         "label": "Output"
@@ -510,8 +510,8 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1093.5
+        "x": 599,
+        "y": 931.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -523,8 +523,8 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 585,
-        "y": 1130.5
+        "x": 599,
+        "y": 968.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -536,8 +536,8 @@
       "id": "60",
       "type": "constant",
       "position": {
-        "x": 121,
-        "y": 354.25
+        "x": 99,
+        "y": 1180.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -554,8 +554,8 @@
       "id": "61",
       "type": "constant",
       "position": {
-        "x": 0,
-        "y": 662
+        "x": 12,
+        "y": 1270.4
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -567,8 +567,8 @@
       "id": "69",
       "type": "io",
       "position": {
-        "x": 1062,
-        "y": 1560.25
+        "x": 1492,
+        "y": 686.5
       },
       "data": {
         "descriptionFile": "climateMetrics>climateVelocity.yml"
@@ -578,8 +578,8 @@
       "id": "70",
       "type": "output",
       "position": {
-        "x": 1855,
-        "y": 1612.75
+        "x": 2063,
+        "y": 829
       },
       "data": {
         "label": "Output"
@@ -589,8 +589,8 @@
       "id": "71",
       "type": "constant",
       "position": {
-        "x": 665,
-        "y": 1487.5
+        "x": 645,
+        "y": 1157.9
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -607,13 +607,26 @@
       "id": "72",
       "type": "constant",
       "position": {
-        "x": 587.4041901361404,
-        "y": 235.1453248249827
+        "x": 599,
+        "y": 265.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "1990-01-01"
+      }
+    },
+    {
+      "id": "73",
+      "type": "constant",
+      "position": {
+        "x": 1808,
+        "y": 641.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean",
+        "value": false
       }
     }
   ],
@@ -1135,6 +1148,13 @@
       "target": "14",
       "targetHandle": "t0",
       "id": "reactflow__edge-72-14t0"
+    },
+    {
+      "source": "73",
+      "sourceHandle": null,
+      "target": "36",
+      "targetHandle": "single_mask",
+      "id": "reactflow__edge-73-36single_mask"
     }
   ],
   "inputs": {
@@ -1205,9 +1225,9 @@
       "example": "climate_current_rarity.tif"
     },
     "binaryLayer>binaryLayer.yml@36|output_binary": {
-      "description": "land cover raster classes, where 1 in above threshold and 0 below threshold.",
+      "description": "land cover raster classes, where 1 is above threshold and 0 below threshold.",
       "label": "binary layer output",
-      "type": "image/tiff;application=geotiff[]",
+      "type": "image/tiff;application=geotiff",
       "example": "y2000_class210_binary.tif"
     },
     "accessibility>accessibility.yml@41|output_tif": {

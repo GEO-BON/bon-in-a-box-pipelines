@@ -1,4 +1,15 @@
-FROM julia:1.8.1
+FROM julia:1.9.0
 
 # Pre-compiling Julia dependencies
-RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["BiodiversityObservationNetworks", "JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots"]); Pkg.instantiate();'
+RUN julia -e 'pwd(); using Pkg; Pkg.add.([ \
+        "BiodiversityObservationNetworks", \
+        "JSON", \
+        "SpeciesDistributionToolkit", \
+        "NeutralLandscapes", \
+        "Plots", \
+        "CSV", \
+        "GeoArrays", \
+        "DataFrames", \
+        "Downloads" \
+    ]); Pkg.instantiate();'
+

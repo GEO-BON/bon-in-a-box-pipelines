@@ -21,21 +21,25 @@ library("gdalcubes")
 library("stringr")
 
 
-
+print(outputFolder)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
+if(input$collections_items == ""){
+  collections_items = NULL
+  print("No collection items")
+} else {
+  collections_items = input$collections_items
+}
 
 # Case 1: we create an extent from a set of observations
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
+                      xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj))
 
-print(length(input$collections_items))
-
-if (length(input$collections_items)==0) {
+if (length(collections_items)==0) {
   if (length(input$weight_matrix_with_ids) == 0) {
-    stop('Please specify collections_items')
+    stop('Please specify collections_items or weights matrix')
   } else {
     weight_matrix<-input$weight_matrix_with_ids
     stac_collections_items <- unlist(lapply((str_split(weight_matrix,'\n',simplify=T) |> str_split(','))[-1],function(l){l[1]}))
@@ -44,32 +48,39 @@ if (length(input$collections_items)==0) {
   }
 } else {
   weight_matrix=NULL
-  collections_items <- input$collections_items
 }
-cube_args = list(stac_path = input$stac_url,
-limit = 5000,
-t0 = NULL,
-t1 = NULL,
-spatial.res = input$spatial_res, # in meters
-temporal.res = "P1D",
-aggregation = "mean",
-resampling = "near")
 
-subset_layers = input$layers
-proj = input$proj
-as_list = F
+# check if there were no stac layers in the weights matrix, if there weren't write out matrix as is
+if (length(collections_items)==0){
+  output <- list("rasters" = "","weight_matrix_with_layers" = weight_matrix)
+  jsonData <- toJSON(output, indent=2)
+  write(jsonData, file.path(outputFolder,"output.json"))
+} else{
 
-mask=input$mask
-if(mask==''){
-  mask=NULL
-}
-predictors=list()
-nc_names=c()
-for (coll_it in collections_items){
+  cube_args = list(stac_path = input$stac_url,
+                   limit = 5000,
+                   t0 = NULL,
+                   t1 = NULL,
+                   spatial.res = input$spatial_res, # in meters
+                   temporal.res = "P1D",
+                   aggregation = "mean",
+                   resampling = "near")
+
+  subset_layers = input$layers
+  proj = input$proj
+  as_list = F
+
+  mask=input$mask
+  if(mask==''){
+    mask=NULL
+  }
+  predictors=list()
+  nc_names=c()
+  for (coll_it in collections_items){
     ci<-strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
 
     cube_args_c <- append(cube_args, list(collections=ci[1],
-                                          srs.cube = proj, 
+                                          srs.cube = proj,
                                           bbox = bbox,
                                           layers=NULL,
                                           variable = NULL,
@@ -77,36 +88,38 @@ for (coll_it in collections_items){
     print(cube_args_c)
     pred <- do.call(stacatalogue::load_cube, cube_args_c)
 
-     if(!is.null(mask)) {
-        pred <- gdalcubes::filter_geom(pred, sf::st_geometry(mask))
-      }
-      nc_names <- cbind(nc_names,names(pred))
-      if(names(pred)=='data'){
-        pred <- rename_bands(pred, data=ci[2])
-      }
-     print(pred)
+    if(!is.null(mask)) {
+      pred <- gdalcubes::filter_geom(pred, sf::st_geometry(mask))
+    }
+    nc_names <- cbind(nc_names,names(pred))
+    if(names(pred)=='data'){
+      pred <- rename_bands(pred, data=ci[2])
+    }
+    print(pred)
 
-     predictors[[ci[2]]]=pred
-}
-  print(names(predictors))
-
-output_predictors <- file.path(outputFolder)
-
-layer_paths<-c()
-for (i in 1:length(predictors)) {
-  ff <- tempfile(pattern = paste0(names(predictors[i][[1]]),'_'))
-  out<-gdalcubes::write_tif(predictors[i][[1]], dir = output_predictors, prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=TRUE)
-  fp <- paste0(out[1])
-  layer_paths <- cbind(layer_paths,fp)
-  if(!is.null(weight_matrix)) {
-    weight_matrix <- sub(stac_collections_items[i],fp[1], weight_matrix, fixed=TRUE)
+    predictors[[ci[2]]]=pred
   }
+
+  output_predictors <- file.path(outputFolder)
+
+  layer_paths<-c()
+  for (i in 1:length(predictors)) {
+    ff <- tempfile(pattern = paste0(names(predictors[i][[1]]),'_'))
+    out<-gdalcubes::write_tif(predictors[i][[1]], dir = output_predictors, prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=TRUE)
+    fp <- paste0(out[1])
+    layer_paths <- cbind(layer_paths,fp)
+    if(!is.null(weight_matrix)) {
+      weight_matrix <- sub(stac_collections_items[i],fp[1], weight_matrix, fixed=TRUE)
+    }
+  }
+
+  if(is.null(weight_matrix)) { #Temporary fix
+    weight_matrix=''
+  }
+
+  print(weight_matrix)
+
+  output <- list("rasters" = layer_paths,"weight_matrix_with_layers" = weight_matrix)
+  jsonData <- toJSON(output, indent=2)
+  write(jsonData, file.path(outputFolder,"output.json"))
 }
-
- if(is.null(weight_matrix)) { #Temporary fix
-  weight_matrix=''
- }
-
-output <- list("rasters" = layer_paths,"weight_matrix_with_layers" = weight_matrix)
-jsonData <- toJSON(output, indent=2)
-write(jsonData, file.path(outputFolder,"output.json"))

@@ -1,0 +1,25 @@
+script: combineLayers.jl
+description: Combines the layers and associate weights to create a priority map balanced across targets.
+
+inputs:
+    layerdata:
+        label: Layer matrix
+        description: Array with layer url in the first column, and weights for each layer and target in subsequent columns. One row for each layer.
+        type: text[]
+        example: ["layer, current, change\nfirstId, 0.2, 0.5\nhttps://object-arbutus.cloud.computecanada.ca/bq-io/io/qc_pilot_env/backward_velocity.tif, 0.5, 0.2\nthirdId, 0.3, 0.3\n"]
+    targetbalance:
+        label: Balance between targets
+        description: List of weights for each target, should sum to 1
+        type: float[]
+        example: [0.3, 0.7]
+    mask:
+        label: Mask of regions to include.
+        description: Should be a path to a binary mask.
+        type: image/tiff;application=geotiff
+        example: "./foo/bar/priority_map.tiff"
+outputs:
+    priority_map:
+        label: Priority map
+        description: Priority map created based on layers and weights
+        type: image/tiff;application=geotiff
+       

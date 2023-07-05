@@ -50,7 +50,7 @@ if (input$stac_source == "IO") {
                                 spatial.res = input$spatial_res, # in meters
                                 prop = input$prop,
                                 prop.res = input$prop_res,
-                                select_values = input$select_values,
+                                select_values = as.numeric(input$select_values),
                                 temporal.res =  temporal_res)
   } else if (input$stac_source == "PC") {
   lc_raster <- stacatalogue::load_prop_values_pc(stac_path =  "https://planetarycomputer.microsoft.com/api/stac/v1/",
@@ -63,7 +63,7 @@ if (input$stac_source == "IO") {
                                 spatial.res = input$spatial_res, # in meters
                                 prop = input$prop,
                                 prop.res = input$prop_res,
-                                select_values = input$select_values,
+                                select_values = as.numeric(input$select_values),
                                 temporal.res =  temporal_res)
 }
 
