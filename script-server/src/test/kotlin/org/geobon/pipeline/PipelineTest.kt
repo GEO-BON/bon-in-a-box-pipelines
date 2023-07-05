@@ -164,6 +164,22 @@ internal class PipelineTest {
     }
 
     @Test
+    fun `given a pipeline with null param_when ran_then a null value is received`() = runTest {
+        val pipeline = RootPipeline("assertNull.json", """{"assertNull.yml@0|input":null}""")
+        pipeline.pullFinalOutputs()
+        println(pipeline.outputs)
+        assertNull(pipeline.outputs["assertNull.yml@1|the_same"]!!.value)
+    }
+
+    @Test
+    fun `given a pipeline with null constant_when ran_then a null value is received`() = runTest {
+        val pipeline = RootPipeline("assertNull_fromConstant.json", "{}")
+        pipeline.pullFinalOutputs()
+        println(pipeline.outputs)
+        assertNull(pipeline.outputs["assertNull.yml@1|the_same"]!!.value)
+    }
+
+    @Test
     fun `given a pipeline passing int_when ran_then an int value is received`() = runTest {
         val pipeline = RootPipeline("assertInt.json")
         pipeline.pullFinalOutputs()
