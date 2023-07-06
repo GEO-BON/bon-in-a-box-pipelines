@@ -60,9 +60,6 @@ proj = input$proj
 as_list = F
 
 mask=input$mask
-if(mask==''){
-  mask=NULL
-}
 predictors=list()
 nc_names=c()
 for (coll_it in collections_items){

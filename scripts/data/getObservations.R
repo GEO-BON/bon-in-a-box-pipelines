@@ -30,17 +30,16 @@ bbox_wgs84 <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
             xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) %>% sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% 
         sf::st_bbox()
 
-
-if (input$country == "..." | length(input$country) < 2) {
+country <- input$country
+if (!is.null(country) && nchar(country) < 2) {
+  print("Invalid country")
   country <- NULL
-} else {
-  country <- input$country
 }
 
-if (input$bbox_buffer == "...") {
+bbox_buffer <- input$bbox_buffer
+if (is.null(bbox_buffer)) {
   bbox_buffer <- 0
-} else {
-  bbox_buffer <- input$bbox_buffer }
+}
 
 occurrence_status <- str_split(input$occurrence_status, " ")[[1]]
 
