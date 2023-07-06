@@ -24,68 +24,66 @@ import {
 } from "../utils/IOId";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
 
-
-const defaultPipeline = 'helloWorld';
-
+const defaultPipeline = "helloWorld";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
-
 function pipReducer(state, action) {
   switch (action.type) {
-    case 'run': {
+    case "run": {
       return {
-        lastAction: 'run',
+        lastAction: "run",
         runHash: action.newHash,
         pipeline: state.pipeline,
-        runId: state.pipeline+'>'+action.newHash
+        runId: state.pipeline + ">" + action.newHash,
       };
-    };
-    case 'select': {
+    }
+    case "select": {
       return {
-        lastAction: 'select',
+        lastAction: "select",
         runHash: null,
         pipeline: action.newPipeline,
-        runId: null
+        runId: null,
       };
     }
-    case 'url': {
+    case "url": {
       return {
-        lastAction: 'url',
+        lastAction: "url",
         runHash: action.newHash,
         pipeline: action.newPipeline,
-        runId: action.newPipeline+'>'+action.newHash
+        runId: action.newPipeline + ">" + action.newHash,
       };
     }
-    case 'reset': {
+    case "reset": {
       return {
-        lastAction: 'reset',
+        lastAction: "reset",
         runHash: null,
         pipeline: defaultPipeline,
         runId: null,
       };
     }
   }
-  throw Error('Unknown action: ' + action.type);
+  throw Error("Unknown action: " + action.type);
 }
 
 function pipInitialState(pipelineRunId) {
   let runHash = null;
   let pipeline = defaultPipeline;
-  if(pipelineRunId){
-    const parts = pipelineRunId.split('>')
+  let action = "reset";
+  if (pipelineRunId) {
+    const parts = pipelineRunId.split(">");
     runHash = parts.at(-1);
     pipeline = parts.at(-2);
+    action = "url";
   }
   return {
-    lastAction: 'reset',
+    lastAction: action,
     runHash: runHash,
     pipeline: pipeline,
-    runId: pipeline+'>'+runHash
+    runId: pipeline + ">" + runHash,
   };
 }
-
 
 export function PipelinePage() {
   const [stoppable, setStoppable] = useState(null);
@@ -138,49 +136,58 @@ export function PipelinePage() {
     }
   }
 
-  function loadPipelineMetadata(choice) {
-    choice = choice + '.json';
+  function loadPipelineMetadata(choice, setExamples = true) {
+    choice = choice + ".json";
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
       } else if (data) {
         setPipelineMetadata(data);
-        let inputExamples = {};
-        if (data && data.inputs) {
-          Object.keys(data.inputs).forEach((inputId) => {
-            let input = data.inputs[inputId];
-            if (input) {
-              const example = input.example;
-              inputExamples[inputId] = example === undefined ? null : example;
-            }
-          });
+        if (setExamples) {
+          let inputExamples = {};
+          if (data && data.inputs) {
+            Object.keys(data.inputs).forEach((inputId) => {
+              let input = data.inputs[inputId];
+              if (input) {
+                const example = input.example;
+                inputExamples[inputId] = example === undefined ? null : example;
+              }
+            });
+          }
+          setInputFileContent(inputExamples);
         }
-        setInputExamples(inputExamples);
       }
     };
     api.getPipelineInfo(choice, callback);
   }
 
-  function loadInputJson(pip,hash) {
-      var inputJson = "/output/" + pip + "/" + hash + "/input.json";
-      fetch(inputJson)
+  function loadInputJson(pip, hash) {
+    var inputJson = "/output/" + pip + "/" + hash + "/input.json";
+    fetch(inputJson)
       .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-          if (response.status === 404) {
-            // This is a new run
-            loadPipelineMetadata(pip);
-            setResultsData(null);
-            loadPipelineOutputs();
-            return false;
-          }
+        if (response.ok) {
+          return response.json();
+        }
+        if (response.status === 404) {
+          // This is a new run
+          setPipStates({
+            type: "run",
+            newPipeline: pip,
+            newHash: hash,
+          });
+          return false;
+        }
       })
       .then((json) => {
-        if(json){ // This has been run before
-          loadPipelineMetadata(pip);
+        if (json) {
+          // This has been run before
+          setPipStates({
+            type: "url",
+            newPipeline: pip,
+            newHash: hash,
+          });
+          loadPipelineMetadata(pip, false);
           setInputFileContent(json);
-          loadPipelineOutputs();
         }
       });
   }
@@ -189,12 +196,15 @@ export function PipelinePage() {
     setStoppable(runningScripts.size > 0);
   }, [runningScripts]);
 
-
   useEffect(() => {
-    if(Object.keys(inputFileContent).length ===0){
-      setInputFileContent(inputExamples);
+    loadPipelineOutputs();
+    if (["reset", "select"].includes(pipStates.lastAction)) {
+      loadPipelineMetadata(pipStates.pipeline, true);
     }
-  }, [inputExamples, inputFileContent]);
+    if (["run"].includes(pipStates.lastAction)) {
+      loadPipelineMetadata(pipStates.pipeline, false);
+    }
+  }, [pipStates]);
 
   useEffect(() => {
     // set by the route
@@ -202,18 +212,7 @@ export function PipelinePage() {
       const runIdParts = pipelineRunId.split(">");
       var hash = runIdParts.at(-1);
       var pip = runIdParts.at(-2);
-      setPipStates({
-        type: 'url',
-        newPipeline: pip,
-        newHash: hash
-      })
       loadInputJson(pip, hash);
-    } else {
-      setPipStates({
-        type: 'reset'
-      })
-      loadPipelineOutputs();
-      loadPipelineMetadata(pipStates.pipeline);
     }
   }, [pipelineRunId]);
 
@@ -236,14 +235,11 @@ export function PipelinePage() {
       >
         <PipelineForm
           pipelineMetadata={pipelineMetadata}
-          setPipelineMetadata={setPipelineMetadata}
           setInputFileContent={setInputFileContent}
           inputFileContent={inputFileContent}
-          loadPipelineMetadata={loadPipelineMetadata}
-          loadPipelineOutputs={loadPipelineOutputs}
           setSelectedPipeline={setSelectedPipeline}
           selectedPipeline={selectedPipeline}
-          setResultsData={setResultsData}
+          setInputExamples={setInputExamples}
           pipStates={pipStates}
           setPipStates={setPipStates}
           showHttpError={showHttpError}
