@@ -8,13 +8,9 @@ export const api = new BonInABoxScriptService.DefaultApi();
 
 export function PipelineForm({
   pipelineMetadata,
-  setPipelineMetadata,
-  runId,
   pipStates,
   setPipStates,
-  loadPipelineMetadata,
-  loadPipelineOutputs,
-  setResultsData,
+  setInputExamples,
   showHttpError,
   inputFileContent,
   setInputFileContent,
@@ -25,9 +21,10 @@ export function PipelineForm({
 
   function clearPreviousRequest() {
     setPipStates({
-      type: 'reset',
-    })
+      type: "reset",
+    });
     showHttpError(null);
+    setInputExamples({});
     setInputFileContent({});
   }
 
@@ -37,14 +34,11 @@ export function PipelineForm({
   };
 
   const handlePipelineChange = (value) => {
-    value = value.replace('.json','')
     clearPreviousRequest();
     setPipStates({
-      type: 'select',
+      type: "select",
       newPipeline: value,
-    })
-    loadPipelineOutputs();
-    loadPipelineMetadata(value);
+    });
     navigate("/pipeline-form");
   };
 
@@ -55,9 +49,7 @@ export function PipelineForm({
         data = {};
         showHttpError(error, response);
       } else if (data) {
-        navigate("/pipeline-form/"+data);
-        setResultsData(null)
-        loadPipelineOutputs();
+        navigate("/pipeline-form/" + data);
       } else {
         showHttpError("Server returned empty result");
       }
@@ -67,11 +59,7 @@ export function PipelineForm({
     let opts = {
       body: JSON.stringify(inputFileContent),
     };
-    api.runPipeline(
-      pipStates.pipeline+'.json',
-      opts,
-      callback
-    );
+    api.runPipeline(pipStates.pipeline + ".json", opts, callback);
   };
 
   // Applied only once when first loaded
@@ -82,9 +70,10 @@ export function PipelineForm({
         console.error(error);
       } else {
         let newOptions = [];
-        data.forEach((script) =>
-          newOptions.push({ label: script, value: script })
-        );
+        data.forEach((script) => {
+          script = script.replace(".json", "");
+          newOptions.push({ label: script, value: script });
+        });
         setPipelineOptions(newOptions);
       }
     });
@@ -100,7 +89,10 @@ export function PipelineForm({
         name="pipelineChoice"
         className="blackText"
         options={pipelineOptions}
-        value={{ label: pipStates.pipeline+'.json', value: pipStates.pipeline+'.json' }}
+        value={{
+          label: pipStates.pipeline,
+          value: pipStates.pipeline,
+        }}
         onChange={(v) => handlePipelineChange(v.value)}
       />
       <br />
