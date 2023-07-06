@@ -226,7 +226,7 @@ export function PipelinePage() {
       <h2>Pipeline run</h2>
       <FoldableOutput
         title="Input form"
-        isActive={!pipStates.runId}
+        isActive={!pipStates.runHash}
         keepWhenHidden={true}
       >
         <PipelineForm
