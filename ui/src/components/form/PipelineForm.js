@@ -10,7 +10,6 @@ export function PipelineForm({
   pipelineMetadata,
   pipStates,
   setPipStates,
-  setInputExamples,
   showHttpError,
   inputFileContent,
   setInputFileContent,
@@ -24,7 +23,6 @@ export function PipelineForm({
       type: "reset",
     });
     showHttpError(null);
-    setInputExamples({});
     setInputFileContent({});
   }
 

@@ -93,14 +93,10 @@ export function PipelinePage() {
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
   const [selectedPipeline, setSelectedPipeline] = useState("helloWorld.json");
 
-  const navigate = useNavigate();
-  const location = useLocation();
-
   /**
    * String: Content of input.json for this run
    */
   const [inputFileContent, setInputFileContent] = useState({});
-  const [inputExamples, setInputExamples] = useState({});
 
   const { pipelineRunId } = useParams();
   const [pipStates, setPipStates] = useReducer(
@@ -239,7 +235,6 @@ export function PipelinePage() {
           inputFileContent={inputFileContent}
           setSelectedPipeline={setSelectedPipeline}
           selectedPipeline={selectedPipeline}
-          setInputExamples={setInputExamples}
           pipStates={pipStates}
           setPipStates={setPipStates}
           showHttpError={showHttpError}
