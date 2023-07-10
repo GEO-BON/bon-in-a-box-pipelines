@@ -1,6 +1,6 @@
 # Instalar librerias necesarias
 packagesPrev<- installed.packages()[,"Package"]
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply")
+packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson")
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    })
 
 # Cargar librerias
@@ -8,12 +8,15 @@ packagesList<-list("magrittr", "terra")
 lapply(packagesList, library, character.only = TRUE)
 
 # Definir output
-# outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
-Sys.setenv(outputFolder = "/path/to/output/folder")
+outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
+# Sys.setenv(outputFolder = "/path/to/output/folder")
+
+
+
 
 
 # Definir input
-input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Cargar input
+input <- rjson::fromJSON(file= file.path(outputFolder, "input.json")) # Cargar input
 
 input<- lapply(input, function(x) {  
   if (length(x)>0){
