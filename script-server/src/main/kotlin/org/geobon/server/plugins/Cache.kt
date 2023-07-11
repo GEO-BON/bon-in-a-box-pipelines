@@ -17,13 +17,15 @@ fun checkCacheVersion() {
     if (oldVersion == CACHE_VERSION) {
         logger.debug("Using cache version $CACHE_VERSION")
     } else {
-        logger.debug("Upgrading cache from version $oldVersion to $CACHE_VERSION")
         outputRoot.listFiles()?.let { topLevelFiles ->
-            val archivePath = File(outputRoot, "OLD_v$oldVersion")
-            archivePath.mkdir()
-            topLevelFiles.forEach {
-                if(it.name != ".gitignore") {
-                    it.toPath().moveTo(File(archivePath, it.name).toPath())
+            if(topLevelFiles.isNotEmpty()) {
+                val archivePath = File(outputRoot, "OLD_v$oldVersion")
+                logger.debug("Disruptive change: Switching to cache version $CACHE_VERSION. Existing cache of version $oldVersion will be kept in a separate folder.")
+                archivePath.mkdir()
+                topLevelFiles.forEach {
+                    if (it.name != ".gitignore") {
+                        it.toPath().moveTo(File(archivePath, it.name).toPath())
+                    }
                 }
             }
         }

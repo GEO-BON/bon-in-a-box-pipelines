@@ -2,7 +2,6 @@ package org.geobon.server.plugins
 
 import org.geobon.pipeline.outputRoot
 import java.io.File
-import kotlin.test.assertTrue
 import kotlin.test.*
 
 private const val DUMMY_TEXT = "Some content"
@@ -95,5 +94,16 @@ class CacheTest {
         checkCacheVersion()
 
         assertTrue(gitignore.exists())
+    }
+
+    @Test
+    fun givenCacheNotExisting_whenCheckCache_thenOnlyPutsVersionFile() {
+        outputRoot.listFiles()?.forEach { it.deleteRecursively() }
+        assertEquals(0, outputRoot.listFiles()?.size)
+
+        checkCacheVersion()
+
+        assertEquals(CACHE_VERSION, CACHE_VERSION_FILE.readText())
+        assertEquals(1, outputRoot.listFiles()?.size)
     }
 }
