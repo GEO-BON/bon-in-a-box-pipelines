@@ -193,12 +193,11 @@ export function PipelinePage() {
   }, [runningScripts]);
 
   useEffect(() => {
+    loadPipelineOutputs();
     if (["reset", "select"].includes(pipStates.lastAction)) {
-      loadPipelineOutputs();
       loadPipelineMetadata(pipStates.pipeline, true);
     }
     if (["run"].includes(pipStates.lastAction)) {
-      loadPipelineOutputs();
       loadPipelineMetadata(pipStates.pipeline, false);
     }
   }, [pipStates]);
