@@ -8,7 +8,7 @@ inputs:
     example: Canada
  bbox:
     label: bbox coordinates
-    description: coordinates of the bbox, in the order xmin, ymin, xmax, ymax.
+    description: geographic coordinates of the bbox, in the order xmin, ymin, xmax, ymax.
     type: float[]
     example: [-79.76281,  44.99137, -57.10549, 62.58277]
  crs: 
@@ -23,11 +23,14 @@ inputs:
     example: 1000
  habitat_type:
     label: habitat type
-    description:
-      type of habitat ["terrestrial", "marine", "partial"], by default is ["terrestrial"].
-      "partial" is a protected area or OECM is that partially within the marine environment and partially within the terrestrial (or freshwater) environment
+    description: type of habitat. 0 == "terrestrial" (The protected area is completely within the terrestrial and/or freshwater environments), 1 = 'partial' (The protected area is partially within the marine environment (coastal), 2 == "marine" (The protected area is completely within the marine environment). By default ALL included.
     type: text[]
-    example: ['terrestrial'] 
+    example: ["terrestrial", "partial", "marine"]
+ status:
+    label: protected area status
+    description: protected area status "Designated", "Proposed", "Established", "Inscribed", "Adopted", see https://wdpa.s3-eu-west-1.amazonaws.com/WDPA_Manual/English/WDPA_WDOECM_Manual_1_6.pdf for definitions. By default ALL status.
+    type: text[]
+    example: ["Designated", "Proposed", "Established", "Inscribed", "Adopted"]
 outputs:
   output_tif:
     label: protected areas
@@ -35,9 +38,11 @@ outputs:
     type: image/tiff;application=geotiff
     example: Protected_areas_prop.tif
 references:
-  - text: World database on protected areas (wdpa)
+  - text: UNEP-WCMC, IUCN (2023). Protected Planet, The World Database on Protected Areas (WDPA).
     doi: https://www.protectedplanet.net/en
   - text: wdpar R package, it is a interface to the World Database on Protected Areas (fetch and clean data from the wdpa)
     doi: https://cran.r-project.org/web/packages/wdpar/vignettes/wdpar.html
-  - text: perpr R package to augment data cleaning procedures. 
+  - text: Hanson JO (2022). “wdpar", Interface to the World Database on Protected Areas.” Journal of Open Source Software, 7, 4594.
+    doi: https://joss.theoj.org/papers/10.21105/joss.04594
+  - text: perpr R package to augment data cleaning procedures.
     doi: https://github.com/dickoa/prepr
