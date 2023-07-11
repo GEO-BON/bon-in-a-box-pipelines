@@ -150,22 +150,21 @@ internal class PullLayersByIdTest {
 
 
     @Test
-    fun whenPullingNoLayers_thenErrorThrown() = runTest {
+    fun whenPullingNoLayers_thenMatrixUnchanged() = runTest {
         withProductionPaths {
-            step.inputs[PullLayersById.IN_WITH_IDS] = ConstantPipe("text", """
+            val matrix = """
                layer, current, change
                invalidId, 0.5, 0.2
                invalidId, 0.5, 0.8
                """.trimIndent()
-            )
+            step.inputs[PullLayersById.IN_WITH_IDS] = ConstantPipe("text", matrix)
             step.validateGraph().let {
                 assertTrue(it.isEmpty(), it)
             }
 
-            assertFailsWith<RuntimeException> {
-                step.execute()
-            }
-
+            step.execute()
+            
+            assertEquals(matrix, step.outputs[PullLayersById.OUT_WITH_LAYERS]!!.pull())
             assertTrue(finishLine.isEmpty())
         }
     }

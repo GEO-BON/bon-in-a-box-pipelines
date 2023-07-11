@@ -91,6 +91,7 @@ export function PipelineForm({
           label: pipStates.pipeline,
           value: pipStates.pipeline,
         }}
+        menuPortalTarget={document.body}
         onChange={(v) => handlePipelineChange(v.value)}
       />
       <br />

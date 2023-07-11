@@ -51,8 +51,14 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
         onBlur={e => onValueUpdated(parseFloat(e.target.value))} />
 
     default:
-      return <input type='text' {...passedProps} defaultValue={value}
-        placeholder={CONSTANT_PLACEHOLDER}
-        onBlur={e => onValueUpdated(e.target.value)} />
+      if (value && value.includes("\n")) {
+        return <AutoResizeTextArea {...passedProps} defaultValue={value}
+          placeholder={CONSTANT_PLACEHOLDER}
+          onBlur={e => onValueUpdated(e.target.value)} />
+      } else {
+        return <input type='text' {...passedProps} defaultValue={value}
+          placeholder={CONSTANT_PLACEHOLDER}
+          onBlur={e => onValueUpdated(e.target.value)} />
+      }
   }
 }
