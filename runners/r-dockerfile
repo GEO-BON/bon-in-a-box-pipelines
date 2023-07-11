@@ -16,7 +16,11 @@ RUN R -e 'devtools::install_github("appelmar/gdalcubes_R")'
 RUN R -e 'devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")'
 RUN R -e 'devtools::install_github("gearslaboratory/gdalUtils")'
 
+<<<<<<< HEAD
 # For installation of prepr for protectedAreas/protectedAreasProp.R
+=======
+# Libs required to install prepr for protectedAreas/protectedAreasProp.R
+>>>>>>> 0e526faf8e87e9e322444c8f12be0fd325ee22ae
 RUN apt-get update; \
     apt-get install -y libgmp3-dev libmpfr-dev libudunits2-dev libgdal-dev libgeos-dev libproj-dev; \
     apt-get clean all;
