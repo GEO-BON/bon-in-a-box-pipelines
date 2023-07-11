@@ -1,128 +1,129 @@
 aside.scriptChooser {
-    padding: 15px 10px;
-    flex:1;
-    overflow: scroll;
+  padding: 15px 10px;
+  flex: 1;
+  overflow: scroll;
 }
 
 aside.scriptChooser .description {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 #editorLayout {
-    flex-direction: column;
-    display: flex;
-    height: 100%;
+  flex-direction: column;
+  display: flex;
+  height: 100%;
 }
 
 .dndflow {
-    flex:1;
+  flex: 1;
 }
 
 .tooltip {
-    position:absolute;
-    margin: 5px;
-    padding: 5px;
-    background-color: #222222bb;
-    width: max-content;
-    max-width: 65%;
-    z-index: 1500; /* Above the nodes, that have z-index 1000 */
+  position: absolute;
+  margin: 5px;
+  padding: 5px;
+  background-color: #222222bb;
+  width: max-content;
+  max-width: 65%;
+  z-index: 1500; /* Above the nodes, that have z-index 1000 */
 }
 
 .dndnode {
-    height: 20px;
-    padding: 4px;
-    border: 1px solid #1a192b;
-    border-radius: 2px;
-    margin-bottom: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: grab;
-    background: #fcfcfc;
+  height: 20px;
+  padding: 4px;
+  border: 1px solid #1a192b;
+  border-radius: 2px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  background: #fcfcfc;
 }
 
 .dndnode.input {
-    border-color: #0041d0;
+  border-color: #0041d0;
 }
 
 .dndnode.output {
-    border-color: #ff0072;
+  border-color: #ff0072;
 }
 
 .inFolder {
-    padding-left: 1em;
+  padding-left: 1em;
 }
 
 .userInput {
-    padding: 1px 2px 1px 10px;
-    border-color: #36eb5a;
+  padding: 1px 2px 1px 10px;
+  border-color: #36eb5a;
 }
 
 .constant {
-    padding: 1px 2px 1px 10px;
-    border-color: #0041d0;
+  padding: 1px 2px 1px 10px;
+  border-color: #0041d0;
 }
 
 .constant p {
-    display:inline-block;
-    vertical-align: top;
-    margin: 1px 10px 0 0;
+  display: inline-block;
+  vertical-align: top;
+  margin: 1px 10px 0 0;
 }
 
 .dragHandle {
-    cursor: grab;
+  cursor: grab;
 }
 
 .dragHandle:active {
-    cursor: grabbing;
+  cursor: grabbing;
 }
 
 .react-flow__node-output {
-    border-color: #ff0072;
+  border-color: #ff0072;
 }
 
 .reactflow-wrapper {
-    flex-grow: 1;
-    height: 100%;
-    background-color: #fcfcfc99;
+  flex-grow: 1;
+  height: 100%;
+  background-color: #fcfcfc99;
 }
 
 .selectall {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
-.react-flow__edge-path, .react-flow__connection-path {
-    stroke: #fcfcfc;
-    stroke-width: 3;
+.react-flow__edge-path,
+.react-flow__connection-path {
+  stroke: #fcfcfc;
+  stroke-width: 3;
 }
 
 .react-flow__edge.selected .react-flow__edge-path {
-    stroke:#9E2B25;
+  stroke: #9e2b25;
 }
-  
+
 .ioNode {
-    border-color: rgb(52, 52, 52);
-    color: black;
-    border-collapse: unset;
+  border-color: rgb(52, 52, 52);
+  color: black;
+  border-collapse: unset;
 }
 
 .ioNode,
 .constant,
 .userInput,
 .react-flow__node-output {
-    color: black;
-    background-color: whitesmoke;
+  color: black;
+  background-color: whitesmoke;
 
-    border-width: 2px;
-    border-radius: 3px;
-    border-style: solid;
+  border-width: 2px;
+  border-radius: 3px;
+  border-style: solid;
 }
 
 .ioNode:hover,
 .constant:hover,
 .userInput:hover,
 .react-flow__node-output:hover {
-    background-color: white;
+  background-color: white;
 }
 
 .selected .ioNode,
@@ -131,149 +132,191 @@ aside.scriptChooser .description {
 .react-flow__node-output.selected,
 .ioList .selected,
 .scriptChooser .selected {
-    background-color: blanchedalmond;
+  background-color: blanchedalmond;
 }
 
 .ioNode td {
-    border: none;
-    padding:3px 0px;
-    min-width: 0.5em;
+  border: none;
+  padding: 3px 0px;
+  min-width: 0.5em;
 }
 
 .ioNode td.name {
-    padding: 0.5em;
+  padding: 0.5em;
 }
 
-.inputs, .outputs {
-    vertical-align: top;
-    font-size: 0.7rem;
+.inputs,
+.outputs {
+  vertical-align: top;
+  font-size: 0.7rem;
 }
 
 .react-flow__handle {
-    width: 0.5rem;
-    height: 0.5rem;
+  width: 0.5rem;
+  height: 0.5rem;
 }
 
-
-.inputs .react-flow__handle, .outputs .react-flow__handle{
-    position:relative;
+.inputs .react-flow__handle,
+.outputs .react-flow__handle {
+  position: relative;
 }
 
-.inputs .react-flow__handle-left, .outputs .react-flow__handle-right {
-    /* Undo default style */
-    right:auto;
-    left:auto;
-    top: 0.1rem; /* Match with text alignment */
-    bottom:auto;
-    transform: none;
-    display: inline-block;
+.inputs .react-flow__handle-left,
+.outputs .react-flow__handle-right {
+  /* Undo default style */
+  right: auto;
+  left: auto;
+  top: 0.1rem; /* Match with text alignment */
+  bottom: auto;
+  transform: none;
+  display: inline-block;
 }
 
 .inputs .react-flow__handle-left {
-    margin-left:-7px;
-    margin-right:3px;
+  margin-left: -7px;
+  margin-right: 3px;
 }
 
 .outputs {
-    text-align: right;
+  text-align: right;
 }
 
 .outputs .react-flow__handle-right {
-    margin-left:3px;
-    margin-right:-7px;
+  margin-left: 3px;
+  margin-right: -7px;
 }
 
 .ioWarning {
-    color: hsl(0, 100%, 27%);
-    font-weight: bold;
+  color: hsl(0, 100%, 27%);
+  font-weight: bold;
 }
 
 .save__controls {
-    position: absolute;
-    right: 10px;
-    top: 10px;
-    z-index: 4;
-    font-size: 12px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  z-index: 4;
+  font-size: 12px;
 }
 
 .save__controls button {
-    margin-left: 5px;
+  margin-left: 5px;
 }
 
 .ioList {
-    border: 1px solid black;
-    border-radius: 3px;
-    background: #ffffffee;
-    color:black;
+  border: 1px solid black;
+  border-right: 0;
+  border-radius: 0px 0px 0px 3px;
+  background: whitesmoke;
+  color: black;
 
-    padding-left: 1em;
-    padding-right: 1em;
-    width:fit-content;
-    max-width: 30%;
-    overflow-y: auto;
-    
-    position: absolute;
-    top: 3em;
-    right: 0px;
-    bottom: 190px;
+  overflow-x: visible;
+  width: 30%;
+  max-width: 400px;
 
-    z-index: 1500;
+  position: absolute;
+  top: 3em;
+  right: 0px;
+  bottom: 190px;
+
+  z-index: 1500;
+  transition: width 0.5s;
+}
+
+.paneCollapsed.ioList {
+  width: 0px !important;
+}
+
+.ioListInner {
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .ioList .description {
-    font-size: small;
-    color: gray;
+  font-size: small;
+  color: gray;
+}
+
+.collapseTab {
+  text-align: center;
+}
+
+.paneOpen .collapseTab {
+  writing-mode: horizontal-tb;
+}
+
+.topToBottomText {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.collapseTab {
+  position: absolute;
+  width: 15px;
+  left: -28px; /*-width - padding - border*/
+  top: -1px;
+  padding: 6px;
+
+  background: whitesmoke;
+  border-style: solid none solid solid;
+  border-width: 1px;
+  border-color: black whitesmoke black black;
+  border-radius: 3px 0px 0px 3px;
+  cursor: pointer;
 }
 
 .arrowDownButton {
-    /* Remove the button styling */
-    border: none;
-    background: none;
-    font-size: 60px;
-    cursor: pointer;
-    padding: 0;
+  /* Remove the button styling */
+  border: none;
+  background: none;
+  font-size: 60px;
+  cursor: pointer;
+  padding: 0;
 
-    /* Create the down arrow */
-    width: 0;
-    height: 0;
-    border-left: 0.5rem solid transparent;
-    border-right: 0.5rem solid transparent;
-    border-top: 0.5rem solid rgb(112, 112, 112);
+  /* Create the down arrow */
+  width: 0;
+  height: 0;
+  border-left: 0.5rem solid transparent;
+  border-right: 0.5rem solid transparent;
+  border-top: 0.5rem solid rgb(112, 112, 112);
 
-    /*Placement*/
-    vertical-align: top;
-    margin-left: 5px;
-    margin-top: 2px;
-    padding-bottom: 0.5rem;
+  /*Placement*/
+  vertical-align: top;
+  margin-left: 5px;
+  margin-top: 2px;
+  padding-bottom: 0.5rem;
 }
 
-
 ul#popupMenu {
-    /* see https://mionskowski.pl/posts/positioning-a-context-menu-using-pure-css/ */
-    position: fixed;
-    margin: 0;
-    left: 0;
-    top: 0;
-    /* The following line is responsible for all the magic */
-    transform: translateX(min(var(--mouse-x), calc(100vw - 100%))) translateY(min(var(--mouse-y), calc(100vh - 100%)));
+  /* see https://mionskowski.pl/posts/positioning-a-context-menu-using-pure-css/ */
+  position: fixed;
+  margin: 0;
+  left: 0;
+  top: 0;
+  /* The following line is responsible for all the magic */
+  transform: translateX(min(var(--mouse-x), calc(100vw - 100%)))
+    translateY(min(var(--mouse-y), calc(100vh - 100%)));
 
-    /* Styling */
-    z-index: 2000;
-    color: black;
-    background-color: whitesmoke;
-    border: 2px solid rgb(52, 52, 52);
+  /* Styling */
+  z-index: 2000;
+  color: black;
+  background-color: whitesmoke;
+  border: 2px solid rgb(52, 52, 52);
 }
 
 #popupMenu {
-    padding: 0;
+  padding: 0;
 }
 
 #popupMenu li {
-    padding: 3px;
-    list-style-type: none;
+  padding: 3px;
+  list-style-type: none;
 }
 
 #popupMenu li:hover {
-    background-color: #aaa;
-    cursor:pointer;
+  background-color: #aaa;
+  cursor: pointer;
 }
