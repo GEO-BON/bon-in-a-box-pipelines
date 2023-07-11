@@ -174,8 +174,12 @@ fun Application.configureRouting() {
             if (pipeline == null) {
                 val outputFolder = File(outputRoot, id.replace(FILE_SEPARATOR, '/'))
                 val outputFile = File(outputFolder, "output.json")
-                val type = object : TypeToken<Map<String, Any>>() {}.type
-                call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
+                if(outputFile.exists()) {
+                    val type = object : TypeToken<Map<String, Any>>() {}.type
+                    call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
+                } else {
+                    call.respondText(text = "Run \"$id\" was not found on this server.", status = HttpStatusCode.NotFound)
+                }
             } else {
                 call.respond(pipeline.getLiveOutput().mapKeys { it.key.replace('/', FILE_SEPARATOR) })
             }
