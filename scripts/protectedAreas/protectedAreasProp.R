@@ -3,10 +3,11 @@
 
 # world database on protected areas (wdpa) source: https://www.protectedplanet.net/en
 
-packages <- c("sf", "wdpar", "terra", "exactextractr", "dplyr", "raster", "rjson", "Rcpp", "remotes", "wdman", "webdriver")
+packages <- c("sf",  "terra", "exactextractr", "dplyr",  "rjson", "Rcpp", "remotes", "wdman", "webdriver")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
+remotes::install_github("prioritizr/wdpar@fixes")
 # libraries
 library("rjson")
 library("sf")
@@ -14,11 +15,12 @@ library("wdpar")
 library("terra")
 library("exactextractr")
 library("dplyr")
-library("raster")
 library("Rcpp")
 library("wdman")
 library("remotes")
 library("webdriver")
+
+webdriver::install_phantomjs()
 
 
 if (!"prepr" %in% installed.packages()[,"Package"]) remotes::install_github("dickoa/prepr")
@@ -29,7 +31,8 @@ print("Inputs: ")
 print(input)
 
 
-webdriver::install_phantomjs()
+
+
 
 
 # Load functions
@@ -46,17 +49,18 @@ tif <- protected_areas(country = input$country,
                        bbox = bbox,
                        crs = input$crs,
                        pixel_size = input$pixel_size,
-                       habitat_type = input$habitat_type
+                       habitat_type = input$habitat_type,
+                       status = input$status
 )
 
 
 
-output_tif <- file.path(outputFolder, paste0("Protected_areas_prop_", input$habitat_type, ".tif"))
-raster::writeRaster(x = tif,
+output_tif <- file.path(outputFolder, paste0("Protected_areas_prop",  ".tif"))
+terra::writeRaster(x = tif,
                     output_tif,
                     overwrite = TRUE,
-                    format='COG',
-                    options=c("COMPRESS=DEFLATE")
+                    filetype='COG',
+                    wopt= list(gdal=c("COMPRESS=DEFLATE"))
 )
 
 
