@@ -19,9 +19,6 @@ export function PipelineForm({
   const [pipelineOptions, setPipelineOptions] = useState([]);
 
   function clearPreviousRequest() {
-    setPipStates({
-      type: "reset",
-    });
     showHttpError(null);
     setInputFileContent({});
   }
