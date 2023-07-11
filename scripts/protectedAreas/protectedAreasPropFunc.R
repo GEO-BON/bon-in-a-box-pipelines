@@ -5,22 +5,25 @@
 #' @param bbox, a numeric vector of size 4 or 6. Coordinates of the bounding box (xmin, xmax, ymax, ymin). Details in rstac::stac_search documentation. 
 #' @param crs, CRS object or a character string describing a projection and datum in the PROJ.4 format (e.g., "EPSG:6623" or "+proj=aea +lat_0=44 +lon_0=-68.5 +lat_1=60 +lat_2=46 +x_0=0 +y_0=0 +datum=NAD83 +units=m +no_defs" ).
 #' @param pixel_size, an integer defining the output pixel size in meters. Set at 1000m
-#' @param habitat_type,  a character vector of type of habitat c("terrestrial", "marine", "partial"), by default is c("terrestrial")."partial" is a protected area or OECM is that partially within the marine environment and partially within the terrestrial (or freshwater) environments. This value is applicable to polygons only. 
-#' @import sf wdpar terra exactextractr dplyr raster remotes Rcpp
+#' @param habitat_type,  a character vector of habitat type: 0=terrestrial; 1=partial; 2=marine 
+#' @param status, character vector defining status: c("Designated", "Proposed", "Established", "Inscribed", "Adopted")
+#' @import sf wdpar terra exactextractr dplyr remotes Rcpp 
 #' @return a raster
 #' @export
 
 
-protected_areas <- function(country = "Canada",
+ 
+  protected_areas <- function(country = "Canada",
                             bbox = c(-79.76281,  44.99137, -57.10549, 62.58277),
                             crs = "EPSG:6623",
                             pixel_size = 1000,
-                            habitat_type = c("terrestrial")
+                            habitat_type = c("terrestrial", "partial", "marine"),
+                            status = c("Designated", "Proposed", "Established", "Inscribed", "Adopted")
                             ){
   
   # download protected area data for your country (e.g., Canada)
-  # (excluding areas represented as point localities)
-    print("Loading protected areas data set (wdpa) ....")
+    # (excluding areas represented as point localities)
+    print("Loading protected areas data set (wdpa, protected planet) for a country....")
 
     raw_pa_data <- wdpar::wdpa_fetch(country,
                               wait = TRUE,
@@ -31,45 +34,38 @@ protected_areas <- function(country = "Canada",
                                                                               # and R can simply re-load previously downloaded datasets as needed.
                                 )
 
-  
   # clean Country data
     print("Cleaning protected areas data set (wdpa) ....")
     
     pa_data <- wdpar::wdpa_clean(raw_pa_data,
                           crs = crs,
                           erase_overlaps = F)
-  
+  # bbox coordinates
     lat <- c(input$bbox[2],  input$bbox[4])
     lon <- c(input$bbox[1],  input$bbox[3])
    
     
-    # Area of interest within the country (bbox)
+  # Area of interest within the country (bbox)
     # repair any geometry issues, dissolve the border, reproject to same
     # coordinate system as the protected area data, and repair the geometry again
-    print("Loading bbox (i.e., area of interest ....)")
+    print("Creating polygon (i.e., area of interest ....)")
     
       poly <-
         data.frame(lon, lat)%>%
         st_as_sf(coords = c("lon", "lat"),
-                 crs = crs) %>%
+                crs = "EPSG:4326") %>%
         st_bbox() %>%
         st_as_sfc()%>%
-        st_set_precision(pixel_size) %>%
-        sf::st_make_valid() %>%
-        st_set_precision(pixel_size) %>%
-        st_combine() %>%
-        st_union() %>%
-        st_set_precision(pixel_size) %>%
-        sf::st_make_valid() %>%
-        st_transform(st_crs(pa_data)) %>%
-        sf::st_make_valid()
+        st_transform(st_crs(pa_data))%>%
+        st_as_sf()
     
-    # Select type of protected areas (e.g., "terrestrial, "marine", "partial") using bbox ('area of interest')
-      print(paste0("Selecting type of habitat type = ", habitat_type, " ...."))
+   # Select type of protected areas (e.g., "terrestrial, "marine", "partial") using bbox ('area of interest')
+      print(paste0("Selecting habitat type and status ...."))
       
       pa_data <-
         pa_data %>%
         dplyr::filter(MARINE %in% habitat_type) %>%
+        dplyr::filter(STATUS %in% status) %>%
         sf::st_intersection(poly)
       
     # recalculate the area of each protected area
@@ -86,35 +82,39 @@ protected_areas <- function(country = "Canada",
       terra::res(r1) <- c(0.01, 0.01)
       terra::values(r1) <- 1
       
-    # Study area polygon
-      #study_area_wgs84 <-  terra::vect(base::rbind(lon, lat), type = "polygons")
+    # Study area polygon geographic projection
+   
       study_area_wgs84 <-  terra::vect(poly)%>%
         terra::project("EPSG:4326")
+    
       
     # Cropping raster template using study area polygon and project it.
-      print("Cropping raster template using the area of interest and project it ...")
+      print("Cropping raster template using the area of interest and projecting it ...")
       r_template <- terra::crop(r1, study_area_wgs84)%>%
-      terra::project(res=pixel_size, mask=T,align = T, gdal=T, 
-                     crs,
-                     method="near")
+      terra::project(res=1000*pixel_size, mask=T,align = T, gdal=T, 
+                     y = crs,
+                     method="near")%>%
+        terra::disagg(fact=1000, method="near")
       
       
     # dissolve polygons into one feature (speed up calculating the fraction of raster cells covered by a polygon)
       print("Dissolving multiple features (PAs) to one polygon feature ....")
       
-      pas_dissolved <- sf::st_union(pa_data$geometry, by_feature = FALSE)
+      pas_dissolved <- sf::st_union(st_as_sf(pa_data), by_feature = F)%>%
+        sf::st_union()%>%
+        sf::st_as_sf()
+    
     
     # Calculate the fraction of raster cells covered by a polygon
       print("Calculating the fraction of raster cells covered by a protected area polygon ....") 
       
-      proportion_pas <- exactextractr::coverage_fraction(r_template,
-                                                         pas_dissolved,
-                                                         crop = T
-                                                         )
-    
+   
+      proportion_pas <- exactextractr::coverage_fraction(x = r_template,
+                                                         y = pas_dissolved,
+                                                         crop = T)
+      
+      return(proportion_pas[[1]])
       print("Raster layer saved!")
-    
-      return(raster::raster(proportion_pas[[1]]))
       
 }
  
