@@ -22,7 +22,7 @@ import {
   toDisplayString,
   getBreadcrumbs,
 } from "../utils/IOId";
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 const defaultPipeline = "helloWorld";
 
@@ -67,21 +67,20 @@ function pipReducer(state, action) {
   throw Error("Unknown action: " + action.type);
 }
 
-function pipInitialState(pipelineRunId) {
-  let runHash = null;
-  let pipeline = defaultPipeline;
+function pipInitialState(init) {
+  let hash = null;
+  let pip = defaultPipeline;
   let action = "reset";
-  if (pipelineRunId) {
-    const parts = pipelineRunId.split(">");
-    runHash = parts.at(-1);
-    pipeline = parts.at(-2);
+  if (init.pipeline && init.runHash) {
+    hash = init.runHash;
+    pip = init.pipeline;
     action = "url";
   }
   return {
     lastAction: action,
-    runHash: runHash,
-    pipeline: pipeline,
-    runId: pipeline + ">" + runHash,
+    runHash: hash,
+    pipeline: pip,
+    runId: pip + ">" + hash,
   };
 }
 
@@ -91,17 +90,16 @@ export function PipelinePage() {
   const [resultsData, setResultsData] = useState(null);
   const [httpError, setHttpError] = useState(null);
   const [pipelineMetadata, setPipelineMetadata] = useState(null);
-  const [selectedPipeline, setSelectedPipeline] = useState("helloWorld.json");
 
   /**
    * String: Content of input.json for this run
    */
   const [inputFileContent, setInputFileContent] = useState({});
 
-  const { pipelineRunId } = useParams();
+  const { pipeline, runHash } = useParams();
   const [pipStates, setPipStates] = useReducer(
     pipReducer,
-    pipelineRunId,
+    {pipeline: pipeline, runHash: runHash},
     pipInitialState
   );
   function showHttpError(error, response) {
@@ -158,7 +156,7 @@ export function PipelinePage() {
   }
 
   function loadInputJson(pip, hash) {
-    var inputJson = "/output/" + pip + "/" + hash + "/input.json";
+    var inputJson = "/output/" + pip.replace('>','/') + "/" + hash + "/input.json";
     fetch(inputJson)
       .then((response) => {
         if (response.ok) {
@@ -194,23 +192,24 @@ export function PipelinePage() {
 
   useEffect(() => {
     loadPipelineOutputs();
-    if (["reset", "select"].includes(pipStates.lastAction)) {
-      loadPipelineMetadata(pipStates.pipeline, true);
-    }
-    if (["run"].includes(pipStates.lastAction)) {
-      loadPipelineMetadata(pipStates.pipeline, false);
+    switch(pipStates.lastAction) {
+      case "reset":
+      case "select":
+        loadPipelineMetadata(pipStates.pipeline, true);
+        break;
+      case "run":
+        loadPipelineMetadata(pipStates.pipeline, false);
+        break;
     }
   }, [pipStates]);
 
   useEffect(() => {
     // set by the route
-    if (pipelineRunId && pipelineRunId !== "null") {
-      const runIdParts = pipelineRunId.split(">");
-      var hash = runIdParts.at(-1);
-      var pip = runIdParts.at(-2);
-      loadInputJson(pip, hash);
+    setResultsData(null);
+    if (pipeline && runHash) {
+      loadInputJson(pipeline, runHash);
     }
-  }, [pipelineRunId]);
+  }, [pipeline, runHash]);
 
   const stop = () => {
     setStoppable(false);
@@ -233,11 +232,10 @@ export function PipelinePage() {
           pipelineMetadata={pipelineMetadata}
           setInputFileContent={setInputFileContent}
           inputFileContent={inputFileContent}
-          setSelectedPipeline={setSelectedPipeline}
-          selectedPipeline={selectedPipeline}
           pipStates={pipStates}
           setPipStates={setPipStates}
           showHttpError={showHttpError}
+          setResultsData={setResultsData}
         />
       </FoldableOutput>
 
@@ -258,7 +256,7 @@ export function PipelinePage() {
           resultsData={resultsData}
           runningScripts={runningScripts}
           setRunningScripts={setRunningScripts}
-          pipelineRunId={pipelineRunId}
+          runHash={runHash}
         />
       )}
     </>
@@ -270,23 +268,21 @@ function PipelineResults({
   resultsData,
   runningScripts,
   setRunningScripts,
-  pipelineRunId,
+  runHash,
 }) {
   const [activeRenderer, setActiveRenderer] = useState({});
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
   useEffect(() => {
-    if (resultsData === null || pipelineRunId) {
-      // Put outputResults at initial value
-      const initialValue = {};
-      if (pipelineMetadata.outputs) {
-        Object.keys(pipelineMetadata.outputs).forEach((key) => {
-          initialValue[getBreadcrumbs(key)] = {};
-        });
-      }
-      setPipelineOutputResults(initialValue);
+    // Put outputResults at initial value
+    const initialValue = {};
+    if (pipelineMetadata.outputs) {
+      Object.keys(pipelineMetadata.outputs).forEach((key) => {
+        initialValue[getBreadcrumbs(key)] = {};
+      });
     }
-  }, [pipelineMetadata.outputs, resultsData]);
+    setPipelineOutputResults(initialValue);
+  }, [runHash]);
 
   if (resultsData) {
     return (
@@ -294,7 +290,7 @@ function PipelineResults({
         value={createContext(activeRenderer, setActiveRenderer)}
       >
         <h2>Pipeline</h2>
-        {pipelineMetadata.outputs &&
+        {pipelineOutputResults && pipelineMetadata.outputs &&
           Object.entries(pipelineMetadata.outputs).map((entry) => {
             const [ioId, outputDescription] = entry;
             const breadcrumbs = getBreadcrumbs(ioId);
