@@ -44,7 +44,10 @@ export function PipelineForm({
         data = {};
         showHttpError(error, response);
       } else if (data) {
-        navigate("/pipeline-form/" + data);
+        const parts = data.split(">");
+        let runHash = parts.at(-1);
+        let pipeline = parts.slice(0,-1).join(">")
+        navigate("/pipeline-form/" + pipeline + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
       }
