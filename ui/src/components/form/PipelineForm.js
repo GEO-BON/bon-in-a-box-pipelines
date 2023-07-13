@@ -69,7 +69,7 @@ export function PipelineForm({
       } else {
         let newOptions = [];
         data.forEach((script) => {
-          script = script.replace(".json", "");
+          script = script.replace(/.json$/i, "");
           newOptions.push({ label: script, value: script });
         });
         setPipelineOptions(newOptions);
