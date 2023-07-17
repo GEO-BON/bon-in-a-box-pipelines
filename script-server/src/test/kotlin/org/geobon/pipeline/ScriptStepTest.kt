@@ -156,6 +156,23 @@ internal class ScriptStepTest {
         }
     }
 
+    @Test
+    fun givenNullInput_whenReceivedAsNull_thenHandledAsNull() = runTest {
+        val step = ScriptStep(File(scriptRoot, "assertNull.yml"), StepId("script", "nodeId"),
+            inputs = mutableMapOf("input" to ConstantPipe("text", null)))
+        step.validateGraph().apply { assertTrue(isEmpty(), "Validation error: $this") }
+
+        step.execute()
+
+        assertNull(step.outputs["the_same"]!!.value)
+
+        val files = outputRoot.listFiles()!![0].listFiles()!![0].listFiles()!!
+        files.filter { it.name == "output.json" }.let {
+            assertEquals(1, it.size)
+            assertTrue(it[0]!!.readText().contains("null"))
+        }
+    }
+
     // TODO with cache: If a script is ran in *another* pipeline with the same parameters, we should be able to listen to it!
 
 }

@@ -300,9 +300,9 @@ open class Pipeline private constructor(
                     })
             } else {
                 try {
-                    ConstantPipe(
-                        type,
-                        when (type) {
+                    ConstantPipe(type,
+                        if(obj.isNull(valueProperty)) null
+                        else when (type) {
                             "int" -> obj.getInt(valueProperty)
                             "float" -> obj.getFloat(valueProperty)
                             "boolean" -> obj.getBoolean(valueProperty)
@@ -312,7 +312,7 @@ open class Pipeline private constructor(
                     )
                 } catch (e: Exception) {
                     e.printStackTrace()
-                    throw RuntimeException("Constant #$idForUser has no value in JSON file.")
+                    throw RuntimeException("Constant $idForUser has no value in JSON file.")
                 }
             }
         }

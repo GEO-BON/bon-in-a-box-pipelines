@@ -49,14 +49,14 @@ elev_buffer <- input$elev_buffer
 spat_res <- input$spat_res
 
 #define country if the area of analysis will be restricted to a specific country
-country_code <- ifelse(input$country_code== "" , NA,input$country_code)
-region <- ifelse(input$region== "" , NA ,input$region)
+country_code <- ifelse(is.null(input$country_code), NA,input$country_code)
+region <- ifelse(is.null(input$region), NA ,input$region)
 
 #Define source of expert range maps
 expert_source <- input$expert_source
 #forest threshold for GFW (level of forest for the species)
-min_forest <- ifelse(input$min_forest== "" , NA,input$min_forest)
-max_forest <- ifelse(input$max_forest== "" , NA,input$max_forest)
+min_forest <- ifelse(is.null(input$min_forest), NA,input$min_forest)
+max_forest <- ifelse(is.null(input$max_forest), NA,input$max_forest)
 
 #define time steps
 t_0 <- input$t_0

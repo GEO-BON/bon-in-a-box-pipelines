@@ -2,7 +2,12 @@
 
 Mapping Post-2020 Global Biodiversity Framework indicators and their uncertainty.
 
-A Geo BON project, born from a collaboration between Microsoft, McGill, Humbolt institute, Université de Sherbrooke, Université Concordia and Université de Montréal.
+A GEO BON project, born from a collaboration between Microsoft, McGill, Humbolt institute, Université de Sherbrooke, Université Concordia and Université de Montréal.
+
+## Contributing
+If you wish to contribute your indicator or EBV code, please let us know at web@geobon.org.
+
+The recommended method is to setup an instance of BON in a Box somewhere you can easily play with the script files, using the local or remote setup below. You can create a fork to save your work. Make sure that the code is general, and will work when used with various parameters, such as in different regions around the globe. Once the integration of the new scripts or pipelines are complete, open a pull request to this repository. The pull request will be peer-reviewed before acceptation.
 
 ## Running the servers locally
 Prerequisites : 
@@ -10,6 +15,7 @@ Prerequisites :
  - Linux: Docker with Docker Compose installed. It is recommended to [add your user to the docker group](https://docs.docker.com/engine/install/linux-postinstall/).
  - Windows/Mac: Docker Desktop
  - At least 6 GB of free space (this includes the installation of Docker Desktop)
+ - RAM requirements will depend on the scripts that you run.
 
 To run:
 1. Clone repository (Windows users: do not clone this in a folder under OneDrive.)
@@ -21,7 +27,7 @@ To run:
 5. Provide an environment file (.env) in the root folder with the following keys
     ```
     # Windows only - path to the root directory of the project with forward slashes
-    # Uncomment line and specify path with forward slashed such as PWD=/c/User/me/biab-2.0
+    # Uncomment line and specify path with forward slashes such as PWD=/c/User/me/biab-2.0
     #PWD=
 
     # Access the planetary computer APIs
@@ -52,9 +58,13 @@ To run:
 8. `docker compose down` (to stop the server when done) 
 9. On Windows, to completely stop the processes, you might have to run `wsl --shutdown`
 
-Servers do not need to be restarted when modifying scripts in the /scripts folder:
+When modifying scripts in the /scripts folder, servers do not need to be restarted:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
-- When adding/renaming/removing scripts, refresh the browser page.
+- When adding or renamin scripts, refresh the browser page.
+
+When modifying pipelines in the /pipelines folder, servers do not need to be restarted:
+- In the pipeline editor, click save, paste the file to your file in the pipeline folder and run it from the "pipeline run" page.
+- When adding or renaming pipelines, refresh the browser page.
 
 ## Running the servers remotely
 1. Launch a first instance using the [ansible playbook](https://github.com/GEO-BON/biab-server/tree/main/ansible)
@@ -94,7 +104,7 @@ inputs: # 0 to many
     label: # Human-readable version of the name
     description: # Targetted to those who will interpret pipeline results and edit pipelines.
     type: # see below
-    example: # will also be used as default value
+    example: # will also be used as default value, can be null
 
 outputs: # 1 to many
   key:
@@ -158,11 +168,11 @@ options_example:
 ```
 
 ### Script validation
-The structure of the script description file will be validated on push. To run the validation locally,
+The syntax and structure of the script description file will be validated on push. To run the validation locally,
 - On Windows: Make sure docker is running, then run [validateScripts.bat](/scripts/validateScripts.bat)
 - On Linux: Run [validateScripts.sh](/scripts/validateScripts.sh)
 
-This validates that the structure is correct, but not that it is correct. Hence, peer review of the scripts and the description files is mandatory before accepting a pull requests.
+This validates that the syntax and structure are correct, but not that it's content is correct. Hence, peer review of the scripts and the description files is mandatory before accepting a pull requests.
 
 ### Reporting problems
 The output keys `info`, `warning` and `error` can be used to report problems in script execution. They do not need to be described in the `outputs` section of the description. They will be displayed specially in the UI.
@@ -174,15 +184,65 @@ Scripts can install their own dependencies directly (`install.packages` in R, `P
 
 To pre-compile the dependency in the image, add it to [runners/r-dockerfile](runners/r-dockerfile) or [runners/julia-dockerfile](runners/julia-dockerfile). When the pull request is merged to main, a new image will be available to `docker compose pull` with the added dependencies.
 
+### Receiving inputs
+When running a script, a folder is created for each given set of parameters. The same parameters result in the same folder, different parameters result in a different folder. The inputs for a given script are saved in an `input.json` file in this unique run folder.
+
+The file contains the id of the parameters that were specified in the yaml script description, associated to the values for this run. Example:
+```json
+{
+    "fc": ["L", "LQ", "LQHP"],
+    "method_select_params": "AUC",
+    "n_folds": 2,
+    "orientation_block": "lat_lon",
+    "partition_type": "block",
+    "predictors": [
+        "/output/data/loadFromStac/6af2ccfcd4b0ffe243ff01e3b7eccdc3/bio1_75548ca61981-01-01.tif",
+        "/output/data/loadFromStac/6af2ccfcd4b0ffe243ff01e3b7eccdc3/bio2_7333b3d111981-01-01.tif"
+    ],
+    "presence_background": "/output/SDM/setupDataSdm/edb9492031df9e063a5ec5c325bacdb1/presence_background.tsv",
+    "proj": "EPSG:6623",
+    "rm": [0.5, 1.0, 2.0]
+}
+```
+
+The script reads and uses inputs from the `input.json` file. Example in R:
+
+``` R
+## Receiving arguments from input.json.
+## outputFolder is already defined by server
+library("rjson")
+input <- fromJSON(file=file.path(outputFolder, "input.json"))
+
+## Can now be accessed from the map
+print(input$predictors)
+```
+
+The script should perform appropriate parameter validation.
+
+Note that the inputs will be `null` if the user left the text box empty. 
+
+### Generating outputs
+The output files generated by the script must be saved in the run folder. The script must also generate an `output.json` file in the same folder, that contains a map associating the output ids to their values. Example:
+
+```json
+{
+  "sdm_pred": "/output/SDM/runMaxent/b5937ba69418b65cae7c6cfcfa78b5e8/sdm_pred.tif",
+  "sdm_runs":[
+    "/output/SDM/runMaxent/b5937ba69418b65cae7c6cfcfa78b5e8/sdm_runs_1.tif",
+    "/output/SDM/runMaxent/b5937ba69418b65cae7c6cfcfa78b5e8/sdm_runs_2.tif"
+  ]
+}
+```
+
+
 ## Pipelines
 A pipeline is a collection of steps to acheive the desired processing. Each script becomes a pipeline step.
 ![image](https://user-images.githubusercontent.com/6223744/211096047-d1d205e3-2f5e-4af6-b8c5-015b002432cb.png)
 
 
-Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (red box in image above). It supports [the same types and UI rendering](#input-and-output-types) as individual scripts, since its inputs are directly fed to the steps, and outputs come from the step outputs.
+Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (rightmost red box in image above). Pipeline IO supports [the same types and UI rendering](#input-and-output-types) as individual steps, since its inputs are directly fed to the steps, and outputs come from the step outputs.
 
 ### Pipeline editor
-
 The pipeline editor allows you to create pipelines by plugging steps together.
 
 The left pane shows the available steps, the right pane shows the canvas.

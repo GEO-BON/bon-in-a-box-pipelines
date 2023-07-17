@@ -14,7 +14,7 @@ class RecordPipe(
 ) :
     ConstantPipe(type, value) {
 
-    override suspend fun pull(): Any {
+    override suspend fun pull(): Any? {
         delay(delay)
 
         return super.pull()
