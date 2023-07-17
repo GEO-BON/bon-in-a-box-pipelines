@@ -23,7 +23,7 @@ class AssignId(stepId: StepId, inputs: MutableMap<String, Pipe> = mutableMapOf()
         return res
     }
 
-    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
+    override suspend fun execute(resolvedInputs: Map<String, Any?>): Map<String, Any?> {
         return mapOf(OUT_IDENTIFIED_LAYER to JSONObject(mapOf(
             OUT_IDENTIFIED_LAYER_ID to resolvedInputs[IN_ID],
             OUT_IDENTIFIED_LAYER_LAYER to resolvedInputs[IN_LAYER]

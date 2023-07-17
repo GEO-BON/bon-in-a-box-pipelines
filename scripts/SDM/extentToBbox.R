@@ -17,12 +17,7 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-if (input$proj_to == "...") {
-proj_to <- NULL
-} else { 
-        proj_to <- input$proj_to
-    
-}
+proj_to <- input$proj_to
 
 
 if (input$source == "df_coordinates") {

@@ -38,7 +38,7 @@ inputs:
     label: region
     description: For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])
     type: text
-    example: ""
+    example: null
   spat_res:
     label: output spatial resolution
     description: Spatial resolution (in meters) for the output of the analysis.
