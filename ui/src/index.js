@@ -34,8 +34,8 @@ function App() {
       <Route path="script-form" element={
         <Layout right={<SingleScriptPage />} />
       } />
-
-      <Route path="pipeline-form" element={
+      
+      <Route path="pipeline-form/:pipeline?/:runHash?" element={
       <Layout right={<PipelinePage />} />
       } />
 
