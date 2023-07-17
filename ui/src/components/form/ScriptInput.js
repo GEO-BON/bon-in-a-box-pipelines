@@ -51,14 +51,18 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
         onBlur={e => onValueUpdated(parseFloat(e.target.value))} />
 
     default:
+      let props = {
+        defaultValue: value,
+        placeholder: null,
+        // use null if empty or a string representation of null
+        onBlur: e => onValueUpdated(/^(null)?$/i.test(e.target.value) ? null : e.target.value),
+        ...passedProps
+      }
+
       if (value && value.includes("\n")) {
-        return <AutoResizeTextArea {...passedProps} defaultValue={value}
-          placeholder='null'
-          onBlur={e => onValueUpdated(e.target.value == "" ? null : e.target.value)} />
+        return <AutoResizeTextArea {...props} />
       } else {
-        return <input type='text' {...passedProps} defaultValue={value}
-          placeholder='null'
-          onBlur={e => onValueUpdated(e.target.value == "" ? null : e.target.value)} />
+        return <input type='text' {...props} />
       }
   }
 }
