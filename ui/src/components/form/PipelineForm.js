@@ -47,13 +47,17 @@ export function PipelineForm({
         const parts = data.split(">");
         let runHash = parts.at(-1);
         let pipeline = parts.slice(0,-1).join(">")
+        setPipStates({
+          type: "run",
+          newPipeline: pipeline,
+          newHash: runHash,
+        });
         navigate("/pipeline-form/" + pipeline + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
       }
     };
 
-    clearPreviousRequest();
     let opts = {
       body: JSON.stringify(inputFileContent),
     };

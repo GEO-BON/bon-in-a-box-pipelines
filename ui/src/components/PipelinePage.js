@@ -191,7 +191,7 @@ export function PipelinePage() {
   }, [runningScripts]);
 
   useEffect(() => {
-    loadPipelineOutputs();
+    setResultsData(null);
     switch(pipStates.lastAction) {
       case "reset":
       case "select":
@@ -201,11 +201,11 @@ export function PipelinePage() {
         loadPipelineMetadata(pipStates.pipeline, false);
         break;
     }
+    loadPipelineOutputs();
   }, [pipStates]);
 
   useEffect(() => {
     // set by the route
-    setResultsData(null);
     if (pipeline && runHash) {
       loadInputJson(pipeline, runHash);
     }
