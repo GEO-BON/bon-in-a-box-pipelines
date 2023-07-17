@@ -1,66 +1,67 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Select from 'react-select';
-import InputFileInput from './InputFileInput';
+import React, { useState, useRef, useEffect } from "react";
+import Select from "react-select";
+import InputFileInput from "./InputFileInput";
+import { useNavigate } from "react-router-dom";
 
-const BonInABoxScriptService = require('bon_in_a_box_script_service');
+const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
-export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, showHttpError }) {
+export function PipelineForm({
+  pipelineMetadata,
+  pipStates,
+  setPipStates,
+  showHttpError,
+  inputFileContent,
+  setInputFileContent,
+}) {
   const formRef = useRef();
-
-  const defaultPipeline = "helloWorld.json";
+  const navigate = useNavigate();
   const [pipelineOptions, setPipelineOptions] = useState([]);
-
-  /**
-   * String: Content of input.json for this run
-   */
-  const [inputFileContent, setInputFileContent] = useState({});
 
   function clearPreviousRequest() {
     showHttpError(null);
-    setInputFileContent({})
-    setRunId(null);
-  }
-
-  function loadPipelineMetadata(choice) {
-    clearPreviousRequest();
-    setPipelineMetadata(null);
-
-    var callback = function (error, data, response) {
-      if (error) {
-        showHttpError(error, response);
-      } else if (data) {
-        setPipelineMetadata(data);
-      }
-    };
-
-    api.getPipelineInfo(choice, callback);
+    setInputFileContent({});
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     runScript();
+  };
+
+  const handlePipelineChange = (value) => {
+    clearPreviousRequest();
+    setPipStates({
+      type: "select",
+      newPipeline: value,
+    });
+    navigate("/pipeline-form");
   };
 
   const runScript = () => {
     var callback = function (error, data, response) {
-      if (error) { // Server / connection errors. Data will be undefined.
+      if (error) {
+        // Server / connection errors. Data will be undefined.
         data = {};
         showHttpError(error, response);
-
       } else if (data) {
-        setRunId(data);
+        const parts = data.split(">");
+        let runHash = parts.at(-1);
+        let pipeline = parts.slice(0,-1).join(">")
+        setPipStates({
+          type: "run",
+          newPipeline: pipeline,
+          newHash: runHash,
+        });
+        navigate("/pipeline-form/" + pipeline + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
       }
     };
 
-    clearPreviousRequest();
     let opts = {
-      'body': JSON.stringify(inputFileContent)
+      body: JSON.stringify(inputFileContent),
     };
-    api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
+    api.runPipeline(pipStates.pipeline + ".json", opts, callback);
   };
 
   // Applied only once when first loaded
@@ -71,9 +72,11 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
         console.error(error);
       } else {
         let newOptions = [];
-        data.forEach(script => newOptions.push({ label: script, value: script }));
+        data.forEach((script) => {
+          script = script.replace(/.json$/i, "");
+          newOptions.push({ label: script, value: script });
+        });
         setPipelineOptions(newOptions);
-        loadPipelineMetadata(defaultPipeline);
       }
     });
     // Empty dependency array to get script list only once
@@ -82,16 +85,25 @@ export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, 
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label htmlFor='pipelineChoice'>Pipeline:</label>
-      <Select id="pipelineChoice" name="pipelineChoice" className="blackText" options={pipelineOptions}
-        defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
+      <label htmlFor="pipelineChoice">Pipeline:</label>
+      <Select
+        id="pipelineChoice"
+        name="pipelineChoice"
+        className="blackText"
+        options={pipelineOptions}
+        value={{
+          label: pipStates.pipeline,
+          value: pipStates.pipeline,
+        }}
         menuPortalTarget={document.body}
-        onChange={(v) => loadPipelineMetadata(v.value)} />
+        onChange={(v) => handlePipelineChange(v.value)}
+      />
       <br />
       <InputFileInput
         metadata={pipelineMetadata}
         inputFileContent={inputFileContent}
-        setInputFileContent={setInputFileContent} />
+        setInputFileContent={setInputFileContent}
+      />
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
     </form>
