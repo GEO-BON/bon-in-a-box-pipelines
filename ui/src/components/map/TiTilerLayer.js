@@ -6,12 +6,12 @@ import { createRangeLegendControl } from "./Legend"
 import L from 'leaflet';
 import { extractLegend } from "../../utils/ColorMapping";
 
-const TILER_URL = 'https://titiler.xyz/cog'
-// const TILER_URL = 'https://tiler.biodiversite-quebec.ca/cog'
+// const TILER_URL = 'https://titiler.xyz/cog' // A generic tiler available on the web
+const TILER_URL = window.location.origin + "/tiler" // A tiler in the internal docker network
 const COLORMAP_NAME = 'hot' // see available in ColorMapping
 
 function fetchStats(url) {
-  return fetch(`${TILER_URL}/statistics?url=${url}`)
+  return fetch(`${TILER_URL}/cog/statistics?url=${url}`)
     .then(response => {
       if (response.ok)
         return response.json()
@@ -29,7 +29,7 @@ function fetchStats(url) {
 }
 
 function fetchBounds(url) {
-  return fetch(`${TILER_URL}/bounds?url=${url}`)
+  return fetch(`${TILER_URL}/cog/bounds?url=${url}`)
     .then(response => {
       if (!response.ok) return Promise.reject('Failed to get bounds')
       return response.json()
@@ -48,7 +48,7 @@ export default function TiTilerLayer({ url, range, setError }) {
     let legend
 
     const addLayer = (min, max) => {
-      const tiler = `${TILER_URL}/tiles/{z}/{x}/{y}`;
+      const tiler = `${TILER_URL}/cog/tiles/{z}/{x}/{y}`;
       const rescale = `${min},${max}`;
       const params = new URLSearchParams({
         /*assets: selectedLayerAssetName,*/
