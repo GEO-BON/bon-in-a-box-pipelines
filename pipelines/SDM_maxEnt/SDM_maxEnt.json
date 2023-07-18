@@ -866,7 +866,7 @@
       "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
       "type": "application/dbf",
-      "example": ""
+      "example": null
     }
   },
   "outputs": {
