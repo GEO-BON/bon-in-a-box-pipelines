@@ -9,8 +9,6 @@
     "bon_in_a_box_script_service": "file:BonInABoxScriptService",
     "chroma-js": "^2.4.2",
     "elkjs": "^0.8.2",
-    "georaster": "^1.5.6",
-    "georaster-layer-for-leaflet": "^3.10.0",
     "js-yaml": "^4.1.0",
     "leaflet": "^1.9.2",
     "leaflet.markercluster": "^1.5.3",
