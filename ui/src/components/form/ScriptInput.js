@@ -53,7 +53,7 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
     default:
       let props = {
         defaultValue: value,
-        placeholder: null,
+        placeholder: 'null',
         // use null if empty or a string representation of null
         onBlur: e => onValueUpdated(/^(null)?$/i.test(e.target.value) ? null : e.target.value),
         ...passedProps

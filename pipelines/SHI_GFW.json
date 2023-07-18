@@ -127,7 +127,7 @@
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
       "label": "region",
       "type": "text",
-      "example": ""
+      "example": null
     },
     "SHI>scpSHI_Jetz_complete.yml@8|expert_source": {
       "description": "Source of the expert range map for the species.",
