@@ -2,6 +2,7 @@ script: assertFloat.py
 inputs:
   input:
     label: Some float
+    description: The value to check.
     type: float
     example: 12.34
 outputs:
@@ -9,5 +10,5 @@ outputs:
     label: Same value
     description: The same float as in the inputs. But this crashes if not an float.
     type: float
-    example: false
+    example: 12.34
 description: "Test python script that fails if it doesn't receive a float."
