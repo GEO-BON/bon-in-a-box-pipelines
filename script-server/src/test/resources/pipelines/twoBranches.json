@@ -1,0 +1,99 @@
+{
+  "nodes": [
+    {
+      "id": "4",
+      "type": "io",
+      "position": {
+        "x": 757.5,
+        "y": 438
+      },
+      "data": {
+        "descriptionFile": "assertFloat.yml"
+      }
+    },
+    {
+      "id": "5",
+      "type": "io",
+      "position": {
+        "x": 452.5,
+        "y": 337
+      },
+      "data": {
+        "descriptionFile": "divideFloat.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 748.5,
+        "y": 304
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "7",
+      "type": "output",
+      "position": {
+        "x": 1067.5,
+        "y": 433
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "5",
+      "sourceHandle": "result",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-5result-6"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "result",
+      "target": "4",
+      "targetHandle": "input",
+      "id": "reactflow__edge-5result-4input"
+    },
+    {
+      "source": "4",
+      "sourceHandle": "the_same",
+      "target": "7",
+      "targetHandle": null,
+      "id": "reactflow__edge-4the_same-7"
+    }
+  ],
+  "inputs": {
+    "divideFloat.yml@5|float_value": {
+      "description": "A number",
+      "label": "value",
+      "type": "float",
+      "example": 3.2
+    },
+    "divideFloat.yml@5|divider": {
+      "description": "The divider",
+      "label": "Divider",
+      "type": "float",
+      "example": 2
+    }
+  },
+  "outputs": {
+    "divideFloat.yml@5|result": {
+      "description": "result of the division",
+      "label": "Result",
+      "type": "float",
+      "example": 1.6
+    },
+    "assertFloat.yml@4|the_same": {
+      "description": "The same float as in the inputs. But this crashes if not an float.",
+      "label": "Same value",
+      "type": "float",
+      "example": 1.6
+    }
+  }
+}

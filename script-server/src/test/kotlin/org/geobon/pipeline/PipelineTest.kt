@@ -2,6 +2,7 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import java.io.File
 import kotlin.test.*
 
 @ExperimentalCoroutinesApi
@@ -222,7 +223,7 @@ internal class PipelineTest {
     }
 
     @Test
-    fun `given a nested pipeline with input left blank_when ran_it behaves as a single pipeline`() = runTest {
+    fun `given a nested pipeline with input left blank_when ran_then it behaves as a single pipeline`() = runTest {
         val pipeline = RootPipeline("pipelineInPipeline/inputLeftBlank.json",
             """ {"1in1out_1step.json@1|helloWorld>helloPython.yml@0|some_int":3} """)
 
@@ -236,7 +237,7 @@ internal class PipelineTest {
 
 
     @Test
-    fun `given a nested pipeline with a user input_when ran_it behaves as a single pipeline`() = runTest {
+    fun `given a nested pipeline with a user input_when ran_then it behaves as a single pipeline`() = runTest {
         val pipeline = RootPipeline("pipelineInPipeline/userInputInside.json",
             """ {"userInput.json@0|pipeline@1":20} """)
 
@@ -253,7 +254,7 @@ internal class PipelineTest {
 
 
     @Test
-    fun `given a nested pipeline receiving a user input_when ran_it behaves as a single pipeline`() = runTest {
+    fun `given a nested pipeline receiving a user input_when ran_then it behaves as a single pipeline`() = runTest {
         val pipeline = RootPipeline("pipelineInPipeline/userInputOutside.json",
             """ {"pipeline@3":5} """)
 
@@ -265,5 +266,25 @@ internal class PipelineTest {
 
         assertEquals(6, pipeline.outputs["helloWorld>helloPython.yml@4|increment"]!!.pull())
         assertEquals(7, pipeline.outputs["userInput.json@0|helloWorld>helloPython.yml@5|increment"]!!.pull())
+    }
+
+    @Test
+    fun `given a nested pipeline with two branches_when ran_then only the necessary branch runs`() = runTest {
+        val pipeline = RootPipeline("pipelineInPipeline/twoBranchTest.json",
+            """ {"twoBranches.json@14|divideFloat.yml@5|divider":2} """)
+
+        val result = pipeline.pullFinalOutputs()
+
+        // No output folder fo assertFloat
+        assertTrue(File(outputRoot, "divideFloat").isDirectory)
+        assertFalse(File(outputRoot, "assertFloat").isDirectory)
+
+        // The excluded one should not figure in the results
+        assertContains(result.keys, "helloWorld>helloPython.yml@16") // The increment
+        assertContains(result.keys, "twoBranches.json@14|divideFloat.yml@5") // The division
+        assertFalse(result.keys.contains("twoBranches.json@14|assertFloat.yml@4")) // The assertion should not be there
+
+        // Result should still be valid
+        assertEquals(6, pipeline.outputs["twoBranches.json@14|divideFloat.yml@5|result"]!!.pull())
     }
 }
