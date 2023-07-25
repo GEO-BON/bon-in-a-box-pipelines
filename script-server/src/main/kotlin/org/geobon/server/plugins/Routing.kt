@@ -48,7 +48,7 @@ fun Application.configureRouting() {
                 }
             }
 
-            possible.sort()
+            possible.sortWith(String.CASE_INSENSITIVE_ORDER)
             call.respond(possible)
         }
 
@@ -99,7 +99,7 @@ fun Application.configureRouting() {
                 }
             }
 
-            possible.sort()
+            possible.sortWith(String.CASE_INSENSITIVE_ORDER)
             call.respond(possible)
         }
 
