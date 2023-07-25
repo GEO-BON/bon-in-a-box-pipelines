@@ -11,6 +11,9 @@ if(length(new.packages)) install.packages(new.packages)
 library("rjson")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
+## Parameter validation
+<YOUR VALIDATION HERE>
+
 ## Script body
 <YOUR CODE HERE>
 
