@@ -11,10 +11,6 @@
         "type": "int",
         "value": "19"
       },
-      "positionAbsolute": {
-        "x": 286,
-        "y": 166.76666259765625
-      },
       "z": 1000,
       "handleBounds": {
         "source": [
@@ -28,11 +24,7 @@
           }
         ],
         "target": null
-      },
-      "width": 235,
-      "height": 46,
-      "selected": true,
-      "dragging": false
+      }
     },
     {
       "id": "1",
@@ -43,10 +35,6 @@
       },
       "data": {
         "label": "Output"
-      },
-      "positionAbsolute": {
-        "x": 362.5,
-        "y": 281.8999938964844
       },
       "z": 0,
       "handleBounds": {
@@ -61,11 +49,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 150,
-      "height": 38,
-      "selected": false,
-      "dragging": false
+      }
     }
   ],
   "edges": [
@@ -77,9 +61,8 @@
       "id": "reactflow__edge-node_0-node_1"
     }
   ],
-  "viewport": {
-    "x": 65,
-    "y": -52.0333251953125,
-    "zoom": 2
+  "inputs": {},
+  "outputs": {
+    "undefined@0": {}
   }
 }

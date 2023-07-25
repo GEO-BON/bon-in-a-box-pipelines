@@ -56,7 +56,7 @@
     "assertNull.yml@1|the_same": {
       "description": "The same value as in the inputs. But this crashes if not null!",
       "label": "Same value",
-      "type": "string"
+      "type": "text"
     }
   }
 }

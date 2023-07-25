@@ -93,7 +93,7 @@
       "description": "The same float as in the inputs. But this crashes if not an float.",
       "label": "Same value",
       "type": "float",
-      "example": 1.6
+      "example": 12.34
     }
   }
 }

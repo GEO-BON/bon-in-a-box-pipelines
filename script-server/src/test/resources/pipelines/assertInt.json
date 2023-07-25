@@ -70,10 +70,8 @@
       "id": "reactflow__edge-9the_same-6"
     }
   ],
-  "viewport": {
-    "x": 213,
-    "y": 215,
-    "zoom": 1
-  },
-  "inputs": {}
+  "inputs": {},
+  "outputs": {
+    "assertInt.yml@9|the_same": {}
+  }
 }

@@ -4,15 +4,11 @@
       "id": "1",
       "type": "output",
       "position": {
-        "x": 477.5,
-        "y": 197.89999389648438
+        "x": 581.5,
+        "y": 128.89999389648438
       },
       "data": {
         "label": "Output"
-      },
-      "positionAbsolute": {
-        "x": 477.5,
-        "y": 197.89999389648438
       },
       "z": 0,
       "handleBounds": {
@@ -27,11 +23,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 150,
-      "height": 39,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "2",
@@ -42,10 +34,6 @@
       },
       "data": {
         "descriptionFile": "helloWorld>helloPython.yml"
-      },
-      "positionAbsolute": {
-        "x": 224,
-        "y": 131.89999389648438
       },
       "z": 0,
       "handleBounds": {
@@ -69,11 +57,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 287,
-      "height": 45,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "3",
@@ -85,10 +69,6 @@
       "data": {
         "type": "int",
         "value": "19"
-      },
-      "positionAbsolute": {
-        "x": -64.59370835690285,
-        "y": 117.29969161001281
       },
       "z": 1000,
       "handleBounds": {
@@ -103,11 +83,7 @@
           }
         ],
         "target": null
-      },
-      "width": 258,
-      "height": 46,
-      "selected": true,
-      "dragging": false
+      }
     }
   ],
   "edges": [
@@ -126,9 +102,13 @@
       "id": "reactflow__edge-3-2some_int"
     }
   ],
-  "viewport": {
-    "x": 83.53382020291394,
-    "y": -22.78821770094251,
-    "zoom": 1.055049106517846
+  "inputs": {},
+  "outputs": {
+    "helloWorld>helloPython.yml@2|increment": {
+      "description": "bla bla",
+      "label": "A number (input++)",
+      "type": "int",
+      "example": 4
+    }
   }
 }
