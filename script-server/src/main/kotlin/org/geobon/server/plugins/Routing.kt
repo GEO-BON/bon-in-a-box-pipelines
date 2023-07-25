@@ -48,6 +48,7 @@ fun Application.configureRouting() {
                 }
             }
 
+            possible.sort()
             call.respond(possible)
         }
 
@@ -98,6 +99,7 @@ fun Application.configureRouting() {
                 }
             }
 
+            possible.sort()
             call.respond(possible)
         }
 
