@@ -1,8 +1,6 @@
 {
   "nodes": [
     {
-      "width": 267,
-      "height": 45,
       "id": "0",
       "type": "io",
       "position": {
@@ -11,16 +9,9 @@
       },
       "data": {
         "descriptionFile": "assertArray.yml"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 739,
-        "y": 346
       }
     },
     {
-      "width": 258,
-      "height": 28,
       "id": "4",
       "type": "constant",
       "position": {
@@ -31,17 +22,9 @@
       "data": {
         "type": "int",
         "value": "12"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 350,
-        "y": 367
-      },
-      "dragging": false
+      }
     },
     {
-      "width": 258,
-      "height": 28,
       "id": "7",
       "type": "constant",
       "position": {
@@ -52,17 +35,9 @@
       "data": {
         "type": "int",
         "value": "13"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 347,
-        "y": 411
-      },
-      "dragging": false
+      }
     },
     {
-      "width": 258,
-      "height": 28,
       "id": "8",
       "type": "constant",
       "position": {
@@ -73,17 +48,9 @@
       "data": {
         "type": "int",
         "value": "11"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 352,
-        "y": 318
-      },
-      "dragging": false
+      }
     },
     {
-      "width": 150,
-      "height": 39,
       "id": "9",
       "type": "output",
       "position": {
@@ -92,14 +59,7 @@
       },
       "data": {
         "label": "Output"
-      },
-      "targetPosition": "left",
-      "selected": true,
-      "positionAbsolute": {
-        "x": 1067,
-        "y": 337
-      },
-      "dragging": false
+      }
     }
   ],
   "edges": [
@@ -132,9 +92,8 @@
       "id": "reactflow__edge-0the_same-9"
     }
   ],
-  "viewport": {
-    "x": -2,
-    "y": 3,
-    "zoom": 1
+  "inputs": {},
+  "outputs": {
+    "assertArray.yml@0|the_same": {}
   }
 }

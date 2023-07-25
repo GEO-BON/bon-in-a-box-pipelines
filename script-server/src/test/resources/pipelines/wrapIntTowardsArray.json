@@ -50,10 +50,17 @@
       "id": "reactflow__edge-1the_same-2"
     }
   ],
-  "viewport": {
-    "x": -245,
-    "y": 78,
-    "zoom": 1
-  },
-  "inputs": {}
+  "inputs": {},
+  "outputs": {
+    "assertArray.yml@1|the_same": {
+      "description": "The same array as in the inputs. But this crashes if not an array",
+      "label": "Same value",
+      "type": "int[]",
+      "example": [
+        3,
+        4,
+        5
+      ]
+    }
+  }
 }

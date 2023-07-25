@@ -70,10 +70,8 @@
       "id": "reactflow__edge-5the_same-6"
     }
   ],
-  "viewport": {
-    "x": 54,
-    "y": -20,
-    "zoom": 1
-  },
-  "inputs": {}
+  "inputs": {},
+  "outputs": {
+    "assertFloat.yml@5|the_same": {}
+  }
 }

@@ -11,10 +11,6 @@
         "type": "int",
         "value": "19"
       },
-      "positionAbsolute": {
-        "x": -13,
-        "y": 93.76666259765625
-      },
       "z": 0,
       "handleBounds": {
         "source": [
@@ -28,11 +24,7 @@
           }
         ],
         "target": null
-      },
-      "width": 235,
-      "height": 46,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "1",
@@ -43,10 +35,6 @@
       },
       "data": {
         "label": "Output"
-      },
-      "positionAbsolute": {
-        "x": 892.5,
-        "y": 338.8999938964844
       },
       "z": 0,
       "handleBounds": {
@@ -61,11 +49,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 150,
-      "height": 38,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "3",
@@ -76,10 +60,6 @@
       },
       "data": {
         "descriptionFile": "helloWorld>helloPython.yml"
-      },
-      "positionAbsolute": {
-        "x": 199,
-        "y": 162.39999389648438
       },
       "z": 0,
       "handleBounds": {
@@ -103,11 +83,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 287,
-      "height": 45,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "5",
@@ -119,10 +95,6 @@
       "data": {
         "descriptionFile": "helloWorld>helloPython.yml"
       },
-      "positionAbsolute": {
-        "x": 531.2093167415944,
-        "y": 110.36905671527575
-      },
       "z": 0,
       "handleBounds": {
         "source": [
@@ -145,11 +117,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 287,
-      "height": 45,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "6",
@@ -161,10 +129,6 @@
       "data": {
         "descriptionFile": "helloWorld>helloPython.yml"
       },
-      "positionAbsolute": {
-        "x": 456.73943935904254,
-        "y": 291.47306241997455
-      },
       "z": 0,
       "handleBounds": {
         "source": [
@@ -187,11 +151,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 287,
-      "height": 45,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "7",
@@ -202,10 +162,6 @@
       },
       "data": {
         "descriptionFile": "helloWorld>helloPython.yml"
-      },
-      "positionAbsolute": {
-        "x": 862.23809573488,
-        "y": 111.8234655072233
       },
       "z": 0,
       "handleBounds": {
@@ -229,11 +185,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 287,
-      "height": 45,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "8",
@@ -244,10 +196,6 @@
       },
       "data": {
         "label": "Output"
-      },
-      "positionAbsolute": {
-        "x": 1160.5058233187715,
-        "y": 192.06986288977328
       },
       "z": 0,
       "handleBounds": {
@@ -262,11 +210,7 @@
             "height": 8
           }
         ]
-      },
-      "width": 150,
-      "height": 38,
-      "selected": false,
-      "dragging": false
+      }
     },
     {
       "id": "9",
@@ -278,10 +222,6 @@
       "data": {
         "type": "int",
         "value": "4"
-      },
-      "positionAbsolute": {
-        "x": 140.7973292066638,
-        "y": 224.6065132286244
       },
       "z": 1000,
       "handleBounds": {
@@ -296,11 +236,7 @@
           }
         ],
         "target": null
-      },
-      "width": 235,
-      "height": 46,
-      "selected": true,
-      "dragging": false
+      }
     }
   ],
   "edges": [
@@ -347,9 +283,19 @@
       "id": "reactflow__edge-node_9-node_6some_int"
     }
   ],
-  "viewport": {
-    "x": 89.22092425327287,
-    "y": 88.32252646703967,
-    "zoom": 1.062895674358553
+  "inputs": {},
+  "outputs": {
+    "helloWorld>helloPython.yml@6|increment": {
+      "description": "bla bla",
+      "label": "A number (input++)",
+      "type": "int",
+      "example": 4
+    },
+    "helloWorld>helloPython.yml@7|increment": {
+      "description": "bla bla",
+      "label": "A number (input++)",
+      "type": "int",
+      "example": 4
+    }
   }
 }
