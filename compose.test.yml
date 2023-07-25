@@ -1,0 +1,17 @@
+## Use this file to run the pipeline engine with the test pipelines from the script server unit tests.
+version: "3.7"
+
+services:
+# This can be accessed within the docker network with http://biab-script-server:8081/script/...
+  script-server:
+    volumes:
+      - ./script-server/src/test/resources/scripts:/scripts:ro
+      - ./script-server/src/test/resources/pipelines:/pipelines:ro
+
+  runner-r:
+    volumes:
+      - ./script-server/src/test/resources/scripts:/scripts:ro
+
+  runner-julia:
+    volumes:
+      - ./script-server/src/test/resources/scripts:/scripts:ro
