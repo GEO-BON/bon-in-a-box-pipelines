@@ -1,5 +1,6 @@
 .env
 .Rproj.user
 .Rhistory
+.vscode
 **/.cache
 **/.config
