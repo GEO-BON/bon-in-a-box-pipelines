@@ -86,7 +86,7 @@ class ScriptRun( // Constructor used in single script run
      */
     suspend fun waitForResults() {
         // TODO: Could use join() on a job, if we had a job to join with...
-        logger.debug("Waiting for run completion... ${outputFolder}")
+        logger.debug("Waiting for run completion... $outputFolder")
         while(!this::results.isInitialized) {
             delay(100L)
         }
