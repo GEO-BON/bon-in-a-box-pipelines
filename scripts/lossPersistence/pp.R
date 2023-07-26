@@ -8,25 +8,18 @@ packagesList<-list("magrittr", "terra", "raster")
 lapply(packagesList, library, character.only = TRUE)
 
 # Definir output
-#  outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
-Sys.setenv(outputFolder = "/path/to/output/folder")
+# outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
+# Sys.setenv(outputFolder = "/path/to/output/folder")
 
 # Definir input
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Cargar input
+input<- lapply(input, function(x) if( grepl("/", x) ){
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # Ajuste input 1
 
-input<- lapply(input, function(x) if( grepl("/output/", x) ){
-  sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x} ) # Ajuste input 1
 
-input <- lapply(input, function(x) {
-  if(tools::file_ext(x) %in% 'json'){
-    pattern<-  "/\\{\\{(.+?)\\}\\}/"
-    element <-  stringr::str_extract(x, pattern) %>% {gsub("[\\{\\}/]", "", .)}
-     folder_json<- gsub(pattern, "/", x) %>% dirname() %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
-    object<- rjson::fromJSON(file=file.path(folder_json, "output.json"))[[element]]
-  } else {x}    }    ) # Ajuste input 2
 
-input<- lapply(input, function(x) if( grepl("/output/", x) ){
-  sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x} ) # Ajuste input 1
+
+
 
 
 # Correr codigo
