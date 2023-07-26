@@ -63,4 +63,8 @@ outputs:
     label: dir_data_areas
     description: dir_data_areas
     type: text/csv
+  table_pp:
+    label: table_pp
+    description: table_pp
+    type: text
 

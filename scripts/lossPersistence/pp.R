@@ -238,6 +238,12 @@ dir_data_areas<- file.path(outputFolder, "data_areas.csv")
 write.csv(data_areas2, dir_data_areas)
 
 
+
+# Tabla de areas json
+table_pp<- jsonlite::toJSON(data_areas2)
+
+
+
 # Exportar imagenes de los raster
 dir_png<- file.path(outputFolder, "dir_png")
 unlink(dir_png, recursive = TRUE); dir.create(dir_png); setwd(dir_png)
@@ -271,26 +277,9 @@ saveraster<- lapply( seq(nrow(data_areas)), function(i) { print(i)
 } )
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 # Exportar output final
 output<- list( area_stack= dir_area_4326, dir_stack= dir_stack, dir_png=dir_png, dir_info_layer= dir_info_layer,
-               dir_data_layer=dir_data_layer, dir_data_areas= dir_data_areas)
+               dir_data_layer=dir_data_layer, dir_data_areas= dir_data_areas, table_pp=table_pp)
   
 setwd(outputFolder)
 jsonlite::write_json(output, "output.json", auto_unbox = TRUE, pretty = TRUE)
