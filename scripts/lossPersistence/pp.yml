@@ -11,7 +11,7 @@ inputs:
     label: dir_collection
     description: dir_collection
     type: text
-    example: '/output/0_inputs/Colecciones/Colombia_pp_collection'
+    example: '/scripts/lossPersistence/input/Colombia_pp_collection'
   epsg:
     label: epsg
     description: epsg
