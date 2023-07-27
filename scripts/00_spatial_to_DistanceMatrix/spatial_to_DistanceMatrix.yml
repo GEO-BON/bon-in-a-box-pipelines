@@ -1,0 +1,65 @@
+script: spatial_to_DistanceMatrix.R
+description: "This script calculates a distance matrix between spatial units from a spatial file. It reads the spatial data from the file, which contains the geographic information of the spatial units, such as their boundaries or centroids"
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  studyarea_wkt:
+    label: studyarea_wkt
+    description: WKT (Well-Known Text) string or the file path to a .txt file containing the WKT representation of the study area boundaries. The WKT format is a text-based format used to describe the geometry of the study area's boundaries. The structure of the WKT file includes a geometry type label (MULTIPOLYGON), which is associated with the coordinate values of the vertices that define the study area's boundary mask.
+    type: text
+    example: "/scripts/IAvH_inputs/wkt_polygon_test.txt"
+  studyarea_EPSG:
+    label: studyarea_EPSG
+    description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
+    type: int
+    example: 3395
+  unit_distance:
+    label: unit_distance
+    description: String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.
+    type: options
+    options:
+      - m
+      - km
+    example: "m"
+  spatial_file:
+    label: spatial_file
+    description: String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix
+    type: text
+    example: "/scripts/00_spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
+  column_group:
+    label: column_group 
+    description: String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.
+    type: text
+    example: "id_pa"
+outputs:
+  spatialunits_studyarea:
+    label: spatialunits_studyarea
+    description: Represents the map of the analyzed spatial units within the study area.
+    type: application/geo+json
+  spatialunits_studyarea_data:
+    label: spatialunits_studyarea_data
+    description: Refers to the dataset containing information about the spatial units analyzed within the study area. 
+    type: text/csv
+  mtx_distance_centroid:
+    label: mtx_distance_centroid
+    description: Distance matrix that represents the distances between the centroids of spatial units within the study area. Each element in the matrix denotes the distance between the centroid of one spatial unit and the centroid of another
+    type: text/csv
+  mtx_distance_nearest:
+    label: mtx_distance_nearest
+    description: Distance matrix that represents the distances between the closest boundaries of spatial units within the study area. Each element in the matrix denotes the distance between the boundary of one spatial unit and the boundary of another.
+    type: text/csv
+  spatial_unit:
+    label: spatial_unit
+    description: Refers to the column in the spatialunits_studyarea_data that denotes the spatial entity or geographic unit used for analysis. This column contains information about the spatial units that have been grouped based on the levels provided in the column_group input.
+    type: text
+  column_area:
+    label: column_area
+    description: Refers to the column in the dataset that contains the estimated area for each of the spatial units under analysis. The estimation is expressed in square units (m2 or km2), as defined by the input unit_distance.
+    type: text
+  area_study_area:
+    label: area_study_area
+    description: Refers to the total area of the analyzed study area. The estimation of this area is expressed in square units (m2 or km2) as defined by the input unit_distance.
+    type: int
+  area_unit:
+    label: area_unit
+    description: Refers to the unit of measurement used for representing area in square units. The specific unit, whether square meters (m2) or square kilometers (km2), is determined by the input value provided for unit_distance.
+    type: int
