@@ -121,7 +121,19 @@ references: # 0 to many
 See [example](/scripts/helloWorld/helloR.yml)
 
 #### Input and output types
-Each input and output must declare a type, *in lowercase.* The following file types are accepted:
+Each input and output must declare a type, *in lowercase.* It can be a primitive or a file.
+
+The following primitive types are accepted:
+| "type" attribute in the yaml   | UI rendering                 |
+|--------------------------------|------------------------------|
+| boolean                        | Plain text                   |
+| float, float[]                 | Plain text                   |
+| int, int[]                     | Plain text                   |
+| options <sup>[2](#io2)</sup>   | Plain text                   |
+| text, text[]                   | Plain text                   |
+| (any unknown type)             | Plain text                   |
+
+Any [MIME type](https://en.wikipedia.org/wiki/Media_type) is accepted. Here are a few common ones:
 | File type                    | MIME type to use in the yaml   | UI rendering                 |
 | ---------------------------- |------------------------------- |------------------------------|
 | CSV                          | text/csv                       | HTML table (partial content) |
@@ -134,15 +146,9 @@ Each input and output must declare a type, *in lowercase.* The following file ty
 | TSV                          | text/tab-separated-values      | HTML table (partial content) |
 |                              | (any unknown type)             | Plain text or link           |
 
-The following primitive types are accepted:
-| "type" attribute in the yaml   | UI rendering                 |
-|--------------------------------|------------------------------|
-| boolean                        | Plain text                   |
-| float, float[]                 | Plain text                   |
-| int, int[]                     | Plain text                   |
-| options <sup>[2](#io2)</sup>   | Plain text                   |
-| text, text[]                   | Plain text                   |
-| (any unknown type)             | Plain text                   |
+Search the web to find the appropriate MIME type for your content. Here are a few references:
+- http://www.iana.org/assignments/media-types/media-types.xhtml
+- http://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?view=markup
 
 <a name="io1"></a><sup>1</sup> When used as an output, `image/tiff;application=geotiff` type allows an additionnal `range` attribute to be added with the min and max values that the tiff should hold. This will be used for display purposes.
 ```yml
