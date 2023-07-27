@@ -186,6 +186,12 @@ aside.scriptChooser .description {
   margin-right: -7px;
 }
 
+.inputs div:hover,
+.outputs div:hover {
+  text-shadow: 0px 0px 1px black;
+}
+
+
 .ioWarning {
   color: hsl(0, 100%, 27%);
   font-weight: bold;
