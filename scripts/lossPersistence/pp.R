@@ -8,44 +8,33 @@ packagesList<-list("magrittr", "terra", "raster")
 lapply(packagesList, library, character.only = TRUE)
 
 # Definir output
-# outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
 # Sys.setenv(outputFolder = "/path/to/output/folder")
+# outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
 
 # Definir input
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Cargar input
 input<- lapply(input, function(x) if( grepl("/", x) ){
   sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # Ajuste input 1
 
-
-
-
-
-
-
 # Correr codigo
 # Definir area de estudio
 ext_WKT_area<- tools::file_ext(input$WKT_area)
 dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$WKT_area) }else{ input$WKT_area }
 crs_polygon<- terra::crs( paste0("+init=epsg:", input$epsg) ) %>% as.character()
-vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon ) 
+vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon ) %>% sf::st_as_sf()
   
 # Ajustar resolucion
 resolution_crs<- raster::raster(raster::extent(seq(4)),crs= paste0("+init=epsg:", 3395), res= input$resolution) %>% 
   raster::projectRaster( crs = crs_polygon) %>% raster::res()
 
-box_polygon<-  sf::st_bbox(vector_polygon) %>% sf::st_as_sfc() %>% sf::st_buffer(sqrt(prod(resolution_crs))) %>% sf::st_bbox()
+box_polygon<-  sf::st_bbox(vector_polygon) %>% sf::st_as_sfc() %>% sf::st_bbox()
 
 
 # crear raster base
-rasterbase<- raster::raster( raster::extent(box_polygon),crs= crs_polygon, res= resolution_crs) %>% terra::rast()
-study_area<- terra::rasterize(vector_polygon, rasterbase)
+rasterbase<- raster::raster( raster::extent(box_polygon),crs= crs_polygon, res= resolution_crs)
+study_area<- fasterize::fasterize(vector_polygon, rasterbase)
 box_study_area<- terra::ext(study_area) %>% sf::st_bbox()
 dim_study_area<- dim(study_area)
-
-
-
-
-
 
 
 # Cargar coleccion
@@ -105,6 +94,15 @@ cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = t0
 # Crear cubo
 cube <- gdalcubes::raster_cube(image_collection, cube_collection)
 
+cube_stars<- cube %>% stars::st_as_stars() %>% 
+  terra::rast() 
+
+layers_info<- cube_stars[[unique(terra::freq(cube_stars))$layer]]
+
+
+
+
+
 # Descargar cubo
 fn = tempfile(fileext = ".nc"); gdalcubes::write_ncdf(cube, fn)
 nc <-  ncdf4::nc_open(fn); vars <- names(nc$var)
@@ -115,6 +113,8 @@ cube_times
 
 nc_times<- if(nrow(cube_times)<2){"X0"}else{ paste0("X", ncdf4::ncvar_get(nc, "time_bnds")[1,]) }
 time_collection<- as.data.frame(gdalcubes::dimension_bounds(cube)[["t"]]) %>% dplyr::mutate(time_id= nc_times, dim3=seq(nrow(.)))
+
+bb<- terra::rast(fn)
 
 # Organizar cubo como raster
 terra_mask<- pbapply::pblapply(vars[5:length(vars)], function(x){ print(x)
@@ -130,6 +130,10 @@ terra_mask<- pbapply::pblapply(vars[5:length(vars)], function(x){ print(x)
     # Cargar capa raster
     key2<- {if(nrow(cube_times)<2){ dplyr::mutate(key, time_id= "X0") }else{ key }} %>% {list(., time_collection)} %>% plyr::join_all()
     brick  <- raster::brick(fn, var= x) %>% terra::rast() %>% terra::resample(study_area, method= "near") %>% terra::mask(study_area)
+    
+    
+    
+    
     
     times<- unique(key2$time_id) 
     layer <- brick[[ times ]];
