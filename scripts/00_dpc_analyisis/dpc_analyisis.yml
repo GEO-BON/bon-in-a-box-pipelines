@@ -3,7 +3,7 @@ description: "This script estima la importancia de unidades espaciales en una es
 inputs:
   data_spatial_unit:
     label: data_spatial_unit 
-    description: tabla de datos que contenga columnas id del sitio o unidad espacial, area por id sitio; si se analiza por periodo debe existir una columna de fecha.
+    description: tabla de datos v2 con esto: que contenga columnas id del sitio o unidad espacial, area por id sitio; si se analiza por periodo debe existir una columna de fecha.
     type: text
     example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
   area_study_area:
