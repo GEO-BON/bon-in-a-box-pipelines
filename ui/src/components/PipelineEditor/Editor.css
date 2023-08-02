@@ -119,6 +119,11 @@ aside.scriptChooser .description {
   border-style: solid;
 }
 
+.ioNode.pipeline {
+  border-style: double;
+  border-width: 5px;
+}
+
 .ioNode:hover,
 .constant:hover,
 .userInput:hover,
@@ -177,6 +182,10 @@ aside.scriptChooser .description {
   margin-right: 3px;
 }
 
+.ioNode.pipeline .inputs .react-flow__handle-left {
+  margin-left: -9px;
+}
+
 .outputs {
   text-align: right;
 }
@@ -184,6 +193,10 @@ aside.scriptChooser .description {
 .outputs .react-flow__handle-right {
   margin-left: 3px;
   margin-right: -7px;
+}
+
+.ioNode.pipeline .outputs .react-flow__handle-right {
+  margin-right: -9px;
 }
 
 .inputs div:hover,
