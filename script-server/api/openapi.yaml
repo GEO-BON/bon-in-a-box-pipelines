@@ -13,44 +13,7 @@ tags:
   - name: placeholder
     description: We could use tags
 paths:
-  /script/list:
-    get:
-      summary: Get a list of available scripts
-      responses:
-        "200":
-          description: Array of script description files
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-                  example: ["helloWorld.yml", "runSDM.yml","SHI.yml"]
-  /script/{scriptPath}/info:
-    get:
-      tags: []
-      summary: Get metadata about this script
-      operationId: getScriptInfo
-      parameters:
-        - name: scriptPath
-          in: path
-          description: Where to find the script in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Returns the metadata, in JSON format
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/info'
-        "400":
-          description: Bad request
-        "404":
-          description: Script not found
+  
   /script/{scriptPath}/run:
     post:
       tags: []
@@ -79,12 +42,17 @@ paths:
           description: Bad request
         "404":
           description: Script not found
-  /pipeline/list:
+  /{type}/list:
     get:
-      summary: Get a list of available pipelines
+      summary: Get a list of available steps of given type
+      parameters:
+        - $ref: '#/parameters/stepType'
       responses:
         "200":
-          description: Array of pipeline description files
+          description:
+            Array of step description files.
+            Script description files are located in the /script folder.
+            Pipeline description files are located in the /pipeline folder.
           content:
             application/json:
               schema:
@@ -92,12 +60,38 @@ paths:
                 items:
                   type: string
                   example: ["SHI.yml", "Folder>SDM.yml"]
-  /pipeline/{descriptionPath}/info:
+  /script/{scriptPath}/info:
+    get:
+      tags: []
+      summary: Get metadata about this script
+      operationId: getScriptInfo
+      parameters:
+        - name: scriptPath
+          in: path
+          description: Where to find the script in ./script folder.
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Returns the metadata, in JSON format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/info'
+        "400":
+          description: Bad request
+        "404":
+          description: Script not found
+  /{type}/{descriptionPath}/info:
     get:
       tags: []
       summary: Get metadata about this pipeline
       operationId: getPipelineInfo
       parameters:
+        - $ref: '#/parameters/stepType'
         - name: descriptionPath
           in: path
           description: Where to find the pipeline in ./pipeline folder.
@@ -273,6 +267,17 @@ paths:
           description: Bad request
         "404":
           description: id not found
+parameters:
+  stepType:
+      name: type
+      in: path
+      description: Script or pipeline
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        enum: [script, pipeline]
 components:
   schemas:
     script_run_result:
