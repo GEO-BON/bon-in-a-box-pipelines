@@ -38,20 +38,6 @@ fun Application.configureRouting() {
 
     routing {
 
-        get("/script/list") {
-            val possible = mutableListOf<String>()
-            val relPathIndex = scriptRoot.absolutePath.length + 1
-            scriptRoot.walkTopDown().forEach { file ->
-                if (file.extension == "yml") {
-                    // Add the relative path, without the script root.
-                    possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
-                }
-            }
-
-            possible.sortWith(String.CASE_INSENSITIVE_ORDER)
-            call.respond(possible)
-        }
-
         get("/script/{scriptPath}/info") {
             try {
                 // Put back the slashes and replace extension by .yml
@@ -89,12 +75,32 @@ fun Application.configureRouting() {
             }
         }
 
-        get("/pipeline/list") {
+        get("/{type}/list") {
+            val type = call.parameters["type"]
+            val root:File
+            val extension:String
+            when(type) {
+                "pipeline" -> {
+                    root = pipelinesRoot
+                    extension = "json"
+                }
+                "script" -> {
+                    root = scriptRoot
+                    extension = "yml"
+                }
+                else -> {
+                    call.respondText(
+                        text = "Invalid type $type. Must be either \"script\" or \"pipeline\".",
+                        status = HttpStatusCode.BadRequest)
+                    return@get
+                }
+            }
+
             val possible = mutableListOf<String>()
-            val relPathIndex = pipelinesRoot.absolutePath.length + 1
-            pipelinesRoot.walkTopDown().forEach { file ->
-                if (file.extension == "json") {
-                    // Add the relative path, without the script root.
+            val relPathIndex = root.absolutePath.length + 1
+            root.walkTopDown().forEach { file ->
+                if (file.extension == extension) {
+                    // Add the relative path, without the root.
                     possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
                 }
             }
