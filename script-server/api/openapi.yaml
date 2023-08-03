@@ -13,7 +13,6 @@ tags:
   - name: placeholder
     description: We could use tags
 paths:
-  
   /script/{scriptPath}/run:
     post:
       tags: []
@@ -47,7 +46,7 @@ paths:
       summary: Get a list of available steps of given type
       operationId: getStepList
       parameters:
-        - $ref: '#/parameters/stepType'
+        - $ref: '#/components/parameters/stepType'
       responses:
         "200":
           description:
@@ -67,8 +66,8 @@ paths:
       summary: Get metadata about this step
       operationId: getStepInfo
       parameters:
-        - $ref: '#/parameters/stepType'
-        - $ref: '#/parameters/descriptionPath'
+        - $ref: '#/components/parameters/stepType'
+        - $ref: '#/components/parameters/descriptionPath'
       responses:
         "200":
           description: Returns the metadata, in JSON format
@@ -85,7 +84,7 @@ paths:
       summary: Get JSON file that describes the pipeline.
       operationId: getPipeline
       parameters:
-        - $ref: '#/parameters/descriptionPath'
+        - $ref: '#/components/parameters/descriptionPath'
       responses:
         "200":
           description: Returns the complete pipeline, in JSON format
@@ -150,18 +149,21 @@ paths:
           description: Bad request
         "404":
           description: Pipeline not found
-  /pipeline/{descriptionPath}/run:
+  /{type}/{descriptionPath}/run:
     post:
       tags: []
-      summary: Run this pipeline
-      operationId: runPipeline
+      summary: Runs the script or pipeline matching `descriptionPath`.
+      operationId: run
       parameters:
-        - $ref: '#/parameters/descriptionPath'
+        - $ref: '#/components/parameters/stepType'
+        - $ref: '#/components/parameters/descriptionPath'
       requestBody:
         $ref: '#/components/requestBodies/run_input_body'
       responses:
         "200":
-          description: Returns the unique ID for this run. It corresponds to the unique output folder.
+          description:
+            Returns the unique ID for this run.
+            It corresponds to the unique output folder.
           content:
             text/plain:
               schema:
@@ -171,14 +173,14 @@ paths:
         "400":
           description: Bad request
         "404":
-          description: Pipeline not found
+          description: Script or pipeline not found
   /pipeline/{id}/outputs:
     get:
       tags: []
       summary: Get the output folders of the scripts composing this pipeline
       operationId: getPipelineOutputs
       parameters:
-        - $ref: '#/parameters/runId'
+        - $ref: '#/components/parameters/runId'
       responses:
         "200":
           description: List of output folders for all the scripts
@@ -200,7 +202,7 @@ paths:
       summary: Stop the specified pipeline run
       operationId: stopPipeline
       parameters:
-        - $ref: '#/parameters/runId'
+        - $ref: '#/components/parameters/runId'
       responses:
         "200":
           description: Pipeline run is stopped (or was already stopped)
@@ -208,39 +210,39 @@ paths:
           description: Bad request
         "404":
           description: id not found
-parameters:
-  stepType:
-    name: type
-    in: path
-    description: Script or pipeline
-    required: true
-    style: simple
-    explode: false
-    schema:
-      type: string
-      enum: [script, pipeline]
-  descriptionPath:
-    name: descriptionPath
-    in: path
-    description:
-      Where to find the step. 
-      For scripts, paths are relative to the /script folder. 
-      For pipelines, paths are relative to the /pipeline folder.
-    required: true
-    style: simple
-    explode: false
-    schema:
-      type: string
-  runId:
-    name: id
-    in: path
-    description: Where to find the pipeline in ./script folder.
-    required: true
-    style: simple
-    explode: false
-    schema:
-      type: string
 components:
+  parameters:
+    stepType:
+      name: type
+      in: path
+      description: Script or pipeline
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        enum: [script, pipeline]
+    descriptionPath:
+      name: descriptionPath
+      in: path
+      description:
+        Where to find the step. 
+        For scripts, paths are relative to the /script folder. 
+        For pipelines, paths are relative to the /pipeline folder.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    runId:
+      name: id
+      in: path
+      description: Where to find the pipeline in ./script folder.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
   schemas:
     script_run_result:
       type: object
