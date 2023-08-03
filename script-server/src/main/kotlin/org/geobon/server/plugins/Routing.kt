@@ -158,12 +158,13 @@ fun Application.configureRouting() {
                 try {
                     call.respondText(runId)
 
-                    val scriptOutputFolders = pipeline.pullFinalOutputs().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
                     pipelineOutputFolder.mkdirs()
-                    val resultFile = File(pipelineOutputFolder, "output.json")
+                    val resultFile = File(pipelineOutputFolder, "pipelineOutput.json")
                     logger.trace("Outputting to $resultFile")
-                    resultFile.writeText(gson.toJson(scriptOutputFolders))
+
                     File(pipelineOutputFolder,"input.json").writeText(inputFileContent)
+                    val scriptOutputFolders = pipeline.pullFinalOutputs().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
+                    resultFile.writeText(gson.toJson(scriptOutputFolders))
                 } catch (ex:Exception) {
                     ex.printStackTrace()
                 } finally {
@@ -181,7 +182,7 @@ fun Application.configureRouting() {
             val pipeline = runningPipelines[id]
             if (pipeline == null) {
                 val outputFolder = File(outputRoot, id.replace(FILE_SEPARATOR, '/'))
-                val outputFile = File(outputFolder, "output.json")
+                val outputFile = File(outputFolder, "pipelineOutput.json")
                 if(outputFile.exists()) {
                     val type = object : TypeToken<Map<String, Any>>() {}.type
                     call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))

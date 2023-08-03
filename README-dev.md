@@ -99,13 +99,13 @@ sequenceDiagram
         Note right of script: 1h timeout for individual script
         script-->>script_server: output.json (script)
         ui->>script_server: pipeline/<id>/outputs
-        script_server-->>ui: output.json (pipeline)
+        script_server-->>ui: pipelineOutput.json (pipeline)
     end
 
 ```
 
 Every second, the UI polls for:
-- output.json from the pipeline, to get the output folders of individual scripts. Stops polling when pipeline stops.
+- pipelineOutput.json from the pipeline, to get the output folders of individual scripts. Stops polling when pipeline stops.
 - logs.txt of individual scripts, for realtime logging, only if log section is opened. Stops when individual script completes, or when log section closed.
 - output.json of individual scripts, to know when script completes and display its outputs. Stops when script stops.
 
