@@ -94,58 +94,58 @@ paths:
               schema:
                 type: object
                 nullable: false
-              example: '
-              {
-                "nodes": [
-                  {
-                    "id": "0",
-                    "type": "io",
-                    "position": {
-                      "x": 236.8125,
-                      "y": 287
+              example: 
+                {
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "type": "io",
+                      "position": {
+                        "x": 236.8125,
+                        "y": 287
+                      },
+                      "data": {
+                        "descriptionFile": "helloWorld>helloPython.yml"
+                      }
                     },
-                    "data": {
-                      "descriptionFile": "helloWorld>helloPython.yml"
+                    {
+                      "id": "1",
+                      "type": "output",
+                      "position": {
+                        "x": 593.8125,
+                        "y": 289
+                      },
+                      "data": {
+                        "label": "Output"
+                      }
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "source": "0",
+                      "sourceHandle": "increment",
+                      "target": "1",
+                      "targetHandle": null,
+                      "id": "reactflow__edge-0increment-1"
+                    }
+                  ],
+                  "inputs": {
+                    "helloWorld>helloPython.yml@0|some_int": {
+                      "description": "A number that we will increment",
+                      "label": "Some int",
+                      "type": "int",
+                      "example": 3
                     }
                   },
-                  {
-                    "id": "1",
-                    "type": "output",
-                    "position": {
-                      "x": 593.8125,
-                      "y": 289
-                    },
-                    "data": {
-                      "label": "Output"
+                  "outputs": {
+                    "helloWorld>helloPython.yml@0|increment": {
+                      "description": "bla bla",
+                      "label": "A number (input++)",
+                      "type": "int",
+                      "example": 4
                     }
                   }
-                ],
-                "edges": [
-                  {
-                    "source": "0",
-                    "sourceHandle": "increment",
-                    "target": "1",
-                    "targetHandle": null,
-                    "id": "reactflow__edge-0increment-1"
-                  }
-                ],
-                "inputs": {
-                  "helloWorld>helloPython.yml@0|some_int": {
-                    "description": "A number that we will increment",
-                    "label": "Some int",
-                    "type": "int",
-                    "example": 3
-                  }
-                },
-                "outputs": {
-                  "helloWorld>helloPython.yml@0|increment": {
-                    "description": "bla bla",
-                    "label": "A number (input++)",
-                    "type": "int",
-                    "example": 4
-                  }
                 }
-              }'
         "400":
           description: Bad request
         "404":
@@ -384,7 +384,8 @@ components:
         text/plain:
           schema:
             type: string
-            example: '{ 
-              "occurence":"/output/result/from/previous/script", 
-              "intensity":3
-            } '
+            example: 
+              { 
+                "occurence":"/output/result/from/previous/script", 
+                "intensity":3
+              }
