@@ -10,21 +10,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 
-class RootPipeline(descriptionFile: File, inputsJSON: String? = null) :
-    Pipeline(StepId("", ""), descriptionFile, inputsJSON) {
-
-    constructor(relPath: String, inputsJSON: String? = null) : this(File(pipelineRoot, relPath), inputsJSON)
-
-    init {
-        linkInputs()
-
-        val errors = validateGraph()
-        if(errors.isNotEmpty()) {
-            throw RuntimeException(errors)
-        }
-    }
-}
-
 open class Pipeline private constructor(
     override val id: StepId,
     pipelineJSON: JSONObject,
@@ -249,6 +234,20 @@ open class Pipeline private constructor(
     }
 
     companion object {
+        fun createRootPipeline(relPath: String, inputsJSON: String? = null) =
+            createRootPipeline(File(pipelineRoot, relPath), inputsJSON)
+
+        fun createRootPipeline(descriptionFile: File, inputsJSON: String? = null): Pipeline {
+            return Pipeline(StepId("", ""), descriptionFile, inputsJSON).apply {
+                linkInputs()
+
+                val errors = validateGraph()
+                if (errors.isNotEmpty()) {
+                    throw RuntimeException(errors)
+                }
+            }
+        }
+
         private fun inputsToConstants(inputsJSON:String?, pipelineJSON: JSONObject) : MutableMap<String, Pipe> {
             if(inputsJSON == null)
                 return mutableMapOf()

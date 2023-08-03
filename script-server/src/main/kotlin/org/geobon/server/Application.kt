@@ -2,7 +2,6 @@ package org.geobon.server
 
 import io.ktor.server.application.*
 import io.ktor.server.routing.*
-import org.geobon.server.plugins.checkCacheVersion
 import org.geobon.server.plugins.*
 
 fun main(args: Array<String>): Unit =
