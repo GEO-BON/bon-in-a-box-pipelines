@@ -2,6 +2,7 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.teststeps.RecordPipe
 import org.geobon.utils.withProductionPaths
 import org.geobon.utils.withProductionScripts
@@ -198,7 +199,7 @@ internal class PullLayersByIdTest {
     @Test
     fun `given a pipeline with PullLayersById_when ran_then replaces the expected layer`() = runTest {
         withProductionScripts {
-            val pipeline = RootPipeline("pullLayersByIdTest.json",
+            val pipeline = createRootPipeline("pullLayersByIdTest.json",
             """{
                 "pipeline>PullLayersById.yml@9|with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
             }""".trimIndent())

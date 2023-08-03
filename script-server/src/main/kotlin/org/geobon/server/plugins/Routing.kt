@@ -8,8 +8,8 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.geobon.pipeline.*
+import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
-import org.geobon.script.ScriptRun
 import org.geobon.utils.toMD5
 import org.json.JSONObject
 import org.slf4j.Logger
@@ -142,7 +142,9 @@ fun Application.configureRouting() {
             }   
         }
 
-        post("/pipeline/{descriptionPath}/run") {
+        post("/{type}/{descriptionPath}/run") {
+            val singleScript = call.parameters["type"] == "script"
+
             val inputFileContent = call.receive<String>()
             val descriptionPath = call.parameters["descriptionPath"]!!
 
@@ -152,7 +154,20 @@ fun Application.configureRouting() {
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
             runCatching {
-                RootPipeline(descriptionPath.replace(FILE_SEPARATOR, '/'), inputFileContent)
+                val relPath = descriptionPath.replace(FILE_SEPARATOR, '/')
+//                if(singleScript) {
+//                    val scriptFile = File(scriptRoot, relPath)
+//                    if(scriptFile.exists()) {
+//                        val run = ScriptRun(scriptFile, inputFileContent)
+//                    } else {
+//                        call.respondText(
+//                            text = "Script $descriptionPath not found on this server.",
+//                            status = HttpStatusCode.NotFound
+//                        )
+//                    }
+//                } else {
+                    createRootPipeline(relPath, inputFileContent)
+//                }
             }.onSuccess { pipeline ->
                 runningPipelines[runId] = pipeline
                 try {
