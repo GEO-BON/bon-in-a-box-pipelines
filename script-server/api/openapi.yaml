@@ -45,6 +45,7 @@ paths:
   /{type}/list:
     get:
       summary: Get a list of available steps of given type
+      operationId: getStepList
       parameters:
         - $ref: '#/parameters/stepType'
       responses:
@@ -60,46 +61,14 @@ paths:
                 items:
                   type: string
                   example: ["SHI.yml", "Folder>SDM.yml"]
-  /script/{scriptPath}/info:
-    get:
-      tags: []
-      summary: Get metadata about this script
-      operationId: getScriptInfo
-      parameters:
-        - name: scriptPath
-          in: path
-          description: Where to find the script in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      responses:
-        "200":
-          description: Returns the metadata, in JSON format
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/info'
-        "400":
-          description: Bad request
-        "404":
-          description: Script not found
   /{type}/{descriptionPath}/info:
     get:
       tags: []
-      summary: Get metadata about this pipeline
-      operationId: getPipelineInfo
+      summary: Get metadata about this step
+      operationId: getStepInfo
       parameters:
         - $ref: '#/parameters/stepType'
-        - name: descriptionPath
-          in: path
-          description: Where to find the pipeline in ./pipeline folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/parameters/descriptionPath'
       responses:
         "200":
           description: Returns the metadata, in JSON format
@@ -110,20 +79,13 @@ paths:
         "400":
           description: Bad request
         "404":
-          description: Pipeline not found
+          description: Step not found
   /pipeline/{descriptionPath}/get:
     get:
       summary: Get JSON file that describes the pipeline
       operationId: getPipeline
       parameters:
-        - name: descriptionPath
-          in: path
-          description: Where to find the pipeline in ./pipeline folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/parameters/descriptionPath'
       responses:
         "200":
           description: Returns the complete pipeline, in JSON format
@@ -194,14 +156,7 @@ paths:
       summary: Run this pipeline
       operationId: runPipeline
       parameters:
-        - name: descriptionPath
-          in: path
-          description: Where to find the script in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/parameters/descriptionPath'
       requestBody:
         $ref: '#/components/requestBodies/run_input_body'
       responses:
@@ -269,15 +224,27 @@ paths:
           description: id not found
 parameters:
   stepType:
-      name: type
-      in: path
-      description: Script or pipeline
-      required: true
-      style: simple
-      explode: false
-      schema:
-        type: string
-        enum: [script, pipeline]
+    name: type
+    in: path
+    description: Script or pipeline
+    required: true
+    style: simple
+    explode: false
+    schema:
+      type: string
+      enum: [script, pipeline]
+  descriptionPath:
+    name: descriptionPath
+    in: path
+    description:
+      Where to find the step. 
+      For scripts, paths are relative to the /script folder. 
+      For pipelines, paths are relative to the /pipeline folder.
+    required: true
+    style: simple
+    explode: false
+    schema:
+      type: string
 components:
   schemas:
     script_run_result:
