@@ -82,7 +82,7 @@ paths:
           description: Step not found
   /pipeline/{descriptionPath}/get:
     get:
-      summary: Get JSON file that describes the pipeline
+      summary: Get JSON file that describes the pipeline.
       operationId: getPipeline
       parameters:
         - $ref: '#/parameters/descriptionPath'
@@ -178,14 +178,7 @@ paths:
       summary: Get the output folders of the scripts composing this pipeline
       operationId: getPipelineOutputs
       parameters:
-        - name: id
-          in: path
-          description: Where to find the pipeline in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/parameters/runId'
       responses:
         "200":
           description: List of output folders for all the scripts
@@ -207,14 +200,7 @@ paths:
       summary: Stop the specified pipeline run
       operationId: stopPipeline
       parameters:
-        - name: id
-          in: path
-          description: Where to find the pipeline in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/parameters/runId'
       responses:
         "200":
           description: Pipeline run is stopped (or was already stopped)
@@ -240,6 +226,15 @@ parameters:
       Where to find the step. 
       For scripts, paths are relative to the /script folder. 
       For pipelines, paths are relative to the /pipeline folder.
+    required: true
+    style: simple
+    explode: false
+    schema:
+      type: string
+  runId:
+    name: id
+    in: path
+    description: Where to find the pipeline in ./script folder.
     required: true
     style: simple
     explode: false
