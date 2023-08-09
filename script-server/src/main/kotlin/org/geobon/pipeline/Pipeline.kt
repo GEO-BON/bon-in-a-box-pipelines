@@ -9,15 +9,15 @@ import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.File
 
-open class Pipeline private constructor(
+open class Pipeline constructor(
     override val id: StepId,
-    private val descriptionFile: File,
+    private val debugName: String,
     private val steps:Map<String, IStep>,
     final override val inputs: MutableMap<String, Pipe>,
     final override val outputs: MutableMap<String, Output> = mutableMapOf()
 ) : IStep {
 
-    private val logger = LoggerFactory.getLogger(descriptionFile.nameWithoutExtension)
+    private val logger = LoggerFactory.getLogger(debugName)
 
     fun getPipelineOutputs(): List<Pipe> = outputs.values.map { it }
 
@@ -120,7 +120,7 @@ open class Pipeline private constructor(
     }
 
     override fun toString(): String {
-        return "Pipeline(descriptionFile=${descriptionFile.relativeTo(pipelineRoot)})"
+        return "Pipeline(${debugName})"
     }
 
     companion object {
@@ -241,7 +241,7 @@ open class Pipeline private constructor(
 
             return Pipeline(
                 stepId,
-                descriptionFile,
+                descriptionFile.relativeTo(pipelineRoot.parentFile).path,
                 steps,
                 inputsToConstants(inputsJSON, pipelineJSON),
                 outputs
