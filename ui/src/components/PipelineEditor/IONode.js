@@ -32,8 +32,8 @@ export default function IONode({ id, data }) {
 
   if (!metadata) return null
 
-  let divClass = /\.json$/i.test(descriptionFileLocation) ? 'pipeline' : 'script'
-  return <table className={`ioNode ${divClass}`}><tbody>
+  let stepType = /\.json$/i.test(descriptionFileLocation) ? 'pipeline' : 'script'
+  return <table className={`ioNode ${stepType}`}><tbody>
     <tr>
       <td className='inputs'>
         {metadata.inputs && Object.entries(metadata.inputs).map(([inputName, desc]) => {
