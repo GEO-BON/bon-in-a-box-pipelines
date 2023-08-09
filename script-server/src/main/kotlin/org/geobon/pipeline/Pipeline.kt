@@ -5,6 +5,7 @@ import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 import org.geobon.pipeline.RunContext.Companion.pipelineRoot
+import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -12,9 +13,12 @@ import java.io.File
 open class Pipeline constructor(
     override val id: StepId,
     private val debugName: String,
+    /** Node id to Step */
     private val steps:Map<String, IStep>,
+    /** IO Id to Input */
     final override val inputs: MutableMap<String, Pipe>,
-    final override val outputs: MutableMap<String, Output> = mutableMapOf()
+    /** IO Id to Output */
+    final override val outputs: Map<String, Output> = mutableMapOf()
 ) : IStep {
 
     private val logger = LoggerFactory.getLogger(debugName)
@@ -40,7 +44,7 @@ open class Pipeline constructor(
             val nodeId = getStepNodeId(key)
             val inputId = getStepInput(key) ?: Step.DEFAULT_IN // inputId uses default when step is a UserInput
             val step = steps[nodeId]
-                ?: throw RuntimeException("Step id \"$nodeId\" does not exist in pipeline")
+                ?: throw RuntimeException("Step id \"$nodeId\" does not exist in pipeline. Available steps are ${steps.keys}.")
 
             step.inputs[inputId] = pipe
         }
@@ -124,6 +128,34 @@ open class Pipeline constructor(
     }
 
     companion object {
+        fun createMiniPipelineFromScript(descriptionFile: File, descriptionFileId:String, inputsJSON: String? = null) : Pipeline {
+            val pipelineId = StepId("", "")
+            val step = ScriptStep(
+                descriptionFile,
+                StepId(
+                    descriptionFileId,
+                    "1",
+                    pipelineId
+                )
+            )
+
+            val miniPipeline = Pipeline(
+                pipelineId,
+                descriptionFile.relativeTo(scriptRoot.parentFile).path,
+                mapOf(step.id.nodeId to step),
+                inputsToConstants(inputsJSON, step),
+                step.outputs.toMutableMap()
+            )
+
+            miniPipeline.linkInputs()
+            val errors = miniPipeline.validateGraph()
+            if (errors.isNotEmpty()) {
+                throw RuntimeException(errors)
+            }
+
+            return miniPipeline
+        }
+
         fun createRootPipeline(relPath: String, inputsJSON: String? = null) =
             createRootPipeline(File(pipelineRoot, relPath), inputsJSON)
 
@@ -262,6 +294,23 @@ open class Pipeline constructor(
 
                     constants[key] = createConstant(key, inputsParsed, type, key)
                 }
+            }
+
+            return constants
+        }
+
+        private fun inputsToConstants(inputsJSON: String?, step: ScriptStep): MutableMap<String, Pipe> {
+            if (inputsJSON == null)
+                return mutableMapOf()
+
+            val inputsParsed = JSONObject(inputsJSON)
+            val constants = mutableMapOf<String, Pipe>()
+            inputsParsed.keySet().forEach { key ->
+                val type = step.inputsDefinition[key]
+                    ?: throw RuntimeException("Input received \"$key\" is not listed in script inputs. Listed inputs are ${step.inputsDefinition.keys}")
+
+                val inputId = IOId(step.id, key)
+                constants[inputId.toBreadcrumbs()] = createConstant(key, inputsParsed, type, key)
             }
 
             return constants

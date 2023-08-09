@@ -2,6 +2,7 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
 import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import java.io.File
 import kotlin.test.*
@@ -287,5 +288,33 @@ internal class PipelineTest {
 
         // Result should still be valid
         assertEquals(6, pipeline.outputs["twoBranches.json@14|divideFloat.yml@5|result"]!!.pull())
+    }
+
+    @Test
+    fun `given a mini pipeline_when ran_then outputs generated`() = runTest {
+        val pipeline = createMiniPipelineFromScript(
+            File(RunContext.scriptRoot, "helloWorld/helloPython.yml"),
+            "helloWorld>helloPython.yml",
+            """{ "some_int": "7" }"""
+        )
+
+        val outputs = pipeline.pullFinalOutputs()
+        val scriptOutputDir = File(outputRoot, outputs["helloWorld>helloPython.yml@1"]!!)
+        val scriptOutputFile = File(scriptOutputDir, "output.json")
+        assertTrue(scriptOutputFile.exists())
+
+        // The results are there
+        assertContains(scriptOutputFile.readText(), "\"increment\": 8")
+    }
+
+    @Test
+    fun `given a mini pipeline_when ran with bad key_then exception occurs`() = runTest {
+        assertFailsWith<RuntimeException> {
+            createMiniPipelineFromScript(
+                File(RunContext.scriptRoot, "helloWorld/helloPython.yml"),
+                "helloWorld>helloPython.yml",
+                """{ "bad_key": "7" }"""
+            )
+        }
     }
 }

@@ -14,11 +14,11 @@ data class IOId(val step: StepId, val inputOrOutput: String? = null) {
     constructor(pipelineId: StepId, stepIoId:IOId) : this(pipelineId, stepIoId.toString())
 
     override fun toString(): String {
-        return "${step.toString()}" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
+        return step.toString() + (if (inputOrOutput == null) "" else "|$inputOrOutput")
     }
 
     fun toBreadcrumbs(): String {
-        return "${step.toBreadcrumbs()}" + (if (inputOrOutput == null) "" else "|$inputOrOutput")
+        return step.toBreadcrumbs() + (if (inputOrOutput == null) "" else "|$inputOrOutput")
     }
 }
 

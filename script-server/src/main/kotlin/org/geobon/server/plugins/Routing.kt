@@ -8,9 +8,9 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.geobon.pipeline.*
+import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
 import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
-import org.geobon.script.ScriptRun
 import org.geobon.utils.toMD5
 import org.json.JSONObject
 import org.slf4j.Logger
@@ -55,7 +55,7 @@ fun Application.configureRouting() {
                 ex.printStackTrace()
             }
         }
-
+/*
         post("/script/{scriptPath}/run") {
             val inputFileContent = call.receiveText()
             logger.info("scriptPath: ${call.parameters["scriptPath"]}\nbody:$inputFileContent")
@@ -75,7 +75,7 @@ fun Application.configureRouting() {
                 call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
             }
         }
-
+*/
         get("/{type}/list") {
             val type = call.parameters["type"]
             val root:File
@@ -154,21 +154,25 @@ fun Application.configureRouting() {
             val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
+            // Validate the existence of the file
+            val descriptionFile = File(
+                if (singleScript) scriptRoot else pipelinesRoot,
+                descriptionPath.replace(FILE_SEPARATOR, '/')
+            )
+            if(!descriptionFile.exists()) {
+                call.respondText(
+                    text = "Script $descriptionPath not found on this server.".also { logger.warn(it) },
+                    status = HttpStatusCode.NotFound
+                )
+                return@post
+            }
+
             runCatching {
-                val relPath = descriptionPath.replace(FILE_SEPARATOR, '/')
-//                if(singleScript) {
-//                    val scriptFile = File(scriptRoot, relPath)
-//                    if(scriptFile.exists()) {
-//                        val run = ScriptRun(scriptFile, inputFileContent)
-//                    } else {
-//                        call.respondText(
-//                            text = "Script $descriptionPath not found on this server.",
-//                            status = HttpStatusCode.NotFound
-//                        )
-//                    }
-//                } else {
-                    createRootPipeline(relPath, inputFileContent)
-//                }
+                if(singleScript) {
+                    createMiniPipelineFromScript(descriptionFile, descriptionPath, inputFileContent)
+                } else {
+                    createRootPipeline(descriptionFile, inputFileContent)
+                }
             }.onSuccess { pipeline ->
                 runningPipelines[runId] = pipeline
                 try {
