@@ -13,34 +13,6 @@ tags:
   - name: placeholder
     description: We could use tags
 paths:
-  /script/{scriptPath}/run:
-    post:
-      tags: []
-      summary: Run this script
-      description: Run the script specified in the URL. Must include the extension.
-      operationId: runScript
-      parameters:
-        - name: scriptPath
-          in: path
-          description: Where to find the script in ./script folder
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        $ref: '#/components/requestBodies/run_input_body'
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/script_run_result'
-        "400":
-          description: Bad request
-        "404":
-          description: Script not found
   /{type}/list:
     get:
       summary: Get a list of available steps of given type
