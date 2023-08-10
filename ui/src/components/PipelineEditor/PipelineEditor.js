@@ -795,7 +795,7 @@ export function PipelineEditor(props) {
                 <button onClick={onLoadFromServerBtnClick}>
                   Load from server
                 </button>
-                <button onClick={onSave}>Save</button>
+                <button onClick={onSave}>Save to clipboard</button>
               </div>
 
               <Controls />

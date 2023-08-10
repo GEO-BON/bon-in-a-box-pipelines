@@ -253,7 +253,10 @@ The pipeline editor allows you to create pipelines by plugging steps together.
 
 The left pane shows the available steps, the right pane shows the canvas.
 
-**To add a step:** drag and drop from the left pane to the canvas.
+**To add a step:** drag and drop from the left pane to the canvas. Steps that are single scripts will display with a single border, while steps that are pipelines will display with a double border.
+
+![image](https://github.com/GEO-BON/biab-2.0/assets/6223744/f590bd01-d333-4712-934b-242a0f925f58)
+
 
 **To connect steps:** drag to connect an output and an input handle. Input handles are on the left, output handles are on the right.
 
