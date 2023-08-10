@@ -39,43 +39,6 @@ fun Application.configureRouting() {
 
     routing {
 
-        get("/script/{scriptPath}/info") {
-            try {
-                // Put back the slashes and replace extension by .yml
-                val ymlPath = call.parameters["scriptPath"]!!.run{replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")}
-                val scriptFile = File(scriptRoot, ymlPath)
-                if (scriptFile.exists()) {
-                    call.respond(Yaml().load(scriptFile.readText()) as Map<String, Any>)
-                } else {
-                    call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
-                    logger.debug("404: Paths.getPipelineInfo ${call.parameters["scriptPath"]}")
-                }
-            } catch (ex: Exception) {
-                call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
-                ex.printStackTrace()
-            }
-        }
-/*
-        post("/script/{scriptPath}/run") {
-            val inputFileContent = call.receiveText()
-            logger.info("scriptPath: ${call.parameters["scriptPath"]}\nbody:$inputFileContent")
-
-            val scriptRelPath = call.parameters["scriptPath"]!!.replace(FILE_SEPARATOR, '/')
-            val scriptFile = File(scriptRoot, scriptRelPath)
-            if(scriptFile.exists()) {
-                val run = ScriptRun(scriptFile, inputFileContent)
-                run.execute()
-                call.respond(
-                    HttpStatusCode.OK, ScriptRunResult(
-                        run.logFile.run { if(exists()) readText() else "" },
-                        run.results
-                    )
-                )
-            } else {
-                call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
-            }
-        }
-*/
         get("/{type}/list") {
             val type = call.parameters["type"]
             val root:File
@@ -108,6 +71,23 @@ fun Application.configureRouting() {
 
             possible.sortWith(String.CASE_INSENSITIVE_ORDER)
             call.respond(possible)
+        }
+
+        get("/script/{scriptPath}/info") {
+            try {
+                // Put back the slashes and replace extension by .yml
+                val ymlPath = call.parameters["scriptPath"]!!.run{replace(FILE_SEPARATOR, '/').replace(Regex("""\.\w+$"""), ".yml")}
+                val scriptFile = File(scriptRoot, ymlPath)
+                if (scriptFile.exists()) {
+                    call.respond(Yaml().load(scriptFile.readText()) as Map<String, Any>)
+                } else {
+                    call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
+                    logger.debug("404: Paths.getPipelineInfo ${call.parameters["scriptPath"]}")
+                }
+            } catch (ex: Exception) {
+                call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
+                ex.printStackTrace()
+            }
         }
 
         get("/pipeline/{descriptionPath}/info") {
