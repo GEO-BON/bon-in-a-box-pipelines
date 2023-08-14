@@ -1,0 +1,37 @@
+script: auk_filter.R
+description: "This script filters eBird basic dataset checklist and observation files according to the study area and eBird best practices for occupancy models to generate a single zero-filled dataframe with site IDs."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  ebd_file:
+    label: ebd_file
+    description: "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products"
+    type: text
+    example:  'scripts/00_auk_filter/input/ebd_CO_relDec-2022.txt'
+  ebd_sampling_file:
+    label: ebd_sampling_file
+    description: "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products"
+    type: text
+    example: 'scripts/00_auk_filter/input/ebd_samp_Col_relDec-2022-002.txt'
+  studyarea:
+    label: studyarea
+    description: "Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with WGS_1984 geographic coordinate system. This file comes from the 'studyarea_to_grid' step and is use to plot the study area in Bon in a Box and should be used when biological data coordinates are in WGS_1984 geographic coordinate system. It provides a geographical grid to the study area to define the sites for occupancy modelling."
+    type: text
+    example: 'scripts/00_auk_filter/input/raster_study_area_4326_path.tif'
+  species:
+    label: species
+    description: "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy"
+    type: text
+    example: "Setophaga fusca"
+outputs:
+  dir_ebd_zerofill:
+    label: dir_ebd_zerofill
+    description: 'Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.'
+    type: text/csv	
+  dir_table_observed:
+    label: dir_table_observed
+    description: 'Numerical value referring to the EPSG code used as the spatial reference system for the study area. This code specifies the reference coordinate system of the val_wkt_path file.'
+    type: text/csv
+  dir_GeoJSON_points:
+    label: dir_GeoJSON_points
+    description: 'Text string referring to the file path of the generated GeoJSON (.geojson) file that represents the boundaries of the study area. The GeoJSON file (Geospatial JavaScript Object Notation) is a format for storing spatial data that describes the geometry of the study area.'
+    type: application/geo+json	
