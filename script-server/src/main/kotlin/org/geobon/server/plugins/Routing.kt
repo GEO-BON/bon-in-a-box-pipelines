@@ -29,12 +29,6 @@ private val pipelinesRoot = File(System.getenv("PIPELINES_LOCATION"))
 private val runningPipelines = mutableMapOf<String, Pipeline>()
 private val logger: Logger = LoggerFactory.getLogger("Server")
 
-// TODO: this will be removed when we migrate scripts to work like pipelines
-data class ScriptRunResult(
-    val logs: String? = null,
-    val files: Map<String, Any> = mapOf()
-) 
-
 fun Application.configureRouting() {
 
     routing {
