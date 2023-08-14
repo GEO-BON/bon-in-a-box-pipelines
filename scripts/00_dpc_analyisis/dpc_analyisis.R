@@ -137,19 +137,14 @@ output<- tryCatch({
     
    ########################PEDAZO QUE FALTA##################################
     
-    #Calculate de dPC index
-    result_dPC$dPC = ((result_dPC$PC- result_dPC$dPC_out))/result_dPC$PC
-    
-    dPC = as.data.frame(matrix(NA,ncol = 3, nrow = 0))
-    colnames(dPC) = c("Period", "id_pa","dPC")
-    
     #Calculate the dPC index by period of time
     for (i in decades) {
-      filter = result_dPC[result_dPC$Period==i,]
-      min_dpc =min(filter$dPC)
-      min_dp_row=which(filter$dPC %in% min_dpc)
-      min_dpc_id = filter[min_dp_row,]
-      dpc_decade_df = data.frame(Period = i,id_pa = min_dpc_id$id_pa, dPC = min_dpc_id$dPC)
+      filter = result_dPC[result_dPC$Period==decades[i],]
+      order = filter[with(filter, order(-filter$dPC)), ]
+      if(nrow(order)>=5){
+        dpc_decade_df = order[5,]
+      } else
+        dpc_decade_df = order
       dPC = rbind.data.frame(dPC,dpc_decade_df)
     }
     
