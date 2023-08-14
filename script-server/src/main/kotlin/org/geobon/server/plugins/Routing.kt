@@ -123,8 +123,10 @@ fun Application.configureRouting() {
             val inputFileContent = call.receive<String>()
             val descriptionPath = call.parameters["descriptionPath"]!!
 
+            val withoutExtension = descriptionPath.removeSuffix(".json").removeSuffix(".yml")
+
             // Unique   to this pipeline                                               and to these params
-            val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
+            val runId = withoutExtension + FILE_SEPARATOR + inputFileContent.toMD5()
             val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
@@ -154,7 +156,7 @@ fun Application.configureRouting() {
 
                     pipelineOutputFolder.mkdirs()
                     val resultFile = File(pipelineOutputFolder, "pipelineOutput.json")
-                    logger.trace("Outputting to $resultFile")
+                    logger.trace("Pipeline outputting to {}", resultFile)
 
                     File(pipelineOutputFolder,"input.json").writeText(inputFileContent)
                     val scriptOutputFolders = pipeline.pullFinalOutputs().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
@@ -171,15 +173,16 @@ fun Application.configureRouting() {
             }
         }
         
-        get("/pipeline/{id}/outputs") {
+        get("/{type}/{id}/outputs") {
+            // val type = call.parameters["type"]!! Type here is a placeholder to make the API more uniform.
             val id = call.parameters["id"]!!
             val pipeline = runningPipelines[id]
             if (pipeline == null) {
                 val outputFolder = File(outputRoot, id.replace(FILE_SEPARATOR, '/'))
                 val outputFile = File(outputFolder, "pipelineOutput.json")
                 if(outputFile.exists()) {
-                    val type = object : TypeToken<Map<String, Any>>() {}.type
-                    call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
+                    val typeToken = object : TypeToken<Map<String, Any>>() {}.type
+                    call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), typeToken))
                 } else {
                     call.respondText(text = "Run \"$id\" was not found on this server.", status = HttpStatusCode.NotFound)
                 }
