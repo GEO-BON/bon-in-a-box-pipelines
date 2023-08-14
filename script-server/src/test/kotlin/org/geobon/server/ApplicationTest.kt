@@ -49,7 +49,6 @@ class ApplicationTest {
 
         client.get("/pipeline/$id/outputs").apply {
             val result = JSONObject(bodyAsText())
-            println(result)
 
             val folder = File(
                 outputRoot,
@@ -113,7 +112,6 @@ class ApplicationTest {
 
         client.get("/pipeline/$id/outputs").apply {
             val result = JSONObject(bodyAsText())
-            println(result)
 
             val folder = File(
                 outputRoot,
@@ -123,6 +121,79 @@ class ApplicationTest {
 
             val files = folder.listFiles()
             assertTrue(files!!.size >= 3, "Expected input, output and log files to be there.\nFound ${files.toList()}")
+        }
+    }
+
+    @Test
+    fun `given script exists_when getting info_then info returned`() = testApplication {
+        client.get("/script/helloWorld>helloPython.yml/info").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            val result = JSONObject(bodyAsText())
+            assertTrue(result.has("script"))
+            assertTrue(result.has("description"))
+            assertTrue(result.has("inputs"))
+            assertTrue(result.has("outputs"))
+        }
+    }
+
+    @Test
+    fun `given script does not exist_when getting info_then 404`() = testApplication {
+        client.get("/script/non-existing/info").apply {
+            assertEquals(HttpStatusCode.NotFound, status)
+        }
+    }
+    @Test
+    fun `given pipeline exists_when getting info_then info returned`() = testApplication {
+        client.get("/pipeline/helloWorld.json/info").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            val result = JSONObject(bodyAsText())
+            assertTrue(result.has("inputs"))
+            assertTrue(result.has("outputs"))
+            assertFalse(result.has("nodes"))
+            assertFalse(result.has("edges"))
+        }
+    }
+
+    @Test
+    fun `given pipeline does not exist_when getting info_then 404`() = testApplication {
+        client.get("/pipeline/non-existing/info").apply {
+            assertEquals(HttpStatusCode.NotFound, status)
+        }
+    }
+
+    @Test
+    fun `given pipeline exists_when getting structure_then returned`() = testApplication {
+        client.get("/pipeline/helloWorld.json/get").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            val result = JSONObject(bodyAsText())
+            assertTrue(result.has("inputs"))
+            assertTrue(result.has("outputs"))
+            assertTrue(result.has("nodes"))
+            assertTrue(result.has("edges"))
+        }
+    }
+
+    @Test
+    fun `given pipeline does not exist_when getting structure_then 404`() = testApplication {
+        client.get("/pipeline/non-existing/get").apply {
+            assertEquals(HttpStatusCode.NotFound, status)
+        }
+    }
+
+    @Test
+    fun `given run does not exist_when getting outputs_then 404`() = testApplication {
+        client.get("/pipeline/1234/outputs").apply {
+            assertEquals(HttpStatusCode.NotFound, status)
+        }
+    }
+
+    @Test
+    fun `given run does not exist_when trying to stop_then 412`() = testApplication {
+        client.get("/pipeline/1234/stop").apply {
+            assertEquals(HttpStatusCode.NotFound, status)
+        }
+        client.get("/script/1234/stop").apply {
+            assertEquals(HttpStatusCode.NotFound, status)
         }
     }
 

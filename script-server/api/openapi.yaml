@@ -169,11 +169,12 @@ paths:
           description: Bad request
         "404":
           description: id not found
-  /pipeline/{id}/stop:
+  /{type}/{id}/stop:
     get:
       summary: Stop the specified pipeline run
-      operationId: stopPipeline
+      operationId: stop
       parameters:
+        - $ref: '#/components/parameters/stepType'
         - $ref: '#/components/parameters/runId'
       responses:
         "200":
