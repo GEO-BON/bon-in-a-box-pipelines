@@ -142,7 +142,7 @@ output<- tryCatch({
       filter = result_dPC[result_dPC$Period==decades[i],]
       order = filter[with(filter, order(-filter$dPC)), ]
       if(nrow(order)>=5){
-        dpc_decade_df = order[5,]
+        dpc_decade_df = order[1:5,]
       } else
         dpc_decade_df = order
       dPC = rbind.data.frame(dPC,dpc_decade_df)
