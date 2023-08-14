@@ -20,10 +20,10 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
 
 # Option 1: Setting for production pipeline purposes. This is designed for use in a production environment or workflow.
-# Sys.getenv("SCRIPT_LOCATION")
+Sys.getenv("SCRIPT_LOCATION")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
-outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
+# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
 
 
 
@@ -33,33 +33,8 @@ outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-# Adjust input 1
-input<- lapply(input, function(x) {  
-  if (length(x)>0){
-    if( grepl("/output/", x) ){
-      sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x}
-  }else {x}
-} ) 
-
-# Adjust input 2
-input <- lapply(input, function(x) {
-  if(tools::file_ext(x) %in% 'json'){
-    pattern<-  "/\\{\\{(.+?)\\}\\}/"
-    element <-  stringr::str_extract(x, pattern) %>% {gsub("[\\{\\}/]", "", .)}
-    folder_json<- gsub(pattern, "/", x) %>% dirname() %>% list.files(full.names = T) %>%
-      {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
-    object<- rjson::fromJSON(file=file.path(folder_json, "output.json"))[[element]]
-  } else {x}    }    )
-
-# Adjust input 3
-input<- lapply(input, function(x) {  
-  if (length(x)>0){
-    if( grepl("/output/", x) ){
-      sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x}
-  }else {x}
-} )
-
-
+input<- lapply(input, function(x) if( grepl("/", x) ){
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # adjust input 1
 
 
 
