@@ -64,7 +64,7 @@ abstract class YMLStep(
 
     override fun onInputsReceived(resolvedInputs: Map<String, Any?>) {
         // Now that we know the inputs are valid, record the id
-        context = RunContext(yamlFile, resolvedInputs.toString())
+        context = RunContext(yamlFile, resolvedInputs)
 
         try { // Validation
             inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->

@@ -30,13 +30,13 @@ internal class ScriptRunTest {
 
     @Test
     fun `given script has been run previously_when running again_then cache is used`() = runTest {
-        val run1 = ScriptRun(File(scriptRoot, "1in1out.py"), """{"some_int":5}""")
+        val run1 = ScriptRun(File(scriptRoot, "1in1out.py"), mapOf("some_int" to 5))
         run1.execute()
         assertNotNull(run1.results["increment"], "increment key not found in ${run1.results}")
         assertEquals(6, run1.results["increment"]!!)
         val run1Time = run1.resultFile.lastModified()
 
-        val run2 = ScriptRun(File(scriptRoot, "1in1out.py"), """{"some_int":5}""")
+        val run2 = ScriptRun(File(scriptRoot, "1in1out.py"), mapOf("some_int" to 5))
         run2.execute()
         assertNotNull(run2.results["increment"], "increment key not found in ${run2.results}")
         assertEquals(6, run2.results["increment"]!!)
@@ -47,13 +47,13 @@ internal class ScriptRunTest {
 
     @Test
     fun `given script has been run previously_when running with different parameters_then script ran again`() = runTest {
-        val run1 = ScriptRun(File(scriptRoot, "1in1out.py"), """{"some_int":5}""")
+        val run1 = ScriptRun(File(scriptRoot, "1in1out.py"), mapOf("some_int" to 5))
         run1.execute()
         assertNotNull(run1.results["increment"], "increment key not found in ${run1.results}")
         assertEquals(6, run1.results["increment"]!!)
         val run1Time = run1.resultFile.lastModified()
 
-        val run2 = ScriptRun(File(scriptRoot, "1in1out.py"), """{"some_int":10}""")
+        val run2 = ScriptRun(File(scriptRoot, "1in1out.py"), mapOf("some_int" to 10))
         run2.execute()
         assertNotNull(run2.results["increment"], "increment key not found in ${run2.results}")
         assertEquals(11, run2.results["increment"]!!)
@@ -68,7 +68,7 @@ internal class ScriptRunTest {
         scriptFile.setLastModified(currentTimeMillis())
         val scriptTime1 = scriptFile.lastModified()
 
-        val run1 = ScriptRun(scriptFile, """{"some_int":5}""")
+        val run1 = ScriptRun(scriptFile, mapOf("some_int" to 5))
         run1.execute()
         assertNotNull(run1.results["increment"], "increment key not found in ${run1.results}")
         assertEquals(6, run1.results["increment"]!!)
@@ -77,7 +77,7 @@ internal class ScriptRunTest {
         scriptFile.setLastModified(currentTimeMillis())
         assertNotEquals(scriptTime1, scriptFile.lastModified())
 
-        val run2 = ScriptRun(scriptFile, """{"some_int":5}""")
+        val run2 = ScriptRun(scriptFile, mapOf("some_int" to 5))
         run2.execute()
         assertNotNull(run2.results["increment"], "increment key not found in ${run2.results}")
         assertEquals(6, run2.results["increment"]!!)
@@ -91,14 +91,14 @@ internal class ScriptRunTest {
         val scriptFile = File(scriptRoot, "1in1out.py")
         scriptFile.setLastModified(currentTimeMillis())
 
-        ScriptRun(scriptFile, """{"some_int":5}""").execute()
-        ScriptRun(scriptFile, """{"some_int":6}""").execute()
+        ScriptRun(scriptFile, mapOf("some_int" to 5)).execute()
+        ScriptRun(scriptFile, mapOf("some_int" to 6)).execute()
 
         // We expect two folder in the cache
         assertEquals(2, outputRoot.listFiles()!![0].listFiles()!!.size)
 
         scriptFile.setLastModified(currentTimeMillis())
-        ScriptRun(scriptFile, """{"some_int":5}""").execute()
+        ScriptRun(scriptFile, mapOf("some_int" to 5)).execute()
 
         // We expect cache was deleted and only one folder is left
         assertEquals(1, outputRoot.listFiles()!![0].listFiles()!!.size)
@@ -110,17 +110,17 @@ internal class ScriptRunTest {
             val scriptFile = File(scriptRoot, "1in1out.py")
             scriptFile.setLastModified(currentTimeMillis())
 
-            val val5Run1 = ScriptRun(scriptFile, """{"some_int":5}""")
+            val val5Run1 = ScriptRun(scriptFile, mapOf("some_int" to 5))
             val5Run1.execute()
             val val5Run1LastModified = val5Run1.resultFile.lastModified()
-            val val6Run1 = ScriptRun(scriptFile, """{"some_int":6}""")
+            val val6Run1 = ScriptRun(scriptFile, mapOf("some_int" to 6))
             val6Run1.execute()
 
             // We expect two folder in the cache
             assertEquals(2, outputRoot.listFiles()!![0].listFiles()!!.size)
 
             scriptFile.setLastModified(currentTimeMillis())
-            val val5Run2 = ScriptRun(scriptFile, """{"some_int":5}""")
+            val val5Run2 = ScriptRun(scriptFile, mapOf("some_int" to 5))
             val5Run2.execute()
 
             // We still expect two folders in the cache
@@ -148,14 +148,14 @@ internal class ScriptRunTest {
         // First run
         val inputFile = File(outputRoot, "someinputfile.csv")
         inputFile.createNewFile()
-        val run1Time = ScriptRun(scriptFile, """{"file":"${inputFile.path}"}""").let {
+        val run1Time = ScriptRun(scriptFile, mapOf("file" to inputFile.path)).let {
             it.execute()
             it.resultFile.lastModified()
         }
 
         // Second run, input has changed
         inputFile.setLastModified(currentTimeMillis())
-        val run2Time = ScriptRun(scriptFile, """{"file":"${inputFile.path}"}""").let {
+        val run2Time = ScriptRun(scriptFile, mapOf("file" to inputFile.path)).let {
             it.execute()
             it.resultFile.lastModified()
         }
@@ -171,14 +171,14 @@ internal class ScriptRunTest {
         // First run
         val inputFile = File(outputRoot, "someinputfile.csv")
         inputFile.createNewFile()
-        val run1Time = ScriptRun(scriptFile, """{"file":"${inputFile.path}"}""").let {
+        val run1Time = ScriptRun(scriptFile, mapOf("file" to inputFile.path)).let {
             it.execute()
             it.resultFile.lastModified()
         }
 
         // Second run, input missing
         inputFile.delete()
-        val run2Time = ScriptRun(scriptFile, """{"file":"${inputFile.path}"}""").let {
+        val run2Time = ScriptRun(scriptFile, mapOf("file" to inputFile.path)).let {
             it.execute()
             it.resultFile.lastModified()
         }

@@ -1,19 +1,14 @@
 package org.geobon.script
 
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonParseException
 import com.google.gson.reflect.TypeToken
-import com.google.gson.stream.MalformedJsonException
 import kotlinx.coroutines.*
 import org.geobon.pipeline.RunContext
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.IOException
-import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
-import kotlin.math.floor
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.hours
 import kotlin.time.DurationUnit
@@ -23,56 +18,29 @@ import kotlin.time.measureTime
 
 class ScriptRun( // Constructor used in single script run
     private val scriptFile: File,
-    private val inputFileContent: String?,
-    context: RunContext = RunContext(scriptFile, inputFileContent),
+    private val context: RunContext,
     private val timeout: Duration = DEFAULT_TIMEOUT) {
 
     // Constructor used in pipelines & tests
     constructor(
         scriptFile: File,
-        inputMap: SortedMap<String, Any?>,
-        context: RunContext = RunContext(scriptFile, inputMap.toString()),
+        /** The JSON content of the input file */
+        inputMap: Map<String, Any?>,
         timeout: Duration = DEFAULT_TIMEOUT
-    ) : this(scriptFile, if (inputMap.isEmpty()) null else toJson(inputMap), context, timeout)
+    ) : this(scriptFile, RunContext(scriptFile, inputMap), timeout)
 
     lateinit var results: Map<String, Any>
         private set
 
-    private val outputFolder = context.outputFolder
-    private val inputFile = context.inputFile
-    val resultFile = context.resultFile
+    val resultFile get() = context.resultFile
 
     private val logger: Logger = LoggerFactory.getLogger(scriptFile.name)
     private var logBuffer: String = ""
-    internal val logFile = File(outputFolder, "logs.txt")
+    private val logFile = File(context.outputFolder, "logs.txt")
 
     companion object {
         const val ERROR_KEY = "error"
         val DEFAULT_TIMEOUT = 1.hours
-
-        private val gson = GsonBuilder()
-            .serializeNulls()
-            .setObjectToNumberStrategy { reader ->
-                val value: String = reader.nextString()
-                try {
-                    val d = value.toDouble()
-                    if ((d.isInfinite() || d.isNaN()) && !reader.isLenient) {
-                        throw MalformedJsonException("JSON forbids NaN and infinities: " + d + "; at path " + reader.previousPath)
-                    }
-
-                    if (floor(d) == d) {
-                        if (d > Integer.MAX_VALUE) d.toLong() else d.toInt()
-                    } else {
-                        d
-                    }
-
-                } catch (doubleE: NumberFormatException) {
-                    throw JsonParseException("Cannot parse " + value + "; at path " + reader.previousPath, doubleE)
-                }
-            }
-            .create()
-
-        fun toJson(src: Any): String = gson.toJson(src)
     }
 
     suspend fun execute() {
@@ -86,7 +54,7 @@ class ScriptRun( // Constructor used in single script run
      */
     suspend fun waitForResults() {
         // TODO: Could use join() on a job, if we had a job to join with...
-        logger.debug("Waiting for run completion... $outputFolder")
+        logger.debug("Waiting for run completion... {}", context.outputFolder)
         while(!this::results.isInitialized) {
             delay(100L)
         }
@@ -97,7 +65,7 @@ class ScriptRun( // Constructor used in single script run
         if (resultFile.exists()) {
             if (scriptFile.lastModified() < resultFile.lastModified()) {
                 kotlin.runCatching {
-                    gson.fromJson<Map<String, Any>>(
+                    RunContext.gson.fromJson<Map<String, Any>>(
                         resultFile.readText().also { logger.trace("Cached outputs: $it") },
                         object : TypeToken<Map<String, Any>>() {}.type
                     )
@@ -125,12 +93,12 @@ class ScriptRun( // Constructor used in single script run
 
                 when(cleanOption) {
                     "partial" ->
-                        if (!outputFolder.deleteRecursively()) {
-                            throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                        if (!context.outputFolder.deleteRecursively()) {
+                            throw RuntimeException("Failed to delete cache for modified script at ${context.outputFolder.parentFile.path}")
                         }
                     else -> // "full" or unset
-                        if (!outputFolder.parentFile.deleteRecursively()) {
-                            throw RuntimeException("Failed to delete cache for modified script at ${outputFolder.parentFile.path}")
+                        if (!context.outputFolder.parentFile.deleteRecursively()) {
+                            throw RuntimeException("Failed to delete cache for modified script at ${context.outputFolder.parentFile.path}")
                         }
                 }
             }
@@ -145,11 +113,11 @@ class ScriptRun( // Constructor used in single script run
      * @return true if all inputs are older than cached result
      */
     private fun inputsOlderThanCache(): Boolean {
-        if (inputFile.exists()) {
+        if (context.inputFile.exists()) {
             val cacheTime = resultFile.lastModified()
             kotlin.runCatching {
-                gson.fromJson<Map<String, Any?>>(
-                    inputFile.readText().also { logger.trace("Cached inputs: $it") },
+                RunContext.gson.fromJson<Map<String, Any?>>(
+                    context.inputFile.readText().also { logger.trace("Cached inputs: $it") },
                     object : TypeToken<Map<String, Any?>>() {}.type
                 )
             }.onSuccess { inputs ->
@@ -189,7 +157,6 @@ class ScriptRun( // Constructor used in single script run
 
     @OptIn(ExperimentalTime::class)
     private suspend fun runScript(): Map<String, Any> {
-        // TODO Wait if already running
         if (!scriptFile.exists()) {
             val message = "Script $scriptFile not found"
             logger.warn(message)
@@ -201,28 +168,28 @@ class ScriptRun( // Constructor used in single script run
         var outputs: Map<String, Any>? = null
 
         val elapsed = measureTime {
-            val pidFile = File(outputFolder.absolutePath, ".pid")
+            val pidFile = File(context.outputFolder.absolutePath, ".pid")
 
             runCatching {
                 // TODO: Errors are using the log file. If this initial step fails, they might be appended to previous log.
                 withContext(Dispatchers.IO) {
                     // If loading from cache didn't succeed, make sure we have a clean slate.
-                    if (outputFolder.exists()) {
-                        outputFolder.deleteRecursively()
+                    if (context.outputFolder.exists()) {
+                        context.outputFolder.deleteRecursively()
 
-                        if (outputFolder.exists())
-                            throw RuntimeException("Failed to delete directory of previous run ${outputFolder.path}")
+                        if (context.outputFolder.exists())
+                            throw RuntimeException("Failed to delete directory of previous run ${context.outputFolder.path}")
                     }
 
                     // Create the output folder for this invocation
-                    outputFolder.mkdirs()
-                    logger.debug("Script run outputting to $outputFolder")
+                    context.outputFolder.mkdirs()
+                    logger.debug("Script run outputting to {}", context.outputFolder)
 
                     // Script run pre-requisites
                     logFile.writeText(logBuffer)
-                    inputFileContent?.let {
+                    context.inputs?.let {
                         // Create input.json
-                        inputFile.writeText(inputFileContent)
+                        context.inputFile.writeText(it)
                     }
                 }
 
@@ -235,7 +202,7 @@ class ScriptRun( // Constructor used in single script run
                         command = listOf("/usr/local/bin/docker", "exec", "-i", runner, "julia", "-e",
                             """
                             open("${pidFile.absolutePath}", "w") do file write(file, string(getpid())) end;
-                            ARGS=["${outputFolder.absolutePath}"];
+                            ARGS=["${context.outputFolder.absolutePath}"];
                             include("${scriptFile.absolutePath}")
                             rm("${pidFile.absolutePath}")
                             """
@@ -248,7 +215,7 @@ class ScriptRun( // Constructor used in single script run
                             "/usr/local/bin/docker", "exec", "-i", runner, "Rscript", "-e", 
                             """
                             fileConn<-file("${pidFile.absolutePath}"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);
-                            outputFolder<-"${outputFolder.absolutePath}";
+                            context.outputFolder<-"${context.outputFolder.absolutePath}";
                             tryCatch(source("${scriptFile.absolutePath}"),
                                 error=function(e) if(grepl("ignoring SIGPIPE signal",e${"$"}message)) {
                                         print("Suppressed: 'ignoring SIGPIPE signal'");
@@ -261,8 +228,8 @@ class ScriptRun( // Constructor used in single script run
                         )
                     }
 
-                    "sh" -> command = listOf("sh", scriptFile.absolutePath, outputFolder.absolutePath)
-                    "py", "PY" -> command = listOf("python3", scriptFile.absolutePath, outputFolder.absolutePath)
+                    "sh" -> command = listOf("sh", scriptFile.absolutePath, context.outputFolder.absolutePath)
+                    "py", "PY" -> command = listOf("python3", scriptFile.absolutePath, context.outputFolder.absolutePath)
                     else -> {
                         log(logger::warn, "Unsupported script extension ${scriptFile.extension}")
                         return flagError(mapOf(), true)
@@ -345,7 +312,7 @@ class ScriptRun( // Constructor used in single script run
                     val type = object : TypeToken<Map<String, Any>>() {}.type
                     val result = resultFile.readText()
                     try {
-                        outputs = gson.fromJson<Map<String, Any>>(result, type)
+                        outputs = RunContext.gson.fromJson<Map<String, Any>>(result, type)
                         logger.debug("Output: $result")
                     } catch (e: Exception) {
                         error = true
@@ -370,7 +337,7 @@ class ScriptRun( // Constructor used in single script run
                         val event = ex.message ?: ex.javaClass.name
                         log(logger::info, "$event: done.")
                         outputs = mapOf(ERROR_KEY to event)
-                        resultFile.writeText(gson.toJson(outputs))
+                        resultFile.writeText(RunContext.gson.toJson(outputs))
                     }
                     else -> {
                         log(logger::warn, "An error occurred when running the script: ${ex.message}")
@@ -400,7 +367,7 @@ class ScriptRun( // Constructor used in single script run
                 outputs[ERROR_KEY] = "An error occurred. Check logs for details."
 
                 // Rewrite output file with error
-                resultFile.writeText(gson.toJson(outputs))
+                resultFile.writeText(RunContext.gson.toJson(outputs))
 
                 return outputs
             }

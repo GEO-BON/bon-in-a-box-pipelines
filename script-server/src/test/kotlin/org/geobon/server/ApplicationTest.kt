@@ -6,7 +6,6 @@ import io.ktor.http.*
 import io.ktor.server.testing.*
 import org.geobon.pipeline.outputRoot
 import org.geobon.server.plugins.configureRouting
-import org.geobon.utils.withProductionPaths
 import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
@@ -38,7 +37,6 @@ class ApplicationTest {
             assertEquals(HttpStatusCode.OK, status)
             val result = bodyAsText()
             val jsonResult = JSONArray(result)
-            println("Available scripts: $result")
             assertTrue(jsonResult.length() > 0)
             assertContains(jsonResult, "helloWorld.json")
         }
@@ -62,7 +60,49 @@ class ApplicationTest {
             assertTrue(folder.isDirectory)
 
             val files = folder.listFiles()
-            assertTrue(files!!.size >= 3, "Expected input, output and log files to be there.\nFound ${files.toList()}")
+            assertTrue(files!!.size == 3, "Expected input, output and log files to be there.\nFound ${files.toList()}")
+        }
+    }
+
+    @Test
+    fun testScriptRun() = testApplication {
+        application {
+            configureRouting()
+        }
+
+        client.get("/script/list").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            val result = bodyAsText()
+            val jsonResult = JSONArray(result)
+            assertTrue(jsonResult.length() > 0)
+            assertContains(jsonResult, "helloWorld>helloPython.yml")
+        }
+
+        var id:String
+        client.post("/script/helloWorld>helloPython.yml/run") {
+            setBody("{\"some_int\":1}")
+        }.apply {
+            assertEquals(HttpStatusCode.OK, status)
+            id = bodyAsText()
+        }
+
+        client.get("/script/$id/outputs").apply {
+            val result = JSONObject(bodyAsText())
+
+            val folder = File(
+                outputRoot,
+                result.getString(result.keys().next()))
+            assertTrue(folder.isDirectory)
+
+            val files = folder.listFiles()
+            assertTrue(files!!.size == 4, "Expected input, pipeline output, script output and log files to be there.\nFound ${files.toList()}")
+
+            assertEquals("""
+                {
+                  "increment": 2
+                }""".trimIndent(),
+                File(folder, "output.json").readText()
+            )
         }
     }
 
