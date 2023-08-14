@@ -3,7 +3,7 @@ description: "This script identifies the spatial unit or node that contributes t
 inputs:
   data_spatial_unit:
     label: data_spatial_unit 
-    description: Table in .csv format that contains two mandatory columns, id and area of spatial units or nodes. If the analysis is done over time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration.
+    description: Table in csv format that contains two mandatory columns, id and area of spatial units or nodes. If the analysis is done over time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration.
     type: text
     example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
   area_study_area:
