@@ -173,8 +173,7 @@ fun Application.configureRouting() {
             }
         }
         
-        get("/{type}/{id}/outputs") {
-            // val type = call.parameters["type"]!! Type here is a placeholder to make the API more uniform.
+        get("/pipeline/{id}/outputs") {
             val id = call.parameters["id"]!!
             val pipeline = runningPipelines[id]
             if (pipeline == null) {
@@ -191,7 +190,7 @@ fun Application.configureRouting() {
             }
         }
         
-        get("/pipeline/{id}/stop") {
+        get("/{type}/{id}/stop") {
             val id = call.parameters["id"]!!
             runningPipelines[id]?.let { pipeline ->
                 // the pipeline is running, we need to stop it
