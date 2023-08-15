@@ -35,7 +35,7 @@ export function PipelineForm({
       type: "select",
       newPipeline: value,
     });
-    navigate("/pipeline-form");
+    navigate("/" + runType + "-form");
   };
 
   const runPipeline = () => {
@@ -53,7 +53,7 @@ export function PipelineForm({
           newPipeline: pipeline,
           newHash: runHash,
         });
-        navigate("/pipeline-form/" + pipeline + "/" + runHash);
+        navigate("/" + runType + "-form/" + pipeline + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
       }
@@ -67,7 +67,7 @@ export function PipelineForm({
 
   // Applied only once when first loaded
   useEffect(() => {
-    // Load list of scripts into pipelineOptions
+    // Load list of scripts/pipelines into pipelineOptions
     api.getListOf(runType, (error, data, response) => {
       if (error) {
         console.error(error);
