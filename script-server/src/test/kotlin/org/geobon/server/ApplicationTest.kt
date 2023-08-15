@@ -29,6 +29,9 @@ class ApplicationTest {
 
     @Test
     fun testPipelineRun() = testApplication {
+        application {
+            configureRouting()
+        }
 
         client.get("/pipeline/list").apply {
             assertEquals(HttpStatusCode.OK, status)
@@ -62,6 +65,9 @@ class ApplicationTest {
 
     @Test
     fun testScriptRun() = testApplication {
+        application {
+            configureRouting()
+        }
 
         client.get("/script/list").apply {
             assertEquals(HttpStatusCode.OK, status)
@@ -101,6 +107,9 @@ class ApplicationTest {
 
     @Test
     fun testPipelineWithSubfolder() = testApplication {
+        application {
+            configureRouting()
+        }
 
         var id: String
         client.post("/pipeline/subfolder>in_subfolder.json/run") {
@@ -199,7 +208,6 @@ class ApplicationTest {
 
     @Test
     fun testIgnoreTrailingSlash() = testApplication {
-
         client.get("/pipeline/list").apply {
             assertEquals(HttpStatusCode.OK, status)
         }
