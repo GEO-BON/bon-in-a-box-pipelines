@@ -190,10 +190,10 @@ class ApplicationTest {
     @Test
     fun `given run does not exist_when trying to stop_then 412`() = testApplication {
         client.get("/pipeline/1234/stop").apply {
-            assertEquals(HttpStatusCode.NotFound, status)
+            assertEquals(HttpStatusCode.PreconditionFailed, status)
         }
         client.get("/script/1234/stop").apply {
-            assertEquals(HttpStatusCode.NotFound, status)
+            assertEquals(HttpStatusCode.PreconditionFailed, status)
         }
     }
 
