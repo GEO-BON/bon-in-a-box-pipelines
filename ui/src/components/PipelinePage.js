@@ -29,6 +29,8 @@ const defaultPipeline = "helloWorld";
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
+const runType = "pipeline"
+
 function pipReducer(state, action) {
   switch (action.type) {
     case "run": {
@@ -111,7 +113,7 @@ export function PipelinePage() {
   let timeout;
   function loadPipelineOutputs() {
     if (pipStates.runHash) {
-      api.getPipelineOutputs(pipStates.runId, (error, data, response) => {
+      api.getOutputFolders(runType, pipStates.runId, (error, data, response) => {
         if (error) {
           showHttpError(error, response);
         } else {
@@ -152,7 +154,7 @@ export function PipelinePage() {
         }
       }
     };
-    api.getPipelineInfo(choice, callback);
+    api.getInfo(runType, choice, callback);
   }
 
   function loadInputJson(pip, hash) {
@@ -213,7 +215,7 @@ export function PipelinePage() {
 
   const stop = () => {
     setStoppable(false);
-    api.stopPipeline(pipStates.runId, (error, data, response) => {
+    api.stop(runType, pipStates.runId, (error, data, response) => {
       if (response.status === 200) {
         setHttpError("Cancelled by user");
       }
@@ -236,6 +238,7 @@ export function PipelinePage() {
           setPipStates={setPipStates}
           showHttpError={showHttpError}
           setResultsData={setResultsData}
+          runType={runType}
         />
       </FoldableOutput>
 
@@ -441,7 +444,7 @@ function DelayedResult({
       setScriptMetadata(data);
     };
 
-    api.getScriptInfo(script, callback);
+    api.getInfo("script", script, callback);
   }, [script]);
 
   let content,

@@ -633,7 +633,7 @@ export function PipelineEditor(props) {
 
     setPopupMenuPos({ x: event.clientX, y: event.clientY });
 
-    api.pipelineListGet((error, data, response) => {
+    api.getListOf("pipeline", (error, data, response) => {
       if (error) {
         if (response && response.text) alert(response.text);
         else alert(error.toString());

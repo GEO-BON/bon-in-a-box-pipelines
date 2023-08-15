@@ -57,7 +57,7 @@ function SingleScriptForm(props) {
       props.setResultData({ httpError: error ? error.toString() : null });
     };
 
-    api.getScriptInfo(choice, callback);
+    api.getInfo("script", choice, callback);
   }
 
   const handleSubmit = (event) => {
@@ -90,13 +90,13 @@ function SingleScriptForm(props) {
     let opts = {
       'body': JSON.stringify(inputFileContent)
     };
-    api.runScript(scriptPath, opts, callback);
+    api.run("script", scriptPath, opts, callback);
   };
 
   // Applied only once when first loaded  
   useEffect(() => {
     // Load list of scripts into scriptFileOptions
-    api.scriptListGet((error, data, response) => {
+    api.getListOf("script", (error, data, response) => {
       if (error) {
         console.error(error);
       } else {

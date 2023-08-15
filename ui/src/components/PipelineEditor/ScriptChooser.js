@@ -24,7 +24,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
 
   // Applied only once when first loaded  
   useEffect(() => {
-    api.pipelineListGet((error, pipelineList, response) => {
+    api.getListOf("pipeline", (error, pipelineList, response) => {
       if (error) {
         console.error(error);
       } else {
@@ -33,7 +33,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
     });
 
     // Load list of scripts into scriptFileOptions
-    api.scriptListGet((error, scriptList, response) => {
+    api.getListOf("script", (error, scriptList, response) => {
       if (error) {
         console.error(error);
       } else {

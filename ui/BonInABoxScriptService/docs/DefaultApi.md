@@ -4,23 +4,20 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getPipeline**](DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline
-[**getPipelineInfo**](DefaultApi.md#getPipelineInfo) | **GET** /pipeline/{descriptionPath}/info | Get metadata about this pipeline
-[**getPipelineOutputs**](DefaultApi.md#getPipelineOutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
-[**getScriptInfo**](DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
-[**pipelineListGet**](DefaultApi.md#pipelineListGet) | **GET** /pipeline/list | Get a list of available pipelines
-[**runPipeline**](DefaultApi.md#runPipeline) | **POST** /pipeline/{descriptionPath}/run | Run this pipeline
-[**runScript**](DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
-[**scriptListGet**](DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
-[**stopPipeline**](DefaultApi.md#stopPipeline) | **GET** /pipeline/{id}/stop | Stop the specified pipeline run
+[**getInfo**](DefaultApi.md#getInfo) | **GET** /{type}/{descriptionPath}/info | Get metadata about this script or pipeline.
+[**getListOf**](DefaultApi.md#getListOf) | **GET** /{type}/list | Get a list of available steps of given type.
+[**getOutputFolders**](DefaultApi.md#getOutputFolders) | **GET** /{type}/{id}/outputs | Get the output folders of the scripts composing this pipeline
+[**getPipeline**](DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline.
+[**run**](DefaultApi.md#run) | **POST** /{type}/{descriptionPath}/run | Runs the script or pipeline matching &#x60;descriptionPath&#x60;.
+[**stop**](DefaultApi.md#stop) | **GET** /{type}/{id}/stop | Stop the specified pipeline run.
 
 
 
-## getPipeline
+## getInfo
 
-> Object getPipeline(descriptionPath)
+> Info getInfo(type, descriptionPath)
 
-Get JSON file that describes the pipeline
+Get metadata about this script or pipeline.
 
 ### Example
 
@@ -28,8 +25,9 @@ Get JSON file that describes the pipeline
 import BonInABoxScriptService from 'bon_in_a_box_script_service';
 
 let apiInstance = new BonInABoxScriptService.DefaultApi();
-let descriptionPath = "descriptionPath_example"; // String | Where to find the pipeline in ./pipeline folder.
-apiInstance.getPipeline(descriptionPath, (error, data, response) => {
+let type = "type_example"; // String | Script or pipeline
+let descriptionPath = "descriptionPath_example"; // String | Where to find the step. For scripts, paths are relative to the /script folder. For pipelines, paths are relative to the /pipeline folder.
+apiInstance.getInfo(type, descriptionPath, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -43,50 +41,8 @@ apiInstance.getPipeline(descriptionPath, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **descriptionPath** | **String**| Where to find the pipeline in ./pipeline folder. | 
-
-### Return type
-
-**Object**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-
-## getPipelineInfo
-
-> Info getPipelineInfo(descriptionPath)
-
-Get metadata about this pipeline
-
-### Example
-
-```javascript
-import BonInABoxScriptService from 'bon_in_a_box_script_service';
-
-let apiInstance = new BonInABoxScriptService.DefaultApi();
-let descriptionPath = "descriptionPath_example"; // String | Where to find the pipeline in ./pipeline folder.
-apiInstance.getPipelineInfo(descriptionPath, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-});
-```
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **descriptionPath** | **String**| Where to find the pipeline in ./pipeline folder. | 
+ **type** | **String**| Script or pipeline | 
+ **descriptionPath** | **String**| Where to find the step. For scripts, paths are relative to the /script folder. For pipelines, paths are relative to the /pipeline folder. | 
 
 ### Return type
 
@@ -102,11 +58,11 @@ No authorization required
 - **Accept**: application/json
 
 
-## getPipelineOutputs
+## getListOf
 
-> {String: String} getPipelineOutputs(id)
+> [String] getListOf(type)
 
-Get the output folders of the scripts composing this pipeline
+Get a list of available steps of given type.
 
 ### Example
 
@@ -114,8 +70,8 @@ Get the output folders of the scripts composing this pipeline
 import BonInABoxScriptService from 'bon_in_a_box_script_service';
 
 let apiInstance = new BonInABoxScriptService.DefaultApi();
-let id = "id_example"; // String | Where to find the pipeline in ./script folder.
-apiInstance.getPipelineOutputs(id, (error, data, response) => {
+let type = "type_example"; // String | Script or pipeline
+apiInstance.getListOf(type, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -129,6 +85,51 @@ apiInstance.getPipelineOutputs(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **type** | **String**| Script or pipeline | 
+
+### Return type
+
+**[String]**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json
+
+
+## getOutputFolders
+
+> {String: String} getOutputFolders(type, id)
+
+Get the output folders of the scripts composing this pipeline
+
+### Example
+
+```javascript
+import BonInABoxScriptService from 'bon_in_a_box_script_service';
+
+let apiInstance = new BonInABoxScriptService.DefaultApi();
+let type = "type_example"; // String | Script or pipeline
+let id = "id_example"; // String | Where to find the pipeline in ./script folder.
+apiInstance.getOutputFolders(type, id, (error, data, response) => {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+});
+```
+
+### Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **type** | **String**| Script or pipeline | 
  **id** | **String**| Where to find the pipeline in ./script folder. | 
 
 ### Return type
@@ -145,11 +146,11 @@ No authorization required
 - **Accept**: application/json
 
 
-## getScriptInfo
+## getPipeline
 
-> Info getScriptInfo(scriptPath)
+> Object getPipeline(descriptionPath)
 
-Get metadata about this script
+Get JSON file that describes the pipeline.
 
 ### Example
 
@@ -157,8 +158,8 @@ Get metadata about this script
 import BonInABoxScriptService from 'bon_in_a_box_script_service';
 
 let apiInstance = new BonInABoxScriptService.DefaultApi();
-let scriptPath = "scriptPath_example"; // String | Where to find the script in ./script folder.
-apiInstance.getScriptInfo(scriptPath, (error, data, response) => {
+let descriptionPath = "descriptionPath_example"; // String | Where to find the step. For scripts, paths are relative to the /script folder. For pipelines, paths are relative to the /pipeline folder.
+apiInstance.getPipeline(descriptionPath, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -172,11 +173,11 @@ apiInstance.getScriptInfo(scriptPath, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **scriptPath** | **String**| Where to find the script in ./script folder. | 
+ **descriptionPath** | **String**| Where to find the step. For scripts, paths are relative to the /script folder. For pipelines, paths are relative to the /pipeline folder. | 
 
 ### Return type
 
-[**Info**](Info.md)
+**Object**
 
 ### Authorization
 
@@ -188,50 +189,11 @@ No authorization required
 - **Accept**: application/json
 
 
-## pipelineListGet
+## run
 
-> [String] pipelineListGet()
+> String run(type, descriptionPath, opts)
 
-Get a list of available pipelines
-
-### Example
-
-```javascript
-import BonInABoxScriptService from 'bon_in_a_box_script_service';
-
-let apiInstance = new BonInABoxScriptService.DefaultApi();
-apiInstance.pipelineListGet((error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-});
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-**[String]**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-
-## runPipeline
-
-> String runPipeline(descriptionPath, opts)
-
-Run this pipeline
+Runs the script or pipeline matching &#x60;descriptionPath&#x60;.
 
 ### Example
 
@@ -239,11 +201,12 @@ Run this pipeline
 import BonInABoxScriptService from 'bon_in_a_box_script_service';
 
 let apiInstance = new BonInABoxScriptService.DefaultApi();
-let descriptionPath = "descriptionPath_example"; // String | Where to find the script in ./script folder.
+let type = "type_example"; // String | Script or pipeline
+let descriptionPath = "descriptionPath_example"; // String | Where to find the step. For scripts, paths are relative to the /script folder. For pipelines, paths are relative to the /pipeline folder.
 let opts = {
   'body': "body_example" // String | Content of input.json for this run
 };
-apiInstance.runPipeline(descriptionPath, opts, (error, data, response) => {
+apiInstance.run(type, descriptionPath, opts, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -257,7 +220,8 @@ apiInstance.runPipeline(descriptionPath, opts, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **descriptionPath** | **String**| Where to find the script in ./script folder. | 
+ **type** | **String**| Script or pipeline | 
+ **descriptionPath** | **String**| Where to find the step. For scripts, paths are relative to the /script folder. For pipelines, paths are relative to the /pipeline folder. | 
  **body** | **String**| Content of input.json for this run | [optional] 
 
 ### Return type
@@ -274,13 +238,11 @@ No authorization required
 - **Accept**: text/plain
 
 
-## runScript
+## stop
 
-> ScriptRunResult runScript(scriptPath, opts)
+> stop(type, id)
 
-Run this script
-
-Run the script specified in the URL. Must include the extension.
+Stop the specified pipeline run.
 
 ### Example
 
@@ -288,94 +250,9 @@ Run the script specified in the URL. Must include the extension.
 import BonInABoxScriptService from 'bon_in_a_box_script_service';
 
 let apiInstance = new BonInABoxScriptService.DefaultApi();
-let scriptPath = "scriptPath_example"; // String | Where to find the script in ./script folder
-let opts = {
-  'body': "body_example" // String | Content of input.json for this run
-};
-apiInstance.runScript(scriptPath, opts, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-});
-```
-
-### Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **scriptPath** | **String**| Where to find the script in ./script folder | 
- **body** | **String**| Content of input.json for this run | [optional] 
-
-### Return type
-
-[**ScriptRunResult**](ScriptRunResult.md)
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: text/plain
-- **Accept**: application/json
-
-
-## scriptListGet
-
-> [String] scriptListGet()
-
-Get a list of available scripts
-
-### Example
-
-```javascript
-import BonInABoxScriptService from 'bon_in_a_box_script_service';
-
-let apiInstance = new BonInABoxScriptService.DefaultApi();
-apiInstance.scriptListGet((error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-});
-```
-
-### Parameters
-
-This endpoint does not need any parameter.
-
-### Return type
-
-**[String]**
-
-### Authorization
-
-No authorization required
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json
-
-
-## stopPipeline
-
-> stopPipeline(id)
-
-Stop the specified pipeline run
-
-### Example
-
-```javascript
-import BonInABoxScriptService from 'bon_in_a_box_script_service';
-
-let apiInstance = new BonInABoxScriptService.DefaultApi();
+let type = "type_example"; // String | Script or pipeline
 let id = "id_example"; // String | Where to find the pipeline in ./script folder.
-apiInstance.stopPipeline(id, (error, data, response) => {
+apiInstance.stop(type, id, (error, data, response) => {
   if (error) {
     console.error(error);
   } else {
@@ -389,6 +266,7 @@ apiInstance.stopPipeline(id, (error, data, response) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
+ **type** | **String**| Script or pipeline | 
  **id** | **String**| Where to find the pipeline in ./script folder. | 
 
 ### Return type

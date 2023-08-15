@@ -15,8 +15,8 @@ tags:
 paths:
   /{type}/list:
     get:
-      summary: Get a list of available steps of given type
-      operationId: getStepList
+      summary: Get a list of available steps of given type.
+      operationId: getListOf
       parameters:
         - $ref: '#/components/parameters/stepType'
       responses:
@@ -35,8 +35,8 @@ paths:
   /{type}/{descriptionPath}/info:
     get:
       tags: []
-      summary: Get metadata about this step
-      operationId: getStepInfo
+      summary: Get metadata about this script or pipeline.
+      operationId: getInfo
       parameters:
         - $ref: '#/components/parameters/stepType'
         - $ref: '#/components/parameters/descriptionPath'
@@ -156,7 +156,7 @@ paths:
         - $ref: '#/components/parameters/runId'
       responses:
         "200":
-          description: List of output folders for all the scripts
+          description: List of output folders for all the scripts.
           content:
             application/json:
               schema:
@@ -172,7 +172,7 @@ paths:
           description: id not found
   /{type}/{id}/stop:
     get:
-      summary: Stop the specified pipeline run
+      summary: Stop the specified pipeline run.
       operationId: stop
       parameters:
         - $ref: '#/components/parameters/stepType'
