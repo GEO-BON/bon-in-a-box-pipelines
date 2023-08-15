@@ -29,8 +29,6 @@ const defaultPipeline = "helloWorld";
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
-const runType = "pipeline"
-
 function pipReducer(state, action) {
   switch (action.type) {
     case "run": {
@@ -86,7 +84,7 @@ function pipInitialState(init) {
   };
 }
 
-export function PipelinePage() {
+export function PipelinePage({runType}) {
   const [stoppable, setStoppable] = useState(null);
   const [runningScripts, setRunningScripts] = useState(new Set());
   const [resultsData, setResultsData] = useState(null);
