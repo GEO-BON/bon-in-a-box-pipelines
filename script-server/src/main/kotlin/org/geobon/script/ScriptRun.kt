@@ -215,7 +215,7 @@ class ScriptRun( // Constructor used in single script run
                             "/usr/local/bin/docker", "exec", "-i", runner, "Rscript", "-e", 
                             """
                             fileConn<-file("${pidFile.absolutePath}"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);
-                            context.outputFolder<-"${context.outputFolder.absolutePath}";
+                            outputFolder<-"${context.outputFolder.absolutePath}";
                             tryCatch(source("${scriptFile.absolutePath}"),
                                 error=function(e) if(grepl("ignoring SIGPIPE signal",e${"$"}message)) {
                                         print("Suppressed: 'ignoring SIGPIPE signal'");
