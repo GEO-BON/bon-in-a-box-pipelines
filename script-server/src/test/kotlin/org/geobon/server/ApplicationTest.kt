@@ -82,6 +82,7 @@ class ApplicationTest {
         }
 
         client.get("/script/$id/outputs").apply {
+            assertEquals(HttpStatusCode.OK, status, bodyAsText())
             val result = JSONObject(bodyAsText())
 
             val folder = File(
