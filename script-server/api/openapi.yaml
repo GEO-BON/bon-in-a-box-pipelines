@@ -146,12 +146,13 @@ paths:
           description: Bad request
         "404":
           description: Script or pipeline not found
-  /pipeline/{id}/outputs:
+  /{type}/{id}/outputs:
     get:
       tags: []
       summary: Get the output folders of the scripts composing this pipeline
-      operationId: getPipelineOutputs
+      operationId: getOutputFolders
       parameters:
+        - $ref: '#/components/parameters/stepType'
         - $ref: '#/components/parameters/runId'
       responses:
         "200":

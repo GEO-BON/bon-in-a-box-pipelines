@@ -173,7 +173,8 @@ fun Application.configureRouting() {
             }
         }
         
-        get("/pipeline/{id}/outputs") {
+        get("/{type}/{id}/outputs") {
+            // type: The value pipeline of script is for api consistency, it makes no real difference for this API call.
             val id = call.parameters["id"]!!
             val pipeline = runningPipelines[id]
             if (pipeline == null) {
