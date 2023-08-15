@@ -20,7 +20,6 @@ import InfoInputsValueExampleOneOfInner from './model/InfoInputsValueExampleOneO
 import InfoOutputsValue from './model/InfoOutputsValue';
 import InfoOutputsValueExample from './model/InfoOutputsValueExample';
 import InfoReferencesInner from './model/InfoReferencesInner';
-import ScriptRunResult from './model/ScriptRunResult';
 import DefaultApi from './api/DefaultApi';
 
 
@@ -103,12 +102,6 @@ export {
      * @property {module:model/InfoReferencesInner}
      */
     InfoReferencesInner,
-
-    /**
-     * The ScriptRunResult model constructor.
-     * @property {module:model/ScriptRunResult}
-     */
-    ScriptRunResult,
 
     /**
     * The DefaultApi service constructor.

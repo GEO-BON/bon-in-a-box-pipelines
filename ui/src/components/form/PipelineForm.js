@@ -13,6 +13,7 @@ export function PipelineForm({
   showHttpError,
   inputFileContent,
   setInputFileContent,
+  runType
 }) {
   const formRef = useRef();
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ export function PipelineForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    runScript();
+    runPipeline();
   };
 
   const handlePipelineChange = (value) => {
@@ -37,7 +38,7 @@ export function PipelineForm({
     navigate("/pipeline-form");
   };
 
-  const runScript = () => {
+  const runPipeline = () => {
     var callback = function (error, data, response) {
       if (error) {
         // Server / connection errors. Data will be undefined.
@@ -61,13 +62,13 @@ export function PipelineForm({
     let opts = {
       body: JSON.stringify(inputFileContent),
     };
-    api.runPipeline(pipStates.pipeline + ".json", opts, callback);
+    api.run(runType, pipStates.pipeline + ".json", opts, callback);
   };
 
   // Applied only once when first loaded
   useEffect(() => {
     // Load list of scripts into pipelineOptions
-    api.pipelineListGet((error, data, response) => {
+    api.getListOf(runType, (error, data, response) => {
       if (error) {
         console.error(error);
       } else {
