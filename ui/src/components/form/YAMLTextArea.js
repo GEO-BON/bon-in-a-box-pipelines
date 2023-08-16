@@ -1,12 +1,7 @@
 import AutoResizeTextArea from './AutoResizeTextArea';
+import { isEmptyObject } from '../../utils/isEmptyObject';
 
 const yaml = require('js-yaml');
-
-// https://stackoverflow.com/a/34491966/3519951
-function isEmptyObject(obj) {
-  for (var _ in obj) { return false; }
-  return true;
-}
 
 export default function YAMLTextArea({ data, setData }) {
 
