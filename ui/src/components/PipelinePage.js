@@ -171,9 +171,9 @@ export function PipelinePage({runType}) {
           return response.json();
         }
         if (response.status === 404) {
-          // This is a new run
+          // This has never ran. Simply select the pipeline.
           setPipStates({
-            type: "run",
+            type: "select",
             newPipeline: pip,
             newDescriptionFile: descriptionFile,
             newHash: hash,
