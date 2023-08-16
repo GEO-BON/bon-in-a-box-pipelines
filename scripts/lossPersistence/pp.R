@@ -207,7 +207,7 @@ terra::writeRaster(area_4326, dir_area_4326, gdal=c("COMPRESS=DEFLATE", "TFW=YES
 layers<- terra_mask_layers
 name_layers<- data.frame(layer_id= names(layers)) %>% dplyr::mutate(layer= seq(nrow(.)))
 freq_layers<- terra::freq(layers) %>% list(name_layers) %>% plyr::join_all() %>%
-  plyr::mutate(area =  count*(input$resolution /10000 )   ) %>% 
+  plyr::mutate(area =  count*( prod(input$resolution, input$resolution) /10000 )  )  %>% 
   dplyr::select(- c("layer", "count")) %>% dplyr::rename(layer= layer_id)
 
 
@@ -230,7 +230,6 @@ write.csv(data_areas2, dir_data_areas)
 
 # Tabla de areas json
 table_pp<- jsonlite::toJSON(data_areas2)
-
 
 
 # Exportar imagenes de los raster
