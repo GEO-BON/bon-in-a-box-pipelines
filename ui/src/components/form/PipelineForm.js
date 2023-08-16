@@ -29,11 +29,12 @@ export function PipelineForm({
     runPipeline();
   };
 
-  const handlePipelineChange = (value) => {
+  const handlePipelineChange = (label, value) => {
     clearPreviousRequest();
     setPipStates({
       type: "select",
-      newPipeline: value,
+      newPipeline: label,
+      newDescriptionFile: value,
     });
     navigate("/" + runType + "-form");
   };
@@ -47,13 +48,14 @@ export function PipelineForm({
       } else if (data) {
         const parts = data.split(">");
         let runHash = parts.at(-1);
-        let pipeline = parts.slice(0,-1).join(">")
+        let pipelineForUrl = parts.slice(0,-1).join(">")
         setPipStates({
           type: "run",
-          newPipeline: pipeline,
+          newPipeline: pipStates.pipeline,
+          newDescriptionFile: pipStates.descriptionFile,
           newHash: runHash,
         });
-        navigate("/" + runType + "-form/" + pipeline + "/" + runHash);
+        navigate("/" + runType + "-form/" + pipelineForUrl + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
       }
@@ -62,7 +64,7 @@ export function PipelineForm({
     let opts = {
       body: JSON.stringify(inputFileContent),
     };
-    api.run(runType, pipStates.pipeline + ".json", opts, callback);
+    api.run(runType, pipStates.descriptionFile, opts, callback);
   };
 
   // Applied only once when first loaded
@@ -73,9 +75,9 @@ export function PipelineForm({
         console.error(error);
       } else {
         let newOptions = [];
-        data.forEach((script) => {
-          script = script.replace(/.json$/i, "");
-          newOptions.push({ label: script, value: script });
+        data.forEach((descriptionFile) => {
+          let display = descriptionFile.replace(/.json$/i, "").replace(/.yml$/i, "").replace(">", " > ");
+          newOptions.push({ label: display, value: descriptionFile });
         });
         setPipelineOptions(newOptions);
       }
@@ -94,10 +96,10 @@ export function PipelineForm({
         options={pipelineOptions}
         value={{
           label: pipStates.pipeline,
-          value: pipStates.pipeline,
+          value: pipStates.descriptionFile,
         }}
         menuPortalTarget={document.body}
-        onChange={(v) => handlePipelineChange(v.value)}
+        onChange={(v) => handlePipelineChange(v.label, v.value)}
       />
       <br />
       <InputFileInput
