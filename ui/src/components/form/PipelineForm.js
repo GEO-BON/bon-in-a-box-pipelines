@@ -80,9 +80,7 @@ export function PipelineForm({
         setPipelineOptions(newOptions);
       }
     });
-    // Empty dependency array to get script list only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [runType, setPipelineOptions]);
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
