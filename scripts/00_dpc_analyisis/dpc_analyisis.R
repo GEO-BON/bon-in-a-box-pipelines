@@ -46,7 +46,7 @@ output<- tryCatch({
   spatial_unit_data<- read.csv(input$data_spatial_unit) %>% dplyr::select(c(input$column_spatial_unit, input$column_date, input$column_area)) %>%
     dplyr::filter(!duplicated(input$column_spatial_unit)) %>% dplyr::mutate(spatial_unit= "yes_spatial_unit_data")
 
-  spatial_unit_data$date<- as.Date(spatial_unit_data$created_date, format = input$format_date)
+  spatial_unit_data$date<- as.Date(spatial_unit_data$created_date, format = "%Y-%m-%d")
 
   
   start_date<- {if(input$time_start == "NA"){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
@@ -86,11 +86,11 @@ output<- tryCatch({
 
   #Create the table result
   result_dPC = as.data.frame(matrix(NA,ncol = 4, nrow = 0))
-  colnames(result_dPC) = c("Period", "id_pa","dPC_out","PC")
+  colnames(result_dPC) = c("Period", "id_pa","PC_out","PC")
   
 
   
-  for (i in as.character(decades)) {
+  for (i in as.character(decades)) { print(i)
     
     
     #Filter the data for each i period
@@ -99,29 +99,33 @@ output<- tryCatch({
     area_consult = sum(decade$area)
     #Extract the protected areas that intersect with the area of interest
     area_protect = decade[decade$spatial_unit != "no_spatial_unit",]
-    #Extract the unique ids for these protected areas
-    a = area_protect$area
+    #Extract the estimate areas for each spatial unit
+    a = area_protect[,input$column_area]
     addition = 0
+    
     for (j in 1:length(a)) {
       #Sum the product of each protected areas by themselves
       b = a[j]
       #Remove the product the value j by itself
       product = a[-j]*b
       addition = addition+sum(product)
-      
     }
+    
+    
     #Calculate the PC value
     PC = addition/(area_consult*area_consult)
     #result_pc= data.frame(Period = i,PC=PC)
     #result_PC = rbind.data.frame(result_PC,result_pc)
     
-    #Calculate the dPC value
+    # Calculate pc 
     #Extract the unique ids for protected areas
     ids = unique(area_protect$id_pa)
-    for (k in 1:length(ids)) {
+    
+    for (k in 1:length(ids)) { 
       #Filter the table with all areas of protected areas except the ids k
       table = area_protect[area_protect$id_pa != ids[k],]
-      b = table$area
+      b = table[, input$column_area]
+      
       add = 0
       for (z in 1:length(b)) {
         #Sum the product of each protected areas by themselves
@@ -130,37 +134,37 @@ output<- tryCatch({
         prod = b[-z]*c
         add = add+sum(prod)
       }
+      
+      
       PC_out_id = add/(area_consult*area_consult)
-      result_dpc_out = data.frame(Period = i,id_pa = ids[k], dPC_out = PC_out_id, PC = PC)
-      result_dPC = rbind.data.frame(result_dPC,result_dpc_out)
+      result_PC_out = data.frame(Period = i,id_pa = ids[k], PC_out = PC_out_id, PC = PC)
+      result_dPC = rbind.data.frame(result_dPC,result_PC_out)
     }
+  
+    result_dPC2<- result_dPC
+    result_dPC2$dPC = (((result_dPC$PC- result_dPC$PC_out))/result_dPC$PC)*100
     
-   ########################PEDAZO QUE FALTA##################################
+    dPC = as.data.frame(matrix(NA,ncol = 6, nrow = 0))
+    colnames(dPC) = c("Period", "id_pa", "name", "PC_out","PC" , "dPC")
     
-    #Calculate de dPC index
-    result_dPC$dPC = ((result_dPC$PC- result_dPC$dPC_out))/result_dPC$PC
-    
-    dPC = as.data.frame(matrix(NA,ncol = 3, nrow = 0))
-    colnames(dPC) = c("Period", "id_pa","dPC")
-    
-    #Calculate the dPC index by period of time
-    for (i in decades) {
-      filter = result_dPC[result_dPC$Period==i,]
-      min_dpc =min(filter$dPC)
-      min_dp_row=which(filter$dPC %in% min_dpc)
-      min_dpc_id = filter[min_dp_row,]
-      dpc_decade_df = data.frame(Period = i,id_pa = min_dpc_id$id_pa, dPC = min_dpc_id$dPC)
+      filter = result_dPC2[result_dPC2$Period== i,]
+      order = filter[with(filter, order(filter$dPC)), ]
+      
+      if(nrow(order)>=5){
+        dpc_decade_df = order[seq(5),]
+      } else{dpc_decade_df = order}
+      
       dPC = rbind.data.frame(dPC,dpc_decade_df)
-    }
-    
-    ########################PEDAZO QUE FALTA################################## 
-     
   }
 
-  result_dPC <- result_dPC[
-    order(result_dPC[, "Period"], result_dPC[, input$column_spatial_unit]) , ] 
+}
   
-  names(result_dPC)[3]<- "dPC" 
+  
+  
+   
+  
+  
+  
   
 # Define and export the output values
 
