@@ -84,7 +84,7 @@ export function PipelineForm({
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label htmlFor="pipelineChoice">Pipeline:</label>
+      <label htmlFor="pipelineChoice">{runType === "pipeline" ? "Pipeline:" : "Script:"}</label>
       <Select
         id="pipelineChoice"
         name="pipelineChoice"

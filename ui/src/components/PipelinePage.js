@@ -23,6 +23,7 @@ import {
   getBreadcrumbs,
 } from "../utils/IOId";
 import { useParams } from "react-router-dom";
+import { isEmptyObject } from "../utils/isEmptyObject";
 
 const defaultPipeline = {name: "helloWorld", file: "helloWorld.json"};
 const defaultScript = {name: "helloWorld > helloR", file: "helloWorld>helloR.yml"};
@@ -240,7 +241,7 @@ export function PipelinePage({runType}) {
 
   return (
     <>
-      <h2>Pipeline run</h2>
+      <h2>{runType === "pipeline" ? "Pipeline" : "Script"} run</h2>
       <FoldableOutput
         title="Input form"
         isActive={!pipStates.runHash}
@@ -276,6 +277,7 @@ export function PipelinePage({runType}) {
           runningScripts={runningScripts}
           setRunningScripts={setRunningScripts}
           runHash={runHash}
+          isPipeline={runType === "pipeline"}
         />
       )}
     </>
@@ -288,9 +290,16 @@ function PipelineResults({
   runningScripts,
   setRunningScripts,
   runHash,
+  isPipeline,
 }) {
   const [activeRenderer, setActiveRenderer] = useState({});
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
+
+  useEffect(() => {
+    if(!isEmptyObject(resultsData)) {
+      setActiveRenderer(Object.keys(resultsData)[0])
+    }
+  }, [resultsData, setActiveRenderer])
 
   useEffect(() => {
     // Put outputResults at initial value
@@ -308,51 +317,54 @@ function PipelineResults({
       <RenderContext.Provider
         value={createContext(activeRenderer, setActiveRenderer)}
       >
-        <h2>Pipeline</h2>
-        {pipelineOutputResults && pipelineMetadata.outputs &&
-          Object.entries(pipelineMetadata.outputs).map((entry) => {
-            const [ioId, outputDescription] = entry;
-            const breadcrumbs = getBreadcrumbs(ioId);
-            const outputId = getScriptOutput(ioId);
-            const value =
-              pipelineOutputResults[breadcrumbs] &&
-              pipelineOutputResults[breadcrumbs][outputId];
-            if (!value) {
-              return (
-                <div key={ioId} className="outputTitle">
-                  <h3>{outputDescription.label}</h3>
-                  {runningScripts.size > 0 ? (
-                    <img
-                      src={spinnerImg}
-                      alt="Spinner"
-                      className="spinner-inline"
-                    />
-                  ) : (
-                    <>
+        <h2>Results</h2>
+        {isPipeline && <>
+          {pipelineOutputResults && pipelineMetadata.outputs &&
+            Object.entries(pipelineMetadata.outputs).map((entry) => {
+              const [ioId, outputDescription] = entry;
+              const breadcrumbs = getBreadcrumbs(ioId);
+              const outputId = getScriptOutput(ioId);
+              const value =
+                pipelineOutputResults[breadcrumbs] &&
+                pipelineOutputResults[breadcrumbs][outputId];
+              if (!value) {
+                return (
+                  <div key={ioId} className="outputTitle">
+                    <h3>{outputDescription.label}</h3>
+                    {runningScripts.size > 0 ? (
                       <img
-                        src={warningImg}
-                        alt="Warning"
-                        className="error-inline"
+                        src={spinnerImg}
+                        alt="Spinner"
+                        className="spinner-inline"
                       />
-                      See detailed results
-                    </>
-                  )}
-                </div>
+                    ) : (
+                      <>
+                        <img
+                          src={warningImg}
+                          alt="Warning"
+                          className="error-inline"
+                        />
+                        See detailed results
+                      </>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <SingleOutputResult
+                  key={ioId}
+                  outputId={outputId}
+                  componentId={ioId}
+                  outputValue={value}
+                  outputMetadata={outputDescription}
+                />
               );
-            }
+            })}
 
-            return (
-              <SingleOutputResult
-                key={ioId}
-                outputId={outputId}
-                componentId={ioId}
-                outputValue={value}
-                outputMetadata={outputDescription}
-              />
-            );
-          })}
-
-        <h2>Detailed results</h2>
+          <h2>Detailed results</h2>
+        </>
+        }
         {Object.entries(resultsData).map((entry) => {
           const [key, value] = entry;
 
