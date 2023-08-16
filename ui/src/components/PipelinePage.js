@@ -65,8 +65,9 @@ function pipReducer(state, action) {
     case "reset": {
       return pipInitialState({runType: action.runType})
     }
+    default:
+      throw Error("Unknown action: " + action.type);
   }
-  throw Error("Unknown action: " + action.type);
 }
 
 function pipInitialState(init) {
@@ -189,7 +190,6 @@ export function PipelinePage({runType}) {
             newDescriptionFile: descriptionFile,
             newHash: hash,
           });
-          loadPipelineMetadata(descriptionFile, false);
           setInputFileContent(json);
         }
       });
@@ -207,8 +207,11 @@ export function PipelinePage({runType}) {
         loadPipelineMetadata(pipStates.descriptionFile, true);
         break;
       case "run":
+      case "url":
         loadPipelineMetadata(pipStates.descriptionFile, false);
         break;
+      default:
+        throw Error("Unknown action: " + pipStates.lastAction);
     }
     loadPipelineOutputs();
   }, [pipStates]);
