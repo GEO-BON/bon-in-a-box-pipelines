@@ -63,7 +63,7 @@ function pipReducer(state, action) {
       };
     }
     case "reset": {
-      return pipInitialState({runType: state.runType})
+      return pipInitialState({runType: action.runType})
     }
   }
   throw Error("Unknown action: " + action.type);
@@ -218,6 +218,11 @@ export function PipelinePage({runType}) {
     if (pipeline && runHash) {
       let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
       loadInputJson(pipeline, descriptionFile, runHash);
+    } else {
+      setPipStates({
+        type: "reset",
+        runType: runType,
+      });
     }
   }, [pipeline, runHash, runType]);
 
