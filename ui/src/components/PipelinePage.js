@@ -24,7 +24,8 @@ import {
 } from "../utils/IOId";
 import { useParams } from "react-router-dom";
 
-const defaultPipeline = "helloWorld";
+const defaultPipeline = {name: "helloWorld", file: "helloWorld.json"};
+const defaultScript = {name: "helloWorld > helloR", file: "helloWorld>helloR.yml"};
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -36,7 +37,9 @@ function pipReducer(state, action) {
         lastAction: "run",
         runHash: action.newHash,
         pipeline: state.pipeline,
+        descriptionFile: state.descriptionFile,
         runId: state.pipeline + ">" + action.newHash,
+        runType: state.runType,
       };
     }
     case "select": {
@@ -44,7 +47,9 @@ function pipReducer(state, action) {
         lastAction: "select",
         runHash: null,
         pipeline: action.newPipeline,
+        descriptionFile: action.newDescriptionFile,
         runId: null,
+        runType: state.runType,
       };
     }
     case "url": {
@@ -52,34 +57,36 @@ function pipReducer(state, action) {
         lastAction: "url",
         runHash: action.newHash,
         pipeline: action.newPipeline,
+        descriptionFile: action.newDescriptionFile,
         runId: action.newPipeline + ">" + action.newHash,
+        runType: state.runType,
       };
     }
     case "reset": {
-      return {
-        lastAction: "reset",
-        runHash: null,
-        pipeline: defaultPipeline,
-        runId: null,
-      };
+      return pipInitialState({runType: state.runType})
     }
   }
   throw Error("Unknown action: " + action.type);
 }
 
 function pipInitialState(init) {
+  let defaultSelection = init.runType === "pipeline" ? defaultPipeline : defaultScript
+  let pip = defaultSelection.name
+  let descriptionFile = defaultSelection.file
+
   let hash = null;
-  let pip = defaultPipeline;
   let action = "reset";
   if (init.pipeline && init.runHash) {
     hash = init.runHash;
     pip = init.pipeline;
     action = "url";
   }
+
   return {
     lastAction: action,
     runHash: hash,
     pipeline: pip,
+    descriptionFile: descriptionFile,
     runId: pip + ">" + hash,
   };
 }
@@ -99,9 +106,10 @@ export function PipelinePage({runType}) {
   const { pipeline, runHash } = useParams();
   const [pipStates, setPipStates] = useReducer(
     pipReducer,
-    {pipeline: pipeline, runHash: runHash},
+    {runType, pipeline, runHash},
     pipInitialState
   );
+
   function showHttpError(error, response) {
     if (response && response.text) setHttpError(response.text);
     else if (error) setHttpError(error.toString());
@@ -131,7 +139,6 @@ export function PipelinePage({runType}) {
   }
 
   function loadPipelineMetadata(choice, setExamples = true) {
-    choice = choice + ".json";
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
@@ -155,7 +162,7 @@ export function PipelinePage({runType}) {
     api.getInfo(runType, choice, callback);
   }
 
-  function loadInputJson(pip, hash) {
+  function loadInputJson(pip, descriptionFile, hash) {
     var inputJson = "/output/" + pip.replace('>','/') + "/" + hash + "/input.json";
     fetch(inputJson)
       .then((response) => {
@@ -167,6 +174,7 @@ export function PipelinePage({runType}) {
           setPipStates({
             type: "run",
             newPipeline: pip,
+            newDescriptionFile: descriptionFile,
             newHash: hash,
           });
           return false;
@@ -178,9 +186,10 @@ export function PipelinePage({runType}) {
           setPipStates({
             type: "url",
             newPipeline: pip,
+            newDescriptionFile: descriptionFile,
             newHash: hash,
           });
-          loadPipelineMetadata(pip, false);
+          loadPipelineMetadata(descriptionFile, false);
           setInputFileContent(json);
         }
       });
@@ -195,10 +204,10 @@ export function PipelinePage({runType}) {
     switch(pipStates.lastAction) {
       case "reset":
       case "select":
-        loadPipelineMetadata(pipStates.pipeline, true);
+        loadPipelineMetadata(pipStates.descriptionFile, true);
         break;
       case "run":
-        loadPipelineMetadata(pipStates.pipeline, false);
+        loadPipelineMetadata(pipStates.descriptionFile, false);
         break;
     }
     loadPipelineOutputs();
@@ -207,9 +216,10 @@ export function PipelinePage({runType}) {
   useEffect(() => {
     // set by the route
     if (pipeline && runHash) {
-      loadInputJson(pipeline, runHash);
+      let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
+      loadInputJson(pipeline, descriptionFile, runHash);
     }
-  }, [pipeline, runHash]);
+  }, [pipeline, runHash, runType]);
 
   const stop = () => {
     setStoppable(false);
