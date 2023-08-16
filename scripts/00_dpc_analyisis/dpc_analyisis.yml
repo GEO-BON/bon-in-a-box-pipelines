@@ -3,46 +3,46 @@ description: "This script identifies the spatial unit or node that contributes t
 inputs:
   data_spatial_unit:
     label: data_spatial_unit 
-    description: Table in csv format that contains two mandatory columns, id and area of spatial units or nodes. If the analysis is done over time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration.
+    description: "Table in csv format that contains two mandatory columns, id and area of spatial units or nodes. If the analysis is done over time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration."
     type: text
     example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
   area_study_area:
     label: area_study_area
-    description: Specify the total area of the query area, this value is mandatory for the dPC calculation. Check that the area units are the same as those used in the data_spatial_unit parameter.
+    description: "Specify the total area of the query area, this value is mandatory for the dPC calculation. Check that the area units are the same as those used in the data_spatial_unit parameter."
     type: int
     example: 11000000000
   column_spatial_unit:
     label: column_spatial_unit 
-    description: Specifies the name of the column that contains the id of the spatial unit or node.
+    description: "Specifies the name of the column that contains the id of the spatial unit or node."
     type: text
     example: "id_pa"
   column_area:
     label: column_area 
-    description: Specifies the name of the column that contains the area of the spatial units or nodes. If there are several areas for the same id, the areas will be added. Values must be numeric otherwise they will be ignored.
+    description: "Specifies the name of the column that contains the area of the spatial units or nodes. If there are several areas for the same id, the areas will be added. Values must be numeric otherwise they will be ignored."
     type: text
     example: "area_spatial"
   column_date:
     label: column_date 
-    description: Specifies the name of the column that contains the date. The date is a mandatory field if you want an analysis by time periods. The date can be entered as "Year-Month-Day", just year, or just year-month; if given in a different format the row is ignored. If (NULL) is not specified, a single period is assumed for the entire data set and the following arguments will be ignored.
+    description: "Specifies the name of the column that contains the date. The date is a mandatory field if you want an analysis by time periods. The date can be entered as 'Year-Month-Day', just year, or just year-month; if given in a different format the row is ignored. If (NULL) is not specified, a single period is assumed for the entire data set and the following arguments will be ignored."
     type: text
     example: "created_date"
   time_interval:
     label: time_interval
-    description: Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, "1Y" is used by default.
+    description: "Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, '1Y' is used by default."
     type: text
     example: "10Y"
   time_start:
     label: time_start
-    description: Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL. 
+    description: "Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
     example: NA
   time_end:
     label: time_end
-    description: Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL.
+    description: "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
     example: NA
 outputs:
   dpC_result:
     label: dpC_result
-    description: Table with final results with three columns: period that contains the time period suggested by the user, id_spatial_unit that contains the id of the spatial unit or node that contributes the most to the connectivity of the query area, and the delta in the probability of connectivity ( dPC).
+    description: "Table with final results with three columns: period that contains the time period suggested by the user, id_spatial_unit that contains the id of the spatial unit or node that contributes the most to the connectivity of the query area, and the delta in the probability of connectivity ( dPC)."
     type: txt/csv
