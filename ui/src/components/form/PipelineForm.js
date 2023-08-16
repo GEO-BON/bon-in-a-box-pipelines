@@ -51,8 +51,6 @@ export function PipelineForm({
         let pipelineForUrl = parts.slice(0,-1).join(">")
         setPipStates({
           type: "run",
-          newPipeline: pipStates.pipeline,
-          newDescriptionFile: pipStates.descriptionFile,
           newHash: runHash,
         });
         navigate("/" + runType + "-form/" + pipelineForUrl + "/" + runHash);
