@@ -80,10 +80,6 @@ t1<- (if(type_period$type == "Y"){ lubridate::ceiling_date(as.Date(t1),  lubrida
 
 
 
-
-
-
-
 # Establecer cube view
 cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = t0, t1 = t1,
                                                                            left = box_study_area[1], right = box_study_area[3],
@@ -218,7 +214,8 @@ freq_layers<- terra::freq(layers) %>% list(name_layers) %>% plyr::join_all() %>%
 
 # Asignar atributos a layer
 data_areas<- list(data_layers, dplyr::filter(freq_layers, !layer %in% "area")) %>% plyr::join_all() %>% 
-  dplyr::mutate(area= ifelse(is.na(area), 0, area))
+  dplyr::mutate(area= ifelse(is.na(area), 0, area)) %>%   dplyr::mutate(classes= gsub(" ", "_", tolower(classes))) 
+
 
 data_areas2<- data_areas %>% 
   dplyr::group_by(period_layer) %>%  dplyr::mutate(percentage= area/ sum(area)) %>% 
