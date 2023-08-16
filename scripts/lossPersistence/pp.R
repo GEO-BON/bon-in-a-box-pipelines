@@ -88,7 +88,7 @@ t1<- (if(type_period$type == "Y"){ lubridate::ceiling_date(as.Date(t1),  lubrida
 cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = t0, t1 = t1,
                                                                            left = box_study_area[1], right = box_study_area[3],
                                                                            top = box_study_area[4], bottom = box_study_area[2]),
-                                         nx = dim_study_area[2], ny = dim_study_area[1], dt = "P1Y",aggregation = "near", resampling = "first",
+                                         nx = dim_study_area[1], ny = dim_study_area[2], dt = "P1Y",aggregation = "near", resampling = "first",
                                          keep.asp= F)
 
 # Crear cubo
