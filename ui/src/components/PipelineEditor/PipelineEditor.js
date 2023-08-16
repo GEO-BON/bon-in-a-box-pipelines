@@ -388,6 +388,9 @@ export function PipelineEditor(props) {
    */
   const refreshInputList = useCallback(
     (allNodes, allEdges) => {
+      if (allNodes.length === 0)
+        return
+
       setInputList((previousInputs) => {
         let newUserInputs = [];
 
@@ -464,11 +467,11 @@ export function PipelineEditor(props) {
                       previousInput && previousInput.label
                         ? previousInput
                         : {
-                            ...inputDescription,
-                            nodeId: node.id,
-                            inputId: inputId,
-                            file: node.data.descriptionFile,
-                          }
+                          ...inputDescription,
+                          nodeId: node.id,
+                          inputId: inputId,
+                          file: node.data.descriptionFile,
+                        }
                     );
                   }
                 });
@@ -488,13 +491,17 @@ export function PipelineEditor(props) {
   }, [nodes, edges, refreshInputList]);
 
   /**
-   * Refresh the list of outputs.
+   * Refresh the list of outputs on edge change.
    */
   useEffect(() => {
-    if (!reactFlowInstance) return;
-
-    let newPipelineOutputs = [];
+    if (!reactFlowInstance)
+      return
+    
     const allNodes = reactFlowInstance.getNodes();
+    if(allNodes.length === 0)
+      return
+  
+    let newPipelineOutputs = [];
     allNodes.forEach((node) => {
       if (node.type === "output") {
         const connectedEdges = getConnectedEdges([node], edges);
@@ -657,7 +664,7 @@ export function PipelineEditor(props) {
     });
   };
 
-  const onLoadFlow = (flow) => {
+  const onLoadFlow = useCallback((flow) => {
     if (flow) {
       // Read inputs
       let inputsFromFile = [];
@@ -747,7 +754,17 @@ export function PipelineEditor(props) {
     } else {
       console.error("Error parsing flow");
     }
-  };
+  }, [
+    reactFlowInstance,
+    setInputList,
+    setOutputList,
+    setEdges,
+    setNodes,
+    injectConstant,
+    injectOutput,
+    onConstantValueChange,
+    onPopupMenu
+  ]);
 
   return (
     <div id="editorLayout">
