@@ -27,11 +27,3 @@ outputs:
     label: dir_ebd_zerofill
     description: 'Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.'
     type: text/csv	
-  dir_table_observed:
-    label: dir_table_observed
-    description: 'Numerical value referring to the EPSG code used as the spatial reference system for the study area. This code specifies the reference coordinate system of the val_wkt_path file.'
-    type: text/csv
-  dir_GeoJSON_points:
-    label: dir_GeoJSON_points
-    description: 'Text string referring to the file path of the generated GeoJSON (.geojson) file that represents the boundaries of the study area. The GeoJSON file (Geospatial JavaScript Object Notation) is a format for storing spatial data that describes the geometry of the study area.'
-    type: application/geo+json	
