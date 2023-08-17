@@ -48,11 +48,10 @@ export function PipelineForm({
         const parts = runId.split(">");
         let runHash = parts.at(-1);
         let pipelineForUrl = parts.slice(0,-1).join(">")
-        setPipStates({
-          type: "run",
-          newHash: runHash,
-          runId: runId,
-        });
+        if(pipStates.runHash === runHash) {
+          setPipStates({type: "rerun"});
+        }
+
         navigate("/" + runType + "-form/" + pipelineForUrl + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
