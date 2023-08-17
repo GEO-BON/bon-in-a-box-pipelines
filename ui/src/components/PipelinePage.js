@@ -33,15 +33,10 @@ export const api = new BonInABoxScriptService.DefaultApi();
 
 function pipReducer(state, action) {
   switch (action.type) {
-    case "run": {
+    case "rerun": {
       return {
-        lastAction: "run",
-        runHash: action.newHash,
-        runId: action.runId,
-
-        pipeline: state.pipeline,
-        descriptionFile: state.descriptionFile,
-        runType: state.runType,
+        ...state,
+        lastAction: "rerun",
       };
     }
     case "select": {
@@ -67,7 +62,7 @@ function pipReducer(state, action) {
       };
     }
     case "reset": {
-      return pipInitialState({runType: action.runType})
+      return pipInitialState({ runType: action.runType })
     }
     default:
       throw Error("Unknown action: " + action.type);
@@ -93,6 +88,7 @@ function pipInitialState(init) {
     pipeline: pip,
     descriptionFile: descriptionFile,
     runId: pip + ">" + hash,
+    runType: init.runType,
   };
 }
 
@@ -174,26 +170,13 @@ export function PipelinePage({runType}) {
         if (response.ok) {
           return response.json();
         }
-        if (response.status === 404) {
-          // This has never ran. Simply select the pipeline.
-          setPipStates({
-            type: "select",
-            newPipeline: pip,
-            newDescriptionFile: descriptionFile,
-            newHash: hash,
-          });
+
+        // This has never ran. No inputs to load.
           return false;
-        }
       })
       .then((json) => {
         if (json) {
-          // This has been run before
-          setPipStates({
-            type: "url",
-            newPipeline: pip,
-            newDescriptionFile: descriptionFile,
-            newHash: hash,
-          });
+          // This has been run before, load the inputs
           setInputFileContent(json);
         }
       });
@@ -205,18 +188,21 @@ export function PipelinePage({runType}) {
 
   useEffect(() => {
     setResultsData(null);
+
     switch(pipStates.lastAction) {
       case "reset":
       case "select":
         loadPipelineMetadata(pipStates.descriptionFile, true);
         break;
-      case "run":
+      case "rerun":
+        break;
       case "url":
         loadPipelineMetadata(pipStates.descriptionFile, false);
         break;
       default:
         throw Error("Unknown action: " + pipStates.lastAction);
     }
+
     loadPipelineOutputs();
   }, [pipStates]);
 
@@ -224,6 +210,13 @@ export function PipelinePage({runType}) {
     // set by the route
     if (pipeline && runHash) {
       let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
+      setPipStates({
+        type: "url",
+        newPipeline: pipeline,
+        newDescriptionFile: descriptionFile,
+        newHash: runHash,
+      });
+
       loadInputJson(pipeline, descriptionFile, runHash);
     } else {
       setPipStates({
