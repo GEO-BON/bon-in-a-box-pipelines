@@ -40,18 +40,18 @@ export function PipelineForm({
   };
 
   const runPipeline = () => {
-    var callback = function (error, data, response) {
+    var callback = function (error, runId, response) {
       if (error) {
         // Server / connection errors. Data will be undefined.
-        data = {};
         showHttpError(error, response);
-      } else if (data) {
-        const parts = data.split(">");
+      } else if (runId) {
+        const parts = runId.split(">");
         let runHash = parts.at(-1);
         let pipelineForUrl = parts.slice(0,-1).join(">")
         setPipStates({
           type: "run",
           newHash: runHash,
+          runId: runId,
         });
         navigate("/" + runType + "-form/" + pipelineForUrl + "/" + runHash);
       } else {
@@ -74,7 +74,7 @@ export function PipelineForm({
       } else {
         let newOptions = [];
         data.forEach((descriptionFile) => {
-          let display = descriptionFile.replace(/.json$/i, "").replace(/.yml$/i, "").replace(">", " > ");
+          let display = descriptionFile.replace(/.json$/i, "").replace(/.yml$/i, "").replaceAll(">", " > ");
           newOptions.push({ label: display, value: descriptionFile });
         });
         setPipelineOptions(newOptions);

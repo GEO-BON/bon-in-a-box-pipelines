@@ -37,19 +37,21 @@ function pipReducer(state, action) {
       return {
         lastAction: "run",
         runHash: action.newHash,
+        runId: action.runId,
+
         pipeline: state.pipeline,
         descriptionFile: state.descriptionFile,
-        runId: state.pipeline + ">" + action.newHash,
         runType: state.runType,
       };
     }
     case "select": {
       return {
         lastAction: "select",
-        runHash: null,
         pipeline: action.newPipeline,
         descriptionFile: action.newDescriptionFile,
+        runHash: null,
         runId: null,
+
         runType: state.runType,
       };
     }
@@ -60,6 +62,7 @@ function pipReducer(state, action) {
         pipeline: action.newPipeline,
         descriptionFile: action.newDescriptionFile,
         runId: action.newPipeline + ">" + action.newHash,
+
         runType: state.runType,
       };
     }
@@ -165,7 +168,7 @@ export function PipelinePage({runType}) {
   }
 
   function loadInputJson(pip, descriptionFile, hash) {
-    var inputJson = "/output/" + pip.replace('>','/') + "/" + hash + "/input.json";
+    var inputJson = "/output/" + pip.replaceAll('>','/') + "/" + hash + "/input.json";
     fetch(inputJson)
       .then((response) => {
         if (response.ok) {
