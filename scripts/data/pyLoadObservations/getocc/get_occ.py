@@ -9,6 +9,9 @@ from pyproj import Proj
 from pathlib import Path
 
 # Reading input.json
+#pa=sys.argv[1]
+#pa=pa.rstrip()
+#print(pa+'/input.json')
 inputFile = open(sys.argv[1] + '/input.json')
 data = json.load(inputFile)
 
