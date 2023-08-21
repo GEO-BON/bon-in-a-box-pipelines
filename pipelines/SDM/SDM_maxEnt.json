@@ -809,7 +809,7 @@
         "amphibians",
         "all"
       ],
-      "example": "reptiles"
+      "example": "plants"
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
@@ -826,8 +826,7 @@
       "label": "Taxa list",
       "type": "text[]",
       "example": [
-        "Acer saccharum",
-        "Bubo scandiacus"
+        "Acer saccharum"
       ]
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
