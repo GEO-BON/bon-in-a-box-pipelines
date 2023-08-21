@@ -1,4 +1,4 @@
-description: "This script computes the range (max - min) of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures)."
+description: "This script computes the range of a 95% CI of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures)."
 
 script: rangePredictions.R
 inputs:
@@ -10,5 +10,5 @@ inputs:
 outputs:
   range_predictions:
     label: range predictions
-    description: range (max - min) of a set of predictions
+    description: range of a 95% CI of a set of predictions
     type: image/tiff;application=geotiff
