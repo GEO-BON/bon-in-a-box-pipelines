@@ -31,12 +31,8 @@ export function PipelineForm({
 
   const handlePipelineChange = (label, value) => {
     clearPreviousRequest();
-    setPipStates({
-      type: "select",
-      newPipeline: label,
-      newDescriptionFile: value,
-    });
-    navigate("/" + runType + "-form");
+    let pipelineForUrl = value.replace(/.json$/i, "").replace(/.yml$/i, "")
+    navigate("/" + runType + "-form/" + pipelineForUrl);
   };
 
   const runPipeline = () => {
