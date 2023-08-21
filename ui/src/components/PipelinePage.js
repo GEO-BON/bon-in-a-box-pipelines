@@ -152,7 +152,7 @@ export function PipelinePage({runType}) {
     api.getInfo(runType, choice, callback);
   }
 
-  function loadInputJson(pip, descriptionFile, hash) {
+  function loadPipelineInputs(pip, hash) {
     var inputJson = "/output/" + pip.replaceAll('>','/') + "/" + hash + "/input.json";
     fetch(inputJson)
       .then((response) => {
@@ -185,7 +185,7 @@ export function PipelinePage({runType}) {
       case "rerun":
         break;
       case "url":
-        loadPipelineMetadata(pipStates.descriptionFile, pipStates.runHash);
+        loadPipelineMetadata(pipStates.descriptionFile, !pipStates.runHash);
         break;
       default:
         throw Error("Unknown action: " + pipStates.lastAction);
@@ -206,7 +206,7 @@ export function PipelinePage({runType}) {
       });
 
       if (runHash) {
-      loadInputJson(pipeline, descriptionFile, runHash);
+        loadPipelineInputs(pipeline, runHash);
       }
     } else {
       setPipStates({
