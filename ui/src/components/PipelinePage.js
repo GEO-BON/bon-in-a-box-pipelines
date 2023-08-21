@@ -39,17 +39,6 @@ function pipReducer(state, action) {
         lastAction: "rerun",
       };
     }
-    case "select": {
-      return {
-        lastAction: "select",
-        pipeline: action.newPipeline,
-        descriptionFile: action.newDescriptionFile,
-        runHash: null,
-        runId: null,
-
-        runType: state.runType,
-      };
-    }
     case "url": {
       return {
         lastAction: "url",
@@ -191,13 +180,12 @@ export function PipelinePage({runType}) {
 
     switch(pipStates.lastAction) {
       case "reset":
-      case "select":
         loadPipelineMetadata(pipStates.descriptionFile, true);
         break;
       case "rerun":
         break;
       case "url":
-        loadPipelineMetadata(pipStates.descriptionFile, false);
+        loadPipelineMetadata(pipStates.descriptionFile, pipStates.runHash);
         break;
       default:
         throw Error("Unknown action: " + pipStates.lastAction);
@@ -208,7 +196,7 @@ export function PipelinePage({runType}) {
 
   useEffect(() => {
     // set by the route
-    if (pipeline && runHash) {
+    if (pipeline) {
       let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
       setPipStates({
         type: "url",
@@ -217,7 +205,9 @@ export function PipelinePage({runType}) {
         newHash: runHash,
       });
 
+      if (runHash) {
       loadInputJson(pipeline, descriptionFile, runHash);
+      }
     } else {
       setPipStates({
         type: "reset",
