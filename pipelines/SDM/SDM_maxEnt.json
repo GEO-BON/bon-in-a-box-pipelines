@@ -447,7 +447,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "\n"
+        "value": ""
       }
     }
   ],
