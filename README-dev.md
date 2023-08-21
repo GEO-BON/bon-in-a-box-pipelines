@@ -77,10 +77,22 @@ sequenceDiagram
     script_server-->>ui: 
 
     ui->>script_server: script/run
-    script_server->>script: 
+    script_server->>script: launch
+    script_server-->>ui: runId
+
+    loop Until output.json file generated
+        ui->>script_server: output/{id}/logs.txt
+        script_server-->>ui: 
+
+        ui->>script_server: output/{id}/output.json
+    end
+
+   
     script-->>script_server: output.json
-    Note left of ui: Currently 1h timeout.<br/>Using a job id necessary for long operations.
-    script_server-->>ui: output + logs
+
+    ui->>script_server: output/{id}/output.json
+    script_server-->>ui: 
+
 ```
 
 ### Pipeline scenario
@@ -96,7 +108,7 @@ sequenceDiagram
     script_server-->>ui: id
     loop For each step
         script_server->>script: run
-        Note right of script: 1h timeout for individual script
+        Note right of script: see previous diagram
         script-->>script_server: output.json (script)
         ui->>script_server: pipeline/<id>/outputs
         script_server-->>ui: pipelineOutput.json (pipeline)
