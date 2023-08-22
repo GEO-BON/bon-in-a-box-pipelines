@@ -23,28 +23,20 @@ import {
   getBreadcrumbs,
 } from "../utils/IOId";
 import { useParams } from "react-router-dom";
+import { isEmptyObject } from "../utils/isEmptyObject";
 
-const defaultPipeline = "helloWorld";
+const defaultPipeline = {name: "helloWorld", file: "helloWorld.json"};
+const defaultScript = {name: "helloWorld > helloR", file: "helloWorld>helloR.yml"};
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
 function pipReducer(state, action) {
   switch (action.type) {
-    case "run": {
+    case "rerun": {
       return {
-        lastAction: "run",
-        runHash: action.newHash,
-        pipeline: state.pipeline,
-        runId: state.pipeline + ">" + action.newHash,
-      };
-    }
-    case "select": {
-      return {
-        lastAction: "select",
-        runHash: null,
-        pipeline: action.newPipeline,
-        runId: null,
+        ...state,
+        lastAction: "rerun",
       };
     }
     case "url": {
@@ -52,39 +44,44 @@ function pipReducer(state, action) {
         lastAction: "url",
         runHash: action.newHash,
         pipeline: action.newPipeline,
+        descriptionFile: action.newDescriptionFile,
         runId: action.newPipeline + ">" + action.newHash,
+
+        runType: state.runType,
       };
     }
     case "reset": {
-      return {
-        lastAction: "reset",
-        runHash: null,
-        pipeline: defaultPipeline,
-        runId: null,
-      };
+      return pipInitialState({ runType: action.runType })
     }
+    default:
+      throw Error("Unknown action: " + action.type);
   }
-  throw Error("Unknown action: " + action.type);
 }
 
 function pipInitialState(init) {
+  let defaultSelection = init.runType === "pipeline" ? defaultPipeline : defaultScript
+  let pip = defaultSelection.name
+  let descriptionFile = defaultSelection.file
+
   let hash = null;
-  let pip = defaultPipeline;
   let action = "reset";
   if (init.pipeline && init.runHash) {
     hash = init.runHash;
     pip = init.pipeline;
     action = "url";
   }
+
   return {
     lastAction: action,
     runHash: hash,
     pipeline: pip,
+    descriptionFile: descriptionFile,
     runId: pip + ">" + hash,
+    runType: init.runType,
   };
 }
 
-export function PipelinePage() {
+export function PipelinePage({runType}) {
   const [stoppable, setStoppable] = useState(null);
   const [runningScripts, setRunningScripts] = useState(new Set());
   const [resultsData, setResultsData] = useState(null);
@@ -99,9 +96,10 @@ export function PipelinePage() {
   const { pipeline, runHash } = useParams();
   const [pipStates, setPipStates] = useReducer(
     pipReducer,
-    {pipeline: pipeline, runHash: runHash},
+    {runType, pipeline, runHash},
     pipInitialState
   );
+
   function showHttpError(error, response) {
     if (response && response.text) setHttpError(response.text);
     else if (error) setHttpError(error.toString());
@@ -111,7 +109,7 @@ export function PipelinePage() {
   let timeout;
   function loadPipelineOutputs() {
     if (pipStates.runHash) {
-      api.getPipelineOutputs(pipStates.runId, (error, data, response) => {
+      api.getOutputFolders(runType, pipStates.runId, (error, data, response) => {
         if (error) {
           showHttpError(error, response);
         } else {
@@ -131,7 +129,6 @@ export function PipelinePage() {
   }
 
   function loadPipelineMetadata(choice, setExamples = true) {
-    choice = choice + ".json";
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
@@ -152,35 +149,23 @@ export function PipelinePage() {
         }
       }
     };
-    api.getPipelineInfo(choice, callback);
+    api.getInfo(runType, choice, callback);
   }
 
-  function loadInputJson(pip, hash) {
-    var inputJson = "/output/" + pip.replace('>','/') + "/" + hash + "/input.json";
+  function loadPipelineInputs(pip, hash) {
+    var inputJson = "/output/" + pip.replaceAll('>','/') + "/" + hash + "/input.json";
     fetch(inputJson)
       .then((response) => {
         if (response.ok) {
           return response.json();
         }
-        if (response.status === 404) {
-          // This is a new run
-          setPipStates({
-            type: "run",
-            newPipeline: pip,
-            newHash: hash,
-          });
+
+        // This has never ran. No inputs to load.
           return false;
-        }
       })
       .then((json) => {
         if (json) {
-          // This has been run before
-          setPipStates({
-            type: "url",
-            newPipeline: pip,
-            newHash: hash,
-          });
-          loadPipelineMetadata(pip, false);
+          // This has been run before, load the inputs
           setInputFileContent(json);
         }
       });
@@ -192,28 +177,48 @@ export function PipelinePage() {
 
   useEffect(() => {
     setResultsData(null);
+
     switch(pipStates.lastAction) {
       case "reset":
-      case "select":
-        loadPipelineMetadata(pipStates.pipeline, true);
+        loadPipelineMetadata(pipStates.descriptionFile, true);
         break;
-      case "run":
-        loadPipelineMetadata(pipStates.pipeline, false);
+      case "rerun":
         break;
+      case "url":
+        loadPipelineMetadata(pipStates.descriptionFile, !pipStates.runHash);
+        break;
+      default:
+        throw Error("Unknown action: " + pipStates.lastAction);
     }
+
     loadPipelineOutputs();
   }, [pipStates]);
 
   useEffect(() => {
     // set by the route
-    if (pipeline && runHash) {
-      loadInputJson(pipeline, runHash);
+    if (pipeline) {
+      let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
+      setPipStates({
+        type: "url",
+        newPipeline: pipeline,
+        newDescriptionFile: descriptionFile,
+        newHash: runHash,
+      });
+
+      if (runHash) {
+        loadPipelineInputs(pipeline, runHash);
+      }
+    } else {
+      setPipStates({
+        type: "reset",
+        runType: runType,
+      });
     }
-  }, [pipeline, runHash]);
+  }, [pipeline, runHash, runType]);
 
   const stop = () => {
     setStoppable(false);
-    api.stopPipeline(pipStates.runId, (error, data, response) => {
+    api.stop(runType, pipStates.runId, (error, data, response) => {
       if (response.status === 200) {
         setHttpError("Cancelled by user");
       }
@@ -222,7 +227,7 @@ export function PipelinePage() {
 
   return (
     <>
-      <h2>Pipeline run</h2>
+      <h2>{runType === "pipeline" ? "Pipeline" : "Script"} run</h2>
       <FoldableOutput
         title="Input form"
         isActive={!pipStates.runHash}
@@ -236,6 +241,7 @@ export function PipelinePage() {
           setPipStates={setPipStates}
           showHttpError={showHttpError}
           setResultsData={setResultsData}
+          runType={runType}
         />
       </FoldableOutput>
 
@@ -257,6 +263,7 @@ export function PipelinePage() {
           runningScripts={runningScripts}
           setRunningScripts={setRunningScripts}
           runHash={runHash}
+          isPipeline={runType === "pipeline"}
         />
       )}
     </>
@@ -269,9 +276,16 @@ function PipelineResults({
   runningScripts,
   setRunningScripts,
   runHash,
+  isPipeline,
 }) {
   const [activeRenderer, setActiveRenderer] = useState({});
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
+
+  useEffect(() => {
+    if(!isEmptyObject(resultsData)) {
+      setActiveRenderer(Object.keys(resultsData)[0])
+    }
+  }, [resultsData, setActiveRenderer])
 
   useEffect(() => {
     // Put outputResults at initial value
@@ -289,51 +303,54 @@ function PipelineResults({
       <RenderContext.Provider
         value={createContext(activeRenderer, setActiveRenderer)}
       >
-        <h2>Pipeline</h2>
-        {pipelineOutputResults && pipelineMetadata.outputs &&
-          Object.entries(pipelineMetadata.outputs).map((entry) => {
-            const [ioId, outputDescription] = entry;
-            const breadcrumbs = getBreadcrumbs(ioId);
-            const outputId = getScriptOutput(ioId);
-            const value =
-              pipelineOutputResults[breadcrumbs] &&
-              pipelineOutputResults[breadcrumbs][outputId];
-            if (!value) {
-              return (
-                <div key={ioId} className="outputTitle">
-                  <h3>{outputDescription.label}</h3>
-                  {runningScripts.size > 0 ? (
-                    <img
-                      src={spinnerImg}
-                      alt="Spinner"
-                      className="spinner-inline"
-                    />
-                  ) : (
-                    <>
+        <h2>Results</h2>
+        {isPipeline && <>
+          {pipelineOutputResults && pipelineMetadata.outputs &&
+            Object.entries(pipelineMetadata.outputs).map((entry) => {
+              const [ioId, outputDescription] = entry;
+              const breadcrumbs = getBreadcrumbs(ioId);
+              const outputId = getScriptOutput(ioId);
+              const value =
+                pipelineOutputResults[breadcrumbs] &&
+                pipelineOutputResults[breadcrumbs][outputId];
+              if (!value) {
+                return (
+                  <div key={ioId} className="outputTitle">
+                    <h3>{outputDescription.label}</h3>
+                    {runningScripts.size > 0 ? (
                       <img
-                        src={warningImg}
-                        alt="Warning"
-                        className="error-inline"
+                        src={spinnerImg}
+                        alt="Spinner"
+                        className="spinner-inline"
                       />
-                      See detailed results
-                    </>
-                  )}
-                </div>
+                    ) : (
+                      <>
+                        <img
+                          src={warningImg}
+                          alt="Warning"
+                          className="error-inline"
+                        />
+                        See detailed results
+                      </>
+                    )}
+                  </div>
+                );
+              }
+
+              return (
+                <SingleOutputResult
+                  key={ioId}
+                  outputId={outputId}
+                  componentId={ioId}
+                  outputValue={value}
+                  outputMetadata={outputDescription}
+                />
               );
-            }
+            })}
 
-            return (
-              <SingleOutputResult
-                key={ioId}
-                outputId={outputId}
-                componentId={ioId}
-                outputValue={value}
-                outputMetadata={outputDescription}
-              />
-            );
-          })}
-
-        <h2>Detailed results</h2>
+          <h2>Detailed results</h2>
+        </>
+        }
         {Object.entries(resultsData).map((entry) => {
           const [key, value] = entry;
 
@@ -441,7 +458,7 @@ function DelayedResult({
       setScriptMetadata(data);
     };
 
-    api.getScriptInfo(script, callback);
+    api.getInfo("script", script, callback);
   }, [script]);
 
   let content,

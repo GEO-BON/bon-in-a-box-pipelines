@@ -25,20 +25,21 @@ abstract class YMLStep(
      */
     protected var context:RunContext? = null
 
-    override fun validateInputsConfiguration(): String {
-        val inputsFromYml = readInputs(yamlParsed, logger)
+    val inputsDefinition = readInputs(yamlParsed, logger)
 
-        if (inputs.size != inputsFromYml.size) {
+    override fun validateInputsConfiguration(): String {
+
+        if (inputs.size != inputsDefinition.size) {
             return "Bad number of inputs." +
-                    "\n\tYAML spec: ${inputsFromYml.keys}" +
+                    "\n\tYAML spec: ${inputsDefinition.keys}" +
                     "\n\tReceived:  ${inputs.keys}" +
-                    "\n\tExtra keys: ${inputs.mapNotNull { if (inputsFromYml.containsKey(it.key)) null else it.key }}" +
-                    "\n\tMissing keys: ${inputsFromYml.mapNotNull { if (inputs.containsKey(it.key)) null else it.key }}\n"
+                    "\n\tExtra keys: ${inputs.mapNotNull { if (inputsDefinition.containsKey(it.key)) null else it.key }}" +
+                    "\n\tMissing keys: ${inputsDefinition.mapNotNull { if (inputs.containsKey(it.key)) null else it.key }}\n"
         }
 
         // Validate presence and type of each input
         var errorMessages = ""
-        inputsFromYml.forEach { (inputKey, expectedType) ->
+        inputsDefinition.forEach { (inputKey, expectedType) ->
             errorMessages += inputs[inputKey]?.let {
                 if (it.type == expectedType) ""
                 // Check for convertible types (currently only int to float, use a map/when if more conversions are possible)
@@ -55,7 +56,7 @@ abstract class YMLStep(
                     // Everything else refused
                     else -> "Wrong type \"${it.type}\" for input \"$inputKey\", \"$expectedType\" expected.\n"
                 }
-            } ?: "Missing key $inputKey\n\tYAML spec: ${inputsFromYml.keys}\n\tReceived:  ${inputs.keys}\n"
+            } ?: "Missing key $inputKey\n\tYAML spec: ${inputsDefinition.keys}\n\tReceived:  ${inputs.keys}\n"
         }
 
         return errorMessages
@@ -63,7 +64,7 @@ abstract class YMLStep(
 
     override fun onInputsReceived(resolvedInputs: Map<String, Any?>) {
         // Now that we know the inputs are valid, record the id
-        context = RunContext(yamlFile, resolvedInputs.toString())
+        context = RunContext(yamlFile, resolvedInputs)
 
         try { // Validation
             inputs.filter { (_, pipe) -> pipe.type == TYPE_OPTIONS }.forEach { (key, _) ->
@@ -95,7 +96,7 @@ abstract class YMLStep(
             if(key == searchedKey) {
                 return description as? Map<*, *>
             }
-        } ?: println("$section is not a valid map")
+        } ?: logger.warn("$section is not a valid map")
 
         return null
     }

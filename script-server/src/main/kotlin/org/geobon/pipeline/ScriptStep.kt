@@ -33,7 +33,7 @@ class ScriptStep(yamlFile: File, stepId: StepId, inputs: MutableMap<String, Pipe
         val scriptRun = synchronized(currentRuns) {
             currentRuns.getOrPut(context!!.runId) {
                 runOwner = true
-                ScriptRun(scriptFile, resolvedInputs.toSortedMap(), context!!, specificTimeout ?: DEFAULT_TIMEOUT)
+                ScriptRun(scriptFile, context!!, specificTimeout ?: DEFAULT_TIMEOUT)
             }
         }
         
