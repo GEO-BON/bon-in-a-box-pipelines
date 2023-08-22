@@ -2,7 +2,7 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson", "units") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
@@ -20,7 +20,7 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
 
 # Option 1: Setting for production pipeline purposes. This is designed for use in a production environment or workflow.
- Sys.getenv("SCRIPT_LOCATION")
+Sys.getenv("SCRIPT_LOCATION")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
 # outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
@@ -33,21 +33,27 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) if(!is.null(x)) if( grepl("/", x) ){
+input<- lapply(input, function(x) if( grepl("/", x) ){
   sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # adjust input 1
+
 
 
 
 ####  Script body ####
 output<- tryCatch({
   
+  
   units::units_options(set_units_mode = "standard")
   
-  spatial_unit_data<- read.csv(input$data_spatial_unit) %>% dplyr::select(c(input$column_spatial_unit, input$column_date, input$column_area)) %>%
-    dplyr::filter(!duplicated(input$column_spatial_unit)) %>% dplyr::mutate(spatial_unit= "yes_spatial_unit_data")
-
+  group<- input$column_spatial_unit
+  
+  spatial_unit_data<- read.csv(input$data_spatial_unit) %>%
+    dplyr::mutate(group_n= paste0(!!!dplyr::syms(group)) %>% {gsub(" ", "_", .)}) %>% 
+    dplyr::select(c(input$column_spatial_unit, input$column_date, input$column_area, "group_n")) %>%
+    dplyr::filter(!duplicated(group_n)) %>% dplyr::mutate(spatial_unit= "yes_spatial_unit_data")
+  
   spatial_unit_data$date<- as.Date(spatial_unit_data$created_date, format = "%Y-%m-%d")
-
+  
   
   start_date<- {if(input$time_start == "NA"){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
   end_date<- {if(input$time_end == "NA"){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
@@ -59,36 +65,39 @@ output<- tryCatch({
   spatial_unit_data$period <- lubridate::floor_date(spatial_unit_data$date, input$time_interval)
   
   spatial_unit_data_v2 <- spatial_unit_data[
-    order(spatial_unit_data[, "date"], spatial_unit_data[, input$column_spatial_unit]) , ]
-
+    order(spatial_unit_data[, "date"], spatial_unit_data[, "group_n"]) , ]
   
-
-
+  
+  
+  
   ## cunsum
-   spatial_unit_area<- lapply(seq(nrow(spatial_unit_data_v2)), function(i){
-     new_periods<- periods %>%  {.[which(spatial_unit_data_v2[i,"period"] == .):length(.)]}  
-     data_period<- lapply(new_periods, function(j) dplyr::mutate(spatial_unit_data_v2[i,], period= j)) %>% plyr::rbind.fill()
+  spatial_unit_area<- lapply(seq(nrow(spatial_unit_data_v2)), function(i){
+    new_periods<- periods %>%  {.[which(spatial_unit_data_v2[i,"period"] == .):length(.)]}  
+    data_period<- lapply(new_periods, function(j) dplyr::mutate(spatial_unit_data_v2[i,], period= j)) %>% plyr::rbind.fill()
   }) %>% plyr::rbind.fill()
-
-   spatial_unit_no_area<- dplyr::select(spatial_unit_area, c("id_pa", "period", "area_spatial")) %>%
-     dplyr::distinct() %>% dplyr::group_by(period) %>%
-     dplyr::summarize( area_spatial =  input$area_study_area - sum(area_spatial)) %>% 
-     dplyr::mutate(spatial_unit= "no_spatial_unit")
-   
-
-   spatial_units_periods<- plyr::rbind.fill(list(spatial_unit_area, spatial_unit_no_area))
-   spatial_units_periods <-  spatial_units_periods[ order( spatial_units_periods[, "date"],  spatial_units_periods[, input$column_spatial_unit]), ]
   
-
+  spatial_unit_no_area<- dplyr::select(spatial_unit_area, c("group_n", "period", "area_spatial")) %>%
+    dplyr::distinct() %>% dplyr::group_by(period) %>%
+    dplyr::summarize( area_spatial =  input$area_study_area - sum(area_spatial)) %>% 
+    dplyr::mutate(spatial_unit= "no_spatial_unit")
+  
+  
+  spatial_units_periods<- plyr::rbind.fill(list(spatial_unit_area, spatial_unit_no_area))
+  spatial_units_periods <-  spatial_units_periods[ order( spatial_units_periods[, "date"],  spatial_units_periods[, "group_n"]), ]
+  
+  
   
   #Define the decades reported for the protected areas creation to start the analysis
   decades = unique(spatial_units_periods$period) 
-
+  
   #Create the table result
   result_dPC = as.data.frame(matrix(NA,ncol = 4, nrow = 0))
-  colnames(result_dPC) = c("Period", "id_pa","PC_out","PC")
+  colnames(result_dPC) = c("Period", "group_n","PC_out","PC")
   
-
+  dPC = as.data.frame(matrix(NA,ncol = 6, nrow = 0))
+  colnames(dPC) = c("Period", "group_n", "name", "PC_out","PC" , "dPC")
+  
+  
   
   for (i in as.character(decades)) { print(i)
     
@@ -119,11 +128,11 @@ output<- tryCatch({
     
     # Calculate pc 
     #Extract the unique ids for protected areas
-    ids = unique(area_protect$id_pa)
+    ids = unique(area_protect$group_n)
     
-    for (k in 1:length(ids)) { 
+    for (k in 1:length(ids)) {
       #Filter the table with all areas of protected areas except the ids k
-      table = area_protect[area_protect$id_pa != ids[k],]
+      table = area_protect[area_protect$group_n != ids[k],]
       b = table[, input$column_area]
       
       add = 0
@@ -137,46 +146,39 @@ output<- tryCatch({
       
       
       PC_out_id = add/(area_consult*area_consult)
-      result_PC_out = data.frame(Period = i,id_pa = ids[k], PC_out = PC_out_id, PC = PC)
+      result_PC_out = data.frame(Period = i,group_n = ids[k], PC_out = PC_out_id, PC = PC)
       result_dPC = rbind.data.frame(result_dPC,result_PC_out)
     }
-  
+    
     result_dPC2<- result_dPC
     result_dPC2$dPC = (((result_dPC$PC- result_dPC$PC_out))/result_dPC$PC)*100
     
-    dPC = as.data.frame(matrix(NA,ncol = 6, nrow = 0))
-    colnames(dPC) = c("Period", "id_pa", "name", "PC_out","PC" , "dPC")
+    filter = result_dPC2[result_dPC2$Period== i,]
+    order = filter[with(filter, order(filter$dPC)), ]
     
-      filter = result_dPC2[result_dPC2$Period== i,]
-      order = filter[with(filter, order(filter$dPC)), ]
-      
-      if(nrow(order)>=5){
-        dpc_decade_df = order[seq(5),]
-      } else{dpc_decade_df = order}
-      
-      dPC = rbind.data.frame(dPC,dpc_decade_df)
+    if(nrow(order)>=5){
+      dpc_decade_df = order[seq(5),]
+    } else{dpc_decade_df = order}
+    
+    dPC = rbind.data.frame(dPC,dpc_decade_df)
   }
-
-}
   
   
+  # Define and export the output values
   
-   
+  dPC_template<- dplyr::select(spatial_unit_data,c("group_n", group)) %>% dplyr::distinct()
+  dPC_correct<- list(dPC, dPC_template) %>% plyr::join_all() %>% dplyr::select(-"group_n") %>% 
+    dplyr::relocate(group, .after = 1)
   
   
+  # Define protcom result output
+  dpC_result_path<- file.path(outputFolder, "dpC_result.csv") # Define the file path for the 'val_wkt_path' output
+  write.csv(dPC_correct, dpC_result_path, row.names = F ) 
+  
+  # Define final output list
+  output<- list(dpC_result= dpC_result_path)
   
   
-# Define and export the output values
-
-# Define protcom result output
-dpC_result_path<- file.path(outputFolder, "dpC_result.csv") # Define the file path for the 'val_wkt_path' output
-write.csv(result_dPC, dpC_result_path, row.names = F ) # Write the 'val_wkt_path' output
-
-
-# Define final output list
-output<- list(dpC_result= dpC_result_path)
-
-
 }, error = function(e) { list(error= conditionMessage(e)) })
 
 
