@@ -6,12 +6,12 @@ inputs:
     label: dir_stack
     description: dir_stack
     type: text
-    example: '/output/01_IAvH_test/load_collection.R/{{dir_stack}}/output.json'
+    example: "/scripts/01_IAvH_test/input/dir_stack"
   dir_data_layer:
     label: dir_data_layer
     description: dir_data_layer
     type: text/csv
-    example: '/output/01_IAvH_test/load_collection.R/{{dir_data_layer}}/output.json'
+    example: "/scripts/01_IAvH_test/input/data_layer.csv"
   group:
     label: group
     description: group

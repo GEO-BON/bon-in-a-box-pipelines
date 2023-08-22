@@ -14,8 +14,8 @@ inputs:
   column_spatial_unit:
     label: column_spatial_unit 
     description: "Specifies the name of the column that contains the id of the spatial unit or node."
-    type: text
-    example: "id_pa"
+    type: text[]
+    example: ["id_pa", "name"]
   column_area:
     label: column_area 
     description: "Specifies the name of the column that contains the area of the spatial units or nodes. If there are several areas for the same id, the areas will be added. Values must be numeric otherwise they will be ignored."
@@ -44,5 +44,5 @@ inputs:
 outputs:
   dpC_result:
     label: dpC_result
-    description: "Table with final results with three columns: period that contains the time period suggested by the user, id_spatial_unit that contains the id of the spatial unit or node that contributes the most to the connectivity of the query area, and the delta in the probability of connectivity ( dPC)."
-    type: txt/csv
+    description: "T"
+    type: text/csv
