@@ -8,8 +8,9 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.geobon.pipeline.*
+import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
+import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
-import org.geobon.script.ScriptRun
 import org.geobon.utils.toMD5
 import org.json.JSONObject
 import org.slf4j.Logger
@@ -28,22 +29,36 @@ private val pipelinesRoot = File(System.getenv("PIPELINES_LOCATION"))
 private val runningPipelines = mutableMapOf<String, Pipeline>()
 private val logger: Logger = LoggerFactory.getLogger("Server")
 
-// TODO: this will be removed when we migrate scripts to work like pipelines
-data class ScriptRunResult(
-    val logs: String? = null,
-    val files: Map<String, Any> = mapOf()
-) 
-
 fun Application.configureRouting() {
 
     routing {
 
-        get("/script/list") {
+        get("/{type}/list") {
+            val type = call.parameters["type"]
+            val root:File
+            val extension:String
+            when(type) {
+                "pipeline" -> {
+                    root = pipelinesRoot
+                    extension = "json"
+                }
+                "script" -> {
+                    root = scriptRoot
+                    extension = "yml"
+                }
+                else -> {
+                    call.respondText(
+                        text = "Invalid type $type. Must be either \"script\" or \"pipeline\".",
+                        status = HttpStatusCode.BadRequest)
+                    return@get
+                }
+            }
+
             val possible = mutableListOf<String>()
-            val relPathIndex = scriptRoot.absolutePath.length + 1
-            scriptRoot.walkTopDown().forEach { file ->
-                if (file.extension == "yml") {
-                    // Add the relative path, without the script root.
+            val relPathIndex = root.absolutePath.length + 1
+            root.walkTopDown().forEach { file ->
+                if (file.extension == extension) {
+                    // Add the relative path, without the root.
                     possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
                 }
             }
@@ -61,46 +76,12 @@ fun Application.configureRouting() {
                     call.respond(Yaml().load(scriptFile.readText()) as Map<String, Any>)
                 } else {
                     call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
-                    logger.debug("404: Paths.getPipelineInfo ${call.parameters["scriptPath"]}")
+                    logger.debug("404: getInfo ${call.parameters["scriptPath"]}")
                 }
             } catch (ex: Exception) {
                 call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
                 ex.printStackTrace()
             }
-        }
-
-        post("/script/{scriptPath}/run") {
-            val inputFileContent = call.receiveText()
-            logger.info("scriptPath: ${call.parameters["scriptPath"]}\nbody:$inputFileContent")
-
-            val scriptRelPath = call.parameters["scriptPath"]!!.replace(FILE_SEPARATOR, '/')
-            val scriptFile = File(scriptRoot, scriptRelPath)
-            if(scriptFile.exists()) {
-                val run = ScriptRun(scriptFile, inputFileContent)
-                run.execute()
-                call.respond(
-                    HttpStatusCode.OK, ScriptRunResult(
-                        run.logFile.run { if(exists()) readText() else "" },
-                        run.results
-                    )
-                )
-            } else {
-                call.respondText(text = "$scriptFile does not exist", status = HttpStatusCode.NotFound)
-            }
-        }
-
-        get("/pipeline/list") {
-            val possible = mutableListOf<String>()
-            val relPathIndex = pipelinesRoot.absolutePath.length + 1
-            pipelinesRoot.walkTopDown().forEach { file ->
-                if (file.extension == "json") {
-                    // Add the relative path, without the script root.
-                    possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
-                }
-            }
-
-            possible.sortWith(String.CASE_INSENSITIVE_ORDER)
-            call.respond(possible)
         }
 
         get("/pipeline/{descriptionPath}/info") {
@@ -118,7 +99,7 @@ fun Application.configureRouting() {
                     call.respondText(descriptionJSON.toString(), ContentType.parse("application/json"))
                 } else {
                     call.respondText(text = "$descriptionFile does not exist", status = HttpStatusCode.NotFound)
-                    logger.debug("404: Paths.getPipelineInfo ${call.parameters["descriptionPath"]}")
+                    logger.debug("404: getListOf ${call.parameters["descriptionPath"]}")
                 }
             } catch (ex: Exception) {
                 call.respondText(text = ex.message!!, status = HttpStatusCode.InternalServerError)
@@ -136,28 +117,50 @@ fun Application.configureRouting() {
             }   
         }
 
-        post("/pipeline/{descriptionPath}/run") {
+        post("/{type}/{descriptionPath}/run") {
+            val singleScript = call.parameters["type"] == "script"
+
             val inputFileContent = call.receive<String>()
             val descriptionPath = call.parameters["descriptionPath"]!!
 
+            val withoutExtension = descriptionPath.removeSuffix(".json").removeSuffix(".yml")
+
             // Unique   to this pipeline                                               and to these params
-            val runId = descriptionPath.removeSuffix(".json") + FILE_SEPARATOR + inputFileContent.toMD5()
+            val runId = withoutExtension + FILE_SEPARATOR + inputFileContent.toMD5()
             val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
+            // Validate the existence of the file
+            val descriptionFile = File(
+                if (singleScript) scriptRoot else pipelinesRoot,
+                descriptionPath.replace(FILE_SEPARATOR, '/')
+            )
+            if(!descriptionFile.exists()) {
+                call.respondText(
+                    text = "Script $descriptionPath not found on this server.".also { logger.warn(it) },
+                    status = HttpStatusCode.NotFound
+                )
+                return@post
+            }
+
             runCatching {
-                RootPipeline(descriptionPath.replace(FILE_SEPARATOR, '/'), inputFileContent)
+                if(singleScript) {
+                    createMiniPipelineFromScript(descriptionFile, descriptionPath, inputFileContent)
+                } else {
+                    createRootPipeline(descriptionFile, inputFileContent)
+                }
             }.onSuccess { pipeline ->
                 runningPipelines[runId] = pipeline
                 try {
                     call.respondText(runId)
 
-                    val scriptOutputFolders = pipeline.pullFinalOutputs().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
                     pipelineOutputFolder.mkdirs()
-                    val resultFile = File(pipelineOutputFolder, "output.json")
-                    logger.trace("Outputting to $resultFile")
-                    resultFile.writeText(gson.toJson(scriptOutputFolders))
+                    val resultFile = File(pipelineOutputFolder, "pipelineOutput.json")
+                    logger.trace("Pipeline outputting to {}", resultFile)
+
                     File(pipelineOutputFolder,"input.json").writeText(inputFileContent)
+                    val scriptOutputFolders = pipeline.pullFinalOutputs().mapKeys { it.key.replace('/', FILE_SEPARATOR) }
+                    resultFile.writeText(gson.toJson(scriptOutputFolders))
                 } catch (ex:Exception) {
                     ex.printStackTrace()
                 } finally {
@@ -166,19 +169,20 @@ fun Application.configureRouting() {
 
             }.onFailure {
                 call.respondText(text = it.message ?: "", status = HttpStatusCode.InternalServerError)
-                logger.debug("runPipeline: ${it.message}")
+                logger.debug("run: ${it.message}")
             }
         }
         
-        get("/pipeline/{id}/outputs") {
+        get("/{type}/{id}/outputs") {
+            // type: The value pipeline of script is for api consistency, it makes no real difference for this API call.
             val id = call.parameters["id"]!!
             val pipeline = runningPipelines[id]
             if (pipeline == null) {
                 val outputFolder = File(outputRoot, id.replace(FILE_SEPARATOR, '/'))
-                val outputFile = File(outputFolder, "output.json")
+                val outputFile = File(outputFolder, "pipelineOutput.json")
                 if(outputFile.exists()) {
-                    val type = object : TypeToken<Map<String, Any>>() {}.type
-                    call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), type))
+                    val typeToken = object : TypeToken<Map<String, Any>>() {}.type
+                    call.respond(gson.fromJson<Map<String, String>>(outputFile.readText(), typeToken))
                 } else {
                     call.respondText(text = "Run \"$id\" was not found on this server.", status = HttpStatusCode.NotFound)
                 }
@@ -187,7 +191,7 @@ fun Application.configureRouting() {
             }
         }
         
-        get("/pipeline/{id}/stop") {
+        get("/{type}/{id}/stop") {
             val id = call.parameters["id"]!!
             runningPipelines[id]?.let { pipeline ->
                 // the pipeline is running, we need to stop it

@@ -7,7 +7,7 @@ services:
     command:
       - python
     volumes:
-      - ${HOST_PATH}/scripts/:/home/jovyan/scripts/
+      - ${HOST_PATH}/scripts/:/home/jovyan/scripts/:r
       - ${HOST_PATH}/output:/output/:rw
     environment:
       - GRANT_SUDO=yes

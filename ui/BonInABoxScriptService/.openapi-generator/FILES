@@ -9,7 +9,6 @@ docs/InfoInputsValueExampleOneOfInner.md
 docs/InfoOutputsValue.md
 docs/InfoOutputsValueExample.md
 docs/InfoReferencesInner.md
-docs/ScriptRunResult.md
 git_push.sh
 mocha.opts
 package.json
@@ -22,4 +21,3 @@ src/model/InfoInputsValueExampleOneOfInner.js
 src/model/InfoOutputsValue.js
 src/model/InfoOutputsValueExample.js
 src/model/InfoReferencesInner.js
-src/model/ScriptRunResult.js

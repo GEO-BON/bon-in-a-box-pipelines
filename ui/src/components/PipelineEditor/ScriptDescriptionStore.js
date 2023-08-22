@@ -18,25 +18,17 @@ export function fetchStepDescription(descriptionFileLocation, callback) {
   }
 
   // We know that Pipeline descriptions are json and Scripts are yaml...
-  if(descriptionFileLocation.endsWith('.json')) {
-    api.getPipelineInfo(descriptionFileLocation, (error, callbackData, response) => {
-      if (error) {
-        console.error("Error loading " + descriptionFileLocation + ":", error);
-      } else {
-        descriptions[descriptionFileLocation] = callbackData
-        callback(callbackData)
-      }
-    });
-  } else {
-    api.getScriptInfo(descriptionFileLocation, (error, callbackData, response) => {
-      if (error) {
-        console.error("Error loading " + descriptionFileLocation + ":", error)
-      } else {
-        descriptions[descriptionFileLocation] = callbackData
-        callback(callbackData)
-      }
-    });
-  }
+  api.getInfo(
+    descriptionFileLocation.endsWith('.json') ? "pipeline" : "script",
+    descriptionFileLocation,
+    (error, callbackData, response) => {
+    if (error) {
+      console.error("Error loading " + descriptionFileLocation + ":", error);
+    } else {
+      descriptions[descriptionFileLocation] = callbackData
+      callback(callbackData)
+    }
+  });
 }
 
 /**

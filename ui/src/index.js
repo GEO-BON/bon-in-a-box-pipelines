@@ -9,7 +9,7 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { SingleScriptPage } from "./components/SingleScriptPage";
+
 import { PipelinePage } from "./components/PipelinePage";
 import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
 import ScriptChooser from "./components/PipelineEditor/ScriptChooser";
@@ -31,12 +31,12 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />} />
 
-      <Route path="script-form" element={
-        <Layout right={<SingleScriptPage />} />
+      <Route path="script-form/:pipeline?/:runHash?" element={
+        <Layout right={<PipelinePage runType="script" />} />
       } />
       
       <Route path="pipeline-form/:pipeline?/:runHash?" element={
-      <Layout right={<PipelinePage />} />
+        <Layout right={<PipelinePage runType="pipeline" />} />
       } />
 
       <Route path="pipeline-editor" element={

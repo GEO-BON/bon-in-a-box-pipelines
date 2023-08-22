@@ -13,78 +13,18 @@ tags:
   - name: placeholder
     description: We could use tags
 paths:
-  /script/list:
+  /{type}/list:
     get:
-      summary: Get a list of available scripts
-      responses:
-        "200":
-          description: Array of script description files
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: string
-                  example: ["helloWorld.yml", "runSDM.yml","SHI.yml"]
-  /script/{scriptPath}/info:
-    get:
-      tags: []
-      summary: Get metadata about this script
-      operationId: getScriptInfo
+      summary: Get a list of available steps of given type.
+      operationId: getListOf
       parameters:
-        - name: scriptPath
-          in: path
-          description: Where to find the script in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/stepType'
       responses:
         "200":
-          description: Returns the metadata, in JSON format
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/info'
-        "400":
-          description: Bad request
-        "404":
-          description: Script not found
-  /script/{scriptPath}/run:
-    post:
-      tags: []
-      summary: Run this script
-      description: Run the script specified in the URL. Must include the extension.
-      operationId: runScript
-      parameters:
-        - name: scriptPath
-          in: path
-          description: Where to find the script in ./script folder
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
-      requestBody:
-        $ref: '#/components/requestBodies/run_input_body'
-      responses:
-        "200":
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/script_run_result'
-        "400":
-          description: Bad request
-        "404":
-          description: Script not found
-  /pipeline/list:
-    get:
-      summary: Get a list of available pipelines
-      responses:
-        "200":
-          description: Array of pipeline description files
+          description:
+            Array of step description files.
+            Script description files are located in the /script folder.
+            Pipeline description files are located in the /pipeline folder.
           content:
             application/json:
               schema:
@@ -92,20 +32,14 @@ paths:
                 items:
                   type: string
                   example: ["SHI.yml", "Folder>SDM.yml"]
-  /pipeline/{descriptionPath}/info:
+  /{type}/{descriptionPath}/info:
     get:
       tags: []
-      summary: Get metadata about this pipeline
-      operationId: getPipelineInfo
+      summary: Get metadata about this script or pipeline.
+      operationId: getInfo
       parameters:
-        - name: descriptionPath
-          in: path
-          description: Where to find the pipeline in ./pipeline folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/stepType'
+        - $ref: '#/components/parameters/descriptionPath'
       responses:
         "200":
           description: Returns the metadata, in JSON format
@@ -116,20 +50,13 @@ paths:
         "400":
           description: Bad request
         "404":
-          description: Pipeline not found
+          description: Step not found
   /pipeline/{descriptionPath}/get:
     get:
-      summary: Get JSON file that describes the pipeline
+      summary: Get JSON file that describes the pipeline.
       operationId: getPipeline
       parameters:
-        - name: descriptionPath
-          in: path
-          description: Where to find the pipeline in ./pipeline folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/descriptionPath'
       responses:
         "200":
           description: Returns the complete pipeline, in JSON format
@@ -138,81 +65,77 @@ paths:
               schema:
                 type: object
                 nullable: false
-              example: '
-              {
-                "nodes": [
-                  {
-                    "id": "0",
-                    "type": "io",
-                    "position": {
-                      "x": 236.8125,
-                      "y": 287
+              example: 
+                {
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "type": "io",
+                      "position": {
+                        "x": 236.8125,
+                        "y": 287
+                      },
+                      "data": {
+                        "descriptionFile": "helloWorld>helloPython.yml"
+                      }
                     },
-                    "data": {
-                      "descriptionFile": "helloWorld>helloPython.yml"
+                    {
+                      "id": "1",
+                      "type": "output",
+                      "position": {
+                        "x": 593.8125,
+                        "y": 289
+                      },
+                      "data": {
+                        "label": "Output"
+                      }
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "source": "0",
+                      "sourceHandle": "increment",
+                      "target": "1",
+                      "targetHandle": null,
+                      "id": "reactflow__edge-0increment-1"
+                    }
+                  ],
+                  "inputs": {
+                    "helloWorld>helloPython.yml@0|some_int": {
+                      "description": "A number that we will increment",
+                      "label": "Some int",
+                      "type": "int",
+                      "example": 3
                     }
                   },
-                  {
-                    "id": "1",
-                    "type": "output",
-                    "position": {
-                      "x": 593.8125,
-                      "y": 289
-                    },
-                    "data": {
-                      "label": "Output"
+                  "outputs": {
+                    "helloWorld>helloPython.yml@0|increment": {
+                      "description": "bla bla",
+                      "label": "A number (input++)",
+                      "type": "int",
+                      "example": 4
                     }
                   }
-                ],
-                "edges": [
-                  {
-                    "source": "0",
-                    "sourceHandle": "increment",
-                    "target": "1",
-                    "targetHandle": null,
-                    "id": "reactflow__edge-0increment-1"
-                  }
-                ],
-                "inputs": {
-                  "helloWorld>helloPython.yml@0|some_int": {
-                    "description": "A number that we will increment",
-                    "label": "Some int",
-                    "type": "int",
-                    "example": 3
-                  }
-                },
-                "outputs": {
-                  "helloWorld>helloPython.yml@0|increment": {
-                    "description": "bla bla",
-                    "label": "A number (input++)",
-                    "type": "int",
-                    "example": 4
-                  }
                 }
-              }'
         "400":
           description: Bad request
         "404":
           description: Pipeline not found
-  /pipeline/{descriptionPath}/run:
+  /{type}/{descriptionPath}/run:
     post:
       tags: []
-      summary: Run this pipeline
-      operationId: runPipeline
+      summary: Runs the script or pipeline matching `descriptionPath`.
+      operationId: run
       parameters:
-        - name: descriptionPath
-          in: path
-          description: Where to find the script in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/stepType'
+        - $ref: '#/components/parameters/descriptionPath'
       requestBody:
         $ref: '#/components/requestBodies/run_input_body'
       responses:
         "200":
-          description: Returns the unique ID for this run. It corresponds to the unique output folder.
+          description:
+            Returns the unique ID for this run.
+            It corresponds to the unique output folder.
           content:
             text/plain:
               schema:
@@ -222,24 +145,18 @@ paths:
         "400":
           description: Bad request
         "404":
-          description: Pipeline not found
-  /pipeline/{id}/outputs:
+          description: Script or pipeline not found
+  /{type}/{id}/outputs:
     get:
       tags: []
       summary: Get the output folders of the scripts composing this pipeline
-      operationId: getPipelineOutputs
+      operationId: getOutputFolders
       parameters:
-        - name: id
-          in: path
-          description: Where to find the pipeline in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/stepType'
+        - $ref: '#/components/parameters/runId'
       responses:
         "200":
-          description: List of output folders for all the scripts
+          description: List of output folders for all the scripts.
           content:
             application/json:
               schema:
@@ -253,19 +170,13 @@ paths:
           description: Bad request
         "404":
           description: id not found
-  /pipeline/{id}/stop:
+  /{type}/{id}/stop:
     get:
-      summary: Stop the specified pipeline run
-      operationId: stopPipeline
+      summary: Stop the specified pipeline run.
+      operationId: stop
       parameters:
-        - name: id
-          in: path
-          description: Where to find the pipeline in ./script folder.
-          required: true
-          style: simple
-          explode: false
-          schema:
-            type: string
+        - $ref: '#/components/parameters/stepType'
+        - $ref: '#/components/parameters/runId'
       responses:
         "200":
           description: Pipeline run is stopped (or was already stopped)
@@ -274,23 +185,39 @@ paths:
         "404":
           description: id not found
 components:
+  parameters:
+    stepType:
+      name: type
+      in: path
+      description: Script or pipeline
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+        enum: [script, pipeline]
+    descriptionPath:
+      name: descriptionPath
+      in: path
+      description:
+        Where to find the step. 
+        For scripts, paths are relative to the /script folder. 
+        For pipelines, paths are relative to the /pipeline folder.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
+    runId:
+      name: id
+      in: path
+      description: Where to find the pipeline in ./script folder.
+      required: true
+      style: simple
+      explode: false
+      schema:
+        type: string
   schemas:
-    script_run_result:
-      type: object
-      properties:
-        logs:
-          type: string
-        files:
-          type: object
-          additionalProperties:
-            type: string
-      example:
-        files:
-          presence: presence.tiff
-          uncertainty: uncertainty.tiff
-        logs: Starting... Script completed!
-      xml:
-        name: Result
     info:
       type: object
       properties:
@@ -412,7 +339,8 @@ components:
         text/plain:
           schema:
             type: string
-            example: '{ 
-              "occurence":"/output/result/from/previous/script", 
-              "intensity":3
-            } '
+            example: 
+              { 
+                "occurence":"/output/result/from/previous/script", 
+                "intensity":3
+              }

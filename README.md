@@ -83,9 +83,9 @@ Currently supported :
 
 Script lifecycle:
 1. Script launched with output folder as a parameter. (In R, an `outputFolder` variable in the R session. In Julia, Shell and Python, the output folder is received as an argument.)
-3. Script reads input.json to get execution parameters (ex. species, area, data source, etc.)
+3. Script reads `input.json` to get execution parameters (ex. species, area, data source, etc.)
 4. Script performs its task
-5. Script generates output.json, containing links to result files, or native values (number, string, etc.)
+5. Script generates `output.json` containing links to result files, or native values (number, string, etc.)
 
 See [empty R script](/scripts/helloWorld/empty.R) for a minimal script lifecycle example.
 
@@ -274,7 +274,7 @@ A single value can also be combined with an array of the same type, to produce a
 
 <img src="https://user-images.githubusercontent.com/6223744/181106278-f6db6af5-764a-4775-b196-48feac940eec.png" width="300">
 
-**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the sample input.json file when running the pipeline.
+**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the sample input file when running the pipeline.
 
 If an input is common to many step, a special user input node can be added to avoid duplication. First, link your nodes to a constant.
 

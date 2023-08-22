@@ -13,6 +13,7 @@ export function PipelineForm({
   showHttpError,
   inputFileContent,
   setInputFileContent,
+  runType
 }) {
   const formRef = useRef();
   const navigate = useNavigate();
@@ -25,34 +26,29 @@ export function PipelineForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    runScript();
+    runPipeline();
   };
 
-  const handlePipelineChange = (value) => {
+  const handlePipelineChange = (label, value) => {
     clearPreviousRequest();
-    setPipStates({
-      type: "select",
-      newPipeline: value,
-    });
-    navigate("/pipeline-form");
+    let pipelineForUrl = value.replace(/.json$/i, "").replace(/.yml$/i, "")
+    navigate("/" + runType + "-form/" + pipelineForUrl);
   };
 
-  const runScript = () => {
-    var callback = function (error, data, response) {
+  const runPipeline = () => {
+    var callback = function (error, runId, response) {
       if (error) {
         // Server / connection errors. Data will be undefined.
-        data = {};
         showHttpError(error, response);
-      } else if (data) {
-        const parts = data.split(">");
+      } else if (runId) {
+        const parts = runId.split(">");
         let runHash = parts.at(-1);
-        let pipeline = parts.slice(0,-1).join(">")
-        setPipStates({
-          type: "run",
-          newPipeline: pipeline,
-          newHash: runHash,
-        });
-        navigate("/pipeline-form/" + pipeline + "/" + runHash);
+        let pipelineForUrl = parts.slice(0,-1).join(">")
+        if(pipStates.runHash === runHash) {
+          setPipStates({type: "rerun"});
+        }
+
+        navigate("/" + runType + "-form/" + pipelineForUrl + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
       }
@@ -61,31 +57,29 @@ export function PipelineForm({
     let opts = {
       body: JSON.stringify(inputFileContent),
     };
-    api.runPipeline(pipStates.pipeline + ".json", opts, callback);
+    api.run(runType, pipStates.descriptionFile, opts, callback);
   };
 
   // Applied only once when first loaded
   useEffect(() => {
-    // Load list of scripts into pipelineOptions
-    api.pipelineListGet((error, data, response) => {
+    // Load list of scripts/pipelines into pipelineOptions
+    api.getListOf(runType, (error, data, response) => {
       if (error) {
         console.error(error);
       } else {
         let newOptions = [];
-        data.forEach((script) => {
-          script = script.replace(/.json$/i, "");
-          newOptions.push({ label: script, value: script });
+        data.forEach((descriptionFile) => {
+          let display = descriptionFile.replace(/.json$/i, "").replace(/.yml$/i, "").replaceAll(">", " > ");
+          newOptions.push({ label: display, value: descriptionFile });
         });
         setPipelineOptions(newOptions);
       }
     });
-    // Empty dependency array to get script list only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [runType, setPipelineOptions]);
 
   return (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label htmlFor="pipelineChoice">Pipeline:</label>
+      <label htmlFor="pipelineChoice">{runType === "pipeline" ? "Pipeline:" : "Script:"}</label>
       <Select
         id="pipelineChoice"
         name="pipelineChoice"
@@ -93,10 +87,10 @@ export function PipelineForm({
         options={pipelineOptions}
         value={{
           label: pipStates.pipeline,
-          value: pipStates.pipeline,
+          value: pipStates.descriptionFile,
         }}
         menuPortalTarget={document.body}
-        onChange={(v) => handlePipelineChange(v.value)}
+        onChange={(v) => handlePipelineChange(v.label, v.value)}
       />
       <br />
       <InputFileInput

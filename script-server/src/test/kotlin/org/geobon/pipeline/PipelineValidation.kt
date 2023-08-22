@@ -2,6 +2,7 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.utils.productionPipelinesRoot
 import org.geobon.utils.withProductionPaths
 import org.json.JSONObject
@@ -43,7 +44,7 @@ internal class PipelineValidation {
                     println(fakeInputs.toString(2))
 
                     // Run validation
-                    RootPipeline(file, fakeInputs.toString(2))
+                    createRootPipeline(file, fakeInputs.toString(2))
                 } catch (e: Exception) {
                     errorMessages += "${file.relativeTo(productionPipelinesRoot)}:\n\t${e.message}\n"
                 }
