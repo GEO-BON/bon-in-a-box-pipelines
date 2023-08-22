@@ -1,7 +1,4 @@
 script: helloPython.py
-author: 
-  - name: Jean-Michel Lord
-    identifier: https://orcid.org/0009-0007-3826-1125
 description: "Sample python script that increments a number."
 timeout: 1
 inputs:
