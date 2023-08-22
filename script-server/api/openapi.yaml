@@ -227,6 +227,14 @@ components:
         description: 
           type: string
           example: This sample script shows how it works.
+        author:
+          oneOf:
+          - type: string
+            example: John Doe
+          - type: array
+            example: ["Jane Doe", "John Doe"]
+            items:
+              type: string
         external_link: 
           type: string
           example: https://github.com/GEO-BON/biab-2.0
