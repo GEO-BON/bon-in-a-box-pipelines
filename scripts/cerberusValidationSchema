@@ -6,6 +6,19 @@ description:
   required: true
   type: string
 
+author:
+  type: list
+  required: true
+  schema: 
+    type: dict
+    schema:
+      name: 
+        type: string
+        required: true
+      identifier:
+        type: string
+        required: false
+
 external_link:
   required: false
   nullable: true
