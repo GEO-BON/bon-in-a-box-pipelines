@@ -2,11 +2,12 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
+packagesNeed<- list("rstudioapi", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
+                    "vapour", "sf","tools","gdalUtilities", "tibble", "lubridate", "gridExtra", "tidyverse", "conflicted", "unmarked") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "terra") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+packagesList<-list("magrittr", "terra", "auk") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 
 
@@ -34,16 +35,6 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 input<- lapply(input, function(x) if( grepl("/", x) ){
   sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # adjust input 1
 
-# Install necessary libraries - packages  
-packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("rstudioapi", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
-                    "vapour", "sf","tools","gdalUtilities", "tibble", "lubridate", "gridExtra", "tidyverse", "conflicted", "unmarked") # Define the list of required packages to run the script
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
-
-# Load libraries
-packagesList<-list("auk", "dplyr", "unmarked") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
-lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
-
 
 #### Set enviroment variables ####
 
@@ -51,24 +42,12 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 # The environment variable refers to the path of the output folder for the entire routine
 # 'outputFolder' allows interaction with the output folder of the routine and access to nearby paths, such as the input folder ('input')
 
-outputFolder= "~/Desktop"
-
 # There are two options to set 'outputFolder'
 # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
 
 # Precargar datos de ocurrencia y listas
-input <- list(auk_covars_file= "~/Desktop/ebird_zf_covs.txt", 
-              min_obs = 1, # Data formatting
-              max_obs = 10, # Data formatting
-              annual_closure = FALSE, # Data formatting
-              n_days = 30, # Data formatting
-              date_var = "observation_date", # Data formatting
-              site_vars = "ID", # Data formatting
-              site_id = "site", # format for unmarked 
-              response = "species_observed", # format for unmarked, response variable
-              site_covs = c("huella", "altitud"), # format for unmarked, list of site covars
-              obs_covs = c("duration_minutes")# format for unmarked #  list of observation covars 
-              )
+ebird_habitat<- read.delim(input$auk_covars_file)
+
 
 ####  Script body ####
 # filter prior to creating occupancy model data
@@ -76,26 +55,28 @@ ebird_filtered <- dplyr::filter(ebird_habitat,
                                 number_observers <= 5,
                                 year == max(year))
 # Data formatting
-occ <- filter_repeat_visits(ebird_filtered, 
+occ <- auk::filter_repeat_visits(ebird_filtered, 
                             min_obs = 1, max_obs = 10,
                             annual_closure = FALSE,
                             n_days = 30,
                             date_var = "observation_date",
                             site_vars = "ID")
 # format for unmarked
-occ_wide <- format_unmarked_occu(occ, 
+occ_wide <- auk::format_unmarked_occu(occ, 
                                  site_id = "site", 
                                  response = "species_observed",
                                  site_covs = c("huella", "altitud"),
                                  obs_covs = c("duration_minutes"))
 
-# transform to matrix export fortmat
-occ_wide_export<-as.matrix(occ_wide)
+
+
+occ_wide_path<- file.path(outputFolder, "occ_wide.csv") # Define the file path for the 'val_wkt_path' output
+write.csv(occ_wide, occ_wide_path, row.names = T ) # Write the 'val_wkt_path' output
+
 
 #### Outputing result to JSON ####
-output<- list(occ_wide_export)
+output<- list(occ_wide_export= occ_wide_path)
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)
 jsonlite::write_json(output, "output.json", auto_unbox = TRUE, pretty = TRUE)
-write.table(occ_um_txt, file = "occ_um.txt", sep = "\t", col.names = NA, qmethod = "double", na = "NA")
