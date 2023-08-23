@@ -1,4 +1,5 @@
 script: pyLoadObservations.sh
+name: GBIF Observations
 description: Load complete GBIF data from GBIF download API or Planetary Computer
 author:
   - name: Guillaume Larocque
