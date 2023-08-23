@@ -96,6 +96,9 @@ Here is an empty commented sample:
 ``` yml
 script: # script file with extension, such as "myScript.py".
 description: # Targetted to those who will interpret pipeline results and edit pipelines.
+author: # 1 to many
+  - name: # Full name
+    identifier: # Optional, such as an ORCID
 external_link: # Optional, link to a separate project, github repo, etc.
 timeout: # Optional, in minutes. By defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
 
