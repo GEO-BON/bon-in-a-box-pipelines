@@ -1,4 +1,5 @@
 script: cleanCoordinates.R
+name: Clean Coordinates
 description: "This script enables to apply several cleaning filters to the observations. The tests equal,
      zeros, duplicates, same_pixel, capitals, centroids, seas, urban, gbif and institutions are wrappers around CoordinateCleaner functions.
      Test same_pixel remove points inside the same pixel, based on a provided raster or from a STAC catalogue. Test env allows removing environmental outliers using the 

@@ -1,4 +1,5 @@
 script: extentToBbox.R
+name: Extent to Bounding Box
 description: "This script convert a spatial object (a shapefile, a table of coordinates or the coordiantes of an extent) into a bbox."
 author:
   - name: Sarah Valentin

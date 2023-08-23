@@ -1,4 +1,5 @@
 script: studyExtent.R
+name: Study Extent
 description: "This script computes a study area around presence points."
 author:
   - name: Sarah Valentin

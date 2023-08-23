@@ -1,4 +1,5 @@
 script: selectBackground.R
+name: Background Points
 description: "This script creates a set of pseudo-absences/background points."
 author:
   - name: Sarah Valentin

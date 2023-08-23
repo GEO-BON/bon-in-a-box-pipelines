@@ -1,4 +1,5 @@
 script: runBART.R
+name: BART
 description: "This script creates an SDM and credible interval based on Bayesian additive regression trees (BARTs)."
 author:
   - name: Sarah Valentin

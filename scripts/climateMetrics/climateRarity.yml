@@ -1,4 +1,5 @@
 script: climateMetrics.R
+name: Climate Rarity
 description: 
   This script calculates climate rarity.
   It shows how different the mean temperature is from its surroundings, using moving window and a temperature threshold.

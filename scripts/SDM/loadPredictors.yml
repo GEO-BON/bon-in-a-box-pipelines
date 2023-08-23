@@ -1,4 +1,5 @@
 script: loadPredictors.R
+name: Load Predictors
 description: "This sample script shows how it works."
 author:
   - name: Sarah Valentin
