@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 # Instalar librerias necesarias
 packagesPrev<- installed.packages()[,"Package"]
 packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply")

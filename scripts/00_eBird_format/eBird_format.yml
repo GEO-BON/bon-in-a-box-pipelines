@@ -1,4 +1,4 @@
-script: auk_format.R
+script: eBird_format.R
 description: "This script get the data formating to unmarked."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
@@ -6,7 +6,7 @@ inputs:
     label: auk_covars_file
     description: "Input data with eBird data and covars"
     type: dataframe
-    example:  "/output/0_inputs/ebird_zf_covs.txt"
+    example:  "scripts/00_eBird_format/input/ebird_zf_covs.txt"
   min_obs:
     label: min_obs
     description: "Minimum number of observations required for each site."
@@ -39,7 +39,7 @@ inputs:
     example: "ID"
   site_id:
     label: site_id
-    description: "A unique idenitifer for each "site", typically identifying observations from a unique location by the same observer within a period of temporal closure. Data output from filter_repeat_visits() will have a .site_id variable that meets these requirements."
+    description: "A unique idenitifer for each 'site', typically identifying observations from a unique location by the same observer within a period of temporal closure. Data output from filter_repeat_visits() will have a .site_id variable that meets these requirements."
     type: text
     example: "site"
   response:
@@ -62,7 +62,3 @@ outputs:
     label: occ_wide_export
     description: "Data frame prepared of species observations for ingestion into the package unmarked for hierarchical modeling of abundance and occurrence. "
     type: text/csv
-  val_studyarea_GeoJSON_path:
-    label: val_studyarea_GeoJSON_path
-    description: Text string referring to the file path of the generated GeoJSON (.geojson) file that represents the boundaries of the study area. The GeoJSON file (Geospatial JavaScript Object Notation) is a format for storing spatial data that describes the geometry of the study area.
-    type: application/geo+json	
