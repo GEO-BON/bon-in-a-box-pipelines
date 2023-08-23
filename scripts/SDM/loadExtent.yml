@@ -1,4 +1,7 @@
 description: "This script imports files within a .zip folder stored in Google Drive."
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
 external_link: https://googledrive.tidyverse.org/
 
 script: loadExtent.R

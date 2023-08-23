@@ -1,5 +1,8 @@
 script: runBART.R
 description: "This script creates an SDM and credible interval based on Bayesian additive regression trees (BARTs)."
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
 references:
   - text: https://github.com/cjcarlson/embarcadero/
   - text: Carlson, Colin J. embarcadero Species distribution modelling with Bayesian additive regression trees in r, Methods in Ecology and Evolution (2022).

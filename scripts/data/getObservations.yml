@@ -1,6 +1,10 @@
 script: getObservations.R
 description: "This script gets observations from GBIF database, using the package RGIF."
 external_link: https://github.com/ropensci/rgbif
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
+
 inputs:
   species:
     label: species names

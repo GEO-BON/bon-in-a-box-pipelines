@@ -1,4 +1,7 @@
 description: "This script creates a dataset ready to feed any SDM model."
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
 
 script: setupDataSdm.R
 inputs:

@@ -1,5 +1,9 @@
 script: loadFromStac.R
 description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+author:
+  - name: Guillaume Larocque
+    identifier: https://orcid.org/0000-0002-5967-9156
+
 inputs:
   stac_url:
     label: stac_url
