@@ -1,4 +1,6 @@
 script: accessibility.R
+author:
+  - name: Juan Zuloaga
 description: This script creates the accessibility layer based on the global map of travel time to cities (values close to zero indicate high access to opportunities and services offered by urban centres (Weiss et al 2018)).
 inputs:
    stac_path:
