@@ -224,6 +224,9 @@ components:
         script: 
           type: string
           example: helloR.R
+        name:
+          type: string
+          example: R Example
         description: 
           type: string
           example: This sample script shows how it works.
@@ -235,6 +238,9 @@ components:
             example: ["Jane Doe", "John Doe"]
             items:
               type: string
+        license:
+          type: string
+          example: CC BY
         external_link: 
           type: string
           example: https://github.com/GEO-BON/biab-2.0

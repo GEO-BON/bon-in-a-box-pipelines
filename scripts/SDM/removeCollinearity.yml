@@ -1,4 +1,5 @@
 script: removeCollinearity.R
+name: Remove Collinearity
 description: "Remove collinearity between a series of predictor rasters with the exact same extent CRS and resolution"
 author:
   - name: Sarah Valentin

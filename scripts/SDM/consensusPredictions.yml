@@ -1,4 +1,5 @@
 script: consensusPredictions.R
+name: Predictors Consensus
 description: "This script computes the consensus of a set of predictions rasters."
 author:
   - name: Sarah Valentin

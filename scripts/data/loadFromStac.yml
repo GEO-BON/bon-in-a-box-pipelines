@@ -1,4 +1,5 @@
 script: loadFromStac.R
+name: Load from STAC
 description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
 author:
   - name: Guillaume Larocque

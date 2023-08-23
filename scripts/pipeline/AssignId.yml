@@ -1,4 +1,5 @@
 script: AssignId.kt
+name: Assign Id
 description: 
   Creates an object carrying a layer and its identifier. 
   To be used in conjunction with PullLayersById, inside a pipeline.

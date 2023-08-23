@@ -1,4 +1,5 @@
 script: runMaxent.R
+name: MaxEnt
 description: "This script runs MaxEnt algorithm based on ENMeval package."
 external_link: https://github.com/jamiemkass/ENMeval
 author:
