@@ -14,6 +14,7 @@
 
 import ApiClient from './ApiClient';
 import Info from './model/Info';
+import InfoAuthorInner from './model/InfoAuthorInner';
 import InfoInputsValue from './model/InfoInputsValue';
 import InfoInputsValueExample from './model/InfoInputsValueExample';
 import InfoInputsValueExampleOneOfInner from './model/InfoInputsValueExampleOneOfInner';
@@ -66,6 +67,12 @@ export {
      * @property {module:model/Info}
      */
     Info,
+
+    /**
+     * The InfoAuthorInner model constructor.
+     * @property {module:model/InfoAuthorInner}
+     */
+    InfoAuthorInner,
 
     /**
      * The InfoInputsValue model constructor.

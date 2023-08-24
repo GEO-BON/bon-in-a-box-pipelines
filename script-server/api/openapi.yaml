@@ -231,13 +231,20 @@ components:
           type: string
           example: This sample script shows how it works.
         author:
-          oneOf:
-          - type: string
-            example: John Doe
-          - type: array
-            example: ["Jane Doe", "John Doe"]
-            items:
-              type: string
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Full name
+              identifier:
+                type: string
+                description: Unique digital identifier such as an ORCID
+          example: 
+            - name: Jane Doe
+            - name: John Doe
+              identifier: https://orcid.org/0000-0000-0000-0000
         license:
           type: string
           example: CC BY

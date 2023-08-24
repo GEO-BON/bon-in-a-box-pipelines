@@ -132,6 +132,7 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [BonInABoxScriptService.Info](docs/Info.md)
+ - [BonInABoxScriptService.InfoAuthorInner](docs/InfoAuthorInner.md)
  - [BonInABoxScriptService.InfoInputsValue](docs/InfoInputsValue.md)
  - [BonInABoxScriptService.InfoInputsValueExample](docs/InfoInputsValueExample.md)
  - [BonInABoxScriptService.InfoInputsValueExampleOneOfInner](docs/InfoInputsValueExampleOneOfInner.md)
