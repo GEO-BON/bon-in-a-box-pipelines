@@ -14,7 +14,7 @@ import errorImg from "../img/error.svg";
 import warningImg from "../img/warning.svg";
 import infoImg from "../img/info.svg";
 import { LogViewer } from "./LogViewer";
-import { GeneralDescription } from "./ScriptDescription";
+import { getFolderAndName, GeneralDescription } from "./ScriptDescription";
 import { PipelineForm } from "./form/PipelineForm";
 import {
   getScript,
@@ -496,7 +496,7 @@ function DelayedResult({
 
   return (
     <FoldableOutputWithContext
-      title={toDisplayString(breadcrumbs)}
+      title={getFolderAndName(breadcrumbs, scriptMetadata)}
       componentId={breadcrumbs}
       inline={inline}
       className={className}

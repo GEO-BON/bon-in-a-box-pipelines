@@ -1,5 +1,14 @@
 const yaml = require('js-yaml');
 
+export function getFolderAndName(ymlPath, metadata) {
+    if(!metadata || !metadata.name)
+        return ymlPath.replaceAll('>', ' > ').replaceAll('.json', '').replaceAll('.yml', '')
+
+    let split = ymlPath.split('>')
+    split[split.length -1] = metadata.name
+    return split.join(' > ')
+}
+
 /**
  * Prints a general description of the script, along with the references.
  * @param {string} Path to the yml script description file
