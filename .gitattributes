@@ -1,0 +1,7 @@
+# Auto detect text files and perform LF normalization https://tsalikis.blog/posts/gitattributes/
+# Also https://delitescere.medium.com/docker-file-permissions-and-line-endings-9aced07d70f8
+* text eol=lf
+
+# Any Windows file should be kept to crlf
+*.bat	text eol=crlf
+*.cmd	text eol=crlf
