@@ -200,7 +200,7 @@ export function PipelinePage({runType}) {
       let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
       setPipStates({
         type: "url",
-        newPipeline: pipeline,
+        newPipeline: pipeline.replaceAll('>', ' > '),
         newDescriptionFile: descriptionFile,
         newHash: runHash,
       });
