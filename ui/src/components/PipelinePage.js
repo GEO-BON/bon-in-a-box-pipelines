@@ -19,7 +19,6 @@ import { PipelineForm } from "./form/PipelineForm";
 import {
   getScript,
   getScriptOutput,
-  toDisplayString,
   getBreadcrumbs,
 } from "../utils/IOId";
 import { useParams } from "react-router-dom";
