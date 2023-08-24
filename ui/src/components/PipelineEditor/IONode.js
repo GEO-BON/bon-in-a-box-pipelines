@@ -32,6 +32,9 @@ export default function IONode({ id, data }) {
 
   if (!metadata) return null
 
+  let pathList = descriptionFileLocation.split('>')
+  pathList[pathList.length -1] = metadata.name
+
   let stepType = /\.json$/i.test(descriptionFileLocation) ? 'pipeline' : 'script'
   return <table className={`ioNode ${stepType}`}><tbody>
     <tr>
@@ -48,7 +51,7 @@ export default function IONode({ id, data }) {
         })}
       </td>
       <td className='name' onMouseEnter={showScriptTooltip} onMouseLeave={hideTooltip}>
-        {descriptionFileLocation.split('>').map((s, i) => <span key={i}>{s}<br/></span>)}
+        {pathList.map((s, i) => <span key={i}>{s}<br/></span>)}
       </td>
       <td className='outputs'> 
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {

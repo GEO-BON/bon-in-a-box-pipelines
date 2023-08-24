@@ -4,7 +4,7 @@ import {React, useState, useEffect, useCallback} from 'react';
 
 import spinnerImg from '../../img/spinner.svg';
 import { fetchStepDescription } from './ScriptDescriptionStore';
-import { GeneralDescription, InputsDescription, OutputsDescription } from '../ScriptDescription';
+import { GeneralDescription, InputsDescription, OutputsDescription, getFolderAndName } from '../ScriptDescription';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -56,7 +56,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
         }
 
         setPopupContent(<>
-          <h2>{descriptionFile.replaceAll('>', ' > ')}</h2>
+          <h2>{getFolderAndName(descriptionFile, metadata)}</h2>
           <GeneralDescription ymlPath={descriptionFile} metadata={metadata} />
           <InputsDescription metadata={metadata} />
           <OutputsDescription metadata={metadata} />
