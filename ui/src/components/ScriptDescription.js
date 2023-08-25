@@ -1,11 +1,15 @@
 const yaml = require('js-yaml');
 
-export function getFolderAndName(ymlPath, metadata) {
+export function getFolderAndNameFromMetadata(ymlPath, metadata) {
     if(!metadata || !metadata.name)
         return ymlPath.replaceAll('>', ' > ').replaceAll('.json', '').replaceAll('.yml', '')
 
+    return getFolderAndName(ymlPath, metadata.name)
+}
+
+export function getFolderAndName(ymlPath, name) {
     let split = ymlPath.split('>')
-    split[split.length -1] = metadata.name
+    split[split.length -1] = name
     return split.join(' > ')
 }
 

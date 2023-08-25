@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 import InputFileInput from "./InputFileInput";
 import { useNavigate } from "react-router-dom";
+import { getFolderAndName } from "../ScriptDescription";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -68,9 +69,11 @@ export function PipelineForm({
         console.error(error);
       } else {
         let newOptions = [];
-        data.forEach((descriptionFile) => {
-          let display = descriptionFile.replace(/.json$/i, "").replace(/.yml$/i, "").replaceAll(">", " > ");
-          newOptions.push({ label: display, value: descriptionFile });
+        Object.entries(data).forEach(([descriptionFile, pipelineName]) => {
+          newOptions.push({
+            label: getFolderAndName(descriptionFile, pipelineName),
+            value: descriptionFile
+          });
         });
         setPipelineOptions(newOptions);
       }
