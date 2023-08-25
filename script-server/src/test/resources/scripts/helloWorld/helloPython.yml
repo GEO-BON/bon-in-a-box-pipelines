@@ -1,4 +1,11 @@
 script: helloPython.py
+name: Python Example
+author:
+  - name: Jean-Michel Lord
+    identifier: https://orcid.org/0009-0007-3826-1125
+license: CC0
+description: "Sample python script that increments a number."
+timeout: 1
 inputs:
   some_int:
     label: Some int
@@ -11,4 +18,3 @@ outputs:
     description: bla bla
     type: int
     example: 4
-description: "Sample python script that increments a number."
