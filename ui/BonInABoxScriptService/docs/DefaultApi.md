@@ -5,7 +5,7 @@ All URIs are relative to *http://localhost*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**getInfo**](DefaultApi.md#getInfo) | **GET** /{type}/{descriptionPath}/info | Get metadata about this script or pipeline.
-[**getListOf**](DefaultApi.md#getListOf) | **GET** /{type}/list | Get a list of available steps of given type.
+[**getListOf**](DefaultApi.md#getListOf) | **GET** /{type}/list | Get a list of available steps of given type and their names.
 [**getOutputFolders**](DefaultApi.md#getOutputFolders) | **GET** /{type}/{id}/outputs | Get the output folders of the scripts composing this pipeline
 [**getPipeline**](DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline.
 [**run**](DefaultApi.md#run) | **POST** /{type}/{descriptionPath}/run | Runs the script or pipeline matching &#x60;descriptionPath&#x60;.
@@ -60,9 +60,9 @@ No authorization required
 
 ## getListOf
 
-> [String] getListOf(type)
+> {String: String} getListOf(type)
 
-Get a list of available steps of given type.
+Get a list of available steps of given type and their names.
 
 ### Example
 
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**[String]**
+**{String: String}**
 
 ### Authorization
 
