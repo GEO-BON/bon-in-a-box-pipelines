@@ -50,16 +50,7 @@ output<- tryCatch({
     crs_polygon<- terra::crs( study_area ) %>% as.character()
     dim_study_area<- dim(study_area)
     
-    
-    nn<- rstac::collections(RSTACQuery) %>% rstac::get_request()
-    sapply(nn$collections, function(x) x$id)
-    
-    
-    
-    
-    
-    
-    STACItemCollection <- rstac::stac_search(q= RSTACQuery, collections = "earthenv_topography"  , bbox = box_4326) %>% rstac::get_request()
+    STACItemCollection <- rstac::stac_search(q= RSTACQuery, collections = "earthenv_topography"  , bbox = box_study_area) %>% rstac::get_request()
 
     for (i in 1:length(STACItemCollection$features)) {
       feature <- STACItemCollection$features[[i]]
@@ -68,9 +59,14 @@ output<- tryCatch({
       names(STACItemCollection$features[[i]]$assets)<- new_name
     }
     
+    
     assets<- unlist(lapply(STACItemCollection$features,function(y){names(y$assets)})) %>% unique()
     
-    image_collection <- gdalcubes::stac_image_collection(STACItemCollection$features, asset_names = assets )
+    image_collection <- gdalcubes::stac_image_collection(STACItemCollection$features, asset_names = "elevation" )
+    
+    
+    t0<- gdalcubes::extent(image_collection)$t0
+    t1<- gdalcubes::extent(image_collection)$t1
     
     cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = t0, t1 = t1,
                                                                              left = box_study_area[1], right = box_study_area[3],
@@ -79,8 +75,8 @@ output<- tryCatch({
                                            keep.asp= F)
 
     cube <- gdalcubes::raster_cube(image_collection, cube_collection)
+  
     
-    aa<- stars::st_as_stars(cube) %>% terra::rast()
     
     # Descargar cubo
     fn = tempfile(fileext = ".nc"); gdalcubes::write_ncdf(cube, fn)
@@ -91,10 +87,8 @@ output<- tryCatch({
     cube_times
     
     nc_times<- if(nrow(cube_times)<2){"X0"}else{ paste0("X", ncdf4::ncvar_get(nc, "time_bnds")[1,]) }
-    time_collection<- as.data.frame(gdalcubes::dimension_bounds(cube)[["t"]]) %>% dplyr::mutate(time_id= nc_times, dim3=seq(nrow(.)))
-    
-    
-    
+    time_collection<- as.data.frame(gdalcubes::dimension_bounds(cube)[["t"]]) %>%
+      dplyr::mutate(time_id= nc_times, dim3=seq(nrow(.)), period= paste0(start, "-", end))
     
     terra_mask<- pbapply::pblapply(vars[5:length(vars)], function(x){ print(x)
       
@@ -115,21 +109,22 @@ output<- tryCatch({
         terra::ext(stack_var)<- terra::ext(study_area)
 
         times<- unique(key2$time_id) 
-        layer <-   stack_var  [[ times ]] %>% terra::mask(study_area) %>% setNames(paste0(x, names(.)))
+        layer <-   stack_var  [[ times ]] %>% terra::mask(study_area) %>% setNames(paste0(x, unique(key2$period)))
         
       } else {NULL}
       
-    })  %>% {Filter(function(x) !is.null(x), .)} 
+    })  %>% {Filter(function(x) !is.null(x), .)}
     
     
+    dir_stack<- file.path(outputFolder, "dir_stack")
+    unlink(dir_stack, recursive = TRUE); dir.create(dir_stack); setwd(dir_stack)
     
     
+    setwd(dir_stack)
+    lapply(terra_mask, function(x)
+      terra::writeRaster(x, paste0(names(x), ".tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"),  filetype = "GTiff", overwrite = TRUE ))
     
-    
-  
-  
-  
-  
+    output<- list(dir_stack= dir_stack)
   
 }, error = function(e) { list(error= conditionMessage(e)) })
 
