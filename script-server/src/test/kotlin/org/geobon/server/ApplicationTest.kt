@@ -4,9 +4,9 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
+import io.mockk.InternalPlatformDsl.toArray
 import org.geobon.pipeline.outputRoot
 import org.geobon.server.plugins.configureRouting
-import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 import kotlin.test.*
@@ -34,9 +34,13 @@ class ApplicationTest {
         client.get("/pipeline/list").apply {
             assertEquals(HttpStatusCode.OK, status)
             val result = bodyAsText()
-            val jsonResult = JSONArray(result)
+            val jsonResult = JSONObject(result)
+            println(jsonResult.keys().next())
             assertTrue(jsonResult.length() > 0)
-            assertContains(jsonResult, "helloWorld.json")
+            assertTrue(jsonResult.has("helloWorld.json"))
+
+            // Todo: Pipelines will eventually have names too
+            assertEquals("helloWorld.json", jsonResult.getString("helloWorld.json"))
         }
 
         var id:String
@@ -68,9 +72,10 @@ class ApplicationTest {
         client.get("/script/list").apply {
             assertEquals(HttpStatusCode.OK, status)
             val result = bodyAsText()
-            val jsonResult = JSONArray(result)
+            val jsonResult = JSONObject(result)
             assertTrue(jsonResult.length() > 0)
-            assertContains(jsonResult, "helloWorld>helloPython.yml")
+            assertTrue(jsonResult.has("helloWorld>helloPython.yml"))
+            assertEquals("Python Example", jsonResult.getString("helloWorld>helloPython.yml"))
         }
 
         var id:String

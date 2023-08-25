@@ -6,32 +6,33 @@ info:
   version: 1.0.0
 servers:
   - url: http://localhost/
-    description: script service (from outside dockers only)
-  - url: http://biab-script-server:8080
-    description: script service (from inside dockers only)
+    description: script service
 tags:
   - name: placeholder
     description: We could use tags
 paths:
   /{type}/list:
     get:
-      summary: Get a list of available steps of given type.
+      summary: Get a list of available steps of given type and their names.
       operationId: getListOf
       parameters:
         - $ref: '#/components/parameters/stepType'
       responses:
         "200":
           description:
-            Array of step description files.
+            Map of step description files to their names.
             Script description files are located in the /script folder.
             Pipeline description files are located in the /pipeline folder.
           content:
             application/json:
               schema:
-                type: array
-                items:
+                type: object
+                additionalProperties:
                   type: string
-                  example: ["SHI.yml", "Folder>SDM.yml"]
+                example: {
+                  "SHI.yml": "Species Habitat Index",
+                  "Folder>SDM.yml": "Species distribution model"
+                }
   /{type}/{descriptionPath}/info:
     get:
       tags: []
