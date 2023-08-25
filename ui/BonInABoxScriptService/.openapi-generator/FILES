@@ -23,11 +23,3 @@ src/model/InfoInputsValueExampleOneOfInner.js
 src/model/InfoOutputsValue.js
 src/model/InfoOutputsValueExample.js
 src/model/InfoReferencesInner.js
-test/model/Info.spec.js
-test/model/InfoAuthorInner.spec.js
-test/model/InfoInputsValue.spec.js
-test/model/InfoInputsValueExample.spec.js
-test/model/InfoInputsValueExampleOneOfInner.spec.js
-test/model/InfoOutputsValue.spec.js
-test/model/InfoOutputsValueExample.spec.js
-test/model/InfoReferencesInner.spec.js
