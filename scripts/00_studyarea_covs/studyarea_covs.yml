@@ -8,7 +8,7 @@ inputs:
     type: text
     example: "scripts/00_studyarea_covs/input/raster_study_area_4326_path.tif"
 outputs:
-  dpC_result:
-    label: dpC_result
-    description: "T"
-    type: text/csv
+  dir_stack:
+    label: dir_stack
+    description: "dir_stack"
+    type: text
