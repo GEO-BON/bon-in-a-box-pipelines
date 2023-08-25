@@ -1,4 +1,8 @@
 script: divideFloat.py
+name: Divide Float
+description: Sample script that divides a float
+author:
+  - name: Jean-Michel Lord
 inputs:
   float_value:
     label: value
