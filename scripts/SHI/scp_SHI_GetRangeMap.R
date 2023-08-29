@@ -4,7 +4,7 @@
 # Script location can be used to access other scripts
 
 print(Sys.getenv("SCRIPT_LOCATION"))
-packages <- c("dplyr","tidyr","purrr","sf")
+packages <- c("rjson","dplyr","tidyr","purrr","sf")
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
