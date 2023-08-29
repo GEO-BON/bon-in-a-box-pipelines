@@ -46,6 +46,8 @@ bbox_studyarea<- terra::ext(study_area) %>% sf::st_bbox()
 #Definir rutas donde se van a guardar archivos
 ebd <- auk::auk_ebd(file= input$ebd_file,  file_sampling = input$ebd_sampling_file) # precargar datos
 
+
+
 # Definri filtros de datos de mi especie de interes
 ebd_filters <- ebd %>% auk::auk_species(input$sp) %>% # filtrar por especies de interes
   auk::auk_protocol(protocol = c("Stationary", "Traveling"))  %>% # filtro por portocolo - Metodologia de muestreoo. 
@@ -68,16 +70,16 @@ time_to_decimal <- function(x) {x <- lubridate::hms(x, quiet = TRUE); lubridate:
 pre_ebd_zf <- auk::auk_zerofill(x= dir_ebdfile, sampling_events =  dir_ebd_sampling_file, collapse = TRUE)
 
 # Limpiar ebd_zf - estandarizar datos
-ebd_zf <- pre_ebd_zf  %>% dplyr::rowwise() %>%
+ebd_zf <- pre_ebd_zf  %>% dplyr::mutate(effort_distance_km= as.numeric(effort_distance_km)) %>% 
+  dplyr::rowwise() %>%
   dplyr::mutate(observation_count = if(observation_count %in% "X"){NA}else{observation_count}) %>%  # Convertir en observation_count X observaciones en NA
-  dplyr::mutate(observation_count = as.integer(observation_count), # convertir observation_count en integer
-                # effort_distance_km to 0 for non-travelling counts
-                effort_distance_km = dplyr::if_else(protocol_type != "Traveling", 0, effort_distance_km), # establecer esfuerzo de muestreo effor_distance_km en 0 cuando protocol sea igual a Traveling
-                time_observations_started = time_to_decimal(time_observations_started),  # convertir fechas en decimales
+  dplyr::mutate(observation_count = as.integer(observation_count),
                 year = lubridate::year(observation_date),# crrear columna año
-                day_of_year = lubridate::yday(observation_date)) # crear columna dias
-
-
+                day_of_year = lubridate::yday(observation_date),
+                effort_distance_km = dplyr::if_else(protocol_type != "Traveling", 0, effort_distance_km) # effort_distance_km to 0 for non-travelling counts
+                )
+ebd_zf$time_observations_started<- time_to_decimal(ebd_zf$time_observations_started)  # convertir fechas en decimales
+  
 
 # Filtros por esfuerzo de muestreo - Optimizacion de la variacion en la detectabilidad
 ebd_zf_filtered <- ebd_zf %>% 
@@ -87,10 +89,7 @@ ebd_zf_filtered <- ebd_zf %>%
 
 
 # Definir ruta de salida de los arcivos zero_fill  la especie de interes
-dir_ebdfile<- file.path(outputFolder, paste0(paste(c("ebdfile", input$sp, round(bbox_studyarea)), collapse = "_"), ".txt")) # Define the file path for the 'val_wkt_path' output
-
-
-f_ebd_zf <- gsub(x= f_ebd, pattern = ".txt", replacement = "_zf.csv")  #Establecer ruta de salida de archivo zer_fill
+dir_ebd_zerofill<- file.path(outputFolder, paste0(paste(c("ebdfile", input$sp, round(bbox_studyarea)), collapse = "_"), "_zf_.txt")) # 
 
 ebird <- ebd_zf_filtered %>% 
   dplyr::select(checklist_id, observer_id, sampling_event_identifier,
@@ -101,25 +100,10 @@ ebird <- ebd_zf_filtered %>%
                 time_observations_started, 
                 duration_minutes, effort_distance_km,
                 number_observers)
-write_csv(ebird, f_ebd_zf, na = "") # exportar archivo ero_fill como csv 
 
+write.table(ebird, dir_ebdfile, sep = "\t", row.names = FALSE, quote = FALSE) ## exportar zf
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# Define final output list
-output<- list(dir_ebdfile = dir_ebdfile,dir_ebd_sampling_file= dir_ebd_sampling_file, study_area_4326_path= study_area_4326_path)
+output<- list(dir_ebd_zerofill = dir_ebd_zerofill)
 
 
 #### Outputing result to JSON ####

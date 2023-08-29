@@ -1,48 +1,48 @@
 script: dpc_analyisis.R
-description: "This script identifies the spatial unit or node that contributes the most to the connectivity of the query area through the index of change in the probability of connectivity (dPC)."
+description: "This script lest run a connectivity analysis where is identified the spatial unit or node that contributes the most to the connectivity of the query area through the index of change in the probability of connectivity (dPC)."
 inputs:
   data_spatial_unit:
     label: data_spatial_unit 
-    description: Table in csv format that contains two mandatory columns, id and area of spatial units or nodes. If the analysis is done over time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration.
+    description: "String refering to the path string where the .csv file containing the information required for the indicator calculation is located. The table must contain the id and the area of the spatial units or nodes. If the analysis is done in time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration."
     type: text
     example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
   area_study_area:
     label: area_study_area
-    description: Specify the total area of the query area, this value is mandatory for the dPC calculation. Check that the area units are the same as those used in the data_spatial_unit parameter.
+    description: "Numeric refering to the total area of the query area, this value is mandatory for the dPC calculation. Check that the area units are the same as those used in the data_spatial_unit parameter."
     type: int
     example: 11000000000
   column_spatial_unit:
     label: column_spatial_unit 
-    description: Specifies the name of the column that contains the id of the spatial unit or node.
-    type: text
-    example: "id_pa"
+    description: "String refering to the name of the column in the data_spatial_unit file that contains the unique identifier ID of the spatial units or nodes that intersect the area of interest."
+    type: text[]
+    example: ["id_pa", "name"]
   column_area:
     label: column_area 
-    description: Specifies the name of the column that contains the area of the spatial units or nodes. If there are several areas for the same id, the areas will be added. Values must be numeric otherwise they will be ignored.
+    description: "String refering to the name of the column in the data_spatial_unit file that contains the area of each spatial unit or nodes that intersects the area of interest. If there are several areas for the same id, the areas will be added. Values must be numeric otherwise they will be ignored."
     type: text
     example: "area_spatial"
   column_date:
     label: column_date 
-    description: Specifies the name of the column that contains the date. The date is a mandatory field if you want an analysis by time periods. The date can be entered as "Year-Month-Day", just year, or just year-month; if given in a different format the row is ignored. If (NULL) is not specified, a single period is assumed for the entire data set and the following arguments will be ignored.
+    description: "String refering to the name of the column that contains the date. The date is a mandatory field if you want an analysis by time periods. The date can be entered as 'Year-Month-Day', just year, or just year-month; if given in a different format the row is ignored. If (NULL) is not specified, a single period is assumed for the entire data set and the following arguments will be ignored."
     type: text
     example: "created_date"
   time_interval:
     label: time_interval
-    description: Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, "1Y" is used by default.
+    description: "String refering to the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, '1Y' is used by default."
     type: text
     example: "10Y"
   time_start:
     label: time_start
-    description: Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL. 
+    description: "Refering to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
     example: NA
   time_end:
     label: time_end
-    description: Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL.
+    description: "Refering to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
     example: NA
 outputs:
-  dpC_result:
+  dpC_result: "Refering to the table that contains the results of the dPC indicator within the study area."
     label: dpC_result
-    description: Table with final results with three columns: period that contains the time period suggested by the user, id_spatial_unit that contains the id of the spatial unit or node that contributes the most to the connectivity of the query area, and the delta in the probability of connectivity ( dPC).
-    type: txt/csv
+    description: "T"
+    type: text/csv

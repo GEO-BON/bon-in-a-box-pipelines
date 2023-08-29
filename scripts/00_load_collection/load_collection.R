@@ -109,6 +109,7 @@ cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = t0
 # Crear cubo
 cube <- gdalcubes::raster_cube(image_collection, cube_collection)
 
+
 # Descargar cubo
 fn = tempfile(fileext = ".nc"); gdalcubes::write_ncdf(cube, fn)
 nc <-  ncdf4::nc_open(fn); vars <- names(nc$var)
