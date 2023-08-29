@@ -1,0 +1,19 @@
+script: add_covs.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dir_stack_covs:
+    label: dir_stack_covs
+    description: "dir_stack_covs"
+    type: text
+    example: "scripts/00_add_covs/input/dir_stack"
+  dir_ebdfile_auk_filter:
+    label: dir_ebdfile_auk_filter
+    description: "dir_ebdfile_auk_filter"
+    type: text
+    example: "scripts/00_add_covs/input/ebdfile_Setophaga fusca_-76_5_-75_6.txt"
+outputs:
+  data_IDs_path:
+    label: data_IDs_path
+    description: "data_IDs_path"
+    type: text/csv

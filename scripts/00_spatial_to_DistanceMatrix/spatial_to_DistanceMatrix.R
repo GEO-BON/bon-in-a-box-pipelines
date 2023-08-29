@@ -41,30 +41,31 @@ input<- lapply(input, function(x) if( grepl("/", x) ){
 
 ####  Script body ####
 output<- tryCatch({
-
   
 units::units_options(set_units_mode = "standard")
 distance_unit<- input$unit_distance 
-area_unit<- paste0(input$unit_distance, 2)
-
-
-studyarea_wkt<- readLines(input$studyarea_wkt)
-studyarea_crs<- terra::crs( paste0("+init=epsg:", input$studyarea_EPSG) ) %>% as.character()
-studyarea_polygon<- terra::vect(studyarea_wkt, crs=  studyarea_crs) %>% sf::st_as_sf()
+area_unit<- paste0(input$unit_distance, "^2")
+  
+# Definir area de estudio
+ext_WKT_area<- tools::file_ext(input$studyarea_wkt)
+dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$studyarea_wkt) }else{ input$studyarea_wkt }
+crs_polygon<- terra::crs( paste0("+init=epsg:", input$studyarea_EPSG) ) %>% as.character()
+vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon )  %>% sf::st_as_sf()
 
 spatial_units<- sf::st_read(input$spatial_file)
-if( ! sf::st_crs(spatial_units) == sf::st_crs(studyarea_polygon) ) { spatial_units<- sf::st_transform(spatial_units, studyarea_crs)  }
+if( ! sf::st_crs(spatial_units) == sf::st_crs(vector_polygon) ) { spatial_units<- sf::st_transform(spatial_units, crs_polygon)  }
 
 # check intersects
-test_intersects<- sf::st_intersects(spatial_units, studyarea_polygon) %>% setNames( seq(length(.))) %>% unlist() %>% names() %>% as.numeric()
+test_intersects<- sf::st_intersects(spatial_units, vector_polygon) %>% setNames( seq(length(.))) %>% unlist() %>% names() %>% as.numeric()
 
 # filter intersects
 spatialunits_studyarea<- spatial_units[test_intersects, ]
 
 # check groups
 group<- input$column_group
+spatialunits_count<-  spatialunits_studyarea %>% dplyr::mutate(group_n= paste0(!!!dplyr::syms(group)) %>% {gsub(" ", "_", .)}) %>% 
+  dplyr::group_by(group_n)  %>% dplyr::mutate(count = dplyr::n())
 
-spatialunits_count<-  spatialunits_studyarea %>% dplyr::group_by(!!dplyr::sym(group))  %>% dplyr::mutate(count = dplyr::n())
 
 spatialunits_group<- spatialunits_count %>% {
   uniques<- dplyr::filter(., count==1) %>% as.data.frame()
@@ -84,24 +85,25 @@ mtx_distance_centroid <- sf::st_distance(shp_centroid) %>% units::set_units(dist
 
 #Convert the matrix to data frame
 mtx_distance_centroid=matrix(mtx_distance_centroid,nrow=nrow(spatialunits_group))
-rownames(mtx_distance_centroid)=colnames(mtx_distance_centroid)= sf::st_drop_geometry(spatialunits_group)[,group]
+rownames(mtx_distance_centroid)=colnames(mtx_distance_centroid)= sf::st_drop_geometry(spatialunits_group)[, "group_n"]
 mtx_distance_centroid<- as.data.frame.matrix(mtx_distance_centroid)
+
+
 
 # create nearest matrix
 #Create the euclidean distance matrix:
-mtx_distance_nearest <- sf::st_distance(spatialunits_group)  %>% units::set_units(distance_unit)
+mtx_distance_nearest <- sf::st_distance(spatialunits_group) %>% units::set_units(distance_unit)
 #Convert the matrix to data frame
 mtx_distance_nearest=matrix(mtx_distance_nearest,nrow=nrow(spatialunits_group))
-rownames(mtx_distance_nearest)=colnames(mtx_distance_nearest)= sf::st_drop_geometry(spatialunits_group)[,group]
+rownames(mtx_distance_nearest)=colnames(mtx_distance_nearest)= sf::st_drop_geometry(spatialunits_group)[,"group_n"]
 mtx_distance_nearest<- as.data.frame.matrix(mtx_distance_nearest)
 
  
 
 #data
-area_study_area<- sf::st_area(studyarea_polygon) %>% units::set_units(area_unit)  %>% as.numeric()
-spatialunits_intersect<- sf::st_intersection(spatialunits_group, studyarea_polygon) %>% dplyr::mutate(area_spatial = sf::st_area(.) %>% units::set_units(area_unit)  %>% as.numeric() )
+area_study_area<- sf::st_area(vector_polygon) %>% units::set_units(area_unit) %>% as.numeric()
+spatialunits_intersect<- sf::st_intersection(spatialunits_group, vector_polygon) %>% dplyr::mutate(area_spatial = sf::st_area(.) %>% units::set_units(area_unit)  %>% as.numeric() )
 spatialunits_studyarea_data<- sf::st_drop_geometry(spatialunits_intersect)
-
 
 # 4326
 spatialunits_studyarea_4326<- spatialunits_intersect %>% sf::st_transform(4326)

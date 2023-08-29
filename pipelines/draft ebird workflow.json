@@ -1,0 +1,195 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": -209.5,
+        "y": 272.5
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 330.4132072353294,
+        "y": 193.52200472867514
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_covs>studyarea_covs.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 764.4339858139745,
+        "y": 245.94132072353295
+      },
+      "data": {
+        "descriptionFile": "00_add_covs>add_covs.yml"
+      }
+    },
+    {
+      "id": "4",
+      "type": "io",
+      "position": {
+        "x": 325,
+        "y": 397
+      },
+      "data": {
+        "descriptionFile": "00_auk_filter>auk_filter.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "io",
+      "position": {
+        "x": 1161.882641447066,
+        "y": 201.6100236433757
+      },
+      "data": {
+        "descriptionFile": "00_eBird_format>eBird_format.yml"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "study_area_4326_path",
+      "target": "1",
+      "targetHandle": "studyarea_grid",
+      "id": "reactflow__edge-0study_area_4326_path-1studyarea_grid"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "dir_stack",
+      "target": "2",
+      "targetHandle": "dir_stack_covs",
+      "id": "reactflow__edge-1dir_stack-2dir_stack_covs"
+    },
+    {
+      "source": "4",
+      "sourceHandle": "dir_ebd_zerofill",
+      "target": "2",
+      "targetHandle": "dir_ebdfile_auk_filter",
+      "id": "reactflow__edge-4dir_ebd_zerofill-2dir_ebdfile_auk_filter"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "data_IDs_path",
+      "target": "6",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-2data_IDs_path-6auk_covars_file"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "study_area_4326_path",
+      "target": "4",
+      "targetHandle": "studyarea",
+      "id": "reactflow__edge-0study_area_4326_path-4studyarea"
+    }
+  ],
+  "inputs": {
+    "00_studyarea_to_grid>studyarea_to_grid.yml@0|studyarea_path": {
+      "description": "Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "studyarea_path",
+      "type": "text",
+      "example": "/output/0_inputs/Caldas.shp"
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@0|studyarea_EPSG": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "studyarea_EPSG",
+      "type": "int",
+      "example": 3395
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@0|studyarea_resolution": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "studyarea_resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "00_auk_filter>auk_filter.yml@4|ebd_file": {
+      "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/ebd_CO_relDec-2022.txt"
+    },
+    "00_auk_filter>auk_filter.yml@4|ebd_sampling_file": {
+      "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_sampling_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/ebd_samp_Col_relDec-2022-002.txt"
+    },
+    "00_auk_filter>auk_filter.yml@4|species": {
+      "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
+      "label": "species",
+      "type": "text",
+      "example": "Setophaga fusca"
+    },
+    "00_eBird_format>eBird_format.yml@6|min_obs": {
+      "description": "Minimum number of observations required for each site.",
+      "label": "min_obs",
+      "type": "int",
+      "example": 1
+    },
+    "00_eBird_format>eBird_format.yml@6|max_obs": {
+      "description": "Maximum number of observations allowed for each site.",
+      "label": "max_obs",
+      "type": "int",
+      "example": 10
+    },
+    "00_eBird_format>eBird_format.yml@6|annual_closure": {
+      "description": "Whether the entire year should be treated as the period of closure (the default). This can be useful, for example, if the data have been subset to a period of closure prior to calling",
+      "label": "annual_closure",
+      "type": "logical",
+      "example": false
+    },
+    "00_eBird_format>eBird_format.yml@6|n_days": {
+      "description": "Number of days defining the temporal length of closure. If annual_closure = TRUE closure periods will be split at year boundaries. If annual_closure = FALSE the closure periods will ignore year boundaries.",
+      "label": "n_days",
+      "type": "int",
+      "example": 30
+    },
+    "00_eBird_format>eBird_format.yml@6|date_var": {
+      "description": "Column name of the variable in x containing the date. This column should either be in Date format or convertible to Date format with as.Date().",
+      "label": "date_var",
+      "type": "text",
+      "example": "observation_date"
+    },
+    "00_eBird_format>eBird_format.yml@6|site_vars": {
+      "description": "Names of one of more columns in x that define a site, typically the location (e.g. latitude/longitude) and observer ID.",
+      "label": "site_vars",
+      "type": "text",
+      "example": "ID"
+    },
+    "00_eBird_format>eBird_format.yml@6|site_id": {
+      "description": "A unique idenitifer for each 'site', typically identifying observations from a unique location by the same observer within a period of temporal closure. Data output from filter_repeat_visits() will have a .site_id variable that meets these requirements.",
+      "label": "site_id",
+      "type": "text",
+      "example": "site"
+    },
+    "00_eBird_format>eBird_format.yml@6|response": {
+      "description": "The variable that will act as the response in modeling efforts, typically a binary variable indicating presence or absence or a count of individuals seen.",
+      "label": "response",
+      "type": "text",
+      "example": "species_observed"
+    },
+    "00_eBird_format>eBird_format.yml@6|site_covs": {
+      "description": "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate.",
+      "label": "site_covs",
+      "type": "text",
+      "example": "huella"
+    },
+    "00_eBird_format>eBird_format.yml@6|obs_covs": {
+      "description": "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation.",
+      "label": "obs_covs",
+      "type": "text",
+      "example": "duration_minutes"
+    }
+  },
+  "outputs": {}
+}

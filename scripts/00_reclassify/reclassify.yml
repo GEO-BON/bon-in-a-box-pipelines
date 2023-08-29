@@ -13,8 +13,8 @@ inputs:
     type: text
     example: '/scripts/00_reclassify/input/dir_stack'
   table_reclassify:
-    label: table_data
-    description: table_data
+    label: table_reclassify
+    description: table_reclassify
     type: text
     example: 'scripts/00_reclassify/input/reclass_data.csv'
 outputs:

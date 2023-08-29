@@ -1,0 +1,14 @@
+script: studyarea_covs.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  studyarea_grid:
+    label: studyarea_grid
+    description: "aa"
+    type: text
+    example: "scripts/00_studyarea_covs/input/raster_study_area_4326_path.tif"
+outputs:
+  dir_stack:
+    label: dir_stack
+    description: "dir_stack"
+    type: text

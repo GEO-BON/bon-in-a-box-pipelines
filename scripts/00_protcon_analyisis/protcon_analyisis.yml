@@ -8,17 +8,17 @@ inputs:
     example: "/scripts/00_protcon_analyisis/input/mtx_distance_centroid.csv"
   area_study_area:
     label: area_study_area
-    description: "It refers to the total area of the area of interest."
+    description: "Number refers to the total area of the area of interest. Check that the area units are the same as those used in the data_spatial_unit parameter."
     type: int
     example: 11000000000
   distance_analysis:
     label: distance_analysis
-    description: "It refers to the distance in which the spatial units are considered to be well connected, this can vary if it is about the dispersal of a species, political decision or another specific objective."
+    description: "Number refers to the distance in which the spatial units are considered to be well connected, this can vary if it is about the dispersal of a species, political decision or another specific objective."
     type: int
     example: 10000
   unit_distance:
     label: unit_distance
-    description: "The unit in which the distance between the spatial units and the input study area is found must be specified (eg m for meters or km for kilometer)."
+    description: "String refers to the unit of the distance for the analysis (ej m for meters or km for kilometer)."
     type: options
     options:
       - m
@@ -26,46 +26,46 @@ inputs:
     example: "m"
   data_spatial_unit:
     label: data_spatial_unit 
-    description: "It refers to the path string where the .csv file containing information required for the calculation of the indicator is located. There must be an ID for each spatial unit, name (if any) and the area of each one of them."
+    description: "String refers to the path string where the .csv file containing information required for the calculation of the indicator is located. There must be an ID for each spatial unit, name (if any) and the area of each one of them. If the analysis is done in time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration."
     type: text
     example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
-  column_spatial_unit: "A string that refers to the name of the column in the data_spatial_unit file that contains the unique identifier ID of the spatial units that intersect the area of interest. These IDs must be equivalent to the column and row names in the distance matrix."
+  column_spatial_unit: "String that refers to the name of the column in the data_spatial_unit file that contains the unique identifier ID of the spatial units that intersect the area of interest. These IDs must be equivalent to the column and row names in the distance matrix."
     label: column_spatial_unit 
     description: 
     type: text
     example: "id_pa"
   column_area:
     label: column_area 
-    description: "A string that refers to the name of the column in the data_spatial_unit file that contains the area of each spatial unit that intersects the area of interest."
+    description: "String refering to the name of the column in the data_spatial_unit file that contains the area of each spatial unit that intersects the area of interest. Values in this column must be numeric otherwise they will be ignored."
     type: text
     example: "area_spatial"
   column_date:
     label: column_date 
-    description: "String that refers to the name of the column in the data_spatial_unit file that contains the date or period in which the information of the spatial units with which the analysis is being performed is produced. For example, the year in which the protected areas were declared or the year in which the layers of forest patches were produced."
+    description: "String refering to the name of the column that contains the date. The date is a mandatory field if you want an analysis by time periods.The date is a mandatory field if you want an analysis by time periods for example the year in which a protected area is declared or the year in which the forest patch layer is produced."
     type: text
     example: "created_date"
   format_date:
     label: format_date 
-    description: "Refers to the date format of the column_date field. For example "%Y-%m-%d", which represents "year-month-day"."
+    description: "String refering to the date format of the column_date field. For example "%Y-%m-%d", which represents "year-month-day"."
     type: text
     example: "%Y-%m-%d"
   time_interval:
     label: time_interval
-    description: "Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, "1Y" is used by default."
+    description: "String refering to the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, "1Y" is used by default."
     type: text
     example: "10Y"
   time_start:
     label: time_start
-    description: "Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis."
+    description: "Refering to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
     example: NA
   time_end:
     label: time_end
-    description: "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis
+    description: "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
     example: NA
 outputs:
   protcon_result:
     label: protcon_result
-    description: "Refers to the table that contains the results of the connectivity analysis between the spatial units within the study area."
+    description: "Refers to the table that contains the results of the protcon indicator within the study area."
     type: txt/csv
