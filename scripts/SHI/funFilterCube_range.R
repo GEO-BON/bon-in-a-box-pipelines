@@ -1,6 +1,8 @@
 # value = FALSE if instead of image values a map of just presence of the values is required
 # type_min either 1 for ">=", 2 for ">" or 3 for equal
-# type_max define 1 for ">=", 2 for ">" or 3 for equal
+# type_max define 1 for "<=", 2 for "<" or 3 for equal
+library(purrr)
+library(gdalcubes)
 
 funFilterCube_range <- as_mapper(function(cube, min=NA , max=NA, type_min=1 , type_max=1 , value=TRUE){
   condition <- case_when(!is.na(min) & !is.na(max) ~ 1, # for minimum and equal min value and maximum and equal max value filter

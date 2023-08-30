@@ -22,22 +22,11 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-source(file.path(path_script,"SHI/funGet_range_maps.R"), echo=TRUE)
 source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
 
 # Parameters -------------------------------------------------------------------
 # Define species
 sp <- str_to_sentence(input$species)
-
-# Define source of expert range maps
-expert_source <- input$expert_source
-
-# Define area of interest, country or region
-study_area_path <- ifelse(is.null(input$study_area), NA,input$study_area)
-country_code <- ifelse(is.null(input$country_code), NA,input$country_code)
-region <- ifelse(is.null(input$region), NA ,input$region)
-
-r_sp_sdm_path <- ifelse(is.null(input$sdm), NA,input$study_area)
 
 # Define SRS
 srs <- input$srs
@@ -50,8 +39,16 @@ srs_cube <- suppressWarnings(if(check_srs){
   if(sum(auth_srid_test)!=1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
 }else srs )# paste Authority in case SRID is used 
 
+# Define expert range maps
+range_map_path <- ifelse(is.null(input$sf_range_map), NA,input$sf_range_map)
+
+# Define area of interest, country or region
+study_area_path <- ifelse(is.null(input$study_area), NA,input$study_area)
+country_code <- ifelse(is.null(input$country_code), NA,input$country_code)
+region <- ifelse(is.null(input$region), NA ,input$region)
+
 # Size of buffer around study area
-buff_size <- ifelse(is.null(input$buff_size), NA,input$study_area)
+buff_size <- ifelse(is.null(input$buff_size), NA,input$buff_size)
 
 # Buffer for elevation values
 elev_buffer <- ifelse(is.null(input$elev_buffer), NA,input$elev_buffer)
@@ -59,29 +56,20 @@ elev_buffer <- ifelse(is.null(input$elev_buffer), NA,input$elev_buffer)
 # spatial resolution
 spat_res <- ifelse(is.null(input$spat_res), 1000 ,input$spat_res)
 
+# binary sdm
+bin_sdm_path <- ifelse(is.null(input$sdm_bin), NA,input$sdm_bin)
+
 #credentials
 token <- Sys.getenv("IUCN_TOKEN")
 
-# Step 1 - Get range map #filter by expert source missing ----------------------
-source_range_maps <- data.frame(expert_source=expert_source ,
-                                species_name = sp) |>
-  dplyr::mutate(function_name=case_when(
-    expert_source=="IUCN"~ "get_iucn_range_map",
-    expert_source=="MOL"~ "get_mol_range_map",
-    expert_source=="QC" ~ "get_qc_range_map"
-  ),
-  species_path= case_when(
-    expert_source=="IUCN"~ sp,
-    expert_source=="MOL"~ paste0(sp,"_mol"),
-    expert_source=="QC" ~ paste0(sp,"_qc")
-  ))
+# Step 1.1 - Get range map #filter by expert source missing ----------------------
+if(!is.na(range_map_path)){
+  sf_range_map <- st_read(range_map_path)
+}else{stop("A range map is needed. Add a polygon or use the SDM pipeline to produce a map with the potential area for the species.")}
 
-with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
-sf_range_map <- st_read(paste0(source_range_maps$species_path,'_range.gpkg'))
+print("========== Step 1.1 - Expert range map successfully loaded ==========")
 
-print("========== Step 1 - Expert range map successfully loaded ==========")
-
-# Step 2 - Get bounding box cropped by country if needed -----------------------
+# Step 1.2 - Get bounding box cropped by country if needed -----------------------
 study_area <- data.frame(study_area_path= study_area_path ,
                          country_code = country_code ,
                          region = region ) |>
@@ -138,9 +126,9 @@ print(sf_ext_srs)
 sf_bbox <- st_as_sfc(sf_ext_srs)
 #st_write(sf_bbox,file.path("./Connectivity/layers_for_omniscape",sp,"st_bbox.gpkg"),append=F)
 
-print("========== Step 2 - Bounding box created ==========")
+print("========== Step 1.2 - Bounding box created ==========")
 
-# Step 3 - Create raster -------------------------------------------------------
+# Step 1.3 - Create raster and limit area by elevation ranges---------------------
 # Bounding box raster
 r_frame <- rast(terra::ext(sf_ext_srs),resolution=spat_res)
 crs(r_frame) <- srs_cube
@@ -169,7 +157,7 @@ with(df_IUCN_sheet_condition, if(is.na(min_elev)  & is.na(max_elev)){ # if no el
   r_range_map <<- r_range_map
 }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
   # STRM from Copernicus
-  cube_STRM <<-
+  cube_STRM <-
     load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
               limit = 1000,
               collections = c("cop-dem-glo-90"),
@@ -180,24 +168,34 @@ with(df_IUCN_sheet_condition, if(is.na(min_elev)  & is.na(max_elev)){ # if no el
               t0 = "2021-01-01",
               t1 = "2021-12-31",
               resampling = "bilinear")
-  r_STRM <<- cube_STRM  |> st_as_stars() |> terra::rast()
-  cube_STRM_range <<- funFilterCube_range(cube_STRM, min = min_elev , max = max_elev) |> select_bands("data")
+  cube_STRM_range <- funFilterCube_range(cube_STRM, min = min_elev , max = max_elev) |> select_bands("data")
   # convert to raster
-  r_STRM_range <<- cube_STRM_range  |> st_as_stars() |> terra::rast()
+  r_STRM <<- terra::wrap(cube_STRM  |> st_as_stars() |> terra::rast())
+  r_STRM_range <- cube_STRM_range  |> st_as_stars() |> terra::rast()
   
-  # resample to raster of SDM
-  r_STRM_range_res <<- terra::resample(r_STRM_range, r_range_map)
-  r_range_map <<- terra::mask(terra::crop(r_range_map,r_STRM_range_res),r_STRM_range_res) #Crop LC to range extent
+  # resample to raster of range map
+  r_STRM_range_res <<- terra::wrap(terra::resample(r_STRM_range, r_range_map))
+  r_range_map <<- terra::wrap(terra::mask(terra::crop(r_range_map,unwrap(r_STRM_range_res)),unwrap(r_STRM_range_res))) #Crop to range extent
 }
 )
 
-print("========== Step 3 - Create base rasters ==========")
+print("========== Step 1.3 - Create base rasters and filter area by elevation ranges ==========")
+
+# Step 1.4 - Crop by binary SDM-------------------------------------------------
+print(file.path(path_script,bin_sdm_path))
+if(!is.na(bin_sdm_path)){
+  r_bin_sdm <- rast(file.path(path_script,bin_sdm_path))
+}else{stop("A binary raster file is required for this step. Add file or use the SDM pipeline to produce a map with the potential area for the species.")}
+
+if(!crs(r_bin_sdm)==crs(srs_cube)){
+  r_bin_sdm <- terra::project(r_bin_sdm, srs_cube, method="near") 
+}
+r_bin_sdm_frame <- terra::crop(r_bin_sdm, r_frame)
+r_bin_sdm_frame_res <- terra::resample(r_bin_sdm_frame,r_frame,method="near")
+r_range_map <- terra::mask(unwrap(r_range_map),r_bin_sdm_frame_res,maskvalues=1,inverse=T)
 
 r_range_map_path <- file.path(outputFolder, "r_range_map.tiff")
-writeRaster(r_range_map, r_range_map_path, overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
-#writeRaster(r_STRM,file.path("./Connectivity/layers_for_omniscape",sp,"r_STRM.tif"),overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
-#writeRaster(r_STRM_range_res,file.path("./Connectivity/layers_for_omniscape",sp,"r_STRM_range_res.tif"),overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
-
+writeRaster(unwrap(r_range_map), r_range_map_path, overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
 
 # Outputing result to JSON -----------------------------------------------------
 output <- list("r_range_map" = r_range_map_path )

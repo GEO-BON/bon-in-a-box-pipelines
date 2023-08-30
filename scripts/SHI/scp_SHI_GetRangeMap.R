@@ -4,7 +4,7 @@
 # Script location can be used to access other scripts
 
 print(Sys.getenv("SCRIPT_LOCATION"))
-packages <- c("rjson","dplyr","tidyr","purrr","sf")
+packages <- c("rjson","dplyr","tidyr","purrr","sf","stringr")
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -42,14 +42,17 @@ source_range_maps <- data.frame(expert_source=expert_source ,
 
 with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
 
-path_to_range_map <- paste0(source_range_maps$species_path,'_range.gpkg')
+file <- paste0(source_range_maps$species_path,'_range.gpkg')
 
-if(file.exists(path_to_range_map)){
-  sf_range_map <- st_read(path_to_range_map)
+if(file.exists(file)){
+  sf_range_map <- st_read(file)
 }else{
   path_to_range_map <- NULL
   cat("========== No range map available for ", sp ,"at the ", expert_source , " expert source database ==========")
 }
+
+path_to_range_map <- file.path(outputFolder, file)
+sf::st_write(sf_range_map, path_to_range_map, append = FALSE  )
 
 # Outputing result to JSON -----------------------------------------------------
 output <- list("sf_range_map" = path_to_range_map )

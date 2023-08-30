@@ -7,20 +7,16 @@ inputs:
     description: Scientific name of the species.
     type: text
     example: Saguinus oedipus
-  expert_source:
-    label: source of expert range map
-    description: Source of the expert range map for the species.
-    type: options
-    options:
-      - MOL
-      - IUCN
-      - QC
-    example: IUCN
+  sf_range_map:
+    label: expert range map
+    description: Polygon with expected area for the species. If it is not available from scp_SHI_GetRangeMap.R then it is recommended to add a polygon with the limits of a species distribution model for the species.
+    type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
+    example: /SHI/example.gpkg
   study_area:
     label: study area
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (but do not foget to add the projection file to the folder)
-    type: text
-    example: /Study_area.gpkg
+    type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
+    example: null
   country_code:
     label: country code
     description: Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.
@@ -31,11 +27,11 @@ inputs:
     description: For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])
     type: text
     example: null
-  sdm:
-    label: SDM
-    description: Path to a raster with species distribution model for the species.
+  sdm_bin:
+    label: Binary SDM
+    description: Path to a raster with a binary output of a species distribution model for the species.
     type: text
-    example: /SDM.tiff
+    #example: /SDM.tiff
   srs:
     label: spatial reference system
     description: Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.

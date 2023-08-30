@@ -1,0 +1,192 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 193.390625,
+        "y": 342
+      },
+      "data": {
+        "descriptionFile": "SHI>scp_SHI_GetRangeMap.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 746.390625,
+        "y": 460
+      },
+      "data": {
+        "descriptionFile": "SHI>scpSHI_GetAOH.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "constant",
+      "position": {
+        "x": -153.609375,
+        "y": 343
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Saguinus oedipus"
+      }
+    },
+    {
+      "id": "3",
+      "type": "constant",
+      "position": {
+        "x": -153.609375,
+        "y": 357
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "IUCN",
+        "options": [
+          "MOL",
+          "IUCN",
+          "QC"
+        ]
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 396.390625,
+        "y": 577
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "5",
+      "type": "userInput",
+      "position": {
+        "x": 397.390625,
+        "y": 524
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 1222.390625,
+        "y": 458
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "sf_range_map",
+      "target": "1",
+      "targetHandle": "sf_range_map",
+      "id": "reactflow__edge-0sf_range_map-1sf_range_map"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "species",
+      "id": "reactflow__edge-2-0species"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "species",
+      "id": "reactflow__edge-2-1species"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-3-0expert_source"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-4-1spat_res"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "sdm_bin",
+      "id": "reactflow__edge-5-1sdm_bin"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "r_range_map",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-1r_range_map-6"
+    }
+  ],
+  "inputs": {
+    "SHI>scpSHI_GetAOH.yml@1|study_area": {
+      "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (but do not foget to add the projection file to the folder)",
+      "label": "study area",
+      "type": "application/geopackage+sqlite3 ; application/geo+json ; application/dbf"
+    },
+    "SHI>scpSHI_GetAOH.yml@1|country_code": {
+      "description": "Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.",
+      "label": "country code",
+      "type": "text",
+      "example": "COL"
+    },
+    "SHI>scpSHI_GetAOH.yml@1|region": {
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
+      "label": "region",
+      "type": "text"
+    },
+    "SHI>scpSHI_GetAOH.yml@1|srs": {
+      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
+      "label": "spatial reference system",
+      "type": "text",
+      "example": "EPSG:3116"
+    },
+    "SHI>scpSHI_GetAOH.yml@1|buff_size": {
+      "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
+      "label": "buffer for study area",
+      "type": "int",
+      "example": 0
+    },
+    "SHI>scpSHI_GetAOH.yml@1|elev_buffer": {
+      "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that magnitude and negative values will reduce the range in that magnitude.",
+      "label": "elevation buffer",
+      "type": "int",
+      "example": 0
+    },
+    "pipeline@5": {
+      "label": "Binary SDM",
+      "description": "Path to a raster with a binary output of a species distribution model for the species.",
+      "type": "text"
+    }
+  },
+  "outputs": {
+    "SHI>scpSHI_GetAOH.yml@1|r_range_map": {
+      "description": "Raster file with the area of habitat.",
+      "label": "area of habitat",
+      "type": "image/tiff;application=geotiff[]"
+    }
+  }
+}
