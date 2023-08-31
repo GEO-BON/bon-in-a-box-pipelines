@@ -23,7 +23,7 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 Sys.getenv("SCRIPT_LOCATION")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
-# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
+# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(., paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
 
 
 
@@ -43,7 +43,9 @@ output<- tryCatch({
   
   layers_covs<- list.files(input$dir_stack_covs, "\\.tif$", recursive = TRUE, full.names = TRUE)
   covs_stack<- terra::rast(layers_covs) %>% setNames(tools::file_path_sans_ext(basename(layers_covs)))
-  ebird_zero_fill<- read.delim(input$dir_ebdfile_auk_filter)
+  
+  setwd(directory)
+  ebird_zero_fill<- read.csv("covars_putumayo_2.csv") %>% dplyr::mutate(latitude= Lat_Y, longitude= Long_X)
   
   
   raster_area<- covs_stack[[1]] %>% {terra::mask(setValues(., seq(ncell(.))), .)}
