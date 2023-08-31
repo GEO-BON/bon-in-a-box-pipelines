@@ -5,7 +5,7 @@ inputs:
     label: mtx_distance
     description: String path that represents the file location of a distance matrix containing distances between spatial units. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km). 
     type: text/csv
-    example: "/scripts/00_protcon_analyisis/input/mtx_distance_centroid.csv"
+    example: "/scripts/protcon_analyisis/input/mtx_distance_centroid.csv"
   area_study_area:
     label: area_study_area
     description: Refers to the total area of the analyzed study area. The unit of area in which it is defined is explicitly specified as the square of the unit_distance input (m2 or km2). 
@@ -28,7 +28,7 @@ inputs:
     label: data_spatial_unit 
     description: "String refers to the path string where the .csv file containing information required for the calculation of the indicator is located. There must be an ID for each spatial unit, name (if any) and the area of each one of them. If the analysis is done in time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration."
     type: text/csv
-    example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
+    example: "/scripts/protcon_analyisis/input/spatialunits_studyarea_data.csv"
   column_spatial_unit:
     label: column_spatial_unit 
     description: "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account."

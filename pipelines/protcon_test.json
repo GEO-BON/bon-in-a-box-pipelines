@@ -8,7 +8,7 @@
         "y": 220
       },
       "data": {
-        "descriptionFile": "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml"
+        "descriptionFile": "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml"
       }
     },
     {
@@ -19,7 +19,7 @@
         "y": 219
       },
       "data": {
-        "descriptionFile": "00_studyarea_to_WKT>studyarea_to_WKT.yml"
+        "descriptionFile": "studyarea_to_WKT>studyarea_to_WKT.yml"
       }
     },
     {
@@ -30,7 +30,7 @@
         "y": 207
       },
       "data": {
-        "descriptionFile": "00_protcon_analyisis>protcon_analyisis.yml"
+        "descriptionFile": "protcon_analyisis>protcon_analyisis.yml"
       }
     },
     {
@@ -111,7 +111,7 @@
     }
   ],
   "inputs": {
-    "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|unit_distance": {
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|unit_distance": {
       "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
       "label": "unit_distance",
       "type": "options",
@@ -121,13 +121,13 @@
       ],
       "example": "m"
     },
-    "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file": {
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file": {
       "description": "String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix",
       "label": "spatial_file",
       "type": "text",
-      "example": "/scripts/00_spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
+      "example": "/scripts/spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
     },
-    "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|column_group": {
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|column_group": {
       "description": "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.",
       "label": "column_group",
       "type": "text[]",
@@ -136,43 +136,43 @@
         "name"
       ]
     },
-    "00_studyarea_to_WKT>studyarea_to_WKT.yml@27|studyarea_path": {
+    "studyarea_to_WKT>studyarea_to_WKT.yml@27|studyarea_path": {
       "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
       "label": "studyarea_path",
       "type": "text",
-      "example": "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
+      "example": "/scripts/studyarea_to_WKT/input/Arauca.gpkg"
     },
-    "00_studyarea_to_WKT>studyarea_to_WKT.yml@27|studyarea_EPSG": {
+    "studyarea_to_WKT>studyarea_to_WKT.yml@27|studyarea_EPSG": {
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
       "label": "studyarea_EPSG",
       "type": "int",
       "example": 3395
     },
-    "00_protcon_analyisis>protcon_analyisis.yml@41|distance_analysis": {
+    "protcon_analyisis>protcon_analyisis.yml@41|distance_analysis": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
       "label": "distance_analysis",
       "type": "int",
       "example": 10000
     },
-    "00_protcon_analyisis>protcon_analyisis.yml@41|column_date": {
+    "protcon_analyisis>protcon_analyisis.yml@41|column_date": {
       "description": "String that refers to the name of the column in the data_spatial_unit containing the date or time information corresponding to the spatial unit levels.",
       "label": "column_date",
       "type": "text",
       "example": "created_date"
     },
-    "00_protcon_analyisis>protcon_analyisis.yml@41|time_interval": {
+    "protcon_analyisis>protcon_analyisis.yml@41|time_interval": {
       "description": "Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis.",
       "label": "time_interval",
       "type": "text",
       "example": "10Y"
     },
-    "00_protcon_analyisis>protcon_analyisis.yml@41|time_start": {
+    "protcon_analyisis>protcon_analyisis.yml@41|time_start": {
       "description": "Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "time_start",
       "type": "text",
       "example": "NULL"
     },
-    "00_protcon_analyisis>protcon_analyisis.yml@41|time_end": {
+    "protcon_analyisis>protcon_analyisis.yml@41|time_end": {
       "description": "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "time_end",
       "type": "text",
@@ -180,10 +180,6 @@
     }
   },
   "outputs": {
-    "00_protcon_analyisis>protcon_analyisis.yml@41|protcon_result": {
-      "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
-      "label": "protcon_result",
-      "type": "text/csv"
-    }
+    "protcon_analyisis>protcon_analyisis.yml@41|protcon_result": {}
   }
 }
