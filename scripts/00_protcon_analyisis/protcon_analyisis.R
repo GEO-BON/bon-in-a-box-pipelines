@@ -43,47 +43,55 @@ output<- tryCatch({
   
   units::units_options(set_units_mode = "standard")
   
-  mtx_distance<-     read.csv(input$mtx_distance, row.names = 1,check.names=FALSE) %>% 
-    setNames(gsub("^0+", "", colnames(.))) %>% as.data.frame.matrix()
-    
+  mtx_distance<-     read.csv(input$mtx_distance, row.names = 1,check.names=FALSE) %>%  as.data.frame.matrix() %>% 
+    setNames(rownames(.))
+  
+  
+  
   distance<- input$distance_analysis
   
-  spatial_unit_data<- read.csv(input$data_spatial_unit) %>% dplyr::select(c(input$column_spatial_unit, input$column_date, input$column_area)) %>%
-    dplyr::filter(!duplicated(input$column_spatial_unit)) %>% dplyr::mutate(spatial_unit= "yes_spatial_unit_data")
-
-  spatial_unit_data$date<- as.Date(spatial_unit_data$created_date, format = input$format_date)
+  spatial_unit_data<- read.csv(input$data_spatial_unit) %>% 
+    dplyr::mutate(spatial_unit= as.character(.[, input$column_spatial_unit]), date=  .[, input$column_date], area_spatial= .[, input$column_area]) %>% 
+    dplyr::select(c("spatial_unit", "date", "area_spatial")) %>%
+    dplyr::filter(!duplicated(spatial_unit)) %>% dplyr::mutate(spatial_unit_check= "yes_spatial_unit_data")
   
-
-  start_date<- {if(input$time_start == "NA"){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
-  end_date<- {if(input$time_end == "NA"){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
+  spatial_unit_data$date<- as.Date(spatial_unit_data$date, format = "%Y-%m-%d")
+  
+  
+  start_date<- {if(is.null(input$time_start)|input$time_start=="NULL"){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
+  end_date<- {if(is.null(input$time_end)|input$time_end=="NULL"){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
   
   
   period_time<- paste(timechange:::parse_rounding_unit(input$time_interval), collapse = " "  )
   periods<- seq(start_date, end_date, by = period_time)
-
+  
   spatial_unit_data$period <- lubridate::floor_date(spatial_unit_data$date, input$time_interval) 
   
   spatial_unit_data_v2<- dplyr::filter(spatial_unit_data, date>=start_date, date<=end_date)
   spatial_unit_data_v2 <- spatial_unit_data_v2[
-    order(spatial_unit_data_v2[, "date"], spatial_unit_data_v2[, input$column_spatial_unit]) , ]
+    order(spatial_unit_data_v2[, "date"], spatial_unit_data_v2[, "spatial_unit"]) , ]
   
-
+  
   ## cunsum
-   spatial_unit_area<- lapply(seq(nrow(spatial_unit_data_v2)), function(i){
-     new_periods<- periods %>%  {.[which(spatial_unit_data_v2[i,"period"] == .):length(.)]}  
-     data_period<- lapply(new_periods, function(j) dplyr::mutate(spatial_unit_data_v2[i,], period= j)) %>% plyr::rbind.fill()
-  }) %>% plyr::rbind.fill()
-
-   spatial_unit_no_area<- dplyr::select(spatial_unit_area, c("id_pa", "period", "area_spatial")) %>%
-     dplyr::distinct() %>% dplyr::group_by(period) %>%
-     dplyr::summarize( area_spatial =  input$area_study_area - sum(area_spatial)) %>% 
-     dplyr::mutate(spatial_unit= "no_spatial_unit")
-   
-
-   spatial_units_periods<- plyr::rbind.fill(list(spatial_unit_area, spatial_unit_no_area))
-   spatial_units_periods <-  spatial_units_periods[ order( spatial_units_periods[, "date"],  spatial_units_periods[, input$column_spatial_unit]), ]
+  spatial_unit_area<- lapply(seq(nrow(spatial_unit_data_v2)), function(i){
+    new_periods<- periods %>%  {.[which(spatial_unit_data_v2[i,"period"] == .):length(.)]}  
+    data_period<- lapply(new_periods, function(j) dplyr::mutate(spatial_unit_data_v2[i,], period= j)) %>% plyr::rbind.fill()
+  }) %>% plyr::rbind.fill() %>% dplyr::arrange(period, spatial_unit)
   
-
+  
+  
+  
+  
+  spatial_unit_no_area<- dplyr::select(spatial_unit_area, c("spatial_unit", "period", "area_spatial")) %>%
+    dplyr::distinct() %>% dplyr::group_by(period) %>%
+    dplyr::summarize( area_spatial =  input$area_study_area - sum(area_spatial)) %>% 
+    dplyr::mutate(spatial_unit_check= "no_spatial_unit")
+  
+  
+  spatial_units_periods<- plyr::rbind.fill(list(spatial_unit_area, spatial_unit_no_area))
+  spatial_units_periods <-  spatial_units_periods[ order( spatial_units_periods[, "date"],  spatial_units_periods[, "area_spatial"]), ]
+  
+  
   
   #Define the decades reported for the protected areas creation to start the analysis
   decades = unique(spatial_units_periods$period) 
@@ -91,7 +99,7 @@ output<- tryCatch({
   result = as.data.frame(matrix(NA,ncol = 5, nrow = 0))
   colnames(result) = c("Period" ,"Protcon","Protuncon","Protected","Unprotected")
   
-
+  
   for (i in as.character(decades)) {
     
     #Filter the decade for the analysis
@@ -101,12 +109,12 @@ output<- tryCatch({
     #Extract the total area of interest
     area_consult = sum(decade$area)
     #Extract the area  of interest that not intersect with any the protected area
-    area_no_prot = decade[decade$spatial_unit == "no_spatial_unit",]
+    area_no_prot = decade[decade$spatial_unit_check == "no_spatial_unit",]
     area_no_prot = sum(area_no_prot$area_spatial)
     
     
     #Extract the area for the protected areas that intersect with the area of interest
-    area_protect = decade[decade$spatial_unit != "no_spatial_unit",]
+    area_protect = decade[decade$spatial_unit_check != "no_spatial_unit",]
     area_protect = sum(area_protect$area_spatial)
     
     #Extract the percentage for unprotected area
@@ -115,8 +123,8 @@ output<- tryCatch({
     
     #Generate the value for protected areas connected (protcon)
     #Filter the unique id?s for the protected areas that intersect with the area of interest for the decade i
-    table = decade[decade$spatial_unit != "no_spatial_unit",]
-    ids_pa = unique(table[,input$column_spatial_unit])
+    table = decade[decade$spatial_unit_check != "no_spatial_unit",]
+    ids_pa = unique(table[,"spatial_unit"])
     ids_pas = as.character(ids_pa)
     #Filter the distance matrix with the unique previous id's
     dist_ids_pa = mtx_distance %>% {.[ids_pas,]} %>% dplyr::select(ids_pas) %>% as.matrix()
@@ -125,8 +133,8 @@ output<- tryCatch({
     
     #Remove redundant
     dist_ids_pa_data=  data.frame(rows= rownames( dist_ids_pa)[row( dist_ids_pa)],
-                             vars= colnames(dist_ids_pa)[col( dist_ids_pa)],
-                             values=  c(dist_ids_pa)  ) %>%  dplyr::filter(! rows == vars) 
+                                  vars= colnames(dist_ids_pa)[col( dist_ids_pa)],
+                                  values=  c(dist_ids_pa)  ) %>%  dplyr::filter(! rows == vars) 
     
     #Remove the duplicates distances
     dist_ids_pa_datav2<-   if(nrow(dist_ids_pa_data)>0){
@@ -141,14 +149,14 @@ output<- tryCatch({
     pa_union =union(unique(dist_ids_pa_con$row),unique(dist_ids_pa_con$vars))
     
     #Look for the id?s in the spatial_units_periods for filter the information
-    areas_pa_conec = decade[decade$id_pa %in% pa_union,]
-    areas_conec = sum(areas_pa_conec$area)
+    areas_pa_conec = decade[decade[, "spatial_unit"] %in% pa_union,]
+    areas_conec = sum(areas_pa_conec[, "area_spatial"])
     #Extract the percentage of area for the conected protected areas (Protcon)
     protcon = (areas_conec/area_protect)*100
     
     #Generate the area for not connected protected areas 
     #Identify the rows where are the connected protected areas
-    rows=which(decade$id_pa %in% pa_union)
+    rows=which(decade[, "spatial_unit"] %in% pa_union)
     #Filter the table "decade" removing connected protected areas
     
     if(length(rows)==0) {
@@ -158,7 +166,7 @@ output<- tryCatch({
     }
     
     #Extract the percentage of area for the not connected protected areas (Protuncon)
-    areas_no_conec = (sum(areas_pa_no_conec$area))
+    areas_no_conec = (sum(areas_pa_no_conec[, "area_spatial"]))
     protuncon = (areas_no_conec/area_protect)*100
     
     #Create the table with the final results  
@@ -167,22 +175,22 @@ output<- tryCatch({
     #Add the previous row to the table final results
     result = rbind.data.frame(result,result_p) 
   }
-
-    
   
   
-# Define and export the output values
-
-# Define protcom result output
-protcon_result_path<- file.path(outputFolder, "protcon_result.csv") # Define the file path for the 'val_wkt_path' output
-write.csv(result, protcon_result_path, row.names = F ) # Write the 'val_wkt_path' output
-
-
-# Define final output list
-output<- list(protcon_result= protcon_result_path)
-
-
+  
+  # Define and export the output values
+  
+  # Define protcom result output
+  protcon_result_path<- file.path(outputFolder, "protcon_result.csv") # Define the file path for the 'val_wkt_path' output
+  write.csv(result, protcon_result_path, row.names = F ) # Write the 'val_wkt_path' output
+  
+  
+  # Define final output list
+  output<- list(protcon_result= protcon_result_path)
+  
+  
 }, error = function(e) { list(error= conditionMessage(e)) })
+
 
 
 

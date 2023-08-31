@@ -1,0 +1,177 @@
+{
+  "id": "Colombia_pp",
+  "type": "Collection",
+  "description": "Collection format for Biotablero (IAvH, 2022)",
+  "pattern": ".+\\.tif",
+  "images": {
+    "pattern": ".*(Colombia_pp-.{4}_.{2}_.{2}-.*)\\.tif"
+  },
+  "datetime": {
+    "pattern": ".*Colombia_pp-(.{4}_.{2}_.{2})-.*\\.tif",
+    "format": "%Y_%m_%d"
+  },
+  "features": {
+    "Colombia_pp-2005_12_31-pp_2000_2005": {
+      "id": "Colombia_pp-2005_12_31-pp_2000_2005",
+      "pattern": ".+Colombia_pp-2005_12_31-pp_2000_2005+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2005_12_31-pp_2000_2005": {
+          "href": "Colombia_pp-2005_12_31-pp_2000_2005.tif",
+          "classes": {
+            "period_layer": ["2000-2005", "2000-2005", "2000-2005"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Colombia_pp-2010_12_31-pp_2006_2010": {
+      "id": "Colombia_pp-2010_12_31-pp_2006_2010",
+      "pattern": ".+Colombia_pp-2010_12_31-pp_2006_2010+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2010_12_31-pp_2006_2010": {
+          "href": "Colombia_pp-2010_12_31-pp_2006_2010.tif",
+          "classes": {
+            "period_layer": ["2006-2010", "2006-2010", "2006-2010"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Colombia_pp-2015_12_31-pp_2011_2015": {
+      "id": "Colombia_pp-2015_12_31-pp_2011_2015",
+      "pattern": ".+Colombia_pp-2015_12_31-pp_2011_2015+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2015_12_31-pp_2011_2015": {
+          "href": "Colombia_pp-2015_12_31-pp_2011_2015.tif",
+          "classes": {
+            "period_layer": ["2011-2015", "2011-2015", "2011-2015"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Colombia_pp-2021_12_31-pp_2016_2021": {
+      "id": "Colombia_pp-2021_12_31-pp_2016_2021",
+      "pattern": ".+Colombia_pp-2021_12_31-pp_2016_2021+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2021_12_31-pp_2016_2021": {
+          "href": "Colombia_pp-2021_12_31-pp_2016_2021.tif",
+          "classes": {
+            "period_layer": ["2016-2021", "2016-2021", "2016-2021"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    }
+  },
+  "bands": {
+    "Colombia_pp-2005_12_31-pp_2000_2005": {
+      "id": "Colombia_pp-2005_12_31-pp_2000_2005",
+      "pattern": ".+Colombia_pp-2005_12_31-pp_2000_2005+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2005_12_31-pp_2000_2005": {
+          "href": "Colombia_pp-2005_12_31-pp_2000_2005.tif",
+          "classes": {
+            "period_layer": ["2000-2005", "2000-2005", "2000-2005"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Colombia_pp-2010_12_31-pp_2006_2010": {
+      "id": "Colombia_pp-2010_12_31-pp_2006_2010",
+      "pattern": ".+Colombia_pp-2010_12_31-pp_2006_2010+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2010_12_31-pp_2006_2010": {
+          "href": "Colombia_pp-2010_12_31-pp_2006_2010.tif",
+          "classes": {
+            "period_layer": ["2006-2010", "2006-2010", "2006-2010"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Colombia_pp-2015_12_31-pp_2011_2015": {
+      "id": "Colombia_pp-2015_12_31-pp_2011_2015",
+      "pattern": ".+Colombia_pp-2015_12_31-pp_2011_2015+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2015_12_31-pp_2011_2015": {
+          "href": "Colombia_pp-2015_12_31-pp_2011_2015.tif",
+          "classes": {
+            "period_layer": ["2011-2015", "2011-2015", "2011-2015"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Colombia_pp-2021_12_31-pp_2016_2021": {
+      "id": "Colombia_pp-2021_12_31-pp_2016_2021",
+      "pattern": ".+Colombia_pp-2021_12_31-pp_2016_2021+.*\\.tif",
+      "assets": {
+        "Colombia_pp-2021_12_31-pp_2016_2021": {
+          "href": "Colombia_pp-2021_12_31-pp_2016_2021.tif",
+          "classes": {
+            "period_layer": ["2016-2021", "2016-2021", "2016-2021"],
+            "col": ["#c65453", "#92ab58", "#c5b599"],
+            "value": [0, 1, 2],
+            "classes": ["Perdida", "Persistencia", "No Bosque"]
+          }
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    }
+  }
+}
