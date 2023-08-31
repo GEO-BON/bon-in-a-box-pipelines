@@ -33,9 +33,11 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) if( grepl("/", x) ){
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # adjust input 1
-
+input<- lapply(input, function(x){
+  sapply(x, function(y) {
+    if( grepl("/", y) ){
+      sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(y) %>% {gsub("//+", "/", .)}  }else{y}
+  })   })
 
 
 
@@ -53,6 +55,9 @@ crs_polygon<- terra::crs( paste0("+init=epsg:", input$studyarea_EPSG) ) %>% as.c
 vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon )  %>% sf::st_as_sf()
 
 spatial_units<- sf::st_read(input$spatial_file)
+
+group<- input$column_group %>% {.[. %in% names(spatial_units)]}
+if(length(group)<1){group<-"id_group";  spatial_units[,"id_group"] <- seq(nrow(spatial_units)); }
 if( ! sf::st_crs(spatial_units) == sf::st_crs(vector_polygon) ) { spatial_units<- sf::st_transform(spatial_units, crs_polygon)  }
 
 # check intersects
@@ -62,9 +67,10 @@ test_intersects<- sf::st_intersects(spatial_units, vector_polygon) %>% setNames(
 spatialunits_studyarea<- spatial_units[test_intersects, ]
 
 # check groups
-group<- input$column_group
-spatialunits_count<-  spatialunits_studyarea %>% dplyr::mutate(group_n= paste0(!!!dplyr::syms(group)) %>% {gsub(" ", "_", .)}) %>% 
-  dplyr::group_by(group_n)  %>% dplyr::mutate(count = dplyr::n())
+spatialunits_count<-  spatialunits_studyarea %>% dplyr::rowwise() %>% 
+  dplyr::mutate(spatial_unit= paste0(!!!dplyr::syms(group), collapse = "_") %>% {gsub(" ", "_", .)}) %>% 
+  dplyr::group_by(spatial_unit)  %>% dplyr::mutate(count = dplyr::n())
+
 
 
 spatialunits_group<- spatialunits_count %>% {
@@ -85,7 +91,7 @@ mtx_distance_centroid <- sf::st_distance(shp_centroid) %>% units::set_units(dist
 
 #Convert the matrix to data frame
 mtx_distance_centroid=matrix(mtx_distance_centroid,nrow=nrow(spatialunits_group))
-rownames(mtx_distance_centroid)=colnames(mtx_distance_centroid)= sf::st_drop_geometry(spatialunits_group)[, "group_n"]
+rownames(mtx_distance_centroid)=colnames(mtx_distance_centroid)= sf::st_drop_geometry(spatialunits_group)[, "spatial_unit"]
 mtx_distance_centroid<- as.data.frame.matrix(mtx_distance_centroid)
 
 
@@ -95,15 +101,16 @@ mtx_distance_centroid<- as.data.frame.matrix(mtx_distance_centroid)
 mtx_distance_nearest <- sf::st_distance(spatialunits_group) %>% units::set_units(distance_unit)
 #Convert the matrix to data frame
 mtx_distance_nearest=matrix(mtx_distance_nearest,nrow=nrow(spatialunits_group))
-rownames(mtx_distance_nearest)=colnames(mtx_distance_nearest)= sf::st_drop_geometry(spatialunits_group)[,"group_n"]
+rownames(mtx_distance_nearest)=colnames(mtx_distance_nearest)= sf::st_drop_geometry(spatialunits_group)[,"spatial_unit"]
 mtx_distance_nearest<- as.data.frame.matrix(mtx_distance_nearest)
 
  
 
 #data
 area_study_area<- sf::st_area(vector_polygon) %>% units::set_units(area_unit) %>% as.numeric()
-spatialunits_intersect<- sf::st_intersection(spatialunits_group, vector_polygon) %>% dplyr::mutate(area_spatial = sf::st_area(.) %>% units::set_units(area_unit)  %>% as.numeric() )
-spatialunits_studyarea_data<- sf::st_drop_geometry(spatialunits_intersect)
+spatialunits_intersect<- sf::st_intersection(spatialunits_group, vector_polygon) %>% dplyr::mutate(area_spatial_unit = sf::st_area(.) %>% units::set_units(area_unit)  %>% as.numeric() )
+spatialunits_studyarea_data<- sf::st_drop_geometry(spatialunits_intersect) %>% 
+  dplyr::relocate(c("spatial_unit", "area_spatial_unit"))
 
 # 4326
 spatialunits_studyarea_4326<- spatialunits_intersect %>% sf::st_transform(4326)
@@ -133,8 +140,10 @@ write.csv(spatialunits_studyarea_data, spatialunits_studyarea_data_path, row.nam
 output<- list(spatialunits_studyarea= spatialunits_studyarea_path,
               spatialunits_studyarea_data= spatialunits_studyarea_data_path, 
               mtx_distance_centroid= mtx_distance_centroid_path,mtx_distance_nearest= mtx_distance_nearest_path, 
-              spatial_unit= group, area_unit= area_unit,
-              column_area= "area_spatial",
+              area_unit= area_unit,
+              distance_unit= input$unit_distance,
+              spatial_unit= "spatial_unit", 
+              column_area= "area_spatial_unit",
               area_study_area=area_study_area)
 
 

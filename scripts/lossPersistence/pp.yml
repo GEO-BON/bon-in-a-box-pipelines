@@ -1,0 +1,70 @@
+script: pp.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  WKT_area:
+    label: WKT_area
+    description: WKT_area
+    type: text
+    example: 'MULTIPOLYGON (((-74.51422355910061 6.287998672327671,-74.28889444279572 6.249776453227831,-74.33011318358322 6.072279835991389,-74.29439027490073 6.066817465067729,-74.24767570200825 5.982143668342713,-74.24767570200825 5.8919926391689925,-74.48124856647063 5.867403444598711,-74.53620688752059 5.973948731032553,-74.69283810251301 5.982143668342713,-74.59940895672806 6.085935520826565,-74.51422355910061 6.287998672327671)))'
+  collection_path:
+    label: dir_collection
+    description: dir_collection
+    type: text
+    example: '/scripts/lossPersistence/input/Colombia_pp_collection'
+  epsg:
+    label: epsg
+    description: epsg
+    type: int
+    example: 4326
+  resolution:
+    label: resolution
+    description: resolution
+    type: int
+    example: 1000
+  time_period:
+    label: time_period
+    description: time_period
+    type: text
+    example: 'P1Y'
+  time_start:
+    label: time_start
+    description: time_start
+    type: text
+    example: 'NA'
+  time_end:
+    label: time_end
+    description: time_end
+    type: text
+    example: 'NA'
+
+outputs:
+  area_stack:
+    label: area_stack
+    description: area_stack
+    type: image/tiff;application=geotiff
+  dir_stack:
+    label: dir_stack
+    description: dir_stack
+    type: text
+  dir_png:
+    label: dir_png
+    description: dir_png
+    type: text
+  dir_info_layer:
+    label: dir_info_layer
+    description: dir_info_layer
+    type: text/csv
+  dir_data_layer:
+    label: dir_data_layer
+    description: dir_data_layer
+    type: text/csv
+  dir_data_areas:
+    label: dir_data_areas
+    description: dir_data_areas
+    type: text/csv
+  table_pp:
+    label: table_pp
+    description: table_pp
+    type: text
+

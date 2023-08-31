@@ -63,3 +63,10 @@ outputs:
     label: area_unit
     description: Refers to the unit of measurement used for representing area in square units. The specific unit, whether square meters (m2) or square kilometers (km2), is determined by the input value provided for unit_distance.
     type: int
+  distance_unit:
+    label: distance_unit
+    description: Refers to the unit of measurement used for representing area in square units. The specific unit, whether square meters (m2) or square kilometers (km2), is determined by the input value provided for unit_distance.
+    type: options
+    options:
+      - m
+      - km
