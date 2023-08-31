@@ -4,108 +4,87 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": -42.29168701171875,
-        "y": 191.66665649414062
+        "x": 325.70831298828125,
+        "y": 246.66665649414062
       },
       "data": {
-        "descriptionFile": "00_studyarea_to_WKT>studyarea_to_WKT.yml"
+        "descriptionFile": "test_collection_LFU.json"
+      }
+    },
+    {
+      "id": "1",
+      "type": "constant",
+      "position": {
+        "x": -21.29168701171875,
+        "y": 365.6666564941406
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "NA"
       }
     },
     {
       "id": "2",
-      "type": "io",
+      "type": "constant",
       "position": {
-        "x": 617.708312988281,
-        "y": 375.4567065602662
+        "x": -20.29168701171875,
+        "y": 289.6666564941406
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "descriptionFile": "01_IAvH_test>load_collection.yml"
-      }
-    },
-    {
-      "id": "3",
-      "type": "output",
-      "position": {
-        "x": 1083.944234016179,
-        "y": 394.98705702314436
-      },
-      "data": {
-        "label": "Output"
+        "type": "text",
+        "value": "NA"
       }
     }
   ],
   "edges": [
     {
-      "source": "0",
-      "sourceHandle": "val_wkt_path",
-      "target": "2",
-      "targetHandle": "WKT_area",
-      "id": "reactflow__edge-0val_wkt_path-2WKT_area"
-    },
-    {
-      "source": "0",
-      "sourceHandle": "val_studyarea_EPSG",
-      "target": "2",
-      "targetHandle": "epsg",
-      "id": "reactflow__edge-0val_studyarea_EPSG-2epsg"
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "01_IAvH_test>load_collection.yml@2|time_end",
+      "id": "reactflow__edge-1-001_IAvH_test>load_collection.yml@2|time_end"
     },
     {
       "source": "2",
-      "sourceHandle": "dir_stack",
-      "target": "3",
-      "targetHandle": null,
-      "id": "reactflow__edge-2dir_stack-3"
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "01_IAvH_test>load_collection.yml@2|time_start",
+      "id": "reactflow__edge-2-001_IAvH_test>load_collection.yml@2|time_start"
     }
   ],
   "inputs": {
-    "00_studyarea_to_WKT>studyarea_to_WKT.yml@0|studyarea_path": {
-      "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
-      "label": "Area de estudio",
-      "type": "text",
-      "example": "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
-    },
-    "00_studyarea_to_WKT>studyarea_to_WKT.yml@0|studyarea_EPSG": {
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
-      "label": "sistema de coordenadas",
-      "type": "int",
-      "example": 3395
-    },
-    "01_IAvH_test>load_collection.yml@2|collection_path": {
-      "description": "dir_collection",
-      "label": "dir_collection",
-      "type": "text",
-      "example": "/output/0_inputs/Colecciones/AP_decada_collection"
-    },
-    "01_IAvH_test>load_collection.yml@2|resolution": {
-      "description": "resolution",
-      "label": "resolution",
-      "type": "int",
-      "example": 1000
-    },
-    "01_IAvH_test>load_collection.yml@2|time_period": {
+    "test_collection_LFU.json@0|01_IAvH_test>load_collection.yml@2|time_period": {
       "description": "time_period",
       "label": "time_period",
       "type": "text",
       "example": "P10Y"
     },
-    "01_IAvH_test>load_collection.yml@2|time_start": {
-      "description": "time_start",
-      "label": "time_start",
-      "type": "text",
-      "example": "NA"
+    "test_collection_LFU.json@0|01_IAvH_test>load_collection.yml@2|resolution": {
+      "description": "resolution",
+      "label": "resolution",
+      "type": "int",
+      "example": 1000
     },
-    "01_IAvH_test>load_collection.yml@2|time_end": {
-      "description": "time_end",
-      "label": "time_end",
+    "test_collection_LFU.json@0|01_IAvH_test>load_collection.yml@2|collection_path": {
+      "description": "dir_collection",
+      "label": "dir_collection",
       "type": "text",
-      "example": "NA"
+      "example": "/output/0_inputs/Colecciones/AP_decada_collection"
+    },
+    "test_collection_LFU.json@0|00_studyarea_to_WKT>studyarea_to_WKT.yml@0|studyarea_path": {
+      "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
+      "label": "Area de estudio",
+      "type": "text",
+      "example": "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
+    },
+    "test_collection_LFU.json@0|00_studyarea_to_WKT>studyarea_to_WKT.yml@0|studyarea_EPSG": {
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
+      "label": "sistema de coordenadas",
+      "type": "int",
+      "example": 3395
     }
   },
-  "outputs": {
-    "01_IAvH_test>load_collection.yml@2|dir_stack": {
-      "description": "dir_stack",
-      "label": "dir_stack",
-      "type": "text"
-    }
-  }
+  "outputs": {}
 }
