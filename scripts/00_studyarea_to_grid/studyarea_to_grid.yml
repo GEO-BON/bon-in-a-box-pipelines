@@ -3,10 +3,10 @@ description: "This script converts the study area layer (shapefile or bounding b
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   studyarea_path:
-    label: studyarea_path
+    label: Area de estudio
     description: Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).
     type: text
-    example:  "/output/0_inputs/Caldas.shp"
+    example:  "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
   studyarea_EPSG:
     label: studyarea_EPSG
     description: Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.

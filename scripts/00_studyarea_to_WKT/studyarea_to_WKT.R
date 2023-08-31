@@ -23,8 +23,7 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
  Sys.getenv("SCRIPT_LOCATION")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
-# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
-
+# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(., paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
 
 
 
@@ -35,8 +34,6 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
 input<- lapply(input, function(x) if( grepl("/", x) ){
   sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # adjust input 1
-
-
 
 
 ####  Script body ####
@@ -68,9 +65,7 @@ output<- list(val_wkt_path= dir_wkt,val_studyarea_GeoJSON_path= dir_GeoJSON, val
 
 
 
-
 #### Outputing result to JSON ####
-
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)
 jsonlite::write_json(output, "output.json", auto_unbox = TRUE, pretty = TRUE)
