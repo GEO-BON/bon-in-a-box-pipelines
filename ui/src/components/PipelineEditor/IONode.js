@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Handle, Position } from 'react-flow-renderer/nocss';
 import isObject from '../../utils/isObject'
 
-import { fetchStepDescription } from './ScriptDescriptionStore'
+import { fetchStepDescription } from './StepDescriptionStore'
 
 // props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
 export default function IONode({ id, data }) {
