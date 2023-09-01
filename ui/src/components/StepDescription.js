@@ -1,5 +1,14 @@
 const yaml = require('js-yaml');
 
+export function StepDescription({ descriptionFile, metadata }) {
+    return <>
+        <h2>{getFolderAndNameFromMetadata(descriptionFile, metadata)}</h2>
+        <GeneralDescription ymlPath={descriptionFile} metadata={metadata} />
+        <InputsDescription metadata={metadata} />
+        <OutputsDescription metadata={metadata} />
+    </>
+}
+
 export function getFolderAndNameFromMetadata(ymlPath, metadata) {
     if(!metadata || !metadata.name)
         return ymlPath.replaceAll('>', ' > ').replaceAll('.json', '').replaceAll('.yml', '')
@@ -22,15 +31,17 @@ export function GeneralDescription({ ymlPath, metadata }) {
     if (!metadata)
         return null
 
-    const codeLink = getCodeLink(ymlPath, metadata.script)
-
+    const codeLink = getCodeUrl(ymlPath, metadata.script)
+    
     return <div className='stepDescription'>
         {metadata.description && <p className="outputDescription">{metadata.description}</p>}
-        {(metadata.external_link || codeLink) &&
+        {codeLink && <p>
+                Code: <a href={codeLink} target="_blank">{codeLink.substring(codeLink.search(/(scripts|pipelines)\//))}</a>
+            </p>
+        }
+        {metadata.external_link &&
             <p>See&nbsp;
-                {metadata.external_link && <a href={metadata.external_link} target="_blank">{metadata.external_link}</a>}
-                {metadata.external_link && codeLink && <>&nbsp;and&nbsp;</>}
-                {codeLink}
+                <a href={metadata.external_link} target="_blank">{metadata.external_link}</a>
             </p>
         }
         {metadata.references &&
@@ -42,17 +53,18 @@ export function GeneralDescription({ ymlPath, metadata }) {
                 </ul>
             </div>
         }
-        <pre>{JSON.stringify(metadata, null, 2)}</pre>
+        {metadata.license && <>
+            <p>License: {metadata.license}</p>
+        </>}
     </div>
 }
 
-function getCodeLink(ymlPath, scriptFileName) {
+function getCodeUrl(ymlPath, scriptFileName) {
     if (!ymlPath || !scriptFileName || scriptFileName.endsWith(".kt")) {
         return null
     }
 
-    const url = 'https://github.com/GEO-BON/biab-2.0/tree/main/scripts/' + removeLastSlash(ymlPath.replaceAll('>', '/')) + scriptFileName
-    return <a href={url} target="_blank">code</a>
+    return 'https://github.com/GEO-BON/biab-2.0/tree/main/scripts/' + removeLastSlash(ymlPath.replaceAll('>', '/')) + scriptFileName 
 }
 
 function removeLastSlash(s) {
