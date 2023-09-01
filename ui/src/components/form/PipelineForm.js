@@ -80,7 +80,7 @@ export function PipelineForm({
     });
   }, [runType, setPipelineOptions]);
 
-  return (
+  return pipelineOptions.length > 0 && (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
       <label htmlFor="pipelineChoice">{runType === "pipeline" ? "Pipeline:" : "Script:"}</label>
       <Select
@@ -88,10 +88,7 @@ export function PipelineForm({
         name="pipelineChoice"
         className="blackText"
         options={pipelineOptions}
-        value={{
-          label: pipStates.pipeline,
-          value: pipStates.descriptionFile,
-        }}
+        value={pipelineOptions.find(o => o.value === pipStates.descriptionFile)}
         menuPortalTarget={document.body}
         onChange={(v) => handlePipelineChange(v.label, v.value)}
       />

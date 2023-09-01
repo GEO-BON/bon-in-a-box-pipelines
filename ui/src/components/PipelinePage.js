@@ -24,8 +24,8 @@ import {
 import { useParams } from "react-router-dom";
 import { isEmptyObject } from "../utils/isEmptyObject";
 
-const defaultPipeline = {name: "helloWorld", file: "helloWorld.json"};
-const defaultScript = {name: "helloWorld > helloR", file: "helloWorld>helloR.yml"};
+const pipelineConfig = {extension: ".json", defaultFile: "helloWorld.json", };
+const scriptConfig = {extension: ".yml", defaultFile: "helloWorld>helloR.yml"};
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -39,13 +39,12 @@ function pipReducer(state, action) {
       };
     }
     case "url": {
+      let selectionUrl = action.newDescriptionFile.substring(0, action.newDescriptionFile.lastIndexOf("."));
       return {
         lastAction: "url",
         runHash: action.newHash,
-        pipeline: action.newPipeline,
         descriptionFile: action.newDescriptionFile,
-        runId: action.newPipeline + ">" + action.newHash,
-
+        runId: action.newHash ? selectionUrl + ">" + action.newHash : null,
         runType: state.runType,
       };
     }
@@ -58,24 +57,28 @@ function pipReducer(state, action) {
 }
 
 function pipInitialState(init) {
-  let defaultSelection = init.runType === "pipeline" ? defaultPipeline : defaultScript
-  let pip = defaultSelection.name
-  let descriptionFile = defaultSelection.file
-
-  let hash = null;
+  let config = init.runType === "pipeline" ? pipelineConfig : scriptConfig
+  let descriptionFile = config.defaultFile
+  let runHash = null;
+  let runId = null
   let action = "reset";
-  if (init.pipeline && init.runHash) {
-    hash = init.runHash;
-    pip = init.pipeline;
+  
+  if (init.selectionUrl) {
     action = "url";
+    descriptionFile = init.selectionUrl + config.extension
+
+    if (init.runHash) {
+      runHash = init.runHash;
+
+      runId = init.selectionUrl + ">" + runHash
+    }
   }
 
   return {
     lastAction: action,
-    runHash: hash,
-    pipeline: pip,
-    descriptionFile: descriptionFile,
-    runId: pip + ">" + hash,
+    runHash,
+    descriptionFile,
+    runId,
     runType: init.runType,
   };
 }
@@ -95,7 +98,7 @@ export function PipelinePage({runType}) {
   const { pipeline, runHash } = useParams();
   const [pipStates, setPipStates] = useReducer(
     pipReducer,
-    {runType, pipeline, runHash},
+    {runType, selectionUrl: pipeline, runHash},
     pipInitialState
   );
 
@@ -199,7 +202,6 @@ export function PipelinePage({runType}) {
       let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
       setPipStates({
         type: "url",
-        newPipeline: pipeline.replaceAll('>', ' > '),
         newDescriptionFile: descriptionFile,
         newHash: runHash,
       });
