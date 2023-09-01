@@ -213,6 +213,7 @@ class ScriptRun( // Constructor used in single script run
                         command = listOf(
                             "/usr/local/bin/docker", "exec", "-i", runner, "Rscript", "-e", 
                             """
+                            options(error=traceback, keep.source=TRUE, show.error.locations=TRUE)
                             fileConn<-file("${pidFile.absolutePath}"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);
                             outputFolder<-"${context.outputFolder.absolutePath}";
                             tryCatch(source("${scriptFile.absolutePath}"),
