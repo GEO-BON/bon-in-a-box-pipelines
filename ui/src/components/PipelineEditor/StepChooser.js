@@ -3,7 +3,7 @@ import './Editor.css'
 import {React, useState, useEffect, useCallback} from 'react';
 
 import spinnerImg from '../../img/spinner.svg';
-import { fetchStepDescription } from './ScriptDescriptionStore';
+import { fetchStepDescription } from './StepDescriptionStore';
 import { GeneralDescription, InputsDescription, OutputsDescription, getFolderAndName } from '../ScriptDescription';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
@@ -17,7 +17,7 @@ const onDragStart = (event, nodeType, descriptionFile) => {
 
 
 
-export default function ScriptChooser({popupContent, setPopupContent}) {
+export default function StepChooser({popupContent, setPopupContent}) {
   const [scriptFiles, setScriptFiles] = useState([]);
   const [pipelineFiles, setPipelineFiles] = useState([]);
   const [selectedStep, setSelectedStep] = useState([]);
@@ -123,7 +123,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
   }, [onStepClick, selectedStep])
 
   return (
-    <aside className='scriptChooser'>
+    <aside className='stepChooser'>
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
         Pipeline output
       </div>

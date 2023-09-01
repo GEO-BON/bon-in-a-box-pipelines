@@ -12,7 +12,7 @@ import {
 
 import { PipelinePage } from "./components/PipelinePage";
 import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
-import ScriptChooser from "./components/PipelineEditor/ScriptChooser";
+import StepChooser from "./components/PipelineEditor/StepChooser";
 import { Layout } from './Layout.js';
 
 function NotFound() {
@@ -40,14 +40,14 @@ function App() {
       } />
 
       <Route path="pipeline-editor" element={
-        <Layout left={<ScriptChooser popupContent={popupContent} setPopupContent={setPopupContent} />}
+        <Layout left={<StepChooser popupContent={popupContent} setPopupContent={setPopupContent} />}
           right={<PipelineEditor />}
           popupContent={popupContent}
           setPopupContent={setPopupContent} />
       } />
 
       <Route path="*" element={
-        <Layout left={<ScriptChooser />}
+        <Layout left={<StepChooser />}
           right={<NotFound />} />
       } />
 
