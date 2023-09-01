@@ -14,7 +14,7 @@ import errorImg from "../img/error.svg";
 import warningImg from "../img/warning.svg";
 import infoImg from "../img/info.svg";
 import { LogViewer } from "./LogViewer";
-import { getFolderAndNameFromMetadata, GeneralDescription } from "./ScriptDescription";
+import { getFolderAndNameFromMetadata, GeneralDescription } from "./StepDescription";
 import { PipelineForm } from "./form/PipelineForm";
 import {
   getScript,

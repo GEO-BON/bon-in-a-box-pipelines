@@ -33,7 +33,7 @@ import {
   toIOId,
 } from "../../utils/IOId";
 import sleep from "../../utils/Sleep";
-import { getFolderAndName } from "../ScriptDescription";
+import { getFolderAndName } from "../StepDescription";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();

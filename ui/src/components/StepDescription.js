@@ -42,6 +42,7 @@ export function GeneralDescription({ ymlPath, metadata }) {
                 </ul>
             </div>
         }
+        <pre>{JSON.stringify(metadata, null, 2)}</pre>
     </div>
 }
 
