@@ -24,7 +24,7 @@ import {
   getUpstreamNodes,
   getDownstreamNodes,
 } from "./react-flow-utils/getConnectedNodes";
-import { getStepDescription } from "./ScriptDescriptionStore";
+import { getStepDescription } from "./StepDescriptionStore";
 import {
   getStepNodeId,
   getStepOutput,
