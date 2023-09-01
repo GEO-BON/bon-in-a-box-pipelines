@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 import InputFileInput from "./InputFileInput";
 import { useNavigate } from "react-router-dom";
-import { getFolderAndName } from "../ScriptDescription";
+import { getFolderAndName } from "../StepDescription";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
