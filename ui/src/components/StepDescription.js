@@ -34,7 +34,19 @@ export function GeneralDescription({ ymlPath, metadata }) {
     const codeLink = getCodeUrl(ymlPath, metadata.script)
     
     return <div className='stepDescription'>
-        {metadata.description && <p className="outputDescription">{metadata.description}</p>}
+        {metadata.author &&
+            <p>
+                <i>
+                    {metadata.author.map((author, i, array) => {
+                        let comma = (i !== array.length - 1) && ',' // Comma will be inside link but the space outside the link.
+                        return author.identifier ?
+                            <><a href={author.identifier} target="_blank">{author.name}{comma}</a> </>
+                            : <>{author.name}{comma} </>
+                    })}
+                </i>
+            </p>
+        }
+        {metadata.description && <p>{metadata.description}</p>}
         {codeLink && <p>
                 Code: <a href={codeLink} target="_blank">{codeLink.substring(codeLink.search(/(scripts|pipelines)\//))}</a>
             </p>
