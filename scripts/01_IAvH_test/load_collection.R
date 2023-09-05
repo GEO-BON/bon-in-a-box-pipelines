@@ -31,7 +31,7 @@ input<- lapply(input, function(x) if( grepl("/output/", x) ){
 
 # Correr codigo
 # Definir area de estudio
-dir_wkt<- readLines(input$WKT_area)
+dir_wkt<- readLines(input$wkt_area)
 crs_polygon<- terra::crs( paste0("+init=epsg:", input$epsg) ) %>% as.character()
 vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon) 
 box_polygon<-  sf::st_bbox(vector_polygon)

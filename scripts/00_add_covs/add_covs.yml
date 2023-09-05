@@ -13,7 +13,7 @@ inputs:
     type: text
     example: "scripts/00_add_covs/input/ebdfile_Setophaga fusca_-76_5_-75_6.txt"
 outputs:
-  data_IDs_path:
+  data_ids_path:
     label: data_IDs_path
     description: "data_IDs_path"
     type: text/csv

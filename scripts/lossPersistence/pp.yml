@@ -2,7 +2,7 @@ script: pp.R
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
-  WKT_area:
+  wkt_area:
     label: WKT_area
     description: WKT_area
     type: text

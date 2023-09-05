@@ -2,9 +2,9 @@ script: load_collection.R
 description: "This sample script shows how it works."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
-  WKT_area:
-    label: WKT_area
-    description: WKT_area
+  wkt_area:
+    label: wkt_area
+    description: wkt_area
     type: text
     example: '/output/01_IAvH_test/shape_to_WKT.R/{{dir_wkt}}/output.json'
   collection_path:

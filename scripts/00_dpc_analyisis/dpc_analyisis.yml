@@ -42,7 +42,7 @@ inputs:
     type: text
     example: NA
 outputs:
-  dpC_result: "Refering to the table that contains the results of the dPC indicator within the study area."
+    dpc_result: "Refering to the table that contains the results of the dPC indicator within the study area."
     label: dpC_result
     description: "T"
     type: text/csv

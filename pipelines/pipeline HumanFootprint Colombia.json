@@ -4,8 +4,8 @@
       "id": "12",
       "type": "io",
       "position": {
-        "x": 80,
-        "y": 174
+        "x": -430.2140185151302,
+        "y": 78.8397997354981
       },
       "data": {
         "descriptionFile": "01_IAvH_test>shape_to_WKT.yml"
@@ -15,8 +15,8 @@
       "id": "13",
       "type": "io",
       "position": {
-        "x": 688,
-        "y": 197
+        "x": 186.7859814848698,
+        "y": 189.8397997354981
       },
       "data": {
         "descriptionFile": "01_IAvH_test>load_collection.yml"
@@ -26,8 +26,8 @@
       "id": "14",
       "type": "constant",
       "position": {
-        "x": 330,
-        "y": 289
+        "x": -179.2140185151302,
+        "y": 17.839799735498104
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +39,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 324,
-        "y": 383
+        "x": -177.2140185151302,
+        "y": 375.8397997354981
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +52,8 @@
       "id": "19",
       "type": "io",
       "position": {
-        "x": 1146,
-        "y": 209
+        "x": 644.7859814848698,
+        "y": 201.8397997354981
       },
       "data": {
         "descriptionFile": "01_IAvH_test>area_layers.yml"
@@ -63,8 +63,8 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 1514,
-        "y": 209
+        "x": 1111.3970925959811,
+        "y": 181.0064664021648
       },
       "data": {
         "label": "Output"
@@ -83,7 +83,7 @@
       "source": "12",
       "sourceHandle": "dir_wkt",
       "target": "13",
-      "targetHandle": "WKT_area",
+      "targetHandle": "wkt_area",
       "id": "reactflow__edge-12dir_wkt-13WKT_area"
     },
     {
@@ -134,6 +134,30 @@
       "label": "epsg",
       "type": "int",
       "example": 3395
+    },
+    "01_IAvH_test>load_collection.yml@13|wkt_area": {
+      "description": "wkt_area",
+      "label": "wkt_area",
+      "type": "text",
+      "example": "/output/01_IAvH_test/shape_to_WKT.R/{{dir_wkt}}/output.json"
+    },
+    "01_IAvH_test>load_collection.yml@13|time_period": {
+      "description": "time_period",
+      "label": "time_period",
+      "type": "text",
+      "example": "P10Y"
+    },
+    "01_IAvH_test>load_collection.yml@13|time_start": {
+      "description": "time_start",
+      "label": "time_start",
+      "type": "text",
+      "example": "NA"
+    },
+    "01_IAvH_test>load_collection.yml@13|time_end": {
+      "description": "time_end",
+      "label": "time_end",
+      "type": "text",
+      "example": "NA"
     },
     "01_IAvH_test>area_layers.yml@19|group": {
       "description": "group",
