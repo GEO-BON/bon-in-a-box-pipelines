@@ -33,7 +33,9 @@ export default function IONode({ id, data }) {
   if (!metadata) return null
 
   let pathList = descriptionFileLocation.split('>')
-  pathList[pathList.length -1] = metadata.name
+  if(metadata.name) {
+    pathList[pathList.length -1] = metadata.name
+  }
 
   let stepType = /\.json$/i.test(descriptionFileLocation) ? 'pipeline' : 'script'
   return <table className={`ioNode ${stepType}`}><tbody>

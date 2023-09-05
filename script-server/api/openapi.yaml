@@ -241,7 +241,7 @@ components:
                 description: Full name
               identifier:
                 type: string
-                description: Unique digital identifier such as an ORCID
+                description: Full URL of a unique digital identifier such as an ORCID
           example: 
             - name: Jane Doe
             - name: John Doe
