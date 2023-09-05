@@ -9,7 +9,7 @@
 #' @export
 
 run_maxent <- function(presence.bg, with_raster = F,
-                        algorithm = "maxnet",
+                        algorithm = "maxent.jar",
                         layers = c(),
                         factors = NULL,
                         predictors = NULL,
