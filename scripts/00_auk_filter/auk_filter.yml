@@ -26,4 +26,4 @@ outputs:
   dir_ebd_zerofill:
     label: dir_ebd_zerofill
     description: 'Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.'
-    type: text/csv	
+    type: text/csv

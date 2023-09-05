@@ -21,7 +21,7 @@ outputs:
     label: epsg
     description: epsg
     type: int
-  dir_GeoJSON:
+  dir_geojson:
     label: dir_GeoJSON
     description: dir_GeoJSON
-    type: application/geo+json	
+    type: application/geo+json

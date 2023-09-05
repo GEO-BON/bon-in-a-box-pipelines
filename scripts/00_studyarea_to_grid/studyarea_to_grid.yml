@@ -7,7 +7,7 @@ inputs:
     description: Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).
     type: text
     example:  "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
-  studyarea_EPSG:
+  studyarea_epsg:
     label: studyarea_EPSG
     description: Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.
     type: int
