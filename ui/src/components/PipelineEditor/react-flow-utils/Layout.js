@@ -1,4 +1,4 @@
-import { getStepDescription } from '../StepDescriptionStore'
+import { getStepDescription } from '../ScriptDescriptionStore'
 
 // For ELK options, refer to https://www.eclipse.org/elk/reference/options.html
 // Some examples: http://rtsys.informatik.uni-kiel.de/elklive/examples.html?e=user-hints%2Flayered%2FverticalOrder

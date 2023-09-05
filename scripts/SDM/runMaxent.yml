@@ -1,10 +1,6 @@
 script: runMaxent.R
-name: MaxEnt
 description: "This script runs MaxEnt algorithm based on ENMeval package."
 external_link: https://github.com/jamiemkass/ENMeval
-author:
-  - name: Sarah Valentin
-    identifier: https://orcid.org/0000-0002-9028-681X
 references:
   - text: ENMeval 2.0 Redesigned for customizable and reproducible modeling of species’ niches and distributions
     doi: doi.org/10.1111/2041-210X.13628

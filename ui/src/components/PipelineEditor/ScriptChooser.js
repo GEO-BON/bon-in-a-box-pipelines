@@ -3,8 +3,8 @@ import './Editor.css'
 import {React, useState, useEffect, useCallback} from 'react';
 
 import spinnerImg from '../../img/spinner.svg';
-import { fetchStepDescription } from './StepDescriptionStore';
-import { StepDescription } from '../StepDescription';
+import { fetchStepDescription } from './ScriptDescriptionStore';
+import { GeneralDescription, InputsDescription, OutputsDescription } from '../ScriptDescription';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -17,7 +17,7 @@ const onDragStart = (event, nodeType, descriptionFile) => {
 
 
 
-export default function StepChooser({popupContent, setPopupContent}) {
+export default function ScriptChooser({popupContent, setPopupContent}) {
   const [scriptFiles, setScriptFiles] = useState([]);
   const [pipelineFiles, setPipelineFiles] = useState([]);
   const [selectedStep, setSelectedStep] = useState([]);
@@ -55,7 +55,12 @@ export default function StepChooser({popupContent, setPopupContent}) {
           return
         }
 
-        setPopupContent(<StepDescription descriptionFile={descriptionFile} metadata={metadata} />)
+        setPopupContent(<>
+          <h2>{descriptionFile.replaceAll('>', ' > ')}</h2>
+          <GeneralDescription ymlPath={descriptionFile} metadata={metadata} />
+          <InputsDescription metadata={metadata} />
+          <OutputsDescription metadata={metadata} />
+        </>)
       })
     }
   }, [selectedStep, setSelectedStep, setPopupContent])
@@ -76,7 +81,7 @@ export default function StepChooser({popupContent, setPopupContent}) {
   const renderTree = useCallback((splitPathBefore, splitPathLeft) => {
     // Group them by folder
     let groupedFiles = new Map()
-    splitPathLeft.forEach(([path, stepName]) => {
+    splitPathLeft.forEach(path => {
       let first = path.shift() // first elem removed
       let key, value
       if (path.length > 0) {
@@ -90,21 +95,21 @@ export default function StepChooser({popupContent, setPopupContent}) {
       if (!groupedFiles.get(key))
         groupedFiles.set(key, [])
 
-      groupedFiles.get(key).push([value, stepName])
+      groupedFiles.get(key).push(value)
     })
 
     // Sort and output
     let sortedKeys = Array.from(groupedFiles.keys()).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }))
-    return sortedKeys.map(key => {
+    return sortedKeys.map((key) => {
       if (key === "") { // leaf
-        return groupedFiles.get(key).map(([fileName, stepName]) => {
+        return groupedFiles.get(key).map(name => {
+          let descriptionFile = [...splitPathBefore, name].join('>')
 
-          let descriptionFile = [...splitPathBefore, fileName].join('>')
-          return <div key={fileName} onDragStart={(event) => onDragStart(event, 'io', descriptionFile)} draggable
+          return <div key={name} onDragStart={(event) => onDragStart(event, 'io', descriptionFile)} draggable
             title='Click for info, drag and drop to add to pipeline.'
             className={'dndnode' + (descriptionFile === selectedStep ? ' selected' : '')}
             onClick={() => onStepClick(descriptionFile)}>
-            <pre>{stepName}</pre>
+            <pre>{name}</pre>
           </div>
         })
       }
@@ -118,18 +123,18 @@ export default function StepChooser({popupContent, setPopupContent}) {
   }, [onStepClick, selectedStep])
 
   return (
-    <aside className='stepChooser'>
+    <aside className='scriptChooser'>
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
         Pipeline output
       </div>
       {pipelineFiles &&
         <div key="Pipelines">
           <p>Pipelines</p>
-          <div className='inFolder'>{renderTree([], Object.entries(pipelineFiles).map(entry => [entry[0].split('>'), entry[1]]))}</div>
+          <div className='inFolder'>{renderTree([], pipelineFiles.map(file => file.split('>')))}</div>
         </div>
       }
 
-      {scriptFiles && renderTree([], Object.entries(scriptFiles).map(entry => [entry[0].split('>'), entry[1]]))}
+      {scriptFiles && renderTree([], scriptFiles.map(file => file.split('>')))}
     </aside>
   );
 };

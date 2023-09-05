@@ -1,10 +1,10 @@
-aside.stepChooser {
+aside.scriptChooser {
   padding: 15px 10px;
   flex: 1;
   overflow: scroll;
 }
 
-aside.stepChooser .description {
+aside.scriptChooser .description {
   margin-bottom: 10px;
 }
 
@@ -136,7 +136,7 @@ aside.stepChooser .description {
 .selected .userInput,
 .react-flow__node-output.selected,
 .ioList .selected,
-.stepChooser .selected {
+.scriptChooser .selected {
   background-color: blanchedalmond;
 }
 

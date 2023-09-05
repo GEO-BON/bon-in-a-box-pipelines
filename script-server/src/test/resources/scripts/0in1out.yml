@@ -1,8 +1,4 @@
 script: 0in1out.sh
-name: 0 in 1 out
-description: 0 input 1 output
-author:
-  - name: Jean-Michel Lord
 inputs:
 outputs:
   randomness:

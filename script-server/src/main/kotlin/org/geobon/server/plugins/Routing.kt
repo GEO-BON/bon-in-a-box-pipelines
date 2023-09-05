@@ -54,26 +54,17 @@ fun Application.configureRouting() {
                 }
             }
 
-            val possible = mutableMapOf<String, String>()
+            val possible = mutableListOf<String>()
             val relPathIndex = root.absolutePath.length + 1
             root.walkTopDown().forEach { file ->
                 if (file.extension == extension) {
-                    val relativePath = file.relativeTo(root).path.replace('/', FILE_SEPARATOR)
-
-                    val name = if(file.extension == "yml") { // Scripts
-                        val lineStart = "name: "
-                        file.useLines {sequence ->
-                            sequence.find { l -> l.startsWith(lineStart) }?.substring(lineStart.length)
-                        }
-                    } else { // Pipelines
-                        null // TODO
-                    }
-
-                    possible[relativePath] = name ?: file.name // Fallback on file name
+                    // Add the relative path, without the root.
+                    possible.add(file.absolutePath.substring(relPathIndex).replace('/', FILE_SEPARATOR))
                 }
             }
 
-            call.respond(possible.toSortedMap(String.CASE_INSENSITIVE_ORDER))
+            possible.sortWith(String.CASE_INSENSITIVE_ORDER)
+            call.respond(possible)
         }
 
         get("/script/{scriptPath}/info") {

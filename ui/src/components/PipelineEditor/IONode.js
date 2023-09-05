@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Handle, Position } from 'react-flow-renderer/nocss';
 import isObject from '../../utils/isObject'
 
-import { fetchStepDescription } from './StepDescriptionStore'
+import { fetchStepDescription } from './ScriptDescriptionStore'
 
 // props content, see https://reactflow.dev/docs/api/nodes/custom-nodes/#passed-prop-types
 export default function IONode({ id, data }) {
@@ -32,11 +32,6 @@ export default function IONode({ id, data }) {
 
   if (!metadata) return null
 
-  let pathList = descriptionFileLocation.split('>')
-  if(metadata.name) {
-    pathList[pathList.length -1] = metadata.name
-  }
-
   let stepType = /\.json$/i.test(descriptionFileLocation) ? 'pipeline' : 'script'
   return <table className={`ioNode ${stepType}`}><tbody>
     <tr>
@@ -53,7 +48,7 @@ export default function IONode({ id, data }) {
         })}
       </td>
       <td className='name' onMouseEnter={showScriptTooltip} onMouseLeave={hideTooltip}>
-        {pathList.map((s, i) => <span key={i}>{s}<br/></span>)}
+        {descriptionFileLocation.split('>').map((s, i) => <span key={i}>{s}<br/></span>)}
       </td>
       <td className='outputs'> 
         {metadata.outputs && Object.entries(metadata.outputs).map(([outputName, desc]) => {

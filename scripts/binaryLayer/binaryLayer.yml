@@ -1,8 +1,5 @@
-script: binaryLayer.R
-name: Binary Layer
-author:
-  - name: Juan Zuloaga
 description: This script creates a binary layer from another layer using a threshold value (e.g.land cover class proportion above 0.8).
+script: binaryLayer.R
 inputs:
   lc_classes: 
     label: input list of layers

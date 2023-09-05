@@ -1,10 +1,5 @@
 script: consensusPredictions.R
-name: Predictors Consensus
 description: "This script computes the consensus of a set of predictions rasters."
-author:
-  - name: Sarah Valentin
-    identifier: https://orcid.org/0000-0002-9028-681X
-
 inputs:
   predictions:
     label: predictions

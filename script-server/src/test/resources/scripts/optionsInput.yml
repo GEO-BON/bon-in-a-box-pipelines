@@ -1,8 +1,4 @@
 script: optionsInput.py
-name: Options Input
-description: Sample script that outputs the received option input
-author:
-  - name: Jean-Michel Lord
 inputs:
   options_in:
     label: Options in

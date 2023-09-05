@@ -14,18 +14,19 @@ import errorImg from "../img/error.svg";
 import warningImg from "../img/warning.svg";
 import infoImg from "../img/info.svg";
 import { LogViewer } from "./LogViewer";
-import { getFolderAndNameFromMetadata, GeneralDescription } from "./StepDescription";
+import { GeneralDescription } from "./ScriptDescription";
 import { PipelineForm } from "./form/PipelineForm";
 import {
   getScript,
   getScriptOutput,
+  toDisplayString,
   getBreadcrumbs,
 } from "../utils/IOId";
 import { useParams } from "react-router-dom";
 import { isEmptyObject } from "../utils/isEmptyObject";
 
-const pipelineConfig = {extension: ".json", defaultFile: "helloWorld.json", };
-const scriptConfig = {extension: ".yml", defaultFile: "helloWorld>helloR.yml"};
+const defaultPipeline = {name: "helloWorld", file: "helloWorld.json"};
+const defaultScript = {name: "helloWorld > helloR", file: "helloWorld>helloR.yml"};
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -39,12 +40,13 @@ function pipReducer(state, action) {
       };
     }
     case "url": {
-      let selectionUrl = action.newDescriptionFile.substring(0, action.newDescriptionFile.lastIndexOf("."));
       return {
         lastAction: "url",
         runHash: action.newHash,
+        pipeline: action.newPipeline,
         descriptionFile: action.newDescriptionFile,
-        runId: action.newHash ? selectionUrl + ">" + action.newHash : null,
+        runId: action.newPipeline + ">" + action.newHash,
+
         runType: state.runType,
       };
     }
@@ -57,28 +59,24 @@ function pipReducer(state, action) {
 }
 
 function pipInitialState(init) {
-  let config = init.runType === "pipeline" ? pipelineConfig : scriptConfig
-  let descriptionFile = config.defaultFile
-  let runHash = null;
-  let runId = null
+  let defaultSelection = init.runType === "pipeline" ? defaultPipeline : defaultScript
+  let pip = defaultSelection.name
+  let descriptionFile = defaultSelection.file
+
+  let hash = null;
   let action = "reset";
-  
-  if (init.selectionUrl) {
+  if (init.pipeline && init.runHash) {
+    hash = init.runHash;
+    pip = init.pipeline;
     action = "url";
-    descriptionFile = init.selectionUrl + config.extension
-
-    if (init.runHash) {
-      runHash = init.runHash;
-
-      runId = init.selectionUrl + ">" + runHash
-    }
   }
 
   return {
     lastAction: action,
-    runHash,
-    descriptionFile,
-    runId,
+    runHash: hash,
+    pipeline: pip,
+    descriptionFile: descriptionFile,
+    runId: pip + ">" + hash,
     runType: init.runType,
   };
 }
@@ -98,7 +96,7 @@ export function PipelinePage({runType}) {
   const { pipeline, runHash } = useParams();
   const [pipStates, setPipStates] = useReducer(
     pipReducer,
-    {runType, selectionUrl: pipeline, runHash},
+    {runType, pipeline, runHash},
     pipInitialState
   );
 
@@ -202,6 +200,7 @@ export function PipelinePage({runType}) {
       let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
       setPipStates({
         type: "url",
+        newPipeline: pipeline,
         newDescriptionFile: descriptionFile,
         newHash: runHash,
       });
@@ -497,7 +496,7 @@ function DelayedResult({
 
   return (
     <FoldableOutputWithContext
-      title={getFolderAndNameFromMetadata(breadcrumbs, scriptMetadata)}
+      title={toDisplayString(breadcrumbs)}
       componentId={breadcrumbs}
       inline={inline}
       className={className}

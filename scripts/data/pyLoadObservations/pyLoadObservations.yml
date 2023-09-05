@@ -1,10 +1,5 @@
 script: pyLoadObservations.sh
-name: GBIF Observations
 description: Load complete GBIF data from GBIF download API or Planetary Computer
-author:
-  - name: Guillaume Larocque
-    identifier: https://orcid.org/0000-0002-5967-9156
-
 inputs:
   data_source:
     description: Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)

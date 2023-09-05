@@ -1,8 +1,4 @@
 script: inSubfolder.sh
-name: In subfolder
-description: This script tests that sub-folders work for scripts.
-author:
-  - name: Jean-Michel Lord
 inputs:
 outputs:
   randomness:

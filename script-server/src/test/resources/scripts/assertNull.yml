@@ -1,8 +1,4 @@
 script: assertNull.py
-name: Assert null
-description: "Test python script that fails if it doesn't receive a null string."
-author:
-  - name: Jean-Michel Lord
 inputs:
   input:
     label: Text input
@@ -15,3 +11,4 @@ outputs:
     description: The same value as in the inputs. But this crashes if not null!
     type: text
     example: null
+description: "Test python script that fails if it doesn't receive a null string."

@@ -1,13 +1,8 @@
 script: PullLayersById.kt
-name: Pull Layers by Id
 description:
   Will pull only the layers found in with_ids. Useful to execute only part of a pipeline depending on an initial configuration.
   To be used in conjunction with AssignId, inside a pipeline.
   (Cannot be ran as a single script.)
-author:
-  - name: Jean-Michel Lord
-    identifier: https://orcid.org/0009-0007-3826-1125
-
 inputs:
   with_ids:
     label: With IDs

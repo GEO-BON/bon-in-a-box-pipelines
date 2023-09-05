@@ -1,8 +1,4 @@
 script: helloJulia.jl
-name: Julia Example
-author:
-  - name: Jean-Michel Lord
-    identifier: https://orcid.org/0009-0007-3826-1125
 description: "This sample script shows how it works in Julia."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
