@@ -1,6 +1,11 @@
 script: 1in1out_fail.py
+name: 1 in 1 out fails
+description: 1 input 1 output, with compilation error.
+author:
+  - name: Jean-Michel Lord
 inputs:
   some_int:
+    label: Some int
     description: A number
     type: int
     example: 3

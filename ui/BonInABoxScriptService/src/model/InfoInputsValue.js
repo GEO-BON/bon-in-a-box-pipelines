@@ -12,7 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
-import InfoInputsValueExample from './InfoInputsValueExample';
+//import InfoInputsValueExample from './InfoInputsValueExample';
 
 /**
  * The InfoInputsValue model module.

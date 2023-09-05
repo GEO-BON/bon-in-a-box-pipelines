@@ -148,5 +148,5 @@ export function getStepInput(ioId) {
  * returns pipeline | pipeline | folder > script | output
  */
 export function toDisplayString(ioId) {
-    return ioId.replaceAll(/(.json|.yml)@\d+/g, '').replaceAll('>', ' > ').replaceAll('|', ' | ')
+    return ioId.replaceAll(/(\.json|\.yml)@\d+/g, '').replaceAll('>', ' > ').replaceAll('|', ' | ')
 }

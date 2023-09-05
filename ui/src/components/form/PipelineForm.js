@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import Select from "react-select";
 import InputFileInput from "./InputFileInput";
 import { useNavigate } from "react-router-dom";
+import { GeneralDescription, getFolderAndName } from "../StepDescription";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -68,16 +69,18 @@ export function PipelineForm({
         console.error(error);
       } else {
         let newOptions = [];
-        data.forEach((descriptionFile) => {
-          let display = descriptionFile.replace(/.json$/i, "").replace(/.yml$/i, "").replaceAll(">", " > ");
-          newOptions.push({ label: display, value: descriptionFile });
+        Object.entries(data).forEach(([descriptionFile, pipelineName]) => {
+          newOptions.push({
+            label: getFolderAndName(descriptionFile, pipelineName),
+            value: descriptionFile
+          });
         });
         setPipelineOptions(newOptions);
       }
     });
   }, [runType, setPipelineOptions]);
 
-  return (
+  return pipelineOptions.length > 0 && (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
       <label htmlFor="pipelineChoice">{runType === "pipeline" ? "Pipeline:" : "Script:"}</label>
       <Select
@@ -85,14 +88,12 @@ export function PipelineForm({
         name="pipelineChoice"
         className="blackText"
         options={pipelineOptions}
-        value={{
-          label: pipStates.pipeline,
-          value: pipStates.descriptionFile,
-        }}
+        value={pipelineOptions.find(o => o.value === pipStates.descriptionFile)}
         menuPortalTarget={document.body}
         onChange={(v) => handlePipelineChange(v.label, v.value)}
       />
       <br />
+      {pipelineMetadata && <GeneralDescription ymlPath={pipStates.descriptionFile} metadata={pipelineMetadata} />}
       <InputFileInput
         metadata={pipelineMetadata}
         inputFileContent={inputFileContent}
