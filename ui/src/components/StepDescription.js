@@ -53,10 +53,46 @@ export function GeneralDescription({ ymlPath, metadata }) {
                 </ul>
             </div>
         }
-        {metadata.license && <>
-            <p>License: {metadata.license}</p>
-        </>}
+        {metadata.license && printLicense(metadata.license)}
     </div>
+}
+
+
+function printLicense(license) {
+    switch (license.toUpperCase()) {
+        case "CC0":
+            return <a href="https://creativecommons.org/publicdomain/zero/1.0/">
+                <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/cc-zero.png" width="116" height="41" />
+            </a>
+
+        case "CC BY":
+            return <a href="https://creativecommons.org/licenses/by/4.0/">
+                <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by.png" width="118" height="41" />
+            </a>
+
+        case "CC BY-SA":
+            return <a href="https://creativecommons.org/licenses/by-sa/4.0/">
+                <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-sa.png" width="117" height="41" />
+            </a>
+
+        case "CC BY-NC-SA":
+            return <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">
+                <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-sa.png" width="117" height="41" />
+            </a>
+
+        case "CC BY-ND":
+            return <a href="https://creativecommons.org/licenses/by-nd/4.0/">
+                <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nd.png" width="117" height="41" />
+            </a>
+
+        case "CC BY-NC-ND":
+            return <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/">
+                <img src="https://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-nc-nd.png" width="118" height="41" />
+            </a>
+
+        default:
+            return <p>License: {license}</p>
+    }
 }
 
 function getCodeUrl(ymlPath, scriptFileName) {
