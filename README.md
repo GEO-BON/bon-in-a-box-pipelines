@@ -100,7 +100,7 @@ name: # short name, such as My Script
 description: # Targetted to those who will interpret pipeline results and edit pipelines.
 author: # 1 to many
   - name: # Full name
-    identifier: # Optional, such as an ORCID
+    identifier: # Optional, full URL of a unique digital identifier such as an ORCID
 license: # Optional, examples here: https://creativecommons.org/about/cclicenses/
 external_link: # Optional, link to a separate project, github repo, etc.
 timeout: # Optional, in minutes. By defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
