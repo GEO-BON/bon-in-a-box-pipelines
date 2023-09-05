@@ -24,4 +24,4 @@ outputs:
   val_studyarea_GeoJSON_path:
     label: val_studyarea_GeoJSON_path
     description: Text string referring to the file path of the generated GeoJSON (.geojson) file that represents the boundaries of the study area. The GeoJSON file (Geospatial JavaScript Object Notation) is a format for storing spatial data that describes the geometry of the study area.
-    type: application/geo+json	
+    type: application/geo+json
