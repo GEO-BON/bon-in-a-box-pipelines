@@ -50,10 +50,9 @@ class ScriptRun( // Constructor used in single script run
 
     /**
      * It is possible that two scripts are executed with the same parameters at the same time.
-     * If so, we wait for the other one to complete and then use it's result as cache.
+     * If so, we wait for the other one to complete and then use its result as cache.
      */
     suspend fun waitForResults() {
-        // TODO: Could use join() on a job, if we had a job to join with...
         logger.debug("Waiting for run completion... {}", context.outputFolder)
         while(!this::results.isInitialized) {
             delay(100L)
@@ -214,6 +213,7 @@ class ScriptRun( // Constructor used in single script run
                         command = listOf(
                             "/usr/local/bin/docker", "exec", "-i", runner, "Rscript", "-e", 
                             """
+                            options(error=traceback, keep.source=TRUE, show.error.locations=TRUE)
                             fileConn<-file("${pidFile.absolutePath}"); writeLines(c(as.character(Sys.getpid())), fileConn); close(fileConn);
                             outputFolder<-"${context.outputFolder.absolutePath}";
                             tryCatch(source("${scriptFile.absolutePath}"),

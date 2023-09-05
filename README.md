@@ -24,7 +24,8 @@ To run:
   - This needs to be re-run everytime the server code changes, or when using git pull if you are not certain.
   - The first execution will be long. The next ones will be shorter or immediate, depending on the changes.
   - Network problems may fail the process. First try running the command again. Intermediate states are saved so not everything will be redone even when there is a failure.
-5. Provide an environment file (.env) in the root folder with the following keys
+  - Windows users may need to turn on virtualization and other tools for Docker Desktop to work and update wsl ("wsl --update", see [https://docs.docker.com/desktop/troubleshoot/topics/#virtualization](https://docs.docker.com/desktop/troubleshoot/topics/#virtualization). Access to the BIOS may be required to enable virtualization)
+4. Provide an environment file (.env) in the root folder with the following keys
     ```
     # Windows only - path to the root directory of the project with forward slashes
     # Uncomment line and specify path with forward slashes such as PWD=/c/User/me/biab-2.0
@@ -52,11 +53,11 @@ To run:
     SCRIPT_SERVER_CACHE_CLEANER=full
 
     ```
-6. `docker compose up -d`
-7. In browser:
+5. `docker compose up -d`
+6. In browser:
     - http://localhost/ shows the UI
-8. `docker compose down` (to stop the server when done) 
-9. On Windows, to completely stop the processes, you might have to run `wsl --shutdown`
+7. `docker compose down` (to stop the server when done) 
+8. On Windows, to completely stop the processes, you might have to run `wsl --shutdown`
 
 When modifying scripts in the /scripts folder, servers do not need to be restarted:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
