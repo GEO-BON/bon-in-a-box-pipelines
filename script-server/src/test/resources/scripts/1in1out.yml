@@ -1,11 +1,6 @@
 script: 1in1out.py
-name: 1 in 1 out
-description: 1 input 1 output
-author:
-  - name: Jean-Michel Lord
 inputs:
   some_int:
-    label: Some int
     description: A number
     type: int
     example: 3

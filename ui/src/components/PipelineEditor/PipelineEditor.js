@@ -24,7 +24,7 @@ import {
   getUpstreamNodes,
   getDownstreamNodes,
 } from "./react-flow-utils/getConnectedNodes";
-import { getStepDescription } from "./StepDescriptionStore";
+import { getStepDescription } from "./ScriptDescriptionStore";
 import {
   getStepNodeId,
   getStepOutput,
@@ -33,7 +33,6 @@ import {
   toIOId,
 } from "../../utils/IOId";
 import sleep from "../../utils/Sleep";
-import { getFolderAndName } from "../StepDescription";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();
@@ -641,23 +640,24 @@ export function PipelineEditor(props) {
 
     setPopupMenuPos({ x: event.clientX, y: event.clientY });
 
-    api.getListOf("pipeline", (error, pipelineMap, response) => {
+    api.getListOf("pipeline", (error, data, response) => {
       if (error) {
         if (response && response.text) alert(response.text);
         else alert(error.toString());
       } else {
         let options = {};
-        Object.entries(pipelineMap).forEach(([descriptionFile, pipelineName]) =>
-          (options[getFolderAndName(descriptionFile, pipelineName)] = () => {
-            api.getPipeline(descriptionFile, (error, data, response) => {
-              if (error) {
-                if (response && response.text) alert(response.text);
-                else alert(error.toString());
-              } else {
-                onLoadFlow(data);
-              }
-            });
-          })
+        data.forEach(
+          (pipeline) =>
+            (options[pipeline] = () => {
+              api.getPipeline(pipeline, (error, data, response) => {
+                if (error) {
+                  if (response && response.text) alert(response.text);
+                  else alert(error.toString());
+                } else {
+                  onLoadFlow(data);
+                }
+              });
+            })
         );
         setPopupMenuOptions(options);
       }

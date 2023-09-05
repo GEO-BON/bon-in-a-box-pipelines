@@ -1,10 +1,5 @@
 script: loadPredictors.R
-name: Load Predictors
 description: "This sample script shows how it works."
-author:
-  - name: Sarah Valentin
-    identifier: https://orcid.org/0000-0002-9028-681X
-
 inputs:
   bbox:
     label: bbox

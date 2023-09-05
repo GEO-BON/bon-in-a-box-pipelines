@@ -1,8 +1,4 @@
 script: helloShell.sh
-name: Shell Example
-author:
-  - name: Jean-Michel Lord
-    identifier: https://orcid.org/0009-0007-3826-1125
 description: "Sample shell script that outputs a number."
 outputs:
   a_number:

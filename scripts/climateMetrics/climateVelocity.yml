@@ -1,9 +1,5 @@
 script: climateMetrics.R
-name: Climate Change Velocity
 description: Climate-change velocity can be defined as the rate and direction of displacement of climatic conditions over Earth’s surface.
-author:
-  - name: Juan Zuloaga
-
 inputs:
   metric:
     label: climate-change velocity metric

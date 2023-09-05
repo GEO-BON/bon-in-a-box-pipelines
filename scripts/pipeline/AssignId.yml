@@ -1,13 +1,8 @@
 script: AssignId.kt
-name: Assign Id
 description: 
   Creates an object carrying a layer and its identifier. 
   To be used in conjunction with PullLayersById, inside a pipeline.
   (Cannot be ran as a single script.)
-author:
-  - name: Jean-Michel Lord
-    identifier: https://orcid.org/0009-0007-3826-1125
-
 inputs:
   id:
     label: id

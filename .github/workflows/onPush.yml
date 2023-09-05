@@ -42,13 +42,6 @@ jobs:
         document_path: scripts
         validate_file_extension: no
         filter_extensions: .yml
-    - name: YML test files syntax validation
-      uses: navikt/yaml-validator@v4
-      with:
-        schema_path: scripts/cerberusValidationSchema
-        document_path: script-server/src/test/resources/scripts/
-        validate_file_extension: no
-        filter_extensions: .yml
     - name: Find duplicate lines inside same step YML file
       working-directory: ./scripts
       run: ../.github/findDuplicateDescriptions.sh

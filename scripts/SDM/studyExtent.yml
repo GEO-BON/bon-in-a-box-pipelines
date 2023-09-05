@@ -1,12 +1,5 @@
 script: studyExtent.R
-name: Study Extent
 description: "This script computes a study area around presence points."
-author:
-  - name: Sarah Valentin
-    identifier: https://orcid.org/0000-0002-9028-681X
-  - name: Guillaume Larocque
-    identifier: https://orcid.org/0000-0002-5967-9156
-
 inputs:
   presence:
     label: clean presence

@@ -122,7 +122,7 @@ All URIs are relative to *http://localhost*
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
 *BonInABoxScriptService.DefaultApi* | [**getInfo**](docs/DefaultApi.md#getInfo) | **GET** /{type}/{descriptionPath}/info | Get metadata about this script or pipeline.
-*BonInABoxScriptService.DefaultApi* | [**getListOf**](docs/DefaultApi.md#getListOf) | **GET** /{type}/list | Get a list of available steps of given type and their names.
+*BonInABoxScriptService.DefaultApi* | [**getListOf**](docs/DefaultApi.md#getListOf) | **GET** /{type}/list | Get a list of available steps of given type.
 *BonInABoxScriptService.DefaultApi* | [**getOutputFolders**](docs/DefaultApi.md#getOutputFolders) | **GET** /{type}/{id}/outputs | Get the output folders of the scripts composing this pipeline
 *BonInABoxScriptService.DefaultApi* | [**getPipeline**](docs/DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline.
 *BonInABoxScriptService.DefaultApi* | [**run**](docs/DefaultApi.md#run) | **POST** /{type}/{descriptionPath}/run | Runs the script or pipeline matching &#x60;descriptionPath&#x60;.
@@ -132,7 +132,6 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [BonInABoxScriptService.Info](docs/Info.md)
- - [BonInABoxScriptService.InfoAuthorInner](docs/InfoAuthorInner.md)
  - [BonInABoxScriptService.InfoInputsValue](docs/InfoInputsValue.md)
  - [BonInABoxScriptService.InfoInputsValueExample](docs/InfoInputsValueExample.md)
  - [BonInABoxScriptService.InfoInputsValueExampleOneOfInner](docs/InfoInputsValueExampleOneOfInner.md)

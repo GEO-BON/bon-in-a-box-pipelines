@@ -1,10 +1,6 @@
-script: rangePredictions.R
-name: Predictions Range
-description: This script computes the range of a 95% confidence interval of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures).
-author:
-  - name: Sarah Valentin
-    identifier: https://orcid.org/0000-0002-9028-681X
+description: "This script computes the range of a 95% confidence interval of a set of predictions rasters (from different models or from bootstrap/cross-validation procedures)."
 
+script: rangePredictions.R
 inputs:
   predictions:
     label: predictions

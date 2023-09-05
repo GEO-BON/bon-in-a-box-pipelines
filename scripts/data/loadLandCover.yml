@@ -1,10 +1,5 @@
-script: loadLandCover.R
-name: Land Cover
 description: This script calculate the proportion of each land cover class from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
-author:
-  - name: Juan Zuloaga
-  - name: Sarah Valentin
-    identifier: https://orcid.org/0000-0002-9028-681X
+script: loadLandCover.R
 inputs:
   stac_source:
     label: STAC source

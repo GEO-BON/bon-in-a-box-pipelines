@@ -1,8 +1,4 @@
 script: assertArray.py
-name: Assert array
-description: "Sample python script fail if it doesn't receive an array."
-author:
-  - name: Jean-Michel Lord
 inputs:
   array:
     label: Some int array
@@ -15,3 +11,4 @@ outputs:
     description: The same array as in the inputs. But this crashes if not an array
     type: int[]
     example: [3,4,5]
+description: "Sample python script fail if it doesn't receive an array."
