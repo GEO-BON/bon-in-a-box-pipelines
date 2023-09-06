@@ -185,6 +185,22 @@ paths:
           description: Bad request
         "404":
           description: id not found
+  /api/versions:
+    get:
+      summary: Returns the version of system components.
+      responses:
+        "200":
+          description: The version of system components.
+          content:
+            text/plain:
+              schema:
+                type: string
+                x-content-type: text/plain
+                example: |
+                  R runner: 2023-06-15T14:09:32.212670687-04:00
+                  Rscript (R) version 4.2.3 (2023-03-15)
+
+            
 components:
   parameters:
     stepType:
