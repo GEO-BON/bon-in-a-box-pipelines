@@ -1,2 +1,2 @@
-FROM node:current-alpine3.15
+FROM node:current-alpine3.18
 RUN npm install -g babel-cli
