@@ -1,8 +1,13 @@
 script: scpSHI_Jetz_complete.R
+name: SHI
 description: 
   This script loads the data needed to calculate the area and connectivity scores 
   to calculate the Species Habitat Index (SHI) using Global Forest Watch data to measure 
   changes in the habitat of the species
+author:
+  - name: Maria Isabel Acre Plata
+    identifier: https://orcid.org/0000-0003-4024-9268
+
 inputs:
   species:
     label: species

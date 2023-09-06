@@ -86,15 +86,15 @@ export default class DefaultApi {
      * Callback function to receive the result of the getListOf operation.
      * @callback module:api/DefaultApi~getListOfCallback
      * @param {String} error Error message, if any.
-     * @param {Array.<String>} data The data returned by the service call.
+     * @param {Object.<String, {String: String}>} data The data returned by the service call.
      * @param {String} response The complete HTTP response.
      */
 
     /**
-     * Get a list of available steps of given type.
+     * Get a list of available steps of given type and their names.
      * @param {module:model/String} type Script or pipeline
      * @param {module:api/DefaultApi~getListOfCallback} callback The callback function, accepting three arguments: error, data, response
-     * data is of type: {@link Array.<String>}
+     * data is of type: {@link Object.<String, {String: String}>}
      */
     getListOf(type, callback) {
       let postBody = null;
@@ -116,7 +116,7 @@ export default class DefaultApi {
       let authNames = [];
       let contentTypes = [];
       let accepts = ['application/json'];
-      let returnType = ['String'];
+      let returnType = {'String': 'String'};
       return this.apiClient.callApi(
         '/{type}/list', 'GET',
         pathParams, queryParams, headerParams, formParams, postBody,
