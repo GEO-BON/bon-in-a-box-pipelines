@@ -3,6 +3,7 @@
 README.md
 docs/DefaultApi.md
 docs/Info.md
+docs/InfoAuthorInner.md
 docs/InfoInputsValue.md
 docs/InfoInputsValueExample.md
 docs/InfoInputsValueExampleOneOfInner.md
@@ -15,6 +16,7 @@ package.json
 src/api/DefaultApi.js
 src/index.js
 src/model/Info.js
+src/model/InfoAuthorInner.js
 src/model/InfoInputsValue.js
 src/model/InfoInputsValueExample.js
 src/model/InfoInputsValueExampleOneOfInner.js
