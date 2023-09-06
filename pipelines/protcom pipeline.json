@@ -120,7 +120,7 @@
       "source": "12",
       "sourceHandle": "dir_wkt",
       "target": "13",
-      "targetHandle": "WKT_area",
+      "targetHandle": "wkt_area",
       "id": "reactflow__edge-12dir_wkt-13WKT_area"
     },
     {
@@ -188,7 +188,7 @@
     },
     {
       "source": "12",
-      "sourceHandle": "dir_GeoJSON",
+      "sourceHandle": "dir_geojson",
       "target": "23",
       "targetHandle": "dir_area",
       "id": "reactflow__edge-12dir_GeoJSON-23dir_area"

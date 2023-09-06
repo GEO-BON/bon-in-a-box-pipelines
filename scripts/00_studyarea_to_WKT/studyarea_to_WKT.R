@@ -40,7 +40,7 @@ input<- lapply(input, function(x) if( grepl("/", x) ){
 output<- tryCatch({
  
 # Load and convert the study area to aggregate polygon limits and project it to the defined EPSG coordinate system
-vector_polygon<-  terra::vect(input$studyarea_path) %>% terra::aggregate()  %>%  terra::project( raster::crs( paste0("+init=epsg:", input$studyarea_EPSG) )    )
+vector_polygon<-  terra::vect(input$studyarea_path) %>% terra::aggregate()  %>%  terra::project( raster::crs( paste0("+init=epsg:", input$studyarea_epsg) )    )
 # Generate WKT representation of the strudy area polygon
 wkt_polygon <- terra::geom(vector_polygon, wkt=TRUE) %>% {  paste0( "MULTIPOLYGON (",paste(gsub("POLYGON |MULTIPOLYGON ", "", .), collapse=  ", "),")") %>% {gsub("\\({4}", "\\(\\(\\(", .)}  }
 
@@ -59,7 +59,7 @@ dir_GeoJSON<- file.path(outputFolder, "wkt_polygon_test.geojson") # Define the f
 sf::st_write(geojson_polygon, dir_GeoJSON, overwrite=T, append=T) # Write the 'val_studyarea_GeoJSON_path' output
 
 # Define final output list
-output<- list(val_wkt_path= dir_wkt,val_studyarea_GeoJSON_path= dir_GeoJSON, val_studyarea_EPSG= input$studyarea_EPSG)
+output<- list(val_wkt_path= dir_wkt,val_studyarea_GeoJSON_path= dir_GeoJSON, val_studyarea_epsg= input$studyarea_epsg)
 
 }, error = function(e) { list(error= conditionMessage(e)) })
 
