@@ -7,10 +7,13 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.geobon.pipeline.*
 import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
 import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
+import org.geobon.utils.runCommand
 import org.geobon.utils.toMD5
 import org.json.JSONObject
 import org.slf4j.Logger
@@ -208,6 +211,15 @@ fun Application.configureRouting() {
                 logger.debug("Cancelled $id")
                 call.respond(HttpStatusCode.OK)
             } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
+        }
+
+        get("/api/versions") {
+            println("getting the versions")
+            val rRunner =
+            call.respond("""
+                R runner: ${"docker inspect --type=image -f '{{ .Created }}' biab_20-runner-r".runCommand()?.trim()}
+                ${"docker exec -i biab-runner-r Rscript --version".runCommand()}
+                """.trimIndent())
         }
     }
 }

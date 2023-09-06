@@ -236,4 +236,14 @@ class ApplicationTest {
             assertEquals(HttpStatusCode.OK, status)
         }
     }
+
+    @Test
+    fun testGetVersion() = testApplication {
+        application { configureRouting() }
+
+        client.get("/api/versions").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            println(bodyAsText())
+        }
+    }
 }
