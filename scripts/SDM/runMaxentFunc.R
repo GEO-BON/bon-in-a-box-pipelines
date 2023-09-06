@@ -36,7 +36,7 @@ run_maxent <- function(presence.bg, with_raster = F,
                             tune.args = list(fc = fc, rm = rm),
                             parallel =  parallel,
                             updateProgress = updateProgress,
-                            parallelType = )
+                            parallelType = parallelType)
     
     
   } else {
