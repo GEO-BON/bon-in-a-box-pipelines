@@ -4,6 +4,11 @@
 
 ## Load required packages
 
+memtot<-as.numeric(system("awk '/MemTotal/ {print $2}' /proc/meminfo", intern=TRUE))/1024^2
+memallow<-floor(memtot*0.9) # 90% of total available memory
+print(paste0(memallow,"G of RAM allowed to Java heap space"))
+options(java.parameters = paste0("-Xmx",memallow,"g"))
+
 library("terra")
 library("rjson")
 library("raster")
