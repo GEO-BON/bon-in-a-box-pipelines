@@ -18,8 +18,8 @@ input<- lapply(input, function(x) if( grepl("/", x) ){
 
 # Correr codigo
 # Definir area de estudio
-ext_WKT_area<- tools::file_ext(input$WKT_area)
-dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$WKT_area) }else{ input$WKT_area }
+ext_WKT_area<- tools::file_ext(input$wkt_area)
+dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$wkt_area) }else{ input$wkt_area }
 crs_polygon<- terra::crs( paste0("+init=epsg:", input$epsg) ) %>% as.character()
 vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon ) %>% sf::st_as_sf()
   
