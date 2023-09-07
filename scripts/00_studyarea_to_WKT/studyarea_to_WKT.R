@@ -59,7 +59,7 @@ dir_GeoJSON<- file.path(outputFolder, "wkt_polygon_test.geojson") # Define the f
 sf::st_write(geojson_polygon, dir_GeoJSON, overwrite=T, append=T) # Write the 'val_studyarea_GeoJSON_path' output
 
 # Define final output list
-output<- list(val_wkt_path= dir_wkt,val_studyarea_GeoJSON_path= dir_GeoJSON, val_studyarea_epsg= input$studyarea_epsg)
+output<- list(val_wkt_path= dir_wkt,val_studyarea_geojson_path= dir_GeoJSON, val_studyarea_epsg= input$studyarea_epsg)
 
 }, error = function(e) { list(error= conditionMessage(e)) })
 
