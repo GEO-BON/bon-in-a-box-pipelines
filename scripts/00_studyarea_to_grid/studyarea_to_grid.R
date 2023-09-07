@@ -42,7 +42,7 @@ input<- lapply(input, function(x) if( grepl("/", x) ){
 output<- tryCatch({
  
 # Load and convert the study area to aggregate polygon limits and project it to the defined EPSG coordinate system
-crs_basemap<- raster::crs( paste0("+init=epsg:", input$studyarea_EPSG) )
+crs_basemap<- raster::crs( paste0("+init=epsg:", input$studyarea_epsg) )
   
 vector_polygon<-  terra::vect(input$studyarea_path) %>% terra::aggregate()  %>%  terra::project( crs_basemap    )
 
@@ -69,13 +69,11 @@ raster_study_area_4326<- raster::raster(raster_study_area) %>%
 
 # Define raster_study_area_path path
 raster_study_area_path<- file.path(outputFolder, "raster_study_area_path.tif") # Define the file path for the 'val_wkt_path' output
-terra::writeRaster(raster_study_area, raster_study_area_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), 
-                   filetype = "GTiff", overwrite = TRUE )
+terra::writeRaster(raster_study_area, raster_study_area_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "GTiff", overwrite = TRUE )
 
 # Define raster_study_area_4326_path path
 raster_study_area_4326_path<- file.path(outputFolder, "raster_study_area_4326_path.tif") # Define the file path for the 'val_wkt_path' output
-terra::writeRaster(raster_study_area_4326, raster_study_area_4326_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), 
-                   filetype = "GTiff", overwrite = TRUE )
+terra::writeRaster(raster_study_area_4326, raster_study_area_4326_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "GTiff", overwrite = TRUE )
 
 
 # Define final output list

@@ -6,7 +6,7 @@ inputs:
     label: shape_dir
     description: shape_dir
     type: text
-    example: "/output/0_inputs/caldas.shp"
+    example: "/output/0_inputs/Atlántico.shp"
   epsg:
     label: epsg
     description: epsg

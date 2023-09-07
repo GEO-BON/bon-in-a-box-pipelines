@@ -1,15 +1,15 @@
 # Instalar librerias necesarias
 packagesPrev<- installed.packages()[,"Package"]
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply")
+packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "rjson")
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    })
 
 # Cargar librerias
-packagesList<-list("magrittr", "terra", "raster")
+packagesList<-list("magrittr", "terra", "raster", "rjson")
 lapply(packagesList, library, character.only = TRUE)
 
 # Definir output
  outputFolder<- {x<- this.path::this.path(); paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ) }  %>% list.files(full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}
-# Sys.setenv(outputFolder = "/path/to/output/folder")
+Sys.setenv(outputFolder = "/path/to/output/folder")
 
 # Definir input
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Cargar input
@@ -31,8 +31,8 @@ input<- lapply(input, function(x) if( grepl("/output/", x) ){
 
 # Correr codigo
 # Definir area de estudio
-ext_WKT_area<- tools::file_ext(input$WKT_area)
-dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$WKT_area) }else{ input$WKT_area }
+ext_WKT_area<- tools::file_ext(input$wkt_area)
+dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$wkt_area) }else{ input$wkt_area }
 crs_polygon<- terra::crs( paste0("+init=epsg:", input$epsg) ) %>% as.character()
 vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon ) 
   
@@ -81,7 +81,7 @@ type_period<- tryCatch({ sub(".*P", "", input$time_period) %>% {period= as.numer
 t0<- gdalcubes::extent(image_collection)$t0
 t1<- gdalcubes::extent(image_collection)$t1
 
-t0<-if(!input$time_start %in% "NA"){ tryCatch(as.Date(input$time_start), error= function(e){t0}) }else{t0}
+t0<-if(!input$time_start %in% "NA"){ tryCatch(as.Date(input$time_start), error= function(e){t0}) }else{t0} 
 t0<- (if(type_period$type == "Y"){ lubridate::floor_date(as.Date(t0),  lubridate::years(type_period$period))
 } else if (type_period$type == "M") { lubridate::floor_date(as.Date(t0),  months(type_period$period) )
 } else if( type_period$type == "D"){ lubridate::floor_date(as.Date(t0),  lubridate::days(type_period$period) )

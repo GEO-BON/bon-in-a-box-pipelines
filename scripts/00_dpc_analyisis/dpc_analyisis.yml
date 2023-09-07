@@ -4,13 +4,12 @@ inputs:
   data_spatial_unit:
     label: data_spatial_unit 
     description: "String refering to the path string where the .csv file containing the information required for the indicator calculation is located. The table must contain the id and the area of the spatial units or nodes. If the analysis is done in time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration."
-    type: text
+    type: text/csv
     example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
   area_study_area:
     label: area_study_area
     description: "Numeric refering to the total area of the query area, this value is mandatory for the dPC calculation. Check that the area units are the same as those used in the data_spatial_unit parameter."
-    type: int
-    example: 11000000000
+    type: image/tiff;application=geotiff
   column_spatial_unit:
     label: column_spatial_unit 
     description: "String refering to the name of the column in the data_spatial_unit file that contains the unique identifier ID of the spatial units or nodes that intersect the area of interest."
