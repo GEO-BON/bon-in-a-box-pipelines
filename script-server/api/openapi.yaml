@@ -197,9 +197,14 @@ paths:
                 type: string
                 x-content-type: text/plain
                 example: |
-                  R runner: 2023-06-15T14:09:32.212670687-04:00
-                  Rscript (R) version 4.2.3 (2023-03-15)
-
+                  UI: 2023-09-07 19:24
+                  Script server: 2023-09-07 19:24
+                  Python: Python 3.10.6
+                  R runner: cat: /timestamp.txt: No such file or directory
+                  Rscript: Rscript (R) version 4.2.3 (2023-03-15)
+                  Julia runner: 2023-09-07 19:24
+                  Julia: julia version 1.8.1
+                  TiTiler: 2023-08-30 15:44
             
 components:
   parameters:
