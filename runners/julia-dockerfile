@@ -2,3 +2,5 @@ FROM julia:1.8.1
 
 # Pre-compiling Julia dependencies
 RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["BiodiversityObservationNetworks", "JSON", "SimpleSDMLayers", "NeutralLandscapes", "Plots"]); Pkg.instantiate();'
+
+RUN date +"%Y-%m-%d %R" > /timestamp.txt

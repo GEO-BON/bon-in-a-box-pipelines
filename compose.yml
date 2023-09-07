@@ -52,8 +52,8 @@ services:
     container_name: biab-runner-julia
     image: geobon/bon-in-a-box:runner-julia
     # build:
-    #   context: ./runners
-    #   dockerfile: julia-dockerfile
+      #   context: ./runners
+      #   dockerfile: julia-dockerfile
     command: sh # Avoids launching julia session that will not be used.
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
@@ -76,7 +76,7 @@ services:
 
   tiler:
     container_name: biab-tiler
-    image: ghcr.io/developmentseed/titiler:0.12.0
+    image: ghcr.io/developmentseed/titiler:latest
     volumes:
       - ./output:/output:rw
     environment:

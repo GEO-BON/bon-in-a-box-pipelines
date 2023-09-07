@@ -58,7 +58,6 @@ fun Application.configureRouting() {
             }
 
             val possible = mutableMapOf<String, String>()
-            val relPathIndex = root.absolutePath.length + 1
             root.walkTopDown().forEach { file ->
                 if (file.extension == extension) {
                     val relativePath = file.relativeTo(root).path.replace('/', FILE_SEPARATOR)
@@ -214,11 +213,17 @@ fun Application.configureRouting() {
         }
 
         get("/api/versions") {
-            println("getting the versions")
-            val rRunner =
             call.respond("""
-                R runner: ${"docker inspect --type=image -f '{{ .Created }}' biab_20-runner-r".runCommand()?.trim()}
-                ${"docker exec -i biab-runner-r Rscript --version".runCommand()}
+                UI: ${"docker exec -i biab-ui cat /timestamp.txt".runCommand()}
+                Script server: ${"cat /timestamp.txt".runCommand()}
+                   ${"python3 --version".runCommand()}
+                R runner: ${"docker exec -i biab-runner-r cat /timestamp.txt".runCommand()}
+                   ${"docker exec -i biab-runner-r Rscript --version".runCommand()}
+                Julia runner: ${"docker exec -i biab-runner-julia cat /timestamp.txt".runCommand()}
+                   ${"docker exec -i biab-runner-julia julia --version".runCommand()}
+                TiTiler: ${
+                    "docker inspect --type=image -f '{{ .Created }}' ghcr.io/developmentseed/titiler".runCommand()
+                    ?.let { it.substring(0, it.lastIndexOf(':')).replace('T', ' ') }}
                 """.trimIndent())
         }
     }
