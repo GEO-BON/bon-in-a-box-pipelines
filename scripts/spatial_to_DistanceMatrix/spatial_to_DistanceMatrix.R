@@ -36,7 +36,7 @@ area_unit<- paste0(input$unit_distance, "^2")
 # Define study area
 ext_WKT_area<- tools::file_ext(input$studyarea_wkt)
 dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$studyarea_wkt) }else{ input$studyarea_wkt }
-crs_polygon<- terra::crs( paste0("+init=epsg:", input$studyarea_EPSG) ) %>% as.character()
+crs_polygon<- terra::crs( paste0("+init=epsg:", input$studyarea_epsg) ) %>% as.character()
 vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon )  %>% sf::st_as_sf()
 
 spatial_units<- sf::st_read(input$spatial_file)
