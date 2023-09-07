@@ -33,8 +33,12 @@ Sys.getenv("SCRIPT_LOCATION")
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) if( grepl("/", x) ){
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x} ) # adjust input 1
+input<- lapply(input, function(x) if( grepl("/output/", x) ){
+  sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x} ) # Ajuste input 1
+
+
+
+
 
 
 
@@ -153,7 +157,6 @@ output<- tryCatch({
     result_dPC2<- result_dPC
     result_dPC2$dPC = (((result_dPC$PC- result_dPC$PC_out))/result_dPC$PC)*100
     
-<<<<<<< HEAD
     #Calculate the dPC index by period of time
     for (i in decades) {
       filter = result_dPC[result_dPC$Period==decades[i],]
@@ -167,16 +170,6 @@ output<- tryCatch({
     
     ########################PEDAZO QUE FALTA################################## 
      
-=======
-    filter = result_dPC2[result_dPC2$Period== i,]
-    order = filter[with(filter, order(filter$dPC)), ]
-    
-    if(nrow(order)>=5){
-      dpc_decade_df = order[seq(5),]
-    } else{dpc_decade_df = order}
-    
-    dPC = rbind.data.frame(dPC,dpc_decade_df)
->>>>>>> 50492af966b9023462572bdb7ef14ad1af7a8da2
   }
   
   
