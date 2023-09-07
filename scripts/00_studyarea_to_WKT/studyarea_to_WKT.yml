@@ -4,24 +4,24 @@ external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   studyarea_path:
     label: Study area
-    description: Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.
+    description: "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file."
     type: text
     example: "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
   studyarea_epsg:
     label: Coordinate system 
-    description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
+    description: "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts."
     type: int
     example: 3395
 outputs:
   val_wkt_path:
     label: val_wkt_path
-    description: Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.
+    description: "Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask."
     type: text
   val_studyarea_epsg:
     label: val_studyarea_epsg
-    description: Numerical value referring to the EPSG code used as the spatial reference system for the study area. This code specifies the reference coordinate system of the val_wkt_path file.
+    description: "Numerical value referring to the EPSG code used as the spatial reference system for the study area. This code specifies the reference coordinate system of the val_wkt_path file."
     type: int
   val_studyarea_geojson_path:
-    label: val_studyarea_GeoJSON_path
-    description: Text string referring to the file path of the generated GeoJSON (.geojson) file that represents the boundaries of the study area. The GeoJSON file (Geospatial JavaScript Object Notation) is a format for storing spatial data that describes the geometry of the study area.
+    label: val_studyarea_geojson_path
+    description: "Text string referring to the file path of the generated GeoJSON (.geojson) file that represents the boundaries of the study area. The GeoJSON file (Geospatial JavaScript Object Notation) is a format for storing spatial data that describes the geometry of the study area."
     type: application/geo+json
