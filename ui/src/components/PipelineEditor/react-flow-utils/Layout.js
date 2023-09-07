@@ -1,4 +1,4 @@
-import { getStepDescription } from '../ScriptDescriptionStore'
+import { getStepDescription } from '../StepDescriptionStore'
 
 // For ELK options, refer to https://www.eclipse.org/elk/reference/options.html
 // Some examples: http://rtsys.informatik.uni-kiel.de/elklive/examples.html?e=user-hints%2Flayered%2FverticalOrder
@@ -53,11 +53,12 @@ export const layoutElements = (nodes, edges, callback) => {
         }
   
         elkjsNode.properties = {
+          alignment: 'RIGHT',
           portConstraints: 'FIXED_ORDER',
           'portAlignment.default': 'BEGIN'
         }
       } else {
-        console.error('Failed ot get description for ' + node.data.descriptionFile)
+        console.error('Failed to get description for ' + node.data.descriptionFile)
       }
     }
 

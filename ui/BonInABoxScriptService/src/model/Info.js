@@ -12,6 +12,7 @@
  */
 
 import ApiClient from '../ApiClient';
+import InfoAuthorInner from './InfoAuthorInner';
 import InfoInputsValue from './InfoInputsValue';
 import InfoOutputsValue from './InfoOutputsValue';
 import InfoReferencesInner from './InfoReferencesInner';
@@ -53,8 +54,17 @@ class Info {
             if (data.hasOwnProperty('script')) {
                 obj['script'] = ApiClient.convertToType(data['script'], 'String');
             }
+            if (data.hasOwnProperty('name')) {
+                obj['name'] = ApiClient.convertToType(data['name'], 'String');
+            }
             if (data.hasOwnProperty('description')) {
                 obj['description'] = ApiClient.convertToType(data['description'], 'String');
+            }
+            if (data.hasOwnProperty('author')) {
+                obj['author'] = ApiClient.convertToType(data['author'], [InfoAuthorInner]);
+            }
+            if (data.hasOwnProperty('license')) {
+                obj['license'] = ApiClient.convertToType(data['license'], 'String');
             }
             if (data.hasOwnProperty('external_link')) {
                 obj['external_link'] = ApiClient.convertToType(data['external_link'], 'String');
@@ -86,8 +96,26 @@ class Info {
             throw new Error("Expected the field `script` to be a primitive type in the JSON string but got " + data['script']);
         }
         // ensure the json data is a string
+        if (data['name'] && !(typeof data['name'] === 'string' || data['name'] instanceof String)) {
+            throw new Error("Expected the field `name` to be a primitive type in the JSON string but got " + data['name']);
+        }
+        // ensure the json data is a string
         if (data['description'] && !(typeof data['description'] === 'string' || data['description'] instanceof String)) {
             throw new Error("Expected the field `description` to be a primitive type in the JSON string but got " + data['description']);
+        }
+        if (data['author']) { // data not null
+            // ensure the json data is an array
+            if (!Array.isArray(data['author'])) {
+                throw new Error("Expected the field `author` to be an array in the JSON data but got " + data['author']);
+            }
+            // validate the optional field `author` (array)
+            for (const item of data['author']) {
+                InfoAuthorInner.validateJSON(item);
+            };
+        }
+        // ensure the json data is a string
+        if (data['license'] && !(typeof data['license'] === 'string' || data['license'] instanceof String)) {
+            throw new Error("Expected the field `license` to be a primitive type in the JSON string but got " + data['license']);
         }
         // ensure the json data is a string
         if (data['external_link'] && !(typeof data['external_link'] === 'string' || data['external_link'] instanceof String)) {
@@ -118,9 +146,24 @@ class Info {
 Info.prototype['script'] = undefined;
 
 /**
+ * @member {String} name
+ */
+Info.prototype['name'] = undefined;
+
+/**
  * @member {String} description
  */
 Info.prototype['description'] = undefined;
+
+/**
+ * @member {Array.<module:model/InfoAuthorInner>} author
+ */
+Info.prototype['author'] = undefined;
+
+/**
+ * @member {String} license
+ */
+Info.prototype['license'] = undefined;
 
 /**
  * @member {String} external_link

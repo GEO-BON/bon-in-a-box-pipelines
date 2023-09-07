@@ -54,8 +54,62 @@
       //expect(instance).to.be.a(BonInABoxScriptService.Info);
     });
 
+    it('should have the property script (base name: "script")', function() {
+      // uncomment below and update the code to test the property script
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property name (base name: "name")', function() {
+      // uncomment below and update the code to test the property name
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property description (base name: "description")', function() {
+      // uncomment below and update the code to test the property description
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property author (base name: "author")', function() {
+      // uncomment below and update the code to test the property author
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property license (base name: "license")', function() {
+      // uncomment below and update the code to test the property license
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property externalLink (base name: "external_link")', function() {
+      // uncomment below and update the code to test the property externalLink
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property timeout (base name: "timeout")', function() {
+      // uncomment below and update the code to test the property timeout
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
     it('should have the property inputs (base name: "inputs")', function() {
       // uncomment below and update the code to test the property inputs
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property outputs (base name: "outputs")', function() {
+      // uncomment below and update the code to test the property outputs
+      //var instance = new BonInABoxScriptService.Info();
+      //expect(instance).to.be();
+    });
+
+    it('should have the property references (base name: "references")', function() {
+      // uncomment below and update the code to test the property references
       //var instance = new BonInABoxScriptService.Info();
       //expect(instance).to.be();
     });

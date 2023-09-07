@@ -7,7 +7,7 @@ import java.io.File
 class PullLayersById(stepId: StepId, inputs: MutableMap<String, Pipe> = mutableMapOf()) :
     YMLStep(File(System.getenv("SCRIPT_LOCATION"), "pipeline/PullLayersById.yml"), stepId, inputs = inputs) {
 
-    override suspend fun resolveInputs(): Map<String, Any> {
+    override suspend fun resolveInputs(): Map<String, Any?> {
         val resolvedInputs = mutableMapOf<String, Any>()
 
         // Only the ids present here will need to be pulled (!! is safe since input list was validated)
@@ -21,12 +21,12 @@ class PullLayersById(stepId: StepId, inputs: MutableMap<String, Pipe> = mutableM
                     ?: false
 
             } else true
-        } ?: throw RuntimeException("No id was found to replace in:\n$withIds")
-   
+        } ?: listOf<JSONObject>()
+
         return resolvedInputs
     }
 
-    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
+    override suspend fun execute(resolvedInputs: Map<String, Any?>): Map<String, Any?> {
         var content:String = (resolvedInputs[IN_WITH_IDS] ?: throw RuntimeException("Input with_ids is missing")) as String
         val identifiedLayers = resolvedInputs[IN_IDENTIFIED_LAYERS] as? List<*> ?: throw RuntimeException("identified_layers is not an list")
 
@@ -40,7 +40,13 @@ class PullLayersById(stepId: StepId, inputs: MutableMap<String, Pipe> = mutableM
             }
         }
 
-        return mapOf(OUT_WITH_LAYERS to content).also{ record(it) }
+        val outputs = mutableMapOf(OUT_WITH_LAYERS to content)
+        if(identifiedLayers.isEmpty()) {
+            outputs["info"] = "No IDs were replaced."
+        }
+
+        record(outputs)
+        return outputs
     }
 
     companion object {

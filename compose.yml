@@ -73,3 +73,12 @@ services:
       - ./output:/static/output:ro
     depends_on:
       - script-server
+
+  tiler:
+    container_name: biab-tiler
+    image: ghcr.io/developmentseed/titiler:0.12.0
+    volumes:
+      - ./output:/output:rw
+    environment:
+      - PORT=8000
+      - WORKERS_PER_CORE=1

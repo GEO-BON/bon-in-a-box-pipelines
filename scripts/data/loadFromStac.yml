@@ -1,5 +1,10 @@
 script: loadFromStac.R
+name: Load from STAC
 description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+author:
+  - name: Guillaume Larocque
+    identifier: https://orcid.org/0000-0002-5967-9156
+
 inputs:
   stac_url:
     label: stac_url
@@ -38,7 +43,7 @@ inputs:
     label: mask
     description: Shapefile, used to mask the output rasters
     type: application/dbf
-    example: ""
+    example: null
 outputs:
   rasters:
     label: rasters

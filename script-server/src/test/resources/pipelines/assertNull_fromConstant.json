@@ -1,0 +1,62 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 415,
+        "y": 12
+      },
+      "data": {
+        "descriptionFile": "assertNull.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "output",
+      "position": {
+        "x": 754,
+        "y": 8
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 86.5,
+        "y": 14
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "the_same",
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-1the_same-2"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "input",
+      "id": "reactflow__edge-4-1input"
+    }
+  ],
+  "inputs": {},
+  "outputs": {
+    "assertNull.yml@1|the_same": {
+      "description": "The same value as in the inputs. But this crashes if not null!",
+      "label": "Same value",
+      "type": "text"
+    }
+  }
+}

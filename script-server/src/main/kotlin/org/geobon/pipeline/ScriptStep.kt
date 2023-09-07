@@ -25,7 +25,7 @@ class ScriptStep(yamlFile: File, stepId: StepId, inputs: MutableMap<String, Pipe
         return super.validateGraph()
     }
 
-    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
+    override suspend fun execute(resolvedInputs: Map<String, Any?>): Map<String, Any?> {
         val scriptFile = File(yamlFile.parent, yamlParsed[SCRIPT].toString())
         val specificTimeout = (yamlParsed[TIMEOUT] as? Int)?.minutes
 
@@ -33,7 +33,7 @@ class ScriptStep(yamlFile: File, stepId: StepId, inputs: MutableMap<String, Pipe
         val scriptRun = synchronized(currentRuns) {
             currentRuns.getOrPut(context!!.runId) {
                 runOwner = true
-                ScriptRun(scriptFile, resolvedInputs.toSortedMap(), context!!, specificTimeout ?: DEFAULT_TIMEOUT)
+                ScriptRun(scriptFile, context!!, specificTimeout ?: DEFAULT_TIMEOUT)
             }
         }
         

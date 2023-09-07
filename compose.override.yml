@@ -15,6 +15,7 @@ services:
       - '80'
     depends_on:
       - script-server
+      - tiler
 
   http-gateway:
     volumes:

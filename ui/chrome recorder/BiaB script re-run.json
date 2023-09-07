@@ -1,0 +1,151 @@
+{
+    "title": "BiaB script re-run",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 1339,
+            "height": 926,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "url": "http://localhost/script-form/helloWorld%3EhelloPython",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "http://localhost/script-form/helloWorld%3EhelloPython",
+                    "title": "BON in a Box"
+                }
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "div.right-content"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div[2]"
+                ],
+                [
+                    "pierce/div.right-content"
+                ]
+            ],
+            "offsetY": 296,
+            "offsetX": 16.1015625
+        },
+        {
+            "type": "change",
+            "value": "13",
+            "selectors": [
+                [
+                    "aria/Some int"
+                ],
+                [
+                    "#some_int"
+                ],
+                [
+                    "xpath///*[@id=\"some_int\"]"
+                ],
+                [
+                    "pierce/#some_int"
+                ]
+            ],
+            "target": "main"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Run pipeline"
+                ],
+                [
+                    "form > input"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div[2]/main/div/div[2]/form/input"
+                ],
+                [
+                    "pierce/form > input"
+                ],
+                [
+                    "text/Run pipeline"
+                ]
+            ],
+            "offsetY": 10.953125,
+            "offsetX": 55.3125
+        },
+        {
+            "type": "waitForElement",
+            "timeout": 10000,
+            "target": "main",
+            "selectors": [
+                "text/An error occurred."
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                "text/+ Input form"
+            ],
+            "offsetX": 6.1015625,
+            "offsetY": 6.8125
+        },
+        {
+            "type": "waitForElement",
+            "target": "main",
+            "selectors": [
+                "aria/Some int",
+                "#some_int",
+                "xpath///*[@id=\"some_int\"]",
+                "pierce/#some_int"
+            ],
+            "attributes": {
+                "value": "13"
+            }
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Run pipeline"
+                ],
+                [
+                    "form > input"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div[2]/main/div[1]/div[2]/form/input"
+                ],
+                [
+                    "pierce/form > input"
+                ],
+                [
+                    "text/Run pipeline"
+                ]
+            ],
+            "offsetY": 5.453125,
+            "offsetX": 35.3125
+        },
+        {
+            "type": "waitForElement",
+            "selectors": [
+                ".spinner-inline"
+            ]
+        },
+        {
+            "type": "waitForElement",
+            "timeout": 10000,
+            "target": "main",
+            "selectors": [
+                "text/An error occurred."
+            ]
+        }
+    ]
+}

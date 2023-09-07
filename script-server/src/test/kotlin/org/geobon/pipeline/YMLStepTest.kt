@@ -10,7 +10,7 @@ private class ResourceYml(resourcePath: String, inputs: MutableMap<String, Pipe>
     YMLStep(File(ResourceYml::class.java.classLoader.getResource(resourcePath)!!.path),
         StepId("ResourceYml",(Math.random() * 10000).roundToInt().toString()),
         inputs = inputs) {
-    override suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any> {
+    override suspend fun execute(resolvedInputs: Map<String, Any?>): Map<String, Any?> {
         throw Exception("this is in YMLStep, should not be tested")
     }
 }

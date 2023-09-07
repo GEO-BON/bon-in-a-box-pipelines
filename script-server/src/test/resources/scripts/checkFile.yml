@@ -1,4 +1,8 @@
 script: checkFile.py
+name: Check file
+description: "Sample python script fails if given file does not exist"
+author:
+  - name: Jean-Michel Lord
 inputs:
   file:
     label: Some file
@@ -11,4 +15,3 @@ outputs:
     description: bla bla
     type: boolean
     example: [3,4,5]
-description: "Sample python script fail if it doesn't receive an array."

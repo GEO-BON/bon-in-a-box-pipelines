@@ -1,0 +1,89 @@
+{
+  "nodes": [
+    {
+      "id": "14",
+      "type": "io",
+      "position": {
+        "x": 761,
+        "y": 105
+      },
+      "data": {
+        "descriptionFile": "twoBranches.json"
+      }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 1046,
+        "y": 165
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "16",
+      "type": "io",
+      "position": {
+        "x": 359,
+        "y": 26
+      },
+      "data": {
+        "descriptionFile": "helloWorld>helloPython.yml"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 11
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "14",
+      "sourceHandle": "divideFloat.yml@5|result",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-14divideFloat.yml@5|result-15"
+    },
+    {
+      "source": "16",
+      "sourceHandle": "increment",
+      "target": "14",
+      "targetHandle": "divideFloat.yml@5|float_value",
+      "id": "reactflow__edge-16increment-14divideFloat.yml@5|float_value"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "some_int",
+      "id": "reactflow__edge-17-16some_int"
+    }
+  ],
+  "inputs": {
+    "twoBranches.json@14|divideFloat.yml@5|divider": {
+      "description": "Divide 12 by this divider",
+      "label": "Divider",
+      "type": "float",
+      "example": 2
+    }
+  },
+  "outputs": {
+    "twoBranches.json@14|divideFloat.yml@5|result": {
+      "description": "result of the division",
+      "label": "Result",
+      "type": "float",
+      "example": 1.6
+    }
+  }
+}

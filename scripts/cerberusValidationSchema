@@ -2,9 +2,30 @@ script:
   required: true
   type: string
 
+name:
+  type: string
+  required: true
+
 description:
   required: true
   type: string
+
+author:
+  type: list
+  required: true
+  schema: 
+    type: dict
+    schema:
+      name: 
+        type: string
+        required: true
+      identifier:
+        type: string
+        required: false
+
+license:
+  type: string
+  required: false
 
 external_link:
   required: false
@@ -52,9 +73,11 @@ inputs:
           type: [object, "object[]"]
       example:
         required: true
+        nullable: true
         oneof:
         - type: number
         - type: string
+          nullable: true
         - type: boolean
         - type: list
         - type: dict

@@ -14,13 +14,13 @@
 
 import ApiClient from './ApiClient';
 import Info from './model/Info';
+import InfoAuthorInner from './model/InfoAuthorInner';
 import InfoInputsValue from './model/InfoInputsValue';
 import InfoInputsValueExample from './model/InfoInputsValueExample';
 import InfoInputsValueExampleOneOfInner from './model/InfoInputsValueExampleOneOfInner';
 import InfoOutputsValue from './model/InfoOutputsValue';
 import InfoOutputsValueExample from './model/InfoOutputsValueExample';
 import InfoReferencesInner from './model/InfoReferencesInner';
-import ScriptRunResult from './model/ScriptRunResult';
 import DefaultApi from './api/DefaultApi';
 
 
@@ -69,6 +69,12 @@ export {
     Info,
 
     /**
+     * The InfoAuthorInner model constructor.
+     * @property {module:model/InfoAuthorInner}
+     */
+    InfoAuthorInner,
+
+    /**
      * The InfoInputsValue model constructor.
      * @property {module:model/InfoInputsValue}
      */
@@ -103,12 +109,6 @@ export {
      * @property {module:model/InfoReferencesInner}
      */
     InfoReferencesInner,
-
-    /**
-     * The ScriptRunResult model constructor.
-     * @property {module:model/ScriptRunResult}
-     */
-    ScriptRunResult,
 
     /**
     * The DefaultApi service constructor.

@@ -78,6 +78,12 @@
       //expect(instance).to.be();
     });
 
+    it('should have the property properties (base name: "properties")', function() {
+      // uncomment below and update the code to test the property properties
+      //var instance = new BonInABoxScriptService.InfoInputsValue();
+      //expect(instance).to.be();
+    });
+
     it('should have the property example (base name: "example")', function() {
       // uncomment below and update the code to test the property example
       //var instance = new BonInABoxScriptService.InfoInputsValue();

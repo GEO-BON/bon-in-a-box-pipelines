@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { Marker, MapContainer, TileLayer, GeoJSON, Popup, useMap } from "react-leaflet";
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import COGLayer from "./COGLayer";
 import TiTilerLayer from "./TiTilerLayer";
 import 'leaflet.markercluster'
 import ReactDOMServer from 'react-dom/server'
@@ -25,20 +24,6 @@ L.Icon.Default.mergeOptions({
   // iconUrl: require('leaflet/dist/images/marker-icon.png'),
   // shadowUrl: require('leaflet/dist/images/marker-shadow.png')
 })
-
-function addTiffLayer(url, range, setError) {
-  const fullUrl = url.startsWith("http") ? url : window.location.origin + url
-  if(fullUrl.startsWith("http://localhost")) {
-    // For relative paths on localhost, we cannot use the online tiler. 
-    // This will be easy to see since a completely different color map will be used.
-    return <COGLayer url={fullUrl} range={range} setError={setError} />
-  }
-
-  // There is a bug with georaster that overlaps tiles when using a remote COG.
-  // Our workaround is to use TiTiler to serve it as a tile layer instead.
-  // see https://matplotlib.org/stable/tutorials/colors/colormaps.html
-  return <TiTilerLayer url={fullUrl} range={range} setError={setError} />
-}
 
 function MarkerCluster({ markers }) {
   const map = useMap()
@@ -145,6 +130,9 @@ export default function MapResult({ tiff, range, json, markers }) {
       />
     }
 
-    {tiff && addTiffLayer(tiff, range, setError)}
+
+    {tiff &&
+      <TiTilerLayer url={tiff} range={range} setError={setError} />
+    }
   </MapContainer>
 }

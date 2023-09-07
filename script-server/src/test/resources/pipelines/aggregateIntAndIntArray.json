@@ -1,8 +1,6 @@
 {
   "nodes": [
     {
-      "width": 267,
-      "height": 45,
       "id": "0",
       "type": "io",
       "position": {
@@ -11,16 +9,9 @@
       },
       "data": {
         "descriptionFile": "assertArray.yml"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 739,
-        "y": 346
       }
     },
     {
-      "width": 258,
-      "height": 28,
       "id": "8",
       "type": "constant",
       "position": {
@@ -31,17 +22,9 @@
       "data": {
         "type": "int",
         "value": "11"
-      },
-      "selected": false,
-      "positionAbsolute": {
-        "x": 352,
-        "y": 318
-      },
-      "dragging": false
+      }
     },
     {
-      "width": 150,
-      "height": 39,
       "id": "9",
       "type": "output",
       "position": {
@@ -50,18 +33,9 @@
       },
       "data": {
         "label": "Output"
-      },
-      "targetPosition": "left",
-      "selected": false,
-      "positionAbsolute": {
-        "x": 1067,
-        "y": 337
-      },
-      "dragging": false
+      }
     },
     {
-      "width": 270,
-      "height": 28,
       "id": "10",
       "type": "constant",
       "position": {
@@ -75,13 +49,7 @@
           "12",
           "13"
         ]
-      },
-      "selected": true,
-      "positionAbsolute": {
-        "x": 349,
-        "y": 371
-      },
-      "dragging": false
+      }
     }
   ],
   "edges": [
@@ -107,9 +75,17 @@
       "id": "reactflow__edge-10-0array"
     }
   ],
-  "viewport": {
-    "x": 0,
-    "y": 0,
-    "zoom": 1
+  "inputs": {},
+  "outputs": {
+    "assertArray.yml@0|the_same": {
+      "description": "The same array as in the inputs. But this crashes if not an array",
+      "label": "Same value",
+      "type": "int[]",
+      "example": [
+        3,
+        4,
+        5
+      ]
+    }
   }
 }

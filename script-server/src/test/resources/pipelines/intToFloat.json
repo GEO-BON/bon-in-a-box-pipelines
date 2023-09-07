@@ -50,11 +50,6 @@
       "id": "reactflow__edge-0result-2"
     }
   ],
-  "viewport": {
-    "x": 0,
-    "y": 0,
-    "zoom": 1
-  },
   "inputs": {
     "divideFloat.yml@0|divider": {
       "description": "The divider",
@@ -67,5 +62,8 @@
       "type": "int",
       "example": 3
     }
+  },
+  "outputs": {
+    "divideFloat.yml@0|result": {}
   }
 }

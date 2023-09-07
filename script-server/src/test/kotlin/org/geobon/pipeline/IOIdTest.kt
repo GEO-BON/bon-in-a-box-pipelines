@@ -1,6 +1,7 @@
 package org.geobon.pipeline
 
-import kotlin.test.*
+import kotlin.test.Test
+import kotlin.test.assertEquals
 
 internal class IOIdTest {
 

@@ -2,6 +2,7 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.teststeps.RecordPipe
 import org.geobon.utils.withProductionPaths
 import org.geobon.utils.withProductionScripts
@@ -150,22 +151,21 @@ internal class PullLayersByIdTest {
 
 
     @Test
-    fun whenPullingNoLayers_thenErrorThrown() = runTest {
+    fun whenPullingNoLayers_thenMatrixUnchanged() = runTest {
         withProductionPaths {
-            step.inputs[PullLayersById.IN_WITH_IDS] = ConstantPipe("text", """
+            val matrix = """
                layer, current, change
                invalidId, 0.5, 0.2
                invalidId, 0.5, 0.8
                """.trimIndent()
-            )
+            step.inputs[PullLayersById.IN_WITH_IDS] = ConstantPipe("text", matrix)
             step.validateGraph().let {
                 assertTrue(it.isEmpty(), it)
             }
 
-            assertFailsWith<RuntimeException> {
-                step.execute()
-            }
-
+            step.execute()
+            
+            assertEquals(matrix, step.outputs[PullLayersById.OUT_WITH_LAYERS]!!.pull())
             assertTrue(finishLine.isEmpty())
         }
     }
@@ -199,7 +199,7 @@ internal class PullLayersByIdTest {
     @Test
     fun `given a pipeline with PullLayersById_when ran_then replaces the expected layer`() = runTest {
         withProductionScripts {
-            val pipeline = RootPipeline("pullLayersByIdTest.json",
+            val pipeline = createRootPipeline("pullLayersByIdTest.json",
             """{
                 "pipeline>PullLayersById.yml@9|with_ids": "layer, current, change\nfirstId, 0.2, 0.5\nGFW170E, 0.5, 0.2\nthirdId, 0.3, 0.3\n"
             }""".trimIndent())

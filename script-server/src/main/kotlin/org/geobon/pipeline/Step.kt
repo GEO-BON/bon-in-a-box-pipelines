@@ -44,14 +44,14 @@ abstract class Step(
         }
     }
 
-    open fun onInputsReceived(resolvedInputs: Map<String, Any>) {
+    open fun onInputsReceived(resolvedInputs: Map<String, Any?>) {
         // Default nothing
     }
 
-    protected abstract suspend fun execute(resolvedInputs: Map<String, Any>): Map<String, Any>
+    protected abstract suspend fun execute(resolvedInputs: Map<String, Any?>): Map<String, Any?>
 
-    protected open suspend fun resolveInputs(): Map<String, Any> {
-        val resolvedInputs = mutableMapOf<String, Any>()
+    protected open suspend fun resolveInputs(): Map<String, Any?> {
+        val resolvedInputs = mutableMapOf<String, Any?>()
         coroutineScope {
             inputs.forEach {
                 // This can happen in parallel coroutines

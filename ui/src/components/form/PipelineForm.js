@@ -1,96 +1,104 @@
-import React, { useState, useRef, useEffect } from 'react';
-import Select from 'react-select';
-import InputFileInput from './InputFileInput';
+import React, { useState, useRef, useEffect } from "react";
+import Select from "react-select";
+import InputFileInput from "./InputFileInput";
+import { useNavigate } from "react-router-dom";
+import { GeneralDescription, getFolderAndName } from "../StepDescription";
 
-const BonInABoxScriptService = require('bon_in_a_box_script_service');
+const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
 
-export function PipelineForm({ pipelineMetadata, setPipelineMetadata, setRunId, showHttpError }) {
+export function PipelineForm({
+  pipelineMetadata,
+  pipStates,
+  setPipStates,
+  showHttpError,
+  inputFileContent,
+  setInputFileContent,
+  runType
+}) {
   const formRef = useRef();
-
-  const defaultPipeline = "helloWorld.json";
+  const navigate = useNavigate();
   const [pipelineOptions, setPipelineOptions] = useState([]);
-
-  /**
-   * String: Content of input.json for this run
-   */
-  const [inputFileContent, setInputFileContent] = useState({});
 
   function clearPreviousRequest() {
     showHttpError(null);
-    setInputFileContent({})
-    setRunId(null);
-  }
-
-  function loadPipelineMetadata(choice) {
-    clearPreviousRequest();
-    setPipelineMetadata(null);
-
-    var callback = function (error, data, response) {
-      if (error) {
-        showHttpError(error, response);
-      } else if (data) {
-        setPipelineMetadata(data);
-      }
-    };
-
-    api.getPipelineInfo(choice, callback);
+    setInputFileContent({});
   }
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    runScript();
+    runPipeline();
   };
 
-  const runScript = () => {
-    var callback = function (error, data, response) {
-      if (error) { // Server / connection errors. Data will be undefined.
-        data = {};
-        showHttpError(error, response);
+  const handlePipelineChange = (label, value) => {
+    clearPreviousRequest();
+    let pipelineForUrl = value.replace(/.json$/i, "").replace(/.yml$/i, "")
+    navigate("/" + runType + "-form/" + pipelineForUrl);
+  };
 
-      } else if (data) {
-        setRunId(data);
+  const runPipeline = () => {
+    var callback = function (error, runId, response) {
+      if (error) {
+        // Server / connection errors. Data will be undefined.
+        showHttpError(error, response);
+      } else if (runId) {
+        const parts = runId.split(">");
+        let runHash = parts.at(-1);
+        let pipelineForUrl = parts.slice(0,-1).join(">")
+        if(pipStates.runHash === runHash) {
+          setPipStates({type: "rerun"});
+        }
+
+        navigate("/" + runType + "-form/" + pipelineForUrl + "/" + runHash);
       } else {
         showHttpError("Server returned empty result");
       }
     };
 
-    clearPreviousRequest();
     let opts = {
-      'body': JSON.stringify(inputFileContent)
+      body: JSON.stringify(inputFileContent),
     };
-    api.runPipeline(formRef.current.elements["pipelineChoice"].value, opts, callback);
+    api.run(runType, pipStates.descriptionFile, opts, callback);
   };
 
   // Applied only once when first loaded
   useEffect(() => {
-    // Load list of scripts into pipelineOptions
-    api.pipelineListGet((error, data, response) => {
+    // Load list of scripts/pipelines into pipelineOptions
+    api.getListOf(runType, (error, data, response) => {
       if (error) {
         console.error(error);
       } else {
         let newOptions = [];
-        data.forEach(script => newOptions.push({ label: script, value: script }));
+        Object.entries(data).forEach(([descriptionFile, pipelineName]) => {
+          newOptions.push({
+            label: getFolderAndName(descriptionFile, pipelineName),
+            value: descriptionFile
+          });
+        });
         setPipelineOptions(newOptions);
-        loadPipelineMetadata(defaultPipeline);
       }
     });
-    // Empty dependency array to get script list only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [runType, setPipelineOptions]);
 
-  return (
+  return pipelineOptions.length > 0 && (
     <form ref={formRef} onSubmit={handleSubmit} acceptCharset="utf-8">
-      <label htmlFor='pipelineChoice'>Pipeline:</label>
-      <Select id="pipelineChoice" name="pipelineChoice" className="blackText" options={pipelineOptions}
-        defaultValue={{ label: defaultPipeline, value: defaultPipeline }}
-        onChange={(v) => loadPipelineMetadata(v.value)} />
+      <label htmlFor="pipelineChoice">{runType === "pipeline" ? "Pipeline:" : "Script:"}</label>
+      <Select
+        id="pipelineChoice"
+        name="pipelineChoice"
+        className="blackText"
+        options={pipelineOptions}
+        value={pipelineOptions.find(o => o.value === pipStates.descriptionFile)}
+        menuPortalTarget={document.body}
+        onChange={(v) => handlePipelineChange(v.label, v.value)}
+      />
       <br />
+      {pipelineMetadata && <GeneralDescription ymlPath={pipStates.descriptionFile} metadata={pipelineMetadata} />}
       <InputFileInput
         metadata={pipelineMetadata}
         inputFileContent={inputFileContent}
-        setInputFileContent={setInputFileContent} />
+        setInputFileContent={setInputFileContent}
+      />
       <br />
       <input type="submit" disabled={false} value="Run pipeline" />
     </form>
