@@ -1,5 +1,11 @@
 script: protcon_analyisis.R
-description: "This script a connectivity analysis between spatial units (ej. protected areas) using a distance matrix within a specified study area. It identifies connected pairs of spatial units based on a specified distance threshold and generates a connectivity table with connectivity status"
+name: Connectivity of PAs
+author: 
+ - name: Maria Alejandra Molina Berbeo
+ - name: Victor Julio Rincon
+description: This script a connectivity analysis between spatial units (ej. protected areas) using a distance matrix within a specified study area. It identifies connected pairs of spatial units based on a specified distance threshold and generates a connectivity table with connectivity status
+external_link: https://github.com/GEO-BON/biab-2.0
+
 inputs:
   mtx_distance:
     label: mtx_distance

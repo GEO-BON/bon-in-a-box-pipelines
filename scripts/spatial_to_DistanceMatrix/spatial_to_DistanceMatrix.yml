@@ -1,5 +1,9 @@
 script: spatial_to_DistanceMatrix.R
-description: "This script calculates a distance matrix between spatial units from a spatial file. It reads the spatial data from the file, which contains the geographic information of the spatial units, such as their boundaries or centroids"
+name: distances matrix
+description: This script calculates a distance matrix between spatial units from a spatial file. It reads the spatial data from the file, which contains the geographic information of the spatial units, such as their boundaries or centroids
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   studyarea_wkt:

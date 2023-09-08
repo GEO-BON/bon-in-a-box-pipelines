@@ -1,5 +1,9 @@
 script: studyarea_to_WKT.R
-description: "This script converts the geometry of the study area into a well-known text (WKT) representation."
+name: Study area geometry to WKT
+description: This script converts the geometry of the study area into a well-known text (WKT) representation.
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   studyarea_path:
