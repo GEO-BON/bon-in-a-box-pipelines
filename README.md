@@ -28,7 +28,7 @@ To run:
 4. Provide an environment file (.env) in the root folder with the following keys
     ```
     # Windows only - path to the root directory of the project with forward slashes
-    # Uncomment line and specify path with forward slashes such as PWD=/c/User/me/biab-2.0
+    # Uncomment line and specify path with forward slashes such as PWD=/c/Users/me/biab-2.0
     #PWD=
 
     # Access the planetary computer APIs
