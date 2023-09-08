@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import YAMLTextArea from "./YAMLTextArea";
 import { InputsDescription } from "../StepDescription";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
