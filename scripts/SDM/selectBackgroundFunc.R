@@ -24,6 +24,8 @@ create_background <- function(
     width_buffer = NULL,
     raster = NULL) {
   
+  method <- match.arg(method)
+  
   proj <- terra::crs(predictors, proj = T)
   
   ## New method: If we use raster, we re-project our raster and add it as an additional layer
