@@ -17,7 +17,7 @@
 create_background <- function(
     predictors,
     mask = NULL,
-    method = "random",
+    method = c("random","weighted_raster","unweighted_raster","inclusion_buffer","biased","thickening"),
     n = 10000,  
     obs = NULL,
     density_bias = NULL,
