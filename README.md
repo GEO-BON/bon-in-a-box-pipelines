@@ -324,4 +324,4 @@ The linked content is intended for those developing the microservice infrastruct
 
 [Developer documentation](/README-dev.md)
 
-[Protcon documentation](pipelines/Protcon%20pipeline\Protcon-pipeline.md)
+[Protcon documentation](pipelines/Protcon%20pipeline/Protcon-pipeline.md)
