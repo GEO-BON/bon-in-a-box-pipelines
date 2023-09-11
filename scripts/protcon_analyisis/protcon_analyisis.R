@@ -48,9 +48,9 @@ output<- tryCatch({
   
   spatial_unit_data$date<- as.Date(spatial_unit_data$date, format = "%Y-%m-%d")
   
-  
-  start_date<- {if(is.null(input$time_start)|input$time_start=="NULL"){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
-  end_date<- {if(is.null(input$time_end)|input$time_end=="NULL"){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
+
+  start_date<- {if(is.null(input$time_start) || input$time_start=="NULL"){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
+  end_date<- {if(is.null(input$time_end) || input$time_end=="NULL"){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
   
   
   period_time<- paste(timechange:::parse_rounding_unit(input$time_interval), collapse = " "  )

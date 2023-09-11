@@ -59,12 +59,12 @@ inputs:
     label: start time
     description: Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis
     type: text
-    example: "NULL"
+    example: null
   time_end:
     label: end time 
     description: Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis
     type: text
-    example: "NULL"
+    example: null
 outputs:
   protcon_result:
     label: protcon results
