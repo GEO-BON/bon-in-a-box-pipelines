@@ -9,12 +9,12 @@
 #' @export
 
 run_maxent <- function(presence.bg, with_raster = F,
-                        algorithm = "maxnet",
+                        algorithm = "maxent.jar",
                         layers = c(),
                         factors = NULL,
                         predictors = NULL,
                         partition_type = "crossvalidation",
-                        nfolds = 5,
+                        n_folds = 5,
                         orientation_block = "lat_lon",
                         fc = "L", rm =1,
                         parallel = T,
@@ -32,11 +32,11 @@ run_maxent <- function(presence.bg, with_raster = F,
                             categoricals = factors,     
                             algorithm = algorithm,
                             partitions = partition_type, 
-                            partition.settings = list(kfold = nfolds, orientation =  orientation_block),
+                            partition.settings = list(kfolds = n_folds, orientation =  orientation_block),
                             tune.args = list(fc = fc, rm = rm),
                             parallel =  parallel,
                             updateProgress = updateProgress,
-                            parallelType = )
+                            parallelType = parallelType)
     
     
   } else {
@@ -46,7 +46,7 @@ run_maxent <- function(presence.bg, with_raster = F,
                             algorithm = algorithm,
                             categoricals = factors,
                             partitions = partition_type, 
-                            partition.settings = list(kfold = nfolds, orientation =  orientation_block),
+                            partition.settings = list(kfolds = n_folds, orientation =  orientation_block),
                             tune.args = list(fc = fc, rm = rm),
                             parallel =  parallel,
                             updateProgress = updateProgress,

@@ -4,6 +4,11 @@
 
 ## Load required packages
 
+memtot<-as.numeric(system("awk '/MemTotal/ {print $2}' /proc/meminfo", intern=TRUE))/1024^2
+memallow<-floor(memtot*0.9) # 90% of total available memory
+print(paste0(memallow,"G of RAM allowed to Java heap space"))
+options(java.parameters = paste0("-Xmx",memallow,"g"))
+
 library("terra")
 library("rjson")
 library("raster")
@@ -30,11 +35,11 @@ presence_background <- read.table(file = input$presence_background, sep = '\t', 
 predictors <- terra::rast(unlist(input$predictors))
 mod_tuning <- run_maxent(presence_background, 
                          with_raster = F, # can be set to F to speed up
-                         algorithm = "maxnet",
+                         algorithm = "maxent.jar",
                          layers = names(predictors),
                          predictors = predictors,
                          partition_type = input$partition_type,
-                         nfolds = input$nfolds,
+                         n_folds = input$n_folds,
                          orientation_block = input$orientation_block,
                          factors = NULL,
                          #used if partition_type is "randomkfold"
@@ -50,7 +55,7 @@ tuned_param <- select_param(res_tuning, method = input$method_select_params, lis
 predictors <- raster::stack(predictors)
 
 sdms <- predict_maxent(presence_background,
-  algorithm = "maxnet", 
+  algorithm = "maxent.jar", 
                            predictors = predictors,
                            fc = tuned_param[[1]],
                            rm = tuned_param[[2]],
