@@ -4,8 +4,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 535,
-        "y": 220
+        "x": 701,
+        "y": 50.5
       },
       "data": {
         "descriptionFile": "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml"
@@ -15,8 +15,8 @@
       "id": "27",
       "type": "io",
       "position": {
-        "x": 69,
-        "y": 219
+        "x": 62,
+        "y": 60.5
       },
       "data": {
         "descriptionFile": "studyarea_to_WKT>studyarea_to_WKT.yml"
@@ -26,8 +26,8 @@
       "id": "41",
       "type": "io",
       "position": {
-        "x": 1151,
-        "y": 207
+        "x": 1383,
+        "y": 40.5
       },
       "data": {
         "descriptionFile": "protcon_analyisis>protcon_analyisis.yml"
@@ -37,8 +37,8 @@
       "id": "42",
       "type": "output",
       "position": {
-        "x": 1547,
-        "y": 211
+        "x": 1895,
+        "y": 33
       },
       "data": {
         "label": "Output"
@@ -123,13 +123,13 @@
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file": {
       "description": "String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix",
-      "label": "path to spatial file",
+      "label": "spatial file",
       "type": "text",
       "example": "/scripts/spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|column_group": {
       "description": "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.",
-      "label": "name of grouping atribute",
+      "label": "name of grouping attribute",
       "type": "text[]",
       "example": [
         "id_pa",
@@ -138,7 +138,7 @@
     },
     "studyarea_to_WKT>studyarea_to_WKT.yml@27|studyarea_path": {
       "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
-      "label": "path to study area geometry",
+      "label": "study area geometry",
       "type": "text",
       "example": "/scripts/studyarea_to_WKT/input/Arauca.gpkg"
     },
@@ -169,17 +169,19 @@
     "protcon_analyisis>protcon_analyisis.yml@41|time_start": {
       "description": "Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "start time",
-      "type": "text",
-      "example": "NULL"
+      "type": "text"
     },
     "protcon_analyisis>protcon_analyisis.yml@41|time_end": {
       "description": "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "end time",
-      "type": "text",
-      "example": "NULL"
+      "type": "text"
     }
   },
   "outputs": {
-    "protcon_analyisis>protcon_analyisis.yml@41|protcon_result": {}
+    "protcon_analyisis>protcon_analyisis.yml@41|protcon_result": {
+      "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
+      "label": "protcon results",
+      "type": "text/csv"
+    }
   }
 }
