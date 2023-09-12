@@ -41,8 +41,8 @@
       "id": "4",
       "type": "io",
       "position": {
-        "x": 868.1573791503906,
-        "y": 393.63392639160156
+        "x": 846.1573791503906,
+        "y": 375.63392639160156
       },
       "data": {
         "descriptionFile": "00_load_collection>load_collection.yml"
@@ -105,6 +105,17 @@
       "data": {
         "type": "int",
         "value": 1000
+      }
+    },
+    {
+      "id": "10",
+      "type": "output",
+      "position": {
+        "x": 1356.1573791503906,
+        "y": 533.2291717529297
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -171,6 +182,13 @@
       "target": "4",
       "targetHandle": "epsg",
       "id": "reactflow__edge-0val_studyarea_epsg-4epsg"
+    },
+    {
+      "source": "4",
+      "sourceHandle": "dir_data_area",
+      "target": "10",
+      "targetHandle": null,
+      "id": "reactflow__edge-4dir_data_area-10"
     }
   ],
   "inputs": {
@@ -207,6 +225,11 @@
     "00_load_collection>load_collection.yml@4|dir_data_layer": {
       "description": "dir_data_layer",
       "label": "dir_data_layer",
+      "type": "text/csv"
+    },
+    "00_load_collection>load_collection.yml@4|dir_data_areas": {
+      "description": "dir_data_areas",
+      "label": "dir_data_areas",
       "type": "text/csv"
     }
   }

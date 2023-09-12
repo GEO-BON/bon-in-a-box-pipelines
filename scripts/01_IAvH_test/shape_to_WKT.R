@@ -57,13 +57,13 @@ dir_wkt<- file.path(outputFolder, "wkt_polygon_test.txt")
 writeLines(wkt_polygon, dir_wkt )
 
 
-dir_GeoJSON<- file.path(outputFolder, "wkt_polygon_test.geojson")
+dir_geojson<- file.path(outputFolder, "wkt_polygon_test.geojson")
 geojson_polygon<- sf::st_as_sf(vector_polygon) %>% sf::st_transform(4326)
-sf::st_write(geojson_polygon, dir_GeoJSON, overwrite=T)
+sf::st_write(geojson_polygon, dir_geojson, overwrite=T)
 
 
 # Definir output final 
-output<- list(dir_wkt= dir_wkt,dir_GeoJSON= dir_GeoJSON, epsg= input$epsg)
+output<- list(dir_wkt= dir_wkt,dir_geojson= dir_geojson, epsg= input$epsg)
 
 }, error = function(e) { list(error= conditionMessage(e)) })
 
