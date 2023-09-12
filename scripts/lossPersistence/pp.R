@@ -1,6 +1,6 @@
 # Instalar librerias necesarias
 packagesPrev<- installed.packages()[,"Package"]
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "gdalUtilities")
+packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "gdalUtilities","sp")
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    })
 
 # Cargar librerias
@@ -193,7 +193,7 @@ unlink(dir_stack, recursive = TRUE); dir.create(dir_stack); setwd(dir_stack)
 
 setwd(dir_stack)
 lapply(terra_mask_layers, function(x)
-    terra::writeRaster(x, paste0(names(x), ".tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"),  filetype = "GTiff", overwrite = TRUE ))
+    terra::writeRaster(x, paste0(names(x), ".tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"),  filetype = "COG", overwrite = TRUE ))
 
 
 # Exportar area rasterizada 4326
