@@ -1,15 +1,21 @@
 
 
 #' @title Create background points
+#' 
+#' @description 
+#' Generates background points using any of the six available methods.
+#' 
+#' @details
+#' When `method = "random"`, background points are randomly sampled throughout the whole study extent. When `method = "weighted_raster"`, background points are sampled in proportion to the number of observations of a target group in an observation density raster. When `method = "unweighted_raster"`, background points are sampled only in cells where there are observations from a target group. With `method = "inclusion_buffer"`, background points are sampled within a buffer around observations (to be confirmed...). With `method = "thickening"`, background points are sampled in proportion the local density of observations by sampling in a buffer around each observation (to be confirmed...). Finally, when `method = "biased"`, a `density_bias` raster representing the effort is given and background points are sampled in proportion to this raster (to be confirmed...).  
 #'
 #' @name create_background
-#' @param predictors spat raster, containing the predictor variables
-#' @param mask, spat vector, mask to apply to the predictors.
-#' @param method string, random, inclusion_buffer (thickening or biased), or raster (unweighted or weighted)
-#' @param n integer, number of background points to select.
-#' @param obs data.frame, containing the observations. Used with method == "thickening" or "inclusion_buffer"
-#' @param width_buffer int, buffer width around observations. Used with method ==  "inclusion_buffer"
-#' @param species string, species name.
+#' @param predictors SpatRasterr, containing the predictor variables
+#' @param mask SpatVector, mask to apply to the predictors.
+#' @param method one of "random","weighted_raster","unweighted_raster","inclusion_buffer","biased","thickening".
+#' @param n integer, number of background points to sample.
+#' @param obs data.frame, containing the observations. Used with "thickening" or "inclusion_buffer".
+#' @param density_bias SpatRaster giving an effort/bias surface from which background points are sampled
+#' @param width_buffer int, buffer width around observations.  Used with "thickening" or "inclusion_buffer".
 #' @param raster SpatRaster, raster heatmap used for weighted or unweighted sampling, default NULL when not using those methods
 #' @return spatial points
 #' @export
@@ -196,7 +202,7 @@ create_background <- function(
 
 
 calculate_dist_buffer <- function(obs, n = 1000) {
-  #Uses the first 1000 points (randomly sampled) to create buffers and distances
+  # uses the first 1000 points (randomly sampled) to create buffers and distances
   if (nrow(obs) > n) {
     nb_buffer_point <- n
   } else {
