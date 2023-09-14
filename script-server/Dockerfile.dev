@@ -17,4 +17,4 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends python3 libc6-dev; \
     apt-get clean all;
 
-RUN echo "dev" > /timestamp.txt 
+RUN echo "dev" > /version.txt 

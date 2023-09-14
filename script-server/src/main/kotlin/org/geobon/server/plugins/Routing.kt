@@ -214,12 +214,12 @@ fun Application.configureRouting() {
 
         get("/api/versions") {
             call.respond("""
-                UI: ${"docker exec -i biab-ui cat /timestamp.txt".runCommand()}
-                Script server: ${"cat /timestamp.txt".runCommand()}
+                UI: ${"docker exec -i biab-ui cat /version.txt".runCommand()}
+                Script server: ${"cat /version.txt".runCommand()}
                    ${"python3 --version".runCommand()}
-                R runner: ${"docker exec -i biab-runner-r cat /timestamp.txt".runCommand()}
+                R runner: ${"docker exec -i biab-runner-r cat /version.txt".runCommand()}
                    ${"docker exec -i biab-runner-r Rscript --version".runCommand()}
-                Julia runner: ${"docker exec -i biab-runner-julia cat /timestamp.txt".runCommand()}
+                Julia runner: ${"docker exec -i biab-runner-julia cat /version.txt".runCommand()}
                    ${"docker exec -i biab-runner-julia julia --version".runCommand()}
                 TiTiler: ${
                     "docker inspect --type=image -f '{{ .Created }}' ghcr.io/developmentseed/titiler".runCommand()
