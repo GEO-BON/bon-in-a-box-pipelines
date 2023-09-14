@@ -746,7 +746,9 @@ export function PipelineEditor(props) {
 
               <IOList
                 inputList={inputList}
+                setInputList={setInputList}
                 outputList={outputList}
+                setOutputList={setOutputList}
                 selectedNodes={selectedNodes}
               />
 

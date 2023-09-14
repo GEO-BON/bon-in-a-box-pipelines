@@ -3,7 +3,13 @@ import React, { useState } from "react";
 /**
  * @returns rendered view of the pipeline inputs and outputs
  */
-export const IOList = ({ inputList, outputList, selectedNodes }) => {
+export const IOList = ({
+  inputList,
+  setInputList, 
+  outputList, 
+  setOutputList, 
+  selectedNodes
+}) => {
   const [collapsedPane, setCollapsedPane] = useState(false);
   return (
     <div className={`ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
@@ -36,7 +42,9 @@ export const IOList = ({ inputList, outputList, selectedNodes }) => {
                 <p>
                   {input.label}
                   <br />
-                  <span className="description">{input.description}</span>
+                  <textarea className="description"
+                    onBlur={e => valueEdited(e.target, "description", input, setInputList)}
+                    defaultValue={input.description}></textarea>
                 </p>
               </div>
             );
@@ -58,7 +66,9 @@ export const IOList = ({ inputList, outputList, selectedNodes }) => {
                 <p>
                   {output.label}
                   <br />
-                  <span className="description">{output.description}</span>
+                  <textarea className="description"
+                    onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
+                    defaultValue={output.description}></textarea>
                 </p>
               </div>
             );
@@ -68,3 +78,17 @@ export const IOList = ({ inputList, outputList, selectedNodes }) => {
     </div>
   );
 };
+
+function valueEdited(subject, valueKey, io, setter) {
+  setter(previousValues => previousValues.map(previousIO => {
+    let newIO = {...previousIO}
+    if(previousIO.nodeId === io.nodeId
+      && previousIO.inputId === io.inputId
+      && previousIO.outputId === io.outputId) {
+        newIO[valueKey] = subject.value
+        console.log("subject.value")
+      }
+
+      return newIO
+  }))
+}
