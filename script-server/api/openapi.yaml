@@ -200,7 +200,7 @@ paths:
                   UI: 2023-09-07 19:24
                   Script server: 2023-09-07 19:24
                   Python: Python 3.10.6
-                  R runner: cat: /timestamp.txt: No such file or directory
+                  R runner: 2023-09-07 19:24
                   Rscript: Rscript (R) version 4.2.3 (2023-03-15)
                   Julia runner: 2023-09-07 19:24
                   Julia: julia version 1.8.1
