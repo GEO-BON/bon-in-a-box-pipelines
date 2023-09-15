@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import AutoResizeTextArea from "../form/AutoResizeTextArea";
 
 /**
  * @returns rendered view of the pipeline inputs and outputs
@@ -40,11 +41,15 @@ export const IOList = ({
                   : ""}
               >
                 <p>
-                  {input.label}
+                <AutoResizeTextArea className="label" keepWidth={true}
+                    onBlur={e => valueEdited(e.target, "label", input, setInputList)}
+                    onInput={preventNewLines}
+                    defaultValue={input.label}></AutoResizeTextArea>
+                  
                   <br />
-                  <textarea className="description"
+                  <AutoResizeTextArea className="description" keepWidth={true}
                     onBlur={e => valueEdited(e.target, "description", input, setInputList)}
-                    defaultValue={input.description}></textarea>
+                    defaultValue={input.description}></AutoResizeTextArea>
                 </p>
               </div>
             );
@@ -64,11 +69,14 @@ export const IOList = ({
                   : ""}
               >
                 <p>
-                  {output.label}
+                <AutoResizeTextArea className="label" keepWidth={true}
+                    onBlur={e => valueEdited(e.target, "label", output, setOutputList)}
+                    onInput={preventNewLines}
+                    defaultValue={output.label}></AutoResizeTextArea>
                   <br />
-                  <textarea className="description"
+                  <AutoResizeTextArea className="description" keepWidth={true}
                     onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
-                    defaultValue={output.description}></textarea>
+                    defaultValue={output.description}></AutoResizeTextArea>
                 </p>
               </div>
             );
@@ -86,9 +94,12 @@ function valueEdited(subject, valueKey, io, setter) {
       && previousIO.inputId === io.inputId
       && previousIO.outputId === io.outputId) {
         newIO[valueKey] = subject.value
-        console.log("subject.value")
       }
 
       return newIO
   }))
+}
+
+function preventNewLines(event){
+  event.target.value = event.target.value.replaceAll("\n", "")
 }
