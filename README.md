@@ -101,7 +101,7 @@ description: # Targetted to those who will interpret pipeline results and edit p
 author: # 1 to many
   - name: # Full name
     identifier: # Optional, full URL of a unique digital identifier such as an ORCID
-license: # Optional, examples here: https://creativecommons.org/about/cclicenses/
+license: # Optional. If unspecified, the project's MIT license will apply.
 external_link: # Optional, link to a separate project, github repo, etc.
 timeout: # Optional, in minutes. By defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
 
