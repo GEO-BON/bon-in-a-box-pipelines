@@ -283,7 +283,7 @@ function PipelineResults({
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
   useEffect(() => {
-    if(!isEmptyObject(resultsData)) {
+    if(!isPipeline && !isEmptyObject(resultsData)) {
       setActiveRenderer(Object.keys(resultsData)[0])
     }
   }, [resultsData, setActiveRenderer])
