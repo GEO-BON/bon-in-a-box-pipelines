@@ -131,6 +131,7 @@ export function PipelinePage({runType}) {
   }
 
   function loadPipelineMetadata(choice, setExamples = true) {
+    setHttpError(null)
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
