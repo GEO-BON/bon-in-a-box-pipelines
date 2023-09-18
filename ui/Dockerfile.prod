@@ -1,5 +1,5 @@
 
-FROM node:current-alpine3.15 as builder
+FROM node:current-alpine3.18 as builder
 
 WORKDIR /app
 ENV PATH /app/node_modules/.bin:$PATH
@@ -29,3 +29,5 @@ COPY ./http-proxy/conf.d/nginx.conf /etc/nginx/conf.d/nginx.conf
 
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"] 
+
+RUN date +"%Y-%m-%d %R" > /version.txt 

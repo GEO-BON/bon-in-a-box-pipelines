@@ -7,10 +7,13 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.launch
 import org.geobon.pipeline.*
 import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
 import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
+import org.geobon.utils.runCommand
 import org.geobon.utils.toMD5
 import org.json.JSONObject
 import org.slf4j.Logger
@@ -55,7 +58,6 @@ fun Application.configureRouting() {
             }
 
             val possible = mutableMapOf<String, String>()
-            val relPathIndex = root.absolutePath.length + 1
             root.walkTopDown().forEach { file ->
                 if (file.extension == extension) {
                     val relativePath = file.relativeTo(root).path.replace('/', FILE_SEPARATOR)
@@ -208,6 +210,21 @@ fun Application.configureRouting() {
                 logger.debug("Cancelled $id")
                 call.respond(HttpStatusCode.OK)
             } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
+        }
+
+        get("/api/versions") {
+            call.respond("""
+                UI: ${"docker exec -i biab-ui cat /version.txt".runCommand()}
+                Script server: ${"cat /version.txt".runCommand()}
+                   ${"python3 --version".runCommand()}
+                R runner: ${"docker exec -i biab-runner-r cat /version.txt".runCommand()}
+                   ${"docker exec -i biab-runner-r Rscript --version".runCommand()}
+                Julia runner: ${"docker exec -i biab-runner-julia cat /version.txt".runCommand()}
+                   ${"docker exec -i biab-runner-julia julia --version".runCommand()}
+                TiTiler: ${
+                    "docker inspect --type=image -f '{{ .Created }}' ghcr.io/developmentseed/titiler".runCommand()
+                    ?.let { it.substring(0, it.lastIndexOf(':')).replace('T', ' ') }}
+                """.trimIndent())
         }
     }
 }

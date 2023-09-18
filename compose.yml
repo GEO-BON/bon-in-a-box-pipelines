@@ -76,7 +76,7 @@ services:
 
   tiler:
     container_name: biab-tiler
-    image: ghcr.io/developmentseed/titiler:0.12.0
+    image: ghcr.io/developmentseed/titiler:latest
     volumes:
       - ./output:/output:rw
     environment:
