@@ -47,8 +47,7 @@ function App() {
       } />
 
       <Route path="*" element={
-        <Layout left={<StepChooser />}
-          right={<NotFound />} />
+        <Layout right={<NotFound />} />
       } />
 
     </Routes>
