@@ -287,7 +287,7 @@ function PipelineResults({
     if(!isPipeline && !isEmptyObject(resultsData)) {
       setActiveRenderer(Object.keys(resultsData)[0])
     }
-  }, [resultsData, setActiveRenderer])
+  }, [resultsData, isPipeline, setActiveRenderer])
 
   useEffect(() => {
     // Put outputResults at initial value
