@@ -43,13 +43,13 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
     case 'int':
       return <input type='text' {...passedProps} defaultValue={value}
         placeholder={CONSTANT_PLACEHOLDER}
-        onKeyDown={e => { if (e.code === "Enter") onValueUpdated(parseInt(e.target.value)) }}
+        onKeyDown={e => { if (e.key === "Enter") onValueUpdated(parseInt(e.target.value)) }}
         onBlur={e => onValueUpdated(parseInt(e.target.value))} />
 
     case 'float':
       return <input type='text' {...passedProps} defaultValue={value}
         placeholder={CONSTANT_PLACEHOLDER}
-        onKeyDown={e => { if (e.code === "Enter") onValueUpdated(parseFloat(e.target.value)) }}
+        onKeyDown={e => { if (e.key === "Enter") onValueUpdated(parseFloat(e.target.value)) }}
         onBlur={e => onValueUpdated(parseFloat(e.target.value))} />
 
     default:
@@ -67,7 +67,7 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
         return <AutoResizeTextArea {...props} />
       } else {
         return <input type='text' {...props} 
-          onKeyDown={e => { if (e.code === "Enter") updateValue(e) }} />
+          onKeyDown={e => { if (e.key === "Enter") updateValue(e) }} />
       }
   }
 }
