@@ -78,7 +78,7 @@ services:
     container_name: biab-tiler
     image: ghcr.io/developmentseed/titiler:latest
     volumes:
-      - ./output:/output:rw
+      - ./output:/output:ro
     environment:
       - PORT=8000
       - WORKERS_PER_CORE=1
