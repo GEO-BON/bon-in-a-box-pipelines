@@ -188,6 +188,7 @@ paths:
   /api/versions:
     get:
       summary: Returns the version of system components.
+      operationId: getVersions
       responses:
         "200":
           description: The version of system components.

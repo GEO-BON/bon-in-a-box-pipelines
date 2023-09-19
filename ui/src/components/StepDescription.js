@@ -40,8 +40,8 @@ export function GeneralDescription({ ymlPath, metadata }) {
                     {metadata.author.map((author, i, array) => {
                         let comma = (i !== array.length - 1) && ',' // Comma will be inside link but the space outside the link.
                         return author.identifier ?
-                            <><a href={author.identifier} target="_blank">{author.name}{comma}</a> </>
-                            : <>{author.name}{comma} </>
+                            <span key={i}><a href={author.identifier} target="_blank">{author.name}{comma}</a> </span>
+                            : <span key={i}>{author.name}{comma} </span>
                     })}
                 </i>
             </p>

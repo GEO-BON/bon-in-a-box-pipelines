@@ -14,6 +14,7 @@ import { PipelinePage } from "./components/PipelinePage";
 import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
 import StepChooser from "./components/PipelineEditor/StepChooser";
 import { Layout } from './Layout.js';
+import Versions from './components/Versions';
 
 function NotFound() {
   const location = useLocation()
@@ -46,9 +47,12 @@ function App() {
           setPopupContent={setPopupContent} />
       } />
 
+      <Route path="versions" element={
+        <Layout right={<Versions />} />
+      } />
+
       <Route path="*" element={
-        <Layout left={<StepChooser />}
-          right={<NotFound />} />
+        <Layout right={<NotFound />} />
       } />
 
     </Routes>
