@@ -35,7 +35,7 @@ export function Layout(props) {
           &nbsp;|&nbsp;
           <NavLink to="/pipeline-editor">Pipeline editor</NavLink>
           &nbsp;|&nbsp;
-          <a href="api/versions" target="_blank">Server info</a>
+          <NavLink to="/versions">Server info</NavLink>
         </nav>
 
         {props.popupContent && 

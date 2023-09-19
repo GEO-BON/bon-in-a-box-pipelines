@@ -87,7 +87,7 @@ class InfoAuthorInner {
 InfoAuthorInner.prototype['name'] = undefined;
 
 /**
- * Unique digital identifier such as an ORCID
+ * Full URL of a unique digital identifier such as an ORCID
  * @member {String} identifier
  */
 InfoAuthorInner.prototype['identifier'] = undefined;

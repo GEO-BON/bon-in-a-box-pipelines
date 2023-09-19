@@ -131,6 +131,7 @@ export function PipelinePage({runType}) {
   }
 
   function loadPipelineMetadata(choice, setExamples = true) {
+    setHttpError(null)
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
@@ -283,10 +284,10 @@ function PipelineResults({
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
   useEffect(() => {
-    if(!isEmptyObject(resultsData)) {
+    if(!isPipeline && !isEmptyObject(resultsData)) {
       setActiveRenderer(Object.keys(resultsData)[0])
     }
-  }, [resultsData, setActiveRenderer])
+  }, [resultsData, isPipeline, setActiveRenderer])
 
   useEffect(() => {
     // Put outputResults at initial value
