@@ -308,7 +308,7 @@ Pipeline inputs and outputs then appear in a collapsible pane on the right of th
 
 <img src="https://github.com/GEO-BON/biab-2.0/assets/6223744/215b75db-7198-486d-880d-87c0b340668b" height="218">
 
-
+Once edited, make sure to save your work before leaving the page.
 
 ### Saving and loading
 The editor _does not_ allow you to edit files live on the server. Files need to be committed to the github repo using git.
