@@ -250,13 +250,49 @@ aside.stepChooser .description {
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 10px;
+  padding-right: 20px;
+}
+
+.ioList h3 {
+  padding-left: 6px;
+}
+
+.ioList .label {
+  font-weight: bold;
 }
 
 .ioList .description {
   font-size: small;
-  color: gray;
+}
+
+.ioList textarea {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  resize: none;
+  font-family: inherit;
+  padding: 3px 6px;
+}
+
+.ioList textarea:hover {
+  background: url("../../img/pen.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 1.5em;
+  border: 1px solid  #bbb;
+  padding: 2px 5px;
+}
+
+.ioList textarea:focus {
+  border:1px solid #0c947b;
+  background-color: unset;
+  resize: both;
+  padding: 2px 5px;
+}
+
+.ioList textarea:hover:focus {
+  background: none;
 }
 
 .collapseTab {
