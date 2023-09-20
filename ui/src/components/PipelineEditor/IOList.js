@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import AutoResizeTextArea from "../form/AutoResizeTextArea";
+import { toIOId } from "../../utils/IOId";
 
 /**
  * @returns rendered view of the pipeline inputs and outputs
@@ -32,10 +33,10 @@ export const IOList = ({
         <h3>User inputs</h3>
         {inputList.length === 0
           ? "No inputs"
-          : inputList.map((input, i) => {
+          : inputList.map((input) => {
             return (
               <div
-                key={i}
+                key={toIOId(input.file, input.nodeId, input.inputId)}
                 className={selectedNodes.find((node) => node.id === input.nodeId)
                   ? "selected"
                   : ""}
@@ -60,10 +61,10 @@ export const IOList = ({
             At least one output is needed for the pipeline to run
           </p>
         ) : (
-          outputList.map((output, i) => {
+          outputList.map((output) => {
             return (
               <div
-                key={i}
+                key={toIOId(output.file, output.nodeId, output.outputId)}
                 className={selectedNodes.find((node) => node.id === output.nodeId)
                   ? "selected"
                   : ""}
