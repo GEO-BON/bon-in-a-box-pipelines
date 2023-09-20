@@ -25,7 +25,9 @@ export const IOList = ({
               {inputList.length < 10 && <>&nbsp;</>}
               {inputList.length}&nbsp;Inputs,&nbsp;
               {outputList.length < 10 && <>&nbsp;</>}
-              {outputList.length}&nbsp;Outputs
+              <span className={outputList.length === 0 && "errorText"}>
+                {outputList.length}&nbsp;Outputs
+              </span>
             </span>
           </>
           : ">>"}

@@ -129,6 +129,11 @@ img#logo {
   margin: 0em .5em -.3em -.5em; 
 }
 
+.errorText {
+  color: hsl(0, 100%, 27%);
+  font-weight: bold;
+}
+
 .error {
   color: hsl(0, 100%, 27%);
   background-image: url(img/error.svg);
