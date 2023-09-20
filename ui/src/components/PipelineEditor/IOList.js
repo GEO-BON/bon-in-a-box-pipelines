@@ -10,7 +10,8 @@ export const IOList = ({
   setInputList, 
   outputList, 
   setOutputList, 
-  selectedNodes
+  selectedNodes,
+  editSession
 }) => {
   const [collapsedPane, setCollapsedPane] = useState(false);
   return (
@@ -36,7 +37,7 @@ export const IOList = ({
           : inputList.map((input) => {
             return (
               <div
-                key={toIOId(input.file, input.nodeId, input.inputId)}
+                key={editSession + "|" + toIOId(input.file, input.nodeId, input.inputId)}
                 className={selectedNodes.find((node) => node.id === input.nodeId)
                   ? "selected"
                   : ""}
@@ -64,7 +65,7 @@ export const IOList = ({
           outputList.map((output) => {
             return (
               <div
-                key={toIOId(output.file, output.nodeId, output.outputId)}
+                key={editSession + "|" + toIOId(output.file, output.nodeId, output.outputId)}
                 className={selectedNodes.find((node) => node.id === output.nodeId)
                   ? "selected"
                   : ""}
