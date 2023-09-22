@@ -230,20 +230,20 @@ aside.stepChooser .description {
   color: black;
 
   overflow-x: visible;
-  width: 30%;
-  max-width: 400px;
 
   position: absolute;
+  left: max(2em, calc(100% - 400px));
   top: 3em;
   right: 0px;
   bottom: 190px;
 
   z-index: 1500;
-  transition: width 0.5s;
+  transition: left 0.5s, right 0.5s;
 }
 
 .paneCollapsed.ioList {
-  width: 0px !important;
+  left: 100% !important;
+  right: max(-400px, calc(2em - 100%));
 }
 
 .ioListInner {
@@ -276,12 +276,26 @@ aside.stepChooser .description {
 }
 
 .ioList textarea:hover {
-  background: url("../../img/pen.svg");
-  background-repeat: no-repeat;
-  background-position: right;
-  background-size: 1.5em;
-  border: 1px solid  #bbb;
+  border: 1px solid #bbb;
   padding: 2px 5px;
+}
+
+.imgHoverAppear img {
+  visibility: hidden;
+  cursor: pointer;
+
+  width: 1.5em;
+  position: absolute;
+  right: 12px;
+  margin-top: 4px;
+}
+
+.imgHoverAppear:hover img {
+  visibility: visible;
+}
+
+.imgHoverAppear:focus-within img {
+  visibility: hidden;
 }
 
 .ioList textarea:focus {

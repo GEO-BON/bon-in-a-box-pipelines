@@ -57,6 +57,8 @@ export function PipelineEditor(props) {
   const [inputList, setInputList] = useState([]);
   const [outputList, setOutputList] = useState([]);
 
+  const [editSession, setEditSession] = useState(Math.random());
+
   const [toolTip, setToolTip] = useState(null);
 
   const [popupMenuPos, setPopupMenuPos] = useState({ x: 0, y: 0 });
@@ -593,6 +595,8 @@ export function PipelineEditor(props) {
 
   const onLoadFlow = useCallback((flow) => {
     if (flow) {
+      setEditSession(Math.random())
+
       // Read inputs
       let inputsFromFile = [];
       if (flow.inputs) {
@@ -750,6 +754,7 @@ export function PipelineEditor(props) {
                 outputList={outputList}
                 setOutputList={setOutputList}
                 selectedNodes={selectedNodes}
+                editSession={editSession}
               />
 
               <MiniMap
