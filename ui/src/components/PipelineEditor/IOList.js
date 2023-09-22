@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import AutoResizeTextArea from "../form/AutoResizeTextArea";
+import { toIOId } from "../../utils/IOId";
+import pen from "../../img/pen.svg"
+
+function focusOnSiblingTextarea(event) {
+  event.target.parentNode.getElementsByTagName('textarea')[0].focus()
+}
 
 /**
  * @returns rendered view of the pipeline inputs and outputs
@@ -9,7 +15,8 @@ export const IOList = ({
   setInputList, 
   outputList, 
   setOutputList, 
-  selectedNodes
+  selectedNodes,
+  editSession
 }) => {
   const [collapsedPane, setCollapsedPane] = useState(false);
   return (
@@ -23,7 +30,9 @@ export const IOList = ({
               {inputList.length < 10 && <>&nbsp;</>}
               {inputList.length}&nbsp;Inputs,&nbsp;
               {outputList.length < 10 && <>&nbsp;</>}
-              {outputList.length}&nbsp;Outputs
+              <span className={outputList.length === 0 && "errorText"}>
+                {outputList.length}&nbsp;Outputs
+              </span>
             </span>
           </>
           : ">>"}
@@ -32,24 +41,30 @@ export const IOList = ({
         <h3>User inputs</h3>
         {inputList.length === 0
           ? "No inputs"
-          : inputList.map((input, i) => {
+          : inputList.map((input) => {
             return (
               <div
-                key={i}
+                key={editSession + "|" + toIOId(input.file, input.nodeId, input.inputId)}
                 className={selectedNodes.find((node) => node.id === input.nodeId)
                   ? "selected"
                   : ""}
               >
                 <p>
-                <AutoResizeTextArea className="label" keepWidth={true}
-                    onBlur={e => valueEdited(e.target, "label", input, setInputList)}
-                    onInput={preventNewLines}
-                    defaultValue={input.label}></AutoResizeTextArea>
-                  
+                  <span class="imgHoverAppear">
+                    <AutoResizeTextArea className="label" keepWidth={true}
+                      onBlur={e => valueEdited(e.target, "label", input, setInputList)}
+                      onInput={preventNewLines}
+                      defaultValue={input.label}></AutoResizeTextArea>
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
+                  </span>
+
                   <br />
-                  <AutoResizeTextArea className="description" keepWidth={true}
-                    onBlur={e => valueEdited(e.target, "description", input, setInputList)}
-                    defaultValue={input.description}></AutoResizeTextArea>
+                  <span class="imgHoverAppear">
+                    <AutoResizeTextArea className="description" keepWidth={true}
+                      onBlur={e => valueEdited(e.target, "description", input, setInputList)}
+                      defaultValue={input.description}></AutoResizeTextArea>
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
+                  </span>
                 </p>
               </div>
             );
@@ -60,23 +75,29 @@ export const IOList = ({
             At least one output is needed for the pipeline to run
           </p>
         ) : (
-          outputList.map((output, i) => {
+          outputList.map((output) => {
             return (
               <div
-                key={i}
+                key={editSession + "|" + toIOId(output.file, output.nodeId, output.outputId)}
                 className={selectedNodes.find((node) => node.id === output.nodeId)
                   ? "selected"
                   : ""}
               >
                 <p>
-                <AutoResizeTextArea className="label" keepWidth={true}
-                    onBlur={e => valueEdited(e.target, "label", output, setOutputList)}
-                    onInput={preventNewLines}
-                    defaultValue={output.label}></AutoResizeTextArea>
+                  <span class="imgHoverAppear">
+                    <AutoResizeTextArea className="label" keepWidth={true}
+                      onBlur={e => valueEdited(e.target, "label", output, setOutputList)}
+                      onInput={preventNewLines}
+                      defaultValue={output.label}></AutoResizeTextArea>
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
+                  </span>
                   <br />
-                  <AutoResizeTextArea className="description" keepWidth={true}
-                    onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
-                    defaultValue={output.description}></AutoResizeTextArea>
+                  <span class="imgHoverAppear">
+                    <AutoResizeTextArea className="description" keepWidth={true}
+                      onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
+                      defaultValue={output.description}></AutoResizeTextArea>
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
+                  </span>
                 </p>
               </div>
             );
