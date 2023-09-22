@@ -35,6 +35,7 @@ import {
 import sleep from "../../utils/Sleep";
 import { getFolderAndName } from "../StepDescription";
 import { IOListPane } from "./IOListPane";
+import { MetadataPane } from "./MetadataPane";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();
@@ -757,6 +758,7 @@ export function PipelineEditor(props) {
                 editSession={editSession}
               />
 
+              <MetadataPane metadata={{test:"some value", other:"some other value"}} />
               <MiniMap
                 nodeStrokeColor={(n) => {
                   switch (n.type) {
