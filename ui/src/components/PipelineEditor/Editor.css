@@ -241,6 +241,7 @@ aside.stepChooser .description {
 .rightPane.paneCollapsed {
   left: 100%;
   right: max(-400px, calc(2em - 100%));
+  z-index: 1400;
 }
 
 .rightPaneInner {
@@ -336,6 +337,10 @@ aside.stepChooser .description {
   border-color: black whitesmoke black black;
   border-radius: 3px 0px 0px 3px;
   cursor: pointer;
+}
+
+.metadataPane .collapseTab {
+  top: 13rem;
 }
 
 .arrowDownButton {
