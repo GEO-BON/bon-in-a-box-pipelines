@@ -222,14 +222,11 @@ aside.stepChooser .description {
   margin-left: 5px;
 }
 
-.ioList {
+.rightPane {
   border: 1px solid black;
-  border-right: 0;
-  border-radius: 0px 0px 0px 3px;
+  border-radius: 3px 0px 0px 3px;
   background: whitesmoke;
   color: black;
-
-  overflow-x: visible;
 
   position: absolute;
   left: max(2em, calc(100% - 400px));
@@ -241,17 +238,21 @@ aside.stepChooser .description {
   transition: left 0.5s, right 0.5s;
 }
 
-.paneCollapsed.ioList {
-  left: 100% !important;
+.rightPane.paneCollapsed {
+  left: 100%;
   right: max(-400px, calc(2em - 100%));
 }
 
-.ioListInner {
+.rightPaneInner {
   overflow-y: auto;
   overflow-x: hidden;
   height: 100%;
   padding-left: 10px;
   padding-right: 20px;
+}
+
+.ioList {
+  border-radius: 0px 0px 0px 3px;
 }
 
 .ioList h3 {
