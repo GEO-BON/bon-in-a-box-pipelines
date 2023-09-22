@@ -20,7 +20,7 @@ export const IOList = ({
 }) => {
   const [collapsedPane, setCollapsedPane] = useState(false);
   return (
-    <div className={`ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
+    <div className={`rightPane ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
       <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
         {collapsedPane ?
           <>
@@ -37,7 +37,7 @@ export const IOList = ({
           </>
           : ">>"}
       </div>
-      <div className="ioListInner">
+      <div className="rightPaneInner">
         <h3>User inputs</h3>
         {inputList.length === 0
           ? "No inputs"
