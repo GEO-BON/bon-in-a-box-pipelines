@@ -10,7 +10,7 @@ function focusOnSiblingTextarea(event) {
 /**
  * @returns rendered view of the pipeline inputs and outputs
  */
-export const IOList = ({
+export const IOListPane = ({
   inputList,
   setInputList, 
   outputList, 

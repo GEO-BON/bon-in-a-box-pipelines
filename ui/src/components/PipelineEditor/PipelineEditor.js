@@ -34,7 +34,7 @@ import {
 } from "../../utils/IOId";
 import sleep from "../../utils/Sleep";
 import { getFolderAndName } from "../StepDescription";
-import { IOList } from "./IOList";
+import { IOListPane } from "./IOListPane";
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();
@@ -748,7 +748,7 @@ export function PipelineEditor(props) {
 
               <Controls />
 
-              <IOList
+              <IOListPane
                 inputList={inputList}
                 setInputList={setInputList}
                 outputList={outputList}
