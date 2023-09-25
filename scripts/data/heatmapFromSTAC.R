@@ -42,6 +42,11 @@ if(!is.null(predictors)){
   it_obj <- s |>
     stac_search(collections=c('gbif_heatmaps'),limit=5000) |> get_request()
 
+    # Force each dataset to have the data role. Fix 08/2023
+    for (i in 1:length(it_obj$features)){
+        it_obj$features[[i]]$assets[[1]]$roles<-'data'
+    }
+
   st <- gdalcubes::stac_image_collection(it_obj$features,asset_names=c("data"), 
                                          property_filter=function(f){f$taxa==taxa})
 

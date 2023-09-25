@@ -16,11 +16,10 @@ library("terra")
 library("rjson")
 library("raster")
 library("dplyr")
-library("stacatalogue")
 library("gdalcubes")
 library("stringr")
 
-
+source(paste(Sys.getenv("SCRIPT_LOCATION"), "/data/loadFromStacFun.R", sep = "/"))
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
@@ -72,7 +71,7 @@ for (coll_it in collections_items){
                                           variable = NULL,
                                           ids=ci[2]))
     print(cube_args_c)
-    pred <- do.call(stacatalogue::load_cube, cube_args_c)
+    pred <- do.call(load_cube, cube_args_c)
 
      if(!is.null(mask)) {
         pred <- gdalcubes::filter_geom(pred, sf::st_geometry(mask))
