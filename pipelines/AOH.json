@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 193.390625,
-        "y": 342
+        "x": 109.390625,
+        "y": 381
       },
       "data": {
         "descriptionFile": "SHI>scp_SHI_GetRangeMap.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 746.390625,
-        "y": 460
+        "x": 854.390625,
+        "y": 498
       },
       "data": {
         "descriptionFile": "SHI>scpSHI_GetAOH.yml"
@@ -26,8 +26,8 @@
       "id": "2",
       "type": "constant",
       "position": {
-        "x": -153.609375,
-        "y": 343
+        "x": -208.609375,
+        "y": 383
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +39,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": -153.609375,
-        "y": 357
+        "x": -239.609375,
+        "y": 393
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -55,35 +55,21 @@
     },
     {
       "id": "4",
-      "type": "constant",
+      "type": "output",
       "position": {
-        "x": 396.390625,
-        "y": 577
+        "x": 1329.390625,
+        "y": 497
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "int",
-        "value": 1000
+        "label": "Output"
       }
     },
     {
       "id": "5",
-      "type": "userInput",
-      "position": {
-        "x": 397.390625,
-        "y": 524
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "6",
       "type": "output",
       "position": {
-        "x": 1222.390625,
-        "y": 458
+        "x": 1332.390625,
+        "y": 513
       },
       "data": {
         "label": "Output"
@@ -120,25 +106,18 @@
       "id": "reactflow__edge-3-0expert_source"
     },
     {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "spat_res",
-      "id": "reactflow__edge-4-1spat_res"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "sdm_bin",
-      "id": "reactflow__edge-5-1sdm_bin"
+      "source": "1",
+      "sourceHandle": "r_range_map",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-1r_range_map-4"
     },
     {
       "source": "1",
-      "sourceHandle": "r_range_map",
-      "target": "6",
+      "sourceHandle": "sf_bbox",
+      "target": "5",
       "targetHandle": null,
-      "id": "reactflow__edge-1r_range_map-6"
+      "id": "reactflow__edge-1sf_bbox-5"
     }
   ],
   "inputs": {
@@ -158,6 +137,12 @@
       "label": "region",
       "type": "text"
     },
+    "SHI>scpSHI_GetAOH.yml@1|sdm_bin": {
+      "description": "Path to a raster with a binary output of a species distribution model for the species.",
+      "label": "Binary SDM",
+      "type": "text",
+      "example": "SHI/Saguinus_oedipus_con.tif"
+    },
     "SHI>scpSHI_GetAOH.yml@1|srs": {
       "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
       "label": "spatial reference system",
@@ -176,10 +161,11 @@
       "type": "int",
       "example": 0
     },
-    "pipeline@5": {
-      "label": "Binary SDM",
-      "description": "Path to a raster with a binary output of a species distribution model for the species.",
-      "type": "text"
+    "SHI>scpSHI_GetAOH.yml@1|spat_res": {
+      "description": "Spatial resolution (in meters) for the output of the analysis.",
+      "label": "output spatial resolution",
+      "type": "int",
+      "example": 1000
     }
   },
   "outputs": {
@@ -187,6 +173,11 @@
       "description": "Raster file with the area of habitat.",
       "label": "area of habitat",
       "type": "image/tiff;application=geotiff[]"
+    },
+    "SHI>scpSHI_GetAOH.yml@1|sf_bbox": {
+      "description": "Bounding box for the area of habitat.",
+      "label": "bounding box",
+      "type": "application/geopackage+sqlite3 ; application/geo+json ; application/dbf"
     }
   }
 }

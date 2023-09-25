@@ -51,7 +51,13 @@ if(file.exists(file)){
   cat("========== No range map available for ", sp ,"at the ", expert_source , " expert source database ==========")
 }
 
-path_to_range_map <- file.path(outputFolder, file)
+if (!dir.exists(file.path(outputFolder,sp))){
+  dir.create(file.path(outputFolder,sp))
+}else{
+  print("dir exists")
+}
+
+path_to_range_map <- file.path(outputFolder, sp, file)
 sf::st_write(sf_range_map, path_to_range_map, append = FALSE  )
 
 # Outputing result to JSON -----------------------------------------------------

@@ -1,4 +1,4 @@
-#This script joins different sections to calculate the species habitat index 
+#This script joins different sections to calculate the species habitat Score 
 #according to what is understood from the methodology Walter Jetz's team uses 
 #for this calculation and compares the use of different land cover sources
 #-------------------------------------------------------------------------------------------------------------------
@@ -116,11 +116,16 @@ if(!is.na(country_code)){
   sf_area_lim_srs <<- st_intersection(sf_area_lim2_srs,sf_area_lim1_srs,dimension="polygon") |> st_make_valid() |> 
     st_collection_extract("POLYGON")
   
+  # Buffer size for bbox
+  sf_bbox_aoh <- sf_area_lim_srs |> st_bbox() |> st_as_sfc()
+  area_bbox <- sf_bbox_aoh |> st_area()
+  buff_size <- round(sqrt(area_aoh)/2)
+  
   if(!is.null(st_crs(sf_area_lim_srs)$units)){
     sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*10))
   }else{
     sf::sf_use_s2(FALSE)
-    sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*0.00001*10))
+    sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(spat_res*10))
     print("--- Buffer defined for spherical geometry ---")
   }
   print(sf_ext_srs)
@@ -221,10 +226,11 @@ if(is.na(min_forest)  & is.na(max_forest)){
   cube_GFW_TC_threshold <<- funFilterCube_range(cube_GFW_TC,min=min_forest,max=max_forest,value=FALSE)
 }
 r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold , format="terra") # convert to raster format
+r_GFW_TC_threshold <- r_GFW_TC_threshold |>
+  terra::classify(rcl=cbind(NA,0)) # turn NA to 0
 
 r_range_map_rescaled <- terra::resample(r_range_map,r_GFW_TC_threshold,method="mode") #Adjust scale of range map
-r_GFW_TC_threshold_mask <- r_GFW_TC_threshold |>
-  terra::classify(rcl=cbind(NA,0)) |> # turn NA to 0
+r_GFW_TC_threshold_mask <- r_GFW_TC_threshold |> 
   terra::mask(r_range_map_rescaled) # mask to range map
 
 print("========== Base forest layer downloaded ==========")
@@ -290,66 +296,83 @@ print("========== Map of changes in suitable area generated ==========")
 img_SHI_time_period_path <- file.path(outputFolder,paste0(sp,"_GFW_change.png"))
 tmap_save(img_map_habitat_changes, img_SHI_time_period_path )
 
-#create layers of forest removing loss by year
-s_HabitatArea0 <- r_GFW_TC_threshold_mask-s_year_loss_mask
-s_HabitatArea <- if(t_0!=2000)  s_HabitatArea0 else c(r_GFW_TC_threshold_mask, s_HabitatArea0) 
-rm(s_HabitatArea0)
-names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
+#create non masked layers for distance metrics
+s_habitat0_nomask <- r_GFW_TC_threshold-s_year_loss
+s_habitat_nomask <- if(t_0!=2000)  s_habitat0_nomask else c(r_GFW_TC_threshold, s_habitat0_nomask) 
+rm(s_habitat0_nomask)
+names(s_habitat_nomask) <- paste0("Habitat_",v_time_steps)
 
-s_Habitat <- terra::classify(s_HabitatArea , rcl=cbind(0,NA))
-r_habitat_by_tstep_path <- file.path(outputFolder, paste0(paste(sub(" ", "_", sp),"GFW",names(s_Habitat),sep="_"), ".tiff"))
-map2(as.list(s_Habitat), r_habitat_by_tstep_path, ~terra::writeRaster(.x,filename=.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
+# #create layers of forest removing loss by year
+# s_HabitatArea0 <- r_GFW_TC_threshold_mask-s_year_loss_mask
+# s_HabitatArea <- if(t_0!=2000)  s_HabitatArea0 else c(r_GFW_TC_threshold_mask, s_HabitatArea0) 
+# rm(s_HabitatArea0)
+# names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
+
+# s_habitat <- terra::classify(s_habitatArea , rcl=cbind(0,NA))
+s_habitat <- terra::mask(s_habitat_nomask , r_range_map)
+r_habitat_by_tstep_path <- file.path(outputFolder, paste0(paste(sub(" ", "_", sp),"GFW",names(s_habitat),sep="_"), ".tiff"))
+map2(as.list(s_habitat), r_habitat_by_tstep_path, ~terra::writeRaster(.x,filename=.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
 print(list.files(outputFolder, pattern = "Habitat", full.names = T))
 
-#----------------------- 3.1.1. Get average distance to edge -------------------
-#patch distances
-df_SnS_dist <- landscapemetrics::lsm_p_enn(s_Habitat) #same as landscapemetrics::lsm_l_enn_mn(s_Habitat)
-df_conn_score <- df_SnS_dist |> group_by(layer) |>
-  summarise(mean_distance=mean(value),median_distance=median(value),min_distance=min(value),max_distance=max(value))
 
-df_conn_score_gfw <- df_conn_score |>
-  dplyr::mutate(ref_value=df_conn_score$mean_distance[1], diff=mean_distance-ref_value, percentage=100-(diff*100/ref_value), info="GFW", Year=v_time_steps)
 
-print("========== Connectivity Score generated ==========")
+# Area Score--------------------------------------------------------------------
+r_areas <- terra::cellSize(s_habitat[[1]],unit="ha")#create raster of areas by pixel
 
-#---------------------- 3.1.2. Calculate areas ---------------------------------
-#create raster of areas by pixel
-r_areas <- terra::cellSize(s_HabitatArea[[1]],unit="km")
+s_habitat_area <- s_habitat * r_areas
+habitat_area <- terra::global(s_habitat_area, sum, na.rm=T)
 
-l_suitable_area <- set_names(map(as.list(s_Habitat * r_areas),function(x) {
-  x<-x[!is.na(x)]
-  data.frame(Area=units::set_units(sum(x),"km2"))
-}),v_time_steps)
+df_area_score_gfw <- tibble(sci_name=sp, Year= v_time_steps, Area=units::set_units(habitat_area$sum,"ha")) |>
+  dplyr::mutate(ref_area=first(Area)) |> dplyr::group_by(Year) |> mutate(diff=ref_area-Area, percentage=as.numeric(Area*100/ref_area),score="AS")
 
-df_area_score <- l_suitable_area |> bind_rows(.id="Year") # almost same as landscapemetrics::lsm_p_area(s_Habitat) but ?? units
+df_area_score_gfw
 
-df_area_score_gfw <-  df_area_score |> dplyr::group_by(Year) |>
-  dplyr::mutate(ref_area=df_area_score$Area[1], diff=ref_area-Area, percentage=100-as.numeric(100*diff/ref_area), info="GFW")
-
+write.csv(df_area_score_gfw,file.path(outputFolder,paste0(sp,"_df_area_score.csv")))
 print("========== Habitat Score generated ==========")
 
-#------------------------ 3.1.3. SHI -------------------------------------------
-df_SHI_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
-df_SHI_gfw <- df_SHI_gfw |> dplyr::mutate(SHI=(HS+CS)/2, info="GFW", Year=v_time_steps)
-df_SHI_gfw_tidy <- df_SHI_gfw |> pivot_longer(c("HS","CS","SHI"),names_to = "Index", values_to = "Value")
+# Connectivity score  ---------------------------------------------------------
+# mean_per_hab_cov <- global(s_habitat,mean,na.rm=T) # mean value of percentage of habitat cover by pixel by year
+# print(mean_per_hab_cov)
+# s_habitat_over_cutoff <- ifel(s_habitat_nomask>=habitat_cutoff,1,0) # set cutoff for what could be used by the species
 
-colnames(df_SHI_gfw) <- c("Habitat Score","Connectivity Score","Species Habitat Index","Source","Year")
-df_SHI_path <- file.path(outputFolder,paste0(sp,"_SHI_table.tsv"))
-write_tsv(df_SHI_gfw,file= df_SHI_path)
+l_habitat_dist <- map(as.list(s_habitat_nomask), ~gridDist(.x, target=0)) # calculate distance to edge
+gc(T)
+map2(as.list(l_habitat_dist), v_time_steps,~writeRaster(.x,file.path(outputFolder,paste0(sp,"_dist_to_edge_",.y,".tif")),overwrite=T))
 
-print("========== Species Habitat Index generated ==========")
+s_habitat_dist <- rast(l_habitat_dist) * (s_habitat>0)
+s_habitat_dist2 <- ifel(s_habitat_dist!=0,s_habitat_dist,NA)
+df_habitat_dist <- global(s_habitat_dist2,mean,na.rm=T)
 
-img_SHI_timeseries <- ggplot(df_SHI_gfw_tidy , aes(x=Year,y=Value,col=Index))+geom_line()+
-  theme_bw()+ylab("Connectivity Score (CS), Habitat Score (HS), SHI")
+df_conn_score_gfw <- tibble(sci_name=sp, Year=v_time_steps, value=df_habitat_dist$mean) |> mutate( ref_value=first(value)) |>
+  dplyr::group_by(Year) |> mutate(diff=ref_value-value, percentage=(value*100)/ref_value,score="CS")
+df_conn_score_gfw
 
-img_SHI_timeseries_path <- file.path(outputFolder,paste0(sp,"_SHI_timeseries.png"))
-ggsave(img_SHI_timeseries_path,img_SHI_timeseries,dpi = 300)
+write.csv(df_conn_score_gfw,file.path(outputFolder,paste0(sp,"_df_conn_scoreGISfrag.csv")))
+print("========== Connectivity Score generated ==========")
+
+
+#------------------------ 3.1.3. SHS -------------------------------------------
+df_SHS_gfw <- data.frame(HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
+df_SHS_gfw <- df_SHS_gfw |> dplyr::mutate(SHS=(HS+CS)/2, info="GFW", Year=v_time_steps)
+df_SHS_gfw_tidy <- df_SHS_gfw |> pivot_longer(c("HS","CS","SHS"),names_to = "Score", values_to = "Value")
+
+colnames(df_SHS_gfw) <- c("Habitat Score","Connectivity Score","Species Habitat Score","Source","Year")
+df_SHS_path <- file.path(outputFolder,paste0(sp,"_SHS_table.tsv"))
+write_tsv(df_SHS_gfw,file= df_SHS_path)
+
+print("========== Species Habitat Score generated ==========")
+
+img_SHS_timeseries <- ggplot(df_SHS_gfw_tidy , aes(x=Year,y=Value,col=Score))+geom_line()+
+  theme_bw()+ylab("Connectivity Score (CS), Habitat Score (HS), SHS")
+
+img_SHS_timeseries_path <- file.path(outputFolder,paste0(sp,"_SHS_timeseries.png"))
+ggsave(img_SHS_timeseries_path,img_SHS_timeseries,dpi = 300)
 
 # Outputing result to JSON
-output <- list("img_shi_time_period" = img_SHI_time_period_path,
-               "df_shi" = df_SHI_path ,
+output <- list("img_shs_time_period" = img_SHS_time_period_path,
+               "df_shs" = df_SHI_path ,
                "r_habitat_by_tstep" = r_habitat_by_tstep_path,
-               "img_shi_timeseries" = img_SHI_timeseries_path)
+               "img_shs_timeseries" = img_SHS_timeseries_path)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

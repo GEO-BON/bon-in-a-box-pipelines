@@ -67,6 +67,12 @@ if(!is.na(range_map_path)){
   sf_range_map <- st_read(range_map_path)
 }else{stop("A range map is needed. Add a polygon or use the SDM pipeline to produce a map with the potential area for the species.")}
 
+if (!dir.exists(file.path(outputFolder,sp))){
+  dir.create(file.path(outputFolder,sp))
+}else{
+  print("dir exists")
+}
+
 print("========== Step 1.1 - Expert range map successfully loaded ==========")
 
 # Step 1.2 - Get bounding box cropped by country if needed -----------------------
@@ -124,7 +130,8 @@ print(sf_ext_srs)
 
 #Create raster
 sf_bbox <- st_as_sfc(sf_ext_srs)
-#st_write(sf_bbox,file.path("./Connectivity/layers_for_omniscape",sp,"st_bbox.gpkg"),append=F)
+sf_bbox_path <- file.path(outputFolder ,sp, "st_bbox.gpkg")
+st_write(sf_bbox,sf_bbox_path,append=F)
 
 print("========== Step 1.2 - Bounding box created ==========")
 
@@ -194,11 +201,12 @@ r_bin_sdm_frame <- terra::crop(r_bin_sdm, r_frame)
 r_bin_sdm_frame_res <- terra::resample(r_bin_sdm_frame,r_frame,method="near")
 r_range_map <- terra::mask(unwrap(r_range_map),r_bin_sdm_frame_res,maskvalues=1,inverse=T)
 
-r_range_map_path <- file.path(outputFolder, "r_range_map.tiff")
+r_range_map_path <- file.path(outputFolder, sp , "r_range_map.tiff")
 writeRaster(unwrap(r_range_map), r_range_map_path, overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
 
 # Outputing result to JSON -----------------------------------------------------
-output <- list("r_range_map" = r_range_map_path )
+output <- list("r_range_map" = r_range_map_path ,
+               "sf_bbox" = sf_bbox_path )
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

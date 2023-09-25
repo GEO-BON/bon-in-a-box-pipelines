@@ -11,7 +11,7 @@ inputs:
     label: expert range map
     description: Polygon with expected area for the species. If it is not available from scp_SHI_GetRangeMap.R then it is recommended to add a polygon with the limits of a species distribution model for the species.
     type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
-    example: /SHI/example.gpkg
+    example: SHI/example.gpkg
   study_area:
     label: study area
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (but do not foget to add the projection file to the folder)
@@ -31,7 +31,7 @@ inputs:
     label: Binary SDM
     description: Path to a raster with a binary output of a species distribution model for the species.
     type: text
-    #example: /SDM.tiff
+    example: SHI/Saguinus_oedipus_con.tif
   srs:
     label: spatial reference system
     description: Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.
@@ -57,9 +57,14 @@ outputs:
     label: area of habitat
     description: Raster file with the area of habitat.
     type: image/tiff;application=geotiff[]
-    #example: /Saguinus oedipus_SHI_table.tsv
+  sf_bbox:
+    label: bounding box
+    description: Bounding box for the area of habitat.
+    type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
 references:
   - text: Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]
   - text: Jetz et al., Species Habitat Index (accessed on 24/8/2022) [https://mol.org/indicators/habitat/background]
   - text: Jetz, W., McGowan, J., Rinnan, D. S., Possingham, H. P., Visconti, P., O’Donnell, B., & Londoño-Murcia, M. C. (2022). Include biodiversity representation indicators in area-based conservation targets. Nature Ecology & Evolution, 6(2), 123–126. https://doi.org/10.1038/s41559-021-01620-y [https://www.nature.com/articles/s41559-021-01620-y]
+  - text: Soto L. & Roncancio N. 2017. Modelo de distribución de Saguinus oedipus ID PRI-629. Instituto Alexander von Humboldt.[http://biomodelos.humboldt.org.co/species/visor?species_id=7017.]
+
   
