@@ -192,44 +192,44 @@
     }
   ],
   "inputs": {
-    "00_load_collection>load_collection.yml@4|time_period": {
-      "description": "time_period",
-      "label": "time_period",
+    "00_load_collection>load_collection.yml@4|Time interval": {
+      "description": "Temporality covering the collection data ",
+      "label": "Time interval",
       "type": "text",
       "example": "P1Y"
     },
-    "00_load_collection>load_collection.yml@4|time_start": {
-      "description": "time_start",
-      "label": "time_start",
+    "00_load_collection>load_collection.yml@4|Start of time interval": {
+      "description": "Period with which the temporality of the collection begins",
+      "label": "Start of time interval",
       "type": "text",
       "example": "NA"
     },
-    "00_load_collection>load_collection.yml@4|time_end": {
-      "description": "time_end",
-      "label": "time_end",
+    "00_load_collection>load_collection.yml@4|End of time interval": {
+      "description": "Period with which the temporality of the collection ends",
+      "label": "End of time interval",
       "type": "text",
       "example": "NA"
     }
   },
   "outputs": {
-    "00_load_collection>load_collection.yml@4|dir_stack": {
-      "description": "dir_stack",
-      "label": "dir_stack",
+    "00_load_collection>load_collection.yml@4|Stack direction": {
+      "description": "Direction where the stack is located",
+      "label": "Stack direction",
       "type": "text"
     },
-    "00_load_collection>load_collection.yml@4|dir_png": {
-      "description": "dir_png",
-      "label": "dir_png",
+    "00_load_collection>load_collection.yml@4|png direction": {
+      "description": "Direction where the png  is located",
+      "label": "png direction",
       "type": "text"
     },
     "00_load_collection>load_collection.yml@4|dir_data_layer": {
-      "description": "dir_data_layer",
-      "label": "dir_data_layer",
+      "description": "Direction where the data layer  is located",
+      "label": "Data layer direction",
       "type": "text/csv"
     },
-    "00_load_collection>load_collection.yml@4|dir_data_areas": {
-      "description": "dir_data_areas",
-      "label": "dir_data_areas",
+    "00_load_collection>load_collection.yml@4|Data areas direction": {
+      "description": "Direction where the data layer  is located",
+      "label": "Data areas direction",
       "type": "text/csv"
     }
   }
