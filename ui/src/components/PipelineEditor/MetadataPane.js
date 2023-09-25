@@ -15,19 +15,23 @@ export const MetadataPane = ({
   return (
     <div className={`rightPane metadataPane ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
       <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
-        {collapsedPane ?
-          <>
-            &lt;&lt;
-            <span className="topToBottomText">
-              &nbsp;&nbsp;
-              Metadata
-            </span>
-          </>
-          : ">>"}
+        <>
+          {collapsedPane ? <>&lt;&lt;</> : <>&gt;&gt;</>}
+          <span className="topToBottomText">
+            &nbsp;&nbsp;
+            Metadata
+          </span>
+        </>
       </div>
       <div className="rightPaneInner">
-        <h3>Metadata</h3>
-        <Editor defaultLanguage="yaml" defaultValue={yaml.dump(metadata)} />;
+        <Editor
+          defaultLanguage="yaml"
+          defaultValue={yaml.dump(metadata)}
+          options={{
+            lineNumbers:"off",
+            minimap: { enabled: false },
+          }}
+        />
       </div>
     </div>
   );

@@ -22,20 +22,18 @@ export const IOListPane = ({
   return (
     <div className={`rightPane ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
       <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
-        {collapsedPane ?
-          <>
-            &lt;&lt;
-            <span className="topToBottomText">
-              &nbsp;&nbsp;
-              {inputList.length < 10 && <>&nbsp;</>}
-              {inputList.length}&nbsp;Inputs,&nbsp;
-              {outputList.length < 10 && <>&nbsp;</>}
-              <span className={outputList.length === 0 && "errorText"}>
-                {outputList.length}&nbsp;Outputs
-              </span>
+        <>
+          {collapsedPane ? <>&lt;&lt;</> : <>&gt;&gt;</>}
+          <span className="topToBottomText">
+            &nbsp;&nbsp;
+            {inputList.length < 10 && <>&nbsp;</>}
+            {inputList.length}&nbsp;Inputs,&nbsp;
+            {outputList.length < 10 && <>&nbsp;</>}
+            <span className={outputList.length === 0 && "errorText"}>
+              {outputList.length}&nbsp;Outputs
             </span>
-          </>
-          : ">>"}
+          </span>
+        </>
       </div>
       <div className="rightPaneInner">
         <h3>User inputs</h3>
