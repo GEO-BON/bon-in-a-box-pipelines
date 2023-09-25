@@ -51,19 +51,19 @@ export const IOList = ({
               >
                 <p>
                   <span className="imgHoverAppear">
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="label" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "label", input, setInputList)}
                       onInput={preventNewLines}
                       defaultValue={input.label}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                   </span>
 
                   <br />
                   <span className="imgHoverAppear">
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="description" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "description", input, setInputList)}
                       defaultValue={input.description}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                   </span>
                 </p>
               </div>
@@ -85,18 +85,18 @@ export const IOList = ({
               >
                 <p>
                   <span className="imgHoverAppear">
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="label" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "label", output, setOutputList)}
                       onInput={preventNewLines}
                       defaultValue={output.label}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                   </span>
                   <br />
                   <span className="imgHoverAppear">
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="description" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
                       defaultValue={output.description}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                   </span>
                 </p>
               </div>
