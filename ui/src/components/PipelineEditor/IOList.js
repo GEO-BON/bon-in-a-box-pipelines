@@ -30,7 +30,7 @@ export const IOList = ({
               {inputList.length < 10 && <>&nbsp;</>}
               {inputList.length}&nbsp;Inputs,&nbsp;
               {outputList.length < 10 && <>&nbsp;</>}
-              <span className={outputList.length === 0 && "errorText"}>
+              <span className={outputList.length === 0 ? "errorText" : undefined}>
                 {outputList.length}&nbsp;Outputs
               </span>
             </span>
@@ -50,7 +50,7 @@ export const IOList = ({
                   : ""}
               >
                 <p>
-                  <span class="imgHoverAppear">
+                  <span className="imgHoverAppear">
                     <AutoResizeTextArea className="label" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "label", input, setInputList)}
                       onInput={preventNewLines}
@@ -59,7 +59,7 @@ export const IOList = ({
                   </span>
 
                   <br />
-                  <span class="imgHoverAppear">
+                  <span className="imgHoverAppear">
                     <AutoResizeTextArea className="description" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "description", input, setInputList)}
                       defaultValue={input.description}></AutoResizeTextArea>
@@ -84,7 +84,7 @@ export const IOList = ({
                   : ""}
               >
                 <p>
-                  <span class="imgHoverAppear">
+                  <span className="imgHoverAppear">
                     <AutoResizeTextArea className="label" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "label", output, setOutputList)}
                       onInput={preventNewLines}
@@ -92,7 +92,7 @@ export const IOList = ({
                     <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                   </span>
                   <br />
-                  <span class="imgHoverAppear">
+                  <span className="imgHoverAppear">
                     <AutoResizeTextArea className="description" keepWidth={true}
                       onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
                       defaultValue={output.description}></AutoResizeTextArea>
