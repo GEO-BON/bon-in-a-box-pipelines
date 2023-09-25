@@ -245,15 +245,18 @@ aside.stepChooser .description {
 }
 
 .rightPaneInner {
-  overflow-y: auto;
-  overflow-x: hidden;
   height: 100%;
-  padding-left: 10px;
-  padding-right: 20px;
 }
 
 .ioList {
   border-radius: 0px 0px 0px 3px;
+}
+
+.ioList .rightPaneInner {
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-left: 10px;
+  padding-right: 20px;
 }
 
 .ioList h3 {
@@ -341,6 +344,10 @@ aside.stepChooser .description {
 
 .metadataPane .collapseTab {
   top: 13rem;
+}
+
+.metadataPane h3 {
+  padding-left: 26px;
 }
 
 .arrowDownButton {
