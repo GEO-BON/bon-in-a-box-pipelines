@@ -57,6 +57,7 @@ export function PipelineEditor(props) {
   const [selectedNodes, setSelectedNodes] = useState(null);
   const [inputList, setInputList] = useState([]);
   const [outputList, setOutputList] = useState([]);
+  const [metadata, setMetadata] = useState("")
 
   const [editSession, setEditSession] = useState(Math.random());
 
@@ -758,7 +759,7 @@ export function PipelineEditor(props) {
                 editSession={editSession}
               />
 
-              <MetadataPane metadata={{test:"some value", other:"some other value"}} />
+              <MetadataPane metadata={metadata} setMetadata={setMetadata} />
               <MiniMap
                 nodeStrokeColor={(n) => {
                   switch (n.type) {
