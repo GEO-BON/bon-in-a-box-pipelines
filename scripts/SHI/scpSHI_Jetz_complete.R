@@ -192,17 +192,6 @@ with(df_IUCN_sheet_condition, if(is.na(min_elev)  & is.na(max_elev)){ # if no el
 
 print("========== Map of suitable area generated ==========")
 
-#2.2 Load habitat preferences---------------------------------------------
-# df_IUCN_habitat_cat <- rl_habitats(sp,key = token)$result
-# 
-# #Load table with land cover equivalences need to be updated with Jung et al
-# df_IUCN_to_LC_categories <- read.csv(file.path(path_script,"SHI","IUCN_to_LC_categories.csv"),colClasses = "character") # PENDING PUT 0.5 TO MARGINAL HABITATS
-# df_IUCN_habitat_LC_cat <- left_join(df_IUCN_habitat_cat,df_IUCN_to_LC_categories, by="code")
-# LC_codes <- as.numeric(unique(df_IUCN_habitat_LC_cat$ESA_cod))
-
-#2.3 Hydrological features------------------------------------------------------
-
-
 #-------------------------------------------------------------------------------------------------------------------
 #3. Land Cover Values
 #-------------------------------------------------------------------------------------------------------------------
@@ -297,7 +286,7 @@ img_SHI_time_period_path <- file.path(outputFolder,paste0(sp,"_GFW_change.png"))
 tmap_save(img_map_habitat_changes, img_SHI_time_period_path )
 
 #create non masked layers for distance metrics
-s_habitat0_nomask <- r_GFW_TC_threshold-s_year_loss
+s_habitat0_nomask <- terra::classify(r_GFW_TC_threshold-s_year_loss,rcl=cbind(-1,0))
 s_habitat_nomask <- if(t_0!=2000)  s_habitat0_nomask else c(r_GFW_TC_threshold, s_habitat0_nomask) 
 rm(s_habitat0_nomask)
 names(s_habitat_nomask) <- paste0("Habitat_",v_time_steps)
@@ -309,7 +298,7 @@ names(s_habitat_nomask) <- paste0("Habitat_",v_time_steps)
 # names(s_HabitatArea) <- paste0("Habitat_",v_time_steps)
 
 # s_habitat <- terra::classify(s_habitatArea , rcl=cbind(0,NA))
-s_habitat <- terra::mask(s_habitat_nomask , r_range_map)
+s_habitat <- terra::mask(s_habitat_nomask , r_range_map_rescaled )
 r_habitat_by_tstep_path <- file.path(outputFolder, paste0(paste(sub(" ", "_", sp),"GFW",names(s_habitat),sep="_"), ".tiff"))
 map2(as.list(s_habitat), r_habitat_by_tstep_path, ~terra::writeRaster(.x,filename=.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
 print(list.files(outputFolder, pattern = "Habitat", full.names = T))
