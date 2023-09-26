@@ -342,6 +342,15 @@ aside.stepChooser .description {
   cursor: pointer;
 }
 
+.rightPane.metadataPane {
+  left: max(2em, calc(100% - 850px));
+}
+
+.rightPane.metadataPane.paneCollapsed {
+  left: 100%;
+  right: max(-850px, calc(2em - 100%));
+}
+
 .metadataPane .collapseTab {
   top: 13rem;
 }
