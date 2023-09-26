@@ -37,6 +37,8 @@ import { getFolderAndName } from "../StepDescription";
 import { IOListPane } from "./IOListPane";
 import { MetadataPane } from "./MetadataPane";
 
+const yaml = require('js-yaml');
+
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();
 
@@ -535,6 +537,11 @@ export function PipelineEditor(props) {
           copy;
       });
 
+      // Save the metadata (only if metadata pane was edited)
+      if(metadata !== "") {
+        flow.metadata = yaml.load(metadata)
+      }
+
       navigator.clipboard
         .writeText(JSON.stringify(flow, null, 2))
         .then(() => {
@@ -546,7 +553,7 @@ export function PipelineEditor(props) {
           alert("Error: Failed to copy content to clipboard.");
         });
     }
-  }, [reactFlowInstance, inputList, outputList]);
+  }, [reactFlowInstance, inputList, outputList, metadata]);
 
   const onLoadFromFileBtnClick = () => inputFile.current.click(); // will call onLoad
 
@@ -598,6 +605,9 @@ export function PipelineEditor(props) {
   const onLoadFlow = useCallback((flow) => {
     if (flow) {
       setEditSession(Math.random())
+
+      // Read metadata
+      setMetadata(flow.metadata ? yaml.dump(flow.metadata) : "")
 
       // Read inputs
       let inputsFromFile = [];
@@ -689,6 +699,7 @@ export function PipelineEditor(props) {
     }
   }, [
     reactFlowInstance,
+    setMetadata,
     setInputList,
     setOutputList,
     setEdges,
