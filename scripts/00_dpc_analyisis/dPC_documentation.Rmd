@@ -1,7 +1,7 @@
 ---
 title: "dPC pipeline documentation"
 output: 
-  html_document:
+  github_document:
     toc: true             
 ---
 
