@@ -31,7 +31,7 @@ jobs:
         path: script-server/build/reports/tests/test/
 
   
-  run-yml-validation:
+  run-script-validation:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -53,6 +53,15 @@ jobs:
       working-directory: ./scripts
       run: ../.github/findDuplicateDescriptions.sh
       shell: bash
+
+
+  run-pipeline-validation:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: pip install cerberus
+    - name: Metadata validation
+      run: ../pipelines/validatePipelines.py
     - name: Find duplicate lines inside same pipeline JSON file
       working-directory: ./pipelines
       run: ../.github/findDuplicateIds.sh
