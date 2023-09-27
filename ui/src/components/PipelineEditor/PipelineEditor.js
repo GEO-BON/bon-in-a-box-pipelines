@@ -51,7 +51,7 @@ const customNodeTypes = {
 let id = 0;
 const getId = () => `${id++}`;
 
-export function PipelineEditor(props) {
+export default function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
