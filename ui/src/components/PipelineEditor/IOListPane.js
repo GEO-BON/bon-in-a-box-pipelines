@@ -18,7 +18,7 @@ export const IOListPane = ({
   selectedNodes,
   editSession
 }) => {
-  const [collapsedPane, setCollapsedPane] = useState(false);
+  const [collapsedPane, setCollapsedPane] = useState(true);
   return (
     <div className={`rightPane ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
       <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
