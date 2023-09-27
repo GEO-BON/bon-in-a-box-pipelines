@@ -10,7 +10,7 @@ function focusOnSiblingTextarea(event) {
 /**
  * @returns rendered view of the pipeline inputs and outputs
  */
-export const IOList = ({
+export const IOListPane = ({
   inputList,
   setInputList, 
   outputList, 
@@ -18,26 +18,24 @@ export const IOList = ({
   selectedNodes,
   editSession
 }) => {
-  const [collapsedPane, setCollapsedPane] = useState(false);
+  const [collapsedPane, setCollapsedPane] = useState(true);
   return (
-    <div className={`ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
+    <div className={`rightPane ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
       <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
-        {collapsedPane ?
-          <>
-            &lt;&lt;
-            <span className="topToBottomText">
-              &nbsp;&nbsp;
-              {inputList.length < 10 && <>&nbsp;</>}
-              {inputList.length}&nbsp;Inputs,&nbsp;
-              {outputList.length < 10 && <>&nbsp;</>}
-              <span className={outputList.length === 0 ? "errorText" : undefined}>
-                {outputList.length}&nbsp;Outputs
-              </span>
+        <>
+          {collapsedPane ? <>&lt;&lt;</> : <>&gt;&gt;</>}
+          <span className="topToBottomText">
+            &nbsp;&nbsp;
+            {inputList.length < 10 && <>&nbsp;</>}
+            {inputList.length}&nbsp;Inputs,&nbsp;
+            {outputList.length < 10 && <>&nbsp;</>}
+            <span className={outputList.length === 0 ? "errorText" : undefined}>
+              {outputList.length}&nbsp;Outputs
             </span>
-          </>
-          : ">>"}
+          </span>
+        </>
       </div>
-      <div className="ioListInner">
+      <div className="rightPaneInner">
         <h3>User inputs</h3>
         {inputList.length === 0
           ? "No inputs"

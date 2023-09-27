@@ -164,8 +164,13 @@ class ApplicationTest {
         client.get("/pipeline/helloWorld.json/info").apply {
             assertEquals(HttpStatusCode.OK, status)
             val result = JSONObject(bodyAsText())
+            assertTrue(result.has("name"))
+            assertTrue(result.has("description"))
+            assertTrue(result.has("author"))
+            assertTrue(result.has("license"))
             assertTrue(result.has("inputs"))
             assertTrue(result.has("outputs"))
+
             assertFalse(result.has("nodes"))
             assertFalse(result.has("edges"))
         }
