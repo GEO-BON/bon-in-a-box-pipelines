@@ -34,7 +34,10 @@ import {
 } from "../../utils/IOId";
 import sleep from "../../utils/Sleep";
 import { getFolderAndName } from "../StepDescription";
-import { IOList } from "./IOList";
+import { IOListPane } from "./IOListPane";
+import { MetadataPane } from "./MetadataPane";
+
+const yaml = require('js-yaml');
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();
@@ -48,7 +51,7 @@ const customNodeTypes = {
 let id = 0;
 const getId = () => `${id++}`;
 
-export function PipelineEditor(props) {
+export default function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -56,6 +59,7 @@ export function PipelineEditor(props) {
   const [selectedNodes, setSelectedNodes] = useState(null);
   const [inputList, setInputList] = useState([]);
   const [outputList, setOutputList] = useState([]);
+  const [metadata, setMetadata] = useState("")
 
   const [editSession, setEditSession] = useState(Math.random());
 
@@ -532,6 +536,11 @@ export function PipelineEditor(props) {
           copy;
       });
 
+      // Save the metadata (only if metadata pane was edited)
+      if(metadata !== "") {
+        flow.metadata = yaml.load(metadata)
+      }
+
       navigator.clipboard
         .writeText(JSON.stringify(flow, null, 2))
         .then(() => {
@@ -543,7 +552,7 @@ export function PipelineEditor(props) {
           alert("Error: Failed to copy content to clipboard.");
         });
     }
-  }, [reactFlowInstance, inputList, outputList]);
+  }, [reactFlowInstance, inputList, outputList, metadata]);
 
   const onLoadFromFileBtnClick = () => inputFile.current.click(); // will call onLoad
 
@@ -595,6 +604,9 @@ export function PipelineEditor(props) {
   const onLoadFlow = useCallback((flow) => {
     if (flow) {
       setEditSession(Math.random())
+
+      // Read metadata
+      setMetadata(flow.metadata ? yaml.dump(flow.metadata) : "")
 
       // Read inputs
       let inputsFromFile = [];
@@ -686,6 +698,7 @@ export function PipelineEditor(props) {
     }
   }, [
     reactFlowInstance,
+    setMetadata,
     setInputList,
     setOutputList,
     setEdges,
@@ -747,7 +760,7 @@ export function PipelineEditor(props) {
 
               <Controls />
 
-              <IOList
+              <IOListPane
                 inputList={inputList}
                 setInputList={setInputList}
                 outputList={outputList}
@@ -756,6 +769,7 @@ export function PipelineEditor(props) {
                 editSession={editSession}
               />
 
+              <MetadataPane metadata={metadata} setMetadata={setMetadata} />
               <MiniMap
                 nodeStrokeColor={(n) => {
                   switch (n.type) {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, lazy, Suspense} from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -11,10 +11,11 @@ import {
 
 
 import { PipelinePage } from "./components/PipelinePage";
-import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
 import StepChooser from "./components/PipelineEditor/StepChooser";
 import { Layout } from './Layout.js';
 import Versions from './components/Versions';
+import { Spinner } from './components/Spinner';
+const PipelineEditor = lazy(() => import("./components/PipelineEditor/PipelineEditor"));
 
 function NotFound() {
   const location = useLocation()
@@ -42,7 +43,11 @@ function App() {
 
       <Route path="pipeline-editor" element={
         <Layout left={<StepChooser popupContent={popupContent} setPopupContent={setPopupContent} />}
-          right={<PipelineEditor />}
+          right={
+            <Suspense fallback={<Spinner />}>
+              <PipelineEditor />
+            </Suspense>
+          }
           popupContent={popupContent}
           setPopupContent={setPopupContent} />
       } />

@@ -100,14 +100,17 @@ fun Application.configureRouting() {
                 // Put back the slashes before reading
                 val descriptionFile = File(pipelinesRoot, call.parameters["descriptionPath"]!!.replace(FILE_SEPARATOR, '/'))
                 if (descriptionFile.exists()) {
-                    val descriptionJSON = JSONObject(descriptionFile.readText()).apply {
-                        // Remove the pipeline structure to leave only the metadata
-                        remove(NODES_LIST)
-                        remove(EDGES_LIST)
-                        remove(VIEWPORT)
+                    val descriptionJSON = JSONObject(descriptionFile.readText())
+                    val metadataJSON = JSONObject()
+                    metadataJSON.putOpt(INPUTS, descriptionJSON.get(INPUTS))
+                    metadataJSON.putOpt(OUTPUTS, descriptionJSON.get(OUTPUTS))
+                    descriptionJSON.optJSONObject(METADATA)?.let { metadata ->
+                        metadata.keys().forEach { key ->
+                            metadataJSON.putOpt(key, metadata.get(key))
+                        }
                     }
 
-                    call.respondText(descriptionJSON.toString(), ContentType.parse("application/json"))
+                    call.respondText(metadataJSON.toString(), ContentType.parse("application/json"))
                 } else {
                     call.respondText(text = "$descriptionFile does not exist", status = HttpStatusCode.NotFound)
                     logger.debug("404: getListOf ${call.parameters["descriptionPath"]}")

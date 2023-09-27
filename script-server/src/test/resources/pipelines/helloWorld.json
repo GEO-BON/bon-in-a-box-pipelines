@@ -47,5 +47,17 @@
       "type": "int",
       "example": 4
     }
+  },
+  "metadata": {
+    "name": "Hello World pipeline",
+    "description": "This very simple pipeline shows how to connect a single script to a single output.\nThe input of the script is left blank, thus becoming a pipeline input.",
+    "author": [
+      {
+        "name": "Jean-Michel Lord",
+        "identifier": "https://orcid.org/0009-0007-3826-1125"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://github.com/GEO-BON/biab-2.0"
   }
 }
