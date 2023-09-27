@@ -62,7 +62,7 @@ jobs:
     - run: pip install cerberus
     - name: Metadata validation
       working-directory: ./pipelines
-      run: validatePipelines.py
+      run: python3 validatePipelines.py
     - name: Find duplicate lines inside same pipeline JSON file
       working-directory: ./pipelines
       run: ../.github/findDuplicateIds.sh
