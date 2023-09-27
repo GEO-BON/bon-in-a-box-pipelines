@@ -280,7 +280,7 @@ aside.stepChooser .description {
   padding: 3px 6px;
 }
 
-.ioList textarea:hover {
+.ioList .imgHoverAppear:hover textarea {
   border: 1px solid #bbb;
   padding: 2px 5px;
 }
