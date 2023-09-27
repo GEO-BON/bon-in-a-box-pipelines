@@ -25,3 +25,6 @@ const val VIEWPORT = "viewport"
 const val INPUTS = "inputs"
 const val INPUTS__TYPE = "type"
 const val INPUTS__EXAMPLE = "example"
+
+const val OUTPUTS = "outputs"
+const val METADATA = "metadata"
