@@ -1,13 +1,3 @@
-aside.stepChooser {
-  padding: 15px 10px;
-  flex: 1;
-  overflow: scroll;
-}
-
-aside.stepChooser .description {
-  margin-bottom: 10px;
-}
-
 #editorLayout {
   flex-direction: column;
   display: flex;
@@ -26,31 +16,6 @@ aside.stepChooser .description {
   width: max-content;
   max-width: 65%;
   z-index: 1500; /* Above the nodes, that have z-index 1000 */
-}
-
-.dndnode {
-  height: 20px;
-  padding: 4px;
-  border: 1px solid #1a192b;
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab;
-  background: #fcfcfc;
-}
-
-.dndnode.input {
-  border-color: #0041d0;
-}
-
-.dndnode.output {
-  border-color: #ff0072;
-}
-
-.inFolder {
-  padding-left: 1em;
 }
 
 .userInput {
@@ -93,8 +58,8 @@ aside.stepChooser .description {
 
 .react-flow__edge-path,
 .react-flow__connection-path {
-  stroke: #fcfcfc;
-  stroke-width: 3;
+  stroke: #fcfcfc !important;
+  stroke-width: 3 !important;
 }
 
 .react-flow__edge.selected .react-flow__edge-path {
@@ -135,8 +100,7 @@ aside.stepChooser .description {
 .selected .constant,
 .selected .userInput,
 .react-flow__node-output.selected,
-.ioList .selected,
-.stepChooser .selected {
+.ioList .selected {
   background-color: blanchedalmond;
 }
 
