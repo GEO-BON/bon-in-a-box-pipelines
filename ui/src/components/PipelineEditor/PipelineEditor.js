@@ -336,8 +336,13 @@ export function PipelineEditor(props) {
                 newUserInputs.push(previousInput);
               } else {
                 // No existing input, add a new one
-                let label = "Label";
-                let description = "Description";
+                let toAdd = {
+                  label: "Label missing",
+                  description: "Description missing",
+                  type: node.data.type,
+                  example: node.data.value,
+                  nodeId: node.id
+                }
 
                 // Descriptions may vary between all steps connected, we pick the one from the first outgoing edge.
                 const edgeFound = allEdges.find(
@@ -356,20 +361,14 @@ export function PipelineEditor(props) {
                       stepDescription.inputs[edgeFound.targetHandle];
 
                     if (inputDescription) {
-                      label = inputDescription.label;
-                      node.data.label = label;
-                      description = inputDescription.description;
+                      // This will fill label, description, and other fields.
+                      Object.assign(toAdd, inputDescription)
+                      node.data.label = inputDescription.label;
                     }
                   }
                 }
 
-                newUserInputs.push({
-                  label,
-                  description,
-                  type: node.data.type,
-                  example: node.data.value,
-                  nodeId: node.id,
-                });
+                newUserInputs.push(toAdd);
               }
             } else if (node.type === "io") {
               let scriptDescription = getStepDescription(
