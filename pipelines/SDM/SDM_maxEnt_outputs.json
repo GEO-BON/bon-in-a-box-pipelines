@@ -958,7 +958,7 @@
   },
   "metadata": {
     "name": "Species distribution modeling with Maxent",
-    "description": "This pipeline",
+    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Bias correction is achieved using random pseudo-absences throught the region of interest. A variance map to represent the prediction uncertainty is generated through bootstraping.",
     "author": [
       {
         "name": "Sarah Valentin"
