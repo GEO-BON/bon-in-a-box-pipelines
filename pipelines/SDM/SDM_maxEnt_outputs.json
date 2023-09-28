@@ -920,19 +920,6 @@
     }
   },
   "outputs": {
-    "SDM>rangePredictions.yml@68|range_predictions": {
-      "description": "Variability of predictions based on range method",
-      "label": "Variability of predictions",
-      "type": "image/tiff;application=geotiff",
-      "weight": 6
-    },
-    "SDM>runMaxent.yml@108|sdm_pred": {
-      "description": "Model predictions from Maxent algorithm",
-      "label": "Predictions",
-      "type": "image/tiff;application=geotiff",
-      "range": [0, 1],
-      "weight": 5
-    },
     "pipeline@121": {
       "label": "Species name",
       "description": "Species for which the distribution model is generated"
@@ -943,17 +930,30 @@
       "type": "text/tab-separated-values",
       "weight": 2
     },
+    "data>heatmapFromSTAC.yml@67|raster": {
+      "description": "Heatmap of GBIF occurences for plants used for bias correction",
+      "label": "Density of GBIF occurrences",
+      "type": "image/tiff;application=geotiff",
+      "weight": 4
+    },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "Environmental layers used as predictors in species distribution modeling",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
       "weight": 3
     },
-    "data>heatmapFromSTAC.yml@67|raster": {
-      "description": "Heatmap of GBIF occurences for plants used for bias correction",
-      "label": "Density of GBIF occurrences",
+    "SDM>runMaxent.yml@108|sdm_pred": {
+      "description": "Model predictions from Maxent algorithm",
+      "label": "Predictions",
       "type": "image/tiff;application=geotiff",
-      "weight": 4
+      "range": [0, 1],
+      "weight": 5
+    },
+    "SDM>rangePredictions.yml@68|range_predictions": {
+      "description": "Variability of predictions based on range method",
+      "label": "Variability of predictions",
+      "type": "image/tiff;application=geotiff",
+      "weight": 6
     }
   },
   "metadata": {
