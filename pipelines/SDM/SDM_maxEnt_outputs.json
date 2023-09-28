@@ -920,10 +920,22 @@
     }
   },
   "outputs": {
+    "SDM>rangePredictions.yml@68|range_predictions": {
+      "description": "Variability of predictions based on range method",
+      "label": "Variability of predictions",
+      "type": "image/tiff;application=geotiff",
+      "weight": 6
+    },
+    "SDM>runMaxent.yml@108|sdm_pred": {
+      "description": "Model predictions from Maxent algorithm",
+      "label": "Predictions",
+      "type": "image/tiff;application=geotiff",
+      "range": [0, 1],
+      "weight": 5
+    },
     "pipeline@121": {
       "label": "Species name",
-      "description": "Species for which the SDM is generated",
-      "weight": 1
+      "description": "Species for which the distribution model is generated"
     },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
@@ -942,19 +954,24 @@
       "label": "Density of GBIF occurrences",
       "type": "image/tiff;application=geotiff",
       "weight": 4
-    },
-    "SDM>runMaxent.yml@108|sdm_pred": {
-      "description": "Model predictions from Maxent algorithm",
-      "label": "Predictions",
-      "type": "image/tiff;application=geotiff",
-      "range": [0, 1],
-      "weight": 5
-    },
-    "SDM>rangePredictions.yml@68|range_predictions": {
-      "description": "Variability of predictions based on range method",
-      "label": "Variability of predictions",
-      "type": "image/tiff;application=geotiff",
-      "weight": 6
     }
+  },
+  "metadata": {
+    "name": "Species distribution modeling with Maxent",
+    "description": "This pipeline",
+    "author": [
+      {
+        "name": "Sarah Valentin"
+      },
+      {
+        "name": "Guillaume Larocque",
+        "identifier": "https://orcid.org/0000-0002-5967-9156"
+      },
+      {
+        "name": "François Rousseu"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runMaxent.R"
   }
 }
