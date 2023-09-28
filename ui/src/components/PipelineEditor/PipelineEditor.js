@@ -532,8 +532,12 @@ export default function PipelineEditor(props) {
       outputList.forEach((output) => {
         // Destructuring copy to leave out fields that are not part of the output description spec.
         let { file, nodeId, outputId, ...copy } = output;
-        flow.outputs[toIOId(output.file, output.nodeId, output.outputId)] =
-          copy;
+        const id =
+          file === undefined
+            ? toIOId("pipeline", output.nodeId)
+            : toIOId(output.file, output.nodeId, output.outputId);
+
+        flow.outputs[id] = copy;
       });
 
       // Save the metadata (only if metadata pane was edited)
