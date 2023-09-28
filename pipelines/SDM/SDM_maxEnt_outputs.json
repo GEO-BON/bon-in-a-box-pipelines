@@ -922,7 +922,8 @@
   "outputs": {
     "pipeline@121": {
       "label": "Species name",
-      "description": "Species for which the distribution model is generated"
+      "description": "Species for which the distribution model is generated",
+      "weight": 1
     },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
@@ -961,7 +962,8 @@
     "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Bias correction is achieved using random pseudo-absences throught the region of interest. A variance map to represent the prediction uncertainty is generated through bootstraping.",
     "author": [
       {
-        "name": "Sarah Valentin"
+        "name": "Sarah Valentin",
+        "identifier": "https://orcid.org/0000-0002-9028-681X"
       },
       {
         "name": "Guillaume Larocque",
