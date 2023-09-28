@@ -24,7 +24,11 @@ fun checkCacheVersion() {
                 archivePath.mkdir()
                 topLevelFiles.forEach {
                     if (it.name != ".gitignore") {
-                        it.toPath().moveTo(File(archivePath, it.name).toPath())
+                        try {
+                            it.toPath().moveTo(File(archivePath, it.name).toPath())
+                        } catch (e:IOException) {
+                            logger.error("Failed to move ${it.toPath()}.\nGot ${e.message}")
+                        }
                     }
                 }
             }
