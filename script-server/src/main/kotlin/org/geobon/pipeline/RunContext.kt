@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.MalformedJsonException
 import org.geobon.utils.toMD5
 import java.io.File
-import java.util.*
 import kotlin.math.floor
 
 val outputRoot = File(System.getenv("OUTPUT_LOCATION"))
@@ -22,7 +21,7 @@ data class RunContext(val runId: String, val inputs: String?) {
             // Unique to this script
             descriptionFile.relativeTo(scriptRoot).path.removeSuffix(".yml"),
             // Unique to these params
-            if (inputs.isNullOrEmpty()) "no_params" else jsonToMd5(inputs)
+            if (inputs.isNullOrEmpty()) "no_params" else inputsToMd5(inputs)
         ).path,
         inputs
     )
@@ -73,7 +72,7 @@ data class RunContext(val runId: String, val inputs: String?) {
         /**
          * Makes sure the file gives the same hash, regardless of the key order.
          */
-        private fun jsonToMd5(jsonString: String): String {
+        fun inputsToMd5(jsonString: String): String {
             val sorted = gson.fromJson<Map<String, Any>>(
                 jsonString,
                 object : TypeToken<Map<String, Any>>() {}.type

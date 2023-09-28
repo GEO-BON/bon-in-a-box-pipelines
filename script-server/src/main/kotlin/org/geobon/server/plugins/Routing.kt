@@ -7,14 +7,11 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import org.geobon.pipeline.*
 import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
 import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
 import org.geobon.utils.runCommand
-import org.geobon.utils.toMD5
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -139,8 +136,8 @@ fun Application.configureRouting() {
 
             val withoutExtension = descriptionPath.removeSuffix(".json").removeSuffix(".yml")
 
-            // Unique   to this pipeline                                               and to these params
-            val runId = withoutExtension + FILE_SEPARATOR + inputFileContent.toMD5()
+            // Unique   to this pipeline                    and to these params
+            val runId = withoutExtension + FILE_SEPARATOR + RunContext.inputsToMd5(inputFileContent)
             val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
