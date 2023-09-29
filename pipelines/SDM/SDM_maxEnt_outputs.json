@@ -922,7 +922,7 @@
   "outputs": {
     "pipeline@121": {
       "label": "Species name",
-      "description": "Species for which the SDM is generated",
+      "description": "Species for which the distribution model is generated",
       "weight": 1
     },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
@@ -931,17 +931,17 @@
       "type": "text/tab-separated-values",
       "weight": 2
     },
-    "SDM>removeCollinearity.yml@97|rasters_selected": {
-      "description": "Environmental layers used as predictors in species distribution modeling",
-      "label": "Environmental predictors",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 3
-    },
     "data>heatmapFromSTAC.yml@67|raster": {
       "description": "Heatmap of GBIF occurences for plants used for bias correction",
       "label": "Density of GBIF occurrences",
       "type": "image/tiff;application=geotiff",
       "weight": 4
+    },
+    "SDM>removeCollinearity.yml@97|rasters_selected": {
+      "description": "Environmental layers used as predictors in species distribution modeling",
+      "label": "Environmental predictors",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "Model predictions from Maxent algorithm",
@@ -956,5 +956,24 @@
       "type": "image/tiff;application=geotiff",
       "weight": 6
     }
+  },
+  "metadata": {
+    "name": "Species distribution modeling with Maxent",
+    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Bias correction is achieved using random pseudo-absences throught the region of interest. A variance map to represent the prediction uncertainty is generated through bootstraping.",
+    "author": [
+      {
+        "name": "Sarah Valentin",
+        "identifier": "https://orcid.org/0000-0002-9028-681X"
+      },
+      {
+        "name": "Guillaume Larocque",
+        "identifier": "https://orcid.org/0000-0002-5967-9156"
+      },
+      {
+        "name": "François Rousseu"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runMaxent.R"
   }
 }
