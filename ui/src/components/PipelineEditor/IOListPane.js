@@ -54,11 +54,14 @@ export const IOListPane = ({
                     onBlur={e => valueEdited(e.target.value, "description", input, setInputList)}
                     defaultValue={input.description}></AutoResizeTextArea>
 
-                  <br />
-                  <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                  <span className="example-tag">Example: </span>
-                  <ScriptInput type={input.type} value={input.example} options={input.options}
-                    onValueUpdated={(value) => valueEdited(value, "example", input, setInputList)} />
+                  {input.type &&
+                    <>
+                      <br />
+                      <span className="example-tag">Example: </span>
+                      <ScriptInput type={input.type} value={input.example} options={input.options}
+                        onValueUpdated={(value) => valueEdited(value, "example", input, setInputList)} />
+                    </>
+                  }
                 </p>
               </div>
             );
@@ -88,10 +91,14 @@ export const IOListPane = ({
                     onBlur={e => valueEdited(e.target.value, "description", output, setOutputList)}
                     defaultValue={output.description}></AutoResizeTextArea>
 
-                  <br />
-                  <span className="example-tag">Example: </span>
-                  <ScriptInput type={output.type} value={output.example} options={output.options}
-                    onValueUpdated={(value) => valueEdited(value, "example", output, setOutputList)} />
+                  {output.type &&
+                    <>
+                      <br />
+                      <span className="example-tag">Example: </span>
+                      <ScriptInput type={output.type} value={output.example} options={output.options}
+                        onValueUpdated={(value) => valueEdited(value, "example", output, setOutputList)} />
+                    </>
+                  }
                 </p>
               </div>
             );
