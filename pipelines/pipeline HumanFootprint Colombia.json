@@ -4,8 +4,8 @@
       "id": "12",
       "type": "io",
       "position": {
-        "x": -430.2140185151302,
-        "y": 78.8397997354981
+        "x": 62,
+        "y": 89
       },
       "data": {
         "descriptionFile": "01_IAvH_test>shape_to_WKT.yml"
@@ -15,8 +15,8 @@
       "id": "13",
       "type": "io",
       "position": {
-        "x": 186.7859814848698,
-        "y": 189.8397997354981
+        "x": 522,
+        "y": 42
       },
       "data": {
         "descriptionFile": "01_IAvH_test>load_collection.yml"
@@ -26,8 +26,8 @@
       "id": "14",
       "type": "constant",
       "position": {
-        "x": -179.2140185151302,
-        "y": 17.839799735498104
+        "x": 96,
+        "y": 45
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +39,8 @@
       "id": "15",
       "type": "constant",
       "position": {
-        "x": -177.2140185151302,
-        "y": 375.8397997354981
+        "x": 106,
+        "y": 199
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -49,22 +49,22 @@
       }
     },
     {
-      "id": "19",
+      "id": "21",
       "type": "io",
       "position": {
-        "x": 644.7859814848698,
-        "y": 201.8397997354981
+        "x": 1012,
+        "y": 12
       },
       "data": {
-        "descriptionFile": "01_IAvH_test>area_layers.yml"
+        "descriptionFile": "00_reclassify>reclassify.yml"
       }
     },
     {
-      "id": "20",
+      "id": "22",
       "type": "output",
       "position": {
-        "x": 1111.3970925959811,
-        "y": 181.0064664021648
+        "x": 1372,
+        "y": 92
       },
       "data": {
         "label": "Output"
@@ -103,73 +103,67 @@
     {
       "source": "13",
       "sourceHandle": "dir_stack",
-      "target": "19",
+      "target": "21",
       "targetHandle": "dir_stack",
-      "id": "reactflow__edge-13dir_stack-19dir_stack"
+      "id": "reactflow__edge-13dir_stack-21dir_stack"
     },
     {
       "source": "13",
       "sourceHandle": "dir_data_layer",
-      "target": "19",
-      "targetHandle": "dir_data_layer",
-      "id": "reactflow__edge-13dir_data_layer-19dir_data_layer"
+      "target": "21",
+      "targetHandle": "table_data",
+      "id": "reactflow__edge-13dir_data_layer-21table_data"
     },
     {
-      "source": "19",
-      "sourceHandle": "dir_areas",
-      "target": "20",
+      "source": "21",
+      "sourceHandle": "compare_data",
+      "target": "22",
       "targetHandle": null,
-      "id": "reactflow__edge-19dir_areas-20"
+      "id": "reactflow__edge-21compare_data-22"
     }
   ],
   "inputs": {
     "01_IAvH_test>shape_to_WKT.yml@12|shape_dir": {
-      "description": "shape_dir",
-      "label": "shape_dir",
+      "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
+      "label": "study area geometry",
       "type": "text",
-      "example": "/output/0_inputs/Quindío.shp"
+      "example": "/output/0_inputs/Atlántico.shp"
     },
     "01_IAvH_test>shape_to_WKT.yml@12|epsg": {
-      "description": "epsg",
-      "label": "epsg",
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts",
+      "label": "study area EPSG",
       "type": "int",
       "example": 3395
     },
-    "01_IAvH_test>load_collection.yml@13|wkt_area": {
-      "description": "wkt_area",
-      "label": "wkt_area",
-      "type": "text",
-      "example": "/output/01_IAvH_test/shape_to_WKT.R/{{dir_wkt}}/output.json"
-    },
     "01_IAvH_test>load_collection.yml@13|time_period": {
-      "description": "time_period",
-      "label": "time_period",
+      "description": "String refering to the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, '1Y' is used by default",
+      "label": "time interval",
       "type": "text",
       "example": "P10Y"
     },
     "01_IAvH_test>load_collection.yml@13|time_start": {
-      "description": "time_start",
-      "label": "time_start",
+      "description": "Refering to the starting date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL",
+      "label": "Start of time interval",
       "type": "text",
       "example": "NA"
     },
     "01_IAvH_test>load_collection.yml@13|time_end": {
-      "description": "time_end",
-      "label": "time_end",
+      "description": "Refering to the ending date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL",
+      "label": "End of time interval",
       "type": "text",
       "example": "NA"
     },
-    "01_IAvH_test>area_layers.yml@19|group": {
-      "description": "group",
-      "label": "group",
+    "00_reclassify>reclassify.yml@21|table_reclassify": {
+      "description": "Table with the reclassification values used to classify the collection.",
+      "label": "reclassify table",
       "type": "text",
-      "example": "period, classes"
+      "example": "scripts/00_reclassify/input/reclass_data.csv"
     }
   },
   "outputs": {
-    "01_IAvH_test>area_layers.yml@19|dir_areas": {
-      "description": "dir_areas",
-      "label": "dir_areas",
+    "00_reclassify>reclassify.yml@21|compare_data": {
+      "description": "Comparative table summarizing the pixel count results in each of the reclassification categories for each period contained in the collection and the user-selected analysis interval",
+      "label": "compare table reclass data",
       "type": "text/csv"
     }
   }

@@ -1,40 +1,46 @@
 script: load_collection.R
-description: "This sample script shows how it works."
+name:  load collection to calculate metric
+description: "This code allows loading a collection containing information for metric calculation. The information is filtered by the WKT-generated study area coordinates."
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
+ - name: Luis Fernando Urbina (lurbina@humboldt.org.co)
 external_link: https://github.com/GEO-BON/biab-2.0
+
 inputs:
-  wkt_area:
-    label: wkt_area
-    description: wkt_area
-    type: text
-    example: '/output/01_IAvH_test/shape_to_WKT.R/{{dir_wkt}}/output.json'
   collection_path:
-    label: dir_collection
-    description: dir_collection
+    label: collection path
+    description: Path where the collection is hosted. The path can be hosted on the BIAB server (subject to approval from administrators) or in a cloud container
     type: text
     example: '/output/0_inputs/Colecciones/AP_decada_collection'
+  wkt_area:
+    label: study area wkt
+    description: Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.
+    type: text
+    example: '/output/01_IAvH_test/shape_to_WKT.R/{{dir_wkt}}/output.json'
   epsg:
-    label: epsg
-    description: epsg
+    label: study area EPSG in
+    description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts
     type: int
     example: 3395
   resolution:
     label: resolution
-    description: resolution
+    description: Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.
     type: int
     example: 1000
   time_period:
-    label: time_period
-    description: time_period
+    label: time interval
+    description: String refering to the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, '1Y' is used by default
     type: text
     example: 'P10Y'
   time_start:
-    label: time_start
-    description: time_start
+    label: Start of time interval
+    description: Refering to the starting date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL
     type: text
     example: 'NA'
   time_end:
-    label: time_end
-    description: time_end
+    label: End of time interval
+    description: "Refering to the ending date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
     example: 'NA'
 
@@ -44,15 +50,15 @@ outputs:
     description: area_stack
     type: image/tiff;application=geotiff
   dir_stack:
-    label: dir_stack
-    description: dir_stack
+    label: stack path out
+    description: Path to the output directory where the raster results of the metric analysis are saved
     type: text
   dir_info_layer:
-    label: dir_info_layer
-    description: dir_info_layer
+    label: info table path out
+    description: Path to the .csv file containing the information from the join performed for metric calculation.
     type: text/csv
   dir_data_layer:
-    label: dir_data_layer
-    description: dir_data_layer
+    label: data table path out
+    description: Compiled information about the layers including in the collection
     type: text/csv
 

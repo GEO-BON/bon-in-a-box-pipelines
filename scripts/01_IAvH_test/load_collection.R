@@ -197,7 +197,7 @@ lapply(terra_mask_layers, function(x)
 # Exportar area rasterizada 4326
 dir_area_4326<- file.path(outputFolder, "dir_area_4326.tif")
 area_4326<-  terra::project(terra_mask_layers$area,  paste0("+init=epsg:", 4326) )
-terra::writeRaster(area_4326, dir_area_4326, gdal=c("COMPRESS=DEFLATE", "TFW=YES"),  filetype = "GTiff", overwrite = TRUE )
+terra::writeRaster(area_4326, dir_area_4326, gdal=c("COMPRESS=DEFLATE", "TFW=YES"),  filetype = "cog", overwrite = TRUE )
 
 # Exportar output final
 output<- list( area_stack= dir_area_4326, dir_stack= dir_stack,dir_info_layer= dir_info_layer, dir_data_layer=dir_data_layer)
