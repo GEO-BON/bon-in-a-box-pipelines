@@ -249,7 +249,7 @@
   padding: 3px 6px;
 }
 
-.ioList .imgHoverAppear:hover textarea {
+.ioList textarea:hover {
   border: 1px solid #bbb;
   padding: 2px 5px;
 }
