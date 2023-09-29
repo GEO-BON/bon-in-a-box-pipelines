@@ -28,6 +28,8 @@ RUN gradle assemble
 ## This takes the build server and puts in on the R-script enabled image
 FROM base-image
 COPY --from=builder /home/gradle/project/build/libs/biab-script-server-all.jar /root/biab-script-server.jar
-    
+
 WORKDIR /root
 CMD ["java", "-server", "-Xms4g", "-Xmx4g", "-XX:+UseG1GC", "-XX:MaxGCPauseMillis=100", "-XX:+UseStringDeduplication", "-jar", "biab-script-server.jar"]
+
+RUN date +"%Y-%m-%d %R" > /version.txt 

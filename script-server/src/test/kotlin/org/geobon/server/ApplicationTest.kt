@@ -164,8 +164,13 @@ class ApplicationTest {
         client.get("/pipeline/helloWorld.json/info").apply {
             assertEquals(HttpStatusCode.OK, status)
             val result = JSONObject(bodyAsText())
+            assertTrue(result.has("name"))
+            assertTrue(result.has("description"))
+            assertTrue(result.has("author"))
+            assertTrue(result.has("license"))
             assertTrue(result.has("inputs"))
             assertTrue(result.has("outputs"))
+
             assertFalse(result.has("nodes"))
             assertFalse(result.has("edges"))
         }
@@ -234,6 +239,16 @@ class ApplicationTest {
 
         client.get("/pipeline/list/").apply {
             assertEquals(HttpStatusCode.OK, status)
+        }
+    }
+
+    @Test
+    fun testGetVersion() = testApplication {
+        application { configureRouting() }
+
+        client.get("/api/versions").apply {
+            assertEquals(HttpStatusCode.OK, status)
+            println(bodyAsText())
         }
     }
 }

@@ -9,7 +9,6 @@ import {
 
 import { useInterval } from "../UseInterval";
 
-import spinnerImg from "../img/spinner.svg";
 import errorImg from "../img/error.svg";
 import warningImg from "../img/warning.svg";
 import infoImg from "../img/info.svg";
@@ -23,6 +22,7 @@ import {
 } from "../utils/IOId";
 import { useParams } from "react-router-dom";
 import { isEmptyObject } from "../utils/isEmptyObject";
+import { InlineSpinner } from "./Spinner";
 
 const pipelineConfig = {extension: ".json", defaultFile: "helloWorld.json", };
 const scriptConfig = {extension: ".yml", defaultFile: "helloWorld>helloR.yml"};
@@ -131,6 +131,7 @@ export function PipelinePage({runType}) {
   }
 
   function loadPipelineMetadata(choice, setExamples = true) {
+    setHttpError(null)
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
@@ -283,10 +284,10 @@ function PipelineResults({
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
   useEffect(() => {
-    if(!isEmptyObject(resultsData)) {
+    if(!isPipeline && !isEmptyObject(resultsData)) {
       setActiveRenderer(Object.keys(resultsData)[0])
     }
-  }, [resultsData, setActiveRenderer])
+  }, [resultsData, isPipeline, setActiveRenderer])
 
   useEffect(() => {
     // Put outputResults at initial value
@@ -319,11 +320,7 @@ function PipelineResults({
                   <div key={ioId} className="outputTitle">
                     <h3>{outputDescription.label}</h3>
                     {runningScripts.size > 0 ? (
-                      <img
-                        src={spinnerImg}
-                        alt="Spinner"
-                        className="spinner-inline"
-                      />
+                      <InlineSpinner />
                     ) : (
                       <>
                         <img
@@ -485,7 +482,7 @@ function DelayedResult({
     } else {
       content = <p>Running...</p>;
       inline = (
-        <img src={spinnerImg} alt="Spinner" className="spinner-inline" />
+        <InlineSpinner />
       );
     }
   } else {

@@ -101,7 +101,7 @@ description: # Targetted to those who will interpret pipeline results and edit p
 author: # 1 to many
   - name: # Full name
     identifier: # Optional, full URL of a unique digital identifier such as an ORCID
-license: # Optional, examples here: https://creativecommons.org/about/cclicenses/
+license: # Optional. If unspecified, the project's MIT license will apply.
 external_link: # Optional, link to a separate project, github repo, etc.
 timeout: # Optional, in minutes. By defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
 
@@ -257,7 +257,9 @@ Pipelines also have inputs and outputs. In order to run, a pipeline needs to spe
 ### Pipeline editor
 The pipeline editor allows you to create pipelines by plugging steps together.
 
-The left pane shows the available steps, the right pane shows the canvas.
+The left pane shows the available steps, the main section shows the canvas.
+
+On the right side, a collapsible pane allows to edit the labels and descriptions of the pipeline inputs and outputs.
 
 **To add a step:** drag and drop from the left pane to the canvas. Steps that are single scripts will display with a single border, while steps that are pipelines will display with a double border.
 
@@ -302,6 +304,11 @@ Add an **output** node linked to a step output to specify that this output is an
 
 ![image](https://user-images.githubusercontent.com/6223744/181108988-97d988ca-8f4b-45b1-b4a3-32e90821b68b.png)
 
+Pipeline inputs and outputs then appear in a collapsible pane on the right of the canvas, where their descriptions and labels can be edited.
+
+<img src="https://github.com/GEO-BON/biab-2.0/assets/6223744/215b75db-7198-486d-880d-87c0b340668b" height="218">
+
+Once edited, make sure to save your work before leaving the page.
 
 ### Saving and loading
 The editor _does not_ allow you to edit files live on the server. Files need to be committed to the github repo using git.

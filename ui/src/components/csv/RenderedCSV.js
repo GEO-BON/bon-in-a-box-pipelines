@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import spinner from '../../img/spinner.svg';
 import CsvToHtmlTable, {parseCsvToRowsAndColumn} from './CsvToHtmlTable.jsx'
 import MapResult from '../map/Map';
+import { Spinner } from '../Spinner.js';
 
 /**
  * Properties
@@ -57,7 +57,7 @@ function CsvToTable({url, delimiter}) {
             {partial && <p>Displaying partial data. <a href={url}>Download full csv file</a> for complete data.</p>}
         </>
     else
-        return <img src={spinner} className="spinner" alt="Spinner" />
+        return <Spinner />
 }
 
 function CsvToMap({url, delimiter}) {
@@ -118,7 +118,7 @@ function CsvToMap({url, delimiter}) {
             {!error && data && <MapResult markers={readCoordinates(data, delimiter)} />}
         </>
     else
-        return <img src={spinner} className="spinner" alt="Spinner" />
+        return <Spinner />
 }
 
 export default RenderedCSV

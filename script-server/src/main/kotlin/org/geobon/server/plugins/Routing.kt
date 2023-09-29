@@ -11,7 +11,7 @@ import org.geobon.pipeline.*
 import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
 import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import org.geobon.pipeline.RunContext.Companion.scriptRoot
-import org.geobon.utils.toMD5
+import org.geobon.utils.runCommand
 import org.json.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -55,7 +55,6 @@ fun Application.configureRouting() {
             }
 
             val possible = mutableMapOf<String, String>()
-            val relPathIndex = root.absolutePath.length + 1
             root.walkTopDown().forEach { file ->
                 if (file.extension == extension) {
                     val relativePath = file.relativeTo(root).path.replace('/', FILE_SEPARATOR)
@@ -98,14 +97,17 @@ fun Application.configureRouting() {
                 // Put back the slashes before reading
                 val descriptionFile = File(pipelinesRoot, call.parameters["descriptionPath"]!!.replace(FILE_SEPARATOR, '/'))
                 if (descriptionFile.exists()) {
-                    val descriptionJSON = JSONObject(descriptionFile.readText()).apply {
-                        // Remove the pipeline structure to leave only the metadata
-                        remove(NODES_LIST)
-                        remove(EDGES_LIST)
-                        remove(VIEWPORT)
+                    val descriptionJSON = JSONObject(descriptionFile.readText())
+                    val metadataJSON = JSONObject()
+                    metadataJSON.putOpt(INPUTS, descriptionJSON.get(INPUTS))
+                    metadataJSON.putOpt(OUTPUTS, descriptionJSON.get(OUTPUTS))
+                    descriptionJSON.optJSONObject(METADATA)?.let { metadata ->
+                        metadata.keys().forEach { key ->
+                            metadataJSON.putOpt(key, metadata.get(key))
+                        }
                     }
 
-                    call.respondText(descriptionJSON.toString(), ContentType.parse("application/json"))
+                    call.respondText(metadataJSON.toString(), ContentType.parse("application/json"))
                 } else {
                     call.respondText(text = "$descriptionFile does not exist", status = HttpStatusCode.NotFound)
                     logger.debug("404: getListOf ${call.parameters["descriptionPath"]}")
@@ -134,8 +136,8 @@ fun Application.configureRouting() {
 
             val withoutExtension = descriptionPath.removeSuffix(".json").removeSuffix(".yml")
 
-            // Unique   to this pipeline                                               and to these params
-            val runId = withoutExtension + FILE_SEPARATOR + inputFileContent.toMD5()
+            // Unique   to this pipeline                    and to these params
+            val runId = withoutExtension + FILE_SEPARATOR + RunContext.inputsToMd5(inputFileContent)
             val pipelineOutputFolder = File(outputRoot, runId.replace(FILE_SEPARATOR, '/'))
             logger.info("Pipeline: $descriptionPath\nFolder: $pipelineOutputFolder\nBody: $inputFileContent")
 
@@ -208,6 +210,21 @@ fun Application.configureRouting() {
                 logger.debug("Cancelled $id")
                 call.respond(HttpStatusCode.OK)
             } ?: call.respond(/*412*/HttpStatusCode.PreconditionFailed, "The pipeline wasn't running")
+        }
+
+        get("/api/versions") {
+            call.respond("""
+                UI: ${"docker exec -i biab-ui cat /version.txt".runCommand()}
+                Script server: ${"cat /version.txt".runCommand()}
+                   ${"python3 --version".runCommand()}
+                R runner: ${"docker exec -i biab-runner-r cat /version.txt".runCommand()}
+                   ${"docker exec -i biab-runner-r Rscript --version".runCommand()}
+                Julia runner: ${"docker exec -i biab-runner-julia cat /version.txt".runCommand()}
+                   ${"docker exec -i biab-runner-julia julia --version".runCommand()}
+                TiTiler: ${
+                    "docker inspect --type=image -f '{{ .Created }}' ghcr.io/developmentseed/titiler".runCommand()
+                    ?.let { it.substring(0, it.lastIndexOf(':')).replace('T', ' ') }}
+                """.trimIndent())
         }
     }
 }

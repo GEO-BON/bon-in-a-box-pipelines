@@ -1,10 +1,10 @@
-import './Editor.css'
+import './StepChooser.css'
 
 import {React, useState, useEffect, useCallback} from 'react';
 
-import spinnerImg from '../../img/spinner.svg';
 import { fetchStepDescription } from './StepDescriptionStore';
 import { StepDescription } from '../StepDescription';
+import { Spinner } from '../Spinner';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -47,7 +47,7 @@ export default function StepChooser({popupContent, setPopupContent}) {
       setPopupContent(null) 
     } else {
       setSelectedStep(descriptionFile)
-      setPopupContent(<img src={spinnerImg} className="spinner" alt="Spinner" />)
+      setPopupContent(<Spinner />)
 
       fetchStepDescription(descriptionFile, (metadata) => {
         if(!metadata) {

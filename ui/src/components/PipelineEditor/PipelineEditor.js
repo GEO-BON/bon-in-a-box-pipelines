@@ -34,6 +34,10 @@ import {
 } from "../../utils/IOId";
 import sleep from "../../utils/Sleep";
 import { getFolderAndName } from "../StepDescription";
+import { IOListPane } from "./IOListPane";
+import { MetadataPane } from "./MetadataPane";
+
+const yaml = require('js-yaml');
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 const api = new BonInABoxScriptService.DefaultApi();
@@ -47,81 +51,7 @@ const customNodeTypes = {
 let id = 0;
 const getId = () => `${id++}`;
 
-/**
- * @returns rendered view of the pipeline inputs
- */
-const IOList = ({ inputList, outputList, selectedNodes }) => {
-  const [collapsedPane, setCollapsedPane] = useState(false);
-  return (
-    <div className={`ioList ${collapsedPane ? "paneCollapsed" : "paneOpen"}`}>
-      <div className="collapseTab" onClick={() => setCollapsedPane(!collapsedPane)}>
-        {collapsedPane ?
-        <>
-          &lt;&lt;
-          <span className="topToBottomText">
-            &nbsp;&nbsp;
-            {inputList.length < 10 && <>&nbsp;</>}
-            {inputList.length}&nbsp;Inputs,&nbsp;
-            {outputList.length < 10 && <>&nbsp;</>}
-            {outputList.length}&nbsp;Outputs
-          </span>
-        </>
-          : ">>"
-        }
-      </div>
-      <div className="ioListInner">
-        <h3>User inputs</h3>
-        {inputList.length === 0
-          ? "No inputs"
-          : inputList.map((input, i) => {
-              return (
-                <div
-                  key={i}
-                  className={
-                    selectedNodes.find((node) => node.id === input.nodeId)
-                      ? "selected"
-                      : ""
-                  }
-                >
-                  <p>
-                    {input.label}
-                    <br />
-                    <span className="description">{input.description}</span>
-                  </p>
-                </div>
-              );
-            })}
-        <h3>Pipeline outputs</h3>
-        {outputList.length === 0 ? (
-          <p className="error">
-            At least one output is needed for the pipeline to run
-          </p>
-        ) : (
-          outputList.map((output, i) => {
-            return (
-              <div
-                key={i}
-                className={
-                  selectedNodes.find((node) => node.id === output.nodeId)
-                    ? "selected"
-                    : ""
-                }
-              >
-                <p>
-                  {output.label}
-                  <br />
-                  <span className="description">{output.description}</span>
-                </p>
-              </div>
-            );
-          })
-        )}
-      </div>
-    </div>
-  );
-};
-
-export function PipelineEditor(props) {
+export default function PipelineEditor(props) {
   const reactFlowWrapper = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -129,6 +59,9 @@ export function PipelineEditor(props) {
   const [selectedNodes, setSelectedNodes] = useState(null);
   const [inputList, setInputList] = useState([]);
   const [outputList, setOutputList] = useState([]);
+  const [metadata, setMetadata] = useState("")
+
+  const [editSession, setEditSession] = useState(Math.random());
 
   const [toolTip, setToolTip] = useState(null);
 
@@ -407,8 +340,13 @@ export function PipelineEditor(props) {
                 newUserInputs.push(previousInput);
               } else {
                 // No existing input, add a new one
-                let label = "Label";
-                let description = "Description";
+                let toAdd = {
+                  label: "Label missing",
+                  description: "Description missing",
+                  type: node.data.type,
+                  example: node.data.value,
+                  nodeId: node.id
+                }
 
                 // Descriptions may vary between all steps connected, we pick the one from the first outgoing edge.
                 const edgeFound = allEdges.find(
@@ -427,20 +365,14 @@ export function PipelineEditor(props) {
                       stepDescription.inputs[edgeFound.targetHandle];
 
                     if (inputDescription) {
-                      label = inputDescription.label;
-                      node.data.label = label;
-                      description = inputDescription.description;
+                      // This will fill label, description, and other fields.
+                      Object.assign(toAdd, inputDescription)
+                      node.data.label = inputDescription.label;
                     }
                   }
                 }
 
-                newUserInputs.push({
-                  label,
-                  description,
-                  type: node.data.type,
-                  example: node.data.value,
-                  nodeId: node.id,
-                });
+                newUserInputs.push(toAdd);
               }
             } else if (node.type === "io") {
               let scriptDescription = getStepDescription(
@@ -604,6 +536,11 @@ export function PipelineEditor(props) {
           copy;
       });
 
+      // Save the metadata (only if metadata pane was edited)
+      if(metadata !== "") {
+        flow.metadata = yaml.load(metadata)
+      }
+
       navigator.clipboard
         .writeText(JSON.stringify(flow, null, 2))
         .then(() => {
@@ -615,7 +552,7 @@ export function PipelineEditor(props) {
           alert("Error: Failed to copy content to clipboard.");
         });
     }
-  }, [reactFlowInstance, inputList, outputList]);
+  }, [reactFlowInstance, inputList, outputList, metadata]);
 
   const onLoadFromFileBtnClick = () => inputFile.current.click(); // will call onLoad
 
@@ -666,6 +603,11 @@ export function PipelineEditor(props) {
 
   const onLoadFlow = useCallback((flow) => {
     if (flow) {
+      setEditSession(Math.random())
+
+      // Read metadata
+      setMetadata(flow.metadata ? yaml.dump(flow.metadata) : "")
+
       // Read inputs
       let inputsFromFile = [];
       if (flow.inputs) {
@@ -756,6 +698,7 @@ export function PipelineEditor(props) {
     }
   }, [
     reactFlowInstance,
+    setMetadata,
     setInputList,
     setOutputList,
     setEdges,
@@ -817,12 +760,16 @@ export function PipelineEditor(props) {
 
               <Controls />
 
-              <IOList
+              <IOListPane
                 inputList={inputList}
+                setInputList={setInputList}
                 outputList={outputList}
+                setOutputList={setOutputList}
                 selectedNodes={selectedNodes}
+                editSession={editSession}
               />
 
+              <MetadataPane metadata={metadata} setMetadata={setMetadata} />
               <MiniMap
                 nodeStrokeColor={(n) => {
                   switch (n.type) {

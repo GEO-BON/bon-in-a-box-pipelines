@@ -3,7 +3,7 @@
 version: "3.7"
 
 services:
-# This can be accessed within the docker network with http://biab-script-server:8081/script/...
+  # This can be accessed within the docker network with http://biab-script-server:8081/script/...
   script-server:
     container_name: biab-script-server
     volumes:
@@ -12,7 +12,7 @@ services:
       - ./output:/output:rw
       - /var/run/docker.sock:/var/run/docker.sock
     expose:
-      - '8080'
+      - "8080"
     environment:
       - SCRIPT_LOCATION=/scripts
       - PIPELINES_LOCATION=/pipelines
@@ -26,7 +26,6 @@ services:
     depends_on:
       - runner-r
       - runner-julia
-
 
   runner-r:
     container_name: biab-runner-r
@@ -67,7 +66,7 @@ services:
     container_name: http-rev-prox
     image: nginx
     ports:
-      - '80:80'
+      - "80:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./output:/static/output:ro
@@ -76,9 +75,12 @@ services:
 
   tiler:
     container_name: biab-tiler
-    image: ghcr.io/developmentseed/titiler:0.12.0
+    image: ghcr.io/developmentseed/titiler:latest
     volumes:
-      - ./output:/output:rw
+      - ./output:/output:ro
     environment:
       - PORT=8000
       - WORKERS_PER_CORE=1
+      - TITILER_API_CORS_ORIGINS=*
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

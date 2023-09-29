@@ -185,6 +185,28 @@ paths:
           description: Bad request
         "404":
           description: id not found
+  /api/versions:
+    get:
+      summary: Returns the version of system components.
+      operationId: getVersions
+      responses:
+        "200":
+          description: The version of system components.
+          content:
+            text/plain:
+              schema:
+                type: string
+                x-content-type: text/plain
+                example: |
+                  UI: 2023-09-07 19:24
+                  Script server: 2023-09-07 19:24
+                  Python: Python 3.10.6
+                  R runner: 2023-09-07 19:24
+                  Rscript: Rscript (R) version 4.2.3 (2023-03-15)
+                  Julia runner: 2023-09-07 19:24
+                  Julia: julia version 1.8.1
+                  TiTiler: 2023-08-30 15:44
+            
 components:
   parameters:
     stepType:
