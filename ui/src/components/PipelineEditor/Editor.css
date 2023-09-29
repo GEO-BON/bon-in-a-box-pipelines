@@ -235,6 +235,11 @@
   font-size: small;
 }
 
+.ioList .example-tag {
+  padding-left: 5px;
+  font-size: small;
+}
+
 .ioList textarea {
   width: 100%;
   background-color: transparent;

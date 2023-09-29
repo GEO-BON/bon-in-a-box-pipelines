@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AutoResizeTextArea from "../form/AutoResizeTextArea";
 import { toIOId } from "../../utils/IOId";
 import pen from "../../img/pen.svg"
+import ScriptInput from "../form/ScriptInput";
 
 function focusOnSiblingTextarea(event) {
   event.target.parentNode.getElementsByTagName('textarea')[0].focus()
@@ -51,7 +52,7 @@ export const IOListPane = ({
                   <span className="imgHoverAppear">
                     <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="label" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "label", input, setInputList)}
+                      onBlur={e => valueEdited(e.target.value, "label", input, setInputList)}
                       onInput={preventNewLines}
                       defaultValue={input.label}></AutoResizeTextArea>
                   </span>
@@ -60,8 +61,16 @@ export const IOListPane = ({
                   <span className="imgHoverAppear">
                     <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="description" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "description", input, setInputList)}
+                      onBlur={e => valueEdited(e.target.value, "description", input, setInputList)}
                       defaultValue={input.description}></AutoResizeTextArea>
+                  </span>
+
+                  <br />
+                  <span className="imgHoverAppear">
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
+                    <span className="example-tag">Example: </span>
+                    <ScriptInput type={input.type} value={input.example} options={input.options} 
+                      onValueUpdated={(value) => valueEdited(value, "example", input, setInputList)} />
                   </span>
                 </p>
               </div>
@@ -85,16 +94,25 @@ export const IOListPane = ({
                   <span className="imgHoverAppear">
                     <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="label" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "label", output, setOutputList)}
+                      onBlur={e => valueEdited(e.target.value, "label", output, setOutputList)}
                       onInput={preventNewLines}
                       defaultValue={output.label}></AutoResizeTextArea>
                   </span>
+
                   <br />
                   <span className="imgHoverAppear">
                     <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
                     <AutoResizeTextArea className="description" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
+                      onBlur={e => valueEdited(e.target.value, "description", output, setOutputList)}
                       defaultValue={output.description}></AutoResizeTextArea>
+                  </span>
+
+                  <br />
+                  <span className="imgHoverAppear">
+                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
+                    <span className="example-tag">Example: </span>
+                    <ScriptInput type={output.type} value={output.example} options={output.options} 
+                      onValueUpdated={(value) => valueEdited(value, "example", output, setOutputList)} />
                   </span>
                 </p>
               </div>
@@ -106,13 +124,13 @@ export const IOListPane = ({
   );
 };
 
-function valueEdited(subject, valueKey, io, setter) {
+function valueEdited(value, valueKey, io, setter) {
   setter(previousValues => previousValues.map(previousIO => {
     let newIO = {...previousIO}
     if(previousIO.nodeId === io.nodeId
       && previousIO.inputId === io.inputId
       && previousIO.outputId === io.outputId) {
-        newIO[valueKey] = subject.value
+        newIO[valueKey] = value
       }
 
       return newIO
