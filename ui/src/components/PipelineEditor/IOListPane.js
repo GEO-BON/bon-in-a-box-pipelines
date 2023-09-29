@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 import AutoResizeTextArea from "../form/AutoResizeTextArea";
 import { toIOId } from "../../utils/IOId";
-import pen from "../../img/pen.svg"
 import ScriptInput from "../form/ScriptInput";
-
-function focusOnSiblingTextarea(event) {
-  event.target.parentNode.getElementsByTagName('textarea')[0].focus()
-}
 
 /**
  * @returns rendered view of the pipeline inputs and outputs
@@ -49,29 +44,21 @@ export const IOListPane = ({
                   : ""}
               >
                 <p>
-                  <span className="imgHoverAppear">
-                    <AutoResizeTextArea className="label" keepWidth={true}
-                      onBlur={e => valueEdited(e.target.value, "label", input, setInputList)}
-                      onInput={preventNewLines}
-                      defaultValue={input.label}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                  </span>
+                  <AutoResizeTextArea className="label" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "label", input, setInputList)}
+                    onInput={preventNewLines}
+                    defaultValue={input.label}></AutoResizeTextArea>
 
                   <br />
-                  <span className="imgHoverAppear">
-                    <AutoResizeTextArea className="description" keepWidth={true}
-                      onBlur={e => valueEdited(e.target.value, "description", input, setInputList)}
-                      defaultValue={input.description}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                  </span>
+                  <AutoResizeTextArea className="description" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "description", input, setInputList)}
+                    defaultValue={input.description}></AutoResizeTextArea>
 
                   <br />
-                  <span className="imgHoverAppear">
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                    <span className="example-tag">Example: </span>
-                    <ScriptInput type={input.type} value={input.example} options={input.options} 
-                      onValueUpdated={(value) => valueEdited(value, "example", input, setInputList)} />
-                  </span>
+                  <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
+                  <span className="example-tag">Example: </span>
+                  <ScriptInput type={input.type} value={input.example} options={input.options}
+                    onValueUpdated={(value) => valueEdited(value, "example", input, setInputList)} />
                 </p>
               </div>
             );
@@ -91,29 +78,20 @@ export const IOListPane = ({
                   : ""}
               >
                 <p>
-                  <span className="imgHoverAppear">
-                    <AutoResizeTextArea className="label" keepWidth={true}
-                      onBlur={e => valueEdited(e.target.value, "label", output, setOutputList)}
-                      onInput={preventNewLines}
-                      defaultValue={output.label}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                  </span>
+                  <AutoResizeTextArea className="label" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "label", output, setOutputList)}
+                    onInput={preventNewLines}
+                    defaultValue={output.label}></AutoResizeTextArea>
 
                   <br />
-                  <span className="imgHoverAppear">
-                    <AutoResizeTextArea className="description" keepWidth={true}
-                      onBlur={e => valueEdited(e.target.value, "description", output, setOutputList)}
-                      defaultValue={output.description}></AutoResizeTextArea>
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                  </span>
+                  <AutoResizeTextArea className="description" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "description", output, setOutputList)}
+                    defaultValue={output.description}></AutoResizeTextArea>
 
                   <br />
-                  <span className="imgHoverAppear">
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                    <span className="example-tag">Example: </span>
-                    <ScriptInput type={output.type} value={output.example} options={output.options} 
-                      onValueUpdated={(value) => valueEdited(value, "example", output, setOutputList)} />
-                  </span>
+                  <span className="example-tag">Example: </span>
+                  <ScriptInput type={output.type} value={output.example} options={output.options}
+                    onValueUpdated={(value) => valueEdited(value, "example", output, setOutputList)} />
                 </p>
               </div>
             );
