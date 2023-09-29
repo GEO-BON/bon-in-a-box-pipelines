@@ -31,7 +31,7 @@ print("Inputs : ")
 print(input)
 
 
-presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE) 
+presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE) 
 predictors <- terra::rast(unlist(input$predictors))
 mod_tuning <- run_maxent(presence_background, 
                          with_raster = F, # can be set to F to speed up
