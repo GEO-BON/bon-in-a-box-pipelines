@@ -5,11 +5,11 @@
 print(Sys.getenv("SCRIPT_LOCATION"))
 options(timeout = max(60000000, getOption("timeout")))
 
-packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf",
+packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
               "geodata","gdalcubes","stacatalogue","rredlist","stringr")
 
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git", update="never")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue", update="never", quiet=T)
+if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -25,8 +25,8 @@ print(input)
 source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
 
 # Parameters -------------------------------------------------------------------
-# Define species
-sp <- str_to_sentence(input$species)
+# spatial resolution
+spat_res <- ifelse(is.null(input$spat_res), 1000 ,input$spat_res)
 
 # Define SRS
 srs <- input$srs
@@ -35,12 +35,9 @@ sf_srs  <-  if(check_srs) st_crs(as.numeric(srs)) else  st_crs(srs) # converts t
 srs_cube <- suppressWarnings(if(check_srs){
   authorities <- c("EPSG","ESRI","IAU2000","SR-ORG")
   auth_srid <- paste(authorities,srs,sep=":")
-  auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(try(st_crs(.x),silent=TRUE)))
+  auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(suppressWarnings(try(st_crs(.x),silent=TRUE))))
   if(sum(auth_srid_test)!=1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
 }else srs )# paste Authority in case SRID is used 
-
-# Define expert range maps
-range_map_path <- ifelse(is.null(input$sf_range_map), NA,input$sf_range_map)
 
 # Define area of interest, country or region
 study_area_path <- ifelse(is.null(input$study_area), NA,input$study_area)
@@ -50,163 +47,206 @@ region <- ifelse(is.null(input$region), NA ,input$region)
 # Size of buffer around study area
 buff_size <- ifelse(is.null(input$buff_size), NA,input$buff_size)
 
+# Define species
+sp <- str_to_sentence(input$species)
+
+# Range map option
+range_map_type <- ifelse(is.null(input$range_map_type), NA,input$range_map_type)
+# Define expert range maps
+sf_range_map_path <- if(is.null(input$sf_range_map)){NA}else{input$sf_range_map}
+r_range_map_path <- if(is.null(input$r_range_map)){NA}else{input$r_range_map}
+
+# Elevation_filter
+elevation_filter <- ifelse(input$elevation_filter=="Yes", 1,NA)
 # Buffer for elevation values
 elev_buffer <- ifelse(is.null(input$elev_buffer), NA,input$elev_buffer)
-
-# spatial resolution
-spat_res <- ifelse(is.null(input$spat_res), 1000 ,input$spat_res)
-
-# binary sdm
-bin_sdm_path <- ifelse(is.null(input$sdm_bin), NA,input$sdm_bin)
 
 #credentials
 token <- Sys.getenv("IUCN_TOKEN")
 
-# Step 1.1 - Get range map #filter by expert source missing ----------------------
-if(!is.na(range_map_path)){
-  sf_range_map <- st_read(range_map_path)
-}else{stop("A range map is needed. Add a polygon or use the SDM pipeline to produce a map with the potential area for the species.")}
-
-if (!dir.exists(file.path(outputFolder,sp))){
-  dir.create(file.path(outputFolder,sp))
-}else{
-  print("dir exists")
-}
-
-print("========== Step 1.1 - Expert range map successfully loaded ==========")
-
-# Step 1.2 - Get bounding box cropped by country if needed -----------------------
+#-------------------------------------------------------------------------------
+# Step 1 - Get study area
+#-------------------------------------------------------------------------------
 study_area <- data.frame(study_area_path= study_area_path ,
                          country_code = country_code ,
                          region = region ) |>
   dplyr::mutate(option=case_when(
-    is.na(study_area_path) & is.na(country_code) ~ 1,
-    !is.na(study_area_path) ~  2,
-    !is.na(country_code) & is.na(region) ~  3,
-    !is.na(country_code) & !is.na(region) ~ 4
+    !is.na(study_area_path) ~  1,
+    !is.na(country_code) & is.na(region) ~  2,
+    !is.na(country_code) & !is.na(region) ~ 3,
+    is.na(study_area_path) & is.na(country_code) ~ 4,
   ))
 
 if(study_area$option == 1){
-  sf_area_lim <- sf_range_map
-  sf_area_lim_srs <- sf_area_lim |> st_transform(sf_srs)
-}else{
-  if(study_area$option == 2){
-    sf_area_lim1 <- st_read(study_area_path)
+  sf_area_lim1 <- st_read(study_area_path) # user defined area
+}
+if(study_area$option == 2){
+  sf_area_lim1 <- gadm(country=country_code, level=0, path=tempdir()) |> st_as_sf() |> st_make_valid() # country
+}
+if(study_area$option == 3){
+  sf_area_lim1 <- gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region) # region in a country
+}
+
+sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
+area_study_a <<- sf_area_lim1_srs |> st_area()
+
+
+print("==================== Step 1 - Study area loaded =====================")
+
+#-------------------------------------------------------------------------------
+# Step 2 -  Get area of habitat
+#-------------------------------------------------------------------------------
+v_path_to_area_of_habitat <- c()
+v_path_bbox_analysis <- c()
+df_aoh_areas <- tibble()
+
+for(i in 1:length(sp)){
+  if (!dir.exists(file.path(outputFolder,sp[i]))){
+    dir.create(file.path(outputFolder,sp[i]))
+  }else{
+    print("dir exists")
   }
-  if(study_area$option == 3){
-    sf_area_lim1 <- gadm(country=country_code, level=0, path=tempdir()) |> st_as_sf() |> st_make_valid()
+  
+  # Get range map---------------------------------------------------------------
+  sf_range_map <<- st_read(sf_range_map_path[i])
+  if(range_map_type=="Polygon"){
+    sf_range_map <<- st_read(sf_range_map_path[i])
   }
-  if(study_area$option == 4){
-    sf_area_lim1 <- gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region)
+  if(range_map_type=="Raster"){
+    r_range_map <- rast(r_range_map_path[i])
+    sf_range_map <<- as.polygons(r_range_map)
   }
-  sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
+  if(range_map_type=="Both"){
+    sf_range_map <<- st_read(sf_range_map_path[i])
+    r_range_map <- rast(r_range_map_path[i])
+    r_range_map2 <- project(r_range_map, crs(sf_range_map), method="near")
+    r_range_map2 <- mask(crop(r_range_map2, sf_range_map), vect(as(sf_range_map,"Spatial")))
+    sf_range_map <<- as.polygons(r_range_map2)
+  }
   
   sf_area_lim2 <- sf_range_map |> st_make_valid() |> st_transform(st_crs(sf_area_lim1))
   sf_area_lim2_srs <- sf_area_lim2 |> st_transform(sf_srs)
   
-  sf_area_lim <- st_intersection(sf_area_lim2,sf_area_lim1,dimension="polygon") |> st_make_valid()
-  sf_area_lim_srs <- st_intersection(sf_area_lim2_srs,sf_area_lim1_srs,dimension="polygon") |> st_make_valid()
-}
-
-# define buffer size 
-if(is.na(buff_size)){
-  sf_bbox_aoh <- sf_area_lim |> st_bbox() |> st_as_sfc()
-  buff_size <- round(sqrt( sf_bbox_aoh |> st_area())/2)
-}else{
-  buff_size <- buff_size
-}
-
-# get bounding box for the complete area projected and non projected
-suppressWarnings({
-  if(!is.null(st_crs(sf_area_lim_srs)$units)){
-  sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(buff_size))
-  }else{
-  sf::sf_use_s2(FALSE)
-  sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(buff_size*0.00001)) # approximate value from degrees to m
-  print("--- Buffer defined for spherical geometry ---")
-  }
-})
-print(sf_ext_srs)
-
-#Create raster
-sf_bbox <- st_as_sfc(sf_ext_srs)
-sf_bbox_path <- file.path(outputFolder ,sp, "st_bbox.gpkg")
-st_write(sf_bbox,sf_bbox_path,append=F)
-
-print("========== Step 1.2 - Bounding box created ==========")
-
-# Step 1.3 - Create raster and limit area by elevation ranges---------------------
-# Bounding box raster
-r_frame <- rast(terra::ext(sf_ext_srs),resolution=spat_res)
-crs(r_frame) <- srs_cube
-values(r_frame) <- 1
-#writeRaster(r_frame,file.path("./Connectivity/layers_for_omniscape",sp,"./r_frame.tif"),overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
-
-# Mask to study area
-r_range_map <- terra::mask(r_frame,vect(sf_area_lim_srs))
-
-# Load elevation preferences
-df_IUCN_sheet <- rredlist::rl_search(sp, key = token)$result
-
-df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
-  min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
-    is.na(elevation_lower) ~ NA_real_,
-    !is.na(elevation_lower) & (as.numeric(elevation_lower) < elev_buffer)  ~ 0,
-    !is.na(elevation_lower) & (as.numeric(elevation_lower) >= elev_buffer) ~ as.numeric(elevation_lower) - elev_buffer),
-  max_elev= case_when(
-    is.na(elevation_upper) ~ NA_real_,
-    !is.na(elevation_upper) ~ as.numeric(elevation_upper) + elev_buffer)
-)
-
-print(df_IUCN_sheet_condition |> select(elevation_lower, elevation_upper))
-
-with(df_IUCN_sheet_condition, if(is.na(min_elev)  & is.na(max_elev)){ # if no elevation values are provided then the range map stays the same
-  r_range_map <<- r_range_map
-}else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
-  # STRM from Copernicus
-  cube_STRM <-
-    load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
-              limit = 1000,
-              collections = c("cop-dem-glo-90"),
-              bbox = sf_ext_srs,
-              srs.cube = srs_cube,
-              spatial.res = spat_res,
-              temporal.res = "P1Y",
-              t0 = "2021-01-01",
-              t1 = "2021-12-31",
-              resampling = "bilinear")
-  cube_STRM_range <- funFilterCube_range(cube_STRM, min = min_elev , max = max_elev) |> select_bands("data")
-  # convert to raster
-  r_STRM <<- terra::wrap(cube_STRM  |> st_as_stars() |> terra::rast())
-  r_STRM_range <- cube_STRM_range  |> st_as_stars() |> terra::rast()
+  area_range_map <- sf_area_lim2_srs |> st_area()
   
-  # resample to raster of range map
-  r_STRM_range_res <<- terra::wrap(terra::resample(r_STRM_range, r_range_map))
-  r_range_map <<- terra::wrap(terra::mask(terra::crop(r_range_map,unwrap(r_STRM_range_res)),unwrap(r_STRM_range_res))) #Crop to range extent
+  print("========== Step 2.1 - Expert range map successfully loaded ==========")
+  
+  # Intersect range map to study area-------------------------------------------
+  # sf_area_lim <- st_intersection(sf_area_lim2,sf_area_lim1) |> 
+  #   st_make_valid()
+  sf_area_lim_srs <- st_intersection(sf_area_lim2_srs,sf_area_lim1_srs) |> 
+    st_make_valid()
+  
+  print(sf_area_lim_srs)
+  # define buffer size 
+  if(is.na(buff_size)){
+    # Buffer size for range map
+    sf_bbox_aoh <- sf_area_lim_srs |> st_bbox() |> st_as_sfc()
+    area_bbox <- sf_bbox_aoh |> st_area()
+    buff_size <- round(sqrt(area_aoh)/2)
+  }else{
+    buff_size <- buff_size
+  }
+  
+  # get bounding box for the complete area projected and non projected----------
+  suppressWarnings({
+    if(!is.null(st_crs(sf_area_lim_srs)$units)){
+      sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(buff_size))
+    }else{
+      sf::sf_use_s2(FALSE)
+      sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(buff_size*0.00001)) # approximate value from degrees to m
+      print("--- Buffer defined for spherical geometry ---")
+    }
+  })
+  print(sf_ext_srs)
+  
+  sf_bbox_analysis <- sf_ext_srs |> st_as_sfc()
+  area_bbox_analysis <- sf_bbox_analysis |> st_area()
+  
+  v_path_bbox_analysis[i] <- file.path(outputFolder ,sp[i], paste0(sp[i],"_st_bbox.gpkg"))
+  st_write(sf_bbox_analysis,v_path_bbox_analysis[i],append=F)
+  
+  print("================== Step 2.2 - Bounding box created =================")
+  
+  #Create raster
+  r_frame <- rast(terra::ext(sf_ext_srs),resolution=spat_res)
+  crs(r_frame) <- srs_cube
+  values(r_frame) <- 1
+  r_aoh <- terra::mask(r_frame,vect(as(sf_area_lim_srs,"Spatial")))
+  
+  # elevation filters-----------------------------------------------------------
+  if(elevation_filter==1){
+    # Load elevation preferences
+    df_IUCN_sheet <- rredlist::rl_search(sp[i], key = token)$result
+    
+    df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
+      min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
+        is.na(elevation_lower) ~ NA_real_,
+        !is.na(elevation_lower) & (as.numeric(elevation_lower) < elev_buffer)  ~ 0,
+        !is.na(elevation_lower) & (as.numeric(elevation_lower) >= elev_buffer) ~ as.numeric(elevation_lower) - elev_buffer),
+      max_elev= case_when(
+        is.na(elevation_upper) ~ NA_real_,
+        !is.na(elevation_upper) ~ as.numeric(elevation_upper) + elev_buffer)
+    )
+    
+    print(df_IUCN_sheet_condition |> select(elevation_lower, elevation_upper))
+    
+    with(df_IUCN_sheet_condition, if(is.na(min_elev)  & is.na(max_elev)){ # if no elevation values are provided then the range map stays the same
+      r_aoh <<- terra::wrap(r_aoh)
+    }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
+      # STRM from Copernicus
+      cube_STRM <-
+        load_cube(stac_path = "https://planetarycomputer.microsoft.com/api/stac/v1/",
+                  limit = 1000,
+                  collections = c("cop-dem-glo-90"),
+                  bbox = sf_ext_srs,
+                  srs.cube = srs_cube,
+                  spatial.res = spat_res,
+                  temporal.res = "P1Y",
+                  t0 = "2021-01-01",
+                  t1 = "2021-12-31",
+                  resampling = "bilinear")
+      cube_STRM_range <- funFilterCube_range(cube_STRM, min = min_elev , max = max_elev) |> select_bands("data")
+      
+      # convert to raster
+      r_STRM_range <- cube_STRM_range  |> st_as_stars() |> terra::rast()
+      
+      # resample to raster of area of habitat
+      r_STRM_range_res <- terra::resample(r_STRM_range, r_aoh)
+      r_aoh <<- terra::wrap(terra::mask(terra::crop(r_aoh,r_STRM_range_res),r_STRM_range_res)) #Crop to range extent
+      
+      print("============= Step 2.2.1 - Filter by elevation limits ==============")
+    }
+    )
+  }
+  
+  r_aoh <- unwrap(r_aoh)
+  v_path_to_area_of_habitat[i] <- file.path(outputFolder, sp[i] , paste0(sp[i],"_r_aoh.tif"))
+  writeRaster(r_aoh, v_path_to_area_of_habitat[i], overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
+  
+  print("================== Step 2.3 - Area of habitat created =================")
+  
+  # get area for the area of habitat delimited by the study area or country
+  r_aoh_area <- terra::cellSize(r_aoh,unit="ha")#create raster of areas by pixel
+  area_aoh  <- global(r_aoh_area,sum)$sum 
+  
+  #create dataframe with area values--------------------------------------------
+  df_aoh_areas_sp <- tibble(sci_name=sp[i], area_range_map = area_range_map, 
+                         area_study_a=area_study_a, area_bbox_analysis=area_bbox_analysis,
+                         buff_size=buff_size, area_aoh=area_aoh)
+  write_csv(df_aoh_areas_sp,file.path(outputFolder,sp[i],paste0(sp[i],"_df_aoh_areas.csv")))
+  
+  df_aoh_areas <- bind_rows(df_aoh_areas,df_aoh_areas_sp)
+  print("================== Step 2.4 - Table of areas =================")
 }
-)
 
-print("========== Step 1.3 - Create base rasters and filter area by elevation ranges ==========")
-
-# Step 1.4 - Crop by binary SDM-------------------------------------------------
-print(file.path(path_script,bin_sdm_path))
-if(!is.na(bin_sdm_path)){
-  r_bin_sdm <- rast(file.path(path_script,bin_sdm_path))
-}else{stop("A binary raster file is required for this step. Add file or use the SDM pipeline to produce a map with the potential area for the species.")}
-
-if(!crs(r_bin_sdm)==crs(srs_cube)){
-  r_bin_sdm <- terra::project(r_bin_sdm, srs_cube, method="near") 
-}
-r_bin_sdm_frame <- terra::crop(r_bin_sdm, r_frame)
-r_bin_sdm_frame_res <- terra::resample(r_bin_sdm_frame,r_frame,method="near")
-r_range_map <- terra::mask(unwrap(r_range_map),r_bin_sdm_frame_res,maskvalues=1,inverse=T)
-
-r_range_map_path <- file.path(outputFolder, sp , "r_range_map.tiff")
-writeRaster(unwrap(r_range_map), r_range_map_path, overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG")
+path_aoh_areas <- file.path(outputFolder,"df_aoh_areas.csv")
+write_tsv(df_aoh_areas,file= path_aoh_areas)
 
 # Outputing result to JSON -----------------------------------------------------
-output <- list("r_range_map" = r_range_map_path ,
-               "sf_bbox" = sf_bbox_path )
+output <- list("r_area_of_habitat" = v_path_to_area_of_habitat ,
+               "sf_bbox" = v_path_bbox_analysis,
+               "df_areas"= path_aoh_areas)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

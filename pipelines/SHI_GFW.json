@@ -1,22 +1,48 @@
 {
   "nodes": [
     {
-      "id": "8",
+      "id": "0",
       "type": "io",
       "position": {
-        "x": 432,
-        "y": 115
+        "x": 441.984375,
+        "y": 331
       },
       "data": {
         "descriptionFile": "SHI>scpSHI_Jetz_complete.yml"
       }
     },
     {
-      "id": "12",
+      "id": "1",
       "type": "constant",
       "position": {
-        "x": 11,
-        "y": 76
+        "x": 111.984375,
+        "y": 331
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Saguinus oedipus"
+      }
+    },
+    {
+      "id": "2",
+      "type": "constant",
+      "position": {
+        "x": 131.984375,
+        "y": 348
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:3116"
+      }
+    },
+    {
+      "id": "3",
+      "type": "constant",
+      "position": {
+        "x": 131.984375,
+        "y": 361
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -25,11 +51,50 @@
       }
     },
     {
-      "id": "15",
+      "id": "4",
       "type": "constant",
       "position": {
-        "x": 11,
-        "y": 228
+        "x": 129.984375,
+        "y": 374
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 50
+      }
+    },
+    {
+      "id": "5",
+      "type": "constant",
+      "position": {
+        "x": 132.984375,
+        "y": 387
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 100
+      }
+    },
+    {
+      "id": "6",
+      "type": "constant",
+      "position": {
+        "x": 149.984375,
+        "y": 398
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "COL"
+      }
+    },
+    {
+      "id": "7",
+      "type": "constant",
+      "position": {
+        "x": 125.984375,
+        "y": 424
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -38,24 +103,101 @@
       }
     },
     {
-      "id": "19",
+      "id": "8",
       "type": "constant",
       "position": {
-        "x": 11,
-        "y": 380
+        "x": 135.984375,
+        "y": 435
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "IUCN",
+        "options": [
+          "MOL",
+          "IUCN",
+          "QC"
+        ]
+      }
+    },
+    {
+      "id": "9",
+      "type": "constant",
+      "position": {
+        "x": 133.984375,
+        "y": 448
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int",
-        "value": 1
+        "value": 2000
       }
     },
     {
-      "id": "20",
+      "id": "10",
+      "type": "constant",
+      "position": {
+        "x": 133.984375,
+        "y": 463
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2020
+      }
+    },
+    {
+      "id": "11",
+      "type": "constant",
+      "position": {
+        "x": 140.984375,
+        "y": 475
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 10
+      }
+    },
+    {
+      "id": "12",
       "type": "output",
       "position": {
-        "x": 1012,
-        "y": 185
+        "x": 975.984375,
+        "y": 333
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 975.984375,
+        "y": 343
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "14",
+      "type": "output",
+      "position": {
+        "x": 975.984375,
+        "y": 360
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 977.984375,
+        "y": 372
       },
       "data": {
         "label": "Output"
@@ -64,101 +206,140 @@
   ],
   "edges": [
     {
-      "source": "8",
-      "sourceHandle": "img_shi_time_period",
-      "target": "20",
-      "targetHandle": null,
-      "id": "reactflow__edge-8img_shi_time_period-20"
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "species",
+      "id": "reactflow__edge-1-0species"
     },
     {
-      "source": "12",
+      "source": "2",
       "sourceHandle": null,
-      "target": "8",
+      "target": "0",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-2-0srs"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "0",
       "targetHandle": "elev_buffer",
-      "id": "reactflow__edge-12-8elev_buffer"
+      "id": "reactflow__edge-3-0elev_buffer"
     },
     {
-      "source": "15",
+      "source": "4",
       "sourceHandle": null,
-      "target": "8",
+      "target": "0",
+      "targetHandle": "min_forest",
+      "id": "reactflow__edge-4-0min_forest"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "max_forest",
+      "id": "reactflow__edge-5-0max_forest"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "country_code",
+      "id": "reactflow__edge-6-0country_code"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "0",
       "targetHandle": "spat_res",
-      "id": "reactflow__edge-15-8spat_res"
+      "id": "reactflow__edge-7-0spat_res"
     },
     {
-      "source": "19",
+      "source": "8",
       "sourceHandle": null,
-      "target": "8",
+      "target": "0",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-8-0expert_source"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "t_0",
+      "id": "reactflow__edge-9-0t_0"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "t_n",
+      "id": "reactflow__edge-10-0t_n"
+    },
+    {
+      "source": "11",
+      "sourceHandle": null,
+      "target": "0",
       "targetHandle": "time_step",
-      "id": "reactflow__edge-19-8time_step"
+      "id": "reactflow__edge-11-0time_step"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "df_shi",
+      "target": "12",
+      "targetHandle": null,
+      "id": "reactflow__edge-0df_shi-12"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "img_shi_time_period",
+      "target": "13",
+      "targetHandle": null,
+      "id": "reactflow__edge-0img_shi_time_period-13"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "img_shi_timeseries",
+      "target": "14",
+      "targetHandle": null,
+      "id": "reactflow__edge-0img_shi_timeseries-14"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "r_habitat_by_tstep",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-0r_habitat_by_tstep-15"
     }
   ],
   "inputs": {
-    "SHI>scpSHI_Jetz_complete.yml@8|species": {
-      "description": "Scientific name of the species.",
-      "label": "species",
-      "type": "text",
-      "example": "Saguinus oedipus"
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|srs": {
-      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
-      "label": "spatial reference system",
-      "type": "text",
-      "example": "EPSG:3116"
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|min_forest": {
-      "description": "Minimum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "min forest",
-      "type": "int",
-      "example": 50
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|max_forest": {
-      "description": "Maximum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "max forest",
-      "type": "int",
-      "example": 100
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|country_code": {
-      "description": "Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.",
-      "label": "country code",
-      "type": "text",
-      "example": "COL"
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|region": {
+    "SHI>scpSHI_Jetz_complete.yml@0|region": {
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
       "label": "region",
-      "type": "text",
-      "example": null
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|expert_source": {
-      "description": "Source of the expert range map for the species.",
-      "label": "source of expert range map",
-      "type": "options",
-      "options": [
-        "MOL",
-        "IUCN",
-        "QC"
-      ],
-      "example": "IUCN"
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|t_0": {
-      "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
-      "label": "initial time",
-      "type": "int",
-      "example": 2000
-    },
-    "SHI>scpSHI_Jetz_complete.yml@8|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time)",
-      "label": "final time",
-      "type": "int",
-      "example": 2020
+      "type": "text"
     }
   },
   "outputs": {
-    "SHI>scpSHI_Jetz_complete.yml@8|img_shi_time_period": {
+    "SHI>scpSHI_Jetz_complete.yml@0|df_shi": {
+      "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
+      "label": "shi table",
+      "type": "text/tab-separated-values",
+      "example": "/Saguinus oedipus_SHI_table.tsv"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0|img_shi_time_period": {
       "description": "Map showing species habitat changes (gain and loss) between t_0 and t_n.",
       "label": "shi map",
       "type": "image/png",
       "example": "/Saguinus oedipus_GFW_change.png"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0|img_shi_timeseries": {
+      "description": "Figure showing a time series of SHI values for each time step.",
+      "label": "shi time series",
+      "type": "image/png"
+    },
+    "SHI>scpSHI_Jetz_complete.yml@0|r_habitat_by_tstep": {
+      "description": "Habitat available for the species by time step.",
+      "label": "habitat raster",
+      "type": "image/tiff;application=geotiff[]"
     }
   }
 }

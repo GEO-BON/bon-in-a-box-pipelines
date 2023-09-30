@@ -1,0 +1,500 @@
+{
+  "nodes": [
+    {
+      "id": "20",
+      "type": "io",
+      "position": {
+        "x": 388,
+        "y": 394
+      },
+      "data": {
+        "descriptionFile": "SHI>scp_SHI_GetRangeMap.yml"
+      }
+    },
+    {
+      "id": "21",
+      "type": "io",
+      "position": {
+        "x": 948,
+        "y": 256
+      },
+      "data": {
+        "descriptionFile": "SHI>scp_SHI_GetAOH.yml"
+      }
+    },
+    {
+      "id": "22",
+      "type": "io",
+      "position": {
+        "x": 1622,
+        "y": 90.5
+      },
+      "data": {
+        "descriptionFile": "SHI>scp_SHI_HabitatChange.yml"
+      }
+    },
+    {
+      "id": "23",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 318.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Saguinus oedipus",
+          "Ateles fusciceps"
+        ]
+      }
+    },
+    {
+      "id": "24",
+      "type": "constant",
+      "position": {
+        "x": 132,
+        "y": 400.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "IUCN",
+        "options": [
+          "MOL",
+          "IUCN",
+          "QC"
+        ]
+      }
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": 557,
+        "y": 219.33333333333337
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 548,
+        "y": 257.33333333333337
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:3116"
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 527,
+        "y": 284
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "COL"
+      }
+    },
+    {
+      "id": "28",
+      "type": "constant",
+      "position": {
+        "x": 636,
+        "y": 357
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Polygon",
+        "options": [
+          "Polygon",
+          "Raster",
+          "Both"
+        ]
+      }
+    },
+    {
+      "id": "29",
+      "type": "constant",
+      "position": {
+        "x": 663,
+        "y": 484
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Yes",
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    },
+    {
+      "id": "30",
+      "type": "output",
+      "position": {
+        "x": 1622,
+        "y": 538.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": 1205,
+        "y": 162
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          "50",
+          "50"
+        ]
+      }
+    },
+    {
+      "id": "32",
+      "type": "constant",
+      "position": {
+        "x": 1205,
+        "y": 209
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          "100",
+          "100"
+        ]
+      }
+    },
+    {
+      "id": "33",
+      "type": "constant",
+      "position": {
+        "x": 1221,
+        "y": 444
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2000
+      }
+    },
+    {
+      "id": "34",
+      "type": "constant",
+      "position": {
+        "x": 1221,
+        "y": 482
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2020
+      }
+    },
+    {
+      "id": "35",
+      "type": "constant",
+      "position": {
+        "x": 1221,
+        "y": 520
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 10
+      }
+    },
+    {
+      "id": "36",
+      "type": "output",
+      "position": {
+        "x": 2073,
+        "y": 61
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "37",
+      "type": "output",
+      "position": {
+        "x": 2073,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "38",
+      "type": "output",
+      "position": {
+        "x": 2073,
+        "y": 509
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "39",
+      "type": "output",
+      "position": {
+        "x": 2073,
+        "y": 460
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "species",
+      "id": "reactflow__edge-23-20species"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-24-20expert_source"
+    },
+    {
+      "source": "20",
+      "sourceHandle": "sf_range_map",
+      "target": "21",
+      "targetHandle": "sf_range_map",
+      "id": "reactflow__edge-20sf_range_map-21sf_range_map"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "species",
+      "id": "reactflow__edge-23-21species"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-25-21spat_res"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-26-21srs"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "country_code",
+      "id": "reactflow__edge-27-21country_code"
+    },
+    {
+      "source": "28",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "range_map_type",
+      "id": "reactflow__edge-28-21range_map_type"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "elevation_filter",
+      "id": "reactflow__edge-29-21elevation_filter"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "species",
+      "id": "reactflow__edge-23-22species"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-25-22spat_res"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-26-22srs"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "sf_bbox",
+      "target": "22",
+      "targetHandle": "sf_bbox",
+      "id": "reactflow__edge-21sf_bbox-22sf_bbox"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "r_area_of_habitat",
+      "target": "22",
+      "targetHandle": "r_area_of_habitat",
+      "id": "reactflow__edge-21r_area_of_habitat-22r_area_of_habitat"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "df_aoh_areas",
+      "target": "30",
+      "targetHandle": null,
+      "id": "reactflow__edge-21df_aoh_areas-30"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "min_forest",
+      "id": "reactflow__edge-31-22min_forest"
+    },
+    {
+      "source": "32",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "max_forest",
+      "id": "reactflow__edge-32-22max_forest"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "t_0",
+      "id": "reactflow__edge-33-22t_0"
+    },
+    {
+      "source": "34",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "t_n",
+      "id": "reactflow__edge-34-22t_n"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "22",
+      "targetHandle": "time_step",
+      "id": "reactflow__edge-35-22time_step"
+    },
+    {
+      "source": "22",
+      "sourceHandle": "img_shs_map",
+      "target": "36",
+      "targetHandle": null,
+      "id": "reactflow__edge-22img_shs_map-36"
+    },
+    {
+      "source": "22",
+      "sourceHandle": "r_habitat_by_tstep",
+      "target": "37",
+      "targetHandle": null,
+      "id": "reactflow__edge-22r_habitat_by_tstep-37"
+    },
+    {
+      "source": "22",
+      "sourceHandle": "img_shs_timeseries",
+      "target": "38",
+      "targetHandle": null,
+      "id": "reactflow__edge-22img_shs_timeseries-38"
+    },
+    {
+      "source": "22",
+      "sourceHandle": "df_shs",
+      "target": "39",
+      "targetHandle": null,
+      "id": "reactflow__edge-22df_shs-39"
+    }
+  ],
+  "inputs": {
+    "SHI>scp_SHI_GetAOH.yml@21|study_area": {
+      "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)",
+      "label": "study area",
+      "type": "application/geopackage+sqlite3 ; application/geo+json ; application/dbf"
+    },
+    "SHI>scp_SHI_GetAOH.yml@21|region": {
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
+      "label": "region",
+      "type": "text"
+    },
+    "SHI>scp_SHI_GetAOH.yml@21|buff_size": {
+      "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
+      "label": "buffer for study area",
+      "type": "int",
+      "example": 0
+    },
+    "SHI>scp_SHI_GetAOH.yml@21|r_range_map": {
+      "description": "Raster with expected area for the species.",
+      "label": "range map (raster)",
+      "type": "image/tiff;application=geotiff[]",
+      "example": [
+        "/scripts/SHI/Saguinus_oedipus_con.tif"
+      ]
+    },
+    "SHI>scp_SHI_GetAOH.yml@21|elev_buffer": {
+      "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that magnitude and negative values will reduce the range in that magnitude.",
+      "label": "elevation buffer",
+      "type": "int",
+      "example": 0
+    }
+  },
+  "outputs": {
+    "SHI>scp_SHI_GetAOH.yml@21|df_aoh_areas": {
+      "description": "A TSV (Tab Separated Values) file containing the area of the range map loaded (area_range_map), the size of the study area (area_study_a), the area of the bounding box for the analysis (area_bbox_analysis), size of the buffer used to create the bounding box for the analysis, the size of the area of habitat(area_aoh).",
+      "label": "table with size of areas of reference.",
+      "type": "text/tab-separated-values"
+    },
+    "SHI>scp_SHI_HabitatChange.yml@22|img_shs_map": {
+      "description": "Figure showing a map with changes in the habitat for the time range.",
+      "label": "SHS map",
+      "type": "image/png[]"
+    },
+    "SHI>scp_SHI_HabitatChange.yml@22|r_habitat_by_tstep": {
+      "description": "Raster of habitat by time step.",
+      "label": "Habitat by time step",
+      "type": "image/tiff;application=geotiff[]"
+    },
+    "SHI>scp_SHI_HabitatChange.yml@22|img_shs_timeseries": {
+      "description": "Figure showing a time series of SHS values for each time step.",
+      "label": "SHS time series",
+      "type": "image/png[]"
+    },
+    "SHI>scp_SHI_HabitatChange.yml@22|df_shs": {
+      "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
+      "label": "SHS table",
+      "type": "text/tab-separated-values[]"
+    }
+  }
+}

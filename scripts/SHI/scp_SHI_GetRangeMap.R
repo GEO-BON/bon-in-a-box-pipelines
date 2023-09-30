@@ -26,42 +26,52 @@ sp <- str_to_sentence(input$species)
 # Define source of expert range maps
 expert_source <- input$expert_source
 
-# Step 1.1 ---------------------------------------------------------------------
-source_range_maps <- data.frame(expert_source=expert_source ,
-                                species_name = sp) |>
-  dplyr::mutate(function_name=case_when(
-    expert_source=="IUCN"~ "get_iucn_range_map",
-    expert_source=="MOL"~ "get_mol_range_map",
-    expert_source=="QC" ~ "get_qc_range_map"
-  ),
-  species_path= case_when(
-    expert_source=="IUCN"~ sp,
-    expert_source=="MOL"~ paste0(sp,"_mol"),
-    expert_source=="QC" ~ paste0(sp,"_qc")
-  ))
+#-------------------------------------------------------------------------------
+# Get range map
+#-------------------------------------------------------------------------------
 
-with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
+v_path_to_range_map <- c()
 
-file <- paste0(source_range_maps$species_path,'_range.gpkg')
-
-if(file.exists(file)){
-  sf_range_map <- st_read(file)
-}else{
-  path_to_range_map <- NULL
-  cat("========== No range map available for ", sp ,"at the ", expert_source , " expert source database ==========")
+for( i in 1:length(sp)){
+  source_range_maps <- data.frame(expert_source=expert_source ,
+                                  species_name = sp[i]) |>
+    dplyr::mutate(function_name=case_when(
+      expert_source=="IUCN"~ "get_iucn_range_map",
+      expert_source=="MOL"~ "get_mol_range_map",
+      expert_source=="QC" ~ "get_qc_range_map"
+    ),
+    species_path= case_when(
+      expert_source=="IUCN"~ sp[i],
+      expert_source=="MOL"~ paste0(sp[i],"_mol"),
+      expert_source=="QC" ~ paste0(sp[i],"_qc")
+    ))
+  
+  with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
+  
+  file <- paste0(source_range_maps$species_path,'_range.gpkg')
+  
+  if(file.exists(file)){
+    sf_range_map <- st_read(file)
+  }else{
+    path_to_range_map <- NULL
+    cat("========== No range map available for ", sp[i] ,"at the ", expert_source , " expert source database ==========")
+  }
+  
+  if (!dir.exists(file.path(outputFolder,sp[i]))){
+    dir.create(file.path(outputFolder,sp[i]))
+  }else{
+    print("dir exists")
+  }
+  
+  v_path_to_range_map[i] <- file.path(outputFolder, sp[i], file)
+  sf::st_write(sf_range_map, v_path_to_range_map[i], append = FALSE  )
+  
+  print("========== Expert range map successfully downloaded ==========")
 }
 
-if (!dir.exists(file.path(outputFolder,sp))){
-  dir.create(file.path(outputFolder,sp))
-}else{
-  print("dir exists")
-}
-
-path_to_range_map <- file.path(outputFolder, sp, file)
-sf::st_write(sf_range_map, path_to_range_map, append = FALSE  )
 
 # Outputing result to JSON -----------------------------------------------------
-output <- list("sf_range_map" = path_to_range_map )
+output <- list("sf_range_map" = v_path_to_range_map )
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))
