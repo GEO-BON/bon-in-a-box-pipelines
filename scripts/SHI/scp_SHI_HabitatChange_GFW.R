@@ -253,7 +253,7 @@ for(i in 1:length(sp)){
   print("========== Species Habitat Score generated ==========")
 
   img_SHS_timeseries <- ggplot(df_SHS_gfw_tidy , aes(x=Year,y=Values,col=Score))+geom_line()+
-    theme_bw()+ylab("Connectivity Score (CS), Habitat Score (HS), SHS")
+    theme_bw()+ylab("Connectivity Score (CS), Habitat Score (HS), \n Species Habitat Score (SHS)")
 
   v_path_img_SHS_timeseries[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_SHS_timeseries.png"))
   ggsave(v_path_img_SHS_timeseries[i],img_SHS_timeseries,dpi = 300)
@@ -269,7 +269,8 @@ print(v_path_img_SHS_timeseries)
 output <- list( "img_shs_map" = v_path_SHS_map,
                 "r_habitat_by_tstep" = path_habitat_by_tstep ,
                 "img_shs_timeseries" = v_path_img_SHS_timeseries,
-                "df_shs" = v_path_SHS)
+                "df_shs" = v_path_SHS,
+                "df_shs_tidy" = v_path_SHS_tidy)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

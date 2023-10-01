@@ -90,6 +90,10 @@ outputs:
     label: SHS table
     description: A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.
     type: text/tab-separated-values[]
+  df_shs_tidy:
+    label: SHS table (long format)
+    description: A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.
+    type: text/tab-separated-values[]
 references:
 - text: Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)
 - text: Jetz, W., McGowan, J., Rinnan, D. S., Possingham, H. P., Visconti, P., O’Donnell, B., & Londoño-Murcia, M. C. (2022). Include biodiversity representation indicators in area-based conservation targets. Nature Ecology & Evolution, 6(2), 123–126. [https://doi.org/10.1038/s41559-021-01620-y](https://www.nature.com/articles/s41559-021-01620-y)

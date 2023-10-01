@@ -246,7 +246,7 @@ write_tsv(df_aoh_areas,file= path_aoh_areas)
 # Outputing result to JSON -----------------------------------------------------
 output <- list("r_area_of_habitat" = v_path_to_area_of_habitat ,
                "sf_bbox" = v_path_bbox_analysis,
-               "df_areas"= path_aoh_areas)
+               "df_aoh_areas"= path_aoh_areas)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))
