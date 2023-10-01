@@ -145,7 +145,7 @@ function main()
 
     fit_dict = compute_fit_stats_and_cutoff(prediction, p_and_a_coords, y)  
 
-    τ = fit_dict["threshold"]
+    τ = fit_dict[:threshold]
 
     # Set below threshold to 0
     prediction.grid[findall(x -> x < τ, prediction.grid)] .= 0
