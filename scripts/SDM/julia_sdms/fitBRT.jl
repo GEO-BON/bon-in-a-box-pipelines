@@ -89,7 +89,7 @@ function predict_single_sdm(model, layers)
     uncertainty = SimpleSDMPredictor(zeros(Float32, size(layers[begin])); SpeciesDistributionToolkit.boundingbox(layers[begin])...)
     uncertainty.grid[I] = pred[:, 2]
 
-    return rescale(distribution, (0, 1)), rescale(uncertainty, (0, 1))
+    rescale(distribution, (0, 1)), rescale(uncertainty, (0, 1))
 end 
 
 function main()
@@ -144,6 +144,12 @@ function main()
 
 
     fit_dict = compute_fit_stats_and_cutoff(prediction, p_and_a_coords, y)  
+
+    τ = fit_dict["threshold"]
+
+    # Set below threshold to 0
+    prediction.grid[findall(x -> x < τ, prediction.grid)] .= 0
+
     fit_stats_path = joinpath(runtime_dir, "fit_stats.json")
     open(fit_stats_path, "w") do f 
         write(f, JSON.json(fit_dict))
