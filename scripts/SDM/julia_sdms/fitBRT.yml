@@ -26,7 +26,7 @@ outputs:
     description: map of predicted occurrence probability
     type: image/tiff;application=geotiff
   sdm_uncertainty:
-    label:  
+    label: sdm uncertainty
     description: map of relative uncertainty 
     type: image/tiff;application=geotiff
   fit_stats:

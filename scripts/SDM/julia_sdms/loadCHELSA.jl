@@ -71,13 +71,15 @@ function main()
     layers = []
     for l in layer_names
         success = false
+        ct = 1
         while !success     
             try  
                 a = convert(Float32, SimpleSDMPredictor(PROVIDER; layer=l, bbox...)) 
                 success = true
                 push!(layers, a)
             catch
-                @info "Errored on $l on attempt $i. Almost certainly a network error on CHELSA's side. Trying again..."
+                @info "Errored on $l on attempt $ct. Almost certainly a network error on CHELSA's side. Trying again..."
+                ct += 1
             end 
         end
     end
