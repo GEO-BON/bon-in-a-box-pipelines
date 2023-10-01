@@ -127,7 +127,7 @@ for(i in 1:length(sp)){
   sf_area_lim2 <- sf_range_map |> st_make_valid() |> st_transform(st_crs(sf_area_lim1))
   sf_area_lim2_srs <- sf_area_lim2 |> st_transform(sf_srs)
   
-  area_range_map <- sf_area_lim2_srs |> st_area()
+  area_range_map <- sf_area_lim2_srs |> st_combine() |> st_combine() |> st_area()
   
   print("========== Step 2.1 - Expert range map successfully loaded ==========")
   
@@ -234,13 +234,13 @@ for(i in 1:length(sp)){
   df_aoh_areas_sp <- tibble(sci_name=sp[i], area_range_map = area_range_map, 
                          area_study_a=area_study_a, area_bbox_analysis=area_bbox_analysis,
                          buff_size=buff_size, area_aoh=area_aoh)
-  write_csv(df_aoh_areas_sp,file.path(outputFolder,sp[i],paste0(sp[i],"_df_aoh_areas.csv")))
+  write_tsv(df_aoh_areas_sp,file.path(outputFolder,sp[i],paste0(sp[i],"_df_aoh_areas.tsv")))
   
   df_aoh_areas <- bind_rows(df_aoh_areas,df_aoh_areas_sp)
   print("================== Step 2.4 - Table of areas =================")
 }
 
-path_aoh_areas <- file.path(outputFolder,"df_aoh_areas.csv")
+path_aoh_areas <- file.path(outputFolder,"df_aoh_areas.tsv")
 write_tsv(df_aoh_areas,file= path_aoh_areas)
 
 # Outputing result to JSON -----------------------------------------------------
