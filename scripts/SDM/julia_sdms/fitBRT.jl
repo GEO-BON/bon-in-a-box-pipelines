@@ -137,18 +137,17 @@ function main()
 
     prediction, uncertainty = predict_single_sdm(model, predictors)
 
+    fit_dict = compute_fit_stats_and_cutoff(prediction, p_and_a_coords, y)  
+    τ = fit_dict[:threshold]
+
+    # Set below threshold to 0
+    prediction.grid[findall(x -> x < τ, prediction.grid)] .= 0
+
     sdm_path = joinpath(runtime_dir, "sdm.tif")
     SpeciesDistributionToolkit.save(sdm_path, prediction)
     uncertainty_path = joinpath(runtime_dir, "uncertainty.tif")
     SpeciesDistributionToolkit.save(uncertainty_path, uncertainty)
 
-
-    fit_dict = compute_fit_stats_and_cutoff(prediction, p_and_a_coords, y)  
-
-    τ = fit_dict[:threshold]
-
-    # Set below threshold to 0
-    prediction.grid[findall(x -> x < τ, prediction.grid)] .= 0
 
     fit_stats_path = joinpath(runtime_dir, "fit_stats.json")
     open(fit_stats_path, "w") do f 
