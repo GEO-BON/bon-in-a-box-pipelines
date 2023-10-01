@@ -26,14 +26,6 @@ inputs:
       [
         "Saguinus oedipus"
       ]
-  sf_bbox:
-    label: bounding box
-    description: Bounding box for the area of habitat.
-    type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf[]
-    example: 
-      [
-        "/output/SHI/scp_SHI_GetAOH/48cd4841e3cf49e1d85608c90315c3db/Saguinus oedipus/Saguinus oedipus_st_bbox.gpkg"
-      ]
   r_area_of_habitat:
     label: area of habitat
     description: Raster file with the area of habitat.
@@ -41,6 +33,14 @@ inputs:
     example:
       [
         "/output/SHI/scp_SHI_GetAOH/48cd4841e3cf49e1d85608c90315c3db/Saguinus oedipus/Saguinus oedipus_r_aoh.tif"
+      ]
+  sf_bbox:
+    label: bounding box
+    description: Bounding box for the area of habitat.
+    type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf[]
+    example: 
+      [
+        "/output/SHI/scp_SHI_GetAOH/48cd4841e3cf49e1d85608c90315c3db/Saguinus oedipus/Saguinus oedipus_st_bbox.gpkg"
       ]
   min_forest:
     label: min forest
