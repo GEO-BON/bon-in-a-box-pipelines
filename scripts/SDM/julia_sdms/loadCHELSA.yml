@@ -1,0 +1,26 @@
+script: loadCHELSA.jl
+name: Load CHELSA
+description: "This script creates an SDM and uncertainty map based on using Boosted Regression Trees (BRTs) using the package SpeciesDistributionToolkit.jl and EvoTrees.jl"
+author:
+  - name: Michael D. Catchen
+    identifier: https://orcid.org/0000-0002-6506-6487
+inputs:
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax in coordinates
+    type: float[]
+    example: [-86.75, 33.72,-52.21,63.27]
+  pca:
+    label: pca layers
+    description: Boolean, whether to PCA predictor layers or not
+    type: boolean
+    example: True
+  layer_numbers:
+    description: the CHELSA layers to use
+    type: int[]
+    example: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
+outputs:
+  predictors:
+    label: predictors
+    description: raster, predictors
+    type: image/tiff;application=geotiff[]
