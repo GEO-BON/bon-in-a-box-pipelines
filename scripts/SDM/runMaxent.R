@@ -52,7 +52,7 @@ mod_tuning <- run_maxent(presence_background,
 res_tuning <- mod_tuning@results
 tuned_param <- select_param(res_tuning, method = input$method_select_params, list = T)
 
-predictors <- raster::stack(predictors)
+#predictors <- raster::stack(predictors)
 
 sdms <- predict_maxent(presence_background,
   algorithm = "maxent.jar", 
@@ -73,17 +73,17 @@ names(sdm_pred) <- "prediction"
 sdm_runs <- sdms[["pred_runs"]]
 
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
-runs.output <- paste0(outputFolder,"/sdm_runs_", 1:nlayers(sdm_runs), ".tif")
+runs.output <- paste0(outputFolder,"/sdm_runs_", 1:nlyr(sdm_runs), ".tif")
 #runs.output <- file.path(outputFolder, "sdm_runs.tif")
 
-sdm_pred<-project(rast(sdm_pred),crs(input$proj)) ##Temporary fix while maxent transitions to terra
+sdm_pred<-project(sdm_pred,crs(input$proj)) ##Temporary fix while maxent transitions to terra
 terra::writeRaster(x = sdm_pred,
                           filename = pred.output,
                           filetype = "COG",
                           wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
-for (i in 1:nlayers(sdm_runs)){
-    thisrun<-project(rast(sdm_runs[[i]]),crs(input$proj))  ##Temporary fix while maxent transitions to terra
+for (i in 1:nlyr(sdm_runs)){
+    thisrun<-project(sdm_runs[[i]],crs(input$proj))  ##Temporary fix while maxent transitions to terra
     terra::writeRaster(x = thisrun,
     filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),
     filetype = "COG",

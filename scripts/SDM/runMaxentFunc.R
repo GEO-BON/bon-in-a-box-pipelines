@@ -322,12 +322,18 @@ runs <- c("run_1")
       pred_pres <- dismo::predict(mod_tuning@models[[tuned_param]], predictors,
                                   args = sprintf("outputformat=%s", type))
 
-        if (inherits(pred_runs, "RasterLayer") || inherits(pred_runs, "RasterStack")) {
-              pred_runs <- raster::stack(pred_runs, pred_pres)
-         
-        } else {
-           pred_runs <-  pred_pres 
-           }
+        #if (inherits(pred_runs, "RasterLayer") || inherits(pred_runs, "RasterStack")) {
+        #    pred_runs <- raster::stack(pred_runs, pred_pres)
+        #} else {
+        #   pred_runs <-  pred_pres 
+        #}
+      if (is.null(pred_runs)) {
+        pred_runs <- pred_pres
+      } else {
+        pred_runs <-  c(pred_runs, pred_pres) 
+      }
+      
+        
       
  }
 
