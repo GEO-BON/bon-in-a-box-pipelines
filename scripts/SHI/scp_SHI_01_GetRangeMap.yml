@@ -1,5 +1,5 @@
-script: scp_SHI_GetRangeMap.R
-name: Get range map for SHI 
+script: scp_SHI_01_GetRangeMap.R
+name: Get range map 
 description: This script downloads the range map of the species according to the expert source chosen. In case that no range map is available (output NULL), at least a species distribution model should be uploaded to continue to the next step to calculate the species habitat index.
 author: 
   - name: Maria Isabel Arce-Plata
@@ -13,8 +13,7 @@ inputs:
     type: text[]
     example: 
       [
-        "Saguinus oedipus",
-        "Ateles fusciceps"
+        "Saguinus oedipus"
       ]
   expert_source:
     label: source of expert range map

@@ -1,4 +1,4 @@
-script: scp_SHI_CalcSHI.R
+script: scp_SHI_04_CalcSHI.R
 name: Caculate SHI
 description: 
   This script takes all the tables with the Species Habitat Scores and the areas for the total range map and the area of habitat calculated to produce the Species Habitat Index and the Steward's Species Habitat Index.

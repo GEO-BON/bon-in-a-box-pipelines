@@ -1,5 +1,5 @@
-script: scp_SHI_GetAOH.R
-name: Get area of habitat for SHI
+script: scp_SHI_02_GetAOH.R
+name: Get area of habitat
 description: This script loads the data needed to calculate the area of habitat for a species to use it for the Species Habitat Index(SHI)
 author: 
   - name: Maria Isabel Arce-Plata
@@ -21,7 +21,7 @@ inputs:
     label: study area
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
-    example: null
+    example: "/scripts/SHI/example.gpkg"
   country_code:
     label: country code
     description: Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.
@@ -61,7 +61,7 @@ inputs:
     type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf[]
     example: 
       [
-        "/output/SHI/scp_SHI_GetAOH/48cd4841e3cf49e1d85608c90315c3db/Saguinus oedipus/Saguinus oedipus_st_bbox.gpkg"
+        "/scripts/SHI/Saguinus oedipus_range.gpkg"
       ]
   r_range_map:
     label: range map (raster)
