@@ -253,7 +253,7 @@ for(i in 1:length(sp)){
   print("========== Species Habitat Score generated ==========")
 
   img_SHS_timeseries <- ggplot(df_SHS_gfw_tidy , aes(x=Year,y=Values,col=Score,linewidth=width))+geom_line(linewidth=1)+
-    theme_bw()+scale_colour_brewer(palette="Dark2")+
+    theme_bw()+scale_colour_brewer(palette="Dark2")+ylim(0,100)+
     ylab("Connectivity Score (CS), Habitat Score (HS), \n Species Habitat Score (SHS)")
 
   v_path_img_SHS_timeseries[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_SHS_timeseries.png"))

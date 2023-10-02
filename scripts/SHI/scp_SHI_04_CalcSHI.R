@@ -55,7 +55,7 @@ img_SHI_timeseries <- ggplot(df_SHI , aes(x=Year,y=SHI))+geom_line()+
   theme_bw()+ylab("Species Habitat Index (%)")
 
 path_img_SHI_timeseries <- file.path(outputFolder,"SHI_timeseries.png")
-ggsave(path_img_SHI_timeseries, img_SHI_timeseries ,dpi = 300)
+ggsave(path_img_SHI_timeseries, img_SHI_timeseries ,dpi = 300,width=8,height = 5)
 
 img_W_SHI_timeseries <- ggplot(df_SHI , aes(x=Year,y=Steward_SHI))+geom_line()+
   theme_bw()+ylab("Steward's Species Habitat Index (%)")
@@ -65,9 +65,9 @@ ggsave(path_img_W_SHI_timeseries , img_W_SHI_timeseries ,dpi = 300,width=8,heigh
 
 #-------------------------------------------------------------------------------
 # Outputing result to JSON
-output <- list( "df_SHI" = path_SHI,
-                "img_SHI_timeseries" = path_img_SHI_timeseries ,
-                "img_W_SHI_timeseries" = path_img_W_SHI_timeseries)
+output <- list( "df_shi" = path_SHI,
+                "img_shi_timeseries" = path_img_SHI_timeseries ,
+                "img_w_shi_timeseries" = path_img_W_SHI_timeseries)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))
