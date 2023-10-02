@@ -92,7 +92,7 @@ outputs:
     type: text/tab-separated-values[]
   df_shs_tidy:
     label: SHS table (long format)
-    description: A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.
+    description: A TSV (Tab Separated Values) file in long format containing Habitat Score, Connectivity Score, and SHI by time step.
     type: text/tab-separated-values[]
 references:
 - text: Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)
