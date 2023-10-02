@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, lazy, Suspense} from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
@@ -9,11 +9,13 @@ import {
   useLocation,
 } from "react-router-dom";
 
-import { SingleScriptPage } from "./components/SingleScriptPage";
+
 import { PipelinePage } from "./components/PipelinePage";
-import { PipelineEditor } from "./components/PipelineEditor/PipelineEditor";
-import ScriptChooser from "./components/PipelineEditor/ScriptChooser";
+import StepChooser from "./components/PipelineEditor/StepChooser";
 import { Layout } from './Layout.js';
+import Versions from './components/Versions';
+import { Spinner } from './components/Spinner';
+const PipelineEditor = lazy(() => import("./components/PipelineEditor/PipelineEditor"));
 
 function NotFound() {
   const location = useLocation()
@@ -31,24 +33,31 @@ function App() {
     <Routes>
       <Route path="/" element={<Layout />} />
 
-      <Route path="script-form" element={
-        <Layout right={<SingleScriptPage />} />
+      <Route path="script-form/:pipeline?/:runHash?" element={
+        <Layout right={<PipelinePage runType="script" />} />
       } />
       
       <Route path="pipeline-form/:pipeline?/:runHash?" element={
-      <Layout right={<PipelinePage />} />
+        <Layout right={<PipelinePage runType="pipeline" />} />
       } />
 
       <Route path="pipeline-editor" element={
-        <Layout left={<ScriptChooser popupContent={popupContent} setPopupContent={setPopupContent} />}
-          right={<PipelineEditor />}
+        <Layout left={<StepChooser popupContent={popupContent} setPopupContent={setPopupContent} />}
+          right={
+            <Suspense fallback={<Spinner />}>
+              <PipelineEditor />
+            </Suspense>
+          }
           popupContent={popupContent}
           setPopupContent={setPopupContent} />
       } />
 
+      <Route path="versions" element={
+        <Layout right={<Versions />} />
+      } />
+
       <Route path="*" element={
-        <Layout left={<ScriptChooser />}
-          right={<NotFound />} />
+        <Layout right={<NotFound />} />
       } />
 
     </Routes>

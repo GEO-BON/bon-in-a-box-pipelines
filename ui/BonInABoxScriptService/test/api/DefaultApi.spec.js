@@ -48,20 +48,60 @@
   }
 
   describe('DefaultApi', function() {
-    describe('getScriptInfo', function() {
-      it('should call getScriptInfo successfully', function(done) {
-        //uncomment below and update the code to test getScriptInfo
-        //instance.getScriptInfo(function(error) {
+    describe('getInfo', function() {
+      it('should call getInfo successfully', function(done) {
+        //uncomment below and update the code to test getInfo
+        //instance.getInfo(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});
         done();
       });
     });
-    describe('runScript', function() {
-      it('should call runScript successfully', function(done) {
-        //uncomment below and update the code to test runScript
-        //instance.runScript(function(error) {
+    describe('getListOf', function() {
+      it('should call getListOf successfully', function(done) {
+        //uncomment below and update the code to test getListOf
+        //instance.getListOf(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('getOutputFolders', function() {
+      it('should call getOutputFolders successfully', function(done) {
+        //uncomment below and update the code to test getOutputFolders
+        //instance.getOutputFolders(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('getPipeline', function() {
+      it('should call getPipeline successfully', function(done) {
+        //uncomment below and update the code to test getPipeline
+        //instance.getPipeline(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('run', function() {
+      it('should call run successfully', function(done) {
+        //uncomment below and update the code to test run
+        //instance.run(function(error) {
+        //  if (error) throw error;
+        //expect().to.be();
+        //});
+        done();
+      });
+    });
+    describe('stop', function() {
+      it('should call stop successfully', function(done) {
+        //uncomment below and update the code to test stop
+        //instance.stop(function(error) {
         //  if (error) throw error;
         //expect().to.be();
         //});

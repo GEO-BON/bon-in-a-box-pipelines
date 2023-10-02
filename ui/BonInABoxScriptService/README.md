@@ -102,7 +102,8 @@ var BonInABoxScriptService = require('bon_in_a_box_script_service');
 
 
 var api = new BonInABoxScriptService.DefaultApi()
-var descriptionPath = "descriptionPath_example"; // {String} Where to find the pipeline in ./pipeline folder.
+var type = "type_example"; // {String} Script or pipeline
+var descriptionPath = "descriptionPath_example"; // {String} Where to find the step. For scripts, paths are relative to the /script folder. For pipelines, paths are relative to the /pipeline folder.
 var callback = function(error, data, response) {
   if (error) {
     console.error(error);
@@ -110,7 +111,7 @@ var callback = function(error, data, response) {
     console.log('API called successfully. Returned data: ' + data);
   }
 };
-api.getPipeline(descriptionPath, callback);
+api.getInfo(type, descriptionPath, callback);
 
 ```
 
@@ -120,29 +121,28 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*BonInABoxScriptService.DefaultApi* | [**getPipeline**](docs/DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline
-*BonInABoxScriptService.DefaultApi* | [**getPipelineInfo**](docs/DefaultApi.md#getPipelineInfo) | **GET** /pipeline/{descriptionPath}/info | Get metadata about this pipeline
-*BonInABoxScriptService.DefaultApi* | [**getPipelineOutputs**](docs/DefaultApi.md#getPipelineOutputs) | **GET** /pipeline/{id}/outputs | Get the output folders of the scripts composing this pipeline
-*BonInABoxScriptService.DefaultApi* | [**getScriptInfo**](docs/DefaultApi.md#getScriptInfo) | **GET** /script/{scriptPath}/info | Get metadata about this script
-*BonInABoxScriptService.DefaultApi* | [**pipelineListGet**](docs/DefaultApi.md#pipelineListGet) | **GET** /pipeline/list | Get a list of available pipelines
-*BonInABoxScriptService.DefaultApi* | [**runPipeline**](docs/DefaultApi.md#runPipeline) | **POST** /pipeline/{descriptionPath}/run | Run this pipeline
-*BonInABoxScriptService.DefaultApi* | [**runScript**](docs/DefaultApi.md#runScript) | **POST** /script/{scriptPath}/run | Run this script
-*BonInABoxScriptService.DefaultApi* | [**scriptListGet**](docs/DefaultApi.md#scriptListGet) | **GET** /script/list | Get a list of available scripts
-*BonInABoxScriptService.DefaultApi* | [**stopPipeline**](docs/DefaultApi.md#stopPipeline) | **GET** /pipeline/{id}/stop | Stop the specified pipeline run
+*BonInABoxScriptService.DefaultApi* | [**getInfo**](docs/DefaultApi.md#getInfo) | **GET** /{type}/{descriptionPath}/info | Get metadata about this script or pipeline.
+*BonInABoxScriptService.DefaultApi* | [**getListOf**](docs/DefaultApi.md#getListOf) | **GET** /{type}/list | Get a list of available steps of given type and their names.
+*BonInABoxScriptService.DefaultApi* | [**getOutputFolders**](docs/DefaultApi.md#getOutputFolders) | **GET** /{type}/{id}/outputs | Get the output folders of the scripts composing this pipeline
+*BonInABoxScriptService.DefaultApi* | [**getPipeline**](docs/DefaultApi.md#getPipeline) | **GET** /pipeline/{descriptionPath}/get | Get JSON file that describes the pipeline.
+*BonInABoxScriptService.DefaultApi* | [**getVersions**](docs/DefaultApi.md#getVersions) | **GET** /api/versions | Returns the version of system components.
+*BonInABoxScriptService.DefaultApi* | [**run**](docs/DefaultApi.md#run) | **POST** /{type}/{descriptionPath}/run | Runs the script or pipeline matching &#x60;descriptionPath&#x60;.
+*BonInABoxScriptService.DefaultApi* | [**stop**](docs/DefaultApi.md#stop) | **GET** /{type}/{id}/stop | Stop the specified pipeline run.
 
 
 ## Documentation for Models
 
  - [BonInABoxScriptService.Info](docs/Info.md)
+ - [BonInABoxScriptService.InfoAuthorInner](docs/InfoAuthorInner.md)
  - [BonInABoxScriptService.InfoInputsValue](docs/InfoInputsValue.md)
  - [BonInABoxScriptService.InfoInputsValueExample](docs/InfoInputsValueExample.md)
  - [BonInABoxScriptService.InfoInputsValueExampleOneOfInner](docs/InfoInputsValueExampleOneOfInner.md)
  - [BonInABoxScriptService.InfoOutputsValue](docs/InfoOutputsValue.md)
  - [BonInABoxScriptService.InfoOutputsValueExample](docs/InfoOutputsValueExample.md)
  - [BonInABoxScriptService.InfoReferencesInner](docs/InfoReferencesInner.md)
- - [BonInABoxScriptService.ScriptRunResult](docs/ScriptRunResult.md)
 
 
 ## Documentation for Authorization
 
-All endpoints do not require authorization.
+Endpoints do not require authorization.
+

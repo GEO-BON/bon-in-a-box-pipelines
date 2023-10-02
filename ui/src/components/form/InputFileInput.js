@@ -1,6 +1,5 @@
-import { useEffect } from "react";
 import YAMLTextArea from "./YAMLTextArea";
-import { InputsDescription } from "../ScriptDescription";
+import { InputsDescription } from "../StepDescription";
 import { Tabs, Tab, TabList, TabPanel } from "react-tabs";
 
 import "react-tabs/style/react-tabs.css";
@@ -74,6 +73,7 @@ const InputForm = ({ inputs, inputFileContent, setInputFileContent }) => {
                   options={options}
                   value={inputFileContent && inputFileContent[inputId]}
                   onValueUpdated={(value) => updateInputFile(inputId, value)}
+                  cols="50"
                 />
               </td>
               <td className="descriptionCell">

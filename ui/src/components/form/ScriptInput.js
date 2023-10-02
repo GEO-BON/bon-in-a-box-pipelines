@@ -3,12 +3,14 @@ import AutoResizeTextArea from './AutoResizeTextArea'
 export const ARRAY_PLACEHOLDER = 'Array (comma-separated)';
 export const CONSTANT_PLACEHOLDER = 'Constant';
 
-export default function ScriptInput({ type, value, options, onValueUpdated, ...passedProps }) {
+export default function ScriptInput({ type, value, options, onValueUpdated, cols, ...passedProps }) {
 
   if(type.endsWith('[]')) {
     return <AutoResizeTextArea {...passedProps}
         defaultValue={value && typeof value.join === 'function' ? value.join(', ') : value}
         placeholder={ARRAY_PLACEHOLDER}
+        keepWidth={true}
+        cols={cols}
         onBlur={e => {
           const value = e.target.value
           if(!value || value === "") {
@@ -43,26 +45,31 @@ export default function ScriptInput({ type, value, options, onValueUpdated, ...p
     case 'int':
       return <input type='text' {...passedProps} defaultValue={value}
         placeholder={CONSTANT_PLACEHOLDER}
+        onKeyDown={e => { if (e.key === "Enter") onValueUpdated(parseInt(e.target.value)) }}
         onBlur={e => onValueUpdated(parseInt(e.target.value))} />
 
     case 'float':
       return <input type='text' {...passedProps} defaultValue={value}
         placeholder={CONSTANT_PLACEHOLDER}
+        onKeyDown={e => { if (e.key === "Enter") onValueUpdated(parseFloat(e.target.value)) }}
         onBlur={e => onValueUpdated(parseFloat(e.target.value))} />
 
     default:
-      let props = {
+      // use null if empty or a string representation of null
+      const updateValue = e => onValueUpdated(/^(null)?$/i.test(e.target.value) ? null : e.target.value)
+
+      const props = {
         defaultValue: value,
         placeholder: 'null',
-        // use null if empty or a string representation of null
-        onBlur: e => onValueUpdated(/^(null)?$/i.test(e.target.value) ? null : e.target.value),
+        onBlur: updateValue,
         ...passedProps
       }
 
       if (value && value.includes("\n")) {
         return <AutoResizeTextArea {...props} />
       } else {
-        return <input type='text' {...props} />
+        return <input type='text' {...props} 
+          onKeyDown={e => { if (e.key === "Enter") updateValue(e) }} />
       }
   }
 }

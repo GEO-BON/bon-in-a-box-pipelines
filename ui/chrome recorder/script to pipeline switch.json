@@ -1,0 +1,196 @@
+{
+    "title": "Script to pipeline switch",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 1339,
+            "height": 926,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "url": "http://localhost/script-form",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "http://localhost/script-form",
+                    "title": "BON in a Box"
+                }
+            ]
+        },
+        {
+            "type": "waitForExpression",
+            "expression": "document.getElementsByName(\"pipelineChoice\")[0].value == \"helloWorld>helloR.yml\""
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                "aria/Pipeline run",
+                "a:nth-of-type(2)",
+                "xpath///*[@id=\"root\"]/div[2]/nav/a[2]",
+                "pierce/a:nth-of-type(2)",
+                "text/Pipeline run"
+            ],
+            "offsetX": 51.34375,
+            "offsetY": 12
+        },
+        {
+            "type": "waitForExpression",
+            "expression": "document.getElementsByName(\"pipelineChoice\")[0].value == \"helloWorld.json\""
+        },
+        {
+            "type": "waitForElement",
+            "target": "main",
+            "selectors": [
+                "aria/Some int",
+                "#helloWorld\\>helloPython\\.yml\\@0\\|some_int",
+                "xpath///*[@id=\"helloWorld>helloPython.yml@0|some_int\"]",
+                "pierce/#helloWorld\\>helloPython\\.yml\\@0\\|some_int"
+            ],
+            "attributes": {
+                "value": "3"
+            }
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "svg"
+                ],
+                [
+                    "xpath///*[@id=\"pipelineChoice\"]/div/div[2]/div/svg"
+                ],
+                [
+                    "pierce/svg"
+                ]
+            ],
+            "offsetY": 18.453125,
+            "offsetX": 14
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "#react-select-2-option-3"
+                ],
+                [
+                    "xpath///*[@id=\"react-select-2-option-3\"]"
+                ],
+                [
+                    "pierce/#react-select-2-option-3"
+                ]
+            ],
+            "offsetY": 26.953125,
+            "offsetX": 188.3125
+        },
+        {
+            "type": "waitForElement",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Data source gbif_api",
+                    "aria/[role=\"strong\"]"
+                ],
+                "tr:nth-of-type(1) strong",
+                "xpath///*[@id=\"panel:r0:0\"]/table/tbody/tr[1]/td[1]/label/strong",
+                "pierce/tr:nth-of-type(1) strong",
+                "text/Data source"
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Single script run"
+                ],
+                [
+                    "a:nth-of-type(1)"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div[2]/nav/a[1]"
+                ],
+                [
+                    "pierce/a:nth-of-type(1)"
+                ],
+                [
+                    "text/Single script"
+                ]
+            ],
+            "offsetY": 10,
+            "offsetX": 65.1015625
+        },
+        {
+            "type": "waitForExpression",
+            "expression": "document.getElementsByName(\"pipelineChoice\")[0].value == \"helloWorld>helloR.yml\""
+        },
+        {
+            "type": "waitForElement",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Occurence http://something-compatible.tiff",
+                    "aria/[role=\"strong\"]"
+                ],
+                "tr:nth-of-type(1) strong",
+                "xpath///*[@id=\"panel:r0:0\"]/table/tbody/tr[1]/td[1]/label/strong",
+                "pierce/tr:nth-of-type(1) strong",
+                "text/Occurence"
+            ]
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "div.css-qbdosj-Input"
+                ],
+                [
+                    "xpath///*[@id=\"pipelineChoice\"]/div/div[1]/div[2]"
+                ],
+                [
+                    "pierce/div.css-qbdosj-Input"
+                ]
+            ],
+            "offsetY": 10.703125,
+            "offsetX": 398.3125
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "#react-select-2-option-12"
+                ],
+                [
+                    "xpath///*[@id=\"react-select-2-option-12\"]"
+                ],
+                [
+                    "pierce/#react-select-2-option-12"
+                ]
+            ],
+            "offsetY": 21.453125,
+            "offsetX": 254.3125
+        },
+        {
+            "type": "waitForElement",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Some int 3",
+                    "aria/[role=\"strong\"]"
+                ],
+                "strong",
+                "xpath///*[@id=\"panel:r0:0\"]/table/tbody/tr/td[1]/label/strong",
+                "pierce/strong",
+                "text/Some int"
+            ]
+        }
+    ]
+}

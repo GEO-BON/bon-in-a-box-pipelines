@@ -1,10 +1,10 @@
-import './Editor.css'
+import './StepChooser.css'
 
 import {React, useState, useEffect, useCallback} from 'react';
 
-import spinnerImg from '../../img/spinner.svg';
-import { fetchStepDescription } from './ScriptDescriptionStore';
-import { GeneralDescription, InputsDescription, OutputsDescription } from '../ScriptDescription';
+import { fetchStepDescription } from './StepDescriptionStore';
+import { StepDescription } from '../StepDescription';
+import { Spinner } from '../Spinner';
 
 const BonInABoxScriptService = require('bon_in_a_box_script_service');
 const api = new BonInABoxScriptService.DefaultApi();
@@ -17,14 +17,14 @@ const onDragStart = (event, nodeType, descriptionFile) => {
 
 
 
-export default function ScriptChooser({popupContent, setPopupContent}) {
+export default function StepChooser({popupContent, setPopupContent}) {
   const [scriptFiles, setScriptFiles] = useState([]);
   const [pipelineFiles, setPipelineFiles] = useState([]);
   const [selectedStep, setSelectedStep] = useState([]);
 
   // Applied only once when first loaded  
   useEffect(() => {
-    api.pipelineListGet((error, pipelineList, response) => {
+    api.getListOf("pipeline", (error, pipelineList, response) => {
       if (error) {
         console.error(error);
       } else {
@@ -33,7 +33,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
     });
 
     // Load list of scripts into scriptFileOptions
-    api.scriptListGet((error, scriptList, response) => {
+    api.getListOf("script", (error, scriptList, response) => {
       if (error) {
         console.error(error);
       } else {
@@ -47,7 +47,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
       setPopupContent(null) 
     } else {
       setSelectedStep(descriptionFile)
-      setPopupContent(<img src={spinnerImg} className="spinner" alt="Spinner" />)
+      setPopupContent(<Spinner />)
 
       fetchStepDescription(descriptionFile, (metadata) => {
         if(!metadata) {
@@ -55,12 +55,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
           return
         }
 
-        setPopupContent(<>
-          <h2>{descriptionFile.replaceAll('>', ' > ')}</h2>
-          <GeneralDescription ymlPath={descriptionFile} metadata={metadata} />
-          <InputsDescription metadata={metadata} />
-          <OutputsDescription metadata={metadata} />
-        </>)
+        setPopupContent(<StepDescription descriptionFile={descriptionFile} metadata={metadata} />)
       })
     }
   }, [selectedStep, setSelectedStep, setPopupContent])
@@ -81,7 +76,7 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
   const renderTree = useCallback((splitPathBefore, splitPathLeft) => {
     // Group them by folder
     let groupedFiles = new Map()
-    splitPathLeft.forEach(path => {
+    splitPathLeft.forEach(([path, stepName]) => {
       let first = path.shift() // first elem removed
       let key, value
       if (path.length > 0) {
@@ -95,21 +90,21 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
       if (!groupedFiles.get(key))
         groupedFiles.set(key, [])
 
-      groupedFiles.get(key).push(value)
+      groupedFiles.get(key).push([value, stepName])
     })
 
     // Sort and output
     let sortedKeys = Array.from(groupedFiles.keys()).sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' }))
-    return sortedKeys.map((key) => {
+    return sortedKeys.map(key => {
       if (key === "") { // leaf
-        return groupedFiles.get(key).map(name => {
-          let descriptionFile = [...splitPathBefore, name].join('>')
+        return groupedFiles.get(key).map(([fileName, stepName]) => {
 
-          return <div key={name} onDragStart={(event) => onDragStart(event, 'io', descriptionFile)} draggable
+          let descriptionFile = [...splitPathBefore, fileName].join('>')
+          return <div key={fileName} onDragStart={(event) => onDragStart(event, 'io', descriptionFile)} draggable
             title='Click for info, drag and drop to add to pipeline.'
             className={'dndnode' + (descriptionFile === selectedStep ? ' selected' : '')}
             onClick={() => onStepClick(descriptionFile)}>
-            <pre>{name}</pre>
+            <pre>{stepName}</pre>
           </div>
         })
       }
@@ -123,18 +118,18 @@ export default function ScriptChooser({popupContent, setPopupContent}) {
   }, [onStepClick, selectedStep])
 
   return (
-    <aside className='scriptChooser'>
+    <aside className='stepChooser'>
       <div className="dndnode output" onDragStart={(event) => onDragStart(event, 'output')} draggable>
         Pipeline output
       </div>
       {pipelineFiles &&
         <div key="Pipelines">
           <p>Pipelines</p>
-          <div className='inFolder'>{renderTree([], pipelineFiles.map(file => file.split('>')))}</div>
+          <div className='inFolder'>{renderTree([], Object.entries(pipelineFiles).map(entry => [entry[0].split('>'), entry[1]]))}</div>
         </div>
       }
 
-      {scriptFiles && renderTree([], scriptFiles.map(file => file.split('>')))}
+      {scriptFiles && renderTree([], Object.entries(scriptFiles).map(entry => [entry[0].split('>'), entry[1]]))}
     </aside>
   );
 };

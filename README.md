@@ -24,10 +24,11 @@ To run:
   - This needs to be re-run everytime the server code changes, or when using git pull if you are not certain.
   - The first execution will be long. The next ones will be shorter or immediate, depending on the changes.
   - Network problems may fail the process. First try running the command again. Intermediate states are saved so not everything will be redone even when there is a failure.
-5. Provide an environment file (.env) in the root folder with the following keys
+  - Windows users may need to turn on virtualization and other tools for Docker Desktop to work and update wsl ("wsl --update", see [https://docs.docker.com/desktop/troubleshoot/topics/#virtualization](https://docs.docker.com/desktop/troubleshoot/topics/#virtualization). Access to the BIOS may be required to enable virtualization)
+4. Provide an environment file (.env) in the root folder with the following keys
     ```
     # Windows only - path to the root directory of the project with forward slashes
-    # Uncomment line and specify path with forward slashes such as PWD=/c/User/me/biab-2.0
+    # Uncomment line and specify path with forward slashes such as PWD=/c/Users/me/biab-2.0
     #PWD=
 
     # Access the planetary computer APIs
@@ -52,11 +53,11 @@ To run:
     SCRIPT_SERVER_CACHE_CLEANER=full
 
     ```
-6. `docker compose up -d`
-7. In browser:
+5. `docker compose up -d`
+6. In browser:
     - http://localhost/ shows the UI
-8. `docker compose down` (to stop the server when done) 
-9. On Windows, to completely stop the processes, you might have to run `wsl --shutdown`
+7. `docker compose down` (to stop the server when done) 
+8. On Windows, to completely stop the processes, you might have to run `wsl --shutdown`
 
 When modifying scripts in the /scripts folder, servers do not need to be restarted:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
@@ -83,9 +84,9 @@ Currently supported :
 
 Script lifecycle:
 1. Script launched with output folder as a parameter. (In R, an `outputFolder` variable in the R session. In Julia, Shell and Python, the output folder is received as an argument.)
-3. Script reads input.json to get execution parameters (ex. species, area, data source, etc.)
+3. Script reads `input.json` to get execution parameters (ex. species, area, data source, etc.)
 4. Script performs its task
-5. Script generates output.json, containing links to result files, or native values (number, string, etc.)
+5. Script generates `output.json` containing links to result files, or native values (number, string, etc.)
 
 See [empty R script](/scripts/helloWorld/empty.R) for a minimal script lifecycle example.
 
@@ -95,7 +96,12 @@ The script description is in a .yml file next to the script. It is necessary for
 Here is an empty commented sample:
 ``` yml
 script: # script file with extension, such as "myScript.py".
+name: # short name, such as My Script
 description: # Targetted to those who will interpret pipeline results and edit pipelines.
+author: # 1 to many
+  - name: # Full name
+    identifier: # Optional, full URL of a unique digital identifier such as an ORCID
+license: # Optional. If unspecified, the project's MIT license will apply.
 external_link: # Optional, link to a separate project, github repo, etc.
 timeout: # Optional, in minutes. By defaults steps time out after 1h to avoid hung process to consume resources. It can be made longer for heavy processes.
 
@@ -251,7 +257,9 @@ Pipelines also have inputs and outputs. In order to run, a pipeline needs to spe
 ### Pipeline editor
 The pipeline editor allows you to create pipelines by plugging steps together.
 
-The left pane shows the available steps, the right pane shows the canvas.
+The left pane shows the available steps, the main section shows the canvas.
+
+On the right side, a collapsible pane allows to edit the labels and descriptions of the pipeline inputs and outputs.
 
 **To add a step:** drag and drop from the left pane to the canvas. Steps that are single scripts will display with a single border, while steps that are pipelines will display with a double border.
 
@@ -274,7 +282,7 @@ A single value can also be combined with an array of the same type, to produce a
 
 <img src="https://user-images.githubusercontent.com/6223744/181106278-f6db6af5-764a-4775-b196-48feac940eec.png" width="300">
 
-**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the sample input.json file when running the pipeline.
+**User inputs:** To provide inputs at runtime, simply leave them unconnected in the pipeline editor. They will be added to the sample input file when running the pipeline.
 
 If an input is common to many step, a special user input node can be added to avoid duplication. First, link your nodes to a constant.
 
@@ -296,6 +304,11 @@ Add an **output** node linked to a step output to specify that this output is an
 
 ![image](https://user-images.githubusercontent.com/6223744/181108988-97d988ca-8f4b-45b1-b4a3-32e90821b68b.png)
 
+Pipeline inputs and outputs then appear in a collapsible pane on the right of the canvas, where their descriptions and labels can be edited.
+
+<img src="https://github.com/GEO-BON/biab-2.0/assets/6223744/215b75db-7198-486d-880d-87c0b340668b" height="218">
+
+Once edited, make sure to save your work before leaving the page.
 
 ### Saving and loading
 The editor _does not_ allow you to edit files live on the server. Files need to be committed to the github repo using git.

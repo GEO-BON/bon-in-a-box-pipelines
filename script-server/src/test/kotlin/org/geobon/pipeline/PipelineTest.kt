@@ -2,6 +2,8 @@ package org.geobon.pipeline
 
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.geobon.pipeline.Pipeline.Companion.createMiniPipelineFromScript
+import org.geobon.pipeline.Pipeline.Companion.createRootPipeline
 import java.io.File
 import kotlin.test.*
 
@@ -23,7 +25,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a single script pipeline_when building from json_then node is there`() = runTest {
-        val pipeline = RootPipeline("0in1out_1step.json")
+        val pipeline = createRootPipeline("0in1out_1step.json")
 
         val allOutputs = mutableMapOf<String, String>()
         pipeline.dumpOutputFolders(allOutputs)
@@ -37,7 +39,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with outputs from many scripts_when ran_then all outputs satisfied_no step is duplicated in output dump`() = runTest {
-        val pipeline = RootPipeline("0in2out_twoBranches.json")
+        val pipeline = createRootPipeline("0in2out_twoBranches.json")
 
         val allOutputs = mutableMapOf<String, String>()
         pipeline.dumpOutputFolders(allOutputs)
@@ -54,7 +56,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with two disconnected pipelines_when ran_then both are run`() = runTest {
-        val pipeline = RootPipeline("0in2out_parallelPipelines.json")
+        val pipeline = createRootPipeline("0in2out_parallelPipelines.json")
 
         val allOutputs = mutableMapOf<String, String>()
         pipeline.dumpOutputFolders(allOutputs)
@@ -71,7 +73,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with constant array_when ran_then input json created with array`() = runTest {
-        val pipeline = RootPipeline("arrayConst.json")
+        val pipeline = createRootPipeline("arrayConst.json")
 
         pipeline.pullFinalOutputs()
 
@@ -82,7 +84,7 @@ internal class PipelineTest {
 
     @Test
     fun `given an int aggregation_when ran_then script receives array`() = runTest {
-        val pipeline = RootPipeline("aggregateInt.json")
+        val pipeline = createRootPipeline("aggregateInt.json")
 
         pipeline.pullFinalOutputs()
 
@@ -94,7 +96,7 @@ internal class PipelineTest {
 
     @Test
     fun `given an int and int array aggregation_when ran_then script receives single array`() = runTest {
-        val pipeline = RootPipeline("aggregateIntAndIntArray.json")
+        val pipeline = createRootPipeline("aggregateIntAndIntArray.json")
 
         pipeline.pullFinalOutputs()
 
@@ -105,7 +107,7 @@ internal class PipelineTest {
 
     @Test
     fun `given an int while step awaits an array_when ran_then int wrapped in array`() = runTest {
-        val pipeline = RootPipeline("wrapIntTowardsArray.json")
+        val pipeline = createRootPipeline("wrapIntTowardsArray.json")
 
         pipeline.pullFinalOutputs()
 
@@ -114,7 +116,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with boolean constant_when ran_then script input json created with boolean`() = runTest {
-        val pipeline = RootPipeline("boolConst.json")
+        val pipeline = createRootPipeline("boolConst.json")
 
         pipeline.pullFinalOutputs()
 
@@ -125,7 +127,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with an input_when ran_then the provided input is used`() = runTest {
-        val pipeline = RootPipeline("1in1out_1step.json", """{ "helloWorld>helloPython.yml@0|some_int": 5 }""")
+        val pipeline = createRootPipeline("1in1out_1step.json", """{ "helloWorld>helloPython.yml@0|some_int": 5 }""")
         pipeline.pullFinalOutputs()
 
         assertEquals(6, pipeline.getPipelineOutputs()[0].pull())
@@ -134,39 +136,39 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline with a malformed input name_when built_then an exception is thrown`() = runTest {
         assertFailsWith<RuntimeException> { // missing @
-            RootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml0|some_int": 5 }""")
+            createRootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml0|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // missing step id
-            RootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@|some_int": 5 }""")
+            createRootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // missing everything
-            RootPipeline("1in1out_1step.json", """ { "@|": 5 }""")
+            createRootPipeline("1in1out_1step.json", """ { "@|": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // plausible case where a non-existant script path is used
-            RootPipeline("1in1out_1step.json", """ { "HelloWorld>BAD@0|some_int": 5 }""")
+            createRootPipeline("1in1out_1step.json", """ { "HelloWorld>BAD@0|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // non-numeric step id
-            RootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@BAD|some_int": 5 }""")
+            createRootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@BAD|some_int": 5 }""")
         }
 
         assertFailsWith<RuntimeException> { // plausible case where a non-existent step id is used
-            RootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72|some_int": 5 }""")
+            createRootPipeline("1in1out_1step.json", """ { "helloWorld>helloPython.yml@72|some_int": 5 }""")
         }
     }
 
     @Test
     fun `given a pipeline passing float_when ran_then a float value is received`() = runTest {
-        val pipeline = RootPipeline("assertFloat.json")
+        val pipeline = createRootPipeline("assertFloat.json")
         pipeline.pullFinalOutputs()
     }
 
     @Test
     fun `given a pipeline with null param_when ran_then a null value is received`() = runTest {
-        val pipeline = RootPipeline("assertNull.json", """{"assertNull.yml@0|input":null}""")
+        val pipeline = createRootPipeline("assertNull.json", """{"assertNull.yml@0|input":null}""")
         pipeline.pullFinalOutputs()
         println(pipeline.outputs)
         assertNull(pipeline.outputs["assertNull.yml@1|the_same"]!!.value)
@@ -174,7 +176,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline with null constant_when ran_then a null value is received`() = runTest {
-        val pipeline = RootPipeline("assertNull_fromConstant.json", "{}")
+        val pipeline = createRootPipeline("assertNull_fromConstant.json", "{}")
         pipeline.pullFinalOutputs()
         println(pipeline.outputs)
         assertNull(pipeline.outputs["assertNull.yml@1|the_same"]!!.value)
@@ -182,20 +184,20 @@ internal class PipelineTest {
 
     @Test
     fun `given a pipeline passing int_when ran_then an int value is received`() = runTest {
-        val pipeline = RootPipeline("assertInt.json")
+        val pipeline = createRootPipeline("assertInt.json")
         pipeline.pullFinalOutputs()
     }
 
     @Test
     fun `given a pipeline passing int to float_when ran_then float input accepts int input`() = runTest {
-        val pipeline = RootPipeline("intToFloat.json", """ { "1in1out.yml@1|some_int": 3, "divideFloat.yml@0|divider": 2 }""")
+        val pipeline = createRootPipeline("intToFloat.json", """ { "1in1out.yml@1|some_int": 3, "divideFloat.yml@0|divider": 2 }""")
         pipeline.pullFinalOutputs()
         assertTrue(pipeline.getPipelineOutputs()[0].pull() == 2)
     }
 
     @Test
     fun `given a pipeline with userInput string_when ran_then input fed to child steps`() = runTest {
-        val pipeline = RootPipeline("userInput.json", """ { "pipeline@1": 10} """)
+        val pipeline = createRootPipeline("userInput.json", """ { "pipeline@1": 10} """)
         pipeline.pullFinalOutputs()
         assertTrue(pipeline.getPipelineOutputs()[0].pull() == 11)
         assertTrue(pipeline.getPipelineOutputs()[1].pull() == 12)
@@ -204,27 +206,27 @@ internal class PipelineTest {
     @Test
     fun `given a pipeline with userInput string_when built with bad input id_then error message thrown`() = runTest {
         assertFailsWith<RuntimeException> {
-            RootPipeline("userInput.json", """ { "pipeline@3": 10} """)
+            createRootPipeline("userInput.json", """ { "pipeline@3": 10} """)
         }
     }
 
     @Test
     fun `given a pipeline with userInput string_when built with bad input type_then error message thrown`() = runTest {
         assertFailsWith<RuntimeException> {
-            RootPipeline("userInput.json", """ { "pipeline@1": "A string?"} """)
+            createRootPipeline("userInput.json", """ { "pipeline@1": "A string?"} """)
         }
     }
 
     @Test
     fun `given a pipeline with userInput array_when ran_then input fed to child steps`() = runTest {
-        val pipeline = RootPipeline("userInput_array.json", """ {"pipeline@1":[3,4,5]} """)
+        val pipeline = createRootPipeline("userInput_array.json", """ {"pipeline@1":[3,4,5]} """)
         pipeline.pullFinalOutputs()
         assertEquals(listOf(3,4,5), pipeline.getPipelineOutputs()[0].pull())
     }
 
     @Test
     fun `given a nested pipeline with input left blank_when ran_then it behaves as a single pipeline`() = runTest {
-        val pipeline = RootPipeline("pipelineInPipeline/inputLeftBlank.json",
+        val pipeline = createRootPipeline("pipelineInPipeline/inputLeftBlank.json",
             """ {"1in1out_1step.json@1|helloWorld>helloPython.yml@0|some_int":3} """)
 
         val allOutputs = mutableMapOf<String, String>()
@@ -238,7 +240,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a nested pipeline with a user input_when ran_then it behaves as a single pipeline`() = runTest {
-        val pipeline = RootPipeline("pipelineInPipeline/userInputInside.json",
+        val pipeline = createRootPipeline("pipelineInPipeline/userInputInside.json",
             """ {"userInput.json@0|pipeline@1":20} """)
 
         val allOutputs = mutableMapOf<String, String>()
@@ -255,7 +257,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a nested pipeline receiving a user input_when ran_then it behaves as a single pipeline`() = runTest {
-        val pipeline = RootPipeline("pipelineInPipeline/userInputOutside.json",
+        val pipeline = createRootPipeline("pipelineInPipeline/userInputOutside.json",
             """ {"pipeline@3":5} """)
 
         val allOutputs = mutableMapOf<String, String>()
@@ -270,7 +272,7 @@ internal class PipelineTest {
 
     @Test
     fun `given a nested pipeline with two branches_when ran_then only the necessary branch runs`() = runTest {
-        val pipeline = RootPipeline("pipelineInPipeline/twoBranchTest.json",
+        val pipeline = createRootPipeline("pipelineInPipeline/twoBranchTest.json",
             """ {"twoBranches.json@14|divideFloat.yml@5|divider":2} """)
 
         val result = pipeline.pullFinalOutputs()
@@ -286,5 +288,33 @@ internal class PipelineTest {
 
         // Result should still be valid
         assertEquals(6, pipeline.outputs["twoBranches.json@14|divideFloat.yml@5|result"]!!.pull())
+    }
+
+    @Test
+    fun `given a mini pipeline_when ran_then outputs generated`() = runTest {
+        val pipeline = createMiniPipelineFromScript(
+            File(RunContext.scriptRoot, "helloWorld/helloPython.yml"),
+            "helloWorld>helloPython.yml",
+            """{ "some_int": "7" }"""
+        )
+
+        val outputs = pipeline.pullFinalOutputs()
+        val scriptOutputDir = File(outputRoot, outputs["helloWorld>helloPython.yml@1"]!!)
+        val scriptOutputFile = File(scriptOutputDir, "output.json")
+        assertTrue(scriptOutputFile.exists())
+
+        // The results are there
+        assertContains(scriptOutputFile.readText(), "\"increment\": 8")
+    }
+
+    @Test
+    fun `given a mini pipeline_when ran with bad key_then exception occurs`() = runTest {
+        assertFailsWith<RuntimeException> {
+            createMiniPipelineFromScript(
+                File(RunContext.scriptRoot, "helloWorld/helloPython.yml"),
+                "helloWorld>helloPython.yml",
+                """{ "bad_key": "7" }"""
+            )
+        }
     }
 }

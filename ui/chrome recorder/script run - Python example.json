@@ -1,0 +1,186 @@
+{
+    "title": "BIAB script run - Python example",
+    "steps": [
+        {
+            "type": "setViewport",
+            "width": 1174,
+            "height": 931,
+            "deviceScaleFactor": 1,
+            "isMobile": false,
+            "hasTouch": false,
+            "isLandscape": false
+        },
+        {
+            "type": "navigate",
+            "assertedEvents": [
+                {
+                    "type": "navigation",
+                    "url": "http://localhost/script-form/",
+                    "title": "BON in a Box"
+                }
+            ],
+            "url": "http://localhost/script-form/"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "div.css-qbdosj-Input"
+                ],
+                [
+                    "xpath///*[@id=\"pipelineChoice\"]/div/div[1]/div[2]"
+                ],
+                [
+                    "pierce/div.css-qbdosj-Input"
+                ]
+            ],
+            "offsetX": 355.828125,
+            "offsetY": 14.46875
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                "text/Python Example"
+            ],
+            "offsetX": 289.828125,
+            "offsetY": 27.46875
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "div.outputContent"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div[2]/main/div/div[2]"
+                ],
+                [
+                    "pierce/div.outputContent"
+                ]
+            ],
+            "offsetX": 6.015625,
+            "offsetY": 149.46875
+        },
+        {
+            "type": "change",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Some int"
+                ],
+                [
+                    "#some_int"
+                ],
+                [
+                    "xpath///*[@id=\"some_int\"]"
+                ],
+                [
+                    "pierce/#some_int"
+                ]
+            ],
+            "value": "10"
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Run pipeline"
+                ],
+                [
+                    "form > input"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div[2]/main/div/div[2]/form/input"
+                ],
+                [
+                    "pierce/form > input"
+                ],
+                [
+                    "text/Run pipeline"
+                ]
+            ],
+            "offsetX": 48.828125,
+            "offsetY": 4.46875
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                "div.outputContent .clickable"
+            ],
+            "offsetX": 9.828125,
+            "offsetY": 12.578125
+        },
+        {
+            "type": "waitForExpression",
+            "expression": "document.getElementsByClassName(\"resultText\")[0].textContent == \"11\""
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/+ Input form"
+                ],
+                [
+                    "main > div:nth-of-type(1) h3"
+                ],
+                [
+                    "xpath///*[@id=\"root\"]/div[2]/main/div[1]/div[1]/h3"
+                ],
+                [
+                    "pierce/main > div:nth-of-type(1) h3"
+                ],
+                [
+                    "text/– Input form"
+                ]
+            ],
+            "offsetX": 10.609375,
+            "offsetY": 10.828125
+        },
+        {
+            "type": "waitForElement",
+            "target": "main",
+            "selectors": [
+                "aria/Some int",
+                "#some_int",
+                "xpath///*[@id=\"some_int\"]",
+                "pierce/#some_int"
+            ],
+            "attributes": {
+                "value": "10"
+            }
+        },
+        {
+            "type": "click",
+            "target": "main",
+            "selectors": [
+                [
+                    "aria/Input yaml"
+                ],
+                [
+                    "#tab\\:r0\\:1"
+                ],
+                [
+                    "xpath///*[@id=\"tab:r0:1\"]"
+                ],
+                [
+                    "pierce/#tab\\:r0\\:1"
+                ],
+                [
+                    "text/Input yaml"
+                ]
+            ],
+            "offsetX": 40.03125,
+            "offsetY": 15.46875
+        },
+        {
+            "type": "waitForExpression",
+            "expression": "document.getElementsByClassName(\"inputFile\")[0].value.startsWith(\"some_int: 10\")"
+        }
+    ]
+}

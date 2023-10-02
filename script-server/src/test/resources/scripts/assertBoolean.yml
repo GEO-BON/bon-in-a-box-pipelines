@@ -1,7 +1,12 @@
 script: assertBoolean.py
+name: Assert boolean
+description: "Test python script that fails if it doesn't receive a boolean."
+author:
+  - name: Jean-Michel Lord
 inputs:
   input_bool:
     label: Some boolean
+    description: Value to be validated
     type: boolean
     example: false
 outputs:
@@ -10,4 +15,3 @@ outputs:
     description: The same boolean as in the inputs. But this crashes if not a boolean.
     type: boolean
     example: false
-description: "Test python script that fails if it doesn't receive a boolean."

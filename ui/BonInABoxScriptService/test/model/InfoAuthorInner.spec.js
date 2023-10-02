@@ -28,7 +28,7 @@
   var instance;
 
   beforeEach(function() {
-    instance = new BonInABoxScriptService.ScriptRunResult();
+    instance = new BonInABoxScriptService.InfoAuthorInner();
   });
 
   var getProperty = function(object, getter, property) {
@@ -47,22 +47,22 @@
       object[property] = value;
   }
 
-  describe('ScriptRunResult', function() {
-    it('should create an instance of ScriptRunResult', function() {
-      // uncomment below and update the code to test ScriptRunResult
-      //var instance = new BonInABoxScriptService.ScriptRunResult();
-      //expect(instance).to.be.a(BonInABoxScriptService.ScriptRunResult);
+  describe('InfoAuthorInner', function() {
+    it('should create an instance of InfoAuthorInner', function() {
+      // uncomment below and update the code to test InfoAuthorInner
+      //var instance = new BonInABoxScriptService.InfoAuthorInner();
+      //expect(instance).to.be.a(BonInABoxScriptService.InfoAuthorInner);
     });
 
-    it('should have the property logs (base name: "logs")', function() {
-      // uncomment below and update the code to test the property logs
-      //var instance = new BonInABoxScriptService.ScriptRunResult();
+    it('should have the property name (base name: "name")', function() {
+      // uncomment below and update the code to test the property name
+      //var instance = new BonInABoxScriptService.InfoAuthorInner();
       //expect(instance).to.be();
     });
 
-    it('should have the property files (base name: "files")', function() {
-      // uncomment below and update the code to test the property files
-      //var instance = new BonInABoxScriptService.ScriptRunResult();
+    it('should have the property identifier (base name: "identifier")', function() {
+      // uncomment below and update the code to test the property identifier
+      //var instance = new BonInABoxScriptService.InfoAuthorInner();
       //expect(instance).to.be();
     });
 

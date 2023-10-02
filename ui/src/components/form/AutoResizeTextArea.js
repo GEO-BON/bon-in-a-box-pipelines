@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from 'react';
 
-export default function AutoResizeTextArea({defaultValue, ...props}) {
+export default function AutoResizeTextArea({defaultValue, keepWidth, className, ...props}) {
 
   const textAreaRef = useRef(null)
 
   useEffect(() => {
     resize(textAreaRef.current)
-  }, [defaultValue])
+  }, [defaultValue, resize])
 
   /**
    * Automatic horizontal and vertical resizing of textarea
@@ -16,10 +16,12 @@ export default function AutoResizeTextArea({defaultValue, ...props}) {
     input.style.height = 0;
     input.style.height = input.scrollHeight + "px";
 
-    input.style.width = "auto";
-    input.style.width = input.scrollWidth + "px";
+    if(!keepWidth) {
+      input.style.width = "auto";
+      input.style.width = input.scrollWidth + "px";
+    }
   }
 
-  return <textarea className='autoResize' ref={textAreaRef} defaultValue={defaultValue} {...props} 
-    onChange={(e) => resize(e.target)} />;  
+  return <textarea className={(className ? className + ' ' : '') + 'autoResize'} ref={textAreaRef} defaultValue={defaultValue} {...props} 
+    onChange={(e) => resize(e.target)} />;
 }

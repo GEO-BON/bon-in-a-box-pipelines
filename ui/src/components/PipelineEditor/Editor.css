@@ -1,13 +1,3 @@
-aside.scriptChooser {
-  padding: 15px 10px;
-  flex: 1;
-  overflow: scroll;
-}
-
-aside.scriptChooser .description {
-  margin-bottom: 10px;
-}
-
 #editorLayout {
   flex-direction: column;
   display: flex;
@@ -26,31 +16,6 @@ aside.scriptChooser .description {
   width: max-content;
   max-width: 65%;
   z-index: 1500; /* Above the nodes, that have z-index 1000 */
-}
-
-.dndnode {
-  height: 20px;
-  padding: 4px;
-  border: 1px solid #1a192b;
-  border-radius: 2px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: grab;
-  background: #fcfcfc;
-}
-
-.dndnode.input {
-  border-color: #0041d0;
-}
-
-.dndnode.output {
-  border-color: #ff0072;
-}
-
-.inFolder {
-  padding-left: 1em;
 }
 
 .userInput {
@@ -93,8 +58,8 @@ aside.scriptChooser .description {
 
 .react-flow__edge-path,
 .react-flow__connection-path {
-  stroke: #fcfcfc;
-  stroke-width: 3;
+  stroke: #fcfcfc !important;
+  stroke-width: 3 !important;
 }
 
 .react-flow__edge.selected .react-flow__edge-path {
@@ -135,8 +100,7 @@ aside.scriptChooser .description {
 .selected .constant,
 .selected .userInput,
 .react-flow__node-output.selected,
-.ioList .selected,
-.scriptChooser .selected {
+.ioList .selected {
   background-color: blanchedalmond;
 }
 
@@ -222,41 +186,87 @@ aside.scriptChooser .description {
   margin-left: 5px;
 }
 
-.ioList {
+.rightPane {
   border: 1px solid black;
-  border-right: 0;
-  border-radius: 0px 0px 0px 3px;
+  border-radius: 3px 0px 0px 3px;
   background: whitesmoke;
   color: black;
 
-  overflow-x: visible;
-  width: 30%;
-  max-width: 400px;
-
   position: absolute;
+  left: max(2em, calc(100% - 400px));
   top: 3em;
   right: 0px;
   bottom: 190px;
 
   z-index: 1500;
-  transition: width 0.5s;
+  transition: left 0.5s, right 0.5s;
 }
 
-.paneCollapsed.ioList {
-  width: 0px !important;
+.rightPane.paneCollapsed {
+  left: 100%;
+  right: max(-400px, calc(2em - 100%));
+  z-index: 1400;
 }
 
-.ioListInner {
+.rightPaneInner {
+  height: 100%;
+}
+
+.ioList {
+  border-radius: 0px 0px 0px 3px;
+}
+
+.ioList .rightPaneInner {
   overflow-y: auto;
   overflow-x: hidden;
-  height: 100%;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 10px;
+  padding-right: 20px;
+}
+
+.ioList h3 {
+  padding-left: 6px;
+}
+
+.ioList .label {
+  font-weight: bold;
 }
 
 .ioList .description {
   font-size: small;
-  color: gray;
+}
+
+.ioList .example-tag {
+  padding-left: 5px;
+  font-size: small;
+}
+
+.ioList textarea {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  resize: none;
+  font-family: inherit;
+  padding: 3px 6px;
+}
+
+.ioList textarea:hover {
+  background: url("../../img/pen.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 1.5em;
+  border: 1px solid  #bbb;
+  padding: 2px 5px;
+}
+
+.ioList textarea:focus {
+  border:1px solid #0c947b;
+  background-color: unset;
+  resize: both;
+  padding: 2px 5px;
+}
+
+.ioList textarea:hover:focus {
+  background: none;
 }
 
 .collapseTab {
@@ -285,6 +295,23 @@ aside.scriptChooser .description {
   border-color: black whitesmoke black black;
   border-radius: 3px 0px 0px 3px;
   cursor: pointer;
+}
+
+.rightPane.metadataPane {
+  left: max(2em, calc(100% - 850px));
+}
+
+.rightPane.metadataPane.paneCollapsed {
+  left: 100%;
+  right: max(-850px, calc(2em - 100%));
+}
+
+.metadataPane .collapseTab {
+  top: 13rem;
+}
+
+.metadataPane h3 {
+  padding-left: 26px;
 }
 
 .arrowDownButton {
