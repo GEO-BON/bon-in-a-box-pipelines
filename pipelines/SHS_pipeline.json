@@ -223,55 +223,11 @@
       }
     },
     {
-      "id": "17",
-      "type": "output",
-      "position": {
-        "x": 2116,
-        "y": 202
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "18",
-      "type": "output",
-      "position": {
-        "x": 2116,
-        "y": 251
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "19",
-      "type": "output",
-      "position": {
-        "x": 2116,
-        "y": 521
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "20",
       "type": "output",
       "position": {
-        "x": 2116,
-        "y": 300
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "21",
-      "type": "output",
-      "position": {
-        "x": 2116,
-        "y": 472
+        "x": 2229.0000000000005,
+        "y": 364.00000000000006
       },
       "data": {
         "label": "Output"
@@ -432,38 +388,10 @@
     },
     {
       "source": "2",
-      "sourceHandle": "img_shs_map",
-      "target": "17",
-      "targetHandle": null,
-      "id": "reactflow__edge-2img_shs_map-17"
-    },
-    {
-      "source": "2",
-      "sourceHandle": "img_shs_timeseries",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-2img_shs_timeseries-18"
-    },
-    {
-      "source": "2",
-      "sourceHandle": "r_habitat_by_tstep",
-      "target": "19",
-      "targetHandle": null,
-      "id": "reactflow__edge-2r_habitat_by_tstep-19"
-    },
-    {
-      "source": "2",
       "sourceHandle": "df_shs",
       "target": "20",
       "targetHandle": null,
       "id": "reactflow__edge-2df_shs-20"
-    },
-    {
-      "source": "2",
-      "sourceHandle": "df_shs_tidy",
-      "target": "21",
-      "targetHandle": null,
-      "id": "reactflow__edge-2df_shs_tidy-21"
     },
     {
       "source": "1",
@@ -471,6 +399,34 @@
       "target": "22",
       "targetHandle": null,
       "id": "reactflow__edge-1df_aoh_areas-22"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "img_shs_map",
+      "target": "20",
+      "targetHandle": null,
+      "id": "reactflow__edge-2img_shs_map-20"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "r_habitat_by_tstep",
+      "target": "20",
+      "targetHandle": null,
+      "id": "reactflow__edge-2r_habitat_by_tstep-20"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "img_shs_timeseries",
+      "target": "20",
+      "targetHandle": null,
+      "id": "reactflow__edge-2img_shs_timeseries-20"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "df_shs_tidy",
+      "target": "20",
+      "targetHandle": null,
+      "id": "reactflow__edge-2df_shs_tidy-20"
     }
   ],
   "inputs": {
