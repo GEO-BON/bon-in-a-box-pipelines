@@ -1,444 +1,441 @@
 {
-    "nodes": [
-      {
-        "id": "34",
-        "type": "io",
-        "position": {
-          "x": 1586.7477746676786,
-          "y": 76.24777466767864
-        },
-        "data": {
-          "descriptionFile": "filtering>cleanCoordinates.yml"
-        }
+  "nodes": [
+    {
+      "id": "34",
+      "type": "io",
+      "position": {
+        "x": 1586.7477746676786,
+        "y": 76.24777466767864
       },
-      {
-        "id": "35",
-        "type": "constant",
-        "position": {
-          "x": 1279.3155700434806,
-          "y": 244.87700732693582
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "equal",
-            "zeros",
-            "duplicates",
-            "same_pixel",
-            "capitals",
-            "centroids",
-            "seas",
-            "urban",
-            "gbif",
-            "institutions"
-          ]
-        }
-      },
-      {
-        "id": "64",
-        "type": "constant",
-        "position": {
-          "x": 1365.2699098847381,
-          "y": 400.73124362757727
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "float",
-          "value": 0.8
-        }
-      },
-      {
-        "id": "96",
-        "type": "io",
-        "position": {
-          "x": 798,
-          "y": 86
-        },
-        "data": {
-          "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
-        }
-      },
-      {
-        "id": "125",
-        "type": "io",
-        "position": {
-          "x": 2009.9356294214217,
-          "y": 237.59508691036865
-        },
-        "data": {
-          "descriptionFile": "SDM>julia_sdms>generateBackground.yml"
-        }
-      },
-      {
-        "id": "126",
-        "type": "io",
-        "position": {
-          "x": 2528.381575227725,
-          "y": 232.33703046549493
-        },
-        "data": {
-          "descriptionFile": "SDM>julia_sdms>fitBRT.yml"
-        }
-      },
-      {
-        "id": "127",
-        "type": "constant",
-        "position": {
-          "x": 1688.8666687011719,
-          "y": 193.6666717529297
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 30000
-        }
-      },
-      {
-        "id": "128",
-        "type": "output",
-        "position": {
-          "x": 2944.5951749942374,
-          "y": 176.795471455183
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "129",
-        "type": "output",
-        "position": {
-          "x": 2934.4253987541583,
-          "y": 243.00293443137292
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "130",
-        "type": "output",
-        "position": {
-          "x": 2934.463085490269,
-          "y": 298.6066659194679
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "134",
-        "type": "constant",
-        "position": {
-          "x": 30.866668701171875,
-          "y": 270.6666717529297
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "float[]",
-          "value": [
-            "-86.748047",
-            "33.724340",
-            "-52.207031",
-            "63.273182"
-          ]
-        }
-      },
-      {
-        "id": "139",
-        "type": "io",
-        "position": {
-          "x": 1116.0405860379915,
-          "y": 604.5090499252474
-        },
-        "data": {
-          "descriptionFile": "SDM>julia_sdms>loadCHELSA.yml"
-        }
-      },
-      {
-        "id": "140",
-        "type": "constant",
-        "position": {
-          "x": 155.54867352690655,
-          "y": 37.46137819782004
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text",
-          "value": "EPSG:4326"
-        }
-      },
-      {
-        "id": "141",
-        "type": "output",
-        "position": {
-          "x": 2040.8666687011719,
-          "y": 51.66667175292969
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "142",
-        "type": "output",
-        "position": {
-          "x": 2395.866668701172,
-          "y": 129.6666717529297
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "144",
-        "type": "constant",
-        "position": {
-          "x": 446.74262439587665,
-          "y": 100.37230768385939
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "Acer saccharum"
-          ]
-        }
+      "data": {
+        "descriptionFile": "filtering>cleanCoordinates.yml"
       }
-    ],
-    "edges": [
-      {
-        "source": "96",
-        "sourceHandle": "observations_file",
-        "target": "34",
-        "targetHandle": "presence",
-        "id": "reactflow__edge-96observations_file-34presence"
+    },
+    {
+      "id": "35",
+      "type": "constant",
+      "position": {
+        "x": 1279.3155700434806,
+        "y": 244.87700732693582
       },
-      {
-        "source": "35",
-        "sourceHandle": null,
-        "target": "34",
-        "targetHandle": "tests",
-        "id": "reactflow__edge-35-34tests"
-      },
-      {
-        "source": "64",
-        "sourceHandle": null,
-        "target": "34",
-        "targetHandle": "env_threshold",
-        "id": "reactflow__edge-64-34env_threshold"
-      },
-      {
-        "source": "34",
-        "sourceHandle": "clean_presence",
-        "target": "125",
-        "targetHandle": "presence",
-        "id": "reactflow__edge-34clean_presence-125presence"
-      },
-      {
-        "source": "127",
-        "sourceHandle": null,
-        "target": "125",
-        "targetHandle": "buffer_distance",
-        "id": "reactflow__edge-127-125buffer_distance"
-      },
-      {
-        "source": "125",
-        "sourceHandle": "background",
-        "target": "126",
-        "targetHandle": "background",
-        "id": "reactflow__edge-125background-126background"
-      },
-      {
-        "source": "34",
-        "sourceHandle": "clean_presence",
-        "target": "126",
-        "targetHandle": "occurrence",
-        "id": "reactflow__edge-34clean_presence-126occurrence"
-      },
-      {
-        "source": "126",
-        "sourceHandle": "sdm",
-        "target": "128",
-        "targetHandle": null,
-        "id": "reactflow__edge-126sdm-128"
-      },
-      {
-        "source": "126",
-        "sourceHandle": "sdm_uncertainty",
-        "target": "129",
-        "targetHandle": null,
-        "id": "reactflow__edge-126sdm_uncertainty-129"
-      },
-      {
-        "source": "126",
-        "sourceHandle": "fit_stats",
-        "target": "130",
-        "targetHandle": null,
-        "id": "reactflow__edge-126fit_stats-130"
-      },
-      {
-        "source": "134",
-        "sourceHandle": null,
-        "target": "96",
-        "targetHandle": "bbox",
-        "id": "reactflow__edge-134-96bbox"
-      },
-      {
-        "source": "134",
-        "sourceHandle": null,
-        "target": "139",
-        "targetHandle": "bbox",
-        "id": "reactflow__edge-134-139bbox"
-      },
-      {
-        "source": "139",
-        "sourceHandle": "predictors",
-        "target": "34",
-        "targetHandle": "predictors",
-        "id": "reactflow__edge-139predictors-34predictors"
-      },
-      {
-        "source": "139",
-        "sourceHandle": "predictors",
-        "target": "125",
-        "targetHandle": "predictors",
-        "id": "reactflow__edge-139predictors-125predictors"
-      },
-      {
-        "source": "139",
-        "sourceHandle": "predictors",
-        "target": "126",
-        "targetHandle": "predictors",
-        "id": "reactflow__edge-139predictors-126predictors"
-      },
-      {
-        "source": "140",
-        "sourceHandle": null,
-        "target": "96",
-        "targetHandle": "proj",
-        "id": "reactflow__edge-140-96proj"
-      },
-      {
-        "source": "34",
-        "sourceHandle": "clean_presence",
-        "target": "141",
-        "targetHandle": null,
-        "id": "reactflow__edge-34clean_presence-141"
-      },
-      {
-        "source": "125",
-        "sourceHandle": "background",
-        "target": "142",
-        "targetHandle": null,
-        "id": "reactflow__edge-125background-142"
-      },
-      {
-        "source": "144",
-        "sourceHandle": null,
-        "target": "96",
-        "targetHandle": "taxa",
-        "id": "reactflow__edge-144-96taxa"
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "equal",
+          "zeros",
+          "duplicates",
+          "same_pixel",
+          "capitals",
+          "centroids",
+          "seas",
+          "urban",
+          "gbif",
+          "institutions"
+        ]
       }
-    ],
-    "inputs": {
-      "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
-        "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
-        "label": "Data source",
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 1365.2699098847381,
+        "y": 400.73124362757727
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.8
+      }
+    },
+    {
+      "id": "96",
+      "type": "io",
+      "position": {
+        "x": 798,
+        "y": 86
+      },
+      "data": {
+        "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
+      }
+    },
+    {
+      "id": "125",
+      "type": "io",
+      "position": {
+        "x": 2009.9356294214217,
+        "y": 237.59508691036865
+      },
+      "data": {
+        "descriptionFile": "SDM>julia_sdms>generateBackground.yml"
+      }
+    },
+    {
+      "id": "126",
+      "type": "io",
+      "position": {
+        "x": 2528.381575227725,
+        "y": 232.33703046549493
+      },
+      "data": {
+        "descriptionFile": "SDM>julia_sdms>fitBRT.yml"
+      }
+    },
+    {
+      "id": "127",
+      "type": "constant",
+      "position": {
+        "x": 1688.8666687011719,
+        "y": 193.6666717529297
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 30000
+      }
+    },
+    {
+      "id": "128",
+      "type": "output",
+      "position": {
+        "x": 2944.5951749942374,
+        "y": 176.795471455183
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "129",
+      "type": "output",
+      "position": {
+        "x": 2934.4253987541583,
+        "y": 243.00293443137292
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "130",
+      "type": "output",
+      "position": {
+        "x": 2934.463085490269,
+        "y": 298.6066659194679
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "134",
+      "type": "userInput",
+      "position": {
+        "x": 30.866668701171875,
+        "y": 270.6666717529297
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          "-86.748047",
+          "33.724340",
+          "-52.207031",
+          "63.273182"
+        ]
+      }
+    },
+    {
+      "id": "139",
+      "type": "io",
+      "position": {
+        "x": 1116.0405860379915,
+        "y": 604.5090499252474
+      },
+      "data": {
+        "descriptionFile": "SDM>julia_sdms>loadCHELSA.yml"
+      }
+    },
+    {
+      "id": "141",
+      "type": "output",
+      "position": {
+        "x": 2040.8666687011719,
+        "y": 51.66667175292969
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "142",
+      "type": "output",
+      "position": {
+        "x": 2395.866668701172,
+        "y": 129.6666717529297
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "145",
+      "type": "constant",
+      "position": {
+        "x": 491.6009387529714,
+        "y": 84.77367167495548
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "options",
+        "value": "gbif_api",
         "options": [
           "gbif_pc",
           "gbif_api"
-        ],
-        "example": "gbif_api"
-      },
-      "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
-        "description": "Min year observations wanted",
-        "label": "minimum year",
-        "type": "int",
-        "example": 2010
-      },
-      "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
-        "description": "Max year observations wanted",
-        "label": "maximum year",
-        "type": "int",
-        "example": 2020
-      },
-      "SDM>julia_sdms>loadCHELSA.yml@139|pca": {
-        "description": "Boolean, whether to PCA predictor layers or not",
-        "label": "pca layers",
-        "type": "boolean",
-        "example": true
-      },
-      "SDM>julia_sdms>loadCHELSA.yml@139|layer_numbers": {
-        "description": "The numbers of CHELSA layers to use",
-        "type": "int[]",
-        "example": [
-          1,
-          2,
-          3,
-          4,
-          5,
-          6,
-          7,
-          8,
-          9,
-          10,
-          11,
-          12,
-          13,
-          14,
-          15,
-          16,
-          17,
-          18,
-          19
-        ],
-        "label": "CHELSA Layers"
+        ]
       }
-    },
-    "outputs": {
-      "SDM>julia_sdms>fitBRT.yml@126|sdm": {
-        "description": "Map of predicted occurrence probability",
-        "label": "SDM",
-        "type": "image/tiff;application=geotiff"
-      },
-      "SDM>julia_sdms>fitBRT.yml@126|sdm_uncertainty": {
-        "description": "Map of relative model uncertainty",
-        "label": "Uncertainty",
-        "type": "image/tiff;application=geotiff"
-      },
-      "SDM>julia_sdms>fitBRT.yml@126|fit_stats": {
-        "description": "JSON of BRT fit stats and optimal cutoff threshold",
-        "label": "Fit Stats",
-        "type": "text/json"
-      },
-      "filtering>cleanCoordinates.yml@34|clean_presence": {
-        "description": "Data frame with clean occurrence points.",
-        "label": "Cleaned Occurrences",
-        "type": "text/tab-separated-values"
-      },
-      "SDM>julia_sdms>generateBackground.yml@125|background": {
-        "description": "TSV file containing with the background (pseudoabsence) coordinates.",
-        "label": "Background Points",
-        "type": "text/tab-separated-values"
-      }
-    },
-    "metadata": {
-      "name": "Julia BRT SDM",
-      "description": "Pipeline to make a species distribution model (SDM) using Boosted Regression Trees (BRT) in Julia, using the SpeciesDistributionToolkit.jl and EvoTrees.jl packages.",
-      "author": [
-        {
-          "name": "Michael D. Catchen",
-          "identifier": "https://orcid.org/0000-0002-6506-6487"
-        },
-        {
-          "name": "Timothée Poisot",
-          "identifier": "https://orcid.org/0000-0002-0735-5184"
-        }
-      ],
-      "license": "MIT",
-      "external_link": null
     }
+  ],
+  "edges": [
+    {
+      "source": "96",
+      "sourceHandle": "observations_file",
+      "target": "34",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-96observations_file-34presence"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "tests",
+      "id": "reactflow__edge-35-34tests"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "env_threshold",
+      "id": "reactflow__edge-64-34env_threshold"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "125",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-34clean_presence-125presence"
+    },
+    {
+      "source": "127",
+      "sourceHandle": null,
+      "target": "125",
+      "targetHandle": "buffer_distance",
+      "id": "reactflow__edge-127-125buffer_distance"
+    },
+    {
+      "source": "125",
+      "sourceHandle": "background",
+      "target": "126",
+      "targetHandle": "background",
+      "id": "reactflow__edge-125background-126background"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "126",
+      "targetHandle": "occurrence",
+      "id": "reactflow__edge-34clean_presence-126occurrence"
+    },
+    {
+      "source": "126",
+      "sourceHandle": "sdm",
+      "target": "128",
+      "targetHandle": null,
+      "id": "reactflow__edge-126sdm-128"
+    },
+    {
+      "source": "126",
+      "sourceHandle": "sdm_uncertainty",
+      "target": "129",
+      "targetHandle": null,
+      "id": "reactflow__edge-126sdm_uncertainty-129"
+    },
+    {
+      "source": "126",
+      "sourceHandle": "fit_stats",
+      "target": "130",
+      "targetHandle": null,
+      "id": "reactflow__edge-126fit_stats-130"
+    },
+    {
+      "source": "134",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-134-96bbox"
+    },
+    {
+      "source": "134",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-134-139bbox"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "predictors",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-139predictors-34predictors"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "predictors",
+      "target": "125",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-139predictors-125predictors"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "predictors",
+      "target": "126",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-139predictors-126predictors"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "141",
+      "targetHandle": null,
+      "id": "reactflow__edge-34clean_presence-141"
+    },
+    {
+      "source": "125",
+      "sourceHandle": "background",
+      "target": "142",
+      "targetHandle": null,
+      "id": "reactflow__edge-125background-142"
+    },
+    {
+      "source": "145",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "data_source",
+      "id": "reactflow__edge-145-96data_source"
+    }
+  ],
+  "inputs": {
+    "data>pyLoadObservations>pyLoadObservations.yml@96|taxa": {
+      "description": "Array of taxa values",
+      "label": "Taxa list",
+      "type": "text[]",
+      "example": [
+        "Acer saccharum"
+      ]
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|proj": {
+      "description": "String, projection system of the coordinates in bbox",
+      "label": "projection system",
+      "type": "text",
+      "example": "EPSG:4326"
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2020
+    },
+    "pipeline@134": {
+      "label": "bbox",
+      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
+      "example": [
+        "-86.748047",
+        "33.724340",
+        "-52.207031",
+        "63.273182"
+      ]
+    },
+    "SDM>julia_sdms>loadCHELSA.yml@139|pca": {
+      "description": "Boolean, whether to PCA predictor layers or not",
+      "label": "pca layers",
+      "type": "boolean",
+      "example": true
+    },
+    "SDM>julia_sdms>loadCHELSA.yml@139|layer_numbers": {
+      "description": "The numbers of CHELSA layers to use",
+      "label": "CHELSA layer numbers",
+      "type": "int[]",
+      "example": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19
+      ]
+    }
+  },
+  "outputs": {
+    "SDM>julia_sdms>fitBRT.yml@126|sdm": {
+      "description": "Map of predicted occurrence probability",
+      "label": "SDM",
+      "type": "image/tiff;application=geotiff"
+    },
+    "SDM>julia_sdms>fitBRT.yml@126|sdm_uncertainty": {
+      "description": "Map of relative model uncertainty",
+      "label": "Uncertainty",
+      "type": "image/tiff;application=geotiff"
+    },
+    "SDM>julia_sdms>fitBRT.yml@126|fit_stats": {
+      "description": "JSON of BRT fit stats and optimal cutoff threshold",
+      "label": "Fit Stats",
+      "type": "text/json"
+    },
+    "filtering>cleanCoordinates.yml@34|clean_presence": {
+      "description": "Data frame with clean occurrence points.",
+      "label": "Cleaned Occurrences",
+      "type": "text/tab-separated-values"
+    },
+    "SDM>julia_sdms>generateBackground.yml@125|background": {
+      "description": "TSV file containing with the background (pseudoabsence) coordinates.",
+      "label": "Background Points",
+      "type": "text/tab-separated-values"
+    }
+  },
+  "metadata": {
+    "name": "Julia BRT SDM",
+    "description": "Pipeline to make a species distribution model (SDM) using Boosted Regression Trees (BRT) in Julia, using the SpeciesDistributionToolkit.jl and EvoTrees.jl packages.",
+    "author": [
+      {
+        "name": "Michael D. Catchen",
+        "identifier": "https://orcid.org/0000-0002-6506-6487"
+      },
+      {
+        "name": "Timothée Poisot",
+        "identifier": "https://orcid.org/0000-0002-0735-5184"
+      }
+    ],
+    "license": "MIT",
+    "external_link": null
   }
+}
