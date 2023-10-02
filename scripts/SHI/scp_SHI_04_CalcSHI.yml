@@ -23,15 +23,15 @@ inputs:
     type: text/tab-separated-values
     example: "/scripts/SHI/df_aoh_areas.tsv"
 outputs:
-  df_SHI:
+  df_shi:
     label: SHI table
     description: "Table with SHI and Steward's SHI values for the complete area of study."
     type: text/tab-separated-values
-  img_SHI_timeseries:
+  img_shi_timeseries:
     label: SHI time series
     description: Figure showing a time series of SHI values for each time step.
     type: image/png
-  img_W_SHI_timeseries:
+  img_W_shi_timeseries:
     label: "Steward's SHI time series"
     description: "Figure showing a time series of Steward's SHI values for each time step."
     type: image/png
