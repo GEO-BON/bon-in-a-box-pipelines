@@ -37,7 +37,7 @@ internal class PipelineValidation {
                     pipelineJSON.optJSONObject(INPUTS)?.let { inputsSpec ->
                         inputsSpec.keySet().forEach { key ->
                             inputsSpec.optJSONObject(key)?.let { inputSpec ->
-                                fakeInputs.put(key, inputSpec.get(INPUTS__EXAMPLE))
+                                fakeInputs.put(key, inputSpec.opt(INPUTS__EXAMPLE))
                             }
                         }
                     }
