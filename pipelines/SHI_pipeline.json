@@ -49,24 +49,6 @@
       }
     },
     {
-      "id": "5",
-      "type": "userInput",
-      "position": {
-        "x": 12,
-        "y": 205.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "IUCN",
-        "options": [
-          "MOL",
-          "IUCN",
-          "QC"
-        ]
-      }
-    },
-    {
       "id": "6",
       "type": "userInput",
       "position": {
@@ -154,75 +136,6 @@
       }
     },
     {
-      "id": "12",
-      "type": "userInput",
-      "position": {
-        "x": 1276,
-        "y": 129
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int[]",
-        "value": [
-          50
-        ]
-      }
-    },
-    {
-      "id": "13",
-      "type": "userInput",
-      "position": {
-        "x": 1273,
-        "y": 164
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int[]",
-        "value": [
-          100
-        ]
-      }
-    },
-    {
-      "id": "14",
-      "type": "userInput",
-      "position": {
-        "x": 1285,
-        "y": 387
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2000
-      }
-    },
-    {
-      "id": "15",
-      "type": "userInput",
-      "position": {
-        "x": 1293,
-        "y": 422
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2020
-      }
-    },
-    {
-      "id": "16",
-      "type": "userInput",
-      "position": {
-        "x": 1293,
-        "y": 457
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 10
-      }
-    },
-    {
       "id": "17",
       "type": "output",
       "position": {
@@ -263,13 +176,6 @@
       "target": "0",
       "targetHandle": "species",
       "id": "reactflow__edge-3-0species"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "expert_source",
-      "id": "reactflow__edge-5-0expert_source"
     },
     {
       "source": "0",
@@ -363,41 +269,6 @@
       "id": "reactflow__edge-3-2species"
     },
     {
-      "source": "12",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "min_forest",
-      "id": "reactflow__edge-12-2min_forest"
-    },
-    {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "max_forest",
-      "id": "reactflow__edge-13-2max_forest"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "t_0",
-      "id": "reactflow__edge-14-2t_0"
-    },
-    {
-      "source": "15",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "t_n",
-      "id": "reactflow__edge-15-2t_n"
-    },
-    {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "time_step",
-      "id": "reactflow__edge-16-2time_step"
-    },
-    {
       "source": "2",
       "sourceHandle": "img_shs_map",
       "target": "17",
@@ -420,10 +291,10 @@
     },
     {
       "source": "23",
-      "sourceHandle": "df_SHI",
+      "sourceHandle": "df_shi",
       "target": "24",
       "targetHandle": null,
-      "id": "reactflow__edge-23df_SHI-24"
+      "id": "reactflow__edge-23df_shi-24"
     },
     {
       "source": "2",
@@ -448,17 +319,17 @@
     },
     {
       "source": "23",
-      "sourceHandle": "img_SHI_timeseries",
+      "sourceHandle": "img_shi_timeseries",
       "target": "24",
       "targetHandle": null,
-      "id": "reactflow__edge-23img_SHI_timeseries-24"
+      "id": "reactflow__edge-23img_shi_timeseries-24"
     },
     {
       "source": "23",
-      "sourceHandle": "img_W_SHI_timeseries",
+      "sourceHandle": "img_w_shi_timeseries",
       "target": "24",
       "targetHandle": null,
-      "id": "reactflow__edge-23img_W_SHI_timeseries-24"
+      "id": "reactflow__edge-23img_w_shi_timeseries-24"
     }
   ],
   "inputs": {
@@ -471,7 +342,8 @@
     "SHI>scp_SHI_02_GetAOH.yml@1|region": {
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
       "label": "region",
-      "type": "text"
+      "type": "text",
+      "example": null
     },
     "SHI>scp_SHI_02_GetAOH.yml@1|buff_size": {
       "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
@@ -495,7 +367,7 @@
         "Saguinus oedipus"
       ]
     },
-    "pipeline@5": {
+    "SHI>scp_SHI_01_GetRangeMap.yml@0|expert_source": {
       "label": "source of expert range map",
       "description": "Source of the expert range map for the species.",
       "type": "options",
@@ -524,7 +396,7 @@
       "type": "text",
       "example": "COL"
     },
-    "pipeline@12": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|min_forest": {
       "label": "min forest",
       "description": "Minimum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
       "type": "int[]",
@@ -532,7 +404,7 @@
         50
       ]
     },
-    "pipeline@13": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|max_forest": {
       "label": "max forest",
       "description": "Maximum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
       "type": "int[]",
@@ -540,19 +412,19 @@
         100
       ]
     },
-    "pipeline@14": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|t_0": {
       "label": "initial time",
       "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
       "type": "int",
       "example": 2000
     },
-    "pipeline@15": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|t_n": {
       "label": "final time",
       "description": "Year where the analysis should end (it should be later than Initial time)",
       "type": "int",
       "example": 2020
     },
-    "pipeline@16": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|time_step": {
       "label": "time step",
       "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
       "type": "int",
@@ -580,17 +452,17 @@
       "label": "SHS table",
       "type": "text/tab-separated-values[]"
     },
-    "SHI>scp_SHI_04_CalcSHI.yml@23|df_SHI": {
+    "SHI>scp_SHI_04_CalcSHI.yml@23|df_shi": {
       "description": "Table with SHI and Steward's SHI values for the complete area of study.",
       "label": "SHI table",
       "type": "text/tab-separated-values"
     },
-    "SHI>scp_SHI_04_CalcSHI.yml@23|img_SHI_timeseries": {
+    "SHI>scp_SHI_04_CalcSHI.yml@23|img_shi_timeseries": {
       "description": "Figure showing a time series of SHI values for each time step.",
       "label": "SHI time series",
       "type": "image/png"
     },
-    "SHI>scp_SHI_04_CalcSHI.yml@23|img_W_SHI_timeseries": {
+    "SHI>scp_SHI_04_CalcSHI.yml@23|img_w_shi_timeseries": {
       "description": "Figure showing a time series of Steward's SHI values for each time step.",
       "label": "Steward's SHI time series",
       "type": "image/png"
