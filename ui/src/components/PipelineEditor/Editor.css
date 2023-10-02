@@ -58,8 +58,8 @@
 
 .react-flow__edge-path,
 .react-flow__connection-path {
-  stroke: #fcfcfc !important;
-  stroke-width: 3 !important;
+  stroke: #fcfcfc;
+  stroke-width: 3;
 }
 
 .react-flow__edge.selected .react-flow__edge-path {
