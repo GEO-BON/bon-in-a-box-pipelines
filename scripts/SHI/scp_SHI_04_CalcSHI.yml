@@ -31,7 +31,7 @@ outputs:
     label: SHI time series
     description: Figure showing a time series of SHI values for each time step.
     type: image/png
-  img_W_shi_timeseries:
+  img_w_shi_timeseries:
     label: "Steward's SHI time series"
     description: "Figure showing a time series of Steward's SHI values for each time step."
     type: image/png
