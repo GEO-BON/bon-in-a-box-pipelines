@@ -40,6 +40,7 @@ srs_cube <- suppressWarnings(if(check_srs){
 }else srs )# paste Authority in case SRID is used 
 
 # Define area of interest, country or region
+study_area_opt <- input$study_area_opt
 study_area_path <- ifelse(is.null(input$study_area), NA,input$study_area)
 country_code <- ifelse(is.null(input$country_code), NA,input$country_code)
 region <- ifelse(is.null(input$region), NA ,input$region)
@@ -77,15 +78,30 @@ study_area <- data.frame(study_area_path= study_area_path ,
     is.na(study_area_path) & is.na(country_code) ~ 4,
   ))
 
+study_area <- data.frame(text=study_area_opt,
+                         study_area_path= study_area_path ,
+                         country_code = country_code ,
+                         region = region) |> 
+  dplyr::mutate(option=case_when(
+    study_area_opt == "Country" ~  1,
+    study_area_opt == "Region in Country" ~  2,
+    study_area_opt == "User defined" ~ 3,
+    is.null(study_area_opt) ~ 4,
+  ))
+
 if(study_area$option == 1){
-  sf_area_lim1 <- st_read(study_area_path) # user defined area
-}
-if(study_area$option == 2){
   sf_area_lim1 <- gadm(country=country_code, level=0, path=tempdir()) |> st_as_sf() |> st_make_valid() # country
 }
-if(study_area$option == 3){
+if(study_area$option == 2){
   sf_area_lim1 <- gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region) # region in a country
 }
+if(study_area$option == 3){
+  sf_area_lim1 <- st_read(study_area_path) # user defined area
+}
+if(study_area$option == 4){
+  print("A study area is required, please choose one of the options")
+}
+
 
 sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
 area_study_a <<- sf_area_lim1_srs |> st_area()

@@ -17,11 +17,21 @@ inputs:
     description: Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.
     type: text
     example: EPSG:3116
+  study_area_opt:
+    label: study area option
+    description: Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.
+    type: options
+    options:
+      - "Country" 
+      - "Region in Country"
+      - "User defined"
+    example: 
+        Country
   study_area:
     label: study area
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
-    example: "/scripts/SHI/example.gpkg"
+    example: null
   country_code:
     label: country code
     description: Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.
@@ -69,7 +79,7 @@ inputs:
     type: image/tiff;application=geotiff[]
     example: 
       [
-        "/scripts/SHI/Saguinus_oedipus_con.tif"
+        null
       ]
   elevation_filter:
     label: filter by elevation
@@ -84,7 +94,7 @@ inputs:
     label: elevation buffer
     description: Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that magnitude and negative values will reduce the range in that magnitude.
     type: int
-    example: 0
+    example: null
 outputs:
   r_area_of_habitat:
     label: area of habitat
