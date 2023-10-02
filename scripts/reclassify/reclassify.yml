@@ -11,17 +11,17 @@ inputs:
     label: stack path in
     description: Path to the input directory where the raster results of the metric analysis are saved
     type: text
-    example: '/scripts/00_reclassify/input/dir_stack'
+    example: '/scripts/reclassify/input/dir_stack'
   table_data:
     label: data table path in
     description: Compiled information about the layers including in the collection.
     type: text/csv
-    example: 'scripts/00_reclassify/input/data_layer.csv'
+    example: 'scripts/reclassify/input/data_layer.csv'
   table_reclassify:
     label: reclassify table
     description: Table with the reclassification values used to classify the collection.
     type: text
-    example: 'scripts/00_reclassify/input/reclass_data.csv'
+    example: 'scripts/reclassify/input/reclass_data.csv'
 outputs:
   compare_data:
     label: compare table reclass data

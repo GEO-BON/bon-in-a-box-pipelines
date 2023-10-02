@@ -25,7 +25,7 @@ inputs:
     example: 3395
   resolution:
     label: resolution
-    description: Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.
+    description: Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses. A value of 100 represents an hectare and a value of 1000 represents a square kilometer.  
     type: int
     example: 1000
   time_period:
