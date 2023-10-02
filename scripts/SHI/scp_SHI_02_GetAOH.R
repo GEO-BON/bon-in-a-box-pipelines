@@ -136,8 +136,8 @@ for(i in 1:length(sp)){
     sf_range_map <<- st_read(sf_range_map_path[i])
     r_range_map <- rast(r_range_map_path[i])
     r_range_map2 <- project(r_range_map, crs(sf_range_map), method="near")
-    r_range_map2 <- mask(crop(r_range_map2, sf_range_map), vect(as(sf_range_map,"Spatial")))
-    sf_range_map <<- as.polygons(r_range_map2)
+    r_range_map2 <- mask(crop(r_range_map2, sf_range_map), sf_range_map)
+    sf_range_map <<- as.polygons(ifel(r_range_map2==1,1,NA))
   }
   
   sf_area_lim2 <- sf_range_map |> st_make_valid() |> st_transform(st_crs(sf_area_lim1))
