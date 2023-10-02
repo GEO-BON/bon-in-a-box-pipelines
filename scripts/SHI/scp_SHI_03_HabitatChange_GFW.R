@@ -174,7 +174,7 @@ for(i in 1:length(sp)){
     tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
     tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
     tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
-    tm_shape(r_aoh)+tm_raster(alpha=0.3,palette = c("gray"),legend.show=FALSE)+
+    tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("gray"),legend.show=FALSE)+
     tm_compass()+tm_scale_bar()+tm_layout(legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
     tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Suitable Habitat")
 
