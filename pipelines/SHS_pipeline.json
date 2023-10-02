@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 409,
-        "y": 198
+        "x": 309,
+        "y": 207
       },
       "data": {
         "descriptionFile": "SHI>scp_SHI_01_GetRangeMap.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 957,
-        "y": 199
+        "x": 887,
+        "y": 253
       },
       "data": {
         "descriptionFile": "SHI>scp_SHI_02_GetAOH.yml"
@@ -26,8 +26,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 1649,
-        "y": 329.5
+        "x": 1525,
+        "y": 42
       },
       "data": {
         "descriptionFile": "SHI>scp_SHI_03_HabitatChange_GFW.yml"
@@ -37,8 +37,8 @@
       "id": "3",
       "type": "userInput",
       "position": {
-        "x": 168,
-        "y": 137.5
+        "x": 12,
+        "y": 145.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +52,8 @@
       "id": "6",
       "type": "userInput",
       "position": {
-        "x": 534,
-        "y": 45
+        "x": 436,
+        "y": 53
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -65,8 +65,8 @@
       "id": "7",
       "type": "userInput",
       "position": {
-        "x": 526,
-        "y": 80
+        "x": 428,
+        "y": 88
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -78,8 +78,8 @@
       "id": "8",
       "type": "userInput",
       "position": {
-        "x": 608,
-        "y": 115
+        "x": 511,
+        "y": 123
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -91,8 +91,8 @@
       "id": "9",
       "type": "constant",
       "position": {
-        "x": 605,
-        "y": 161
+        "x": 506,
+        "y": 169
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -109,8 +109,8 @@
       "id": "10",
       "type": "constant",
       "position": {
-        "x": 632,
-        "y": 288
+        "x": 534,
+        "y": 341
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -126,8 +126,8 @@
       "id": "11",
       "type": "constant",
       "position": {
-        "x": 526,
-        "y": 325
+        "x": 440,
+        "y": 379
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -139,8 +139,8 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 2229.0000000000005,
-        "y": 364.00000000000006
+        "x": 2075,
+        "y": 70.33333333333331
       },
       "data": {
         "label": "Output"
@@ -150,11 +150,24 @@
       "id": "22",
       "type": "output",
       "position": {
-        "x": 1649,
-        "y": 550.5
+        "x": 1521,
+        "y": 274
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "23",
+      "type": "constant",
+      "position": {
+        "x": 258,
+        "y": 296
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff[]",
+        "value": []
       }
     }
   ],
@@ -298,9 +311,27 @@
       "target": "20",
       "targetHandle": null,
       "id": "reactflow__edge-2df_shs_tidy-20"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "r_range_map",
+      "id": "reactflow__edge-23-1r_range_map"
     }
   ],
   "inputs": {
+    "SHI>scp_SHI_01_GetRangeMap.yml@0|expert_source": {
+      "label": "source of expert range map",
+      "description": "Source of the expert range map for the species.",
+      "type": "options",
+      "example": "IUCN",
+      "options": [
+        "MOL",
+        "IUCN",
+        "QC"
+      ]
+    },
     "SHI>scp_SHI_02_GetAOH.yml@1|study_area": {
       "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)",
       "label": "study area",
@@ -317,51 +348,6 @@
       "label": "buffer for study area",
       "type": "int",
       "example": 0
-    },
-    "SHI>scp_SHI_02_GetAOH.yml@1|r_range_map": {
-      "description": "Raster with expected area for the species.",
-      "label": "range map (raster)",
-      "type": "image/tiff;application=geotiff[]",
-      "example": [
-        "/scripts/SHI/Saguinus_oedipus_con.tif"
-      ]
-    },
-    "pipeline@3": {
-      "label": "species",
-      "description": "Scientific name of the species.",
-      "type": "text[]",
-      "example": [
-        "Saguinus oedipus"
-      ]
-    },
-    "SHI>scp_SHI_01_GetRangeMap.yml@0|expert_source": {
-      "label": "source of expert range map",
-      "description": "Source of the expert range map for the species.",
-      "type": "options",
-      "example": "IUCN",
-      "options": [
-        "MOL",
-        "IUCN",
-        "QC"
-      ]
-    },
-    "pipeline@6": {
-      "label": "output spatial resolution",
-      "description": "Spatial resolution (in meters) for the output of the analysis.",
-      "type": "int",
-      "example": 1000
-    },
-    "pipeline@7": {
-      "label": "spatial reference system",
-      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
-      "type": "text",
-      "example": "EPSG:3116"
-    },
-    "pipeline@8": {
-      "label": "country code",
-      "description": "Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.",
-      "type": "text",
-      "example": "COL"
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|min_forest": {
       "label": "min forest",
@@ -396,17 +382,43 @@
       "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
       "type": "int",
       "example": 10
+    },
+    "pipeline@3": {
+      "label": "species",
+      "description": "Scientific name of the species.",
+      "type": "text[]",
+      "example": [
+        "Saguinus oedipus"
+      ]
+    },
+    "pipeline@6": {
+      "label": "output spatial resolution",
+      "description": "Spatial resolution (in meters) for the output of the analysis.",
+      "type": "int",
+      "example": 1000
+    },
+    "pipeline@7": {
+      "label": "spatial reference system",
+      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
+      "type": "text",
+      "example": "EPSG:3116"
+    },
+    "pipeline@8": {
+      "label": "country code",
+      "description": "Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.",
+      "type": "text",
+      "example": "COL"
     }
   },
   "outputs": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|df_shs": {
+      "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
+      "label": "SHS table",
+      "type": "text/tab-separated-values[]"
+    },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|img_shs_map": {
       "description": "Figure showing a map with changes in the habitat for the time range.",
       "label": "SHS map",
-      "type": "image/png[]"
-    },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|img_shs_timeseries": {
-      "description": "Figure showing a time series of SHS values for each time step.",
-      "label": "SHS time series",
       "type": "image/png[]"
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|r_habitat_by_tstep": {
@@ -414,10 +426,10 @@
       "label": "Habitat by time step",
       "type": "image/tiff;application=geotiff[]"
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|df_shs": {
-      "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
-      "label": "SHS table",
-      "type": "text/tab-separated-values[]"
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|img_shs_timeseries": {
+      "description": "Figure showing a time series of SHS values for each time step.",
+      "label": "SHS time series",
+      "type": "image/png[]"
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|df_shs_tidy": {
       "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
