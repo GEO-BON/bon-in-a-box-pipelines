@@ -73,6 +73,7 @@ const InputForm = ({ inputs, inputFileContent, setInputFileContent }) => {
                   options={options}
                   value={inputFileContent && inputFileContent[inputId]}
                   onValueUpdated={(value) => updateInputFile(inputId, value)}
+                  cols="50"
                 />
               </td>
               <td className="descriptionCell">

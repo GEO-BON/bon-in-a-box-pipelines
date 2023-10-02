@@ -6,7 +6,7 @@ export default function AutoResizeTextArea({defaultValue, keepWidth, className, 
 
   useEffect(() => {
     resize(textAreaRef.current)
-  }, [defaultValue])
+  }, [defaultValue, resize])
 
   /**
    * Automatic horizontal and vertical resizing of textarea
@@ -22,6 +22,6 @@ export default function AutoResizeTextArea({defaultValue, keepWidth, className, 
     }
   }
 
-  return <textarea className={className + ' autoResize'} ref={textAreaRef} defaultValue={defaultValue} {...props} 
-    onChange={(e) => resize(e.target)} />;  
+  return <textarea className={(className ? className + ' ' : '') + 'autoResize'} ref={textAreaRef} defaultValue={defaultValue} {...props} 
+    onChange={(e) => resize(e.target)} />;
 }
