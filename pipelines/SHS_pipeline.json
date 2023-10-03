@@ -531,7 +531,7 @@
     }
   },
   "metadata": {
-    "name": "Species Habitat Score# short name, such as My Script",
+    "name": "Species Habitat Score",
     "description": "This pipeline measures the Species Habitat Score (SHS), for the species used as inputs. It uses the range maps, the elevation ranges and the habitat categories available from The International Union for Conservation of Nature (IUCN). Changes in the habitat are measured using the Global Forest Watch layers and soon other land cover layers will be added. For the specific case of Quebec it has range maps available from the Ministère de l’Environnement. The outputs are a table with the changes in the area of the habitat by year requested and a graph with a timeseries of these values. Rasters of the habitat available for each year can also be requested.",
     "author": [
       {
