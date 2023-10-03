@@ -19,14 +19,13 @@ function get_features_and_labels(presences, absences, climate_layers)
     return X, y, coord
 end
 
-function layers_to_matrix!(climate_layers, mat)
-    for (i, idx) in enumerate(eachindex(climate_layers[begin].grid))
+function layers_to_matrix!(climate_layers, mat, land_idx)
+    for (i, idx) in enumerate(land_idx)
         for l in eachindex(climate_layers)
             mat[l, i] = climate_layers[l].grid[idx]
         end
     end
 end
-
 
 function compute_fit_stats_and_cutoff(distribution, coords, y)
     cutoff = LinRange(extrema(distribution)..., 500)
@@ -74,20 +73,24 @@ function test_train_split(X, y, proportion=0.7)
 end
 
 function predict_single_sdm(model, layers)
-    mat = zeros(Float32, length(layers), prod(size(layers[begin])))
-    layers_to_matrix!(layers, mat)
 
-    I = eachindex(layers[begin].grid)
+    land_idx = findall(!isnothing, layers[begin].grid)
+
+    mat = zeros(Float32, length(layers), length(land_idx))
+
+    # Handle nothings here
+    layers_to_matrix!(layers, mat, land_idx)
+
     pred = EvoTrees.predict(model, mat')
 
     distribution = SimpleSDMPredictor(
         zeros(Float32, size(layers[begin])); 
         SpeciesDistributionToolkit.boundingbox(layers[begin])...
     )
-    distribution.grid[I] = pred[:, 1]
+    distribution.grid[land_idx] = pred[:, 1]
 
     uncertainty = SimpleSDMPredictor(zeros(Float32, size(layers[begin])); SpeciesDistributionToolkit.boundingbox(layers[begin])...)
-    uncertainty.grid[I] = pred[:, 2]
+    uncertainty.grid[land_idx] = pred[:, 2]
 
     rescale(distribution, (0, 1)), rescale(uncertainty, (0, 1))
 end 
