@@ -71,6 +71,13 @@ outputs:
     description: Some picture/graph/etc that shows bla bla...
     type: image/jpg
     example: /path/to/some/example.jpg
+  userdata_available:
+    label: Available user data
+    description: This is just printing out the content of userdata folder, to show that you can use data uploaded there.
+    type: text[]
+    example:
+      - file1.txt
+      - file2.tiff
 references:
   - text: John Doe, The ins and outs of copy-pasting, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
     doi: 10.1093/biosci/biab041
