@@ -366,7 +366,6 @@
       "data": {
         "type": "text[]",
         "value": [
-          "L",
           "LQ",
           "LQHP"
         ]
@@ -384,8 +383,7 @@
         "type": "float[]",
         "value": [
           0.5,
-          1,
-          2
+          1
         ]
       }
     },
@@ -852,7 +850,7 @@
         "checkerboard1",
         "checkerboard2"
       ],
-      "example": "block"
+      "example": "randomkfold"
     },
     "data>loadFromStac.yml@119|stac_url": {
       "description": "URL of the Stac catalog",
@@ -865,15 +863,19 @@
       "label": "collections_items",
       "type": "text[]",
       "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
+         "chelsa-clim|bio1",
+         "chelsa-clim|bio7",
+         "chelsa-clim|bio12",
+         "earthenv_topography|elevation_median",
+         "earthenv_landcover|class_3",
+         "earthenv_landcover|class_12"
       ]
     },
     "data>loadFromStac.yml@119|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
       "type": "int",
-      "example": 1000
+      "example": 5000
     },
     "data>loadFromStac.yml@119|mask": {
       "description": "Shapefile, used to mask the output rasters",
