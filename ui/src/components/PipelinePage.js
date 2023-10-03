@@ -324,10 +324,10 @@ function PipelineResults({
         value={createContext(activeRenderer, setActiveRenderer)}
       >
         <h2>Results</h2>
-        {viewerHost && runHash && (
+        {isPipeline && viewerHost && runHash && (
           <button>
             <a
-              href={`${viewerHost}/viewer/${pipeline}>${runHash}`}
+              href={`${viewerHost}/${pipeline}>${runHash}`}
               target="_blank"
               style={{ textDecoration: "none", color: "#333" }}
             >
