@@ -296,7 +296,7 @@ function PipelineResults({
   const [activeRenderer, setActiveRenderer] = useState({});
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
-  let viewerHost = "";
+  let viewerHost = null;
   if (process.env.REACT_APP_VIEWER_HOST) {
     viewerHost = process.env.REACT_APP_VIEWER_HOST;
   }
@@ -324,7 +324,7 @@ function PipelineResults({
         value={createContext(activeRenderer, setActiveRenderer)}
       >
         <h2>Results</h2>
-        {runHash && (
+        {viewerHost && runHash && (
           <button>
             <a
               href={`${viewerHost}/viewer/${pipeline}>${runHash}`}
