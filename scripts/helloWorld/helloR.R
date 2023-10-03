@@ -57,6 +57,7 @@ output <- list(#"error" = "Some error", # Use error key to stop the rest of the 
                 "some_csv_data" = some_csv_data,
                 "some_tsv_data" = some_tsv_data,
                 "some_picture" = example_jpg,
+                "userdata_available" = list.files(file.path(Sys.getenv("USERDATA_LOCATION"))),
                 "undocumented_output" = "Some debug output") 
                 
 jsonData <- toJSON(output, indent=2)

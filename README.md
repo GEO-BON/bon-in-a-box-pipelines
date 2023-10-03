@@ -7,7 +7,7 @@ A GEO BON project, born from a collaboration between Microsoft, McGill, Humbolt 
 ## Contributing
 If you wish to contribute your indicator or EBV code, please let us know at web@geobon.org.
 
-The recommended method is to setup an instance of BON in a Box somewhere you can easily play with the script files, using the local or remote setup below. You can create a fork to save your work. Make sure that the code is general, and will work when used with various parameters, such as in different regions around the globe. Once the integration of the new scripts or pipelines are complete, open a pull request to this repository. The pull request will be peer-reviewed before acceptation.
+The recommended method is to setup an instance of BON in a Box somewhere you can easily play with the script files, using the local or remote setup below. You can create a branch or fork to save your work. Make sure that the code is general, and will work when used with various parameters, such as in different regions around the globe. Once the integration of the new scripts or pipelines are complete, open a pull request to this repository. The pull request will be peer-reviewed before acceptation.
 
 ## Running the servers locally
 Prerequisites : 
@@ -72,6 +72,13 @@ When modifying pipelines in the /pipelines folder, servers do not need to be res
 2. Check that the servers run with a browser.
 3. Create a .env file on the server, as above.
 4. Take dockers down and up to load the .env file (this allows accessing GBIF, etc.)
+
+## Running a script or pipeline
+You have an instance of BON in a Box running, either [locally](#running-the-servers-locally) or [remotely](#running-the-servers-remotely), and you want to run your first script or pipeline.
+
+There is one page to run scripts, and one to run pipelines. Select the script or pipelines from the dropdown and fill the form.
+
+The form might ask you for a file. In order to provide a file that you own locally, upload or copy it to the `userdata` folder. You can then refer to it with a url as such: `userdata/myFile.shp`, or `userdata/myFolder/myFile.shp` if there are subfolders.
 
 ## Scripts
 The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
