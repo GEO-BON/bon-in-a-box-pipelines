@@ -176,7 +176,7 @@ for(i in 1:length(sp)){
     tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
     tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("gray"),legend.show=FALSE)+
     tm_compass()+tm_scale_bar()+tm_layout(legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
-    tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Suitable Habitat")
+    tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Area of Habitat")
 
   v_path_SHS_map[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_change.png"))
   tmap_save(img_map_habitat_changes, v_path_SHS_map[i])
