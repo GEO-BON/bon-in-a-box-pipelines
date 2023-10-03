@@ -15,7 +15,7 @@ function main()
     
     predictors = SimpleSDMPredictor.(predictor_paths)
 
-    occurrence = CSV.read(occurrence_path, DataFrame)
+    occurrence = CSV.read(occurrence_path, DataFrame, delim="\t")
     occurrence_layer = create_occurrence_layer(similar(predictors[1]), occurrence)
 
     buffer = pseudoabsencemask(WithinRadius, occurrence_layer; distance = buffer_distance)
