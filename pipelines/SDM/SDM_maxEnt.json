@@ -850,7 +850,7 @@
         "checkerboard1",
         "checkerboard2"
       ],
-      "example": "randomkfold"
+      "example": "block"
     },
     "data>loadFromStac.yml@119|stac_url": {
       "description": "URL of the Stac catalog",
