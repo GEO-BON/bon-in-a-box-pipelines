@@ -577,5 +577,21 @@
       "label": "Steward's SHI time series",
       "type": "image/png"
     }
+  },
+  "metadata": {
+    "name": "Species Habitat Index",
+    "description": "This pipeline takes the outputs from the Species Habitat Score (SHS) pipeline and measures the Species Habitat Index for the species used as inputs, following the methodology proposed for Jetz et al. 2022 (https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf)",
+    "author": [
+      {
+        "name": "Maria Isabel Arce-Plata",
+        "identifier": "https://orcid.org/0000-0003-4024-9268"
+      },
+      {
+        "name": "Guillaume Laroc",
+        "identifier": "https://orcid.org/0000-0002-5967-9156"
+      }
+    ],
+    "license": "CC BY",
+    "external_link": "https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI"
   }
 }
