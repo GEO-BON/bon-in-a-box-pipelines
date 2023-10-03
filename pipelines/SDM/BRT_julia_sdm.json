@@ -304,6 +304,28 @@
             "chelsa-clim|bio19"
           ]
         }
+      },
+      {
+        "id": "33",
+        "type": "output",
+        "position": {
+          "x": 2379.6499938964844,
+          "y": 122
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "34",
+        "type": "output",
+        "position": {
+          "x": 1371.6499938964844,
+          "y": 725
+        },
+        "data": {
+          "label": "Output"
+        }
       }
     ],
     "edges": [
@@ -509,6 +531,20 @@
         "target": "0",
         "targetHandle": "collections_items",
         "id": "reactflow__edge-32-0collections_items"
+      },
+      {
+        "source": "21",
+        "sourceHandle": "clean_presence",
+        "target": "33",
+        "targetHandle": null,
+        "id": "reactflow__edge-21clean_presence-33"
+      },
+      {
+        "source": "18",
+        "sourceHandle": "rasters",
+        "target": "34",
+        "targetHandle": null,
+        "id": "reactflow__edge-18rasters-34"
       }
     ],
     "inputs": {
@@ -573,6 +609,16 @@
         "description": "JSON of model fit stats and threshold",
         "label": "fit_stats",
         "type": "text/json"
+      },
+      "filtering>cleanCoordinates.yml@21|clean_presence": {
+        "description": "Dataframe, table with clean presence points.",
+        "label": "clean presences",
+        "type": "text/tab-separated-values"
+      },
+      "data>loadFromStac.yml@18|rasters": {
+        "description": "array of output raster paths",
+        "label": "rasters",
+        "type": "image/tiff;application=geotiff[]"
       }
     }
   }
