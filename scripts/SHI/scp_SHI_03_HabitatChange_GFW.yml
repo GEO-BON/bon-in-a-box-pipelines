@@ -4,7 +4,9 @@ description:
   This script loads the area of habitat of the species and extracts the land cover layers to measure changes on the habitat of the species.
 author: 
   - name: Maria Isabel Arce-Plata
-    identifier: https://orcid.org/0000-0003-4024-9268 
+    identifier: https://orcid.org/0000-0003-4024-9268
+  - name: "Guillaume Laroc"
+    identifier: "https://orcid.org/0000-0002-5967-9156"
 license: CC BY 
 external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI 
 inputs:
