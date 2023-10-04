@@ -3,8 +3,7 @@
 version: "3.7"
 
 services:
-
-## UI server to use when you just want to use the UI
+  ## UI server to use when you just want to use the UI
   ui-prod:
     container_name: biab-ui-prod
     image: geobon/bon-in-a-box:ui
@@ -12,14 +11,16 @@ services:
     #   context: ./ui
     #   dockerfile: Dockerfile.prod
     expose:
-      - '80'
+      - "80"
     depends_on:
       - script-server
       - tiler
+    environment:
+      - REACT_APP_VIEWER_HOST=${REACT_APP_VIEWER_HOST}
 
   http-gateway:
     volumes:
-    - ./http-proxy/conf.d-prod:/etc/nginx/conf.d:ro
+      - ./http-proxy/conf.d-prod:/etc/nginx/conf.d:ro
     depends_on:
       - ui-prod
 
