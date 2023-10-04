@@ -2,7 +2,7 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson", "units") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
@@ -23,7 +23,8 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 Sys.getenv("SCRIPT_LOCATION")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
-# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
+# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(., paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
+
 
 
 
@@ -33,9 +34,8 @@ Sys.getenv("SCRIPT_LOCATION")
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) if( grepl("/output/", x) ){
-  sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x} ) # Ajuste input 1
-
+input<- lapply(input, function(x) if(!is.null(x)){ if( grepl("/", x)  ){ 
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x}} ) # adjust input 1
 
 
 
@@ -47,6 +47,7 @@ input<- lapply(input, function(x) if( grepl("/output/", x) ){
 output<- tryCatch({
   
   
+  
   units::units_options(set_units_mode = "standard")
   
   group<- input$column_spatial_unit
@@ -54,13 +55,12 @@ output<- tryCatch({
   spatial_unit_data<- read.csv(input$data_spatial_unit) %>%
     dplyr::mutate(group_n= paste0(!!!dplyr::syms(group)) %>% {gsub(" ", "_", .)}) %>% 
     dplyr::select(c(input$column_spatial_unit, input$column_date, input$column_area, "group_n")) %>%
-    dplyr::filter(!duplicated(group_n)) %>% dplyr::mutate(spatial_unit= "yes_spatial_unit_data")
-  
-  spatial_unit_data$date<- as.Date(spatial_unit_data$created_date, format = "%Y-%m-%d")
-  
-  
-  start_date<- {if(input$time_start == "NA"){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
-  end_date<- {if(input$time_end == "NA"){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
+    dplyr::filter(!duplicated(group_n)) %>% dplyr::mutate(spatial_unit= "yes_spatial_unit", )
+
+  input$area_study_area<- input$area_study_area %>% {if( is.null(.)  ){sum( spatial_unit_data[,input$column_area] )*2 } else {.}}
+
+  start_date<- {if( is.null(input$time_start) ){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
+  end_date<- {if( is.null(input$time_end) ){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
   
   
   period_time<- paste(timechange:::parse_rounding_unit(input$time_interval), collapse = " "  )
@@ -80,15 +80,18 @@ output<- tryCatch({
     data_period<- lapply(new_periods, function(j) dplyr::mutate(spatial_unit_data_v2[i,], period= j)) %>% plyr::rbind.fill()
   }) %>% plyr::rbind.fill()
   
-  spatial_unit_no_area<- dplyr::select(spatial_unit_area, c("group_n", "period", "area_spatial")) %>%
+  spatial_unit_no_area<- spatial_unit_area %>%
     dplyr::distinct() %>% dplyr::group_by(period) %>%
-    dplyr::summarize( area_spatial =  input$area_study_area - sum(area_spatial)) %>% 
+    dplyr::summarise( !!input$column_area :=  input$area_study_area - sum( .data[[ input$column_area ]] )) %>% 
     dplyr::mutate(spatial_unit= "no_spatial_unit")
   
   
   spatial_units_periods<- plyr::rbind.fill(list(spatial_unit_area, spatial_unit_no_area))
   spatial_units_periods <-  spatial_units_periods[ order( spatial_units_periods[, "date"],  spatial_units_periods[, "group_n"]), ]
   
+  
+  
+  spatial_units_periods<- read.csv("C:/Users/LENOVO/Documents/pa_ejemplo_victor_v2.csv")
   
   
   #Define the decades reported for the protected areas creation to start the analysis
@@ -98,8 +101,9 @@ output<- tryCatch({
   result_dPC = as.data.frame(matrix(NA,ncol = 4, nrow = 0))
   colnames(result_dPC) = c("Period", "group_n","PC_out","PC")
   
-  dPC = as.data.frame(matrix(NA,ncol = 6, nrow = 0))
-  colnames(dPC) = c("Period", "group_n", "name", "PC_out","PC" , "dPC")
+
+  # 
+  
   
   
   
@@ -125,6 +129,8 @@ output<- tryCatch({
     }
     
     
+    
+    
     #Calculate the PC value
     PC = addition/(area_consult*area_consult)
     #result_pc= data.frame(Period = i,PC=PC)
@@ -148,29 +154,39 @@ output<- tryCatch({
         add = add+sum(prod)
       }
       
-      
       PC_out_id = add/(area_consult*area_consult)
       result_PC_out = data.frame(Period = i,group_n = ids[k], PC_out = PC_out_id, PC = PC)
       result_dPC = rbind.data.frame(result_dPC,result_PC_out)
     }
     
+    
     result_dPC2<- result_dPC
-    result_dPC2$dPC = (((result_dPC$PC- result_dPC$PC_out))/result_dPC$PC)*100
-    
-    #Calculate the dPC index by period of time
-    for (i in decades) {
-      filter = result_dPC[result_dPC$Period==decades[i],]
-      order = filter[with(filter, order(-filter$dPC)), ]
-      if(nrow(order)>=5){
-        dpc_decade_df = order[5,]
-      } else{dpc_decade_df = order}
+    result_dPC2$dPC<- (((result_dPC$PC- result_dPC$PC_out))/result_dPC$PC) %>% sapply(function(x) {if(is.na(x)){0}else{x*100}} )
       
-      dPC = rbind.data.frame(dPC,dpc_decade_df)
-    }
-    
-    ########################PEDAZO QUE FALTA################################## 
-     
+
   }
+  
+  
+  
+  
+  #Calculate the dPC index by period of time
+  dPC = as.data.frame(matrix(NA,ncol = 3, nrow = 0))
+  colnames(dPC) = c("Period", "id_pa","dPC")
+  
+  #Calculate the dPC index by period of time
+  for (i in as.character(decades)) {
+    filter = result_dPC2[result_dPC2$Period== i,]
+    order = filter[with(filter, order(-filter$dPC)), ]
+    if(nrow(order)>=5){
+      dpc_decade_df = order[5,]
+    } else{dpc_decade_df = order}
+    
+    dPC = rbind.data.frame(dPC,dpc_decade_df)
+  }
+  
+  
+  
+  
   
   
   # Define and export the output values

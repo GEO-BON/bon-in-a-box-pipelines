@@ -19,7 +19,7 @@ inputs:
     label: Area column name
     description: "String refering to the name of the column in the data spatial units file that contains the area of each spatial unit or nodes that intersects the area of interest. If there are several areas for the same id, the areas will be added. Values must be numeric otherwise they will be ignored."
     type: text
-    example: "area_spatial"
+    example: "area_ha"
   column_date:
     label: Date column name 
     description: "String refering to the name of the column that contains the date. The date is a mandatory field if you want an temporal analysis by time periods. The date can be entered as 'Year-Month-Day', just year, or just year-month; if given in a different format the row is ignored. If (NULL) is not specified, a single period is assumed for the entire data set and the following arguments will be ignored."
@@ -34,12 +34,10 @@ inputs:
     label: Start of time interval
     description: "Refering to the starting date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
-    example: NA
   time_end:
     label: End of time interval
     description: "Refering to the ending date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
     type: text
-    example: NA
 outputs:
   dpc_result:
     label: Final table with dpC result
