@@ -20,11 +20,12 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
 
 # Option 1: Setting for production pipeline purposes. This is designed for use in a production environment or workflow.
-# Sys.getenv("SCRIPT_LOCATION")
+Sys.getenv("SCRIPT_LOCATION")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
- outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(., paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
-
+if(!exists("outputFolder")){
+outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(., paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
+check_input<- T} else {check_input<- F}
 
 
 
@@ -34,8 +35,7 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) if(!is.null(x)){ if( grepl("/", x)  ){ 
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x}} ) # adjust input 1
+if(check_input) {input<- lapply(input, function(x) if(!is.null(x) & length(x)<2){ if( grepl("/", x)  ){ sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  }else{x}} )} # adjust input 1
 
 
 
@@ -200,7 +200,7 @@ output<- tryCatch({
   write.csv(dPC_correct, dpC_result_path, row.names = F ) 
   
   # Define final output list
-  output<- list(dpC_result= dpC_result_path)
+  output<- list(dpc_result= dpC_result_path)
   
   
 }, error = function(e) { list(error= conditionMessage(e)) })
