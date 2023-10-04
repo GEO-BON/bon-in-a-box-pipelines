@@ -864,12 +864,12 @@
       "label": "collections_items",
       "type": "text[]",
       "example": [
-         "chelsa-clim|bio1",
-         "chelsa-clim|bio7",
-         "chelsa-clim|bio12",
-         "earthenv_topography|elevation_median",
-         "earthenv_landcover|class_3",
-         "earthenv_landcover|class_12"
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio7",
+        "chelsa-clim|bio12",
+        "earthenv_topography|elevation_median",
+        "earthenv_landcover|class_3",
+        "earthenv_landcover|class_12"
       ]
     },
     "data>loadFromStac.yml@119|spatial_res": {
@@ -899,5 +899,17 @@
         1
       ]
     }
+  },
+  "metadata": {
+    "name": "Maxent SDM pipeline",
+    "description": "A pipeline to produce species distribution models using Maxent",
+    "author": [
+      {
+        "name": "Sarah Valentin",
+        "identifier": "https://orcid.org/0000-0002-9028-681X"
+      }
+    ],
+    "license": null,
+    "external_link": null
   }
 }
