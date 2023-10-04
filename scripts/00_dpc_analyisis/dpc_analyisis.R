@@ -58,7 +58,8 @@ output<- tryCatch({
     dplyr::filter(!duplicated(group_n)) %>% dplyr::mutate(spatial_unit= "yes_spatial_unit", )
 
   input$area_study_area<- input$area_study_area %>% {if( is.null(.)  ){sum( spatial_unit_data[,input$column_area] )*2 } else {.}}
-
+  spatial_unit_data$date<- as.Date(spatial_unit_data$created_date, format = "%Y-%m-%d")
+  
   start_date<- {if( is.null(input$time_start) ){min(spatial_unit_data$date)}else{input$time_start}} %>% lubridate::floor_date(unit = input$time_interval)
   end_date<- {if( is.null(input$time_end) ){max(spatial_unit_data$date)}else{input$time_end}}  %>% lubridate::ceiling_date(unit = input$time_interval)
   
@@ -90,9 +91,7 @@ output<- tryCatch({
   spatial_units_periods <-  spatial_units_periods[ order( spatial_units_periods[, "date"],  spatial_units_periods[, "group_n"]), ]
   
   
-  
-  spatial_units_periods<- read.csv("C:/Users/LENOVO/Documents/pa_ejemplo_victor_v2.csv")
-  
+
   
   #Define the decades reported for the protected areas creation to start the analysis
   decades = unique(spatial_units_periods$period) 
