@@ -43,9 +43,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": [
-          "Saguinus oedipus"
-        ]
+        "value": ["Saguinus oedipus"]
       }
     },
     {
@@ -85,11 +83,7 @@
       "data": {
         "type": "options",
         "value": "Country",
-        "options": [
-          "Country",
-          "Region in Country",
-          "User defined"
-        ]
+        "options": ["Country", "Region in Country", "User defined"]
       }
     },
     {
@@ -129,11 +123,7 @@
       "data": {
         "type": "options",
         "value": "Polygon",
-        "options": [
-          "Polygon",
-          "Raster",
-          "Both"
-        ]
+        "options": ["Polygon", "Raster", "Both"]
       }
     },
     {
@@ -147,10 +137,7 @@
       "data": {
         "type": "options",
         "value": "Yes",
-        "options": [
-          "Yes",
-          "No"
-        ]
+        "options": ["Yes", "No"]
       }
     },
     {
@@ -262,6 +249,41 @@
       "position": {
         "x": 2813,
         "y": 450.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 1240.2248673169506,
+        "y": 831.113448763316
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "userInput",
+      "position": {
+        "x": 629.2411885087829,
+        "y": 767.9991392623689
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "COL"
+      }
+    },
+    {
+      "id": "52",
+      "type": "output",
+      "position": {
+        "x": 1854.0468157987307,
+        "y": 790.2891861564518
       },
       "data": {
         "label": "Output"
@@ -450,6 +472,27 @@
       "target": "49",
       "targetHandle": null,
       "id": "reactflow__edge-46img_w_shi_timeseries-49"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-30-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "28",
+      "targetHandle": "country_code",
+      "id": "reactflow__edge-51-28country_code"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": null,
+      "id": "reactflow__edge-51-52"
     }
   ],
   "inputs": {
@@ -457,18 +500,8 @@
       "description": "Source of the expert range map for the species.",
       "label": "source of expert range map",
       "type": "options",
-      "options": [
-        "MOL",
-        "IUCN",
-        "QC"
-      ],
+      "options": ["MOL", "IUCN", "QC"],
       "example": "IUCN"
-    },
-    "SHI>scp_SHI_02_GetAOH.yml@28|country_code": {
-      "description": "Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.",
-      "label": "country code",
-      "type": "text",
-      "example": "COL"
     },
     "SHI>scp_SHI_02_GetAOH.yml@28|region": {
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
@@ -479,17 +512,13 @@
       "description": "Minimum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
       "label": "min forest",
       "type": "int[]",
-      "example": [
-        50
-      ]
+      "example": [50]
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|max_forest": {
       "description": "Maximum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
       "label": "max forest",
       "type": "int[]",
-      "example": [
-        100
-      ]
+      "example": [100]
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|t_0": {
       "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
@@ -513,9 +542,7 @@
       "label": "species",
       "description": "Scientific name of the species.",
       "type": "text[]",
-      "example": [
-        "Saguinus oedipus"
-      ]
+      "example": ["Saguinus oedipus"]
     },
     "pipeline@31": {
       "label": "output spatial resolution",
@@ -534,48 +561,67 @@
       "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or user defined polygon with the borders of the study area.",
       "type": "options",
       "example": "Country",
-      "options": [
-        "Country",
-        "Region in Country",
-        "User defined"
-      ]
+      "options": ["Country", "Region in Country", "User defined"]
+    },
+    "pipeline@51": {
+      "label": "country code",
+      "description": "Three letter code for the country where the SHI is calculated.",
+      "type": "text",
+      "example": "COL"
     }
   },
   "outputs": {
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|img_shs_map": {
-      "description": "Figure showing a map with changes in the habitat for the time range.",
-      "label": "SHS map",
-      "type": "image/png[]"
+    "pipeline@30": {
+      "label": "Species",
+      "description": "Species for which the SHI is generated",
+      "weight": 1
+    },
+    "pipeline@51": {
+      "label": "Country code",
+      "description": "Country code for which the SHI is calculated",
+      "weight": 2
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|r_habitat_by_tstep": {
       "description": "Raster of habitat by time step.",
       "label": "Habitat by time step",
-      "type": "image/tiff;application=geotiff[]"
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
+    },
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|img_shs_map": {
+      "description": "Figure showing a map with changes in the habitat for the time range.",
+      "label": "SHS map",
+      "type": "image/png[]",
+      "weight": 4
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|img_shs_timeseries": {
       "description": "Figure showing a time series of SHS values for each time step.",
       "label": "SHS time series",
-      "type": "image/png[]"
+      "type": "image/png[]",
+      "weight": 5
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|df_shs": {
       "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
       "label": "SHS table",
-      "type": "text/tab-separated-values[]"
+      "type": "text/tab-separated-values[]",
+      "weight": 6
     },
     "SHI>scp_SHI_04_CalcSHI.yml@46|df_shi": {
       "description": "Table with SHI and Steward's SHI values for the complete area of study.",
       "label": "SHI table",
-      "type": "text/tab-separated-values"
+      "type": "text/tab-separated-values",
+      "weight": 7
     },
     "SHI>scp_SHI_04_CalcSHI.yml@46|img_shi_timeseries": {
       "description": "Figure showing a time series of SHI values for each time step.",
       "label": "SHI time series",
-      "type": "image/png"
+      "type": "image/png",
+      "weight": 8
     },
     "SHI>scp_SHI_04_CalcSHI.yml@46|img_w_shi_timeseries": {
       "description": "Figure showing a time series of Steward's SHI values for each time step.",
       "label": "Steward's SHI time series",
-      "type": "image/png"
+      "type": "image/png",
+      "weight": 9
     }
   },
   "metadata": {
@@ -587,7 +633,7 @@
         "identifier": "https://orcid.org/0000-0003-4024-9268"
       },
       {
-        "name": "Guillaume Laroc",
+        "name": "Guillaume Larocque",
         "identifier": "https://orcid.org/0000-0002-5967-9156"
       }
     ],
