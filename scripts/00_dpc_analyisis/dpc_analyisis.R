@@ -193,7 +193,7 @@ output<- tryCatch({
   
   dPC_template<- dplyr::select(spatial_unit_data,c("group_n", group)) %>% dplyr::distinct()
   dPC_correct<- list(dPC, dPC_template) %>% plyr::join_all() %>% dplyr::select(-"group_n") %>% 
-    dplyr::relocate(group, .after = 1)
+    dplyr::relocate(group, .after = 1) %>% dplyr::relocate(PC, .before= PC_out)
   
   
   # Define protcom result output
