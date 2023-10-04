@@ -761,7 +761,8 @@
         "random",
         "inclusion_buffer",
         "weighted_raster",
-        "unweighted_raster"
+        "unweighted_raster",
+        "thickening"
       ],
       "example": "random"
     },
