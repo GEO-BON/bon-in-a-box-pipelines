@@ -9,12 +9,14 @@ services:
     volumes:
       - ./scripts:/scripts:ro
       - ./pipelines:/pipelines:ro
+      - ./userdata:/userdata:ro
       - ./output:/output:rw
       - /var/run/docker.sock:/var/run/docker.sock
     expose:
       - "8080"
     environment:
       - SCRIPT_LOCATION=/scripts
+      - USERDATA_LOCATION=/userdata
       - PIPELINES_LOCATION=/pipelines
       - OUTPUT_LOCATION=/output
       - HOST_PATH=${PWD}
@@ -37,9 +39,11 @@ services:
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
       - ./scripts:/scripts:ro
+      - ./userdata:/userdata:ro
       - ./output:/output:rw
     environment:
       - SCRIPT_LOCATION=/scripts
+      - USERDATA_LOCATION=/userdata
       - OUTPUT_LOCATION=/output
       - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
       - GBIF_USER=${GBIF_USER}
@@ -57,9 +61,11 @@ services:
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
       - ./scripts:/scripts:ro
+      - ./userdata:/userdata:ro
       - ./output:/output:rw
     environment:
       - SCRIPT_LOCATION=/scripts
+      - USERDATA_LOCATION=/userdata
       - OUTPUT_LOCATION=/output
 
   http-gateway:
@@ -78,6 +84,7 @@ services:
     image: ghcr.io/developmentseed/titiler:latest
     volumes:
       - ./output:/output:ro
+      - ./userdata:/userdata:ro
     environment:
       - PORT=8000
       - WORKERS_PER_CORE=1
