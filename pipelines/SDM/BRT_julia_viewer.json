@@ -660,45 +660,53 @@
     }
   },
   "outputs": {
-    "SDM>julia_sdms>pcaLayers.yml@13|predictors": {
-      "description": "Environmental layers used as predictors in model fitting",
-      "label": "Environmental predictors",
-      "type": "image/tiff;application=geotiff[]"
-    },
-    "SDM>julia_sdms>fitBRT.yml@24|sdm": {
-      "description": "Map of predicted occurrence probability for selected species using Booster Regression Trees",
-      "label": "Predictions",
-      "type": "image/tiff;application=geotiff"
-    },
-    "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty": {
-      "description": "Map of relative uncertainty of predictions",
-      "label": "Spatial uncertainty",
-      "type": "image/tiff;application=geotiff"
-    },
-    "SDM>julia_sdms>fitBRT.yml@24|fit_stats": {
-      "description": "Model fit statistics and threshold",
-      "label": "Fit statistics",
-      "type": "text/json"
+    "pipeline@30": {
+      "label": "Species name",
+      "description": "Species for which the distribution model is generated",
+      "weight": 1
     },
     "filtering>cleanCoordinates.yml@21|clean_presence": {
       "description": "Dataframe, table with clean presence points from GBIF for selected species",
       "label": "Presences",
-      "type": "text/tab-separated-values"
-    },
-    "data>loadFromStac.yml@18|rasters": {
-      "description": "Land cover layer used for masking non terrestrial pixels",
-      "label": "Land cover map",
-      "type": "image/tiff;application=geotiff[]"
-    },
-    "pipeline@30": {
-      "label": "Species name",
-      "description": "Species for which the distribution model is generated"
+      "type": "text/tab-separated-values",
+      "weight": 2
     },
     "data>pyLoadObservations>pyLoadObservations.yml@1|total_records": {
       "description": "Total number of GBIF occurrences in csv file",
       "label": "Total number of occurrences",
       "type": "int",
-      "example": 1234
+      "example": 1234,
+      "weight": 3
+    },
+    "SDM>julia_sdms>pcaLayers.yml@13|predictors": {
+      "description": "Environmental layers used as predictors in model fitting",
+      "label": "Environmental predictors",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 4
+    },
+    "data>loadFromStac.yml@18|rasters": {
+      "description": "Land cover layer used for masking non terrestrial pixels",
+      "label": "Land cover map",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 5
+    },
+    "SDM>julia_sdms>fitBRT.yml@24|fit_stats": {
+      "description": "Model fit statistics and threshold",
+      "label": "Fit statistics",
+      "type": "text/json",
+      "weight": 6
+    },
+    "SDM>julia_sdms>fitBRT.yml@24|sdm": {
+      "description": "Map of predicted occurrence probability for selected species using Booster Regression Trees",
+      "label": "Predictions",
+      "type": "image/tiff;application=geotiff",
+      "weight": 7
+    },
+    "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty": {
+      "description": "Map of relative uncertainty of predictions",
+      "label": "Spatial uncertainty",
+      "type": "image/tiff;application=geotiff",
+      "weight": 8
     }
   },
   "metadata": {
@@ -710,7 +718,7 @@
         "identifier": "https://orcid.org/0000-0002-6506-6487"
       },
       {
-        "name": "Thimothé Poisoit",
+        "name": "Thimothée Poisot",
         "identifier": "https://orcid.org/0000-0002-0735-5184"
       }
     ],
