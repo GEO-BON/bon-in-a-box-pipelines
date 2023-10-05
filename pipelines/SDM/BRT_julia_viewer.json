@@ -1,720 +1,740 @@
 {
-  "nodes": [
-    {
-      "id": "0",
-      "type": "io",
-      "position": {
-        "x": 892.926148028543,
-        "y": 359.3674249062675
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "1",
-      "type": "io",
-      "position": {
-        "x": 906.9895403393837,
-        "y": 76.25361041097028
-      },
-      "data": {
-        "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
-      }
-    },
-    {
-      "id": "2",
-      "type": "constant",
-      "position": {
-        "x": 368.86119022111507,
-        "y": 142.04267028927177
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "https://io.biodiversite-quebec.ca/stac/"
-      }
-    },
-    {
-      "id": "3",
-      "type": "userInput",
-      "position": {
-        "x": 313.1962041962512,
-        "y": 257.3975828418341
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": ["-86.748047", "33.724340", "-52.207031", "63.273182"]
-      }
-    },
-    {
-      "id": "4",
-      "type": "constant",
-      "position": {
-        "x": 254.62676356703406,
-        "y": 370.36734296317206
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:4326"
-      }
-    },
-    {
-      "id": "13",
-      "type": "io",
-      "position": {
-        "x": 1458.5472678652434,
-        "y": 515.8899053001562
-      },
-      "data": {
-        "descriptionFile": "SDM>julia_sdms>pcaLayers.yml"
-      }
-    },
-    {
-      "id": "15",
-      "type": "output",
-      "position": {
-        "x": 2033.5593979778441,
-        "y": 585.8910696961975
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "16",
-      "type": "constant",
-      "position": {
-        "x": 231.39999389648438,
-        "y": 418.8999938964844
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0.008
-      }
-    },
-    {
-      "id": "18",
-      "type": "io",
-      "position": {
-        "x": 888.3999938964844,
-        "y": 668.8999938964844
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "19",
-      "type": "constant",
-      "position": {
-        "x": 389.3999938964844,
-        "y": 675.8999938964844
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": ["esacci-lc|esacci-lc-2020"]
-      }
-    },
-    {
-      "id": "20",
-      "type": "constant",
-      "position": {
-        "x": 371.3999938964844,
-        "y": 609.8999938964844
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "https://io.biodiversite-quebec.ca/stac/"
-      }
-    },
-    {
-      "id": "21",
-      "type": "io",
-      "position": {
-        "x": 1928.3999938964844,
-        "y": 217.89999389648438
-      },
-      "data": {
-        "descriptionFile": "filtering>cleanCoordinates.yml"
-      }
-    },
-    {
-      "id": "22",
-      "type": "io",
-      "position": {
-        "x": 2195.3999938964844,
-        "y": 369.8999938964844
-      },
-      "data": {
-        "descriptionFile": "SDM>julia_sdms>generateBackground.yml"
-      }
-    },
-    {
-      "id": "24",
-      "type": "io",
-      "position": {
-        "x": 2735.3999938964844,
-        "y": 402.8999938964844
-      },
-      "data": {
-        "descriptionFile": "SDM>julia_sdms>fitBRT.yml"
-      }
-    },
-    {
-      "id": "25",
-      "type": "output",
-      "position": {
-        "x": 3179.3999938964844,
-        "y": 397.8999938964844
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "26",
-      "type": "output",
-      "position": {
-        "x": 3185.3999938964844,
-        "y": 438.8999938964844
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "27",
-      "type": "output",
-      "position": {
-        "x": 3195.3999938964844,
-        "y": 485.8999938964844
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "28",
-      "type": "constant",
-      "position": {
-        "x": 1604.3844157896422,
-        "y": -83.59950590983343
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "equal",
-          "zeros",
-          "duplicates",
-          "same_pixel",
-          "seas",
-          "urban",
-          "gbif"
-        ]
-      }
-    },
-    {
-      "id": "29",
-      "type": "constant",
-      "position": {
-        "x": 1585.6031762103437,
-        "y": 62.60748756512288
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0.8
-      }
-    },
-    {
-      "id": "30",
-      "type": "userInput",
-      "position": {
-        "x": 589.2832121887816,
-        "y": 83.84679123817233
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": ["Acer saccharum"]
-      }
-    },
-    {
-      "id": "31",
-      "type": "constant",
-      "position": {
-        "x": 588.3999938964844,
-        "y": 32.899993896484375
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "gbif_api",
-        "options": ["gbif_pc", "gbif_api"]
-      }
-    },
-    {
-      "id": "32",
-      "type": "userInput",
-      "position": {
-        "x": 89.39999389648438,
-        "y": 478.8999938964844
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "chelsa-clim|bio1",
-          "chelsa-clim|bio2",
-          "chelsa-clim|bio3",
-          "chelsa-clim|bio4",
-          "chelsa-clim|bio5",
-          "chelsa-clim|bio6",
-          "chelsa-clim|bio7",
-          "chelsa-clim|bio8",
-          "chelsa-clim|bio9",
-          "chelsa-clim|bio10",
-          "chelsa-clim|bio11",
-          "chelsa-clim|bio12",
-          "chelsa-clim|bio13",
-          "chelsa-clim|bio14",
-          "chelsa-clim|bio15",
-          "chelsa-clim|bio16",
-          "chelsa-clim|bio17",
-          "chelsa-clim|bio18",
-          "chelsa-clim|bio19"
-        ]
-      }
-    },
-    {
-      "id": "33",
-      "type": "output",
-      "position": {
-        "x": 2379.6499938964844,
-        "y": 122
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "34",
-      "type": "output",
-      "position": {
-        "x": 1444.1260034160307,
-        "y": 729.9415461036054
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "35",
-      "type": "constant",
-      "position": {
-        "x": 536.9888109468682,
-        "y": 704.4499002160003
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
-      }
-    },
-    {
-      "id": "36",
-      "type": "constant",
-      "position": {
-        "x": 542.5677856122697,
-        "y": 396.2115499525608
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
-      }
-    },
-    {
-      "id": "37",
-      "type": "output",
-      "position": {
-        "x": 1328.5098721252748,
-        "y": 895.8373517186589
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "38",
-      "type": "output",
-      "position": {
-        "x": 1504.2802457138919,
-        "y": 294.44054742414664
-      },
-      "data": {
-        "label": "Output"
-      }
-    }
-  ],
-  "edges": [
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-2-0stac_url"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-3-0bbox"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-3-1bbox"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-4-0proj"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-4-1proj"
-    },
-    {
-      "source": "0",
-      "sourceHandle": "rasters",
-      "target": "13",
-      "targetHandle": "layers",
-      "id": "reactflow__edge-0rasters-13layers"
-    },
-    {
-      "source": "13",
-      "sourceHandle": "predictors",
-      "target": "15",
-      "targetHandle": null,
-      "id": "reactflow__edge-13predictors-15"
-    },
-    {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-16-0spatial_res"
-    },
-    {
-      "source": "19",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-19-18collections_items"
-    },
-    {
-      "source": "20",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-20-18stac_url"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-4-18proj"
-    },
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-3-18bbox"
-    },
-    {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-16-18spatial_res"
-    },
-    {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "13",
-      "targetHandle": "mask",
-      "id": "reactflow__edge-18rasters-13mask"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "observations_file",
-      "target": "21",
-      "targetHandle": "presence",
-      "id": "reactflow__edge-1observations_file-21presence"
-    },
-    {
-      "source": "13",
-      "sourceHandle": "predictors",
-      "target": "21",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-13predictors-21predictors"
-    },
-    {
-      "source": "13",
-      "sourceHandle": "predictors",
-      "target": "22",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-13predictors-22predictors"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "clean_presence",
-      "target": "22",
-      "targetHandle": "presence",
-      "id": "reactflow__edge-21clean_presence-22presence"
-    },
-    {
-      "source": "22",
-      "sourceHandle": "background",
-      "target": "24",
-      "targetHandle": "background",
-      "id": "reactflow__edge-22background-24background"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "clean_presence",
-      "target": "24",
-      "targetHandle": "occurrence",
-      "id": "reactflow__edge-21clean_presence-24occurrence"
-    },
-    {
-      "source": "13",
-      "sourceHandle": "predictors",
-      "target": "24",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-13predictors-24predictors"
-    },
-    {
-      "source": "24",
-      "sourceHandle": "sdm",
-      "target": "25",
-      "targetHandle": null,
-      "id": "reactflow__edge-24sdm-25"
-    },
-    {
-      "source": "24",
-      "sourceHandle": "sdm_uncertainty",
-      "target": "26",
-      "targetHandle": null,
-      "id": "reactflow__edge-24sdm_uncertainty-26"
-    },
-    {
-      "source": "24",
-      "sourceHandle": "fit_stats",
-      "target": "27",
-      "targetHandle": null,
-      "id": "reactflow__edge-24fit_stats-27"
-    },
-    {
-      "source": "28",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "tests",
-      "id": "reactflow__edge-28-21tests"
-    },
-    {
-      "source": "29",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "env_threshold",
-      "id": "reactflow__edge-29-21env_threshold"
-    },
-    {
-      "source": "30",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "taxa",
-      "id": "reactflow__edge-30-1taxa"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "data_source",
-      "id": "reactflow__edge-31-1data_source"
-    },
-    {
-      "source": "32",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-32-0collections_items"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "clean_presence",
-      "target": "33",
-      "targetHandle": null,
-      "id": "reactflow__edge-21clean_presence-33"
-    },
-    {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "34",
-      "targetHandle": null,
-      "id": "reactflow__edge-18rasters-34"
-    },
-    {
-      "source": "35",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-35-18weight_matrix_with_ids"
-    },
-    {
-      "source": "36",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-36-0weight_matrix_with_ids"
-    },
-    {
-      "source": "30",
-      "sourceHandle": null,
-      "target": "37",
-      "targetHandle": null,
-      "id": "reactflow__edge-30-37"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "total_records",
-      "target": "38",
-      "targetHandle": null,
-      "id": "reactflow__edge-1total_records-38"
-    }
-  ],
-  "inputs": {
-    "data>loadFromStac.yml@0|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf"
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@1|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
-      "type": "int",
-      "example": 2010
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@1|max_year": {
-      "description": "Max year observations wanted",
-      "label": "maximum year",
-      "type": "int",
-      "example": 2020
-    },
-    "pipeline@3": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [-2316297, -1971146, 1015207, 1511916]
-    },
-    "data>loadFromStac.yml@18|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf"
-    },
-    "SDM>julia_sdms>generateBackground.yml@22|buffer_distance": {
-      "description": "the minimum distance between any presence and any pseudoabsence in meters",
-      "label": "buffer_distance",
-      "type": "int",
-      "example": 50000
-    },
-    "pipeline@30": {
-      "label": "Taxa list",
-      "description": "Array of taxa values",
-      "type": "text[]",
-      "example": ["Acer saccharum", "Bubo scandiacus"]
-    },
-    "pipeline@32": {
-      "label": "collections_items",
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "type": "text[]",
-      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
-    }
-  },
-  "outputs": {
-    "SDM>julia_sdms>pcaLayers.yml@13|predictors": {
-      "description": "Environmental layers used as predictors in model fitting",
-      "label": "Environmental predictors",
-      "type": "image/tiff;application=geotiff[]"
-    },
-    "SDM>julia_sdms>fitBRT.yml@24|sdm": {
-      "description": "Map of predicted occurrence probability for selected species using Booster Regression Trees",
-      "label": "Predictions",
-      "type": "image/tiff;application=geotiff"
-    },
-    "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty": {
-      "description": "Map of relative uncertainty of predictions",
-      "label": "Spatial uncertainty",
-      "type": "image/tiff;application=geotiff"
-    },
-    "SDM>julia_sdms>fitBRT.yml@24|fit_stats": {
-      "description": "Model fit statistics and threshold",
-      "label": "Fit statistics",
-      "type": "text/json"
-    },
-    "filtering>cleanCoordinates.yml@21|clean_presence": {
-      "description": "Dataframe, table with clean presence points from GBIF for selected species",
-      "label": "Presences",
-      "type": "text/tab-separated-values"
-    },
-    "data>loadFromStac.yml@18|rasters": {
-      "description": "Land cover layer used for masking non terrestrial pixels",
-      "label": "Land cover map",
-      "type": "image/tiff;application=geotiff[]"
-    },
-    "pipeline@30": {
-      "label": "Species name",
-      "description": "Species for which the distribution model is generated"
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@1|total_records": {
-      "description": "Total number of GBIF occurrences in csv file",
-      "label": "Total number of occurrences",
-      "type": "int",
-      "example": 1234
-    }
-  },
-  "metadata": {
-    "name": "Species Distribution Modelling with Boosted Regression Trees",
-    "description": "This pipeline performs species distribution modeling for a given species and region from GBIF data with Boosted Regression Trees in the Julia programming language.",
-    "author": [
+    "nodes": [
       {
-        "name": "Michael Catchen",
-        "identifier": "https://orcid.org/0000-0002-6506-6487"
+        "id": "0",
+        "type": "io",
+        "position": {
+          "x": 892.926148028543,
+          "y": 359.3674249062675
+        },
+        "data": {
+          "descriptionFile": "data>loadFromStac.yml"
+        }
       },
       {
-        "name": "Thimothé Poisoit",
-        "identifier": "https://orcid.org/0000-0002-0735-5184"
+        "id": "1",
+        "type": "io",
+        "position": {
+          "x": 906.9895403393837,
+          "y": 76.25361041097028
+        },
+        "data": {
+          "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
+        }
+      },
+      {
+        "id": "2",
+        "type": "constant",
+        "position": {
+          "x": 368.86119022111507,
+          "y": 142.04267028927177
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "https://io.biodiversite-quebec.ca/stac/"
+        }
+      },
+      {
+        "id": "3",
+        "type": "userInput",
+        "position": {
+          "x": 313.1962041962512,
+          "y": 257.3975828418341
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "float[]",
+          "value": [
+            "-86.748047",
+            "33.724340",
+            "-52.207031",
+            "63.273182"
+          ]
+        }
+      },
+      {
+        "id": "4",
+        "type": "constant",
+        "position": {
+          "x": 254.62676356703406,
+          "y": 370.36734296317206
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "EPSG:4326"
+        }
+      },
+      {
+        "id": "13",
+        "type": "io",
+        "position": {
+          "x": 1458.5472678652434,
+          "y": 515.8899053001562
+        },
+        "data": {
+          "descriptionFile": "SDM>julia_sdms>pcaLayers.yml"
+        }
+      },
+      {
+        "id": "15",
+        "type": "output",
+        "position": {
+          "x": 2033.5593979778441,
+          "y": 585.8910696961975
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "16",
+        "type": "constant",
+        "position": {
+          "x": 231.39999389648438,
+          "y": 418.8999938964844
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "float",
+          "value": 0.008
+        }
+      },
+      {
+        "id": "18",
+        "type": "io",
+        "position": {
+          "x": 888.3999938964844,
+          "y": 668.8999938964844
+        },
+        "data": {
+          "descriptionFile": "data>loadFromStac.yml"
+        }
+      },
+      {
+        "id": "19",
+        "type": "constant",
+        "position": {
+          "x": 389.3999938964844,
+          "y": 675.8999938964844
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "esacci-lc|esacci-lc-2020"
+          ]
+        }
+      },
+      {
+        "id": "20",
+        "type": "constant",
+        "position": {
+          "x": 371.3999938964844,
+          "y": 609.8999938964844
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "https://io.biodiversite-quebec.ca/stac/"
+        }
+      },
+      {
+        "id": "21",
+        "type": "io",
+        "position": {
+          "x": 1928.3999938964844,
+          "y": 217.89999389648438
+        },
+        "data": {
+          "descriptionFile": "filtering>cleanCoordinates.yml"
+        }
+      },
+      {
+        "id": "22",
+        "type": "io",
+        "position": {
+          "x": 2195.3999938964844,
+          "y": 369.8999938964844
+        },
+        "data": {
+          "descriptionFile": "SDM>julia_sdms>generateBackground.yml"
+        }
+      },
+      {
+        "id": "24",
+        "type": "io",
+        "position": {
+          "x": 2735.3999938964844,
+          "y": 402.8999938964844
+        },
+        "data": {
+          "descriptionFile": "SDM>julia_sdms>fitBRT.yml"
+        }
+      },
+      {
+        "id": "25",
+        "type": "output",
+        "position": {
+          "x": 3179.3999938964844,
+          "y": 397.8999938964844
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "26",
+        "type": "output",
+        "position": {
+          "x": 3185.3999938964844,
+          "y": 438.8999938964844
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "27",
+        "type": "output",
+        "position": {
+          "x": 3195.3999938964844,
+          "y": 485.8999938964844
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "28",
+        "type": "constant",
+        "position": {
+          "x": 1604.3844157896422,
+          "y": -83.59950590983343
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "equal",
+            "zeros",
+            "duplicates",
+            "same_pixel",
+            "seas",
+            "urban",
+            "gbif"
+          ]
+        }
+      },
+      {
+        "id": "29",
+        "type": "constant",
+        "position": {
+          "x": 1585.6031762103437,
+          "y": 62.60748756512288
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "float",
+          "value": 0.8
+        }
+      },
+      {
+        "id": "30",
+        "type": "userInput",
+        "position": {
+          "x": 589.2832121887816,
+          "y": 83.84679123817233
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "Acer saccharum"
+          ]
+        }
+      },
+      {
+        "id": "31",
+        "type": "constant",
+        "position": {
+          "x": 588.3999938964844,
+          "y": 32.899993896484375
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "options",
+          "value": "gbif_api",
+          "options": [
+            "gbif_pc",
+            "gbif_api"
+          ]
+        }
+      },
+      {
+        "id": "32",
+        "type": "userInput",
+        "position": {
+          "x": 89.39999389648438,
+          "y": 478.8999938964844
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "chelsa-clim|bio1",
+            "chelsa-clim|bio2",
+            "chelsa-clim|bio3",
+            "chelsa-clim|bio4",
+            "chelsa-clim|bio5",
+            "chelsa-clim|bio6",
+            "chelsa-clim|bio7",
+            "chelsa-clim|bio8",
+            "chelsa-clim|bio9",
+            "chelsa-clim|bio10",
+            "chelsa-clim|bio11",
+            "chelsa-clim|bio12",
+            "chelsa-clim|bio13",
+            "chelsa-clim|bio14",
+            "chelsa-clim|bio15",
+            "chelsa-clim|bio16",
+            "chelsa-clim|bio17",
+            "chelsa-clim|bio18",
+            "chelsa-clim|bio19"
+          ]
+        }
+      },
+      {
+        "id": "33",
+        "type": "output",
+        "position": {
+          "x": 2379.6499938964844,
+          "y": 122
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "34",
+        "type": "output",
+        "position": {
+          "x": 1444.1260034160307,
+          "y": 729.9415461036054
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "35",
+        "type": "constant",
+        "position": {
+          "x": 536.9888109468682,
+          "y": 704.4499002160003
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+        }
+      },
+      {
+        "id": "36",
+        "type": "constant",
+        "position": {
+          "x": 542.5677856122697,
+          "y": 396.2115499525608
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+        }
+      },
+      {
+        "id": "37",
+        "type": "output",
+        "position": {
+          "x": 1328.5098721252748,
+          "y": 895.8373517186589
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "38",
+        "type": "output",
+        "position": {
+          "x": 1504.2802457138919,
+          "y": 294.44054742414664
+        },
+        "data": {
+          "label": "Output"
+        }
       }
     ],
-    "license": "MIT",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/tree/mdc/julia_brt"
-  }
+    "edges": [
+      {
+        "source": "2",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "stac_url",
+        "id": "reactflow__edge-2-0stac_url"
+      },
+      {
+        "source": "3",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "bbox",
+        "id": "reactflow__edge-3-0bbox"
+      },
+      {
+        "source": "3",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "bbox",
+        "id": "reactflow__edge-3-1bbox"
+      },
+      {
+        "source": "4",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "proj",
+        "id": "reactflow__edge-4-0proj"
+      },
+      {
+        "source": "4",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "proj",
+        "id": "reactflow__edge-4-1proj"
+      },
+      {
+        "source": "0",
+        "sourceHandle": "rasters",
+        "target": "13",
+        "targetHandle": "layers",
+        "id": "reactflow__edge-0rasters-13layers"
+      },
+      {
+        "source": "13",
+        "sourceHandle": "predictors",
+        "target": "15",
+        "targetHandle": null,
+        "id": "reactflow__edge-13predictors-15"
+      },
+      {
+        "source": "16",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "spatial_res",
+        "id": "reactflow__edge-16-0spatial_res"
+      },
+      {
+        "source": "19",
+        "sourceHandle": null,
+        "target": "18",
+        "targetHandle": "collections_items",
+        "id": "reactflow__edge-19-18collections_items"
+      },
+      {
+        "source": "20",
+        "sourceHandle": null,
+        "target": "18",
+        "targetHandle": "stac_url",
+        "id": "reactflow__edge-20-18stac_url"
+      },
+      {
+        "source": "4",
+        "sourceHandle": null,
+        "target": "18",
+        "targetHandle": "proj",
+        "id": "reactflow__edge-4-18proj"
+      },
+      {
+        "source": "3",
+        "sourceHandle": null,
+        "target": "18",
+        "targetHandle": "bbox",
+        "id": "reactflow__edge-3-18bbox"
+      },
+      {
+        "source": "16",
+        "sourceHandle": null,
+        "target": "18",
+        "targetHandle": "spatial_res",
+        "id": "reactflow__edge-16-18spatial_res"
+      },
+      {
+        "source": "18",
+        "sourceHandle": "rasters",
+        "target": "13",
+        "targetHandle": "mask",
+        "id": "reactflow__edge-18rasters-13mask"
+      },
+      {
+        "source": "1",
+        "sourceHandle": "observations_file",
+        "target": "21",
+        "targetHandle": "presence",
+        "id": "reactflow__edge-1observations_file-21presence"
+      },
+      {
+        "source": "13",
+        "sourceHandle": "predictors",
+        "target": "21",
+        "targetHandle": "predictors",
+        "id": "reactflow__edge-13predictors-21predictors"
+      },
+      {
+        "source": "13",
+        "sourceHandle": "predictors",
+        "target": "22",
+        "targetHandle": "predictors",
+        "id": "reactflow__edge-13predictors-22predictors"
+      },
+      {
+        "source": "21",
+        "sourceHandle": "clean_presence",
+        "target": "22",
+        "targetHandle": "presence",
+        "id": "reactflow__edge-21clean_presence-22presence"
+      },
+      {
+        "source": "22",
+        "sourceHandle": "background",
+        "target": "24",
+        "targetHandle": "background",
+        "id": "reactflow__edge-22background-24background"
+      },
+      {
+        "source": "21",
+        "sourceHandle": "clean_presence",
+        "target": "24",
+        "targetHandle": "occurrence",
+        "id": "reactflow__edge-21clean_presence-24occurrence"
+      },
+      {
+        "source": "13",
+        "sourceHandle": "predictors",
+        "target": "24",
+        "targetHandle": "predictors",
+        "id": "reactflow__edge-13predictors-24predictors"
+      },
+      {
+        "source": "24",
+        "sourceHandle": "sdm",
+        "target": "25",
+        "targetHandle": null,
+        "id": "reactflow__edge-24sdm-25"
+      },
+      {
+        "source": "24",
+        "sourceHandle": "sdm_uncertainty",
+        "target": "26",
+        "targetHandle": null,
+        "id": "reactflow__edge-24sdm_uncertainty-26"
+      },
+      {
+        "source": "24",
+        "sourceHandle": "fit_stats",
+        "target": "27",
+        "targetHandle": null,
+        "id": "reactflow__edge-24fit_stats-27"
+      },
+      {
+        "source": "28",
+        "sourceHandle": null,
+        "target": "21",
+        "targetHandle": "tests",
+        "id": "reactflow__edge-28-21tests"
+      },
+      {
+        "source": "29",
+        "sourceHandle": null,
+        "target": "21",
+        "targetHandle": "env_threshold",
+        "id": "reactflow__edge-29-21env_threshold"
+      },
+      {
+        "source": "30",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "taxa",
+        "id": "reactflow__edge-30-1taxa"
+      },
+      {
+        "source": "31",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "data_source",
+        "id": "reactflow__edge-31-1data_source"
+      },
+      {
+        "source": "32",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "collections_items",
+        "id": "reactflow__edge-32-0collections_items"
+      },
+      {
+        "source": "21",
+        "sourceHandle": "clean_presence",
+        "target": "33",
+        "targetHandle": null,
+        "id": "reactflow__edge-21clean_presence-33"
+      },
+      {
+        "source": "18",
+        "sourceHandle": "rasters",
+        "target": "34",
+        "targetHandle": null,
+        "id": "reactflow__edge-18rasters-34"
+      },
+      {
+        "source": "35",
+        "sourceHandle": null,
+        "target": "18",
+        "targetHandle": "weight_matrix_with_ids",
+        "id": "reactflow__edge-35-18weight_matrix_with_ids"
+      },
+      {
+        "source": "36",
+        "sourceHandle": null,
+        "target": "0",
+        "targetHandle": "weight_matrix_with_ids",
+        "id": "reactflow__edge-36-0weight_matrix_with_ids"
+      },
+      {
+        "source": "30",
+        "sourceHandle": null,
+        "target": "37",
+        "targetHandle": null,
+        "id": "reactflow__edge-30-37"
+      },
+      {
+        "source": "1",
+        "sourceHandle": "total_records",
+        "target": "38",
+        "targetHandle": null,
+        "id": "reactflow__edge-1total_records-38"
+      }
+    ],
+    "inputs": {
+      "data>loadFromStac.yml@0|mask": {
+        "description": "Shapefile, used to mask the output rasters",
+        "label": "mask",
+        "type": "application/dbf"
+      },
+      "data>pyLoadObservations>pyLoadObservations.yml@1|min_year": {
+        "description": "Min year observations wanted",
+        "label": "minimum year",
+        "type": "int",
+        "example": 2010
+      },
+      "data>pyLoadObservations>pyLoadObservations.yml@1|max_year": {
+        "description": "Max year observations wanted",
+        "label": "maximum year",
+        "type": "int",
+        "example": 2020
+      },
+      "pipeline@3": {
+        "label": "bbox",
+        "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+        "type": "float[]",
+        "example": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
+      },
+      "data>loadFromStac.yml@18|mask": {
+        "description": "Shapefile, used to mask the output rasters",
+        "label": "mask",
+        "type": "application/dbf"
+      },
+      "SDM>julia_sdms>generateBackground.yml@22|buffer_distance": {
+        "description": "the minimum distance between any presence and any pseudoabsence in meters",
+        "label": "buffer_distance",
+        "type": "int",
+        "example": 50000
+      },
+      "pipeline@30": {
+        "label": "Taxa list",
+        "description": "Array of taxa values",
+        "type": "text[]",
+        "example": [
+          "Acer saccharum",
+          "Bubo scandiacus"
+        ]
+      },
+      "pipeline@32": {
+        "label": "collections_items",
+        "description": "Vector of strings, collection name followed by '|' followed by item id",
+        "type": "text[]",
+        "example": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
+        ]
+      }
+    },
+    "outputs": {
+      "SDM>julia_sdms>pcaLayers.yml@13|predictors": {
+        "description": "Environmental layers used as predictors in model fitting",
+        "label": "Environmental predictors",
+        "type": "image/tiff;application=geotiff[]"
+      },
+      "SDM>julia_sdms>fitBRT.yml@24|sdm": {
+        "description": "Map of predicted occurrence probability for selected species using Booster Regression Trees",
+        "label": "Predictions",
+        "type": "image/tiff;application=geotiff"
+      },
+      "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty": {
+        "description": "Map of relative uncertainty of predictions",
+        "label": "Spatial uncertainty",
+        "type": "image/tiff;application=geotiff"
+      },
+      "SDM>julia_sdms>fitBRT.yml@24|fit_stats": {
+        "description": "Model fit statistics and threshold",
+        "label": "Fit statistics",
+        "type": "text/json"
+      },
+      "filtering>cleanCoordinates.yml@21|clean_presence": {
+        "description": "Dataframe, table with clean presence points from GBIF for selected species",
+        "label": "Presences",
+        "type": "text/tab-separated-values"
+      },
+      "data>loadFromStac.yml@18|rasters": {
+        "description": "Land cover layer used for masking non terrestrial pixels",
+        "label": "Land cover map",
+        "type": "image/tiff;application=geotiff[]"
+      },
+      "undefined@30": {},
+      "data>pyLoadObservations>pyLoadObservations.yml@1|total_records": {
+        "description": "Total number of GBIF occurrences in csv file",
+        "label": "Total number of occurrences",
+        "type": "int",
+        "example": 1234
+      }
+    },
+    "metadata": {
+      "name": "Species Distribution Modelling with Boosted Regression Trees",
+      "description": "This pipeline performs species distribution modeling for a given species and region from GBIF data with Boosted Regression Trees in the Julia programming language.",
+      "author": [
+        {
+          "name": "Michael Catchen",
+          "identifier": "https://orcid.org/0000-0002-6506-6487"
+        },
+        {
+          "name": "Timothée Poisot",
+          "identifier": "https://orcid.org/0000-0002-0735-5184"
+        }
+      ],
+      "license": "MIT",
+      "external_link": "https://github.com/GEO-BON/biab-2.0/tree/mdc/julia_brt"
+    }
 }

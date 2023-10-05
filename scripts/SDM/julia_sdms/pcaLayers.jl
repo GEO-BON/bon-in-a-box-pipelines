@@ -40,12 +40,13 @@ function make_pca_layers(layers, land_idx)
 end
 
 function write_outputs(runtime_dir, layers)
+    
     predictor_paths = []
 
     for (i,l) in enumerate(layers)
         outpath = joinpath(runtime_dir, "predictor$i.tif")
         push!(predictor_paths, outpath)
-        SpeciesDistributionToolkit.save(outpath, l)
+        SpeciesDistributionToolkit._write_geotiff(outpath, l; compress="COG")
     end
 
     output_json_path = joinpath(runtime_dir, "output.json")

@@ -50,7 +50,7 @@ services:
   runner-julia:
     container_name: biab-runner-julia
     image: geobon/bon-in-a-box:runner-julia
-    # build:
+    #build:
     #   context: ./runners
     #   dockerfile: julia-dockerfile
     command: sh # Avoids launching julia session that will not be used.
