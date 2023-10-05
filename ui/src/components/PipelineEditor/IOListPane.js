@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import AutoResizeTextArea from "../form/AutoResizeTextArea";
 import { toIOId } from "../../utils/IOId";
-import pen from "../../img/pen.svg"
-
-function focusOnSiblingTextarea(event) {
-  event.target.parentNode.getElementsByTagName('textarea')[0].focus()
-}
+import ScriptInput from "../form/ScriptInput";
 
 /**
  * @returns rendered view of the pipeline inputs and outputs
@@ -48,21 +44,24 @@ export const IOListPane = ({
                   : ""}
               >
                 <p>
-                  <span className="imgHoverAppear">
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                    <AutoResizeTextArea className="label" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "label", input, setInputList)}
-                      onInput={preventNewLines}
-                      defaultValue={input.label}></AutoResizeTextArea>
-                  </span>
+                  <AutoResizeTextArea className="label" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "label", input, setInputList)}
+                    onInput={preventNewLines}
+                    defaultValue={input.label}></AutoResizeTextArea>
 
                   <br />
-                  <span className="imgHoverAppear">
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                    <AutoResizeTextArea className="description" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "description", input, setInputList)}
-                      defaultValue={input.description}></AutoResizeTextArea>
-                  </span>
+                  <AutoResizeTextArea className="description" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "description", input, setInputList)}
+                    defaultValue={input.description}></AutoResizeTextArea>
+
+                  {input.type &&
+                    <>
+                      <br />
+                      <span className="example-tag">Example: </span>
+                      <ScriptInput type={input.type} value={input.example} options={input.options}
+                        onValueUpdated={(value) => valueEdited(value, "example", input, setInputList)} />
+                    </>
+                  }
                 </p>
               </div>
             );
@@ -82,20 +81,24 @@ export const IOListPane = ({
                   : ""}
               >
                 <p>
-                  <span className="imgHoverAppear">
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                    <AutoResizeTextArea className="label" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "label", output, setOutputList)}
-                      onInput={preventNewLines}
-                      defaultValue={output.label}></AutoResizeTextArea>
-                  </span>
+                  <AutoResizeTextArea className="label" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "label", output, setOutputList)}
+                    onInput={preventNewLines}
+                    defaultValue={output.label}></AutoResizeTextArea>
+
                   <br />
-                  <span className="imgHoverAppear">
-                    <img src={pen} alt="Edit" onClick={focusOnSiblingTextarea} />
-                    <AutoResizeTextArea className="description" keepWidth={true}
-                      onBlur={e => valueEdited(e.target, "description", output, setOutputList)}
-                      defaultValue={output.description}></AutoResizeTextArea>
-                  </span>
+                  <AutoResizeTextArea className="description" keepWidth={true}
+                    onBlur={e => valueEdited(e.target.value, "description", output, setOutputList)}
+                    defaultValue={output.description}></AutoResizeTextArea>
+
+                  {output.type &&
+                    <>
+                      <br />
+                      <span className="example-tag">Example: </span>
+                      <ScriptInput type={output.type} value={output.example} options={output.options}
+                        onValueUpdated={(value) => valueEdited(value, "example", output, setOutputList)} />
+                    </>
+                  }
                 </p>
               </div>
             );
@@ -106,13 +109,13 @@ export const IOListPane = ({
   );
 };
 
-function valueEdited(subject, valueKey, io, setter) {
+function valueEdited(value, valueKey, io, setter) {
   setter(previousValues => previousValues.map(previousIO => {
     let newIO = {...previousIO}
     if(previousIO.nodeId === io.nodeId
       && previousIO.inputId === io.inputId
       && previousIO.outputId === io.outputId) {
-        newIO[valueKey] = subject.value
+        newIO[valueKey] = value
       }
 
       return newIO

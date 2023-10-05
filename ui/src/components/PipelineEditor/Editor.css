@@ -58,8 +58,8 @@
 
 .react-flow__edge-path,
 .react-flow__connection-path {
-  stroke: #fcfcfc !important;
-  stroke-width: 3 !important;
+  stroke: #fcfcfc;
+  stroke-width: 3;
 }
 
 .react-flow__edge.selected .react-flow__edge-path {
@@ -235,6 +235,11 @@
   font-size: small;
 }
 
+.ioList .example-tag {
+  padding-left: 5px;
+  font-size: small;
+}
+
 .ioList textarea {
   width: 100%;
   background-color: transparent;
@@ -244,27 +249,13 @@
   padding: 3px 6px;
 }
 
-.ioList .imgHoverAppear:hover textarea {
-  border: 1px solid #bbb;
+.ioList textarea:hover {
+  background: url("../../img/pen.svg");
+  background-repeat: no-repeat;
+  background-position: right;
+  background-size: 1.5em;
+  border: 1px solid  #bbb;
   padding: 2px 5px;
-}
-
-.imgHoverAppear img {
-  visibility: hidden;
-  cursor: pointer;
-
-  width: 1.5em;
-  position: absolute;
-  right: 12px;
-  margin-top: 4px;
-}
-
-.imgHoverAppear:hover img {
-  visibility: visible;
-}
-
-.imgHoverAppear:focus-within img {
-  visibility: hidden;
 }
 
 .ioList textarea:focus {
