@@ -109,7 +109,6 @@ function main()
 
     pseudoabsences = CSV.read(pseudoabs_path, DataFrame, delim="\t")
     pseudoabs_layer = create_occurrence_layer(similar(predictors[1]), pseudoabsences)
-    #pseudoabs_layer = create_occurrence_layer(similar(predictors[1]), pseudoabs_df)
 
     X, y, p_and_a_coords = get_features_and_labels(occurrence_layer, pseudoabs_layer, predictors)
 
