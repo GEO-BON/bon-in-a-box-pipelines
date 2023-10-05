@@ -297,8 +297,8 @@
       "id": "33",
       "type": "output",
       "position": {
-        "x": 2396.121814241836,
-        "y": 98.93945151650797
+        "x": 2379.6499938964844,
+        "y": 122
       },
       "data": {
         "label": "Output"
@@ -353,11 +353,11 @@
       }
     },
     {
-      "id": "39",
+      "id": "38",
       "type": "output",
       "position": {
-        "x": 2687.4770663161003,
-        "y": 233.61776005508665
+        "x": 1504.2802457138919,
+        "y": 294.44054742414664
       },
       "data": {
         "label": "Output"
@@ -604,11 +604,11 @@
       "id": "reactflow__edge-30-37"
     },
     {
-      "source": "21",
-      "sourceHandle": "n_clean",
-      "target": "39",
+      "source": "1",
+      "sourceHandle": "total_records",
+      "target": "38",
       "targetHandle": null,
-      "id": "reactflow__edge-21n_clean-39"
+      "id": "reactflow__edge-1total_records-38"
     }
   ],
   "inputs": {
@@ -718,7 +718,7 @@
         "identifier": "https://orcid.org/0000-0002-6506-6487"
       },
       {
-        "name": "Thimothée Poisot",
+        "name": "Timothée Poisot",
         "identifier": "https://orcid.org/0000-0002-0735-5184"
       }
     ],

@@ -19,17 +19,21 @@ inputs:
     label: predictors
     description: layer names (predictors) as a list
     type: image/tiff;application=geotiff[]
-    example: ["/output/data/loadFromStac/ea82148a2926d97acf85cea61a110194/bio1_242b2b01561981-01-01.tif","/output/data/loadFromStac/ea82148a2926d97acf85cea61a110194/bio2_243a4e7f541981-01-01.tif"]
+    example:
+      [
+        "/output/data/loadFromStac/ea82148a2926d97acf85cea61a110194/bio1_242b2b01561981-01-01.tif",
+        "/output/data/loadFromStac/ea82148a2926d97acf85cea61a110194/bio2_243a4e7f541981-01-01.tif",
+      ]
 outputs:
   sdm:
     label: sdm
     description: map of predicted occurrence probability
     type: image/tiff;application=geotiff
   sdm_uncertainty:
-    label: sdm uncertainty
-    description: map of relative uncertainty 
+    label: sdm_uncertainty
+    description: map of relative uncertainty
     type: image/tiff;application=geotiff
   fit_stats:
     label: fit_stats
-    description: JSON of model fit stats and threshold 
+    description: JSON of model fit stats and threshold
     type: text/json
