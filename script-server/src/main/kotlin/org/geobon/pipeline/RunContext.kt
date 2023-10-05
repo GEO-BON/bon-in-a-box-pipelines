@@ -3,6 +3,7 @@ package org.geobon.pipeline
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
+import com.google.gson.reflect.TypeToken
 import com.google.gson.stream.MalformedJsonException
 import org.geobon.utils.toMD5
 import java.io.File
@@ -20,7 +21,7 @@ data class RunContext(val runId: String, val inputs: String?) {
             // Unique to this script
             descriptionFile.relativeTo(scriptRoot).path.removeSuffix(".yml"),
             // Unique to these params
-            if (inputs.isNullOrEmpty()) "no_params" else inputs.toMD5()
+            if (inputs.isNullOrEmpty()) "no_params" else inputsToMd5(inputs)
         ).path,
         inputs
     )
@@ -67,5 +68,18 @@ data class RunContext(val runId: String, val inputs: String?) {
                 }
             }
             .create()
+
+        /**
+         * Makes sure the file gives the same hash, regardless of the key order.
+         */
+        fun inputsToMd5(jsonString: String): String {
+            val sorted = gson.fromJson<Map<String, Any>>(
+                jsonString,
+                object : TypeToken<Map<String, Any>>() {}.type
+            ).toSortedMap()
+
+            return gson.toJson(sorted).toMD5()
+        }
+
     }
 }

@@ -731,8 +731,8 @@
     "data>loadFromStac.yml@114|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
-      "type": "int",
-      "example": 1000
+      "type": "float",
+      "example": 1000.0
     },
     "data>loadFromStac.yml@114|mask": {
       "description": "Shapefile, used to mask the output rasters",
