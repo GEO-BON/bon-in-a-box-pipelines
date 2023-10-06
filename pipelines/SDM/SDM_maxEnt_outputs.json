@@ -246,19 +246,6 @@
       }
     },
     {
-      "id": "101",
-      "type": "constant",
-      "position": {
-        "x": 525,
-        "y": 564
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0.75
-      }
-    },
-    {
       "id": "102",
       "type": "constant",
       "position": {
@@ -672,13 +659,6 @@
       "id": "reactflow__edge-97rasters_selected-40predictors"
     },
     {
-      "source": "101",
-      "sourceHandle": null,
-      "target": "97",
-      "targetHandle": "cutoff_cor",
-      "id": "reactflow__edge-101-97cutoff_cor"
-    },
-    {
       "source": "58",
       "sourceHandle": null,
       "target": "104",
@@ -875,6 +855,12 @@
       "label": "maximum year",
       "type": "int",
       "example": 2020
+    },
+    "SDM>removeCollinearity.yml@97|cutoff_cor": {
+      "description": "Float, correlation cutoff (used with vif.cor, pearson spearman and kendall method)",
+      "label": "cutoff correlation",
+      "type": "float",
+      "example": 0.75
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
