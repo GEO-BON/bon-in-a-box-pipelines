@@ -1,0 +1,33 @@
+script: weightLayers.jl
+name: Weight Layers
+description: "This script takes in multiple layers and computes a priority map based on a weighted average of those layers"
+author:
+  - name: Michael D. Catchen 
+    identifier: https://orcid.org/0000-0002-6506-6487
+inputs:
+  uncertainty:
+    label: uncertainty
+    description: uncertainty in the inference of some value across space
+    example: null
+  climate_uniqueness:
+    label: climate uniqueness
+    description: foobar
+    example: null
+  climate_velocity: 
+    label: climate uniqueness
+    description: foobar
+    example: null
+  accessibility:
+    label: accessibility
+    descrpition: foobar
+    example: null
+  weights:
+    label: weights
+    description: weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]
+    example: [0.3, 0.2, 0.4, 0.1]
+outputs:
+  priority_map:
+    label: priority_map
+    description: Sampling priority map.
+    type: image/tiff;application=geotiff
+
