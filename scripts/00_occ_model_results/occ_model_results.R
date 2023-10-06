@@ -104,8 +104,8 @@ mutate_all(mc, ~ round(., 3)) %>%
   head(18) %>% 
   knitr::kable()
 # export result
-write.csv(mc, "model_selection.csv")
-write.table("model_selection.txt", sep= "\t", header = TRUE, row.names = 1)
+#write.csv(mc, "model_selection.csv")
+#write.table("model_selection.txt", sep= "\t", header = TRUE, row.names = 1)
 # select models with the most support for model averaging (< 2.5 delta aicc)
 occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 8)
 # average models based on model weights 
@@ -236,7 +236,7 @@ occPlotFacet_path<- file.path(outputFolder, "occ_plot.jpeg") # Define the file p
 jpeg("occ_plot.jpeg", quality = 300)  # plot graph
 
 #### Outputing result to JSON ####
-output<- list(final = final)
+output<- list(occPlotFacet_path = occPlotFacet_path)
 
 # Final table and VEB 
 # create classification matrix
