@@ -564,8 +564,8 @@
       "options": ["Country", "Region in Country", "User defined"]
     },
     "pipeline@51": {
-      "label": "country code",
-      "description": "Three letter code for the country where the SHI is calculated.",
+      "label": "Country name",
+      "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
       "type": "text",
       "example": "COL"
     }
