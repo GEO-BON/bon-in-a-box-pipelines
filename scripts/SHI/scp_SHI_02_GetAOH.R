@@ -6,7 +6,7 @@ print(Sys.getenv("SCRIPT_LOCATION"))
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
-              "geodata","gdalcubes","stacatalogue","rredlist","stringr")
+              "geodata","gdalcubes","stacatalogue","rredlist","stringr","httr2","geojsonsf")
 
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
