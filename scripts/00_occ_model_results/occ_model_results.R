@@ -164,9 +164,13 @@ r_pred <- r_pred[[c("occ_prob", "occ_se")]]
 # export graph
 occprob_raster_path<- file.path(outputFolder, "occupancy-model_prob.tif") # Define the file path for the 'val_wkt_path' output
 occprob_raster<-writeRaster(r_pred[["occ_prob"]], "occupancy-model_prob.tif", overwrite = TRUE) # occ prop map
+#### Outputing result to JSON ####
+output<- list(occprob_raster_export = occprob_raster_path)
 
 occse_raster_path<- file.path(outputFolder, "occupancy-model_prob.tif") # Define the file path for the 'val_wkt_path' output
 occse_raster<-writeRaster(r_pred[["occ_se"]], "occupancy-model_se.tif", overwrite = TRUE) # se map
+#### Outputing result to JSON ####
+output<- list(occse_raster_export = occse_rasterr_path)
 
 
 # save the raster
@@ -236,7 +240,8 @@ occPlotFacet_path<- file.path(outputFolder, "occ_plot.jpeg") # Define the file p
 jpeg("occ_plot.jpeg", quality = 300)  # plot graph
 
 #### Outputing result to JSON ####
-output<- list(occPlotFacet_path = occPlotFacet_path)
+output<- list(occPlotFacet_export = occPlotFacet_path)
+
 
 # Final table and VEB 
 # create classification matrix
@@ -274,17 +279,18 @@ final<- final %>% janitor::adorn_totals("row")
 VEB<- rsult %>% dplyr::filter(range== "0.6<Ψ≤0.8" | range== "0.8<Ψ≤1") %>% 
   dplyr::summarize(VEB = sum(area))
 FVEB <- paste0("Occupancy area VEB (Ψ>0.6) = ", VEB$VEB, " Km²")
-#export resulsts (aqui no estoy seguro como exportar)
-write.table(final, "tabla_VEB.csv", sep = "\t", row.names = FALSE, quote = FALSE) ## exportar zf
 
-#####
-occ_wide_path<- file.path(outputFolder, "occ_wide.csv") # Define the file path for the 'val_wkt_path' output
-write.csv(occ_wide, occ_wide_path, row.names = T ) # Write the 'val_wkt_path' output
 #####
 final_path<- file.path(outputFolder, "final.csv") # Define the file path for the 'val_wkt_path' output
 write.csv(final, final_path, row.names = T ) # Write the 'val_wkt_path' output
 #### Outputing result to JSON ####
-output<- list(final = final)
+output<- list(final_export = final_path)
+
+
+VEB_path<- file.path(outputFolder, "VEB.csv") # Define the file path for the 'val_wkt_path' output
+write.csv(FVEB, VEB_path, row.names = T ) # Write the 'val_wkt_path' output
+#### Outputing result to JSON ####
+output<- list(VEB_export = VEB_path)
 
 #### Outputing result to JSON ####
 
