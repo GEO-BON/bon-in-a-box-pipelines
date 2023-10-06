@@ -34,9 +34,9 @@ inputs:
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
     example: null
-  country_code:
+  country:
     label: country code
-    description: Three letter code (ISO_3166-1_alpha-3 [https://www.iso.org/obp/ui/#search]) for the country where the analysis will be done.
+    description: Name of the country for the analysis. According to the 'rnaturalearth' package functions 'ne_countries' and 'ne_states' (https://github.com/ropensci/rnaturalearth)
     type: text
     example: COL
   region:
