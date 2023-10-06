@@ -50,8 +50,22 @@ ebird_habitat<- read.delim(input$auk_covars_file)
 
 
 ####  Script body ####
+#time to decimal function
+time_to_decimal <- function(x) {x <- lubridate::hms(x, quiet = TRUE); lubridate::hour(x) + lubridate::minute(x) / 60 + lubridate::second(x) / 3600} # function para convertir fechas en decimales
+
+# Clean ebd_zf -data standaritation
+ebd_occ <- ebird_habitat  %>% dplyr::rowwise() %>%
+  dplyr::mutate(observation_count = if(observation_count %in% "X"){NA}else{observation_count}) %>%  # Convertir en observation_count X observaciones en NA
+  dplyr::mutate(observation_count = as.integer(observation_count), # convertir observation_count en integer
+                # effort_distance_km to 0 for non-travelling counts
+                effort_distance_km = if_else(protocol_type != "Traveling", 0, effort_distance_km), # establecer esfuerzo de muestreo effor_distance_km en 0 cuando protocol sea igual a Traveling
+                #time_observations_started = time_to_decimal(time_observations_started),  # convertir fechas en decimales
+                year = lubridate::year(observation_date),# crrear columna año
+                day_of_year = lubridate::yday(observation_date),
+                species_observed = ifelse(isTRUE(species_observed),1,0) ) # crear columna dias
+
 # filter prior to creating occupancy model data
-ebird_filtered <- dplyr::filter(ebird_habitat, 
+ebird_filtered <- dplyr::filter(ebd_occ, 
                                 number_observers <= 5,
                                 year == max(year))
 # Data formatting
