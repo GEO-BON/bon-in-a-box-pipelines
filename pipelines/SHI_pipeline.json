@@ -587,11 +587,6 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 3
     },
-    "pipeline@51": {
-      "label": "Country code",
-      "description": "Country code for which the SHI is calculated",
-      "weight": 2
-    },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|img_shs_map": {
       "description": "Figure showing a map with changes in the habitat for the time range.",
       "label": "SHS map",
