@@ -576,6 +576,11 @@
       "description": "Species for which the SHI is generated",
       "weight": 1
     },
+    "pipeline@51": {
+      "label": "Country name",
+      "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+      "weight": 2
+    },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|r_habitat_by_tstep": {
       "description": "Raster of habitat by time step.",
       "label": "Habitat by time step",
@@ -627,7 +632,7 @@
   "metadata": {
     "name": "Species Habitat Index",
     "description": "This pipeline takes the outputs from the Species Habitat Score (SHS) pipeline and measures the Species Habitat Index for the species used as inputs, following the methodology proposed for Jetz et al. 2022 (https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf). The index has two componentes an Area Score and a Connectivity score that are measured for the habitat of the required species (Species Habitat Score), and the average between those scores for the study area is the Species Habitat Index. It can also have weight values assigned according to the proportion of the area of the habitat of the species that is located in the study area.",
-    "references":[
+    "references": [
       {
         "text": "Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]"
       },
