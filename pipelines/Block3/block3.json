@@ -1,0 +1,341 @@
+{
+    "nodes": [
+      {
+        "id": "1",
+        "type": "io",
+        "position": {
+          "x": 391.76898108164164,
+          "y": 573.1078098700178
+        },
+        "data": {
+          "descriptionFile": "data>loadFromStac.yml"
+        }
+      },
+      {
+        "id": "2",
+        "type": "constant",
+        "position": {
+          "x": -156.75574478195932,
+          "y": 431.2707717160671
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "https://io.biodiversite-quebec.ca/stac/"
+        }
+      },
+      {
+        "id": "3",
+        "type": "constant",
+        "position": {
+          "x": -312.14873695815743,
+          "y": 496.4338350821323
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "float[]",
+          "value": [
+            "-86.748047",
+            "33.72434",
+            "-52.207031",
+            "63.273182"
+          ]
+        }
+      },
+      {
+        "id": "4",
+        "type": "constant",
+        "position": {
+          "x": -387.5944218132245,
+          "y": 657.8221162348001
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "float",
+          "value": 0.008
+        }
+      },
+      {
+        "id": "5",
+        "type": "constant",
+        "position": {
+          "x": -378.1831805555882,
+          "y": 598.85523630657
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "EPSG:4326"
+        }
+      },
+      {
+        "id": "6",
+        "type": "constant",
+        "position": {
+          "x": -369.5859975359332,
+          "y": 39.41973092263399
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "chelsa-clim|bio1",
+            "chelsa-clim|bio2",
+            "chelsa-clim|bio3",
+            "chelsa-clim|bio4",
+            "chelsa-clim|bio5",
+            "chelsa-clim|bio6",
+            "chelsa-clim|bio7",
+            "chelsa-clim|bio8",
+            "chelsa-clim|bio9",
+            "chelsa-clim|bio10",
+            "chelsa-clim|bio11",
+            "chelsa-clim|bio12",
+            "chelsa-clim|bio13",
+            "chelsa-clim|bio14",
+            "chelsa-clim|bio15",
+            "chelsa-clim|bio16",
+            "chelsa-clim|bio17",
+            "chelsa-clim|bio18",
+            "chelsa-clim|bio19"
+          ]
+        }
+      },
+      {
+        "id": "9",
+        "type": "io",
+        "position": {
+          "x": 353.6499938964844,
+          "y": 884
+        },
+        "data": {
+          "descriptionFile": "data>loadFromStac.yml"
+        }
+      },
+      {
+        "id": "10",
+        "type": "constant",
+        "position": {
+          "x": -270.3500061035156,
+          "y": 775
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "esacci-lc|esacci-lc-2020"
+          ]
+        }
+      },
+      {
+        "id": "12",
+        "type": "output",
+        "position": {
+          "x": 953.6499938964844,
+          "y": 480
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "15",
+        "type": "output",
+        "position": {
+          "x": 838.6499938964844,
+          "y": 885
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "16",
+        "type": "io",
+        "position": {
+          "x": 1321.6499938964844,
+          "y": 685
+        },
+        "data": {
+          "descriptionFile": "Block3>climateUniqueness.yml"
+        }
+      },
+      {
+        "id": "17",
+        "type": "output",
+        "position": {
+          "x": 1761.6499938964844,
+          "y": 682
+        },
+        "data": {
+          "label": "Output"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "2",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "stac_url",
+        "id": "reactflow__edge-2-1stac_url"
+      },
+      {
+        "source": "3",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "bbox",
+        "id": "reactflow__edge-3-1bbox"
+      },
+      {
+        "source": "4",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "spatial_res",
+        "id": "reactflow__edge-4-1spatial_res"
+      },
+      {
+        "source": "5",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "proj",
+        "id": "reactflow__edge-5-1proj"
+      },
+      {
+        "source": "6",
+        "sourceHandle": null,
+        "target": "1",
+        "targetHandle": "collections_items",
+        "id": "reactflow__edge-6-1collections_items"
+      },
+      {
+        "source": "3",
+        "sourceHandle": null,
+        "target": "9",
+        "targetHandle": "bbox",
+        "id": "reactflow__edge-3-9bbox"
+      },
+      {
+        "source": "5",
+        "sourceHandle": null,
+        "target": "9",
+        "targetHandle": "proj",
+        "id": "reactflow__edge-5-9proj"
+      },
+      {
+        "source": "4",
+        "sourceHandle": null,
+        "target": "9",
+        "targetHandle": "spatial_res",
+        "id": "reactflow__edge-4-9spatial_res"
+      },
+      {
+        "source": "10",
+        "sourceHandle": null,
+        "target": "9",
+        "targetHandle": "collections_items",
+        "id": "reactflow__edge-10-9collections_items"
+      },
+      {
+        "source": "2",
+        "sourceHandle": null,
+        "target": "9",
+        "targetHandle": "stac_url",
+        "id": "reactflow__edge-2-9stac_url"
+      },
+      {
+        "source": "1",
+        "sourceHandle": "rasters",
+        "target": "12",
+        "targetHandle": null,
+        "id": "reactflow__edge-1rasters-12"
+      },
+      {
+        "source": "9",
+        "sourceHandle": "rasters",
+        "target": "15",
+        "targetHandle": null,
+        "id": "reactflow__edge-9rasters-15"
+      },
+      {
+        "source": "1",
+        "sourceHandle": "rasters",
+        "target": "16",
+        "targetHandle": "layers",
+        "id": "reactflow__edge-1rasters-16layers"
+      },
+      {
+        "source": "9",
+        "sourceHandle": "rasters",
+        "target": "16",
+        "targetHandle": "water_mask",
+        "id": "reactflow__edge-9rasters-16water_mask"
+      },
+      {
+        "source": "16",
+        "sourceHandle": "climate_uniqueness",
+        "target": "17",
+        "targetHandle": null,
+        "id": "reactflow__edge-16climate_uniqueness-17"
+      }
+    ],
+    "inputs": {
+      "data>loadFromStac.yml@1|weight_matrix_with_ids": {
+        "description": "Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.",
+        "label": "Weight matrix with ids",
+        "type": "text",
+        "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+      },
+      "data>loadFromStac.yml@1|mask": {
+        "description": "Shapefile, used to mask the output rasters",
+        "label": "mask",
+        "type": "application/dbf"
+      },
+      "data>loadFromStac.yml@9|weight_matrix_with_ids": {
+        "description": "Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.",
+        "label": "Weight matrix with ids",
+        "type": "text",
+        "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+      },
+      "data>loadFromStac.yml@9|mask": {
+        "description": "Shapefile, used to mask the output rasters",
+        "label": "mask",
+        "type": "application/dbf"
+      },
+      "Block3>climateUniqueness.yml@16|k": {
+        "description": "the value of k for the k-means algorithm",
+        "label": "k",
+        "type": "int",
+        "example": 5
+      }
+    },
+    "outputs": {
+      "data>loadFromStac.yml@1|rasters": {
+        "description": "array of output raster paths",
+        "label": "rasters",
+        "type": "image/tiff;application=geotiff[]"
+      },
+      "data>loadFromStac.yml@9|rasters": {
+        "description": "array of output raster paths",
+        "label": "rasters",
+        "type": "image/tiff;application=geotiff[]"
+      },
+      "Block3>climateUniqueness.yml@16|climate_uniqueness": {
+        "description": "map",
+        "label": "climate uniqueness",
+        "type": "image/tiff;application=geotiff"
+      }
+    },
+    "metadata": {
+      "name": "pipeline",
+      "description": "da pipline",
+      "author": [
+        {
+          "name": "Michael D. Catchen",
+          "identifier": null
+        }
+      ],
+      "license": "MIT",
+      "external_link": null
+    }
+  }
