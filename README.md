@@ -330,4 +330,3 @@ To share your modifications, commit and push on a branch using git. Then, create
 The linked content is intended for those developing the microservice infrastructure supporting the pipelines.
 
 [Developer documentation](/README-dev.md)
-
