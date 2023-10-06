@@ -34,11 +34,11 @@ inputs:
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf
     example: null
-  country:
-    label: country code
+  country_code:
+    label: country
     description: 'Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
     type: text
-    example: COL
+    example: Colombia
   region:
     label: region
     description: 'For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
