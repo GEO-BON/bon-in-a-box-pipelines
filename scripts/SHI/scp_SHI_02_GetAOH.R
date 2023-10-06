@@ -6,7 +6,7 @@ print(Sys.getenv("SCRIPT_LOCATION"))
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
-              "geodata","gdalcubes","stacatalogue","rredlist","stringr")
+              "geodata","gdalcubes","stacatalogue","rredlist","stringr","rnaturalearth","rnaturalearthhires")
 
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
@@ -90,10 +90,10 @@ study_area <- data.frame(text=study_area_opt,
   ))
 
 if(study_area$option == 1){
-  sf_area_lim1 <- gadm(country=country_code, level=0, path=tempdir()) |> st_as_sf() |> st_make_valid() # country
+  sf_area_lim1 <- ne_countries(country = country_code,returnclass = 'sf') |> st_make_valid() # country
 }
 if(study_area$option == 2){
-  sf_area_lim1 <- gadm(country=country_code, level=1, path=tempdir()) |> st_as_sf() |> st_make_valid() |> filter(NAME_1==region) # region in a country
+  sf_area_lim1 <- ne_states(geounit="canada",returnclass = 'sf') |> st_make_valid() |> filter(woe_name==region) # region in a country
 }
 if(study_area$option == 3){
   sf_area_lim1 <- st_read(study_area_path) # user defined area
