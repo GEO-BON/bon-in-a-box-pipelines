@@ -8,7 +8,7 @@ packagesNeed<-list("rstudioapi", "magrittr", "dplyr", "plyr",  "raster", "terra"
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "terra", "auk") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+packagesList<-list("magrittr", "terra", "auk","MuMIn", "AICcmodavg", "raster", "ggplot2", "janitor") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 
 
@@ -44,7 +44,7 @@ input<- lapply(input, function(x) if( grepl("/", x) ){
 # There are two options to set 'outputFolder'
 # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
 
-# Precargar datos de ocurrencia y listas
+# Load data in eBird fortmat to unmarked
 occ_wide<- read.delim(input$eBird_format_file)
 #occ_wide<- read.table("occ_wide.txt", sep= "\t")
 ####  Script body ####
@@ -64,13 +64,13 @@ res_occ<-summary(occ_model)
 state<- as.data.frame(res_occ$state)
 det<- as.data.frame(res_occ$det)
 #write.table(state,"occ_state.txt", sep= "\t", row.names = TRUE)
-write.csv(state, "occ_state.csv")
+#write.csv(state, "occ_state.csv")
 #occ_det<- write.table("occ_det.txt", sep= "\t", header = TRUE, row.names = 1)
-write.csv(det, "occ_det.csv")
+#write.csv(det, "occ_det.csv")
 #######################
 # Assessment
 #####################
-occ_gof <- AICcmodavg::mb.gof.test(occ_model, nsim = 5, plot.hist = FALSE)
+occ_gof <- AICcmodavg::mb.gof.test(occ_model, nsim = 20, plot.hist = FALSE)
 # hide the chisq table to give simpler output
 sa<-occ_gof$chisq.table <- NULL
 print(occ_gof)
@@ -107,7 +107,7 @@ mutate_all(mc, ~ round(., 3)) %>%
 write.csv(mc, "model_selection.csv")
 write.table("model_selection.txt", sep= "\t", header = TRUE, row.names = 1)
 # select models with the most support for model averaging (< 2.5 delta aicc)
-occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 6)
+occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 8)
 # average models based on model weights 
 occ_avg <- MuMIn::model.avg(occ_dredge_delta, fit = TRUE)
 # model averaged coefficients for occupancy and detection probability
@@ -131,7 +131,9 @@ coef(occ_avg) %>%
 ##########
 #Prediction
 ##########
-pred_surface <- read.csv("pland-elev_prediction-surface.csv")
+# Load data of prediction surface
+pred_surface<- read.delim(input$pred_surface)
+#pred_surface <- read.csv("pland-elev_prediction-surface.csv")
 
 pred_surface_selec<-pred_surface %>% dplyr::select(id, Longitude, Latitude, altitud, huella)
 
@@ -147,26 +149,37 @@ pred_occ <- bind_cols(pred_surface,
   dplyr::select(Latitude, Longitude, occ_prob, occ_se)
 
 ## Raster points using the predicciotn surface raster template
-r <- raster("grilla_base.tif")
+base_grid<- list.files(input$base_grid, "\\.tif$", recursive = TRUE, full.names = TRUE)
+
+base_grid <- raster("grilla_base.tif")
 r_pred <- pred_occ %>% 
   # convert to spatial features
   st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>% 
-  st_transform(crs = raster::projection(r)) %>% 
+  st_transform(crs = raster::projection(base_grid)) %>% 
   # rasterize
-  raster::rasterize(r)
+  raster::rasterize(base_grid)
 r_pred <- r_pred[[c("occ_prob", "occ_se")]]
 
+
+# export graph
+occprob_raster_path<- file.path(outputFolder, "occupancy-model_prob.tif") # Define the file path for the 'val_wkt_path' output
+occprob_raster<-writeRaster(r_pred[["occ_prob"]], "occupancy-model_prob.tif", overwrite = TRUE) # occ prop map
+
+occse_raster_path<- file.path(outputFolder, "occupancy-model_prob.tif") # Define the file path for the 'val_wkt_path' output
+occse_raster<-writeRaster(r_pred[["occ_se"]], "occupancy-model_se.tif", overwrite = TRUE) # se map
+
+
 # save the raster
-tif_dir <- "output"
-if (!dir.exists(tif_dir)) {
-  dir.create(tif_dir)
-}
-writeRaster(r_pred[["occ_prob"]], 
-            filename = file.path(tif_dir, "occupancy-model_prob_Tyrannus_melanchilicus.tif"),
-            overwrite = TRUE)
-writeRaster(r_pred[["occ_se"]], 
-            filename = file.path(tif_dir, "occupancy-model_se_Tyrannus_melanchilicus.tif"), 
-            overwrite = TRUE)
+#tif_dir <- "output"
+#if (!dir.exists(tif_dir)) {
+#  dir.create(tif_dir)
+#}
+#writeRaster(r_pred[["occ_prob"]], 
+#            filename = file.path(tif_dir, "occupancy-model_prob_Tyrannus_melanchilicus.tif"),
+#            overwrite = TRUE)
+#writeRaster(r_pred[["occ_se"]], 
+#            filename = file.path(tif_dir, "occupancy-model_se_Tyrannus_melanchilicus.tif"), 
+#            overwrite = TRUE)
 #######
 #Graphs
 #######
@@ -218,9 +231,14 @@ occPlot<-ggplot(data=occCovariatePredOcc)+
 
 occPlotFacet<-occPlot+facet_wrap(.~CovariateName, scales="free",ncol=3)
 occPlotFacet
+# export graph
+occPlotFacet_path<- file.path(outputFolder, "occ_plot.jpeg") # Define the file path for the 'val_wkt_path' output
+jpeg("occ_plot.jpeg", quality = 300)  # plot graph
 
-# load raster occ to get VE
-mi_raster <- raster("occupancy-model_prob_Tyrannus_melanchilicus.tif")
+#### Outputing result to JSON ####
+output<- list(final = final)
+
+# Final table and VEB 
 # create classification matrix
 reclass_df <- c(0, 0.2, 1,
                 0.2, 0.4, 2,
@@ -232,7 +250,7 @@ reclass_m <- matrix(reclass_df,
                     ncol = 3,
                     byrow = TRUE)
 # reclassify the raster using the reclass object - reclass_m
-chm_classified <- reclassify(mi_raster,
+chm_classified <- reclassify(occprob_raster,
                              reclass_m)
 # Calculate area after clasification
 tbl<-rasterToPoints(chm_classified, spatial = FALSE)
@@ -251,17 +269,22 @@ rsult$range <- c('0.0<Ψ≤0.2', '0.2<Ψ≤0.4', '0.4<Ψ≤0.6', '0.6<Ψ≤0.8',
 # get final table report 
 final<- data.frame(rsult$range, rsult$area, rsult$percent)
 names(final) <- c("Range", "Area (Km²)", "Pergentage")
-final<- final %>% adorn_totals("row")
+final<- final %>% janitor::adorn_totals("row")
 # get occupancy area VEB
 VEB<- rsult %>% dplyr::filter(range== "0.6<Ψ≤0.8" | range== "0.8<Ψ≤1") %>% 
   dplyr::summarize(VEB = sum(area))
 FVEB <- paste0("Occupancy area VEB (Ψ>0.6) = ", VEB$VEB, " Km²")
-#export resulsts
-write_csv2(final, "tabla_VEB.csv")
+#export resulsts (aqui no estoy seguro como exportar)
+write.table(final, "tabla_VEB.csv", sep = "\t", row.names = FALSE, quote = FALSE) ## exportar zf
 
-write.table(final, dir_ebdfile, sep = "\t", row.names = FALSE, quote = FALSE) ## exportar zf
-
-output<- list(dir_ebd_zerofill = dir_ebd_zerofill)
+#####
+occ_wide_path<- file.path(outputFolder, "occ_wide.csv") # Define the file path for the 'val_wkt_path' output
+write.csv(occ_wide, occ_wide_path, row.names = T ) # Write the 'val_wkt_path' output
+#####
+final_path<- file.path(outputFolder, "final.csv") # Define the file path for the 'val_wkt_path' output
+write.csv(final, final_path, row.names = T ) # Write the 'val_wkt_path' output
+#### Outputing result to JSON ####
+output<- list(final = final)
 
 #### Outputing result to JSON ####
 

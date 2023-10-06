@@ -7,6 +7,16 @@ inputs:
     description: "Input data with eBird format"
     type: dataframe
     example:  "scripts/00_occ_model_results/input/occ_wide.txt"
+  pred_surface:
+    label: pred_surface
+    description: "Data frame with prediction supeface"
+    type: dataframe
+    example:  "scripts/00_occ_model_results/input/pland-elev_prediction-surface.csv"
+  base_grid:
+    label: base_grid
+    description: "tif with base grid"
+    type: dataframe
+    example:  "scripts/00_occ_model_results/input/grilla_base.tif"
   formula:
     label: formula
     description: "Double right-hand side formula describing covariates of detection and occupancy in that order. Each covariates must be with ~ symbol. To add occupancy/ detection covariates it use + symbol."
@@ -55,7 +65,7 @@ outputs:
   occPlotFacet:
     label: occPlotFacet
     description: "Get a graph of the response of the covariates and occupancy prop"
-    type: text/csv
+    type: jpg
   final_table:
     label: final_table
     description: "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ"
