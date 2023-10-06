@@ -1,0 +1,66 @@
+script: occ_model_results.R
+description: "This script get the occupancy models result, exploring results and plot graph and maps."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  auk_covars_file:
+    label: eBird_format_file
+    description: "Input data with eBird format"
+    type: dataframe
+    example:  "scripts/00_occ_model_results/input/occ_wide.txt"
+  formula:
+    label: formula
+    description: "Double right-hand side formula describing covariates of detection and occupancy in that order. Each covariates must be with ~ symbol. To add occupancy/ detection covariates it use + symbol."
+    type: text
+    example:  "~ duration_minutes ~ huella + altitud"
+  nsim:
+    label: nsim
+    description: "The number of bootstrapped samples"
+    type: int
+    example: 10
+  plot.hist:
+    label: plot.hist
+    description: "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample."
+    type: logical
+    example:  FALSE
+  occformulalists:
+    label: occformulalists
+    description: "List of ocupancy covatieties to plot"
+    type: int
+    example: "~1~altitud, ~1~huella"
+outputs:
+  occ_state:
+    label: occ_state
+    description: "Data frame with a summary resulto of occupancy model stats"
+    type: text/csv
+  occ_det:
+    label: occ_det
+    description: "Data frame with a summary resulto of detection model stats"
+    type: text/csv
+  assesment:
+    label: assessment
+    description: "Results of assesment model with coecficents"
+    type: text/csv
+  Model_seleccion:
+    label: Model_seleccion
+    description: "Results of model selecction"
+    type: text/csv
+  Map_prediction:
+    label: Map_prediction
+    description: "Raster map with occupancy model probability and standar error"
+    type: tif
+  Model_seleccion:
+    label: Model_seleccion
+    description: "Results of model selecction"
+    type: text/csv
+  occPlotFacet:
+    label: occPlotFacet
+    description: "Get a graph of the response of the covariates and occupancy prop"
+    type: text/csv
+  final_table:
+    label: final_table
+    description: "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ"
+    type: text/csv
+  FVEB:
+    label: FVEB
+    description: "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)"
+    type: text/csv
