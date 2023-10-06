@@ -6,7 +6,7 @@ print(Sys.getenv("SCRIPT_LOCATION"))
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
-              "geodata","gdalcubes","stacatalogue","rredlist","stringr","rnaturalearth","rnaturalearthhires")
+              "geodata","gdalcubes","stacatalogue","rredlist","stringr")
 
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
@@ -23,6 +23,16 @@ print("Inputs: ")
 print(input)
 
 source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
+
+get_country<-function(country){
+  resp <- req_perform( request(paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=",country)))
+  geojson_sf(resp_body_string(resp))
+}
+
+get_state<-function(country,region){
+  resp <- req_perform( request(paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?state_name=",region,"&country_name=",country)))
+  geojson_sf(resp_body_string(resp))
+}
 
 # Parameters -------------------------------------------------------------------
 # spatial resolution
@@ -90,10 +100,10 @@ study_area <- data.frame(text=study_area_opt,
   ))
 
 if(study_area$option == 1){
-  sf_area_lim1 <- ne_countries(country = country_code,returnclass = 'sf') |> st_make_valid() # country
+  sf_area_lim1 <- get_country(country_code) |> st_make_valid() # country
 }
 if(study_area$option == 2){
-  sf_area_lim1 <- ne_states(geounit=country_code,returnclass = 'sf') |> st_make_valid() |> filter(woe_name==region) # region in a country
+  sf_area_lim1 <- get_state(country_code,region) |> st_make_valid() # region in a country
 }
 if(study_area$option == 3){
   sf_area_lim1 <- st_read(study_area_path) # user defined area
