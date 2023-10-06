@@ -93,7 +93,7 @@ if(study_area$option == 1){
   sf_area_lim1 <- ne_countries(country = country_code,returnclass = 'sf') |> st_make_valid() # country
 }
 if(study_area$option == 2){
-  sf_area_lim1 <- ne_states(geounit="canada",returnclass = 'sf') |> st_make_valid() |> filter(woe_name==region) # region in a country
+  sf_area_lim1 <- ne_states(geounit=country_code,returnclass = 'sf') |> st_make_valid() |> filter(woe_name==region) # region in a country
 }
 if(study_area$option == 3){
   sf_area_lim1 <- st_read(study_area_path) # user defined area
