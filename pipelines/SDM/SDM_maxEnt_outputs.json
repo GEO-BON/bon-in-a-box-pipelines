@@ -959,7 +959,7 @@
   },
   "metadata": {
     "name": "Species distribution modeling with Maxent",
-    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Several background methods are possible, including randomly  distributed pseudo-absences throughout the region, background thickening  ([Vollering et al. 2019](https://doi.org/10.1111/ecog.04503)) and  target-group background selection ([Phillips et al. 2009](https://doi.org/10.1890/07-2153.1).  Bias correction is achieved using the target-group background selection method.  A variance map to represent the prediction  uncertainty is generated through bootstraping.",
+    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Several background methods are possible, including randomly  distributed pseudo-absences throughout the region, background thickening  ([Vollering et al. 2019](https://doi.org/10.1111/ecog.04503)) and  target-group background selection ([Phillips et al. 2009](https://doi.org/10.1890/07-2153.1)).  Bias correction is achieved using the target-group background selection method.  A variance map to represent the prediction  uncertainty is generated through bootstraping.",
     "author": [
       {
         "name": "Sarah Valentin",
