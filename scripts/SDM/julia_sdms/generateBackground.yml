@@ -23,6 +23,6 @@ inputs:
 outputs:
   background:
     label: background
-    description: TSV file containing with the coordinates background points.
+    description: TSV file containing the background points coordinates.
     type: text/tab-separated-values
 
