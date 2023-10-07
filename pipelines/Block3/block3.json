@@ -26,7 +26,7 @@
       },
       {
         "id": "3",
-        "type": "constant",
+        "type": "userInput",
         "position": {
           "x": -312.14873695815743,
           "y": 496.4338350821323
@@ -57,10 +57,10 @@
       },
       {
         "id": "6",
-        "type": "constant",
+        "type": "userInput",
         "position": {
-          "x": -369.5859975359332,
-          "y": 39.41973092263399
+          "x": -429.5859975359332,
+          "y": 67.41973092263399
         },
         "dragHandle": ".dragHandle",
         "data": {
@@ -283,6 +283,41 @@
         "position": {
           "x": 1743.3434534806934,
           "y": 102.68967835196827
+        },
+        "data": {
+          "label": "Output"
+        }
+      },
+      {
+        "id": "43",
+        "type": "userInput",
+        "position": {
+          "x": 1079.0333251953125,
+          "y": 719.6666717529297
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 5
+        }
+      },
+      {
+        "id": "44",
+        "type": "io",
+        "position": {
+          "x": 2260.0333251953125,
+          "y": 440.6666717529297
+        },
+        "data": {
+          "descriptionFile": "Block3>weightLayers.yml"
+        }
+      },
+      {
+        "id": "46",
+        "type": "output",
+        "position": {
+          "x": 2617.6873111923583,
+          "y": 439.7879847872508
         },
         "data": {
           "label": "Output"
@@ -541,20 +576,93 @@
         "target": "42",
         "targetHandle": null,
         "id": "reactflow__edge-41climate_velocity-42"
+      },
+      {
+        "source": "43",
+        "sourceHandle": null,
+        "target": "16",
+        "targetHandle": "k",
+        "id": "reactflow__edge-43-16k"
+      },
+      {
+        "source": "41",
+        "sourceHandle": "climate_velocity",
+        "target": "44",
+        "targetHandle": "climate_velocity",
+        "id": "reactflow__edge-41climate_velocity-44climate_velocity"
+      },
+      {
+        "source": "16",
+        "sourceHandle": "climate_uniqueness",
+        "target": "44",
+        "targetHandle": "climate_uniqueness",
+        "id": "reactflow__edge-16climate_uniqueness-44climate_uniqueness"
+      },
+      {
+        "source": "9",
+        "sourceHandle": "rasters",
+        "target": "44",
+        "targetHandle": "accessibility",
+        "id": "reactflow__edge-9rasters-44accessibility"
+      },
+      {
+        "source": "44",
+        "sourceHandle": "priority_map",
+        "target": "46",
+        "targetHandle": null,
+        "id": "reactflow__edge-44priority_map-46"
+      },
+      {
+        "source": "24",
+        "sourceHandle": null,
+        "target": "9",
+        "targetHandle": "weight_matrix_with_ids",
+        "id": "reactflow__edge-24-9weight_matrix_with_ids"
       }
     ],
     "inputs": {
-      "data>loadFromStac.yml@9|weight_matrix_with_ids": {
-        "description": "Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.",
-        "label": "Weight matrix with ids",
-        "type": "text",
-        "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+      "pipeline@3": {
+        "label": "bbox",
+        "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+        "type": "float[]",
+        "example": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
       },
-      "Block3>climateUniqueness.yml@16|k": {
-        "description": "the value of k for the k-means algorithm",
+      "pipeline@6": {
+        "label": "collections_items",
+        "description": "Vector of strings, collection name followed by '|' followed by item id",
+        "type": "text[]",
+        "example": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
+        ]
+      },
+      "pipeline@43": {
         "label": "k",
+        "description": "the value of k for the k-means algorithm",
         "type": "int",
         "example": 5
+      },
+      "Block3>weightLayers.yml@44|uncertainty": {
+        "description": "uncertainty in the inference of some value across space",
+        "label": "uncertainty",
+        "type": "image/tiff;application=geotiff",
+        "example": "y2000_class210_binary.tif"
+      },
+      "Block3>weightLayers.yml@44|weights": {
+        "description": "weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]",
+        "label": "weights",
+        "type": "float[]",
+        "example": [
+          0.3,
+          0.2,
+          0.4,
+          0.1
+        ]
       }
     },
     "outputs": {
@@ -576,6 +684,11 @@
       "Block3>climateVelocity.yml@41|climate_velocity": {
         "description": "map",
         "label": "climate velocity",
+        "type": "image/tiff;application=geotiff"
+      },
+      "Block3>weightLayers.yml@44|priority_map": {
+        "description": "Sampling priority map.",
+        "label": "priority_map",
         "type": "image/tiff;application=geotiff"
       }
     },
