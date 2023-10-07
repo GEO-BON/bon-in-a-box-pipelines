@@ -15,6 +15,7 @@ RUN cd BonInABoxScriptService; npm run build; cd ..; \
 # add app
 COPY . ./
 
+ENV REACT_APP_VIEWER_HOST=${REACT_APP_VIEWER_HOST}
 RUN npm run build
 CMD ["npm", "start"]
 

@@ -1,0 +1,31 @@
+script: climateVelocity.jl
+name: Climate Velocity
+description: "This script takes in multiple climate layers and computes the
+velocity (rate) of change of each layer standardized across the period
+1970-2100, split into four intervals. (This is because by default, CHELSA is
+provided that way)"
+author:
+  - name: Michael D. Catchen 
+    identifier: https://orcid.org/0000-0002-6506-6487
+inputs:
+  baseline_layers:
+    label: baseline_layers
+    description: a list of the baseline climate layers to use to compute velocity
+    type: image/tiff;application=geotiff[]
+    example: ["foo"]
+  end_layers:
+    label: end_layers
+    description: a list of the climate at the end of the period to compute
+    type: image/tiff;application=geotiff[]
+    example: "/output/foobar/lc.tif"
+  landcover:
+    label: landcover raster
+    description: land cover raster to mask out water
+    type: image/tiff;application=geotiff[]
+    example: "foo"
+outputs:
+  climate_velocity:
+    label: climate velocity
+    description: map
+    type: image/tiff;application=geotiff
+
