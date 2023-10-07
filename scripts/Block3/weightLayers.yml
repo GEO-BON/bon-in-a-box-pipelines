@@ -16,14 +16,14 @@ inputs:
     type: image/tiff;application=geotiff
     example: y2000_class210_binary.tif
   climate_velocity: 
-    label: climate uniqueness
+    label: climate velocity
     description: foobar
     type: image/tiff;application=geotiff
     example: y2000_class210_binary.tif
   accessibility:
     label: accessibility
     descrpition: foobar
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]
     example: y2000_class210_binary.tif
   weights:
     label: weights
