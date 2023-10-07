@@ -19,6 +19,7 @@ function get_features_and_labels(presences, absences, climate_layers)
     return X, y, coord
 end
 
+
 function layers_to_matrix!(climate_layers, mat, land_idx)
     for (i, idx) in enumerate(land_idx)
         for l in eachindex(climate_layers)
@@ -160,7 +161,7 @@ function main()
     open(output_json_path, "w") do f
         write(f, JSON.json(Dict(
             :sdm => sdm_path,
-            :uncertainty => uncertainty_path,
+            :sdm_uncertainty => uncertainty_path,
             :fit_stats => fit_stats_path
         )))
     end 

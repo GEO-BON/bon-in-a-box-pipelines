@@ -31,7 +31,7 @@ outputs:
     type: image/tiff;application=geotiff
   sdm_uncertainty:
     label: sdm_uncertainty
-    description: map of relative uncertainty
+    description: map of relative uncertainty 
     type: image/tiff;application=geotiff
   fit_stats:
     label: fit_stats
