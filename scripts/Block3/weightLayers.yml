@@ -22,7 +22,7 @@ inputs:
     example: y2000_class210_binary.tif
   accessibility:
     label: accessibility
-    descrpition: foobar
+    description: foobar
     type: image/tiff;application=geotiff[]
     example: y2000_class210_binary.tif
   weights:
