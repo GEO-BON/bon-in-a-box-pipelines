@@ -57,6 +57,7 @@ end
 
 function apply_pca_to_layers(pca, layers, land_idx)
     data_matrix = zeros(Float32, length(layers), length(land_idx))
+    @info size(layers[1]), pca
     feat_mat = convert_layers_to_features_matrix(layers, data_matrix, land_idx)
 
     pca_mat = MultivariateStats.transform(pca, feat_mat)
@@ -128,5 +129,4 @@ function main()
     write_outputs(runtime_dir, velocity)
 end
 
-@info "hello?????"
 main()
