@@ -1,6 +1,11 @@
 FROM julia:1.9.3
 
 # Pre-compiling Julia dependencies
-RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["SpeciesDistributionToolkit", "Dates", "Clustering", "JSON", "CSV", "DataFrames", "StatsBase", "EvoTrees", "MultivariateStats" ]); Pkg.instantiate();'
+# RUN  julia -e 'pwd(); using Pkg; Pkg.add.(["SpeciesDistributionToolkit", "Dates", "Clustering", "JSON", "CSV", "DataFrames", "StatsBase", "EvoTrees", "MultivariateStats" ]); Pkg.instantiate();'
+
+
 
 RUN date +"%Y-%m-%d %R" > /version.txt
+COPY Project.toml /root/Project.toml
+COPY instantiate.jl /root/instantiate.jl
+RUN julia --project=. /root/instantiate.jl
