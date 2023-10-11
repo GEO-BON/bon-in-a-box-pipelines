@@ -1,4 +1,5 @@
 using JSON
+using EvoTrees
 
 println("Hello World")
 outputFolder = ARGS[1]

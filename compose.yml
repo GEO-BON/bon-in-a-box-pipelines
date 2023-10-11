@@ -54,9 +54,9 @@ services:
   runner-julia:
     container_name: biab-runner-julia
     image: geobon/bon-in-a-box:runner-julia
-    # build:
-    #   context: ./runners
-    #   dockerfile: julia-dockerfile
+    build:
+       context: ./runners
+       dockerfile: julia-dockerfile
     command: sh # Avoids launching julia session that will not be used.
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
