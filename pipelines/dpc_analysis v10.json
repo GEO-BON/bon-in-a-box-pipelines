@@ -1,0 +1,168 @@
+{
+    "nodes": [
+      {
+        "id": "5",
+        "type": "io",
+        "position": {
+          "x": 144.29600211199545,
+          "y": 371.96752646182824
+        },
+        "data": {
+          "descriptionFile": "00_studyarea_to_WKT>studyarea_to_WKT.yml"
+        }
+      },
+      {
+        "id": "6",
+        "type": "io",
+        "position": {
+          "x": 686.5,
+          "y": 302
+        },
+        "data": {
+          "descriptionFile": "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml"
+        }
+      },
+      {
+        "id": "7",
+        "type": "userInput",
+        "position": {
+          "x": -199.7381227432755,
+          "y": 361.8692801887633
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "int",
+          "value": 3395
+        }
+      },
+      {
+        "id": "8",
+        "type": "constant",
+        "position": {
+          "x": 315.97044107172803,
+          "y": 200.87178196938828
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "options",
+          "value": "m",
+          "options": [
+            "m",
+            "km"
+          ]
+        }
+      },
+      {
+        "id": "9",
+        "type": "constant",
+        "position": {
+          "x": 229.01457304949872,
+          "y": 253.38968245806143
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text",
+          "value": "/scripts/00_spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
+        }
+      },
+      {
+        "id": "10",
+        "type": "constant",
+        "position": {
+          "x": 229.01457304949872,
+          "y": 295.5761926866677
+        },
+        "dragHandle": ".dragHandle",
+        "data": {
+          "type": "text[]",
+          "value": [
+            "id_pa",
+            "name"
+          ]
+        }
+      },
+      {
+        "id": "12",
+        "type": "output",
+        "position": {
+          "x": 1242.29432598992,
+          "y": 330.48460129195183
+        },
+        "data": {
+          "label": "Output"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "5",
+        "sourceHandle": "val_wkt_path",
+        "target": "6",
+        "targetHandle": "studyarea_wkt",
+        "id": "reactflow__edge-5val_wkt_path-6studyarea_wkt"
+      },
+      {
+        "source": "7",
+        "sourceHandle": null,
+        "target": "5",
+        "targetHandle": "studyarea_epsg",
+        "id": "reactflow__edge-7-5studyarea_epsg"
+      },
+      {
+        "source": "8",
+        "sourceHandle": null,
+        "target": "6",
+        "targetHandle": "unit_distance",
+        "id": "reactflow__edge-8-6unit_distance"
+      },
+      {
+        "source": "9",
+        "sourceHandle": null,
+        "target": "6",
+        "targetHandle": "spatial_file",
+        "id": "reactflow__edge-9-6spatial_file"
+      },
+      {
+        "source": "10",
+        "sourceHandle": null,
+        "target": "6",
+        "targetHandle": "column_group",
+        "id": "reactflow__edge-10-6column_group"
+      },
+      {
+        "source": "6",
+        "sourceHandle": "spatialunits_studyarea_data",
+        "target": "12",
+        "targetHandle": null,
+        "id": "reactflow__edge-6spatialunits_studyarea_data-12"
+      },
+      {
+        "source": "5",
+        "sourceHandle": "val_studyarea_epsg",
+        "target": "6",
+        "targetHandle": "studyarea_epsg",
+        "id": "reactflow__edge-5val_studyarea_epsg-6studyarea_epsg"
+      }
+    ],
+    "inputs": {
+      "00_studyarea_to_WKT>studyarea_to_WKT.yml@5|studyarea_path": {
+        "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
+        "label": "study area geometry",
+        "type": "text",
+        "example": "/scripts/00_studyarea_to_WKT/input/Arauca.gpkg"
+      },
+      "pipeline@7": {
+        "label": "study area EPSG in",
+        "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
+        "type": "int",
+        "example": 3395
+      }
+    },
+    "outputs": {
+      "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@6|spatialunits_studyarea_data": {
+        "description": "Refers to the dataset containing information about the spatial units analyzed within the study area.",
+        "label": "spatialunits_studyarea_data",
+        "type": "text/csv"
+      }
+    }
+  }
