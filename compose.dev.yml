@@ -5,7 +5,6 @@ version: "3.7"
 services:
   ## UI server to use when developing UI code
   ui:
-    container_name: biab-ui
     build:
       context: ./ui
       dockerfile: Dockerfile.dev
@@ -21,15 +20,11 @@ services:
       # https://github.com/facebook/create-react-app/issues/11779
       - WDS_SOCKET_PORT=0
       - REACT_APP_VIEWER_HOST=${REACT_APP_VIEWER_HOST}
-    depends_on:
-      - script-server
-      - tiler
 
   http-gateway:
     volumes:
       - ./http-proxy/conf.d:/etc/nginx/conf.d:rw
     depends_on:
-      - ui
       - openapi_swagger
 
   ## In the DEV version, using a volume and a single docker. To rebuild without restarting everything, use
