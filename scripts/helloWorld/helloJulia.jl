@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate("/root")
+
 using JSON
 using EvoTrees
 

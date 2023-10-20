@@ -1,0 +1,18 @@
+[deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Clustering = "aaaa29a8-35af-508c-8bc3-b662a17a0fe5"
+DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
+EvoTrees = "f6006082-12f8-11e9-0c9c-0d5d367ab1e5"
+JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
+MultivariateStats = "6f286f6a-111f-5878-ab1e-185364afe411"
+SpeciesDistributionToolkit = "72b53823-5c0b-4575-ad0e-8e97227ad13b"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
+
+[compat]
+CSV = "0.10"
+EvoTrees = "0.16"
+JSON = "0.21"
+MultivariateStats = "0.10"
+SpeciesDistributionToolkit = "0.0.8"
+StatsBase = "0.34"
+julia = "1.9"
