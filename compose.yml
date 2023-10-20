@@ -3,6 +3,12 @@
 version: "3.7"
 
 services:
+  ui:
+    container_name: biab-ui
+    depends_on:
+      - script-server
+      - tiler
+
   # This can be accessed within the docker network with http://biab-script-server:8081/script/...
   script-server:
     container_name: biab-script-server
@@ -78,6 +84,7 @@ services:
       - ./output:/static/output:ro
     depends_on:
       - script-server
+      - ui
 
   tiler:
     container_name: biab-tiler
