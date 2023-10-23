@@ -261,6 +261,8 @@ A pipeline is a collection of steps to acheive the desired processing. Each scri
 
 Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (rightmost red box in image above). Pipeline IO supports [the same types and UI rendering](#input-and-output-types) as individual steps, since its inputs are directly fed to the steps, and outputs come from the step outputs.
 
+For a general description of pipelines in software engineering, see [Wikipedia](https://en.wikipedia.org/wiki/Pipeline_%28software%29).
+
 ### Pipeline editor
 The pipeline editor allows you to create pipelines by plugging steps together.
 
