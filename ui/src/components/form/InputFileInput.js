@@ -87,6 +87,7 @@ const InputForm = ({ inputs, inputFileContent, setInputFileContent }) => {
                     value={example}
                     disabled="true"
                     cols="50"
+                    className="example"
                   />
                 </>}
               </td>
