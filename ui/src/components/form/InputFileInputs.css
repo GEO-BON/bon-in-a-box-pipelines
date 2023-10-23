@@ -26,6 +26,11 @@ table.inputFileFields td.descriptionCell {
     white-space: pre-wrap;
 }
 
+table.inputFileFields .example {
+    color: #f3f3f1;
+    background-color: transparent;
+}
+
 @media all and (max-width: 599px) {
     table, thead, tbody, th, td, tr {
         display: block;
