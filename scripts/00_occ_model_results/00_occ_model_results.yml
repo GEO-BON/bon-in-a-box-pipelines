@@ -7,6 +7,11 @@ inputs:
     description: "Input data with eBird format"
     type: dataframe
     example:  "scripts/00_occ_model_results/input/occ_wide.txt"
+  covars:
+    label: List covars
+    description: "List of covarieties"
+    type: text[]
+    example:  ["altitud", "huella"]
   pred_surface:
     label: pred_surface
     description: "Data frame with prediction supeface"
