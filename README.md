@@ -61,7 +61,7 @@ To run:
 
 When modifying scripts in the /scripts folder, servers do not need to be restarted:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
-- When adding or renamin scripts, refresh the browser page.
+- When adding or renaming scripts, refresh the browser page.
 
 When modifying pipelines in the /pipelines folder, servers do not need to be restarted:
 - In the pipeline editor, click save, paste the file to your file in the pipeline folder and run it from the "pipeline run" page.
