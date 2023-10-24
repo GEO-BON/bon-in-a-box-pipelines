@@ -9,7 +9,7 @@ inputs:
   area_study_area:
     label: Total area of study area
     description: "Numeric refering to the total area of the query area, this value is mandatory for the dPC calculation. Check that the area units are the same as those used in the data_spatial_unit parameter."
-    type: image/tiff;application=geotiff
+    type: int
   column_spatial_unit:
     label: ID colunm name
     description: "String refering to the name of the column in the data spatial unit file that contains the unique identifier ID of the spatial units or nodes that intersect the area of interest."
