@@ -78,7 +78,7 @@ You have an instance of BON in a Box running, either [locally](#running-the-serv
 
 There is one page to run scripts, and one to run pipelines. Select the script or pipelines from the dropdown and fill the form.
 
-The form might ask you for a file. In order to provide a file that you own locally, upload or copy it to the `userdata` folder. You can then refer to it with a url as such: `userdata/myFile.shp`, or `userdata/myFolder/myFile.shp` if there are subfolders.
+The form might ask you for a file. In order to provide a file that you own locally, upload or copy it to the `userdata` folder. You can then refer to it with a url as such: `/userdata/myFile.shp`, or `/userdata/myFolder/myFile.shp` if there are subfolders.
 
 ## Scripts
 The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
