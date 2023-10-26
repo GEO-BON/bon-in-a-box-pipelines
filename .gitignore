@@ -4,3 +4,8 @@
 .vscode
 **/.cache
 **/.config
+scripts/1_IAvH_functions/01_pp.R
+scripts/1_IAvH_functions/01_pp.yml
+scripts/IAvH_inputs/p&p_collection/metadata.json
+scripts/IAvH_inputs/p&p_collection/metadata.csv
+*.tif
