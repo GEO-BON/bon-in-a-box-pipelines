@@ -1,0 +1,72 @@
+script: protcon_analyisis.R
+name: Connectivity of PAs
+author: 
+ - name: Maria Alejandra Molina Berbeo
+ - name: Victor Julio Rincon
+description: This script a connectivity analysis between spatial units (ej. protected areas) using a distance matrix within a specified study area. It identifies connected pairs of spatial units based on a specified distance threshold and generates a connectivity table with connectivity status
+external_link: https://github.com/GEO-BON/biab-2.0
+
+inputs:
+  mtx_distance:
+    label: distance centroid matrix path
+    description: String path that represents the file location of a distance matrix containing distances between spatial units. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km). 
+    type: text/csv
+    example: "/scripts/protcon_analyisis/input/mtx_distance_centroid.csv"
+  area_study_area:
+    label: total study area
+    description: Refers to the total area of the analyzed study area. The unit of area in which it is defined is explicitly specified as the square of the unit_distance input (m2 or km2). 
+    type: int
+    example: 11000000000
+  distance_analysis:
+    label: distance analysis threshold
+    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).
+    type: int
+    example: 10000
+  unit_distance:
+    label: unit for distance measurement
+    description: Refers to the distance measurement unit (m or km) used to estimate connectivity between spatial analysis units. It defines the distance threshold for determining whether areas are considered connected.
+    type: options
+    options:
+      - m
+      - km
+    example: "m"
+  data_spatial_unit:
+    label: path to spatial unit 
+    description: String refers to the path string where the .csv file containing information required for the calculation of the indicator is located. There must be an ID for each spatial unit, name (if any) and the area of each one of them. If the analysis is done in time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration.
+    type: text/csv
+    example: "/scripts/protcon_analyisis/input/spatialunits_studyarea_data.csv"
+  column_spatial_unit:
+    label: spatial unit 
+    description: String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.
+    type: text
+    example: "spatial_unit"
+  column_area:
+    label: path to study area geometry  
+    description: Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.
+    type: text
+    example: "area_spatial_unit"
+  column_date:
+    label: date information column 
+    description: String that refers to the name of the column in the data_spatial_unit containing the date or time information corresponding to the spatial unit levels.
+    type: text
+    example: "created_date"
+  time_interval:
+    label: time intervals
+    description: Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis.
+    type: text
+    example: "10Y"
+  time_start:
+    label: start time
+    description: Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis
+    type: text
+    example: null
+  time_end:
+    label: end time 
+    description: Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis
+    type: text
+    example: null
+outputs:
+  protcon_result:
+    label: protcon results
+    description: "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities"
+    type: text/csv
