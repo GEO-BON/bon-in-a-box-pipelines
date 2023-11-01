@@ -30,7 +30,7 @@ inputs:
       ]
   r_area_of_habitat:
     label: area of habitat
-    description: Raster file with the area of habitat.
+    description: Raster file with the area of habitat for each species.
     type: image/tiff;application=geotiff[]
     example:
       [
@@ -38,7 +38,7 @@ inputs:
       ]
   sf_bbox:
     label: bounding box
-    description: Bounding box for the area of habitat.
+    description: Bounding box for the area of habitat for each species.
     type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf[]
     example: 
       [
@@ -46,7 +46,7 @@ inputs:
       ]
   min_forest:
     label: min forest
-    description: Minimum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
+    description: Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
     type: int[]
     example: 
       [
@@ -54,7 +54,7 @@ inputs:
       ]
   max_forest:
     label: max forest
-    description: Maximum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
+    description: Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
     type: int[]
     example: 
       [
@@ -78,7 +78,7 @@ inputs:
 outputs:
   img_shs_map:
     label: SHS map
-    description: Figure showing a map with changes in the habitat for the time range.
+    description: Figure showing a map with changes in the habitat for the time range for each species.
     type: image/png[]
   r_habitat_by_tstep:
     label: Habitat by time step
@@ -86,15 +86,15 @@ outputs:
     type: image/tiff;application=geotiff[]
   img_shs_timeseries:
     label: SHS time series
-    description: Figure showing a time series of SHS values for each time step.
+    description: Figure showing a time series of SHS values for each time step for each species.
     type: image/png[]
   df_shs:
     label: SHS table
-    description: A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.
+    description: A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score and SHS by time step for each species.
     type: text/tab-separated-values[]
   df_shs_tidy:
     label: SHS table (long format)
-    description: A TSV (Tab Separated Values) file in long format containing Habitat Score, Connectivity Score, and SHI by time step.
+    description: A TSV (Tab Separated Values) file in long format containing Habitat Score, Connectivity Score and SHS by time step for each species.
     type: text/tab-separated-values[]
 references:
 - text: Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)

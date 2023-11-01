@@ -1,8 +1,6 @@
 #-------------------------------------------------------------------------------
 # This script measures change on the habitat of the species associated to forest cover
 #-------------------------------------------------------------------------------
-# Script location can be used to access other scripts
-print(Sys.getenv("SCRIPT_LOCATION"))
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr","tmap",
