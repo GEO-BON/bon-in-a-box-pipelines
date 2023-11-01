@@ -226,5 +226,27 @@ fun Application.configureRouting() {
                     ?.let { it.substring(0, it.lastIndexOf(':')).replace('T', ' ') }}
                 """.trimIndent())
         }
+
+
+        post("/pipeline/save/{filename}") {
+            // TODO: Disallow on server. Env var?
+
+            val filename = call.parameters["filename"]!!
+            val pipelineContent = call.receive<String>()
+            val file = File(pipelinesRoot, "$filename.json")
+
+            // TODO: Validate json integrity
+            // TODO: Validate pipeline integrity
+
+            try {
+                file.delete()
+                file.writeText(pipelineContent)
+            } catch (ex:Exception) {
+                logger.warn(ex.message)
+                call.respondText(text = "Failed to save pipeline.", status = HttpStatusCode.BadRequest)
+            }
+
+            call.respond(HttpStatusCode.OK)
+        }
     }
 }

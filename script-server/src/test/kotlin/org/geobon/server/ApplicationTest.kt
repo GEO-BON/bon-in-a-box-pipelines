@@ -4,7 +4,7 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import io.mockk.InternalPlatformDsl.toArray
+import org.geobon.pipeline.RunContext
 import org.geobon.pipeline.outputRoot
 import org.geobon.server.plugins.configureRouting
 import org.json.JSONObject
@@ -43,7 +43,7 @@ class ApplicationTest {
             assertEquals("helloWorld.json", jsonResult.getString("helloWorld.json"))
         }
 
-        var id:String
+        var id: String
         client.post("/pipeline/helloWorld.json/run") {
             setBody("{\"helloWorld>helloPython.yml@0|some_int\":1}")
         }.apply {
@@ -57,7 +57,8 @@ class ApplicationTest {
 
             val folder = File(
                 outputRoot,
-                result.getString(result.keys().next()))
+                result.getString(result.keys().next())
+            )
             assertTrue(folder.isDirectory)
 
             val files = folder.listFiles()
@@ -78,7 +79,7 @@ class ApplicationTest {
             assertEquals("Python Example", jsonResult.getString("helloWorld>helloPython.yml"))
         }
 
-        var id:String
+        var id: String
         client.post("/script/helloWorld>helloPython.yml/run") {
             setBody("{\"some_int\":1}")
         }.apply {
@@ -92,13 +93,18 @@ class ApplicationTest {
 
             val folder = File(
                 outputRoot,
-                result.getString(result.keys().next()))
+                result.getString(result.keys().next())
+            )
             assertTrue(folder.isDirectory)
 
             val files = folder.listFiles()
-            assertTrue(files!!.size == 4, "Expected input, pipeline output, script output and log files to be there.\nFound ${files.toList()}")
+            assertTrue(
+                files!!.size == 4,
+                "Expected input, pipeline output, script output and log files to be there.\nFound ${files.toList()}"
+            )
 
-            assertEquals("""
+            assertEquals(
+                """
                 {
                   "increment": 2
                 }""".trimIndent(),
@@ -157,6 +163,7 @@ class ApplicationTest {
             assertEquals(HttpStatusCode.NotFound, status)
         }
     }
+
     @Test
     fun `given pipeline exists_when getting info_then info returned`() = testApplication {
         application { configureRouting() }
@@ -250,5 +257,89 @@ class ApplicationTest {
             assertEquals(HttpStatusCode.OK, status)
             println(bodyAsText())
         }
+    }
+
+    @Test
+    fun testSaveSuccess() = testApplication {
+        application { configureRouting() }
+
+        val file = File(RunContext.pipelineRoot, "temp.json")
+        file.delete()
+
+        val content = """
+                {
+                  "nodes": [
+                    {
+                      "id": "0",
+                      "type": "io",
+                      "position": {
+                        "x": 236.8125,
+                        "y": 287
+                      },
+                      "data": {
+                        "descriptionFile": "helloWorld>helloPython.yml"
+                      }
+                    },
+                    {
+                      "id": "1",
+                      "type": "output",
+                      "position": {
+                        "x": 593.8125,
+                        "y": 289
+                      },
+                      "data": {
+                        "label": "Output"
+                      }
+                    }
+                  ],
+                  "edges": [
+                    {
+                      "source": "0",
+                      "sourceHandle": "increment",
+                      "target": "1",
+                      "targetHandle": null,
+                      "id": "reactflow__edge-0increment-1"
+                    }
+                  ],
+                  "inputs": {
+                    "helloWorld>helloPython.yml@0|some_int": {
+                      "description": "A number that we will increment",
+                      "label": "Some int",
+                      "type": "int",
+                      "example": 3
+                    }
+                  },
+                  "outputs": {
+                    "helloWorld>helloPython.yml@0|increment": {
+                      "description": "bla bla",
+                      "label": "A number (input++)",
+                      "type": "int",
+                      "example": 4
+                    }
+                  },
+                  "metadata": {
+                    "name": "Hello World pipeline",
+                    "description": "This very simple pipeline shows how to connect a single script to a single output.\nThe input of the script is left blank, thus becoming a pipeline input.",
+                    "author": [
+                      {
+                        "name": "Jean-Michel Lord",
+                        "identifier": "https://orcid.org/0009-0007-3826-1125"
+                      }
+                    ],
+                    "license": "MIT",
+                    "external_link": "https://github.com/GEO-BON/biab-2.0"
+                  }
+                }
+            """.trimIndent()
+
+        client.post("/pipeline/save/temp") {
+            setBody(content)
+        }.apply {
+            assertEquals(HttpStatusCode.OK, status)
+            assertTrue(file.exists())
+            assertEquals(content, file.readText())
+        }
+
+        file.delete()
     }
 }
