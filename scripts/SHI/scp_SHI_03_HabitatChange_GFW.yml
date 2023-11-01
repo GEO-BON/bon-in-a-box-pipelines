@@ -39,7 +39,7 @@ inputs:
   sf_bbox:
     label: bounding box
     description: Bounding box for the area of habitat for each species.
-    type: application/geopackage+sqlite3 ; application/geo+json ; application/dbf[]
+    type: application/geopackage+sqlite3[]
     example: 
       [
         "/output/SHI/scp_SHI_02_GetAOH/eccbebe3a9ef4effc2ad36a25380b9ff/Saguinus oedipus/Saguinus oedipus_st_bbox.gpkg"
