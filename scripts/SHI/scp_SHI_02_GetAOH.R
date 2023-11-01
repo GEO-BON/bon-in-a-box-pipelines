@@ -1,8 +1,6 @@
 #-------------------------------------------------------------------------------
 # This script produces the base maps for the area of interest, based on the data for the species
 #-------------------------------------------------------------------------------
-# Script location can be used to access other scripts
-print(Sys.getenv("SCRIPT_LOCATION"))
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
