@@ -34,7 +34,7 @@ inputs:
     type: image/tiff;application=geotiff[]
     example:
       [
-        "/output/SHI/scp_SHI_02_GetAOH/eccbebe3a9ef4effc2ad36a25380b9ff/Saguinus oedipus/Saguinus oedipus_r_aoh.tif"
+        "/scripts/SHI/Saguinus oedipus_r_aoh.tif"
       ]
   sf_bbox:
     label: bounding box
@@ -42,7 +42,7 @@ inputs:
     type: application/geopackage+sqlite3[]
     example: 
       [
-        "/output/SHI/scp_SHI_02_GetAOH/eccbebe3a9ef4effc2ad36a25380b9ff/Saguinus oedipus/Saguinus oedipus_st_bbox.gpkg"
+        "/scripts/SHI/Saguinus oedipus_st_bbox.gpkg"
       ]
   min_forest:
     label: min forest
