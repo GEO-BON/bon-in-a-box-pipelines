@@ -746,22 +746,6 @@
     }
   },
   "metadata": {
-    "name": "Species Habitat Score",
-    "description": "This pipeline measures the Species Habitat Score (SHS), for the species used as inputs. It uses the range maps, the elevation ranges and the habitat categories available from The International Union for Conservation of Nature (IUCN). Changes in the habitat are measured using the Global Forest Watch layers and soon other land cover layers will be added. For the specific case of Quebec it has range maps available from the Ministère de l’Environnement. The outputs are a table with the changes in the area of the habitat by year requested and a graph with a timeseries of these values. Rasters of the habitat available for each year can also be requested.",
-    "author": [
-      {
-        "name": "Maria Isabel Arce-Plata",
-        "identifier": "https://orcid.org/0000-0003-4024-9268"
-      },
-      {
-        "name": "Guillaume Larocque",
-        "identifier": "https://orcid.org/0000-0002-5967-9156"
-      }
-    ],
-    "license": "CC BY",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI"
-  },
-  "metadata": {
     "name": "Species Habitat Index",
     "description": "This pipeline takes the outputs from the Species Habitat Score (SHS) pipeline and measures the Species Habitat Index for the species used as inputs, following the methodology proposed for Jetz et al. 2022 (https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf). The index has two componentes an Area Score and a Connectivity score that are measured for the habitat of the required species (Species Habitat Score), and the average between those scores for the study area is the Species Habitat Index. It can also have weight values assigned according to the proportion of the area of the habitat of the species that is located in the study area.",
     "references": [
