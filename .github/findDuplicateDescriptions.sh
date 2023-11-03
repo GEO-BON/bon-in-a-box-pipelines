@@ -3,7 +3,7 @@
 RED="\033[31m"
 ENDCOLOR="\033[0m"
 
-echo "Checking for duplicate lines inside each yml files..."
+echo "Checking for duplicate lines inside each yml file..."
 # This is a frequent error in step YML files when adding an additionnal param : 
 # Copy paste the param above and forget to change the description!
 

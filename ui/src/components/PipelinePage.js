@@ -23,7 +23,7 @@ import { useParams } from "react-router-dom";
 import { isEmptyObject } from "../utils/isEmptyObject";
 import { InlineSpinner } from "./Spinner";
 
-const pipelineConfig = { extension: ".json", defaultFile: "helloWorld.json" };
+const pipelineConfig = { extension: ".json", defaultFile: "walkthrough>1_helloWorld.json" };
 const scriptConfig = {
   extension: ".yml",
   defaultFile: "helloWorld>helloR.yml",
