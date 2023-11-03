@@ -35,6 +35,7 @@ services:
       dockerfile: Dockerfile.dev
     volumes:
       - ./script-server:/home/gradle/project:rw
+      - ./pipelines:/home/gradle/project/pipelines:rw
     working_dir: /home/gradle/project
     command: gradle run
     environment:

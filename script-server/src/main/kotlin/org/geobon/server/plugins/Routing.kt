@@ -230,10 +230,23 @@ fun Application.configureRouting() {
 
         post("/pipeline/save/{filename}") {
             // TODO: Disallow on server. Env var?
+            val pipelineFolder = File("pipelines")
+
+            if (!pipelineFolder.exists()) {
+                val outputFile = File(pipelineFolder, "output.txt")
+
+                try {
+                    val contentToWrite = "Hello, this is the content to be written to the file."
+                    outputFile.writeText(contentToWrite)
+                    println("File written successfully.")
+                } catch (e: Exception) {
+                    println("Error writing to the file: $e")
+                }
+            } 
 
             val filename = call.parameters["filename"]!!
             val pipelineContent = call.receive<String>()
-            val file = File(pipelinesRoot, "$filename.json")
+            val file = File(pipelineFolder, "$filename.json")
 
             // TODO: Validate json integrity
             // TODO: Validate pipeline integrity
@@ -243,9 +256,8 @@ fun Application.configureRouting() {
                 file.writeText(pipelineContent)
             } catch (ex:Exception) {
                 logger.warn(ex.message)
-                call.respondText(text = "Failed to save pipeline.", status = HttpStatusCode.BadRequest)
+                call.respondText(text = "Failed to save pipeline. hehe", status = HttpStatusCode.BadRequest)
             }
-
             call.respond(HttpStatusCode.OK)
         }
     }

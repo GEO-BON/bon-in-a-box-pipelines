@@ -33,6 +33,32 @@ paths:
                   "SHI.yml": "Species Habitat Index",
                   "Folder>SDM.yml": "Species distribution model"
                 }
+
+  /pipeline/save/{filename}:
+    post:
+      summary: Save a json file to the pipeline folder.
+      operationId: savePipeline
+      parameters:
+        - name: filename
+          in: path
+          description: The name of the JSON file.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Content of pipeline.json to save
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        "200":
+          description: File saved
+        "400":
+          description: Bad request
+        
   /{type}/{descriptionPath}/info:
     get:
       tags: []
@@ -388,3 +414,4 @@ components:
                 "occurence":"/output/result/from/previous/script", 
                 "intensity":3
               }
+      

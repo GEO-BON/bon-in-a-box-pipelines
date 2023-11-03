@@ -13,6 +13,7 @@ docs/InfoReferencesInner.md
 git_push.sh
 mocha.opts
 package.json
+src/ApiClient.js
 src/api/DefaultApi.js
 src/index.js
 src/model/Info.js

@@ -302,6 +302,52 @@ export default class DefaultApi {
     }
 
     /**
+     * Callback function to receive the result of the savePipeline operation.
+     * @callback module:api/DefaultApi~savePipelineCallback
+     * @param {String} error Error message, if any.
+     * @param data This operation does not return a value.
+     * @param {String} response The complete HTTP response.
+     */
+
+    /**
+     * Save a json file to the pipeline folder.
+     * @param {String} filename The name of the JSON file.
+     * @param {Object.<String, {String: Object}>} requestBody Content of pipeline.json to save
+     * @param {module:api/DefaultApi~savePipelineCallback} callback The callback function, accepting three arguments: error, data, response
+     */
+    savePipeline(filename, requestBody, callback) {
+      let postBody = requestBody;
+      // verify the required parameter 'filename' is set
+      if (filename === undefined || filename === null) {
+        throw new Error("Missing the required parameter 'filename' when calling savePipeline");
+      }
+      // verify the required parameter 'requestBody' is set
+      if (requestBody === undefined || requestBody === null) {
+        throw new Error("Missing the required parameter 'requestBody' when calling savePipeline");
+      }
+
+      let pathParams = {
+        'filename': filename
+      };
+      let queryParams = {
+      };
+      let headerParams = {
+      };
+      let formParams = {
+      };
+
+      let authNames = [];
+      let contentTypes = ['application/json'];
+      let accepts = [];
+      let returnType = null;
+      return this.apiClient.callApi(
+        '/pipeline/save/{filename}', 'POST',
+        pathParams, queryParams, headerParams, formParams, postBody,
+        authNames, contentTypes, accepts, returnType, null, callback
+      );
+    }
+
+    /**
      * Callback function to receive the result of the stop operation.
      * @callback module:api/DefaultApi~stopCallback
      * @param {String} error Error message, if any.

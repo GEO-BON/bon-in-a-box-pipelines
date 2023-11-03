@@ -67,6 +67,8 @@ export default function PipelineEditor(props) {
 
   const [popupMenuPos, setPopupMenuPos] = useState({ x: 0, y: 0 });
   const [popupMenuOptions, setPopupMenuOptions] = useState();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [fileName, setFileName] = useState('');
 
   // We need this since the functions passed through node data retain their old selectedNodes state.
   // Note that the stratagem fails if trying to add edges from many sources at the same time.
@@ -486,7 +488,7 @@ export default function PipelineEditor(props) {
     );
   }, [reactFlowInstance, setNodes]);
 
-  const onSave = useCallback(() => {
+  const onSave = useCallback((saveType) => {
     if (reactFlowInstance) {
       const flow = reactFlowInstance.toObject();
 
@@ -545,7 +547,8 @@ export default function PipelineEditor(props) {
         flow.metadata = yaml.load(metadata)
       }
 
-      navigator.clipboard
+      if (saveType === "clipboard") {
+        navigator.clipboard
         .writeText(JSON.stringify(flow, null, 2))
         .then(() => {
           alert(
@@ -555,6 +558,19 @@ export default function PipelineEditor(props) {
         .catch(() => {
           alert("Error: Failed to copy content to clipboard.");
         });
+      }
+      else if (saveType === "server") {
+        api.savePipeline(fileName, JSON.stringify(flow, null, 2), (error, data, response) => {
+          if (error) {
+            if (response && response.text) alert(response.text);
+            else{
+              alert(error.toString());
+            }
+          } else {
+            alert("Pipeline saved to server.");
+          }
+        });
+      }
     }
   }, [reactFlowInstance, inputList, outputList, metadata]);
 
@@ -713,6 +729,20 @@ export default function PipelineEditor(props) {
     onPopupMenu
   ]);
 
+  const openModal = () => {
+    setFileName('');
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSaveFileToServer = () => {
+    closeModal();
+    onSave("server");
+  };
+
   return (
     <div id="editorLayout">
       <p>
@@ -725,6 +755,22 @@ export default function PipelineEditor(props) {
           the documentation
         </a>
       </p>
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h2>Enter File Name</h2>
+            <p>(Do not add an extension)</p>
+            <input
+              type="text"
+              placeholder="Save As..."
+              value={fileName}
+              onChange={(e) => setFileName(e.target.value)}
+            />
+            <button onClick={handleSaveFileToServer}>Save</button>
+            <button onClick={closeModal}>Cancel</button>
+          </div>
+        </div>
+      )}
       <div className="dndflow">
         <ReactFlowProvider>
           <div className="reactflow-wrapper" ref={reactFlowWrapper}>
@@ -759,7 +805,8 @@ export default function PipelineEditor(props) {
                 <button onClick={onLoadFromServerBtnClick}>
                   Load from server
                 </button>
-                <button onClick={onSave}>Save to clipboard</button>
+                <button onClick={() => onSave("clipboard")}>Save to clipboard</button>
+                <button onClick={() => openModal()}>Save to server</button>
               </div>
 
               <Controls />
