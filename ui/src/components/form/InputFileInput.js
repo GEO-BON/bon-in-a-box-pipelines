@@ -85,7 +85,7 @@ const InputForm = ({ inputs, inputFileContent, setInputFileContent }) => {
                     type={inputDescription.type}
                     options={options}
                     value={example}
-                    disabled="true"
+                    disabled={true}
                     cols="50"
                     className="example"
                   />
