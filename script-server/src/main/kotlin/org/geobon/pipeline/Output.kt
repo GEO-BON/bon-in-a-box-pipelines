@@ -18,7 +18,9 @@ class Output(override val type:String) : Pipe {
             step?.execute()
                 ?: throw RuntimeException("Output of type $type disconnected from any step when pulling")
         }
-        return value ?: throw RuntimeException("Output of type $type has not been set by step $step")
+        return value
+            ?: throw RuntimeException("Output of type \"$type\" has not been set by " +
+                    step?.run { "${javaClass.simpleName} $id" })
     }
 
     override suspend fun pullIf(condition: (step: Step) -> Boolean): Any? {
