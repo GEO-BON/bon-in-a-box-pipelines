@@ -120,6 +120,11 @@ outputs:
           type:
             - image/tiff;application=geotiff
             - image/tiff;application=geotiff[]
+
+      weight:
+        required: false
+        type: number
+
       example:
         required: false
         nullable: true
