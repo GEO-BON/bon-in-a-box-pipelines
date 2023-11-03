@@ -68,7 +68,11 @@
       "data": {
         "type": "options",
         "value": "bootstrap",
-        "options": ["bootstrap", "crossvalidation", "none"]
+        "options": [
+          "bootstrap",
+          "crossvalidation",
+          "none"
+        ]
       }
     },
     {
@@ -133,7 +137,12 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [-2316297, -1971146, 1015207, 1511916]
+        "value": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
       }
     },
     {
@@ -215,7 +224,13 @@
       "data": {
         "type": "options",
         "value": "vif.cor",
-        "options": ["vif.cor", "vif.step", "pearson", "spearman", "kendall"]
+        "options": [
+          "vif.cor",
+          "vif.step",
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
       }
     },
     {
@@ -229,7 +244,11 @@
       "data": {
         "type": "options",
         "value": "pearson",
-        "options": ["pearson", "spearman", "kendall"]
+        "options": [
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
       }
     },
     {
@@ -293,7 +312,12 @@
       "data": {
         "type": "options",
         "value": "bbox",
-        "options": ["box", "mcp", "buffer", "bbox"]
+        "options": [
+          "box",
+          "mcp",
+          "buffer",
+          "bbox"
+        ]
       }
     },
     {
@@ -341,7 +365,11 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["L", "LQ", "LQHP"]
+        "value": [
+          "L",
+          "LQ",
+          "LQHP"
+        ]
       }
     },
     {
@@ -354,7 +382,11 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [0.5, 1, 2]
+        "value": [
+          0.5,
+          1,
+          2
+        ]
       }
     },
     {
@@ -368,7 +400,11 @@
       "data": {
         "type": "options",
         "value": "AUC",
-        "options": ["p10", "AIC", "AUC"]
+        "options": [
+          "p10",
+          "AIC",
+          "AUC"
+        ]
       }
     },
     {
@@ -382,7 +418,12 @@
       "data": {
         "type": "options",
         "value": "lat_lon",
-        "options": ["lat_lon", "lon_lat", "lon_lon", "lat_lat"]
+        "options": [
+          "lat_lon",
+          "lon_lat",
+          "lon_lon",
+          "lat_lat"
+        ]
       }
     },
     {
@@ -419,7 +460,9 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["Acer saccharum"]
+        "value": [
+          "Acer saccharum"
+        ]
       }
     },
     {
@@ -840,7 +883,12 @@
       "label": "bbox",
       "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
       "type": "float[]",
-      "example": [-2316297, -1971146, 1015207, 1511916]
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ]
     },
     "data>heatmapFromSTAC.yml@67|taxa": {
       "description": "taxonomic group to retrieve GBIF heatmap",
@@ -861,7 +909,10 @@
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
       "label": "Data source",
       "type": "options",
-      "options": ["gbif_pc", "gbif_api"],
+      "options": [
+        "gbif_pc",
+        "gbif_api"
+      ],
       "example": "gbif_api"
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
@@ -899,12 +950,15 @@
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "label": "collections_items",
       "type": "text[]",
-      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
     },
     "data>loadFromStac.yml@119|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
-      "type": "int",
+      "type": "float",
       "example": 1000
     },
     "data>loadFromStac.yml@119|mask": {
@@ -916,26 +970,34 @@
       "label": "Taxa list",
       "description": "Array of taxa values",
       "type": "text[]",
-      "example": ["Acer saccharum"]
+      "example": [
+        "Acer saccharum"
+      ]
     }
   },
   "outputs": {
-    "pipeline@121": {
-      "label": "Species name",
-      "description": "Species for which the distribution model is generated",
-      "weight": 1
+    "SDM>rangePredictions.yml@68|range_predictions": {
+      "description": "Variability of predictions based on range method",
+      "label": "Variability of predictions",
+      "type": "image/tiff;application=geotiff",
+      "weight": 6
     },
+    "SDM>runMaxent.yml@108|sdm_pred": {
+      "description": "Model predictions from Maxent algorithm",
+      "label": "Predictions",
+      "type": "image/tiff;application=geotiff",
+      "range": [
+        0,
+        1
+      ],
+      "weight": 5
+    },
+    "pipeline@121": {},
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
       "label": "Presences",
       "type": "text/tab-separated-values",
       "weight": 2
-    },
-    "data>heatmapFromSTAC.yml@67|raster": {
-      "description": "Heatmap of GBIF occurences for plants used for bias correction",
-      "label": "Density of GBIF occurrences",
-      "type": "image/tiff;application=geotiff",
-      "weight": 4
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "Environmental layers used as predictors in species distribution modeling",
@@ -943,23 +1005,16 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 3
     },
-    "SDM>runMaxent.yml@108|sdm_pred": {
-      "description": "Model predictions from Maxent algorithm",
-      "label": "Predictions",
+    "data>heatmapFromSTAC.yml@67|raster": {
+      "description": "Heatmap of GBIF occurences for plants used for bias correction",
+      "label": "Density of GBIF occurrences",
       "type": "image/tiff;application=geotiff",
-      "range": [0, 1],
-      "weight": 5
-    },
-    "SDM>rangePredictions.yml@68|range_predictions": {
-      "description": "Variability of predictions based on range method",
-      "label": "Variability of predictions",
-      "type": "image/tiff;application=geotiff",
-      "weight": 6
+      "weight": 4
     }
   },
   "metadata": {
     "name": "Species distribution modeling with Maxent",
-    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Bias correction is achieved using random pseudo-absences throught the region of interest. A variance map to represent the prediction uncertainty is generated through bootstraping.",
+    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Several background methods are possible, including randomly  distributed pseudo-absences throughout the region, background thickening  (Vollering et al. 2019, [https://doi.org/10.1111/ecog.04503] and  target-group background selection (Phillips et al. 2009, [https://doi.org/10.1890/07-2153.1]).  Bias correction is achieved using the target-group background selection method.  A variance map to represent the prediction  uncertainty is generated through bootstraping.",
     "author": [
       {
         "name": "Sarah Valentin",
@@ -970,7 +1025,8 @@
         "identifier": "https://orcid.org/0000-0002-5967-9156"
       },
       {
-        "name": "François Rousseu"
+        "name": "François Rousseu",
+        "identifier": "https://orcid.org/0000-0002-2400-2479"
       }
     ],
     "license": "MIT",

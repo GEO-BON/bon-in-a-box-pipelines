@@ -7,7 +7,7 @@ A GEO BON project, born from a collaboration between Microsoft, McGill, Humbolt 
 ## Contributing
 If you wish to contribute your indicator or EBV code, please let us know at web@geobon.org.
 
-The recommended method is to setup an instance of BON in a Box somewhere you can easily play with the script files, using the local or remote setup below. You can create a fork to save your work. Make sure that the code is general, and will work when used with various parameters, such as in different regions around the globe. Once the integration of the new scripts or pipelines are complete, open a pull request to this repository. The pull request will be peer-reviewed before acceptation.
+The recommended method is to setup an instance of BON in a Box somewhere you can easily play with the script files, using the local or remote setup below. You can create a branch or fork to save your work. Make sure that the code is general, and will work when used with various parameters, such as in different regions around the globe. Once the integration of the new scripts or pipelines are complete, open a pull request to this repository. The pull request will be peer-reviewed before acceptation.
 
 ## Running the servers locally
 Prerequisites : 
@@ -61,7 +61,7 @@ To run:
 
 When modifying scripts in the /scripts folder, servers do not need to be restarted:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
-- When adding or renamin scripts, refresh the browser page.
+- When adding or renaming scripts, refresh the browser page.
 
 When modifying pipelines in the /pipelines folder, servers do not need to be restarted:
 - In the pipeline editor, click save, paste the file to your file in the pipeline folder and run it from the "pipeline run" page.
@@ -72,6 +72,13 @@ When modifying pipelines in the /pipelines folder, servers do not need to be res
 2. Check that the servers run with a browser.
 3. Create a .env file on the server, as above.
 4. Take dockers down and up to load the .env file (this allows accessing GBIF, etc.)
+
+## Running a script or pipeline
+You have an instance of BON in a Box running, either [locally](#running-the-servers-locally) or [remotely](#running-the-servers-remotely), and you want to run your first script or pipeline.
+
+There is one page to run scripts, and one to run pipelines. Select the script or pipelines from the dropdown and fill the form.
+
+The form might ask you for a file. In order to provide a file that you own locally, upload or copy it to the `userdata` folder. You can then refer to it with a url as such: `/userdata/myFile.shp`, or `/userdata/myFolder/myFile.shp` if there are subfolders.
 
 ## Scripts
 The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
@@ -253,6 +260,8 @@ A pipeline is a collection of steps to acheive the desired processing. Each scri
 
 
 Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (rightmost red box in image above). Pipeline IO supports [the same types and UI rendering](#input-and-output-types) as individual steps, since its inputs are directly fed to the steps, and outputs come from the step outputs.
+
+For a general description of pipelines in software engineering, see [Wikipedia](https://en.wikipedia.org/wiki/Pipeline_%28software%29).
 
 ### Pipeline editor
 The pipeline editor allows you to create pipelines by plugging steps together.

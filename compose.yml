@@ -3,18 +3,26 @@
 version: "3.7"
 
 services:
+  ui:
+    container_name: biab-ui
+    depends_on:
+      - script-server
+      - tiler
+
   # This can be accessed within the docker network with http://biab-script-server:8081/script/...
   script-server:
     container_name: biab-script-server
     volumes:
       - ./scripts:/scripts:ro
       - ./pipelines:/pipelines:ro
+      - ./userdata:/userdata:ro
       - ./output:/output:rw
       - /var/run/docker.sock:/var/run/docker.sock
     expose:
       - "8080"
     environment:
       - SCRIPT_LOCATION=/scripts
+      - USERDATA_LOCATION=/userdata
       - PIPELINES_LOCATION=/pipelines
       - OUTPUT_LOCATION=/output
       - HOST_PATH=${PWD}
@@ -37,9 +45,11 @@ services:
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
       - ./scripts:/scripts:ro
+      - ./userdata:/userdata:ro
       - ./output:/output:rw
     environment:
       - SCRIPT_LOCATION=/scripts
+      - USERDATA_LOCATION=/userdata
       - OUTPUT_LOCATION=/output
       - JUPYTERHUB_API_TOKEN=${JUPYTERHUB_API_TOKEN}
       - GBIF_USER=${GBIF_USER}
@@ -57,9 +67,11 @@ services:
     tty: true # Needed to keep the container alive, waiting for requests.
     volumes:
       - ./scripts:/scripts:ro
+      - ./userdata:/userdata:ro
       - ./output:/output:rw
     environment:
       - SCRIPT_LOCATION=/scripts
+      - USERDATA_LOCATION=/userdata
       - OUTPUT_LOCATION=/output
 
   http-gateway:
@@ -72,12 +84,14 @@ services:
       - ./output:/static/output:ro
     depends_on:
       - script-server
+      - ui
 
   tiler:
     container_name: biab-tiler
     image: ghcr.io/developmentseed/titiler:latest
     volumes:
       - ./output:/output:ro
+      - ./userdata:/userdata:ro
     environment:
       - PORT=8000
       - WORKERS_PER_CORE=1

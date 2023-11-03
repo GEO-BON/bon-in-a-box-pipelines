@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import {Spinner} from "./Spinner"
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -13,5 +14,5 @@ export default function Versions() {
         });
     }, [])
 
-    return <p style={{whiteSpace: "pre-wrap"}}>{versions}</p>
+    return <p style={{whiteSpace: "pre-wrap"}}>{versions ? versions : <Spinner />}</p>
 }
