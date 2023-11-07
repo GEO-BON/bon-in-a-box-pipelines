@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Start the BON in a Box microservices locally.
+# The UI can then be accessed throught the localhost of this machine.
+
 # TODO change repo-split for main
 branch=repo-split
 
