@@ -2,7 +2,7 @@
 
 echo "Updating server init script..."
 if cd .server; then
-    git fetch
+    git fetch --depth 1
 else 
     git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git .server --depth 1
     cd .server;
