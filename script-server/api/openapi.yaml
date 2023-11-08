@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.0.3
 info:
   title: BON in a Box - Script service
   contact:
@@ -164,9 +164,17 @@ paths:
                 type: object
                 additionalProperties:
                   type: string
-                example:
-                  id1: Folder/Script_ext/88204814d39b762f933d67d9a3d68832
-                  id2: Folder/Script2/1a015dccdfb7f639ec32c278506e7c5a
+              examples:
+                success:
+                  value:
+                    id1: Folder/Script_ext/88204814d39b762f933d67d9a3d68832
+                    id2: Folder/Script2/1a015dccdfb7f639ec32c278506e7c5a
+                error:
+                  value:
+                    error: An error message that happened outside of script execution.
+                    id1: Folder/Script_ext/88204814d39b762f933d67d9a3d68832
+                    id2: skipped
+                  
         "400":
           description: Bad request
         "404":

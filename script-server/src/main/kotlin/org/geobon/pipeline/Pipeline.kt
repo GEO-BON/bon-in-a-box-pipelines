@@ -14,7 +14,7 @@ open class Pipeline constructor(
     override val id: StepId,
     private val debugName: String,
     /** Node id to Step */
-    private val steps:Map<String, IStep>,
+    private val steps: Map<String, IStep>,
     /** IO Id to Input */
     final override val inputs: MutableMap<String, Pipe>,
     /** IO Id to Output */
@@ -76,6 +76,7 @@ open class Pipeline constructor(
     suspend fun pullFinalOutputs(): Map<String, String> {
         var cancelled = false
         var failure = false
+        var error: String? = null
         try {
             coroutineScope {
                 job = launch {
@@ -85,15 +86,21 @@ open class Pipeline constructor(
 
             job?.apply { cancelled = isCancelled }
         } catch (ex: RuntimeException) {
-            logger.debug("In execute \"${ex.message ?: ex.stackTraceToString()}\"")
+            error = ex.message ?: ex.stackTraceToString()
+            logger.debug(error)
+
             if (!cancelled) failure = true
         } catch (ex: Exception) {
+            error =
+                "Server error: ${ex.message}.\n\nPlease consider filing an issue on github with detailed steps to reproduce."
             logger.error(ex.stackTraceToString())
+
+            failure = true
         } finally {
             job = null
         }
 
-        return getLiveOutput().mapValues { (_, value) ->
+        val output = getLiveOutput().mapValues { (_, value) ->
             when {
                 value.isNotEmpty() -> value
                 cancelled -> "cancelled"
@@ -101,6 +108,9 @@ open class Pipeline constructor(
                 else -> "skipped"
             }
         }
+
+        return if (error == null) output
+        else output.toMutableMap().apply { this["error"] = error }
     }
 
     override fun validateGraph(): String {
@@ -128,7 +138,11 @@ open class Pipeline constructor(
     }
 
     companion object {
-        fun createMiniPipelineFromScript(descriptionFile: File, descriptionFileId:String, inputsJSON: String? = null) : Pipeline {
+        fun createMiniPipelineFromScript(
+            descriptionFile: File,
+            descriptionFileId: String,
+            inputsJSON: String? = null
+        ): Pipeline {
             val pipelineId = StepId("", "")
             val step = ScriptStep(
                 descriptionFile,
@@ -182,7 +196,7 @@ open class Pipeline constructor(
 
             val constants = mutableMapOf<String, ConstantPipe>()
             val outputIds = mutableListOf<String>()
-            val steps:MutableMap<String, IStep> = mutableMapOf()
+            val steps: MutableMap<String, IStep> = mutableMapOf()
             val outputs: MutableMap<String, Output> = mutableMapOf()
 
             // Load all nodes and classify them as steps, constants or pipeline outputs
@@ -354,7 +368,7 @@ open class Pipeline constructor(
             } else {
                 try {
                     ConstantPipe(type,
-                        if(obj.isNull(valueProperty)) null
+                        if (obj.isNull(valueProperty)) null
                         else when (type) {
                             "int" -> obj.getInt(valueProperty)
                             "float" -> obj.getFloat(valueProperty)
