@@ -572,7 +572,7 @@ export default function PipelineEditor(props) {
         });
       }
     }
-  }, [reactFlowInstance, inputList, outputList, metadata]);
+  }, [reactFlowInstance, inputList, outputList, metadata,fileName]);
 
   const onLoadFromFileBtnClick = () => inputFile.current.click(); // will call onLoad
 
@@ -739,8 +739,8 @@ export default function PipelineEditor(props) {
   };
 
   const handleSaveFileToServer = () => {
-    closeModal();
     onSave("server");
+    closeModal();
   };
 
   return (
