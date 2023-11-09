@@ -61,7 +61,7 @@ To run:
 
 When modifying scripts in the /scripts folder, servers do not need to be restarted:
 - When modifying an existing script, simply re-run the script from the UI and the new version will be executed.
-- When adding or renamin scripts, refresh the browser page.
+- When adding or renaming scripts, refresh the browser page.
 
 When modifying pipelines in the /pipelines folder, servers do not need to be restarted:
 - In the pipeline editor, click save, paste the file to your file in the pipeline folder and run it from the "pipeline run" page.
@@ -78,7 +78,7 @@ You have an instance of BON in a Box running, either [locally](#running-the-serv
 
 There is one page to run scripts, and one to run pipelines. Select the script or pipelines from the dropdown and fill the form.
 
-The form might ask you for a file. In order to provide a file that you own locally, upload or copy it to the `userdata` folder. You can then refer to it with a url as such: `userdata/myFile.shp`, or `userdata/myFolder/myFile.shp` if there are subfolders.
+The form might ask you for a file. In order to provide a file that you own locally, upload or copy it to the `userdata` folder. You can then refer to it with a url as such: `/userdata/myFile.shp`, or `/userdata/myFolder/myFile.shp` if there are subfolders.
 
 ## Scripts
 The scripts perform the actual work behind the scenes. They are located in [/scripts folder](/scripts)
@@ -260,6 +260,8 @@ A pipeline is a collection of steps to acheive the desired processing. Each scri
 
 
 Pipelines also have inputs and outputs. In order to run, a pipeline needs to specify at least one output (rightmost red box in image above). Pipeline IO supports [the same types and UI rendering](#input-and-output-types) as individual steps, since its inputs are directly fed to the steps, and outputs come from the step outputs.
+
+For a general description of pipelines in software engineering, see [Wikipedia](https://en.wikipedia.org/wiki/Pipeline_%28software%29).
 
 ### Pipeline editor
 The pipeline editor allows you to create pipelines by plugging steps together.

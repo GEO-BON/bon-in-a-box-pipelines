@@ -59,7 +59,7 @@ const InputForm = ({ inputs, inputFileContent, setInputFileContent }) => {
     <table className="inputFileFields">
       <tbody>
         {Object.entries(inputs).map(([inputId, inputDescription]) => {
-          const { label, description, options, ...theRest } = inputDescription;
+          const { label, description, options, example, ...theRest } = inputDescription;
 
           return (
             <tr key={inputId}>
@@ -78,6 +78,18 @@ const InputForm = ({ inputs, inputFileContent, setInputFileContent }) => {
               </td>
               <td className="descriptionCell">
                 {description + "\n" + yaml.dump(theRest)}
+                {example && <>
+                  Example:<br />
+                  <ScriptInput
+                    id={inputId}
+                    type={inputDescription.type}
+                    options={options}
+                    value={example}
+                    disabled={true}
+                    cols="50"
+                    className="example"
+                  />
+                </>}
               </td>
             </tr>
           );

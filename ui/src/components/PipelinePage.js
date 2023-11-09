@@ -123,6 +123,11 @@ export function PipelinePage({ runType }) {
           if (error) {
             showHttpError(error, response);
           } else {
+            if(data.error) {
+              setHttpError(data.error);
+              delete data.error
+            }
+
             let allOutputFoldersKnown = Object.values(data).every(
               (val) => val !== ""
             );
