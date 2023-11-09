@@ -713,7 +713,6 @@
         "label": "Land cover map",
         "type": "image/tiff;application=geotiff[]"
       },
-      "undefined@30": {},
       "data>pyLoadObservations>pyLoadObservations.yml@1|total_records": {
         "description": "Total number of GBIF occurrences in csv file",
         "label": "Total number of occurrences",
