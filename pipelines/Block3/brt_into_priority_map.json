@@ -4,21 +4,26 @@
       "id": "13",
       "type": "constant",
       "position": {
-        "x": 105,
-        "y": 432.8333333333333
+        "x": 95,
+        "y": 268
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": ["-86.748047", "33.72434", "-52.207031", "63.273182"]
+        "value": [
+          "-86.748047",
+          "33.72434",
+          "-52.207031",
+          "63.273182"
+        ]
       }
     },
     {
       "id": "14",
       "type": "userInput",
       "position": {
-        "x": 132,
-        "y": 397.8333333333333
+        "x": 137,
+        "y": 129
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +55,8 @@
       "id": "15",
       "type": "userInput",
       "position": {
-        "x": 1141,
-        "y": 300
+        "x": 1142,
+        "y": 69
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -63,21 +68,26 @@
       "id": "16",
       "type": "userInput",
       "position": {
-        "x": 1065,
-        "y": 335
+        "x": 1066,
+        "y": 103.00000000000003
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [0.3, 0.2, 0.4, 0.1]
+        "value": [
+          0.3,
+          0.2,
+          0.4,
+          0.1
+        ]
       }
     },
     {
       "id": "17",
       "type": "userInput",
       "position": {
-        "x": 174,
-        "y": 210.83333333333331
+        "x": 179,
+        "y": 234
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,21 +99,24 @@
       "id": "18",
       "type": "userInput",
       "position": {
-        "x": 199,
-        "y": 522.8333333333333
+        "x": 204,
+        "y": 163
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["Acer saccharum", "Bubo scandiacus"]
+        "value": [
+          "Acer saccharum",
+          "Bubo scandiacus"
+        ]
       }
     },
     {
       "id": "19",
       "type": "userInput",
       "position": {
-        "x": 165,
-        "y": 117.5
+        "x": 170,
+        "y": 95
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -115,8 +128,8 @@
       "id": "21",
       "type": "io",
       "position": {
-        "x": 511,
-        "y": 130
+        "x": 496,
+        "y": 188.28571428571428
       },
       "data": {
         "descriptionFile": "SDM>BRT_julia_viewer.json"
@@ -126,8 +139,8 @@
       "id": "22",
       "type": "userInput",
       "position": {
-        "x": 177,
-        "y": 557.8333333333333
+        "x": 182,
+        "y": 357
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -136,33 +149,11 @@
       }
     },
     {
-      "id": "23",
-      "type": "output",
-      "position": {
-        "x": 1400,
-        "y": 12
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "24",
       "type": "output",
       "position": {
-        "x": 1400,
-        "y": 385
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "25",
-      "type": "output",
-      "position": {
-        "x": 1400,
-        "y": 61
+        "x": 1355,
+        "y": 254.78571428571433
       },
       "data": {
         "label": "Output"
@@ -172,8 +163,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 1400,
-        "y": 120
+        "x": 1351,
+        "y": 75.88888888888891
       },
       "data": {
         "descriptionFile": "Block3>block3.json"
@@ -184,7 +175,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 152.5
+        "y": 197
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -193,55 +184,11 @@
       }
     },
     {
-      "id": "28",
-      "type": "output",
-      "position": {
-        "x": 1706,
-        "y": 355.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "29",
       "type": "output",
       "position": {
-        "x": 1731.4105363488807,
-        "y": 148.5916669748139
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "30",
-      "type": "output",
-      "position": {
-        "x": 1706,
-        "y": 208.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "31",
-      "type": "output",
-      "position": {
-        "x": 1706,
-        "y": 90.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "32",
-      "type": "output",
-      "position": {
-        "x": 1706,
-        "y": 257.5
+        "x": 1975.3486287912697,
+        "y": 100.21469286673499
       },
       "data": {
         "label": "Output"
@@ -251,8 +198,8 @@
       "id": "33",
       "type": "output",
       "position": {
-        "x": 511,
-        "y": 520
+        "x": 496,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -304,24 +251,10 @@
     },
     {
       "source": "21",
-      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm",
-      "target": "23",
-      "targetHandle": null,
-      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm-23"
-    },
-    {
-      "source": "21",
       "sourceHandle": "filtering>cleanCoordinates.yml@21|clean_presence",
       "target": "24",
       "targetHandle": null,
       "id": "reactflow__edge-21filtering>cleanCoordinates.yml@21|clean_presence-24"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|fit_stats",
-      "target": "25",
-      "targetHandle": null,
-      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|fit_stats-25"
     },
     {
       "source": "15",
@@ -360,38 +293,10 @@
     },
     {
       "source": "26",
-      "sourceHandle": "Block3>climateVelocity.yml@50|climate_velocity",
-      "target": "28",
-      "targetHandle": null,
-      "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-28"
-    },
-    {
-      "source": "26",
       "sourceHandle": "data>loadFromStac.yml@9|rasters",
       "target": "29",
       "targetHandle": null,
       "id": "reactflow__edge-26data>loadFromStac.yml@9|rasters-29"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "data>loadFromStac.yml@1|rasters",
-      "target": "30",
-      "targetHandle": null,
-      "id": "reactflow__edge-26data>loadFromStac.yml@1|rasters-30"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "Block3>climateUniqueness.yml@16|climate_uniqueness",
-      "target": "31",
-      "targetHandle": null,
-      "id": "reactflow__edge-26Block3>climateUniqueness.yml@16|climate_uniqueness-31"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "Block3>weightLayers.yml@44|priority_map",
-      "target": "32",
-      "targetHandle": null,
-      "id": "reactflow__edge-26Block3>weightLayers.yml@44|priority_map-32"
     },
     {
       "source": "21",
@@ -406,6 +311,62 @@
       "target": "33",
       "targetHandle": null,
       "id": "reactflow__edge-18-33"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm",
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm-24"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|fit_stats",
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|fit_stats-24"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>climateVelocity.yml@50|climate_velocity",
+      "target": "29",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-29"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@1|rasters",
+      "target": "29",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@1|rasters-29"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>climateUniqueness.yml@16|climate_uniqueness",
+      "target": "29",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>climateUniqueness.yml@16|climate_uniqueness-29"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>weightLayers.yml@44|priority_map",
+      "target": "29",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>weightLayers.yml@44|priority_map-29"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@30|rasters",
+      "target": "29",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@30|rasters-29"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty",
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty-24"
     }
   ],
   "inputs": {
@@ -413,7 +374,10 @@
       "label": "collections_items",
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "type": "text[]",
-      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
     },
     "pipeline@15": {
       "label": "k",
@@ -425,7 +389,12 @@
       "label": "weights",
       "description": "weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]",
       "type": "float[]",
-      "example": [0.3, 0.2, 0.4, 0.1]
+      "example": [
+        0.3,
+        0.2,
+        0.4,
+        0.1
+      ]
     },
     "pipeline@17": {
       "label": "maximum year",
@@ -437,7 +406,10 @@
       "label": "Taxa list",
       "description": "Array of taxa values",
       "type": "text[]",
-      "example": ["Acer saccharum", "Bubo scandiacus"]
+      "example": [
+        "Acer saccharum",
+        "Bubo scandiacus"
+      ]
     },
     "pipeline@19": {
       "label": "buffer_distance",
@@ -455,7 +427,12 @@
       "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
       "label": "bbox",
       "type": "float[]",
-      "example": [-2316297, -1971146, 1015207, 1511916]
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ]
     }
   },
   "outputs": {
@@ -505,6 +482,12 @@
       "description": "Sampling priority map based on weighting accessibility, climate uniqueness, climate velocity, and SDM uncertainty",
       "label": "priority map",
       "type": "image/tiff;application=geotiff",
+      "weight": 11
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@30|rasters": {
+      "description": "Accessibility, in minutes, to the nearest city.",
+      "label": "Accessibility",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 10
     },
     "pipeline@18": {
