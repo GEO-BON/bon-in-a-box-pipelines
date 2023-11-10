@@ -263,7 +263,7 @@ class ApplicationTest {
     fun testSaveSuccess() = testApplication {
         application { configureRouting() }
 
-        val file = File(RunContext.pipelineRoot, "temp.json")
+        val file = File("pipelines", "temp.json")
         file.delete()
 
         val content = """
