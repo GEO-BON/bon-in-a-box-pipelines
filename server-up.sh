@@ -3,7 +3,9 @@
 # Start the BON in a Box microservices locally.
 # The UI can then be accessed throught the localhost of this machine.
 
-branch=main
+# Optional arg 1: branch name of server repo, default "main"
+branch=${1:-"main"}
+echo "Using branch $branch"
 
 echo "Updating server init script..."
 if cd .server; then
@@ -14,4 +16,4 @@ else
 fi
 
 git checkout origin/$branch -- prod-server-up.sh
-./prod-server-up.sh
+./prod-server-up.sh $branch
