@@ -4,7 +4,6 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.ktor.server.testing.*
-import org.geobon.pipeline.RunContext
 import org.geobon.pipeline.outputRoot
 import org.geobon.server.plugins.configureRouting
 import org.json.JSONObject
@@ -263,7 +262,7 @@ class ApplicationTest {
     fun testSaveSuccess() = testApplication {
         application { configureRouting() }
 
-        val file = File("pipelines", "temp.json")
+        val file = File(System.getenv("PIPELINES_LOCATION"), "temp.json")
         file.delete()
 
         val content = """
