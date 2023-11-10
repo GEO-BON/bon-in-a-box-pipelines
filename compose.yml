@@ -14,7 +14,7 @@ services:
     container_name: biab-script-server
     volumes:
       - ./scripts:/scripts:ro
-      - ./pipelines:/pipelines:ro
+      - ./pipelines:/pipelines:rw
       - ./userdata:/userdata:ro
       - ./output:/output:rw
       - /var/run/docker.sock:/var/run/docker.sock
