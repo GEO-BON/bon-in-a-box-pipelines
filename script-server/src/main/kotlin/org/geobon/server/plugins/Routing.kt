@@ -125,7 +125,7 @@ fun Application.configureRouting() {
             } else {
                 call.respondText(text = "$descriptionFile does not exist", status = HttpStatusCode.NotFound)
                 logger.debug("404: pipeline/${call.parameters["descriptionPath"]}/get")
-            }   
+            }
         }
 
         post("/{type}/{descriptionPath}/run") {
@@ -182,7 +182,7 @@ fun Application.configureRouting() {
                 logger.debug("run: ${it.message}")
             }
         }
-        
+
         get("/{type}/{id}/outputs") {
             // type: The value pipeline of script is for api consistency, it makes no real difference for this API call.
             val id = call.parameters["id"]!!
@@ -200,7 +200,7 @@ fun Application.configureRouting() {
                 call.respond(pipeline.getLiveOutput().mapKeys { it.key.replace('/', FILE_SEPARATOR) })
             }
         }
-        
+
         get("/{type}/{id}/stop") {
             val id = call.parameters["id"]!!
             runningPipelines[id]?.let { pipeline ->
@@ -230,13 +230,11 @@ fun Application.configureRouting() {
         post("/pipeline/save/{filename}") {
             // TODO: Disallow on server. Env var?
 
-            val pipelineFolder = File("pipelines")
-            val fileName = call.parameters["filename"]!!
+            val filename = call.parameters["filename"]!!
             val pipelineContent = call.receive<String>()
-            
+            val file = File(pipelinesRoot, "$filename.json")
+
             // TODO: Validate json integrity
-            val fileNameWithoutExtension = fileName.removeSuffix(".json").removeSuffix(".yml")
-            val file = File(pipelineFolder, "$fileNameWithoutExtension.json")
             // TODO: Validate pipeline integrity
 
             try {
@@ -246,6 +244,7 @@ fun Application.configureRouting() {
                 logger.warn(ex.message)
                 call.respondText(text = "Failed to save pipeline.", status = HttpStatusCode.BadRequest)
             }
+
             call.respond(HttpStatusCode.OK)
         }
     }
