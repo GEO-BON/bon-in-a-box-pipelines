@@ -12,7 +12,7 @@ if [[ $? -ne 0 ]] ; then
 fi
 
 # Validate against schema
-docker run -v $(pwd):"/scripts" \
+docker run --rm --name biab-yaml-validator -v $(pwd):"/scripts" \
     -v $(pwd)/../.server/.github/:"/.github" \
     navikt/yaml-validator:v4 \
     ".github/scriptValidationSchema.yml" "scripts/" "no" ".yml"
