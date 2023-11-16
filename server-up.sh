@@ -26,5 +26,6 @@ else
 fi
 
 echo "Using branch $branch."
-git checkout origin/$branch -- prod-server-up.sh
-./prod-server-up.sh $branch
+git checkout origin/$branch -- prod-server.sh
+./prod-server.sh checkout $branch
+./prod-server.sh up
