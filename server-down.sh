@@ -1,1 +1,1 @@
-.server/prod-server-down.sh
+.server/prod-server.sh down
