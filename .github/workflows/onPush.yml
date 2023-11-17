@@ -4,7 +4,7 @@ on: [push]
 # TODO change pipeline-repo-actions to main
 jobs:
   run-yml-validation:
-    runs-on: ubuntu-latesst
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Getting init script
