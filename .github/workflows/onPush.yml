@@ -1,59 +1,23 @@
 name: On push, any branch
 
 on: [push]
-
+# TODO change pipeline-repo-actions to main
 jobs:
-  run-script-server-test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@v1
-
-    - name: Gradle build & test
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: build --info
-        build-root-directory: script-server
-
-    - name: Save test results
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: Test results
-        path: script-server/build/reports/tests/test/
-
-  
   run-yml-validation:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latesst
     steps:
     - uses: actions/checkout@v3
-    - name: YML file syntax validation
-      uses: navikt/yaml-validator@v4
-      with:
-        schema_path: scripts/cerberusValidationSchema
-        document_path: scripts
-        validate_file_extension: no
-        filter_extensions: .yml
-    - name: YML test files syntax validation
-      uses: navikt/yaml-validator@v4
-      with:
-        schema_path: .server/.github/scriptValidationSchema.yml
-        document_path: script-server/src/test/resources/scripts/
-        validate_file_extension: no
-        filter_extensions: .yml
-    - name: Find duplicate lines inside same step YML file
-      working-directory: ./scripts
-      run: $GITHUB_WORKSPACE/.server/.github/findDuplicateDescriptions.sh
+    - name: Getting init script
+      working-directory: .
+      run: git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git --branch pipeline-repo-actions --single-branch .server --depth 1; \
+           cd .server; \
+           git checkout origin/pipeline-repo-actions -- prod-server.sh
       shell: bash
-    - name: Find duplicate lines inside same pipeline JSON file
-      working-directory: ./pipelines
-      run: $GITHUB_WORKSPACE/.server/.github/findDuplicateIds.sh
+    - name: Getting server config
+      working-directory: .
+      run: $GITHUB_WORKSPACE/.server/.prod-server.sh checkout pipeline-repo-actions
+      shell: bash
+    - name: Script and pipelines basic validation
+      working-directory: .
+      run: $GITHUB_WORKSPACE/.server/.prod-server.sh validate
       shell: bash
