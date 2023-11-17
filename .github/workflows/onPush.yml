@@ -6,13 +6,26 @@ jobs:
   run-yml-validation:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Getting init script
-      working-directory: .
-      run: git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git --branch pipeline-repo-actions --single-branch .server --depth 1; \
-           cd .server; \
-           git checkout origin/pipeline-repo-actions -- prod-server.sh
-      shell: bash
+    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
+      with:
+        # Repository name with owner. For example, actions/checkout
+        # Default: ${{ github.repository }}
+        repository: 'git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git'
+
+        # The branch, tag or SHA to checkout. When checking out the repository that
+        # triggered a workflow, this defaults to the reference or SHA for that event.
+        # Otherwise, uses the default branch.
+        ref: 'pipeline-repo-actions'
+
+        # Relative path under $GITHUB_WORKSPACE to place the repository
+        path: '.server'
+
+        # Do a sparse checkout on given patterns. Each pattern should be separated with
+        # new lines.
+        # Default: null
+        sparse-checkout: 'prod-server.sh'
+
     - name: Getting server config
       working-directory: .
       run: $GITHUB_WORKSPACE/.server/.prod-server.sh checkout pipeline-repo-actions
