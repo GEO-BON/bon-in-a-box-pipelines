@@ -21,19 +21,9 @@ jobs:
         # Relative path under $GITHUB_WORKSPACE to place the repository
         path: '.server'
 
-        # Do a sparse checkout on given patterns. Each pattern should be separated with
-        # new lines.
-        # Default: null
-        sparse-checkout: |
-          prod-server.sh
-
     - name: Temp
       working-directory: .
       run: ls -la .server
-      shell: bash
-    - name: Getting server config
-      working-directory: .
-      run: $GITHUB_WORKSPACE/.server/prod-server.sh checkout pipeline-repo-actions
       shell: bash
     - name: Script and pipelines basic validation
       working-directory: .
