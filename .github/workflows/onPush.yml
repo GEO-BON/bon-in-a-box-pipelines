@@ -30,7 +30,7 @@ jobs:
 
     - name: Temp
       working-directory: .
-      run: ls -la
+      run: ls -la .server
       shell: bash
     - name: Getting server config
       working-directory: .
