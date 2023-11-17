@@ -21,9 +21,9 @@ jobs:
         # Relative path under $GITHUB_WORKSPACE to place the repository
         path: '.server'
 
-    - name: Temp
-      working-directory: .
-      run: ls -la .server
+    - name: Creating empty runner.env
+      working-directory: .server
+      run: touch runner.env
       shell: bash
     - name: Script and pipelines basic validation
       working-directory: .
