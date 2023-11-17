@@ -11,7 +11,7 @@ jobs:
       with:
         # Repository name with owner. For example, actions/checkout
         # Default: ${{ github.repository }}
-        repository: 'git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git'
+        repository: 'GEO-BON/bon-in-a-box-pipeline-engine.git'
 
         # The branch, tag or SHA to checkout. When checking out the repository that
         # triggered a workflow, this defaults to the reference or SHA for that event.
