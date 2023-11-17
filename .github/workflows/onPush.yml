@@ -22,10 +22,10 @@ jobs:
         path: '.server'
 
     - name: Creating empty runner.env
-      working-directory: .server
+      working-directory: .
       run: touch runner.env
       shell: bash
     - name: Script and pipelines basic validation
       working-directory: .
-      run: $GITHUB_WORKSPACE/.server/prod-server.sh validate
+      run: .server/prod-server.sh validate
       shell: bash
