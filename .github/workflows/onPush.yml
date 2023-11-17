@@ -21,9 +21,10 @@ jobs:
         # Relative path under $GITHUB_WORKSPACE to place the repository
         path: '.server'
 
-        # Partially clone against a given filter. Overrides sparse-checkout if set.
+        # Do a sparse checkout on given patterns. Each pattern should be separated with
+        # new lines.
         # Default: null
-        filter: 'prod-server.sh'
+        sparse-checkout: 'prod-server.sh'
 
     - name: Getting server config
       working-directory: .
