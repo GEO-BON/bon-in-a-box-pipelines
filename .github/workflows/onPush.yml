@@ -26,7 +26,6 @@ jobs:
         # Default: null
         sparse-checkout: |
           prod-server.sh
-          compose.yml
 
     - name: Temp
       working-directory: .
@@ -34,9 +33,9 @@ jobs:
       shell: bash
     - name: Getting server config
       working-directory: .
-      run: $GITHUB_WORKSPACE/.server/.prod-server.sh checkout pipeline-repo-actions
+      run: $GITHUB_WORKSPACE/.server/prod-server.sh checkout pipeline-repo-actions
       shell: bash
     - name: Script and pipelines basic validation
       working-directory: .
-      run: $GITHUB_WORKSPACE/.server/.prod-server.sh validate
+      run: $GITHUB_WORKSPACE/.server/prod-server.sh validate
       shell: bash
