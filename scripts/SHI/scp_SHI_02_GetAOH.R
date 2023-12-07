@@ -178,7 +178,7 @@ for(i in 1:length(sp)){
       sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(buff_size))
     }else{
       sf::sf_use_s2(FALSE)
-      sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(buff_size*0.00001)) # approximate value from degrees to m
+      sf_ext_srs <<- st_bbox(sf_area_lim_srs |> st_buffer(buff_size)) 
       print("--- Buffer defined for spherical geometry ---")
     }
   })
