@@ -166,9 +166,9 @@ for(i in 1:length(sp)){
   r_GFW_gain <- cube_to_raster(cube_GFW_gain , format="terra") # convert to raster format
   r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_aoh_rescaled),rcl=cbind(0,NA))
 
-  osm <- read_osm(sf_bbox_analysis, ext=1.1)
+  #osm <- read_osm(sf_bbox_analysis, ext=1.1) # removed it is not working due to update on packages (dec-07-2023)
 
-  img_map_habitat_changes <- tm_shape(osm) + tm_rgb()+
+  img_map_habitat_changes <- #tm_shape(osm) + tm_rgb()+
     tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
     tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
     tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
