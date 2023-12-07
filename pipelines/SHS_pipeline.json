@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 522,
-        "y": 397
+        "x": 460,
+        "y": 347
       },
       "data": {
         "descriptionFile": "SHI>scp_SHI_01_GetRangeMap.yml"
@@ -37,8 +37,8 @@
       "id": "3",
       "type": "userInput",
       "position": {
-        "x": 168,
-        "y": 261.5
+        "x": 192,
+        "y": 304.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -175,21 +175,6 @@
           "Polygon",
           "Raster",
           "Both"
-        ]
-      }
-    },
-    {
-      "id": "13",
-      "type": "constant",
-      "position": {
-        "x": 419,
-        "y": 322
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/geopackage+sqlite3[]",
-        "value": [
-          "/scripts/SHI/Saguinus oedipus_range.gpkg"
         ]
       }
     },
@@ -338,6 +323,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "25",
+      "type": "output",
+      "position": {
+        "x": 1641.628715942124,
+        "y": 199.20921606072204
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -431,13 +427,6 @@
       "target": "1",
       "targetHandle": "range_map_type",
       "id": "reactflow__edge-12-1range_map_type"
-    },
-    {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "sf_range_map",
-      "id": "reactflow__edge-13-1sf_range_map"
     },
     {
       "source": "14",
@@ -543,6 +532,13 @@
       "target": "24",
       "targetHandle": null,
       "id": "reactflow__edge-2df_shs-24"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "df_aoh_areas",
+      "target": "25",
+      "targetHandle": null,
+      "id": "reactflow__edge-1df_aoh_areas-25"
     }
   ],
   "inputs": {
@@ -649,6 +645,11 @@
       "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score and SHS by time step for each species.",
       "label": "SHS table",
       "type": "text/tab-separated-values[]"
+    },
+    "SHI>scp_SHI_02_GetAOH.yml@1|df_aoh_areas": {
+      "description": "A TSV (Tab Separated Values) file containing the area of the range map loaded (area_range_map), the size of the study area (area_study_a), the area of the bounding box for the analysis (area_bbox_analysis), size of the buffer used to create the bounding box for the analysis, the size of the area of habitat(area_aoh).",
+      "label": "table with size of areas of reference.",
+      "type": "text/tab-separated-values"
     }
   },
   "metadata": {
