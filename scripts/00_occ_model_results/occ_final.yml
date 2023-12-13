@@ -35,8 +35,8 @@ inputs:
   plot.hist:
     label: plot.hist
     description: "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample."
-    type: logical
-    example:  FALSE
+    type: boolean
+    example:  true
   occformulalists:
     label: occformulalists
     description: "List of ocupancy covatieties to plot"

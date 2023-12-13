@@ -66,6 +66,10 @@ output<- tryCatch({
   occ_model <- unmarked::occu(~ duration_minutes
                               ~ huella + altitud, 
                               data = occ_um)
+  
+  
+  
+  
   # look at the regression coefficients from the model
   summary(occ_model)
   # look at the regression coefficients from the model
@@ -97,6 +101,8 @@ output<- tryCatch({
   #################
   # dredge all possible combinations of the occupancy covariates
   occ_dredge <- MuMIn::dredge(occ_model)
+  
+  
   # model comparison to explore the results for occupancy
   mc <- as.data.frame(occ_dredge) %>% 
     dplyr::select(starts_with("psi(p"), df, AICc, delta, weight)

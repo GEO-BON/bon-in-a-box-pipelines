@@ -33,6 +33,10 @@ input<- lapply(input, function(x) if( grepl("/output/", x) ){
   sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x} ) # Ajuste input 1
 
 
+
+
+
+
 # Correr codigo
 # Definir area de estudio
 ext_WKT_area<- tools::file_ext(input$wkt_area)
