@@ -7,6 +7,8 @@ on:
       - main
     paths:
       - 'runners/julia-dockerfile'
+      - 'runners/instantiate.jl'
+      - 'runners/Project.toml'
 
 jobs:
   runner-julia:
