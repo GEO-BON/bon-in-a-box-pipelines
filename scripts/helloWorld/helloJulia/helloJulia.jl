@@ -1,3 +1,6 @@
+using Pkg
+Pkg.activate("/root/"*@__DIR__)
+
 using JSON
 
 println("Hello World")
