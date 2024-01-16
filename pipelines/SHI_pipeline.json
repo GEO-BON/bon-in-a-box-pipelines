@@ -136,18 +136,6 @@
       }
     },
     {
-      "id": "10",
-      "type": "userInput",
-      "position": {
-        "x": 767,
-        "y": 338.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
       "id": "11",
       "type": "constant",
       "position": {
@@ -456,13 +444,6 @@
       "id": "reactflow__edge-9-1country_code"
     },
     {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "region",
-      "id": "reactflow__edge-10-1region"
-    },
-    {
       "source": "11",
       "sourceHandle": null,
       "target": "1",
@@ -625,6 +606,11 @@
     }
   ],
   "inputs": {
+    "SHI>scp_SHI_02_GetAOH.yml@1|region": {
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+      "label": "region",
+      "type": "text"
+    },
     "pipeline@3": {
       "label": "species",
       "description": "Scientific name of the species.",
@@ -672,11 +658,6 @@
       "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
       "type": "text",
       "example": "Colombia"
-    },
-    "pipeline@10": {
-      "label": "region",
-      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
-      "type": "text"
     },
     "pipeline@17": {
       "label": "min forest",
