@@ -55,7 +55,7 @@ output<- tryCatch({
   
   # Load data in eBird fortmat to unmarked
   occ_wide<- read.delim(input$auk_covars_file)
-  #occ_wide<- read.table("occ_wide.txt", sep= "\t")
+  #occ_wide<- read.table("occ_wide_Zcapensis.csv", sep= "\t")
   ####  Script body ####
   #unmarked object
   occ_um <- unmarked::formatWide(dfin= occ_wide, type = "unmarkedFrameOccu")
