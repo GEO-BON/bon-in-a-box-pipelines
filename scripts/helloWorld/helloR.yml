@@ -32,6 +32,10 @@ inputs:
       - third option
     example: third option
 outputs:
+  text2:
+    label: text2
+    description: text2
+    type: text/plain
   text:
     label: Text
     description: We can add plain text

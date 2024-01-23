@@ -1,0 +1,54 @@
+script: Early_Warnings.R
+name: Early_Warnings
+description: This script converts the geometry of the study area into a well-known text (WKT) representation.
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dir_collection:
+    label: 'stack path in'
+    description: 'Path to the input directory where the raster results of the metric analysis are saved'
+    type: text
+    example: "scripts/00_Early_Warnings/input/dir_stack"
+  fun_summary:
+    label: fun_summary
+    description: 'Estadistica resumen de cada capa de la coleccion. https://rdrr.io/cran/terra/man/global.html'
+    type: options
+    options:
+      - mean
+      - sum
+      - mode
+    example: mean
+  projection_factor:
+    label: projection_factor
+    description: 'Valor por el que se multiplican la cantidad maxima de periodos, para estimar hasta que periodo proyectar. Ej. si tienes 20 periodos, y el valor de proyeccion es 2, entonces se proyectara hasta 40 periodos'
+    type: int
+    example: 2
+  threshold:
+    label: threshold
+    description: 'Umbral en el que se detecta una alerta temprana. Si NULL cuando no se tiene claro, entonces se estima a partir de threshold_trend'
+    type: text
+    example: NULL
+  threshold_trend:
+    label: threshold_trend
+    description: "Funcion para estimar el Umbral de deteccion de alerta temprana. x corresponden a los datos observados, y la funcion sobre x a como se estima el umbral. Por ejemplo, para temperatura se toma la media de los 20 primeros periodos x[1:20] sumado a 1.5 x[1:20]+1.5"
+    type: text
+    example: "mean(x[1:20])+1.5"
+outputs:
+  grafica1_trend:
+    label: grafica1_trend
+    description: grafica1_trend
+    type: image/jpg
+  result_table:
+    label: result_table
+    description: result_table
+    type: text/csv
+  threshold:
+    label: threshold
+    description: threshold
+    type: text
+  trend_raster:
+    label: trend_raster
+    description: trend_raster
+    type: text

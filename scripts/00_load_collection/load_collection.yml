@@ -5,13 +5,13 @@ inputs:
   wkt_area:
     label: wkt_area
     description: wkt_area
-    type: text/wkt
+    type: text
     example: '/scripts/00_load_collection/input/wkt_polygon_test.txt'
   collection_path:
     label: dir_collection
     description: dir_collection
     type: text
-    example: '/scripts/00_load_collection/input/Colombia_human_footprint_collection'
+    example: '/scripts/00_load_collection/input/Temperature_collection'
   epsg:
     label: epsg
     description: epsg
@@ -37,7 +37,6 @@ inputs:
     description: time_end
     type: text
     example: 'NA'
-
 outputs:
   area_stack:
     label: area_stack

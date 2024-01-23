@@ -8,8 +8,10 @@ packagesNeed<-list("rstudioapi", "magrittr", "dplyr", "plyr",  "raster", "terra"
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "terra", "auk","MuMIn", "AICcmodavg", "raster", "ggplot2", "janitor") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+packagesList<-list("magrittr", "terra", "unmarked", "auk","MuMIn", "AICcmodavg", "raster", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
+
+
 
 
 #### Set enviroment variables ####
@@ -54,53 +56,22 @@ output<- tryCatch({
   # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
   
   # Load data in eBird fortmat to unmarked
-  occ_wide<- read.delim(input$auk_covars_file)
+  occ_wide<- read.csv(input$auk_covars_file) %>% dplyr::select(-"X")
+  
   #occ_wide<- read.table("occ_wide.txt", sep= "\t")
   ####  Script body ####
   #unmarked object
+
   occ_um <- unmarked::formatWide(dfin= occ_wide, type = "unmarkedFrameOccu")
-  summary(occ_um)
+
   # Occupancy modeling
   #####################
   # fit model
-  occ_model <- unmarked::occu(~ duration_minutes
-                              ~ huella + altitud, 
-                              data = occ_um)
-  
-  
-  
-  
-  # look at the regression coefficients from the model
-  summary(occ_model)
-  # look at the regression coefficients from the model
-  res_occ<-summary(occ_model)
-  state<- as.data.frame(res_occ$state)
-  det<- as.data.frame(res_occ$det)
-  #write.table(state,"occ_state.txt", sep= "\t", row.names = TRUE)
-  #write.csv(state, "occ_state.csv")
-  #occ_det<- write.table("occ_det.txt", sep= "\t", header = TRUE, row.names = 1)
-  #write.csv(det, "occ_det.csv")
-  #######################
-  # Assessment
-  #####################
-  occ_gof <- AICcmodavg::mb.gof.test(occ_model, nsim = input$nsim, plot.hist = FALSE)
-  # hide the chisq table to give simpler output
-  sa<-occ_gof$chisq.table <- NULL
-  print(occ_gof)
-  # Other results
-  #boot::inv.logit(coef(occ_model)[1]) # Real estimate of occupancy
-  #boot::inv.logit(coef(occ_model)[4]) # Real estimate of detection
-  resultados<-(plogis(   MuMIn::coeffs(occ_model)       ))
-  resultados<- data.frame(resultados)
-  #library(tibble)
-  #resultados<-resultados %>% rownames_to_column(var="Det_Occ")
-  #resultados_plot<- resultados %>% filter(Det_Occ == "psi(Int)" | Det_Occ == "p(Int)")
-  
-  ##################
-  #Model selection
-  #################
-  # dredge all possible combinations of the occupancy covariates
+  occ_model <- unmarked::occu(~ duration_minutes ~ huella + altitud,  data = occ_um)
   occ_dredge <- MuMIn::dredge(occ_model)
+  
+
+  
   
   
   # model comparison to explore the results for occupancy

@@ -1,0 +1,1878 @@
+{
+  "id": "Temperature",
+  "type": "Collection",
+  "description": "Collection format for Temperature (IAvH, 2022)",
+  "references": "https:///",
+  "pattern": ".+\\.tif",
+  "images": {
+    "pattern": ".*(Temperature-.{4}_.{2}_.{2}-.*)\\.tif"
+  },
+  "datetime": {
+    "pattern": ".*Temperature-(.{4}_.{2}_.{2})-.*\\.tif",
+    "format": "%Y_%m_%d"
+  },
+  "features": {
+    "Temperature-1961_12_31-Temp_1961": {
+      "id": "Temperature-1961_12_31-Temp_1961",
+      "pattern": ".+Temperature-1961_12_31-Temp_1961+.*\\.tif",
+      "assets": {
+        "Temperature-1961_12_31-Temp_1961": {
+          "href": "Temperature-1961_12_31-Temp_1961.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1962_12_31-Temp_1962": {
+      "id": "Temperature-1962_12_31-Temp_1962",
+      "pattern": ".+Temperature-1962_12_31-Temp_1962+.*\\.tif",
+      "assets": {
+        "Temperature-1962_12_31-Temp_1962": {
+          "href": "Temperature-1962_12_31-Temp_1962.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1963_12_31-Temp_1963": {
+      "id": "Temperature-1963_12_31-Temp_1963",
+      "pattern": ".+Temperature-1963_12_31-Temp_1963+.*\\.tif",
+      "assets": {
+        "Temperature-1963_12_31-Temp_1963": {
+          "href": "Temperature-1963_12_31-Temp_1963.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1964_12_31-Temp_1964": {
+      "id": "Temperature-1964_12_31-Temp_1964",
+      "pattern": ".+Temperature-1964_12_31-Temp_1964+.*\\.tif",
+      "assets": {
+        "Temperature-1964_12_31-Temp_1964": {
+          "href": "Temperature-1964_12_31-Temp_1964.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1965_12_31-Temp_1965": {
+      "id": "Temperature-1965_12_31-Temp_1965",
+      "pattern": ".+Temperature-1965_12_31-Temp_1965+.*\\.tif",
+      "assets": {
+        "Temperature-1965_12_31-Temp_1965": {
+          "href": "Temperature-1965_12_31-Temp_1965.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1966_12_31-Temp_1966": {
+      "id": "Temperature-1966_12_31-Temp_1966",
+      "pattern": ".+Temperature-1966_12_31-Temp_1966+.*\\.tif",
+      "assets": {
+        "Temperature-1966_12_31-Temp_1966": {
+          "href": "Temperature-1966_12_31-Temp_1966.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1967_12_31-Temp_1967": {
+      "id": "Temperature-1967_12_31-Temp_1967",
+      "pattern": ".+Temperature-1967_12_31-Temp_1967+.*\\.tif",
+      "assets": {
+        "Temperature-1967_12_31-Temp_1967": {
+          "href": "Temperature-1967_12_31-Temp_1967.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1968_12_31-Temp_1968": {
+      "id": "Temperature-1968_12_31-Temp_1968",
+      "pattern": ".+Temperature-1968_12_31-Temp_1968+.*\\.tif",
+      "assets": {
+        "Temperature-1968_12_31-Temp_1968": {
+          "href": "Temperature-1968_12_31-Temp_1968.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1969_12_31-Temp_1969": {
+      "id": "Temperature-1969_12_31-Temp_1969",
+      "pattern": ".+Temperature-1969_12_31-Temp_1969+.*\\.tif",
+      "assets": {
+        "Temperature-1969_12_31-Temp_1969": {
+          "href": "Temperature-1969_12_31-Temp_1969.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1970_12_31-Temp_1970": {
+      "id": "Temperature-1970_12_31-Temp_1970",
+      "pattern": ".+Temperature-1970_12_31-Temp_1970+.*\\.tif",
+      "assets": {
+        "Temperature-1970_12_31-Temp_1970": {
+          "href": "Temperature-1970_12_31-Temp_1970.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1971_12_31-Temp_1971": {
+      "id": "Temperature-1971_12_31-Temp_1971",
+      "pattern": ".+Temperature-1971_12_31-Temp_1971+.*\\.tif",
+      "assets": {
+        "Temperature-1971_12_31-Temp_1971": {
+          "href": "Temperature-1971_12_31-Temp_1971.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1972_12_31-Temp_1972": {
+      "id": "Temperature-1972_12_31-Temp_1972",
+      "pattern": ".+Temperature-1972_12_31-Temp_1972+.*\\.tif",
+      "assets": {
+        "Temperature-1972_12_31-Temp_1972": {
+          "href": "Temperature-1972_12_31-Temp_1972.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1973_12_31-Temp_1973": {
+      "id": "Temperature-1973_12_31-Temp_1973",
+      "pattern": ".+Temperature-1973_12_31-Temp_1973+.*\\.tif",
+      "assets": {
+        "Temperature-1973_12_31-Temp_1973": {
+          "href": "Temperature-1973_12_31-Temp_1973.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1974_12_31-Temp_1974": {
+      "id": "Temperature-1974_12_31-Temp_1974",
+      "pattern": ".+Temperature-1974_12_31-Temp_1974+.*\\.tif",
+      "assets": {
+        "Temperature-1974_12_31-Temp_1974": {
+          "href": "Temperature-1974_12_31-Temp_1974.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1975_12_31-Temp_1975": {
+      "id": "Temperature-1975_12_31-Temp_1975",
+      "pattern": ".+Temperature-1975_12_31-Temp_1975+.*\\.tif",
+      "assets": {
+        "Temperature-1975_12_31-Temp_1975": {
+          "href": "Temperature-1975_12_31-Temp_1975.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1976_12_31-Temp_1976": {
+      "id": "Temperature-1976_12_31-Temp_1976",
+      "pattern": ".+Temperature-1976_12_31-Temp_1976+.*\\.tif",
+      "assets": {
+        "Temperature-1976_12_31-Temp_1976": {
+          "href": "Temperature-1976_12_31-Temp_1976.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1977_12_31-Temp_1977": {
+      "id": "Temperature-1977_12_31-Temp_1977",
+      "pattern": ".+Temperature-1977_12_31-Temp_1977+.*\\.tif",
+      "assets": {
+        "Temperature-1977_12_31-Temp_1977": {
+          "href": "Temperature-1977_12_31-Temp_1977.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1978_12_31-Temp_1978": {
+      "id": "Temperature-1978_12_31-Temp_1978",
+      "pattern": ".+Temperature-1978_12_31-Temp_1978+.*\\.tif",
+      "assets": {
+        "Temperature-1978_12_31-Temp_1978": {
+          "href": "Temperature-1978_12_31-Temp_1978.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1979_12_31-Temp_1979": {
+      "id": "Temperature-1979_12_31-Temp_1979",
+      "pattern": ".+Temperature-1979_12_31-Temp_1979+.*\\.tif",
+      "assets": {
+        "Temperature-1979_12_31-Temp_1979": {
+          "href": "Temperature-1979_12_31-Temp_1979.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1980_12_31-Temp_1980": {
+      "id": "Temperature-1980_12_31-Temp_1980",
+      "pattern": ".+Temperature-1980_12_31-Temp_1980+.*\\.tif",
+      "assets": {
+        "Temperature-1980_12_31-Temp_1980": {
+          "href": "Temperature-1980_12_31-Temp_1980.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1981_12_31-Temp_1981": {
+      "id": "Temperature-1981_12_31-Temp_1981",
+      "pattern": ".+Temperature-1981_12_31-Temp_1981+.*\\.tif",
+      "assets": {
+        "Temperature-1981_12_31-Temp_1981": {
+          "href": "Temperature-1981_12_31-Temp_1981.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1982_12_31-Temp_1982": {
+      "id": "Temperature-1982_12_31-Temp_1982",
+      "pattern": ".+Temperature-1982_12_31-Temp_1982+.*\\.tif",
+      "assets": {
+        "Temperature-1982_12_31-Temp_1982": {
+          "href": "Temperature-1982_12_31-Temp_1982.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1983_12_31-Temp_1983": {
+      "id": "Temperature-1983_12_31-Temp_1983",
+      "pattern": ".+Temperature-1983_12_31-Temp_1983+.*\\.tif",
+      "assets": {
+        "Temperature-1983_12_31-Temp_1983": {
+          "href": "Temperature-1983_12_31-Temp_1983.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1984_12_31-Temp_1984": {
+      "id": "Temperature-1984_12_31-Temp_1984",
+      "pattern": ".+Temperature-1984_12_31-Temp_1984+.*\\.tif",
+      "assets": {
+        "Temperature-1984_12_31-Temp_1984": {
+          "href": "Temperature-1984_12_31-Temp_1984.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1985_12_31-Temp_1985": {
+      "id": "Temperature-1985_12_31-Temp_1985",
+      "pattern": ".+Temperature-1985_12_31-Temp_1985+.*\\.tif",
+      "assets": {
+        "Temperature-1985_12_31-Temp_1985": {
+          "href": "Temperature-1985_12_31-Temp_1985.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1986_12_31-Temp_1986": {
+      "id": "Temperature-1986_12_31-Temp_1986",
+      "pattern": ".+Temperature-1986_12_31-Temp_1986+.*\\.tif",
+      "assets": {
+        "Temperature-1986_12_31-Temp_1986": {
+          "href": "Temperature-1986_12_31-Temp_1986.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1987_12_31-Temp_1987": {
+      "id": "Temperature-1987_12_31-Temp_1987",
+      "pattern": ".+Temperature-1987_12_31-Temp_1987+.*\\.tif",
+      "assets": {
+        "Temperature-1987_12_31-Temp_1987": {
+          "href": "Temperature-1987_12_31-Temp_1987.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1988_12_31-Temp_1988": {
+      "id": "Temperature-1988_12_31-Temp_1988",
+      "pattern": ".+Temperature-1988_12_31-Temp_1988+.*\\.tif",
+      "assets": {
+        "Temperature-1988_12_31-Temp_1988": {
+          "href": "Temperature-1988_12_31-Temp_1988.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1989_12_31-Temp_1989": {
+      "id": "Temperature-1989_12_31-Temp_1989",
+      "pattern": ".+Temperature-1989_12_31-Temp_1989+.*\\.tif",
+      "assets": {
+        "Temperature-1989_12_31-Temp_1989": {
+          "href": "Temperature-1989_12_31-Temp_1989.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1990_12_31-Temp_1990": {
+      "id": "Temperature-1990_12_31-Temp_1990",
+      "pattern": ".+Temperature-1990_12_31-Temp_1990+.*\\.tif",
+      "assets": {
+        "Temperature-1990_12_31-Temp_1990": {
+          "href": "Temperature-1990_12_31-Temp_1990.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1991_12_31-Temp_1991": {
+      "id": "Temperature-1991_12_31-Temp_1991",
+      "pattern": ".+Temperature-1991_12_31-Temp_1991+.*\\.tif",
+      "assets": {
+        "Temperature-1991_12_31-Temp_1991": {
+          "href": "Temperature-1991_12_31-Temp_1991.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1992_12_31-Temp_1992": {
+      "id": "Temperature-1992_12_31-Temp_1992",
+      "pattern": ".+Temperature-1992_12_31-Temp_1992+.*\\.tif",
+      "assets": {
+        "Temperature-1992_12_31-Temp_1992": {
+          "href": "Temperature-1992_12_31-Temp_1992.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1993_12_31-Temp_1993": {
+      "id": "Temperature-1993_12_31-Temp_1993",
+      "pattern": ".+Temperature-1993_12_31-Temp_1993+.*\\.tif",
+      "assets": {
+        "Temperature-1993_12_31-Temp_1993": {
+          "href": "Temperature-1993_12_31-Temp_1993.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1994_12_31-Temp_1994": {
+      "id": "Temperature-1994_12_31-Temp_1994",
+      "pattern": ".+Temperature-1994_12_31-Temp_1994+.*\\.tif",
+      "assets": {
+        "Temperature-1994_12_31-Temp_1994": {
+          "href": "Temperature-1994_12_31-Temp_1994.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1995_12_31-Temp_1995": {
+      "id": "Temperature-1995_12_31-Temp_1995",
+      "pattern": ".+Temperature-1995_12_31-Temp_1995+.*\\.tif",
+      "assets": {
+        "Temperature-1995_12_31-Temp_1995": {
+          "href": "Temperature-1995_12_31-Temp_1995.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1996_12_31-Temp_1996": {
+      "id": "Temperature-1996_12_31-Temp_1996",
+      "pattern": ".+Temperature-1996_12_31-Temp_1996+.*\\.tif",
+      "assets": {
+        "Temperature-1996_12_31-Temp_1996": {
+          "href": "Temperature-1996_12_31-Temp_1996.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1997_12_31-Temp_1997": {
+      "id": "Temperature-1997_12_31-Temp_1997",
+      "pattern": ".+Temperature-1997_12_31-Temp_1997+.*\\.tif",
+      "assets": {
+        "Temperature-1997_12_31-Temp_1997": {
+          "href": "Temperature-1997_12_31-Temp_1997.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1998_12_31-Temp_1998": {
+      "id": "Temperature-1998_12_31-Temp_1998",
+      "pattern": ".+Temperature-1998_12_31-Temp_1998+.*\\.tif",
+      "assets": {
+        "Temperature-1998_12_31-Temp_1998": {
+          "href": "Temperature-1998_12_31-Temp_1998.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1999_12_31-Temp_1999": {
+      "id": "Temperature-1999_12_31-Temp_1999",
+      "pattern": ".+Temperature-1999_12_31-Temp_1999+.*\\.tif",
+      "assets": {
+        "Temperature-1999_12_31-Temp_1999": {
+          "href": "Temperature-1999_12_31-Temp_1999.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2000_12_31-Temp_2000": {
+      "id": "Temperature-2000_12_31-Temp_2000",
+      "pattern": ".+Temperature-2000_12_31-Temp_2000+.*\\.tif",
+      "assets": {
+        "Temperature-2000_12_31-Temp_2000": {
+          "href": "Temperature-2000_12_31-Temp_2000.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2001_12_31-Temp_2001": {
+      "id": "Temperature-2001_12_31-Temp_2001",
+      "pattern": ".+Temperature-2001_12_31-Temp_2001+.*\\.tif",
+      "assets": {
+        "Temperature-2001_12_31-Temp_2001": {
+          "href": "Temperature-2001_12_31-Temp_2001.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2002_12_31-Temp_2002": {
+      "id": "Temperature-2002_12_31-Temp_2002",
+      "pattern": ".+Temperature-2002_12_31-Temp_2002+.*\\.tif",
+      "assets": {
+        "Temperature-2002_12_31-Temp_2002": {
+          "href": "Temperature-2002_12_31-Temp_2002.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2003_12_31-Temp_2003": {
+      "id": "Temperature-2003_12_31-Temp_2003",
+      "pattern": ".+Temperature-2003_12_31-Temp_2003+.*\\.tif",
+      "assets": {
+        "Temperature-2003_12_31-Temp_2003": {
+          "href": "Temperature-2003_12_31-Temp_2003.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2004_12_31-Temp_2004": {
+      "id": "Temperature-2004_12_31-Temp_2004",
+      "pattern": ".+Temperature-2004_12_31-Temp_2004+.*\\.tif",
+      "assets": {
+        "Temperature-2004_12_31-Temp_2004": {
+          "href": "Temperature-2004_12_31-Temp_2004.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2005_12_31-Temp_2005": {
+      "id": "Temperature-2005_12_31-Temp_2005",
+      "pattern": ".+Temperature-2005_12_31-Temp_2005+.*\\.tif",
+      "assets": {
+        "Temperature-2005_12_31-Temp_2005": {
+          "href": "Temperature-2005_12_31-Temp_2005.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2006_12_31-Temp_2006": {
+      "id": "Temperature-2006_12_31-Temp_2006",
+      "pattern": ".+Temperature-2006_12_31-Temp_2006+.*\\.tif",
+      "assets": {
+        "Temperature-2006_12_31-Temp_2006": {
+          "href": "Temperature-2006_12_31-Temp_2006.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2007_12_31-Temp_2007": {
+      "id": "Temperature-2007_12_31-Temp_2007",
+      "pattern": ".+Temperature-2007_12_31-Temp_2007+.*\\.tif",
+      "assets": {
+        "Temperature-2007_12_31-Temp_2007": {
+          "href": "Temperature-2007_12_31-Temp_2007.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2008_12_31-Temp_2008": {
+      "id": "Temperature-2008_12_31-Temp_2008",
+      "pattern": ".+Temperature-2008_12_31-Temp_2008+.*\\.tif",
+      "assets": {
+        "Temperature-2008_12_31-Temp_2008": {
+          "href": "Temperature-2008_12_31-Temp_2008.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2009_12_31-Temp_2009": {
+      "id": "Temperature-2009_12_31-Temp_2009",
+      "pattern": ".+Temperature-2009_12_31-Temp_2009+.*\\.tif",
+      "assets": {
+        "Temperature-2009_12_31-Temp_2009": {
+          "href": "Temperature-2009_12_31-Temp_2009.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2010_12_31-Temp_2010": {
+      "id": "Temperature-2010_12_31-Temp_2010",
+      "pattern": ".+Temperature-2010_12_31-Temp_2010+.*\\.tif",
+      "assets": {
+        "Temperature-2010_12_31-Temp_2010": {
+          "href": "Temperature-2010_12_31-Temp_2010.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2011_12_31-Temp_2011": {
+      "id": "Temperature-2011_12_31-Temp_2011",
+      "pattern": ".+Temperature-2011_12_31-Temp_2011+.*\\.tif",
+      "assets": {
+        "Temperature-2011_12_31-Temp_2011": {
+          "href": "Temperature-2011_12_31-Temp_2011.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2012_12_31-Temp_2012": {
+      "id": "Temperature-2012_12_31-Temp_2012",
+      "pattern": ".+Temperature-2012_12_31-Temp_2012+.*\\.tif",
+      "assets": {
+        "Temperature-2012_12_31-Temp_2012": {
+          "href": "Temperature-2012_12_31-Temp_2012.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2013_12_31-Temp_2013": {
+      "id": "Temperature-2013_12_31-Temp_2013",
+      "pattern": ".+Temperature-2013_12_31-Temp_2013+.*\\.tif",
+      "assets": {
+        "Temperature-2013_12_31-Temp_2013": {
+          "href": "Temperature-2013_12_31-Temp_2013.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2014_12_31-Temp_2014": {
+      "id": "Temperature-2014_12_31-Temp_2014",
+      "pattern": ".+Temperature-2014_12_31-Temp_2014+.*\\.tif",
+      "assets": {
+        "Temperature-2014_12_31-Temp_2014": {
+          "href": "Temperature-2014_12_31-Temp_2014.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2015_12_31-Temp_2015": {
+      "id": "Temperature-2015_12_31-Temp_2015",
+      "pattern": ".+Temperature-2015_12_31-Temp_2015+.*\\.tif",
+      "assets": {
+        "Temperature-2015_12_31-Temp_2015": {
+          "href": "Temperature-2015_12_31-Temp_2015.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2016_12_31-Temp_2016": {
+      "id": "Temperature-2016_12_31-Temp_2016",
+      "pattern": ".+Temperature-2016_12_31-Temp_2016+.*\\.tif",
+      "assets": {
+        "Temperature-2016_12_31-Temp_2016": {
+          "href": "Temperature-2016_12_31-Temp_2016.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2017_12_31-Temp_2017": {
+      "id": "Temperature-2017_12_31-Temp_2017",
+      "pattern": ".+Temperature-2017_12_31-Temp_2017+.*\\.tif",
+      "assets": {
+        "Temperature-2017_12_31-Temp_2017": {
+          "href": "Temperature-2017_12_31-Temp_2017.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2018_12_31-Temp_2018": {
+      "id": "Temperature-2018_12_31-Temp_2018",
+      "pattern": ".+Temperature-2018_12_31-Temp_2018+.*\\.tif",
+      "assets": {
+        "Temperature-2018_12_31-Temp_2018": {
+          "href": "Temperature-2018_12_31-Temp_2018.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2019_12_31-Temp_2019": {
+      "id": "Temperature-2019_12_31-Temp_2019",
+      "pattern": ".+Temperature-2019_12_31-Temp_2019+.*\\.tif",
+      "assets": {
+        "Temperature-2019_12_31-Temp_2019": {
+          "href": "Temperature-2019_12_31-Temp_2019.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2020_12_31-Temp_2020": {
+      "id": "Temperature-2020_12_31-Temp_2020",
+      "pattern": ".+Temperature-2020_12_31-Temp_2020+.*\\.tif",
+      "assets": {
+        "Temperature-2020_12_31-Temp_2020": {
+          "href": "Temperature-2020_12_31-Temp_2020.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2021_12_31-Temp_2021": {
+      "id": "Temperature-2021_12_31-Temp_2021",
+      "pattern": ".+Temperature-2021_12_31-Temp_2021+.*\\.tif",
+      "assets": {
+        "Temperature-2021_12_31-Temp_2021": {
+          "href": "Temperature-2021_12_31-Temp_2021.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2022_12_31-Temp_2022": {
+      "id": "Temperature-2022_12_31-Temp_2022",
+      "pattern": ".+Temperature-2022_12_31-Temp_2022+.*\\.tif",
+      "assets": {
+        "Temperature-2022_12_31-Temp_2022": {
+          "href": "Temperature-2022_12_31-Temp_2022.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    }
+  },
+  "bands": {
+    "Temperature-1961_12_31-Temp_1961": {
+      "id": "Temperature-1961_12_31-Temp_1961",
+      "pattern": ".+Temperature-1961_12_31-Temp_1961+.*\\.tif",
+      "assets": {
+        "Temperature-1961_12_31-Temp_1961": {
+          "href": "Temperature-1961_12_31-Temp_1961.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1962_12_31-Temp_1962": {
+      "id": "Temperature-1962_12_31-Temp_1962",
+      "pattern": ".+Temperature-1962_12_31-Temp_1962+.*\\.tif",
+      "assets": {
+        "Temperature-1962_12_31-Temp_1962": {
+          "href": "Temperature-1962_12_31-Temp_1962.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1963_12_31-Temp_1963": {
+      "id": "Temperature-1963_12_31-Temp_1963",
+      "pattern": ".+Temperature-1963_12_31-Temp_1963+.*\\.tif",
+      "assets": {
+        "Temperature-1963_12_31-Temp_1963": {
+          "href": "Temperature-1963_12_31-Temp_1963.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1964_12_31-Temp_1964": {
+      "id": "Temperature-1964_12_31-Temp_1964",
+      "pattern": ".+Temperature-1964_12_31-Temp_1964+.*\\.tif",
+      "assets": {
+        "Temperature-1964_12_31-Temp_1964": {
+          "href": "Temperature-1964_12_31-Temp_1964.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1965_12_31-Temp_1965": {
+      "id": "Temperature-1965_12_31-Temp_1965",
+      "pattern": ".+Temperature-1965_12_31-Temp_1965+.*\\.tif",
+      "assets": {
+        "Temperature-1965_12_31-Temp_1965": {
+          "href": "Temperature-1965_12_31-Temp_1965.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1966_12_31-Temp_1966": {
+      "id": "Temperature-1966_12_31-Temp_1966",
+      "pattern": ".+Temperature-1966_12_31-Temp_1966+.*\\.tif",
+      "assets": {
+        "Temperature-1966_12_31-Temp_1966": {
+          "href": "Temperature-1966_12_31-Temp_1966.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1967_12_31-Temp_1967": {
+      "id": "Temperature-1967_12_31-Temp_1967",
+      "pattern": ".+Temperature-1967_12_31-Temp_1967+.*\\.tif",
+      "assets": {
+        "Temperature-1967_12_31-Temp_1967": {
+          "href": "Temperature-1967_12_31-Temp_1967.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1968_12_31-Temp_1968": {
+      "id": "Temperature-1968_12_31-Temp_1968",
+      "pattern": ".+Temperature-1968_12_31-Temp_1968+.*\\.tif",
+      "assets": {
+        "Temperature-1968_12_31-Temp_1968": {
+          "href": "Temperature-1968_12_31-Temp_1968.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1969_12_31-Temp_1969": {
+      "id": "Temperature-1969_12_31-Temp_1969",
+      "pattern": ".+Temperature-1969_12_31-Temp_1969+.*\\.tif",
+      "assets": {
+        "Temperature-1969_12_31-Temp_1969": {
+          "href": "Temperature-1969_12_31-Temp_1969.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1970_12_31-Temp_1970": {
+      "id": "Temperature-1970_12_31-Temp_1970",
+      "pattern": ".+Temperature-1970_12_31-Temp_1970+.*\\.tif",
+      "assets": {
+        "Temperature-1970_12_31-Temp_1970": {
+          "href": "Temperature-1970_12_31-Temp_1970.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1971_12_31-Temp_1971": {
+      "id": "Temperature-1971_12_31-Temp_1971",
+      "pattern": ".+Temperature-1971_12_31-Temp_1971+.*\\.tif",
+      "assets": {
+        "Temperature-1971_12_31-Temp_1971": {
+          "href": "Temperature-1971_12_31-Temp_1971.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1972_12_31-Temp_1972": {
+      "id": "Temperature-1972_12_31-Temp_1972",
+      "pattern": ".+Temperature-1972_12_31-Temp_1972+.*\\.tif",
+      "assets": {
+        "Temperature-1972_12_31-Temp_1972": {
+          "href": "Temperature-1972_12_31-Temp_1972.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1973_12_31-Temp_1973": {
+      "id": "Temperature-1973_12_31-Temp_1973",
+      "pattern": ".+Temperature-1973_12_31-Temp_1973+.*\\.tif",
+      "assets": {
+        "Temperature-1973_12_31-Temp_1973": {
+          "href": "Temperature-1973_12_31-Temp_1973.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1974_12_31-Temp_1974": {
+      "id": "Temperature-1974_12_31-Temp_1974",
+      "pattern": ".+Temperature-1974_12_31-Temp_1974+.*\\.tif",
+      "assets": {
+        "Temperature-1974_12_31-Temp_1974": {
+          "href": "Temperature-1974_12_31-Temp_1974.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1975_12_31-Temp_1975": {
+      "id": "Temperature-1975_12_31-Temp_1975",
+      "pattern": ".+Temperature-1975_12_31-Temp_1975+.*\\.tif",
+      "assets": {
+        "Temperature-1975_12_31-Temp_1975": {
+          "href": "Temperature-1975_12_31-Temp_1975.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1976_12_31-Temp_1976": {
+      "id": "Temperature-1976_12_31-Temp_1976",
+      "pattern": ".+Temperature-1976_12_31-Temp_1976+.*\\.tif",
+      "assets": {
+        "Temperature-1976_12_31-Temp_1976": {
+          "href": "Temperature-1976_12_31-Temp_1976.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1977_12_31-Temp_1977": {
+      "id": "Temperature-1977_12_31-Temp_1977",
+      "pattern": ".+Temperature-1977_12_31-Temp_1977+.*\\.tif",
+      "assets": {
+        "Temperature-1977_12_31-Temp_1977": {
+          "href": "Temperature-1977_12_31-Temp_1977.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1978_12_31-Temp_1978": {
+      "id": "Temperature-1978_12_31-Temp_1978",
+      "pattern": ".+Temperature-1978_12_31-Temp_1978+.*\\.tif",
+      "assets": {
+        "Temperature-1978_12_31-Temp_1978": {
+          "href": "Temperature-1978_12_31-Temp_1978.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1979_12_31-Temp_1979": {
+      "id": "Temperature-1979_12_31-Temp_1979",
+      "pattern": ".+Temperature-1979_12_31-Temp_1979+.*\\.tif",
+      "assets": {
+        "Temperature-1979_12_31-Temp_1979": {
+          "href": "Temperature-1979_12_31-Temp_1979.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1980_12_31-Temp_1980": {
+      "id": "Temperature-1980_12_31-Temp_1980",
+      "pattern": ".+Temperature-1980_12_31-Temp_1980+.*\\.tif",
+      "assets": {
+        "Temperature-1980_12_31-Temp_1980": {
+          "href": "Temperature-1980_12_31-Temp_1980.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1981_12_31-Temp_1981": {
+      "id": "Temperature-1981_12_31-Temp_1981",
+      "pattern": ".+Temperature-1981_12_31-Temp_1981+.*\\.tif",
+      "assets": {
+        "Temperature-1981_12_31-Temp_1981": {
+          "href": "Temperature-1981_12_31-Temp_1981.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1982_12_31-Temp_1982": {
+      "id": "Temperature-1982_12_31-Temp_1982",
+      "pattern": ".+Temperature-1982_12_31-Temp_1982+.*\\.tif",
+      "assets": {
+        "Temperature-1982_12_31-Temp_1982": {
+          "href": "Temperature-1982_12_31-Temp_1982.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1983_12_31-Temp_1983": {
+      "id": "Temperature-1983_12_31-Temp_1983",
+      "pattern": ".+Temperature-1983_12_31-Temp_1983+.*\\.tif",
+      "assets": {
+        "Temperature-1983_12_31-Temp_1983": {
+          "href": "Temperature-1983_12_31-Temp_1983.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1984_12_31-Temp_1984": {
+      "id": "Temperature-1984_12_31-Temp_1984",
+      "pattern": ".+Temperature-1984_12_31-Temp_1984+.*\\.tif",
+      "assets": {
+        "Temperature-1984_12_31-Temp_1984": {
+          "href": "Temperature-1984_12_31-Temp_1984.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1985_12_31-Temp_1985": {
+      "id": "Temperature-1985_12_31-Temp_1985",
+      "pattern": ".+Temperature-1985_12_31-Temp_1985+.*\\.tif",
+      "assets": {
+        "Temperature-1985_12_31-Temp_1985": {
+          "href": "Temperature-1985_12_31-Temp_1985.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1986_12_31-Temp_1986": {
+      "id": "Temperature-1986_12_31-Temp_1986",
+      "pattern": ".+Temperature-1986_12_31-Temp_1986+.*\\.tif",
+      "assets": {
+        "Temperature-1986_12_31-Temp_1986": {
+          "href": "Temperature-1986_12_31-Temp_1986.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1987_12_31-Temp_1987": {
+      "id": "Temperature-1987_12_31-Temp_1987",
+      "pattern": ".+Temperature-1987_12_31-Temp_1987+.*\\.tif",
+      "assets": {
+        "Temperature-1987_12_31-Temp_1987": {
+          "href": "Temperature-1987_12_31-Temp_1987.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1988_12_31-Temp_1988": {
+      "id": "Temperature-1988_12_31-Temp_1988",
+      "pattern": ".+Temperature-1988_12_31-Temp_1988+.*\\.tif",
+      "assets": {
+        "Temperature-1988_12_31-Temp_1988": {
+          "href": "Temperature-1988_12_31-Temp_1988.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1989_12_31-Temp_1989": {
+      "id": "Temperature-1989_12_31-Temp_1989",
+      "pattern": ".+Temperature-1989_12_31-Temp_1989+.*\\.tif",
+      "assets": {
+        "Temperature-1989_12_31-Temp_1989": {
+          "href": "Temperature-1989_12_31-Temp_1989.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1990_12_31-Temp_1990": {
+      "id": "Temperature-1990_12_31-Temp_1990",
+      "pattern": ".+Temperature-1990_12_31-Temp_1990+.*\\.tif",
+      "assets": {
+        "Temperature-1990_12_31-Temp_1990": {
+          "href": "Temperature-1990_12_31-Temp_1990.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1991_12_31-Temp_1991": {
+      "id": "Temperature-1991_12_31-Temp_1991",
+      "pattern": ".+Temperature-1991_12_31-Temp_1991+.*\\.tif",
+      "assets": {
+        "Temperature-1991_12_31-Temp_1991": {
+          "href": "Temperature-1991_12_31-Temp_1991.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1992_12_31-Temp_1992": {
+      "id": "Temperature-1992_12_31-Temp_1992",
+      "pattern": ".+Temperature-1992_12_31-Temp_1992+.*\\.tif",
+      "assets": {
+        "Temperature-1992_12_31-Temp_1992": {
+          "href": "Temperature-1992_12_31-Temp_1992.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1993_12_31-Temp_1993": {
+      "id": "Temperature-1993_12_31-Temp_1993",
+      "pattern": ".+Temperature-1993_12_31-Temp_1993+.*\\.tif",
+      "assets": {
+        "Temperature-1993_12_31-Temp_1993": {
+          "href": "Temperature-1993_12_31-Temp_1993.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1994_12_31-Temp_1994": {
+      "id": "Temperature-1994_12_31-Temp_1994",
+      "pattern": ".+Temperature-1994_12_31-Temp_1994+.*\\.tif",
+      "assets": {
+        "Temperature-1994_12_31-Temp_1994": {
+          "href": "Temperature-1994_12_31-Temp_1994.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1995_12_31-Temp_1995": {
+      "id": "Temperature-1995_12_31-Temp_1995",
+      "pattern": ".+Temperature-1995_12_31-Temp_1995+.*\\.tif",
+      "assets": {
+        "Temperature-1995_12_31-Temp_1995": {
+          "href": "Temperature-1995_12_31-Temp_1995.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1996_12_31-Temp_1996": {
+      "id": "Temperature-1996_12_31-Temp_1996",
+      "pattern": ".+Temperature-1996_12_31-Temp_1996+.*\\.tif",
+      "assets": {
+        "Temperature-1996_12_31-Temp_1996": {
+          "href": "Temperature-1996_12_31-Temp_1996.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1997_12_31-Temp_1997": {
+      "id": "Temperature-1997_12_31-Temp_1997",
+      "pattern": ".+Temperature-1997_12_31-Temp_1997+.*\\.tif",
+      "assets": {
+        "Temperature-1997_12_31-Temp_1997": {
+          "href": "Temperature-1997_12_31-Temp_1997.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1998_12_31-Temp_1998": {
+      "id": "Temperature-1998_12_31-Temp_1998",
+      "pattern": ".+Temperature-1998_12_31-Temp_1998+.*\\.tif",
+      "assets": {
+        "Temperature-1998_12_31-Temp_1998": {
+          "href": "Temperature-1998_12_31-Temp_1998.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-1999_12_31-Temp_1999": {
+      "id": "Temperature-1999_12_31-Temp_1999",
+      "pattern": ".+Temperature-1999_12_31-Temp_1999+.*\\.tif",
+      "assets": {
+        "Temperature-1999_12_31-Temp_1999": {
+          "href": "Temperature-1999_12_31-Temp_1999.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2000_12_31-Temp_2000": {
+      "id": "Temperature-2000_12_31-Temp_2000",
+      "pattern": ".+Temperature-2000_12_31-Temp_2000+.*\\.tif",
+      "assets": {
+        "Temperature-2000_12_31-Temp_2000": {
+          "href": "Temperature-2000_12_31-Temp_2000.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2001_12_31-Temp_2001": {
+      "id": "Temperature-2001_12_31-Temp_2001",
+      "pattern": ".+Temperature-2001_12_31-Temp_2001+.*\\.tif",
+      "assets": {
+        "Temperature-2001_12_31-Temp_2001": {
+          "href": "Temperature-2001_12_31-Temp_2001.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2002_12_31-Temp_2002": {
+      "id": "Temperature-2002_12_31-Temp_2002",
+      "pattern": ".+Temperature-2002_12_31-Temp_2002+.*\\.tif",
+      "assets": {
+        "Temperature-2002_12_31-Temp_2002": {
+          "href": "Temperature-2002_12_31-Temp_2002.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2003_12_31-Temp_2003": {
+      "id": "Temperature-2003_12_31-Temp_2003",
+      "pattern": ".+Temperature-2003_12_31-Temp_2003+.*\\.tif",
+      "assets": {
+        "Temperature-2003_12_31-Temp_2003": {
+          "href": "Temperature-2003_12_31-Temp_2003.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2004_12_31-Temp_2004": {
+      "id": "Temperature-2004_12_31-Temp_2004",
+      "pattern": ".+Temperature-2004_12_31-Temp_2004+.*\\.tif",
+      "assets": {
+        "Temperature-2004_12_31-Temp_2004": {
+          "href": "Temperature-2004_12_31-Temp_2004.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2005_12_31-Temp_2005": {
+      "id": "Temperature-2005_12_31-Temp_2005",
+      "pattern": ".+Temperature-2005_12_31-Temp_2005+.*\\.tif",
+      "assets": {
+        "Temperature-2005_12_31-Temp_2005": {
+          "href": "Temperature-2005_12_31-Temp_2005.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2006_12_31-Temp_2006": {
+      "id": "Temperature-2006_12_31-Temp_2006",
+      "pattern": ".+Temperature-2006_12_31-Temp_2006+.*\\.tif",
+      "assets": {
+        "Temperature-2006_12_31-Temp_2006": {
+          "href": "Temperature-2006_12_31-Temp_2006.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2007_12_31-Temp_2007": {
+      "id": "Temperature-2007_12_31-Temp_2007",
+      "pattern": ".+Temperature-2007_12_31-Temp_2007+.*\\.tif",
+      "assets": {
+        "Temperature-2007_12_31-Temp_2007": {
+          "href": "Temperature-2007_12_31-Temp_2007.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2008_12_31-Temp_2008": {
+      "id": "Temperature-2008_12_31-Temp_2008",
+      "pattern": ".+Temperature-2008_12_31-Temp_2008+.*\\.tif",
+      "assets": {
+        "Temperature-2008_12_31-Temp_2008": {
+          "href": "Temperature-2008_12_31-Temp_2008.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2009_12_31-Temp_2009": {
+      "id": "Temperature-2009_12_31-Temp_2009",
+      "pattern": ".+Temperature-2009_12_31-Temp_2009+.*\\.tif",
+      "assets": {
+        "Temperature-2009_12_31-Temp_2009": {
+          "href": "Temperature-2009_12_31-Temp_2009.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2010_12_31-Temp_2010": {
+      "id": "Temperature-2010_12_31-Temp_2010",
+      "pattern": ".+Temperature-2010_12_31-Temp_2010+.*\\.tif",
+      "assets": {
+        "Temperature-2010_12_31-Temp_2010": {
+          "href": "Temperature-2010_12_31-Temp_2010.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2011_12_31-Temp_2011": {
+      "id": "Temperature-2011_12_31-Temp_2011",
+      "pattern": ".+Temperature-2011_12_31-Temp_2011+.*\\.tif",
+      "assets": {
+        "Temperature-2011_12_31-Temp_2011": {
+          "href": "Temperature-2011_12_31-Temp_2011.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2012_12_31-Temp_2012": {
+      "id": "Temperature-2012_12_31-Temp_2012",
+      "pattern": ".+Temperature-2012_12_31-Temp_2012+.*\\.tif",
+      "assets": {
+        "Temperature-2012_12_31-Temp_2012": {
+          "href": "Temperature-2012_12_31-Temp_2012.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2013_12_31-Temp_2013": {
+      "id": "Temperature-2013_12_31-Temp_2013",
+      "pattern": ".+Temperature-2013_12_31-Temp_2013+.*\\.tif",
+      "assets": {
+        "Temperature-2013_12_31-Temp_2013": {
+          "href": "Temperature-2013_12_31-Temp_2013.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2014_12_31-Temp_2014": {
+      "id": "Temperature-2014_12_31-Temp_2014",
+      "pattern": ".+Temperature-2014_12_31-Temp_2014+.*\\.tif",
+      "assets": {
+        "Temperature-2014_12_31-Temp_2014": {
+          "href": "Temperature-2014_12_31-Temp_2014.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2015_12_31-Temp_2015": {
+      "id": "Temperature-2015_12_31-Temp_2015",
+      "pattern": ".+Temperature-2015_12_31-Temp_2015+.*\\.tif",
+      "assets": {
+        "Temperature-2015_12_31-Temp_2015": {
+          "href": "Temperature-2015_12_31-Temp_2015.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2016_12_31-Temp_2016": {
+      "id": "Temperature-2016_12_31-Temp_2016",
+      "pattern": ".+Temperature-2016_12_31-Temp_2016+.*\\.tif",
+      "assets": {
+        "Temperature-2016_12_31-Temp_2016": {
+          "href": "Temperature-2016_12_31-Temp_2016.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2017_12_31-Temp_2017": {
+      "id": "Temperature-2017_12_31-Temp_2017",
+      "pattern": ".+Temperature-2017_12_31-Temp_2017+.*\\.tif",
+      "assets": {
+        "Temperature-2017_12_31-Temp_2017": {
+          "href": "Temperature-2017_12_31-Temp_2017.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2018_12_31-Temp_2018": {
+      "id": "Temperature-2018_12_31-Temp_2018",
+      "pattern": ".+Temperature-2018_12_31-Temp_2018+.*\\.tif",
+      "assets": {
+        "Temperature-2018_12_31-Temp_2018": {
+          "href": "Temperature-2018_12_31-Temp_2018.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2019_12_31-Temp_2019": {
+      "id": "Temperature-2019_12_31-Temp_2019",
+      "pattern": ".+Temperature-2019_12_31-Temp_2019+.*\\.tif",
+      "assets": {
+        "Temperature-2019_12_31-Temp_2019": {
+          "href": "Temperature-2019_12_31-Temp_2019.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2020_12_31-Temp_2020": {
+      "id": "Temperature-2020_12_31-Temp_2020",
+      "pattern": ".+Temperature-2020_12_31-Temp_2020+.*\\.tif",
+      "assets": {
+        "Temperature-2020_12_31-Temp_2020": {
+          "href": "Temperature-2020_12_31-Temp_2020.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2021_12_31-Temp_2021": {
+      "id": "Temperature-2021_12_31-Temp_2021",
+      "pattern": ".+Temperature-2021_12_31-Temp_2021+.*\\.tif",
+      "assets": {
+        "Temperature-2021_12_31-Temp_2021": {
+          "href": "Temperature-2021_12_31-Temp_2021.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    },
+    "Temperature-2022_12_31-Temp_2022": {
+      "id": "Temperature-2022_12_31-Temp_2022",
+      "pattern": ".+Temperature-2022_12_31-Temp_2022+.*\\.tif",
+      "assets": {
+        "Temperature-2022_12_31-Temp_2022": {
+          "href": "Temperature-2022_12_31-Temp_2022.tif",
+          "classes": {}
+        }
+      },
+      "bbox": [-180, -90, 180, 90],
+      "properties": {
+        "proj:epsg": null,
+        "resolution": [300, 300]
+      }
+    }
+  }
+}
