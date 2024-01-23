@@ -6,7 +6,7 @@ inputs:
     label: eBird_format_file
     description: "Input data with eBird format"
     type: dataframe
-    example:  "scripts/00_occ_model_results/input/occ_wide.txt"
+    example:  "scripts/00_occ_model_results/input/occ_wide_Zcapensis.csv"
   covars:
     label: List covars
     description: "List of covarieties"

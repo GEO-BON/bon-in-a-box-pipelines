@@ -6,7 +6,7 @@ inputs:
     label: auk_covars_file
     description: "Input data with eBird data and covars"
     type: dataframe
-    example:  "scripts/00_eBird_format/input/ebird_zf_covs.txt"
+    example:  "scripts/00_eBird_format/input/occ_wide_Zcapensis.csv"
   min_obs:
     label: min_obs
     description: "Minimum number of observations required for each site."
