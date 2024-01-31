@@ -43,39 +43,23 @@ inputs:
     type: text
     example: "~1~altitud, ~1~huella"
 outputs:
-  occ_state:
-    label: occ_state
-    description: "Data frame with a summary resulto of occupancy model stats"
-    type: text/csv
-  occ_det:
-    label: occ_det
-    description: "Data frame with a summary resulto of detection model stats"
-    type: text/csv
-  assesment:
-    label: assessment
-    description: "Results of assesment model with coecficents"
-    type: text/csv
-  Model_seleccion:
-    label: Model_seleccion
-    description: "Results of model selecction"
-    type: text/csv
-  Map_prediction:
-    label: Map_prediction
+  occprob_raster_path:
+    label: occprob_raster_path
     description: "Raster map with occupancy model probability and standar error"
-    type: tif
-  Model_seleccion:
-    label: Model_seleccion
-    description: "Results of model selecction"
-    type: text/csv
+    type: image/tiff;application=geotiff	
+  occse_raster_path:
+    label: occse_raster_path
+    description: "Raster map with occupancy model probability and standar error"
+    type: image/tiff;application=geotiff	
   occPlotFacet:
     label: occPlotFacet
     description: "Get a graph of the response of the covariates and occupancy prop"
-    type: jpg
-  final_table:
+    type: image/jpg	
+  final_export:
     label: final_table
     description: "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ"
     type: text/csv
-  FVEB:
+  VEB_export:
     label: FVEB
     description: "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)"
-    type: text/csv
+    type: text
