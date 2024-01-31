@@ -366,7 +366,6 @@
       "data": {
         "type": "text[]",
         "value": [
-          "L",
           "LQ",
           "LQHP"
         ]
@@ -384,8 +383,7 @@
         "type": "float[]",
         "value": [
           0.5,
-          1,
-          2
+          1
         ]
       }
     },
@@ -763,7 +761,8 @@
         "random",
         "inclusion_buffer",
         "weighted_raster",
-        "unweighted_raster"
+        "unweighted_raster",
+        "thickening"
       ],
       "example": "random"
     },
@@ -866,14 +865,18 @@
       "type": "text[]",
       "example": [
         "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
+        "chelsa-clim|bio7",
+        "chelsa-clim|bio12",
+        "earthenv_topography|elevation_median",
+        "earthenv_landcover|class_3",
+        "earthenv_landcover|class_12"
       ]
     },
     "data>loadFromStac.yml@119|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
       "type": "float",
-      "example": 1000.0
+      "example": 5000.0
     },
     "data>loadFromStac.yml@119|mask": {
       "description": "Shapefile, used to mask the output rasters",
@@ -896,5 +899,17 @@
         1
       ]
     }
+  },
+  "metadata": {
+    "name": "Maxent SDM pipeline",
+    "description": "A pipeline to produce species distribution models using Maxent",
+    "author": [
+      {
+        "name": "Sarah Valentin",
+        "identifier": "https://orcid.org/0000-0002-9028-681X"
+      }
+    ],
+    "license": null,
+    "external_link": null
   }
 }

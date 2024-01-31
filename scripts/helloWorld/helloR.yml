@@ -36,6 +36,14 @@ inputs:
       - second option
       - third option
     example: third option
+  freeflow_text:
+    label: Freeflow text
+    description: This is regular text, and can have multiple lines.
+    type: text/plain
+    example: |
+      This is a multiline example.
+      Once there is a line break in the example, it becomes a textarea in the UI.
+
 outputs:
   text:
     label: Text

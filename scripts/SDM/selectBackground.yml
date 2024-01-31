@@ -26,6 +26,7 @@ inputs:
       - inclusion_buffer
       - weighted_raster
       - unweighted_raster
+      - thickening
     example: random
   n_background: 
     label: number of background points
