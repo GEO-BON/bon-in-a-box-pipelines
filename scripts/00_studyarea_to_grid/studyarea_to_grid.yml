@@ -21,8 +21,8 @@ outputs:
   study_area_path:
     label: study_area_path
     description: Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with the chosen projected coordinate system. Use this file for spatial operations and when biological data coordinates are projected to a particular coordinate system.
-    type: image/tiff;application=geotiff
+    type: text
   study_area_4326_path:
     label: study_area_4326_path
     description: Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with WGS_1984 geographic coordinate system. This file is use to plot the study area in Bon in a Box and should be used when biological data coordinates are in WGS_1984 geographic coordinate system.
-    type: image/tiff;application=geotiff
+    type: text
