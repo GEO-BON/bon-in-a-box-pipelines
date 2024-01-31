@@ -65,6 +65,7 @@ output<- tryCatch({
     occ_wide = occ_wide %>% dplyr::select(-"X")
     }
   
+  
   #occ_wide<- read.table("occ_wide.txt", sep= "\t")
 #>>>>>>> 78e6870b65abd7b2a689a2b6d3604979ca2c9ad6
   ####  Script body ####
