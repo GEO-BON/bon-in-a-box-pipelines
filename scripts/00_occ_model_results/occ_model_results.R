@@ -170,8 +170,8 @@ output<- tryCatch({
   
   occse_raster_path<- file.path(outputFolder, "occupancy-model_prob.tif") # Define the file path for the 'val_wkt_path' output
   occse_raster<-writeRaster(r_pred[["occ_se"]], occse_raster_path, overwrite = TRUE) # se map
-  #### Outputing result to JSON ####
-  output<- list(occse_raster_export = occse_raster_path)
+  
+
   
   
   # save the raster
@@ -296,15 +296,13 @@ output<- tryCatch({
   #### Outputing result to JSON ####
   
   
-  VEB_path<- file.path(outputFolder, "VEB.csv") # Define the file path for the 'val_wkt_path' output
-  write.csv(FVEB, VEB_path, row.names = T ) # Write the 'val_wkt_path' output
-  
-  
-  
   #### Outputing result to JSON ####
-  output<- list(occPlotFacet_export = occprob_raster_path, occPlotFacet= occPlotFacet_path,
-                final_export = final_path, VEB_export = VEB_path)
+  output<- list(occPlotFacet_export = occprob_raster_path,
+                occse_raster_export = occse_raster_path,
+                occPlotFacet= occPlotFacet_path,
+                final_export = final_path, VEB_export = FVEB)
   
+
 }, error = function(e) { list(error= conditionMessage(e)) })
 
 
