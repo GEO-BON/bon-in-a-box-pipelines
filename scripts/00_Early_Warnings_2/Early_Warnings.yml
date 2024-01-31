@@ -50,5 +50,5 @@ outputs:
     type: text
   trend_raster:
     label: trend_raster
-    description: trend_raster
+    description: "Pendiente de cambio del observado"
     type: text
