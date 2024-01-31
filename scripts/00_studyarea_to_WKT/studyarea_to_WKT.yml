@@ -1,5 +1,5 @@
 script: studyarea_to_WKT.R
-name: study area geometry to WKT
+name: studyarea_to_WKT
 description: This script converts the geometry of the study area into a well-known text (WKT) representation.
 author: 
  - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
@@ -20,7 +20,7 @@ outputs:
   val_wkt_path:
     label: study area wkt
     description: Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.
-    type: text/wkt
+    type: text
   val_studyarea_epsg:
     label: study area EPSG out
     description: Numerical value referring to the EPSG code used as the spatial reference system for the study area. This code specifies the reference coordinate system of the val_wkt_path file.
@@ -29,3 +29,11 @@ outputs:
     label: study area geoJSON
     description: Text string referring to the file path of the generated GeoJSON (.geojson) file that represents the boundaries of the study area. The GeoJSON file (Geospatial JavaScript Object Notation) is a format for storing spatial data that describes the geometry of the study area.
     type: application/geo+json
+  val_data_path:
+    label: val_data_path
+    description: val_data_path
+    type: text
+  val_data_path2:
+    label: val_data_path2
+    description: val_data_path
+    type: text

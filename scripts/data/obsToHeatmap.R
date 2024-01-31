@@ -14,9 +14,10 @@ library("stars")
 
 setwd(outputFolder)
 # Does this make sense with setwd()? -Dat
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
-print("Inputs: ")
-print(input)
+input <- list(presence= 'D:/Repositories/PEM-Humboldt_biab-2.0/scripts/SDM/selectBackground_presence.tsv', 
+              predictors= 'D:/Repositories/PEM-Humboldt_biab-2.0/scripts/filtering/cleanCoordinates_predictors.tif')
+
+
 
 predictors <- terra::rast(input$predictors)
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE)

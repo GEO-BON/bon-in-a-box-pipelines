@@ -1,0 +1,54 @@
+script: Early_Warnings.R
+name: Early_Warnings
+description: This script converts the geometry of the study area into a well-known text (WKT) representation.
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dir_collection:
+    label: 'stack path in'
+    description: 'Path to the input directory where the raster results of the metric analysis are saved'
+    type: text
+    example: "scripts/00_Early_Warnings/input/dir_stack"
+  fun_summary:
+    label: summary function
+    description: 'Corresponds to the statistic by which you want to reduce the data collection. https://rdrr.io/cran/terra/man/global.html'
+    type: text
+    options:
+      - mean
+      - sum
+      - mode
+    example: mean
+  projection_factor:
+    label: projection factor
+    description: 'It corresponds to the number of additional periods for which you want to make the projection. If, for example, you wanted to project 100 periods and the collection has 60 periods, the value that must be set would be 40, so that there are 100 periods in total'
+    type: int
+    example: 40
+  threshold:
+    label: threshold
+    description: 'Value of the variable at which an early warning is detected. If NULL when not clear, then estimated from threshold_trend'
+    type: text
+    example: NULL
+  threshold_trend:
+    label: threshold trend
+    description: "Function that determines the threshold value to detect early warning. In the case of temperature, the average of the first 20 periods is taken and 1.5 is added according to the literature. In the case of forest, 30% of the forest is found in year 1 of the collection is taken. When the projected values exceed this value, the alert is identified."
+    type: text
+    example: "mean(x[1:20])+1.5"
+outputs:
+  trend_figure:
+    label: trend figure
+    description: 'It corresponds to the trend graph of the variable of interest. This shows the variable summarized by the selected function for the area of interest and the threshold value.''
+    type: image/jpg
+  result_table:
+    label: result table
+    description: 'corresponds to the table that has the results of the analysis. This contains the collection periods, the value of the function that is chosen for the variable, the predicted values, the threshold value and the difference between the observed and predicted values.'
+    type: text/csv
+  threshold:
+    label: threshold
+    description: threshold
+    type: text
+  trend_raster:
+    label: trend raster
+    description: 'It corresponds to a raster layer in which each of the cells contains the trend value for all analysis periods.'
+    type: text

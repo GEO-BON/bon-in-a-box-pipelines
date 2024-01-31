@@ -20,10 +20,10 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
 
 # Option 1: Setting for production pipeline purposes. This is designed for use in a production environment or workflow.
- Sys.getenv("SCRIPT_LOCATION")
+Sys.getenv("SCRIPT_LOCATION")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
-# outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(., paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
+ outputFolder<- {x<- this.path::this.path();  file_prev<-  paste0(gsub("/scripts.*", "/output", x), gsub("^.*/scripts", "", x)  ); options<- tools::file_path_sans_ext(file_prev) %>% {c(., paste0(., ".R"), paste0(., "_R"))}; folder_out<- options %>% {.[file.exists(.)]} %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]}; folder_final<- list.files(folder_out, full.names = T) %>% {.[which.max(sapply(., function(info) file.info(info)$mtime))]} }
 
 
 
@@ -38,29 +38,30 @@ input<- lapply(input, function(x) if( grepl("/", x) ){
 
 ####  Script body ####
 output<- tryCatch({
- 
-# Load and convert the study area to aggregate polygon limits and project it to the defined EPSG coordinate system
-vector_polygon<-  terra::vect(input$studyarea_path) %>% terra::aggregate()  %>%  terra::project( raster::crs( paste0("+init=epsg:", input$studyarea_epsg) )    )
-# Generate WKT representation of the strudy area polygon
-wkt_polygon <- terra::geom(vector_polygon, wkt=TRUE) %>% {  paste0( "MULTIPOLYGON (",paste(gsub("POLYGON |MULTIPOLYGON ", "", .), collapse=  ", "),")") %>% {gsub("\\({4}", "\\(\\(\\(", .)}  }
-
-# Convert the vector polygon to the GeoJSON format and transform its coordinate reference system to 4326 (WGS84) to make it compatible with the Leaflet interactive JavaScript library
-geojson_polygon<- sf::st_as_sf(vector_polygon) %>% sf::st_transform(4326)
-
-
-# Define and export the output values
-
-# Define val_wkt_path output
-dir_wkt<- file.path(outputFolder, "wkt_polygon_test.txt") # Define the file path for the 'val_wkt_path' output
-writeLines(wkt_polygon, dir_wkt ) # Write the 'val_wkt_path' output
-
-# Define val_studyarea_GeoJSON_path output
-dir_GeoJSON<- file.path(outputFolder, "wkt_polygon_test.geojson") # Define the file path for the 'val_studyarea_GeoJSON_path' output
-sf::st_write(geojson_polygon, dir_GeoJSON, overwrite=T, append=T) # Write the 'val_studyarea_GeoJSON_path' output
-
-# Define final output list
-output<- list(val_wkt_path= dir_wkt,val_studyarea_geojson_path= dir_GeoJSON, val_studyarea_epsg= input$studyarea_epsg)
-
+  
+  # Load and convert the study area to aggregate polygon limits and project it to the defined EPSG coordinate system
+  vector_polygon<-  terra::vect(input$studyarea_path) %>% terra::aggregate()  %>%  terra::project( raster::crs( paste0("+init=epsg:", input$studyarea_epsg) )    )
+  # Generate WKT representation of the strudy area polygon
+  wkt_polygon <- terra::geom(vector_polygon, wkt=TRUE) %>% {  paste0( "MULTIPOLYGON (",paste(gsub("POLYGON |MULTIPOLYGON ", "", .), collapse=  ", "),")") %>% {gsub("\\({4}", "\\(\\(\\(", .)}  }
+  
+  # Convert the vector polygon to the GeoJSON format and transform its coordinate reference system to 4326 (WGS84) to make it compatible with the Leaflet interactive JavaScript library
+  geojson_polygon<- sf::st_as_sf(vector_polygon) %>% sf::st_transform(4326)
+  
+  
+  # Define and export the output values
+  
+  # Define val_wkt_path output
+  dir_wkt<- file.path(outputFolder, "wkt_polygon_test.txt") # Define the file path for the 'val_wkt_path' output
+  writeLines(wkt_polygon, dir_wkt ) # Write the 'val_wkt_path' output
+  
+  # Define val_studyarea_GeoJSON_path output
+  dir_GeoJSON<- file.path(outputFolder, "wkt_polygon_test.geojson") # Define the file path for the 'val_studyarea_GeoJSON_path' output
+  sf::st_write(geojson_polygon, dir_GeoJSON, overwrite=T, append=T) # Write the 'val_studyarea_GeoJSON_path' output
+  
+  
+  # Define final output list
+  output<- list(val_wkt_path= dir_wkt,val_studyarea_geojson_path= dir_GeoJSON, val_studyarea_epsg= input$studyarea_epsg)
+  
 }, error = function(e) { list(error= conditionMessage(e)) })
 
 
