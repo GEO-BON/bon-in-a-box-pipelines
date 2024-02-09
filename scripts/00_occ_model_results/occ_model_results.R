@@ -2,7 +2,7 @@
 
 # Install necessary libraries - packages 
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<-list("rstudioapi", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
+packagesNeed<-list("rstudioapi", "this.path", "rjson", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
                    "vapour", "sf","tools","gdalUtilities", "tibble", "lubridate", "gridExtra", "tidyverse", "conflicted", 
                    "dggridR", "unmarked", "ebirdst", "MuMIn", "AICcmodavg", "fields", "rgdal", "janitor", "ggplot2")
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
@@ -10,7 +10,6 @@ lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.pack
 # Load libraries
 packagesList<-list("magrittr", "terra", "unmarked", "auk","MuMIn", "AICcmodavg", "raster", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
-
 
 
 
@@ -163,12 +162,12 @@ output<- tryCatch({
   
   
   # export graph
-  occprob_raster_path<- file.path(outputFolder, "occupancy-model_prob.tif") # Define the file path for the 'val_wkt_path' output
+  occprob_raster_path<- file.path(outputFolder, "occupancy_model_prob.tif") # Define the file path for the 'val_wkt_path' output
   occprob_raster<-writeRaster(r_pred[["occ_prob"]], occprob_raster_path, overwrite = TRUE) # occ prop map
   #### Outputing result to JSON ####
   output<- list(occprob_raster_export = occprob_raster_path)
   
-  occse_raster_path<- file.path(outputFolder, "occupancy-model_prob.tif") # Define the file path for the 'val_wkt_path' output
+  occse_raster_path<- file.path(outputFolder, "occupancy_se_model_prob.tif") # Define the file path for the 'val_wkt_path' output
   occse_raster<-writeRaster(r_pred[["occ_se"]], occse_raster_path, overwrite = TRUE) # se map
   
 
@@ -243,10 +242,9 @@ output<- tryCatch({
     theme(panel.border=element_rect(color="black",fill="transparent"), panel.background = element_rect(fill="white"))
   
   occPlotFacet<-occPlot+facet_wrap(.~CovariateName, scales="free",ncol=3)
-  occPlotFacet
   # export graph
   occPlotFacet_path<- file.path(outputFolder, "occ_plot.jpeg") # Define the file path for the 'val_wkt_path' output
-  jpeg("occ_plot.jpeg", quality = 300)  # plot graph
+  ggsave(occPlotFacet_path, occPlotFacet, width = 11, height = 9, dpi= 300, bg= "white")
   
   #### Outputing result to JSON ####
   
