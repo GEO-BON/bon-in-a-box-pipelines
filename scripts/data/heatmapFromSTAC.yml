@@ -1,5 +1,9 @@
 script: heatmapFromSTAC.R
+name: GBIF Heatmap
 description: "Download GBIF heatmap from STAC catalogue, specifying taxa."
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
 
 inputs:
   taxa: 

@@ -1,15 +1,21 @@
 
-
+#'
 #' @title Create background points
+#' 
+#' @description 
+#' Generates background points using any of the six available methods.
+#' 
+#' @details
+#' When `method = "random"`, background points are randomly sampled throughout the whole study extent. When `method = "weighted_raster"`, background points are sampled in proportion to the number of observations of a target group in an observation density raster. When `method = "unweighted_raster"`, background points are sampled only in cells where there are observations from a target group. With `method = "inclusion_buffer"`, background points are sampled within a buffer around observations (to be confirmed...). With `method = "thickening"`, background points are sampled in proportion the local density of observations by sampling in a buffer around each observation (to be confirmed...). Finally, when `method = "biased"`, a `density_bias` raster representing the effort is given and background points are sampled in proportion to this raster (to be confirmed...).  
 #'
 #' @name create_background
-#' @param predictors spat raster, containing the predictor variables
-#' @param mask, spat vector, mask to apply to the predictors.
-#' @param method string, random, inclusion_buffer (thickening or biased), or raster (unweighted or weighted)
-#' @param n integer, number of background points to select.
-#' @param obs data.frame, containing the observations. Used with method == "thickening" or "inclusion_buffer"
-#' @param width_buffer int, buffer width around observations. Used with method ==  "inclusion_buffer"
-#' @param species string, species name.
+#' @param predictors SpatRasterr, containing the predictor variables
+#' @param mask SpatVector, mask to apply to the predictors.
+#' @param method one of "random","weighted_raster","unweighted_raster","inclusion_buffer","biased","thickening".
+#' @param n integer, number of background points to sample.
+#' @param obs data.frame, containing the observations. Used with "thickening" or "inclusion_buffer".
+#' @param density_bias SpatRaster giving an effort/bias surface from which background points are sampled
+#' @param width_buffer int, buffer width around observations.  Used with "thickening" or "inclusion_buffer".
 #' @param raster SpatRaster, raster heatmap used for weighted or unweighted sampling, default NULL when not using those methods
 #' @return spatial points
 #' @export
@@ -17,184 +23,111 @@
 create_background <- function(
     predictors,
     mask = NULL,
-    method = "random",
+    method = c("random","weighted_raster","unweighted_raster","inclusion_buffer","biased","thickening"),
     n = 10000,  
     obs = NULL,
     density_bias = NULL,
     width_buffer = NULL,
     raster = NULL) {
   
-  proj <- terra::crs(predictors, proj = T)
+  method <- match.arg(method)
+  
+  proj <- terra::crs(predictors)
   
   ## New method: If we use raster, we re-project our raster and add it as an additional layer
   if (grepl("raster", method)) {
     if (is.null(raster)) stop(paste("No raster included with method:", method))
-    
-    # Bilinear interpolation when projecting in this manner
-    # Exclude 0s, since we don't want to sample areas with no sightings
-    raster[raster <= 0] <- NA
-    
-    add(predictors) <- raster
-    
+  }
+  
+  if (method == "biased") {
+    if (is.null(density_bias)) stop(paste("No density_bias included with method:", method))
   }
   
   if (!is.null(mask)) {
     predictors <- fast_crop(predictors, mask)
   }
   
-  sum_na_layer <-  terra::tapp(predictors, index = rep(1, terra::nlyr(predictors)), fun = sum, na.rm = F)
-  
-  ncellr <- terra::global(!is.na(sum_na_layer), sum)
-  
-  if (ncellr < n) {
-    message(
-      "Number of background-points exceeds number of cell. ",
-      ncellr,
-      " background-points will be sampled"
-    )
-    backgr <- terra::as.data.frame(predictors, na.rm = TRUE, xy = TRUE) |> dplyr::select(x, y)
+  if (method %in% c("inclusion_buffer","thickening")){
+    ### Not sure why the following buffer width method was originally used. package FNN could be faster for searching nearest neighbours.
+    #message("Argument width_buffer not provided. Using the 95% quantile 
+    #  of the nearest neighbour distance that is not in the same location.")
+    #
+    #if(nrow(obs) > 1000){
+    #  sampled_obs <- sample(1:nrow(obs), min(1000, nrow(obs)))
+    #  message("Only 1000 randomly sampled locations are used to determine the width_buffer.")
+    #}else{
+    #  sampled_obs <- 1:nrow(obs)
+    #}
+    #width_buffer<-quantile(st_distance(obs[sampled_obs,]),0.95)
+    #  
+    #width_buffer<-obs[sampled_obs,] |>
+    #                st_distance() |> 
+    #                apply(2,function(x){min(x[x>0])}) |> 
+    #                quantile(0.95)
+    #  
+    #message(sprintf("width-buffer used is %s (in the units of the crs)", width_buffer))
     
-  } else {
-    
-    if (any(method == "random" | grepl("^unweighted", method))) {
-      
-      # all the cells have the same probability to be selected
-      message(sprintf("Selecting %i background point based on %s method.", n, method  ))
-      
-      # Apparently this breaks if there are a lot of NA values.. using a different version for now
-      if (0) {
-        # This version has issues sampling rasters with a lot (or mostly) NA value cells
-        backgr <- terra::spatSample(sum_na_layer,
-                                    size = n,
-                                    method="random", 
-                                    replace = FALSE,
-                                    na.rm = T,
-                                    xy = TRUE, 
-                                    as.points = FALSE, 
-                                    values = F)
-      }else{
-        # cells only retrieves non-NA cells
-        backgr <- sample(cells(sum_na_layer), n)
-        backgr <- xyFromCell(sum_na_layer,backgr)
-        
-      }
-    } else if (any(method == "thickening")) {
-      
-      message(sprintf("Selecting %i background point based on %s method.", n, method  ))
-      
-      obs_vec <- terra::vect(obs, geom = c("lon", "lat"), crs = crs(predictors))
-      
-      if (is.null(width_buffer)) {
-        width_buffer <- mean(terra::distance(obs_vec))
-      } else {
-        width_buffer <- as.numeric(width_buffer)
-      }
-      buf <- terra::buffer(obs_vec, width_buffer, quadsegs = 10)
-      buf_r <- !is.na(terra::rasterize(buf[1], sum_na_layer))
-      for (i in 2:nrow(buf)) {
-        buf_r <- buf_r + !is.na(terra::rasterize(buf[i], sum_na_layer))
-      }
-      buf_r <- terra::mask(buf_r, sum_na_layer)
-      backgr <- terra::spatSample(buf_r,
-                                  size = n,
-                                  method = "weighted", 
-                                  replace = FALSE,
-                                  na.rm = T,
-                                  xy = TRUE, 
-                                  as.points = FALSE, 
-                                  values = F)
-      
-    } else if (any(method == "biased")) {
-      
-      if (!is.null(mask)) density_bias <- fast_crop(density_bias, mask)
-      
-      backgr <- terra::spatSample(density_bias,
-                                  size = n,
-                                  method = "weighted", 
-                                  replace = FALSE,
-                                  na.rm = T,
-                                  xy = TRUE, 
-                                  as.points = FALSE, 
-                                  values = F)
-      
-    } else if (method == "inclusion_buffer") {
-      
-      obs_vec <- terra::vect(obs, geom = c("lon", "lat"), crs = crs(predictors))
-      
-      if (is.null(dist_buffer)) {
-        
-        message("Buffer distance not provided. Using the 95% quantile 
-      of the minimum distance between each point.")
-        dist_buffer <- calculate_dist_buffer(obs |> dplyr::select(lon, lat))
-        message(sprintf("Buffer distance: %s (unit of projection)", dist_buffer))
-        
-      }
-      
-      # Creating the buffer
-      
-      buffer_shape <- rgeos::gBuffer(spgeom = as(obs_vec, "Spatial"),
-                                     byid = FALSE, width = dist_buffer)
-      
-      # crops the predictors to that shape to rasterize
-      sum_na_layer <- fast_crop(sum_na_layer,  buffer_shape)
-      
-      message(sprintf("Trying selecting %i background point based on %s method.", n ,method  ))
-      backgr <- terra::spatSample(sum_na_layer,
-                                  size = n, 
-                                  method="random",
-                                  replace=FALSE,
-                                  na.rm=T,
-                                  xy=TRUE,
-                                  as.points=FALSE, 
-                                  values=F)
-      
-    } else if (grepl("^weighted", method)) {
-      ## Set heatmap cells to NA if they are NA in sum_na_layer
-      ## Assumes the last layer of predictors is the heatmap, and that it is counts!
-      values(predictors[[dim(predictors)[3]]])[which(is.na(values(sum_na_layer)))] <- NA
-      tgb_weights <- predictors[[dim(predictors)[3]]]
-      tgb_weights <- tgb_weights/sum(values(tgb_weights), na.rm = T)
-      
-      #backgr <- sample(cells(tgb_weights), n, prob = unlist(extract(tgb_weights, cells(tgb_weights))))
-      #backgr <- xyFromCell(tgb_weights, backgr)
-
-      # Sampling using density as probabilities
-      # We still run into NA values in the weights, which we should exclude
-      weightsVector <- unlist(extract(tgb_weights, cells(tgb_weights)))
-      names(weightsVector) <- cells(tgb_weights)
-      weightsVector <- na.omit(weightsVector)
-
-      if(length(weightsVector) < n){
-        message(
-          "Number of background-points exceeds number of cell. ",
-          ncellr,
-          " background-points will be sampled"
-        )
-        backgr <- names(weightsVector)
-    
-      }else{
-        backgr <- sample(names(weightsVector), n, prob = weightsVector)
-
-      }
-
-      backgr <- xyFromCell(tgb_weights, as.numeric(backgr))
+    if (is.null(obs)){
+      stop(paste("No obs included with method:", method))
     }
+    
+    obs <- st_as_sf(obs, coords=c("lon", "lat"), crs = proj)
+    
+    if(is.null(width_buffer)){
+      width_buffer <- 0.1 * max(diff(st_bbox(obs)[c(1, 3)]),diff(st_bbox(obs)[c(2, 4)]))
+      message(sprintf("width_buffer used is 10%% of the largest bounding box dimension (%s in the units of the crs)", round(width_buffer)))
+    }
+    
   }
-  message(sprintf("%s selected", nrow(backgr)))
   
-  #species <- unique(obs$scientific_name) This didn't work if there are more than one equivalent species names
-  species <- obs$scientific_name[1]
-  backgr <- dplyr::bind_cols(id = 1:nrow(backgr),
-                             scientific_name = species,
-                             backgr |> data.frame()) |>
-    setNames(c("id", "scientific_name", "lon", "lat"))
+  backgr<-switch(method,
+                 random = {
+                   terra::spatSample(predictors[[1]], size = n, method = "random", replace = TRUE, values = FALSE, as.points = TRUE)
+                 },
+                 weighted_raster = {
+                   terra::spatSample(raster, size = n, method = "weights", replace = TRUE, values = FALSE, as.points = TRUE)
+                 },
+                 unweighted_raster = {
+                   terra::spatSample(raster > 0, size = n, method = "weights", replace = TRUE, values = FALSE, as.points = TRUE)
+                 },
+                 inclusion_buffer = { # this thing can take a while if there are many observations
+                   obs |> 
+                     st_buffer(dist = width_buffer, nQuadSegs = 10) |> 
+                     st_union() |> 
+                     st_sample(n) |> 
+                     st_as_sf()
+                 },
+                 biased = { # not sure how this method differs from weighted_raster, ignored at the moment as an option
+                   terra::spatSample(density_bias, size = n, method = "weights", replace = TRUE, values = FALSE, as.points = TRUE)
+                 },
+                 thickening = { 
+                   # There is probably a faster way using a radius and angle from each observations. Right now, rasterizing the buffers and sampling from the raster seems much faster than sampling within the buffers using sf (commented version)
+                   #backgr<-obs |> 
+                   #  st_buffer(dist = width_buffer, nQuadSegs = 10) |> 
+                   #  st_sample(size = rep(ceiling(n / nrow(obs)),nrow(obs)), by_polygon = FALSE) |> 
+                   #  st_as_sf()
+                   #backgr[sample(1:nrow(backgr),n),]
+                   terra::spatSample(
+                     rasterize(st_buffer(obs, dist = width_buffer, nQuadSegs = 10), rast(predictors[[1]]), fun = sum),
+                     size = n, 
+                     method = "weights", 
+                     replace = TRUE, 
+                     values = FALSE, 
+                     as.points = TRUE
+                   )
+                 }
+  )
+  backgr <- backgr[,-1] # temporary fix for https://github.com/rspatial/terra/issues/1275
+  backgr <- st_as_sf(backgr) |> 
+    st_coordinates() |>
+    data.frame(id = 1:nrow(backgr), scientific_name = obs$scientific_name[1], lon = _) |>
+    setNames(c("id","scientific_name","lon","lat"))
+  backgr
   
-  return(backgr)
 }
 
-
 calculate_dist_buffer <- function(obs, n = 1000) {
-  #Uses the first 1000 points (randomly sampled) to create buffers and distances
+  # uses the first 1000 points (randomly sampled) to create buffers and distances
   if (nrow(obs) > n) {
     nb_buffer_point <- n
   } else {

@@ -1,18 +1,24 @@
 script: obsToHeatmap.R
+name: Observations to Heatmap
 description: "Converts occurrence points to raster, conforming to resolution and projection of the predictors raster."
+author:
+  - name: Dat Nguyen
+
 inputs:
   presence:
     label: presence
     description: Dataframe, presence data.
-    type: text
+    type: text/tab-separated-values
     example: "/scripts/SDM/selectBackground_presence.tsv"
   predictors: 
     label: predictors
     description: raster, predictors variables 
-    type: text
+    type: image/tiff;application=geotiff[]
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
 outputs:
   heatmap:
     label: heatmap
     description: raster, heatmap of occurrences
     type: image/tiff;application=geotiff
+    example:
+
