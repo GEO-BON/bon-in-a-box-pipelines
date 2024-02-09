@@ -244,7 +244,7 @@ output<- tryCatch({
   occPlotFacet<-occPlot+facet_wrap(.~CovariateName, scales="free",ncol=3)
   # export graph
   occPlotFacet_path<- file.path(outputFolder, "occ_plot.jpeg") # Define the file path for the 'val_wkt_path' output
-  ggsave(occPlotFacet_path, occPlotFacet, width = 11, height = 9, dpi= 300, bg= "white")
+  ggsave(occPlotFacet_path, occPlotFacet, width = 4, height = 4, dpi= 300, bg= "white")
   
   #### Outputing result to JSON ####
   
