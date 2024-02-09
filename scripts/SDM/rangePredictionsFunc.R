@@ -24,8 +24,9 @@ return(range)
   range_predictions <- function(predictions) {
     # transform the list into a terra rast object
     predictions <- terra::rast(predictions)
-    range <- terra::app(predictions, fun = function(i) {quantile(i,0.975) - quantile(i,0.025) })
-      names(range) <- "range_predictions"
- return(range)
+    #range <- terra::app(predictions, fun = function(i) {quantile(i,0.975) - quantile(i,0.025) })
+    range <- diff(quantile(predictions, probs = c(0.025 , 0.975)))
+    names(range) <- c("range_predictions")
+    return(range)
   }
   

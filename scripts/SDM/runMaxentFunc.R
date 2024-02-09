@@ -9,12 +9,12 @@
 #' @export
 
 run_maxent <- function(presence.bg, with_raster = F,
-                        algorithm = "maxnet",
+                        algorithm = "maxent.jar",
                         layers = c(),
                         factors = NULL,
                         predictors = NULL,
                         partition_type = "crossvalidation",
-                        nfolds = 5,
+                        n_folds = 5,
                         orientation_block = "lat_lon",
                         fc = "L", rm =1,
                         parallel = T,
@@ -22,8 +22,8 @@ run_maxent <- function(presence.bg, with_raster = F,
                         parallelType = "doParallel"
 ) {
   
-  presence <- presence.bg |> dplyr::filter(pa == 1) |> data.frame()
-  background <- presence.bg |> dplyr::filter(pa == 0) |> data.frame()
+  presence <- presence.bg |> dplyr::filter(pa == 1) |> as.data.frame()
+  background <- presence.bg |> dplyr::filter(pa == 0) |> as.data.frame()
   
   if (with_raster) {
     ENMmodel <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat")],
@@ -32,11 +32,11 @@ run_maxent <- function(presence.bg, with_raster = F,
                             categoricals = factors,     
                             algorithm = algorithm,
                             partitions = partition_type, 
-                            partition.settings = list(kfold = nfolds, orientation =  orientation_block),
+                            partition.settings = list(kfolds = n_folds, orientation =  orientation_block),
                             tune.args = list(fc = fc, rm = rm),
                             parallel =  parallel,
                             updateProgress = updateProgress,
-                            parallelType = )
+                            parallelType = parallelType)
     
     
   } else {
@@ -46,7 +46,7 @@ run_maxent <- function(presence.bg, with_raster = F,
                             algorithm = algorithm,
                             categoricals = factors,
                             partitions = partition_type, 
-                            partition.settings = list(kfold = nfolds, orientation =  orientation_block),
+                            partition.settings = list(kfolds = n_folds, orientation =  orientation_block),
                             tune.args = list(fc = fc, rm = rm),
                             parallel =  parallel,
                             updateProgress = updateProgress,
@@ -259,8 +259,8 @@ predict_maxent <- function(presence_background,
 
   # We calculate the prediction with the whole dataset
 
-      presence <- presence_background |> dplyr::filter(pa == 1) |> data.frame()
-      background <- presence_background |> dplyr::filter(pa == 0) |> data.frame()
+      presence <- presence_background |> dplyr::filter(pa == 1) |> as.data.frame()
+      background <- presence_background |> dplyr::filter(pa == 0) |> as.data.frame()
       
 
       mod_tuning <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat", layers)], 
@@ -304,8 +304,8 @@ runs <- c("run_1")
       backg_test <- backgr[bg.grp == g, ]
       presence_bg_train <- group.all[which(group.all[,1] == g),]
       
-      presence <- presence_bg_train |> dplyr::filter(pa == 1) |> data.frame()
-      background <- presence_bg_train |> dplyr::filter(pa == 0) |> data.frame()
+      presence <- presence_bg_train |> dplyr::filter(pa == 1) |> as.data.frame()
+      background <- presence_bg_train |> dplyr::filter(pa == 0) |> as.data.frame()
       
 
       mod_tuning <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat", layers)], 
@@ -322,12 +322,18 @@ runs <- c("run_1")
       pred_pres <- dismo::predict(mod_tuning@models[[tuned_param]], predictors,
                                   args = sprintf("outputformat=%s", type))
 
-        if (inherits(pred_runs, "RasterLayer") || inherits(pred_runs, "RasterStack")) {
-              pred_runs <- raster::stack(pred_runs, pred_pres)
-         
-        } else {
-           pred_runs <-  pred_pres 
-           }
+        #if (inherits(pred_runs, "RasterLayer") || inherits(pred_runs, "RasterStack")) {
+        #    pred_runs <- raster::stack(pred_runs, pred_pres)
+        #} else {
+        #   pred_runs <-  pred_pres 
+        #}
+      if (is.null(pred_runs)) {
+        pred_runs <- pred_pres
+      } else {
+        pred_runs <-  c(pred_runs, pred_pres) 
+      }
+      
+        
       
  }
 

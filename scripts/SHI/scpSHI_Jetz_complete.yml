@@ -1,8 +1,13 @@
 script: scpSHI_Jetz_complete.R
+name: SHI
 description: 
   This script loads the data needed to calculate the area and connectivity scores 
   to calculate the Species Habitat Index (SHI) using Global Forest Watch data to measure 
   changes in the habitat of the species
+author:
+  - name: Maria Isabel Acre Plata
+    identifier: https://orcid.org/0000-0003-4024-9268
+
 inputs:
   species:
     label: species
@@ -38,7 +43,7 @@ inputs:
     label: region
     description: For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])
     type: text
-    example: ""
+    example: null
   spat_res:
     label: output spatial resolution
     description: Spatial resolution (in meters) for the output of the analysis.

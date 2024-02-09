@@ -13,10 +13,14 @@ from pathlib import Path
 
 
 
-def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022],outfile=('out.csv')):
+def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 	GBIF_USER=os.environ['GBIF_USER']
 	GBIF_PWD=os.environ['GBIF_PWD']
 	GBIF_EMAIL=os.environ['GBIF_EMAIL']
+
+	if GBIF_USER=='' or GBIF_PWD=='' or GBIF_EMAIL=='':
+		return {'error':'GBIF_USER, GBIF_PWD and GBIF_EMAIL environment variable must be defined'}
+
 	keys = [ species.name_backbone(x)['usageKey'] for x in splist ]
 	counts = [ occ.search(taxonKey = x, limit=0)['count'] for x in keys ]
 	spcount = dict(zip(splist, counts))
@@ -47,8 +51,8 @@ def process_gbif_download(link, key, outfile):
 	tempzip = urllib.request.urlretrieve(link, temp_input_path)
 	print('Extracting occurrence file from ZIP')
 	with ZipFile(temp_input_path, 'r') as zipObj:
-		zipObj.extract('occurrence.txt', '.')
-	df = pd.read_csv('occurrence.txt', sep='\t')
+		zipObj.extract(key+'.csv', '.')
+	df = pd.read_csv(key+'.csv', sep='\t')
 	#df = df[['gbifID','datasetKey','occurrenceID','kingdom','phylum','class','order','family','genus','species','infraspecificEpithet','taxonRank','scientificName','verbatimScientificName','countryCode','locality','stateProvince','occurrenceStatus','individualCount','decimalLatitude','decimalLongitude','coordinateUncertaintyInMeters','coordinatePrecision','elevation','elevationAccuracy','depth','depthAccuracy','eventDate','day','month','year','taxonKey','speciesKey','institutionCode','collectionCode','catalogNumber','recordNumber','basisOfRecord','identifiedBy','dateIdentified','license','rightsHolder','recordedBy','typeStatus','establishmentMeans','lastInterpreted','mediaType','issue']]
 	#Convert column names to snake_case
 	df.columns = (df.columns
