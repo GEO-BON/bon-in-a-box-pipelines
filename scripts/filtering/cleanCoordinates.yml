@@ -1,8 +1,12 @@
 script: cleanCoordinates.R
+name: Clean Coordinates
 description: "This script enables to apply several cleaning filters to the observations. The tests equal,
      zeros, duplicates, same_pixel, capitals, centroids, seas, urban, gbif and institutions are wrappers around CoordinateCleaner functions.
      Test same_pixel remove points inside the same pixel, based on a provided raster or from a STAC catalogue. Test env allows removing environmental outliers using the 
      the Reverse Jackknife procedure as described by Chapman (2005) and adapted from the package biogeo."
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
 external_link: https://github.com/ropensci/CoordinateCleaner
 references:
   - text: Chapman, A.D. (2005) Principles and Methods of Data Cleaning - Primary Species and Species- Occurrence Data, version 1.0. Report for the Global Biodiversity Information Facility, Copenhagen.
