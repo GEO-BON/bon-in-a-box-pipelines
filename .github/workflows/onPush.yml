@@ -1,52 +1,31 @@
 name: On push, any branch
 
 on: [push]
-
+# TODO change pipeline-repo-actions to main
 jobs:
-  run-script-server-test:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: Set up JDK 11
-      uses: actions/setup-java@v3
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-
-    - name: Validate Gradle wrapper
-      uses: gradle/wrapper-validation-action@v1
-
-    - name: Gradle build & test
-      uses: gradle/gradle-build-action@v2
-      with:
-        arguments: build --info
-        build-root-directory: script-server
-
-    - name: Save test results
-      uses: actions/upload-artifact@v3
-      if: always()
-      with:
-        name: Test results
-        path: script-server/build/reports/tests/test/
-
-  
   run-yml-validation:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: YML file syntax validation
-      uses: navikt/yaml-validator@v4
+    - uses: actions/checkout@v4
+    - uses: actions/checkout@v4
       with:
-        schema_path: scripts/cerberusValidationSchema
-        document_path: scripts
-        validate_file_extension: no
-        filter_extensions: .yml
-    - name: Find duplicate lines inside same step YML file
-      working-directory: ./scripts
-      run: ../.github/findDuplicateDescriptions.sh
+        # Repository name with owner. For example, actions/checkout
+        # Default: ${{ github.repository }}
+        repository: 'GEO-BON/bon-in-a-box-pipeline-engine.git'
+
+        # The branch, tag or SHA to checkout. When checking out the repository that
+        # triggered a workflow, this defaults to the reference or SHA for that event.
+        # Otherwise, uses the default branch.
+        ref: 'main'
+
+        # Relative path under $GITHUB_WORKSPACE to place the repository
+        path: '.server'
+
+    - name: Creating empty runner.env
+      working-directory: .
+      run: touch runner.env
       shell: bash
-    - name: Find duplicate lines inside same pipeline JSON file
-      working-directory: ./pipelines
-      run: ../.github/findDuplicateIds.sh
+    - name: Script and pipelines basic validation
+      working-directory: .
+      run: .server/prod-server.sh validate
       shell: bash

@@ -1,5 +1,10 @@
 script: selectBackground.R
+name: Background Points
 description: "This script creates a set of pseudo-absences/background points."
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
+  - name: Dat Nguyen
 
 inputs:
   presence:
@@ -21,6 +26,7 @@ inputs:
       - inclusion_buffer
       - weighted_raster
       - unweighted_raster
+      - thickening
     example: random
   n_background: 
     label: number of background points
