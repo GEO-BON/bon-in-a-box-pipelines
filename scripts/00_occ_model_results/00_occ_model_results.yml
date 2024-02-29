@@ -9,27 +9,27 @@ inputs:
     example:  "scripts/00_occ_model_results/input/occ_wide_Zcapensis.csv"
   covars:
     label: List covars
-    description: "List of covarieties"
+    description: "List of covariables for occupancy probability"
     type: text[]
     example:  ["altitud", "huella"]
   pred_surface:
     label: pred_surface
-    description: "Data frame with prediction supeface"
+    description: "Data frame with prediction surface for maps"
     type: dataframe
     example:  "scripts/00_occ_model_results/input/pland-elev_prediction-surface.csv"
   base_grid:
     label: base_grid
-    description: "tif with base grid"
+    description: "Geographical grid to define pixels in the study area"
     type: dataframe
     example:  "scripts/00_occ_model_results/input/grilla_base.tif"
   formula:
     label: formula
-    description: "Double right-hand side formula describing covariates of detection and occupancy in that order. Each covariates must be with ~ symbol. To add occupancy/ detection covariates it use + symbol."
+    description: "Double right-hand side formula describing covariables of detection and occupancy in that order. Each covariate must be with ~ symbol. To add occupancy/ detection covariates it use + symbol."
     type: text
     example:  "~ duration_minutes ~ huella + altitud"
   nsim:
     label: nsim
-    description: "The number of bootstrapped samples"
+    description: "Number of bootstrapped samples use to evaluate goodness of fit for the model"
     type: int
     example: 10
   plot_hist:
