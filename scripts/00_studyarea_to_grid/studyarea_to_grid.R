@@ -38,28 +38,21 @@ extent_base <- bbox_base %>% raster::extent()
 
 # create base grid
 raster_base <- raster::raster(extent_base,crs = crs_basemap, res= input$studyarea_resolution )
-raster_study_area<- fasterize::fasterize(sf_polygon, raster_base) %>% terra::rast() %>% 
-   {terra::mask(setValues(., seq(ncell(.))), .)} 
+raster_study_area<- fasterize::fasterize(sf_polygon, raster_base) %>% terra::rast()
 
-# raster in 4326
-raster_study_area_4326<- raster::raster(raster_study_area) %>% 
-  raster::projectRaster(crs = sf::st_crs(4326)$proj4string, method = "ngb") %>% terra::rast()
-
+levels(raster_study_area)<- data.frame(values= 1, label= "Study area")
+coltab(raster_study_area)<- data.frame(values= 1, cols= "gray")
 
 
 # Define and export the output values
-
 # Define raster_study_area_path path
 raster_study_area_path<- file.path(outputFolder, "raster_study_area_path.tiff") # Define the file path for the 'val_wkt_path' output
 terra::writeRaster(raster_study_area, raster_study_area_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "GTiff", overwrite = TRUE )
 
-# Define raster_study_area_4326_path path
-raster_study_area_4326_path<- file.path(outputFolder, "raster_study_area_4326_path.geotiff") # Define the file path for the 'val_wkt_path' output
-terra::writeRaster(raster_study_area_4326, raster_study_area_4326_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "GTiff", overwrite = TRUE )
 
 
 # Define final output list
-output<- list(study_area_path= raster_study_area_path,study_area_4326_path= raster_study_area_4326_path)
+output<- list(study_area_path= raster_study_area_path)
 
 }, error = function(e) { list(error= conditionMessage(e)) })
 
