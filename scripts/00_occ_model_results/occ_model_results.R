@@ -76,12 +76,22 @@ output<- tryCatch({
   #####################
   # fit model
   occ_model <- unmarked::occu(~ duration_minutes ~ huella + altitud,  data = occ_um)
+  #occ_dredge <- MuMIn::dredge(occ_model)
+  
+  #######################
+  # Assessment
+  #####################
+  occ_gof <- AICcmodavg::mb.gof.test(occ_model, nsim = input$nsim, plot.hist = FALSE)
+  # hide the chisq table to give simpler output
+  sa<-occ_gof$chisq.table <- NULL
+  print(occ_gof)
+  # Other results
+  
+  ##################
+  #Model selection
+  #################
+  # dredge all possible combinations of the occupancy covariates
   occ_dredge <- MuMIn::dredge(occ_model)
-  
-
-  
-  
-  
   # model comparison to explore the results for occupancy
   mc <- as.data.frame(occ_dredge) %>% 
     dplyr::select(starts_with("psi(p"), df, AICc, delta, weight)
