@@ -1,5 +1,8 @@
 #### Load required packages - libraries to run the script ####
 
+Inicio<- Sys.time()
+
+
 # Install necessary libraries - packages 
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<-list("rstudioapi", "this.path", "rjson", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
@@ -40,7 +43,6 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 if(check_input) {input<- lapply(input, function(x) unlist(lapply(x, function(y) {
   if( grepl("/", y)  ){ sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(y) %>% {gsub("//+", "/", .)}  }else{y}
 }), recursive = F)) } # adjust input 1
-
 
 
 output<- tryCatch({
@@ -303,6 +305,7 @@ output<- tryCatch({
 
 }, error = function(e) { list(error= conditionMessage(e)) })
 
+print(Sys.time()-Inicio)
 
 
 #### Outputing result to JSON ####
