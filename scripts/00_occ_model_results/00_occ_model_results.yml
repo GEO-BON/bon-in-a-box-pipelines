@@ -31,7 +31,7 @@ inputs:
     label: nsim
     description: "The number of bootstrapped samples"
     type: int
-    example: 10
+    example: 2
   plot_hist:
     label: plot.hist
     description: "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample."
