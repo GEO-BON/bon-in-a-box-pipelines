@@ -3,8 +3,8 @@ name: distances matrix
 description: This script calculates a distance matrix between spatial units from a spatial file. It reads the spatial data from the file, which contains the geographic information of the spatial units, such as their boundaries or centroids
 author: 
  - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
- - name: Victor Julio Rincon
-external_link: https://github.com/GEO-BON/biab-2.0
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
+external_link: https://github.com/GEO-BON/biab-2.0/scripts/spatial_to_DistanceMatrix/spatial_to_DistanceMatrix.R
 inputs:
   studyarea_wkt:
     label: study area
@@ -26,7 +26,7 @@ inputs:
     example: "m"
   spatial_file:
     label: spatial file
-    description: String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix
+    description: String path represents the file location of a spatial file containing spatial units (geometries), which is used to calculate the distance matrix
     type: text
     example: "/scripts/spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
   column_group:
@@ -64,14 +64,14 @@ outputs:
     description: Refers to the total area of the analyzed study area. The estimation of this area is expressed in square units (m2 or km2) as defined by the input unit_distance.
     type: int
   area_unit:
-    label: unit for area measurement
+    label: area unit
     description: Refers to the unit of measurement used for representing area in square units. The specific unit, whether square meters (m2) or square kilometers (km2), is determined by the input value provided for unit_distance.
     type: options
     options:
       - m2
       - km2
   distance_unit:
-    label: unit for distance measurement
+    label: distance unit
     description: Refers to the unit of measurement used for representing area in linear units. The specific unit, whether square (m) or kilometers (km), is determined by the input value provided for unit_distance.
     type: options
     options:

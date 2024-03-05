@@ -10,7 +10,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library(knitr)
 knitr::opts_chunk$set(echo = TRUE)
 require("knitr")
-
 ```
 
 ## General description
@@ -27,6 +26,7 @@ This methodology is based on a minimum distance in which protected areas are con
 $$
 protcon=\frac{A_{pac}}{A_{tpa}}*100
 $$
+
 **Where:**
 
 A~pac~ = Area of protected areas well connected
@@ -36,6 +36,7 @@ A~tpa~ = Area total of protected areas in the area of interest
 $$
 protuncon=\frac{A_{panc}}{A_{tpa}}*100
 $$
+
 **Where:**
 
 A~panc~ = Area of protected areas not connected
@@ -45,6 +46,7 @@ A~tpa~ = Area total of protected areas in the area of interest
 $$
 protected=\frac{A_{prot}}{A_{t}}*100
 $$
+
 **Where:**
 
 A~prot~ = Area of protected areas in the area of interest
@@ -54,6 +56,7 @@ A~t~ = Area total of area of interest
 $$
 unprotected=\frac{A_{uprot}}{A_{t}}*100
 $$
+
 **Where:**
 
 A~prot~ = Area of unprotected areas in the area of interest

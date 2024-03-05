@@ -134,10 +134,10 @@ output<- tryCatch({
     
     
     #Filter only the protected areas that are at a distances less than user distance
-    dist_ids_pa_con =dist_ids_pa_datav2[dist_ids_pa_datav2$values<distance, ]
+    dist_ids_pa_con = dist_ids_pa_datav2[dist_ids_pa_datav2$values<distance, ]
     
     #Extract the unique id?s of protected areas at a distances less than user distance
-    pa_union =union(unique(dist_ids_pa_con$row),unique(dist_ids_pa_con$vars))
+    pa_union = union(unique(dist_ids_pa_con$row),unique(dist_ids_pa_con$vars))
     
     #Look for the id?s in the spatial_units_periods for filter the information
     areas_pa_conec = decade[decade[, "spatial_unit"] %in% pa_union,]

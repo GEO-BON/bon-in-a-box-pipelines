@@ -1,10 +1,10 @@
 script: protcon_analyisis.R
-name: Connectivity of PAs
+name: Connectivity of Protected Areas (PAs)
 author: 
- - name: Maria Alejandra Molina Berbeo
- - name: Victor Julio Rincon
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
 description: This script a connectivity analysis between spatial units (ej. protected areas) using a distance matrix within a specified study area. It identifies connected pairs of spatial units based on a specified distance threshold and generates a connectivity table with connectivity status
-external_link: https://github.com/GEO-BON/biab-2.0
+external_link: https://github.com/GEO-BON/biab-2.0/scripts/studyarea_to_WKT/studyarea_to_WKT.R
 
 inputs:
   mtx_distance:
@@ -19,7 +19,7 @@ inputs:
     example: 11000000000
   distance_analysis:
     label: distance analysis threshold
-    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).
+    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).
     type: int
     example: 10000
   unit_distance:
