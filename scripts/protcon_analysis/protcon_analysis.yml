@@ -1,4 +1,4 @@
-script: protcon_analyisis.R
+script: protcon_analysis.R
 name: Connectivity of Protected Areas (PAs)
 author: 
  - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
@@ -11,7 +11,7 @@ inputs:
     label: distance centroid matrix path
     description: String path that represents the file location of a distance matrix containing distances between spatial units. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km). 
     type: text/csv
-    example: "/scripts/protcon_analyisis/input/mtx_distance_centroid.csv"
+    example: "/scripts/protcon_analysis/input/mtx_distance_centroid.csv"
   area_study_area:
     label: total study area
     description: Refers to the total area of the analyzed study area. The unit of area in which it is defined is explicitly specified as the square of the unit_distance input (m2 or km2). 
@@ -34,7 +34,7 @@ inputs:
     label: path to spatial unit 
     description: String refers to the path string where the .csv file containing information required for the calculation of the indicator is located. There must be an ID for each spatial unit, name (if any) and the area of each one of them. If the analysis is done in time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration.
     type: text/csv
-    example: "/scripts/protcon_analyisis/input/spatialunits_studyarea_data.csv"
+    example: "/scripts/protcon_analysis/input/spatialunits_studyarea_data.csv"
   column_spatial_unit:
     label: spatial unit 
     description: String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.
