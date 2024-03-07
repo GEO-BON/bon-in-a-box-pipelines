@@ -4,8 +4,8 @@
       "id": "13",
       "type": "constant",
       "position": {
-        "x": 95,
-        "y": 268
+        "x": 12,
+        "y": 86.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -20,10 +20,10 @@
     },
     {
       "id": "14",
-      "type": "userInput",
+      "type": "constant",
       "position": {
-        "x": 137,
-        "y": 129
+        "x": 952.0205030584714,
+        "y": 384.4578314167838
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -55,8 +55,8 @@
       "id": "15",
       "type": "userInput",
       "position": {
-        "x": 1142,
-        "y": 69
+        "x": 1114,
+        "y": 51.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,8 +68,8 @@
       "id": "16",
       "type": "userInput",
       "position": {
-        "x": 1066,
-        "y": 103.00000000000003
+        "x": 1044,
+        "y": 278.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -86,8 +86,8 @@
       "id": "17",
       "type": "userInput",
       "position": {
-        "x": 179,
-        "y": 234
+        "x": 77,
+        "y": 51.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -96,27 +96,11 @@
       }
     },
     {
-      "id": "18",
-      "type": "userInput",
-      "position": {
-        "x": 204,
-        "y": 163
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "Acer saccharum",
-          "Bubo scandiacus"
-        ]
-      }
-    },
-    {
       "id": "19",
       "type": "userInput",
       "position": {
-        "x": 170,
-        "y": 95
+        "x": 71,
+        "y": 16.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -125,22 +109,11 @@
       }
     },
     {
-      "id": "21",
-      "type": "io",
-      "position": {
-        "x": 496,
-        "y": 188.28571428571428
-      },
-      "data": {
-        "descriptionFile": "SDM>BRT_julia_viewer.json"
-      }
-    },
-    {
       "id": "22",
       "type": "userInput",
       "position": {
-        "x": 182,
-        "y": 357
+        "x": 81,
+        "y": 176.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -149,57 +122,136 @@
       }
     },
     {
-      "id": "24",
-      "type": "output",
-      "position": {
-        "x": 1355,
-        "y": 254.78571428571433
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "26",
       "type": "io",
       "position": {
-        "x": 1351,
-        "y": 75.88888888888891
+        "x": 1387.4043563950304,
+        "y": 172.26749354390472
       },
       "data": {
         "descriptionFile": "Block3>block3.json"
       }
     },
     {
-      "id": "27",
-      "type": "constant",
-      "position": {
-        "x": 12,
-        "y": 197
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/dbf",
-        "value": null
-      }
-    },
-    {
-      "id": "29",
+      "id": "35",
       "type": "output",
       "position": {
-        "x": 1975.3486287912697,
-        "y": 100.21469286673499
+        "x": 1332,
+        "y": 12
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "33",
+      "id": "36",
       "type": "output",
       "position": {
-        "x": 496,
-        "y": 12
+        "x": 1332,
+        "y": 609
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "40",
+      "type": "io",
+      "position": {
+        "x": 382,
+        "y": 86.5
+      },
+      "data": {
+        "descriptionFile": "SDM>SDM_BRT_julia.json"
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": -70.8511688540051,
+        "y": 422.88940850992606
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Acer saccharum"
+        ]
+      }
+    },
+    {
+      "id": "44",
+      "type": "output",
+      "position": {
+        "x": 1712.6175952008457,
+        "y": 395.1286617792226
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "45",
+      "type": "output",
+      "position": {
+        "x": 2042.854282950792,
+        "y": 134.94599531689386
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "46",
+      "type": "output",
+      "position": {
+        "x": 2026.670917890824,
+        "y": 202.16920402753104
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "47",
+      "type": "output",
+      "position": {
+        "x": 2027.9157921262058,
+        "y": 265.6577900320218
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "48",
+      "type": "output",
+      "position": {
+        "x": 2072.731264599964,
+        "y": 336.61562144880554
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 2047.8337798923208,
+        "y": 402.5939559240604
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 1999.2836847124163,
+        "y": 482.2659069885194
       },
       "data": {
         "label": "Output"
@@ -207,55 +259,6 @@
     }
   ],
   "edges": [
-    {
-      "source": "19",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "SDM>julia_sdms>generateBackground.yml@22|buffer_distance",
-      "id": "reactflow__edge-19-21SDM>julia_sdms>generateBackground.yml@22|buffer_distance"
-    },
-    {
-      "source": "17",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|max_year",
-      "id": "reactflow__edge-17-21data>pyLoadObservations>pyLoadObservations.yml@1|max_year"
-    },
-    {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "pipeline@30",
-      "id": "reactflow__edge-18-21pipeline@30"
-    },
-    {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "pipeline@3",
-      "id": "reactflow__edge-13-21pipeline@3"
-    },
-    {
-      "source": "22",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|min_year",
-      "id": "reactflow__edge-22-21data>pyLoadObservations>pyLoadObservations.yml@1|min_year"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "pipeline@32",
-      "id": "reactflow__edge-14-21pipeline@32"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "filtering>cleanCoordinates.yml@21|clean_presence",
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-21filtering>cleanCoordinates.yml@21|clean_presence-24"
-    },
     {
       "source": "15",
       "sourceHandle": null,
@@ -278,107 +281,119 @@
       "id": "reactflow__edge-14-26pipeline@6"
     },
     {
-      "source": "27",
+      "source": "22",
       "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "data>loadFromStac.yml@18|mask",
-      "id": "reactflow__edge-27-21data>loadFromStac.yml@18|mask"
+      "target": "40",
+      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|min_year",
+      "id": "reactflow__edge-22-40data>pyLoadObservations>pyLoadObservations.yml@1|min_year"
     },
     {
-      "source": "27",
+      "source": "13",
       "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "data>loadFromStac.yml@0|mask",
-      "id": "reactflow__edge-27-21data>loadFromStac.yml@0|mask"
+      "target": "40",
+      "targetHandle": "pipeline@3",
+      "id": "reactflow__edge-13-40pipeline@3"
     },
     {
-      "source": "26",
-      "sourceHandle": "data>loadFromStac.yml@9|rasters",
-      "target": "29",
+      "source": "17",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|max_year",
+      "id": "reactflow__edge-17-40data>pyLoadObservations>pyLoadObservations.yml@1|max_year"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "SDM>julia_sdms>generateBackground.yml@22|buffer_distance",
+      "id": "reactflow__edge-19-40SDM>julia_sdms>generateBackground.yml@22|buffer_distance"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi",
+      "target": "35",
       "targetHandle": null,
-      "id": "reactflow__edge-26data>loadFromStac.yml@9|rasters-29"
+      "id": "reactflow__edge-40data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi-35"
     },
     {
-      "source": "21",
+      "source": "40",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm",
+      "target": "36",
+      "targetHandle": null,
+      "id": "reactflow__edge-40SDM>julia_sdms>fitBRT.yml@24|sdm-36"
+    },
+    {
+      "source": "40",
       "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty",
       "target": "26",
       "targetHandle": "Block3>weightLayers.yml@44|uncertainty",
-      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty-26Block3>weightLayers.yml@44|uncertainty"
+      "id": "reactflow__edge-40SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty-26Block3>weightLayers.yml@44|uncertainty"
     },
     {
-      "source": "18",
+      "source": "42",
       "sourceHandle": null,
-      "target": "33",
-      "targetHandle": null,
-      "id": "reactflow__edge-18-33"
+      "target": "40",
+      "targetHandle": "pipeline@35",
+      "id": "reactflow__edge-42-40pipeline@35"
     },
     {
-      "source": "21",
-      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm",
-      "target": "24",
+      "source": "40",
+      "sourceHandle": "pipeline@35|defaultOutput",
+      "target": "44",
       "targetHandle": null,
-      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm-24"
+      "id": "reactflow__edge-40pipeline@35|defaultOutput-44"
     },
     {
-      "source": "21",
-      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|fit_stats",
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|fit_stats-24"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "Block3>climateVelocity.yml@50|climate_velocity",
-      "target": "29",
-      "targetHandle": null,
-      "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-29"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "data>loadFromStac.yml@1|rasters",
-      "target": "29",
-      "targetHandle": null,
-      "id": "reactflow__edge-26data>loadFromStac.yml@1|rasters-29"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "Block3>climateUniqueness.yml@16|climate_uniqueness",
-      "target": "29",
-      "targetHandle": null,
-      "id": "reactflow__edge-26Block3>climateUniqueness.yml@16|climate_uniqueness-29"
+      "source": "13",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "pipeline@3",
+      "id": "reactflow__edge-13-26pipeline@3"
     },
     {
       "source": "26",
       "sourceHandle": "Block3>weightLayers.yml@44|priority_map",
-      "target": "29",
+      "target": "45",
       "targetHandle": null,
-      "id": "reactflow__edge-26Block3>weightLayers.yml@44|priority_map-29"
+      "id": "reactflow__edge-26Block3>weightLayers.yml@44|priority_map-45"
     },
     {
       "source": "26",
       "sourceHandle": "data>loadFromStac.yml@30|rasters",
-      "target": "29",
+      "target": "46",
       "targetHandle": null,
-      "id": "reactflow__edge-26data>loadFromStac.yml@30|rasters-29"
+      "id": "reactflow__edge-26data>loadFromStac.yml@30|rasters-46"
     },
     {
-      "source": "21",
-      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty",
-      "target": "24",
+      "source": "26",
+      "sourceHandle": "Block3>climateUniqueness.yml@16|climate_uniqueness",
+      "target": "47",
       "targetHandle": null,
-      "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty-24"
+      "id": "reactflow__edge-26Block3>climateUniqueness.yml@16|climate_uniqueness-47"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@1|rasters",
+      "target": "48",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@1|rasters-48"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@9|rasters",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@9|rasters-49"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>climateVelocity.yml@50|climate_velocity",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-50"
     }
   ],
   "inputs": {
-    "pipeline@14": {
-      "label": "collections_items",
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ]
-    },
     "pipeline@15": {
       "label": "k",
       "description": "the value of k for the k-means algorithm",
@@ -402,15 +417,6 @@
       "type": "int",
       "example": 2020
     },
-    "pipeline@18": {
-      "label": "Taxa list",
-      "description": "Array of taxa values",
-      "type": "text[]",
-      "example": [
-        "Acer saccharum",
-        "Bubo scandiacus"
-      ]
-    },
     "pipeline@19": {
       "label": "buffer_distance",
       "description": "the minimum distance between any presence and any pseudoabsence in meters",
@@ -423,83 +429,74 @@
       "type": "int",
       "example": 2010
     },
-    "Block3>block3.json@26|pipeline@3": {
-      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
-      "label": "bbox",
-      "type": "float[]",
+    "SDM>SDM_BRT_julia.json@40|data>loadFromStac.yml@0|collections_items": {
+      "description": "Predictors from the STAC catalog",
+      "label": "Predictors",
+      "type": "text[]",
       "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
       ]
+    },
+    "SDM>SDM_BRT_julia.json@40|pipeline@16": {
+      "description": "Spatial resolution of the rasters, in degrees",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 0.008
     }
   },
   "outputs": {
-    "SDM>BRT_julia_viewer.json@21|SDM>julia_sdms>fitBRT.yml@24|sdm": {
-      "description": "Map of predicted occurrence probability for selected species using Boosted Regression Trees",
-      "label": "Predictions",
-      "type": "image/tiff;application=geotiff",
-      "weight": 5
-    },
-    "SDM>BRT_julia_viewer.json@21|filtering>cleanCoordinates.yml@21|clean_presence": {
-      "description": "Dataframe, table with clean presence points from GBIF for selected species",
-      "label": "Presences",
-      "type": "text/tab-separated-values",
+    "SDM>SDM_BRT_julia.json@40|data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
       "weight": 2
     },
-    "SDM>BRT_julia_viewer.json@21|SDM>julia_sdms>fitBRT.yml@24|fit_stats": {
-      "description": "Model fit statistics and threshold",
-      "label": "Fit statistics",
-      "type": "text/json",
-      "weight": 8
-    },
-    "Block3>block3.json@26|Block3>climateVelocity.yml@50|climate_velocity": {
-      "description": "Map where higher pixel values means the climatic conditions are changing faster at that place relative to pixels with lower values",
-      "label": "climate velocity",
+    "SDM>SDM_BRT_julia.json@40|SDM>julia_sdms>fitBRT.yml@24|sdm": {
+      "description": "Map of predicted occurrence probability for selected species using Boosted Regresion Trees",
+      "label": "Predictions",
       "type": "image/tiff;application=geotiff",
-      "weight": 9
+      "example": null,
+      "weight": 5
     },
-    "Block3>block3.json@26|data>loadFromStac.yml@9|rasters": {
-      "description": "Land cover layer used for masking non-terrestrial habitats",
-      "label": "Land cover",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 3
-    },
-    "Block3>block3.json@26|data>loadFromStac.yml@1|rasters": {
-      "description": "Environmental layers used as predictors in species distribution modeling",
-      "label": "Predictors",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 4
-    },
-    "Block3>block3.json@26|Block3>climateUniqueness.yml@16|climate_uniqueness": {
-      "description": "Map where higher pixel values means the climatic conditions are more unique/rare than lower value-pixels",
-      "label": "climate uniqueness",
-      "type": "image/tiff;application=geotiff",
-      "weight": 10
+    "SDM>SDM_BRT_julia.json@40|pipeline@35|defaultOutput": {
+      "description": "Species for which the distribution model is generated",
+      "label": "Species name",
+      "type": "text[]",
+      "example": [
+        "Acer saccharum"
+      ]
     },
     "Block3>block3.json@26|Block3>weightLayers.yml@44|priority_map": {
-      "description": "Sampling priority map based on weighting accessibility, climate uniqueness, climate velocity, and SDM uncertainty",
-      "label": "priority map",
-      "type": "image/tiff;application=geotiff",
-      "weight": 11
+      "description": "Sampling priority map.",
+      "label": "priority_map",
+      "type": "image/tiff;application=geotiff"
     },
     "Block3>block3.json@26|data>loadFromStac.yml@30|rasters": {
-      "description": "Accessibility, in minutes, to the nearest city.",
+      "description": "array of output raster paths",
       "label": "Accessibility",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 10
+      "type": "image/tiff;application=geotiff[]"
     },
-    "pipeline@18": {
-      "label": "Species name",
-      "description": "Species for which the sampling prioritization is calculated",
-      "weight": 1
+    "Block3>block3.json@26|Block3>climateUniqueness.yml@16|climate_uniqueness": {
+      "description": "map",
+      "label": "climate uniqueness",
+      "type": "image/tiff;application=geotiff"
     },
-    "SDM>BRT_julia_viewer.json@21|SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty": {
-      "description": "Map of relative uncertainty of species distribution modeling predictions",
-      "label": "Spatial uncertainty",
-      "type": "image/tiff;application=geotiff",
-      "weight": 6
+    "Block3>block3.json@26|data>loadFromStac.yml@1|rasters": {
+      "description": "array of output raster paths",
+      "label": "Layers (for climate uniqueness)",
+      "type": "image/tiff;application=geotiff[]"
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@9|rasters": {
+      "description": "array of output raster paths",
+      "label": "ESA Land Cover (for climat uniqueness)",
+      "type": "image/tiff;application=geotiff[]"
+    },
+    "Block3>block3.json@26|Block3>climateVelocity.yml@50|climate_velocity": {
+      "description": "map",
+      "label": "climate velocity",
+      "type": "image/tiff;application=geotiff"
     }
   },
   "metadata": {

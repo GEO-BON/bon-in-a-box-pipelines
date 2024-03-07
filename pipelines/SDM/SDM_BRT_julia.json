@@ -694,19 +694,19 @@
       "label": "Predictions",
       "type": "image/tiff;application=geotiff",
       "example": null,
-      "weight": 9
+      "weight": 10
     },
     "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty": {
       "description": "Map of relative uncertainty of predictions",
       "label": "Spatial Uncertainty",
       "type": "image/tiff;application=geotiff",
-      "weight": 10
+      "weight": 11
     },
     "SDM>julia_sdms>fitBRT.yml@24|fit_stats": {
       "description": "JSON of model fit stats and threshold",
       "label": "Fit statistics",
       "type": "text/json",
-      "weight": 8
+      "weight": 9
     },
     "filtering>cleanCoordinates.yml@21|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
@@ -718,7 +718,7 @@
       "description": "Land cover layer used for masking non terrestrial pixels",
       "label": "Land cover",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 6
+      "weight": 8
     },
     "pipeline@35|defaultOutput": {
       "label": "Species name",
@@ -752,7 +752,8 @@
       "description": "Raw environmental predictors",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
-      "example": []
+      "example": [],
+      "weight": 6
     }
   },
   "metadata": {
