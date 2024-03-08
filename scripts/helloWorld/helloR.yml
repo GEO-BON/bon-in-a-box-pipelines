@@ -2,6 +2,7 @@ script: helloR.R
 name: R Example
 author:
   - name: Jean-Michel Lord
+    email: jean-michel.lord@mcgill.ca
     identifier: https://orcid.org/0009-0007-3826-1125
   - name: Guillaume Larocque
 description: "This sample script shows how it works."
