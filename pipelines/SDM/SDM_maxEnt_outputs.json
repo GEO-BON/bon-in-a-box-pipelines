@@ -964,7 +964,8 @@
     "data>loadFromStac.yml@119|mask": {
       "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
-      "type": "application/dbf"
+      "type": "application/dbf",
+      "example": null
     },
     "pipeline@121": {
       "label": "Taxa list",
@@ -992,7 +993,14 @@
       ],
       "weight": 5
     },
-    "pipeline@121": {},
+    "pipeline@121|defaultOutput": {
+      "label": "Species",
+      "description": "Species for which this model was run.",
+      "example": [
+        "Acer saccharum"
+      ],
+      "type": "text[]"
+    },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
       "label": "Presences",
