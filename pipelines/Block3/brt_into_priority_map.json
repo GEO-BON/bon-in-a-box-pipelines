@@ -10,12 +10,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [
-          "-86.748047",
-          "33.72434",
-          "-52.207031",
-          "63.273182"
-        ]
+        "value": ["-86.748047", "33.72434", "-52.207031", "63.273182"]
       }
     },
     {
@@ -74,12 +69,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [
-          0.3,
-          0.2,
-          0.4,
-          0.1
-        ]
+        "value": [0.3, 0.2, 0.4, 0.1]
       }
     },
     {
@@ -175,9 +165,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": [
-          "Acer saccharum"
-        ]
+        "value": ["Acer saccharum"]
       }
     },
     {
@@ -404,12 +392,7 @@
       "label": "weights",
       "description": "weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]",
       "type": "float[]",
-      "example": [
-        0.3,
-        0.2,
-        0.4,
-        0.1
-      ]
+      "example": [0.3, 0.2, 0.4, 0.1]
     },
     "pipeline@17": {
       "label": "maximum year",
@@ -433,10 +416,7 @@
       "description": "Predictors from the STAC catalog",
       "label": "Predictors",
       "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ]
+      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
     },
     "SDM>SDM_BRT_julia.json@40|pipeline@16": {
       "description": "Spatial resolution of the rasters, in degrees",
@@ -458,45 +438,50 @@
       "label": "Predictions",
       "type": "image/tiff;application=geotiff",
       "example": null,
-      "weight": 5
+      "weight": 3
     },
     "SDM>SDM_BRT_julia.json@40|pipeline@35|defaultOutput": {
       "description": "Species for which the distribution model is generated",
       "label": "Species name",
       "type": "text[]",
-      "example": [
-        "Acer saccharum"
-      ]
+      "example": ["Acer saccharum"],
+      "weight": 1
     },
     "Block3>block3.json@26|Block3>weightLayers.yml@44|priority_map": {
       "description": "Sampling priority map.",
-      "label": "priority_map",
-      "type": "image/tiff;application=geotiff"
+      "label": "Priority map",
+      "type": "image/tiff;application=geotiff",
+      "weight": 7
     },
     "Block3>block3.json@26|data>loadFromStac.yml@30|rasters": {
-      "description": "array of output raster paths",
+      "description": "Accessibility to nearest city",
       "label": "Accessibility",
-      "type": "image/tiff;application=geotiff[]"
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 6
     },
     "Block3>block3.json@26|Block3>climateUniqueness.yml@16|climate_uniqueness": {
-      "description": "map",
-      "label": "climate uniqueness",
-      "type": "image/tiff;application=geotiff"
+      "description": "Map of climate uniqueness",
+      "label": "Climate uniqueness",
+      "type": "image/tiff;application=geotiff",
+      "weight": 4
     },
     "Block3>block3.json@26|data>loadFromStac.yml@1|rasters": {
-      "description": "array of output raster paths",
+      "description": "List of layers used in climate uniqueness calculation",
       "label": "Layers (for climate uniqueness)",
-      "type": "image/tiff;application=geotiff[]"
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
     },
     "Block3>block3.json@26|data>loadFromStac.yml@9|rasters": {
       "description": "array of output raster paths",
       "label": "ESA Land Cover (for climat uniqueness)",
-      "type": "image/tiff;application=geotiff[]"
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
     },
     "Block3>block3.json@26|Block3>climateVelocity.yml@50|climate_velocity": {
-      "description": "map",
-      "label": "climate velocity",
-      "type": "image/tiff;application=geotiff"
+      "description": "Map of climate velocity",
+      "label": "Climate velocity",
+      "type": "image/tiff;application=geotiff",
+      "weight": 5
     }
   },
   "metadata": {
