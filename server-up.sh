@@ -21,12 +21,13 @@ function assertSuccess {
 echo "Updating server init script..."
 if cd .server; then
     # Check for a branch change
-    if [[ "$(git branch --show-current)" != $branch ]]; then
+    remoteFetch="+refs/heads/$branch:refs/remotes/origin/$branch"
+    if [[ "$(git config remote.origin.fetch)" != $remoteFetch ]]; then
         echo "Switching to branch $branch..."
 
         # Change branch restriction of shallow repo.
         # We are not really changing branch but just allowing to checkout individual files from that other branch.
-        git config remote.origin.fetch "+refs/heads/$branch:refs/remotes/origin/$branch"
+        git config remote.origin.fetch "$remoteFetch"
         # Delete all except .git, . and ..
         ls -a | grep -Ev "^(\.git|\.|\.\.)$" | xargs rm -r
     fi
