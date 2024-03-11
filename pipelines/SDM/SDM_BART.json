@@ -1,0 +1,756 @@
+{
+  "nodes": [
+    {
+      "id": "34",
+      "type": "io",
+      "position": {
+        "x": 1661,
+        "y": 44
+      },
+      "data": {
+        "descriptionFile": "filtering>cleanCoordinates.yml"
+      }
+    },
+    {
+      "id": "35",
+      "type": "constant",
+      "position": {
+        "x": 1218,
+        "y": 79
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "equal",
+          "zeros",
+          "duplicates",
+          "same_pixel",
+          "capitals",
+          "centroids",
+          "seas",
+          "urban",
+          "gbif",
+          "institutions"
+        ]
+      }
+    },
+    {
+      "id": "40",
+      "type": "io",
+      "position": {
+        "x": 2638,
+        "y": 167.5
+      },
+      "data": {
+        "descriptionFile": "SDM>selectBackground.yml"
+      }
+    },
+    {
+      "id": "44",
+      "type": "io",
+      "position": {
+        "x": 3198,
+        "y": 373
+      },
+      "data": {
+        "descriptionFile": "SDM>setupDataSdm.yml"
+      }
+    },
+    {
+      "id": "45",
+      "type": "constant",
+      "position": {
+        "x": 2831,
+        "y": 411.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "bootstrap",
+        "options": ["bootstrap", "crossvalidation", "none"]
+      }
+    },
+    {
+      "id": "46",
+      "type": "userInput",
+      "position": {
+        "x": 2866,
+        "y": 449.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2
+      }
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": 2761,
+        "y": 484.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.7
+      }
+    },
+    {
+      "id": "48",
+      "type": "constant",
+      "position": {
+        "x": 2777,
+        "y": 522.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
+    },
+    {
+      "id": "56",
+      "type": "output",
+      "position": {
+        "x": 4237,
+        "y": 524.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "57",
+      "type": "userInput",
+      "position": {
+        "x": 72,
+        "y": 227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6623"
+      }
+    },
+    {
+      "id": "58",
+      "type": "userInput",
+      "position": {
+        "x": 148,
+        "y": 166
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [-2316297, -1971146, 1015207, 1511916]
+      }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 1224,
+        "y": 117
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.8
+      }
+    },
+    {
+      "id": "67",
+      "type": "io",
+      "position": {
+        "x": 2194,
+        "y": 330.5
+      },
+      "data": {
+        "descriptionFile": "data>heatmapFromSTAC.yml"
+      }
+    },
+    {
+      "id": "96",
+      "type": "io",
+      "position": {
+        "x": 432,
+        "y": 0
+      },
+      "data": {
+        "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
+      }
+    },
+    {
+      "id": "97",
+      "type": "io",
+      "position": {
+        "x": 1028,
+        "y": 354.25
+      },
+      "data": {
+        "descriptionFile": "SDM>removeCollinearity.yml"
+      }
+    },
+    {
+      "id": "98",
+      "type": "constant",
+      "position": {
+        "x": 693,
+        "y": 387
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "vif.cor",
+        "options": ["vif.cor", "vif.step", "pearson", "spearman", "kendall"]
+      }
+    },
+    {
+      "id": "99",
+      "type": "constant",
+      "position": {
+        "x": 693,
+        "y": 425
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "pearson",
+        "options": ["pearson", "spearman", "kendall"]
+      }
+    },
+    {
+      "id": "100",
+      "type": "constant",
+      "position": {
+        "x": 607,
+        "y": 487.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5000
+      }
+    },
+    {
+      "id": "101",
+      "type": "constant",
+      "position": {
+        "x": 591,
+        "y": 525.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.75
+      }
+    },
+    {
+      "id": "102",
+      "type": "constant",
+      "position": {
+        "x": 607,
+        "y": 563.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 8
+      }
+    },
+    {
+      "id": "104",
+      "type": "io",
+      "position": {
+        "x": 2149,
+        "y": 142.5
+      },
+      "data": {
+        "descriptionFile": "SDM>studyExtent.yml"
+      }
+    },
+    {
+      "id": "105",
+      "type": "constant",
+      "position": {
+        "x": 1835,
+        "y": 175
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "bbox",
+        "options": ["box", "mcp", "buffer", "bbox"]
+      }
+    },
+    {
+      "id": "107",
+      "type": "constant",
+      "position": {
+        "x": 1728,
+        "y": 213
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
+    },
+    {
+      "id": "108",
+      "type": "io",
+      "position": {
+        "x": 3802,
+        "y": 554
+      },
+      "data": {
+        "descriptionFile": "SDM>runBART.yml"
+      }
+    },
+    {
+      "id": "110",
+      "type": "constant",
+      "position": {
+        "x": 3365,
+        "y": 623
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.095
+      }
+    },
+    {
+      "id": "111",
+      "type": "constant",
+      "position": {
+        "x": 3365,
+        "y": 585
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.025
+      }
+    },
+    {
+      "id": "112",
+      "type": "output",
+      "position": {
+        "x": 4237,
+        "y": 573.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "114",
+      "type": "io",
+      "position": {
+        "x": 562.3638076156117,
+        "y": 185.10533060875855
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "115",
+      "type": "constant",
+      "position": {
+        "x": 218.3550717948067,
+        "y": 297.207281035391
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "40",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-34clean_presence-40presence"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "44",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-34clean_presence-44presence"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "observations_file",
+      "target": "34",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-96observations_file-34presence"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "104",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-34clean_presence-104presence"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "presence_background",
+      "target": "108",
+      "targetHandle": "presence_background",
+      "id": "reactflow__edge-44presence_background-108presence_background"
+    },
+    {
+      "source": "108",
+      "sourceHandle": "sdm_pred",
+      "target": "56",
+      "targetHandle": null,
+      "id": "reactflow__edge-108sdm_pred-56"
+    },
+    {
+      "source": "108",
+      "sourceHandle": "sdm_uncertainty",
+      "target": "112",
+      "targetHandle": null,
+      "id": "reactflow__edge-108sdm_uncertainty-112"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "background",
+      "target": "44",
+      "targetHandle": "background",
+      "id": "reactflow__edge-40background-44background"
+    },
+    {
+      "source": "97",
+      "sourceHandle": "rasters_selected",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-97rasters_selected-34predictors"
+    },
+    {
+      "source": "97",
+      "sourceHandle": "rasters_selected",
+      "target": "67",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-97rasters_selected-67predictors"
+    },
+    {
+      "source": "98",
+      "sourceHandle": null,
+      "target": "97",
+      "targetHandle": "method",
+      "id": "reactflow__edge-98-97method"
+    },
+    {
+      "source": "104",
+      "sourceHandle": "study_extent",
+      "target": "40",
+      "targetHandle": "extent",
+      "id": "reactflow__edge-104study_extent-40extent"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-104proj"
+    },
+    {
+      "source": "97",
+      "sourceHandle": "rasters_selected",
+      "target": "108",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-97rasters_selected-108predictors"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "tests",
+      "id": "reactflow__edge-35-34tests"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-96bbox"
+    },
+    {
+      "source": "97",
+      "sourceHandle": "rasters_selected",
+      "target": "44",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-97rasters_selected-44predictors"
+    },
+    {
+      "source": "99",
+      "sourceHandle": null,
+      "target": "97",
+      "targetHandle": "method_cor_vif",
+      "id": "reactflow__edge-99-97method_cor_vif"
+    },
+    {
+      "source": "105",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "method",
+      "id": "reactflow__edge-105-104method"
+    },
+    {
+      "source": "111",
+      "sourceHandle": null,
+      "target": "108",
+      "targetHandle": "quantile_min",
+      "id": "reactflow__edge-111-108quantile_min"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "partition_type",
+      "id": "reactflow__edge-45-44partition_type"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "env_threshold",
+      "id": "reactflow__edge-64-34env_threshold"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-96proj"
+    },
+    {
+      "source": "100",
+      "sourceHandle": null,
+      "target": "97",
+      "targetHandle": "nb_sample",
+      "id": "reactflow__edge-100-97nb_sample"
+    },
+    {
+      "source": "107",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "width_buffer",
+      "id": "reactflow__edge-107-104width_buffer"
+    },
+    {
+      "source": "110",
+      "sourceHandle": null,
+      "target": "108",
+      "targetHandle": "quantile_max",
+      "id": "reactflow__edge-110-108quantile_max"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "runs_n",
+      "id": "reactflow__edge-46-44runs_n"
+    },
+    {
+      "source": "97",
+      "sourceHandle": "rasters_selected",
+      "target": "40",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-97rasters_selected-40predictors"
+    },
+    {
+      "source": "101",
+      "sourceHandle": null,
+      "target": "97",
+      "targetHandle": "cutoff_cor",
+      "id": "reactflow__edge-101-97cutoff_cor"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-104bbox"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "boot_proportion",
+      "id": "reactflow__edge-47-44boot_proportion"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "raster",
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-67raster-40raster"
+    },
+    {
+      "source": "102",
+      "sourceHandle": null,
+      "target": "97",
+      "targetHandle": "cutoff_vif",
+      "id": "reactflow__edge-102-97cutoff_vif"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "44",
+      "targetHandle": "cv_partitions",
+      "id": "reactflow__edge-48-44cv_partitions"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "114",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-114bbox"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "114",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-114proj"
+    },
+    {
+      "source": "114",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-114rasters-97rasters"
+    },
+    {
+      "source": "115",
+      "sourceHandle": null,
+      "target": "114",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-115-114weight_matrix_with_ids"
+    }
+  ],
+  "inputs": {
+    "SDM>selectBackground.yml@40|method_background": {
+      "description": "method used to sample background points",
+      "label": "method background",
+      "type": "options",
+      "options": [
+        "random",
+        "inclusion_buffer",
+        "weighted_raster",
+        "unweighted_raster"
+      ],
+      "example": "random"
+    },
+    "SDM>selectBackground.yml@40|n_background": {
+      "description": "number of background points",
+      "label": "number of background points",
+      "type": "int",
+      "example": 10000
+    },
+    "pipeline@46": {
+      "label": "number of runs",
+      "description": "number of runs (in bootstrap or crossvalidation method)",
+      "type": "int",
+      "example": 2
+    },
+    "pipeline@57": {
+      "label": "projection system",
+      "description": "String, projection system",
+      "type": "text",
+      "example": "EPSG:6623"
+    },
+    "pipeline@58": {
+      "label": "bbox",
+      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
+      "example": [-2316297, -1971146, 1015207, 1511916]
+    },
+    "data>heatmapFromSTAC.yml@67|taxa": {
+      "description": "taxonomic group to retrieve GBIF heatmap",
+      "label": "taxa",
+      "type": "options",
+      "options": [
+        "reptiles",
+        "plants",
+        "mammals",
+        "birds",
+        "arthropods",
+        "amphibians",
+        "all"
+      ],
+      "example": "reptiles"
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
+      "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
+      "label": "Data source",
+      "type": "options",
+      "options": ["gbif_pc", "gbif_api"],
+      "example": "gbif_api"
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|taxa": {
+      "description": "Array of taxa values",
+      "label": "Taxa list",
+      "type": "text[]",
+      "example": ["Acer saccharum", "Bubo scandiacus"]
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2020
+    },
+    "data>loadFromStac.yml@114|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    },
+    "data>loadFromStac.yml@114|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+    },
+    "data>loadFromStac.yml@114|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters",
+      "label": "spatial resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "data>loadFromStac.yml@114|mask": {
+      "description": "Shapefile, used to mask the output rasters",
+      "label": "mask",
+      "type": "application/dbf",
+      "example": null
+    }
+  },
+  "outputs": {
+    "SDM>runBART.yml@108|sdm_pred": {
+      "description": "mean posterior distribution of probability of presence",
+      "label": "predictions",
+      "type": "image/tiff;application=geotiff"
+    },
+    "SDM>runBART.yml@108|sdm_uncertainty": {
+      "description": "credible interval of the posterior distribution",
+      "label": "uncertainty",
+      "type": "image/tiff;application=geotiff"
+    }
+  }
+}
