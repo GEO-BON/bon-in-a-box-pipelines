@@ -508,6 +508,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "126",
+      "type": "output",
+      "position": {
+        "x": 823.09375,
+        "y": 101
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -846,6 +857,13 @@
       "target": "125",
       "targetHandle": null,
       "id": "reactflow__edge-67raster-125"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "gbif_doi",
+      "target": "126",
+      "targetHandle": null,
+      "id": "reactflow__edge-96gbif_doi-126"
     }
   ],
   "inputs": {
@@ -1018,6 +1036,12 @@
       "label": "Density of GBIF occurrences",
       "type": "image/tiff;application=geotiff",
       "weight": 4
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5"
     }
   },
   "metadata": {
