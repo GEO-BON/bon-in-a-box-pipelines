@@ -5,8 +5,8 @@ inputs:
   studyarea_grid:
     label: studyarea_grid
     description: "studyarea_grid"
-    type: text
-    example: "scripts/00_studyarea_covs/input/raster_study_area_4326_path.tif"
+    type: image/tiff;application=geotiff
+    example: "scripts/00_studyarea_covs/input/raster_study_area_path.tif"
   RSTACQuery:
     label: RSTACQuery
     description: "RSTACQuery"
@@ -43,16 +43,19 @@ inputs:
     example: null
   selectVars:
     label: selectVars
-    description: 'selectVars bio18, bio19'
+    description: 'selectVars'
     type: text
-    example: bio18, bio19
+    example: bio18, bio4 , bio7
 outputs:
+  list_vars:
+    label: list_vars
+    description: "list_vars"
+    type: text
+  first_var:
+    label: first_var
+    description: "first_var"
+    type: image/tiff;application=geotiff
   dir_stack:
     label: dir_stack
     description: "dir_stack"
     type: text
-outputs:
-  first_var:
-    label: first_var
-    description: "dir_stack"
-    type: GeoTIFF

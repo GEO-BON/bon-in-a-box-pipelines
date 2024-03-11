@@ -40,10 +40,11 @@ input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/
 output<- (function(){
 
 # Cargar area de estudio 
-study_area<- terra::rast(input$studyarea_grid)  # cargar raster
+study_area<- terra::rast(input$studyarea_grid) %>% terra::project(terra::crs( "+proj=longlat +datum=WGS84 +no_defs" )) # cargar raster
 box_study_area <-  sf::st_bbox(study_area) # estimar extension
 crs_polygon<- terra::crs( study_area ) %>% as.character() # estimar proyeccion del poligono
 res_studyarea<- terra::res(study_area)
+
 
 
 # revisar si la url de la coleccion existe
@@ -142,20 +143,22 @@ terra_mask<- pbapply::pblapply(vars[5:length(vars)], function(x){ print(x)
 })  %>% {Filter(function(x) !is.null(x), .)} 
 
 
-terra_mask_layers<- purrr::map(terra_mask, "layer") %>% setNames(names(.))
+terra_mask_layers<- purrr::map(terra_mask, "layer") %>% setNames(unlist(lapply(., function(x) names(x))))
+
+
 
 dir_stack<- file.path(outputFolder, "dir_stack")
 unlink(dir_stack, recursive = TRUE); dir.create(dir_stack); setwd(dir_stack)
 
 setwd(dir_stack)
 output_layers<- lapply(terra_mask_layers, function(x){
-  name_layer<- paste0(names(x), ".tif")
+  name_layer<- file.path(dir_stack, paste0(names(x), ".tif"))
   terra::writeRaster(x, name_layer, gdal=c("COMPRESS=DEFLATE", "TFW=YES"),  filetype = "GTiff", overwrite = TRUE );
-  name_layer})
+  name_layer}) 
 
 
 
-output<- list(dir_stack= dir_stack, first_var= output_layers[1])
+output<- list(list_vars= paste0(names(terra_mask_layers), collapse = ", "), dir_stack= dir_stack, first_var= as.character(output_layers[1]) )
 
 
 })()
