@@ -4,21 +4,26 @@
       "id": "13",
       "type": "constant",
       "position": {
-        "x": 12,
-        "y": 86.5
+        "x": 18,
+        "y": 312
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": ["-86.748047", "33.72434", "-52.207031", "63.273182"]
+        "value": [
+          "-86.748047",
+          "33.72434",
+          "-52.207031",
+          "63.273182"
+        ]
       }
     },
     {
       "id": "14",
       "type": "constant",
       "position": {
-        "x": 952.0205030584714,
-        "y": 384.4578314167838
+        "x": 1023,
+        "y": 318.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +55,8 @@
       "id": "15",
       "type": "userInput",
       "position": {
-        "x": 1114,
-        "y": 51.5
+        "x": 1194,
+        "y": 56.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -63,21 +68,26 @@
       "id": "16",
       "type": "userInput",
       "position": {
-        "x": 1044,
-        "y": 278.5
+        "x": 1124,
+        "y": 91.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [0.3, 0.2, 0.4, 0.1]
+        "value": [
+          0.3,
+          0.2,
+          0.4,
+          0.1
+        ]
       }
     },
     {
       "id": "17",
       "type": "userInput",
       "position": {
-        "x": 77,
-        "y": 51.5
+        "x": 92,
+        "y": 82
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,8 +99,8 @@
       "id": "19",
       "type": "userInput",
       "position": {
-        "x": 71,
-        "y": 16.5
+        "x": 86,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -102,8 +112,8 @@
       "id": "22",
       "type": "userInput",
       "position": {
-        "x": 81,
-        "y": 176.5
+        "x": 96,
+        "y": 117
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -115,8 +125,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 1387.4043563950304,
-        "y": 172.26749354390472
+        "x": 1432,
+        "y": 391
       },
       "data": {
         "descriptionFile": "Block3>block3.json"
@@ -126,8 +136,8 @@
       "id": "35",
       "type": "output",
       "position": {
-        "x": 1332,
-        "y": 12
+        "x": 1432,
+        "y": 662.5
       },
       "data": {
         "label": "Output"
@@ -137,8 +147,8 @@
       "id": "36",
       "type": "output",
       "position": {
-        "x": 1332,
-        "y": 609
+        "x": 1432,
+        "y": 614.5
       },
       "data": {
         "label": "Output"
@@ -148,8 +158,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 382,
-        "y": 86.5
+        "x": 437,
+        "y": 126.5
       },
       "data": {
         "descriptionFile": "SDM>SDM_BRT_julia.json"
@@ -159,21 +169,23 @@
       "id": "42",
       "type": "constant",
       "position": {
-        "x": -70.8511688540051,
-        "y": 422.88940850992606
+        "x": 18,
+        "y": 242
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["Acer saccharum"]
+        "value": [
+          "Acer saccharum"
+        ]
       }
     },
     {
       "id": "44",
       "type": "output",
       "position": {
-        "x": 1712.6175952008457,
-        "y": 395.1286617792226
+        "x": 1432,
+        "y": 17.5
       },
       "data": {
         "label": "Output"
@@ -183,8 +195,8 @@
       "id": "45",
       "type": "output",
       "position": {
-        "x": 2042.854282950792,
-        "y": 134.94599531689386
+        "x": 2092,
+        "y": 306
       },
       "data": {
         "label": "Output"
@@ -194,8 +206,8 @@
       "id": "46",
       "type": "output",
       "position": {
-        "x": 2026.670917890824,
-        "y": 202.16920402753104
+        "x": 2092,
+        "y": 258
       },
       "data": {
         "label": "Output"
@@ -205,8 +217,8 @@
       "id": "47",
       "type": "output",
       "position": {
-        "x": 2027.9157921262058,
-        "y": 265.6577900320218
+        "x": 2092,
+        "y": 354
       },
       "data": {
         "label": "Output"
@@ -216,8 +228,8 @@
       "id": "48",
       "type": "output",
       "position": {
-        "x": 2072.731264599964,
-        "y": 336.61562144880554
+        "x": 2092,
+        "y": 576
       },
       "data": {
         "label": "Output"
@@ -227,8 +239,8 @@
       "id": "49",
       "type": "output",
       "position": {
-        "x": 2047.8337798923208,
-        "y": 402.5939559240604
+        "x": 2092,
+        "y": 480
       },
       "data": {
         "label": "Output"
@@ -238,11 +250,24 @@
       "id": "50",
       "type": "output",
       "position": {
-        "x": 1999.2836847124163,
-        "y": 482.2659069885194
+        "x": 2092,
+        "y": 528
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "userInput",
+      "position": {
+        "x": 27,
+        "y": 47
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://io.biodiversite-quebec.ca/stac/"
       }
     }
   ],
@@ -379,6 +404,13 @@
       "target": "50",
       "targetHandle": null,
       "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-51-40pipeline@2"
     }
   ],
   "inputs": {
@@ -390,9 +422,14 @@
     },
     "pipeline@16": {
       "label": "weights",
-      "description": "weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]",
+      "description": "Weight vectors that sum to one. Weights correspond to layers in this order: [uncertainty, uniqueness, velocity, accessibility].",
       "type": "float[]",
-      "example": [0.3, 0.2, 0.4, 0.1]
+      "example": [
+        0.3,
+        0.2,
+        0.4,
+        0.1
+      ]
     },
     "pipeline@17": {
       "label": "maximum year",
@@ -416,13 +453,22 @@
       "description": "Predictors from the STAC catalog",
       "label": "Predictors",
       "type": "text[]",
-      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
     },
     "SDM>SDM_BRT_julia.json@40|pipeline@16": {
       "description": "Spatial resolution of the rasters, in degrees",
       "label": "Spatial resolution",
       "type": "float",
       "example": 0.008
+    },
+    "pipeline@51": {
+      "label": "STAC url for predictors",
+      "description": "URL of the STAC catalog",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
     }
   },
   "outputs": {
@@ -444,7 +490,9 @@
       "description": "Species for which the distribution model is generated",
       "label": "Species name",
       "type": "text[]",
-      "example": ["Acer saccharum"],
+      "example": [
+        "Acer saccharum"
+      ],
       "weight": 1
     },
     "Block3>block3.json@26|Block3>weightLayers.yml@44|priority_map": {

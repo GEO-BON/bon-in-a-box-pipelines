@@ -765,7 +765,7 @@
       "example": "y2000_class210_binary.tif"
     },
     "Block3>weightLayers.yml@44|weights": {
-      "description": "weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]",
+      "description": "Weight vectors that sum to one. Weights correspond to layers in this order: [uncertainty, uniqueness, velocity, accessibility].",
       "label": "weights",
       "type": "float[]",
       "example": [
@@ -813,8 +813,7 @@
     "description": "da pipline",
     "author": [
       {
-        "name": "Michael D. Catchen",
-        "identifier": null
+        "name": "Michael D. Catchen"
       }
     ],
     "license": "MIT",

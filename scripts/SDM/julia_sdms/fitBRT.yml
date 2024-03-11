@@ -1,6 +1,6 @@
 script: fitBRT.jl
 name: BRT
-description: "This script creates an SDM and uncertainty map based on using Boosted Regression Trees (BRTs) using the package SpeciesDistributionToolkit.jl and EvoTrees.jl"
+description: "This script creates a Species Distribution Model (SDM) and uncertainty map based on using Boosted Regression Trees (BRTs) using the package SpeciesDistributionToolkit.jl and EvoTrees.jl"
 author:
   - name: Michael D. Catchen
     identifier: https://orcid.org/0000-0002-6506-6487
@@ -30,10 +30,10 @@ outputs:
     description: map of predicted occurrence probability
     type: image/tiff;application=geotiff
   sdm_uncertainty:
-    label: sdm_uncertainty
-    description: map of relative uncertainty 
+    label: sdm uncertainty
+    description: map of relative uncertainty
     type: image/tiff;application=geotiff
   fit_stats:
-    label: fit_stats
+    label: fit statistics
     description: JSON of model fit stats and threshold
     type: text/json

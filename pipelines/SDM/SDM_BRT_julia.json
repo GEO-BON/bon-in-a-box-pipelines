@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 598,
-        "y": 472.41666666666663
+        "x": 610,
+        "y": 314
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 571,
-        "y": 100.41666666666663
+        "x": 583,
+        "y": 117
       },
       "data": {
         "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
@@ -24,10 +24,10 @@
     },
     {
       "id": "2",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": 94,
-        "y": 458.41666666666663
+        "x": 113,
+        "y": 146
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,13 +39,18 @@
       "id": "3",
       "type": "userInput",
       "position": {
-        "x": 153,
-        "y": 134.16666666666663
+        "x": 163,
+        "y": 181
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": ["-86.748047", "33.724340", "-52.207031", "63.273182"]
+        "value": [
+          "-86.748047",
+          "33.724340",
+          "-52.207031",
+          "63.273182"
+        ]
       }
     },
     {
@@ -53,7 +58,7 @@
       "type": "constant",
       "position": {
         "x": 94,
-        "y": 360.41666666666663
+        "y": 216
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -65,8 +70,8 @@
       "id": "13",
       "type": "io",
       "position": {
-        "x": 1122,
-        "y": 462.41666666666663
+        "x": 1129,
+        "y": 304
       },
       "data": {
         "descriptionFile": "SDM>julia_sdms>pcaLayers.yml"
@@ -76,8 +81,8 @@
       "id": "15",
       "type": "output",
       "position": {
-        "x": 1499,
-        "y": 512.4166666666666
+        "x": 1525,
+        "y": 355
       },
       "data": {
         "label": "Output"
@@ -87,8 +92,8 @@
       "id": "16",
       "type": "userInput",
       "position": {
-        "x": 138,
-        "y": 496.41666666666663
+        "x": 145,
+        "y": 350
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -100,8 +105,8 @@
       "id": "18",
       "type": "io",
       "position": {
-        "x": 598,
-        "y": 314.41666666666663
+        "x": 610,
+        "y": 447
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -111,13 +116,15 @@
       "id": "19",
       "type": "constant",
       "position": {
-        "x": 110,
-        "y": 300.41666666666663
+        "x": 104,
+        "y": 462
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["esacci-lc|esacci-lc-2020"]
+        "value": [
+          "esacci-lc|esacci-lc-2020"
+        ]
       }
     },
     {
@@ -125,7 +132,7 @@
       "type": "constant",
       "position": {
         "x": 94,
-        "y": 96.16666666666663
+        "y": 313
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -137,8 +144,8 @@
       "id": "21",
       "type": "io",
       "position": {
-        "x": 1499,
-        "y": 304.91666666666663
+        "x": 1525,
+        "y": 124.5
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -148,8 +155,8 @@
       "id": "22",
       "type": "io",
       "position": {
-        "x": 1940,
-        "y": 432.41666666666663
+        "x": 1961,
+        "y": 304
       },
       "data": {
         "descriptionFile": "SDM>julia_sdms>generateBackground.yml"
@@ -159,8 +166,8 @@
       "id": "24",
       "type": "io",
       "position": {
-        "x": 2409,
-        "y": 402.41666666666663
+        "x": 2420,
+        "y": 363
       },
       "data": {
         "descriptionFile": "SDM>julia_sdms>fitBRT.yml"
@@ -170,8 +177,8 @@
       "id": "25",
       "type": "output",
       "position": {
-        "x": 2799,
-        "y": 530.9166666666666
+        "x": 2872,
+        "y": 313
       },
       "data": {
         "label": "Output"
@@ -181,8 +188,8 @@
       "id": "26",
       "type": "output",
       "position": {
-        "x": 2799,
-        "y": 579.9166666666666
+        "x": 2870,
+        "y": 371
       },
       "data": {
         "label": "Output"
@@ -192,8 +199,8 @@
       "id": "27",
       "type": "output",
       "position": {
-        "x": 2799,
-        "y": 481.91666666666663
+        "x": 2868,
+        "y": 417
       },
       "data": {
         "label": "Output"
@@ -203,8 +210,8 @@
       "id": "28",
       "type": "constant",
       "position": {
-        "x": 1128,
-        "y": 304.91666666666663
+        "x": 1126,
+        "y": 81
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -224,8 +231,8 @@
       "id": "29",
       "type": "constant",
       "position": {
-        "x": 1107,
-        "y": 394.91666666666663
+        "x": 1111,
+        "y": 171
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -237,22 +244,25 @@
       "id": "31",
       "type": "constant",
       "position": {
-        "x": 170,
-        "y": 58.16666666666663
+        "x": 184,
+        "y": 104
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "gbif_api",
-        "options": ["gbif_pc", "gbif_api"]
+        "options": [
+          "gbif_pc",
+          "gbif_api"
+        ]
       }
     },
     {
       "id": "33",
       "type": "output",
       "position": {
-        "x": 1940,
-        "y": 373.41666666666663
+        "x": 1961,
+        "y": 246
       },
       "data": {
         "label": "Output"
@@ -262,8 +272,8 @@
       "id": "34",
       "type": "output",
       "position": {
-        "x": 1107,
-        "y": 245.91666666666663
+        "x": 1111,
+        "y": 418
       },
       "data": {
         "label": "Output"
@@ -273,20 +283,23 @@
       "id": "35",
       "type": "userInput",
       "position": {
-        "x": 160,
-        "y": 23.166666666666686
+        "x": 166,
+        "y": 22.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["Acer saccharum", "Bubo scandiacus"]
+        "value": [
+          "Acer saccharum",
+          "Bubo scandiacus"
+        ]
       }
     },
     {
       "id": "36",
       "type": "output",
       "position": {
-        "x": 571,
+        "x": 583,
         "y": 12
       },
       "data": {
@@ -297,8 +310,8 @@
       "id": "37",
       "type": "constant",
       "position": {
-        "x": 121,
-        "y": 398.41666666666663
+        "x": 112,
+        "y": 253
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -310,8 +323,8 @@
       "id": "38",
       "type": "output",
       "position": {
-        "x": 1107,
-        "y": 196.91666666666663
+        "x": 1111,
+        "y": 208
       },
       "data": {
         "label": "Output"
@@ -321,8 +334,8 @@
       "id": "39",
       "type": "output",
       "position": {
-        "x": 1940,
-        "y": 275.41666666666663
+        "x": 1961,
+        "y": 47.5
       },
       "data": {
         "label": "Output"
@@ -332,8 +345,8 @@
       "id": "40",
       "type": "output",
       "position": {
-        "x": 1940,
-        "y": 226.41666666666663
+        "x": 1961,
+        "y": 95.5
       },
       "data": {
         "label": "Output"
@@ -344,7 +357,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 531.4166666666666
+        "y": 385
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -355,8 +368,8 @@
       "id": "42",
       "type": "output",
       "position": {
-        "x": 1101.1435095292334,
-        "y": 652.393114158762
+        "x": 1111,
+        "y": 256
       },
       "data": {
         "label": "Output"
@@ -643,7 +656,10 @@
       "description": "Predictors from the STAC catalog",
       "label": "Predictors",
       "type": "text[]",
-      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
     },
     "data>pyLoadObservations>pyLoadObservations.yml@1|min_year": {
       "description": "Minimum year for selecting occurrence from GBIF",
@@ -657,11 +673,22 @@
       "type": "int",
       "example": 2020
     },
+    "pipeline@2": {
+      "label": "STAC url for predictors",
+      "description": "URL of the STAC catalog",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    },
     "pipeline@3": {
       "label": "Bounding box",
       "description": "Bounding coordinates of the extent in the order xmin, ymin, xmax, ymax, in degrees",
       "type": "float[]",
-      "example": ["-78", "43", "-68", "65"]
+      "example": [
+        "-78",
+        "43",
+        "-68",
+        "65"
+      ]
     },
     "pipeline@16": {
       "label": "Spatial resolution",
@@ -679,7 +706,9 @@
       "label": "Species name",
       "description": "Species for which the distribution model is generated",
       "type": "text[]",
-      "example": ["Acer saccharum"]
+      "example": [
+        "Acer saccharum"
+      ]
     }
   },
   "outputs": {
@@ -716,14 +745,16 @@
     },
     "data>loadFromStac.yml@18|rasters": {
       "description": "Land cover layer used for masking non terrestrial pixels",
-      "label": "Land cover",
+      "label": "Land cover mask",
       "type": "image/tiff;application=geotiff[]",
       "weight": 8
     },
     "pipeline@35|defaultOutput": {
       "label": "Species name",
       "description": "Species for which the distribution model is generated",
-      "example": ["Acer saccharum"],
+      "example": [
+        "Acer saccharum"
+      ],
       "type": "text[]",
       "weight": 1
     },
@@ -735,14 +766,14 @@
       "weight": 3
     },
     "filtering>cleanCoordinates.yml@21|n_presence": {
-      "description": "Number of occurrences nitial number of presences points.",
+      "description": "Initial number of presences points, before cleaning",
       "label": "Number of occurrences",
       "type": "int",
       "example": 500,
       "weight": 2
     },
     "filtering>cleanCoordinates.yml@21|n_clean": {
-      "description": "Integer, final number of presences points after cleaning",
+      "description": "Final number of presences points after cleaning",
       "label": "Number of occurrences from GBIF after cleaning",
       "type": "int",
       "example": 400,
