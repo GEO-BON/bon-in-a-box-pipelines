@@ -5,8 +5,8 @@ inputs:
   auk_covars_file:
     label: auk_covars_file
     description: "Input data with eBird data and covars"
-    type: dataframe
-    example:  "scripts/00_eBird_format/input/occ_wide_Zcapensis.csv"
+    type: text/csv
+    example:  "scripts/00_eBird_format/input/vars_dataset.csv"
   min_obs:
     label: min_obs
     description: "Minimum number of observations required for each site."
@@ -20,45 +20,30 @@ inputs:
   annual_closure:
     label: annual_closure
     description: "Whether the entire year should be treated as the period of closure (the default). This can be useful, for example, if the data have been subset to a period of closure prior to calling"
-    type: logical
+    type: boolean
     example:  FALSE
   n_days:
     label: n_days
     description: "Number of days defining the temporal length of closure. If annual_closure = TRUE closure periods will be split at year boundaries. If annual_closure = FALSE the closure periods will ignore year boundaries."
     type: int
     example: 30
-  date_var:
-    label: date_var
-    description: "Column name of the variable in x containing the date. This column should either be in Date format or convertible to Date format with as.Date()."
-    type: text
-    example: "observation_date"
   site_vars:
     label: site_vars
     description: "Names of one of more columns in x that define a site, typically the location (e.g. latitude/longitude) and observer ID."
     type: text
-    example: "ID"
-  site_id:
-    label: site_id
-    description: "A unique idenitifer for each 'site', typically identifying observations from a unique location by the same observer within a period of temporal closure. Data output from filter_repeat_visits() will have a .site_id variable that meets these requirements."
-    type: text
-    example: "site"
-  response:
-    label: response
-    description: "The variable that will act as the response in modeling efforts, typically a binary variable indicating presence or absence or a count of individuals seen."
-    type: text
-    example: "species_observed"
+    example: "ID_grid"
   site_covs:
     label: site_covs
     description: "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate."
     type: text
-    example: "huella"
+    example: bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01
   obs_covs:
     label: obs_covs
     description: "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation."
     type: text
     example: "duration_minutes"
 outputs:
-  occ_wide_export:
-    label: occ_wide_export
+  occ_wide_unmark:
+    label: occ_wide_unmark
     description: "Data frame prepared of species observations for ingestion into the package unmarked for hierarchical modeling of abundance and occurrence. "
     type: text/csv

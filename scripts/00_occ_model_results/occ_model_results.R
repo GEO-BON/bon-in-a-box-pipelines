@@ -1,5 +1,8 @@
 #### Load required packages - libraries to run the script ####
 
+Inicio<- Sys.time()
+
+
 # Install necessary libraries - packages 
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<-list("rstudioapi", "this.path", "rjson", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
@@ -42,7 +45,6 @@ if(check_input) {input<- lapply(input, function(x) unlist(lapply(x, function(y) 
 }), recursive = F)) } # adjust input 1
 
 
-
 output<- tryCatch({
   
   #### Set enviroment variables ####
@@ -56,71 +58,53 @@ output<- tryCatch({
   
   # Load data in eBird fortmat to unmarked
 #<<<<<<< HEAD
-  occ_wide<- read.delim(input$auk_covars_file, sep = ";")
-  #occ_wide<- read.table("occ_wide_Zcapensis.csv", sep= "\t")
-#=======
-  #occ_wide<- read.csv(input$auk_covars_file)
-  if(any(names(occ_wide) %in% "X")){ 
-    occ_wide = occ_wide %>% dplyr::select(-"X")
-    }
+  covs_ocupacion<- input$covars_ocupacion %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
+  covs_detection<- input$covars_detection %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
   
+  occ_wide<- read.csv(input$auk_covars_file)
+  occ_wide_no_NA <- occ_wide %>% dplyr::filter(if_all(all_of(covs_ocupacion), ~ !is.na(.))) 
+  
+
   
   #occ_wide<- read.table("occ_wide.txt", sep= "\t")
 #>>>>>>> 78e6870b65abd7b2a689a2b6d3604979ca2c9ad6
   ####  Script body ####
   #unmarked object
-
-  occ_um <- unmarked::formatWide(dfin= occ_wide, type = "unmarkedFrameOccu")
+  occ_um <- unmarked::formatWide(dfin= occ_wide_no_NA, type = "unmarkedFrameOccu")
 
   # Occupancy modeling
   #####################
   # fit model
-  occ_model <- unmarked::occu(~ duration_minutes ~ huella + altitud,  data = occ_um)
-  #occ_dredge <- MuMIn::dredge(occ_model)
+
   
-  #######################
-  # Assessment
-  #####################
-  occ_gof <- AICcmodavg::mb.gof.test(occ_model, nsim = input$nsim, plot.hist = FALSE)
-  # hide the chisq table to give simpler output
-  sa<-occ_gof$chisq.table <- NULL
-  print(occ_gof)
-  # Other results
+  formula_occ<- as.formula( paste0("~ ", paste0(covs_detection, collapse = " + "), " ~ ", paste0(covs_ocupacion, collapse = " + ")) )
   
-  ##################
-  #Model selection
-  #################
-  # dredge all possible combinations of the occupancy covariates
+  
+  occ_model <- unmarked::occu( formula_occ ,  data = occ_um)
+  
   occ_dredge <- MuMIn::dredge(occ_model)
-  # model comparison to explore the results for occupancy
-  mc <- as.data.frame(occ_dredge) %>% 
-    dplyr::select(starts_with("psi(p"), df, AICc, delta, weight)
-  # model comparison
-  # model comparison to explore the results for occupancy
-  mc <- as.data.frame(occ_dredge) %>% 
-    dplyr::select(starts_with("psi(p"), df, AICc, delta, weight)
-  # shorten names for printing
-  names(mc) <- names(mc) %>% 
-    stringr::str_extract("(?<=psi\\(pland_[0-9]{2}_)[a-z_]+") %>% 
-    dplyr::coalesce(names(mc))
-  # take a quick peak at the model selection table
-  dplyr::mutate_all(mc, ~ round(., 3)) %>% 
-    head(18) %>% 
-    knitr::kable()
   
+
   
   
   # BREAK script if delr <= 2.5
   
-  # export result
-  #write.csv(mc, "model_selection.csv")
-  #write.table("model_selection.txt", sep= "\t", header = TRUE, row.names = 1)
-  # select models with the most support for model averaging (< 2.5 delta aicc)
-  occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 80)
+  occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 1000)
+
+  
   # average models based on model weights 
-  occ_avg <- MuMIn::model.avg(occ_dredge_delta, fit = TRUE)
-  # model averaged coefficients for occupancy and detection probability
-  coef(occ_avg)
+  test_models<- dplyr::filter(as.data.frame(occ_dredge), delta <= 1000)
+  
+  occ_avg<- if(nrow(test_models)<=1){
+    occ_dredge_delta[[1]]
+  } else {
+    MuMIn::model.avg(occ_dredge_delta, fit = TRUE)
+  }
+    
+
+  
+  
+    
   ##################
   #Exploring the effects of covariates on detection probability
   ##################
@@ -131,74 +115,52 @@ output<- tryCatch({
   names(md) <- names(md) %>% 
     stringr::str_extract("(?<=p\\(pland_[0-9]{2}_)[a-z_]+") %>% 
     dplyr::coalesce(names(md))
-  # take a quick peak at the model selection table
-  md[1:8,]
+
   
-  coef(occ_avg) %>% 
-    tibble::enframe() 
   
   ##########
   #Prediction
   ##########
   # Load data of prediction surface
-  # pred_surface<- read.delim(input$pred_surface, row.names = 1)
-  pred_surface <- read.csv(input$pred_surface)
+  layers_covs<- list.files(input$dir_stack, "\\.tif$", recursive = TRUE, full.names = TRUE)
+  spatial_pred_surface<- terra::rast(layers_covs)
   
-  covars<- c("id", "Longitude", "Latitude", input$covars)
-  pred_surface_selec<-pred_surface %>% dplyr::select(covars)
+  id_cells<- terra::cells(spatial_pred_surface)
+  pred_surface <- spatial_pred_surface[id_cells]
   
   # note: the code below can take up to an hour to run!
-  occ_pred <- predict(occ_avg, 
-                      newdata = as.data.frame(pred_surface_selec), 
-                      type = "state")
-  
-  # add to prediction surface
-  pred_occ <- dplyr::bind_cols(pred_surface, 
-                               occ_prob = occ_pred$fit, 
-                               occ_se = occ_pred$se.fit) %>% 
-    dplyr::select(Latitude, Longitude, occ_prob, occ_se)
+  occ_pred <- predict( occ_avg,  newdata = pred_surface ,  type = "state")
+
   
   ## Raster points using the predicciotn surface raster template
-  base_grid <- raster(input$base_grid)
-  
-  
-  r_pred <- pred_occ %>% 
-    # convert to spatial features
-    sf::st_as_sf(coords = c("Longitude", "Latitude"), crs = 4326) %>% 
-    sf::st_transform(crs = raster::projection(base_grid)) %>% 
-    # rasterize
-    raster::rasterize(base_grid)
-  r_pred <- r_pred[[c("occ_prob", "occ_se")]]
-  
-  
-  # export graph
-  occprob_raster_path<- file.path(outputFolder, "occupancy_model_prob.tif") # Define the file path for the 'val_wkt_path' output
-  occprob_raster<-writeRaster(r_pred[["occ_prob"]], occprob_raster_path, overwrite = TRUE) # occ prop map
-  #### Outputing result to JSON ####
-  output<- list(occprob_raster_export = occprob_raster_path)
-  
-  occse_raster_path<- file.path(outputFolder, "occupancy_se_model_prob.tif") # Define the file path for the 'val_wkt_path' output
-  occse_raster<-writeRaster(r_pred[["occ_se"]], occse_raster_path, overwrite = TRUE) # se map
+  base_grid <- terra::rast(spatial_pred_surface[[1]])
   
 
+  r_pred_occ_prob<- base_grid
+  r_pred_occ_prob[id_cells]<- occ_pred[[1]]
+  
+  r_pred_occ_se<- base_grid
+  r_pred_occ_se[id_cells]<- occ_pred[[2]]
+  
+  
   
   
   # save the raster
-  #tif_dir <- "output"
-  #if (!dir.exists(tif_dir)) {
-  #  dir.create(tif_dir)
-  #}
-  #writeRaster(r_pred[["occ_prob"]], 
-  #            filename = file.path(tif_dir, "occupancy-model_prob_Tyrannus_melanchilicus.tif"),
-  #            overwrite = TRUE)
-  #writeRaster(r_pred[["occ_se"]], 
-  #            filename = file.path(tif_dir, "occupancy-model_se_Tyrannus_melanchilicus.tif"), 
-  #            overwrite = TRUE)
+  
+  # export rasters
+  occprob_raster_path<- file.path(outputFolder, "occupancy_model_prob.tif") # Define the file path for the 'val_wkt_path' output
+  occprob_raster<-writeRaster(r_pred_occ_prob, occprob_raster_path, overwrite = TRUE) # occ prop map
+
+  occse_raster_path<- file.path(outputFolder, "occupancy_se_model_prob.tif") # Define the file path for the 'val_wkt_path' output
+  occse_raster<-writeRaster(r_pred_occ_se, occse_raster_path, overwrite = TRUE) # se map
+  
+
+  
   #######
   #Graphs
   #######
   #List occupacy covaraibles 
-  occformulaList<- lapply(input$covars, function(y) paste0("~1~", y) %>% as.character)
+  occformulaList<- lapply(covs_ocupacion, function(y) paste0("~1~", y) %>% as.character)
   
   
   
@@ -218,10 +180,10 @@ output<- tryCatch({
     adjust_form<- as.formula(occformulaList[[i]])
     
     print(occformulaList[[i]])
-    new.occ_model <- occu(adjust_form,  data=occ_um)
+    new.occ_model <- unmarked::occu(adjust_form,  data=occ_um)
     
     #get det covariate name
-    varName<-input$covars[i]
+    varName<- covs_ocupacion[i]
     
     #get range of values from data to simulate new data
     varData<-siteCovs.df[,names(siteCovs.df)==varName]
@@ -240,6 +202,9 @@ output<- tryCatch({
     
   }
   
+  
+  
+  
   #make CovariateName a factor
   occCovariatePredOcc$CovariateName<-as.factor(occCovariatePredOcc$CovariateName)
   
@@ -252,9 +217,12 @@ output<- tryCatch({
     theme(panel.border=element_rect(color="black",fill="transparent"), panel.background = element_rect(fill="white"))
   
   occPlotFacet<-occPlot+facet_wrap(.~CovariateName, scales="free",ncol=3)
+  
   # export graph
   occPlotFacet_path<- file.path(outputFolder, "occ_plot.jpeg") # Define the file path for the 'val_wkt_path' output
-  ggsave(occPlotFacet_path, occPlotFacet, width = 4, height = 4, dpi= 300, bg= "white")
+  ggsave(occPlotFacet_path, occPlotFacet, dpi= 300, bg= "white")
+  
+  
   
   #### Outputing result to JSON ####
   
@@ -266,13 +234,17 @@ output<- tryCatch({
                   0.4, 0.6, 3,
                   0.6, 0.8, 4,
                   0.8, 1, 5)
+  
+  
   # reshape the object into a matrix with columns and rows
   reclass_m <- matrix(reclass_df,
                       ncol = 3,
                       byrow = TRUE)
+  
+  
   # reclassify the raster using the reclass object - reclass_m
-  chm_classified <- reclassify(occprob_raster,
-                               reclass_m)
+  chm_classified <- reclassify( raster::raster(occprob_raster), reclass_m)
+  
   # Calculate area after clasification
   tbl<-rasterToPoints(chm_classified, spatial = FALSE)
   tbl<-tibble::as_tibble(tbl)
@@ -305,7 +277,7 @@ output<- tryCatch({
   
   
   #### Outputing result to JSON ####
-  output<- list(occPlotFacet_export = occprob_raster_path,
+  output<- list(occprob_raster_export  = occprob_raster_path,
                 occse_raster_export = occse_raster_path,
                 occPlotFacet= occPlotFacet_path,
                 final_export = final_path, VEB_export = FVEB)
@@ -313,6 +285,7 @@ output<- tryCatch({
 
 }, error = function(e) { list(error= conditionMessage(e)) })
 
+print(Sys.time()-Inicio)
 
 
 #### Outputing result to JSON ####

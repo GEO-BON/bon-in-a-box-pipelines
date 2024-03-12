@@ -5,50 +5,40 @@ inputs:
   auk_covars_file:
     label: eBird_format_file
     description: "Input data with eBird format"
-    type: dataframe
-    example:  "scripts/00_occ_model_results/input/occ_wide_Zcapensis.csv"
-  covars:
-    label: List covars
-    description: "List of covariables for occupancy probability"
-    type: text[]
-    example:  ["altitud", "huella"]
-  pred_surface:
-    label: pred_surface
-    description: "Data frame with prediction surface for maps"
-    type: dataframe
-    example:  "scripts/00_occ_model_results/input/pland-elev_prediction-surface.csv"
-  base_grid:
-    label: base_grid
-    description: "Geographical grid to define pixels in the study area"
-    type: dataframe
-    example:  "scripts/00_occ_model_results/input/grilla_base.tif"
-  formula:
-    label: formula
-    description: "Double right-hand side formula describing covariables of detection and occupancy in that order. Each covariate must be with ~ symbol. To add occupancy/ detection covariates it use + symbol."
+    type: text/csv
+    example:  "scripts/00_occ_model_results/input/occ_wide.csv"
+  covars_ocupacion:
+    label: covars_ocupacion
+    description: "covars_ocupacion"
     type: text
-    example:  "~ duration_minutes ~ huella + altitud"
+    example:  bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01
+  covars_detection:
+    label: covars_detection
+    description: "covars_detection"
+    type: text
+    example:  duration_minutes
+  dir_stack:
+    label: dir_stack
+    description: "tif with base grid"
+    type: text
+    example:  "scripts/00_occ_model_results/input/dir_stack"
   nsim:
     label: nsim
-    description: "Number of bootstrapped samples use to evaluate goodness of fit for the model"
+    description: "The number of bootstrapped samples"
     type: int
-    example: 10
+    example: 2
   plot_hist:
     label: plot.hist
     description: "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample."
     type: boolean
     example: false
-  occformulalists:
-    label: occformulalists
-    description: "List of ocupancy covatieties to plot"
-    type: text
-    example: "~1~altitud, ~1~huella"
 outputs:
-  occprob_raster_path:
-    label: occprob_raster_path
+  occprob_raster_export:
+    label: occprob_raster_export
     description: "Raster map with occupancy model probability and standar error"
     type: image/tiff;application=geotiff	
-  occse_raster_path:
-    label: occse_raster_path
+  occse_raster_export:
+    label: occse_raster_export
     description: "Raster map with occupancy model probability and standar error"
     type: image/tiff;application=geotiff	
   occPlotFacet:

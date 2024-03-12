@@ -1,0 +1,338 @@
+{
+  "nodes": [
+    {
+      "id": "21",
+      "type": "io",
+      "position": {
+        "x": 70,
+        "y": 66
+      },
+      "data": {
+        "descriptionFile": "00_add_covs>add_covs.yml"
+      }
+    },
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": -9,
+        "y": 190
+      },
+      "data": {
+        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
+      }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": -372.88750206594204,
+        "y": 174.74450431548672
+      },
+      "data": {
+        "descriptionFile": "00_auk_filter>auk_filter.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": -739.3752625562634,
+        "y": 60.34841919933416
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "27",
+      "type": "io",
+      "position": {
+        "x": -289.4913331916201,
+        "y": -82.70963126845857
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_covs>studyarea_covs.yml"
+      }
+    },
+    {
+      "id": "28",
+      "type": "io",
+      "position": {
+        "x": 453.86943887652,
+        "y": 82.92940166858321
+      },
+      "data": {
+        "descriptionFile": "00_eBird_format>eBird_format.yml"
+      }
+    },
+    {
+      "id": "34",
+      "type": "io",
+      "position": {
+        "x": 489,
+        "y": -58.5
+      },
+      "data": {
+        "descriptionFile": "00_occ_model_results>00_occ_model_results.yml"
+      }
+    },
+    {
+      "id": "35",
+      "type": "output",
+      "position": {
+        "x": 950.8923238237705,
+        "y": 100.27269068619847
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "23",
+      "sourceHandle": "spatial_points",
+      "target": "21",
+      "targetHandle": "spatial_points",
+      "id": "reactflow__edge-23spatial_points-21spatial_points"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "ebd_zerofill",
+      "target": "23",
+      "targetHandle": "dataset",
+      "id": "reactflow__edge-25ebd_zerofill-23dataset"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "study_area_path",
+      "target": "25",
+      "targetHandle": "studyarea",
+      "id": "reactflow__edge-26study_area_path-25studyarea"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "study_area_path",
+      "target": "27",
+      "targetHandle": "studyarea_grid",
+      "id": "reactflow__edge-26study_area_path-27studyarea_grid"
+    },
+    {
+      "source": "27",
+      "sourceHandle": "dir_stack",
+      "target": "21",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-27dir_stack-21folder_vars"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "vars_dataset",
+      "target": "28",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-21vars_dataset-28auk_covars_file"
+    },
+    {
+      "source": "28",
+      "sourceHandle": "occ_wide_unmark",
+      "target": "34",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-28occ_wide_unmark-34auk_covars_file"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "VEB_export",
+      "target": "35",
+      "targetHandle": null,
+      "id": "reactflow__edge-34VEB_export-35"
+    },
+    {
+      "source": "27",
+      "sourceHandle": "dir_stack",
+      "target": "34",
+      "targetHandle": "dir_stack",
+      "id": "reactflow__edge-27dir_stack-34dir_stack"
+    }
+  ],
+  "inputs": {
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@23|xlat": {
+      "description": "xlat",
+      "label": "xlat",
+      "type": "text",
+      "example": "latitude"
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@23|ylong": {
+      "description": "ylong",
+      "label": "ylong",
+      "type": "text",
+      "example": "longitude"
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@23|espg_coords": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "espg_coords",
+      "type": "int",
+      "example": 4326
+    },
+    "00_auk_filter>auk_filter.yml@25|ebd_file": {
+      "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt"
+    },
+    "00_auk_filter>auk_filter.yml@25|ebd_sampling_file": {
+      "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_sampling_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt"
+    },
+    "00_auk_filter>auk_filter.yml@25|species": {
+      "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
+      "label": "species",
+      "type": "text",
+      "example": "Setophaga fusca"
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@26|studyarea_path": {
+      "description": "Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "Area de estudio",
+      "type": "application/geopackage+sqlite3",
+      "example": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@26|studyarea_epsg": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "studyarea_epsg",
+      "type": "int",
+      "example": 3395
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@26|studyarea_resolution": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "studyarea_resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "00_studyarea_covs>studyarea_covs.yml@27|RSTACQuery": {
+      "description": "RSTACQuery",
+      "label": "RSTACQuery",
+      "type": "text",
+      "example": "http://io.biodiversite-quebec.ca/stac/"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@27|RSTACcollection": {
+      "description": "RSTACcollection",
+      "label": "RSTACcollection",
+      "type": "text",
+      "example": "chelsa-clim"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@27|RSTACassets": {
+      "description": "RSTACassets",
+      "label": "RSTACassets",
+      "type": "options",
+      "options": [
+        "allVars",
+        "selectVars"
+      ],
+      "example": "selectVars"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@27|zonal": {
+      "description": "method of aggregation for the temperature data",
+      "label": "zonal",
+      "type": "options",
+      "options": [
+        "min",
+        "max",
+        "mean",
+        "median",
+        "first"
+      ],
+      "example": "mean"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@27|time_zonal": {
+      "description": "time_period",
+      "label": "time period",
+      "type": "text",
+      "example": "P1Y"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@27|time_period": {
+      "description": "Y-m-d time_period 1980-01-01, 1990-01-01",
+      "label": "time_period",
+      "type": "text"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@27|selectVars": {
+      "description": "selectVars bio18, bio19",
+      "label": "selectVars",
+      "type": "text",
+      "example": "bio18, bio4 , bio7"
+    },
+    "00_eBird_format>eBird_format.yml@28|min_obs": {
+      "description": "Minimum number of observations required for each site.",
+      "label": "min_obs",
+      "type": "int",
+      "example": 1
+    },
+    "00_eBird_format>eBird_format.yml@28|max_obs": {
+      "description": "Maximum number of observations allowed for each site.",
+      "label": "max_obs",
+      "type": "int",
+      "example": 10
+    },
+    "00_eBird_format>eBird_format.yml@28|annual_closure": {
+      "description": "Whether the entire year should be treated as the period of closure (the default). This can be useful, for example, if the data have been subset to a period of closure prior to calling",
+      "label": "annual_closure",
+      "type": "boolean",
+      "example": false
+    },
+    "00_eBird_format>eBird_format.yml@28|n_days": {
+      "description": "Number of days defining the temporal length of closure. If annual_closure = TRUE closure periods will be split at year boundaries. If annual_closure = FALSE the closure periods will ignore year boundaries.",
+      "label": "n_days",
+      "type": "int",
+      "example": 30
+    },
+    "00_eBird_format>eBird_format.yml@28|site_vars": {
+      "description": "Names of one of more columns in x that define a site, typically the location (e.g. latitude/longitude) and observer ID.",
+      "label": "site_vars",
+      "type": "text",
+      "example": "ID_grid"
+    },
+    "00_eBird_format>eBird_format.yml@28|site_covs": {
+      "description": "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate.",
+      "label": "site_covs",
+      "type": "text",
+      "example": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01"
+    },
+    "00_eBird_format>eBird_format.yml@28|obs_covs": {
+      "description": "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation.",
+      "label": "obs_covs",
+      "type": "text",
+      "example": "duration_minutes"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@34|covars_ocupacion": {
+      "description": "covars_ocupacion",
+      "label": "covars_ocupacion",
+      "type": "text",
+      "example": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@34|covars_detection": {
+      "description": "covars_detection",
+      "label": "covars_detection",
+      "type": "text",
+      "example": "duration_minutes"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@34|nsim": {
+      "description": "The number of bootstrapped samples",
+      "label": "nsim",
+      "type": "int",
+      "example": 2
+    },
+    "00_occ_model_results>00_occ_model_results.yml@34|plot_hist": {
+      "description": "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample.",
+      "label": "plot.hist",
+      "type": "boolean",
+      "example": false
+    }
+  },
+  "outputs": {
+    "00_occ_model_results>00_occ_model_results.yml@34|VEB_export": {
+      "description": "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)",
+      "label": "FVEB",
+      "type": "text"
+    }
+  }
+}

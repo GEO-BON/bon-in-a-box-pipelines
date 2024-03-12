@@ -4,10 +4,57 @@ external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   studyarea_grid:
     label: studyarea_grid
-    description: "aa"
+    description: "studyarea_grid"
+    type: image/tiff;application=geotiff
+    example: "scripts/00_studyarea_covs/input/raster_study_area_path.tif"
+  RSTACQuery:
+    label: RSTACQuery
+    description: "RSTACQuery"
     type: text
-    example: "scripts/00_studyarea_covs/input/raster_study_area_4326_path.tif"
+    example: "http://io.biodiversite-quebec.ca/stac/"
+  RSTACcollection:
+    label: RSTACcollection
+    description: "RSTACcollection"
+    type: text
+    example: "chelsa-clim"
+  RSTACassets:
+    label: RSTACassets
+    description: "RSTACassets"
+    type: options
+    options: 
+      - "allVars"
+      - "selectVars"
+    example: "selectVars"
+  zonal:
+    label: zonal
+    description: method of aggregation for the temperature data
+    type: options
+    options: [min, max, mean, median, first]
+    example: mean
+  time_zonal:
+    label: time period
+    description: time_period
+    type: text
+    example: 'P1Y'
+  time_period:
+    label: time_period
+    description: "Y-m-d time_period 1980-01-01, 1990-01-01"
+    type: text
+    example: null
+  selectVars:
+    label: selectVars
+    description: 'selectVars'
+    type: text
+    example: bio18, bio4 , bio7
 outputs:
+  list_vars:
+    label: list_vars
+    description: "list_vars"
+    type: text
+  first_var:
+    label: first_var
+    description: "first_var"
+    type: image/tiff;application=geotiff
   dir_stack:
     label: dir_stack
     description: "dir_stack"
