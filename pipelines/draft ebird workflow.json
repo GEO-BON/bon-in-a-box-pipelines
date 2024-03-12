@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": -209.5,
-        "y": 272.5
+        "x": -161.5,
+        "y": 48.5
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
@@ -48,11 +48,51 @@
       "id": "6",
       "type": "io",
       "position": {
-        "x": 1161.882641447066,
-        "y": 201.6100236433757
+        "x": 1158.474553652706,
+        "y": 409.5033790993394
       },
       "data": {
         "descriptionFile": "00_eBird_format>eBird_format.yml"
+      }
+    },
+    {
+      "id": "7",
+      "type": "io",
+      "position": {
+        "x": 1590.1950431874318,
+        "y": 233.99351180726376
+      },
+      "data": {
+        "descriptionFile": "00_occ_model_results>00_occ_model_results.yml"
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 1292.6741460041949,
+        "y": 105.16589886307116
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "altitud",
+          "jjjjj"
+        ]
+      }
+    },
+    {
+      "id": "10",
+      "type": "constant",
+      "position": {
+        "x": 1194.9371328628627,
+        "y": 610.0243803858408
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "~ duration_minutes ~ huella + altitud"
       }
     }
   ],
@@ -91,6 +131,48 @@
       "target": "4",
       "targetHandle": "studyarea",
       "id": "reactflow__edge-0study_area_4326_path-4studyarea"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "occ_wide_export",
+      "target": "7",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-6occ_wide_export-7auk_covars_file"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "dir_stack",
+      "target": "2",
+      "targetHandle": "stac_repository",
+      "id": "reactflow__edge-1dir_stack-2stac_repository"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "7",
+      "targetHandle": "covars",
+      "id": "reactflow__edge-8-7covars"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "study_area_4326_path",
+      "target": "7",
+      "targetHandle": "base_grid",
+      "id": "reactflow__edge-0study_area_4326_path-7base_grid"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "cube_layers",
+      "target": "7",
+      "targetHandle": "pred_surface",
+      "id": "reactflow__edge-2cube_layers-7pred_surface"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "7",
+      "targetHandle": "formula",
+      "id": "reactflow__edge-10-7formula"
     }
   ],
   "inputs": {
@@ -100,15 +182,33 @@
       "type": "text",
       "example": "/output/0_inputs/Caldas.shp"
     },
-    "00_studyarea_to_grid>studyarea_to_grid.yml@0|studyarea_EPSG": {
+    "00_studyarea_to_grid>studyarea_to_grid.yml@0|studyarea_epsg": {
       "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
-      "label": "studyarea_EPSG",
+      "label": "studyarea_epsg",
       "type": "int",
       "example": 3395
     },
     "00_studyarea_to_grid>studyarea_to_grid.yml@0|studyarea_resolution": {
       "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
       "label": "studyarea_resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "00_add_covs>add_covs.yml@2|wkt_area": {
+      "description": "wkt_area",
+      "label": "wkt_area",
+      "type": "text/wkt",
+      "example": "/scripts/00_load_collection/input/wkt_polygon_test.txt"
+    },
+    "00_add_covs>add_covs.yml@2|collection": {
+      "description": "collection",
+      "label": "collection",
+      "type": "text",
+      "example": "chelsa-clim"
+    },
+    "00_add_covs>add_covs.yml@2|resolution": {
+      "description": "resolution",
+      "label": "resolution",
       "type": "int",
       "example": 1000
     },
@@ -189,6 +289,24 @@
       "label": "obs_covs",
       "type": "text",
       "example": "duration_minutes"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@7|nsim": {
+      "description": "The number of bootstrapped samples",
+      "label": "nsim",
+      "type": "int",
+      "example": 2
+    },
+    "00_occ_model_results>00_occ_model_results.yml@7|plot_hist": {
+      "description": "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample.",
+      "label": "plot.hist",
+      "type": "boolean",
+      "example": false
+    },
+    "00_occ_model_results>00_occ_model_results.yml@7|occformulalists": {
+      "description": "List of ocupancy covatieties to plot",
+      "label": "occformulalists",
+      "type": "text",
+      "example": "~1~altitud, ~1~huella"
     }
   },
   "outputs": {}

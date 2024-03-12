@@ -1,0 +1,132 @@
+{
+  "nodes": [
+    {
+      "id": "3",
+      "type": "io",
+      "position": {
+        "x": 79,
+        "y": 123
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "5",
+      "type": "io",
+      "position": {
+        "x": 554,
+        "y": 156
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_covs>studyarea_covs.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 956,
+        "y": 158
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "5",
+      "sourceHandle": "dir_stack",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-5dir_stack-6"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "study_area_path",
+      "target": "5",
+      "targetHandle": "studyarea_grid",
+      "id": "reactflow__edge-3study_area_path-5studyarea_grid"
+    }
+  ],
+  "inputs": {
+    "00_studyarea_to_grid>studyarea_to_grid.yml@3|studyarea_path": {
+      "description": "Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "Area de estudio",
+      "type": "application/geopackage+sqlite3",
+      "example": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@3|studyarea_epsg": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "studyarea_epsg",
+      "type": "int",
+      "example": 3395
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@3|studyarea_resolution": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "studyarea_resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "00_studyarea_covs>studyarea_covs.yml@5|RSTACQuery": {
+      "description": "RSTACQuery",
+      "label": "RSTACQuery",
+      "type": "text",
+      "example": "http://io.biodiversite-quebec.ca/stac/"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@5|RSTACcollection": {
+      "description": "RSTACcollection",
+      "label": "RSTACcollection",
+      "type": "text",
+      "example": "chelsa-clim"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@5|RSTACassets": {
+      "description": "RSTACassets",
+      "label": "RSTACassets",
+      "type": "options",
+      "options": [
+        "allVars",
+        "selectVars"
+      ],
+      "example": "selectVars"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@5|zonal": {
+      "description": "method of aggregation for the temperature data",
+      "label": "zonal",
+      "type": "options",
+      "options": [
+        "min",
+        "max",
+        "mean",
+        "median",
+        "first"
+      ],
+      "example": "mean"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@5|time_zonal": {
+      "description": "time_period",
+      "label": "time period",
+      "type": "text",
+      "example": "P1Y"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@5|time_period": {
+      "description": "Y-m-d time_period 1980-01-01, 1990-01-01",
+      "label": "time_period",
+      "type": "text"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@5|selectVars": {
+      "description": "selectVars bio18, bio19",
+      "label": "selectVars",
+      "type": "text",
+      "example": "bio18, bio19"
+    }
+  },
+  "outputs": {
+    "00_studyarea_covs>studyarea_covs.yml@5|dir_stack": {
+      "description": "dir_stack",
+      "label": "dir_stack",
+      "type": "text"
+    }
+  }
+}

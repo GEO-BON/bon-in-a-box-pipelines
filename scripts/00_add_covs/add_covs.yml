@@ -2,33 +2,22 @@ script: add_covs.R
 description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
-  wkt_area:
-    label: wkt_area
-    description: wkt_area
-    type: text/wkt
-    example: '/scripts/00_load_collection/input/wkt_polygon_test.txt'
-  stac_repository:
-    label: stac_repository
-    description: stac_repository
+  folder_vars:
+    label: folder_vars
+    description: folder_vars
     type: text
-    example: "http://io.biodiversite-quebec.ca/stac/"
-  collection:
-    label: collection
-    description: collection
-    type: text
-    example: 'chelsa-clim'
-  resolution:
-    label: resolution
-    description: resolution
-    type: int
-    example: 1000
-  dir_ebdfile_auk_filter:
-    label: dir_ebdfile_auk_filter
-    description: "dir_ebdfile_auk_filter"
-    type: text
-    example: "scripts/00_add_covs/input/ebdfile_Setophaga fusca_-76_5_-75_6.txt"
+    example: 'scripts/00_add_covs/input/dir_stack'
+  spatial_points:
+    label: spatial_points
+    description: "spatial_points"
+    type: application/geo+json
+    example: 'scripts/00_add_covs/input/spatial_points_path.GeoJSON'
 outputs:
-  cube_layers:
-    label: cube_layers
-    description: "cube_layers"
+  vars_dataset:
+    label: vars_dataset
+    description: "vars_dataset"
     type: text/csv
+  spatial_dataset:
+    label: spatial_dataset
+    description: "spatial_dataset"
+    type: application/geo+json
