@@ -135,19 +135,27 @@ for(i in 1:length(sp)){
   times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4))
 
   l_year_loss <- map(times, ~ funFilterCube_range(cube = cube_GFW_loss, max=.x, type_max=1, min=1, type_min=1, value=FALSE))
+  # turn cube to raster
   l_r_year_loss <- map(l_year_loss, cube_to_raster, format="terra")
-  s_year_loss <- rast(l_r_year_loss) |> terra::classify(rcl=cbind(NA,0))
-  names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
+  s_year_loss_w_nas <- rast(l_r_year_loss) 
+  # turn NAs into 0 for raster operations
+  s_year_loss <- s_year_loss_w_nas |> terra::classify(rcl=cbind(NA,0)) # faster than with ifel
 
   s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
 
-  #if t_0 different of 2000 update reference forest layer "r_GFW_TC_threshold_mask"
+  #if t_0 different of 2000 update reference forest layer "r_GFW_TC_threshold_mask" by substracting t0 to base forest layer from 2000
   if(t_0!=2000){
-    r_GFW_TC_threshold_mask <- terra::classify(r_GFW_TC_threshold_mask - terra::subset(s_year_loss_mask,paste0("Loss_",t_0)),rcl=cbind(-1,0))
+    names(s_year_loss_mask) <- paste0("Loss_",v_time_steps)
+    s_year_loss_t0 <- terra::subset(s_year_loss_mask,paste0("Loss_",t_0))
+    r_GFW_TC_threshold_mask <- terra::classify(r_GFW_TC_threshold_mask - s_year_loss_t0,rcl=cbind(-1,0))
+  }else{
+    names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
   }
-
+  # extract last year
+  s_year_loss_tn <- terra::subset(s_year_loss_mask,paste0("Loss_",t_n))
+  
   #-------------------------- figure ----------------------------------------------
-  r_year_loss_mask_plot <- terra::classify(s_year_loss_mask[[length(l_r_year_loss)]],rcl=cbind(0,NA)) # turn 0 to NA
+  r_year_loss_mask_plot <- terra::classify(s_year_loss_tn,rcl=cbind(0,NA)) # turn 0 to NA
 
   cube_GFW_gain <-
     load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac",
@@ -169,12 +177,13 @@ for(i in 1:length(sp)){
   #load world limits
   sf_world_lim <- st_read(file.path(path_script,"SHI/world-administrative-boundaries.gpkg"))
 
-  img_map_habitat_changes <- tm_shape(sf_world_lim,bbox=st_bbox(r_aoh))+tm_polygons(col="white",fill="#c2bbac")+
-    tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("lightgray"),legend.show=FALSE)+
+  img_map_habitat_changes <- tm_shape(sf_world_lim,bbox=st_bbox(r_GFW_TC_threshold_mask))+tm_polygons(col="white",fill="#c2bbac")+
+    tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("#E8E9EB"),legend.show=FALSE)+
     tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
     tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
     tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
-    tm_compass()+tm_scalebar()+tm_layout(bg.color="lightblue",legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
+    tm_compass(position=c("right","bottom"))+tm_scalebar(position=c("left","top"))+
+    tm_layout(bg.color="lightblue",legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
     tm_add_legend(labels=c("No change","Loss","Gain"),fill=c("blue","red","yellow"),title="Area of Habitat")
 
   v_path_SHS_map[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_change.png"))
