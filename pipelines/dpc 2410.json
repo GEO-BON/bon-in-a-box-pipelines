@@ -1,0 +1,167 @@
+{
+    "nodes": [
+      {
+        "id": "0",
+        "type": "io",
+        "position": {
+          "x": 681.7666625976562,
+          "y": 152.8333282470703
+        },
+        "data": {
+          "descriptionFile": "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml"
+        }
+      },
+      {
+        "id": "1",
+        "type": "io",
+        "position": {
+          "x": 136.76666259765625,
+          "y": 163.8333282470703
+        },
+        "data": {
+          "descriptionFile": "00_studyarea_to_WKT>studyarea_to_WKT.yml"
+        }
+      },
+      {
+        "id": "3",
+        "type": "io",
+        "position": {
+          "x": 1237.7666625976562,
+          "y": 150.8333282470703
+        },
+        "data": {
+          "descriptionFile": "00_dpc_analyisis>dpc_analyisis.yml"
+        }
+      },
+      {
+        "id": "4",
+        "type": "output",
+        "position": {
+          "x": 1733.7666625976562,
+          "y": 138.8333282470703
+        },
+        "data": {
+          "label": "Output"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "1",
+        "sourceHandle": "val_wkt_path",
+        "target": "0",
+        "targetHandle": "studyarea_wkt",
+        "id": "reactflow__edge-1val_wkt_path-0studyarea_wkt"
+      },
+      {
+        "source": "1",
+        "sourceHandle": "val_studyarea_epsg",
+        "target": "0",
+        "targetHandle": "studyarea_epsg",
+        "id": "reactflow__edge-1val_studyarea_epsg-0studyarea_epsg"
+      },
+      {
+        "source": "0",
+        "sourceHandle": "spatialunits_studyarea_data",
+        "target": "3",
+        "targetHandle": "data_spatial_unit",
+        "id": "reactflow__edge-0spatialunits_studyarea_data-3data_spatial_unit"
+      },
+      {
+        "source": "3",
+        "sourceHandle": "dpc_result",
+        "target": "4",
+        "targetHandle": null,
+        "id": "reactflow__edge-3dpc_result-4"
+      },
+      {
+        "source": "0",
+        "sourceHandle": "spatial_unit",
+        "target": "3",
+        "targetHandle": "column_spatial_unit",
+        "id": "reactflow__edge-0spatial_unit-3column_spatial_unit"
+      },
+      {
+        "source": "0",
+        "sourceHandle": "area_study_area",
+        "target": "3",
+        "targetHandle": "area_study_area",
+        "id": "reactflow__edge-0area_study_area-3area_study_area"
+      },
+      {
+        "source": "0",
+        "sourceHandle": "column_area",
+        "target": "3",
+        "targetHandle": "column_area",
+        "id": "reactflow__edge-0column_area-3column_area"
+      }
+    ],
+    "inputs": {
+      "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@0|unit_distance": {
+        "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
+        "label": "unit_distance",
+        "type": "options",
+        "options": [
+          "m",
+          "km"
+        ],
+        "example": "m"
+      },
+      "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@0|spatial_file": {
+        "description": "String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix",
+        "label": "spatial_file",
+        "type": "text",
+        "example": "/scripts/00_spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
+      },
+      "00_spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@0|column_group": {
+        "description": "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.",
+        "label": "column_group",
+        "type": "text[]",
+        "example": [
+          "id_pa",
+          "name"
+        ]
+      },
+      "00_studyarea_to_WKT>studyarea_to_WKT.yml@1|studyarea_path": {
+        "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
+        "label": "study area geometry",
+        "type": "text",
+        "example": "/scripts/00_studyarea_to_WKT/input/Arauca.gpkg"
+      },
+      "00_studyarea_to_WKT>studyarea_to_WKT.yml@1|studyarea_epsg": {
+        "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
+        "label": "study area EPSG in",
+        "type": "int",
+        "example": 3395
+      },
+      "00_dpc_analyisis>dpc_analyisis.yml@3|column_date": {
+        "description": "String refering to the name of the column that contains the date. The date is a mandatory field if you want an temporal analysis by time periods. The date can be entered as 'Year-Month-Day', just year, or just year-month; if given in a different format the row is ignored. If (NULL) is not specified, a single period is assumed for the entire data set and the following arguments will be ignored.",
+        "label": "Date column name",
+        "type": "text",
+        "example": "created_date"
+      },
+      "00_dpc_analyisis>dpc_analyisis.yml@3|time_interval": {
+        "description": "String refering to the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, '1Y' is used by default.",
+        "label": "Time interval",
+        "type": "text",
+        "example": "10Y"
+      },
+      "00_dpc_analyisis>dpc_analyisis.yml@3|time_start": {
+        "description": "Refering to the starting date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL.",
+        "label": "Start of time interval",
+        "type": "text"
+      },
+      "00_dpc_analyisis>dpc_analyisis.yml@3|time_end": {
+        "description": "Refering to the ending date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL.",
+        "label": "End of time interval",
+        "type": "text"
+      }
+    },
+    "outputs": {
+      "00_dpc_analyisis>dpc_analyisis.yml@3|dpc_result": {
+        "description": "Refering to the table that contains the results of the dPC indicator within the study area",
+        "label": "Final table with dpC result",
+        "type": "text/csv"
+      }
+    }
+  }

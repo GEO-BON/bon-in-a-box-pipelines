@@ -1,0 +1,19 @@
+script: site_grid.R
+description: "This script filters eBird basic dataset checklist and observation files according to the study area and eBird best practices for occupancy models to generate a single zero-filled dataframe with site IDs."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  covars_site:
+    label: covars_site
+    description: "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products"
+    type: text/csv
+    example:  'scripts/00_site_grid/input/covars_putumayo_2.csv'
+  studyarea:
+    label: studyarea
+    description: "Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with WGS_1984 geographic coordinate system. This file comes from the 'studyarea_to_grid' step and is use to plot the study area in Bon in a Box and should be used when biological data coordinates are in WGS_1984 geographic coordinate system. It provides a geographical grid to the study area to define the sites for occupancy modelling."
+    type: text
+    example: 'scripts/00_site_grid/input/raster_study_area_4326_path.tif'
+outputs:
+ sp_covars_ID:
+    label: sp_covars_ID
+    description: 'Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.'
+    type: text/csv

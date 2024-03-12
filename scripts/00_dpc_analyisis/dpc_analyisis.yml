@@ -1,0 +1,45 @@
+script: dpc_analyisis.R
+description: "This script lest run a connectivity analysis where is identified the spatial unit or node that contributes the most to the connectivity of the query area through the index of change in the probability of connectivity (dPC)."
+inputs:
+  data_spatial_unit:
+    label: Table path for data spatial units 
+    description: "String refering to the path string where the .csv file containing the information required for the indicator calculation is located. The table must contain the id and the area of the spatial units or nodes. If the analysis is temporal, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration."
+    type: text/csv
+    example: "/scripts/00_protcon_analyisis/input/spatialunits_studyarea_data.csv"
+  area_study_area:
+    label: Total area of study area
+    description: "Numeric refering to the total area of the query area, this value is mandatory for the dPC calculation. Check that the area units are the same as those used in the data_spatial_unit parameter."
+    type: int
+  column_spatial_unit:
+    label: ID colunm name
+    description: "String refering to the name of the column in the data spatial unit file that contains the unique identifier ID of the spatial units or nodes that intersect the area of interest."
+    type: text[]
+    example: ["id_pa", "name"]
+  column_area:
+    label: Area column name
+    description: "String refering to the name of the column in the data spatial units file that contains the area of each spatial unit or nodes that intersects the area of interest. If there are several areas for the same id, the areas will be added. Values must be numeric otherwise they will be ignored."
+    type: text
+    example: "area_ha"
+  column_date:
+    label: Date column name 
+    description: "String refering to the name of the column that contains the date. The date is a mandatory field if you want an temporal analysis by time periods. The date can be entered as 'Year-Month-Day', just year, or just year-month; if given in a different format the row is ignored. If (NULL) is not specified, a single period is assumed for the entire data set and the following arguments will be ignored."
+    type: text
+    example: "created_date"
+  time_interval:
+    label: Time interval
+    description: "String refering to the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis. If no interval (time_interval) is specified, '1Y' is used by default."
+    type: text
+    example: "10Y"
+  time_start:
+    label: Start of time interval
+    description: "Refering to the starting date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
+    type: text
+  time_end:
+    label: End of time interval
+    description: "Refering to the ending date of the time interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis. This argument is ignored if column_date=NULL."
+    type: text
+outputs:
+  dpc_result:
+    label: Final table with dpC result
+    description: "Refering to the table that contains the results of the dPC indicator within the study area"
+    type: text/csv

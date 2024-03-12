@@ -1,0 +1,98 @@
+{
+  "nodes": [
+    {
+      "id": "9",
+      "type": "io",
+      "position": {
+        "x": 491,
+        "y": 253
+      },
+      "data": {
+        "descriptionFile": "00_auk_filter>auk_filter.yml"
+      }
+    },
+    {
+      "id": "10",
+      "type": "io",
+      "position": {
+        "x": -32,
+        "y": 77
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "11",
+      "type": "output",
+      "position": {
+        "x": 905,
+        "y": 128
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "10",
+      "sourceHandle": "study_area_path",
+      "target": "9",
+      "targetHandle": "studyarea",
+      "id": "reactflow__edge-10study_area_path-9studyarea"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "ebd_zerofill",
+      "target": "11",
+      "targetHandle": null,
+      "id": "reactflow__edge-9ebd_zerofill-11"
+    }
+  ],
+  "inputs": {
+    "00_auk_filter>auk_filter.yml@9|ebd_file": {
+      "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt"
+    },
+    "00_auk_filter>auk_filter.yml@9|ebd_sampling_file": {
+      "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_sampling_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt"
+    },
+    "00_auk_filter>auk_filter.yml@9|species": {
+      "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
+      "label": "species",
+      "type": "text",
+      "example": "Setophaga fusca"
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@10|studyarea_path": {
+      "description": "Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "Area de estudio",
+      "type": "application/geopackage+sqlite3",
+      "example": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@10|studyarea_epsg": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "studyarea_epsg",
+      "type": "int",
+      "example": 3395
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@10|studyarea_resolution": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "studyarea_resolution",
+      "type": "int",
+      "example": 1000
+    }
+  },
+  "outputs": {
+    "00_auk_filter>auk_filter.yml@9|ebd_zerofill": {
+      "description": "ebd_zerofill",
+      "label": "ebd_zerofill",
+      "type": "text/tab-separated-values"
+    }
+  }
+}

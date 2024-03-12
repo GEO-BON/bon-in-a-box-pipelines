@@ -1,0 +1,93 @@
+script: helloR.R
+name: R Example
+author:
+  - name: Jean-Michel Lord
+    identifier: https://orcid.org/0009-0007-3826-1125
+  - name: Guillaume Larocque
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  raster:
+    label: Some raster
+    description: Some raster file, with some description here
+    type: image/tiff;application=geotiff
+    example: http://something-compatible.tiff
+  intensity:
+    label: Intensity
+    description: Intensity of bla bla, from [1,10]
+    type: int
+    example: 3
+  species:
+    label: Species
+    description: a list of species
+    type: text[]
+    example: [Acer saccharum, Bubo scandiacus]
+  a_boolean:
+    label: A boolean value
+    description: The description of this value
+    type: boolean
+    example: true
+  options_example:
+    label: Fixed options
+    description: The user has to select between a fixed number of text options. The script receives the selected option as text.
+    type: options
+    options:
+      - first option
+      - second option
+      - third option
+    example: third option
+  freeflow_text:
+    label: Freeflow text
+    description: This is regular text, and can have multiple lines.
+    type: text/plain
+    example: |
+      This is a multiline example.
+      Once there is a line break in the example, it becomes a textarea in the UI.
+
+outputs:
+  text:
+    label: Text
+    description: We can add plain text
+    type: text/plain
+  number:
+    label: A number (intensity*3)
+    description: blabla, normalized [0,1]
+    type: int
+    example: 9
+  heat_map:
+    label: Heat map
+    description: Some heat map that shows bla bla...
+    type: image/tiff;application=geotiff
+    range: [0, 255]
+    example: https://github.com/yeesian/ArchGDALDatasets/raw/master/data/utmsmall.tif
+  geo_json:
+    label: Sample GeoJSON
+    description: This random file will show a GeoJSON
+    type: application/geo+json
+  some_csv_data:
+    label: Some CSV data
+    description: This CSV (Comma Separated Values) data is rendered as an HTML table when unfolded. If you do not unfold, it is not loaded at all... Note that only the first kilobyte of the file is retrieved.
+    type: text/csv
+    example: /output/.../some_data.csv
+  some_tsv_data:
+    label: Some TSV data
+    description: This TSV (Tab Separated Values) data is rendered as an HTML table when unfolded. If you do not unfold, it is not loaded at all... Note that only the first kilobyte of the file is retrieved.
+    type: text/tab-separated-values
+    example: /output/.../some_data.tsv
+  some_picture:
+    label: Some picture
+    description: Some picture/graph/etc that shows bla bla...
+    type: image/jpg
+    example: /path/to/some/example.jpg
+  userdata_available:
+    label: Available user data
+    description: This is just printing out the content of userdata folder, to show that you can use data uploaded there.
+    type: text[]
+    example:
+      - file1.txt
+      - file2.tiff
+references:
+  - text: John Doe, The ins and outs of copy-pasting, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
+    doi: 10.1093/biosci/biab041
+  - text: Nick Copy, Rupert Paste, Replicating text in a documentation context, Textopasto, 405, (123456), (2022).
+    doi: 10.1016/j.biab.2021.115424

@@ -1,0 +1,40 @@
+script: KBA_workflow_Colombia.R
+name: KBA example
+author:
+  - name: Victor J Rincon-Parra
+  - name: Karolina Fierro
+  - name: Carolina Castellanos
+  - name: Andres Tigreros
+  - name: Sandra Galeano
+  - name: Khristian Venegas
+  - name: Maria Piedad Baptiste
+
+description: "This sample script shows how it works."
+inputs:
+   studyarea_path:   
+    label: Area de estudio
+    description: Direccion del poligono de estudio a analizar.
+    type: text
+    example: "/scripts/KBA_workflow_Colombia/input/100127Alto_de_Ventanas.shp"
+   collection_selected:
+    label: Coleccion espacial de especies
+    description: The user has to select between a fixed number of text options. The script receives the selected option as text.
+    type: options
+    options:
+      - Biomodelos_validadosMetadata4
+      - RangosUICN
+      - AOOUICN
+    example: Biomodelos_validadosMetadata4
+outputs:
+  study_area_path:
+    label: Mapa del area de estudio
+    description: We can add plain text
+    type: application/geo+json
+  triggers_site_path:
+    label: Tabla de las potenciales especies triggers en el area de estudio.
+    description: We can add plain text
+    type: text/csv
+  species_site_path:
+    label: Tabla de los mapas de especies estimadas en el area de estudio.
+    description: We can add plain text
+    type: application/geo+json
