@@ -99,12 +99,21 @@ study_area <- data.frame(text=study_area_opt,
 
 if(study_area$option == 1){
   sf_area_lim1 <- get_country(country_code) |> st_make_valid() # country
+  if(nrow(sf_area_lim1)==0){
+    cat("Country code:",country_code,"invalid")
+  }
 }
 if(study_area$option == 2){
   sf_area_lim1 <- get_state(country_code,region) |> st_make_valid() # region in a country
+  if(nrow(sf_area_lim1)==0){
+    cat("Country code:",country_code,"or","Region code:",region,"invalid")
+  }
 }
 if(study_area$option == 3){
   sf_area_lim1 <- st_read(study_area_path) # user defined area
+  if(nrow(sf_area_lim1)==0){
+    cat("Study area path:",study_area_path,"invalid")
+  }
 }
 if(study_area$option == 4){
   print("A study area is required, please choose one of the options")
@@ -112,7 +121,7 @@ if(study_area$option == 4){
 
 
 sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
-area_study_a <<- sf_area_lim1_srs |> st_area()
+area_study_a <- sf_area_lim1_srs |> st_area()
 
 
 print("==================== Step 1 - Study area loaded =====================")
