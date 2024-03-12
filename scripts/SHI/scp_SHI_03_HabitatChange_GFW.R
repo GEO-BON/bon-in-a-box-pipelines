@@ -166,15 +166,16 @@ for(i in 1:length(sp)){
   r_GFW_gain <- cube_to_raster(cube_GFW_gain , format="terra") # convert to raster format
   r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_aoh_rescaled),rcl=cbind(0,NA))
 
-  #osm <- read_osm(sf_bbox_analysis, ext=1.1) # removed it is not working due to update on packages (dec-07-2023)
+  #load world limits
+  sf_world_lim <- st_read(file.path(path_script,"SHI/world-administrative-boundaries.gpkg"))
 
-  img_map_habitat_changes <- #tm_shape(osm) + tm_rgb()+
+  img_map_habitat_changes <- tm_shape(sf_world_lim,bbox=st_bbox(r_aoh))+tm_polygons(col="white",fill="#c2bbac")+
+    tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("lightgray"),legend.show=FALSE)+
     tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
     tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
     tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
-    tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("gray"),legend.show=FALSE)+
-    tm_compass()+tm_scale_bar()+tm_layout(legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
-    tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Area of Habitat")
+    tm_compass()+tm_scalebar()+tm_layout(bg.color="lightblue",legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
+    tm_add_legend(labels=c("No change","Loss","Gain"),fill=c("blue","red","yellow"),title="Area of Habitat")
 
   v_path_SHS_map[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_change.png"))
   tmap_save(img_map_habitat_changes, v_path_SHS_map[i])
@@ -231,17 +232,17 @@ for(i in 1:length(sp)){
 
 
   #------------------------ 3.1.3. SHS -------------------------------------------
-  df_SHS_gfw <- data.frame(sci_name=sp[i], HS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
+  df_SHS_gfw <- data.frame(sci_name=sp[i], AS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
   print(df_SHS_gfw)
-  df_SHS_gfw <- df_SHS_gfw |> dplyr::mutate(SHS=(HS+CS)/2, info="GFW", Year=v_time_steps)
+  df_SHS_gfw <- df_SHS_gfw |> dplyr::mutate(SHS=(AS+CS)/2, info="GFW", Year=v_time_steps)
   print(df_SHS_gfw)
   
-  df_SHS_gfw_tidy <- df_SHS_gfw |> pivot_longer(c("HS","CS","SHS"),names_to = "Score", values_to = "Values")
+  df_SHS_gfw_tidy <- df_SHS_gfw |> pivot_longer(c("AS","CS","SHS"),names_to = "Score", values_to = "Values")
   v_path_SHS_tidy[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_SHS_table_tidy.tsv"))
   print(df_SHS_gfw_tidy)
   write_tsv(df_SHS_gfw_tidy,file= v_path_SHS_tidy[i])
   
-  colnames(df_SHS_gfw) <- c("Species","Habitat Score","Connectivity Score","Species Habitat Score","Source","Year")
+  colnames(df_SHS_gfw) <- c("Species","Area Score","Connectivity Score","Species Habitat Score","Source","Year")
   print(df_SHS_gfw)
 
   v_path_SHS[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_SHS_table.tsv"))
@@ -250,7 +251,8 @@ for(i in 1:length(sp)){
 
   print("========== Species Habitat Score generated ==========")
 
-  img_SHS_timeseries <- ggplot(df_SHS_gfw_tidy , aes(x=Year,y=Values,col=Score,linewidth=width))+geom_line(linewidth=1)+
+  img_SHS_timeseries <- ggplot(df_SHS_gfw_tidy , aes(x=Year,y=Values,col=Score))+
+    geom_line(linewidth=1)+geom_point()+
     theme_bw()+scale_colour_brewer(palette="Dark2")+ylim(0,100)+
     ylab("Connectivity Score (CS), Habitat Score (HS), \n Species Habitat Score (SHS)")
 
