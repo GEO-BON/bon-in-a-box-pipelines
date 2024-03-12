@@ -15,3 +15,5 @@ runner.env
 # mac system files
 ._*
 */._*
+*/*/._*
+*/*/*/._*
