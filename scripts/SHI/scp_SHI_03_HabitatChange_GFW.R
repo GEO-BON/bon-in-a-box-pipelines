@@ -143,13 +143,14 @@ for(i in 1:length(sp)){
 
   s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
 
-  #if t_0 different of 2000 update reference forest layer "r_GFW_TC_threshold_mask" by substracting t0 to base forest layer from 2000
+  #if t_0 different of 2000 update reference forest layer "r_GFW_TC_threshold_mask" by subtracting t0 to base forest layer from 2000
   if(t_0!=2000){
     names(s_year_loss_mask) <- paste0("Loss_",v_time_steps)
     s_year_loss_t0 <- terra::subset(s_year_loss_mask,paste0("Loss_",t_0))
+    s_year_loss_mask <- terra::subset(s_year_loss_mask,subset=paste0("Loss_",v_time_steps[v_time_steps>t_0]))
     r_GFW_TC_threshold_mask <- terra::classify(r_GFW_TC_threshold_mask - s_year_loss_t0,rcl=cbind(-1,0))
   }else{
-    names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
+    names(s_year_loss_mask) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
   }
   # extract last year
   s_year_loss_tn <- terra::subset(s_year_loss_mask,paste0("Loss_",t_n))
@@ -182,9 +183,9 @@ for(i in 1:length(sp)){
     tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
     tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
     tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
-    tm_compass(position=c("right","bottom"))+tm_scalebar(position=c("left","top"))+
+    tm_compass(position=c("right","bottom"))+tm_scale_bar(position=c("left","top"))+
     tm_layout(bg.color="lightblue",legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
-    tm_add_legend(labels=c("No change","Loss","Gain"),fill=c("blue","red","yellow"),title="Area of Habitat")
+    tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Area of Habitat")
 
   v_path_SHS_map[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_change.png"))
   tmap_save(img_map_habitat_changes, v_path_SHS_map[i])
