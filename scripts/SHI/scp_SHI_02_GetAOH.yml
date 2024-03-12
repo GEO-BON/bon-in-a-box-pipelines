@@ -35,12 +35,12 @@ inputs:
     example: null
   country_code:
     label: country
-    description: 'Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
+    description: 'Name of the country for the analysis. Check the available countries here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-details/ or check the name with the option "Try it out" at "country_geojson" here: https://geoio.biodiversite-quebec.ca/docs#/default/country_geojson_country_geojson__get the "Response body" section should show the information for the country.'
     type: text
     example: Colombia
   region:
     label: region
-    description: 'For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
+    description: 'For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available regions by putting the Country name at the option "Try it out" at "state_list" here: https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get'
     type: text
     example: null
   buff_size:
