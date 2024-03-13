@@ -32,8 +32,8 @@ inputs:
   spatial_res:
     label: spatial resolution of the input
     description: spatial resolution of the input in meters (must be multiple of output spatialr resolution) 
-    type: int
-    example: 250
+    type: float
+    example: 250.0
   prop_res: 
     label: spatial resolution for the output in meters
     description: Integer, if proportion is TRUE, resolution to calculate the proportion from

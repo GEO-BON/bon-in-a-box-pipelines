@@ -1,0 +1,546 @@
+{
+  "nodes": [
+    {
+      "id": "13",
+      "type": "constant",
+      "position": {
+        "x": 18,
+        "y": 312
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          "-86.748047",
+          "33.72434",
+          "-52.207031",
+          "63.273182"
+        ]
+      }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 1023,
+        "y": 318.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2",
+          "chelsa-clim|bio3",
+          "chelsa-clim|bio4",
+          "chelsa-clim|bio5",
+          "chelsa-clim|bio6",
+          "chelsa-clim|bio7",
+          "chelsa-clim|bio8",
+          "chelsa-clim|bio9",
+          "chelsa-clim|bio10",
+          "chelsa-clim|bio11",
+          "chelsa-clim|bio12",
+          "chelsa-clim|bio13",
+          "chelsa-clim|bio14",
+          "chelsa-clim|bio15",
+          "chelsa-clim|bio16",
+          "chelsa-clim|bio17",
+          "chelsa-clim|bio18",
+          "chelsa-clim|bio19"
+        ]
+      }
+    },
+    {
+      "id": "15",
+      "type": "userInput",
+      "position": {
+        "x": 1194,
+        "y": 56.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
+    },
+    {
+      "id": "16",
+      "type": "userInput",
+      "position": {
+        "x": 1124,
+        "y": 91.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.3,
+          0.2,
+          0.4,
+          0.1
+        ]
+      }
+    },
+    {
+      "id": "17",
+      "type": "userInput",
+      "position": {
+        "x": 92,
+        "y": 82
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2020
+      }
+    },
+    {
+      "id": "19",
+      "type": "userInput",
+      "position": {
+        "x": 86,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 50000
+      }
+    },
+    {
+      "id": "22",
+      "type": "userInput",
+      "position": {
+        "x": 96,
+        "y": 117
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2010
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": 1432,
+        "y": 391
+      },
+      "data": {
+        "descriptionFile": "Block3>block3.json"
+      }
+    },
+    {
+      "id": "35",
+      "type": "output",
+      "position": {
+        "x": 1432,
+        "y": 662.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "36",
+      "type": "output",
+      "position": {
+        "x": 1432,
+        "y": 614.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "40",
+      "type": "io",
+      "position": {
+        "x": 437,
+        "y": 126.5
+      },
+      "data": {
+        "descriptionFile": "SDM>SDM_BRT_julia.json"
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": 18,
+        "y": 242
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Acer saccharum"
+        ]
+      }
+    },
+    {
+      "id": "44",
+      "type": "output",
+      "position": {
+        "x": 1432,
+        "y": 17.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "45",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 306
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "46",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 258
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "47",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 354
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "48",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 576
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 480
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 528
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "userInput",
+      "position": {
+        "x": 27,
+        "y": 47
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://io.biodiversite-quebec.ca/stac/"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "pipeline@43",
+      "id": "reactflow__edge-15-26pipeline@43"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "Block3>weightLayers.yml@44|weights",
+      "id": "reactflow__edge-16-26Block3>weightLayers.yml@44|weights"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "pipeline@6",
+      "id": "reactflow__edge-14-26pipeline@6"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|min_year",
+      "id": "reactflow__edge-22-40data>pyLoadObservations>pyLoadObservations.yml@1|min_year"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "pipeline@3",
+      "id": "reactflow__edge-13-40pipeline@3"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|max_year",
+      "id": "reactflow__edge-17-40data>pyLoadObservations>pyLoadObservations.yml@1|max_year"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "SDM>julia_sdms>generateBackground.yml@22|buffer_distance",
+      "id": "reactflow__edge-19-40SDM>julia_sdms>generateBackground.yml@22|buffer_distance"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi",
+      "target": "35",
+      "targetHandle": null,
+      "id": "reactflow__edge-40data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi-35"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm",
+      "target": "36",
+      "targetHandle": null,
+      "id": "reactflow__edge-40SDM>julia_sdms>fitBRT.yml@24|sdm-36"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty",
+      "target": "26",
+      "targetHandle": "Block3>weightLayers.yml@44|uncertainty",
+      "id": "reactflow__edge-40SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty-26Block3>weightLayers.yml@44|uncertainty"
+    },
+    {
+      "source": "42",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "pipeline@35",
+      "id": "reactflow__edge-42-40pipeline@35"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "pipeline@35|defaultOutput",
+      "target": "44",
+      "targetHandle": null,
+      "id": "reactflow__edge-40pipeline@35|defaultOutput-44"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "pipeline@3",
+      "id": "reactflow__edge-13-26pipeline@3"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>weightLayers.yml@44|priority_map",
+      "target": "45",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>weightLayers.yml@44|priority_map-45"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@30|rasters",
+      "target": "46",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@30|rasters-46"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>climateUniqueness.yml@16|climate_uniqueness",
+      "target": "47",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>climateUniqueness.yml@16|climate_uniqueness-47"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@1|rasters",
+      "target": "48",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@1|rasters-48"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@9|rasters",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@9|rasters-49"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>climateVelocity.yml@50|climate_velocity",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-51-40pipeline@2"
+    }
+  ],
+  "inputs": {
+    "pipeline@15": {
+      "label": "k",
+      "description": "the value of k for the k-means algorithm",
+      "type": "int",
+      "example": 5
+    },
+    "pipeline@16": {
+      "label": "weights",
+      "description": "Weight vectors that sum to one. Weights correspond to layers in this order: [uncertainty, uniqueness, velocity, accessibility].",
+      "type": "float[]",
+      "example": [
+        0.3,
+        0.2,
+        0.4,
+        0.1
+      ]
+    },
+    "pipeline@17": {
+      "label": "maximum year",
+      "description": "Max year observations wanted",
+      "type": "int",
+      "example": 2020
+    },
+    "pipeline@19": {
+      "label": "buffer_distance",
+      "description": "the minimum distance between any presence and any pseudoabsence in meters",
+      "type": "int",
+      "example": 50000
+    },
+    "pipeline@22": {
+      "label": "minimum year",
+      "description": "Min year observations wanted",
+      "type": "int",
+      "example": 2010
+    },
+    "SDM>SDM_BRT_julia.json@40|data>loadFromStac.yml@0|collections_items": {
+      "description": "Predictors from the STAC catalog",
+      "label": "Predictors",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
+    },
+    "SDM>SDM_BRT_julia.json@40|pipeline@16": {
+      "description": "Spatial resolution of the rasters, in degrees",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 0.008
+    },
+    "pipeline@51": {
+      "label": "STAC url for predictors",
+      "description": "URL of the STAC catalog",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    }
+  },
+  "outputs": {
+    "SDM>SDM_BRT_julia.json@40|data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
+      "weight": 2
+    },
+    "SDM>SDM_BRT_julia.json@40|SDM>julia_sdms>fitBRT.yml@24|sdm": {
+      "description": "Map of predicted occurrence probability for selected species using Boosted Regresion Trees",
+      "label": "Predictions",
+      "type": "image/tiff;application=geotiff",
+      "example": null,
+      "weight": 3
+    },
+    "SDM>SDM_BRT_julia.json@40|pipeline@35|defaultOutput": {
+      "description": "Species for which the distribution model is generated",
+      "label": "Species name",
+      "type": "text[]",
+      "example": [
+        "Acer saccharum"
+      ],
+      "weight": 1
+    },
+    "Block3>block3.json@26|Block3>weightLayers.yml@44|priority_map": {
+      "description": "Sampling priority map.",
+      "label": "Priority map",
+      "type": "image/tiff;application=geotiff",
+      "weight": 7
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@30|rasters": {
+      "description": "Accessibility to nearest city",
+      "label": "Accessibility",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 6
+    },
+    "Block3>block3.json@26|Block3>climateUniqueness.yml@16|climate_uniqueness": {
+      "description": "Map of climate uniqueness",
+      "label": "Climate uniqueness",
+      "type": "image/tiff;application=geotiff",
+      "weight": 4
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@1|rasters": {
+      "description": "List of layers used in climate uniqueness calculation",
+      "label": "Layers (for climate uniqueness)",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@9|rasters": {
+      "description": "array of output raster paths",
+      "label": "ESA Land Cover (for climat uniqueness)",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "Block3>block3.json@26|Block3>climateVelocity.yml@50|climate_velocity": {
+      "description": "Map of climate velocity",
+      "label": "Climate velocity",
+      "type": "image/tiff;application=geotiff",
+      "weight": 5
+    }
+  },
+  "metadata": {
+    "name": "Sampling prioritization based on species distribution modeling",
+    "description": "This is a pipeline that contains two pipelines, first to compute and SDM using BRTs, and second to take the SDM uncertainty and weigh it with accessibility, climate uniqueness, and climate velocity to produce a sampling priority map for a selected species.",
+    "author": [
+      {
+        "name": "Michael D. Catchen"
+      }
+    ],
+    "license": "MIT",
+    "external_link": null
+  }
+}
