@@ -27,12 +27,12 @@ inputs:
       - "Region in Country"
       - "User defined"
     example: 
-        Country
+        "Region in Country"
   study_area:
     label: study area
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3 
-    example: null
+    example: "./example.gpkg"
   country_code:
     label: country
     description: 'Name of the country for the analysis. Check the available countries here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-details/ or check the name with the option "Try it out" at "country_geojson" here: https://geoio.biodiversite-quebec.ca/docs#/default/country_geojson_country_geojson__get the "Response body" section should show the information for the country.'
@@ -42,7 +42,7 @@ inputs:
     label: region
     description: 'For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available regions by putting the Country name at the option "Try it out" at "state_list" here: https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get'
     type: text
-    example: null
+    example: "Bolívar"
   buff_size:
     label: buffer for study area
     description: Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.
@@ -95,7 +95,7 @@ inputs:
     label: elevation buffer
     description: Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.
     type: int
-    example: null
+    example: 0
 outputs:
   r_area_of_habitat:
     label: area of habitat
