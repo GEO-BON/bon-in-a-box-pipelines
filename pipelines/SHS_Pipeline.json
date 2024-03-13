@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 269,
-        "y": 242.5
+        "x": 429,
+        "y": 292.5
       },
       "data": {
         "descriptionFile": "SHI>scp_SHI_01_GetRangeMap.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 778,
-        "y": 131.5
+        "x": 948,
+        "y": 171.5
       },
       "data": {
         "descriptionFile": "SHI>scp_SHI_02_GetAOH.yml"
@@ -24,10 +24,21 @@
     },
     {
       "id": "2",
+      "type": "io",
+      "position": {
+        "x": 1597,
+        "y": 90.5
+      },
+      "data": {
+        "descriptionFile": "SHI>scp_SHI_03_HabitatChange_GFW.yml"
+      }
+    },
+    {
+      "id": "3",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 224.5
+        "x": 172,
+        "y": 259.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -38,22 +49,40 @@
       }
     },
     {
-      "id": "5",
-      "type": "io",
+      "id": "4",
+      "type": "userInput",
       "position": {
-        "x": 1407,
-        "y": 90.5
+        "x": 12,
+        "y": 300.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "IUCN",
+        "options": [
+          "MOL",
+          "IUCN",
+          "QC"
+        ]
+      }
+    },
+    {
+      "id": "5",
+      "type": "output",
+      "position": {
+        "x": 1597,
+        "y": 360.5
       },
       "data": {
-        "descriptionFile": "SHI>scp_SHI_03_HabitatChange_GFW.yml"
+        "label": "Output"
       }
     },
     {
       "id": "6",
       "type": "output",
       "position": {
-        "x": 1407,
-        "y": 323
+        "x": 2088,
+        "y": 61
       },
       "data": {
         "label": "Output"
@@ -61,36 +90,32 @@
     },
     {
       "id": "7",
-      "type": "userInput",
+      "type": "output",
       "position": {
-        "x": 412,
-        "y": 68.5
+        "x": 2088,
+        "y": 282
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "int",
-        "value": 1000
+        "label": "Output"
       }
     },
     {
       "id": "8",
-      "type": "userInput",
+      "type": "output",
       "position": {
-        "x": 401,
-        "y": 102.5
+        "x": 2088,
+        "y": 12
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "EPSG:3116"
+        "label": "Output"
       }
     },
     {
       "id": "9",
       "type": "output",
       "position": {
-        "x": 1898,
-        "y": 12
+        "x": 2088,
+        "y": 233
       },
       "data": {
         "label": "Output"
@@ -100,8 +125,8 @@
       "id": "10",
       "type": "output",
       "position": {
-        "x": 1898,
-        "y": 61
+        "x": 2088,
+        "y": 331
       },
       "data": {
         "label": "Output"
@@ -109,41 +134,59 @@
     },
     {
       "id": "11",
-      "type": "output",
+      "type": "userInput",
       "position": {
-        "x": 1898,
-        "y": 293.5
+        "x": 572,
+        "y": 141.5
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "label": "Output"
+        "type": "int",
+        "value": 1000
       }
     },
     {
       "id": "12",
-      "type": "output",
+      "type": "userInput",
       "position": {
-        "x": 1898,
-        "y": 244.5
+        "x": 561,
+        "y": 175.5
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "label": "Output"
+        "type": "text",
+        "value": "EPSG:3116"
       }
     }
   ],
   "edges": [
     {
-      "source": "2",
+      "source": "3",
       "sourceHandle": null,
       "target": "0",
       "targetHandle": "species",
-      "id": "reactflow__edge-2-0species"
+      "id": "reactflow__edge-3-0species"
     },
     {
-      "source": "2",
+      "source": "3",
       "sourceHandle": null,
       "target": "1",
       "targetHandle": "species",
-      "id": "reactflow__edge-2-1species"
+      "id": "reactflow__edge-3-1species"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "species",
+      "id": "reactflow__edge-3-2species"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-4-0expert_source"
     },
     {
       "source": "0",
@@ -155,100 +198,89 @@
     {
       "source": "1",
       "sourceHandle": "r_area_of_habitat",
-      "target": "5",
+      "target": "2",
       "targetHandle": "r_area_of_habitat",
-      "id": "reactflow__edge-1r_area_of_habitat-5r_area_of_habitat"
+      "id": "reactflow__edge-1r_area_of_habitat-2r_area_of_habitat"
     },
     {
       "source": "1",
       "sourceHandle": "sf_bbox",
-      "target": "5",
+      "target": "2",
       "targetHandle": "sf_bbox",
-      "id": "reactflow__edge-1sf_bbox-5sf_bbox"
+      "id": "reactflow__edge-1sf_bbox-2sf_bbox"
     },
     {
       "source": "1",
       "sourceHandle": "df_aoh_areas",
-      "target": "6",
+      "target": "5",
       "targetHandle": null,
-      "id": "reactflow__edge-1df_aoh_areas-6"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "spat_res",
-      "id": "reactflow__edge-7-1spat_res"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "spat_res",
-      "id": "reactflow__edge-7-5spat_res"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-8-1srs"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-8-5srs"
+      "id": "reactflow__edge-1df_aoh_areas-5"
     },
     {
       "source": "2",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "species",
-      "id": "reactflow__edge-2-5species"
+      "sourceHandle": "img_shs_map",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-2img_shs_map-6"
     },
     {
-      "source": "5",
-      "sourceHandle": "img_shs_map",
+      "source": "2",
+      "sourceHandle": "r_habitat_by_tstep",
+      "target": "7",
+      "targetHandle": null,
+      "id": "reactflow__edge-2r_habitat_by_tstep-7"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "img_shs_timeseries",
+      "target": "8",
+      "targetHandle": null,
+      "id": "reactflow__edge-2img_shs_timeseries-8"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "df_shs",
       "target": "9",
       "targetHandle": null,
-      "id": "reactflow__edge-5img_shs_map-9"
+      "id": "reactflow__edge-2df_shs-9"
     },
     {
-      "source": "5",
-      "sourceHandle": "r_habitat_by_tstep",
+      "source": "2",
+      "sourceHandle": "df_shs_tidy",
       "target": "10",
       "targetHandle": null,
-      "id": "reactflow__edge-5r_habitat_by_tstep-10"
+      "id": "reactflow__edge-2df_shs_tidy-10"
     },
     {
-      "source": "5",
-      "sourceHandle": "img_shs_timeseries",
-      "target": "11",
-      "targetHandle": null,
-      "id": "reactflow__edge-5img_shs_timeseries-11"
+      "source": "11",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-11-1spat_res"
     },
     {
-      "source": "5",
-      "sourceHandle": "df_shs",
-      "target": "12",
-      "targetHandle": null,
-      "id": "reactflow__edge-5df_shs-12"
+      "source": "11",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-11-2spat_res"
+    },
+    {
+      "source": "12",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-12-1srs"
+    },
+    {
+      "source": "12",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-12-2srs"
     }
   ],
   "inputs": {
-    "SHI>scp_SHI_01_GetRangeMap.yml@0|expert_source": {
-      "description": "Source of the expert range map for the species.",
-      "label": "source of expert range map",
-      "type": "options",
-      "options": [
-        "MOL",
-        "IUCN",
-        "QC"
-      ],
-      "example": "IUCN"
-    },
     "SHI>scp_SHI_02_GetAOH.yml@1|study_area_opt": {
       "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.",
       "label": "study area option",
@@ -258,12 +290,13 @@
         "Region in Country",
         "User defined"
       ],
-      "example": "Country"
+      "example": "Region in Country"
     },
     "SHI>scp_SHI_02_GetAOH.yml@1|study_area": {
       "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)",
       "label": "study area",
-      "type": "application/geopackage+sqlite3"
+      "type": "application/geopackage+sqlite3",
+      "example": "./example.gpkg"
     },
     "SHI>scp_SHI_02_GetAOH.yml@1|country_code": {
       "description": "Name of the country for the analysis. Check the available countries here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-details/ or check the name with the option \"Try it out\" at \"country_geojson\" here: https://geoio.biodiversite-quebec.ca/docs#/default/country_geojson_country_geojson__get the \"Response body\" section should show the information for the country.",
@@ -274,7 +307,8 @@
     "SHI>scp_SHI_02_GetAOH.yml@1|region": {
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available regions by putting the Country name at the option \"Try it out\" at \"state_list\" here: https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get",
       "label": "region",
-      "type": "text"
+      "type": "text",
+      "example": "Bolívar"
     },
     "SHI>scp_SHI_02_GetAOH.yml@1|buff_size": {
       "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
@@ -314,17 +348,10 @@
     "SHI>scp_SHI_02_GetAOH.yml@1|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "elevation buffer",
-      "type": "int"
+      "type": "int",
+      "example": 0
     },
-    "pipeline@2": {
-      "label": "species",
-      "description": "Scientific name of the species.",
-      "type": "text[]",
-      "example": [
-        "Saguinus oedipus"
-      ]
-    },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|min_forest": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|min_forest": {
       "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
       "label": "min forest",
       "type": "int[]",
@@ -332,7 +359,7 @@
         50
       ]
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|max_forest": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|max_forest": {
       "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
       "label": "max forest",
       "type": "int[]",
@@ -340,31 +367,50 @@
         100
       ]
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|t_0": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|t_0": {
       "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
       "label": "initial time",
       "type": "int",
       "example": 2000
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|t_n": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|t_n": {
       "description": "Year where the analysis should end (it should be later than Initial time)",
       "label": "final time",
       "type": "int",
       "example": 2020
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|time_step": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|time_step": {
       "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
       "label": "time step",
       "type": "int",
       "example": 10
     },
-    "pipeline@7": {
+    "pipeline@3": {
+      "label": "species",
+      "description": "Scientific name of the species.",
+      "type": "text[]",
+      "example": [
+        "Saguinus oedipus"
+      ]
+    },
+    "pipeline@4": {
+      "label": "source of expert range map",
+      "description": "Source of the expert range map for the species.",
+      "type": "options",
+      "example": "IUCN",
+      "options": [
+        "MOL",
+        "IUCN",
+        "QC"
+      ]
+    },
+    "pipeline@11": {
       "label": "output spatial resolution",
       "description": "Spatial resolution (in meters) for the output of the analysis.",
       "type": "int",
       "example": 1000
     },
-    "pipeline@8": {
+    "pipeline@12": {
       "label": "spatial reference system",
       "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
       "type": "text",
@@ -377,24 +423,29 @@
       "label": "table with size of areas of reference.",
       "type": "text/tab-separated-values"
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|img_shs_map": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|img_shs_map": {
       "description": "Figure showing a map with changes in the habitat for the time range for each species.",
       "label": "SHS map",
       "type": "image/png[]"
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|r_habitat_by_tstep": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|r_habitat_by_tstep": {
       "description": "Raster of habitat by time step.",
       "label": "Habitat by time step",
       "type": "image/tiff;application=geotiff[]"
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|img_shs_timeseries": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|img_shs_timeseries": {
       "description": "Figure showing a time series of SHS values for each time step for each species.",
       "label": "SHS time series",
       "type": "image/png[]"
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@5|df_shs": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|df_shs": {
       "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score and SHS by time step for each species.",
       "label": "SHS table",
+      "type": "text/tab-separated-values[]"
+    },
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|df_shs_tidy": {
+      "description": "A TSV (Tab Separated Values) file in long format containing Habitat Score, Connectivity Score and SHS by time step for each species.",
+      "label": "SHS table (long format)",
       "type": "text/tab-separated-values[]"
     }
   },
