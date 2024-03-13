@@ -111,8 +111,6 @@ for(i in 1:length(sp)){
     terra::classify(rcl=cbind(NA,0)) # turn NA to 0
 
   r_aoh_rescaled <- terra::resample(r_aoh,r_GFW_TC_threshold,method="mode") #Adjust scale of range map
-  r_GFW_TC_threshold_mask <- r_GFW_TC_threshold |>
-    terra::mask(r_aoh_rescaled) # mask to range map
 
   print("========== Base forest layer downloaded ==========")
 
@@ -141,19 +139,27 @@ for(i in 1:length(sp)){
   # turn NAs into 0 for raster operations
   s_year_loss <- s_year_loss_w_nas |> terra::classify(rcl=cbind(NA,0)) # faster than with ifel
 
-  s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
-
   #if t_0 different of 2000 update reference forest layer "r_GFW_TC_threshold_mask" by subtracting t0 to base forest layer from 2000
   if(t_0!=2000){
-    names(s_year_loss_mask) <- paste0("Loss_",v_time_steps)
-    s_year_loss_t0 <- terra::subset(s_year_loss_mask,paste0("Loss_",t_0))
-    s_year_loss_mask <- terra::subset(s_year_loss_mask,subset=paste0("Loss_",v_time_steps[v_time_steps>t_0]))
-    r_GFW_TC_threshold_mask <- terra::classify(r_GFW_TC_threshold_mask - s_year_loss_t0,rcl=cbind(-1,0))
+    names(s_year_loss) <- paste0("Loss_",v_time_steps)
+    s_year_loss <- terra::subset(s_year_loss,subset=paste0("Loss_",v_time_steps[v_time_steps>t_0]))
+    # get first year for habitat in t0
+    s_year_loss_t0 <- terra::subset(s_year_loss,paste0("Loss_",t_0))
+    r_GFW_TC_threshold <- terra::classify(r_GFW_TC_threshold - s_year_loss_t0,rcl=cbind(-1,0))
   }else{
-    names(s_year_loss_mask) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
+    names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
   }
+  
+  # mask t0 to AOH
+  r_GFW_TC_threshold_mask <- r_GFW_TC_threshold |>
+    terra::mask(r_aoh_rescaled) # mask to range map
+  
+  # mask to t0
+  s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
   # extract last year
   s_year_loss_tn <- terra::subset(s_year_loss_mask,paste0("Loss_",t_n))
+  
+  
   
   #-------------------------- figure ----------------------------------------------
   r_year_loss_mask_plot <- terra::classify(s_year_loss_tn,rcl=cbind(0,NA)) # turn 0 to NA
@@ -194,12 +200,14 @@ for(i in 1:length(sp)){
 
   #create non masked layers for distance metrics
   s_habitat0_nomask <- terra::classify(r_GFW_TC_threshold-s_year_loss,rcl=cbind(-1,0))
-  s_habitat_nomask <- if(t_0!=2000)  s_habitat0_nomask else c(r_GFW_TC_threshold, s_habitat0_nomask)
-  rm(s_habitat0_nomask)
+  
+  s_habitat_nomask <- c(r_GFW_TC_threshold, s_habitat0_nomask)
+  # rm(s_habitat0_nomask)
   names(s_habitat_nomask) <- paste0("habitat_",v_time_steps)
 
-  # s_habitat <- terra::classify(s_habitatArea , rcl=cbind(0,NA))
   s_habitat <- terra::mask(s_habitat_nomask , r_aoh_rescaled )
+  s_habitat <- terra::classify(s_habitat , rcl=cbind(0,NA))
+  
   l_path_habitat_by_tstep[[i]] <- file.path(outputFolder, sp[i], paste0(sp[i],"_GFW_",names(s_habitat),".tif"))
   print(l_path_habitat_by_tstep[[i]])
   map2(as.list(s_habitat), unlist(l_path_habitat_by_tstep[[i]]), ~terra::writeRaster(.x,filename=.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
@@ -229,9 +237,8 @@ for(i in 1:length(sp)){
   gc(T)
   map2(as.list(l_habitat_dist), v_time_steps,~writeRaster(.x,file.path(outputFolder,sp[i],paste0(sp[i],"_dist_to_edge_",.y,".tif")),overwrite=T))
 
-  s_habitat_dist <- rast(l_habitat_dist) * (s_habitat>0)
-  s_habitat_dist2 <- ifel(s_habitat_dist!=0,s_habitat_dist,NA)
-  df_habitat_dist <- global(s_habitat_dist2,mean,na.rm=T)
+  s_habitat_dist <- rast(l_habitat_dist) * s_habitat
+  df_habitat_dist <- global(s_habitat_dist,mean,na.rm=T)
 
   df_conn_score_gfw <- tibble(sci_name=sp[i], Year=v_time_steps, value=df_habitat_dist$mean) |> mutate( ref_value=first(value)) |>
     dplyr::group_by(Year) |> mutate(diff=ref_value-value, percentage=(value*100)/ref_value,score="CS")
