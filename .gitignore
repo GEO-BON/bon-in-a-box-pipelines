@@ -13,7 +13,4 @@ runner.env
 ._.Rhistory
 
 # mac system files
-._*
-*/._*
-*/*/._*
-*/*/*/._*
+**/._*
