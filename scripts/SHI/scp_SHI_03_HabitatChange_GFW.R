@@ -242,7 +242,7 @@ for(i in 1:length(sp)){
   gc(T)
   map2(as.list(l_habitat_dist), v_time_steps,~writeRaster(.x,file.path(outputFolder,sp[i],paste0(sp[i],"_dist_to_edge_",.y,".tif")),overwrite=T))
 
-  s_habitat_dist <- rast(l_habitat_dist) * s_habitat
+  s_habitat_dist <- mask(rast(l_habitat_dist),s_habitat,maskvalues=1,inverse=T)
   df_habitat_dist <- global(s_habitat_dist,mean,na.rm=T)
 
   df_conn_score_gfw <- tibble(sci_name=sp[i], Year=v_time_steps, value=df_habitat_dist$mean) |> mutate( ref_value=first(value)) |>
