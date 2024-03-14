@@ -16,6 +16,7 @@ path_script <- Sys.getenv("SCRIPT_LOCATION")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
+print(outputFolder)
 
 source(file.path(path_script,"SHI/funGet_range_maps.R"), echo=TRUE)
 
