@@ -28,7 +28,7 @@ get_country<-function(country){
 }
 
 get_state<-function(country,region){
-  resp <- req_perform( request(paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?state_name=",region,"&country_name=",country)))
+  resp <- request("https://geoio.biodiversite-quebec.ca/state_geojson/") |> req_url_query("state_name" = region, "country_name" = country) |> req_perform()
   geojson_sf(resp_body_string(resp))
 }
 
