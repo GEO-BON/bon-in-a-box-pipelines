@@ -142,10 +142,14 @@ for(i in 1:length(sp)){
   #if t_0 different of 2000 update reference forest layer "r_GFW_TC_threshold_mask" by subtracting t0 to base forest layer from 2000
   if(t_0!=2000){
     names(s_year_loss) <- paste0("Loss_",v_time_steps)
-    s_year_loss <- terra::subset(s_year_loss,subset=paste0("Loss_",v_time_steps[v_time_steps>t_0]))
+    print("Asign names to layers")
     # get first year for habitat in t0
     s_year_loss_t0 <- terra::subset(s_year_loss,paste0("Loss_",t_0))
+    cat("Create t0 layer with: ", paste0("Loss_",t_0),"\n")
+    s_year_loss <- terra::subset(s_year_loss,subset=paste0("Loss_",v_time_steps[v_time_steps>t_0]))
+    cat("Create new loss layers without t0: ", paste0("Loss_",v_time_steps[v_time_steps>t_0],collapse=", "),"\n")
     r_GFW_TC_threshold <- terra::classify(r_GFW_TC_threshold - s_year_loss_t0,rcl=cbind(-1,0))
+    print("Create new base habitat layer")
   }else{
     names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
   }
@@ -157,6 +161,7 @@ for(i in 1:length(sp)){
   # mask to t0
   s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
   # extract last year
+  cat("Extract last year: ",paste0("Loss_",t_n),"\\n")
   s_year_loss_tn <- terra::subset(s_year_loss_mask,paste0("Loss_",t_n))
   
   
@@ -270,7 +275,7 @@ for(i in 1:length(sp)){
 
   img_SHS_timeseries <- ggplot(df_SHS_gfw_tidy , aes(x=Year,y=Values,col=Score))+
     geom_line(linewidth=1)+geom_point()+
-    theme_bw()+scale_colour_brewer(palette="Dark2")+ylim(0,100)+
+    theme_bw()+scale_colour_brewer(palette="Dark2")+ coord_cartesian(ylim(0,110))+
     ylab("Connectivity Score (CS), Habitat Score (HS), \n Species Habitat Score (SHS)")
 
   v_path_img_SHS_timeseries[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_SHS_timeseries.png"))
