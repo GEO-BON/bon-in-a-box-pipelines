@@ -1,12 +1,12 @@
 FROM  condaforge/mambaforge
 
-ADD . /data
+ADD ./r-environment.yml /data/r-environment.yml
 
 WORKDIR /data
 
+RUN mamba init
 RUN mamba env create -f /data/r-environment.yml
 
 RUN date +"%Y-%m-%d %R" > /version.txt
-
 
  ###Missing packages coordinatecleaner geodata OpenStreetMap
