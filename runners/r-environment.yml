@@ -1,22 +1,32 @@
 name: rbase
 channels:
   - conda-forge
+  - r
 dependencies:
   - conda-build
   - gdal
+  - r-abind
   - r-base
-  - r-essentials
-  - r-rjson
-  - r-rcurl
-  - r-rstac
-  - r-rgbif
+  - r-curl
+  - r-devtools
   - r-dismo
+  - r-downloader
   - r-enmeval
+  - r-essentials
+  - r-gdalcubes
+  - r-gdalutilities
   - r-gdalutils
   - r-ggsci
+  - r-jpeg
   - r-landscapemetrics
+  - r-png
+  - r-rcurl
+  - r-rgbif
+  - r-rjson
   - r-rredlist
-  - r-gdalutilities
-  - r-gdalcubes
+  - r-rstac
+  - r-rstac
   - r-sf
+  - r-stars
   - r-terra
+  - r-tidyselect
