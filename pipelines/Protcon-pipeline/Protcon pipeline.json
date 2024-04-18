@@ -4,30 +4,19 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 701,
-        "y": 50.5
+        "x": -142,
+        "y": 104.5
       },
       "data": {
         "descriptionFile": "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml"
       }
     },
     {
-      "id": "27",
-      "type": "io",
-      "position": {
-        "x": 62,
-        "y": 60.5
-      },
-      "data": {
-        "descriptionFile": "studyarea_to_WKT>studyarea_to_WKT.yml"
-      }
-    },
-    {
       "id": "41",
       "type": "io",
       "position": {
-        "x": 1383,
-        "y": 40.5
+        "x": 750,
+        "y": 143.5
       },
       "data": {
         "descriptionFile": "protcon_analysis>protcon_analysis.yml"
@@ -37,8 +26,8 @@
       "id": "42",
       "type": "output",
       "position": {
-        "x": 1895,
-        "y": 33
+        "x": 1307,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -46,20 +35,6 @@
     }
   ],
   "edges": [
-    {
-      "source": "27",
-      "sourceHandle": "val_wkt_path",
-      "target": "26",
-      "targetHandle": "studyarea_wkt",
-      "id": "reactflow__edge-27val_wkt_path-26studyarea_wkt"
-    },
-    {
-      "source": "27",
-      "sourceHandle": "val_studyarea_epsg",
-      "target": "26",
-      "targetHandle": "studyarea_epsg",
-      "id": "reactflow__edge-27val_studyarea_epsg-26studyarea_epsg"
-    },
     {
       "source": "26",
       "sourceHandle": "mtx_distance_centroid",
@@ -111,6 +86,24 @@
     }
   ],
   "inputs": {
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file": {
+      "description": "String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix",
+      "label": "Protected Areas File",
+      "type": "text",
+      "example": "https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=Colombia&state_name=Putumayo"
+    },
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file_epsg": {
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
+      "label": "Spatial file EPSG",
+      "type": "int",
+      "example": 4326
+    },
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|study_area_limits": {
+      "description": "String path represents the file location or url of a spatial file defining the limits of the study area within which the analysis is conducted",
+      "label": "Limits of the area within which the analysis is conducted",
+      "type": "text",
+      "example": "https://geoio.biodiversite-quebec.ca/state_geojson/?state_name=Putumayo&country_name=Colombia"
+    },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|unit_distance": {
       "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
       "label": "unit for distance measurement",
@@ -121,32 +114,13 @@
       ],
       "example": "m"
     },
-    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file": {
-      "description": "String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix",
-      "label": "spatial file",
-      "type": "text",
-      "example": "/scripts/spatial_to_DistanceMatrix/input/Colombian_protected_areas.gpkg"
-    },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|column_group": {
       "description": "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.",
       "label": "name of grouping attribute",
       "type": "text[]",
       "example": [
-        "id_pa",
-        "name"
+        "WDPAID"
       ]
-    },
-    "studyarea_to_WKT>studyarea_to_WKT.yml@27|studyarea_path": {
-      "description": "Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.",
-      "label": "study area geometry",
-      "type": "text",
-      "example": "/scripts/studyarea_to_WKT/input/Arauca.gpkg"
-    },
-    "studyarea_to_WKT>studyarea_to_WKT.yml@27|studyarea_epsg": {
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
-      "label": "study area EPSG in",
-      "type": "int",
-      "example": 3395
     },
     "protcon_analysis>protcon_analysis.yml@41|distance_analysis": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
@@ -158,7 +132,7 @@
       "description": "String that refers to the name of the column in the data_spatial_unit containing the date or time information corresponding to the spatial unit levels.",
       "label": "date information column",
       "type": "text",
-      "example": "created_date"
+      "example": "STATUS_YR"
     },
     "protcon_analysis>protcon_analysis.yml@41|time_interval": {
       "description": "Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis.",
