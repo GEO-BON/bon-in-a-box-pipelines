@@ -15,7 +15,7 @@ RUN mamba env create -f /data/r-environment.yml
 # These packages are not in conda-forge
 RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \"geodata\", \"OpenStreetMap\"), repos=\"https://mirror.csclub.uwaterloo.ca/CRAN/\")'"
 
+# Packages from GitHub
+RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
 
 RUN date +"%Y-%m-%d %R" > /version.txt
-
- ###Missing packages coordinatecleaner geodata OpenStreetMap
