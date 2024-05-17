@@ -13,7 +13,7 @@ RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
 RUN mamba env create -f /data/r-environment.yml
 
 # These packages are not in conda-forge
-RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \"geodata\", \"OpenStreetMap\"), repos=\"https://mirror.csclub.uwaterloo.ca/CRAN/\")'"
+RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \"geodata\", \"OpenStreetMap\"), repos=\"https://cloud.r-project.org/\")'"
 
 # Packages from GitHub
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
