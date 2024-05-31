@@ -2,7 +2,7 @@ script: cleanCoordinates.R
 name: Clean Coordinates
 description: "This script enables to apply several cleaning filters to the observations. The tests equal,
      zeros, duplicates, same_pixel, capitals, centroids, seas, urban, gbif and institutions are wrappers around CoordinateCleaner functions.
-     Test same_pixel remove points inside the same pixel, based on a provided raster or from a STAC catalogue. Test env allows removing environmental outliers using the 
+     Test same_pixel remove points inside the same pixel, based on a provided raster or from a STAC catalogue. Test env allows removing environmental outliers using the
      the Reverse Jackknife procedure as described by Chapman (2005) and adapted from the package biogeo."
 author:
   - name: Sarah Valentin
@@ -19,16 +19,16 @@ inputs:
     description: Dataframe, presence data.
     type: text/tab-separated-values
     example: "/scripts/filtering/cleanCoordinates_presence.tsv"
-  predictors: 
+  predictors:
     label: predictors
-    description: Raster, predictors. 
+    description: Raster, predictors.
     type: image/tiff;application=geotiff[]
     example: ["/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif"]
-  tests: 
-    label: cleaning_tests
+  tests:
+    label: cleaning tests
     description: Vector of strings, tests to run from all tests available - capitals, centroids, same_pixel, equal, gbif, institutions, duplicates, urban, seas, zeros, env
     type: text[]
-    example: 
+    example:
      - equal
      - zeros
      - duplicates
@@ -41,7 +41,7 @@ inputs:
      - institutions
      - env
   env_threshold:
-    label: threshold_env
+    label: env threshold
     description: Float, proportion of predictors to consider the observation as an outlier.
     type: float
     example: 0.8
