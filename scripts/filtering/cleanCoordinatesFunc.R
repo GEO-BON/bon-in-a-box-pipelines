@@ -300,7 +300,7 @@ clean_coordinates <- function(x,
   
 }
 
-# Impoirted and modified from CoordinateCleaner
+# Imported and modified from CoordinateCleaner
 cc_urb <- function (x, lon = "decimal_longitude", lat = "decimal_latitude", 
                     ref = NULL, value = "clean", verbose = TRUE) {
   match.arg(value, choices = c("clean", "flagged"))

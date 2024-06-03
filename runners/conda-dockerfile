@@ -1,0 +1,21 @@
+FROM  condaforge/mambaforge
+
+ADD ./r-environment.yml /data/r-environment.yml
+
+WORKDIR /data
+
+RUN mamba init
+
+# Allow to read bashrc to execute mamba init when using docker exec
+# See https://stackoverflow.com/a/74017557/3519951
+RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
+
+RUN mamba env create -f /data/r-environment.yml
+
+# These packages are not in conda-forge
+RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \"geodata\", \"OpenStreetMap\"), repos=\"https://cloud.r-project.org/\")'"
+
+# Packages from GitHub
+RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
+
+RUN date +"%Y-%m-%d %R" > /version.txt
