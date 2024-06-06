@@ -80,6 +80,7 @@ time_to_decimal <- function(x) {x <- lubridate::hms(x, quiet = TRUE); lubridate:
 pre_ebd_zf <- tryCatch({  auk::auk_zerofill(x= dir_ebdfile, sampling_events =  dir_ebd_sampling_file, collapse = TRUE) }, error=function(e) {NULL} )
 
 
+
 if(is.null(pre_ebd_zf)){return("Error: Los parametros definidos generan un filtro vacio")} # mensaje, la url no existe
 
 
