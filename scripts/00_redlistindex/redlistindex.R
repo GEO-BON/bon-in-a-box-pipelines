@@ -59,10 +59,10 @@ IUCN_history_data<- plyr::rbind.fill(list_IUCN_history) %>%
   dplyr::mutate(sp= factor(sp, levels= unique(.$sp))) %>%  dplyr::arrange(sp, year) %>% 
   dplyr::mutate(code = ifelse(code == "LR/lc", "LC", code))
 
-IUCN_history_matrix<- IUCN_history_data %>% dplyr::filter(n_years>1) %>% 
+IUCN_history_matrix<- IUCN_history_data %>% 
   reshape2::dcast( sp ~ year, value.var = "code") %>% tibble::column_to_rownames("sp")
 
 
-rli(IUCN_history_matrix, boot = TRUE, dd = F, na.rm = TRUE)
+rli(IUCN_history_matrix, boot = F, dd = T)
 
 

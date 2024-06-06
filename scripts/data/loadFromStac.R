@@ -111,5 +111,5 @@ for (i in 1:length(predictors)) {
  }
 
 output <- list("rasters" = layer_paths,"weight_matrix_with_layers" = weight_matrix)
-jsonData <- toJSON(output, indent=2)
+jsonData <- rjson::toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

@@ -1,0 +1,504 @@
+{
+  "nodes": [
+    {
+      "id": "11",
+      "type": "io",
+      "position": {
+        "x": 357,
+        "y": 310
+      },
+      "data": {
+        "descriptionFile": "Concatenate_paths>Concatenate_paths.yml"
+      }
+    },
+    {
+      "id": "28",
+      "type": "io",
+      "position": {
+        "x": -11,
+        "y": 198
+      },
+      "data": {
+        "descriptionFile": "Get_filepath>Get_filepath.yml"
+      }
+    },
+    {
+      "id": "36",
+      "type": "io",
+      "position": {
+        "x": -125,
+        "y": 107
+      },
+      "data": {
+        "descriptionFile": "Filter_data>Filter_data.yml"
+      }
+    },
+    {
+      "id": "37",
+      "type": "io",
+      "position": {
+        "x": 603,
+        "y": 443
+      },
+      "data": {
+        "descriptionFile": "Join_datasets>Join_datasets.yml"
+      }
+    },
+    {
+      "id": "41",
+      "type": "constant",
+      "position": {
+        "x": -447,
+        "y": 462
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Cam.Site"
+        ]
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": -443,
+        "y": 362
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/Join_datasets/input/sp_covs.csv"
+      }
+    },
+    {
+      "id": "43",
+      "type": "constant",
+      "position": {
+        "x": -454,
+        "y": 325
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "/scripts/Filter_data/input/records_data.csv"
+      }
+    },
+    {
+      "id": "44",
+      "type": "constant",
+      "position": {
+        "x": -447,
+        "y": 411
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Cuniculus paca"
+        ]
+      }
+    },
+    {
+      "id": "45",
+      "type": "io",
+      "position": {
+        "x": 831,
+        "y": 552
+      },
+      "data": {
+        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
+      }
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": -445,
+        "y": 511
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Long_X"
+      }
+    },
+    {
+      "id": "47",
+      "type": "constant",
+      "position": {
+        "x": -450,
+        "y": 550
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Lat_Y"
+      }
+    },
+    {
+      "id": "48",
+      "type": "constant",
+      "position": {
+        "x": -445,
+        "y": 597
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 4326
+      }
+    },
+    {
+      "id": "50",
+      "type": "io",
+      "position": {
+        "x": 961.4206050828268,
+        "y": 133.73488783721234
+      },
+      "data": {
+        "descriptionFile": "00_add_covs>add_covs.yml"
+      }
+    },
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 380.8625816033157,
+        "y": -56.813374175044345
+      },
+      "data": {
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": -161.81708090092366,
+        "y": -62.120754737433
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "54",
+      "type": "constant",
+      "position": {
+        "x": -509.1633906197294,
+        "y": -63.852303331461385
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
+      }
+    },
+    {
+      "id": "55",
+      "type": "io",
+      "position": {
+        "x": 1414.183349609375,
+        "y": 51.33332824707031
+      },
+      "data": {
+        "descriptionFile": "detectionHistory>detectionHistory.yml"
+      }
+    },
+    {
+      "id": "56",
+      "type": "output",
+      "position": {
+        "x": 1907.183349609375,
+        "y": 115.33332824707031
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "28",
+      "sourceHandle": "text_paths",
+      "target": "11",
+      "targetHandle": "path1",
+      "id": "reactflow__edge-28text_paths-11path1"
+    },
+    {
+      "source": "36",
+      "sourceHandle": "data_filter",
+      "target": "28",
+      "targetHandle": "text_csv",
+      "id": "reactflow__edge-36data_filter-28text_csv"
+    },
+    {
+      "source": "11",
+      "sourceHandle": "list_paths",
+      "target": "37",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-11list_paths-37lists_datasets"
+    },
+    {
+      "source": "41",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "column_join",
+      "id": "reactflow__edge-41-37column_join"
+    },
+    {
+      "source": "42",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "path2",
+      "id": "reactflow__edge-42-11path2"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "36",
+      "targetHandle": "data",
+      "id": "reactflow__edge-43-36data"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "36",
+      "targetHandle": "condition",
+      "id": "reactflow__edge-44-36condition"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "data_join",
+      "target": "45",
+      "targetHandle": "dataset",
+      "id": "reactflow__edge-37data_join-45dataset"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "xlat",
+      "id": "reactflow__edge-46-45xlat"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "ylong",
+      "id": "reactflow__edge-47-45ylong"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "espg_coords",
+      "id": "reactflow__edge-48-45espg_coords"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "spatial_points",
+      "target": "50",
+      "targetHandle": "spatial_points",
+      "id": "reactflow__edge-45spatial_points-50spatial_points"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "folder_stac",
+      "target": "50",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-52folder_stac-50folder_vars"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "52",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "StudyArea_vector",
+      "id": "reactflow__edge-54-53StudyArea_vector"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "vars_dataset",
+      "target": "55",
+      "targetHandle": "data",
+      "id": "reactflow__edge-50vars_dataset-55data"
+    },
+    {
+      "source": "55",
+      "sourceHandle": "data_filter",
+      "target": "56",
+      "targetHandle": null,
+      "id": "reactflow__edge-55data_filter-56"
+    }
+  ],
+  "inputs": {
+    "Concatenate_paths>Concatenate_paths.yml@11|path3": {
+      "description": "path files",
+      "label": "path3",
+      "type": "text"
+    },
+    "Get_filepath>Get_filepath.yml@28|text_plain": {
+      "description": "Plain text",
+      "label": "text_plain",
+      "type": "text/plain"
+    },
+    "Get_filepath>Get_filepath.yml@28|text_array": {
+      "description": "Plain text",
+      "label": "text_array",
+      "type": "text[]",
+      "example": [
+        null
+      ]
+    },
+    "Get_filepath>Get_filepath.yml@28|application_geo_json": {
+      "description": "Map",
+      "label": "application_geo_json",
+      "type": "application/geo+json"
+    },
+    "Get_filepath>Get_filepath.yml@28|application_geopackage": {
+      "description": "Link",
+      "label": "application_geopackage",
+      "type": "application/geopackage+sqlite3"
+    },
+    "Get_filepath>Get_filepath.yml@28|image_geotiff": {
+      "description": "Map widget (leaflet)",
+      "label": "image_geotiff",
+      "type": "image/tiff;application=geotiff"
+    },
+    "Get_filepath>Get_filepath.yml@28|image_jpg": {
+      "description": "<img> tag",
+      "label": "image_jpg",
+      "type": "image/jpg"
+    },
+    "Get_filepath>Get_filepath.yml@28|application_dbf": {
+      "description": "Link",
+      "label": "application_dbf",
+      "type": "application/dbf"
+    },
+    "Filter_data>Filter_data.yml@36|column": {
+      "description": "Name of the column in the dataset that will be used to apply the filter condition.",
+      "label": "column",
+      "type": "text/plain",
+      "example": "scientificName"
+    },
+    "Filter_data>Filter_data.yml@36|rev": {
+      "description": "Indicates whether to invert the filter condition (TRUE to invert, FALSE to not invert). Inverting means applying the opposite filter to the condition defined in 'condition' argument.",
+      "label": "rev",
+      "type": "boolean",
+      "example": false
+    },
+    "Join_datasets>Join_datasets.yml@37|type": {
+      "description": "Type of join to be performed. Options: 'left' for all rows from the left dataset and matching rows from the right, 'right' for all rows from the right dataset and matching rows from the left, 'inner' for only rows with matching keys in both datasets, and 'full' for all rows from both datasets and with NA where there are no matches.",
+      "label": "type",
+      "type": "options",
+      "options": [
+        "left",
+        "right",
+        "inner",
+        "full"
+      ],
+      "example": "left"
+    },
+    "Join_datasets>Join_datasets.yml@37|match": {
+      "description": "Match method for joining: 'all' to join all matches, 'first' to join only the first match, and 'all' to join all matches.",
+      "label": "match",
+      "type": "options",
+      "options": [
+        "all",
+        "first"
+      ],
+      "example": "all"
+    },
+    "Stac_FromGrid>Stac_FromGrid.yml@52|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    },
+    "Stac_FromGrid>Stac_FromGrid.yml@52|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|EPSG_grid": {
+      "description": "Numeric EPSG coordinate system in which the study grid will be projected. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html",
+      "label": "EPSG_grid",
+      "type": "int",
+      "example": 4326
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|Resolution_grid": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area.",
+      "label": "Resolution_grid",
+      "type": "int",
+      "example": 1000
+    },
+    "detectionHistory>detectionHistory.yml@55|speciesCol": {
+      "description": "speciesCol",
+      "label": "speciesCol",
+      "type": "text/plain",
+      "example": "speciesCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|species": {
+      "description": "species",
+      "label": "species",
+      "type": "text/plain",
+      "example": "species"
+    },
+    "detectionHistory>detectionHistory.yml@55|setupCol": {
+      "description": "setupCol",
+      "label": "setupCol",
+      "type": "text/plain",
+      "example": "setupCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|retrievalCol": {
+      "description": "conretrievalColdition",
+      "label": "retrievalCol",
+      "type": "text/plain",
+      "example": "retrievalCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|stationCol": {
+      "description": "stationCol",
+      "label": "stationCol",
+      "type": "text/plain",
+      "example": "stationCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|cameraCol": {
+      "description": "condition",
+      "label": "cameraCol",
+      "type": "text/plain",
+      "example": "cameraCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|recordDateTimeCol": {
+      "description": "condition",
+      "label": "recordDateTimeCol",
+      "type": "text/plain",
+      "example": "recordDateTimeCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|recordDateTimeFormat": {
+      "description": "recordDateTimeFormat",
+      "label": "recordDateTimeFormat",
+      "type": "text/plain",
+      "example": "recordDateTimeFormat"
+    }
+  },
+  "outputs": {
+    "detectionHistory>detectionHistory.yml@55|data_filter": {
+      "description": "data_filter",
+      "label": "data_filter",
+      "type": "text/csv"
+    }
+  }
+}
