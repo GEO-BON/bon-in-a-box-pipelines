@@ -102,7 +102,7 @@ cube
 layer_paths<-c()
 for (i in 1:length(stac_layers)) {
   gdalcubes::gdalcubes_options(parallel = T)
-  name_layer<- paste(list_layers[[i]], collapse= "_")
+  name_layer<- paste(list_layers[[i]], collapse= "_") %>% {gsub("[^[:alnum:]]", "_", .)}
   ff <- file.path(dirname(tempfile()), name_layer)
   out<-gdalcubes::write_tif(stac_layers[i][[1]], dir= folder_stac,   prefix= basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=F)
 

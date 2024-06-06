@@ -88,8 +88,9 @@ occ <- auk::filter_repeat_visits(ebird_filtered,
 
 
 # format for unmarked
-site_covs<- input$site_covs %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
-obs_covs<- input$obs_covs %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
+site_covs<- input$site_covs %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
+obs_covs<- input$obs_covs %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
+
 
 
 occ_wide <- auk::format_unmarked_occu(occ, 
@@ -97,7 +98,6 @@ occ_wide <- auk::format_unmarked_occu(occ,
                                  response = "species_observed",
                                  site_covs = site_covs,
                                  obs_covs = obs_covs)
-
 
 
 occ_wide_path<- file.path(outputFolder, "occ_wide.csv") # Define the file path for the 'val_wkt_path' output
