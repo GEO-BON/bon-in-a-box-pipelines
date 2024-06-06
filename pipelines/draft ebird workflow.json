@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": -161.5,
-        "y": 48.5
+        "x": -150.5,
+        "y": 207.5
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 330.4132072353294,
-        "y": 193.52200472867514
+        "x": 348.4132072353294,
+        "y": 109.52200472867514
       },
       "data": {
         "descriptionFile": "00_studyarea_covs>studyarea_covs.yml"
@@ -26,8 +26,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 764.4339858139745,
-        "y": 245.94132072353295
+        "x": 685.4339858139745,
+        "y": 173.94132072353295
       },
       "data": {
         "descriptionFile": "00_add_covs>add_covs.yml"
@@ -37,8 +37,8 @@
       "id": "4",
       "type": "io",
       "position": {
-        "x": 325,
-        "y": 397
+        "x": 255,
+        "y": 341
       },
       "data": {
         "descriptionFile": "00_auk_filter>auk_filter.yml"
@@ -48,8 +48,8 @@
       "id": "6",
       "type": "io",
       "position": {
-        "x": 1158.474553652706,
-        "y": 409.5033790993394
+        "x": 991.4745536527059,
+        "y": 344.5033790993394
       },
       "data": {
         "descriptionFile": "00_eBird_format>eBird_format.yml"
@@ -59,40 +59,11 @@
       "id": "7",
       "type": "io",
       "position": {
-        "x": 1590.1950431874318,
-        "y": 233.99351180726376
+        "x": 1485.1950431874318,
+        "y": 241.99351180726376
       },
       "data": {
         "descriptionFile": "00_occ_model_results>00_occ_model_results.yml"
-      }
-    },
-    {
-      "id": "8",
-      "type": "constant",
-      "position": {
-        "x": 1292.6741460041949,
-        "y": 105.16589886307116
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "altitud",
-          "jjjjj"
-        ]
-      }
-    },
-    {
-      "id": "10",
-      "type": "constant",
-      "position": {
-        "x": 1194.9371328628627,
-        "y": 610.0243803858408
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "~ duration_minutes ~ huella + altitud"
       }
     }
   ],
@@ -147,13 +118,6 @@
       "id": "reactflow__edge-1dir_stack-2stac_repository"
     },
     {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "7",
-      "targetHandle": "covars",
-      "id": "reactflow__edge-8-7covars"
-    },
-    {
       "source": "0",
       "sourceHandle": "study_area_4326_path",
       "target": "7",
@@ -168,11 +132,32 @@
       "id": "reactflow__edge-2cube_layers-7pred_surface"
     },
     {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "7",
-      "targetHandle": "formula",
-      "id": "reactflow__edge-10-7formula"
+      "source": "0",
+      "sourceHandle": "study_area_path",
+      "target": "1",
+      "targetHandle": "studyarea_grid",
+      "id": "reactflow__edge-0study_area_path-1studyarea_grid"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "dir_stack",
+      "target": "2",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-1dir_stack-2folder_vars"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "vars_dataset",
+      "target": "6",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-2vars_dataset-6auk_covars_file"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "study_area_path",
+      "target": "4",
+      "targetHandle": "studyarea",
+      "id": "reactflow__edge-0study_area_path-4studyarea"
     }
   ],
   "inputs": {
@@ -194,23 +179,63 @@
       "type": "int",
       "example": 1000
     },
-    "00_add_covs>add_covs.yml@2|wkt_area": {
-      "description": "wkt_area",
-      "label": "wkt_area",
-      "type": "text/wkt",
-      "example": "/scripts/00_load_collection/input/wkt_polygon_test.txt"
+    "00_studyarea_covs>studyarea_covs.yml@1|RSTACQuery": {
+      "description": "RSTACQuery",
+      "label": "RSTACQuery",
+      "type": "text",
+      "example": "http://io.biodiversite-quebec.ca/stac/"
     },
-    "00_add_covs>add_covs.yml@2|collection": {
-      "description": "collection",
-      "label": "collection",
+    "00_studyarea_covs>studyarea_covs.yml@1|RSTACcollection": {
+      "description": "RSTACcollection",
+      "label": "RSTACcollection",
       "type": "text",
       "example": "chelsa-clim"
     },
-    "00_add_covs>add_covs.yml@2|resolution": {
-      "description": "resolution",
-      "label": "resolution",
-      "type": "int",
-      "example": 1000
+    "00_studyarea_covs>studyarea_covs.yml@1|RSTACassets": {
+      "description": "RSTACassets",
+      "label": "RSTACassets",
+      "type": "options",
+      "options": [
+        "allVars",
+        "selectVars"
+      ],
+      "example": "selectVars"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@1|zonal": {
+      "description": "method of aggregation for the temperature data",
+      "label": "zonal",
+      "type": "options",
+      "options": [
+        "min",
+        "max",
+        "mean",
+        "median",
+        "first"
+      ],
+      "example": "mean"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@1|time_zonal": {
+      "description": "time_period",
+      "label": "time period",
+      "type": "text",
+      "example": "P1Y"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@1|time_period": {
+      "description": "Y-m-d time_period 1980-01-01, 1990-01-01",
+      "label": "time_period",
+      "type": "text"
+    },
+    "00_studyarea_covs>studyarea_covs.yml@1|selectVars": {
+      "description": "selectVars",
+      "label": "selectVars",
+      "type": "text",
+      "example": "bio18, bio4 , bio7"
+    },
+    "00_add_covs>add_covs.yml@2|spatial_points": {
+      "description": "spatial_points",
+      "label": "spatial_points",
+      "type": "application/geo+json",
+      "example": "scripts/00_add_covs/input/spatial_points_path.GeoJSON"
     },
     "00_auk_filter>auk_filter.yml@4|ebd_file": {
       "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
@@ -254,29 +279,11 @@
       "type": "int",
       "example": 30
     },
-    "00_eBird_format>eBird_format.yml@6|date_var": {
-      "description": "Column name of the variable in x containing the date. This column should either be in Date format or convertible to Date format with as.Date().",
-      "label": "date_var",
-      "type": "text",
-      "example": "observation_date"
-    },
     "00_eBird_format>eBird_format.yml@6|site_vars": {
       "description": "Names of one of more columns in x that define a site, typically the location (e.g. latitude/longitude) and observer ID.",
       "label": "site_vars",
       "type": "text",
       "example": "ID"
-    },
-    "00_eBird_format>eBird_format.yml@6|site_id": {
-      "description": "A unique idenitifer for each 'site', typically identifying observations from a unique location by the same observer within a period of temporal closure. Data output from filter_repeat_visits() will have a .site_id variable that meets these requirements.",
-      "label": "site_id",
-      "type": "text",
-      "example": "site"
-    },
-    "00_eBird_format>eBird_format.yml@6|response": {
-      "description": "The variable that will act as the response in modeling efforts, typically a binary variable indicating presence or absence or a count of individuals seen.",
-      "label": "response",
-      "type": "text",
-      "example": "species_observed"
     },
     "00_eBird_format>eBird_format.yml@6|site_covs": {
       "description": "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate.",
@@ -290,6 +297,24 @@
       "type": "text",
       "example": "duration_minutes"
     },
+    "00_occ_model_results>00_occ_model_results.yml@7|covars_ocupacion": {
+      "description": "covars_ocupacion",
+      "label": "covars_ocupacion",
+      "type": "text",
+      "example": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@7|covars_detection": {
+      "description": "covars_detection",
+      "label": "covars_detection",
+      "type": "text",
+      "example": "duration_minutes"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@7|dir_stack": {
+      "description": "tif with base grid",
+      "label": "dir_stack",
+      "type": "text",
+      "example": "scripts/00_occ_model_results/input/dir_stack"
+    },
     "00_occ_model_results>00_occ_model_results.yml@7|nsim": {
       "description": "The number of bootstrapped samples",
       "label": "nsim",
@@ -301,12 +326,6 @@
       "label": "plot.hist",
       "type": "boolean",
       "example": false
-    },
-    "00_occ_model_results>00_occ_model_results.yml@7|occformulalists": {
-      "description": "List of ocupancy covatieties to plot",
-      "label": "occformulalists",
-      "type": "text",
-      "example": "~1~altitud, ~1~huella"
     }
   },
   "outputs": {}
