@@ -1,28 +1,28 @@
 script: studyarea_to_grid.R
-description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+description: "This script converts the study area layer into a spatial grid (.tif representation)."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
-  studyarea_path:
-    label: Area de estudio
-    description: Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).
-    type: application/geopackage+sqlite3
-    example:  "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
-  studyarea_epsg:
-    label: studyarea_epsg
-    description: Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.
+  StudyArea_vector:
+    label: StudyArea_vector
+    description: "Text string with the path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), GeoJSON (.json) or  GeoPackage (.gpkg)."
+    type: text
+    example:  "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
+  EPSG_grid:
+    label: EPSG_grid
+    description: "Numeric EPSG coordinate system in which the study grid will be projected. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html"
     type: int
-    example: 3395
-  studyarea_resolution:
-    label: studyarea_resolution
-    description: Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.
+    example: 4326
+  Resolution_grid:
+    label: Resolution_grid
+    description: "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area."
     type: int
     example: 1000
 outputs:
-  original_area:
-    label: original_area
-    description: Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with the chosen projected coordinate system. Use this file for spatial operations and when biological data coordinates are projected to a particular coordinate system.
-    type: application/geo+json
-  study_area_path:
-    label: study_area_path
-    description: Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with the chosen projected coordinate system. Use this file for spatial operations and when biological data coordinates are projected to a particular coordinate system.
+  StudyArea_grid:
+    label: StudyArea_grid
+    description: "Raster file representing the study area as a grid."
     type: image/tiff;application=geotiff
+  StudyArea_vector:
+    label: StudyArea_vector
+    description: "GeoJSON file containing the vector representation of the study area boundaries."
+    type: application/geo+json
