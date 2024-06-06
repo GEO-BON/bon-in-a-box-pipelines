@@ -1,0 +1,28 @@
+script: studyarea_to_grid.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  StudyArea_polygon:
+    label: StudyArea_polygon
+    description: Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).
+    type: application/geopackage+sqlite3
+    example:  "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+  EPSG:
+    label: EPSG
+    description: Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.
+    type: int
+    example: 3395
+  gridRes_meters:
+    label: gridRes_meters
+    description: Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.
+    type: int
+    example: 1000
+outputs:
+  StudyArea_polygon:
+    label: StudyArea_polygon
+    description: Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with the chosen projected coordinate system. Use this file for spatial operations and when biological data coordinates are projected to a particular coordinate system.
+    type: application/geo+json
+  StudyArea_grid:
+    label: StudyArea_grid
+    description: Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with the chosen projected coordinate system. Use this file for spatial operations and when biological data coordinates are projected to a particular coordinate system.
+    type: image/tiff;application=geotiff
