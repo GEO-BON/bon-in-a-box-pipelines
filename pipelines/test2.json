@@ -4,8 +4,8 @@
       "id": "53",
       "type": "io",
       "position": {
-        "x": 86.63141805245664,
-        "y": 241.63713935081887
+        "x": 318.63141805245664,
+        "y": 191.63713935081887
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
@@ -26,8 +26,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 1,
-        "y": 336.5
+        "x": 527,
+        "y": 56.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -76,8 +76,8 @@
       "id": "62",
       "type": "io",
       "position": {
-        "x": 1138.2600000000002,
-        "y": -131.01333333333332
+        "x": 808.2600000000002,
+        "y": -57.01333333333332
       },
       "data": {
         "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
@@ -87,8 +87,8 @@
       "id": "63",
       "type": "io",
       "position": {
-        "x": 1335.4000000000003,
-        "y": 60.49333333333331
+        "x": 909.4000000000003,
+        "y": 80.49333333333334
       },
       "data": {
         "descriptionFile": "00_add_covs>add_covs.yml"
@@ -98,8 +98,8 @@
       "id": "65",
       "type": "io",
       "position": {
-        "x": 1777.3900535741386,
-        "y": 44.89833097798635
+        "x": 1357.3900535741386,
+        "y": -7.1016690220136525
       },
       "data": {
         "descriptionFile": "00_eBird_format>eBird_format.yml"
@@ -109,8 +109,8 @@
       "id": "66",
       "type": "output",
       "position": {
-        "x": 2629.328,
-        "y": 32.01999999999998
+        "x": 2117.328,
+        "y": -5.980000000000018
       },
       "data": {
         "label": "Output"
@@ -120,8 +120,8 @@
       "id": "67",
       "type": "io",
       "position": {
-        "x": 2180.6941278593235,
-        "y": 49.49982185601917
+        "x": 1740.6941278593235,
+        "y": 71.49982185601914
       },
       "data": {
         "descriptionFile": "00_occ_model_results>00_occ_model_results.yml"
@@ -212,6 +212,13 @@
       "target": "66",
       "targetHandle": null,
       "id": "reactflow__edge-67VEB_export-66"
+    },
+    {
+      "source": "62",
+      "sourceHandle": "folder_stac",
+      "target": "67",
+      "targetHandle": "dir_stack",
+      "id": "reactflow__edge-62folder_stac-67dir_stack"
     }
   ],
   "inputs": {
@@ -313,12 +320,6 @@
       "label": "covars_detection",
       "type": "text",
       "example": "duration_minutes"
-    },
-    "00_occ_model_results>00_occ_model_results.yml@67|dir_stack": {
-      "description": "tif with base grid",
-      "label": "dir_stack",
-      "type": "text",
-      "example": "scripts/00_occ_model_results/input/dir_stack"
     },
     "00_occ_model_results>00_occ_model_results.yml@67|nsim": {
       "description": "The number of bootstrapped samples",
