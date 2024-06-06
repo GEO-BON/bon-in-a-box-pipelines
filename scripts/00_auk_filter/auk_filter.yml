@@ -26,7 +26,7 @@ outputs:
   ebd_zerofill:
     label: ebd_zerofill
     description: "ebd_zerofill"
-    type: text/tab-separated-values
+    type: text/csv
   ebd_filter:
     label: ebd_filter
     description: "ebd_filter"
