@@ -1,0 +1,50 @@
+script: Density_proxy.R
+description: "This script get the occupancy models result, exploring results and plot graph and maps."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  checklists_env:
+    label: checklists_env
+    description: checklists_env
+    type: text/csv
+    example: 'scripts/Density_proxy/input/checklists_env.csv'
+  iters:
+    label: iters
+    description: Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.
+    type: int
+    example: 2
+  pred_grid:
+    label: pred_grid
+    description: pred_grid
+    type: text/csv
+    example: 'scripts/Density_proxy/input/environmental-variables_prediction-grid_Setophaga fusca.csv'
+  r:
+    label: r
+    description: "r"
+    type: image/tiff;application=geotiff
+    example: 'scripts/Density_proxy/input/prediction-grid.tif'
+  study_area:
+    label: study_area
+    description: "study_area"
+    type: text
+    example: 'scripts/Density_proxy/input/RegionFis_Col_WGS84_Andinas.gpkg'
+outputs:
+  MeanPercentDensity:
+    label: MeanPercentDensity
+    description: "Get a graph of the response of the covariates and occupancy prop"
+    type: image/jpg
+  SDPercentDensity:
+    label: SDPercentDensity
+    description: "Get a graph of the response of the covariates and occupancy prop"
+    type: image/jpg	
+  MEAN_estimates:
+    label: MEAN_estimates
+    description: "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ"
+    type: text/csv
+  SD_estimates:
+    label: SD_estimates
+    description: "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ"
+    type: text/csv
+  ppms_predict:
+    label: ppms_predict
+    description: "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ"
+    type: text/csv
