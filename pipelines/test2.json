@@ -1,28 +1,6 @@
 {
   "nodes": [
     {
-      "id": "50",
-      "type": "io",
-      "position": {
-        "x": 942,
-        "y": 314
-      },
-      "data": {
-        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
-      }
-    },
-    {
-      "id": "51",
-      "type": "output",
-      "position": {
-        "x": 1325,
-        "y": 328
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "53",
       "type": "io",
       "position": {
@@ -32,40 +10,47 @@
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
       }
+    },
+    {
+      "id": "54",
+      "type": "io",
+      "position": {
+        "x": 877,
+        "y": 290.5
+      },
+      "data": {
+        "descriptionFile": "00_auk_filter>auk_filter.yml"
+      }
+    },
+    {
+      "id": "55",
+      "type": "output",
+      "position": {
+        "x": 1296,
+        "y": 289.5
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
     {
-      "source": "50",
-      "sourceHandle": "folder_stac",
-      "target": "51",
-      "targetHandle": null,
-      "id": "reactflow__edge-50folder_stac-51"
-    },
-    {
       "source": "53",
       "sourceHandle": "StudyArea_grid",
-      "target": "50",
-      "targetHandle": "grid_studyArea",
-      "id": "reactflow__edge-53StudyArea_grid-50grid_studyArea"
+      "target": "54",
+      "targetHandle": "studyarea",
+      "id": "reactflow__edge-53StudyArea_grid-54studyarea"
+    },
+    {
+      "source": "54",
+      "sourceHandle": "ebd_zerofill",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-54ebd_zerofill-55"
     }
   ],
   "inputs": {
-    "Stac_FromGrid>Stac_FromGrid.yml@50|stac_url": {
-      "description": "URL of the Stac catalog",
-      "label": "stac_url",
-      "type": "text",
-      "example": "https://io.biodiversite-quebec.ca/stac/"
-    },
-    "Stac_FromGrid>Stac_FromGrid.yml@50|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "collections_items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ]
-    },
     "00_studyarea_to_grid>studyarea_to_grid.yml@53|StudyArea_vector": {
       "description": "Text string with the path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), GeoJSON (.json) or  GeoPackage (.gpkg).",
       "label": "StudyArea_vector",
@@ -83,13 +68,31 @@
       "label": "Resolution_grid",
       "type": "int",
       "example": 1000
+    },
+    "00_auk_filter>auk_filter.yml@54|ebd_file": {
+      "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt"
+    },
+    "00_auk_filter>auk_filter.yml@54|ebd_sampling_file": {
+      "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_sampling_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt"
+    },
+    "00_auk_filter>auk_filter.yml@54|species": {
+      "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
+      "label": "species",
+      "type": "text",
+      "example": "Setophaga fusca"
     }
   },
   "outputs": {
-    "Stac_FromGrid>Stac_FromGrid.yml@50|folder_stac": {
-      "description": "array of output raster paths",
-      "label": "folder_stac",
-      "type": "text"
+    "00_auk_filter>auk_filter.yml@54|ebd_zerofill": {
+      "description": "ebd_zerofill",
+      "label": "ebd_zerofill",
+      "type": "text/csv"
     }
   }
 }
