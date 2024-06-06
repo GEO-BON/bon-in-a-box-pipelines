@@ -4,8 +4,8 @@
       "id": "53",
       "type": "io",
       "position": {
-        "x": 373.1914180524566,
-        "y": 319.39713935081886
+        "x": 86.63141805245664,
+        "y": 241.63713935081887
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
@@ -15,8 +15,8 @@
       "id": "54",
       "type": "io",
       "position": {
-        "x": 740.1818825551861,
-        "y": 210.08935202804798
+        "x": 750.2618825551863,
+        "y": 223.04935202804796
       },
       "data": {
         "descriptionFile": "00_auk_filter>auk_filter.yml"
@@ -73,11 +73,33 @@
       }
     },
     {
-      "id": "60",
+      "id": "62",
+      "type": "io",
+      "position": {
+        "x": 485.2600000000002,
+        "y": 86.98666666666668
+      },
+      "data": {
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
+      }
+    },
+    {
+      "id": "63",
+      "type": "io",
+      "position": {
+        "x": 1506.4000000000003,
+        "y": 52.49333333333331
+      },
+      "data": {
+        "descriptionFile": "00_add_covs>add_covs.yml"
+      }
+    },
+    {
+      "id": "64",
       "type": "output",
       "position": {
-        "x": 1628.548118057601,
-        "y": 209.25931521164608
+        "x": 1882.2333333333336,
+        "y": 51.65999999999997
       },
       "data": {
         "label": "Output"
@@ -121,11 +143,32 @@
       "id": "reactflow__edge-59-57ylong"
     },
     {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "62",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-62grid_studyArea"
+    },
+    {
+      "source": "62",
+      "sourceHandle": "folder_stac",
+      "target": "63",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-62folder_stac-63folder_vars"
+    },
+    {
       "source": "57",
       "sourceHandle": "spatial_points",
-      "target": "60",
+      "target": "63",
+      "targetHandle": "spatial_points",
+      "id": "reactflow__edge-57spatial_points-63spatial_points"
+    },
+    {
+      "source": "63",
+      "sourceHandle": "vars_dataset",
+      "target": "64",
       "targetHandle": null,
-      "id": "reactflow__edge-57spatial_points-60"
+      "id": "reactflow__edge-63vars_dataset-64"
     }
   ],
   "inputs": {
@@ -164,13 +207,28 @@
       "label": "espg_coords",
       "type": "int",
       "example": 4326
+    },
+    "Stac_FromGrid>Stac_FromGrid.yml@62|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    },
+    "Stac_FromGrid>Stac_FromGrid.yml@62|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
     }
   },
   "outputs": {
-    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@57|spatial_points": {
-      "description": "Spatial points dataset in GeoJSON format",
-      "label": "spatial_points",
-      "type": "application/geo+json"
+    "00_add_covs>add_covs.yml@63|vars_dataset": {
+      "description": "vars_dataset",
+      "label": "vars_dataset",
+      "type": "text/csv"
     }
   }
 }
