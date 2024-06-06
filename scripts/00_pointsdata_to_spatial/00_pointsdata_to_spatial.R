@@ -41,7 +41,7 @@ output<- (function(){
   dataset<- data.table::fread(input$dataset)
   
   ## Spatializing coordinates ####
-  spatial_points<- sf::st_as_sf(dataset, coords = c(input$xlat, input$ylong), crs = input$espg_coords)
+  spatial_points<- sf::st_as_sf(dataset, coords = c(input$ylong, input$xlat), crs = input$espg_coords)
   
   ## Write results ####  
   spatial_points_path<- file.path(outputFolder, "spatial_points_path.GeoJSON") # Define the file path for the 'val_wkt_path' output
