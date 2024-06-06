@@ -98,8 +98,8 @@
       "id": "65",
       "type": "io",
       "position": {
-        "x": 1860,
-        "y": -18.5
+        "x": 1777.3900535741386,
+        "y": 44.89833097798635
       },
       "data": {
         "descriptionFile": "00_eBird_format>eBird_format.yml"
@@ -109,11 +109,22 @@
       "id": "66",
       "type": "output",
       "position": {
-        "x": 2282,
-        "y": -15.5
+        "x": 2629.328,
+        "y": 32.01999999999998
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "67",
+      "type": "io",
+      "position": {
+        "x": 2180.6941278593235,
+        "y": 49.49982185601917
+      },
+      "data": {
+        "descriptionFile": "00_occ_model_results>00_occ_model_results.yml"
       }
     }
   ],
@@ -182,18 +193,25 @@
       "id": "reactflow__edge-63vars_dataset-65auk_covars_file"
     },
     {
-      "source": "65",
-      "sourceHandle": "occ_wide_unmark",
-      "target": "66",
-      "targetHandle": null,
-      "id": "reactflow__edge-65occ_wide_unmark-66"
-    },
-    {
       "source": "62",
       "sourceHandle": "folder_stac",
       "target": "65",
       "targetHandle": "site_covs",
       "id": "reactflow__edge-62folder_stac-65site_covs"
+    },
+    {
+      "source": "65",
+      "sourceHandle": "occ_wide_unmark",
+      "target": "67",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-65occ_wide_unmark-67auk_covars_file"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "VEB_export",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-67VEB_export-66"
     }
   ],
   "inputs": {
@@ -283,13 +301,43 @@
       "label": "obs_covs",
       "type": "text",
       "example": "duration_minutes"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@67|covars_ocupacion": {
+      "description": "covars_ocupacion",
+      "label": "covars_ocupacion",
+      "type": "text",
+      "example": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@67|covars_detection": {
+      "description": "covars_detection",
+      "label": "covars_detection",
+      "type": "text",
+      "example": "duration_minutes"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@67|dir_stack": {
+      "description": "tif with base grid",
+      "label": "dir_stack",
+      "type": "text",
+      "example": "scripts/00_occ_model_results/input/dir_stack"
+    },
+    "00_occ_model_results>00_occ_model_results.yml@67|nsim": {
+      "description": "The number of bootstrapped samples",
+      "label": "nsim",
+      "type": "int",
+      "example": 2
+    },
+    "00_occ_model_results>00_occ_model_results.yml@67|plot_hist": {
+      "description": "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample.",
+      "label": "plot.hist",
+      "type": "boolean",
+      "example": false
     }
   },
   "outputs": {
-    "00_eBird_format>eBird_format.yml@65|occ_wide_unmark": {
-      "description": "Data frame prepared of species observations for ingestion into the package unmarked for hierarchical modeling of abundance and occurrence. ",
-      "label": "occ_wide_unmark",
-      "type": "text/csv"
+    "00_occ_model_results>00_occ_model_results.yml@67|VEB_export": {
+      "description": "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)",
+      "label": "FVEB",
+      "type": "text"
     }
   }
 }
