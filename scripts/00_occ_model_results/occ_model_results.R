@@ -58,8 +58,9 @@ output<- tryCatch({
   
   # Load data in eBird fortmat to unmarked
 #<<<<<<< HEAD
-  covs_ocupacion<- input$covars_ocupacion %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
-  covs_detection<- input$dir_stack %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
+  covs_ocupacion<- input$dir_stack %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
+  
+  covs_detection<- input$covars_detection
   
   occ_wide<- read.csv(input$auk_covars_file)
   occ_wide_no_NA <- occ_wide %>% dplyr::filter(if_all(all_of(covs_ocupacion), ~ !is.na(.))) 
