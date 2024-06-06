@@ -1,29 +1,29 @@
 script: 00_pointsdata_to_spatial.R
-description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+description: "Converts a dataset into a spatial object suitable for geospatial analysis and mapping."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   dataset:
     label: dataset
-    description: "dataset"
-    type: text/tab-separated-values
-    example: "scripts/00_pointsdata_to_spatial/input/zf_ebdfile_Setophaga fusca_-76_5_-75_6.txt"
+    description: "Dataset to be spatialized. It must contain columns with latitude ('xlat') and longitude ('ylong'), in a valid EPSG coordinate system equivalent to 'epsg_coords' to ensure proper spatialization."
+    type: text/csv
+    example: "scripts/00_pointsdata_to_spatial/input/data_join.csv"
   xlat:
     label: xlat
-    description: "xlat"
+    description: "Name of the column in the 'dataset' that contains the latitude coordinates of the points to be spatialized."
     type: text
-    example: "latitude"
+    example: "Long_X"
   ylong:
     label: ylong
-    description: "ylong"
+    description: "Name of the column in the 'dataset' that contains the longitude coordinates of the points to be spatialized."
     type: text
-    example: "longitude"
+    example: "Lat_Y"
   espg_coords:
     label: espg_coords
-    description: Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.
+    description: "Numeric EPSG coordinate system. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html"
     type: int
     example: 4326
 outputs:
   spatial_points:
     label: spatial_points
-    description: "spatial_points"
+    description: "Spatial points dataset in GeoJSON format"
     type: application/geo+json

@@ -1,0 +1,19 @@
+script: add_RasterCovs_to_data.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  Folder_RasterCovs:
+    label: Folder_RasterCovs
+    description: Folder_RasterCovs
+    type: text
+    example: 'scripts/00_add_covs/input/dir_stack'
+  SpatialData:
+    label: SpatialData
+    description: "SpatialData"
+    type: application/geo+json
+    example: 'scripts/00_add_covs/input/spatial_points_path.GeoJSON'
+outputs:
+  RasterCovs_data:
+    label: RasterCovs_data
+    description: "RasterCovs_data"
+    type: text/csv

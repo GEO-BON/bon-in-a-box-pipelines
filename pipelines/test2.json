@@ -1,0 +1,95 @@
+{
+  "nodes": [
+    {
+      "id": "50",
+      "type": "io",
+      "position": {
+        "x": 942,
+        "y": 314
+      },
+      "data": {
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
+      }
+    },
+    {
+      "id": "51",
+      "type": "output",
+      "position": {
+        "x": 1325,
+        "y": 328
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": 438,
+        "y": 341
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "50",
+      "sourceHandle": "folder_stac",
+      "target": "51",
+      "targetHandle": null,
+      "id": "reactflow__edge-50folder_stac-51"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "50",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-50grid_studyArea"
+    }
+  ],
+  "inputs": {
+    "Stac_FromGrid>Stac_FromGrid.yml@50|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    },
+    "Stac_FromGrid>Stac_FromGrid.yml@50|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|StudyArea_vector": {
+      "description": "Text string with the path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "StudyArea_vector",
+      "type": "text",
+      "example": "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|EPSG_grid": {
+      "description": "Numeric EPSG coordinate system in which the study grid will be projected. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html",
+      "label": "EPSG_grid",
+      "type": "int",
+      "example": 4326
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|Resolution_grid": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area.",
+      "label": "Resolution_grid",
+      "type": "int",
+      "example": 1000
+    }
+  },
+  "outputs": {
+    "Stac_FromGrid>Stac_FromGrid.yml@50|folder_stac": {
+      "description": "array of output raster paths",
+      "label": "folder_stac",
+      "type": "text"
+    }
+  }
+}

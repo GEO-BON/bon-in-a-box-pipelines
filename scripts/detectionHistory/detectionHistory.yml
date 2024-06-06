@@ -1,0 +1,54 @@
+script: detectionHistory.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  data:
+    label: data
+    description: data
+    type: text/csv
+    example:  "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+  speciesCol:
+    label: speciesCol
+    description: speciesCol
+    type: text/plain	
+    example: "speciesCol"
+  species:
+    label: species
+    description: species
+    type: text/plain	
+    example: "species"
+  setupCol:
+    label: setupCol
+    description: setupCol
+    type: text/plain	
+    example: "setupCol"
+  retrievalCol:
+    label: retrievalCol
+    description: conretrievalColdition
+    type: text/plain	
+    example: "retrievalCol"
+  stationCol:
+    label: stationCol
+    description: stationCol
+    type: text/plain	
+    example: "stationCol"
+  cameraCol:
+    label: cameraCol
+    description: condition
+    type: text/plain	
+    example: "cameraCol"
+  recordDateTimeCol:
+    label: recordDateTimeCol
+    description: condition
+    type: text/plain	
+    example: "recordDateTimeCol"
+  recordDateTimeFormat:
+    label: recordDateTimeFormat
+    description: recordDateTimeFormat
+    type: text/plain	
+    example: "recordDateTimeFormat"
+outputs:
+  data_filter:
+    label: data_filter
+    description: data_filter
+    type: text/csv

@@ -1,0 +1,31 @@
+script: Stac_FromGrid.R
+name: Stac_FromGrid
+description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+author:
+  - name: Guillaume Larocque
+    identifier: https://orcid.org/0000-0002-5967-9156
+inputs:
+  stac_url:
+    label: stac_url
+    description: URL of the Stac catalog
+    type: text
+    example: https://io.biodiversite-quebec.ca/stac/
+  grid_studyArea:
+    label: grid_studyArea
+    description: grid_studyArea
+    type: image/tiff;application=geotiff
+    example: "scripts/Stac_FromGrid/input/StudyArea_grid.tif"
+  collections_items:
+    label: collections_items
+    description: Vector of strings, collection name followed by '|' followed by item id
+    type: text[]
+    example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+outputs:
+  rasters:
+    label: rasters
+    description: array of output raster paths
+    type: image/tiff;application=geotiff[]
+  folder_stac:
+    label: folder_stac
+    description: array of output raster paths
+    type: text
