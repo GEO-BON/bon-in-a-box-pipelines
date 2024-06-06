@@ -32,6 +32,19 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "56",
+      "type": "constant",
+      "position": {
+        "x": 1,
+        "y": 336.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+      }
     }
   ],
   "edges": [
@@ -48,15 +61,16 @@
       "target": "55",
       "targetHandle": null,
       "id": "reactflow__edge-54ebd_zerofill-55"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "StudyArea_vector",
+      "id": "reactflow__edge-56-53StudyArea_vector"
     }
   ],
   "inputs": {
-    "00_studyarea_to_grid>studyarea_to_grid.yml@53|StudyArea_vector": {
-      "description": "Text string with the path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), GeoJSON (.json) or  GeoPackage (.gpkg).",
-      "label": "StudyArea_vector",
-      "type": "text",
-      "example": "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
-    },
     "00_studyarea_to_grid>studyarea_to_grid.yml@53|EPSG_grid": {
       "description": "Numeric EPSG coordinate system in which the study grid will be projected. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html",
       "label": "EPSG_grid",
