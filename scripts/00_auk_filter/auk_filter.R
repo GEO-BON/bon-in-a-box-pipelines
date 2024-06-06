@@ -79,9 +79,6 @@ time_to_decimal <- function(x) {x <- lubridate::hms(x, quiet = TRUE); lubridate:
 # Unir (sp_ebd****.txt y sp_ebd_sampling****.txt) y agrega columna de presencia y ausencio de la sp por lista (zero-filling) 
 pre_ebd_zf <- tryCatch({  auk::auk_zerofill(x= dir_ebdfile, sampling_events =  dir_ebd_sampling_file, collapse = TRUE) }, error=function(e) {NULL} )
 
-library(data.table)
-aa<- fread("~/Documents/GitHub/biab-2.0/scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt")
-
 
 
 if(is.null(pre_ebd_zf)){return("Error: Los parametros definidos generan un filtro vacio")} # mensaje, la url no existe
