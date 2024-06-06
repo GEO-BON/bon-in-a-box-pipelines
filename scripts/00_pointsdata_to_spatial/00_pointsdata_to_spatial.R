@@ -38,10 +38,13 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 output<- (function(){
   
   ## load data ####
-  dataset<- data.table::fread(input$dataset)
+  dataset<- data.table::fread(input$dataset) %>% as.data.frame()
   
   ## Spatializing coordinates ####
-  spatial_points<- sf::st_as_sf(dataset, coords = c(input$ylong, input$xlat), crs = input$espg_coords)
+  dataset_clean <- dataset %>% dplyr::select(-which(duplicated(names(.)))) %>% 
+    dplyr::filter(!is.na(.[, input$ylong]), !is.na(.[, input$xlat]))
+  
+  spatial_points<- sf::st_as_sf(dataset_clean, coords = c(input$ylong, input$xlat), crs = input$espg_coords)
   
   ## Write results ####  
   spatial_points_path<- file.path(outputFolder, "spatial_points_path.GeoJSON") # Define the file path for the 'val_wkt_path' output

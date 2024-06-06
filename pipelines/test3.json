@@ -1,0 +1,109 @@
+{
+  "nodes": [
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 380.8625816033157,
+        "y": -56.813374175044345
+      },
+      "data": {
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": -161.81708090092366,
+        "y": -62.120754737433
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "54",
+      "type": "constant",
+      "position": {
+        "x": -509.1633906197294,
+        "y": -63.852303331461385
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
+      }
+    },
+    {
+      "id": "59",
+      "type": "output",
+      "position": {
+        "x": 761,
+        "y": -36.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "52",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "StudyArea_vector",
+      "id": "reactflow__edge-54-53StudyArea_vector"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "folder_stac",
+      "target": "59",
+      "targetHandle": null,
+      "id": "reactflow__edge-52folder_stac-59"
+    }
+  ],
+  "inputs": {
+    "Stac_FromGrid>Stac_FromGrid.yml@52|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    },
+    "Stac_FromGrid>Stac_FromGrid.yml@52|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|EPSG_grid": {
+      "description": "Numeric EPSG coordinate system in which the study grid will be projected. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html",
+      "label": "EPSG_grid",
+      "type": "int",
+      "example": 4326
+    },
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|Resolution_grid": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area.",
+      "label": "Resolution_grid",
+      "type": "int",
+      "example": 1000
+    }
+  },
+  "outputs": {
+    "Stac_FromGrid>Stac_FromGrid.yml@52|folder_stac": {
+      "description": "array of output raster paths",
+      "label": "folder_stac",
+      "type": "text"
+    }
+  }
+}
