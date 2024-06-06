@@ -154,22 +154,11 @@
       "id": "50",
       "type": "io",
       "position": {
-        "x": 1357.4206050828268,
-        "y": 103.73488783721234
+        "x": 961.4206050828268,
+        "y": 133.73488783721234
       },
       "data": {
         "descriptionFile": "00_add_covs>add_covs.yml"
-      }
-    },
-    {
-      "id": "51",
-      "type": "output",
-      "position": {
-        "x": 1749.326536014202,
-        "y": 128.54024205512712
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -205,6 +194,28 @@
       "data": {
         "type": "text",
         "value": "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
+      }
+    },
+    {
+      "id": "55",
+      "type": "io",
+      "position": {
+        "x": 1414.183349609375,
+        "y": 51.33332824707031
+      },
+      "data": {
+        "descriptionFile": "detectionHistory>detectionHistory.yml"
+      }
+    },
+    {
+      "id": "56",
+      "type": "output",
+      "position": {
+        "x": 1907.183349609375,
+        "y": 115.33332824707031
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -294,13 +305,6 @@
       "id": "reactflow__edge-45spatial_points-50spatial_points"
     },
     {
-      "source": "50",
-      "sourceHandle": "vars_dataset",
-      "target": "51",
-      "targetHandle": null,
-      "id": "reactflow__edge-50vars_dataset-51"
-    },
-    {
       "source": "52",
       "sourceHandle": "folder_stac",
       "target": "50",
@@ -320,6 +324,20 @@
       "target": "53",
       "targetHandle": "StudyArea_vector",
       "id": "reactflow__edge-54-53StudyArea_vector"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "vars_dataset",
+      "target": "55",
+      "targetHandle": "data",
+      "id": "reactflow__edge-50vars_dataset-55data"
+    },
+    {
+      "source": "55",
+      "sourceHandle": "data_filter",
+      "target": "56",
+      "targetHandle": null,
+      "id": "reactflow__edge-55data_filter-56"
     }
   ],
   "inputs": {
@@ -426,12 +444,60 @@
       "label": "Resolution_grid",
       "type": "int",
       "example": 1000
+    },
+    "detectionHistory>detectionHistory.yml@55|speciesCol": {
+      "description": "speciesCol",
+      "label": "speciesCol",
+      "type": "text/plain",
+      "example": "speciesCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|species": {
+      "description": "species",
+      "label": "species",
+      "type": "text/plain",
+      "example": "species"
+    },
+    "detectionHistory>detectionHistory.yml@55|setupCol": {
+      "description": "setupCol",
+      "label": "setupCol",
+      "type": "text/plain",
+      "example": "setupCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|retrievalCol": {
+      "description": "conretrievalColdition",
+      "label": "retrievalCol",
+      "type": "text/plain",
+      "example": "retrievalCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|stationCol": {
+      "description": "stationCol",
+      "label": "stationCol",
+      "type": "text/plain",
+      "example": "stationCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|cameraCol": {
+      "description": "condition",
+      "label": "cameraCol",
+      "type": "text/plain",
+      "example": "cameraCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|recordDateTimeCol": {
+      "description": "condition",
+      "label": "recordDateTimeCol",
+      "type": "text/plain",
+      "example": "recordDateTimeCol"
+    },
+    "detectionHistory>detectionHistory.yml@55|recordDateTimeFormat": {
+      "description": "recordDateTimeFormat",
+      "label": "recordDateTimeFormat",
+      "type": "text/plain",
+      "example": "recordDateTimeFormat"
     }
   },
   "outputs": {
-    "00_add_covs>add_covs.yml@50|vars_dataset": {
-      "description": "vars_dataset",
-      "label": "vars_dataset",
+    "detectionHistory>detectionHistory.yml@55|data_filter": {
+      "description": "data_filter",
+      "label": "data_filter",
       "type": "text/csv"
     }
   }
