@@ -4,8 +4,8 @@
       "id": "53",
       "type": "io",
       "position": {
-        "x": 438,
-        "y": 341
+        "x": 373.1914180524566,
+        "y": 319.39713935081886
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
@@ -15,22 +15,11 @@
       "id": "54",
       "type": "io",
       "position": {
-        "x": 877,
-        "y": 290.5
+        "x": 740.1818825551861,
+        "y": 210.08935202804798
       },
       "data": {
         "descriptionFile": "00_auk_filter>auk_filter.yml"
-      }
-    },
-    {
-      "id": "55",
-      "type": "output",
-      "position": {
-        "x": 1296,
-        "y": 289.5
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -45,6 +34,54 @@
         "type": "text",
         "value": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
       }
+    },
+    {
+      "id": "57",
+      "type": "io",
+      "position": {
+        "x": 1157.699010246658,
+        "y": 205.05677241237396
+      },
+      "data": {
+        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 852.1048904699749,
+        "y": 352.0782272812325
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "latitude"
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 856.9055261697931,
+        "y": 422.8876038535484
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "longitude"
+      }
+    },
+    {
+      "id": "60",
+      "type": "output",
+      "position": {
+        "x": 1628.548118057601,
+        "y": 209.25931521164608
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -56,18 +93,39 @@
       "id": "reactflow__edge-53StudyArea_grid-54studyarea"
     },
     {
-      "source": "54",
-      "sourceHandle": "ebd_zerofill",
-      "target": "55",
-      "targetHandle": null,
-      "id": "reactflow__edge-54ebd_zerofill-55"
-    },
-    {
       "source": "56",
       "sourceHandle": null,
       "target": "53",
       "targetHandle": "StudyArea_vector",
       "id": "reactflow__edge-56-53StudyArea_vector"
+    },
+    {
+      "source": "54",
+      "sourceHandle": "ebd_zerofill",
+      "target": "57",
+      "targetHandle": "dataset",
+      "id": "reactflow__edge-54ebd_zerofill-57dataset"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "xlat",
+      "id": "reactflow__edge-58-57xlat"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "ylong",
+      "id": "reactflow__edge-59-57ylong"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "spatial_points",
+      "target": "60",
+      "targetHandle": null,
+      "id": "reactflow__edge-57spatial_points-60"
     }
   ],
   "inputs": {
@@ -100,13 +158,19 @@
       "label": "species",
       "type": "text",
       "example": "Setophaga fusca"
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@57|espg_coords": {
+      "description": "Numeric EPSG coordinate system. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html",
+      "label": "espg_coords",
+      "type": "int",
+      "example": 4326
     }
   },
   "outputs": {
-    "00_auk_filter>auk_filter.yml@54|ebd_zerofill": {
-      "description": "ebd_zerofill",
-      "label": "ebd_zerofill",
-      "type": "text/csv"
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@57|spatial_points": {
+      "description": "Spatial points dataset in GeoJSON format",
+      "label": "spatial_points",
+      "type": "application/geo+json"
     }
   }
 }
