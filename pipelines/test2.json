@@ -76,8 +76,8 @@
       "id": "62",
       "type": "io",
       "position": {
-        "x": 485.2600000000002,
-        "y": 86.98666666666668
+        "x": 1138.2600000000002,
+        "y": -131.01333333333332
       },
       "data": {
         "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
@@ -87,8 +87,8 @@
       "id": "63",
       "type": "io",
       "position": {
-        "x": 1506.4000000000003,
-        "y": 52.49333333333331
+        "x": 1335.4000000000003,
+        "y": 60.49333333333331
       },
       "data": {
         "descriptionFile": "00_add_covs>add_covs.yml"
@@ -187,6 +187,13 @@
       "target": "66",
       "targetHandle": null,
       "id": "reactflow__edge-65occ_wide_unmark-66"
+    },
+    {
+      "source": "62",
+      "sourceHandle": "folder_stac",
+      "target": "65",
+      "targetHandle": "site_covs",
+      "id": "reactflow__edge-62folder_stac-65site_covs"
     }
   ],
   "inputs": {
@@ -270,12 +277,6 @@
       "label": "site_vars",
       "type": "text",
       "example": "ID_grid"
-    },
-    "00_eBird_format>eBird_format.yml@65|site_covs": {
-      "description": "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate.",
-      "label": "site_covs",
-      "type": "text",
-      "example": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01"
     },
     "00_eBird_format>eBird_format.yml@65|obs_covs": {
       "description": "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation.",

@@ -2,7 +2,7 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "terra", "raster", "sf", "pbapply", "this.path", "rjson", "tools") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
@@ -89,7 +89,7 @@ occ <- auk::filter_repeat_visits(ebird_filtered,
 
 # format for unmarked
 site_covs<- input$site_covs %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
-obs_covs<- input$obs_covs %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
+obs_covs<- input$obs_covs %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
 
 
 occ_wide <- auk::format_unmarked_occu(occ, 
