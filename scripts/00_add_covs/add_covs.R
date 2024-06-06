@@ -48,7 +48,7 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
   
   
   stack_vars<- terra::rast(layers_covs) %>% setNames(tools::file_path_sans_ext(basename(layers_covs)))
-  base_grid<- stack_vars[[1]] %>% terra::rast() %>% terra::setValues(seq(ncell(.))) %>% terra::mask(min(stack_vars)) %>% setNames("base_grid")
+  base_grid<- stack_vars[[1]] %>% terra::rast() %>% terra::setValues(seq(ncell(.))) %>% terra::mask(min(stack_vars)) %>% setNames("ID_grid")
     
   stack_vars<- c(base_grid, stack_vars)
   
@@ -61,7 +61,8 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
   covars_ID<-  raster::extract(stack_vars, distinct_id_coord) %>% {.[,2:length(.)]} %>% 
     dplyr::mutate(id_coord= distinct_id_coord$id_coord)
 
-  join_covars<- covars_ID %>% list(as.data.frame(data_points2)) %>% plyr::join_all() %>% dplyr::select(-c("id_row", "id_coord"))
+  join_covars<- covars_ID %>% list(as.data.frame(data_points2)) %>% plyr::join_all() %>% 
+    dplyr::select(-c("id_row", "id_coord")) %>% dplyr::filter(!is.na(ID_grid))
   
 
   
@@ -70,7 +71,7 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
   data_covars<- sf::st_drop_geometry(spatial_covars)
   
   data_covars_path<- file.path(outputFolder, "vars_dataset.csv") # Define the file path for the 'val_wkt_path' output
-  write.csv(data_covars, data_covars_path, row.names = F ) # Write the 'val_wkt_path' output
+  write.csv(data_covars, data_covars_path, row.names = F, sep= ";" ) # Write the 'val_wkt_path' output
   
   
   
