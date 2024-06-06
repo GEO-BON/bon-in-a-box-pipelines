@@ -95,11 +95,22 @@
       }
     },
     {
-      "id": "64",
+      "id": "65",
+      "type": "io",
+      "position": {
+        "x": 1860,
+        "y": -18.5
+      },
+      "data": {
+        "descriptionFile": "00_eBird_format>eBird_format.yml"
+      }
+    },
+    {
+      "id": "66",
       "type": "output",
       "position": {
-        "x": 1882.2333333333336,
-        "y": 51.65999999999997
+        "x": 2282,
+        "y": -15.5
       },
       "data": {
         "label": "Output"
@@ -166,9 +177,16 @@
     {
       "source": "63",
       "sourceHandle": "vars_dataset",
-      "target": "64",
+      "target": "65",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-63vars_dataset-65auk_covars_file"
+    },
+    {
+      "source": "65",
+      "sourceHandle": "occ_wide_unmark",
+      "target": "66",
       "targetHandle": null,
-      "id": "reactflow__edge-63vars_dataset-64"
+      "id": "reactflow__edge-65occ_wide_unmark-66"
     }
   ],
   "inputs": {
@@ -222,12 +240,54 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ]
+    },
+    "00_eBird_format>eBird_format.yml@65|min_obs": {
+      "description": "Minimum number of observations required for each site.",
+      "label": "min_obs",
+      "type": "int",
+      "example": 1
+    },
+    "00_eBird_format>eBird_format.yml@65|max_obs": {
+      "description": "Maximum number of observations allowed for each site.",
+      "label": "max_obs",
+      "type": "int",
+      "example": 10
+    },
+    "00_eBird_format>eBird_format.yml@65|annual_closure": {
+      "description": "Whether the entire year should be treated as the period of closure (the default). This can be useful, for example, if the data have been subset to a period of closure prior to calling",
+      "label": "annual_closure",
+      "type": "boolean",
+      "example": false
+    },
+    "00_eBird_format>eBird_format.yml@65|n_days": {
+      "description": "Number of days defining the temporal length of closure. If annual_closure = TRUE closure periods will be split at year boundaries. If annual_closure = FALSE the closure periods will ignore year boundaries.",
+      "label": "n_days",
+      "type": "int",
+      "example": 30
+    },
+    "00_eBird_format>eBird_format.yml@65|site_vars": {
+      "description": "Names of one of more columns in x that define a site, typically the location (e.g. latitude/longitude) and observer ID.",
+      "label": "site_vars",
+      "type": "text",
+      "example": "ID_grid"
+    },
+    "00_eBird_format>eBird_format.yml@65|site_covs": {
+      "description": "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate.",
+      "label": "site_covs",
+      "type": "text",
+      "example": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01"
+    },
+    "00_eBird_format>eBird_format.yml@65|obs_covs": {
+      "description": "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation.",
+      "label": "obs_covs",
+      "type": "text",
+      "example": "duration_minutes"
     }
   },
   "outputs": {
-    "00_add_covs>add_covs.yml@63|vars_dataset": {
-      "description": "vars_dataset",
-      "label": "vars_dataset",
+    "00_eBird_format>eBird_format.yml@65|occ_wide_unmark": {
+      "description": "Data frame prepared of species observations for ingestion into the package unmarked for hierarchical modeling of abundance and occurrence. ",
+      "label": "occ_wide_unmark",
       "type": "text/csv"
     }
   }
