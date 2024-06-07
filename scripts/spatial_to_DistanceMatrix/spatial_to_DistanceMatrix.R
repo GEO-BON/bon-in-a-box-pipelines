@@ -36,14 +36,14 @@ area_unit<- paste0(input$unit_distance, "^2")
 # Define study area
 ext_WKT_area<- tools::file_ext(input$studyarea_wkt)
 dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$studyarea_wkt) }else{ input$studyarea_wkt }
-crs_polygon<- terra::crs( paste0("+init=epsg:", input$studyarea_epsg) ) %>% as.character()
-vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon )  %>% sf::st_as_sf()
+crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()
+vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon )  %>% sf::st_as_sf()  %>% sf::st_transform(input$studyarea_epsg)
 
-spatial_units<- sf::st_read(input$spatial_file)
+spatial_units<- sf::st_read(input$spatial_file) %>% sf::st_transform(input$studyarea_epsg)
 
 group<- input$column_group %>% {.[. %in% names(spatial_units)]}
 if(length(group)<1){group<-"id_group";  spatial_units[,"id_group"] <- seq(nrow(spatial_units)); }
-if( ! sf::st_crs(spatial_units) == sf::st_crs(vector_polygon) ) { spatial_units<- sf::st_transform(spatial_units, crs_polygon)  }
+#if( ! sf::st_crs(spatial_units) == sf::st_crs(vector_polygon) ) { spatial_units<- sf::st_transform(spatial_units, crs_polygon)  }
 
 # check intersects
 test_intersects<- sf::st_intersects(spatial_units, vector_polygon) %>% setNames( seq(length(.))) %>% unlist() %>% names() %>% as.numeric()
@@ -57,7 +57,6 @@ spatialunits_count<-  spatialunits_studyarea %>% dplyr::rowwise() %>%
   dplyr::group_by(spatial_unit)  %>% dplyr::mutate(count = dplyr::n())
 
 
-
 spatialunits_group<- spatialunits_count %>% {
   uniques<- dplyr::filter(., count==1) %>% as.data.frame()
   dubs<- dplyr::filter(., count >1) %>%  split(sf::st_drop_geometry(.)[,group] ) %>% 
@@ -67,12 +66,15 @@ spatialunits_group<- spatialunits_count %>% {
       spatial_union[,names(first_data)]<- first_data}) %>% plyr::rbind.fill()
   plyr::rbind.fill(list(uniques, dubs))
 } %>% sf::st_as_sf()
-
+spatialunits_group<-spatialunits_group[!sapply(spatialunits_group$geometry,is.null),]
 
 # create centroid matrix
-shp_centroid <- sf::st_point_on_surface(x = spatialunits_group)
+shp_centroid <- sf::st_point_on_surface(spatialunits_group)
 #Create the euclidean distance matrix:
+
 mtx_distance_centroid <- sf::st_distance(shp_centroid) %>% units::set_units(distance_unit)
+
+
 
 #Convert the matrix to data frame
 mtx_distance_centroid=matrix(mtx_distance_centroid,nrow=nrow(spatialunits_group))
@@ -93,9 +95,15 @@ mtx_distance_nearest<- as.data.frame.matrix(mtx_distance_nearest)
 
 #data
 area_study_area<- sf::st_area(vector_polygon) %>% units::set_units(area_unit) %>% as.numeric()
+
+
+
 spatialunits_intersect<- sf::st_intersection(spatialunits_group, vector_polygon) %>% dplyr::mutate(area_spatial_unit = sf::st_area(.) %>% units::set_units(area_unit)  %>% as.numeric() )
+
 spatialunits_studyarea_data<- sf::st_drop_geometry(spatialunits_intersect) %>% 
   dplyr::relocate(c("spatial_unit", "area_spatial_unit"))
+
+
 
 # 4326
 spatialunits_studyarea_4326<- spatialunits_intersect %>% sf::st_transform(4326)
