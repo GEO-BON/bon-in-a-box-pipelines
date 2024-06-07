@@ -123,13 +123,13 @@
   ],
   "inputs": {
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_wkt": {
-      "description": "WKT (Well-Known Text) string or the file path to a .txt file containing the WKT representation of the study area boundaries. The WKT format is a text-based format used to describe the geometry of the study area's boundaries. The structure of the WKT file includes a geometry type label (MULTIPOLYGON), which is associated with the coordinate values of the vertices that define the study area's boundary mask.",
+      "description": "Link to spatial file representing the study area. To obtain a given region/state/province automatically, change the country name and state_name (in English) in the example url.",
       "label": "study area",
       "type": "text/wkt",
       "example": "https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=Colombia&state_name=Putumayo"
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_epsg": {
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used for calculations. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
       "label": "study area EPSG",
       "type": "int",
       "example": 3395
@@ -138,14 +138,11 @@
       "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
       "label": "unit for distance measurement",
       "type": "options",
-      "options": [
-        "m",
-        "km"
-      ],
+      "options": ["m", "km"],
       "example": "m"
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file": {
-      "description": "String path represents the file location of a spatial file containing spatial units, which is used to calculate the distance matrix",
+      "description": "File location or url to spatial file with protected areas within study area. To obtain WDPA protected areas for a given region/state/province, change the country name and state_name (in English) in the example url.",
       "label": "Protected Areas File",
       "type": "text",
       "example": "https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=Colombia&state_name=Putumayo"
@@ -154,9 +151,7 @@
       "description": "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.",
       "label": "name of grouping attribute",
       "type": "text[]",
-      "example": [
-        "WDPA_PID"
-      ]
+      "example": ["WDPA_PID"]
     },
     "protcon_analysis>protcon_analysis.yml@41|distance_analysis": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
