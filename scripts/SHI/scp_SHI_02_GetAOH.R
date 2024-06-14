@@ -264,9 +264,9 @@ for(i in 1:length(sp)){
   area_aoh  <- global(r_aoh_area,sum)$sum 
   
   #create dataframe with area values--------------------------------------------
-  df_aoh_areas_sp <- tibble(sci_name=sp[i], area_range_map = area_range_map, 
-                         area_study_a=area_study_a, area_bbox_analysis=area_bbox_analysis,
-                         buff_size=buff_size, area_aoh=area_aoh)
+  df_aoh_areas_sp <- tibble(sci_name=sp[i], area_range_map = round(area_range_map), 
+                         area_study_a=round(area_study_a), area_bbox_analysis=round(area_bbox_analysis),
+                         buff_size=round(buff_size), area_aoh=round(area_aoh))
   write_tsv(df_aoh_areas_sp,file.path(outputFolder,sp[i],paste0(sp[i],"_df_aoh_areas.tsv")))
   
   df_aoh_areas <- bind_rows(df_aoh_areas,df_aoh_areas_sp)
