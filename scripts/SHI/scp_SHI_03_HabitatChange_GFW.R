@@ -254,7 +254,7 @@ for(i in 1:length(sp)){
 
 
   #------------------------ 3.1.3. SHS -------------------------------------------
-  df_SHS_gfw <- data.frame(sci_name=sp[i], AS=round(as.numeric(df_area_score_gfw$percentage),2),CS=round(df_conn_score_gfw$percentage),2)
+  df_SHS_gfw <- data.frame(sci_name=sp[i], AS=as.numeric(df_area_score_gfw$percentage),CS=df_conn_score_gfw$percentage)
   print(df_SHS_gfw)
   df_SHS_gfw <- df_SHS_gfw |> dplyr::mutate(SHS=(AS+CS)/2, info="GFW", Year=v_time_steps)
   print(df_SHS_gfw)

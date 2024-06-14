@@ -45,7 +45,7 @@ df_SHS_aoh_areas_sp <- df_SHS_sp |> filter(Score=="SHS") |> left_join(df_aoh_are
 # Calculate SHI
 #-------------------------------------------------------------------------------
 
-df_SHI <- df_SHS_aoh_areas_sp |> group_by(Year) |> summarise(SHI=mean(Values),Steward_SHI= weighted.mean(Values,W_stewardship))
+df_SHI <- df_SHS_aoh_areas_sp |> group_by(Year) |> summarise(SHI=round(mean(Values),2),Steward_SHI= round(weighted.mean(Values,W_stewardship),2))
 path_SHI <- file.path(outputFolder,"SHI_table.tsv")
 print(df_SHI)
 write_tsv(df_SHI,file= path_SHI)
