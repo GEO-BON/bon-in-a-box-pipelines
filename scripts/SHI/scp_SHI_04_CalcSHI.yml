@@ -34,11 +34,15 @@ outputs:
     type: text/tab-separated-values
   img_shi_timeseries:
     label: SHI time series
-    description: Figure showing a time series of SHI values for each time step.
+    description: Figure showing a time series of SHI values for each time step, 100% being equal to the reference year.
     type: image/png
   img_w_shi_timeseries:
     label: Steward’s SHI time series
     description: Figure showing a time series of Steward’s SHI values for each time step.
+      This is weighted by the proportion between the area of habitat for the study area and 
+      the total range map of the species. The reference year will start at the proportion of area of habitat 
+      in the study area. For example, if half of the species habitat is covered by the study area, 
+      the reference year’s value will be 50%.
     type: image/png
 references:
 - text: Jetz et al., Species Habitat Index, accessed on 24/8/2022.

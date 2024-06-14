@@ -260,7 +260,7 @@ for(i in 1:length(sp)){
   print("================== Step 2.3 - Area of habitat created =================")
   
   # get area for the area of habitat delimited by the study area or country
-  r_aoh_area <- terra::cellSize(r_aoh,unit="ha")#create raster of areas by pixel
+  r_aoh_area <- terra::cellSize(r_aoh,unit="m")#create raster of areas by pixel
   area_aoh  <- global(r_aoh_area,sum)$sum 
   
   #create dataframe with area values--------------------------------------------
