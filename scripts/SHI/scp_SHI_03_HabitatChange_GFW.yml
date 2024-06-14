@@ -1,15 +1,15 @@
 script: scp_SHI_03_HabitatChange_GFW.R
 name: Measure habitat change
-description: 
+description:
   This script loads the area of habitat of the species and the Global Forest Watch (GFW) layers to measure changes on the habitat of the species.
-  It uses the layers the 2000 forest layer as a reference and removes the pixels from the loss layer of GFW data. 
-author: 
+  It uses the layers the 2000 forest layer as a reference and removes the pixels from the loss layer of GFW data.
+author:
   - name: Maria Isabel Arce-Plata
     identifier: https://orcid.org/0000-0003-4024-9268
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
-license: CC BY 
-external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI 
+license: CC BY
+external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI
 inputs:
   spat_res:
     label: output spatial resolution
@@ -18,11 +18,11 @@ inputs:
     example: 1000
   srs:
     label: spatial reference system
-    description: Reference system for the area of interest. It can be 
-      1) the Spatial Reference System Identifier (SRID), 
-      2) the authority name (e.g. EPSG) with the SRID or 
+    description: Reference system for the area of interest. It can be
+      1) the Spatial Reference System Identifier (SRID),
+      2) the authority name (e.g. EPSG) with the SRID or
       3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]).
-      
+
       If just the SRID is given and the software can not find the reference system, try options 2 or 3.
     type: text
     example: EPSG:3116
@@ -30,7 +30,7 @@ inputs:
     label: species
     description: Scientific name of the species.
     type: text[]
-    example: 
+    example:
       [
         "Saguinus oedipus"
       ]
@@ -46,39 +46,39 @@ inputs:
     label: bounding box
     description: Bounding box of the area of habitat for each species.
     type: application/geopackage+sqlite3[]
-    example: 
+    example:
       [
         "/scripts/SHI/Saguinus oedipus_st_bbox.gpkg"
       ]
   min_forest:
     label: min forest
-    description: Minimum tree cover percentage required for each species, based on suitable habitat of the species. 
-      Acts as a filter for the Global Forest Watch Data. 
-      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
+    description: Minimum tree cover percentage required for each species, based on suitable habitat of the species.
+      Acts as a filter for the Global Forest Watch Data.
+      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])
     type: int[]
-    example: 
+    example:
       [
         50
       ]
   max_forest:
     label: max forest
-    description: Maximum tree cover percentage required for each species, based on suitable habitat of the species. 
-    Acts as a filter for the Global Forest Watch Data. 
-    If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
+    description: Maximum tree cover percentage required for each species, based on suitable habitat of the species.
+      Acts as a filter for the Global Forest Watch Data.
+      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])
     type: int[]
-    example: 
+    example:
       [
         100
       ]
   t_0:
     label: initial time
-    description: Year where the analysis should start. Starts in 2000, check the time interval available for the 
+    description: Year where the analysis should start. Starts in 2000, check the time interval available for the
       Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.
     type: int
     example: 2000
   t_n:
     label: final time
-    description: Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the 
+    description: Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the
       Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.
     type: int
     example: 2020
@@ -103,7 +103,7 @@ outputs:
     type: image/png[]
   df_shs:
     label: SHS table
-    description: A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species. 
+    description: A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species.
       Percentage of change, 100% being equal to the reference year.
     type: text/tab-separated-values[]
   df_shs_tidy:
