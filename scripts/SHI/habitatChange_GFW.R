@@ -184,7 +184,8 @@ for(i in 1:length(sp)){
   print("========== Forest gain layer downloaded ==========")
   
   r_GFW_gain <- cube_to_raster(cube_GFW_gain , format="terra") # convert to raster format
-  r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_aoh_rescaled),rcl=cbind(0,NA))
+  r_GFW_gain_rescaled <- terra::resample(r_GFW_gain,r_aoh_rescaled,method="mode")
+  r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain_rescaled ,r_aoh_rescaled),rcl=cbind(0,NA))
 
   #load world limits
   sf_world_lim <- st_read(file.path(path_script,"SHI/world-administrative-boundaries.gpkg"))
