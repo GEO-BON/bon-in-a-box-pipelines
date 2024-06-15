@@ -1,8 +1,0 @@
-**/.gradle
-**/.idea
-**/.openapi-generator
-**/build
-
-**/Dockerfile*
-**/*ignore
-**/hotswap.sh

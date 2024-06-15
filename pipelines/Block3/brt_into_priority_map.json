@@ -1,545 +1,546 @@
 {
-    "nodes": [
-      {
-        "id": "12",
-        "type": "userInput",
-        "position": {
-          "x": -269.9666748046875,
-          "y": 176.66034096319282
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 2010
-        }
+  "nodes": [
+    {
+      "id": "13",
+      "type": "constant",
+      "position": {
+        "x": 18,
+        "y": 312
       },
-      {
-        "id": "13",
-        "type": "constant",
-        "position": {
-          "x": -279.9666748046875,
-          "y": 38.66667175292969
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "float[]",
-          "value": [
-            "-86.748047",
-            "33.72434",
-            "-52.207031",
-            "63.273182"
-          ]
-        }
-      },
-      {
-        "id": "14",
-        "type": "userInput",
-        "position": {
-          "x": -248.9666748046875,
-          "y": -336.3333282470703
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "chelsa-clim|bio1",
-            "chelsa-clim|bio2",
-            "chelsa-clim|bio3",
-            "chelsa-clim|bio4",
-            "chelsa-clim|bio5",
-            "chelsa-clim|bio6",
-            "chelsa-clim|bio7",
-            "chelsa-clim|bio8",
-            "chelsa-clim|bio9",
-            "chelsa-clim|bio10",
-            "chelsa-clim|bio11",
-            "chelsa-clim|bio12",
-            "chelsa-clim|bio13",
-            "chelsa-clim|bio14",
-            "chelsa-clim|bio15",
-            "chelsa-clim|bio16",
-            "chelsa-clim|bio17",
-            "chelsa-clim|bio18",
-            "chelsa-clim|bio19"
-          ]
-        }
-      },
-      {
-        "id": "15",
-        "type": "userInput",
-        "position": {
-          "x": 577.3424394757504,
-          "y": 119.82307745771763
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 5
-        }
-      },
-      {
-        "id": "16",
-        "type": "userInput",
-        "position": {
-          "x": 579.0500749045328,
-          "y": 169.34450489240984
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "float[]",
-          "value": [
-            0.3,
-            0.2,
-            0.4,
-            0.1
-          ]
-        }
-      },
-      {
-        "id": "17",
-        "type": "userInput",
-        "position": {
-          "x": -262.5710943105202,
-          "y": 316.49775910028137
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 2020
-        }
-      },
-      {
-        "id": "18",
-        "type": "userInput",
-        "position": {
-          "x": -288.08059049512553,
-          "y": 269.73034942850495
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "Acer saccharum",
-            "Bubo scandiacus"
-          ]
-        }
-      },
-      {
-        "id": "19",
-        "type": "userInput",
-        "position": {
-          "x": -253.00503324129323,
-          "y": 233.5918965003142
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 50000
-        }
-      },
-      {
-        "id": "21",
-        "type": "io",
-        "position": {
-          "x": 80.0333251953125,
-          "y": 246.6666717529297
-        },
-        "data": {
-          "descriptionFile": "SDM>BRT_julia_viewer.json"
-        }
-      },
-      {
-        "id": "22",
-        "type": "userInput",
-        "position": {
-          "x": -268.88055104782734,
-          "y": 352.5328449751833
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 2010
-        }
-      },
-      {
-        "id": "23",
-        "type": "output",
-        "position": {
-          "x": 892.2867257915447,
-          "y": 285.70797712861906
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "24",
-        "type": "output",
-        "position": {
-          "x": 889.2867257915447,
-          "y": 335.70797712861906
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "25",
-        "type": "output",
-        "position": {
-          "x": 892.2867257915447,
-          "y": 389.70797712861906
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "26",
-        "type": "io",
-        "position": {
-          "x": 966.5990984789116,
-          "y": 69.03409646577047
-        },
-        "data": {
-          "descriptionFile": "Block3>block3.json"
-        }
-      },
-      {
-        "id": "27",
-        "type": "constant",
-        "position": {
-          "x": -378.4689379599243,
-          "y": 473.5666226271096
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "application/dbf",
-          "value": null
-        }
-      },
-      {
-        "id": "28",
-        "type": "output",
-        "position": {
-          "x": 1329.2632764081166,
-          "y": 125.39641880514651
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "29",
-        "type": "output",
-        "position": {
-          "x": 1329.2632764081166,
-          "y": 113.57310979860173
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "30",
-        "type": "output",
-        "position": {
-          "x": 1329.2632764081166,
-          "y": 100.72168696540088
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "31",
-        "type": "output",
-        "position": {
-          "x": 1326.6929918414764,
-          "y": 88.38432104552805
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "32",
-        "type": "output",
-        "position": {
-          "x": 1322.5805365348522,
-          "y": 66.2798737724226
-        },
-        "data": {
-          "label": "Output"
-        }
-      }
-    ],
-    "edges": [
-      {
-        "source": "19",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "SDM>julia_sdms>generateBackground.yml@22|buffer_distance",
-        "id": "reactflow__edge-19-21SDM>julia_sdms>generateBackground.yml@22|buffer_distance"
-      },
-      {
-        "source": "17",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|max_year",
-        "id": "reactflow__edge-17-21data>pyLoadObservations>pyLoadObservations.yml@1|max_year"
-      },
-      {
-        "source": "18",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "pipeline@30",
-        "id": "reactflow__edge-18-21pipeline@30"
-      },
-      {
-        "source": "13",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "pipeline@3",
-        "id": "reactflow__edge-13-21pipeline@3"
-      },
-      {
-        "source": "22",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|min_year",
-        "id": "reactflow__edge-22-21data>pyLoadObservations>pyLoadObservations.yml@1|min_year"
-      },
-      {
-        "source": "14",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "pipeline@32",
-        "id": "reactflow__edge-14-21pipeline@32"
-      },
-      {
-        "source": "21",
-        "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm",
-        "target": "23",
-        "targetHandle": null,
-        "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm-23"
-      },
-      {
-        "source": "21",
-        "sourceHandle": "filtering>cleanCoordinates.yml@21|clean_presence",
-        "target": "24",
-        "targetHandle": null,
-        "id": "reactflow__edge-21filtering>cleanCoordinates.yml@21|clean_presence-24"
-      },
-      {
-        "source": "21",
-        "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|fit_stats",
-        "target": "25",
-        "targetHandle": null,
-        "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|fit_stats-25"
-      },
-      {
-        "source": "15",
-        "sourceHandle": null,
-        "target": "26",
-        "targetHandle": "pipeline@43",
-        "id": "reactflow__edge-15-26pipeline@43"
-      },
-      {
-        "source": "16",
-        "sourceHandle": null,
-        "target": "26",
-        "targetHandle": "Block3>weightLayers.yml@44|weights",
-        "id": "reactflow__edge-16-26Block3>weightLayers.yml@44|weights"
-      },
-      {
-        "source": "14",
-        "sourceHandle": null,
-        "target": "26",
-        "targetHandle": "pipeline@6",
-        "id": "reactflow__edge-14-26pipeline@6"
-      },
-      {
-        "source": "27",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "data>loadFromStac.yml@18|mask",
-        "id": "reactflow__edge-27-21data>loadFromStac.yml@18|mask"
-      },
-      {
-        "source": "27",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "data>loadFromStac.yml@0|mask",
-        "id": "reactflow__edge-27-21data>loadFromStac.yml@0|mask"
-      },
-      {
-        "source": "26",
-        "sourceHandle": "Block3>climateVelocity.yml@50|climate_velocity",
-        "target": "28",
-        "targetHandle": null,
-        "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-28"
-      },
-      {
-        "source": "26",
-        "sourceHandle": "data>loadFromStac.yml@9|rasters",
-        "target": "29",
-        "targetHandle": null,
-        "id": "reactflow__edge-26data>loadFromStac.yml@9|rasters-29"
-      },
-      {
-        "source": "26",
-        "sourceHandle": "data>loadFromStac.yml@1|rasters",
-        "target": "30",
-        "targetHandle": null,
-        "id": "reactflow__edge-26data>loadFromStac.yml@1|rasters-30"
-      },
-      {
-        "source": "26",
-        "sourceHandle": "Block3>climateUniqueness.yml@16|climate_uniqueness",
-        "target": "31",
-        "targetHandle": null,
-        "id": "reactflow__edge-26Block3>climateUniqueness.yml@16|climate_uniqueness-31"
-      },
-      {
-        "source": "26",
-        "sourceHandle": "Block3>weightLayers.yml@44|priority_map",
-        "target": "32",
-        "targetHandle": null,
-        "id": "reactflow__edge-26Block3>weightLayers.yml@44|priority_map-32"
-      },
-      {
-        "source": "21",
-        "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty",
-        "target": "26",
-        "targetHandle": "Block3>weightLayers.yml@44|uncertainty",
-        "id": "reactflow__edge-21SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty-26Block3>weightLayers.yml@44|uncertainty"
-      }
-    ],
-    "inputs": {
-      "pipeline@12": {
-        "label": "minimum year",
-        "description": "Min year observations wanted",
-        "type": "int",
-        "example": 2010
-      },
-      "pipeline@14": {
-        "label": "collections_items",
-        "description": "Vector of strings, collection name followed by '|' followed by item id",
-        "type": "text[]",
-        "example": [
-          "chelsa-clim|bio1",
-          "chelsa-clim|bio2"
-        ]
-      },
-      "pipeline@15": {
-        "label": "k",
-        "description": "the value of k for the k-means algorithm",
-        "type": "int",
-        "example": 5
-      },
-      "pipeline@16": {
-        "label": "weights",
-        "description": "weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]",
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "float[]",
-        "example": [
+        "value": [
+          "-86.748047",
+          "33.72434",
+          "-52.207031",
+          "63.273182"
+        ]
+      }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 1023,
+        "y": 318.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2",
+          "chelsa-clim|bio3",
+          "chelsa-clim|bio4",
+          "chelsa-clim|bio5",
+          "chelsa-clim|bio6",
+          "chelsa-clim|bio7",
+          "chelsa-clim|bio8",
+          "chelsa-clim|bio9",
+          "chelsa-clim|bio10",
+          "chelsa-clim|bio11",
+          "chelsa-clim|bio12",
+          "chelsa-clim|bio13",
+          "chelsa-clim|bio14",
+          "chelsa-clim|bio15",
+          "chelsa-clim|bio16",
+          "chelsa-clim|bio17",
+          "chelsa-clim|bio18",
+          "chelsa-clim|bio19"
+        ]
+      }
+    },
+    {
+      "id": "15",
+      "type": "userInput",
+      "position": {
+        "x": 1194,
+        "y": 56.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
+    },
+    {
+      "id": "16",
+      "type": "userInput",
+      "position": {
+        "x": 1124,
+        "y": 91.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
           0.3,
           0.2,
           0.4,
           0.1
         ]
+      }
+    },
+    {
+      "id": "17",
+      "type": "userInput",
+      "position": {
+        "x": 92,
+        "y": 82
       },
-      "pipeline@17": {
-        "label": "maximum year",
-        "description": "Max year observations wanted",
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "int",
-        "example": 2020
+        "value": 2020
+      }
+    },
+    {
+      "id": "19",
+      "type": "userInput",
+      "position": {
+        "x": 86,
+        "y": 12
       },
-      "pipeline@18": {
-        "label": "Taxa list",
-        "description": "Array of taxa values",
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 50000
+      }
+    },
+    {
+      "id": "22",
+      "type": "userInput",
+      "position": {
+        "x": 96,
+        "y": 117
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2010
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": 1432,
+        "y": 391
+      },
+      "data": {
+        "descriptionFile": "Block3>block3.json"
+      }
+    },
+    {
+      "id": "35",
+      "type": "output",
+      "position": {
+        "x": 1432,
+        "y": 662.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "36",
+      "type": "output",
+      "position": {
+        "x": 1432,
+        "y": 614.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "40",
+      "type": "io",
+      "position": {
+        "x": 437,
+        "y": 126.5
+      },
+      "data": {
+        "descriptionFile": "SDM>SDM_BRT_julia.json"
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": 18,
+        "y": 242
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "text[]",
-        "example": [
-          "Acer saccharum",
-          "Bubo scandiacus"
-        ]
-      },
-      "pipeline@19": {
-        "label": "buffer_distance",
-        "description": "the minimum distance between any presence and any pseudoabsence in meters",
-        "type": "int",
-        "example": 50000
-      },
-      "pipeline@22": {
-        "label": "minimum year",
-        "description": "Min year observations wanted",
-        "type": "int",
-        "example": 2010
-      },
-      "Block3>block3.json@26|pipeline@3": {
-        "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
-        "label": "bbox",
-        "type": "float[]",
-        "example": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
+        "value": [
+          "Acer saccharum"
         ]
       }
     },
-    "outputs": {
-      "SDM>BRT_julia_viewer.json@21|SDM>julia_sdms>fitBRT.yml@24|sdm": {
-        "description": "Map of predicted occurrence probability for selected species using Booster Regression Trees",
-        "label": "Predictions",
-        "type": "image/tiff;application=geotiff"
+    {
+      "id": "44",
+      "type": "output",
+      "position": {
+        "x": 1432,
+        "y": 17.5
       },
-      "SDM>BRT_julia_viewer.json@21|filtering>cleanCoordinates.yml@21|clean_presence": {
-        "description": "Dataframe, table with clean presence points from GBIF for selected species",
-        "label": "Presences",
-        "type": "text/tab-separated-values"
-      },
-      "SDM>BRT_julia_viewer.json@21|SDM>julia_sdms>fitBRT.yml@24|fit_stats": {
-        "description": "Model fit statistics and threshold",
-        "label": "Fit statistics",
-        "type": "text/json"
-      },
-      "Block3>block3.json@26|Block3>climateVelocity.yml@50|climate_velocity": {
-        "description": "map",
-        "label": "climate velocity",
-        "type": "image/tiff;application=geotiff"
-      },
-      "Block3>block3.json@26|data>loadFromStac.yml@9|rasters": {
-        "description": "array of output raster paths",
-        "label": "rasters",
-        "type": "image/tiff;application=geotiff[]"
-      },
-      "Block3>block3.json@26|data>loadFromStac.yml@1|rasters": {
-        "description": "array of output raster paths",
-        "label": "rasters",
-        "type": "image/tiff;application=geotiff[]"
-      },
-      "Block3>block3.json@26|Block3>climateUniqueness.yml@16|climate_uniqueness": {
-        "description": "map",
-        "label": "climate uniqueness",
-        "type": "image/tiff;application=geotiff"
-      },
-      "Block3>block3.json@26|Block3>weightLayers.yml@44|priority_map": {
-        "description": "Sampling priority map.",
-        "label": "priority_map",
-        "type": "image/tiff;application=geotiff"
+      "data": {
+        "label": "Output"
       }
     },
-    "metadata": {
-      "name": "Block 3 w/ BRT SDM",
-      "description": "This is a pipeline that contains two pipelines, first to compute and SDM using BRTs, and second to take the SDM uncertainty and weigh it with accessibility, climate uniqueness, and climate velocity to produce a sampling priority map.",
-      "author": [
-        {
-          "name": "Michael D. Catchen",
-          "identifier": null
-        }
-      ],
-      "license": "MIT",
-      "external_link": null
+    {
+      "id": "45",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 306
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "46",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 258
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "47",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 354
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "48",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 576
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 480
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 2092,
+        "y": 528
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "userInput",
+      "position": {
+        "x": 27,
+        "y": 47
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://io.biodiversite-quebec.ca/stac/"
+      }
     }
+  ],
+  "edges": [
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "pipeline@43",
+      "id": "reactflow__edge-15-26pipeline@43"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "Block3>weightLayers.yml@44|weights",
+      "id": "reactflow__edge-16-26Block3>weightLayers.yml@44|weights"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "pipeline@6",
+      "id": "reactflow__edge-14-26pipeline@6"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|min_year",
+      "id": "reactflow__edge-22-40data>pyLoadObservations>pyLoadObservations.yml@1|min_year"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "pipeline@3",
+      "id": "reactflow__edge-13-40pipeline@3"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|max_year",
+      "id": "reactflow__edge-17-40data>pyLoadObservations>pyLoadObservations.yml@1|max_year"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "SDM>julia_sdms>generateBackground.yml@22|buffer_distance",
+      "id": "reactflow__edge-19-40SDM>julia_sdms>generateBackground.yml@22|buffer_distance"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi",
+      "target": "35",
+      "targetHandle": null,
+      "id": "reactflow__edge-40data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi-35"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm",
+      "target": "36",
+      "targetHandle": null,
+      "id": "reactflow__edge-40SDM>julia_sdms>fitBRT.yml@24|sdm-36"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty",
+      "target": "26",
+      "targetHandle": "Block3>weightLayers.yml@44|uncertainty",
+      "id": "reactflow__edge-40SDM>julia_sdms>fitBRT.yml@24|sdm_uncertainty-26Block3>weightLayers.yml@44|uncertainty"
+    },
+    {
+      "source": "42",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "pipeline@35",
+      "id": "reactflow__edge-42-40pipeline@35"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "pipeline@35|defaultOutput",
+      "target": "44",
+      "targetHandle": null,
+      "id": "reactflow__edge-40pipeline@35|defaultOutput-44"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": "pipeline@3",
+      "id": "reactflow__edge-13-26pipeline@3"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>weightLayers.yml@44|priority_map",
+      "target": "45",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>weightLayers.yml@44|priority_map-45"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@30|rasters",
+      "target": "46",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@30|rasters-46"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>climateUniqueness.yml@16|climate_uniqueness",
+      "target": "47",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>climateUniqueness.yml@16|climate_uniqueness-47"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@1|rasters",
+      "target": "48",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@1|rasters-48"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "data>loadFromStac.yml@9|rasters",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-26data>loadFromStac.yml@9|rasters-49"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "Block3>climateVelocity.yml@50|climate_velocity",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-26Block3>climateVelocity.yml@50|climate_velocity-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-51-40pipeline@2"
+    }
+  ],
+  "inputs": {
+    "pipeline@15": {
+      "label": "k",
+      "description": "the value of k for the k-means algorithm",
+      "type": "int",
+      "example": 5
+    },
+    "pipeline@16": {
+      "label": "weights",
+      "description": "Weight vectors that sum to one. Weights correspond to layers in this order: [uncertainty, uniqueness, velocity, accessibility].",
+      "type": "float[]",
+      "example": [
+        0.3,
+        0.2,
+        0.4,
+        0.1
+      ]
+    },
+    "pipeline@17": {
+      "label": "maximum year",
+      "description": "Max year observations wanted",
+      "type": "int",
+      "example": 2020
+    },
+    "pipeline@19": {
+      "label": "buffer_distance",
+      "description": "the minimum distance between any presence and any pseudoabsence in meters",
+      "type": "int",
+      "example": 50000
+    },
+    "pipeline@22": {
+      "label": "minimum year",
+      "description": "Min year observations wanted",
+      "type": "int",
+      "example": 2010
+    },
+    "SDM>SDM_BRT_julia.json@40|data>loadFromStac.yml@0|collections_items": {
+      "description": "Predictors from the STAC catalog",
+      "label": "Predictors",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
+    },
+    "SDM>SDM_BRT_julia.json@40|pipeline@16": {
+      "description": "Spatial resolution of the rasters, in degrees",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 0.008
+    },
+    "pipeline@51": {
+      "label": "STAC url for predictors",
+      "description": "URL of the STAC catalog",
+      "type": "text",
+      "example": "https://io.biodiversite-quebec.ca/stac/"
+    }
+  },
+  "outputs": {
+    "SDM>SDM_BRT_julia.json@40|data>pyLoadObservations>pyLoadObservations.yml@1|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
+      "weight": 2
+    },
+    "SDM>SDM_BRT_julia.json@40|SDM>julia_sdms>fitBRT.yml@24|sdm": {
+      "description": "Map of predicted occurrence probability for selected species using Boosted Regresion Trees",
+      "label": "Predictions",
+      "type": "image/tiff;application=geotiff",
+      "example": null,
+      "weight": 3
+    },
+    "SDM>SDM_BRT_julia.json@40|pipeline@35|defaultOutput": {
+      "description": "Species for which the distribution model is generated",
+      "label": "Species name",
+      "type": "text[]",
+      "example": [
+        "Acer saccharum"
+      ],
+      "weight": 1
+    },
+    "Block3>block3.json@26|Block3>weightLayers.yml@44|priority_map": {
+      "description": "Sampling priority map.",
+      "label": "Priority map",
+      "type": "image/tiff;application=geotiff",
+      "weight": 7
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@30|rasters": {
+      "description": "Accessibility to nearest city",
+      "label": "Accessibility",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 6
+    },
+    "Block3>block3.json@26|Block3>climateUniqueness.yml@16|climate_uniqueness": {
+      "description": "Map of climate uniqueness",
+      "label": "Climate uniqueness",
+      "type": "image/tiff;application=geotiff",
+      "weight": 4
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@1|rasters": {
+      "description": "List of layers used in climate uniqueness calculation",
+      "label": "Layers (for climate uniqueness)",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "Block3>block3.json@26|data>loadFromStac.yml@9|rasters": {
+      "description": "array of output raster paths",
+      "label": "ESA Land Cover (for climat uniqueness)",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "Block3>block3.json@26|Block3>climateVelocity.yml@50|climate_velocity": {
+      "description": "Map of climate velocity",
+      "label": "Climate velocity",
+      "type": "image/tiff;application=geotiff",
+      "weight": 5
+    }
+  },
+  "metadata": {
+    "name": "Sampling prioritization based on species distribution modeling",
+    "description": "This is a pipeline that contains two pipelines, first to compute and SDM using BRTs, and second to take the SDM uncertainty and weigh it with accessibility, climate uniqueness, and climate velocity to produce a sampling priority map for a selected species.",
+    "author": [
+      {
+        "name": "Michael D. Catchen"
+      }
+    ],
+    "license": "MIT",
+    "external_link": null
   }
+}

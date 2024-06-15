@@ -22,8 +22,8 @@ run_maxent <- function(presence.bg, with_raster = F,
                         parallelType = "doParallel"
 ) {
   
-  presence <- presence.bg |> dplyr::filter(pa == 1) |> data.frame()
-  background <- presence.bg |> dplyr::filter(pa == 0) |> data.frame()
+  presence <- presence.bg |> dplyr::filter(pa == 1) |> as.data.frame()
+  background <- presence.bg |> dplyr::filter(pa == 0) |> as.data.frame()
   
   if (with_raster) {
     ENMmodel <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat")],
@@ -259,8 +259,8 @@ predict_maxent <- function(presence_background,
 
   # We calculate the prediction with the whole dataset
 
-      presence <- presence_background |> dplyr::filter(pa == 1) |> data.frame()
-      background <- presence_background |> dplyr::filter(pa == 0) |> data.frame()
+      presence <- presence_background |> dplyr::filter(pa == 1) |> as.data.frame()
+      background <- presence_background |> dplyr::filter(pa == 0) |> as.data.frame()
       
 
       mod_tuning <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat", layers)], 
@@ -304,8 +304,8 @@ runs <- c("run_1")
       backg_test <- backgr[bg.grp == g, ]
       presence_bg_train <- group.all[which(group.all[,1] == g),]
       
-      presence <- presence_bg_train |> dplyr::filter(pa == 1) |> data.frame()
-      background <- presence_bg_train |> dplyr::filter(pa == 0) |> data.frame()
+      presence <- presence_bg_train |> dplyr::filter(pa == 1) |> as.data.frame()
+      background <- presence_bg_train |> dplyr::filter(pa == 0) |> as.data.frame()
       
 
       mod_tuning <- ENMeval::ENMevaluate(occs = presence[, c("lon", "lat", layers)], 
@@ -322,12 +322,18 @@ runs <- c("run_1")
       pred_pres <- dismo::predict(mod_tuning@models[[tuned_param]], predictors,
                                   args = sprintf("outputformat=%s", type))
 
-        if (inherits(pred_runs, "RasterLayer") || inherits(pred_runs, "RasterStack")) {
-              pred_runs <- raster::stack(pred_runs, pred_pres)
-         
-        } else {
-           pred_runs <-  pred_pres 
-           }
+        #if (inherits(pred_runs, "RasterLayer") || inherits(pred_runs, "RasterStack")) {
+        #    pred_runs <- raster::stack(pred_runs, pred_pres)
+        #} else {
+        #   pred_runs <-  pred_pres 
+        #}
+      if (is.null(pred_runs)) {
+        pred_runs <- pred_pres
+      } else {
+        pred_runs <-  c(pred_runs, pred_pres) 
+      }
+      
+        
       
  }
 

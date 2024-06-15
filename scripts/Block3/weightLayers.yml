@@ -1,7 +1,7 @@
 script: weightLayers.jl
 name: Weight Layers
 author:
-  - name: Michael D. Catchen 
+  - name: Michael D. Catchen
     identifier: https://orcid.org/0000-0002-6506-6487
 description: "This script takes in multiple layers and computes a priority map based on a weighted average of those layers"
 inputs:
@@ -15,7 +15,7 @@ inputs:
     description: a layer where higher values means more unique climate conditions
     type: image/tiff;application=geotiff
     example: y2000_class210_binary.tif
-  climate_velocity: 
+  climate_velocity:
     label: climate velocity
     description: a layer where higher values mean the climate is changing faster
     type: image/tiff;application=geotiff
@@ -27,12 +27,14 @@ inputs:
     example: y2000_class210_binary.tif
   weights:
     label: weights
-    description: weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]
+    description: |
+      Weight vectors that sum to one.
+      Weights correspond to layers in this order: [uncertainty, uniqueness, velocity, accessibility].
     type: float[]
     example: [0.3, 0.2, 0.4, 0.1]
 outputs:
   priority_map:
-    label: priority_map
+    label: priority map
     description: Sampling priority map.
     type: image/tiff;application=geotiff
 

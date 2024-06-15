@@ -1,800 +1,822 @@
 {
-    "nodes": [
-      {
-        "id": "1",
-        "type": "io",
-        "position": {
-          "x": 391.76898108164164,
-          "y": 569.1078098700178
-        },
-        "data": {
-          "descriptionFile": "data>loadFromStac.yml"
-        }
+  "nodes": [
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 390.5547861972468,
+        "y": 567.1078098700178
       },
-      {
-        "id": "2",
-        "type": "constant",
-        "position": {
-          "x": -347.9849165399878,
-          "y": -91.01105222521502
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text",
-          "value": "https://io.biodiversite-quebec.ca/stac/"
-        }
-      },
-      {
-        "id": "3",
-        "type": "userInput",
-        "position": {
-          "x": -312.14873695815743,
-          "y": 496.4338350821323
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "float[]",
-          "value": [
-            "-86.748047",
-            "33.72434",
-            "-52.207031",
-            "63.273182"
-          ]
-        }
-      },
-      {
-        "id": "4",
-        "type": "constant",
-        "position": {
-          "x": -594.5944218132245,
-          "y": 717.8221162348001
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "float",
-          "value": 0.008
-        }
-      },
-      {
-        "id": "6",
-        "type": "userInput",
-        "position": {
-          "x": -429.5859975359332,
-          "y": 67.41973092263399
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "chelsa-clim|bio1",
-            "chelsa-clim|bio2",
-            "chelsa-clim|bio3",
-            "chelsa-clim|bio4",
-            "chelsa-clim|bio5",
-            "chelsa-clim|bio6",
-            "chelsa-clim|bio7",
-            "chelsa-clim|bio8",
-            "chelsa-clim|bio9",
-            "chelsa-clim|bio10",
-            "chelsa-clim|bio11",
-            "chelsa-clim|bio12",
-            "chelsa-clim|bio13",
-            "chelsa-clim|bio14",
-            "chelsa-clim|bio15",
-            "chelsa-clim|bio16",
-            "chelsa-clim|bio17",
-            "chelsa-clim|bio18",
-            "chelsa-clim|bio19"
-          ]
-        }
-      },
-      {
-        "id": "9",
-        "type": "io",
-        "position": {
-          "x": 353.6499938964844,
-          "y": 884
-        },
-        "data": {
-          "descriptionFile": "data>loadFromStac.yml"
-        }
-      },
-      {
-        "id": "10",
-        "type": "constant",
-        "position": {
-          "x": -270.3500061035156,
-          "y": 775
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "esacci-lc|esacci-lc-2020"
-          ]
-        }
-      },
-      {
-        "id": "12",
-        "type": "output",
-        "position": {
-          "x": 943.6499938964844,
-          "y": 426
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "15",
-        "type": "output",
-        "position": {
-          "x": 838.6499938964844,
-          "y": 885
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "16",
-        "type": "io",
-        "position": {
-          "x": 1321.6499938964844,
-          "y": 685
-        },
-        "data": {
-          "descriptionFile": "Block3>climateUniqueness.yml"
-        }
-      },
-      {
-        "id": "17",
-        "type": "output",
-        "position": {
-          "x": 1761.6499938964844,
-          "y": 682
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "21",
-        "type": "io",
-        "position": {
-          "x": 570.124027546199,
-          "y": -163.4163222373429
-        },
-        "data": {
-          "descriptionFile": "data>loadFromStac.yml"
-        }
-      },
-      {
-        "id": "24",
-        "type": "constant",
-        "position": {
-          "x": -763.681948816768,
-          "y": 324.6128233177092
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text",
-          "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
-        }
-      },
-      {
-        "id": "25",
-        "type": "constant",
-        "position": {
-          "x": 57.14488835869702,
-          "y": -1050.2978267070198
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "chelsa-clim-proj|bio1_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio2_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio3_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio4_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio5_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio6_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio7_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio8_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio9_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio10_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio11_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio12_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio13_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio14_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio15_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio16_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio17_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio18_2071-2100_gfdl-esm4_ssp370",
-            "chelsa-clim-proj|bio19_2071-2100_gfdl-esm4_ssp370"
-          ]
-        }
-      },
-      {
-        "id": "30",
-        "type": "io",
-        "position": {
-          "x": 499.6499938964844,
-          "y": 1230
-        },
-        "data": {
-          "descriptionFile": "data>loadFromStac.yml"
-        }
-      },
-      {
-        "id": "31",
-        "type": "constant",
-        "position": {
-          "x": -271.1670907550228,
-          "y": 1223.2499264553558
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "accessibility_to_cities|accessibility"
-          ]
-        }
-      },
-      {
-        "id": "33",
-        "type": "constant",
-        "position": {
-          "x": -613.3848707089167,
-          "y": 638.0014281579736
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text",
-          "value": "EPSG:4326"
-        }
-      },
-      {
-        "id": "40",
-        "type": "constant",
-        "position": {
-          "x": 181.0333251953125,
-          "y": 220.6666717529297
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "application/dbf"
-        }
-      },
-      {
-        "id": "43",
-        "type": "userInput",
-        "position": {
-          "x": 1079.0333251953125,
-          "y": 719.6666717529297
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "int",
-          "value": 5
-        }
-      },
-      {
-        "id": "44",
-        "type": "io",
-        "position": {
-          "x": 2260.0333251953125,
-          "y": 440.6666717529297
-        },
-        "data": {
-          "descriptionFile": "Block3>weightLayers.yml"
-        }
-      },
-      {
-        "id": "46",
-        "type": "output",
-        "position": {
-          "x": 2617.6873111923583,
-          "y": 439.7879847872508
-        },
-        "data": {
-          "label": "Output"
-        }
-      },
-      {
-        "id": "48",
-        "type": "io",
-        "position": {
-          "x": 670.7595650083856,
-          "y": -321.4292184355724
-        },
-        "data": {
-          "descriptionFile": "data>loadFromStac.yml"
-        }
-      },
-      {
-        "id": "49",
-        "type": "constant",
-        "position": {
-          "x": 490.98494171472817,
-          "y": -840.0870629692861
-        },
-        "dragHandle": ".dragHandle",
-        "data": {
-          "type": "text[]",
-          "value": [
-            "chelsa-clim|bio1",
-            "chelsa-clim|bio2",
-            "chelsa-clim|bio3",
-            "chelsa-clim|bio4",
-            "chelsa-clim|bio5",
-            "chelsa-clim|bio6",
-            "chelsa-clim|bio7",
-            "chelsa-clim|bio8",
-            "chelsa-clim|bio9",
-            "chelsa-clim|bio10",
-            "chelsa-clim|bio11",
-            "chelsa-clim|bio12",
-            "chelsa-clim|bio13",
-            "chelsa-clim|bio14",
-            "chelsa-clim|bio15",
-            "chelsa-clim|bio16",
-            "chelsa-clim|bio17",
-            "chelsa-clim|bio18",
-            "chelsa-clim|bio19"
-          ]
-        }
-      },
-      {
-        "id": "50",
-        "type": "io",
-        "position": {
-          "x": 1442.3859622978657,
-          "y": 106.05420622683476
-        },
-        "data": {
-          "descriptionFile": "Block3>climateVelocity.yml"
-        }
-      },
-      {
-        "id": "51",
-        "type": "output",
-        "position": {
-          "x": 1801.834967702507,
-          "y": 100.60868986273343
-        },
-        "data": {
-          "label": "Output"
-        }
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
       }
-    ],
-    "edges": [
-      {
-        "source": "2",
-        "sourceHandle": null,
-        "target": "1",
-        "targetHandle": "stac_url",
-        "id": "reactflow__edge-2-1stac_url"
+    },
+    {
+      "id": "2",
+      "type": "constant",
+      "position": {
+        "x": -347.9849165399878,
+        "y": -91.01105222521502
       },
-      {
-        "source": "3",
-        "sourceHandle": null,
-        "target": "1",
-        "targetHandle": "bbox",
-        "id": "reactflow__edge-3-1bbox"
-      },
-      {
-        "source": "4",
-        "sourceHandle": null,
-        "target": "1",
-        "targetHandle": "spatial_res",
-        "id": "reactflow__edge-4-1spatial_res"
-      },
-      {
-        "source": "6",
-        "sourceHandle": null,
-        "target": "1",
-        "targetHandle": "collections_items",
-        "id": "reactflow__edge-6-1collections_items"
-      },
-      {
-        "source": "3",
-        "sourceHandle": null,
-        "target": "9",
-        "targetHandle": "bbox",
-        "id": "reactflow__edge-3-9bbox"
-      },
-      {
-        "source": "4",
-        "sourceHandle": null,
-        "target": "9",
-        "targetHandle": "spatial_res",
-        "id": "reactflow__edge-4-9spatial_res"
-      },
-      {
-        "source": "10",
-        "sourceHandle": null,
-        "target": "9",
-        "targetHandle": "collections_items",
-        "id": "reactflow__edge-10-9collections_items"
-      },
-      {
-        "source": "2",
-        "sourceHandle": null,
-        "target": "9",
-        "targetHandle": "stac_url",
-        "id": "reactflow__edge-2-9stac_url"
-      },
-      {
-        "source": "1",
-        "sourceHandle": "rasters",
-        "target": "12",
-        "targetHandle": null,
-        "id": "reactflow__edge-1rasters-12"
-      },
-      {
-        "source": "9",
-        "sourceHandle": "rasters",
-        "target": "15",
-        "targetHandle": null,
-        "id": "reactflow__edge-9rasters-15"
-      },
-      {
-        "source": "1",
-        "sourceHandle": "rasters",
-        "target": "16",
-        "targetHandle": "layers",
-        "id": "reactflow__edge-1rasters-16layers"
-      },
-      {
-        "source": "9",
-        "sourceHandle": "rasters",
-        "target": "16",
-        "targetHandle": "water_mask",
-        "id": "reactflow__edge-9rasters-16water_mask"
-      },
-      {
-        "source": "16",
-        "sourceHandle": "climate_uniqueness",
-        "target": "17",
-        "targetHandle": null,
-        "id": "reactflow__edge-16climate_uniqueness-17"
-      },
-      {
-        "source": "2",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "stac_url",
-        "id": "reactflow__edge-2-21stac_url"
-      },
-      {
-        "source": "3",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "bbox",
-        "id": "reactflow__edge-3-21bbox"
-      },
-      {
-        "source": "24",
-        "sourceHandle": null,
-        "target": "1",
-        "targetHandle": "weight_matrix_with_ids",
-        "id": "reactflow__edge-24-1weight_matrix_with_ids"
-      },
-      {
-        "source": "24",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "weight_matrix_with_ids",
-        "id": "reactflow__edge-24-21weight_matrix_with_ids"
-      },
-      {
-        "source": "4",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "spatial_res",
-        "id": "reactflow__edge-4-21spatial_res"
-      },
-      {
-        "source": "25",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "collections_items",
-        "id": "reactflow__edge-25-21collections_items"
-      },
-      {
-        "source": "4",
-        "sourceHandle": null,
-        "target": "30",
-        "targetHandle": "spatial_res",
-        "id": "reactflow__edge-4-30spatial_res"
-      },
-      {
-        "source": "3",
-        "sourceHandle": null,
-        "target": "30",
-        "targetHandle": "bbox",
-        "id": "reactflow__edge-3-30bbox"
-      },
-      {
-        "source": "2",
-        "sourceHandle": null,
-        "target": "30",
-        "targetHandle": "stac_url",
-        "id": "reactflow__edge-2-30stac_url"
-      },
-      {
-        "source": "24",
-        "sourceHandle": null,
-        "target": "30",
-        "targetHandle": "weight_matrix_with_ids",
-        "id": "reactflow__edge-24-30weight_matrix_with_ids"
-      },
-      {
-        "source": "31",
-        "sourceHandle": null,
-        "target": "30",
-        "targetHandle": "collections_items",
-        "id": "reactflow__edge-31-30collections_items"
-      },
-      {
-        "source": "33",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "proj",
-        "id": "reactflow__edge-33-21proj"
-      },
-      {
-        "source": "33",
-        "sourceHandle": null,
-        "target": "1",
-        "targetHandle": "proj",
-        "id": "reactflow__edge-33-1proj"
-      },
-      {
-        "source": "33",
-        "sourceHandle": null,
-        "target": "9",
-        "targetHandle": "proj",
-        "id": "reactflow__edge-33-9proj"
-      },
-      {
-        "source": "33",
-        "sourceHandle": null,
-        "target": "30",
-        "targetHandle": "proj",
-        "id": "reactflow__edge-33-30proj"
-      },
-      {
-        "source": "40",
-        "sourceHandle": null,
-        "target": "30",
-        "targetHandle": "mask",
-        "id": "reactflow__edge-40-30mask"
-      },
-      {
-        "source": "40",
-        "sourceHandle": null,
-        "target": "9",
-        "targetHandle": "mask",
-        "id": "reactflow__edge-40-9mask"
-      },
-      {
-        "source": "40",
-        "sourceHandle": null,
-        "target": "1",
-        "targetHandle": "mask",
-        "id": "reactflow__edge-40-1mask"
-      },
-      {
-        "source": "40",
-        "sourceHandle": null,
-        "target": "21",
-        "targetHandle": "mask",
-        "id": "reactflow__edge-40-21mask"
-      },
-      {
-        "source": "43",
-        "sourceHandle": null,
-        "target": "16",
-        "targetHandle": "k",
-        "id": "reactflow__edge-43-16k"
-      },
-      {
-        "source": "16",
-        "sourceHandle": "climate_uniqueness",
-        "target": "44",
-        "targetHandle": "climate_uniqueness",
-        "id": "reactflow__edge-16climate_uniqueness-44climate_uniqueness"
-      },
-      {
-        "source": "9",
-        "sourceHandle": "rasters",
-        "target": "44",
-        "targetHandle": "accessibility",
-        "id": "reactflow__edge-9rasters-44accessibility"
-      },
-      {
-        "source": "44",
-        "sourceHandle": "priority_map",
-        "target": "46",
-        "targetHandle": null,
-        "id": "reactflow__edge-44priority_map-46"
-      },
-      {
-        "source": "24",
-        "sourceHandle": null,
-        "target": "9",
-        "targetHandle": "weight_matrix_with_ids",
-        "id": "reactflow__edge-24-9weight_matrix_with_ids"
-      },
-      {
-        "source": "49",
-        "sourceHandle": null,
-        "target": "48",
-        "targetHandle": "collections_items",
-        "id": "reactflow__edge-49-48collections_items"
-      },
-      {
-        "source": "40",
-        "sourceHandle": null,
-        "target": "48",
-        "targetHandle": "mask",
-        "id": "reactflow__edge-40-48mask"
-      },
-      {
-        "source": "2",
-        "sourceHandle": null,
-        "target": "48",
-        "targetHandle": "stac_url",
-        "id": "reactflow__edge-2-48stac_url"
-      },
-      {
-        "source": "3",
-        "sourceHandle": null,
-        "target": "48",
-        "targetHandle": "bbox",
-        "id": "reactflow__edge-3-48bbox"
-      },
-      {
-        "source": "33",
-        "sourceHandle": null,
-        "target": "48",
-        "targetHandle": "proj",
-        "id": "reactflow__edge-33-48proj"
-      },
-      {
-        "source": "4",
-        "sourceHandle": null,
-        "target": "48",
-        "targetHandle": "spatial_res",
-        "id": "reactflow__edge-4-48spatial_res"
-      },
-      {
-        "source": "24",
-        "sourceHandle": null,
-        "target": "48",
-        "targetHandle": "weight_matrix_with_ids",
-        "id": "reactflow__edge-24-48weight_matrix_with_ids"
-      },
-      {
-        "source": "48",
-        "sourceHandle": "rasters",
-        "target": "50",
-        "targetHandle": "baseline_layers",
-        "id": "reactflow__edge-48rasters-50baseline_layers"
-      },
-      {
-        "source": "21",
-        "sourceHandle": "rasters",
-        "target": "50",
-        "targetHandle": "end_layers",
-        "id": "reactflow__edge-21rasters-50end_layers"
-      },
-      {
-        "source": "9",
-        "sourceHandle": "rasters",
-        "target": "50",
-        "targetHandle": "landcover",
-        "id": "reactflow__edge-9rasters-50landcover"
-      },
-      {
-        "source": "50",
-        "sourceHandle": "climate_velocity",
-        "target": "51",
-        "targetHandle": null,
-        "id": "reactflow__edge-50climate_velocity-51"
-      },
-      {
-        "source": "50",
-        "sourceHandle": "climate_velocity",
-        "target": "44",
-        "targetHandle": "climate_velocity",
-        "id": "reactflow__edge-50climate_velocity-44climate_velocity"
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://io.biodiversite-quebec.ca/stac/"
       }
-    ],
-    "inputs": {
-      "pipeline@3": {
-        "label": "bbox",
-        "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+    },
+    {
+      "id": "3",
+      "type": "userInput",
+      "position": {
+        "x": -312.14873695815743,
+        "y": 496.4338350821323
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "float[]",
-        "example": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
+        "value": [
+          "-86.748047",
+          "33.72434",
+          "-52.207031",
+          "63.273182"
         ]
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": -594.5944218132245,
+        "y": 717.8221162348001
       },
-      "pipeline@6": {
-        "label": "collections_items",
-        "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.008
+      }
+    },
+    {
+      "id": "6",
+      "type": "userInput",
+      "position": {
+        "x": -429.5859975359332,
+        "y": 67.41973092263399
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "text[]",
-        "example": [
+        "value": [
           "chelsa-clim|bio1",
-          "chelsa-clim|bio2"
+          "chelsa-clim|bio2",
+          "chelsa-clim|bio3",
+          "chelsa-clim|bio4",
+          "chelsa-clim|bio5",
+          "chelsa-clim|bio6",
+          "chelsa-clim|bio7",
+          "chelsa-clim|bio8",
+          "chelsa-clim|bio9",
+          "chelsa-clim|bio10",
+          "chelsa-clim|bio11",
+          "chelsa-clim|bio12",
+          "chelsa-clim|bio13",
+          "chelsa-clim|bio14",
+          "chelsa-clim|bio15",
+          "chelsa-clim|bio16",
+          "chelsa-clim|bio17",
+          "chelsa-clim|bio18",
+          "chelsa-clim|bio19"
         ]
+      }
+    },
+    {
+      "id": "9",
+      "type": "io",
+      "position": {
+        "x": 353.6499938964844,
+        "y": 884
       },
-      "pipeline@43": {
-        "label": "k",
-        "description": "the value of k for the k-means algorithm",
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "10",
+      "type": "constant",
+      "position": {
+        "x": -270.3500061035156,
+        "y": 775
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "esacci-lc|esacci-lc-2020"
+        ]
+      }
+    },
+    {
+      "id": "12",
+      "type": "output",
+      "position": {
+        "x": 943.6499938964844,
+        "y": 426
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 838.6499938964844,
+        "y": 885
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "16",
+      "type": "io",
+      "position": {
+        "x": 1319.9565032717592,
+        "y": 685
+      },
+      "data": {
+        "descriptionFile": "Block3>climateUniqueness.yml"
+      }
+    },
+    {
+      "id": "17",
+      "type": "output",
+      "position": {
+        "x": 1761.6499938964844,
+        "y": 682
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "21",
+      "type": "io",
+      "position": {
+        "x": 570.124027546199,
+        "y": -163.4163222373429
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "24",
+      "type": "constant",
+      "position": {
+        "x": -763.681948816768,
+        "y": 324.6128233177092
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+      }
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": 57.14488835869702,
+        "y": -1050.2978267070198
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim-proj|bio1_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio2_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio3_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio4_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio5_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio6_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio7_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio8_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio9_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio10_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio11_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio12_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio13_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio14_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio15_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio16_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio17_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio18_2071-2100_gfdl-esm4_ssp370",
+          "chelsa-clim-proj|bio19_2071-2100_gfdl-esm4_ssp370"
+        ]
+      }
+    },
+    {
+      "id": "30",
+      "type": "io",
+      "position": {
+        "x": 499.6499938964844,
+        "y": 1230
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "31",
+      "type": "constant",
+      "position": {
+        "x": -271.1670907550228,
+        "y": 1223.2499264553558
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "accessibility_to_cities|accessibility"
+        ]
+      }
+    },
+    {
+      "id": "33",
+      "type": "constant",
+      "position": {
+        "x": -613.3848707089167,
+        "y": 638.0014281579736
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "40",
+      "type": "constant",
+      "position": {
+        "x": 181.0333251953125,
+        "y": 220.6666717529297
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf"
+      }
+    },
+    {
+      "id": "43",
+      "type": "userInput",
+      "position": {
+        "x": 1079.0333251953125,
+        "y": 719.6666717529297
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
         "type": "int",
-        "example": 5
+        "value": 5
+      }
+    },
+    {
+      "id": "44",
+      "type": "io",
+      "position": {
+        "x": 2260.0333251953125,
+        "y": 440.6666717529297
       },
-      "Block3>weightLayers.yml@44|uncertainty": {
-        "description": "uncertainty in the inference of some value across space",
-        "label": "uncertainty",
-        "type": "image/tiff;application=geotiff",
-        "example": "y2000_class210_binary.tif"
+      "data": {
+        "descriptionFile": "Block3>weightLayers.yml"
+      }
+    },
+    {
+      "id": "46",
+      "type": "output",
+      "position": {
+        "x": 2617.6873111923583,
+        "y": 439.7879847872508
       },
-      "Block3>weightLayers.yml@44|weights": {
-        "description": "weight vector that sums to one. Weights correnspond to layers in this order, [uncertainty, uniqueness, velocity, accessability]",
-        "label": "weights",
-        "type": "float[]",
-        "example": [
-          0.3,
-          0.2,
-          0.4,
-          0.1
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": 670.7595650083856,
+        "y": -321.4292184355724
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "49",
+      "type": "constant",
+      "position": {
+        "x": 490.98494171472817,
+        "y": -840.0870629692861
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2",
+          "chelsa-clim|bio3",
+          "chelsa-clim|bio4",
+          "chelsa-clim|bio5",
+          "chelsa-clim|bio6",
+          "chelsa-clim|bio7",
+          "chelsa-clim|bio8",
+          "chelsa-clim|bio9",
+          "chelsa-clim|bio10",
+          "chelsa-clim|bio11",
+          "chelsa-clim|bio12",
+          "chelsa-clim|bio13",
+          "chelsa-clim|bio14",
+          "chelsa-clim|bio15",
+          "chelsa-clim|bio16",
+          "chelsa-clim|bio17",
+          "chelsa-clim|bio18",
+          "chelsa-clim|bio19"
         ]
       }
     },
-    "outputs": {
-      "data>loadFromStac.yml@1|rasters": {
-        "description": "array of output raster paths",
-        "label": "rasters",
-        "type": "image/tiff;application=geotiff[]"
+    {
+      "id": "50",
+      "type": "io",
+      "position": {
+        "x": 1442.3859622978657,
+        "y": 106.05420622683476
       },
-      "data>loadFromStac.yml@9|rasters": {
-        "description": "array of output raster paths",
-        "label": "rasters",
-        "type": "image/tiff;application=geotiff[]"
-      },
-      "Block3>climateUniqueness.yml@16|climate_uniqueness": {
-        "description": "map",
-        "label": "climate uniqueness",
-        "type": "image/tiff;application=geotiff"
-      },
-      "Block3>weightLayers.yml@44|priority_map": {
-        "description": "Sampling priority map.",
-        "label": "priority_map",
-        "type": "image/tiff;application=geotiff"
-      },
-      "Block3>climateVelocity.yml@50|climate_velocity": {
-        "description": "map",
-        "label": "climate velocity",
-        "type": "image/tiff;application=geotiff"
+      "data": {
+        "descriptionFile": "Block3>climateVelocity.yml"
       }
     },
-    "metadata": {
-      "name": "pipeline",
-      "description": "da pipline",
-      "author": [
-        {
-          "name": "Michael D. Catchen",
-          "identifier": null
-        }
-      ],
-      "license": "MIT",
-      "external_link": null
+    {
+      "id": "51",
+      "type": "output",
+      "position": {
+        "x": 1801.834967702507,
+        "y": 100.60868986273343
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "52",
+      "type": "output",
+      "position": {
+        "x": 1035.740195422658,
+        "y": 1279.1380011665362
+      },
+      "data": {
+        "label": "Output"
+      }
     }
+  ],
+  "edges": [
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-2-1stac_url"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-3-1bbox"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-4-1spatial_res"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-6-1collections_items"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-3-9bbox"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-4-9spatial_res"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-10-9collections_items"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-2-9stac_url"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "rasters",
+      "target": "12",
+      "targetHandle": null,
+      "id": "reactflow__edge-1rasters-12"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "rasters",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-9rasters-15"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "rasters",
+      "target": "16",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-1rasters-16layers"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "rasters",
+      "target": "16",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-9rasters-16water_mask"
+    },
+    {
+      "source": "16",
+      "sourceHandle": "climate_uniqueness",
+      "target": "17",
+      "targetHandle": null,
+      "id": "reactflow__edge-16climate_uniqueness-17"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-2-21stac_url"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-3-21bbox"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-24-1weight_matrix_with_ids"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-24-21weight_matrix_with_ids"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-4-21spatial_res"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-25-21collections_items"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "30",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-4-30spatial_res"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "30",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-3-30bbox"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "30",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-2-30stac_url"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "30",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-24-30weight_matrix_with_ids"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "30",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-31-30collections_items"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-33-21proj"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-33-1proj"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-33-9proj"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "30",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-33-30proj"
+    },
+    {
+      "source": "40",
+      "sourceHandle": null,
+      "target": "30",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-40-30mask"
+    },
+    {
+      "source": "40",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-40-9mask"
+    },
+    {
+      "source": "40",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-40-1mask"
+    },
+    {
+      "source": "40",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-40-21mask"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "k",
+      "id": "reactflow__edge-43-16k"
+    },
+    {
+      "source": "16",
+      "sourceHandle": "climate_uniqueness",
+      "target": "44",
+      "targetHandle": "climate_uniqueness",
+      "id": "reactflow__edge-16climate_uniqueness-44climate_uniqueness"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "priority_map",
+      "target": "46",
+      "targetHandle": null,
+      "id": "reactflow__edge-44priority_map-46"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-24-9weight_matrix_with_ids"
+    },
+    {
+      "source": "49",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-49-48collections_items"
+    },
+    {
+      "source": "40",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-40-48mask"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-2-48stac_url"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-3-48bbox"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-33-48proj"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-4-48spatial_res"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-24-48weight_matrix_with_ids"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "rasters",
+      "target": "50",
+      "targetHandle": "baseline_layers",
+      "id": "reactflow__edge-48rasters-50baseline_layers"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "rasters",
+      "target": "50",
+      "targetHandle": "end_layers",
+      "id": "reactflow__edge-21rasters-50end_layers"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "rasters",
+      "target": "50",
+      "targetHandle": "landcover",
+      "id": "reactflow__edge-9rasters-50landcover"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "climate_velocity",
+      "target": "51",
+      "targetHandle": null,
+      "id": "reactflow__edge-50climate_velocity-51"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "climate_velocity",
+      "target": "44",
+      "targetHandle": "climate_velocity",
+      "id": "reactflow__edge-50climate_velocity-44climate_velocity"
+    },
+    {
+      "source": "30",
+      "sourceHandle": "rasters",
+      "target": "44",
+      "targetHandle": "accessibility",
+      "id": "reactflow__edge-30rasters-44accessibility"
+    },
+    {
+      "source": "30",
+      "sourceHandle": "rasters",
+      "target": "52",
+      "targetHandle": null,
+      "id": "reactflow__edge-30rasters-52"
+    }
+  ],
+  "inputs": {
+    "pipeline@3": {
+      "label": "bbox",
+      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ]
+    },
+    "pipeline@6": {
+      "label": "collections_items (for climate uniqueness)",
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ]
+    },
+    "pipeline@43": {
+      "label": "k",
+      "description": "the value of k for the k-means algorithm",
+      "type": "int",
+      "example": 5
+    },
+    "Block3>weightLayers.yml@44|uncertainty": {
+      "description": "uncertainty in the inference of some value across space",
+      "label": "uncertainty",
+      "type": "image/tiff;application=geotiff",
+      "example": "y2000_class210_binary.tif"
+    },
+    "Block3>weightLayers.yml@44|weights": {
+      "description": "Weight vectors that sum to one. Weights correspond to layers in this order: [uncertainty, uniqueness, velocity, accessibility].",
+      "label": "weights",
+      "type": "float[]",
+      "example": [
+        0.3,
+        0.2,
+        0.4,
+        0.1
+      ]
+    }
+  },
+  "outputs": {
+    "data>loadFromStac.yml@1|rasters": {
+      "description": "array of output raster paths",
+      "label": "Layers (for climate uniqueness)",
+      "type": "image/tiff;application=geotiff[]"
+    },
+    "data>loadFromStac.yml@9|rasters": {
+      "description": "array of output raster paths",
+      "label": "ESA Land Cover (for climat uniqueness)",
+      "type": "image/tiff;application=geotiff[]"
+    },
+    "Block3>climateUniqueness.yml@16|climate_uniqueness": {
+      "description": "map",
+      "label": "climate uniqueness",
+      "type": "image/tiff;application=geotiff"
+    },
+    "Block3>weightLayers.yml@44|priority_map": {
+      "description": "Sampling priority map.",
+      "label": "priority_map",
+      "type": "image/tiff;application=geotiff"
+    },
+    "Block3>climateVelocity.yml@50|climate_velocity": {
+      "description": "map",
+      "label": "climate velocity",
+      "type": "image/tiff;application=geotiff"
+    },
+    "data>loadFromStac.yml@30|rasters": {
+      "description": "array of output raster paths",
+      "label": "Accessibility",
+      "type": "image/tiff;application=geotiff[]"
+    }
+  },
+  "metadata": {
+    "name": "pipeline",
+    "description": "da pipline",
+    "author": [
+      {
+        "name": "Michael D. Catchen"
+      }
+    ],
+    "license": "MIT",
+    "external_link": null
   }
+}
