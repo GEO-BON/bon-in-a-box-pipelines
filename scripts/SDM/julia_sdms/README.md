@@ -6,10 +6,10 @@ This document describes the methodology behind the BON-in-a-Box (BiaB) script fo
 > Using BRTs to fit a species distribution model requires _absence data_. For the majority of species where no absence data is available, there are various methods to generate pseudoabsences (PAs) based on heuristics about species occurrence. However, the performance characteristics of an SDM fit using PAs can be widely variable depending on the method and parameters used to generate PAs. This means the results of BRT should be explicitly considered as a function of how PAs were generated, and sensitivity analysis to different PAs is _highly_ encouraged. 
 
 **Inputs:**
-- `crs`: foo
-- `predictors`: foo
-- `presences`: foo
-- `absences`: foo
+- `crs`
+- `predictors`
+- `presences`
+- `absences`
 **Outputs**
 - `predicted_sdm.tif`
 - `uncertainty.tif`
@@ -21,7 +21,7 @@ To make an SDM using BRTs, we need a set of presences and absences, In this cont
 
 $$y_i = \begin{cases} 1 \quad&\text{if present} \\0 &\text{if absent}\end{cases}$$
 
-Each $y_i$ is associated with environmental data $\vec{x}_i$, called _features_, at the location where $y_i$ was recorded. Given a set of $n$ data points, $\mathbf{X} = \{x_1, x_2, \dots, x_n\}$, $\mathbf{y} =\{y_1, y_2, \dots, y_n\}$, we split the data into _training_ and _test_ sets, fit the model on the _train_ set, and evaluated the model performance on the _test_ set.
+Each $y_i$ is associated with environmental data $\vec{x}_i$, called _features_, at the location where $y_i$ was recorded. Given a set of $n$ data points, $\mathbf{X} = (x_1, x_2, \dots, x_n)$, $\mathbf{y} =(y_1, y_2, \dots, y_n)$, we split the data into _training_ and _test_ sets, fit the model on the _train_ set, and evaluated the model performance on the _test_ set.
 
 ## What is a decision tree?
 
@@ -52,7 +52,7 @@ Decision trees in their simplest form (as described above), are not commonly use
 
 ### Bootstrap Aggregation ("Bagging")
 
-An early method to improve the performance of decision trees is to use _bootstrap aggregation_ (often shorted to _bagging_). The idea of bagging is to take the $t_m$ points of _training data_ $\mathbf{y}_{train} = \{y_{t_1}, y_{t_2}, \dots y_{t_m}\}$ and fit _many_ decision trees on _subsets_ of the training data, and use an average of the prediction from each tree to produce an _ensemble model_.
+An early method to improve the performance of decision trees is to use _bootstrap aggregation_ (often shorted to _bagging_). The idea of bagging is to take the $t_m$ points of _training data_ $\mathbf{\tilde{y}} = (y_{a}, y_{b}, \dots, y_{c})$ and fit _many_ decision trees on _subsets_ of the training data, and use an average of the prediction from each tree to produce an _ensemble model_.
 
 A common form of bagging is the use of _Random Forests_ (RFs). In addition to bagging, RFs use a _subset_ of features of each tree, for example if each input feature has dimension $n_f$, a common choice is to select $\sqrt{n_f}$  features for each tree in the random forest. 
 ### Gradient Boosting 
