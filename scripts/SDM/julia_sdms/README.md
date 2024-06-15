@@ -10,6 +10,7 @@ This document describes the methodology behind the BON-in-a-Box (BiaB) script fo
 - `predictors`
 - `presences`
 - `absences`
+
 **Outputs**
 - `predicted_sdm.tif`
 - `uncertainty.tif`
