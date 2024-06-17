@@ -18,7 +18,7 @@ print("Inputs: ")
 print(input)
 print(outputFolder)
 
-source(file.path(path_script,"SHI/funGet_range_maps.R"), echo=TRUE)
+source(file.path(path_script,"data/getRangeMapFunc.R"), echo=TRUE)
 
 # Inputs -----------------------------------------------------------------------
 # Define species
@@ -46,27 +46,27 @@ for( i in 1:length(sp)){
       expert_source=="MOL"~ paste0(sp[i],"_mol"),
       expert_source=="QC" ~ paste0(sp[i],"_qc")
     ))
-  
+
   with(source_range_maps, do.call(function_name,args = list(species_name=species_name)))
-  
+
   file <- paste0(source_range_maps$species_path,'_range.gpkg')
-  
+
   if(file.exists(file)){
     sf_range_map <- st_read(file)
   }else{
     path_to_range_map <- NULL
     cat("========== No range map available for ", sp[i] ,"at the ", expert_source , " expert source database ==========")
   }
-  
+
   if (!dir.exists(file.path(outputFolder,sp[i]))){
     dir.create(file.path(outputFolder,sp[i]))
   }else{
     print("dir exists")
   }
-  
+
   v_path_to_range_map[i] <- file.path(outputFolder, sp[i], file)
   sf::st_write(sf_range_map, v_path_to_range_map[i], append = FALSE  )
-  
+
   print("========== Expert range map successfully downloaded ==========")
 }
 
