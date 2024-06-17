@@ -1,4 +1,4 @@
-script: scp_SHI_03_HabitatChange_GFW.R
+script: habitatChange_GFW.R
 name: Measure habitat change
 description:
   This script loads the area of habitat of the species and the Global Forest Watch (GFW) layers to measure changes on the habitat of the species.

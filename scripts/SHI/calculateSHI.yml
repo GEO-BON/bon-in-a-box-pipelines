@@ -1,23 +1,23 @@
-script: scp_SHI_04_CalcSHI.R
+script: calculateSHI.R
 name: Caculate SHI
-description: 
-  This script produces 1) the Species Habitat Index time series, by averaging the Species Habitat Scores; 
-  2) the Steward’s Species Habitat Index, by averaging the Species Habitat Scores weighted by the proportion 
+description:
+  This script produces 1) the Species Habitat Index time series, by averaging the Species Habitat Scores;
+  2) the Steward’s Species Habitat Index, by averaging the Species Habitat Scores weighted by the proportion
   between the area of habitat for the study area and the total range map of the species.
-author: 
+author:
   - name: Maria Isabel Arce-Plata
     identifier: https://orcid.org/0000-0003-4024-9268
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
-license: CC BY 
-external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI 
+license: CC BY
+external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI
 inputs:
   df_shs_tidy:
     label: SHS table (long format)
     description: A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.
       Percentage of change, 100% being equal to the reference year.
     type: text/tab-separated-values[]
-    example: 
+    example:
       [
         "/scripts/SHI/Saguinus oedipus_SHS_table_tidy.tsv",
         "/scripts/SHI/Ateles fusciceps_SHS_table_tidy.tsv"
@@ -39,9 +39,9 @@ outputs:
   img_w_shi_timeseries:
     label: Steward’s SHI time series
     description: Figure showing a time series of Steward’s SHI values for each time step.
-      This is weighted by the proportion between the area of habitat for the study area and 
-      the total range map of the species. The reference year will start at the proportion of area of habitat 
-      in the study area. For example, if half of the species habitat is covered by the study area, 
+      This is weighted by the proportion between the area of habitat for the study area and
+      the total range map of the species. The reference year will start at the proportion of area of habitat
+      in the study area. For example, if half of the species habitat is covered by the study area,
       the reference year’s value will be 50%.
     type: image/png
 references:
