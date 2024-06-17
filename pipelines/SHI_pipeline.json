@@ -8,7 +8,7 @@
         "y": 119.52964428754439
       },
       "data": {
-        "descriptionFile": "SHI>scp_SHI_01_GetRangeMap.yml"
+        "descriptionFile": "data>getRangeMap.yml"
       }
     },
     {
@@ -306,7 +306,7 @@
     }
   ],
   "inputs": {
-    "SHI>scp_SHI_01_GetRangeMap.yml@13|expert_source": {
+    "data>getRangeMap.yml@13|expert_source": {
       "description": "Source of the expert range map for the species.",
       "label": "source of expert range map",
       "type": "options",
