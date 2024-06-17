@@ -19,7 +19,7 @@
         "y": 118.13183836699778
       },
       "data": {
-        "descriptionFile": "SHI>scp_SHI_02_GetAOH.yml"
+        "descriptionFile": "data>getAreaOfHabitat.yml"
       }
     },
     {
@@ -317,7 +317,7 @@
       ],
       "example": "IUCN"
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|study_area_opt": {
+    "data>getAreaOfHabitat.yml@14|study_area_opt": {
       "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.",
       "label": "study area option",
       "type": "options",
@@ -328,31 +328,31 @@
       ],
       "example": "Region in Country"
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|study_area": {
+    "data>getAreaOfHabitat.yml@14|study_area": {
       "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)",
       "label": "study area",
       "type": "application/geopackage+sqlite3",
-      "example": "./example.gpkg"
+      "example": "./getAreaOfHabitat_example.gpkg"
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|country_code": {
+    "data>getAreaOfHabitat.yml@14|country_code": {
       "description": "Name of the country for the analysis. Check the available countries here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-details/ or check the name with the option \"Try it out\" at \"country_geojson\" here: https://geoio.biodiversite-quebec.ca/docs#/default/country_geojson_country_geojson__get the \"Response body\" section should show the information for the country.",
       "label": "country",
       "type": "text",
       "example": "Colombia"
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|region": {
+    "data>getAreaOfHabitat.yml@14|region": {
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available regions by putting the Country name at the option \"Try it out\" at \"state_list\" here: https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get",
       "label": "region",
       "type": "text",
       "example": "Bolívar"
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|buff_size": {
+    "data>getAreaOfHabitat.yml@14|buff_size": {
       "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
       "label": "buffer for study area",
       "type": "int",
       "example": 0
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|range_map_type": {
+    "data>getAreaOfHabitat.yml@14|range_map_type": {
       "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
       "label": "type of range map",
       "type": "options",
@@ -363,7 +363,7 @@
       ],
       "example": "Polygon"
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|r_range_map": {
+    "data>getAreaOfHabitat.yml@14|r_range_map": {
       "description": "Raster with expected area for the species.",
       "label": "range map (raster)",
       "type": "image/tiff;application=geotiff[]",
@@ -371,7 +371,7 @@
         null
       ]
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|elevation_filter": {
+    "data>getAreaOfHabitat.yml@14|elevation_filter": {
       "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
       "label": "filter by elevation",
       "type": "options",
@@ -381,7 +381,7 @@
       ],
       "example": "Yes"
     },
-    "SHI>scp_SHI_02_GetAOH.yml@14|elev_buffer": {
+    "data>getAreaOfHabitat.yml@14|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "elevation buffer",
       "type": "int",

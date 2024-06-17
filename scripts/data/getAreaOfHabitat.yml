@@ -1,4 +1,4 @@
-script: scp_SHI_02_GetAOH.R
+script: getAreaOfHabitat.R
 name: Get area of habitat
 description: >
   This script loads the range map of the chosen species, crops it to the study area limits and filters the map to the elevation ranges registered
@@ -41,7 +41,7 @@ inputs:
     description: Path to the study area file, if "User defined" study area option was chosen.
       This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3
-    example: "./example.gpkg"
+    example: "./getAreaOfHabitat_example.gpkg"
   country_code:
     label: country
     description: >
@@ -93,7 +93,7 @@ inputs:
     type: application/geopackage+sqlite3[]
     example:
       [
-        "/scripts/SHI/Saguinus oedipus_range.gpkg"
+        "/scripts/data/getAreaOfHabitat_Saguinus oedipus range.gpkg"
       ]
   r_range_map:
     label: range map (raster)
