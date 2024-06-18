@@ -3,7 +3,7 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "red", "reshape2") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "reshape2") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
@@ -26,64 +26,33 @@ input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/
   sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) 
 
 
-
-
-
-
-input<- list(species_data = "D:/Repositorios/biab-2.0/scripts/00_redlistindex/input/data_sp.csv", sp_col= "scientific_name", parallel= T)
-
-
 #### Species list by country ####
 #Load IUCN token----
 token <- "f33e69dfa9b06a6495aca3b049606f6e08ceb37083ff88a9c7c9dfbcd56a9121"
 
-UICN_spList<- read.csv(input$species_data)
+UICN_spList<- data.table::fread(input$species_data) %>% as.data.frame()
 
-IUCN_historyAssesment_data <- pbapply::pblapply(UICN_spList[,input$sp_col][1:5] , function(x) {
+IUCN_historyAssesment_data <- pbapply::pblapply(UICN_spList[,input$sp_col] , function(x) {
   tryCatch({
     rredlist::rl_history(name = x, key = token)$result %>% 
       dplyr::mutate(scientific_name= x)
   }, error = function(e) {NULL})
 }) %>% plyr::rbind.fill() %>% list(UICN_spList) %>% plyr::join_all(match = "first")
 
+## Write results ####  
+IUCN_historyAssesment_data_path<- file.path(outputFolder, paste0("IUCN_historyAssesment_data", ".csv")) # Define the file path 
+write.csv(IUCN_historyAssesment_data, IUCN_historyAssesment_data_path, row.names = F) # write result
+
+# Define final output list
+output<- list(IUCN_historyAssesment_data= IUCN_historyAssesment_data_path)
+
+#### Outputing result to JSON ####
+
+# Write the output list to the 'output.json' file in JSON format
+setwd(outputFolder)
+jsonlite::write_json(output, "output.json", auto_unbox = TRUE, pretty = TRUE)
 
 
 
-IUCN_historyAssesment_matrix<-   reshape2::dcast(IUCN_historyAssesment_data, scientific_name ~ assess_year,  value.var = "code",
-                                                 fun.aggregate = function(x) {unique(x)[1]}
-) %>% tibble::column_to_rownames("scientific_name") %>% as.data.frame.matrix()
-
-########## Codigo redlist
-adjust_categories<- data.frame(Cat_IUCN= c("CR", "DD", "EN", "EN", "DD", "DD", "LC", "LC", "LC", "NT", "DD", "NT", "RE", "VU", "VU"),
-                               code= c("CR", "DD", "E", "EN", "I", "K", "LC", "LR/cd", "LR/lc", "LR/nt", "NA", "NT", "R", "V", "VU"))
-
-data_test<- IUCN_historyAssesment_matrix %>% as.matrix()
-
-# Ajustar matriz de codigos
-for(i in seq(nrow(adjust_categories))){ print(i)
-  data_test[ which(data_test== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN 
-}
-
-for(j in unique(adjust_categories$Cat_IUCN)){
-  key<- c(tolower(j), toupper(j), j) %>% paste0(collapse = "|")
-  data_test[ which(grepl(key, data_test), arr.ind = T) ]    <- j
-}
-
-data_test[which( (!data_test %in% adjust_categories$Cat_IUCN)  & !is.na(data_test) , arr.ind = TRUE )]<-NA
-
-
-redlist_data<- red::rli(data_test, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
-  dplyr::filter(!Year %in% "Change/year")
-
-
-# figura redlist
-redlist_plot<- 
-ggplot(redlist_data, aes(x = Year, y = RLI)) +
-  geom_line(group = 1, col= "red") +
-  geom_point() +
-  coord_cartesian(ylim = c(0,1))+
-  theme_classic()+
-  theme(    panel.grid.major = element_line(color = "gray"),
-)
 
 
