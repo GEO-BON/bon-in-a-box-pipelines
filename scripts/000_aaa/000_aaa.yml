@@ -1,0 +1,31 @@
+script: 000_aaa.R
+description: "It obtains a list of species assessed by the IUCN Red List of Species for a specific country and taxonomic group, including their most recent threat categorization."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  country:
+    label: country
+    description: "Select the country to obtain the list of species."
+    type: options
+    example: "Colombia"
+    options:
+      - "Colombia"
+      - "Canada"
+  taxonomic_group:
+    label: taxonomic_group
+    description: "Select the taxonomic group to obtain the list of species. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained."
+    type: options
+    example: "mammals"
+    options:
+      - "all"
+      - "amphibians"
+      - "birds"
+      - "mammals"
+      - "reptiles"
+      - "angelfishes"
+      - "blennies"
+      - "butterfly_fishes"
+outputs:
+  UICN_spList:
+    label: UICN_spList
+    description: "Dataset with the list of species for the specified country and taxonomic group. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
+    type: text/csv

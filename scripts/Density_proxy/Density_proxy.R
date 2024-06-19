@@ -4,7 +4,7 @@
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- list("dplyr", "fields", "gridExtra","lubridate", "mccf1", "ranger",
                     "readr", "scam", "sf", "terra", "tidyr", "ebirdst","yaml", "precrec", "PresenceAbsence") # Define the list of required packages to run the script
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
+lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=F)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
 packagesList<-list("dplyr", "fields", "gridExtra","lubridate", "mccf1", "ranger",

@@ -67,6 +67,7 @@ v_time_steps <- seq(t_0,t_n,time_step)
 
 #credentials
 token <- Sys.getenv("IUCN_TOKEN")
+print(token)
 
 #Filter source for land cover, global or colombia
 # LC_source <- input$lc_source

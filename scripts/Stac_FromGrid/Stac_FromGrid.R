@@ -7,7 +7,7 @@
 options(devtools.ask = FALSE)
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- list("magrittr", "this.path", "rjson", "data.table", "dplyr", "terra", "raster",  "sf", "stars", "rgdal", "remotes", "RCurl", "devtools", "stringr", "sp") # Define the list of required packages to run the script
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
+lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=F)}    }) # Check and install required packages that are not previously installed
 
 if (!"stacatalogue" %in% packagesPrev) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 if (!"gdalcubes" %in% packagesPrev) devtools::install_github("appelmar/gdalcubes_R")

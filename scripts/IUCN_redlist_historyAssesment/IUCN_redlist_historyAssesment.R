@@ -4,7 +4,7 @@
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- list("magrittr", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "reshape2") # Define the list of required packages to run the script
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
+lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=F)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
 packagesList<-list("magrittr", "rredlist", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
@@ -28,7 +28,8 @@ input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/
 
 #### Species list by country ####
 #Load IUCN token----
-token <- "f33e69dfa9b06a6495aca3b049606f6e08ceb37083ff88a9c7c9dfbcd56a9121"
+token<- Sys.getenv("IUCN_TOKEN")
+print(token)
 
 UICN_spList<- data.table::fread(input$species_data) %>% as.data.frame()
 
