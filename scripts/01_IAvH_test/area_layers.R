@@ -1,7 +1,7 @@
 # Instalar librerias necesarias
 packagesPrev<- installed.packages()[,"Package"]
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply")
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=F)}    })
+packagesNeed<- c("magrittr", "terra", "raster", "sf", "fasterize", "pbapply")
+new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T)}
 
 # Cargar librerias
 packagesList<-list("magrittr", "terra")
