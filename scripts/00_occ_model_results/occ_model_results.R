@@ -8,7 +8,7 @@ packagesPrev<- installed.packages()[,"Package"] # Check and get a list of instal
 packagesNeed<-list("rstudioapi", "this.path", "rjson", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
                    "vapour", "sf","tools","gdalUtilities", "tibble", "lubridate", "gridExtra", "tidyverse", "conflicted", 
                    "dggridR", "unmarked", "ebirdst", "MuMIn", "AICcmodavg", "fields", "rgdal", "janitor", "ggplot2")
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=F)}    }) # Check and install required packages that are not previously installed
+new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T)} # Check and install required packages that are not previously installed
 
 # Load libraries
 packagesList<-list("magrittr", "terra", "unmarked", "auk","MuMIn", "AICcmodavg", "raster", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
