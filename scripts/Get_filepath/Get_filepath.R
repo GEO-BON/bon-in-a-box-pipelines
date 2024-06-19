@@ -6,7 +6,7 @@
 ### Check and Install necessary libraries ####
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- list("magrittr", "this.path", "rjson", "data.table", "dplyr", "plyr") # Define the list of required packages to run the script
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
+lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=F)}    }) # Check and install required packages that are not previously installed
 
 ### Load libraries ####
 packagesList<-list("magrittr") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 

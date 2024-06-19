@@ -5,8 +5,8 @@
 
 ### Check and Install necessary libraries ####
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "this.path", "rjson", "dplyr", "rredlist") # Define the list of required packages to run the script
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
+packagesNeed<- list("magrittr", "this.path", "rjson", "dplyr", "rredlist", "dotenv") # Define the list of required packages to run the script
+lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=F)}    }) # Check and install required packages that are not previously installed
 
 ### Load libraries ####
 packagesList<-list("magrittr") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
@@ -35,11 +35,9 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 
 
-
 #  Script body ####
-
-
-token <- "f33e69dfa9b06a6495aca3b049606f6e08ceb37083ff88a9c7c9dfbcd56a9121"
+token<- Sys.getenv("IUCN_TOKEN")
+print(token)
 
 ## Load sp country ####
 UICN_isocode <- rredlist::rl_countries(key = token)$results %>% dplyr::filter(country %in% input$country) %>% {.$isocode}

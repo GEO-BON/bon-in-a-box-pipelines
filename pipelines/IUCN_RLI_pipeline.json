@@ -1,22 +1,22 @@
 {
   "nodes": [
     {
-      "id": "0",
+      "id": "10",
       "type": "io",
       "position": {
-        "x": 293,
-        "y": 232.5
+        "x": 498,
+        "y": 334.5
       },
       "data": {
         "descriptionFile": "IUCN_redlist_spList>IUCN_redlist_spList.yml"
       }
     },
     {
-      "id": "1",
+      "id": "11",
       "type": "constant",
       "position": {
-        "x": -60,
-        "y": 249.5
+        "x": 102,
+        "y": 333.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -59,11 +59,11 @@
       }
     },
     {
-      "id": "2",
+      "id": "12",
       "type": "constant",
       "position": {
-        "x": -138,
-        "y": 173.5
+        "x": 62,
+        "y": 252.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -322,22 +322,22 @@
       }
     },
     {
-      "id": "3",
+      "id": "13",
       "type": "io",
       "position": {
-        "x": 700,
-        "y": 285.5
+        "x": 782,
+        "y": 563.5
       },
       "data": {
         "descriptionFile": "IUCN_redlist_historyAssesment>IUCN_redlist_historyAssesment.yml"
       }
     },
     {
-      "id": "4",
+      "id": "14",
       "type": "constant",
       "position": {
-        "x": 355,
-        "y": 345.5
+        "x": 411,
+        "y": 525.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -346,22 +346,22 @@
       }
     },
     {
-      "id": "5",
+      "id": "15",
       "type": "io",
       "position": {
-        "x": 1244.6276696890372,
-        "y": 393.67891496097667
+        "x": 1515,
+        "y": 347.5
       },
       "data": {
         "descriptionFile": "RedlListindex>RedlListindex.yml"
       }
     },
     {
-      "id": "6",
+      "id": "16",
       "type": "constant",
       "position": {
-        "x": 887.0209604195506,
-        "y": 428.63361298293233
+        "x": 1242,
+        "y": 676.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -370,11 +370,11 @@
       }
     },
     {
-      "id": "7",
+      "id": "17",
       "type": "constant",
       "position": {
-        "x": 880.9943161011786,
-        "y": 481.1515134716054
+        "x": 1402,
+        "y": 523.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -383,11 +383,11 @@
       }
     },
     {
-      "id": "9",
+      "id": "18",
       "type": "output",
       "position": {
-        "x": 1617.6903958180337,
-        "y": 383.86425518930935
+        "x": 1945,
+        "y": 351.5
       },
       "data": {
         "label": "Output"
@@ -396,73 +396,73 @@
   ],
   "edges": [
     {
-      "source": "1",
+      "source": "11",
       "sourceHandle": null,
-      "target": "0",
+      "target": "10",
       "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-1-0taxonomic_group"
+      "id": "reactflow__edge-11-10taxonomic_group"
     },
     {
-      "source": "2",
+      "source": "12",
       "sourceHandle": null,
-      "target": "0",
+      "target": "10",
       "targetHandle": "country",
-      "id": "reactflow__edge-2-0country"
+      "id": "reactflow__edge-12-10country"
     },
     {
-      "source": "0",
+      "source": "10",
       "sourceHandle": "UICN_spList",
-      "target": "3",
+      "target": "13",
       "targetHandle": "species_data",
-      "id": "reactflow__edge-0UICN_spList-3species_data"
+      "id": "reactflow__edge-10UICN_spList-13species_data"
     },
     {
-      "source": "4",
+      "source": "14",
       "sourceHandle": null,
-      "target": "3",
+      "target": "13",
       "targetHandle": "sp_col",
-      "id": "reactflow__edge-4-3sp_col"
+      "id": "reactflow__edge-14-13sp_col"
     },
     {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "sp_col",
-      "id": "reactflow__edge-4-5sp_col"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "time_col",
-      "id": "reactflow__edge-6-5time_col"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "categoryCod_col",
-      "id": "reactflow__edge-7-5categoryCod_col"
-    },
-    {
-      "source": "3",
+      "source": "13",
       "sourceHandle": "IUCN_historyAssesment_data",
-      "target": "5",
+      "target": "15",
       "targetHandle": "historyAssesment_data",
-      "id": "reactflow__edge-3IUCN_historyAssesment_data-5historyAssesment_data"
+      "id": "reactflow__edge-13IUCN_historyAssesment_data-15historyAssesment_data"
     },
     {
-      "source": "5",
+      "source": "14",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "sp_col",
+      "id": "reactflow__edge-14-15sp_col"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "time_col",
+      "id": "reactflow__edge-16-15time_col"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "15",
+      "targetHandle": "categoryCod_col",
+      "id": "reactflow__edge-17-15categoryCod_col"
+    },
+    {
+      "source": "15",
       "sourceHandle": "RedList_trendPlot",
-      "target": "9",
+      "target": "18",
       "targetHandle": null,
-      "id": "reactflow__edge-5RedList_trendPlot-9"
+      "id": "reactflow__edge-15RedList_trendPlot-18"
     }
   ],
   "inputs": {},
   "outputs": {
-    "RedlListindex>RedlListindex.yml@5|RedList_trendPlot": {
-      "description": "RedList_trendPlot",
+    "RedlListindex>RedlListindex.yml@15|RedList_trendPlot": {
+      "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species.",
       "label": "RedList_trendPlot",
       "type": "image/jpg",
       "weight": 0
