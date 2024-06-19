@@ -1,7 +1,17 @@
 runner.env
-.Rproj.user
-.Rhistory
 .vscode
 **/.cache
 **/.config
 .server
+
+# R temporary files
+.Rproj.user
+.Rhistory
+.RData
+.RDataTmp*
+.Ruserdata
+._.Rhistory
+
+# mac system files
+**/._*
+**/.DS_Store
