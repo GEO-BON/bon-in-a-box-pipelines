@@ -1,0 +1,430 @@
+{
+  "nodes": [
+    {
+      "id": "50",
+      "type": "io",
+      "position": {
+        "x": -309.51396010105873,
+        "y": 141.13044066662638
+      },
+      "data": {
+        "descriptionFile": "00_join_data>join_data.yml"
+      }
+    },
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 21.905349978512447,
+        "y": 35.35832042846543
+      },
+      "data": {
+        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
+      }
+    },
+    {
+      "id": "54",
+      "type": "io",
+      "position": {
+        "x": -860.3124825264451,
+        "y": -95.48570979207446
+      },
+      "data": {
+        "descriptionFile": "StudyArea_to_grid>StudyArea_to_grid.yml"
+      }
+    },
+    {
+      "id": "55",
+      "type": "io",
+      "position": {
+        "x": -213.37567011522646,
+        "y": -253.87035027780766
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_covs>studyarea_covs.yml"
+      }
+    },
+    {
+      "id": "56",
+      "type": "io",
+      "position": {
+        "x": 122.97648709497734,
+        "y": -116.64013383970665
+      },
+      "data": {
+        "descriptionFile": "00_add_covs>add_covs.yml"
+      }
+    },
+    {
+      "id": "57",
+      "type": "io",
+      "position": {
+        "x": 525.7561736467551,
+        "y": -64.35041086004398
+      },
+      "data": {
+        "descriptionFile": "00_camformat>camformat.yml"
+      }
+    },
+    {
+      "id": "59",
+      "type": "io",
+      "position": {
+        "x": 878.3459721543517,
+        "y": -163.53760950359387
+      },
+      "data": {
+        "descriptionFile": "00_occ_model_results>00_occ_model_results.yml"
+      }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": 506.5050403764102,
+        "y": -300.4828119304343
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01"
+      }
+    },
+    {
+      "id": "61",
+      "type": "constant",
+      "position": {
+        "x": 461.91313799644615,
+        "y": -224.03955070763882
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "duration_minutes"
+      }
+    },
+    {
+      "id": "62",
+      "type": "output",
+      "position": {
+        "x": 1394.2337147593223,
+        "y": -99.36423180855567
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "63",
+      "type": "io",
+      "position": {
+        "x": -743.6229942488162,
+        "y": 144.12807951244616
+      },
+      "data": {
+        "descriptionFile": "Filter_data>Filter_data.yml"
+      }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": -1092.6229942488162,
+        "y": 145.12807951244616
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "/scripts/Filter_data/input/records_data.csv"
+      }
+    },
+    {
+      "id": "65",
+      "type": "constant",
+      "position": {
+        "x": -1093.6229942488162,
+        "y": 163.12807951244616
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/plain",
+        "value": "scientificName"
+      }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": -1090.6229942488162,
+        "y": 175.12807951244616
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Cuniculus paca"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "50",
+      "sourceHandle": "filter_data",
+      "target": "52",
+      "targetHandle": "dataset",
+      "id": "reactflow__edge-50filter_data-52dataset"
+    },
+    {
+      "source": "54",
+      "sourceHandle": "StudyArea_grid",
+      "target": "55",
+      "targetHandle": "studyarea_grid",
+      "id": "reactflow__edge-54StudyArea_grid-55studyarea_grid"
+    },
+    {
+      "source": "55",
+      "sourceHandle": "dir_stack",
+      "target": "56",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-55dir_stack-56folder_vars"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "vars_dataset",
+      "target": "57",
+      "targetHandle": "cam_format_file",
+      "id": "reactflow__edge-56vars_dataset-57cam_format_file"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "spatial_points",
+      "target": "56",
+      "targetHandle": "spatial_points",
+      "id": "reactflow__edge-52spatial_points-56spatial_points"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "occ_wide_unmark",
+      "target": "59",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-57occ_wide_unmark-59auk_covars_file"
+    },
+    {
+      "source": "55",
+      "sourceHandle": "dir_stack",
+      "target": "59",
+      "targetHandle": "dir_stack",
+      "id": "reactflow__edge-55dir_stack-59dir_stack"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "covars_ocupacion",
+      "id": "reactflow__edge-60-59covars_ocupacion"
+    },
+    {
+      "source": "61",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "covars_detection",
+      "id": "reactflow__edge-61-59covars_detection"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "VEB_export",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-59VEB_export-62"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "data",
+      "id": "reactflow__edge-64-63data"
+    },
+    {
+      "source": "65",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "column",
+      "id": "reactflow__edge-65-63column"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "condition",
+      "id": "reactflow__edge-66-63condition"
+    },
+    {
+      "source": "63",
+      "sourceHandle": "data_filter",
+      "target": "50",
+      "targetHandle": "records_data",
+      "id": "reactflow__edge-63data_filter-50records_data"
+    }
+  ],
+  "inputs": {
+    "00_join_data>join_data.yml@50|col_join": {
+      "description": "col_join",
+      "label": "col_join",
+      "type": "text",
+      "example": "site",
+      "weight": 0
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@52|xlat": {
+      "description": "Name of the column in the 'dataset' that contains the latitude coordinates of the points to be spatialized.",
+      "label": "xlat",
+      "type": "text",
+      "example": "Lat_X",
+      "weight": 1
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@52|ylong": {
+      "description": "Name of the column in the 'dataset' that contains the longitude coordinates of the points to be spatialized.",
+      "label": "ylong",
+      "type": "text",
+      "example": "Long_Y",
+      "weight": 2
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@52|espg_coords": {
+      "description": "Numeric EPSG coordinate system. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html",
+      "label": "espg_coords",
+      "type": "int",
+      "example": 4326,
+      "weight": 3
+    },
+    "StudyArea_to_grid>StudyArea_to_grid.yml@54|StudyArea_polygon": {
+      "description": "Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "StudyArea_polygon",
+      "type": "application/geopackage+sqlite3",
+      "example": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg",
+      "weight": 4
+    },
+    "StudyArea_to_grid>StudyArea_to_grid.yml@54|EPSG": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "EPSG",
+      "type": "int",
+      "example": 3395,
+      "weight": 5
+    },
+    "StudyArea_to_grid>StudyArea_to_grid.yml@54|gridRes_meters": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "gridRes_meters",
+      "type": "int",
+      "example": 1000,
+      "weight": 6
+    },
+    "00_studyarea_covs>studyarea_covs.yml@55|RSTACQuery": {
+      "description": "RSTACQuery",
+      "label": "RSTACQuery",
+      "type": "text",
+      "example": "http://io.biodiversite-quebec.ca/stac/",
+      "weight": 7
+    },
+    "00_studyarea_covs>studyarea_covs.yml@55|RSTACcollection": {
+      "description": "RSTACcollection",
+      "label": "RSTACcollection",
+      "type": "text",
+      "example": "chelsa-clim",
+      "weight": 8
+    },
+    "00_studyarea_covs>studyarea_covs.yml@55|RSTACassets": {
+      "description": "RSTACassets",
+      "label": "RSTACassets",
+      "type": "options",
+      "options": [
+        "allVars",
+        "selectVars"
+      ],
+      "example": "selectVars",
+      "weight": 9
+    },
+    "00_studyarea_covs>studyarea_covs.yml@55|zonal": {
+      "description": "method of aggregation for the temperature data",
+      "label": "zonal",
+      "type": "options",
+      "options": [
+        "min",
+        "max",
+        "mean",
+        "median",
+        "first"
+      ],
+      "example": "mean",
+      "weight": 10
+    },
+    "00_studyarea_covs>studyarea_covs.yml@55|time_zonal": {
+      "description": "time_period",
+      "label": "time period",
+      "type": "text",
+      "example": "P1Y",
+      "weight": 11
+    },
+    "00_studyarea_covs>studyarea_covs.yml@55|time_period": {
+      "description": "Y-m-d time_period 1980-01-01, 1990-01-01",
+      "label": "time_period",
+      "type": "text",
+      "weight": 12
+    },
+    "00_studyarea_covs>studyarea_covs.yml@55|selectVars": {
+      "description": "selectVars",
+      "label": "selectVars",
+      "type": "text",
+      "example": "bio18, bio4 , bio7",
+      "weight": 13
+    },
+    "00_camformat>camformat.yml@57|site_vars": {
+      "description": "Names of one of more columns in x that define a site, typically the location (e.g. latitude/longitude) and observer ID.",
+      "label": "site_vars",
+      "type": "text",
+      "example": "ID_grid",
+      "weight": 14
+    },
+    "00_camformat>camformat.yml@57|site_covs": {
+      "description": "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate.",
+      "label": "site_covs",
+      "type": "text",
+      "example": "bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01",
+      "weight": 15
+    },
+    "00_camformat>camformat.yml@57|obs_covs": {
+      "description": "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation.",
+      "label": "obs_covs",
+      "type": "text",
+      "example": "duration_minutes",
+      "weight": 16
+    },
+    "00_occ_model_results>00_occ_model_results.yml@59|nsim": {
+      "description": "The number of bootstrapped samples",
+      "label": "nsim",
+      "type": "int",
+      "example": 2,
+      "weight": 17
+    },
+    "00_occ_model_results>00_occ_model_results.yml@59|plot_hist": {
+      "description": "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample.",
+      "label": "plot.hist",
+      "type": "boolean",
+      "example": false,
+      "weight": 18
+    },
+    "Filter_data>Filter_data.yml@63|rev": {
+      "description": "Indicates whether to invert the filter condition (TRUE to invert, FALSE to not invert). Inverting means applying the opposite filter to the condition defined in 'condition' argument.",
+      "label": "rev",
+      "type": "boolean",
+      "example": false,
+      "weight": 19
+    }
+  },
+  "outputs": {
+    "00_occ_model_results>00_occ_model_results.yml@59|VEB_export": {
+      "description": "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)",
+      "label": "FVEB",
+      "type": "text",
+      "weight": 0
+    }
+  }
+}

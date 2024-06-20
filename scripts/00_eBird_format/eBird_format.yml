@@ -36,7 +36,7 @@ inputs:
     label: site_covs
     description: "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate."
     type: text
-    example: bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01
+    example: "scripts/00_eBird_format/input/stac"
   obs_covs:
     label: obs_covs
     description: "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation."
