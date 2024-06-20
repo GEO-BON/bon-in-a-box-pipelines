@@ -5,10 +5,15 @@ Inicio<- Sys.time()
 
 # Install necessary libraries - packages 
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<-list("rstudioapi", "this.path", "rjson", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
-                   "vapour", "sf","tools","gdalUtilities", "tibble", "lubridate", "gridExtra", "tidyverse", "conflicted", 
+packagesNeed<-c("rstudioapi", "Rcpp", "this.path", "rjson", "magrittr", "dplyr", "plyr",  "raster", "terra", "auk",
+                   "vapour", "sf","tools", "gdalUtilities", "tibble", "lubridate", "gridExtra", "tidyverse", "conflicted", 
                    "dggridR", "unmarked", "ebirdst", "MuMIn", "AICcmodavg", "fields", "rgdal", "janitor", "ggplot2")
-new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T)} # Check and install required packages that are not previously installed
+new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; 
+lapply(new.packages, function(x) tryCatch({install.packages(x, force=T, dependencies = F)}, error=function(e){NULL}))
+
+# library(devtools)
+# install.packages("https://cran.r-project.org/src/contrib/Archive/unmarked/unmarked_1.3.1.tar.gz", repos=NULL, type="source")
+
 
 # Load libraries
 packagesList<-list("magrittr", "terra", "unmarked", "auk","MuMIn", "AICcmodavg", "raster", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
@@ -45,8 +50,7 @@ if(check_input) {input<- lapply(input, function(x) unlist(lapply(x, function(y) 
 }), recursive = F)) } # adjust input 1
 
 
-output<- tryCatch({
-  
+
   #### Set enviroment variables ####
   
   # Set the 'outputFolder' environment variables
@@ -84,9 +88,7 @@ output<- tryCatch({
   occ_model <- unmarked::occu( formula_occ ,  data = occ_um)
   
   occ_dredge <- MuMIn::dredge(occ_model)
-  
 
-  
   
   # BREAK script if delr <= 2.5
   
@@ -124,7 +126,7 @@ output<- tryCatch({
   ##########
   # Load data of prediction surface
   layers_covs<- list.files(input$dir_stack, "\\.tif$", recursive = TRUE, full.names = TRUE)
-  spatial_pred_surface<- terra::rast(layers_covs)
+  spatial_pred_surface<- terra::rast(layers_covs) %>% setNames(basename(tools::file_path_sans_ext(layers_covs)))
   
   id_cells<- terra::cells(spatial_pred_surface)
   pred_surface <- spatial_pred_surface[id_cells]
@@ -283,8 +285,6 @@ output<- tryCatch({
                 occPlotFacet= occPlotFacet_path,
                 final_export = final_path, VEB_export = FVEB)
   
-
-}, error = function(e) { list(error= conditionMessage(e)) })
 
 print(Sys.time()-Inicio)
 

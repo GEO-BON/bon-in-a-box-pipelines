@@ -36,7 +36,7 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 
 #  Script body ####
-token<- Sys.getenv("IUCN_TOKEN")
+token<- "f33e69dfa9b06a6495aca3b049606f6e08ceb37083ff88a9c7c9dfbcd56a9121"
 print(token)
 
 ## Load sp country ####
