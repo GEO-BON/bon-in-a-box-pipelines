@@ -52,11 +52,11 @@ construir y ejecutar contenedores Docker.
 Toda la infraestructura necesaria para la construcción de los
 contenedores que contienen la máquina virtual para lanzar Bon in a Box
 está alojada en el repositorio
-[PEM-Humboldt/biab-2.0](https://github.com/GEO-BON/bon-in-a-box-pipelines).
+[PEM-Humboldt/biab-2.0](https://github.com/PEM-Humboldt/biab-2.0).
 Este repositorio facilita el desarrollo y la ejecución de flujos de
 trabajo para la estimación de indicadores globales de biodiversidad. El
 repositorio
-[PEM-Humboldt/biab-2.0](https://github.com/GEO-BON/bon-in-a-box-pipelines)
+[PEM-Humboldt/biab-2.0](https://github.com/PEM-Humboldt/biab-2.0)
 es una bifurcación del repositorio global
 [GEO-BON/bon-in-a-box-pipelines](https://github.com/GEO-BON/bon-in-a-box-pipelines),
 pero enfocado en la implementación y mapeo de indicadores de
