@@ -79,13 +79,18 @@ Asigna un título, pega el contenido de la clave pública en el campo correspond
 
 ![](README_figures/newSSHkey.png)
  
-Este proceso de autenticación debe hacerse una sola vez por máquina. Una vez hecho esto, ejecuta de nuevo `./server-up.sh` y se instalarán los contenedores Docker y el servidor de Bon in a Box. La primera vez que se ejecute `server-up.sh` tardará varios minutos porque instala todo el contenedor, pero una vez configurado, las siguientes veces lanzara el servidor más rápido pues solo buscara actualizarse y ejecutarse directamente.
+Este proceso de autenticación debe hacerse una sola vez por máquina. Una vez hecho esto, ejecuta de nuevo `./server-up.sh` y se instalarán los contenedores Docker y el servidor de Bon in a Box. 
+
+## Lanzar servidor
+La primera vez que se ejecute `server-up.sh` tardará varios minutos porque instala todo el contenedor, pero una vez configurado, las siguientes veces lanzara el servidor más rápido pues solo buscara actualizarse y ejecutarse directamente.
 
  ![](README_figures/serverup loading.png)
 
 Una vez que todo esté correctamente configurado, se imprimirá el mensaje `server running` en la consola.
  
  ![](README_figures/serverup ready.png)
+
+## Abrir Bon in a Box
 
 Con el servidor en funcionamiento, solo necesitas escribir la dirección `http://localhost/` en tu navegador para acceder a la plataforma de Bon in a Box.
 

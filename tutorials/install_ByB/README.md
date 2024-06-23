@@ -36,6 +36,9 @@ minimizando la necesidad de conocimientos técnicos avanzados.
   y lanzamiento de Bon in a Box por primera vez</a>
   - <a href="#autenticación-de-clave-ssh"
     id="toc-autenticación-de-clave-ssh">Autenticación de clave SSH</a>
+- <a href="#lanzar-servidor" id="toc-lanzar-servidor">Lanzar servidor</a>
+- <a href="#abrir-bon-in-a-box" id="toc-abrir-bon-in-a-box">Abrir Bon in a
+  Box</a>
 
 
 ## Instalación de software necesarios
@@ -52,12 +55,12 @@ construir y ejecutar contenedores Docker.
 Toda la infraestructura necesaria para la construcción de los
 contenedores que contienen la máquina virtual para lanzar Bon in a Box
 está alojada en el repositorio
-[PEM-Humboldt/biab-2.0](https://github.com/PEM-Humboldt/biab-2.0).
-Este repositorio facilita el desarrollo y la ejecución de flujos de
-trabajo para la estimación de indicadores globales de biodiversidad. El
+[PEM-Humboldt/biab-2.0](https://github.com/PEM-Humboldt/biab-2.0). Este
+repositorio facilita el desarrollo y la ejecución de flujos de trabajo
+para la estimación de indicadores globales de biodiversidad. El
 repositorio
-[PEM-Humboldt/biab-2.0](https://github.com/PEM-Humboldt/biab-2.0)
-es una bifurcación del repositorio global
+[PEM-Humboldt/biab-2.0](https://github.com/PEM-Humboldt/biab-2.0) es una
+bifurcación del repositorio global
 [GEO-BON/bon-in-a-box-pipelines](https://github.com/GEO-BON/bon-in-a-box-pipelines),
 pero enfocado en la implementación y mapeo de indicadores de
 biodiversidad en el contexto de Colombia. Como bifurcación del
@@ -211,11 +214,14 @@ terminar el proceso.
 
 Este proceso de autenticación debe hacerse una sola vez por máquina. Una
 vez hecho esto, ejecuta de nuevo `./server-up.sh` y se instalarán los
-contenedores Docker y el servidor de Bon in a Box. La primera vez que se
-ejecute `server-up.sh` tardará varios minutos porque instala todo el
-contenedor, pero una vez configurado, las siguientes veces lanzara el
-servidor más rápido pues solo buscara actualizarse y ejecutarse
-directamente.
+contenedores Docker y el servidor de Bon in a Box.
+
+## Lanzar servidor
+
+La primera vez que se ejecute `server-up.sh` tardará varios minutos
+porque instala todo el contenedor, pero una vez configurado, las
+siguientes veces lanzara el servidor más rápido pues solo buscara
+actualizarse y ejecutarse directamente.
 
 ![](README_figures/serverup%20loading.png)
 
@@ -223,6 +229,8 @@ Una vez que todo esté correctamente configurado, se imprimirá el mensaje
 `server running` en la consola.
 
 ![](README_figures/serverup%20ready.png)
+
+## Abrir Bon in a Box
 
 Con el servidor en funcionamiento, solo necesitas escribir la dirección
 `http://localhost/` en tu navegador para acceder a la plataforma de Bon
