@@ -9,10 +9,12 @@ packagesNeed<-c("rstudioapi", "Rcpp", "this.path", "rjson", "magrittr", "dplyr",
                    "vapour", "sf","tools", "gdalUtilities", "tibble", "lubridate", "gridExtra", "tidyverse", "conflicted", 
                    "dggridR", "unmarked", "ebirdst", "MuMIn", "AICcmodavg", "fields", "rgdal", "janitor", "ggplot2")
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; 
-lapply(new.packages, function(x) tryCatch({install.packages(x, force=T, dependencies = F)}, error=function(e){NULL}))
+lapply(new.packages, function(x) tryCatch({install.packages(x, force=T)}, error=function(e){NULL}))
 
-# library(devtools)
-# install.packages("https://cran.r-project.org/src/contrib/Archive/unmarked/unmarked_1.3.1.tar.gz", repos=NULL, type="source")
+
+# devtools::install_version("Matrix", version = "1.6-3")
+# devtools::install_version("lme4", version = "1.1-31")
+# devtools::install_version("unmarked", version = "1.3.1")
 
 
 # Load libraries
@@ -62,6 +64,8 @@ if(check_input) {input<- lapply(input, function(x) unlist(lapply(x, function(y) 
   
   # Load data in eBird fortmat to unmarked
 #<<<<<<< HEAD
+
+
   covs_ocupacion<- input$dir_stack %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
   
   covs_detection<- input$covars_detection
@@ -83,6 +87,7 @@ if(check_input) {input<- lapply(input, function(x) unlist(lapply(x, function(y) 
 
   
   formula_occ<- as.formula( paste0("~ ", paste0(covs_detection, collapse = " + "), " ~ ", paste0(covs_ocupacion, collapse = " + ")) )
+  
   
   
   occ_model <- unmarked::occu( formula_occ ,  data = occ_um)
