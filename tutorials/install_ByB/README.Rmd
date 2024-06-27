@@ -24,7 +24,7 @@ Toda la infraestructura necesaria para la construcción de los contenedores que 
 La forma más sencilla de lanzar bon in a box de forma rápida y sencilla consiste en descargar e instalar las versiones de escritorio de los softwares mencionados:
 1)	GitHub Desktop: Disponible en [GitHub Desktop](https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop). Necesario para clonar el repositorio GitHub en la máquina local.
 2)	Docker Desktop: Disponible en [Docker Desktop](https://www.docker.com/products/docker-desktop/). Necesario para generar una máquina virtual en la máquina local. Esta máquina virtual instalará y ejecutará internamente software como R, Python o Julia en versiones específicas, facilitando la portabilidad y la ejecución del código. Mas información en [GEO-BON/bon-in-a-box-pipelines/README-user](https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/blob/main/README-user.md#scripts).
-3)	Para usuarios Windows es necesario una terminal Linux Shell como git bash.
+3)	Para usuarios Windows es necesario una terminal Linux Shell como [Git Bash](https://git-scm.com/downloads).
 4)	En algunos casos, los usuarios de Windows pueden necesitar activar la virtualización y otras herramientas para que Docker Desktop funcione correctamente y actualizar WSL (`wsl--update`, ver https://docs.docker.com/desktop/troubleshoot/topics/#virtualization). Es posible que se requiera acceder al BIOS para habilitar la virtualización. Para más detalles sobre requisitos particulares consultar en [GEO-BON/bon-in-a-box-pipelines/README-user](https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/blob/main/README-user.md#scripts).
 
 ## Clonar el Repositorio GitHub Localmente
@@ -55,12 +55,16 @@ En este ejemplo, trabajaremos sobre la rama test_pipeline_IAvH, que es una rama 
 
 ![](README_figures/branches.jpg)
 
- 
-Una vez estemos en el repositorio deseado, haz clic en la opción `Repository` en la barra superior y selecciona `Open in Git Bash` o `Open in Terminal` según tu sistema operativo. Esto abrirá una consola de comandos. Al abrir la consola desde GitHub Desktop, esta se ubicará automáticamente en la ruta del repositorio clonado, permitiéndote trabajar con los archivos y subdirectorios contenidos en él, lo cual facilita la ejecución de Bon in a Box.
+Una vez estemos en el repositorio deseado, haz clic en la opción `Repository` en la barra superior y selecciona `Open in Git Bash`, `Open in Command Prompt` o `Open in Terminal`. Estas opciones varian según la configuración de tu maquina y de tu sistema operativo.
 
-Para lanzar Bon in a Box, siempre será necesario ejecutar el comando `./server-up.sh`. La primera ejecución tomará más tiempo, ya que descargará los micro-servicios necesarios para lanzar el contenedor Docker. Las siguientes ejecuciones serán más rápidas o inmediatas, dependiendo de los cambios realizados. Este comando ejecutará todas las acciones definidas en el archivo server-up.sh que se encuentra en el directorio clonado, iniciando así Bon in a Box. 
+Para Windows, es mejor lanzar Bon in a Box con `Git Bash`. Si no tienes `Git Bash`, la opción Command Prompt buscará Git en el sistema y, de no encontrarlo, mostrará un mensaje como el siguiente:
+
+![](README_figures/warningPromp.png)
+La opción [Install Git](https://docs.github.com/es/get-started/getting-started-with-git/set-up-git#setting-up-git) describe una serie de pasos para configurarlo. Aunque estos pasos pueden seguirse, es más sencillo instalar [Git Bash](https://git-scm.com/downloads). Al hacer click sobre la opción `Open in Git Bash` o `Open in Terminal` se abrira una consola de comandos. Al abrir la consola desde GitHub Desktop, esta se ubicará automáticamente en la ruta del repositorio clonado, permitiéndote trabajar con los archivos y subdirectorios contenidos en él, lo cual facilita la ejecución de Bon in a Box.
 
 ![](README_figures/launch Byb.png)
+
+Para lanzar Bon in a Box, siempre será necesario ejecutar el comando `./server-up.sh`. La primera ejecución tomará más tiempo, ya que descargará los micro-servicios necesarios para lanzar el contenedor Docker. Las siguientes ejecuciones serán más rápidas o inmediatas, dependiendo de los cambios realizados. Este comando ejecutará todas las acciones definidas en el archivo server-up.sh que se encuentra en el directorio clonado, iniciando así Bon in a Box. 
 
 Para hacer esto, digita el comando `./server-up.sh` en la consola y oprime Enter. Bon in a Box requiere que la cuenta de GitHub desde donde se ejecuta tenga una clave SSH configurada en el computador. Una clave SSH es una configuración criptográfica de seguridad que permite la autenticación segura entre el cliente (tu computadora) y el servidor (GitHub), evitando la necesidad de introducir contraseñas cada vez que se accede al repositorio. Si el usuario no tiene una clave SSH activa en la cuenta asociada al computador, se generará un error de autenticación.
 
