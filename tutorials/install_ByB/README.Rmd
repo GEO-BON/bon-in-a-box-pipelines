@@ -78,7 +78,6 @@ La primera vez que ejecutes el comando `./server-up.sh` sin especificar la clave
 ![](README_figures/first error key.png)
 
 
-
 ### Autenticación de clave SSH
 
 Para configurar una clave SSH, ejecuta el comando `ssh-keygen -t ed25519 -C "email@dominio.com"`. Este comando puede ejecutarse tal cual, sin cambiar el correo electrónico ni el dominio. Esto genera un par de claves SSH, una privada y una pública. Al presionar Enter, el comando preguntará si deseas asignar un nombre particular a las claves; puedes dejar este campo vacío y simplemente presionar Enter para aceptar la ubicación predeterminada del usuario.
