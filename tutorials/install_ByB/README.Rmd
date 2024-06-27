@@ -60,8 +60,9 @@ Una vez estemos en el repositorio deseado, haz clic en la opción `Repository` e
 Para Windows, es mejor lanzar Bon in a Box con `Git Bash`. Si no tienes `Git Bash`, la opción `Command Prompt` buscará Git en el sistema y, de no encontrarlo generara errores o mostrará un mensaje como el siguiente:
 
 ![](README_figures/warningPromp.png)
-La opción [Install Git](https://docs.github.com/es/get-started/getting-started-with-git/set-up-git#setting-up-git) describe una serie de pasos para configurarlo. Aunque estos pasos pueden seguirse, es más sencillo instalar [Git Bash](https://git-scm.com/downloads). Una vez instalado 
+La opción [Install Git](https://docs.github.com/es/get-started/getting-started-with-git/set-up-git#setting-up-git) describe una serie de pasos para configurarlo. Aunque estos pasos pueden seguirse, es más sencillo instalar [Git Bash](https://git-scm.com/downloads). Una vez instalado Git Bash, en GitHub Desktop dirígete a `File` -> `Options`. Selecciona la pestaña `Integrations`, elige `Git Bash` en el campo Shell del menú desplegable y haz clic en Save para guardar los cambios.
 
+![](README_figures/ConfigureGitBash.png)
 
 
 Al hacer click sobre la opción `Open in Git Bash`, `Open in PowerShell`, o `Open in Terminal` se abrira una consola de comandos. Al abrir la consola desde GitHub Desktop, esta se ubicará automáticamente en la ruta del repositorio clonado, permitiéndote trabajar con los archivos y subdirectorios contenidos en él, lo cual facilita la ejecución de Bon in a Box.
