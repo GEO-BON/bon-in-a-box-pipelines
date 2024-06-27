@@ -23,7 +23,6 @@ detalladas en cada paso del proceso. Esta estructura permite a los
 usuarios seguir instrucciones sencillas de manera clara y efectiva,
 minimizando la necesidad de conocimientos técnicos avanzados.
 
-
 - [Instalación de software
   necesarios](#instalación-de-software-necesarios)
 - [Clonar el Repositorio GitHub
@@ -193,6 +192,14 @@ autenticación segura entre el cliente (tu computadora) y el servidor
 (GitHub), evitando la necesidad de introducir contraseñas cada vez que
 se accede al repositorio. Si el usuario no tiene una clave SSH activa en
 la cuenta asociada al computador, se generará un error de autenticación.
+
+La primera vez que ejecutes el comando `./server-up.sh` sin especificar
+la clave SSH, la consola te pedirá confirmar la autenticidad del host.
+Te mostrará la huella digital de la clave del servidor y te preguntará
+si deseas continuar con la conexión. Debes escribir `yes` para aceptar y
+continuar.
+
+![](README_figures/first%20error%20key.png)
 
 ### Autenticación de clave SSH
 

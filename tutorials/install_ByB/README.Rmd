@@ -73,6 +73,12 @@ Para lanzar Bon in a Box, siempre será necesario ejecutar el comando `./server-
 
 Para hacer esto, digita el comando `./server-up.sh` en la consola y oprime Enter. Bon in a Box requiere que la cuenta de GitHub desde donde se ejecuta tenga una clave SSH configurada en el computador. Una clave SSH es una configuración criptográfica de seguridad que permite la autenticación segura entre el cliente (tu computadora) y el servidor (GitHub), evitando la necesidad de introducir contraseñas cada vez que se accede al repositorio. Si el usuario no tiene una clave SSH activa en la cuenta asociada al computador, se generará un error de autenticación.
 
+La primera vez que ejecutes el comando `./server-up.sh` sin especificar la clave SSH, la consola te pedirá confirmar la autenticidad del host. Te mostrará la huella digital de la clave del servidor y te preguntará si deseas continuar con la conexión. Debes escribir `yes` para aceptar y continuar.
+
+![](README_figures/first error key.png)
+
+
+
 ### Autenticación de clave SSH
 
 Para configurar una clave SSH, ejecuta el comando `ssh-keygen -t ed25519 -C "email@dominio.com"`. Este comando puede ejecutarse tal cual, sin cambiar el correo electrónico ni el dominio. Esto genera un par de claves SSH, una privada y una pública. Al presionar Enter, el comando preguntará si deseas asignar un nombre particular a las claves; puedes dejar este campo vacío y simplemente presionar Enter para aceptar la ubicación predeterminada del usuario.
