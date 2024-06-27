@@ -55,12 +55,16 @@ En este ejemplo, trabajaremos sobre la rama test_pipeline_IAvH, que es una rama 
 
 ![](README_figures/branches.jpg)
 
-Una vez estemos en el repositorio deseado, haz clic en la opción `Repository` en la barra superior y selecciona `Open in Git Bash`, `Open in Command Prompt` o `Open in Terminal`. Estas opciones varian según la configuración de tu maquina y de tu sistema operativo.
+Una vez estemos en el repositorio deseado, haz clic en la opción `Repository` en la barra superior y selecciona `Open in Git Bash`, `Open in PowerShell`, `Open in Command Prompt` o `Open in Terminal`. Estas opciones varian según la configuración de tu maquina y de tu sistema operativo.
 
-Para Windows, es mejor lanzar Bon in a Box con `Git Bash`. Si no tienes `Git Bash`, la opción Command Prompt buscará Git en el sistema y, de no encontrarlo, mostrará un mensaje como el siguiente:
+Para Windows, es mejor lanzar Bon in a Box con `Git Bash`. Si no tienes `Git Bash`, la opción `Command Prompt` buscará Git en el sistema y, de no encontrarlo generara errores o mostrará un mensaje como el siguiente:
 
 ![](README_figures/warningPromp.png)
-La opción [Install Git](https://docs.github.com/es/get-started/getting-started-with-git/set-up-git#setting-up-git) describe una serie de pasos para configurarlo. Aunque estos pasos pueden seguirse, es más sencillo instalar [Git Bash](https://git-scm.com/downloads). Al hacer click sobre la opción `Open in Git Bash` o `Open in Terminal` se abrira una consola de comandos. Al abrir la consola desde GitHub Desktop, esta se ubicará automáticamente en la ruta del repositorio clonado, permitiéndote trabajar con los archivos y subdirectorios contenidos en él, lo cual facilita la ejecución de Bon in a Box.
+La opción [Install Git](https://docs.github.com/es/get-started/getting-started-with-git/set-up-git#setting-up-git) describe una serie de pasos para configurarlo. Aunque estos pasos pueden seguirse, es más sencillo instalar [Git Bash](https://git-scm.com/downloads). Una vez instalado 
+
+
+
+Al hacer click sobre la opción `Open in Git Bash`, `Open in PowerShell`, o `Open in Terminal` se abrira una consola de comandos. Al abrir la consola desde GitHub Desktop, esta se ubicará automáticamente en la ruta del repositorio clonado, permitiéndote trabajar con los archivos y subdirectorios contenidos en él, lo cual facilita la ejecución de Bon in a Box.
 
 ![](README_figures/launch Byb.png)
 
