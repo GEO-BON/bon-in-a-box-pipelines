@@ -8,7 +8,7 @@ input <- list(
   "setupCol"="Instal.Date",
   "retrievalCol"="Last.eventDate",
   "min_NAs"=7,
-  "data"="C:/Repositories/biab-2.0/output/00_add_covs/add_covs/83ce6c6ec07b340a09b6667372ce282f/vars_dataset.csv")
+  "data"= "C:/Repositories/biab-2.0/scripts/detectionHistory/input/vars_dataset.csv")
 
 
 
@@ -86,26 +86,21 @@ sp_filter_clean <- join_records[ join_records[, input$stationCol] %in% rownames(
 #Join DH matrix and covariables
 join_DH <- plyr::join_all(list(DH_sp_clean, sp_filter_clean), by =  input$stationCol, match = "first" )
 
-umf = unmarkedFrameOccu(y = DH_sp_adjust, siteCovs = dplyr::select(join_DH, c("Dis_forest", "Dis_forest")),
+library(unmarked)
+
+umf = unmarkedFrameOccu(y = DH_sp_adjust, siteCovs = dplyr::select(join_DH, c("Dis_forest", "chelsa_clim_bio1", "chelsa_clim_bio2")),
                         obsCovs = NULL)
 
 # pivot_wider
 umf2<- umf; umf2@obsCovs<- dplyr::select(join_DH, c("ID_grid", "collapse_hour")) %>%  tibble::column_to_rownames("ID_grid")
 
-
-
-
-
-
-
-
-formula_occ<- as.formula( paste0("~ ", paste0("collapse_hour", collapse = " + "), " ~ ", paste0(c("Dis_forest", "Dis_forest"), collapse = " + ")) )
+formula_occ<- as.formula( paste0("~ ", paste0("collapse_hour", collapse = " + "), " ~ ", paste0(c("chelsa_clim_bio1"), collapse = " + ")) )
 occ_model <- occu( formula_occ, umf2)  # fit a model
 
-boot::inv.logit(coef(occ_model)[4]) # Real estimate of occupancy
-
+# problemas con la convergencia del modelo pueden ser causados por la multicolinealidad entre las covariables, la sobreparametrización debido a un exceso de variables en relación con la cantidad de datos disponibles, o la insuficiencia de variabilidad en los datos, lo cual dificulta la estimación precisa de los parámetros del modelo.
 
 occ_dredge <- MuMIn::dredge(occ_model)
+
 
 
 
