@@ -4,7 +4,7 @@
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- c("dplyr", "fields", "gridExtra","lubridate", "mccf1", "ranger",
                     "readr", "scam", "sf", "terra", "tidyr", "ebirdst","yaml", "precrec", "PresenceAbsence") # Define the list of required packages to run the script
-new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T)} # Check and install required packages that are not previously installed
+new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
 # Load libraries
 packagesList<-list("dplyr", "fields", "gridExtra","lubridate", "mccf1", "ranger",

@@ -1,4 +1,4 @@
-FROM rocker/geospatial:dev-osgeo
+FROM rocker/geospatial:4.4.1
 
 # Additionnal R packages
 RUN R -e 'install.packages(c("rjson", "RCurl", "rstac", "rgbif", "CoordinateCleaner", "dismo", "ENMeval", "gdalUtils", "ggsci", "landscapemetrics", "geodata", "rredlist", "gdalUtilities", "OpenStreetMap"))'

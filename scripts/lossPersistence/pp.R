@@ -1,7 +1,7 @@
 # Instalar librerias necesarias
 packagesPrev<- installed.packages()[,"Package"]
 packagesNeed<- c("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "gdalUtilities","sp")
-new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T)}
+new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")}
 
 # Cargar librerias
 packagesList<-list("magrittr", "terra", "raster")
