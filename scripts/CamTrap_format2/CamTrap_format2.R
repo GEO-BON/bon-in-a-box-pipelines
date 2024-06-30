@@ -26,11 +26,6 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http:://", x)  ) { 
   sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) %>% unlist()) 
 
-
-
-print("RUBN")
-
-
 #  Script body ####
 ## Read data input ####
 camptrap_data <- data.table::fread(input$camptrap_data) %>% as.data.frame() %>% dplyr::mutate(sp= "sp")
@@ -47,11 +42,9 @@ DateTimeOriginal_data<- camptrap_data %>% dplyr::filter(!is.na(.[, input$evendat
   dplyr::mutate(DateTimeOriginal = paste(.[,input$evendateCol], .[,input$eventTimeCol])) %>% 
   dplyr::mutate(site_id= as.character( !!rlang::sym(input$siteCol) ))
 
-print("DateTimeOriginal")
-
 ## Camera operation ####
 CTtable <- DateTimeOriginal_data %>%
-  dplyr::select( c("site_id", as.character(unlist(input[c("setupCol",  "Instal.Date", "retrievalCol", "cameraCol" )]))) ) %>%
+  dplyr::select( c("site_id", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) ) %>%
   na.omit()  %>% dplyr::distinct()
 
 camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
@@ -64,11 +57,10 @@ camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
                                           camerasIndependent = FALSE,
                                           hasProblems  = FALSE)
 
-print("cameraOperation")
 
 
 ## Detection history ####
-recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("sp","DateTimeOriginal", "site_id", as.character(unlist(input[c("setupCol",  "Instal.Date", "retrievalCol", "cameraCol" )]))) )
+recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("sp","DateTimeOriginal", "site_id", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) )
 
 detHistory_matrix <- camtrapR::detectionHistory (recordTable = recordTable,
                                                  speciesCol = "sp", species = "sp",
@@ -144,9 +136,12 @@ umf_matrix = unmarked::unmarkedFrameOccu(y = detHistory_matrix_adjust, siteCovs 
 umf_matrix_path<- file.path(outputFolder, "umf_matrix.csv") # Define the file path for the 'val_wkt_path' output
 write.csv(umf_matrix, umf_matrix_path, row.names = T ) # Write the 'val_wkt_path' output
 
+detHistory_matrix_path<- file.path(outputFolder, "detHistory_matrix.csv") # Define the file path for the 'val_wkt_path' output
+write.csv(detHistory_matrix_adjust, detHistory_matrix_path, row.names = T ) # Write the 'val_wkt_path' output
+
 
 #### Outputing result to JSON ####
-output<- list(umf_matrix= umf_matrix_path)
+output<- list(detHistory_matrix_path=detHistory_matrix_path, umf_matrix= umf_matrix_path)
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)
