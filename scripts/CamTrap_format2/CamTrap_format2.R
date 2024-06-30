@@ -2,8 +2,8 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- c("magrittr", "data.table", "terra", "raster", "sf", "pbapply", "this.path", "rjson", "tools", "unmarked", "reshape2", "camtrapR") # Define the list of required packages to run the script
-new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T)} # Check and install required packages that are not previously installed
+packagesNeed<- c("magrittr", "data.table", "terra", "raster", "sf", "pbapply", "this.path", "rjson", "tools", "unmarked", "reshape2", "Rcpp" , "RcppEigen", "RcppParallel", "RcppNumerical", "secr", "camtrapR") # Define the list of required packages to run the script
+new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
 # Load libraries
 packagesList<-list("magrittr") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
@@ -76,7 +76,7 @@ detHistory_matrix <- camtrapR::detectionHistory (recordTable = recordTable,
                                                  stationCol = "site_id",
                                                  recordDateTimeCol = "DateTimeOriginal",
                                                  recordDateTimeFormat  = "%Y-%m-%d%H:%M:%S",
-                                                 occasionLength = 6,  #change to colaps diferent dates
+                                                 occasionLength = input$dateCollapseLength,  #change to colaps diferent dates
                                                  day1 = "station",  #first day of survey; if we want to specify a date put in "survey"
                                                  datesAsOccasionNames = F,
                                                  includeEffort = F, #careful if trapping effort is thought to influence detection probability, it can be returned by setting includeEffort = TRUE.
@@ -94,7 +94,7 @@ detHistory_matrix_adjust<- detHistory_matrix$detection_history %>% as.data.frame
 #### explore id to table ####
 start_dates <- recordTable %>% dplyr::group_by(site_id) %>% dplyr::summarize(start_date = min(DateTimeOriginal, na.rm = TRUE))
 indexTable <- recordTable %>% dplyr::select(c("DateTimeOriginal", "site_id")) %>% dplyr::left_join(start_dates, by = "site_id")  %>%  
-  dplyr::mutate(occasion = floor(as.numeric(difftime(DateTimeOriginal, start_date, units = "days")) / 6) + 1) %>% 
+  dplyr::mutate(occasion = floor(as.numeric(difftime(DateTimeOriginal, start_date, units = "days")) / input$dateCollapseLength) + 1) %>% 
   list(data.frame(occasion= unique(.$occasion), oc_detHist= colnames(detHistory_matrix_adjust))) %>% plyr::join_all() 
 
 
