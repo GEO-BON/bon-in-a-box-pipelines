@@ -1,3 +1,20 @@
+#### Load required packages - libraries to run the script ####
+
+# Install necessary libraries - packages  
+packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
+packagesNeed<- c("magrittr", "terra", "raster", "sf", "pbapply", "this.path", "rjson", "lubridate", "camptrapR") # Define the list of required packages to run the script
+new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T)} # Check and install required packages that are not previously installed
+
+# Load libraries
+packagesList<-list("magrittr", "terra") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
+
+
+#### Set enviroment variables ####
+
+
+
+
 input <- list(
   "speciesCol"="scientificName",
   "species"="Cuniculus paca",
@@ -98,7 +115,6 @@ formula_occ<- as.formula( paste0("~ ", paste0("collapse_hour", collapse = " + ")
 occ_model <- occu( formula_occ, umf2)  # fit a model
 
 # problemas con la convergencia del modelo pueden ser causados por la multicolinealidad entre las covariables, la sobreparametrización debido a un exceso de variables en relación con la cantidad de datos disponibles, o la insuficiencia de variabilidad en los datos, lo cual dificulta la estimación precisa de los parámetros del modelo.
-
 occ_dredge <- MuMIn::dredge(occ_model)
 
 

@@ -1,0 +1,64 @@
+script: CamTrap_format2.R
+description: "This script get the data formating to unmarked."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  camptrap_data:
+    label: camptrap_data
+    description: "camptrap_data"
+    type: text/csv
+    example:  "scripts/CamTrap_format2/input/vars_dataset.csv"
+  siteCol:
+    label: siteCol
+    description: "siteCol"
+    type: text
+    example: "ID_grid"
+  dateCollapseLength:
+    label: dateCollapseLength
+    description: "dateCollapseLength"
+    type: int
+    example: 6
+  site_covs:
+    label: site_covs
+    description: "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate."
+    type: text
+    example: "scripts/CamTrap_format2/input/stac"
+  obs_covs:
+    label: obs_covs
+    description: "Covarable seguido de factor de collapso lubridate::round_date"
+    type: text[]
+    example: ["eventTime|1|hour", "dist_rios|1"]
+  min_NAs:
+    label: min_NAs
+    description: "min_NAs"
+    type: int
+    example: 7
+  cameraCol:
+    label: cameraCol
+    description: "cameraCol"
+    type: text
+    example: "Cam.Site"
+  evendateCol:
+    label: evendateCol
+    description: "evendateCol. deben ser formato dia/mes/año"
+    type: text
+    example: "eventDate"
+  setupCol:
+    label: setupCol
+    description: "setupCol"
+    type: text
+    example: "Instal.Date"
+  retrievalCol:
+    label: retrievalCol
+    description: "retrievalCol"
+    type: text
+    example: "Last.eventDate"
+  eventTimeCol:
+    label: eventTimeCol
+    description: "eventTimeCol %H:%M:%S"
+    type: text
+    example: "eventTime"
+outputs:
+  umf_matrix:
+    label: umf_matrix
+    description: "umf_matrix"
+    type: text/csv
