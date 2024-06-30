@@ -1,64 +1,68 @@
 script: CamTrap_format2.R
-description: "This script get the data formating to unmarked."
+description: "Processes a camera trap data table to generate a detection matrix and organizes the data with covariates into an unmarked object for occupancy analysis."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   camptrap_data:
     label: camptrap_data
-    description: "camptrap_data"
+    description: "Dataset containing detections made by camera traps. This data should include information on the site, date, and time of detection events for a single species. It should also include site and observation variables."
     type: text/csv
     example:  "scripts/CamTrap_format2/input/vars_dataset.csv"
   siteCol:
     label: siteCol
-    description: "siteCol"
+    description: "Name of the column in the camptrap_data dataset containing the unique ID or identification of the camera trap site or station."
     type: text
     example: "ID_grid"
   dateCollapseLength:
     label: dateCollapseLength
-    description: "dateCollapseLength"
+    description: "Number defining the time interval in days in which detections are grouped or collapsed to determine a sampling occasion or event."
     type: int
     example: 6
-  site_covs:
-    label: site_covs
-    description: "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate."
-    type: text
-    example: "scripts/CamTrap_format2/input/stac"
-  obs_covs:
-    label: obs_covs
-    description: "Covarable seguido de factor de collapso lubridate::round_date"
-    type: text[]
-    example: ["eventTime|1|hour", "dist_rios|1"]
-  min_NAs:
-    label: min_NAs
-    description: "min_NAs"
-    type: int
-    example: 7
   cameraCol:
     label: cameraCol
-    description: "cameraCol"
+    description: "Name of the column in the camptrap_data dataset specifying the unique ID or identification of the camera traps."
     type: text
     example: "Cam.Site"
   evendateCol:
     label: evendateCol
-    description: "evendateCol. deben ser formato dia/mes/año"
+    description: "Name of the column in the camptrap_data dataset specifying the date of the sampling event or occasion. Must be in day/month/year format or will be ignored."
     type: text
     example: "eventDate"
+  eventTimeCol:
+    label: eventTimeCol
+    description: "Name of the column in the camptrap_data dataset specifying the time of the sampling event or occasion. Must be in Hour:Minut:Second 00:00:00 format or will be ignored."
+    type: text
+    example: "eventTime"
   setupCol:
     label: setupCol
-    description: "setupCol"
+    description: "Name of the column in the camptrap_data dataset specifying the installation date of the camera trap. Must be in day/month/year format or will be ignored."
     type: text
     example: "Instal.Date"
   retrievalCol:
     label: retrievalCol
-    description: "retrievalCol"
+    description: "Name of the column in the camptrap_data dataset specifying the retrieval date of the camera trap. Must be in day/month/year format or will be ignored."
     type: text
     example: "Last.eventDate"
-  eventTimeCol:
-    label: eventTimeCol
-    description: "eventTimeCol %H:%M:%S"
+  min_NAs:
+    label: min_NAs
+    description: "Minimum number of events required per site to include that site in the detection matrix in camtrapR. Sites with fewer events will be excluded."
+    type: int
+    example: 7
+  site_covs:
+    label: site_covs
+    description: "List of site variables (site/landscape characteristics that influence species detection and occupancy). They can be specified by name or through the directory where they are stored in .tif format. Names must match the columns in camptrap_data or will be omitted."
     type: text
-    example: "eventTime"
+    example: "scripts/CamTrap_format2/input/stac"
+  obs_covs:
+    label: obs_covs
+    description: "List of observation variables (hour, lunar phase, climate) that must match columns in camptrap_data or will be omitted. As they can vary by event, they must be grouped/collapsed for the unmarked object. When they are factors, they are not rounded. Numeric variables are specified as eventTime|1, where 1 is the rounding value. For temporal variables, use eventTime|1|hour. Temporal units from lubridate::round_date are accepted."
+    type: text[]
+    example: ["eventTime|1|hour"]
 outputs:
+  detHistory_matrix:
+    label: detHistory_matrix
+    description: "Detection matrix. Each row corresponds to a site and each column to an event/occasion. The row names in the first column correspond to the site or station ID."
+    type: text/csv
   umf_matrix:
     label: umf_matrix
-    description: "umf_matrix"
+    description: "Unmarked object containing matrices of detection/non-detection data, site and observation covariates, and associated metadata for occupancy model analysis. The row names in the first column correspond to the site or station ID."
     type: text/csv
