@@ -26,8 +26,8 @@
       "id": "36",
       "type": "io",
       "position": {
-        "x": -125,
-        "y": 107
+        "x": -165,
+        "y": 85
       },
       "data": {
         "descriptionFile": "Filter_data>Filter_data.yml"
@@ -128,8 +128,8 @@
       "id": "50",
       "type": "io",
       "position": {
-        "x": 896.3761160949864,
-        "y": 186.00278077386974
+        "x": 811.2983737900843,
+        "y": 184.26650031866768
       },
       "data": {
         "descriptionFile": "00_add_covs>add_covs.yml"
@@ -171,28 +171,6 @@
       }
     },
     {
-      "id": "55",
-      "type": "io",
-      "position": {
-        "x": 1414.183349609375,
-        "y": 51.33332824707031
-      },
-      "data": {
-        "descriptionFile": "detectionHistory>detectionHistory.yml"
-      }
-    },
-    {
-      "id": "56",
-      "type": "output",
-      "position": {
-        "x": 1907.183349609375,
-        "y": 115.33332824707031
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "57",
       "type": "constant",
       "position": {
@@ -216,6 +194,17 @@
       "data": {
         "type": "text",
         "value": "Long_Y"
+      }
+    },
+    {
+      "id": "60",
+      "type": "io",
+      "position": {
+        "x": 1247.0352610746877,
+        "y": 90.1121125491197
+      },
+      "data": {
+        "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
       }
     }
   ],
@@ -312,20 +301,6 @@
       "id": "reactflow__edge-54-53StudyArea_vector"
     },
     {
-      "source": "50",
-      "sourceHandle": "vars_dataset",
-      "target": "55",
-      "targetHandle": "data",
-      "id": "reactflow__edge-50vars_dataset-55data"
-    },
-    {
-      "source": "55",
-      "sourceHandle": "data_filter",
-      "target": "56",
-      "targetHandle": null,
-      "id": "reactflow__edge-55data_filter-56"
-    },
-    {
       "source": "57",
       "sourceHandle": null,
       "target": "45",
@@ -338,6 +313,13 @@
       "target": "45",
       "targetHandle": "ylong",
       "id": "reactflow__edge-58-45ylong"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "vars_dataset",
+      "target": "60",
+      "targetHandle": "camptrap_data",
+      "id": "reactflow__edge-50vars_dataset-60camptrap_data"
     }
   ],
   "inputs": {
@@ -461,69 +443,80 @@
       "example": 1000,
       "weight": 15
     },
-    "detectionHistory>detectionHistory.yml@55|speciesCol": {
-      "description": "speciesCol",
-      "label": "speciesCol",
-      "type": "text/plain",
-      "example": "speciesCol",
+    "CamTrap_format2>CamTrap_format2.yml@60|siteCol": {
+      "description": "Name of the column in the camptrap_data dataset containing the unique ID or identification of the camera trap site or station.",
+      "label": "siteCol",
+      "type": "text",
+      "example": "ID_grid",
       "weight": 16
     },
-    "detectionHistory>detectionHistory.yml@55|species": {
-      "description": "species",
-      "label": "species",
-      "type": "text/plain",
-      "example": "species",
+    "CamTrap_format2>CamTrap_format2.yml@60|dateCollapseLength": {
+      "description": "Number defining the time interval in days in which detections are grouped or collapsed to determine a sampling occasion or event.",
+      "label": "dateCollapseLength",
+      "type": "int",
+      "example": 6,
       "weight": 17
     },
-    "detectionHistory>detectionHistory.yml@55|setupCol": {
-      "description": "setupCol",
-      "label": "setupCol",
-      "type": "text/plain",
-      "example": "setupCol",
+    "CamTrap_format2>CamTrap_format2.yml@60|cameraCol": {
+      "description": "Name of the column in the camptrap_data dataset specifying the unique ID or identification of the camera traps.",
+      "label": "cameraCol",
+      "type": "text",
+      "example": "Cam.Site",
       "weight": 18
     },
-    "detectionHistory>detectionHistory.yml@55|retrievalCol": {
-      "description": "conretrievalColdition",
-      "label": "retrievalCol",
-      "type": "text/plain",
-      "example": "retrievalCol",
+    "CamTrap_format2>CamTrap_format2.yml@60|evendateCol": {
+      "description": "Name of the column in the camptrap_data dataset specifying the date of the sampling event or occasion. Must be in day/month/year format or will be ignored.",
+      "label": "evendateCol",
+      "type": "text",
+      "example": "eventDate",
       "weight": 19
     },
-    "detectionHistory>detectionHistory.yml@55|stationCol": {
-      "description": "stationCol",
-      "label": "stationCol",
-      "type": "text/plain",
-      "example": "stationCol",
+    "CamTrap_format2>CamTrap_format2.yml@60|eventTimeCol": {
+      "description": "Name of the column in the camptrap_data dataset specifying the time of the sampling event or occasion. Must be in Hour:Minut:Second 00:00:00 format or will be ignored.",
+      "label": "eventTimeCol",
+      "type": "text",
+      "example": "eventTime",
       "weight": 20
     },
-    "detectionHistory>detectionHistory.yml@55|cameraCol": {
-      "description": "condition",
-      "label": "cameraCol",
-      "type": "text/plain",
-      "example": "cameraCol",
+    "CamTrap_format2>CamTrap_format2.yml@60|setupCol": {
+      "description": "Name of the column in the camptrap_data dataset specifying the installation date of the camera trap. Must be in day/month/year format or will be ignored.",
+      "label": "setupCol",
+      "type": "text",
+      "example": "Instal.Date",
       "weight": 21
     },
-    "detectionHistory>detectionHistory.yml@55|recordDateTimeCol": {
-      "description": "condition",
-      "label": "recordDateTimeCol",
-      "type": "text/plain",
-      "example": "recordDateTimeCol",
+    "CamTrap_format2>CamTrap_format2.yml@60|retrievalCol": {
+      "description": "Name of the column in the camptrap_data dataset specifying the retrieval date of the camera trap. Must be in day/month/year format or will be ignored.",
+      "label": "retrievalCol",
+      "type": "text",
+      "example": "Last.eventDate",
       "weight": 22
     },
-    "detectionHistory>detectionHistory.yml@55|recordDateTimeFormat": {
-      "description": "recordDateTimeFormat",
-      "label": "recordDateTimeFormat",
-      "type": "text/plain",
-      "example": "recordDateTimeFormat",
+    "CamTrap_format2>CamTrap_format2.yml@60|min_NAs": {
+      "description": "Minimum number of events required per site to include that site in the detection matrix in camtrapR. Sites with fewer events will be excluded.",
+      "label": "min_NAs",
+      "type": "int",
+      "example": 7,
       "weight": 23
+    },
+    "CamTrap_format2>CamTrap_format2.yml@60|site_covs": {
+      "description": "List of site variables (site/landscape characteristics that influence species detection and occupancy). They can be specified by name or through the directory where they are stored in .tif format. Names must match the columns in camptrap_data or will be omitted.",
+      "label": "site_covs",
+      "type": "text[]",
+      "example": [
+        "scripts/CamTrap_format2/input/stac"
+      ],
+      "weight": 24
+    },
+    "CamTrap_format2>CamTrap_format2.yml@60|obs_covs": {
+      "description": "List of observation variables (hour, lunar phase, climate) that must match columns in camptrap_data or will be omitted. As they can vary by event, they must be grouped/collapsed for the unmarked object. When they are factors, they are not rounded. Numeric variables are specified as eventTime|1, where 1 is the rounding value. For temporal variables, use eventTime|1|hour. Temporal units from lubridate::round_date are accepted.",
+      "label": "obs_covs",
+      "type": "text[]",
+      "example": [
+        "eventTime|1|hour"
+      ],
+      "weight": 25
     }
   },
-  "outputs": {
-    "detectionHistory>detectionHistory.yml@55|data_filter": {
-      "description": "data_filter",
-      "label": "data_filter",
-      "type": "text/csv",
-      "weight": 0
-    }
-  }
+  "outputs": {}
 }
