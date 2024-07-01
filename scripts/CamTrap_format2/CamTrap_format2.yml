@@ -50,8 +50,8 @@ inputs:
   site_covs:
     label: site_covs
     description: "List of site variables (site/landscape characteristics that influence species detection and occupancy). They can be specified by name or through the directory where they are stored in .tif format. Names must match the columns in camptrap_data or will be omitted."
-    type: text
-    example: "scripts/CamTrap_format2/input/stac"
+    type: text[]
+    example: ["scripts/CamTrap_format2/input/stac"]
   obs_covs:
     label: obs_covs
     description: "List of observation variables (hour, lunar phase, climate) that must match columns in camptrap_data or will be omitted. As they can vary by event, they must be grouped/collapsed for the unmarked object. When they are factors, they are not rounded. Numeric variables are specified as eventTime|1, where 1 is the rounding value. For temporal variables, use eventTime|1|hour. Temporal units from lubridate::round_date are accepted."

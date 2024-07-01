@@ -96,10 +96,27 @@ data_adjust <- DateTimeOriginal_data %>% dplyr::mutate(oc_detHist= indexTable$oc
   dplyr::arrange(match(site_id, rownames(detHistory_matrix_adjust)))
 
 ### Adjust site covs ####
-site_covs<- input$site_covs %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
+site_covs_input<- lapply(input$site_covs, function(y) { text_ext<- tools::file_ext(y)
+if(text_ext != ""){
+  if(file.exists(y)){y}else{NULL}
+} else {
+  test_folder<- dir.exists(y)
+  if(test_folder){ list.files(y, full.names = T, recursive = F, pattern = "\\.") %>%  {.[!grepl("\\.tfw$|~$", .)]} } else { NULL }
+}
+})  %>% unlist()  %>%  basename() %>% tools::file_path_sans_ext()
+
+site_covs<- site_covs_input %>% {.[. %in% names(camptrap_data)]}
+
 site_covs_data<-   data_adjust %>%  dplyr::select(c("site_id", site_covs)) %>% 
   dplyr::group_by( site_id) %>% 
   dplyr::summarise(dplyr::across(all_of(site_covs), mean, na.rm = TRUE)) %>% tibble::column_to_rownames("site_id")
+
+
+
+
+
+
+
 
 
 ### Adjust Observation covs ####
@@ -141,7 +158,7 @@ write.csv(detHistory_matrix_adjust, detHistory_matrix_path, row.names = T ) # Wr
 
 
 #### Outputing result to JSON ####
-output<- list(detHistory_matrix_path=detHistory_matrix_path, umf_matrix= umf_matrix_path)
+output<- list(detHistory_matrix=detHistory_matrix_path, umf_matrix= umf_matrix_path)
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)

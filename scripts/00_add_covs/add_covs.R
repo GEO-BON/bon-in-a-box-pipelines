@@ -9,15 +9,9 @@ packagesPrev<- installed.packages()[,"Package"] # Check and get a list of instal
 packagesNeed<- c("magrittr", "this.path", "rjson", "data.table", "dplyr", "terra", "raster",  "sf", "stars", "rgdal", "remotes", "RCurl", "devtools", "stringr", "sp") # Define the list of required packages to run the script
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
-if (!"stacatalogue" %in% packagesPrev) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-if (!"gdalcubes" %in% packagesPrev) devtools::install_github("appelmar/gdalcubes_R")
-
-
 ### Load libraries ####
 packagesList<-list("magrittr", "terra", "raster", "gdalcubes") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
-
-
 
 # Set up the working environment ####
 
@@ -44,27 +38,23 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 
   data_points<- sf::st_read(input$spatial_points) %>% dplyr::mutate(id_row=seq(nrow(.))) 
-  layers_covs<- list.files(input$folder_vars, "\\.tif$", recursive = TRUE, full.names = TRUE)
+  layers_covs<- lapply(input$folder_vars, function(y) {
+    text_ext<- tools::file_ext(y)
+    if(text_ext != ""){
+      if(file.exists(y)){y}else{NULL}
+    } else {
+      test_folder<- dir.exists(y)
+      if(test_folder){ list.files(y, full.names = T, recursive = F, pattern = "\\.") %>%  {.[!grepl("\\.tfw$|~$", .)]} } else { NULL }
+    }
+    })  %>% unlist()
   
   
   stack_vars<- terra::rast(layers_covs) %>% setNames(tools::file_path_sans_ext(basename(layers_covs)))
   base_grid<- stack_vars[[1]] %>% terra::rast() %>% terra::setValues(seq(ncell(.))) %>% terra::mask(min(stack_vars)) %>% setNames("ID_grid")
     
   stack_vars<- c(base_grid, stack_vars)
-  
-  data_points2<- data_points %>% cbind(setNames(as.data.frame(sf::st_coordinates(.)), c("X_coord", "Y_coord"))) %>% dplyr::mutate(id_coord= as.numeric(factor(paste0(X_coord, Y_coord)))) 
-  
-  distinct_id_coord <- data_points2 %>% dplyr::filter(!duplicated(id_coord)) %>% dplyr::select(id_coord)
-  
-  
-  # Generar matriz pixeles por puntos y covariables
-  covars_ID<-  raster::extract(stack_vars, distinct_id_coord) %>% {.[,2:length(.)]} %>% 
-    dplyr::mutate(id_coord= distinct_id_coord$id_coord)
 
-  join_covars<- covars_ID %>% list(as.data.frame(data_points2)) %>% plyr::join_all() %>% 
-    dplyr::select(-c("id_row", "id_coord")) %>% dplyr::filter(!is.na(ID_grid))
-  
-
+  join_covars<- terra::extract(stack_vars, data_points, ID= F) %>% cbind(data_points) %>% dplyr::filter(!is.na(ID_grid))
   
   # Salida final
   spatial_covars<- sf::st_as_sf(join_covars)

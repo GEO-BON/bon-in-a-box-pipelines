@@ -5,8 +5,8 @@ inputs:
   folder_vars:
     label: folder_vars
     description: folder_vars
-    type: text
-    example: 'scripts/00_add_covs/input/dir_stack'
+    type: text[]
+    example: ['scripts/00_add_covs/input/dir_stack']
   spatial_points:
     label: spatial_points
     description: "spatial_points"

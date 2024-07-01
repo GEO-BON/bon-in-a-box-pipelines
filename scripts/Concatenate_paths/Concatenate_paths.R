@@ -43,14 +43,14 @@ output<- (function(){
   list_paths<- lapply(input, function(x) 
     
     lapply(x, function(y) {
-      #### Check path directory ####
-      # If it's a directory, list.files is used to get all stored paths, but if it's a file, the original path is kept
-      test_folder<- dir.exists(y)
-      if(test_folder){
-        
-        list.files(y, full.names = T, recursive = F, pattern = "\\.")
-
-      } else { y }
+   
+      text_ext<- tools::file_ext(y)
+      if(text_ext != ""){
+        if(file.exists(y)){y}else{NULL}
+      } else {
+        test_folder<- dir.exists(y)
+        if(test_folder){ list.files(y, full.names = T, recursive = F, pattern = "\\.") %>%  {.[!grepl("\\.tfw$|~$", .)]} } else { NULL }
+      }
       
     }) ) %>% unlist()
 
