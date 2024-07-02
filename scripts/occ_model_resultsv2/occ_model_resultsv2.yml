@@ -1,0 +1,55 @@
+script: occ_model_resultsv2.R
+description: "This script get the occupancy models result, exploring results and plot graph and maps."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  auk_covars_file:
+    label: auk_covars_file
+    description: "Input data with eBird format"
+    type: text/csv
+    example:  "scripts/00_occ_model_results/input/occ_wide.csv"
+  site_covs:
+    label: site_covs
+    description: "List of site variables (site/landscape characteristics that influence species detection and occupancy). They can be specified by name or through the directory where they are stored in .tif format. Names must match the columns in camptrap_data or will be omitted."
+    type: image/tiff;application=geotiff[]
+    example: ["scripts/CamTrap_format2/input/stac"]
+  site_covs_Layers:
+    label: site_covs_Layers
+    description: "List of site variables (site/landscape characteristics that influence species detection and occupancy). They can be specified by name or through the directory where they are stored in .tif format. Names must match the columns in camptrap_data or will be omitted."
+    type: image/tiff;application=geotiff[]
+    example: ["scripts/CamTrap_format2/input/stac"]
+  obs_covs:
+    label: obs_covs
+    description: "List of observation variables (hour, lunar phase, climate) that must match columns in camptrap_data or will be omitted. As they can vary by event, they must be grouped/collapsed for the unmarked object. When they are factors, they are not rounded. Numeric variables are specified as eventTime|1, where 1 is the rounding value. For temporal variables, use eventTime|1|hour. Temporal units from lubridate::round_date are accepted."
+    type: text[]
+    example: ["eventTime|1|hour"]
+  nsim:
+    label: nsim
+    description: "The number of bootstrapped samples"
+    type: int
+    example: 2
+  plot_hist:
+    label: plot.hist
+    description: "Specifies that a histogram of the bootstrapped test statistic is to be included in the output. For dynamic occupancy models, this produces a histogram of the sum of the season-specific chi-squares for each bootstrap sample."
+    type: boolean
+    example: false
+outputs:
+  occprob_raster_export:
+    label: occprob_raster_export
+    description: "Raster map with occupancy model probability and standar error"
+    type: image/tiff;application=geotiff	
+  occse_raster_export:
+    label: occse_raster_export
+    description: "Raster map with occupancy model probability and standar error"
+    type: image/tiff;application=geotiff	
+  occPlotFacet:
+    label: occPlotFacet
+    description: "Get a graph of the response of the covariates and occupancy prop"
+    type: image/jpg	
+  final_export:
+    label: final_table
+    description: "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ"
+    type: text/csv
+  VEB_export:
+    label: FVEB
+    description: "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)"
+    type: text

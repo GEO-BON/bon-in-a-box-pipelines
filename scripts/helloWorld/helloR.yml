@@ -46,6 +46,10 @@ inputs:
       Once there is a line break in the example, it becomes a textarea in the UI.
 
 outputs:
+  text2:
+    label: text2
+    description: text2
+    type: text/plain
   text:
     label: Text
     description: We can add plain text

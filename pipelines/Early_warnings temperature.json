@@ -1,0 +1,194 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 162.39999389648438,
+        "y": 195.60000610351562
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_WKT2>studyarea_to_WKT.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "constant",
+      "position": {
+        "x": -149.60000610351562,
+        "y": 154.60000610351562
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_studyarea_to_WKT/input/Boyaca.gpkg"
+      }
+    },
+    {
+      "id": "2",
+      "type": "constant",
+      "position": {
+        "x": -115.60000610351562,
+        "y": 299.6000061035156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 3395
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 298.3999938964844,
+        "y": 339.6000061035156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_load_collection/input/Temperature_collection"
+      }
+    },
+    {
+      "id": "6",
+      "type": "io",
+      "position": {
+        "x": 1236.3999938964844,
+        "y": 160.60000610351562
+      },
+      "data": {
+        "descriptionFile": "00_Early_Warnings_2>Early_Warnings.yml"
+      }
+    },
+    {
+      "id": "7",
+      "type": "output",
+      "position": {
+        "x": 1673.3999938964844,
+        "y": 160.60000610351562
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "8",
+      "type": "io",
+      "position": {
+        "x": 768.3999938964844,
+        "y": 235.60000610351562
+      },
+      "data": {
+        "descriptionFile": "00_load_collection2>load_collection.yml"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "studyarea_path",
+      "id": "reactflow__edge-1-0studyarea_path"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "studyarea_epsg",
+      "id": "reactflow__edge-2-0studyarea_epsg"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "grafica1_trend",
+      "target": "7",
+      "targetHandle": null,
+      "id": "reactflow__edge-6grafica1_trend-7"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "val_wkt_path",
+      "target": "8",
+      "targetHandle": "wkt_area",
+      "id": "reactflow__edge-0val_wkt_path-8wkt_area"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "epsg",
+      "id": "reactflow__edge-2-8epsg"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "collection_path",
+      "id": "reactflow__edge-4-8collection_path"
+    },
+    {
+      "source": "8",
+      "sourceHandle": "dir_stack",
+      "target": "6",
+      "targetHandle": "dir_collection",
+      "id": "reactflow__edge-8dir_stack-6dir_collection"
+    }
+  ],
+  "inputs": {
+    "00_Early_Warnings_2>Early_Warnings.yml@6|fun_summary": {
+      "description": "fun_summary",
+      "label": "fun_summary",
+      "type": "text",
+      "example": "mean"
+    },
+    "00_Early_Warnings_2>Early_Warnings.yml@6|projection_factor": {
+      "description": "projection_factor",
+      "label": "projection_factor",
+      "type": "int",
+      "example": 2
+    },
+    "00_Early_Warnings_2>Early_Warnings.yml@6|threshold": {
+      "description": "threshold",
+      "label": "threshold",
+      "type": "text"
+    },
+    "00_Early_Warnings_2>Early_Warnings.yml@6|threshold_trend": {
+      "description": "threshold_trend",
+      "label": "threshold_trend",
+      "type": "text",
+      "example": "mean(x[1:20])+1.5"
+    },
+    "00_load_collection2>load_collection.yml@8|resolution": {
+      "description": "resolution",
+      "label": "resolution",
+      "type": "int",
+      "example": 1000
+    },
+    "00_load_collection2>load_collection.yml@8|time_period": {
+      "description": "time_period",
+      "label": "time period",
+      "type": "text",
+      "example": "P1Y"
+    },
+    "00_load_collection2>load_collection.yml@8|time_start": {
+      "description": "time_start",
+      "label": "start of time interval",
+      "type": "text",
+      "example": "NA"
+    },
+    "00_load_collection2>load_collection.yml@8|time_end": {
+      "description": "time_end",
+      "label": "end of time interval",
+      "type": "text",
+      "example": "NA"
+    }
+  },
+  "outputs": {
+    "00_Early_Warnings_2>Early_Warnings.yml@6|grafica1_trend": {
+      "description": "grafica1_trend",
+      "label": "grafica1_trend",
+      "type": "image/jpg"
+    }
+  }
+}

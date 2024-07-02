@@ -1,0 +1,49 @@
+script: Get_filepath.R
+description: "Retrieve the path of a file in text format. This function is especially useful in the context of pipelines, where input paths need to match a specific type. By converting the file path to text, compatibility and integration with various functionalities for pipeline path integration are facilitated."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  text_csv:
+    label: text_csv
+    description: "HTML table (partial content)"
+    type: text/csv
+    example:  NULL
+  text_plain:
+    label: text_plain
+    description: "Plain text"
+    type: text/plain
+    example: NULL
+  text_array:
+    label: text_array
+    description: "Plain text"
+    type: text[]
+    example: [NULL]
+  application_geo_json:
+    label: application_geo_json
+    description: "Map"
+    type: application/geo+json
+    example: NULL
+  application_geopackage:
+    label: application_geopackage
+    description: "Link"
+    type: application/geopackage+sqlite3
+    example: NULL
+  image_geotiff:
+    label: image_geotiff
+    description: "Map widget (leaflet)"
+    type: image/tiff;application=geotiff	
+    example: NULL
+  image_jpg:
+    label: image_jpg
+    description: "<img> tag"
+    type: image/jpg
+    example: NULL
+  application_dbf:
+    label: application_dbf
+    description: "Link"
+    type: application/dbf
+    example: NULL
+outputs:
+  text_paths:
+    label: text_paths
+    description: "String of text representing the path of files."
+    type: text

@@ -1,0 +1,29 @@
+script: 00_pointsdata_to_spatial.R
+description: "Converts a dataset into a spatial object suitable for geospatial analysis and mapping."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dataset:
+    label: dataset
+    description: "Dataset to be spatialized. It must contain columns with latitude ('xlat') and longitude ('ylong'), in a valid EPSG coordinate system equivalent to 'epsg_coords' to ensure proper spatialization."
+    type: text/csv
+    example: "scripts/00_pointsdata_to_spatial/input/data_join.csv"
+  xlat:
+    label: xlat
+    description: "Name of the column in the 'dataset' that contains the latitude coordinates of the points to be spatialized."
+    type: text
+    example: "Lat_X"
+  ylong:
+    label: ylong
+    description: "Name of the column in the 'dataset' that contains the longitude coordinates of the points to be spatialized."
+    type: text
+    example: "Long_Y"
+  espg_coords:
+    label: espg_coords
+    description: "Numeric EPSG coordinate system. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html"
+    type: int
+    example: 4326
+outputs:
+  spatial_points:
+    label: spatial_points
+    description: "Spatial points dataset in GeoJSON format"
+    type: application/geo+json

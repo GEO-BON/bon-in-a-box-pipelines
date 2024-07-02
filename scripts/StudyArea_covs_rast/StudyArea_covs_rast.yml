@@ -1,0 +1,48 @@
+script: StudyArea_covs_rast.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  StudyArea_grid:
+    label: StudyArea_grid
+    description: "studyarea_grid"
+    type: image/tiff;application=geotiff
+    example: "scripts/00_studyarea_covs/input/raster_study_area_path.tif"
+  Zonal_statistics:
+    label: Zonal_statistics
+    description: method of aggregation for the temperature data
+    type: options
+    options: [min, max, mean, median, first]
+    example: mean
+  Folder_rasters:
+    label: Folder_rasters
+    description: "STACQuery_url"
+    type: text
+    example: "http://io.biodiversite-quebec.ca/stac/"
+  STACQuery_url:
+    label: STACQuery_url
+    description: "STACQuery_url"
+    type: text
+    example: "http://io.biodiversite-quebec.ca/stac/"
+  STACcollection:
+    label: STACcollection
+    description: "STACcollection"
+    type: text
+    example: "chelsa-clim"
+  STACselectVars:
+    label: STACselectVars
+    description: 'selectVars'
+    type: text
+    example: all
+outputs:
+  Folder_StudyArea_rasters:
+    label: Folder_StudyArea_rasters
+    description: "Folder_StudyArea_rasters"
+    type: text
+  List_vars:
+    label: List_vars
+    description: "List_vars"
+    type: text
+  Plot_vars:
+    label: Plot_vars
+    description: "Plot_vars"
+    type: image/tiff;application=geotiff

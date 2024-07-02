@@ -1,0 +1,29 @@
+script: camformat.R
+description: "This script get the data formating to unmarked."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  cam_format_file:
+    label: cam_format_file
+    description: "Input data with eBird data and covars"
+    type: text/csv
+    example:  "scripts/00_eBird_format/input/vars_dataset.csv"
+  site_vars:
+    label: site_vars
+    description: "Names of one of more columns in x that define a site, typically the location (e.g. latitude/longitude) and observer ID."
+    type: text
+    example: "ID_grid"
+  site_covs:
+    label: site_covs
+    description: "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate."
+    type: text
+    example: bio18_1981_01_01_1982_01_01, bio7_1981_01_01_1982_01_01, bio4_1981_01_01_1982_01_01
+  obs_covs:
+    label: obs_covs
+    description: "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation."
+    type: text
+    example: "duration_minutes"
+outputs:
+  occ_wide_unmark:
+    label: occ_wide_unmark
+    description: "Data frame prepared of species observations for ingestion into the package unmarked for hierarchical modeling of abundance and occurrence. "
+    type: text/csv

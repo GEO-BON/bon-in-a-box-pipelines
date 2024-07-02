@@ -1,0 +1,49 @@
+script: auk_filter_eBird.R
+description: "This script filters eBird basic dataset checklist and observation files according to the study area and eBird best practices for occupancy models to generate a single zero-filled dataframe with site IDs."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  ebd_file:
+    label: ebd_file
+    description: "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products"
+    type: text
+    example:  'scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt'
+  ebd_sampling_file:
+    label: ebd_sampling_file
+    description: "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products"
+    type: text
+    example: 'scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt'
+  studyarea:
+    label: StudyArea_spatial
+    description: "Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with WGS_1984 geographic coordinate system. This file comes from the 'studyarea_to_grid' step and is use to plot the study area in Bon in a Box and should be used when biological data coordinates are in WGS_1984 geographic coordinate system. It provides a geographical grid to the study area to define the sites for occupancy modelling."
+    type: image/tiff;application=geotiff
+    example: 'scripts/00_auk_filter/input/raster_study_area_path.tif'
+  species:
+    label: species
+    description: "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy"
+    type: text
+    example: "Setophaga fusca"
+outputs:
+  ebd_zerofill_data:
+    label: ebd_zerofill_data
+    description: "ebd_zerofill_data"
+    type: text/tab-separated-values
+  ebd_filter_data:
+    label: ebd_filter_data
+    description: "ebd_filter_data"
+    type: text/tab-separated-values
+  ebd_sampling_filter_data:
+    label: ebd_zerofill_SpatialData
+    description: "ebd_sampling_filter_data"
+    type: text/tab-separated-values
+  ebd_zerofill_SpatialData:
+    label: ebd_zerofill_SpatialData
+    description: "ebd_zerofill_data"
+    type: text/tab-separated-values
+  ebd_filter_SpatialData:
+    label: ebd_filter_SpatialData
+    description: "ebd_filter_data"
+    type: text/tab-separated-values
+  ebd_sampling_filter_SpatialData:
+    label: ebd_sampling_filter_SpatialData
+    description: "ebd_sampling_filter_data"
+    type: text/tab-separated-values

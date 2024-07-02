@@ -1,0 +1,24 @@
+script: Concatenate_paths.R
+description: "Combines multiple file paths into a single vector list. Useful for inputs requiring a single argument of combined path lists. If a file path is provided, it will concatenate just the file path; if a directory path is provided, it will concatenate all file paths within the directory"
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  path1:
+    label: path1
+    description: "path files"
+    type: text
+    example:  NULL
+  path2:
+    label: path2
+    description: "path files"
+    type: text
+    example:  NULL
+  path3:
+    label: path3
+    description: "path files"
+    type: text
+    example:  NULL
+outputs:
+  list_paths:
+    label: list_paths
+    description: "Concatenated list of file paths"
+    type: text[]

@@ -1,0 +1,21 @@
+script: redlistindex.R
+name: redlistindex
+description: redlistindex
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  species_data:
+    label: species_data
+    description: species_data
+    type: text/csv
+    example: 'scripts/00_reclassify/input/reclass_data.csv'
+  sp_col:
+    label: sp_col
+    description: sp_col
+    type: text
+    example: 'scripts/00_reclassify/input/data_layer.csv'
+outputs:
+  compare_data:
+    label: compare table reclass data
+    description: Comparative table summarizing the pixel count results in each of the reclassification categories for each period contained in the collection and the user-selected analysis interval
+    type: text/csv
+

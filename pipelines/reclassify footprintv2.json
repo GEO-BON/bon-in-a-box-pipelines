@@ -1,0 +1,219 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 466.3452637584637,
+        "y": 201.26058486205147
+      },
+      "data": {
+        "descriptionFile": "00_load_collection>load_collection.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": -24,
+        "y": 172
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_WKT>studyarea_to_WKT.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "constant",
+      "position": {
+        "x": 96,
+        "y": 261
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_load_collection/input/Colombia_human_footprint_collection"
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 95,
+        "y": 297
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "5",
+      "type": "constant",
+      "position": {
+        "x": -293,
+        "y": 55
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
+      }
+    },
+    {
+      "id": "6",
+      "type": "constant",
+      "position": {
+        "x": -300,
+        "y": 99
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 3395
+      }
+    },
+    {
+      "id": "7",
+      "type": "io",
+      "position": {
+        "x": 866.3697075689743,
+        "y": 236.0244438105106
+      },
+      "data": {
+        "descriptionFile": "00_reclassify>reclassify.yml"
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 540.1449139823137,
+        "y": 363.6970756897424
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "scripts/00_reclassify/input/reclass_data.csv"
+      }
+    },
+    {
+      "id": "9",
+      "type": "output",
+      "position": {
+        "x": 1185.4120470171804,
+        "y": 279.3094724830727
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "val_wkt_path",
+      "target": "0",
+      "targetHandle": "WKT_area",
+      "id": "reactflow__edge-1val_wkt_path-0WKT_area"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "val_studyarea_EPSG",
+      "target": "0",
+      "targetHandle": "epsg",
+      "id": "reactflow__edge-1val_studyarea_EPSG-0epsg"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "collection_path",
+      "id": "reactflow__edge-3-0collection_path"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "resolution",
+      "id": "reactflow__edge-4-0resolution"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "studyarea_path",
+      "id": "reactflow__edge-5-1studyarea_path"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "studyarea_EPSG",
+      "id": "reactflow__edge-6-1studyarea_EPSG"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "dir_data_layer",
+      "target": "7",
+      "targetHandle": "table_data",
+      "id": "reactflow__edge-0dir_data_layer-7table_data"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "dir_stack",
+      "target": "7",
+      "targetHandle": "dir_stack",
+      "id": "reactflow__edge-0dir_stack-7dir_stack"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "7",
+      "targetHandle": "table_reclassify",
+      "id": "reactflow__edge-8-7table_reclassify"
+    },
+    {
+      "source": "7",
+      "sourceHandle": "compare_data",
+      "target": "7",
+      "targetHandle": "table_reclassify",
+      "id": "reactflow__edge-7compare_data-7table_reclassify"
+    },
+    {
+      "source": "7",
+      "sourceHandle": "compare_data",
+      "target": "9",
+      "targetHandle": null,
+      "id": "reactflow__edge-7compare_data-9"
+    }
+  ],
+  "inputs": {
+    "00_load_collection>load_collection.yml@0|time_period": {
+      "description": "time_period",
+      "label": "time_period",
+      "type": "text",
+      "example": "P1Y"
+    },
+    "00_load_collection>load_collection.yml@0|time_start": {
+      "description": "time_start",
+      "label": "time_start",
+      "type": "text",
+      "example": "NA"
+    },
+    "00_load_collection>load_collection.yml@0|time_end": {
+      "description": "time_end",
+      "label": "time_end",
+      "type": "text",
+      "example": "NA"
+    }
+  },
+  "outputs": {
+    "00_reclassify>reclassify.yml@7|compare_data": {
+      "description": "compare_data",
+      "label": "compare_data",
+      "type": "text/csv"
+    }
+  }
+}
