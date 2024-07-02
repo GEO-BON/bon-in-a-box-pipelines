@@ -35,11 +35,6 @@ sampling data (1.2) associated with wildlife inventories using camera
 traps, as well as site covariate data related to the study area of these
 inventories.
 
-<figure>
-<img src="README_figures/full_workflow.svg" alt="Image Caption" />
-<figcaption aria-hidden="true">Image Caption</figcaption>
-</figure>
-
 The workflow is divided into four sections: Section one is dedicated to
 loading and organizing camera trap data, section two to estimating the
 detection matrix and concatenating it with covariates in the unmarked
@@ -61,35 +56,10 @@ and from STAC repositories. If you want to load files as covariates only
 from the local machine, use pipeline X, and if you want to load only
 covariates from the STAC, consult pipeline Y.
 
-<style>
-  .superbigimage{
-      overflow-x:scroll;
-      white-space: nowrap;
-  }
-  .superbigimage img{
-     max-width: none;
-  }
-</style>
-This produces the plot with a special css class
-
-<div class="superbigimage">
-
-<div class="figure">
-
-<img src="README_figures/full_workflow.png" alt="A nice image." width="2005" />
-<p class="caption">
-A nice image.
-</p>
-
-</div>
-
-</div>
-
-<div style="width: 100%; overflow-x: auto;">
-
-<img src="README_figures/full_workflow.png" alt="Descripción de la imagen" style="max-width: none;">
-
-</div>
+<figure>
+<img src="README_figures/full_workflow.svg" alt="A nice image." />
+<figcaption aria-hidden="true">A nice image.</figcaption>
+</figure>
 
 Sections 1 and 2 mostly refer to column names of input files to execute
 the analysis.
