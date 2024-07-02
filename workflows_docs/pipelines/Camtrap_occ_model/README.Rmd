@@ -10,7 +10,7 @@ author:
 affiliation: "Instituto de Investigación de Recursos Biológicos Alexander von Humboldt - IAvH"
 output: 
   #md_document:
-  github_document:
+  md_document:
     md_extension: +gfm_auto_identifiers
     preserve_yaml: true
     toc: true
@@ -19,6 +19,7 @@ output:
 
 This pipeline is designed to estimate occupancy models from camera trap data. The main inputs required to run it are record files (1.1) and sampling data (1.2) associated with wildlife inventories using camera traps, as well as site covariate data related to the study area of these inventories.
 
+![](README_figures/full_workflow.svg)
 
 
 The workflow is divided into four sections: Section one is dedicated to loading and organizing camera trap data, section two to estimating the detection matrix and concatenating it with covariates in the unmarked format (designed to handle and analyze observation data for occupancy models), section three to loading and organizing spatial inputs such as site/landscape covariates, and section four to estimating the occupancy model.
@@ -26,10 +27,18 @@ The workflow is divided into four sections: Section one is dedicated to loading 
 If you already have a consolidated file that includes site and detection variables per sampling event, proceed to pipeline X. Similarly, if you already have a file in unmarked format for analysis, go to the simple execution code Y.
 
 
-<img src="README_figures/full_workflow.svg" height="1000" >
-
 
 This workflow loads and adjusts spatial covariates of site/landscape to the study area. For this, it loads raster files from your local computer and from STAC repositories. If you want to load files as covariates only from the local machine, use pipeline X, and if you want to load only covariates from the STAC, consult pipeline Y.
+
+ 
+
+
+
+<div style="width: 100%; overflow-x: auto;">
+  <img src="README_figures/full_workflow.svg" alt="Descripción de la imagen" style="max-width: none;">
+</div>
+Para faciltiar la visualizacion del pipeline descarga la version svg aca 
+
 
 
 
