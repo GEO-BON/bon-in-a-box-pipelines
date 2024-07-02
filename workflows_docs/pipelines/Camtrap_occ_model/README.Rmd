@@ -37,7 +37,7 @@ This workflow loads and adjusts spatial covariates of site/landscape to the stud
 <div style="width: 50%; overflow-x: auto;">
   <img src="README_figures/full_workflow.svg" alt="Descripción de la imagen" style="max-width: none;">
 </div>
-Para faciltiar la visualizacion del pipeline descarga la version svg aca 
+Para faciltiar la visualizacion del pipeline descarga la version [Camtrap_occ_model svg](README_figures/full_workflow.svg)
 
 
 
