@@ -53,7 +53,7 @@ variables per sampling event, proceed to pipeline X. Similarly, if you
 already have a file in unmarked format for analysis, go to the simple
 execution code Y.
 
-<img src="C:/Repositories/biab-2.0/workflows_docs/pipelines/Camtrap_occ_model/README_figures/full_workflow.svg" width="10000" overflow-x= "auto">
+<img src="C:/Repositories/biab-2.0/workflows_docs/pipelines/Camtrap_occ_model/README_figures/full_workflow.svg" style="max-width: 200%;">
 
 This workflow loads and adjusts spatial covariates of site/landscape to
 the study area. For this, it loads raster files from your local computer
