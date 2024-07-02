@@ -4,8 +4,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 1156.7292012233013,
-        "y": 624.278528476011
+        "x": 1060.030030076536,
+        "y": 657.2441550033175
       },
       "data": {
         "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
@@ -15,8 +15,8 @@
       "id": "53",
       "type": "io",
       "position": {
-        "x": 413.3172057837688,
-        "y": 537.0067706896974
+        "x": 449.57939496380607,
+        "y": 616.1242743552328
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
@@ -26,8 +26,8 @@
       "id": "60",
       "type": "io",
       "position": {
-        "x": 1134.8597623467813,
-        "y": 457.2582308125171
+        "x": 1032.6663201121316,
+        "y": 514.3986501265149
       },
       "data": {
         "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
@@ -37,8 +37,8 @@
       "id": "66",
       "type": "io",
       "position": {
-        "x": 1414.3008349552615,
-        "y": 188.83196199041026
+        "x": 1409.1955198799458,
+        "y": 431.33442806791135
       },
       "data": {
         "descriptionFile": "00_add_covs>add_covs.yml"
@@ -90,8 +90,8 @@
       "id": "124",
       "type": "io",
       "position": {
-        "x": 1115.0629827062,
-        "y": 309.1736091282447
+        "x": 1017.1554966107346,
+        "y": 333.21237427467827
       },
       "data": {
         "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
@@ -101,8 +101,8 @@
       "id": "125",
       "type": "io",
       "position": {
-        "x": 798.0623465408098,
-        "y": 211.77706616236077
+        "x": 722.2414055280053,
+        "y": 228.25987942601398
       },
       "data": {
         "descriptionFile": "Join_datasets>Join_datasets.yml"
@@ -127,8 +127,8 @@
       "id": "133",
       "type": "constant",
       "position": {
-        "x": 491,
-        "y": 382.5
+        "x": 511.87823013396076,
+        "y": 303.38249633446475
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -146,8 +146,8 @@
       "id": "134",
       "type": "constant",
       "position": {
-        "x": 498,
-        "y": 423.5
+        "x": 506.79083374061497,
+        "y": 356.46989272781036
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -189,8 +189,8 @@
       "id": "148",
       "type": "io",
       "position": {
-        "x": 2123.13749164891,
-        "y": 557.8188990919028
+        "x": 2128.242806724226,
+        "y": 545.0556114036133
       },
       "data": {
         "descriptionFile": "occ_model_resultsv2>occ_model_resultsv2.yml"
@@ -308,8 +308,8 @@
       "id": "165",
       "type": "io",
       "position": {
-        "x": 1602.3001937916197,
-        "y": 358.2713369468942
+        "x": 1722.0753035074995,
+        "y": 371.4575875578168
       },
       "data": {
         "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
@@ -319,8 +319,8 @@
       "id": "166",
       "type": "io",
       "position": {
-        "x": 386.52264155898075,
-        "y": 131.7685857478215
+        "x": 444.3388549412914,
+        "y": 84.32964143413076
       },
       "data": {
         "descriptionFile": "Filter_data>Filter_data.yml"
@@ -371,8 +371,8 @@
       "id": "170",
       "type": "constant",
       "position": {
-        "x": 332.1849402527958,
-        "y": 208.11639491893197
+        "x": 357.71151562937496,
+        "y": 222.1560113760504
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -665,13 +665,6 @@
       "id": "reactflow__edge-66vars_dataset-165camptrap_data"
     },
     {
-      "source": "165",
-      "sourceHandle": "detHistory_matrix",
-      "target": "148",
-      "targetHandle": "auk_covars_file",
-      "id": "reactflow__edge-165detHistory_matrix-148auk_covars_file"
-    },
-    {
       "source": "166",
       "sourceHandle": "data_filter",
       "target": "125",
@@ -789,6 +782,13 @@
       "target": "165",
       "targetHandle": "dateCollapseLength",
       "id": "reactflow__edge-178-165dateCollapseLength"
+    },
+    {
+      "source": "165",
+      "sourceHandle": "umf_matrix",
+      "target": "148",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-165umf_matrix-148auk_covars_file"
     }
   ],
   "inputs": {},
