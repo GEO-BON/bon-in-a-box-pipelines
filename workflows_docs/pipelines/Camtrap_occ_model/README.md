@@ -59,10 +59,9 @@ covariates from the STAC, consult pipeline Y.
       overflow-x:scroll;
       white-space: nowrap;
   }
-&#10;  .superbigimage img{
+  .superbigimage img{
      max-width: none;
   }
-&#10;
 </style>
 This produces the plot with a special css class
 
@@ -77,7 +76,11 @@ A nice image.
 
 </div>
 
-![](README_figures/full_workflow.png)
+</div>
+
+<div style="width: 100%; overflow-x: auto;">
+
+<img src="README_figures/full_workflow.png" alt="Descripción de la imagen" style="max-width: none;">
 
 </div>
 
