@@ -1,0 +1,146 @@
+{
+  "nodes": [
+    {
+      "id": "125",
+      "type": "io",
+      "position": {
+        "x": 765,
+        "y": 172.5
+      },
+      "data": {
+        "descriptionFile": "Join_datasets>Join_datasets.yml"
+      }
+    },
+    {
+      "id": "166",
+      "type": "output",
+      "position": {
+        "x": 1144.2106393690294,
+        "y": 173.60059293412655
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "167",
+      "type": "io",
+      "position": {
+        "x": 305,
+        "y": 81.5
+      },
+      "data": {
+        "descriptionFile": "Filter_data>Filter_data.yml"
+      }
+    },
+    {
+      "id": "168",
+      "type": "constant",
+      "position": {
+        "x": 522,
+        "y": -39.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv[]",
+        "value": [
+          "/scripts/Join_datasets/input/data_filter"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "125",
+      "sourceHandle": "data_join",
+      "target": "166",
+      "targetHandle": null,
+      "id": "reactflow__edge-125data_join-166"
+    },
+    {
+      "source": "167",
+      "sourceHandle": "data_filter",
+      "target": "125",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-167data_filter-125lists_datasets"
+    },
+    {
+      "source": "168",
+      "sourceHandle": null,
+      "target": "125",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-168-125lists_datasets"
+    }
+  ],
+  "inputs": {
+    "Join_datasets>Join_datasets.yml@125|column_join": {
+      "description": "Name of the common column to be used for joining the datasets. Multiple columns can be specified as long as they are present in all datasets listed in 'lists_datasets'. If 'NULL' is specified, the code will check and select common columns among the elements in 'lists_datasets'.",
+      "label": "column_join",
+      "type": "text",
+      "example": "Cam.Site",
+      "weight": 0
+    },
+    "Join_datasets>Join_datasets.yml@125|type": {
+      "description": "Type of join to be performed. Options: 'left' for all rows from the left dataset and matching rows from the right, 'right' for all rows from the right dataset and matching rows from the left, 'inner' for only rows with matching keys in both datasets, and 'full' for all rows from both datasets and with NA where there are no matches.",
+      "label": "type",
+      "type": "options",
+      "options": [
+        "left",
+        "right",
+        "inner",
+        "full"
+      ],
+      "example": "left",
+      "weight": 1
+    },
+    "Join_datasets>Join_datasets.yml@125|match": {
+      "description": "Match method for joining: 'all' to join all matches, 'first' to join only the first match, and 'all' to join all matches.",
+      "label": "match",
+      "type": "options",
+      "options": [
+        "all",
+        "first"
+      ],
+      "example": "all",
+      "weight": 2
+    },
+    "Filter_data>Filter_data.yml@167|data": {
+      "description": "CSV file containing the dataset to be filtered.",
+      "label": "data",
+      "type": "text/csv[]",
+      "example": [
+        "/scripts/Filter_data/input/records_data.csv"
+      ],
+      "weight": 3
+    },
+    "Filter_data>Filter_data.yml@167|column": {
+      "description": "Name of the column in the dataset that will be used to apply the filter condition.",
+      "label": "column",
+      "type": "text/plain",
+      "example": "scientificName",
+      "weight": 4
+    },
+    "Filter_data>Filter_data.yml@167|condition": {
+      "description": "Specific values of the column to be used as condition filter criteria. When 'column' is a vector, 'condition' should be a character vector. When 'column' is numeric, 'condition' should be an indexed formula (e.g., >= 1; >=2 ; >=1, <=2 ). Multiple conditions for the same column can be separated by commas (e.g., Leopardus wiedii, Mazama americana; >=1, <=2).",
+      "label": "condition",
+      "type": "text",
+      "example": "Cuniculus paca",
+      "weight": 5
+    },
+    "Filter_data>Filter_data.yml@167|rev": {
+      "description": "Indicates whether to invert the filter condition (TRUE to invert, FALSE to not invert). Inverting means applying the opposite filter to the condition defined in 'condition' argument.",
+      "label": "rev",
+      "type": "boolean",
+      "example": false,
+      "weight": 6
+    }
+  },
+  "outputs": {
+    "Join_datasets>Join_datasets.yml@125|data_join": {
+      "description": "Match dataset resulting from joining the list of datasets.",
+      "label": "data_join",
+      "type": "text/csv",
+      "weight": 0
+    }
+  }
+}

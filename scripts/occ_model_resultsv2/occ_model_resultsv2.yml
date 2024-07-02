@@ -10,12 +10,12 @@ inputs:
   site_covs:
     label: site_covs
     description: "List of site variables (site/landscape characteristics that influence species detection and occupancy). They can be specified by name or through the directory where they are stored in .tif format. Names must match the columns in camptrap_data or will be omitted."
-    type: text[]
+    type: image/tiff;application=geotiff[]
     example: ["scripts/CamTrap_format2/input/stac"]
   site_covs_Layers:
     label: site_covs_Layers
     description: "List of site variables (site/landscape characteristics that influence species detection and occupancy). They can be specified by name or through the directory where they are stored in .tif format. Names must match the columns in camptrap_data or will be omitted."
-    type: text[]
+    type: image/tiff;application=geotiff[]
     example: ["scripts/CamTrap_format2/input/stac"]
   obs_covs:
     label: obs_covs

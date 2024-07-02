@@ -7,8 +7,8 @@ inputs:
   folder_layers:
     label: folder_layers
     description: URL of the Stac catalog
-    type: text
-    example: "scripts/AlignRasters_ToGrid/input/dir_layers"
+    type: text[]
+    example: ["scripts/AlignRasters_ToGrid/input/dir_layers"]
   grid_studyArea:
     label: grid_studyArea
     description: grid_studyArea
@@ -19,7 +19,3 @@ outputs:
     label: rasters
     description: array of output raster paths
     type: image/tiff;application=geotiff[]
-  folder_adjustLayers:
-    label: folder_adjustLayers
-    description: array of output raster paths
-    type: text

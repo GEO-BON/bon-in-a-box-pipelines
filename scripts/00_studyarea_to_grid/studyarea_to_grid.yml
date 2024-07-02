@@ -5,8 +5,8 @@ inputs:
   StudyArea_vector:
     label: StudyArea_vector
     description: "Text string with the path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), GeoJSON (.json) or  GeoPackage (.gpkg)."
-    type: text
-    example:  "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
+    type: text[]
+    example:  ["/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"]
   EPSG_grid:
     label: EPSG_grid
     description: "Numeric EPSG coordinate system in which the study grid will be projected. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html"
@@ -17,6 +17,11 @@ inputs:
     description: "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area."
     type: int
     example: 1000
+  name_layer:
+    label: name_layer
+    description: name_layer
+    type: text
+    example: "ID_grid"
 outputs:
   StudyArea_grid:
     label: StudyArea_grid

@@ -5,8 +5,8 @@ inputs:
   data:
     label: data
     description: "CSV file containing the dataset to be filtered."
-    type: text/csv
-    example:  "/scripts/Filter_data/input/records_data.csv"
+    type: text/csv[]
+    example:  ["/scripts/Filter_data/input/records_data.csv"]
   column:
     label: column
     description: "Name of the column in the dataset that will be used to apply the filter condition."
@@ -15,8 +15,8 @@ inputs:
   condition:
     label: condition
     description: "Specific values of the column to be used as condition filter criteria. When 'column' is a vector, 'condition' should be a character vector. When 'column' is numeric, 'condition' should be an indexed formula (e.g., >= 1; >=2 ; >=1, <=2 ). Multiple conditions for the same column can be separated by commas (e.g., Leopardus wiedii, Mazama americana; >=1, <=2)."
-    type: text[]
-    example: ["Cuniculus paca"] 
+    type: text
+    example: "Cuniculus paca"
   rev:
     label: rev
     description: "Indicates whether to invert the filter condition (TRUE to invert, FALSE to not invert). Inverting means applying the opposite filter to the condition defined in 'condition' argument."
