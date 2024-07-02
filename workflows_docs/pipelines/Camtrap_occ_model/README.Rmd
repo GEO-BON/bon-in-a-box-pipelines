@@ -31,12 +31,9 @@ This workflow loads and adjusts spatial covariates of site/landscape to the stud
       overflow-x:scroll;
       white-space: nowrap;
   }
-
   .superbigimage img{
      max-width: none;
   }
-
-
 </style>
 
 
@@ -45,10 +42,12 @@ This produces the plot with a special css class
 ```{r, echo=FALSE, fig.cap="A nice image."}
 knitr::include_graphics("README_figures/full_workflow.png")
 ```
-![](README_figures/full_workflow.png)
-
 </div>
 
+
+<div style="width: 100%; overflow-x: auto;">
+  <img src="README_figures/full_workflow.png" alt="Descripción de la imagen" style="max-width: none;">
+</div>
 
 
 Sections 1 and 2 mostly refer to column names of input files to execute the analysis.
