@@ -19,7 +19,8 @@ output:
 
 This pipeline is designed to estimate occupancy models from camera trap data. The main inputs required to run it are record files (1.1) and sampling data (1.2) associated with wildlife inventories using camera traps, as well as site covariate data related to the study area of these inventories.
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/02/SVG_logo.svg" width="10000"/>
+![Image Caption](README_figures/full_workflow.svg)
+
 
 
 The workflow is divided into four sections: Section one is dedicated to loading and organizing camera trap data, section two to estimating the detection matrix and concatenating it with covariates in the unmarked format (designed to handle and analyze observation data for occupancy models), section three to loading and organizing spatial inputs such as site/landscape covariates, and section four to estimating the occupancy model.
