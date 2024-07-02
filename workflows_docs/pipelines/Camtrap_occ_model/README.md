@@ -35,6 +35,8 @@ sampling data (1.2) associated with wildlife inventories using camera
 traps, as well as site covariate data related to the study area of these
 inventories.
 
+<img src="https://upload.wikimedia.org/wikipedia/commons/0/02/SVG_logo.svg" width="10000"/>
+
 The workflow is divided into four sections: Section one is dedicated to
 loading and organizing camera trap data, section two to estimating the
 detection matrix and concatenating it with covariates in the unmarked
