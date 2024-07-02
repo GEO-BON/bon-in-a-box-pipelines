@@ -68,6 +68,15 @@ This produces the plot with a special css class
 
 <div class="superbigimage">
 
+<div class="figure">
+
+<img src="README_figures/full_workflow.png" alt="A nice image." width="2005" />
+<p class="caption">
+A nice image.
+</p>
+
+</div>
+
 ![](README_figures/full_workflow.png)
 
 </div>
