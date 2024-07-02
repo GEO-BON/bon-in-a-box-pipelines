@@ -53,6 +53,8 @@ variables per sampling event, proceed to pipeline X. Similarly, if you
 already have a file in unmarked format for analysis, go to the simple
 execution code Y.
 
+<img src="README_figures/full_workflow.svg">
+
 This workflow loads and adjusts spatial covariates of site/landscape to
 the study area. For this, it loads raster files from your local computer
 and from STAC repositories. If you want to load files as covariates only
