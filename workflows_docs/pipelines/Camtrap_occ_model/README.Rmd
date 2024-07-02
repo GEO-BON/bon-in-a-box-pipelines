@@ -1,6 +1,6 @@
 ---
 title: "Camtrap_occ_model pipeline - Estimating Occupancy Models from Camera Trap Data Pipeline"
-link: 
+link: https://github.com/PEM-Humboldt/biab-2.0/tree/test_pipeline_IAvH/workflows_docs/pipelines/Camtrap_occ_model
 author: 
   - name: "Camila Diaz Corzo"
     email: "mdiaz@humboldt.org.co"
@@ -17,225 +17,83 @@ output:
     toc_depth: 6
 ---
 
-Este flujo de trabajo estima índices de diversidad beta para un área general y entre los sitios que la integran. Consiste en la carga y organización de datos para la estimación de estas métricas mediante la libreria [vegan](https://cran.r-project.org/web/packages/vegan/vegan.pdf) en R. La diversidad beta evalúa la variación en la composición de especies entre diferentes sitios dentro de un área, ofreciendo una perspectiva sobre la heterogeneidad ecológica y las diferencias en las comunidades biológicas a través del paisaje. Se estima comparando la composición de especies entre sitios, tomando en cuenta tanto las especies únicas presentes en un solo sitio como las especies compartidas entre múltiples sitios. 
-
-## Organizar directorio de trabajo
-<a id="ID_seccion1"></a>
-
-Las entradas de ejemplo de este ejercicio están almacenadas en [IAvH/Unidades compartidas/BetaDiversityInput/input](https://drive.google.com/drive/folders/1DGOnUX2tLY5agzcAnOmLWUPN1qKCcOJ7?usp=drive_link). Están organizadas de esta manera que facilita la ejecución del código:
-
-```
-script
-│- Bdiversity.R
-│    
-└-input
-│ │
-│ │- dataset.csv
-│ │- spatial_dataset.shp
-│     
-└-output
-```
-
-## Establecer parámetros de sesión
-### Cargar librerias/paquetes necesarios para el análisis
-```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
-## Establecer parámetros de sesión ####
-### Cargar librerias/paquetes necesarios para el análisis ####
+This pipeline is designed to estimate occupancy models from camera trap data. The main inputs required to run it are record files (1.1) and sampling data (1.2) associated with wildlife inventories using camera traps, as well as site covariate data related to the study area of these inventories.
 
-#### Verificar e instalar las librerías necesarias ####
-packagesPrev <- installed.packages()[,"Package"]  
-packagesNeed <- librerias <- c("this.path", "magrittr", "dplyr", "plyr", "pbapply", "data.table", "raster", "terra", "sf", "ggplot2", 
-                               "tidyr",, "reshape2", "ggnewscale","openxlsx")  # Define los paquetes necesarios para ejecutar el codigo
-new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]  # Identifica los paquetes que no estC!n instalados
-if(length(new.packages)) {install.packages(new.packages, binary = TRUE)}  # Instala los paquetes necesarios que no estC!n previamente instalados
+The workflow is divided into four sections: Section one is dedicated to loading and organizing camera trap data, section two to estimating the detection matrix and concatenating it with covariates in the unmarked format (designed to handle and analyze observation data for occupancy models), section three to loading and organizing spatial inputs such as site/landscape covariates, and section four to estimating the occupancy model.
 
-#### Cargar librerias ####
-lapply(packagesNeed, library, character.only = TRUE)  # Carga las librerías necesarias
+If you already have a consolidated file that includes site and detection variables per sampling event, proceed to pipeline X. Similarly, if you already have a file in unmarked format for analysis, go to the simple execution code Y.
 
-```
+This workflow loads and adjusts spatial covariates of site/landscape to the study area. For this, it loads raster files from your local computer and from STAC repositories. If you want to load files as covariates only from the local machine, use pipeline X, and if you want to load only covariates from the STAC, consult pipeline Y.
 
-## Establecer entorno de trabajo
-El flujo de trabajo está diseñado para establecer el entorno de trabajo automáticamente a partir de la ubicación del código. Esto significa que tomará como `dir_work` la carpeta raiz donde se almacena el código “~/scripts. De esta manera, se garantiza que la ejecución se realice bajo la misma organización descrita en el paso de [Organizar directorio de trabajo](#ID_seccion1).
+ 
+ <style>
+  .superbigimage{
+      overflow-x:scroll;
+      white-space: nowrap;
+  }
 
-```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
-## Establecer entorno de trabajo ####
-dir_work <- this.path::this.path() %>% dirname()  # Establece el directorio de trabajo
-```
+  .superbigimage img{
+     max-width: none;
+  }
 
 
-### Definir inputs y direccion output
-Dado que el código está configurado para definir las entradas desde la carpeta input, en esta parte se debe definir una lista llamada input en la que se especifica el nombre de cada una de las entradas necesarias para su ejecución. Para este ejemplo, basta con usar file.path con referencia a `input_folder` y el nombre del archivo para definir su ruta y facilitar su carga posterior. No obstante, se podría definir cualquier ruta de la máquina local como carpeta input donde se almacenen las entradas, o hacer referencia a cada archivo directamente.
+</style>
 
-Asimismo, el código genera una carpeta output donde se almacenarán los resultados del análisis. La ruta de esa carpeta se almacena por defecto en el mismo directorio donde se encuentra el código.
+This produces the plot with a special css class
+<div class="superbigimage">
+![](README_figures/full_workflow.png)
+</div>
 
-```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
-### Definir entradas necesarias para la ejecución del análisis ####
 
-# Definir la carpeta de entrada-insumos
-input_folder<- file.path(dir_work, "input"); # "~/input"
 
-# Crear carpeta output
-output<- file.path(dir_work, "output"); dir.create(output)
+Sections 1 and 2 mostly refer to column names of input files to execute the analysis.
 
-#### Definir entradas necesarias para la ejecución del análisis ####
-input <- list(
-  dataset = file.path(input_folder, "Cruce_Llanos_1.csv"), # Ruta del archivo  que contiene datos de especies por sitio
-  sp_col = "species", # Nombre de la columna en el 'dataset' que contiene los nombres de las especies
-  site_col = "Vereda", # Nombre de la columna en el 'dataset' que hace referencia a los sitios
-  beta_plot = "j", # Nombre del indice beta con el que generar diagramas exploratorios. Por defecto es j que corresponde a Jaccard. Mas info en https://rdrr.io/rforge/vegan/man/betadiver.html
-  spatial_dataset = file.path(input_folder, "Veredas_Llanos_1.shp")  # Opcional. Si no se tiene, establecer como NULL. Ruta a un archivo espacial correspondiente al área de estudio. Debe tener una columna con el mismo nombre que 'site_col' para unir el archivo espacial con los resultados
-)
+### Section 1: Loading and organizing camera trap data
 
-```
+* 1.1: Path to the CSV file with record data (default: /inputs/camtrap_records.csv).
+* 1.2: Path to the file with sampling data (default: /inputs/camtrap_sp_covs.csv).
+* 1.3: Name of the column referring to the scientific name of species (default: scientificName).
+* 1.4: Name of the column referring to the camera site (default: Cam_Site).
+* 1.5: Name of the common column with the camera trap ID (default: Cam_Site).
+* 1.6: Name of the column with longitude (default: Long_Y).
+* 1.7: Name of the column with latitude (default: Lat_X).
 
-La lista de entradas incluye la ruta completa al archivo que contiene los datos de especies por sitio, el nombre de la columna en ´dataset´ que contiene los nombres de las especies, y el nombre de la columna en ´dataset´ que hace referencia a los sitios como unidad espacial de analisis. Este dataset se utilizará para realizar los análisis de diversidad beta, basándose en la definición de sp_col y site_col. Además, se especifica un argumento opcional hacia la ruta de un archivo espacial referente a las geometrias espaciales de los sitios definidos. Este archivo  se utilizará para espacializar y diagramar los resultados del análisis y debe tener una columna con el mismo nombre que site_col para permitir la unión con los resultados del análisis. Si no se dispone del archivo shapefile, este parámetro puede establecerse como NULL.
+The main input for section 1 is the paths to the CSV files of records (1.1) and sampling data (1.2) associated with camera trap surveys. The record file (1.1) must contain columns referring to the scientific name of species (1.3), with a level corresponding to the species name to be analyzed specified in input (1.4), in addition to columns for date (2.1) and time (2.2) of records.
 
+Inputs 1.3 and 1.4 are used in FilterData to obtain only the records of the species of interest, while 2.1 and 2.2 will be necessary in CamTrap_format as metadata for date and time to organize events in the detection matrix.
 
-El código estima los 24 estimadores de diversidad beta detallados en el argumento method de [vegan::betadiver](https://rdrr.io/rforge/vegan/man/betadiver.html), referentes a [Koleff et al. (2003](https://besjournals.onlinelibrary.wiley.com/doi/10.1046/j.1365-2656.2003.00710.x) para medir la diversidad beta con datos de presencia-ausencia. Sin embargo, se limita a diagramar para exploración los resultados para una sola opción definida por el usuario en la entrada beta_plot. Dichas opciones son: `"j", "w", "-1", "c", "wb", "r", "I", "e", "t", "me", "sor", "m", "-2", "co", "cc", "g", "-3", "l", "19", "hk", "rlb", "sim", "gl", "z"`. Por defecto, se generan para `"j"`, que corresponde a diversidad beta Jaccard. Dependiendo del método escogido, se genera un dendrograma que muestra el agrupamiento jerárquico de los sitios basado en su similitud o disimilitud según el índice beta utilizado. Si se utiliza un spatial_dataset, también se puede representar espacialmente el índice. Las opciones para beta_plot son las mismas que las especificadas en el argumento method.
+Both the record file (1.1) and the sampling data file (1.2) must have a common column (1.5) specifying a unique ID for each camera trap that will be used to merge these files into one compiled through Join_datasets. This common column (1.5) will also be used as a unique identification of camera traps for the detection matrix in CamTrap_format.
 
-## Organizacion de datos ####
-Los datos deben organizarse en una matriz de sitios (filas) por especies (columnas). El código carga los datos y genera la matriz a partir de las entradas site_col correspondiente a sitios como filas, y sp_col correspondientes a especies como columnas.
+The sampling data file (1.2) must contain columns referring to the longitude (1.6) and latitude (1.7) coordinates of the camera trap location, as well as columns for the installation date (2.3) and removal (2.4) of the camera. The coordinate columns must be in the same coordinate format specified in input 3.3 and will allow the data table to be spatialized to add spatial covariates to the records. The columns for installation date (2.3) and removal (2.4) are also necessary to organize the sequence of events in the detection matrix in CamTrap_format.
 
-```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
-### Generar matriz de sitios (filas) por especies (columnas) ####
-original_dataset <- data.table::fread(input$dataset, header = T) %>% as.data.frame() # Lee el dataset original desde un archivo .csv
-dataset_sp <- original_dataset %>% dplyr::filter(!is.na(  !!sym(input$sp_col)  ))  # Filtra los registros a nivel
+## Section 2: Generation of the detection matrix and unmarked format
 
-data_matrix <- reshape2::dcast(dataset_sp, as.formula( paste(input$site_col, "~", input$sp_col) ), 
-                               fun.aggregate = length, value.var = input$sp_col) %>% 
-  tibble::column_to_rownames(input$site_col)  # Genera la matriz de sitios por especies
-```
+2.1: Name of the column with the event date (default: eventDate).
+2.2: Name of the column with the event time (default: eventTime).
+2.3: Name of the column with the installation date (default: Instal.Date).
+2.4: Name of the column with the last event date (default: Last.eventDate).
+2.5: Name of the observation variables (default: eventTime|1|hour). If NULL, it is ignored. Several can be specified separated by commas (default: eventTime|1|hour, effort|1, moonPhase). If only the name is specified, the variable collapses according to unique values. If the specified variable column is numeric, it rounds using name|rounding_value, and if it is temporal with name|rounding_value|time_unit. Factors are not rounded. Temporal units can be specified according to all formats detailed in lubridate::round_date. Specification errors will result in them being ignored.
+2.6: Time interval in days in which detections are grouped or collapsed as sampling events (default: 6).
+2.7: Minimum number of events per site to include in the detection matrix (default: 7).
+Input 2.5 refers to observation covariates (e.g., time, moon phase, weather) that will be used in CamTrap_format and occ_model_results to organize the detection matrix and estimate the occupancy model. These must correspond to column names in the record files (1.1) or sampling data (1.2), otherwise, they will be omitted. When specifying, the column name must be given. However, as observation covariates can have multiple values for the same site, they must be grouped/collapsed for the correct organization of the unmarked object, which receives unique entries per site. When only the name is given, it will collapse in unmarked by the number of unique values of that column, or if it is numeric, it can be rounded specifying it as name|rounding value (e.g., eventTime|1). When they are factors, they are not rounded. Numeric variables are specified with the variable name and the rounding factor in the form eventTime|1, where 1 is the rounding value. Temporal variables are accepted and rounded by adding a third temporal unit factor in the form eventTime|1|hour, where hour is the rounding unit. Temporal units from lubridate::round_date are accepted.
 
-## Análisis de diversidad beta
-```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
-## Análisis de diversidad beta ####
-# Lista de indices Beta a estimar (https://rdrr.io/rforge/vegan/man/betadiver.html)
-index_list<- c("w", "-1", "c", "wb", "r", "I", "e", "t", "me", "j", "sor", "m", "-2", "co", "cc", "g", "-3", "l", "19", "hk", "rlb", "sim", "gl", "z")
+Inputs 2.6 and 2.7 are numerical arguments for the CamTrapFormat box that organize the detection matrix and the unmarked object. Input 2.6 defines the time interval in days in which detections are grouped or collapsed to determine a sampling occasion or event. Input 2.7 specifies the minimum number of events required per site to include that site in the detection matrix in camtrapR. Sites with fewer events will be excluded from the matrix and the unmarked object.
 
-beta_list<- pblapply(index_list,
-                     function(i) {
-                       
-                       # beta entre sitios #
-                       disim_analysis <- betadiver(data_matrix, method = i)  # Calcula la diversidad beta entre sitios utilizando el índice i
-                       beta_matrix <- as.matrix(disim_analysis)  # Convierte el análisis beta en una matriz
-                       
-                       # beta por sitio #
-                       Bdiv_per_site <- rowMeans(beta_matrix)  # Calcula la diversidad beta por sitio como la media de la matriz
-                       name_sites <- names(Bdiv_per_site) %>% as.character()  # Obtiene los nombres de los sitios
-                       Bdiv_per_site_table <- as.data.frame(Bdiv_per_site) %>% tibble::rownames_to_column("site") %>% setNames(c("site", i)) # Crea una tabla con la diversidad beta por sitio
-                       
-                       list(Bdiv_per_site_table=Bdiv_per_site_table, beta_matrix= as.data.frame.matrix(beta_matrix) %>% tibble::rownames_to_column("site")  )
-                     }) %>% setNames(index_list)
+## Section 3: Loading and organizing spatial inputs as site covariates
 
-beta_matrix_list <- purrr::map(beta_list, "beta_matrix") # compilar matrices en una sola lista
-beta_summ<- purrr::map(beta_list, "Bdiv_per_site_table") %>% plyr::join_all() # compilar indices alfa en una sola tabla
+3.1: Path to the vector file of the study area (default: /inputs/Putumayo.gpkg).
+3.2: Name to be given to the base raster of the study area (default: ID_grid).
+3.3: EPSG numerical coordinate system to which the base raster will be adjusted (default: 4326).
+3.4: Numerical resolution value in meters to which the base raster will be adjusted (default: 1000).
+3.5: Path to the folder where the raster files of the landscape covariates are located (default: /inputs/Putumayo_layers). If set to NULL, no layers are loaded from the local machine.
+3.6: Path to the STAC repository where the landscape covariates of interest are located (default: https://io.biodiv/). If set to NULL, no layers are loaded from the STAC repository.
+3.7: Name of the collection and layer of the specified STAC repository of the landscape covariates of interest. Ignored if 3.6 is NULL.
+The inputs in section 3 correspond to cartographic parameters of the study area. The main input required is the path to a vector file of the study area (3.1). This file is used as a base mask in studyarea_to_grid to generate the base raster grid that will support the analysis and will have parameters such as a name given in 3.2, numerical EPSG cartographic projection defined in 3.3, and spatial resolution in meters defined in 3.4.
 
-### Exportar tablas resultados beta ####
-openxlsx::write.xlsx(beta_matrix_list, file.path(output, paste0("beta_matrix_list", ".xlsx")))
-openxlsx::write.xlsx(beta_summ, file.path(output, paste0("beta_summ", ".xlsx")))
+The workflow adjusts spatial covariates of site/landscape to this defined base. This workflow loads and adjusts spatial covariates of site/landscape to the study area from your computer and from STAC repositories.
 
-### Ver tabla indices de diversidad beta ####
-print(head(beta_summ))
-```
+To load covariates from a local repository, the folder path must be specified in 3.5 where the raster files are stored. The AlignRasters_ToGrid box will load those files and align them to the base grid.
 
+To load covariates from the STAC repository, the STAC URL must be defined in 3.6 and in 3.7 the name of the collection and the required layer, separated by | in the form collection|layer. Multiple layers can be specified, separated by commas. The Stac_From_Grid box will load those layers online and align them to the base raster.
 
-
-```{r,  eval= T, echo=F, warning= F, message = F, attr.output='style="max-height: 10px;"'}
-beta_summ<- tibble::column_to_rownames(readRDS("C:/Users/victor.rincon/Documents/beta_summ.rds") , "site") 
-knitr::kable(head(beta_summ))
-```
-
-
-
-Los resultados son una tabla de datos donde la primera columna representa el sitio analizado, y las columnas restantes contienen las estimaciones de diversidad beta media con todos los indicadores descritos para cada uno de los sitios. Estos resultados se almacenan como `beta_results.xlsx` en la carpeta de salida definida. De la misma manera, las matrices de similitud de cada índice se exportaron en un archivo `beta_matrix_list.xlsx`, en el que cada hoja corresponde a cada uno de los índices.
-
-## Figuras de diversidad beta
-Se generaron figuras para análisis exploratorios de los resultados del `beta_plot` definido. Primero, se creó un dendrograma de similitud basado en el índice beta seleccionado. Segundo, cuando se dispuso de un ``spatial_dataset`, se realizó una representación espacial de los resultados.
-
-
-### Dendograma - Similitud ####
-```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
-## Figuras de diversidad beta ####
-
-### Definir datos indice a diagramar ####
-beta_index_data<- beta_list[[input$beta_plot]]
-
-### Dendograma - Similitud ####
-disimhclust <- hclust(as.dist(beta_index_data$beta_matrix %>% dplyr::select(-site) ))  # Realiza un análisis de conglomerados jerárquicos en la matriz de disimilaridad
-disimdend <- as.dendrogram(disimhclust)  # Convierte el análisis de conglomerados en un dendrograma
-disimdend_data <- ggdendro::dendro_data(disimdend)  # Extrae los datos del dendrograma para visualización
-
-var_table <- with(disimdend_data$labels, data.frame(y_center = x, y_min = x - 0.5, y_max = x + 0.5, Variable = gsub("\n|\r", "", as.character(label)), height = 1))  # Prepara la tabla de variables para la visualización del dendrograma
-is.even <- function(x) { x %% 2 == 0 }  # Función para verificar si un número es par
-var_table$col <- rep_len(c("#EBEBEB", "white"), length.out = length(var_table$Variable)) %>% {if (is.even(length(.))) {rev(.)} else {.}}  # Asigna colores alternativos a las filas del dendrograma
-segment_data <- with(ggdendro::segment(disimdend_data), data.frame(x = y, y = x, xend = yend, yend = xend, disim = yend))  # Prepara los datos de los segmentos del dendrograma para la visualización
-
-# Generar la figura del dendograma
-dendroBeta <- ggplot2::ggplot() +
-  ggplot2::annotate("rect", xmin = -0.05, xmax = 1.04, fill = var_table$col, ymin = var_table$y_min, ymax = var_table$y_max, alpha = 0.75) +  # Añade los rectángulos de fondo alternativos
-  ggplot2::geom_segment(data = segment_data, aes(x = x, y = y, xend = xend, yend = yend, label = disim), size = 0.3) +  # Añade los segmentos del dendrograma
-  ggplot2::scale_y_continuous(breaks = var_table$y_center, labels = var_table$Variable) +  # Escala y ajusta el eje y
-  ggplot2::coord_cartesian(expand = FALSE) +  # Ajusta la coordenada del gráfico
-  ggplot2::labs(x = input$beta_plot, y = "Site") +  # Etiqueta los ejes
-  ggplot2::theme(plot.margin = ggplot2::margin(t = 0, r = 0, b = 0, l = 0),
-                 panel.grid.major = ggplot2::element_line(color = "gray"),
-                 axis.ticks.length = ggplot2::unit(0.3, "mm"),
-                 text = ggplot2::element_text(size = 8))  # Ajusta la temática del gráfico
-
-#### Exportar dendograma beta ####
-ggplot2::ggsave(file.path(output, paste0(input$beta_plot, "_dendroBeta", ".jpeg")), dendroBeta )
-
-#### Ver tabla indices de diversidad beta ####
-print(dendroBeta)
-```
-![](README_figures/j_dendroBeta.jpeg)
-
-
-El dendrograma resultante muestra la similitud entre sitios basada en la disimilaridad calculada a partir de la diversidad beta, lo cual cuantifica las diferencias entre sitios en términos de composición de especies. Como resultado, el dendrograma organiza los sitios en una estructura jerárquica donde las ramas indican la similitud entre grupos de sitios, proporcionando una representación clara de cuáles son más parecidos entre ellos.
-
-### Representación espacial ####
-Cuando se define un `spatial_dataset` como entrada, se genera un mapa que representa espacialmente la diversidad beta por sitio. Este `spatial_dataset` debe tener una columna con el mismo atributo espacial que el dataset, lo cual permite hacer un join entre los resultados para crear un diagrama de la unidad espacial que refleje el indicador beta estimado para esa unidad.
-
-```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
-### Representación espacial ####
-if(!is.null(input$spatial_dataset)){
-
-#### Cargar archivo espacial ####
-spatial_data <- sf::st_read(input$spatial_dataset)   # Lee los datos espaciales desde el archivo vectorial definido
-
-#### Espacializar indice ####
-# Agregar el indice beta estimado al archivo espacial
-spatial_data_index<- dplyr::select(beta_summ, c("site", input$beta_plot)) %>% 
-  setNames(c(input$site_col, input$beta_plot)) %>% list(as.data.frame(spatial_data)) %>% plyr::join_all() %>% 
-  dplyr::filter(!is.na(!!sym(input$beta_plot))) %>% sf::st_as_sf()
-  
-#### Plot espacial Beta ####
-beta_map<-   ggplot2::ggplot() +
-  ggspatial::annotation_map_tile(type = "cartolight") +
-  ggplot2::geom_sf(data= spatial_data_index, col= NA, aes(fill= !!sym(input$beta_plot)), alpha= 0.75 )+
-  ggplot2::scale_fill_distiller(palette = "BuGn", name = "Beta") +
-  ggplot2::theme(text = ggplot2::element_text(size = 8))
-  
-#### Exportar mapa beta ####
-ggplot2::ggsave(file.path(output, paste0(input$beta_plot, "_beta_map", ".jpeg")), beta_map )
-
-#### Ver mapa beta ####
-print(beta_map)}
-```
-![](README_figures/j_beta_map.jpeg)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+The information of the covariates is incorporated into the spatial dataset obtained from poins_data_to_spatial through the add_covs box, which adds the values of the loaded raster covariates as new columns
