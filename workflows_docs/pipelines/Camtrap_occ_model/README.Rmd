@@ -39,9 +39,14 @@ This workflow loads and adjusts spatial covariates of site/landscape to the stud
 
 </style>
 
+
 This produces the plot with a special css class
 <div class="superbigimage">
+```{r, echo=FALSE, fig.cap="A nice image."}
+knitr::include_graphics("README_figures/full_workflow.png")
+```
 ![](README_figures/full_workflow.png)
+
 </div>
 
 
