@@ -17,6 +17,11 @@ inputs:
     description: Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.
     type: int
     example: 1000
+  name_layer:
+    label: name_layer
+    description: name_layer
+    type: text
+    example: "ID_grid"
 outputs:
   StudyArea_polygon:
     label: StudyArea_polygon

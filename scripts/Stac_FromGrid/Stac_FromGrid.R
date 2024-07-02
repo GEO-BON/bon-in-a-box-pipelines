@@ -122,7 +122,7 @@ for (i in 1:length(stac_layers)) {
 
 
 # Define final output list
-output<- list(rasters= layer_paths, folder_stac= folder_stac)
+output<- list(rasters= layer_paths)
 
 
 

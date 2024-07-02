@@ -75,7 +75,7 @@ for (i in 1:length(list_layers_adjust)) {
 
 
 # Define final output list
-output<- list(rasters= layer_paths, folder_adjustLayers= folder_adjustLayers)
+output<- list(rasters= layer_paths)
 
 
 #### Outputing result to JSON ####

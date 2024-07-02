@@ -1,0 +1,166 @@
+{
+  "nodes": [
+    {
+      "id": "153",
+      "type": "io",
+      "position": {
+        "x": 256,
+        "y": 334.5
+      },
+      "data": {
+        "descriptionFile": "Filter_data2>Filter_data2.yml"
+      }
+    },
+    {
+      "id": "160",
+      "type": "io",
+      "position": {
+        "x": 788,
+        "y": 319.5
+      },
+      "data": {
+        "descriptionFile": "Join_datasets>Join_datasets.yml"
+      }
+    },
+    {
+      "id": "161",
+      "type": "output",
+      "position": {
+        "x": 1165,
+        "y": 317.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "162",
+      "type": "output",
+      "position": {
+        "x": 1165,
+        "y": 317.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "163",
+      "type": "constant",
+      "position": {
+        "x": 439,
+        "y": 461.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv[]",
+        "value": [
+          "/scripts/Join_datasets/input/data_filter"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "153",
+      "sourceHandle": "data_filter",
+      "target": "160",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-153data_filter-160lists_datasets"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "data_join",
+      "target": "161",
+      "targetHandle": null,
+      "id": "reactflow__edge-160data_join-161"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "data_join",
+      "target": "162",
+      "targetHandle": null,
+      "id": "reactflow__edge-160data_join-162"
+    },
+    {
+      "source": "163",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-163-160lists_datasets"
+    }
+  ],
+  "inputs": {
+    "Filter_data2>Filter_data2.yml@153|data": {
+      "description": "CSV file containing the dataset to be filtered.",
+      "label": "data",
+      "type": "text/csv",
+      "example": "/scripts/Filter_data/input/records_data.csv",
+      "weight": 0
+    },
+    "Filter_data2>Filter_data2.yml@153|column": {
+      "description": "Name of the column in the dataset that will be used to apply the filter condition.",
+      "label": "column",
+      "type": "text/plain",
+      "example": "scientificName",
+      "weight": 1
+    },
+    "Filter_data2>Filter_data2.yml@153|condition": {
+      "description": "Specific values of the column to be used as condition filter criteria. When 'column' is a vector, 'condition' should be a character vector. When 'column' is numeric, 'condition' should be an indexed formula (e.g., >= 1; >=2 ; >=1, <=2 ). Multiple conditions for the same column can be separated by commas (e.g., Leopardus wiedii, Mazama americana; >=1, <=2).",
+      "label": "condition",
+      "type": "text[]",
+      "example": [
+        "Cuniculus paca"
+      ],
+      "weight": 2
+    },
+    "Filter_data2>Filter_data2.yml@153|rev": {
+      "description": "Indicates whether to invert the filter condition (TRUE to invert, FALSE to not invert). Inverting means applying the opposite filter to the condition defined in 'condition' argument.",
+      "label": "rev",
+      "type": "boolean",
+      "example": false,
+      "weight": 3
+    },
+    "Join_datasets>Join_datasets.yml@160|column_join": {
+      "description": "Name of the common column to be used for joining the datasets. Multiple columns can be specified as long as they are present in all datasets listed in 'lists_datasets'. If 'NULL' is specified, the code will check and select common columns among the elements in 'lists_datasets'.",
+      "label": "column_join",
+      "type": "text[]",
+      "example": [
+        "Cam.Site"
+      ],
+      "weight": 4
+    },
+    "Join_datasets>Join_datasets.yml@160|type": {
+      "description": "Type of join to be performed. Options: 'left' for all rows from the left dataset and matching rows from the right, 'right' for all rows from the right dataset and matching rows from the left, 'inner' for only rows with matching keys in both datasets, and 'full' for all rows from both datasets and with NA where there are no matches.",
+      "label": "type",
+      "type": "options",
+      "options": [
+        "left",
+        "right",
+        "inner",
+        "full"
+      ],
+      "example": "left",
+      "weight": 5
+    },
+    "Join_datasets>Join_datasets.yml@160|match": {
+      "description": "Match method for joining: 'all' to join all matches, 'first' to join only the first match, and 'all' to join all matches.",
+      "label": "match",
+      "type": "options",
+      "options": [
+        "all",
+        "first"
+      ],
+      "example": "all",
+      "weight": 6
+    }
+  },
+  "outputs": {
+    "Join_datasets>Join_datasets.yml@160|data_join": {
+      "description": "Match dataset resulting from joining the list of datasets.",
+      "label": "data_join",
+      "type": "text/csv",
+      "weight": 1
+    }
+  }
+}

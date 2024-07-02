@@ -8,8 +8,8 @@ inputs:
   stac_url:
     label: stac_url
     description: URL of the Stac catalog
-    type: text
-    example: https://io.biodiversite-quebec.ca/stac/
+    type: text[]
+    example: [https://io.biodiversite-quebec.ca/stac/]
   grid_studyArea:
     label: grid_studyArea
     description: grid_studyArea
@@ -25,7 +25,3 @@ outputs:
     label: rasters
     description: array of output raster paths
     type: image/tiff;application=geotiff[]
-  folder_stac:
-    label: folder_stac
-    description: array of output raster paths
-    type: text
