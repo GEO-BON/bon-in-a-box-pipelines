@@ -63,7 +63,7 @@ covariates from the STAC, consult pipeline Y.
 </div>
 
 Para faciltiar la visualizacion del pipeline descarga la version
-[Camtrap_occ_model svg](README_figures/full_workflow.svg)
+[Camtrap_occ_model svg](README_figures/full_workflow.pdf)
 
 Sections 1 and 2 mostly refer to column names of input files to execute
 the analysis.
