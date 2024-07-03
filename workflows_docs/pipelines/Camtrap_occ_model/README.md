@@ -19,6 +19,15 @@ output:
 Camtrap_occ_model pipeline - Estimating Occupancy Models from Camera
 Trap Data Pipeline
 ================
+truetrue
+
+- [Section 1: Loading and organizing camera trap
+  data](#section-1-loading-and-organizing-camera-trap-data)
+- [Section 2: Generation of the detection matrix and unmarked
+  format](#section-2-generation-of-the-detection-matrix-and-unmarked-format)
+- [Section 3: Loading and organizing spatial inputs as site
+  covariates](#section-3-loading-and-organizing-spatial-inputs-as-site-covariates)
+
 This pipeline is designed to estimate occupancy models from camera trap
 data. The main inputs required to run it are record files (1.1) and
 sampling data (1.2) associated with wildlife inventories using camera
@@ -43,14 +52,6 @@ the study area. For this, it loads raster files from your local computer
 and from STAC repositories. If you want to load files as covariates only
 from the local machine, use pipeline X, and if you want to load only
 covariates from the STAC, consult pipeline Y.
-
-- [Section 1: Loading and organizing camera trap
-  data](#section-1-loading-and-organizing-camera-trap-data)
-- [Section 2: Generation of the detection matrix and unmarked
-  format](#section-2-generation-of-the-detection-matrix-and-unmarked-format)
-- [Section 3: Loading and organizing spatial inputs as site
-  covariates](#section-3-loading-and-organizing-spatial-inputs-as-site-covariates)
-
 
 <div style="width: 100%; overflow-x: auto;">
 
