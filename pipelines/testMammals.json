@@ -81,8 +81,7 @@
       "data": {
         "type": "text[]",
         "value": [
-          "chelsa-clim|bio1",
-          "chelsa-clim|bio2"
+          "NULL"
         ]
       }
     },
@@ -274,7 +273,7 @@
       "data": {
         "type": "text[]",
         "value": [
-          "https://io.biodiversite-quebec.ca/stac/"
+          "NULL"
         ]
       }
     },
@@ -391,7 +390,7 @@
       "data": {
         "type": "text[]",
         "value": [
-          "eventTime|1|hour"
+          "NULL"
         ]
       }
     },
@@ -796,6 +795,13 @@
       "target": "148",
       "targetHandle": "site_covs",
       "id": "reactflow__edge-60rasters-148site_covs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "rasters",
+      "target": "148",
+      "targetHandle": "site_covs_Layers",
+      "id": "reactflow__edge-60rasters-148site_covs_Layers"
     }
   ],
   "inputs": {},

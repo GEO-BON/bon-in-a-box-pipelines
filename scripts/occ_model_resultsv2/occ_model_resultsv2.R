@@ -24,8 +24,8 @@ if ( (!exists("outputFolder"))  ) {
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http:://", x)  ) { 
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) %>% unlist()) 
+input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http:", x)  ) { 
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else if(x %in% c("NULL", "NA")){NULL} else {x} }) %>% unlist()) 
 
 #  Script body ####
 
@@ -44,8 +44,7 @@ if(text_ext != ""){
 })  %>% unlist()  %>%  basename() %>% tools::file_path_sans_ext()
 
 site_covs<- site_covs_input %>% {.[. %in% names(occ_wide)]}
-covs_detection<- input$obs_covs %>% sapply(function(x) unlist(strsplit(x, "\\|"))[1]   ) %>% as.character()
-
+covs_detection<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)} %>% sapply(function(x) unlist(strsplit(x, "\\|"))[1]   ) %>% as.character() %>% {Filter(function(x) {!is.null(x)}, .)}
 
 
 occ_wide_scale<- occ_wide
@@ -56,11 +55,11 @@ for(j in site_covs){
   list_scale[[j]]<- list(center= attr(  occ_wide_scale[, j], "scaled:center"), scale= attr(  occ_wide_scale[, j], "scaled:scale") )
 }
 
+occ_um<- occ_wide_scale  %>% unmarked::formatWide(obsToY= NULL, type = "unmarkedFrameOccu")
 
 
-occ_um<- occ_wide_scale  %>% unmarked::formatWide( type = "unmarkedFrameOccu")
 
-formula_occ<- as.formula( paste0("~ ", paste0( covs_detection, collapse = " + "), " ~ ", paste0( site_covs, collapse = " + ")) )
+formula_occ<- as.formula( paste0("~ ", ifelse(length(covs_detection)>0, paste0( covs_detection, collapse = " + "), 1), " ~ ", paste0( site_covs, collapse = " + ")) )
 
 formula_occ
 om1 <- occu(~1 ~1, occ_um)
@@ -103,7 +102,7 @@ occ_avg<- if(nrow(test_models)<=1){
   ##########
   # Load data of prediction surface
   site_covs_Layers<- input$site_covs_Layers %>% setNames(basename(tools::file_path_sans_ext(.)))
-  spatial_pred_surface<- site_covs_Layers[site_covs] %>% terra::rast() %>% setNames(site_covs)
+  spatial_pred_surface<- site_covs_Layers[ names(site_covs_Layers) %>%  {.[. %in% site_covs]} ] %>% terra::rast() %>% setNames(site_covs)
   
   
   
