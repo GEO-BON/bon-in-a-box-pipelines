@@ -37,10 +37,15 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 
 #  Script body ####
-output<- (function(){
-  
+
+print("getwd")
+print(list.dirs(getwd(), recursive = F))
+print("getwd")
+
+
+
   ## load data ####
-  data<- read.csv(input$data, sep= ";")
+  data<- data.table::fread(input$data)
   column<- input$column
   condition<- input$condition
   
@@ -66,8 +71,6 @@ output<- (function(){
 
   # Define final output list
   output<- list(data_filter= data_filter_path)
-
-})()
 
 
 

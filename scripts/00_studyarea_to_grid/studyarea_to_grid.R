@@ -35,8 +35,7 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 #  Script body ####
 
-output<- (function(){
-  
+
   ## Load data ####
   
   #### Load crs projection ####
@@ -61,7 +60,7 @@ output<- (function(){
   
   
   ## Write results ####  
-  StudyArea_grid_path<- file.path(outputFolder, paste0("StudyArea_grid", ".tif")) # Define the file path 
+  StudyArea_grid_path<- file.path(outputFolder, paste0(input$name_layer, ".tif")) # Define the file path 
   terra::writeRaster(raster_study_area, StudyArea_grid_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "GTiff", overwrite = TRUE ) # write result
   
   StudyArea_vector_path<- file.path(outputFolder, paste0("StudyArea_vector", "GeoJSON")) # Define the file path 
@@ -70,7 +69,6 @@ output<- (function(){
   # Define final output list
   output<- list(StudyArea_grid= StudyArea_grid_path, StudyArea_vector= StudyArea_vector_path)
 
-})()
 
 
 

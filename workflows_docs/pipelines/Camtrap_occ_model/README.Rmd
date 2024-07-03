@@ -50,7 +50,6 @@ dplyr::select(c("scientificName", "eventDate", "eventTime", "Cam.Site"))
 knitr::kable(head(data_records),  caption = "Example of input 1.1: Dataset with camera trap record data, including the necessary columns for the analysis.")
 ```
 
-
 ```{r,  eval= T, echo=F, warning= F, message = F}
 library(magrittr)
 data_sample<- data.table::fread("C:/Repositories/biab-2.0/scripts/Join_datasets/input/sp_covs.csv")  %>% 
@@ -58,8 +57,7 @@ data_sample<- data.table::fread("C:/Repositories/biab-2.0/scripts/Join_datasets/
 knitr::kable(head(data_sample),  caption = "Example of input 1.2: Dataset with camera trap sampling data, including the necessary columns for the analysis.")
 ```
 
-
-Inputs 1.3 and 1.4 are used in FilterData to obtain only the records of the species of interest, while 2.1 and 2.2 will be necessary in CamTrap_format as metadata for date and time to organize events in the detection matrix.
+Inputs 1.3 and 1.4 are used in [FilterData box]() to obtain only the records of the species of interest, while 2.1 and 2.2 will be necessary in [CamTrap_format box]()  as metadata for date and time to organize events in the detection matrix.
 
 Both the record file (1.1) and the sampling data file (1.2) must have a common column (1.5) specifying a unique ID for each camera trap that will be used to merge these files into one compiled through Join_datasets. This common column (1.5) will also be used as a unique identification of camera traps for the detection matrix in CamTrap_format.
 

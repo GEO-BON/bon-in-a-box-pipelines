@@ -1,145 +1,228 @@
 {
   "nodes": [
     {
-      "id": "125",
+      "id": "52",
       "type": "io",
       "position": {
-        "x": 765,
-        "y": 172.5
+        "x": 1060.030030076536,
+        "y": 657.2441550033175
       },
       "data": {
-        "descriptionFile": "Join_datasets>Join_datasets.yml"
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
       }
     },
     {
-      "id": "166",
-      "type": "output",
-      "position": {
-        "x": 1144.2106393690294,
-        "y": 173.60059293412655
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "167",
+      "id": "53",
       "type": "io",
       "position": {
-        "x": 305,
-        "y": 81.5
+        "x": 449.57939496380607,
+        "y": 616.1242743552328
       },
       "data": {
-        "descriptionFile": "Filter_data>Filter_data.yml"
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
       }
     },
     {
-      "id": "168",
+      "id": "60",
+      "type": "io",
+      "position": {
+        "x": 1032.6663201121316,
+        "y": 514.3986501265149
+      },
+      "data": {
+        "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
+      }
+    },
+    {
+      "id": "107",
       "type": "constant",
       "position": {
-        "x": 522,
-        "y": -39.5
+        "x": 5.429990055158612,
+        "y": 601.6034603133123
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text/csv[]",
+        "type": "int",
+        "value": 4326
+      }
+    },
+    {
+      "id": "108",
+      "type": "constant",
+      "position": {
+        "x": 0.6029566113155056,
+        "y": 640.4736584872896
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "112",
+      "type": "constant",
+      "position": {
+        "x": -5.8836585145736535,
+        "y": 830.0464465681637
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
         "value": [
-          "/scripts/Join_datasets/input/data_filter"
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
         ]
+      }
+    },
+    {
+      "id": "160",
+      "type": "constant",
+      "position": {
+        "x": 4.232081907847373,
+        "y": 500.5186494479585
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "/scripts/inputs/Putumayo.gpkg"
+        ]
+      }
+    },
+    {
+      "id": "161",
+      "type": "constant",
+      "position": {
+        "x": 0.6504144266172602,
+        "y": 683.1461482261134
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "/scripts/inputs/Putumayo_layers"
+        ]
+      }
+    },
+    {
+      "id": "162",
+      "type": "constant",
+      "position": {
+        "x": 1.749268644194217,
+        "y": 755.1091892254278
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "https://io.biodiversite-quebec.ca/stac/"
+        ]
+      }
+    },
+    {
+      "id": "164",
+      "type": "constant",
+      "position": {
+        "x": 3.9240614308855584,
+        "y": 560.134690401882
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "ID_grid2"
+      }
+    },
+    {
+      "id": "179",
+      "type": "output",
+      "position": {
+        "x": 1426,
+        "y": 516.5
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
   "edges": [
     {
-      "source": "125",
-      "sourceHandle": "data_join",
-      "target": "166",
-      "targetHandle": null,
-      "id": "reactflow__edge-125data_join-166"
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "52",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
     },
     {
-      "source": "167",
-      "sourceHandle": "data_filter",
-      "target": "125",
-      "targetHandle": "lists_datasets",
-      "id": "reactflow__edge-167data_filter-125lists_datasets"
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "60",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-60grid_studyArea"
     },
     {
-      "source": "168",
+      "source": "107",
       "sourceHandle": null,
-      "target": "125",
-      "targetHandle": "lists_datasets",
-      "id": "reactflow__edge-168-125lists_datasets"
+      "target": "53",
+      "targetHandle": "EPSG_grid",
+      "id": "reactflow__edge-107-53EPSG_grid"
+    },
+    {
+      "source": "108",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "Resolution_grid",
+      "id": "reactflow__edge-108-53Resolution_grid"
+    },
+    {
+      "source": "112",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-112-52collections_items"
+    },
+    {
+      "source": "160",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "StudyArea_vector",
+      "id": "reactflow__edge-160-53StudyArea_vector"
+    },
+    {
+      "source": "161",
+      "sourceHandle": null,
+      "target": "60",
+      "targetHandle": "folder_layers",
+      "id": "reactflow__edge-161-60folder_layers"
+    },
+    {
+      "source": "162",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-162-52stac_url"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "name_layer",
+      "id": "reactflow__edge-164-53name_layer"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "rasters",
+      "target": "179",
+      "targetHandle": null,
+      "id": "reactflow__edge-60rasters-179"
     }
   ],
-  "inputs": {
-    "Join_datasets>Join_datasets.yml@125|column_join": {
-      "description": "Name of the common column to be used for joining the datasets. Multiple columns can be specified as long as they are present in all datasets listed in 'lists_datasets'. If 'NULL' is specified, the code will check and select common columns among the elements in 'lists_datasets'.",
-      "label": "column_join",
-      "type": "text",
-      "example": "Cam.Site",
-      "weight": 0
-    },
-    "Join_datasets>Join_datasets.yml@125|type": {
-      "description": "Type of join to be performed. Options: 'left' for all rows from the left dataset and matching rows from the right, 'right' for all rows from the right dataset and matching rows from the left, 'inner' for only rows with matching keys in both datasets, and 'full' for all rows from both datasets and with NA where there are no matches.",
-      "label": "type",
-      "type": "options",
-      "options": [
-        "left",
-        "right",
-        "inner",
-        "full"
-      ],
-      "example": "left",
-      "weight": 1
-    },
-    "Join_datasets>Join_datasets.yml@125|match": {
-      "description": "Match method for joining: 'all' to join all matches, 'first' to join only the first match, and 'all' to join all matches.",
-      "label": "match",
-      "type": "options",
-      "options": [
-        "all",
-        "first"
-      ],
-      "example": "all",
-      "weight": 2
-    },
-    "Filter_data>Filter_data.yml@167|data": {
-      "description": "CSV file containing the dataset to be filtered.",
-      "label": "data",
-      "type": "text/csv[]",
-      "example": [
-        "/scripts/Filter_data/input/records_data.csv"
-      ],
-      "weight": 3
-    },
-    "Filter_data>Filter_data.yml@167|column": {
-      "description": "Name of the column in the dataset that will be used to apply the filter condition.",
-      "label": "column",
-      "type": "text/plain",
-      "example": "scientificName",
-      "weight": 4
-    },
-    "Filter_data>Filter_data.yml@167|condition": {
-      "description": "Specific values of the column to be used as condition filter criteria. When 'column' is a vector, 'condition' should be a character vector. When 'column' is numeric, 'condition' should be an indexed formula (e.g., >= 1; >=2 ; >=1, <=2 ). Multiple conditions for the same column can be separated by commas (e.g., Leopardus wiedii, Mazama americana; >=1, <=2).",
-      "label": "condition",
-      "type": "text",
-      "example": "Cuniculus paca",
-      "weight": 5
-    },
-    "Filter_data>Filter_data.yml@167|rev": {
-      "description": "Indicates whether to invert the filter condition (TRUE to invert, FALSE to not invert). Inverting means applying the opposite filter to the condition defined in 'condition' argument.",
-      "label": "rev",
-      "type": "boolean",
-      "example": false,
-      "weight": 6
-    }
-  },
+  "inputs": {},
   "outputs": {
-    "Join_datasets>Join_datasets.yml@125|data_join": {
-      "description": "Match dataset resulting from joining the list of datasets.",
-      "label": "data_join",
-      "type": "text/csv",
+    "AlignRasters_ToGrid>AlignRasters_ToGrid.yml@60|rasters": {
+      "description": "array of output raster paths",
+      "label": "rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 0
     }
   }
