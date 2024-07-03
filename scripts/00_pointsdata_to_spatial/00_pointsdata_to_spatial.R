@@ -35,11 +35,11 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 #  Script body ####
 
-output<- (function(){
-  
+
   ## load data ####
   dataset<- data.table::fread(input$dataset) %>% as.data.frame()
   
+
   ## Spatializing coordinates ####
   dataset_clean <- dataset %>% dplyr::select(-which(duplicated(names(.)))) %>% 
     dplyr::filter(!is.na(.[, input$ylong]), !is.na(.[, input$xlat]))
@@ -53,7 +53,6 @@ output<- (function(){
   output<- list( spatial_points= spatial_points_path)
   
   
-})()
 
 
 
