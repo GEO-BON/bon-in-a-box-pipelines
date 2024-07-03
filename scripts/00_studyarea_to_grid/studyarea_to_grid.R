@@ -55,13 +55,12 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
   ## Create Study Area base ####
   raster_study_area<- fasterize::fasterize(vector_polygon, raster_base) %>% terra::rast()
-  levels(raster_study_area)<- data.frame(values= 1, label= "Study area")
-  coltab(raster_study_area)<- data.frame(values= 1, cols= "gray")
   
+  StudyArea_grid<- raster_study_area %>% terra::setValues(seq(ncell(.))) %>% terra::mask(raster_study_area) %>% setNames(input$name_layer)
   
   ## Write results ####  
   StudyArea_grid_path<- file.path(outputFolder, paste0(input$name_layer, ".tif")) # Define the file path 
-  terra::writeRaster(raster_study_area, StudyArea_grid_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "GTiff", overwrite = TRUE ) # write result
+  terra::writeRaster(StudyArea_grid, StudyArea_grid_path, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "GTiff", overwrite = TRUE ) # write result
   
   StudyArea_vector_path<- file.path(outputFolder, paste0("StudyArea_vector", "GeoJSON")) # Define the file path 
   sf::st_write(vector_polygon, StudyArea_vector_path, delete_dsn= T, driver = "GeoJSON")

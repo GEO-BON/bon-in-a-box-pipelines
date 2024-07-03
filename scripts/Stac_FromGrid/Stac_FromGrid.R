@@ -36,89 +36,93 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 
 # This lines adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
 input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http", x)  ) { 
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) %>% unlist()) 
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else if(x %in% c("NULL", "NA")){NULL} else {x} }) %>% unlist()) 
+
 
 
 #  Script body ####
 
-
-
-## Load data ####
-raster_grid<- terra::rast(input$grid_studyArea)
-raster_mask_geom<- raster_grid %>% terra::as.polygons() %>% sf::st_as_sf() %>% sf::st_geometry()
-list_layers<- lapply(input$collections_items, function(x) strsplit(x, split = "|", fixed=TRUE)[[1]])
-folder_stac<- file.path(outputFolder, "stac"); dir.create(folder_stac)
-
-## Extract parameters from  study area raster ####
-srs_StudyArea<- terra::crs(raster_grid, proj=T) %>% {if (!grepl("\\+type=crs", .)) { paste(., "+type=crs")} else {.}}
-bbox_studyArea <- sf::st_bbox(raster_grid, crs= srs_StudyArea) 
-resolution_StudyArea<- terra::res(raster_grid)
+if(is.null(input$stac_url)){
+  layer_paths<- NULL
+} else {
   
-
-
-## Load stac layers #####
-
-### Get WGS84 bbox ####
-bbox_WGS84 <- bbox_studyArea %>% sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% sf::st_bbox() # It is necessary for optimizing the clipping and downloading of layers
-
-### Set url stac path ####
-stac_path<- input$stac_url
-STACQuery <- rstac::stac(stac_path)
-
-### Loop load stac layers ####
-stac_layers<- lapply(list_layers, function(x){
-
-x_collection<- x[[1]]; x_layer<- x[[2]]
-
-it_obj <- STACQuery %>% rstac::stac_search(bbox = bbox_WGS84, collections = x_collection, ids = x_layer) %>% rstac::get_request()
-for (i in 1:length(it_obj$features)){it_obj$features[[i]]$assets[[1]]$roles<-'data'}
-
-feats<-it_obj$features[lapply(it_obj$features,function(f){f$id %in% x_layer})==TRUE]
-print("feats")
-layers <- unlist(lapply(it_obj$features, function(x) {names(x$assets) } ))
-print("layers")
-image_collection <- gdalcubes::stac_image_collection(feats, asset_names = layers)
-print("image_collection")
-
-
-t0_x <- gdalcubes::extent(image_collection)$t0; t1_x <- gdalcubes::extent(image_collection)$t1
-
-cube_collection<- gdalcubes::cube_view(srs = srs_StudyArea,  extent = list(t0 = t0_x, t1 = t1_x,
-                                                                         left = bbox_studyArea[1], right = bbox_studyArea[3],
-                                                                         top = bbox_studyArea[4], bottom = bbox_studyArea[2]),
-                                       dx = resolution_StudyArea[1], dy = resolution_StudyArea[2], dt = "P1D",aggregation = "mean", resampling = "near",
-                                       keep.asp= T)
-
-
-cube <- gdalcubes::raster_cube(image_collection, cube_collection)
-cube<- gdalcubes::filter_geom(cube, raster_mask_geom)
-cube
-
-
-})
-
-
-#### Organize Stac layers ####
-layer_paths<-c()
-for (i in 1:length(stac_layers)) {
-  gdalcubes::gdalcubes_options(parallel = T)
-  name_layer<- paste(list_layers[[i]], collapse= "_") %>% {gsub("[^[:alnum:]]", "_", .)}
-  ff <- file.path(dirname(tempfile()), name_layer)
-  out<-gdalcubes::write_tif(stac_layers[i][[1]], dir= folder_stac,   prefix= basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=F)
-
-  out_rename<- file.path(dirname(out), paste0(name_layer,".tif"))
-  file.rename(out,  out_rename )
   
-  fp <- paste0(out_rename[1])
-  layer_paths <- cbind(layer_paths,fp)
-  gdalcubes::gdalcubes_options(parallel = F)
+  tryCatch({
+    ## Load data ####
+    raster_grid<- terra::rast(input$grid_studyArea)
+    raster_mask_geom<- raster_grid %>% terra::as.polygons() %>% sf::st_as_sf() %>% sf::st_geometry()
+    list_layers<- lapply(input$collections_items, function(x) strsplit(x, split = "|", fixed=TRUE)[[1]])
+    folder_stac<- file.path(outputFolder, "stac"); dir.create(folder_stac)
+    
+    ## Extract parameters from  study area raster ####
+    srs_StudyArea<- terra::crs(raster_grid, proj=T) %>% {if (!grepl("\\+type=crs", .)) { paste(., "+type=crs")} else {.}}
+    bbox_studyArea <- sf::st_bbox(raster_grid, crs= srs_StudyArea) 
+    resolution_StudyArea<- terra::res(raster_grid)
+    
+    
+    
+    ## Load stac layers #####
+    
+    ### Get WGS84 bbox ####
+    bbox_WGS84 <- bbox_studyArea %>% sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% sf::st_bbox() # It is necessary for optimizing the clipping and downloading of layers
+    
+    ### Set url stac path ####
+    stac_path<- input$stac_url
+    STACQuery <- rstac::stac(stac_path)
+    
+    ### Loop load stac layers ####
+    stac_layers<- lapply(list_layers, function(x){
+      
+      x_collection<- x[[1]]; x_layer<- x[[2]]
+      
+      it_obj <- STACQuery %>% rstac::stac_search(bbox = bbox_WGS84, collections = x_collection, ids = x_layer) %>% rstac::get_request()
+      for (i in 1:length(it_obj$features)){it_obj$features[[i]]$assets[[1]]$roles<-'data'}
+      
+      feats<-it_obj$features[lapply(it_obj$features,function(f){f$id %in% x_layer})==TRUE]
+      print("feats")
+      layers <- unlist(lapply(it_obj$features, function(x) {names(x$assets) } ))
+      print("layers")
+      image_collection <- gdalcubes::stac_image_collection(feats, asset_names = layers)
+      print("image_collection")
+      
+      
+      t0_x <- gdalcubes::extent(image_collection)$t0; t1_x <- gdalcubes::extent(image_collection)$t1
+      
+      cube_collection<- gdalcubes::cube_view(srs = srs_StudyArea,  extent = list(t0 = t0_x, t1 = t1_x,
+                                                                                 left = bbox_studyArea[1], right = bbox_studyArea[3],
+                                                                                 top = bbox_studyArea[4], bottom = bbox_studyArea[2]),
+                                             dx = resolution_StudyArea[1], dy = resolution_StudyArea[2], dt = "P1D",aggregation = "mean", resampling = "near",
+                                             keep.asp= T)
+      
+      
+      cube <- gdalcubes::raster_cube(image_collection, cube_collection)
+      cube<- gdalcubes::filter_geom(cube, raster_mask_geom)
+      cube
+      
+      
+    })
+    
+    
+    #### Organize Stac layers ####
+    layer_paths<-c()
+    for (i in 1:length(stac_layers)) {
+      gdalcubes::gdalcubes_options(parallel = T)
+      name_layer<- paste(list_layers[[i]], collapse= "_") %>% {gsub("[^[:alnum:]]", "_", .)}
+      ff <- file.path(dirname(tempfile()), name_layer)
+      out<-gdalcubes::write_tif(stac_layers[i][[1]], dir= folder_stac,   prefix= basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=F)
+      
+      out_rename<- file.path(dirname(out), paste0(name_layer,".tif"))
+      file.rename(out,  out_rename )
+      
+      fp <- paste0(out_rename[1])
+      layer_paths <- cbind(layer_paths,fp)
+      gdalcubes::gdalcubes_options(parallel = F)
+    }
+    
+    
+  }, error= function(e) {layer_paths<<- NULL})
+  
 }
-
-
-
-
-
-
 
 
 # Define final output list
