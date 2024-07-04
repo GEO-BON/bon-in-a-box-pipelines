@@ -46,7 +46,10 @@ camptrap_data[, input$eventTimeCol]<-  as.POSIXct(camptrap_data[,input$eventTime
 ### columna DateTimeOriginal ####
 DateTimeOriginal_data<- camptrap_data %>% dplyr::filter(!is.na(.[, input$evendateCol]), !is.na(.[, input$eventTimeCol]) ) %>% 
   dplyr::mutate(DateTimeOriginal = paste(.[,input$evendateCol], .[,input$eventTimeCol])) %>% 
-  dplyr::mutate(site_id= as.character( !!rlang::sym(input$siteCol) ))
+  dplyr::mutate(site_id= as.character( !!rlang::sym(input$siteCol) )) %>% 
+  dplyr::filter(DateTimeOriginal>= !!rlang::sym(input$setupCol) , DateTimeOriginal<= !!rlang::sym(input$retrievalCol)) # eliminar registros fuera de rango
+
+
 
 ## Camera operation ####
 CTtable <- DateTimeOriginal_data %>%
@@ -69,8 +72,7 @@ camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
 recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("sp","DateTimeOriginal", "site_id", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) )
 
 detHistory_matrix <- camtrapR::detectionHistory (recordTable = recordTable,
-                                                 speciesCol = "sp", species = "sp",
-                                                 camOp = camOp_matrix,
+ speciesCol = "sp", species = "sp",camOp = camOp_matrix,
                                                  stationCol = "site_id",
                                                  recordDateTimeCol = "DateTimeOriginal",
                                                  recordDateTimeFormat  = "%Y-%m-%d%H:%M:%S",
@@ -90,16 +92,23 @@ detHistory_matrix_adjust<- detHistory_matrix$detection_history %>% as.data.frame
   dplyr::select_if(~ !all(is.na(.)))
 
 #### explore id to table ####
-start_dates <- recordTable %>% dplyr::group_by(site_id) %>% dplyr::summarize(start_date = min(DateTimeOriginal, na.rm = TRUE))
+start_dates <- recordTable %>% dplyr::group_by(site_id) %>% dplyr::summarize(start_date = min(Instal.Date, na.rm = TRUE))
 indexTable <- recordTable %>% dplyr::select(c("DateTimeOriginal", "site_id")) %>% dplyr::left_join(start_dates, by = "site_id")  %>%  
-  dplyr::mutate(occasion = floor(as.numeric(difftime(DateTimeOriginal, start_date, units = "days")) / input$dateCollapseLength) + 1) %>% 
+  dplyr::mutate(occasion = round(as.numeric(difftime(DateTimeOriginal, start_date, units = "days")) / input$dateCollapseLength) + 1) %>% 
   list(data.frame(occasion= unique(.$occasion), oc_detHist= colnames(detHistory_matrix_adjust))) %>% plyr::join_all() 
+
+unique(indexTable$oc_detHist) %>% length()
 
 
 ## Unmark data ####
-data_adjust <- DateTimeOriginal_data %>% dplyr::mutate(oc_detHist= indexTable$oc_detHist) %>% 
-  dplyr::filter( site_id %in% rownames(detHistory_matrix_adjust)) %>% 
+data_adjust <- DateTimeOriginal_data %>% dplyr::mutate(oc_detHist= as.factor(indexTable$oc_detHist)) %>% 
+dplyr::filter( site_id %in% rownames(detHistory_matrix_adjust)) %>% 
   dplyr::arrange(match(site_id, rownames(detHistory_matrix_adjust)))
+
+
+
+
+
 
 ### Adjust site covs ####
 site_covs_input<- lapply(input$site_covs, function(y) { text_ext<- tools::file_ext(y)
@@ -147,7 +156,7 @@ list_obcovs<- lapply(obs_covs, function(j){
       plyr::round_any(data_adjust[, string_x[1]], as.numeric(string_x[2]))
     } %>% as.factor() %>% as.numeric()
     
-    matrix_obcov <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov") %>% tibble::column_to_rownames("site_id")
+    matrix_obcov <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% tibble::column_to_rownames("site_id")
     
   }, error= function(e) {NULL})
   

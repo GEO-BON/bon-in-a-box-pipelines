@@ -67,7 +67,7 @@ print("getwd")
 
 ## Write results ####  
   data_filter_path<- file.path(outputFolder, paste0("data_filter", ".csv")) # Define the file path 
-  write.csv(data_filter, data_filter_path) # write result
+  data.table::fwrite(data_filter, data_filter_path, row.names = F) # write result
 
   # Define final output list
   output<- list(data_filter= data_filter_path)
