@@ -1,0 +1,820 @@
+{
+  "nodes": [
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 958,
+        "y": 763
+      },
+      "data": {
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": 448,
+        "y": 150.16666666666669
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "60",
+      "type": "io",
+      "position": {
+        "x": 928,
+        "y": 670
+      },
+      "data": {
+        "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
+      }
+    },
+    {
+      "id": "66",
+      "type": "io",
+      "position": {
+        "x": 1320,
+        "y": 12
+      },
+      "data": {
+        "descriptionFile": "00_add_covs>add_covs.yml"
+      }
+    },
+    {
+      "id": "107",
+      "type": "constant",
+      "position": {
+        "x": 49,
+        "y": 149.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 4326
+      }
+    },
+    {
+      "id": "108",
+      "type": "constant",
+      "position": {
+        "x": 49,
+        "y": 254.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "112",
+      "type": "constant",
+      "position": {
+        "x": 600,
+        "y": 801.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
+        ]
+      }
+    },
+    {
+      "id": "124",
+      "type": "io",
+      "position": {
+        "x": 445,
+        "y": 42
+      },
+      "data": {
+        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
+      }
+    },
+    {
+      "id": "135",
+      "type": "constant",
+      "position": {
+        "x": 41,
+        "y": 67.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Lat_X"
+      }
+    },
+    {
+      "id": "136",
+      "type": "constant",
+      "position": {
+        "x": 41,
+        "y": 108.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Long_Y"
+      }
+    },
+    {
+      "id": "160",
+      "type": "constant",
+      "position": {
+        "x": 67,
+        "y": 190.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "/scripts/inputs/Putumayo.gpkg"
+        ]
+      }
+    },
+    {
+      "id": "161",
+      "type": "constant",
+      "position": {
+        "x": 600,
+        "y": 643
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "/scripts/inputs/Putumayo_layers"
+        ]
+      }
+    },
+    {
+      "id": "162",
+      "type": "constant",
+      "position": {
+        "x": 600,
+        "y": 744.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "NULL"
+        ]
+      }
+    },
+    {
+      "id": "164",
+      "type": "constant",
+      "position": {
+        "x": 41,
+        "y": 295.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "ID_grid"
+      }
+    },
+    {
+      "id": "179",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 26.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "/scripts/inputs/camtrap_sp_covs.csv"
+      }
+    },
+    {
+      "id": "182",
+      "type": "io",
+      "position": {
+        "x": 1728,
+        "y": 95
+      },
+      "data": {
+        "descriptionFile": "Join_datasets>Join_datasets.yml"
+      }
+    },
+    {
+      "id": "183",
+      "type": "constant",
+      "position": {
+        "x": 1354,
+        "y": 169
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Cam.Site"
+      }
+    },
+    {
+      "id": "184",
+      "type": "constant",
+      "position": {
+        "x": 1434,
+        "y": 210
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "left",
+        "options": [
+          "left",
+          "right",
+          "inner",
+          "full"
+        ]
+      }
+    },
+    {
+      "id": "185",
+      "type": "constant",
+      "position": {
+        "x": 1441,
+        "y": 251
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "all",
+        "options": [
+          "all",
+          "first"
+        ]
+      }
+    },
+    {
+      "id": "186",
+      "type": "constant",
+      "position": {
+        "x": 1351,
+        "y": 105
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv[]",
+        "value": [
+          "/scripts/inputs/camtrap_records.csv"
+        ]
+      }
+    },
+    {
+      "id": "189",
+      "type": "io",
+      "position": {
+        "x": 2214,
+        "y": 85
+      },
+      "data": {
+        "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
+      }
+    },
+    {
+      "id": "190",
+      "type": "constant",
+      "position": {
+        "x": 1760,
+        "y": 186
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "ID_grid"
+      }
+    },
+    {
+      "id": "191",
+      "type": "constant",
+      "position": {
+        "x": 1768,
+        "y": 315
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 6
+      }
+    },
+    {
+      "id": "192",
+      "type": "constant",
+      "position": {
+        "x": 1760,
+        "y": 356
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Cam.Site"
+      }
+    },
+    {
+      "id": "193",
+      "type": "constant",
+      "position": {
+        "x": 1760,
+        "y": 397
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "eventDate"
+      }
+    },
+    {
+      "id": "194",
+      "type": "constant",
+      "position": {
+        "x": 1760,
+        "y": 438
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "eventTime"
+      }
+    },
+    {
+      "id": "195",
+      "type": "constant",
+      "position": {
+        "x": 1760,
+        "y": 479
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Instal.Date"
+      }
+    },
+    {
+      "id": "196",
+      "type": "constant",
+      "position": {
+        "x": 1760,
+        "y": 520
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Last.eventDate"
+      }
+    },
+    {
+      "id": "197",
+      "type": "constant",
+      "position": {
+        "x": 1768,
+        "y": 561
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 7
+      }
+    },
+    {
+      "id": "201",
+      "type": "constant",
+      "position": {
+        "x": 1760,
+        "y": 227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "scientificName"
+      }
+    },
+    {
+      "id": "202",
+      "type": "constant",
+      "position": {
+        "x": 1786,
+        "y": 268
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Cuniculus paca"
+        ]
+      }
+    },
+    {
+      "id": "203",
+      "type": "constant",
+      "position": {
+        "x": 1786,
+        "y": 613
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "eventTime|1|hour"
+        ]
+      }
+    },
+    {
+      "id": "204",
+      "type": "io",
+      "position": {
+        "x": 2726,
+        "y": 75
+      },
+      "data": {
+        "descriptionFile": "occ_model_resultsv2>occ_model_resultsv2.yml"
+      }
+    },
+    {
+      "id": "206",
+      "type": "output",
+      "position": {
+        "x": 3151,
+        "y": 46
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "207",
+      "type": "constant",
+      "position": {
+        "x": 2378,
+        "y": 671
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "eventTime|1|hour"
+        ]
+      }
+    },
+    {
+      "id": "208",
+      "type": "constant",
+      "position": {
+        "x": 2360,
+        "y": 718
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2
+      }
+    },
+    {
+      "id": "209",
+      "type": "constant",
+      "position": {
+        "x": 2466,
+        "y": 759
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean",
+        "value": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "52",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "60",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-60grid_studyArea"
+    },
+    {
+      "source": "107",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "EPSG_grid",
+      "id": "reactflow__edge-107-53EPSG_grid"
+    },
+    {
+      "source": "108",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "Resolution_grid",
+      "id": "reactflow__edge-108-53Resolution_grid"
+    },
+    {
+      "source": "112",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-112-52collections_items"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "rasters",
+      "target": "66",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-60rasters-66folder_vars"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "66",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-52rasters-66folder_vars"
+    },
+    {
+      "source": "135",
+      "sourceHandle": null,
+      "target": "124",
+      "targetHandle": "xlat",
+      "id": "reactflow__edge-135-124xlat"
+    },
+    {
+      "source": "136",
+      "sourceHandle": null,
+      "target": "124",
+      "targetHandle": "ylong",
+      "id": "reactflow__edge-136-124ylong"
+    },
+    {
+      "source": "107",
+      "sourceHandle": null,
+      "target": "124",
+      "targetHandle": "espg_coords",
+      "id": "reactflow__edge-107-124espg_coords"
+    },
+    {
+      "source": "160",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "StudyArea_vector",
+      "id": "reactflow__edge-160-53StudyArea_vector"
+    },
+    {
+      "source": "161",
+      "sourceHandle": null,
+      "target": "60",
+      "targetHandle": "folder_layers",
+      "id": "reactflow__edge-161-60folder_layers"
+    },
+    {
+      "source": "162",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-162-52stac_url"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "name_layer",
+      "id": "reactflow__edge-164-53name_layer"
+    },
+    {
+      "source": "124",
+      "sourceHandle": "spatial_points",
+      "target": "66",
+      "targetHandle": "spatial_points",
+      "id": "reactflow__edge-124spatial_points-66spatial_points"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "66",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-53StudyArea_grid-66folder_vars"
+    },
+    {
+      "source": "179",
+      "sourceHandle": null,
+      "target": "124",
+      "targetHandle": "dataset",
+      "id": "reactflow__edge-179-124dataset"
+    },
+    {
+      "source": "183",
+      "sourceHandle": null,
+      "target": "182",
+      "targetHandle": "column_join",
+      "id": "reactflow__edge-183-182column_join"
+    },
+    {
+      "source": "184",
+      "sourceHandle": null,
+      "target": "182",
+      "targetHandle": "type",
+      "id": "reactflow__edge-184-182type"
+    },
+    {
+      "source": "185",
+      "sourceHandle": null,
+      "target": "182",
+      "targetHandle": "match",
+      "id": "reactflow__edge-185-182match"
+    },
+    {
+      "source": "66",
+      "sourceHandle": "vars_dataset",
+      "target": "182",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-66vars_dataset-182lists_datasets"
+    },
+    {
+      "source": "186",
+      "sourceHandle": null,
+      "target": "182",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-186-182lists_datasets"
+    },
+    {
+      "source": "182",
+      "sourceHandle": "data_join",
+      "target": "189",
+      "targetHandle": "camptrap_data",
+      "id": "reactflow__edge-182data_join-189camptrap_data"
+    },
+    {
+      "source": "190",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "siteCol",
+      "id": "reactflow__edge-190-189siteCol"
+    },
+    {
+      "source": "191",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "dateCollapseLength",
+      "id": "reactflow__edge-191-189dateCollapseLength"
+    },
+    {
+      "source": "192",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "cameraCol",
+      "id": "reactflow__edge-192-189cameraCol"
+    },
+    {
+      "source": "193",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "evendateCol",
+      "id": "reactflow__edge-193-189evendateCol"
+    },
+    {
+      "source": "194",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "eventTimeCol",
+      "id": "reactflow__edge-194-189eventTimeCol"
+    },
+    {
+      "source": "195",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "setupCol",
+      "id": "reactflow__edge-195-189setupCol"
+    },
+    {
+      "source": "196",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "retrievalCol",
+      "id": "reactflow__edge-196-189retrievalCol"
+    },
+    {
+      "source": "197",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "min_NAs",
+      "id": "reactflow__edge-197-189min_NAs"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "189",
+      "targetHandle": "site_covs",
+      "id": "reactflow__edge-52rasters-189site_covs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "rasters",
+      "target": "189",
+      "targetHandle": "site_covs",
+      "id": "reactflow__edge-60rasters-189site_covs"
+    },
+    {
+      "source": "201",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "speciesCol",
+      "id": "reactflow__edge-201-189speciesCol"
+    },
+    {
+      "source": "202",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "speciesName",
+      "id": "reactflow__edge-202-189speciesName"
+    },
+    {
+      "source": "203",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "obs_covs",
+      "id": "reactflow__edge-203-189obs_covs"
+    },
+    {
+      "source": "204",
+      "sourceHandle": "occse_raster_export",
+      "target": "206",
+      "targetHandle": null,
+      "id": "reactflow__edge-204occse_raster_export-206"
+    },
+    {
+      "source": "189",
+      "sourceHandle": "umf_matrix",
+      "target": "204",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-189umf_matrix-204auk_covars_file"
+    },
+    {
+      "source": "207",
+      "sourceHandle": null,
+      "target": "204",
+      "targetHandle": "obs_covs",
+      "id": "reactflow__edge-207-204obs_covs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "rasters",
+      "target": "204",
+      "targetHandle": "site_covs",
+      "id": "reactflow__edge-60rasters-204site_covs"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "204",
+      "targetHandle": "site_covs",
+      "id": "reactflow__edge-52rasters-204site_covs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "rasters",
+      "target": "204",
+      "targetHandle": "site_covs_Layers",
+      "id": "reactflow__edge-60rasters-204site_covs_Layers"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "204",
+      "targetHandle": "site_covs_Layers",
+      "id": "reactflow__edge-52rasters-204site_covs_Layers"
+    },
+    {
+      "source": "208",
+      "sourceHandle": null,
+      "target": "204",
+      "targetHandle": "nsim",
+      "id": "reactflow__edge-208-204nsim"
+    },
+    {
+      "source": "209",
+      "sourceHandle": null,
+      "target": "204",
+      "targetHandle": "plot_hist",
+      "id": "reactflow__edge-209-204plot_hist"
+    }
+  ],
+  "inputs": {},
+  "outputs": {
+    "occ_model_resultsv2>occ_model_resultsv2.yml@204|occse_raster_export": {
+      "description": "Raster map with occupancy model probability and standar error",
+      "label": "occse_raster_export",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    }
+  }
+}

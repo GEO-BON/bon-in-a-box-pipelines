@@ -5,8 +5,8 @@ inputs:
   dataset:
     label: dataset
     description: "Dataset to be spatialized. It must contain columns with latitude ('xlat') and longitude ('ylong'), in a valid EPSG coordinate system equivalent to 'epsg_coords' to ensure proper spatialization."
-    type: text/csv
-    example: "scripts/00_pointsdata_to_spatial/input/data_join.csv"
+    type: text/csv[]
+    example: ["scripts/00_pointsdata_to_spatial/input/data_join.csv"]
   xlat:
     label: xlat
     description: "Name of the column in the 'dataset' that contains the latitude coordinates of the points to be spatialized."

@@ -356,7 +356,7 @@
     },
     {
       "id": "169",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": 3.6576606220515373,
         "y": 24.910410258393767
@@ -805,7 +805,15 @@
       "id": "reactflow__edge-60rasters-148site_covs_Layers"
     }
   ],
-  "inputs": {},
+  "inputs": {
+    "pipeline@169": {
+      "label": "condition",
+      "description": "Specific values of the column to be used as condition filter criteria. When 'column' is a vector, 'condition' should be a character vector. When 'column' is numeric, 'condition' should be an indexed formula (e.g., >= 1; >=2 ; >=1, <=2 ). Multiple conditions for the same column can be separated by commas (e.g., Leopardus wiedii, Mazama americana; >=1, <=2).",
+      "type": "text",
+      "example": "Cuniculus paca",
+      "weight": 0
+    }
+  },
   "outputs": {
     "occ_model_resultsv2>occ_model_resultsv2.yml@148|final_export": {
       "description": "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ",

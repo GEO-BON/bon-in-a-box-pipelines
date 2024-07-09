@@ -28,7 +28,7 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 #  Script body ####
 ## Read data input ####
-camptrap_data <- data.table::fread(input$camptrap_data) %>% as.data.frame() %>% dplyr::mutate(sp= "sp")
+camptrap_data <- data.table::fread(input$camptrap_data) %>% as.data.frame()
 
 ## Adjust dates ####
 ### Ajustar formato ####
@@ -50,6 +50,7 @@ DateTimeOriginal_data<- camptrap_data %>%
 
 
 
+
 ## Camera operation ####
 CTtable <- DateTimeOriginal_data %>%
   dplyr::select( c("site_id", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) ) %>%
@@ -68,24 +69,23 @@ camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
 
 
 ## Detection history ####
-recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("sp","DateTimeOriginal", "site_id", "id_conc", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) )
+recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("DateTimeOriginal", "site_id", "id_conc", as.character(unlist(input[c("speciesCol","setupCol", "retrievalCol", "cameraCol" )]))) )
+
+
 
 detHistory_matrix <- camtrapR::detectionHistory(recordTable = recordTable,
- speciesCol = "sp", species = "sp",camOp = camOp_matrix,
-                                                 stationCol = "site_id",
-                                                 recordDateTimeCol = "DateTimeOriginal",
-                                                 recordDateTimeFormat  = "%Y-%m-%d%H:%M:%S",
-                                                 occasionLength = input$dateCollapseLength,  #change to colaps diferent dates
-                                                 day1 = "station",  #first day of survey; if we want to specify a date put in "survey"
-                                                 datesAsOccasionNames = F,
-                                                 includeEffort = F, #careful if trapping effort is thought to influence detection probability, it can be returned by setting includeEffort = TRUE.
-                                                 scaleEffort = F)#maybe wise using T, explore later
-
-
-ncol(camOp_matrix)/6
-
-ncol(detHistory_matrix$detection_history)
-
+                                                speciesCol = input$speciesCol, 
+                                                species = input$speciesName,
+                                                camOp = camOp_matrix,
+                                                stationCol = "site_id",
+                                                recordDateTimeCol = "DateTimeOriginal",
+                                                recordDateTimeFormat  = "%Y-%m-%d%H:%M:%S",
+                                                occasionLength = input$dateCollapseLength,  #change to colaps diferent dates
+                                                day1 = "station",  #first day of survey; if we want to specify a date put in "survey"
+                                                datesAsOccasionNames = F,
+                                                includeEffort = F, #careful if trapping effort is thought to influence detection probability, it can be returned by setting includeEffort = TRUE.
+                                                scaleEffort = F, #maybe wise using T, explore later
+                                                timeZone = "UTC")
 
 ### Adjust and clean Detection history ####
 detHistory_matrix_adjust<- detHistory_matrix$detection_history %>% as.data.frame.matrix() %>%
@@ -100,7 +100,7 @@ seq_dates <- seq(from = min(recordTable$Instal.Date), to = max(recordTable$Last.
 indexTable <- recordTable %>% dplyr::select(c("DateTimeOriginal", "site_id", "id_conc")) %>%  dplyr::arrange(DateTimeOriginal) %>% 
   dplyr::mutate(occasion = cut(as.POSIXct(DateTimeOriginal), breaks=seq_dates, include.lowest=TRUE)  ) %>% 
   dplyr::mutate(oc_detHist= factor(paste0("o", as.numeric(.$occasion)), levels= colnames(detHistory_matrix_adjust)) ) %>% 
-dplyr::filter(site_id %in% rownames(detHistory_matrix_adjust) )
+  dplyr::filter(site_id %in% rownames(detHistory_matrix_adjust) )
 
 
 ## Unmark data ####
@@ -130,30 +130,30 @@ site_covs_data<-   data_adjust %>%  dplyr::select(c("site_id", site_covs)) %>%
 obs_covs<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)}
 
 if(length(obs_covs)>0){
-
-name_obs_covs<- sapply(obs_covs, function(x) unlist(strsplit(x, "\\|"))[1]) %>% as.character()
-
-
-list_obcovs<- lapply(obs_covs, function(j){
   
-  string_x<- unlist(strsplit(j, "\\|"))
+  name_obs_covs<- sapply(obs_covs, function(x) unlist(strsplit(x, "\\|"))[1]) %>% as.character()
   
-  data_obcov<- dplyr::select(data_adjust, c("site_id", "oc_detHist", string_x[1]))
   
-  tryCatch({
+  list_obcovs<- lapply(obs_covs, function(j){
     
-    data_obcov[, "var_obcov"]<- if( is.na(as.numeric(string_x[length(string_x)]))  ){
-      as.POSIXct(data_adjust[, string_x[1]], format = "%H:%M:%S")  %>% lubridate::round_date(unit = paste(string_x[2:3], collapse = " ")) 
-    } else {
-      plyr::round_any(data_adjust[, string_x[1]], as.numeric(string_x[2]))
-    } %>% as.factor() %>% as.numeric()
+    string_x<- unlist(strsplit(j, "\\|"))
     
-    matrix_obcov <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% tibble::column_to_rownames("site_id")
+    data_obcov<- dplyr::select(data_adjust, c("site_id", "oc_detHist", string_x[1]))
     
-  }, error= function(e) {NULL})
+    tryCatch({
+      
+      data_obcov[, "var_obcov"]<- if( is.na(as.numeric(string_x[length(string_x)]))  ){
+        as.POSIXct(data_adjust[, string_x[1]], format = "%H:%M:%S")  %>% lubridate::round_date(unit = paste(string_x[2:3], collapse = " ")) 
+      } else {
+        plyr::round_any(data_adjust[, string_x[1]], as.numeric(string_x[2]))
+      } %>% as.factor() %>% as.numeric()
+      
+      matrix_obcov <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% tibble::column_to_rownames("site_id")
+      
+    }, error= function(e) {NULL})
+    
+  }) %>% setNames(name_obs_covs) %>% {Filter(function(x) {!is.null(x)}, .)}
   
-}) %>% setNames(name_obs_covs) %>% {Filter(function(x) {!is.null(x)}, .)}
-
 } else {
   list_obcovs<- NULL
 }
@@ -161,9 +161,6 @@ list_obcovs<- lapply(obs_covs, function(j){
 
 ### Create unmarked data ####
 umf_matrix = unmarked::unmarkedFrameOccu(y = detHistory_matrix_adjust, siteCovs = site_covs_data, obsCovs = list_obcovs)  %>% as( "data.frame") %>% as.data.frame.matrix()
-
-
-
 
 ## Write results ####
 umf_matrix_path<- file.path(outputFolder, "umf_matrix.csv") # Define the file path for the 'val_wkt_path' output

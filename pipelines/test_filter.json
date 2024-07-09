@@ -1,0 +1,126 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 408,
+        "y": 71.5
+      },
+      "data": {
+        "descriptionFile": "Filter_data>Filter_data.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "constant",
+      "position": {
+        "x": 51,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv[]",
+        "value": [
+          "scripts/inputs/records_data.csv"
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "type": "output",
+      "position": {
+        "x": 665,
+        "y": 42.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "3",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 76
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/plain",
+        "value": "scientificName"
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 54,
+        "y": 117
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Cuniculus paca"
+      }
+    },
+    {
+      "id": "5",
+      "type": "constant",
+      "position": {
+        "x": 168,
+        "y": 158
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean",
+        "value": false
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "data",
+      "id": "reactflow__edge-1-0data"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "data_filter",
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-0data_filter-2"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "column",
+      "id": "reactflow__edge-3-0column"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "condition",
+      "id": "reactflow__edge-4-0condition"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "rev",
+      "id": "reactflow__edge-5-0rev"
+    }
+  ],
+  "inputs": {},
+  "outputs": {
+    "Filter_data>Filter_data.yml@0|data_filter": {
+      "description": "The dataset resulting from applying the filter",
+      "label": "data_filter",
+      "type": "text/csv",
+      "weight": 0
+    }
+  }
+}

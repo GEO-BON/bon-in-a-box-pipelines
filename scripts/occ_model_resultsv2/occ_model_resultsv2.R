@@ -33,6 +33,10 @@ input<- lapply(input, function(y) lapply(y, function(x)  {if (!is.null(x) && len
 occ_wide<- data.table::fread(input$auk_covars_file) %>% tibble::column_to_rownames(names(.)[1])
 
 
+
+rowSums(occ_wide[,1:20], na.rm=T)
+
+
 ## Ajustar covariables
 site_covs_input<- lapply(input$site_covs, function(y) { text_ext<- tools::file_ext(y)
 if(text_ext != ""){
