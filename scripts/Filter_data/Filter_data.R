@@ -38,12 +38,6 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 #  Script body ####
 
-print("getwd")
-print(list.dirs(getwd(), recursive = F))
-print("getwd")
-
-
-
   ## load data ####
   data<- data.table::fread(input$data)
   column<- input$column
