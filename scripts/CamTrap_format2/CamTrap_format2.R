@@ -28,7 +28,7 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 #  Script body ####
 ## Read data input ####
-camptrap_data <- data.table::fread(input$camptrap_data) %>% as.data.frame()
+camptrap_data<-  data.table::fread(input$camptrap_data) %>% readr::type_convert() %>% as.data.frame() %>%  dplyr::mutate_if(is.numeric, ~ if(all(. %in% c(0, 1))) {as.factor(.)} else {.})
 
 ## Adjust dates ####
 ### Ajustar formato ####
@@ -37,9 +37,6 @@ camptrap_data[, input$setupCol]<- lubridate::parse_date_time(x = camptrap_data[,
 camptrap_data[, input$retrievalCol]<- lubridate::parse_date_time(x = camptrap_data[, input$retrievalCol], order = c("dmy", "Ymd","dmY"))
 camptrap_data[, input$eventTimeCol]<-  lubridate::parse_date_time(camptrap_data[,input$eventTimeCol], orders = c("H", "H:M", "H:M:S")) %>% format(format = "%H:%M:%S")
 
-
-
-
 ### columna DateTimeOriginal ####
 DateTimeOriginal_data<- camptrap_data %>% 
   dplyr::mutate(id_conc= seq(nrow(.))) %>% 
@@ -47,9 +44,6 @@ DateTimeOriginal_data<- camptrap_data %>%
   dplyr::mutate(DateTimeOriginal = paste(.[,input$evendateCol], .[,input$eventTimeCol])) %>% 
   dplyr::mutate(site_id= as.character( !!rlang::sym(input$siteCol) )) %>% 
   dplyr::filter(DateTimeOriginal>= !!rlang::sym(input$setupCol) , DateTimeOriginal<= !!rlang::sym(input$retrievalCol)) # eliminar registros fuera de rango
-
-
-
 
 ## Camera operation ####
 CTtable <- DateTimeOriginal_data %>%
@@ -65,8 +59,6 @@ camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
                                           allCamsOn = TRUE,
                                           camerasIndependent = FALSE,
                                           hasProblems  = FALSE)
-
-
 
 ## Detection history ####
 recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("DateTimeOriginal", "site_id", "id_conc", as.character(unlist(input[c("speciesCol","setupCol", "retrievalCol", "cameraCol" )]))) )
@@ -126,37 +118,43 @@ site_covs_data<-   data_adjust %>%  dplyr::select(c("site_id", site_covs)) %>%
   dplyr::summarise(dplyr::across(all_of(site_covs), mean, na.rm = TRUE)) %>% tibble::column_to_rownames("site_id")
 
 
+
 ### Adjust Observation covs ####
 obs_covs<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)}
+list_obcovs<- list()
 
-if(length(obs_covs)>0){
+for(j in obs_covs ){
   
-  name_obs_covs<- sapply(obs_covs, function(x) unlist(strsplit(x, "\\|"))[1]) %>% as.character()
+  string_x<- unlist(strsplit(j, "\\|")) %>% sapply(function(x) {if(x == "NULL" | x == "NA"){NULL}else{x} }) %>% unlist()
+  data_obcov<- dplyr::select(data_adjust, c("site_id", "oc_detHist", string_x[1]))
   
-  
-  list_obcovs<- lapply(obs_covs, function(j){
+  tryCatch({
     
-    string_x<- unlist(strsplit(j, "\\|"))
-    
-    data_obcov<- dplyr::select(data_adjust, c("site_id", "oc_detHist", string_x[1]))
-    
-    tryCatch({
-      
-      data_obcov[, "var_obcov"]<- if( is.na(as.numeric(string_x[length(string_x)]))  ){
+    data_obcov[, "var_obcov"]<- {if( any(class(data_adjust[, string_x[1]]) %in% c("character", "factor"))  ){
+      data_adjust[, string_x[1]]
+    } else {
+      if( is.na(as.numeric(string_x[length(string_x)]))  ){
         as.POSIXct(data_adjust[, string_x[1]], format = "%H:%M:%S")  %>% lubridate::round_date(unit = paste(string_x[2:3], collapse = " ")) 
       } else {
-        plyr::round_any(data_adjust[, string_x[1]], as.numeric(string_x[2]))
-      } %>% as.factor() %>% as.numeric()
-      
-      matrix_obcov <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% tibble::column_to_rownames("site_id")
-      
-    }, error= function(e) {NULL})
+        if(length(string_x)<=1){
+          data_adjust[, string_x[1]]
+        } else {
+          plyr::round_any(data_adjust[, string_x[1]], as.numeric(string_x[2]))
+        }
+      } 
+    }
+    }
     
-  }) %>% setNames(name_obs_covs) %>% {Filter(function(x) {!is.null(x)}, .)}
+    list_obcovs[[ as.character(string_x[1]) ]] <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% tibble::column_to_rownames("site_id")
+    
+  }, error= function(e) {NULL})
   
-} else {
-  list_obcovs<- NULL
 }
+
+
+
+
+
 
 
 ### Create unmarked data ####

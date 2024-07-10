@@ -33,10 +33,6 @@ input<- lapply(input, function(y) lapply(y, function(x)  {if (!is.null(x) && len
 occ_wide<- data.table::fread(input$auk_covars_file) %>% tibble::column_to_rownames(names(.)[1])
 
 
-
-rowSums(occ_wide[,1:20], na.rm=T)
-
-
 ## Ajustar covariables
 site_covs_input<- lapply(input$site_covs, function(y) { text_ext<- tools::file_ext(y)
 if(text_ext != ""){
@@ -48,7 +44,9 @@ if(text_ext != ""){
 })  %>% unlist()  %>%  basename() %>% tools::file_path_sans_ext()
 
 site_covs<- site_covs_input %>% {.[. %in% names(occ_wide)]}
+
 covs_detection<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)} %>% sapply(function(x) unlist(strsplit(x, "\\|"))[1]   ) %>% as.character() %>% {Filter(function(x) {!is.null(x)}, .)}
+
 
 occ_wide_scale<- occ_wide
 list_scale<- list()
@@ -120,7 +118,7 @@ occ_avg<- if(nrow(test_models)<=1){
   }
   
   # note: the code below can take up to an hour to run!
-  occ_pred <- predict(occ_avg,  newdata = pred_surface ,  type = "state")
+  occ_pred <- predict(occ_avg,  newdata = pred_surface_scale ,  type = "state")
 
   
   

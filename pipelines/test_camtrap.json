@@ -4,8 +4,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 958,
-        "y": 763
+        "x": 902,
+        "y": 681.5
       },
       "data": {
         "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
@@ -15,8 +15,8 @@
       "id": "53",
       "type": "io",
       "position": {
-        "x": 448,
-        "y": 150.16666666666669
+        "x": 392,
+        "y": 470.5
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
@@ -26,8 +26,8 @@
       "id": "60",
       "type": "io",
       "position": {
-        "x": 928,
-        "y": 670
+        "x": 872,
+        "y": 588.5
       },
       "data": {
         "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
@@ -37,7 +37,7 @@
       "id": "66",
       "type": "io",
       "position": {
-        "x": 1320,
+        "x": 1264,
         "y": 12
       },
       "data": {
@@ -48,8 +48,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 49,
-        "y": 149.5
+        "x": 23,
+        "y": 402.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -61,8 +61,8 @@
       "id": "108",
       "type": "constant",
       "position": {
-        "x": 49,
-        "y": 254.5
+        "x": 23,
+        "y": 507.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -74,8 +74,8 @@
       "id": "112",
       "type": "constant",
       "position": {
-        "x": 600,
-        "y": 801.5
+        "x": 544,
+        "y": 711.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,8 +90,8 @@
       "id": "124",
       "type": "io",
       "position": {
-        "x": 445,
-        "y": 42
+        "x": 389,
+        "y": 316
       },
       "data": {
         "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
@@ -101,8 +101,8 @@
       "id": "135",
       "type": "constant",
       "position": {
-        "x": 41,
-        "y": 67.5
+        "x": 15,
+        "y": 320.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -114,8 +114,8 @@
       "id": "136",
       "type": "constant",
       "position": {
-        "x": 41,
-        "y": 108.5
+        "x": 15,
+        "y": 361.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -127,8 +127,8 @@
       "id": "160",
       "type": "constant",
       "position": {
-        "x": 67,
-        "y": 190.5
+        "x": 41,
+        "y": 443.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -142,8 +142,8 @@
       "id": "161",
       "type": "constant",
       "position": {
-        "x": 600,
-        "y": 643
+        "x": 544,
+        "y": 561.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -157,8 +157,8 @@
       "id": "162",
       "type": "constant",
       "position": {
-        "x": 600,
-        "y": 744.5
+        "x": 544,
+        "y": 654.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -172,34 +172,21 @@
       "id": "164",
       "type": "constant",
       "position": {
-        "x": 41,
-        "y": 295.5
+        "x": 15,
+        "y": 548.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "ID_grid"
-      }
-    },
-    {
-      "id": "179",
-      "type": "constant",
-      "position": {
-        "x": 12,
-        "y": 26.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text/csv",
-        "value": "/scripts/inputs/camtrap_sp_covs.csv"
+        "value": "ID_grid2"
       }
     },
     {
       "id": "182",
       "type": "io",
       "position": {
-        "x": 1728,
-        "y": 95
+        "x": 1652,
+        "y": 164.5
       },
       "data": {
         "descriptionFile": "Join_datasets>Join_datasets.yml"
@@ -209,7 +196,7 @@
       "id": "183",
       "type": "constant",
       "position": {
-        "x": 1354,
+        "x": 1298,
         "y": 169
       },
       "dragHandle": ".dragHandle",
@@ -222,7 +209,7 @@
       "id": "184",
       "type": "constant",
       "position": {
-        "x": 1434,
+        "x": 1378,
         "y": 210
       },
       "dragHandle": ".dragHandle",
@@ -241,7 +228,7 @@
       "id": "185",
       "type": "constant",
       "position": {
-        "x": 1441,
+        "x": 1385,
         "y": 251
       },
       "dragHandle": ".dragHandle",
@@ -258,7 +245,7 @@
       "id": "186",
       "type": "constant",
       "position": {
-        "x": 1351,
+        "x": 1295,
         "y": 105
       },
       "dragHandle": ".dragHandle",
@@ -273,32 +260,19 @@
       "id": "189",
       "type": "io",
       "position": {
-        "x": 2214,
-        "y": 85
+        "x": 2088,
+        "y": 402
       },
       "data": {
         "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
       }
     },
     {
-      "id": "190",
-      "type": "constant",
-      "position": {
-        "x": 1760,
-        "y": 186
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "ID_grid"
-      }
-    },
-    {
       "id": "191",
       "type": "constant",
       "position": {
-        "x": 1768,
-        "y": 315
+        "x": 1692,
+        "y": 384.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -310,8 +284,8 @@
       "id": "192",
       "type": "constant",
       "position": {
-        "x": 1760,
-        "y": 356
+        "x": 1684,
+        "y": 425.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -323,8 +297,8 @@
       "id": "193",
       "type": "constant",
       "position": {
-        "x": 1760,
-        "y": 397
+        "x": 1684,
+        "y": 466.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -336,8 +310,8 @@
       "id": "194",
       "type": "constant",
       "position": {
-        "x": 1760,
-        "y": 438
+        "x": 1684,
+        "y": 507.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -349,8 +323,8 @@
       "id": "195",
       "type": "constant",
       "position": {
-        "x": 1760,
-        "y": 479
+        "x": 1684,
+        "y": 548.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -362,8 +336,8 @@
       "id": "196",
       "type": "constant",
       "position": {
-        "x": 1760,
-        "y": 520
+        "x": 1684,
+        "y": 589.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -375,8 +349,8 @@
       "id": "197",
       "type": "constant",
       "position": {
-        "x": 1768,
-        "y": 561
+        "x": 1692,
+        "y": 630.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -388,8 +362,8 @@
       "id": "201",
       "type": "constant",
       "position": {
-        "x": 1760,
-        "y": 227
+        "x": 1684,
+        "y": 296.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -401,8 +375,8 @@
       "id": "202",
       "type": "constant",
       "position": {
-        "x": 1786,
-        "y": 268
+        "x": 1710,
+        "y": 337.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -416,8 +390,8 @@
       "id": "203",
       "type": "constant",
       "position": {
-        "x": 1786,
-        "y": 613
+        "x": 1710,
+        "y": 686.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -431,8 +405,8 @@
       "id": "204",
       "type": "io",
       "position": {
-        "x": 2726,
-        "y": 75
+        "x": 2590,
+        "y": 651.5
       },
       "data": {
         "descriptionFile": "occ_model_resultsv2>occ_model_resultsv2.yml"
@@ -442,52 +416,52 @@
       "id": "206",
       "type": "output",
       "position": {
-        "x": 3151,
-        "y": 46
+        "x": 3015,
+        "y": 622.5
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "207",
-      "type": "constant",
-      "position": {
-        "x": 2378,
-        "y": 671
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "eventTime|1|hour"
-        ]
-      }
-    },
-    {
       "id": "208",
       "type": "constant",
       "position": {
-        "x": 2360,
-        "y": 718
+        "x": 2234,
+        "y": 722.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int",
-        "value": 2
+        "value": 10
       }
     },
     {
       "id": "209",
       "type": "constant",
       "position": {
-        "x": 2466,
-        "y": 759
+        "x": 2340,
+        "y": 763.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "boolean",
         "value": false
+      }
+    },
+    {
+      "id": "210",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 256.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv[]",
+        "value": [
+          "/scripts/inputs/camtrap_sp_covs.csv"
+        ]
       }
     }
   ],
@@ -605,13 +579,6 @@
       "id": "reactflow__edge-53StudyArea_grid-66folder_vars"
     },
     {
-      "source": "179",
-      "sourceHandle": null,
-      "target": "124",
-      "targetHandle": "dataset",
-      "id": "reactflow__edge-179-124dataset"
-    },
-    {
       "source": "183",
       "sourceHandle": null,
       "target": "182",
@@ -652,13 +619,6 @@
       "target": "189",
       "targetHandle": "camptrap_data",
       "id": "reactflow__edge-182data_join-189camptrap_data"
-    },
-    {
-      "source": "190",
-      "sourceHandle": null,
-      "target": "189",
-      "targetHandle": "siteCol",
-      "id": "reactflow__edge-190-189siteCol"
     },
     {
       "source": "191",
@@ -759,13 +719,6 @@
       "id": "reactflow__edge-189umf_matrix-204auk_covars_file"
     },
     {
-      "source": "207",
-      "sourceHandle": null,
-      "target": "204",
-      "targetHandle": "obs_covs",
-      "id": "reactflow__edge-207-204obs_covs"
-    },
-    {
       "source": "60",
       "sourceHandle": "rasters",
       "target": "204",
@@ -806,6 +759,27 @@
       "target": "204",
       "targetHandle": "plot_hist",
       "id": "reactflow__edge-209-204plot_hist"
+    },
+    {
+      "source": "203",
+      "sourceHandle": null,
+      "target": "204",
+      "targetHandle": "obs_covs",
+      "id": "reactflow__edge-203-204obs_covs"
+    },
+    {
+      "source": "210",
+      "sourceHandle": null,
+      "target": "124",
+      "targetHandle": "dataset",
+      "id": "reactflow__edge-210-124dataset"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "siteCol",
+      "id": "reactflow__edge-164-189siteCol"
     }
   ],
   "inputs": {},

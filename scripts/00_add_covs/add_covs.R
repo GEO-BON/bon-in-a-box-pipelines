@@ -50,11 +50,8 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
   
   
   stack_vars<- terra::rast(layers_covs) %>% setNames(tools::file_path_sans_ext(basename(layers_covs)))
-  base_grid<- stack_vars[[1]] %>% terra::rast() %>% terra::setValues(seq(ncell(.))) %>% terra::mask(min(stack_vars)) %>% setNames("ID_grid")
-    
-  stack_vars<- c(base_grid, stack_vars)
 
-  join_covars<- terra::extract(stack_vars, data_points, ID= F) %>% cbind(data_points) %>% dplyr::filter(!is.na(ID_grid))
+  join_covars<- terra::extract(stack_vars, data_points, ID= F) %>% cbind(data_points)
   
   # Salida final
   spatial_covars<- sf::st_as_sf(join_covars)
