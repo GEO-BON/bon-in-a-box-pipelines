@@ -30,6 +30,18 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 ## Read data input ####
 camptrap_data<-  data.table::fread(input$camptrap_data) %>% readr::type_convert() %>% as.data.frame() %>%  dplyr::mutate_if(is.numeric, ~ if(all(. %in% c(0, 1))) {as.factor(.)} else {.})
 
+
+## Check and Validate Inputs: Common Errors ####
+if(is.null(input$speciesCol)){stop("The `speciesCol` is NULL. A value is required.")}else{if(!(input$speciesCol %in% names(camptrap_data))){stop( paste0("The `", input$speciesCol , "` speciesCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$speciesName)){stop("The `speciesName` is NULL. A value is required.")}else{if(!(input$speciesName %in% camptrap_data[,input$speciesCol])){stop( paste0("The `", input$speciesName , "` speciesName is not found in the `", input$speciesCol,"` speciesCol column of the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$cameraCol)){stop("The `cameraCol` is NULL. A value is required.")}else{if(!(input$cameraCol %in% names(camptrap_data))){stop( paste0("The `", input$cameraCol , "` cameraCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$evendateCol)){stop("The `evendateCol` is NULL. A value is required.")}else{if(!(input$evendateCol %in% names(camptrap_data))){stop( paste0("The `", input$evendateCol , "` evendateCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$eventTimeCol)){stop("The `eventTimeCol` is NULL. A value is required.")}else{if(!(input$eventTimeCol %in% names(camptrap_data))){stop( paste0("The `", input$eventTimeCol , "` eventTimeCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$setupCol)){stop("The `setupCol` is NULL. A value is required.")}else{if(!(input$setupCol %in% names(camptrap_data))){stop( paste0("The `", input$setupCol , "` setupCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$retrievalCol)){stop("The `retrievalCol` is NULL. A value is required.")}else{if(!(input$retrievalCol %in% names(camptrap_data))){stop( paste0("The `", input$retrievalCol , "` retrievalCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+
+
+
 ## Adjust dates ####
 ### Ajustar formato ####
 camptrap_data[, input$evendateCol]<- lubridate::parse_date_time(x = camptrap_data[, input$evendateCol], order = c("dmy", "Ymd","dmY"))
@@ -49,6 +61,8 @@ DateTimeOriginal_data<- camptrap_data %>%
 CTtable <- DateTimeOriginal_data %>%
   dplyr::select( c("site_id", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) ) %>%
   na.omit()  %>% dplyr::distinct()
+
+
 
 camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
                                           setupCol = input$setupCol,
@@ -115,8 +129,10 @@ site_covs<- site_covs_input %>% {.[. %in% names(camptrap_data)]}
 
 site_covs_data<-   data_adjust %>%  dplyr::select(c("site_id", site_covs)) %>% 
   dplyr::group_by( site_id) %>% 
-  dplyr::summarise(dplyr::across(all_of(site_covs), mean, na.rm = TRUE)) %>% tibble::column_to_rownames("site_id")
-
+  dplyr::summarise(
+    dplyr::across(where(is.numeric), mean, na.rm = TRUE),
+    dplyr::across(!where(is.numeric), ~ { unique(.) %>% {.[which.max(tabulate(match(., .)))]}})
+  ) %>% tibble::column_to_rownames("site_id")
 
 
 ### Adjust Observation covs ####

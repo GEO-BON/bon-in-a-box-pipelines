@@ -373,7 +373,7 @@
     },
     {
       "id": "202",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": 1710,
         "y": 337.5
@@ -782,7 +782,17 @@
       "id": "reactflow__edge-164-189siteCol"
     }
   ],
-  "inputs": {},
+  "inputs": {
+    "pipeline@202": {
+      "label": "speciesName",
+      "description": "Specific name of the species of interest. It must be a valid name contained in the column specified in speciesCol.",
+      "type": "text[]",
+      "example": [
+        "Cuniculus paca"
+      ],
+      "weight": 0
+    }
+  },
   "outputs": {
     "occ_model_resultsv2>occ_model_resultsv2.yml@204|occse_raster_export": {
       "description": "Raster map with occupancy model probability and standar error",
