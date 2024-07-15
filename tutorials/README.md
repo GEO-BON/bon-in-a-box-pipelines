@@ -1,5 +1,5 @@
 ---
-title: "Tutoriales Bon in a Box "
+title: "Tutoriales Bon in a Box - Instituto Humboldt"
 author: 
   - name: "Rincon-Parra VJ"
     email: "rincon-v@javeriana.edu.co"
@@ -9,11 +9,11 @@ output:
   github_document:
     md_extension: +gfm_auto_identifiers
     preserve_yaml: true
-    toc: true
+    toc: false
     toc_depth: 6
 ---
 
-Tutoriales Bon in a Box
+Tutoriales Bon in a Box - Instituto Humboldt
 ================
 true
 
@@ -21,7 +21,8 @@ Este folder contiene una serie de tutoriales diseñados para facilitar el
 uso y mantenimiento de los códigos y flujos de trabajo desarrollados por
 el Instituto Humboldt en la plataforma Bon in a Box.
 
-- [Manual de instalación](install_ByB)
+- [Lanzar Bon in a Box](launch_ByB)
+- [Tutorial de instalación](install_ByB)
 - [Manual de usuario](user_manual)
   - [Ejecutar un codigo sencillo](user_manual/Run_SimpleScript)
   - [Ejecutar un pipeline](user_manual/Run_pipeline)
