@@ -15,8 +15,8 @@ output:
 
 Este folder contiene una serie de tutoriales diseñados para facilitar el uso y mantenimiento de los códigos y flujos de trabajo desarrollados por el Instituto Humboldt en la plataforma Bon in a Box.
 
+*	[Lanzar Bon in a Box](launch_ByB)
 *	[Manual de instalación](install_ByB)
-*	[Iniciar Bon in a Box](install_ByB)
 *	[Manual de usuario](user_manual)
     *	[Ejecutar un codigo sencillo](user_manual/Run_SimpleScript)
     *	[Ejecutar un pipeline](user_manual/Run_pipeline)
