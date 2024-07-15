@@ -1,5 +1,5 @@
 ---
-title: "Tutoriales Bon in a Box - Instituto Humboldt"
+title: "Ejecución de script simple"
 author: 
   - name: "Rincon-Parra VJ"
     email: "rincon-v@javeriana.edu.co"
@@ -9,13 +9,14 @@ output:
   github_document:
     md_extension: +gfm_auto_identifiers
     preserve_yaml: true
-    toc: false
+    toc: true
     toc_depth: 6
 ---
 
 Este folder contiene una serie de tutoriales diseñados para facilitar el uso y mantenimiento de los códigos y flujos de trabajo desarrollados por el Instituto Humboldt en la plataforma Bon in a Box.
 
 *	[Manual de instalación](install_ByB)
+*	[Iniciar Bon in a Box](install_ByB)
 *	[Manual de usuario](user_manual)
     *	[Ejecutar un codigo sencillo](user_manual/Run_SimpleScript)
     *	[Ejecutar un pipeline](user_manual/Run_pipeline)
