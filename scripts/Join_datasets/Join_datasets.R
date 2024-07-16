@@ -45,11 +45,9 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
   ## Join data ####
   data_join<- plyr::join_all(list_datasets, by= input$column_join, type = input$type, match = input$match)
 
-
-
   ## Write results ####  
   data_join_path<- file.path(outputFolder, paste0("data_join", ".csv")) # Define the file path 
-data.table::fwrite(data_join, data_join_path, row.names = F) # write result
+  write.csv(data_join, data_join_path, row.names = F) # write result
   
   # Define final output list
   output<- list(data_join= data_join_path)

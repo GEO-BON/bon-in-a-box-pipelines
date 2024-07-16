@@ -6,7 +6,7 @@ inputs:
     label: lists_datasets
     description: "List of CSV datasets to be joined."
     type: text/csv[]
-    example:  ["/scripts/Join_datasets/input/data_filter.csv", "/scripts/Join_datasets/input/sp_covs.csv"] 
+    example:  ["/scripts/Join_datasets/input/data_filter" ] 
   column_join:
     label: column_join
     description: "Name of the common column to be used for joining the datasets. Multiple columns can be specified as long as they are present in all datasets listed in 'lists_datasets'. If 'NULL' is specified, the code will check and select common columns among the elements in 'lists_datasets'."

@@ -12,16 +12,6 @@ inputs:
     description: "Name of the column in the camptrap_data dataset containing the unique ID or identification of the camera trap site or station."
     type: text
     example: "ID_grid"
-  speciesCol:
-    label: scientificName
-    description: "Name of the column in the camptrap_data dataset that contains the scientific names of the recorded species."
-    type: text
-    example: "scientificName"
-  speciesName:
-    label: speciesName
-    description:  "Specific name of the species of interest. It must be a valid name contained in the column specified in speciesCol."
-    type: text[]
-    example: ["Cuniculus paca"]
   dateCollapseLength:
     label: dateCollapseLength
     description: "Number defining the time interval in days in which detections are grouped or collapsed to determine a sampling occasion or event."

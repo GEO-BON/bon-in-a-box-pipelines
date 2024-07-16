@@ -1,7 +1,7 @@
 # Load required packages - libraries to run the script ####
 
 # Install necessary libraries - packages  
-packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine aand R version
+packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- c("magrittr", "data.table", "terra", "raster", "sf", "pbapply", "this.path", "rjson", "tools", "unmarked", "reshape2", "Rcpp" , "RcppEigen", "RcppParallel", "RcppNumerical", "secr", "camtrapR") # Define the list of required packages to run the script
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
@@ -26,43 +26,32 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http:", x)  ) { 
   sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else if(!is.null(x) && length(x) > 0 && x %in% c("NULL", "NA")){NULL} else {x} }) %>% unlist()) 
 
+
+
+
+
+
+
 #  Script body ####
 ## Read data input ####
-camptrap_data<-  data.table::fread(input$camptrap_data) %>% readr::type_convert() %>% as.data.frame() %>%  dplyr::mutate_if(is.numeric, ~ if(all(. %in% c(0, 1))) {as.factor(.)} else {.})
-
-
-## Check and Validate Inputs: Common Errors ####
-if(is.null(input$speciesCol)){stop("The `speciesCol` is NULL. A value is required.")}else{if(!(input$speciesCol %in% names(camptrap_data))){stop( paste0("The `", input$speciesCol , "` speciesCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
-if(is.null(input$speciesName)){stop("The `speciesName` is NULL. A value is required.")}else{if(!(input$speciesName %in% camptrap_data[,input$speciesCol])){stop( paste0("The `", input$speciesName , "` speciesName is not found in the `", input$speciesCol,"` speciesCol column of the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
-if(is.null(input$cameraCol)){stop("The `cameraCol` is NULL. A value is required.")}else{if(!(input$cameraCol %in% names(camptrap_data))){stop( paste0("The `", input$cameraCol , "` cameraCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
-if(is.null(input$evendateCol)){stop("The `evendateCol` is NULL. A value is required.")}else{if(!(input$evendateCol %in% names(camptrap_data))){stop( paste0("The `", input$evendateCol , "` evendateCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
-if(is.null(input$eventTimeCol)){stop("The `eventTimeCol` is NULL. A value is required.")}else{if(!(input$eventTimeCol %in% names(camptrap_data))){stop( paste0("The `", input$eventTimeCol , "` eventTimeCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
-if(is.null(input$setupCol)){stop("The `setupCol` is NULL. A value is required.")}else{if(!(input$setupCol %in% names(camptrap_data))){stop( paste0("The `", input$setupCol , "` setupCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
-if(is.null(input$retrievalCol)){stop("The `retrievalCol` is NULL. A value is required.")}else{if(!(input$retrievalCol %in% names(camptrap_data))){stop( paste0("The `", input$retrievalCol , "` retrievalCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
-
-
+camptrap_data <- data.table::fread(input$camptrap_data) %>% as.data.frame() %>% dplyr::mutate(sp= "sp")
 
 ## Adjust dates ####
 ### Ajustar formato ####
 camptrap_data[, input$evendateCol]<- lubridate::parse_date_time(x = camptrap_data[, input$evendateCol], order = c("dmy", "Ymd","dmY"))
 camptrap_data[, input$setupCol]<- lubridate::parse_date_time(x = camptrap_data[, input$setupCol], order = c("dmy", "Ymd","dmY"))
 camptrap_data[, input$retrievalCol]<- lubridate::parse_date_time(x = camptrap_data[, input$retrievalCol], order = c("dmy", "Ymd","dmY"))
-camptrap_data[, input$eventTimeCol]<-  lubridate::parse_date_time(camptrap_data[,input$eventTimeCol], orders = c("H", "H:M", "H:M:S")) %>% format(format = "%H:%M:%S")
+camptrap_data[, input$eventTimeCol]<-  as.POSIXct(camptrap_data[,input$eventTimeCol], format = "%H:%M:%S") %>% format(format = "%H:%M:%S")
 
 ### columna DateTimeOriginal ####
-DateTimeOriginal_data<- camptrap_data %>% 
-  dplyr::mutate(id_conc= seq(nrow(.))) %>% 
-  dplyr::filter(!is.na(.[, input$evendateCol]), !is.na(.[, input$eventTimeCol]) ) %>% 
+DateTimeOriginal_data<- camptrap_data %>% dplyr::filter(!is.na(.[, input$evendateCol]), !is.na(.[, input$eventTimeCol]) ) %>% 
   dplyr::mutate(DateTimeOriginal = paste(.[,input$evendateCol], .[,input$eventTimeCol])) %>% 
-  dplyr::mutate(site_id= as.character( !!rlang::sym(input$siteCol) )) %>% 
-  dplyr::filter(DateTimeOriginal>= !!rlang::sym(input$setupCol) , DateTimeOriginal<= !!rlang::sym(input$retrievalCol)) # eliminar registros fuera de rango
+  dplyr::mutate(site_id= as.character( !!rlang::sym(input$siteCol) ))
 
 ## Camera operation ####
 CTtable <- DateTimeOriginal_data %>%
   dplyr::select( c("site_id", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) ) %>%
   na.omit()  %>% dplyr::distinct()
-
-
 
 camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
                                           setupCol = input$setupCol,
@@ -74,24 +63,25 @@ camOp_matrix <- camtrapR::cameraOperation(CTtable = CTtable,
                                           camerasIndependent = FALSE,
                                           hasProblems  = FALSE)
 
+
+
 ## Detection history ####
-recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("DateTimeOriginal", "site_id", "id_conc", as.character(unlist(input[c("speciesCol","setupCol", "retrievalCol", "cameraCol" )]))) )
+recordTable<- DateTimeOriginal_data %>% dplyr::select(  c("sp","DateTimeOriginal", "site_id", as.character(unlist(input[c("setupCol", "retrievalCol", "cameraCol" )]))) )
 
+detHistory_matrix <- camtrapR::detectionHistory (recordTable = recordTable,
+                                                 speciesCol = "sp", species = "sp",
+                                                 camOp = camOp_matrix,
+                                                 stationCol = "site_id",
+                                                 recordDateTimeCol = "DateTimeOriginal",
+                                                 recordDateTimeFormat  = "%Y-%m-%d%H:%M:%S",
+                                                 occasionLength = input$dateCollapseLength,  #change to colaps diferent dates
+                                                 day1 = "station",  #first day of survey; if we want to specify a date put in "survey"
+                                                 datesAsOccasionNames = F,
+                                                 includeEffort = F, #careful if trapping effort is thought to influence detection probability, it can be returned by setting includeEffort = TRUE.
+                                                 scaleEffort = F)#maybe wise using T, explore later
 
+print("detHistory_matrix")
 
-detHistory_matrix <- camtrapR::detectionHistory(recordTable = recordTable,
-                                                speciesCol = input$speciesCol, 
-                                                species = input$speciesName,
-                                                camOp = camOp_matrix,
-                                                stationCol = "site_id",
-                                                recordDateTimeCol = "DateTimeOriginal",
-                                                recordDateTimeFormat  = "%Y-%m-%d%H:%M:%S",
-                                                occasionLength = input$dateCollapseLength,  #change to colaps diferent dates
-                                                day1 = "station",  #first day of survey; if we want to specify a date put in "survey"
-                                                datesAsOccasionNames = F,
-                                                includeEffort = F, #careful if trapping effort is thought to influence detection probability, it can be returned by setting includeEffort = TRUE.
-                                                scaleEffort = F, #maybe wise using T, explore later
-                                                timeZone = "UTC")
 
 ### Adjust and clean Detection history ####
 detHistory_matrix_adjust<- detHistory_matrix$detection_history %>% as.data.frame.matrix() %>%
@@ -99,21 +89,17 @@ detHistory_matrix_adjust<- detHistory_matrix$detection_history %>% as.data.frame
   dplyr::filter(na_cells <= input$min_NAs) %>% dplyr::select(-c("na_cells")) %>% 
   dplyr::select_if(~ !all(is.na(.)))
 
-
 #### explore id to table ####
-seq_dates <- seq(from = min(recordTable$Instal.Date), to = max(recordTable$Last.eventDate), by = "6 days") %>% as.POSIXct( format="%Y-%m-%d")
-
-indexTable <- recordTable %>% dplyr::select(c("DateTimeOriginal", "site_id", "id_conc")) %>%  dplyr::arrange(DateTimeOriginal) %>% 
-  dplyr::mutate(occasion = cut(as.POSIXct(DateTimeOriginal), breaks=seq_dates, include.lowest=TRUE)  ) %>% 
-  dplyr::mutate(oc_detHist= factor(paste0("o", as.numeric(.$occasion)), levels= colnames(detHistory_matrix_adjust)) ) %>% 
-  dplyr::filter(site_id %in% rownames(detHistory_matrix_adjust) )
+start_dates <- recordTable %>% dplyr::group_by(site_id) %>% dplyr::summarize(start_date = min(DateTimeOriginal, na.rm = TRUE))
+indexTable <- recordTable %>% dplyr::select(c("DateTimeOriginal", "site_id")) %>% dplyr::left_join(start_dates, by = "site_id")  %>%  
+  dplyr::mutate(occasion = floor(as.numeric(difftime(DateTimeOriginal, start_date, units = "days")) / input$dateCollapseLength) + 1) %>% 
+  list(data.frame(occasion= unique(.$occasion), oc_detHist= colnames(detHistory_matrix_adjust))) %>% plyr::join_all() 
 
 
 ## Unmark data ####
-data_adjust <- list(indexTable, DateTimeOriginal_data) %>% plyr::join_all(match = "all") %>% 
-  dplyr::arrange(match(site_id, rownames(detHistory_matrix_adjust))) %>% 
-  dplyr::filter(!is.na(oc_detHist))
-
+data_adjust <- DateTimeOriginal_data %>% dplyr::mutate(oc_detHist= indexTable$oc_detHist) %>% 
+  dplyr::filter( site_id %in% rownames(detHistory_matrix_adjust)) %>% 
+  dplyr::arrange(match(site_id, rownames(detHistory_matrix_adjust)))
 
 ### Adjust site covs ####
 site_covs_input<- lapply(input$site_covs, function(y) { text_ext<- tools::file_ext(y)
@@ -129,52 +115,57 @@ site_covs<- site_covs_input %>% {.[. %in% names(camptrap_data)]}
 
 site_covs_data<-   data_adjust %>%  dplyr::select(c("site_id", site_covs)) %>% 
   dplyr::group_by( site_id) %>% 
-  dplyr::summarise(
-    dplyr::across(where(is.numeric), mean, na.rm = TRUE),
-    dplyr::across(!where(is.numeric), ~ { unique(.) %>% {.[which.max(tabulate(match(., .)))]}})
-  ) %>% tibble::column_to_rownames("site_id")
+  dplyr::summarise(dplyr::across(all_of(site_covs), mean, na.rm = TRUE)) %>% tibble::column_to_rownames("site_id")
+
+
+
+
+
+
+
 
 
 ### Adjust Observation covs ####
 obs_covs<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)}
-list_obcovs<- list()
 
-for(j in obs_covs ){
+if(length(obs_covs)>0){
+
+name_obs_covs<- sapply(obs_covs, function(x) unlist(strsplit(x, "\\|"))[1]) %>% as.character()
+
+
+list_obcovs<- lapply(obs_covs, function(j){
   
-  string_x<- unlist(strsplit(j, "\\|")) %>% sapply(function(x) {if(x == "NULL" | x == "NA"){NULL}else{x} }) %>% unlist()
+  string_x<- unlist(strsplit(j, "\\|"))
+  
   data_obcov<- dplyr::select(data_adjust, c("site_id", "oc_detHist", string_x[1]))
   
   tryCatch({
     
-    data_obcov[, "var_obcov"]<- {if( any(class(data_adjust[, string_x[1]]) %in% c("character", "factor"))  ){
-      data_adjust[, string_x[1]]
+    data_obcov[, "var_obcov"]<- if( is.na(as.numeric(string_x[length(string_x)]))  ){
+      as.POSIXct(data_adjust[, string_x[1]], format = "%H:%M:%S")  %>% lubridate::round_date(unit = paste(string_x[2:3], collapse = " ")) 
     } else {
-      if( is.na(as.numeric(string_x[length(string_x)]))  ){
-        as.POSIXct(data_adjust[, string_x[1]], format = "%H:%M:%S")  %>% lubridate::round_date(unit = paste(string_x[2:3], collapse = " ")) 
-      } else {
-        if(length(string_x)<=1){
-          data_adjust[, string_x[1]]
-        } else {
-          plyr::round_any(data_adjust[, string_x[1]], as.numeric(string_x[2]))
-        }
-      } 
-    }
-    }
+      plyr::round_any(data_adjust[, string_x[1]], as.numeric(string_x[2]))
+    } %>% as.factor() %>% as.numeric()
     
-    list_obcovs[[ as.character(string_x[1]) ]] <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% tibble::column_to_rownames("site_id")
+    matrix_obcov <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov") %>% tibble::column_to_rownames("site_id")
     
   }, error= function(e) {NULL})
   
+}) %>% setNames(name_obs_covs) %>% {Filter(function(x) {!is.null(x)}, .)}
+
+} else {
+  list_obcovs<- NULL
 }
-
-
-
-
-
 
 
 ### Create unmarked data ####
 umf_matrix = unmarked::unmarkedFrameOccu(y = detHistory_matrix_adjust, siteCovs = site_covs_data, obsCovs = list_obcovs)  %>% as( "data.frame") %>% as.data.frame.matrix()
+
+
+
+
+
+
 
 ## Write results ####
 umf_matrix_path<- file.path(outputFolder, "umf_matrix.csv") # Define the file path for the 'val_wkt_path' output

@@ -24,11 +24,11 @@ if ( (!exists("outputFolder"))  ) {
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(y) lapply(y, function(x)  {if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http:", x)  ) { 
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else if(!is.null(x) && length(x) > 0 && x %in% c("NULL", "NA")){NULL} else {x} }) %>% unlist()) 
-
+input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http:", x)  ) { 
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else if(x %in% c("NULL", "NA")){NULL} else {x} }) %>% unlist()) 
 
 #  Script body ####
+
 ## Cargar datos
 occ_wide<- data.table::fread(input$auk_covars_file) %>% tibble::column_to_rownames(names(.)[1])
 
@@ -44,7 +44,6 @@ if(text_ext != ""){
 })  %>% unlist()  %>%  basename() %>% tools::file_path_sans_ext()
 
 site_covs<- site_covs_input %>% {.[. %in% names(occ_wide)]}
-
 covs_detection<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)} %>% sapply(function(x) unlist(strsplit(x, "\\|"))[1]   ) %>% as.character() %>% {Filter(function(x) {!is.null(x)}, .)}
 
 
@@ -62,8 +61,7 @@ occ_um<- occ_wide_scale  %>% unmarked::formatWide(obsToY= NULL, type = "unmarked
 
 formula_occ<- as.formula( paste0("~ ", ifelse(length(covs_detection)>0, paste0( covs_detection, collapse = " + "), 1), " ~ ", paste0( site_covs, collapse = " + ")) )
 
-
-
+formula_occ
 om1 <- occu(~1 ~1, occ_um)
 simple_coef <- coef(om1)
 
@@ -117,16 +115,11 @@ occ_avg<- if(nrow(test_models)<=1){
     pred_surface_scale[, j]<- scale(pred_surface_scale[, j], center= list_scale[[j]]$center, scale= list_scale[[j]]$scale)
   }
   
+  
+  
   # note: the code below can take up to an hour to run!
-  occ_pred <- predict(occ_avg,  newdata = pred_surface_scale ,  type = "state")
+  occ_pred <- predict(occ_avg,  newdata = pred_surface ,  type = "state")
 
-  
-  
-  
-  
-  
-  
-  
   ## Raster points using the predicciotn surface raster template
   base_grid <- terra::rast(spatial_pred_surface[[1]])
   
