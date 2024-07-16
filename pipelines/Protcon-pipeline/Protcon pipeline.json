@@ -30,7 +30,7 @@
         "y": 40.5
       },
       "data": {
-        "descriptionFile": "protcon_analyisis>protcon_analysis.yml"
+        "descriptionFile": "protcon_analysis>protcon_analysis.yml"
       }
     },
     {
@@ -148,37 +148,37 @@
       "type": "int",
       "example": 3395
     },
-    "protcon_analyisis>protcon_analyisis.yml@41|distance_analysis": {
+    "protcon_analysis>protcon_analysis.yml@41|distance_analysis": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
       "label": "distance analysis threshold",
       "type": "int",
       "example": 10000
     },
-    "protcon_analyisis>protcon_analyisis.yml@41|column_date": {
+    "protcon_analysis>protcon_analysis.yml@41|column_date": {
       "description": "String that refers to the name of the column in the data_spatial_unit containing the date or time information corresponding to the spatial unit levels.",
       "label": "date information column",
       "type": "text",
       "example": "created_date"
     },
-    "protcon_analyisis>protcon_analyisis.yml@41|time_interval": {
+    "protcon_analysis>protcon_analysis.yml@41|time_interval": {
       "description": "Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis.",
       "label": "time intervals",
       "type": "text",
       "example": "10Y"
     },
-    "protcon_analyisis>protcon_analyisis.yml@41|time_start": {
+    "protcon_analysis>protcon_analysis.yml@41|time_start": {
       "description": "Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "start time",
       "type": "text"
     },
-    "protcon_analyisis>protcon_analyisis.yml@41|time_end": {
+    "protcon_analysis>protcon_analysis.yml@41|time_end": {
       "description": "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "end time",
       "type": "text"
     }
   },
   "outputs": {
-    "protcon_analyisis>protcon_analyisis.yml@41|protcon_result": {
+    "protcon_analysis>protcon_analysis.yml@41|protcon_result": {
       "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
       "label": "protcon results",
       "type": "text/csv"
