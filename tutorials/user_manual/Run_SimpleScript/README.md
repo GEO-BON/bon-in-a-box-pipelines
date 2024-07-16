@@ -65,10 +65,10 @@ parte inferior del `Input form`.
 
 Una vez ejecutado, la interfaz mostrará los resultados como listas
 desplegables. Cada una con la descripción general del resultado y la
-ruta relativa dentro del folder del repositorio donde se almacenó el
-resultado. Dichas rutas pueden buscarse en la máquina o descargar una
-copia del resultado directamente haciendo click sobre el hipervínculo de
-la ruta. Sumado a esto, si se expande la lista haciendo click en el
-símbolo “+”, la interfaz mostrará una vista previa del resultado.
+ruta relativa dentro del folder del repositorio donde se almacenó.
+Dichas rutas pueden buscarse en la máquina o descargar una copia del
+resultado directamente haciendo click sobre el hipervínculo de la ruta.
+Sumado a esto, si se expande la lista haciendo click en el símbolo `+`,
+la interfaz mostrará una vista previa del resultado.
 
 ![](README_figures/output_singlescript.png)
