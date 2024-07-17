@@ -2,7 +2,7 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
@@ -31,7 +31,7 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 output<- tryCatch({
  
 # Load and convert the study area to aggregate polygon limits and project it to the defined EPSG coordinate system
-vector_polygon<-  terra::vect(input$studyarea_path) %>% terra::aggregate()  %>%  terra::project( raster::crs( paste0("+init=epsg:", input$studyarea_epsg) )    )
+vector_polygon<-  terra::vect(input$studyarea_path) %>% terra::aggregate()  %>%  terra::project( terra::crs( paste0("epsg:", input$study_area_espg ) )   )
 # Generate WKT representation of the strudy area polygon
 wkt_polygon <- terra::geom(vector_polygon, wkt=TRUE) %>% {  paste0( "MULTIPOLYGON (",paste(gsub("POLYGON |MULTIPOLYGON ", "", .), collapse=  ", "),")") %>% {gsub("\\({4}", "\\(\\(\\(", .)}  }
 
