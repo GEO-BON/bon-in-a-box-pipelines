@@ -6,16 +6,11 @@ author:
   - name: Victor Julio Rincon (vrincon@humboldt.org.co)
 external_link: https://github.com/GEO-BON/biab-2.0/scripts/spatial_to_DistanceMatrix/spatial_to_DistanceMatrix.R
 inputs:
-  #studyarea_wkt:
-   # label: study area
-   # description: WKT (Well-Known Text) string or the file path to a .txt file containing the WKT representation of the study area boundaries. The WKT format is a text-based format used to describe the geometry of the study area's boundaries. The structure of the WKT file includes a geometry type label (MULTIPOLYGON), which is associated with the coordinate values of the vertices that define the study area's boundary mask.
-   # type: text/wkt
-   # example: "https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=Colombia&state_name=Putumayo"
   studyarea_country:
     label: Country
     description: Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get. 
     type: string
-    example: "Colombia"
+    example: Colombia
   studyarea_state:
     label: State/Province
     description: State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.
@@ -34,11 +29,6 @@ inputs:
       - m
       - km
     example: "m"
-  #spatial_file:
-   # label: spatial file
-   # description: String path represents the file location of a spatial file containing spatial units (geometries), which is used to calculate the distance matrix
-   # type: text
-   # example: "https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=Colombia&state_name=Putumayo"
   column_group:
     label: name of grouping attribute
     description: String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.
