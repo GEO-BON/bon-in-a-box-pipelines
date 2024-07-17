@@ -32,18 +32,34 @@ output<- tryCatch({
 units::units_options(set_units_mode = "standard")
 distance_unit<- input$unit_distance 
 area_unit<- paste0(input$unit_distance, "^2")
-  
+
 # Define study area
-ext_WKT_area<- tools::file_ext(input$studyarea_wkt)
-dir_wkt<- if(ext_WKT_area %in% "txt"){ readLines(input$studyarea_wkt) }else{ input$studyarea_wkt }
-crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()
+# If a state is not defined, will pull data for the whole country
+if (is.null(input$studyarea_state)){
+  input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
+  WKT_area<- paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", input$studyarea_country) 
+  PA_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country)
+} else {
+  input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
+  input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
+  WKT_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
+  PA_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
+}
+ ext_WKT_area<- tools::file_ext(WKT_area)
+
+if(ext_WKT_area %in% "txt"){ 
+  dir_wkt <- readLines(WKT_area)
+} else { 
+  dir_wkt <- (WKT_area)
+}
+crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character() 
 vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon )  %>% sf::st_as_sf()  %>% sf::st_transform(input$studyarea_epsg)
 
-spatial_units<- sf::st_read(input$spatial_file) %>% sf::st_transform(input$studyarea_epsg)
+spatial_units<- sf::st_read(PA_area) %>% sf::st_transform(input$studyarea_epsg)
 
 group<- input$column_group %>% {.[. %in% names(spatial_units)]}
 if(length(group)<1){group<-"id_group";  spatial_units[,"id_group"] <- seq(nrow(spatial_units)); }
-#if( ! sf::st_crs(spatial_units) == sf::st_crs(vector_polygon) ) { spatial_units<- sf::st_transform(spatial_units, crs_polygon)  }
+if( ! sf::st_crs(spatial_units) == sf::st_crs(vector_polygon) ) { spatial_units<- sf::st_transform(spatial_units, crs_polygon)  }
 
 # check intersects
 test_intersects<- sf::st_intersects(spatial_units, vector_polygon) %>% setNames( seq(length(.))) %>% unlist() %>% names() %>% as.numeric()
