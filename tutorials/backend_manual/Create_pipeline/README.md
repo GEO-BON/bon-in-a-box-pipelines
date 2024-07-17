@@ -1,5 +1,5 @@
 ---
-title: "Ejecución de pipeline"
+title: "Creación de pipeline"
 author: 
   - name: "Rincon-Parra VJ"
     email: "rincon-v@javeriana.edu.co"
@@ -13,16 +13,15 @@ output:
     toc_depth: 6
 ---
 
-Ejecución de pipeline
+Creación de pipeline
 ================
+true
+
 Un pipeline es una serie de etapas o pasos de procesamiento de datos que
 se ejecutan de manera secuencial. Cada paso toma la salida del paso
 anterior como su entrada, permitiendo que los datos se transformen y
 procesen de manera ordenada y eficiente, facilitando así la
 automatización para el procesamiento de datos.
-
-- [Interfaz Pipeline editor](#interfaz-pipeline-editor)
-- [Interfaz Pipeline run](#interfaz-pipeline-run)
 
 En Bon in a Box, cada `single script` puede ensamblarse como un paso de
 pipeline, organizando y ejecutando flujos de trabajo complejos. Este
@@ -32,21 +31,19 @@ información sobre cómo usar los pipelines, consulte la [documentación
 oficial de usuario de Bon in a
 Box](https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/blob/main/README-user.md#pipelines).
 
-## Interfaz Pipeline editor
-
-<a id="ID_pipeline_editor"></a>
-
-El `Pipeline Editor` es un editor de diagramas interactivo diseñado para
-facilitar la creación y gestión de flujos de trabajo tipo pipeline. En
-este editor, se pueden arrastrar, soltar y conectar diferentes
-`single scripts` para crear flujos de trabajo personalizados. Cada
-`single script` se organiza como una caja y se configura como un paso
-del pipeline. Los componentes principales del pipeline incluyen los
+La pestaña `Pipeline Editor` contiene un editor de diagramas interactivo
+diseñado para facilitar la creación y gestión de flujos de trabajo tipo
+pipeline. En este editor, se pueden arrastrar, soltar y conectar
+diferentes `single scripts` para crear flujos de trabajo personalizados.
+Cada `single script` se organiza como una caja y se configura como un
+paso del pipeline. Los componentes principales del pipeline incluyen los
 scripts, que funcionan como pasos con entradas y salidas, y los
 conectores entre ellos que determinan el flujo de datos.
 
 Para obtener más información sobre los `single script`, consulta en la
-documentación sobre [Run_SimpleScript](../Run_SimpleScript).
+documentación sobre estos en
+[Create_SimpleScript](../Create_SimpleScript) y
+[Run_SimpleScript](../Run_SimpleScript)
 
 La interfaz del `Pipeline Editor` tiene un panel izquierdo que muestra
 los `single scripts` disponibles. Cada `single script` puede ponerse en
@@ -54,12 +51,13 @@ el lienzo principal como un paso de pipeline simplemente arrastrándolo y
 soltándolo allí.
 
 ![](README_figures/panels_pipeline.png) En el lado derecho hay un panel
-desplegable `metadata` que describe los metadatos del pipeline, y un
-panel plegable con la descripción de todos los `inputs` y `outputs` de
-los scripts en el lienzo.Asimismo, al poner el cursor sobre cada caja o
-step, y sobre cada input o output, aparece un tooltip que describe esos
-argumentos. Los inputs pueden definirse desde el `Pipeline Editor` o
-desde el `Pipeline Run`.
+desplegable `metadata` que describe los metadatos editables del pipeline
+como su descripción general, autor y enlaces de consulta para mayor
+información. Ademas, hay un panel plegable con la descripción de todos
+los `inputs` y `outputs` de los scripts en el lienzo. Asimismo, al poner
+el cursor sobre cada caja o step, y sobre cada input o output, aparece
+un tooltip que describe esos argumentos. Los inputs pueden definirse
+desde el `Pipeline Editor` o desde el `Pipeline Run`.
 
 ![](README_figures/tooltips_pipeline.png)
 
@@ -118,38 +116,60 @@ guardados en esa carpeta.
 carpeta `~/pipelines` se visualizarán en la pestaña `Pipeline Run` desde
 donde se ejecutarán.
 
-## Interfaz Pipeline run
+Durante la ejecución del pipeline en la interfaz de Bon in a Box, se
+visualiza un cuadro de `log` de progresos en la parte inferior de cada
+código. Este cuadro muestra los avances en tiempo real de la ejecución
+de cada código, proporcionando a los usuarios una visión continua del
+estado de ejecución del pipeline.
 
-<a id="ID_pipeline_run"></a>
+Si se genera algún error durante la ejecución, el pipeline se detiene y
+la interfaz mostrará un mensaje de error con una `X` roja a la derecha
+del código que generó el error, acompañado del texto
+`"An error occurred. Check logs for details."` Además, se imprime un
+mensaje de error en el cuadro de `log` de ese código que refleja el
+mensaje desde la consola indicando por qué ese código no funciona. Una
+vez ocurre el error, se detiene toda la cascada de pasos dependientes de
+ese código en el pipeline.
 
-La interfaz `Pipeline Run` permite ejecutar los pipelines que han sido
-previamente guardados. En esta interfaz, los pipelines guardados se
-pueden abrir desde el menú desplegable `Pipeline`. Una vez seleccionado
-un pipeline, en la sección `Input Form` se visualizan todos los
-argumentos que no se definieron como constantes en el [Pipeline
-Editor](#ID_pipeline_editor).
+![](README_figures/pipeline_error.png)
 
-Cada argumento de entrada se muestra con su descripción, la cual es la
-misma que se visualizaba en los tooltips del [Pipeline
-Editor](#ID_pipeline_editor). Esto proporciona una guía clara sobre qué
-valores deben ingresarse para cada parámetro.
+Un script bien estructurado y documentado no debería generar errores. En
+general, los errores suelen surgir debido a problemas en los datos de
+entrada o a parámetros especificados incorrectamente por los usuarios.
+Los códigos deben estar preparados para manejar estos problemas e
+imprimir mensajes claros sobre la causa del error. Se recomienda incluir
+líneas de código de validación internas que prevengan estos errores,
+como las detalladas en la sección de prueba y validación de scripts en
+[Create_SimpleScript](../Create_SimpleScript).
 
-Con todos los parámetros ajustados, el pipeline se ejecuta presionando
-el botón `Pipeline Run`. Esta acción iniciará el procesamiento del
-pipeline, ejecutando cada uno de los `single scripts` especificados con
-los valores de entrada proporcionados. Mientras se ejecuta cada paso, se
-visualizarán iconos de carga.
+Si el error es desconocido o no es fácilmente detectable, se debe
+realizar mantenimiento al código. Para esto, debe abrirse una sesión con
+un entorno completamente vacío y ejecutar el código que genera error en
+el pipeline desde la consola. Los codigos estan configurados para cargar
+el intento de ejecución más reciente (ver
+[Create_SimpleScript](../Create_SimpleScript) para obtener mas
+detalles), por lo que al ejecutarla debe replicar el error detectado
+desde el último pipeline ejecutado. Esto permite depurar y hacer los
+ajustes necesarios para repararlo.
 
-Una vez finalizado, el resultado principal se muestra en la sección
-`Results`. Adicionalmente, en la sección `Detailed Results` se muestran
-los resultados de cada paso para explorar los resultados en detalle.
+Los pasos resumidos son:
 
-![](README_figures/results_pipeline.png)
+- 1.  Abrir una sesión con un entorno vacío: Asegurarse de que no haya
+      variables o datos cargados que puedan interferir con la ejecución.
+- 2.  Borrar el caché de carpetas en output: Limpiar los resultados
+      previos para evitar conflictos de interpretación, y mantener solo
+      los folders del intento de ejecución más reciente del código de
+      error y el pipeline asociado, para que el código se ejecute
+      correctamente con los datos actuales.
+- 3.  Configurar outputFolder: Cargar el intento de ejecución más
+      reciente para replicar el error. El código por defecto lo hace.
+- 4.  Ejecutar el código con errores: Ejecutar el código hasta
+      identificar los errores. Estos deben coincidir con los impresos en
+      el log de Bon in a Box.
+- 5.  Depurar y ajustar: Identificar el error, realizar los ajustes
+      necesarios y verificar que el código y el pipeline funcionen
+      correctamente.
 
-La interfaz mostrará los resultados como listas desplegables. Cada una
-con la descripción general del resultado y la ruta relativa dentro del
-folder del repositorio donde se almacenó. Dichas rutas pueden buscarse
-en la máquina o descargar una copia del resultado directamente haciendo
-click sobre el hipervínculo de la ruta. Sumado a esto, si se expande la
-lista haciendo click en el símbolo `+`, la interfaz mostrará una vista
-previa del resultado.
+Estas acciones permiten mantener el código y el pipeline limpios y
+funcionales, asegurando que Bon in a Box opere de manera eficiente y
+precisa.

@@ -137,11 +137,6 @@ site_covs_data<-   data_adjust %>%  dplyr::select(c("site_id", site_covs)) %>%
   dplyr::group_by( site_id) %>% 
   dplyr::summarise(dplyr::across(all_of(site_covs), mean, na.rm = TRUE)) %>% tibble::column_to_rownames("site_id")
 
-dplyr::summarise(
-  dplyr::across(where(is.numeric), mean, na.rm = TRUE),
-  dplyr::across(!where(is.numeric), ~ { unique(.) %>% {.[which.max(tabulate(match(., .)))]}})
-) %>% tibble::column_to_rownames("site_id")
-
 
 ### Adjust Observation covs ####
 obs_covs<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)}
@@ -174,12 +169,6 @@ for(j in obs_covs ){
   }, error= function(e) {NULL})
   
 }
-
-
-
-
-
-
 
 ### Create unmarked data ####
 umf_matrix = unmarked::unmarkedFrameOccu(y = detHistory_matrix_adjust, siteCovs = site_covs_data, obsCovs = list_obcovs)  %>% as( "data.frame") %>% as.data.frame.matrix()

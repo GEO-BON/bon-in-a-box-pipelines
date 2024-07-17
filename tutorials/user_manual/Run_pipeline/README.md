@@ -15,14 +15,16 @@ output:
 
 Ejecución de pipeline
 ================
+true
+
+- [Interfaz Pipeline editor](#interfaz-pipeline-editor)
+- [Interfaz Pipeline run](#interfaz-pipeline-run)
+
 Un pipeline es una serie de etapas o pasos de procesamiento de datos que
 se ejecutan de manera secuencial. Cada paso toma la salida del paso
 anterior como su entrada, permitiendo que los datos se transformen y
 procesen de manera ordenada y eficiente, facilitando así la
 automatización para el procesamiento de datos.
-
-- [Interfaz Pipeline editor](#interfaz-pipeline-editor)
-- [Interfaz Pipeline run](#interfaz-pipeline-run)
 
 En Bon in a Box, cada `single script` puede ensamblarse como un paso de
 pipeline, organizando y ejecutando flujos de trabajo complejos. Este
@@ -153,3 +155,32 @@ en la máquina o descargar una copia del resultado directamente haciendo
 click sobre el hipervínculo de la ruta. Sumado a esto, si se expande la
 lista haciendo click en el símbolo `+`, la interfaz mostrará una vista
 previa del resultado.
+
+Durante la ejecución del pipeline en la interfaz de Bon in a Box, se
+visualiza un cuadro de `log` de progresos en la parte inferior de cada
+código. Este cuadro muestra los avances en tiempo real de la ejecución
+de cada código, proporcionando a los usuarios una visión continua del
+estado de ejecución del pipeline.
+
+Si se genera algún error durante la ejecución, el pipeline se detiene y
+la interfaz mostrará un mensaje de error con una `X` roja a la derecha
+del codigo que genero error, acompañado del texto
+`"An error occurred. Check logs for details."`. Además, se imprime un
+mensaje de error en el cuadro de `log` de ese código que refleja el
+mensaje desde la consola indicando por qué ese código no funciona. Una
+vez ocurre el error se detiene toda la cascada hacia debajo del pipeline
+dependiendo de ese codigo.
+
+![](README_figures/pipeline_error.png)
+
+Generalmente, los errores surgen debido a problemas en los datos de
+entrada o a parámetros incorrectamente especificados por los usuarios.
+Los codigos están preparados para manejar estos problemas e imprimir
+mensajes claros sobre la causa del error. Por lo tanto, se recomienda
+revisar los mensajes del cuadro de “log” en caso de error.
+
+Este mensaje facilita la identificación y corrección del problema por
+parte del usuario. El usuario debe corregir los datos de entrada para
+ejecutar correctamente el pipeline. Si el error persiste, el usuario
+debe comunicarse con los autores del código y pipeline, cuyo contacto
+está detallado en la descripción, para solucionarlo.

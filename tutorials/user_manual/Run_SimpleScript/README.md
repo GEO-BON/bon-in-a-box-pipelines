@@ -72,3 +72,28 @@ Sumado a esto, si se expande la lista haciendo click en el símbolo `+`,
 la interfaz mostrará una vista previa del resultado.
 
 ![](README_figures/output_singlescript.png)
+
+Durante la ejecución del código en la interfaz de Bon in a Box, se
+visualiza un cuadro de `log` de progresos del código en la parte
+inferior. Este cuadro es dinámico e irá mostrando los avances en tiempo
+real, proporcionando a los usuarios una visión continua del estado de la
+ejecución. Si se genera algún error durante la ejecución, el codigo se
+detiene y la interfaz mostrará un mensaje de error con una `X` roja en
+el paso correspondiente, acompañado del texto
+`"An error occurred. Check logs for details."`. Sumado a esto, se
+imprime un mensaje de error en el cuadro de `log` que refleja el mensaje
+desde la consola por el que el codigo no funciona.
+
+Generalmente, los errores surgen debido a problemas en los datos de
+entrada o a parámetros incorrectamente especificados por los usuarios.
+Los códigos están preparados para manejar estos problemas e imprimir
+mensajes claros sobre la causa del error. Por lo tanto, se recomienda
+revisar los mensajes del cuadro de `log` en caso de error.
+
+Este mensaje facilita la identificación y corrección del problema por
+parte del usuario. El usuario debe corregir los datos de entrada para
+ejecutar correctamente el código. Si el error persiste, el usuario debe
+comunicarse con el autor del código detallado en la descripción para
+solucionarlo.
+
+![](README_figures/resultserror.png)
