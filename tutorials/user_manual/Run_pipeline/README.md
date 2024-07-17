@@ -15,16 +15,14 @@ output:
 
 Ejecución de pipeline
 ================
-true
-
-- [Interfaz Pipeline editor](#interfaz-pipeline-editor)
-- [Interfaz Pipeline run](#interfaz-pipeline-run)
-
 Un pipeline es una serie de etapas o pasos de procesamiento de datos que
 se ejecutan de manera secuencial. Cada paso toma la salida del paso
 anterior como su entrada, permitiendo que los datos se transformen y
 procesen de manera ordenada y eficiente, facilitando así la
 automatización para el procesamiento de datos.
+
+- [Interfaz Pipeline editor](#interfaz-pipeline-editor)
+- [Interfaz Pipeline run](#interfaz-pipeline-run)
 
 En Bon in a Box, cada `single script` puede ensamblarse como un paso de
 pipeline, organizando y ejecutando flujos de trabajo complejos. Este
@@ -101,14 +99,14 @@ los botones dispuestos en la parte superior derecha de la interfaz.
 
 En la parte superior derecha, hay varios botones útiles:
 
-- Layout: Permite organizar automáticamente el diseño de los scripts en
-  el lienzo para una mejor visualización.
-- Load from file: Carga un pipeline desde un archivo guardado
+- `Layout`: Permite organizar automáticamente el diseño de los scripts
+  en el lienzo para una mejor visualización.
+- `Load from file`: Carga un pipeline desde un archivo guardado
   previamente.
-- Load from server: Carga un pipeline guardado en el servidor.
-- Clear: Limpia el lienzo, eliminando todos los scripts y conexiones.
-- Save: Guarda y sobreescribe sobre el pipeline actual.
-- Save As: Permite guardar el pipeline actual con un nuevo nombre o
+- `Load from server`: Carga un pipeline guardado en el servidor.
+- `Clear`: Limpia el lienzo, eliminando todos los scripts y conexiones.
+- `Save`: Guarda y sobreescribe sobre el pipeline actual.
+- `Save As`: Permite guardar el pipeline actual con un nuevo nombre o
   ubicación.
 
 En ambas opciones de guardado, los pipelines se almacenarán por defecto

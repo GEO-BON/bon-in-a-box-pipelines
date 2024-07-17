@@ -45,12 +45,12 @@ Cuando el pipeline esté listo, debe añadirse un box final denominado `Output` 
 
 En la parte superior derecha, hay varios botones útiles:
 
-* Layout: Permite organizar automáticamente el diseño de los scripts en el lienzo para una mejor visualización.
-* Load from file: Carga un pipeline desde un archivo guardado previamente.
-* Load from server: Carga un pipeline guardado en el servidor.
-* Clear: Limpia el lienzo, eliminando todos los scripts y conexiones.
-* Save: Guarda y sobreescribe sobre el pipeline actual.
-* Save As: Permite guardar el pipeline actual con un nuevo nombre o ubicación.
+* `Layout`: Permite organizar automáticamente el diseño de los scripts en el lienzo para una mejor visualización.
+* `Load from file`: Carga un pipeline desde un archivo guardado previamente.
+* `Load from server`: Carga un pipeline guardado en el servidor.
+* `Clear`: Limpia el lienzo, eliminando todos los scripts y conexiones.
+* `Save`: Guarda y sobreescribe sobre el pipeline actual.
+* `Save As`: Permite guardar el pipeline actual con un nuevo nombre o ubicación.
 
 En ambas opciones de guardado, los pipelines se almacenarán por defecto en la carpeta `~/pipelines` dentro de la ruta del repositorio. Asimismo, los pipelines que se cargan con `Load from server` son aquellos guardados en esa carpeta.
 
