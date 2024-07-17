@@ -122,81 +122,99 @@
     }
   ],
   "inputs": {
-    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_wkt": {
-      "description": "Link to spatial file representing the study area. To obtain a given region/state/province automatically, change the country name and state_name (in English) in the example url.",
-      "label": "study area",
-      "type": "text/wkt",
-      "example": "https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=Colombia&state_name=Putumayo"
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "string",
+      "example": "Colombia",
+      "weight": 0
+    },
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_state": {
+      "description": "State of interest",
+      "label": "State/Province",
+      "type": "text",
+      "weight": 1,
+      "example": null
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_epsg": {
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used for calculations. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
       "label": "study area EPSG",
       "type": "int",
-      "example": 3395
+      "example": 3395,
+      "weight": 2
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|unit_distance": {
       "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
       "label": "unit for distance measurement",
       "type": "options",
-      "options": ["m", "km"],
-      "example": "m"
-    },
-    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatial_file": {
-      "description": "File location or url to spatial file with protected areas within study area. To obtain WDPA protected areas for a given region/state/province, change the country name and state_name (in English) in the example url.",
-      "label": "Protected Areas File",
-      "type": "text",
-      "example": "https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=Colombia&state_name=Putumayo"
+      "options": [
+        "m",
+        "km"
+      ],
+      "example": "m",
+      "weight": 3
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|column_group": {
       "description": "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.",
       "label": "name of grouping attribute",
       "type": "text[]",
-      "example": ["WDPA_PID"]
+      "example": [
+        "WDPA_PID"
+      ],
+      "weight": 4
     },
     "protcon_analysis>protcon_analysis.yml@41|distance_analysis": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
       "label": "distance analysis threshold",
       "type": "int",
-      "example": 10000
+      "example": 10000,
+      "weight": 5
     },
     "protcon_analysis>protcon_analysis.yml@41|column_date": {
       "description": "String that refers to the name of the column in the data_spatial_unit containing the date or time information corresponding to the spatial unit levels.",
       "label": "date information column",
       "type": "text",
-      "example": "STATUS_YR"
+      "example": "STATUS_YR",
+      "weight": 6
     },
     "protcon_analysis>protcon_analysis.yml@41|time_interval": {
       "description": "Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis.",
       "label": "time intervals",
       "type": "text",
-      "example": "10Y"
+      "example": "10Y",
+      "weight": 7
     },
     "protcon_analysis>protcon_analysis.yml@41|time_start": {
       "description": "Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "start time",
-      "type": "text"
+      "type": "text",
+      "weight": 8
     },
     "protcon_analysis>protcon_analysis.yml@41|time_end": {
       "description": "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "end time",
-      "type": "text"
+      "type": "text",
+      "weight": 9
     }
   },
   "outputs": {
     "protcon_analysis>protcon_analysis.yml@41|protcon_result": {
       "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
       "label": "Protcon results",
-      "type": "text/csv"
+      "type": "text/csv",
+      "weight": 0
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatialunits_studyarea": {
       "description": "Represents the map of the analyzed spatial units within the study area.",
       "label": "Protected areas within study area",
-      "type": "application/geo+json"
+      "type": "application/geo+json",
+      "weight": 1
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|area_study_area": {
       "description": "Refers to the total area of the analyzed study area. The estimation of this area is expressed in square units (m2 or km2) as defined by the input unit_distance.",
       "label": "Total study area",
-      "type": "int"
+      "type": "int",
+      "weight": 2
     }
   }
 }
