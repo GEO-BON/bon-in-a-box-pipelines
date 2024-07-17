@@ -47,9 +47,8 @@ del pipeline. Los componentes principales del pipeline incluyen los
 scripts, que funcionan como pasos con entradas y salidas, y los
 conectores entre ellos que determinan el flujo de datos.
 
-Para obtener más información sobre los `single script run`, consulta en
-la documentación sobre
-[Run_SimpleScript](../user_manual/Run_SimpleScript).
+Para obtener más información sobre los `single script`, consulta en la
+documentación sobre [Run_SimpleScript](../Run_SimpleScript).
 
 La interfaz del `Pipeline Editor` tiene un panel izquierdo que muestra
 los `single scripts` disponibles. Cada `single script` puede ponerse en
