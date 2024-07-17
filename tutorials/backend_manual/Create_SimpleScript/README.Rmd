@@ -120,6 +120,7 @@ Para completar el puente de conexión entre el código y el `YML`, es necesario 
 
 Sin embargo, para facilitar la depuración y pruebas del código, se añaden unas líneas de lectura del `outputFolder` fuera del servidor. Estas líneas tienen un condicional que solo se ejecuta fuera del servidor, y lo que hace es completar las rutas del repositorio al entorno de la máquina local para pruebas.
 
+<a id="ID_defineoutputfolder"></a>
 ```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
 Sys.setenv(outputFolder = "/path/to/output/folder")
 
@@ -195,9 +196,36 @@ Como resultado, en el `outputFolder` se guardan todos los resultados y un archiv
 
 ####	Probar y Validar el Script
 
-Un script bien estructurado y documentado no debería generar errores. En general, los errores se presentan debido a problemas en los datos de entrada o a parámetros especificados incorrectamente por los usuarios. Los códigos deben estar preparados para manejar estos problemas e imprimir mensajes claros sobre la causa del error. Se recomienda incluir líneas de código de validación internas que prevengan estos errores. En este ejemplo, 
+Un script bien estructurado y documentado no debería generar errores. En general, los errores suelen surgir debido a problemas en los datos de entrada o a parámetros especificados incorrectamente por los usuarios. Los códigos deben estar preparados para manejar estos problemas e imprimir mensajes claros sobre la causa del error. Se recomienda incluir líneas de código de validación internas que prevengan estos errores.
 
+En este ejemplo, se incluyen líneas de código que validan todas las entradas proporcionadas por el usuario en relación con un conjunto de datos, asegurándose de que cada columna requerida esté presente y que cada valor especificado exista. 
 
+```{r,  eval=F, echo=T, results='hide', warning= F, message = F}
+## Check and Validate Inputs: Common Errors ####
+if(is.null(input$speciesCol)){stop("The `speciesCol` is NULL. A value is required.")}else{if(!(input$speciesCol %in% names(camptrap_data))){stop( paste0("The `", input$speciesCol , "` speciesCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$speciesName)){stop("The `speciesName` is NULL. A value is required.")}else{if(!(input$speciesName %in% camptrap_data[,input$speciesCol])){stop( paste0("The `", input$speciesName , "` speciesName is not found in the `", input$speciesCol,"` speciesCol column of the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$cameraCol)){stop("The `cameraCol` is NULL. A value is required.")}else{if(!(input$cameraCol %in% names(camptrap_data))){stop( paste0("The `", input$cameraCol , "` cameraCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$evendateCol)){stop("The `evendateCol` is NULL. A value is required.")}else{if(!(input$evendateCol %in% names(camptrap_data))){stop( paste0("The `", input$evendateCol , "` evendateCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$eventTimeCol)){stop("The `eventTimeCol` is NULL. A value is required.")}else{if(!(input$eventTimeCol %in% names(camptrap_data))){stop( paste0("The `", input$eventTimeCol , "` eventTimeCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$setupCol)){stop("The `setupCol` is NULL. A value is required.")}else{if(!(input$setupCol %in% names(camptrap_data))){stop( paste0("The `", input$setupCol , "` setupCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+if(is.null(input$retrievalCol)){stop("The `retrievalCol` is NULL. A value is required.")}else{if(!(input$retrievalCol %in% names(camptrap_data))){stop( paste0("The `", input$retrievalCol , "` retrievalCol column is not found in the `", basename(input$camptrap_data),"` camptrap_data dataset") )}}
+```
+
+Si se encuentra alguna discrepancia, el código se detiene y se imprime un mensaje de error claro y específico en la consola. Este mensaje de error también se registrará en el archivo `logs.txt` y se mostrará en la interfaz de Bon in a Box, facilitando así la identificación y corrección del problema por parte del usuario. Cuando esto sucede, la interfaz de Bon in a Box mostrará un mensaje de error con una `X` roja en el paso del error, acompañado del texto `An error occurred. Check logs for details.`. Sumado a esto sobre el cuadro `logs` se detallara el error.
+
+![](README_figures/resultserror.png)
+
+Si el error es desconocido o no es fácilmente detectable, se debe realizar mantenimiento al código. Para esto, debe abrirse una sesión con un entorno completamente vacío y ejecutar todo el código desde la consola. La línea [outputFolder para pruebas](#ID_defineoutputfolder) está configurada para cargar el intento de ejecución más reciente, por lo que al ejecutarla debe replicar el error detectado. Esto permite depurar y hacer los ajustes necesarios para repararlo.
+
+Los pasos resumidos son:
+
+*1. Abrir una sesión con un entorno vacío: Asegurarse de que no haya variables o datos cargados que puedan interferir con la ejecución. 
+*2. Borrar el caché de carpetas en output: Limpiar los resultados previos para evitar conflictos de interpretación, y mantener solo el folder del intento que genera el error para que el código se ejecute correctamente con los datos actuales.
+*3. Configurar outputfolder: Cargar el intento de ejecución más reciente para replicar el error. El codigo por defecto lo hace.
+*4. Ejecutar el código hasta identificar los errores. Deben ser los mismos impresos en el log de bon in a box.
+*5 . Depurar y ajustar: Identificar el error, realizar los ajustes necesarios y verificar que el código funcione correctamente.
+
+Estas acciones permiten mantener el código limpio y funcional, asegurando que Bon in a Box opere de manera eficiente y precisa.
 
 
 
