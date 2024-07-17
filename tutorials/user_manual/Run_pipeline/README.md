@@ -15,14 +15,16 @@ output:
 
 Ejecución de pipeline
 ================
+true
+
+- [Interfaz Pipeline editor](#interfaz-pipeline-editor)
+- [Interfaz Pipeline run](#interfaz-pipeline-run)
+
 Un pipeline es una serie de etapas o pasos de procesamiento de datos que
 se ejecutan de manera secuencial. Cada paso toma la salida del paso
 anterior como su entrada, permitiendo que los datos se transformen y
 procesen de manera ordenada y eficiente, facilitando así la
 automatización para el procesamiento de datos.
-
-- [Interfaz Pipeline editor](#interfaz-pipeline-editor)
-- [Interfaz Pipeline run](#interfaz-pipeline-run)
 
 En Bon in a Box, cada `single script` puede ensamblarse como un paso de
 pipeline, organizando y ejecutando flujos de trabajo complejos. Este
@@ -44,6 +46,10 @@ este editor, se pueden arrastrar, soltar y conectar diferentes
 del pipeline. Los componentes principales del pipeline incluyen los
 scripts, que funcionan como pasos con entradas y salidas, y los
 conectores entre ellos que determinan el flujo de datos.
+
+Para obtener más información sobre los `single script run`, consulta en
+la documentación sobre
+[Run_SimpleScript](../user_manual/Run_SimpleScript).
 
 La interfaz del `Pipeline Editor` tiene un panel izquierdo que muestra
 los `single scripts` disponibles. Cada `single script` puede ponerse en

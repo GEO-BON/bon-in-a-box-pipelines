@@ -23,6 +23,8 @@ Para más información sobre cómo usar los pipelines, consulte la [documentaci�
 
 El `Pipeline Editor` es un editor de diagramas interactivo diseñado para facilitar la creación y gestión de flujos de trabajo tipo pipeline. En este editor, se pueden arrastrar, soltar y conectar diferentes `single scripts` para crear flujos de trabajo personalizados. Cada `single script` se organiza como una caja y se configura como un paso del pipeline. Los componentes principales del pipeline incluyen los scripts, que funcionan como pasos con entradas y salidas, y los conectores entre ellos que determinan el flujo de datos.
 
+Para obtener más información sobre los `single script`, consulta en la documentación sobre [Run_SimpleScript](../user_manual/Run_SimpleScript).
+
 La interfaz del `Pipeline Editor` tiene un panel izquierdo que muestra los `single scripts` disponibles. Cada `single script` puede ponerse en el lienzo principal como un paso de pipeline simplemente arrastrándolo y soltándolo allí. 
 
 ![](README_figures/panels_pipeline.png)
