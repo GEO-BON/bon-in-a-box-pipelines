@@ -2,7 +2,7 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "raster", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
@@ -142,8 +142,8 @@ output<- tryCatch({
     #Look for the id?s in the spatial_units_periods for filter the information
     areas_pa_conec = decade[decade[, "spatial_unit"] %in% pa_union,]
     areas_conec = sum(areas_pa_conec[, "area_spatial"])
-    #Extract the percentage of area for the conected protected areas (Protcon)
-    protcon = (areas_conec/area_protect)*100
+    # Extract the percentage of total area that is protected and connected (Protcon)
+    protcon = (areas_conec/area_consult)*100
     
     #Generate the area for not connected protected areas 
     #Identify the rows where are the connected protected areas
@@ -158,7 +158,8 @@ output<- tryCatch({
     
     #Extract the percentage of area for the not connected protected areas (Protuncon)
     areas_no_conec = (sum(areas_pa_no_conec[, "area_spatial"]))
-    protuncon = (areas_no_conec/area_protect)*100
+    protuncon = (areas_no_conec/area_consult)*100 
+
     
     #Create the table with the final results  
     #Create the row with the results for the decade i
