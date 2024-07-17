@@ -15,7 +15,6 @@ output:
 
 Guía para Crear y Agregar un Single Script
 ================
-
 Este tutorial describe los pasos necesarios para crear un
 `Single Script` y agregarlo a la plataforma Bon in a Box. Estos códigos
 corresponden a bloques de código diseñados para realizar tareas

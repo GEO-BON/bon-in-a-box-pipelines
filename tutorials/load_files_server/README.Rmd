@@ -1,5 +1,5 @@
 ---
-title: "Lanzar Bon in a Box"
+title: "Cargar archivos en el servidor de Bon in a Box"
 author: 
   - name: "Rincon-Parra VJ"
     email: "rincon-v@javeriana.edu.co"
@@ -12,13 +12,22 @@ output:
     toc: false
     toc_depth: 6
 ---
-Para utilizar la plataforma Bon in a Box en tu computadora, es necesario utilizar las herramientas [GitHub](https://docs.github.com/en/desktop/installing-and-authenticating-to-github-desktop/installing-github-desktop) y [Docker](https://www.docker.com/products/docker-desktop/). Si es la primera vez que utilizas la plataforma, por favor consulta el [tutorial de Instalación Bon in a Box](../install_ByB) que describe los requisitos y el paso a paso para instalación y lanzamiento por primera vez.
 
-Para iniciar el servidor de Bon in a Box, asegúrate de tener Docker abierto y ejecuta el comando `./server-up.sh` desde una consola de código linux. Se recomienda abrir la consola de código desde GitHub Desktop para que se configure automáticamente con la dirección del repositorio. Para ejecutar el comando, simplemente escribe `./server-up.sh` en la consola y presiona Enter.
+El servidor de Bon in a Box requiere que las entradas para ejecutar código sean rutas relativas dentro de su entorno. Esto significa que las rutas deben estar definidas de tal manera que sean accesibles desde el directorio raíz del entorno del servidor. Por lo tanto, para utilizar archivos propios como 'input' en la ejecución de código, es necesario cargarlos en el repositorio local, clonando el repositorio donde está alojado el servidor. Esto asegura que las rutas de los archivos sean correctas y accesibles desde el entorno del servidor.
 
-![](README_figures/launch_ByB.png)
+Por ejemplo, la ruta `/scripts/Filter_data/input/records_data.csv` es una ruta relativa que funciona correctamente dentro del entorno del servidor, ya que comienza desde el directorio raíz del servidor y sigue la estructura de directorios esperada. En contraste, la ruta `C:/Repositories/biab-2.0/tutorials/backend_manual/Create_SimpleScript /scripts/Filter_data/input/records_data.csv` no funciona porque al ser una ruta mixta desde el computador local no permite al servidor la localización de los archivos.
 
-La primera ejecución puede llevar más tiempo, ya que descargará los micro-servicios necesarios para lanzar el contenedor Docker. Las siguientes ejecuciones serán más rápidas o inmediatas, dependiendo de los cambios realizados. Este comando ejecutará todas las acciones definidas en el archivo server-up.sh, ubicado en el directorio clonado, iniciando así el servidor de Bon in a Box.
+Usar rutas relativas no solo facilita la portabilidad del código entre diferentes entornos y máquinas, sino que también mejora la flexibilidad al permitir cambios en la estructura del proyecto sin necesidad de actualizar todas las referencias a archivos. Esto significa que el mismo código se puede ejecutar correctamente sin importar en qué directorio o máquina se despliegue el servidor, lo cual es crucial para el mantenimiento y la estabilidad del código. Además, mantener las rutas relativas contribuye a la seguridad y conveniencia, evitando la exposición de la estructura completa del sistema de archivos del servidor y simplificando la configuración y administración del entorno.
 
-Una vez que el servidor esté en funcionamiento, simplemente escribe la dirección http://localhost/ en tu navegador para acceder a la plataforma Bon in a Box.
-![](README_figures/localhostByB.png)
+Según esto, los archivos `input` propios deben ubicarse en rutas dentro del repositorio donde está el servidor para facilitar su ubicación, o de lo contrario no serán admitidos. En algunos casos, las configuraciones de seguridad y acceso del servidor dificultan esta lectura, por lo que lo más recomendable es cargarlos en la carpeta `/scripts/` junto con los códigos. 
+Para facilitar la organización de archivos, se recomienda guardarlos específicamente en la carpeta `/scripts/inputs`. El usuario no debe preocuparse por el tamaño de los archivos alojados allí, ya que aunque GitHub no admite archivos de más de 75 MB, lo cual puede causar errores al intentar subirlos o actualizar el repositorio, el repositorio cuenta con un archivo  `.gitignore` que evita que estos archivos grandes intenten cargarse, previniendo así problemas durante las operaciones de actualización. 
+
+![](README_figures/inputs.png)
+
+
+Además de esto, es recomendable para los encargados del mantenimiento de los códigos que los inputs por defecto de los códigos se almacenen junto al codigo y el archivo `YML`, de manera que se pueda acceder más fácilmente a ellos para su mantenimiento. Esto facilita la gestión y actualización de los archivos, asegurando que todos los elementos necesarios para la ejecución del código estén organizados y accesibles en un mismo lugar. Al mantener los archivos de entrada, el código y los archivos de configuración (como los archivos `YML`) juntos, se mejora la eficiencia del trabajo y se reduce el riesgo de errores al buscar o actualizar estos componentes.
+
+![](README_figures/folderscript.png)
+
+
+
