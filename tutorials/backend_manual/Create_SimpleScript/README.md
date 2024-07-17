@@ -36,7 +36,8 @@ basadas en el procesamiento realizado.
       - [Establecer Entorno de Trabajo](#establecer-entorno-de-trabajo)
     - [Ejecucion del código](#ejecucion-del-código)
     - [Exportar resultados](#exportar-resultados)
-    - [Probar y Validar el Script](#probar-y-validar-el-script)
+  - [Probar y Validar el Script](#probar-y-validar-el-script)
+
 
 ## Componentes del script
 
@@ -55,9 +56,11 @@ código y un archivo en formato `YML` asociado.
 Estos componentes deben estar presentes en la carpeta `~/scripts` del
 repositorio para que se visualicen en Bon in a Box. Ambos archivos deben
 estar alojados en la misma carpeta para facilitar su lectura y conexión.
-Además, se recomienda que en esta carpeta conjunta se incluya una
-subcarpeta input con datos por defecto, lo cual facilitará su prueba y
+Además, se recomienda que en esta carpeta conjunta se incluya ademas una
+subcarpeta `input` con datos por defecto, lo cual facilitará su prueba y
 ejecución, sirviendo como guía para los usuarios.
+
+![](README_figures/folderscript.png)
 
 ## Archivos `YML`
 
@@ -356,7 +359,7 @@ una visión continua del estado de la ejecución.
 
 ![](README_figures/result_singlescript.png)
 
-#### Probar y Validar el Script
+### Probar y Validar el Script
 
 Un script bien estructurado y documentado no debería generar errores. En
 general, los errores suelen surgir debido a problemas en los datos de

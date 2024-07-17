@@ -22,7 +22,10 @@ Los `Single Script` constan de dos componentes principales: un bloque de código
 * Bloque de código - script  : Contiene el código y las instrucciones de ejecución del algoritmo y análisis requerido.
 * Archivo`YML`: Define la configuración de entradas y salidas de ese código, así como los parámetros necesarios para su ejecución. Este archivo actúa como un puente que permite a los usuarios configurar el código a través de una interfaz amigable, asegurando que los datos sean correctamente interpretados y utilizados por el código subyacente.
 
-Estos componentes deben estar presentes en la carpeta `~/scripts` del repositorio para que se visualicen en Bon in a Box. Ambos archivos deben estar alojados en la misma carpeta para facilitar su lectura y conexión. Además, se recomienda que en esta carpeta conjunta se incluya una subcarpeta input con datos por defecto, lo cual facilitará su prueba y ejecución, sirviendo como guía para los usuarios.
+Estos componentes deben estar presentes en la carpeta `~/scripts` del repositorio para que se visualicen en Bon in a Box. Ambos archivos deben estar alojados en la misma carpeta para facilitar su lectura y conexión. Además, se recomienda que en esta carpeta conjunta se incluya ademas una subcarpeta `input` con datos por defecto, lo cual facilitará su prueba y ejecución, sirviendo como guía para los usuarios.
+
+![](README_figures/folderscript.png)
+
 
 
 ## Archivos `YML`
@@ -194,7 +197,7 @@ Como resultado, en el `outputFolder` se guardan todos los resultados y un archiv
 
 ![](README_figures/result_singlescript.png)
 
-####	Probar y Validar el Script
+###	Probar y Validar el Script
 
 Un script bien estructurado y documentado no debería generar errores. En general, los errores suelen surgir debido a problemas en los datos de entrada o a parámetros especificados incorrectamente por los usuarios. Los códigos deben estar preparados para manejar estos problemas e imprimir mensajes claros sobre la causa del error. Se recomienda incluir líneas de código de validación internas que prevengan estos errores.
 
