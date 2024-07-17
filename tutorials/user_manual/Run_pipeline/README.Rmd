@@ -13,27 +13,61 @@ output:
     toc_depth: 6
 ---
 
-Las órdenes de servidor ejecutadas en Bon in a Box se organizan a partir de códigos individuales conocidos como `single script`. Estos códigos corresponden a bloques de código diseñados para realizar tareas específicas de principio a fin. Cada `single script` está diseñado para recibir ciertos parámetros y argumentos como entradas, procesar estas entradas mediante el código interno y luego generar salidas específicas basadas en el procesamiento realizado.
+Un pipeline es una serie de etapas o pasos de procesamiento de datos que se ejecutan de manera secuencial. Cada paso toma la salida del paso anterior como su entrada, permitiendo que los datos se transformen y procesen de manera ordenada y eficiente, facilitando así la automatización para el procesamiento de datos.
 
-Para ejecutar un `single script`, basta con oprimir el botón `Single script run` en la parte superior izquierda de la interfaz de Bon in a Box. Una vez allí, la interfaz mostrará una barra de selección donde están todos los scripts disponibles. 
+En Bon in a Box, cada `single script` puede ensamblarse como un paso de pipeline, organizando y ejecutando flujos de trabajo complejos. Este enfoque automatiza la conexión entre los scripts, creando pasos interrelacionados a partir de sus entradas y salidas. 
+Para más información sobre cómo usar los pipelines, consulte la [documentación oficial de usuario de Bon in a Box]( https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/blob/main/README-user.md#pipelines).
 
-![](README_figures/selectinput_scinglecsript.png)
-Al seleccionar el script de interés en la barra, la interfaz mostrará en primera línea una descripción de lo que hace ese script, una línea titulada `Code`, una linea `See` con un enlace donde hay una descripción detallada del codigo seleccionado, y una linea con la ruta del archivo del código a ejecutar. 
+## Interfaz Pipeline editor
+<a id="ID_pipeline_editor"></a>
 
-Dicha ruta corresponde a la dirección interna del codigo dentro del repositorio clonado (ej. `scripts/Filter_data/Filter_data.R` corresponde a maquina local en `C:\Repositories\biab-2.0\scripts\Filter_data\Filter_data.R`). Asimismo, los `inputs` referentes a rutas de archivos deben hacer referencia a rutas internas del servidor, de lo contrario, los códigos no podrán cargar los archivos. Por esta razón, todos los archivos que se utilicen como `inputs` deben estar obligatoriamente dentro de la carpeta del repositorio para que el servidor pueda leerlos correctamente. Para mayor información sobre  rutas relativas consulte el [tutorial para Cargar archivos en el servidor de Bon in a Box](../load_files_server).
+El `Pipeline Editor` es un editor de diagramas interactivo diseñado para facilitar la creación y gestión de flujos de trabajo tipo pipeline. En este editor, se pueden arrastrar, soltar y conectar diferentes `single scripts` para crear flujos de trabajo personalizados. Cada `single script` se organiza como una caja y se configura como un paso del pipeline. Los componentes principales del pipeline incluyen los scripts, que funcionan como pasos con entradas y salidas, y los conectores entre ellos que determinan el flujo de datos.
 
-Con el script de interes seleccionado, en la parte central, la plataforma mostrará un cuadro `Input form` con campos de autollenado para las entradas `inputs` o argumentos requeridos para la ejecución del código. Estas entradas son las variables que le pasas a la función para que ésta las utilice en su ejecución y que son necesarias para que el codigo pueda realizar su tarea. Cada `input` tiene un nombre, un espacio para completarse, y una descripción de lo que debería especificar. Por defecto, estos códigos traen unas entradas predeterminadas, pero deben acomodarse según los objetivos del usuario.
+La interfaz del `Pipeline Editor` tiene un panel izquierdo que muestra los `single scripts` disponibles. Cada `single script` puede ponerse en el lienzo principal como un paso de pipeline simplemente arrastrándolo y soltándolo allí. 
 
-Una vez definidos los `inputs` , basta con oprimir `Run script` en la parte inferior del `Input form`. 
+![](README_figures/panels_pipeline.png)
+En el lado derecho hay un panel desplegable `metadata` que describe los metadatos del pipeline, y un panel plegable con la descripción de todos los `inputs` y `outputs` de los scripts en el lienzo.Asimismo, al poner el cursor sobre cada caja o step, y sobre cada input o output, aparece un tooltip que describe esos argumentos. Los inputs pueden definirse desde el `Pipeline Editor` o desde el `Pipeline Run`. 
 
-![](README_figures/inputform_scinglecsript.png)
+![](README_figures/tooltips_pipeline.png)
 
-Una vez ejecutado, la interfaz mostrará los resultados como listas desplegables. Cada una con la descripción general del resultado y la ruta relativa dentro del folder del repositorio donde se almacenó. Dichas rutas pueden buscarse en la máquina o descargar una copia del resultado directamente haciendo click sobre el hipervínculo de la ruta. Sumado a esto, si se expande la lista haciendo click en el símbolo `+`, la interfaz mostrará una vista previa del resultado.
+Los `inputs` pueden definirse desde el `Pipeline Editor` o desde el `Pipeline Run`. Cuando se definen desde el `Pipeline Editor` se configuran como `variables constantes` por lo que no aparecerán en la interfaz `Pipeline Run`. Esto puede ser útil, por ejemplo, si el pipeline se ejecuta múltiples veces con una sola variable dinámica, como cuando solo cambia el nombre de una especie, pero el resto de parámetros son constantes entre especies. Cualquier entrada sin un valor constante asignado se considerará una entrada de pipeline y el usuario tendrá que completar el valor desde [Pipeline Run](id="ID_pipeline_run).
 
-![](README_figures/output_singlescript.png)
+Para definir estos inputs desde el `Pipeline Editor`, basta con hacer doble clic sobre el punto conexo al argumento input. Esto generará un vínculo de conexión hacia donde se debe definir el input. Si se busca que sea una conexión con un `single script` de un paso previo, se debe hacer un solo clic y arrastrar la conexión generada hasta el output del paso previo.
+
+![](README_figures/joinsteps_pipeline.png)
+
+Es importante que los tipos de archivo entre los inputs y los outputs sean coincidentes; de lo contrario, se generará un error. Los tipos de archivo admitidos están descritos en la sección [`input and output types` de la documentación oficial de usuario de Bon in a Box](https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/blob/main/README-user.md#describing-a-script) que corresponden a [MIME media types](https://www.iana.org/assignments/media-types/media-types.xhtml).
 
 
+Cuando el pipeline esté listo, debe añadirse un box final denominado `Output` sobre el paso final, que representará la salida final del pipeline. Para esto debe hacerse doble click sobre cualquier output del paso final. Una vez hecho esto, el pipeline debe guardarse utilizando los botones dispuestos en la parte superior derecha de la interfaz.
 
+En la parte superior derecha, hay varios botones útiles:
 
+* Layout: Permite organizar automáticamente el diseño de los scripts en el lienzo para una mejor visualización.
+* Load from file: Carga un pipeline desde un archivo guardado previamente.
+* Load from server: Carga un pipeline guardado en el servidor.
+* Clear: Limpia el lienzo, eliminando todos los scripts y conexiones.
+* Save: Guarda y sobreescribe sobre el pipeline actual.
+* Save As: Permite guardar el pipeline actual con un nuevo nombre o ubicación.
+
+En ambas opciones de guardado, los pipelines se almacenarán por defecto en la carpeta `~/pipelines` dentro de la ruta del repositorio. Asimismo, los pipelines que se cargan con `Load from server` son aquellos guardados en esa carpeta.
+
+![](README_figures/save_pipeline.png)
+Los pipelines guardados en la carpeta `~/pipelines` se visualizarán en la pestaña `Pipeline Run` desde donde se ejecutarán.
+
+## Interfaz Pipeline run
+<a id="ID_pipeline_run"></a>
+
+La interfaz `Pipeline Run` permite ejecutar los pipelines que han sido previamente guardados. En esta interfaz, los pipelines guardados se pueden abrir desde el menú desplegable `Pipeline`. Una vez seleccionado un pipeline, en la sección `Input Form` se visualizan todos los argumentos que no se definieron como constantes en el [Pipeline Editor](id="ID_pipeline_editor).
+
+Cada argumento de entrada se muestra con su descripción, la cual es la misma que se visualizaba en los tooltips del [Pipeline Editor](id="ID_pipeline_editor). Esto proporciona una guía clara sobre qué valores deben ingresarse para cada parámetro.
+
+Con todos los parámetros ajustados, el pipeline se ejecuta presionando el botón `Pipeline Run`. Esta acción iniciará el procesamiento del pipeline, ejecutando cada uno de los `single scripts` especificados con los valores de entrada proporcionados. Mientras se ejecuta cada paso, se visualizarán iconos de carga.
+
+Una vez finalizado, el resultado principal se muestra en la sección `Results`. Adicionalmente, en la sección `Detailed Results` se muestran los resultados de cada paso para explorar los resultados en detalle.
+
+![](README_figures/results_pipeline.png)
+
+La interfaz mostrará los resultados como listas desplegables. Cada una con la descripción general del resultado y la ruta relativa dentro del folder del repositorio donde se almacenó. Dichas rutas pueden buscarse en la máquina o descargar una copia del resultado directamente haciendo click sobre el hipervínculo de la ruta. Sumado a esto, si se expande la lista haciendo click en el símbolo `+`, la interfaz mostrará una vista previa del resultado.
 
 
