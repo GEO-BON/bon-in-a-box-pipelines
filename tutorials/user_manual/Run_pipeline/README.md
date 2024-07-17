@@ -68,7 +68,7 @@ pipeline se ejecuta múltiples veces con una sola variable dinámica, como
 cuando solo cambia el nombre de una especie, pero el resto de parámetros
 son constantes entre especies. Cualquier entrada sin un valor constante
 asignado se considerará una entrada de pipeline y el usuario tendrá que
-completar el valor desde [Pipeline Run](id=%22ID_pipeline_run).
+completar el valor desde [Pipeline Run](#ID_pipeline_run).
 
 Para definir estos inputs desde el `Pipeline Editor`, basta con hacer
 doble clic sobre el punto conexo al argumento input. Esto generará un
@@ -124,12 +124,12 @@ previamente guardados. En esta interfaz, los pipelines guardados se
 pueden abrir desde el menú desplegable `Pipeline`. Una vez seleccionado
 un pipeline, en la sección `Input Form` se visualizan todos los
 argumentos que no se definieron como constantes en el [Pipeline
-Editor](id=%22ID_pipeline_editor).
+Editor](#ID_pipeline_editor).
 
 Cada argumento de entrada se muestra con su descripción, la cual es la
 misma que se visualizaba en los tooltips del [Pipeline
-Editor](id=%22ID_pipeline_editor). Esto proporciona una guía clara sobre
-qué valores deben ingresarse para cada parámetro.
+Editor](#ID_pipeline_editor). Esto proporciona una guía clara sobre qué
+valores deben ingresarse para cada parámetro.
 
 Con todos los parámetros ajustados, el pipeline se ejecuta presionando
 el botón `Pipeline Run`. Esta acción iniciará el procesamiento del
