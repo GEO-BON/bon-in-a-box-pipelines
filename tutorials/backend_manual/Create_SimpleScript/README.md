@@ -38,7 +38,6 @@ basadas en el procesamiento realizado.
     - [Exportar resultados](#exportar-resultados)
     - [Probar y Validar el Script](#probar-y-validar-el-script)
 
-
 ## Componentes del script
 
 Los `Single Script` constan de dos componentes principales: un bloque de
@@ -404,17 +403,18 @@ depurar y hacer los ajustes necesarios para repararlo.
 
 Los pasos resumidos son:
 
-*1. Abrir una sesión con un entorno vacío: Asegurarse de que no haya
-variables o datos cargados que puedan interferir con la ejecución. *2.
-Borrar el caché de carpetas en output: Limpiar los resultados previos
-para evitar conflictos de interpretación, y mantener solo el folder del
-intento que genera el error para que el código se ejecute correctamente
-con los datos actuales. *3. Configurar outputfolder: Cargar el intento
-de ejecución más reciente para replicar el error. El codigo por defecto
-lo hace. *4. Ejecutar el código hasta identificar los errores. Deben ser
-los mismos impresos en el log de bon in a box. \*5 . Depurar y ajustar:
-Identificar el error, realizar los ajustes necesarios y verificar que el
-código funcione correctamente.
+- 1.  Abrir una sesión con un entorno vacío: Asegurarse de que no haya
+      variables o datos cargados que puedan interferir con la ejecución.
+- 2.  Borrar el caché de carpetas en output: Limpiar los resultados
+      previos para evitar conflictos de interpretación, y mantener solo
+      el folder del intento que genera el error para que el código se
+      ejecute correctamente con los datos actuales.
+- 3.  Configurar outputfolder: Cargar el intento de ejecución más
+      reciente para replicar el error. El codigo por defecto lo hace.
+- 4.  Ejecutar el código hasta identificar los errores. Deben ser los
+      mismos impresos en el log de bon in a box.
+- 5.  Depurar y ajustar: Identificar el error, realizar los ajustes
+      necesarios y verificar que el código funcione correctamente.
 
 Estas acciones permiten mantener el código limpio y funcional,
 asegurando que Bon in a Box opere de manera eficiente y precisa.
