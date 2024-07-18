@@ -35,13 +35,13 @@ inputs:
   site_covs:
     label: site_covs
     description: "the variables that will act as site-level covariates, i.e. covariates that vary at the site level, for example, latitude/longitude or habitat predictors. If this parameter is missing, it will be assumed that any variable that is not an observation-level covariate (obs_covs) or the site_id, is a site-level covariate."
-    type: text
-    example: "scripts/00_eBird_format/input/stac"
+    type: image/tiff;application=geotiff[]
+    example: ["scripts/00_eBird_format/input/stac"]
   obs_covs:
     label: obs_covs
     description: "The variables that will act as observation-level covariates, i.e. covariates that vary within sites, at the level of observations, for example, time or length of observation."
-    type: text
-    example: "duration_minutes"
+    type: text[]
+    example: ["duration_minutes"]
 outputs:
   occ_wide_unmark:
     label: occ_wide_unmark
