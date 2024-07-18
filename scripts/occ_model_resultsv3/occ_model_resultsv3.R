@@ -101,12 +101,27 @@ occ_avg<- if(nrow(test_models)<=1){
   
   
   
+  
+  
+  
+  
   ##########
   #Prediction
   ##########
   # Load data of prediction surface
-  site_covs_Layers<- input$site_covs_Layers %>% setNames(basename(tools::file_path_sans_ext(.)))
+  site_covs_Layers<- lapply(input$site_covs_Layers, function(y) { text_ext<- tools::file_ext(y)
+  if(text_ext != ""){
+    if(file.exists(y)){y}else{NULL}
+  } else {
+    test_folder<- dir.exists(y)
+    if(test_folder){ list.files(y, full.names = T, recursive = F, pattern = "\\.tif$") %>%  {.[!grepl("\\.tfw$|~$", .)]} } else { NULL }
+  }
+  })  %>% unlist()  %>% setNames(basename(tools::file_path_sans_ext(.)))
+  
   spatial_pred_surface<- site_covs_Layers[ names(site_covs_Layers) %>%  {.[. %in% site_covs]} ] %>% terra::rast() %>% setNames(site_covs)
+  
+  
+  
   
   
   
