@@ -231,20 +231,16 @@ occ_avg<- if(nrow(test_models)<=1){
   #### Outputing result to JSON ####
   
   
-  # Final table and VEB 
-  # create classification matrix
-  reclass_df <- c(0, 0.2, 1,
-                  0.2, 0.4, 2,
-                  0.4, 0.6, 3,
-                  0.6, 0.8, 4,
-                  0.8, 1, 5)
+  # Crear las secuencias
+  start <- seq(0.0, 0.9, by = 0.1)
+  end <- seq(0.1, 1.0, by = 0.1)
+  occ <- seq(1, 10, by = 1)
   
+  # Combinar las secuencias en una matriz
+  reclass_df<- cbind(start, end, occ) %>% as.data.frame() %>% dplyr::mutate(range= paste0(start, "<Ψ≤", end))
+  reclass_m <- reclass_df %>% dplyr::select(-range) %>% as.matrix()
   
-  # reshape the object into a matrix with columns and rows
-  reclass_m <- matrix(reclass_df,
-                      ncol = 3,
-                      byrow = TRUE)
-  
+
   
   # reclassify the raster using the reclass object - reclass_m
   chm_classified <- reclassify( raster::raster(occprob_raster), reclass_m)
@@ -264,15 +260,19 @@ occ_avg<- if(nrow(test_models)<=1){
   #pixel to kilometer
   rsult$area <- rsult$count * 0.1
   rsult$percent = round(100 * rsult$area / sum(rsult$area), 1)
-  rsult$range <- c('0.0<Ψ≤0.2', '0.2<Ψ≤0.4', '0.4<Ψ≤0.6', '0.6<Ψ≤0.8', '0.8<Ψ≤1')[seq(nrow(rsult))]
+  
+  rsult <- list(rsult, dplyr::select(reclass_df, c("occ", "range"))) %>% plyr::join_all()
+    
+  
   # get final table report 
-  final<- data.frame(rsult$range, rsult$area, rsult$percent)
-  names(final) <- c("Range", "Area (Km²)", "Percentage")
-  final<- final %>% janitor::adorn_totals("row")
+  final<- rsult %>% dplyr::mutate(accum_area = cumsum(area), accum_percent = cumsum(percent)) %>% 
+    dplyr::select(-c("occ", "count")) %>% dplyr::relocate(.before = 1, "range")
+
+  
   # get occupancy area VEB
-  VEB<- rsult %>% dplyr::filter(range== "0.6<Ψ≤0.8" | range== "0.8<Ψ≤1") %>% 
+  VEB<- rsult %>% dplyr::filter(range== "0.6<Ψ≤0.7" | range== "0.8<Ψ≤1") %>% 
     dplyr::summarize(VEB = sum(area))
-  FVEB <- paste0("Occupancy area VEB (Ψ>0.6) = ", VEB$VEB, " Km²")
+  FVEB <- paste0("Occupancy area VEB (Ψ>0.7) = ", VEB$VEB, " Km²")
   
   #####
   final_path<- file.path(outputFolder, "final.csv") # Define the file path for the 'val_wkt_path' output
