@@ -137,7 +137,7 @@ occ_avg<- if(nrow(test_models)<=1){
   
   
   # note: the code below can take up to an hour to run!
-  occ_pred <- predict(occ_avg,  newdata = pred_surface ,  type = "state")
+  occ_pred <- predict(occ_avg,  newdata = pred_surface_scale ,  type = "state")
 
   ## Raster points using the predicciotn surface raster template
   base_grid <- terra::rast(spatial_pred_surface[[1]])
