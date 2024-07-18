@@ -23,17 +23,6 @@
       }
     },
     {
-      "id": "60",
-      "type": "io",
-      "position": {
-        "x": 967,
-        "y": 653
-      },
-      "data": {
-        "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
-      }
-    },
-    {
       "id": "107",
       "type": "constant",
       "position": {
@@ -86,37 +75,7 @@
       "data": {
         "type": "text[]",
         "value": [
-          "/scripts/inputs/Putumayo.gpkg"
-        ]
-      }
-    },
-    {
-      "id": "161",
-      "type": "constant",
-      "position": {
-        "x": 538,
-        "y": 609
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "/scripts/inputs/Putumayo_layers"
-        ]
-      }
-    },
-    {
-      "id": "162",
-      "type": "constant",
-      "position": {
-        "x": 538,
-        "y": 488
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "NULL"
+          "/scripts/inputs/szh_RioPorce.shp"
         ]
       }
     },
@@ -154,7 +113,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text/csv",
-        "value": "/scripts/inputs/camtrap_sp_covs.csv"
+        "value": "/scripts/inputs/AMVA_events.csv"
       }
     },
     {
@@ -167,7 +126,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Lat_X"
+        "value": "decimalLatitude"
       }
     },
     {
@@ -180,7 +139,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Long_Y"
+        "value": "decimalLongitude"
       }
     },
     {
@@ -229,7 +188,7 @@
       "data": {
         "type": "text/csv[]",
         "value": [
-          "/scripts/inputs/camtrap_records.csv"
+          "/scripts/inputs/AMVA_registros.csv"
         ]
       }
     },
@@ -243,7 +202,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Cam.Site"
+        "value": "eventID"
       }
     },
     {
@@ -317,7 +276,7 @@
       "data": {
         "type": "text[]",
         "value": [
-          "Cuniculus paca"
+          "Canis familiaris"
         ]
       }
     },
@@ -331,7 +290,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int",
-        "value": 6
+        "value": 5
       }
     },
     {
@@ -344,7 +303,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Cam.Site"
+        "value": "eventID"
       }
     },
     {
@@ -409,7 +368,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int",
-        "value": 7
+        "value": 5
       }
     },
     {
@@ -474,6 +433,21 @@
         "type": "boolean",
         "value": false
       }
+    },
+    {
+      "id": "246",
+      "type": "constant",
+      "position": {
+        "x": 534.4621466978404,
+        "y": 482.81654445939034
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "https://io.biodiversite-quebec.ca/stac/"
+        ]
+      }
     }
   ],
   "edges": [
@@ -483,13 +457,6 @@
       "target": "52",
       "targetHandle": "grid_studyArea",
       "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
-    },
-    {
-      "source": "53",
-      "sourceHandle": "StudyArea_grid",
-      "target": "60",
-      "targetHandle": "grid_studyArea",
-      "id": "reactflow__edge-53StudyArea_grid-60grid_studyArea"
     },
     {
       "source": "107",
@@ -518,20 +485,6 @@
       "target": "53",
       "targetHandle": "StudyArea_vector",
       "id": "reactflow__edge-160-53StudyArea_vector"
-    },
-    {
-      "source": "161",
-      "sourceHandle": null,
-      "target": "60",
-      "targetHandle": "folder_layers",
-      "id": "reactflow__edge-161-60folder_layers"
-    },
-    {
-      "source": "162",
-      "sourceHandle": null,
-      "target": "52",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-162-52stac_url"
     },
     {
       "source": "164",
@@ -574,13 +527,6 @@
       "target": "221",
       "targetHandle": "spatial_points",
       "id": "reactflow__edge-216spatial_points-221spatial_points"
-    },
-    {
-      "source": "60",
-      "sourceHandle": "rasters",
-      "target": "221",
-      "targetHandle": "folder_vars",
-      "id": "reactflow__edge-60rasters-221folder_vars"
     },
     {
       "source": "52",
@@ -716,13 +662,6 @@
       "id": "reactflow__edge-238-228obs_covs"
     },
     {
-      "source": "60",
-      "sourceHandle": "rasters",
-      "target": "228",
-      "targetHandle": "site_covs",
-      "id": "reactflow__edge-60rasters-228site_covs"
-    },
-    {
       "source": "52",
       "sourceHandle": "rasters",
       "target": "228",
@@ -751,13 +690,6 @@
       "id": "reactflow__edge-52rasters-240site_covs"
     },
     {
-      "source": "60",
-      "sourceHandle": "rasters",
-      "target": "240",
-      "targetHandle": "site_covs_Layers",
-      "id": "reactflow__edge-60rasters-240site_covs_Layers"
-    },
-    {
       "source": "242",
       "sourceHandle": null,
       "target": "240",
@@ -772,13 +704,6 @@
       "id": "reactflow__edge-244-240plot_hist"
     },
     {
-      "source": "60",
-      "sourceHandle": "rasters",
-      "target": "240",
-      "targetHandle": "site_covs",
-      "id": "reactflow__edge-60rasters-240site_covs"
-    },
-    {
       "source": "52",
       "sourceHandle": "rasters",
       "target": "240",
@@ -791,6 +716,13 @@
       "target": "240",
       "targetHandle": "obs_covs",
       "id": "reactflow__edge-238-240obs_covs"
+    },
+    {
+      "source": "246",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-246-52stac_url"
     }
   ],
   "inputs": {},

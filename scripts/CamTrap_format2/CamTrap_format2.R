@@ -34,7 +34,8 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 #  Script body ####
 ## Read data input ####
-camptrap_data<-  data.table::fread(input$camptrap_data) %>% readr::type_convert() %>% as.data.frame() %>%  dplyr::mutate_if(is.numeric, ~ if(all(. %in% c(0, 1))) {as.factor(.)} else {.})
+camptrap_data<-  data.table::fread(input$camptrap_data) %>%  as.data.frame() %>% {.[,!duplicated(names(.))]} %>% 
+readr::type_convert() %>% as.data.frame() %>%  dplyr::mutate_if(is.numeric, ~ if(all(. %in% c(0, 1))) {as.factor(.)} else {.})
 
 
 ## Check and Validate Inputs: Common Errors ####
