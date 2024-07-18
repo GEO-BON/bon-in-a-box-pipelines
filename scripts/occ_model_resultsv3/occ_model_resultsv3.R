@@ -259,14 +259,19 @@ occ_avg<- if(nrow(test_models)<=1){
   #####
   final_path<- file.path(outputFolder, "final.csv") # Define the file path for the 'val_wkt_path' output
   write.csv(final, final_path, row.names = T ) # Write the 'val_wkt_path' output
-  #### Outputing result to JSON ####
+
+  summary_occ_path<- file.path(outputFolder, "summary_occModel.txt") # Define the file path for the 'val_wkt_path' output
   
+  sink(summary_occ_path)
+  print(occ_model)
+  sink()
   
   #### Outputing result to JSON ####
   output<- list(occprob_raster_export  = occprob_raster_path,
                 occse_raster_export = occse_raster_path,
                 occPlotFacet= occPlotFacet_path,
-                final_export = final_path, VEB_export = FVEB)
+                final_export = final_path, VEB_export = FVEB,
+                summary_occ_path= summary_occ_path)
   
 
 
