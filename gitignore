@@ -1,9 +1,0 @@
-runner.env
-.Rproj.user
-.Rhistory
-.vscode
-**/.cache
-**/.config
-.server
-/output/
-/scripts/00_auk_filter/input/original/
