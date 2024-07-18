@@ -40,9 +40,12 @@ if(text_ext != ""){
   if(file.exists(y)){y}else{NULL}
 } else {
   test_folder<- dir.exists(y)
-  if(test_folder){ list.files(y, full.names = T, recursive = F, pattern = "\\.") %>%  {.[!grepl("\\.tfw$|~$", .)]} } else { NULL }
+  if(test_folder){ list.files(y, full.names = T, recursive = F, pattern = "\\.tif") %>%  {.[!grepl("\\.tfw$|~$", .)]} } else { y }
 }
 })  %>% unlist()  %>%  basename() %>% tools::file_path_sans_ext()
+
+
+
 
 site_covs<- site_covs_input %>% {.[. %in% names(occ_wide)]}
 covs_detection<- input$obs_covs %>% {Filter(function(x) {!is.null(x)}, .)} %>% sapply(function(x) unlist(strsplit(x, "\\|"))[1]   ) %>% as.character() %>% {Filter(function(x) {!is.null(x)}, .)}
