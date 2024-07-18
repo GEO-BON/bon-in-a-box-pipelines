@@ -20,7 +20,6 @@ lapply(packagesList, library, character.only = TRUE)  # Load libraries - package
 # Please select only one of the two options, while silencing the other with the '#' syntaxis: 
 
 # Option 1: Setting for production pipeline purposes. This is designed for use in a production environment or workflow.
-
 Sys.setenv(outputFolder = "/path/to/output/folder")
 
 # Option 2: Recommended for debugging purposes to be used as a testing environment. This is designed to facilitate script testing and correction
@@ -33,8 +32,8 @@ if ( (!exists("outputFolder"))  ) {
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) { 
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) 
+input<- lapply(input, function(y) lapply(y, function(x)  {if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http:", x)  ) { 
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else if(!is.null(x) && length(x) > 0 && x %in% c("NULL", "NA")){NULL} else {x} }) %>% unlist()) 
 
 
 
@@ -88,7 +87,21 @@ occ <- auk::filter_repeat_visits(ebird_filtered,
 
 
 # format for unmarked
-site_covs<- input$site_covs %>% list.files("\\.tif$", recursive = F, full.names = F) %>%  basename() %>% tools::file_path_sans_ext()
+
+site_covs_input<- lapply(input$site_covs, function(y) { text_ext<- tools::file_ext(y)
+if(text_ext != ""){
+  if(file.exists(y)){y}else{NULL}
+} else {
+  test_folder<- dir.exists(y)
+  if(test_folder){ list.files(y, full.names = T, recursive = F, pattern = "\\.tif") %>%  {.[!grepl("\\.tfw$|~$", .)]} } else { y }
+}
+})  %>% unlist()  %>%  basename() %>% tools::file_path_sans_ext()
+
+
+site_covs<- site_covs_input %>% {.[. %in% names(ebird_habitat)]}
+
+
+
 obs_covs<- input$obs_covs %>% strsplit( ",\\s*") %>% unlist() %>% trimws()
 
 
