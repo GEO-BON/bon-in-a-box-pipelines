@@ -1,0 +1,26 @@
+script: getProtectedAreasWDPA.R
+name: Fetch protected areas
+description: This script finds and saves a polygon of the country and state that is specified in the input and the polygon of protected areas in that region from the world database of protected areas (WDPA).
+author:
+  - name: Jory Griffith (jory.griffith@mcgill.ca)
+external_link: https://github.com/GEO-BON/biab-2.0/getProtectedAreasWDPA.R
+inputs:
+  studyarea_country:
+    label: Country
+    description: Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get. 
+    type: text
+    example: Colombia
+  studyarea_state:
+    label: State/Province
+    description: State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.
+    type: text
+    example: null
+outputs:
+  study_area_polygon:
+    label: Polygon of study area
+    description: Represents the map of the study area
+    type: application/geo+json
+  protected_area_polygon:
+    label: Polygon of protected areas
+    description: Represents the map of the protected areas within the study area
+    type: application/geo+json
