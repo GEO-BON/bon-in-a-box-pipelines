@@ -6,21 +6,27 @@ author:
   - name: Victor Julio Rincon (vrincon@humboldt.org.co)
 external_link: https://github.com/GEO-BON/biab-2.0/scripts/spatial_to_DistanceMatrix/spatial_to_DistanceMatrix.R
 inputs:
-  studyarea_country:
-    label: Country
-    description: Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get. 
-    type: string
-    example: Colombia
-  studyarea_state:
-    label: State/Province
-    description: State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.
-    type: text
-    example: null
+  study_area_polygon:
+    label: polygon of study area
+    description: Represents the map of the study area
+    type: application/geo+json
+  protected_area_polygon:
+    label: polygon of protected areas
+    description: Represents the map of the protected areas within the study area
+    type: application/geo+json
   studyarea_epsg:
     label: study area EPSG
     description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
     type: int
     example: 3395
+  distance_matrix_type:
+    label: type of distance matrix
+    description: String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation
+    type: options
+    options:
+      - Centroid
+      - Nearest edge
+    example: "Centroid"
   unit_distance:
     label: unit for distance measurement
     description: String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.
@@ -35,7 +41,11 @@ inputs:
     type: text[]
     example: ["WDPA_PID"]
 outputs:
-  spatialunits_studyarea:
+  study_area_polygon:
+    label: intersect spatial units/study area
+    description: Represents the map of the study area.
+    type: application/geo+json
+  protected_area_polygon:
     label: intersect spatial units/study area
     description: Represents the map of the analyzed spatial units within the study area.
     type: application/geo+json
@@ -43,14 +53,14 @@ outputs:
     label: spatial units study area data
     description: Refers to the dataset containing information about the spatial units analyzed within the study area.
     type: text/csv
-  mtx_distance_centroid:
-    label: distance centroid matrix
-    description: Distance matrix that represents the distances between the centroids of spatial units within the study area. Each element in the matrix denotes the distance between the centroid of one spatial unit and the centroid of another
+  mtx_distance:
+    label: distance matrix
+    description: Distance matrix that represents the distances between either the centroids or nearest path of spatial units within the study area. Each element in the matrix denotes the distance between the centroid or nearest edge of one spatial unit and the centroid or nearest edge of another
     type: text/csv
-  mtx_distance_nearest:
-    label: distance nearest matrix
-    description: Distance matrix that represents the distances between the closest boundaries of spatial units within the study area. Each element in the matrix denotes the distance between the boundary of one spatial unit and the boundary of another.
-    type: text/csv
+  #mtx_distance_nearest:
+   # label: distance nearest matrix
+   # description: Distance matrix that represents the distances between the closest boundaries of spatial units within the study area. Each element in the matrix denotes the distance between the boundary of one spatial unit and the boundary of another.
+   # type: text/csv
   spatial_unit:
     label: spatial unit
     description: Refers to the column in the spatialunits_studyarea_data that denotes the spatial entity or geographic unit used for analysis. This column contains information about the spatial units that have been grouped based on the levels provided in the column_group input.

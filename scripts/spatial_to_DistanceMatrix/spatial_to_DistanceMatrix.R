@@ -2,11 +2,11 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson", "units") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson", "units", "geojsonsf") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "terra") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+packagesList<-list("magrittr") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 
 
@@ -33,29 +33,9 @@ units::units_options(set_units_mode = "standard")
 distance_unit<- input$unit_distance 
 area_unit<- paste0(input$unit_distance, "^2")
 
-# Define study area
-# If a state is not defined, will pull data for the whole country
-if (is.null(input$studyarea_state)){
-  input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
-  WKT_area<- paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", input$studyarea_country) 
-  PA_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country)
-} else {
-  input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
-  input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
-  WKT_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
-  PA_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
-}
- ext_WKT_area<- tools::file_ext(WKT_area)
+vector_polygon<- geojsonsf::geojson_sf(input$study_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 
-if(ext_WKT_area %in% "txt"){ 
-  dir_wkt <- readLines(WKT_area)
-} else { 
-  dir_wkt <- (WKT_area)
-}
-crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character() 
-vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon )  %>% sf::st_as_sf()  %>% sf::st_transform(input$studyarea_epsg)
-
-spatial_units<- sf::st_read(PA_area) %>% sf::st_transform(input$studyarea_epsg)
+spatial_units<- geojsonsf::geojson_sf(input$protected_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
 
 group<- input$column_group %>% {.[. %in% names(spatial_units)]}
 if(length(group)<1){group<-"id_group";  spatial_units[,"id_group"] <- seq(nrow(spatial_units)); }
@@ -84,28 +64,29 @@ spatialunits_group<- spatialunits_count %>% {
 } %>% sf::st_as_sf()
 spatialunits_group<-spatialunits_group[!sapply(spatialunits_group$geometry,is.null),]
 
-# create centroid matrix
+# Create distance matrix
+if (input$distance_matrix_type=="Centroid") {
 shp_centroid <- sf::st_point_on_surface(spatialunits_group)
 #Create the euclidean distance matrix:
-
-mtx_distance_centroid <- sf::st_distance(shp_centroid) %>% units::set_units(distance_unit)
-
-
+mtx_distance <- sf::st_distance(shp_centroid) %>% units::set_units(distance_unit)
+} else {
+mtx_distance <- sf::st_distance(spatialunits_group) %>% units::set_units(distance_unit)
+}
 
 #Convert the matrix to data frame
-mtx_distance_centroid=matrix(mtx_distance_centroid,nrow=nrow(spatialunits_group))
-rownames(mtx_distance_centroid)=colnames(mtx_distance_centroid)= sf::st_drop_geometry(spatialunits_group)[, "spatial_unit"]
-mtx_distance_centroid<- as.data.frame.matrix(mtx_distance_centroid)
+mtx_distance=matrix(mtx_distance, nrow=nrow(spatialunits_group))
+rownames(mtx_distance)=colnames(mtx_distance)= sf::st_drop_geometry(spatialunits_group)[, "spatial_unit"]
+mtx_distance <- as.data.frame.matrix(mtx_distance)
 
 
 
 # create nearest matrix
 #Create the euclidean distance matrix:
-mtx_distance_nearest <- sf::st_distance(spatialunits_group) %>% units::set_units(distance_unit)
+#mtx_distance_nearest <- sf::st_distance(spatialunits_group) %>% units::set_units(distance_unit)
 #Convert the matrix to data frame
-mtx_distance_nearest=matrix(mtx_distance_nearest,nrow=nrow(spatialunits_group))
-rownames(mtx_distance_nearest)=colnames(mtx_distance_nearest)= sf::st_drop_geometry(spatialunits_group)[,"spatial_unit"]
-mtx_distance_nearest<- as.data.frame.matrix(mtx_distance_nearest)
+#mtx_distance_nearest=matrix(mtx_distance_nearest,nrow=nrow(spatialunits_group))
+#rownames(mtx_distance_nearest)=colnames(mtx_distance_nearest)= sf::st_drop_geometry(spatialunits_group)[,"spatial_unit"]
+#mtx_distance_nearest<- as.data.frame.matrix(mtx_distance_nearest)
 
  
 
@@ -127,17 +108,17 @@ spatialunits_studyarea_4326<- spatialunits_intersect %>% sf::st_transform(4326)
 
 # Define and export the output values
 
-# Define mtx_distance_centroid output
-mtx_distance_centroid_path<- file.path(outputFolder, "mtx_distance_centroid.csv") # Define the file path for the 'val_wkt_path' output
-write.csv(mtx_distance_centroid, mtx_distance_centroid_path, row.names = T ) # Write the 'val_wkt_path' output
+# Define mtx_distance output
+mtx_distance_path<- file.path(outputFolder, "mtx_distance.csv") # Define the file path for the 'val_wkt_path' output
+write.csv(mtx_distance, mtx_distance_path, row.names = T ) # Write the 'val_wkt_path' output
 
 # Define mtx_distance_nearest output
-mtx_distance_nearest_path<- file.path(outputFolder, "mtx_distance_nearest.csv") # Define the file path for the 'val_wkt_path' output
-write.csv(mtx_distance_nearest, mtx_distance_nearest_path, row.names = T ) # Write the 'val_wkt_path' output
+#mtx_distance_nearest_path<- file.path(outputFolder, "mtx_distance_nearest.csv") # Define the file path for the 'val_wkt_path' output
+#write.csv(mtx_distance_nearest, mtx_distance_nearest_path, row.names = T ) # Write the 'val_wkt_path' output
 
 # Define spatialunits in studyarea
-spatialunits_studyarea_path<- file.path(outputFolder, "spatialunits_studyarea.geojson") # Define the file path for the 'val_wkt_path' output
-sf::st_write(spatialunits_studyarea_4326, spatialunits_studyarea_path, delete_dsn = T)
+#spatialunits_studyarea_path<- file.path(outputFolder, "spatialunits_studyarea.geojson") # Define the file path for the 'val_wkt_path' output
+#sf::st_write(spatialunits_studyarea_4326, spatialunits_studyarea_path, delete_dsn = T)
 
 # Define spatialunits data
 spatialunits_studyarea_data_path<- file.path(outputFolder, "spatialunits_studyarea_data.csv") # Define the file path for the 'val_wkt_path' output
@@ -146,9 +127,9 @@ write.csv(spatialunits_studyarea_data, spatialunits_studyarea_data_path, row.nam
 
 
 # Define final output list
-output<- list(spatialunits_studyarea= spatialunits_studyarea_path,
+output<- list(#spatialunits_studyarea= spatialunits_studyarea_path,
               spatialunits_studyarea_data= spatialunits_studyarea_data_path, 
-              mtx_distance_centroid= mtx_distance_centroid_path,mtx_distance_nearest= mtx_distance_nearest_path, 
+              mtx_distance= mtx_distance_path, #mtx_distance_nearest= mtx_distance_nearest_path, 
               area_unit= area_unit,
               distance_unit= input$unit_distance,
               spatial_unit= "spatial_unit", 

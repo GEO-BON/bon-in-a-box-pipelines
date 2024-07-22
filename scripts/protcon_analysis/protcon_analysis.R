@@ -113,7 +113,7 @@ output<- tryCatch({
     protected = ((area_protect/area_consult))*100
     
     #Generate the value for protected areas connected (protcon)
-    #Filter the unique id?s for the protected areas that intersect with the area of interest for the decade i
+    #Filter the unique id?s for the protected areas that intersect with the area of interest for the decade iF
     table = decade[decade$spatial_unit_check != "no_spatial_unit",]
     ids_pa = unique(table[,"spatial_unit"])
     ids_pas = as.character(ids_pa)

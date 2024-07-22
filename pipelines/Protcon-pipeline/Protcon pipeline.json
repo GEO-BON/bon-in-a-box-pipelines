@@ -4,8 +4,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": -142,
-        "y": 104.5
+        "x": -141,
+        "y": 103.5
       },
       "data": {
         "descriptionFile": "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml"
@@ -50,6 +50,28 @@
       "position": {
         "x": 1251.9730803520497,
         "y": 58.51363054365636
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": -700.4500122070312,
+        "y": 156.79999542236328
+      },
+      "data": {
+        "descriptionFile": "data>getProtectedAreasWDPA.yml"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 947.5499877929688,
+        "y": -57.20000457763672
       },
       "data": {
         "label": "Output"
@@ -119,29 +141,61 @@
       "target": "44",
       "targetHandle": null,
       "id": "reactflow__edge-26area_study_area-44"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "study_area_polygon",
+      "target": "26",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-48study_area_polygon-26study_area_polygon"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "protected_area_polygon",
+      "target": "26",
+      "targetHandle": "protected_area_polygon",
+      "id": "reactflow__edge-48protected_area_polygon-26protected_area_polygon"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "mtx_distance",
+      "target": "41",
+      "targetHandle": "mtx_distance",
+      "id": "reactflow__edge-26mtx_distance-41mtx_distance"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "study_area_polygon",
+      "target": "43",
+      "targetHandle": null,
+      "id": "reactflow__edge-26study_area_polygon-43"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "protected_area_polygon",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-26protected_area_polygon-49"
     }
   ],
   "inputs": {
-    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_country": {
-      "description": "Country of interest",
-      "label": "Country",
-      "type": "string",
-      "example": "Colombia",
-      "weight": 0
-    },
-    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_state": {
-      "description": "State of interest",
-      "label": "State/Province",
-      "type": "text",
-      "weight": 1,
-      "example": null
-    },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|studyarea_epsg": {
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used for calculations. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
       "label": "study area EPSG",
       "type": "int",
       "example": 3395,
-      "weight": 2
+      "weight": 0
+    },
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|distance_matrix_type": {
+      "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the protconn calculation",
+      "label": "type of distance matrix",
+      "type": "options",
+      "options": [
+        "Centroid",
+        "Nearest edge"
+      ],
+      "weight": 1,
+      "example": "Centroid"
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|unit_distance": {
       "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
@@ -152,7 +206,7 @@
         "km"
       ],
       "example": "m",
-      "weight": 3
+      "weight": 2
     },
     "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|column_group": {
       "description": "String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.",
@@ -161,40 +215,53 @@
       "example": [
         "WDPA_PID"
       ],
-      "weight": 4
+      "weight": 3
     },
     "protcon_analysis>protcon_analysis.yml@41|distance_analysis": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
       "label": "distance analysis threshold",
       "type": "int",
       "example": 10000,
-      "weight": 5
+      "weight": 4
     },
     "protcon_analysis>protcon_analysis.yml@41|column_date": {
       "description": "String that refers to the name of the column in the data_spatial_unit containing the date or time information corresponding to the spatial unit levels.",
       "label": "date information column",
       "type": "text",
       "example": "STATUS_YR",
-      "weight": 6
+      "weight": 5
     },
     "protcon_analysis>protcon_analysis.yml@41|time_interval": {
       "description": "Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis.",
       "label": "time intervals",
       "type": "text",
       "example": "10Y",
-      "weight": 7
+      "weight": 6
     },
     "protcon_analysis>protcon_analysis.yml@41|time_start": {
       "description": "Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "start time",
       "type": "text",
-      "weight": 8
+      "weight": 7
     },
     "protcon_analysis>protcon_analysis.yml@41|time_end": {
       "description": "Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis",
       "label": "end time",
       "type": "text",
+      "weight": 8
+    },
+    "data>getProtectedAreasWDPA.yml@48|studyarea_country": {
+      "description": "Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get.",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
       "weight": 9
+    },
+    "data>getProtectedAreasWDPA.yml@48|studyarea_state": {
+      "description": "State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.",
+      "label": "State/Province",
+      "type": "text",
+      "weight": 10
     }
   },
   "outputs": {
@@ -204,9 +271,9 @@
       "type": "text/csv",
       "weight": 0
     },
-    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|spatialunits_studyarea": {
-      "description": "Represents the map of the analyzed spatial units within the study area.",
-      "label": "Protected areas within study area",
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|study_area_polygon": {
+      "description": "Represents the map of the study area.",
+      "label": "intersect spatial units/study area",
       "type": "application/geo+json",
       "weight": 1
     },
@@ -215,6 +282,12 @@
       "label": "Total study area",
       "type": "int",
       "weight": 2
+    },
+    "spatial_to_DistanceMatrix>spatial_to_DistanceMatrix.yml@26|protected_area_polygon": {
+      "description": "Represents the map of the analyzed spatial units within the study area.",
+      "label": "intersect spatial units/study area",
+      "type": "application/geo+json",
+      "weight": 3
     }
   }
 }
