@@ -6,7 +6,7 @@ packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.pat
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "terra") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+packagesList<-list("magrittr", "terra", "tidyverse") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 
 
@@ -166,19 +166,32 @@ output<- tryCatch({
     result_p= data.frame(Period = i,Protcon=protcon,Protuncon = protuncon, Protected = protected ,Unprotected=unprotected)
     #Add the previous row to the table final results
     result = rbind.data.frame(result,result_p) 
-  }
+
+    # Make pie chart of protcon output
+    results_long <- tidyr::pivot_longer(result, cols=c(Protcon, Protuncon, Protected, Unprotected), names_to="Protection") %>% filter(Protection!="Protected", value>0) # remove protected because redundant
   
-  
+   donut_chart <- ggplot2::ggplot(results_long) +
+    geom_col(aes(y=value, x=1, fill=Protection)) +
+    coord_polar(theta="y") +
+    xlim(c(0,1.5)) +
+    facet_wrap(~Period) +
+    geom_text(aes(y=value, x=1, group=Protection, label=paste(round(value), "%")), position=position_stack(vjust=0.5) )+
+    theme_classic()
+}
+
   
   # Define and export the output values
   
   # Define protcom result output
   protcon_result_path<- file.path(outputFolder, "protcon_result.csv") # Define the file path for the 'val_wkt_path' output
   write.csv(result, protcon_result_path, row.names = F ) # Write the 'val_wkt_path' output
-  
-  
+  donut_chart_path <- file.path(outputFolder, "donut_chart.png")
+  ggsave(donut_chart_path, donut_chart, dpi=300)
+
+
   # Define final output list
-  output<- list(protcon_result= protcon_result_path)
+  output<- list(protcon_result= protcon_result_path,
+  donut_chart=donut_chart_path)
   
   
 }, error = function(e) { list(error= conditionMessage(e)) })

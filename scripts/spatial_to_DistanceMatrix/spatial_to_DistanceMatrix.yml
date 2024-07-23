@@ -42,11 +42,11 @@ inputs:
     example: ["WDPA_PID"]
 outputs:
   study_area_polygon:
-    label: intersect spatial units/study area
+    label: Study area polygon
     description: Represents the map of the study area.
     type: application/geo+json
   protected_area_polygon:
-    label: intersect spatial units/study area
+    label: Protected area polygon
     description: Represents the map of the analyzed spatial units within the study area.
     type: application/geo+json
   spatialunits_studyarea_data:
