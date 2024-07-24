@@ -2,11 +2,11 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson") # Define the list of required packages to run the script
+packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson", "ggrepel") # Define the list of required packages to run the script
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "terra", "tidyverse") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+packagesList<-list("magrittr", "terra", "tidyverse", "ggrepel") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 
 
@@ -168,15 +168,18 @@ output<- tryCatch({
     result = rbind.data.frame(result,result_p) 
 
     # Make pie chart of protcon output
-    results_long <- tidyr::pivot_longer(result, cols=c(Protcon, Protuncon, Protected, Unprotected), names_to="Protection") %>% filter(Protection!="Protected", value>0) # remove protected because redundant
-  
-   donut_chart <- ggplot2::ggplot(results_long) +
-    geom_col(aes(y=value, x=1, fill=Protection)) +
+    results_long <- tidyr::pivot_longer(result, cols=c(Protcon, Protuncon, Protected, Unprotected), names_to="Protection") %>% filter(Protection!="Protected") # remove protected because redundant
+    results_label <- results_long %>% filter(value>0)
+   donut_chart <- ggplot2::ggplot() +
+    geom_col(results_long, mapping = aes(y=value, x=1, fill=Protection)) +
     coord_polar(theta="y") +
     xlim(c(0,1.5)) +
     facet_wrap(~Period) +
-    geom_text(aes(y=value, x=1, group=Protection, label=paste(round(value), "%")), position=position_stack(vjust=0.5) )+
-    theme_classic()
+    geom_text_repel(results_label, mapping = aes(y=value, x=1, group=Protection, label=paste0(round(value, 2), "%")), position=position_stack(vjust=0.5)) +
+    scale_fill_manual(values=c("seagreen4", "seagreen1", "orchid4"), labels=c("Protected connected", "Protected unconnected", "Unprotected")) +
+    theme_void() +
+    #theme(axis.labels=element_blank(), axis.text=element_blank(), axis.ticks=element_blank())
+    theme(panel.border=element_blank() , plot.background = element_rect(fill = "white"), plot.margin = unit(c(0.3,0.3,0.3,0.3), "lines"))
 }
 
   
