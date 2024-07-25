@@ -76,36 +76,6 @@
       }
     },
     {
-      "id": "161",
-      "type": "constant",
-      "position": {
-        "x": 745,
-        "y": 397.3333333333333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "/scripts/inputs/Putumayo_layers"
-        ]
-      }
-    },
-    {
-      "id": "162",
-      "type": "constant",
-      "position": {
-        "x": 745,
-        "y": 502.3333333333333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "NULL"
-        ]
-      }
-    },
-    {
       "id": "164",
       "type": "constant",
       "position": {
@@ -170,8 +140,8 @@
       "id": "245",
       "type": "io",
       "position": {
-        "x": 62,
-        "y": 12
+        "x": 124,
+        "y": -3
       },
       "data": {
         "descriptionFile": "00_auk_filter_v2>00_auk_filter_v2.yml"
@@ -287,6 +257,51 @@
         "type": "boolean",
         "value": false
       }
+    },
+    {
+      "id": "270",
+      "type": "constant",
+      "position": {
+        "x": 762.1015625,
+        "y": 492
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "https://io.biodiversite-quebec.ca/stac/"
+        ]
+      }
+    },
+    {
+      "id": "271",
+      "type": "constant",
+      "position": {
+        "x": 720.0217466683798,
+        "y": 399.8972550437687
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "scripts/AlignRasters_ToGrid/input/dir_layers"
+        ]
+      }
+    },
+    {
+      "id": "272",
+      "type": "constant",
+      "position": {
+        "x": 218.1582695864288,
+        "y": 267.827918969571
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+        ]
+      }
     }
   ],
   "edges": [
@@ -324,20 +339,6 @@
       "target": "52",
       "targetHandle": "collections_items",
       "id": "reactflow__edge-112-52collections_items"
-    },
-    {
-      "source": "161",
-      "sourceHandle": null,
-      "target": "60",
-      "targetHandle": "folder_layers",
-      "id": "reactflow__edge-161-60folder_layers"
-    },
-    {
-      "source": "162",
-      "sourceHandle": null,
-      "target": "52",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-162-52stac_url"
     },
     {
       "source": "164",
@@ -527,45 +528,57 @@
       "target": "266",
       "targetHandle": "plot_hist",
       "id": "reactflow__edge-269-266plot_hist"
+    },
+    {
+      "source": "270",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-270-52stac_url"
+    },
+    {
+      "source": "271",
+      "sourceHandle": null,
+      "target": "60",
+      "targetHandle": "folder_layers",
+      "id": "reactflow__edge-271-60folder_layers"
+    },
+    {
+      "source": "272",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "StudyArea_vector",
+      "id": "reactflow__edge-272-53StudyArea_vector"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "245",
+      "targetHandle": "studyarea",
+      "id": "reactflow__edge-53StudyArea_grid-245studyarea"
     }
   ],
   "inputs": {
-    "00_studyarea_to_grid>studyarea_to_grid.yml@53|StudyArea_vector": {
-      "description": "Text string with the path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), GeoJSON (.json) or  GeoPackage (.gpkg).",
-      "label": "StudyArea_vector",
-      "type": "text[]",
-      "example": [
-        "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
-      ],
-      "weight": 0
-    },
     "00_auk_filter_v2>00_auk_filter_v2.yml@245|ebd_file": {
       "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
       "label": "ebd_file",
       "type": "text",
       "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt",
-      "weight": 1
+      "weight": 0
     },
     "00_auk_filter_v2>00_auk_filter_v2.yml@245|ebd_sampling_file": {
       "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
       "label": "ebd_sampling_file",
       "type": "text",
       "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt",
-      "weight": 2
+      "weight": 1
     },
     "00_auk_filter_v2>00_auk_filter_v2.yml@245|country": {
       "description": "Filter to set countries.  Countries can either be expressed as English names or ISO 2-letter country codes. English names are matched via regular expressions using countrycode, so there is some flexibility in names.",
       "label": "country",
       "type": "text",
       "example": "CO",
-      "weight": 3
-    },
-    "00_auk_filter_v2>00_auk_filter_v2.yml@245|studyarea": {
-      "description": "Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with WGS_1984 geographic coordinate system. This file comes from the 'studyarea_to_grid' step and is use to plot the study area in Bon in a Box and should be used when biological data coordinates are in WGS_1984 geographic coordinate system. It provides a geographical grid to the study area to define the sites for occupancy modelling.",
-      "label": "studyarea",
-      "type": "image/tiff;application=geotiff",
-      "example": "scripts/00_auk_filter/input/raster_study_area_path.tif",
-      "weight": 4
+      "weight": 2
     },
     "00_auk_filter_v2>00_auk_filter_v2.yml@245|protocol": {
       "description": "Set a specific search protocol: stationary, traveling, or casual.",
@@ -575,7 +588,7 @@
         "Stationary",
         "Traveling"
       ],
-      "weight": 5
+      "weight": 3
     },
     "00_auk_filter_v2>00_auk_filter_v2.yml@245|date": {
       "description": "Set the date or date range of your analysis",
@@ -585,21 +598,21 @@
         "2020-11-15",
         "2022-03-15"
       ],
-      "weight": 6
+      "weight": 4
     },
     "00_auk_filter_v2>00_auk_filter_v2.yml@245|species": {
       "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
       "label": "species",
       "type": "text",
       "example": "Setophaga fusca",
-      "weight": 7
+      "weight": 5
     },
     "occ_model_resultsv3>occ_model_resultsv3.yml@266|nsim": {
       "description": "The number of bootstrapped samples",
       "label": "nsim",
       "type": "int",
       "example": 2,
-      "weight": 8
+      "weight": 6
     }
   },
   "outputs": {

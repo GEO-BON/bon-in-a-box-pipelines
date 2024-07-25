@@ -1,0 +1,241 @@
+{
+  "nodes": [
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 1140,
+        "y": 532.3333333333333
+      },
+      "data": {
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": 613,
+        "y": 311.3333333333333
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "60",
+      "type": "io",
+      "position": {
+        "x": 1114,
+        "y": 442.3333333333333
+      },
+      "data": {
+        "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
+      }
+    },
+    {
+      "id": "107",
+      "type": "constant",
+      "position": {
+        "x": 239,
+        "y": 233
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 4326
+      }
+    },
+    {
+      "id": "108",
+      "type": "constant",
+      "position": {
+        "x": 239,
+        "y": 382
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "112",
+      "type": "constant",
+      "position": {
+        "x": 745,
+        "y": 562.3333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
+        ]
+      }
+    },
+    {
+      "id": "164",
+      "type": "constant",
+      "position": {
+        "x": 230,
+        "y": 340
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "ID_grid2"
+      }
+    },
+    {
+      "id": "270",
+      "type": "constant",
+      "position": {
+        "x": 762.1015625,
+        "y": 492
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "https://io.biodiversite-quebec.ca/stac/"
+        ]
+      }
+    },
+    {
+      "id": "271",
+      "type": "output",
+      "position": {
+        "x": 1515.384163538128,
+        "y": 531.415341973938
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "272",
+      "type": "constant",
+      "position": {
+        "x": 725.0818950466867,
+        "y": 403.7164006908832
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "scripts/AlignRasters_ToGrid/input/dir_layers"
+        ]
+      }
+    },
+    {
+      "id": "273",
+      "type": "output",
+      "position": {
+        "x": 1516.8153686523438,
+        "y": 440.8409118652344
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "52",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "60",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-60grid_studyArea"
+    },
+    {
+      "source": "107",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "EPSG_grid",
+      "id": "reactflow__edge-107-53EPSG_grid"
+    },
+    {
+      "source": "108",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "Resolution_grid",
+      "id": "reactflow__edge-108-53Resolution_grid"
+    },
+    {
+      "source": "112",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-112-52collections_items"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "name_layer",
+      "id": "reactflow__edge-164-53name_layer"
+    },
+    {
+      "source": "270",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-270-52stac_url"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "271",
+      "targetHandle": null,
+      "id": "reactflow__edge-52rasters-271"
+    },
+    {
+      "source": "272",
+      "sourceHandle": null,
+      "target": "60",
+      "targetHandle": "folder_layers",
+      "id": "reactflow__edge-272-60folder_layers"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "rasters",
+      "target": "273",
+      "targetHandle": null,
+      "id": "reactflow__edge-60rasters-273"
+    }
+  ],
+  "inputs": {
+    "00_studyarea_to_grid>studyarea_to_grid.yml@53|StudyArea_vector": {
+      "description": "Text string with the path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "StudyArea_vector",
+      "type": "text[]",
+      "example": [
+        "/scripts/00_studyarea_to_WKT/input/Putumayo.gpkg"
+      ],
+      "weight": 0
+    }
+  },
+  "outputs": {
+    "Stac_FromGrid>Stac_FromGrid.yml@52|rasters": {
+      "description": "array of output raster paths",
+      "label": "rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "AlignRasters_ToGrid>AlignRasters_ToGrid.yml@60|rasters": {
+      "description": "array of output raster paths",
+      "label": "rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 1
+    }
+  }
+}
