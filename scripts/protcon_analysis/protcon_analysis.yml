@@ -71,6 +71,14 @@ outputs:
     description: "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities"
     type: text/csv
   donut_chart:
-    label: protcon results in a pie chart
+    label: Donut chart
     description: percentage of total area that is protected and percentage of protected area that is connected
+    type: image/png
+  protcon_result_preset:
+    label: protcon result with recommended preset thresholds
+    description: "Contains the result of the connectivity analysis with 3 preset thresholds of 1, 10, and 100km that cover most of the common dispersal distances"
+    type: type/csv
+  donut_chart_preset:
+    label: Donut chart with 3 thresholds
+    description: percentage of total area that is protected and percentage of protected area that is connected with 3 preset distances
     type: image/png

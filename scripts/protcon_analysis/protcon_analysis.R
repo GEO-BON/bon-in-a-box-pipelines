@@ -39,7 +39,7 @@ output<- tryCatch({
   
   
   
-  distance<- input$distance_analysis
+ distance<- input$distance_analysis
   
   spatial_unit_data<- read.csv(input$data_spatial_unit) %>% 
     dplyr::mutate(spatial_unit= as.character(.[, input$column_spatial_unit]), date=  .[, input$column_date], area_spatial= .[, input$column_area]) %>% 
@@ -118,7 +118,7 @@ output<- tryCatch({
     ids_pa = unique(table[,"spatial_unit"])
     ids_pas = as.character(ids_pa)
     #Filter the distance matrix with the unique previous id's
-    dist_ids_pa = mtx_distance %>% {.[ids_pas,]} %>% dplyr::select(ids_pas) %>% as.matrix()
+    dist_ids_pa = mtx_distance %>% {.[ids_pas,]} %>% dplyr::select(all_of(ids_pas)) %>% as.matrix()
     
     #Convert the matrix to spatial_units_periods frame
     
@@ -180,6 +180,85 @@ output<- tryCatch({
     theme_void() +
     #theme(axis.labels=element_blank(), axis.text=element_blank(), axis.ticks=element_blank())
     theme(panel.border=element_blank() , plot.background = element_rect(fill = "white"), plot.margin = unit(c(0.3,0.3,0.3,0.3), "lines"))
+
+
+
+
+    ##### Calculate protconn and plot for 3 common dispersal distances (used in the paper - 1km, 10km, 100km)
+### NEED TO TAKE INTO ACCOUNT DIFFERENT UNITS 
+    #Filter only the protected areas that are at a distances less than 1km
+    if (input$unit_distance=="m") {dist_ids_pa_con_1km = dist_ids_pa_datav2[dist_ids_pa_datav2$values<1000, ]
+    } else {
+      dist_ids_pa_con_1km = dist_ids_pa_datav2[dist_ids_pa_datav2$values<1, ]
+    }
+    pa_union_1km = union(unique(dist_ids_pa_con_1km$row),unique(dist_ids_pa_con_1km$vars))
+    areas_pa_conec_1km = decade[decade[, "spatial_unit"] %in% pa_union_1km,]
+    areas_conec_1km = sum(areas_pa_conec_1km[, "area_spatial"])
+    protcon_1km = (areas_conec_1km/area_consult)*100
+    rows=which(decade[, "spatial_unit"] %in% pa_union_1km)
+    if(length(rows)==0) {
+      areas_pa_no_conec_1km = table
+    } else {
+      areas_pa_no_conec_1km = table[-rows,]
+    }
+    areas_no_conec_1km = (sum(areas_pa_no_conec_1km[, "area_spatial"]))
+    protuncon_1km = (areas_no_conec_1km/area_consult)*100 
+    #protuncon_1km = protected - protcon_1km
+    result_p_1km= data.frame(Distance="1 km",Protcon=protcon_1km,Protuncon = protuncon_1km, Protected = protected ,Unprotected=unprotected)
+
+#Filter only the protected areas that are at a distances less than 10km
+    if (input$unit_distance=="m") {dist_ids_pa_con_10km = dist_ids_pa_datav2[dist_ids_pa_datav2$values<10000, ]
+     } else {
+      dist_ids_pa_con_10km = dist_ids_pa_datav2[dist_ids_pa_datav2$values<10, ]
+      }
+    pa_union_10km = union(unique(dist_ids_pa_con_10km$row),unique(dist_ids_pa_con_10km$vars))
+    areas_pa_conec_10km = decade[decade[, "spatial_unit"] %in% pa_union_10km,]
+    areas_conec_10km = sum(areas_pa_conec_10km[, "area_spatial"])
+    protcon_10km = (areas_conec_10km/area_consult)*100
+    rows=which(decade[, "spatial_unit"] %in% pa_union_10km)
+    if(length(rows)==0) {
+      areas_pa_no_conec_10km = table
+    } else {
+      areas_pa_no_conec_10km = table[-rows,]
+    }
+    areas_no_conec_10km = (sum(areas_pa_no_conec_10km[, "area_spatial"]))
+    protuncon_10km = (areas_no_conec_10km/area_consult)*100 
+    #protuncon_10km = protected - protcon_10km
+    result_p_10km= data.frame(Distance="10 km",Protcon=protcon_10km,Protuncon = protuncon_10km, Protected = protected ,Unprotected=unprotected)
+
+#Filter only the protected areas that are at a distances less than 10km
+    if (input$unit_distance=="m") {dist_ids_pa_con_100km = dist_ids_pa_datav2[dist_ids_pa_datav2$values<100000, ]
+    } else {
+      dist_ids_pa_con_100km = dist_ids_pa_datav2[dist_ids_pa_datav2$values<100, ]
+    }
+    pa_union_100km = union(unique(dist_ids_pa_con_100km$row),unique(dist_ids_pa_con_100km$vars))
+    areas_pa_conec_100km = decade[decade[, "spatial_unit"] %in% pa_union_100km,]
+    areas_conec_100km = sum(areas_pa_conec_100km[, "area_spatial"])
+    protcon_100km = (areas_conec_100km/area_consult)*100
+    rows=which(decade[, "spatial_unit"] %in% pa_union_100km)
+    if(length(rows)==0) {
+      areas_pa_no_conec_100km = table
+    } else {
+      areas_pa_no_conec_100km = table[-rows,]
+    }
+    areas_no_conec_100km = (sum(areas_pa_no_conec_100km[, "area_spatial"]))
+    protuncon_100km = (areas_no_conec_100km/area_consult)*100 
+    #protuncon_100km = protected - protcon_100km
+    result_p_100km= data.frame(Distance="100 km",Protcon=protcon_100km,Protuncon = protuncon_100km, Protected = protected ,Unprotected=unprotected)
+    result_preset = rbind.data.frame(result_p_1km, result_p_10km, result_p_100km)
+  
+  result_preset_long <- tidyr::pivot_longer(result_preset, cols=c(Protcon, Protuncon, Protected, Unprotected), names_to="Protection") %>% filter(Protection!="Protected") # remove protected because redundant
+    result_preset_label <- result_preset_long %>% filter(value>0)
+   donut_chart_preset <- ggplot2::ggplot() +
+    geom_col(result_preset_long, mapping = aes(y=value, x=1, fill=Protection)) +
+    coord_polar(theta="y") +
+    xlim(c(0,1.5)) +
+    facet_wrap(~Distance) +
+    geom_text_repel(result_preset_label, mapping = aes(y=value, x=1, group=Protection, label=paste0(round(value, 2), "%")), position=position_stack(vjust=0.5)) +
+    scale_fill_manual(values=c("seagreen4", "seagreen1", "orchid4"), labels=c("Protected connected", "Protected unconnected", "Unprotected")) +
+    theme_void() +
+    #theme(axis.labels=element_blank(), axis.text=element_blank(), axis.ticks=element_blank())
+    theme(panel.border=element_blank() , plot.background = element_rect(fill = "white"), plot.margin = unit(c(0.3,0.3,0.3,0.3), "lines"), text=element_text(size=12))
 }
 
   
@@ -190,11 +269,17 @@ output<- tryCatch({
   write.csv(result, protcon_result_path, row.names = F ) # Write the 'val_wkt_path' output
   donut_chart_path <- file.path(outputFolder, "donut_chart.png")
   ggsave(donut_chart_path, donut_chart, dpi=300)
+  protcon_result_preset_path <- file.path(outputFolder, "protcon_result_preset.csv")
+  write.csv(result_preset, protcon_result_preset_path, row.names = F )
+  donut_chart_preset_path <- file.path(outputFolder, "donut_chart_preset.png")
+  ggsave(donut_chart_preset_path, donut_chart_preset, dpi=300)
 
 
   # Define final output list
   output<- list(protcon_result= protcon_result_path,
-  donut_chart=donut_chart_path)
+  donut_chart=donut_chart_path,
+  protcon_result_preset=protcon_result_preset_path,
+  donut_chart_preset=donut_chart_preset_path)
   
   
 }, error = function(e) { list(error= conditionMessage(e)) })
