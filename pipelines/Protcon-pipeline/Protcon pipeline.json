@@ -15,8 +15,8 @@
       "id": "42",
       "type": "output",
       "position": {
-        "x": 1455,
-        "y": 171
+        "x": 1504,
+        "y": 88
       },
       "data": {
         "label": "Output"
@@ -70,8 +70,30 @@
       "id": "54",
       "type": "output",
       "position": {
-        "x": 1441.5499877929688,
-        "y": 235.79999542236328
+        "x": 1510.5499877929688,
+        "y": 138.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "55",
+      "type": "output",
+      "position": {
+        "x": 1514.5499877929688,
+        "y": 195.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "56",
+      "type": "output",
+      "position": {
+        "x": 1638.5499877929688,
+        "y": 279.7999954223633
       },
       "data": {
         "label": "Output"
@@ -162,11 +184,25 @@
       "target": "54",
       "targetHandle": null,
       "id": "reactflow__edge-41donut_chart-54"
+    },
+    {
+      "source": "41",
+      "sourceHandle": "protcon_result_preset",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-41protcon_result_preset-55"
+    },
+    {
+      "source": "41",
+      "sourceHandle": "donut_chart_preset",
+      "target": "56",
+      "targetHandle": null,
+      "id": "reactflow__edge-41donut_chart_preset-56"
     }
   ],
   "inputs": {
     "protcon_analysis>protcon_analysis.yml@41|distance_analysis": {
-      "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. he unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
+      "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).",
       "label": "distance analysis threshold",
       "type": "int",
       "example": 10000,
@@ -274,6 +310,18 @@
       "label": "protcon results in a pie chart",
       "type": "image/png",
       "weight": 3
+    },
+    "protcon_analysis>protcon_analysis.yml@41|protcon_result_preset": {
+      "description": "Contains the result of the connectivity analysis with 3 preset thresholds of 1, 10, and 100km that cover most of the common dispersal distances",
+      "label": "protcon result with recommended preset thresholds",
+      "type": "type/csv",
+      "weight": 4
+    },
+    "protcon_analysis>protcon_analysis.yml@41|donut_chart_preset": {
+      "description": "percentage of total area that is protected and percentage of protected area that is connected with 3 preset distances",
+      "label": "protcon results in a pie chart",
+      "type": "image/png",
+      "weight": 5
     }
   }
 }
