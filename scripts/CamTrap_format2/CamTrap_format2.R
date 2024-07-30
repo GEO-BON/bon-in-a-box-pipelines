@@ -102,8 +102,8 @@ detHistory_matrix <- camtrapR::detectionHistory(recordTable = recordTable,
 
 ### Adjust and clean Detection history ####
 detHistory_matrix_adjust<- detHistory_matrix$detection_history %>% as.data.frame.matrix() %>%
-  dplyr::mutate( na_cells = rowSums(is.na(.))) %>% 
-  dplyr::filter(na_cells <= input$min_NAs) %>% dplyr::select(-c("na_cells")) %>% 
+  #dplyr::mutate( na_cells = rowSums(is.na(.))) %>% 
+  #dplyr::filter(na_cells <= input$min_NAs) %>% dplyr::select(-c("na_cells")) %>% 
   dplyr::select_if(~ !all(is.na(.)))
 
 
@@ -112,14 +112,13 @@ seq_dates <- seq(from = min(recordTable$Instal.Date), to = max(recordTable$Last.
 
 indexTable <- recordTable %>% dplyr::select(c("DateTimeOriginal", "site_id", "id_conc")) %>%  dplyr::arrange(DateTimeOriginal) %>% 
   dplyr::mutate(occasion = cut(as.POSIXct(DateTimeOriginal), breaks=seq_dates, include.lowest=TRUE)  ) %>% 
-  dplyr::mutate(oc_detHist= factor(paste0("o", as.numeric(.$occasion)), levels= colnames(detHistory_matrix_adjust)) ) %>% 
-  dplyr::filter(site_id %in% rownames(detHistory_matrix_adjust) )
+  dplyr::mutate(oc_detHist= factor(paste0("o", as.numeric(.$occasion)), levels= colnames(detHistory_matrix_adjust)) )
+
 
 
 ## Unmark data ####
 data_adjust <- list(indexTable, DateTimeOriginal_data) %>% plyr::join_all(match = "all") %>% 
-  dplyr::arrange(match(site_id, rownames(detHistory_matrix_adjust))) %>% 
-  dplyr::filter(!is.na(oc_detHist))
+  dplyr::arrange(match(site_id, rownames(detHistory_matrix_adjust)))
 
 
 ### Adjust site covs ####
@@ -135,7 +134,7 @@ if(text_ext != ""){
 site_covs<- site_covs_input %>% {.[. %in% names(camptrap_data)]}
 
 site_covs_data<-   data_adjust %>%  dplyr::select(c("site_id", site_covs)) %>% 
-  dplyr::group_by( site_id) %>% 
+dplyr::group_by( site_id) %>% 
   dplyr::summarise(dplyr::across(all_of(site_covs), mean, na.rm = TRUE)) %>% tibble::column_to_rownames("site_id")
 
 
@@ -165,12 +164,17 @@ for(j in obs_covs ){
     }
     }
     
-    list_obcovs[[ as.character(string_x[1]) ]] <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% tibble::column_to_rownames("site_id")
+    list_obcovs[[ as.character(string_x[1]) ]] <- reshape2::dcast(data_obcov, site_id ~ oc_detHist, value.var = "var_obcov", drop = F) %>% 
+      tibble::column_to_rownames("site_id") %>% {.[,names(.) != "NA"]}
+    
+    
     
   }, error= function(e) {NULL})
   
 }
 
+list_obcovs<- list_obcovs %>% {if(length(.)>0){.}else{NULL}}
+  
 ### Create unmarked data ####
 umf_matrix = unmarked::unmarkedFrameOccu(y = detHistory_matrix_adjust, siteCovs = site_covs_data, obsCovs = list_obcovs)  %>% as( "data.frame") %>% as.data.frame.matrix()
 

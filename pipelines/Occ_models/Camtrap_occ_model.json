@@ -4,8 +4,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 997,
-        "y": 515
+        "x": 1060.030030076536,
+        "y": 657.2441550033175
       },
       "data": {
         "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
@@ -15,19 +15,30 @@
       "id": "53",
       "type": "io",
       "position": {
-        "x": 386,
-        "y": 303
+        "x": 449.57939496380607,
+        "y": 616.1242743552328
       },
       "data": {
         "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
       }
     },
     {
+      "id": "60",
+      "type": "io",
+      "position": {
+        "x": 1032.6663201121316,
+        "y": 514.3986501265149
+      },
+      "data": {
+        "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
+      }
+    },
+    {
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 20,
-        "y": 291.3333333333333
+        "x": 5.429990055158612,
+        "y": 601.6034603133123
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +50,8 @@
       "id": "108",
       "type": "constant",
       "position": {
-        "x": 20,
-        "y": 373.3333333333333
+        "x": 0.6029566113155056,
+        "y": 640.4736584872896
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +63,8 @@
       "id": "112",
       "type": "constant",
       "position": {
-        "x": 538,
-        "y": 545
+        "x": -5.8836585145736535,
+        "y": 830.0464465681637
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,14 +79,44 @@
       "id": "160",
       "type": "constant",
       "position": {
-        "x": 38,
-        "y": 227.33333333333331
+        "x": 4.232081907847373,
+        "y": 500.5186494479585
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
         "value": [
-          "/scripts/inputs/szh_RioPorce.shp"
+          "/scripts/inputs/Putumayo.gpkg"
+        ]
+      }
+    },
+    {
+      "id": "161",
+      "type": "constant",
+      "position": {
+        "x": 0.6504144266172602,
+        "y": 683.1461482261134
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "/scripts/inputs/Putumayo_layers"
+        ]
+      }
+    },
+    {
+      "id": "162",
+      "type": "constant",
+      "position": {
+        "x": 1.749268644194217,
+        "y": 755.1091892254278
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "https://io.biodiversite-quebec.ca/stac/"
         ]
       }
     },
@@ -83,8 +124,8 @@
       "id": "164",
       "type": "constant",
       "position": {
-        "x": 12,
-        "y": 332.3333333333333
+        "x": 3.9240614308855584,
+        "y": 560.134690401882
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -93,360 +134,14 @@
       }
     },
     {
-      "id": "216",
-      "type": "io",
-      "position": {
-        "x": 886,
-        "y": 195.5
-      },
-      "data": {
-        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
-      }
-    },
-    {
-      "id": "217",
-      "type": "constant",
-      "position": {
-        "x": 483,
-        "y": 128
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text/csv",
-        "value": "/scripts/inputs/AMVA_events.csv"
-      }
-    },
-    {
-      "id": "218",
-      "type": "constant",
-      "position": {
-        "x": 512,
-        "y": 169
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "decimalLatitude"
-      }
-    },
-    {
-      "id": "219",
-      "type": "constant",
-      "position": {
-        "x": 512,
-        "y": 210
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "decimalLongitude"
-      }
-    },
-    {
-      "id": "220",
-      "type": "constant",
-      "position": {
-        "x": 520,
-        "y": 251
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 4326
-      }
-    },
-    {
-      "id": "221",
-      "type": "io",
-      "position": {
-        "x": 1369,
-        "y": 12
-      },
-      "data": {
-        "descriptionFile": "00_add_covs>add_covs.yml"
-      }
-    },
-    {
-      "id": "222",
-      "type": "io",
-      "position": {
-        "x": 1757,
-        "y": 164.5
-      },
-      "data": {
-        "descriptionFile": "Join_datasets>Join_datasets.yml"
-      }
-    },
-    {
-      "id": "223",
-      "type": "constant",
-      "position": {
-        "x": 1400,
-        "y": 95
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text/csv[]",
-        "value": [
-          "/scripts/inputs/AMVA_registros.csv"
-        ]
-      }
-    },
-    {
-      "id": "224",
-      "type": "constant",
-      "position": {
-        "x": 1403,
-        "y": 169
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "eventID"
-      }
-    },
-    {
-      "id": "225",
-      "type": "constant",
-      "position": {
-        "x": 1483,
-        "y": 210
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "left",
-        "options": [
-          "left",
-          "right",
-          "inner",
-          "full"
-        ]
-      }
-    },
-    {
-      "id": "226",
-      "type": "constant",
-      "position": {
-        "x": 1490,
-        "y": 251
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "all",
-        "options": [
-          "all",
-          "first"
-        ]
-      }
-    },
-    {
-      "id": "228",
-      "type": "io",
-      "position": {
-        "x": 2203,
-        "y": 439.5
-      },
-      "data": {
-        "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
-      }
-    },
-    {
-      "id": "229",
-      "type": "constant",
-      "position": {
-        "x": 1789,
-        "y": 303
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "scientificName"
-      }
-    },
-    {
-      "id": "230",
-      "type": "constant",
-      "position": {
-        "x": 1815,
-        "y": 344
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "Canis familiaris"
-        ]
-      }
-    },
-    {
-      "id": "231",
-      "type": "constant",
-      "position": {
-        "x": 1797,
-        "y": 391
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 5
-      }
-    },
-    {
-      "id": "232",
-      "type": "constant",
-      "position": {
-        "x": 1789,
-        "y": 432
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "eventID"
-      }
-    },
-    {
-      "id": "233",
-      "type": "constant",
-      "position": {
-        "x": 1789,
-        "y": 473
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "eventDate"
-      }
-    },
-    {
-      "id": "234",
-      "type": "constant",
-      "position": {
-        "x": 1789,
-        "y": 514
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "eventTime"
-      }
-    },
-    {
-      "id": "235",
-      "type": "constant",
-      "position": {
-        "x": 1789,
-        "y": 555
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Instal.Date"
-      }
-    },
-    {
-      "id": "236",
-      "type": "constant",
-      "position": {
-        "x": 1789,
-        "y": 596
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Last.eventDate"
-      }
-    },
-    {
-      "id": "237",
-      "type": "constant",
-      "position": {
-        "x": 1797,
-        "y": 637
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 5
-      }
-    },
-    {
-      "id": "238",
-      "type": "constant",
-      "position": {
-        "x": 1815,
-        "y": 689
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "eventTime|1|hour"
-        ]
-      }
-    },
-    {
-      "id": "240",
-      "type": "io",
-      "position": {
-        "x": 2695,
-        "y": 658
-      },
-      "data": {
-        "descriptionFile": "occ_model_resultsv2>occ_model_resultsv2.yml"
-      }
-    },
-    {
-      "id": "241",
+      "id": "179",
       "type": "output",
       "position": {
-        "x": 3120,
-        "y": 760
+        "x": 1426,
+        "y": 516.5
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "242",
-      "type": "constant",
-      "position": {
-        "x": 2349,
-        "y": 724.6666666666667
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2
-      }
-    },
-    {
-      "id": "244",
-      "type": "constant",
-      "position": {
-        "x": 2455,
-        "y": 765.6666666666667
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "boolean",
-        "value": false
-      }
-    },
-    {
-      "id": "246",
-      "type": "constant",
-      "position": {
-        "x": 534.4621466978404,
-        "y": 482.81654445939034
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "https://io.biodiversite-quebec.ca/stac/"
-        ]
       }
     }
   ],
@@ -457,6 +152,13 @@
       "target": "52",
       "targetHandle": "grid_studyArea",
       "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "60",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-60grid_studyArea"
     },
     {
       "source": "107",
@@ -487,6 +189,20 @@
       "id": "reactflow__edge-160-53StudyArea_vector"
     },
     {
+      "source": "161",
+      "sourceHandle": null,
+      "target": "60",
+      "targetHandle": "folder_layers",
+      "id": "reactflow__edge-161-60folder_layers"
+    },
+    {
+      "source": "162",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-162-52stac_url"
+    },
+    {
       "source": "164",
       "sourceHandle": null,
       "target": "53",
@@ -494,243 +210,19 @@
       "id": "reactflow__edge-164-53name_layer"
     },
     {
-      "source": "217",
-      "sourceHandle": null,
-      "target": "216",
-      "targetHandle": "dataset",
-      "id": "reactflow__edge-217-216dataset"
-    },
-    {
-      "source": "218",
-      "sourceHandle": null,
-      "target": "216",
-      "targetHandle": "xlat",
-      "id": "reactflow__edge-218-216xlat"
-    },
-    {
-      "source": "219",
-      "sourceHandle": null,
-      "target": "216",
-      "targetHandle": "ylong",
-      "id": "reactflow__edge-219-216ylong"
-    },
-    {
-      "source": "220",
-      "sourceHandle": null,
-      "target": "216",
-      "targetHandle": "espg_coords",
-      "id": "reactflow__edge-220-216espg_coords"
-    },
-    {
-      "source": "216",
-      "sourceHandle": "spatial_points",
-      "target": "221",
-      "targetHandle": "spatial_points",
-      "id": "reactflow__edge-216spatial_points-221spatial_points"
-    },
-    {
-      "source": "52",
+      "source": "60",
       "sourceHandle": "rasters",
-      "target": "221",
-      "targetHandle": "folder_vars",
-      "id": "reactflow__edge-52rasters-221folder_vars"
-    },
-    {
-      "source": "221",
-      "sourceHandle": "vars_dataset",
-      "target": "222",
-      "targetHandle": "lists_datasets",
-      "id": "reactflow__edge-221vars_dataset-222lists_datasets"
-    },
-    {
-      "source": "223",
-      "sourceHandle": null,
-      "target": "222",
-      "targetHandle": "lists_datasets",
-      "id": "reactflow__edge-223-222lists_datasets"
-    },
-    {
-      "source": "224",
-      "sourceHandle": null,
-      "target": "222",
-      "targetHandle": "column_join",
-      "id": "reactflow__edge-224-222column_join"
-    },
-    {
-      "source": "225",
-      "sourceHandle": null,
-      "target": "222",
-      "targetHandle": "type",
-      "id": "reactflow__edge-225-222type"
-    },
-    {
-      "source": "226",
-      "sourceHandle": null,
-      "target": "222",
-      "targetHandle": "match",
-      "id": "reactflow__edge-226-222match"
-    },
-    {
-      "source": "53",
-      "sourceHandle": "StudyArea_grid",
-      "target": "221",
-      "targetHandle": "folder_vars",
-      "id": "reactflow__edge-53StudyArea_grid-221folder_vars"
-    },
-    {
-      "source": "222",
-      "sourceHandle": "data_join",
-      "target": "228",
-      "targetHandle": "camptrap_data",
-      "id": "reactflow__edge-222data_join-228camptrap_data"
-    },
-    {
-      "source": "164",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "siteCol",
-      "id": "reactflow__edge-164-228siteCol"
-    },
-    {
-      "source": "229",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "speciesCol",
-      "id": "reactflow__edge-229-228speciesCol"
-    },
-    {
-      "source": "230",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "speciesName",
-      "id": "reactflow__edge-230-228speciesName"
-    },
-    {
-      "source": "231",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "dateCollapseLength",
-      "id": "reactflow__edge-231-228dateCollapseLength"
-    },
-    {
-      "source": "232",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "cameraCol",
-      "id": "reactflow__edge-232-228cameraCol"
-    },
-    {
-      "source": "233",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "evendateCol",
-      "id": "reactflow__edge-233-228evendateCol"
-    },
-    {
-      "source": "234",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "eventTimeCol",
-      "id": "reactflow__edge-234-228eventTimeCol"
-    },
-    {
-      "source": "235",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "setupCol",
-      "id": "reactflow__edge-235-228setupCol"
-    },
-    {
-      "source": "236",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "retrievalCol",
-      "id": "reactflow__edge-236-228retrievalCol"
-    },
-    {
-      "source": "237",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "min_NAs",
-      "id": "reactflow__edge-237-228min_NAs"
-    },
-    {
-      "source": "238",
-      "sourceHandle": null,
-      "target": "228",
-      "targetHandle": "obs_covs",
-      "id": "reactflow__edge-238-228obs_covs"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "rasters",
-      "target": "228",
-      "targetHandle": "site_covs",
-      "id": "reactflow__edge-52rasters-228site_covs"
-    },
-    {
-      "source": "240",
-      "sourceHandle": "VEB_export",
-      "target": "241",
+      "target": "179",
       "targetHandle": null,
-      "id": "reactflow__edge-240VEB_export-241"
-    },
-    {
-      "source": "228",
-      "sourceHandle": "umf_matrix",
-      "target": "240",
-      "targetHandle": "auk_covars_file",
-      "id": "reactflow__edge-228umf_matrix-240auk_covars_file"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "rasters",
-      "target": "240",
-      "targetHandle": "site_covs",
-      "id": "reactflow__edge-52rasters-240site_covs"
-    },
-    {
-      "source": "242",
-      "sourceHandle": null,
-      "target": "240",
-      "targetHandle": "nsim",
-      "id": "reactflow__edge-242-240nsim"
-    },
-    {
-      "source": "244",
-      "sourceHandle": null,
-      "target": "240",
-      "targetHandle": "plot_hist",
-      "id": "reactflow__edge-244-240plot_hist"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "rasters",
-      "target": "240",
-      "targetHandle": "site_covs_Layers",
-      "id": "reactflow__edge-52rasters-240site_covs_Layers"
-    },
-    {
-      "source": "238",
-      "sourceHandle": null,
-      "target": "240",
-      "targetHandle": "obs_covs",
-      "id": "reactflow__edge-238-240obs_covs"
-    },
-    {
-      "source": "246",
-      "sourceHandle": null,
-      "target": "52",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-246-52stac_url"
+      "id": "reactflow__edge-60rasters-179"
     }
   ],
   "inputs": {},
   "outputs": {
-    "occ_model_resultsv2>occ_model_resultsv2.yml@240|VEB_export": {
-      "description": "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)",
-      "label": "FVEB",
-      "type": "text",
+    "AlignRasters_ToGrid>AlignRasters_ToGrid.yml@60|rasters": {
+      "description": "array of output raster paths",
+      "label": "rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 0
     }
   }
