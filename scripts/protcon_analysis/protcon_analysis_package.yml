@@ -1,0 +1,76 @@
+script: protcon_analysis_package.R
+name: Protcon analysis with Makurhini package
+description: This script calculates ProtConn using the MK_ProtConn function in the Makurhini package
+author:
+  - name: Jory Griffith (jory.griffith@mcgill.ca)
+inputs:
+  study_area_polygon:
+    label: polygon of study area
+    description: Represents the map of the study area
+    type: application/geo+json
+  protected_area_polygon:
+    label: polygon of protected areas
+    description: Represents the map of the protected areas within the study area
+    type: application/geo+json
+  studyarea_epsg:
+    label: study area EPSG
+    description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
+    type: int
+    example: 3395
+  unit_distance:
+    label: unit for distance measurement
+    description: String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.
+    type: options
+    options:
+      - "m2"
+      - "km2"
+  distance_threshold:
+    label: distance analysis threshold
+    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).
+    type: int
+    example: 10000
+  distance_matrix_type:
+    label: type of distance matrix
+    description: String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation
+    type: options
+    options:
+      - "centroid"
+      - "edge"
+    example: "centroid"
+  buffer_zone: 
+    label: transboundary buffer distance
+    description: transboundary buffer distance for protected areas outside of the country or region to contribute to connectivity
+    type: int
+    example: 0
+  years:
+    label: year for cutoff
+    description: year for cutoff for PAs
+    type: int
+    example: 2024
+  start_year: 
+    label: start year
+    description: year for the time series plot to start
+    type: int
+    example: 1950
+  year_int: 
+    label: year interval
+    description: year interval to calculate in the time series
+    type: int
+    example: 20
+outputs:
+  protcon_result:
+    label: Protcon results
+    description: "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities"
+    type: text/csv
+  result_plot:
+    label: Result plot
+    description: percentage of total area that is protected and percentage of protected area that is connected
+    type: image/png
+  result_yrs_plot:
+    label: Result plot yrs
+    description: change in protconn over years
+    type: image/png
+  result_yrs:
+    label: yrs result
+    description: yrs
+    type: text/csv
