@@ -1,0 +1,52 @@
+script: 00_auk_filter_v2.R
+description: "This script filters eBird basic dataset checklist and observation files according to the study area and eBird best practices for occupancy models to generate a single zero-filled dataframe with site IDs."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  ebd_file:
+    label: ebd_file
+    description: "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products"
+    type: text
+    example:  'scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt'
+  ebd_sampling_file:
+    label: ebd_sampling_file
+    description: "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products"
+    type: text
+    example: 'scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt'
+  country:
+    label: country
+    description: "Filter to set countries.  Countries can either be expressed as English names or ISO 2-letter country codes. English names are matched via regular expressions using countrycode, so there is some flexibility in names."
+    type: text
+    example: CO
+  studyarea:
+    label: studyarea
+    description: "Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with WGS_1984 geographic coordinate system. This file comes from the 'studyarea_to_grid' step and is use to plot the study area in Bon in a Box and should be used when biological data coordinates are in WGS_1984 geographic coordinate system. It provides a geographical grid to the study area to define the sites for occupancy modelling."
+    type: image/tiff;application=geotiff
+    example: 'scripts/00_auk_filter/input/raster_study_area_path.tif'
+  protocol:
+    label: protocol
+    description: "Set a specific search protocol: stationary, traveling, or casual."
+    type: text[]
+    example: ["Stationary", "Traveling"]
+  date:
+    label: date
+    description: "Set the date or date range of your analysis"
+    type: text[]
+    example: ["2020-11-15", "2022-03-15"]
+  species:
+    label: species
+    description: "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy"
+    type: text
+    example: "Setophaga fusca"
+outputs:
+  ebd_zerofill:
+    label: ebd_zerofill
+    description: "ebd_zerofill"
+    type: text/csv
+  ebd_filter:
+    label: ebd_filter
+    description: "ebd_filter"
+    type: text/tab-separated-values
+  ebd_sampling_filter:
+    label: ebd_sampling_filter
+    description: "ebd_sampling_filter"
+    type: text/tab-separated-values

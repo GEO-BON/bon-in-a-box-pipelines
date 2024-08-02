@@ -5,3 +5,6 @@ runner.env
 **/.cache
 **/.config
 .server
+/output/
+/scripts/00_auk_filter/input/original/
+scripts/00_auk_filter_v2/input/original/

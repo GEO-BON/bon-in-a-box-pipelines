@@ -1,0 +1,28 @@
+script: area_layers.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dir_stack:
+    label: dir_stack
+    description: dir_stack
+    type: text
+    example: "/scripts/01_IAvH_test/input/dir_stack"
+  dir_data_layer:
+    label: dir_data_layer
+    description: dir_data_layer
+    type: text/csv
+    example: "/scripts/01_IAvH_test/input/data_layer.csv"
+  group:
+    label: group
+    description: group
+    type: text
+    example: "period, classes"
+outputs:
+  dir_areas:
+    label: dir_areas
+    description: dir_areas
+    type: text/csv
+  dir_area_total:
+    label: dir_area_total
+    description: dir_area_total
+    type: text/csv

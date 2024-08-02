@@ -1,0 +1,65 @@
+script: load_collection.R
+description: "This sample script shows how it works."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  wkt_area:
+    label: wkt_area
+    description: wkt_area
+    type: text
+    example: '/scripts/00_load_collection/input/wkt_polygon_test.txt'
+  collection_path:
+    label: dir_collection
+    description: dir_collection
+    type: text
+    example: '/scripts/00_load_collection/input/Temperature_collection'
+  epsg:
+    label: epsg
+    description: epsg
+    type: int
+    example: 3395
+  resolution:
+    label: resolution
+    description: resolution
+    type: int
+    example: 1000
+  time_period:
+    label: time period
+    description: time_period
+    type: text
+    example: 'P1Y'
+  time_start:
+    label: start of time interval
+    description: time_start
+    type: text
+    example: 'NA'
+  time_end:
+    label: end of time interval
+    description: time_end
+    type: text
+    example: 'NA'
+outputs:
+  area_stack:
+    label: area_stack
+    description: area_stack
+    type: image/tiff;application=geotiff
+  dir_stack:
+    label: stack direction
+    description: dir_stack
+    type: text
+  dir_png:
+    label: png direction
+    description: dir_png
+    type: text
+  dir_info_layer:
+    label: dir_info_layer
+    description: dir_info_layer
+    type: text/csv
+  dir_data_layer:
+    label: data layer direction
+    description: dir_data_layer
+    type: text/csv
+  dir_data_area:
+    label: data areas direction
+    description: dir_data_area
+    type: text/csv
+

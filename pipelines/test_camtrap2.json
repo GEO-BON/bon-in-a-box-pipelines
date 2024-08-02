@@ -1,0 +1,737 @@
+{
+  "nodes": [
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 997,
+        "y": 515
+      },
+      "data": {
+        "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": 386,
+        "y": 303
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_grid>studyarea_to_grid.yml"
+      }
+    },
+    {
+      "id": "107",
+      "type": "constant",
+      "position": {
+        "x": 20,
+        "y": 291.3333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 4326
+      }
+    },
+    {
+      "id": "108",
+      "type": "constant",
+      "position": {
+        "x": 20,
+        "y": 373.3333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "112",
+      "type": "constant",
+      "position": {
+        "x": 538,
+        "y": 545
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
+        ]
+      }
+    },
+    {
+      "id": "160",
+      "type": "constant",
+      "position": {
+        "x": 38,
+        "y": 227.33333333333331
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "/scripts/inputs/szh_RioPorce.shp"
+        ]
+      }
+    },
+    {
+      "id": "164",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 332.3333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "ID_grid3"
+      }
+    },
+    {
+      "id": "216",
+      "type": "io",
+      "position": {
+        "x": 886,
+        "y": 195.5
+      },
+      "data": {
+        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
+      }
+    },
+    {
+      "id": "217",
+      "type": "constant",
+      "position": {
+        "x": 483,
+        "y": 128
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "/scripts/inputs/AMVA_events.csv"
+      }
+    },
+    {
+      "id": "218",
+      "type": "constant",
+      "position": {
+        "x": 512,
+        "y": 169
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "decimalLatitude"
+      }
+    },
+    {
+      "id": "219",
+      "type": "constant",
+      "position": {
+        "x": 512,
+        "y": 210
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "decimalLongitude"
+      }
+    },
+    {
+      "id": "220",
+      "type": "constant",
+      "position": {
+        "x": 520,
+        "y": 251
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 4326
+      }
+    },
+    {
+      "id": "221",
+      "type": "io",
+      "position": {
+        "x": 1369,
+        "y": 12
+      },
+      "data": {
+        "descriptionFile": "00_add_covs>add_covs.yml"
+      }
+    },
+    {
+      "id": "222",
+      "type": "io",
+      "position": {
+        "x": 1757,
+        "y": 164.5
+      },
+      "data": {
+        "descriptionFile": "Join_datasets>Join_datasets.yml"
+      }
+    },
+    {
+      "id": "223",
+      "type": "constant",
+      "position": {
+        "x": 1400,
+        "y": 95
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv[]",
+        "value": [
+          "/scripts/inputs/AMVA_registros.csv"
+        ]
+      }
+    },
+    {
+      "id": "224",
+      "type": "constant",
+      "position": {
+        "x": 1403,
+        "y": 169
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "eventID"
+      }
+    },
+    {
+      "id": "225",
+      "type": "constant",
+      "position": {
+        "x": 1483,
+        "y": 210
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "left",
+        "options": [
+          "left",
+          "right",
+          "inner",
+          "full"
+        ]
+      }
+    },
+    {
+      "id": "226",
+      "type": "constant",
+      "position": {
+        "x": 1490,
+        "y": 251
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "all",
+        "options": [
+          "all",
+          "first"
+        ]
+      }
+    },
+    {
+      "id": "228",
+      "type": "io",
+      "position": {
+        "x": 885,
+        "y": 691.5
+      },
+      "data": {
+        "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
+      }
+    },
+    {
+      "id": "229",
+      "type": "constant",
+      "position": {
+        "x": 348.93100298743377,
+        "y": 653.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "scientificName"
+      }
+    },
+    {
+      "id": "230",
+      "type": "constant",
+      "position": {
+        "x": 374.93100298743377,
+        "y": 694.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Cuniculus paca"
+        ]
+      }
+    },
+    {
+      "id": "231",
+      "type": "constant",
+      "position": {
+        "x": 355.3676802465817,
+        "y": 741.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
+    },
+    {
+      "id": "232",
+      "type": "constant",
+      "position": {
+        "x": 347.3676802465817,
+        "y": 782.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "eventID"
+      }
+    },
+    {
+      "id": "233",
+      "type": "constant",
+      "position": {
+        "x": 347.3676802465817,
+        "y": 823.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "eventDate"
+      }
+    },
+    {
+      "id": "234",
+      "type": "constant",
+      "position": {
+        "x": 347.3676802465817,
+        "y": 864.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "eventTime"
+      }
+    },
+    {
+      "id": "235",
+      "type": "constant",
+      "position": {
+        "x": 347.3676802465817,
+        "y": 905.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Instal.Date"
+      }
+    },
+    {
+      "id": "236",
+      "type": "constant",
+      "position": {
+        "x": 347.3676802465817,
+        "y": 946.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Last.eventDate"
+      }
+    },
+    {
+      "id": "237",
+      "type": "constant",
+      "position": {
+        "x": 355.3676802465817,
+        "y": 987.742623637082
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 5
+      }
+    },
+    {
+      "id": "238",
+      "type": "constant",
+      "position": {
+        "x": 1349,
+        "y": 683
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "eventDate|1|hour"
+        ]
+      }
+    },
+    {
+      "id": "246",
+      "type": "constant",
+      "position": {
+        "x": 534.4621466978404,
+        "y": 482.81654445939034
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "https://io.biodiversite-quebec.ca/stac/"
+        ]
+      }
+    },
+    {
+      "id": "247",
+      "type": "io",
+      "position": {
+        "x": 1795.8333129882812,
+        "y": 372
+      },
+      "data": {
+        "descriptionFile": "occ_model_resultsv3>occ_model_resultsv3.yml"
+      }
+    },
+    {
+      "id": "249",
+      "type": "constant",
+      "position": {
+        "x": 1391.759970703125,
+        "y": 481.53999999999985
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2
+      }
+    },
+    {
+      "id": "250",
+      "type": "constant",
+      "position": {
+        "x": 1458.259970703125,
+        "y": 567.0399999999998
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "boolean",
+        "value": false
+      }
+    },
+    {
+      "id": "251",
+      "type": "output",
+      "position": {
+        "x": 1898.3232934439766,
+        "y": 617.7365501493715
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "52",
+      "targetHandle": "grid_studyArea",
+      "id": "reactflow__edge-53StudyArea_grid-52grid_studyArea"
+    },
+    {
+      "source": "107",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "EPSG_grid",
+      "id": "reactflow__edge-107-53EPSG_grid"
+    },
+    {
+      "source": "108",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "Resolution_grid",
+      "id": "reactflow__edge-108-53Resolution_grid"
+    },
+    {
+      "source": "112",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-112-52collections_items"
+    },
+    {
+      "source": "160",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "StudyArea_vector",
+      "id": "reactflow__edge-160-53StudyArea_vector"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "name_layer",
+      "id": "reactflow__edge-164-53name_layer"
+    },
+    {
+      "source": "217",
+      "sourceHandle": null,
+      "target": "216",
+      "targetHandle": "dataset",
+      "id": "reactflow__edge-217-216dataset"
+    },
+    {
+      "source": "218",
+      "sourceHandle": null,
+      "target": "216",
+      "targetHandle": "xlat",
+      "id": "reactflow__edge-218-216xlat"
+    },
+    {
+      "source": "219",
+      "sourceHandle": null,
+      "target": "216",
+      "targetHandle": "ylong",
+      "id": "reactflow__edge-219-216ylong"
+    },
+    {
+      "source": "220",
+      "sourceHandle": null,
+      "target": "216",
+      "targetHandle": "espg_coords",
+      "id": "reactflow__edge-220-216espg_coords"
+    },
+    {
+      "source": "216",
+      "sourceHandle": "spatial_points",
+      "target": "221",
+      "targetHandle": "spatial_points",
+      "id": "reactflow__edge-216spatial_points-221spatial_points"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "221",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-52rasters-221folder_vars"
+    },
+    {
+      "source": "221",
+      "sourceHandle": "vars_dataset",
+      "target": "222",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-221vars_dataset-222lists_datasets"
+    },
+    {
+      "source": "223",
+      "sourceHandle": null,
+      "target": "222",
+      "targetHandle": "lists_datasets",
+      "id": "reactflow__edge-223-222lists_datasets"
+    },
+    {
+      "source": "224",
+      "sourceHandle": null,
+      "target": "222",
+      "targetHandle": "column_join",
+      "id": "reactflow__edge-224-222column_join"
+    },
+    {
+      "source": "225",
+      "sourceHandle": null,
+      "target": "222",
+      "targetHandle": "type",
+      "id": "reactflow__edge-225-222type"
+    },
+    {
+      "source": "226",
+      "sourceHandle": null,
+      "target": "222",
+      "targetHandle": "match",
+      "id": "reactflow__edge-226-222match"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "StudyArea_grid",
+      "target": "221",
+      "targetHandle": "folder_vars",
+      "id": "reactflow__edge-53StudyArea_grid-221folder_vars"
+    },
+    {
+      "source": "222",
+      "sourceHandle": "data_join",
+      "target": "228",
+      "targetHandle": "camptrap_data",
+      "id": "reactflow__edge-222data_join-228camptrap_data"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "siteCol",
+      "id": "reactflow__edge-164-228siteCol"
+    },
+    {
+      "source": "229",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "speciesCol",
+      "id": "reactflow__edge-229-228speciesCol"
+    },
+    {
+      "source": "230",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "speciesName",
+      "id": "reactflow__edge-230-228speciesName"
+    },
+    {
+      "source": "231",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "dateCollapseLength",
+      "id": "reactflow__edge-231-228dateCollapseLength"
+    },
+    {
+      "source": "232",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "cameraCol",
+      "id": "reactflow__edge-232-228cameraCol"
+    },
+    {
+      "source": "233",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "evendateCol",
+      "id": "reactflow__edge-233-228evendateCol"
+    },
+    {
+      "source": "234",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "eventTimeCol",
+      "id": "reactflow__edge-234-228eventTimeCol"
+    },
+    {
+      "source": "235",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "setupCol",
+      "id": "reactflow__edge-235-228setupCol"
+    },
+    {
+      "source": "236",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "retrievalCol",
+      "id": "reactflow__edge-236-228retrievalCol"
+    },
+    {
+      "source": "237",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "min_NAs",
+      "id": "reactflow__edge-237-228min_NAs"
+    },
+    {
+      "source": "238",
+      "sourceHandle": null,
+      "target": "228",
+      "targetHandle": "obs_covs",
+      "id": "reactflow__edge-238-228obs_covs"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "228",
+      "targetHandle": "site_covs",
+      "id": "reactflow__edge-52rasters-228site_covs"
+    },
+    {
+      "source": "246",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-246-52stac_url"
+    },
+    {
+      "source": "228",
+      "sourceHandle": "umf_matrix",
+      "target": "247",
+      "targetHandle": "auk_covars_file",
+      "id": "reactflow__edge-228umf_matrix-247auk_covars_file"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "247",
+      "targetHandle": "site_covs",
+      "id": "reactflow__edge-52rasters-247site_covs"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "rasters",
+      "target": "247",
+      "targetHandle": "site_covs_Layers",
+      "id": "reactflow__edge-52rasters-247site_covs_Layers"
+    },
+    {
+      "source": "249",
+      "sourceHandle": null,
+      "target": "247",
+      "targetHandle": "nsim",
+      "id": "reactflow__edge-249-247nsim"
+    },
+    {
+      "source": "250",
+      "sourceHandle": null,
+      "target": "247",
+      "targetHandle": "plot_hist",
+      "id": "reactflow__edge-250-247plot_hist"
+    },
+    {
+      "source": "247",
+      "sourceHandle": "VEB_export",
+      "target": "251",
+      "targetHandle": null,
+      "id": "reactflow__edge-247VEB_export-251"
+    },
+    {
+      "source": "238",
+      "sourceHandle": null,
+      "target": "247",
+      "targetHandle": "obs_covs",
+      "id": "reactflow__edge-238-247obs_covs"
+    }
+  ],
+  "inputs": {},
+  "outputs": {
+    "occ_model_resultsv3>occ_model_resultsv3.yml@247|VEB_export": {
+      "description": "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)",
+      "label": "FVEB",
+      "type": "text",
+      "weight": 0
+    }
+  }
+}

@@ -1,0 +1,21 @@
+script: AlignRasters_ToGrid.R
+name: AlignRasters_ToGrid
+description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+author:
+  - name: Victor Rincon-Parra
+inputs:
+  folder_layers:
+    label: folder_layers
+    description: URL of the Stac catalog
+    type: text[]
+    example: ["scripts/AlignRasters_ToGrid/input/dir_layers"]
+  grid_studyArea:
+    label: grid_studyArea
+    description: grid_studyArea
+    type: image/tiff;application=geotiff
+    example: "scripts/Stac_FromGrid/input/StudyArea_grid.tif"
+outputs:
+  rasters:
+    label: rasters
+    description: array of output raster paths
+    type: image/tiff;application=geotiff[]

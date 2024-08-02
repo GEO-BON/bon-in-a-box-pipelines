@@ -1,0 +1,236 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 268.1573791503906,
+        "y": 422.63392639160156
+      },
+      "data": {
+        "descriptionFile": "00_studyarea_to_WKT>studyarea_to_WKT.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "constant",
+      "position": {
+        "x": -111.84262084960938,
+        "y": 265.63392639160156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/scripts/00_studyarea_to_WKT/input/Arauca.shp"
+      }
+    },
+    {
+      "id": "2",
+      "type": "constant",
+      "position": {
+        "x": -75.84262084960938,
+        "y": 444.63392639160156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 3395
+      }
+    },
+    {
+      "id": "4",
+      "type": "io",
+      "position": {
+        "x": 846.1573791503906,
+        "y": 375.63392639160156
+      },
+      "data": {
+        "descriptionFile": "00_load_collection>load_collection.yml"
+      }
+    },
+    {
+      "id": "5",
+      "type": "output",
+      "position": {
+        "x": 1348.1573791503906,
+        "y": 413.63392639160156
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 1347.1573791503906,
+        "y": 429.63392639160156
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "7",
+      "type": "output",
+      "position": {
+        "x": 1346.1573791503906,
+        "y": 469.63392639160156
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 467.1573791503906,
+        "y": 202.63392639160156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "scripts/lossPersistence/input/Colombia_pp_collection"
+      }
+    },
+    {
+      "id": "9",
+      "type": "constant",
+      "position": {
+        "x": 530.1573791503906,
+        "y": 651.6339263916016
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1000
+      }
+    },
+    {
+      "id": "10",
+      "type": "output",
+      "position": {
+        "x": 1356.1573791503906,
+        "y": 533.2291717529297
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "studyarea_path",
+      "id": "reactflow__edge-1-0studyarea_path"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "studyarea_epsg",
+      "id": "reactflow__edge-2-0studyarea_epsg"
+    },
+    {
+      "source": "4",
+      "sourceHandle": "dir_stack",
+      "target": "5",
+      "targetHandle": null,
+      "id": "reactflow__edge-4dir_stack-5"
+    },
+    {
+      "source": "4",
+      "sourceHandle": "dir_png",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-4dir_png-6"
+    },
+    {
+      "source": "4",
+      "sourceHandle": "dir_data_layer",
+      "target": "7",
+      "targetHandle": null,
+      "id": "reactflow__edge-4dir_data_layer-7"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "4",
+      "targetHandle": "collection_path",
+      "id": "reactflow__edge-8-4collection_path"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "4",
+      "targetHandle": "resolution",
+      "id": "reactflow__edge-9-4resolution"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "val_wkt_path",
+      "target": "4",
+      "targetHandle": "wkt_area",
+      "id": "reactflow__edge-0val_wkt_path-4wkt_area"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "val_studyarea_epsg",
+      "target": "4",
+      "targetHandle": "epsg",
+      "id": "reactflow__edge-0val_studyarea_epsg-4epsg"
+    },
+    {
+      "source": "4",
+      "sourceHandle": "dir_data_area",
+      "target": "10",
+      "targetHandle": null,
+      "id": "reactflow__edge-4dir_data_area-10"
+    }
+  ],
+  "inputs": {
+    "00_load_collection>load_collection.yml@4|time_period": {
+      "description": "Temporality covering the collection data ",
+      "label": "time period",
+      "type": "text",
+      "example": "P1Y"
+    },
+    "00_load_collection>load_collection.yml@4|time_start": {
+      "description": "Period with which the temporality of the collection begins",
+      "label": "start of time interval",
+      "type": "text",
+      "example": "NA"
+    },
+    "00_load_collection>load_collection.yml@4|time_end": {
+      "description": "Period with which the temporality of the collection ends",
+      "label": "end of time interval",
+      "type": "text",
+      "example": "NA"
+    }
+  },
+  "outputs": {
+    "00_load_collection>load_collection.yml@4|dir_stack": {
+      "description": "Direction where the stack is located",
+      "label": "stack direction",
+      "type": "text"
+    },
+    "00_load_collection>load_collection.yml@4|dir_png": {
+      "description": "Direction where the png result is located",
+      "label": "png direction",
+      "type": "text"
+    },
+    "00_load_collection>load_collection.yml@4|dir_data_layer": {
+      "description": "Direction where the data layer is located",
+      "label": "data layer direction",
+      "type": "text/csv"
+    },
+    "00_load_collection>load_collection.yml@4|dir_data_area": {
+      "description": "Direction where the areas is located",
+      "label": "data areas direction",
+      "type": "text/csv"
+    }
+  }
+}

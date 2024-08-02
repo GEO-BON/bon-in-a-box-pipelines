@@ -1,0 +1,127 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 359,
+        "y": 47
+      },
+      "data": {
+        "descriptionFile": "Filter_data>Filter_data.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv[]",
+        "value": [
+          "/scripts/Filter_data/input/records_data.csv"
+        ]
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 696,
+        "y": 138
+      },
+      "data": {
+        "descriptionFile": "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "output",
+      "position": {
+        "x": 1089,
+        "y": 210
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "data",
+      "id": "reactflow__edge-1-0data"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "spatial_points",
+      "target": "3",
+      "targetHandle": null,
+      "id": "reactflow__edge-2spatial_points-3"
+    }
+  ],
+  "inputs": {
+    "Filter_data>Filter_data.yml@0|column": {
+      "description": "Name of the column in the dataset that will be used to apply the filter condition.",
+      "label": "column",
+      "type": "text/plain",
+      "example": "scientificName",
+      "weight": 0
+    },
+    "Filter_data>Filter_data.yml@0|condition": {
+      "description": "Specific values of the column to be used as condition filter criteria. When 'column' is a vector, 'condition' should be a character vector. When 'column' is numeric, 'condition' should be an indexed formula (e.g., >= 1; >=2 ; >=1, <=2 ). Multiple conditions for the same column can be separated by commas (e.g., Leopardus wiedii, Mazama americana; >=1, <=2).",
+      "label": "condition",
+      "type": "text",
+      "example": "Cuniculus paca",
+      "weight": 1
+    },
+    "Filter_data>Filter_data.yml@0|rev": {
+      "description": "Indicates whether to invert the filter condition (TRUE to invert, FALSE to not invert). Inverting means applying the opposite filter to the condition defined in 'condition' argument.",
+      "label": "rev",
+      "type": "boolean",
+      "example": false,
+      "weight": 2
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@2|dataset": {
+      "description": "Dataset to be spatialized. It must contain columns with latitude ('xlat') and longitude ('ylong'), in a valid EPSG coordinate system equivalent to 'epsg_coords' to ensure proper spatialization.",
+      "label": "dataset",
+      "type": "text/csv",
+      "example": "scripts/00_pointsdata_to_spatial/input/data_join.csv",
+      "weight": 3
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@2|xlat": {
+      "description": "Name of the column in the 'dataset' that contains the latitude coordinates of the points to be spatialized.",
+      "label": "xlat",
+      "type": "text",
+      "example": "Lat_X",
+      "weight": 4
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@2|ylong": {
+      "description": "Name of the column in the 'dataset' that contains the longitude coordinates of the points to be spatialized.",
+      "label": "ylong",
+      "type": "text",
+      "example": "Long_Y",
+      "weight": 5
+    },
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@2|espg_coords": {
+      "description": "Numeric EPSG coordinate system. Must be a valid EPSG code that defines the coordinate reference system to ensure proper spatialization. EPSG website at https://epsg.org/home.html",
+      "label": "espg_coords",
+      "type": "int",
+      "example": 4326,
+      "weight": 6
+    }
+  },
+  "outputs": {
+    "00_pointsdata_to_spatial>00_pointsdata_to_spatial.yml@2|spatial_points": {
+      "description": "Spatial points dataset in GeoJSON format",
+      "label": "spatial_points",
+      "type": "application/geo+json",
+      "weight": 0
+    }
+  }
+}

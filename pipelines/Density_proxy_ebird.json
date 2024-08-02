@@ -1,0 +1,230 @@
+{
+  "nodes": [
+    {
+      "id": "36",
+      "type": "io",
+      "position": {
+        "x": 481,
+        "y": -28
+      },
+      "data": {
+        "descriptionFile": "Density_proxy>Density_proxy.yml"
+      }
+    },
+    {
+      "id": "37",
+      "type": "io",
+      "position": {
+        "x": -482,
+        "y": -87
+      },
+      "data": {
+        "descriptionFile": "load_studyarea_covs_rast>load_studyarea_covs_rast.yml"
+      }
+    },
+    {
+      "id": "38",
+      "type": "io",
+      "position": {
+        "x": -468,
+        "y": -51
+      },
+      "data": {
+        "descriptionFile": "StudyArea_covs_rast>StudyArea_covs_rast.yml"
+      }
+    },
+    {
+      "id": "39",
+      "type": "io",
+      "position": {
+        "x": -935,
+        "y": 64
+      },
+      "data": {
+        "descriptionFile": "StudyArea_to_grid>StudyArea_to_grid.yml"
+      }
+    },
+    {
+      "id": "40",
+      "type": "io",
+      "position": {
+        "x": -511,
+        "y": 189
+      },
+      "data": {
+        "descriptionFile": "auk_filter_eBird>auk_filter_eBird.yml"
+      }
+    },
+    {
+      "id": "41",
+      "type": "io",
+      "position": {
+        "x": 14,
+        "y": 90
+      },
+      "data": {
+        "descriptionFile": "add_RasterCovs_to_data>add_RasterCovs_to_data.yml"
+      }
+    },
+    {
+      "id": "42",
+      "type": "constant",
+      "position": {
+        "x": -1066,
+        "y": -93
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3",
+        "value": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "39",
+      "sourceHandle": "StudyArea_grid",
+      "target": "38",
+      "targetHandle": "StudyArea_grid",
+      "id": "reactflow__edge-39StudyArea_grid-38StudyArea_grid"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "StudyArea_grid",
+      "target": "40",
+      "targetHandle": "studyarea",
+      "id": "reactflow__edge-39StudyArea_grid-40studyarea"
+    },
+    {
+      "source": "38",
+      "sourceHandle": "Folder_StudyArea_rasters",
+      "target": "41",
+      "targetHandle": "Folder_RasterCovs",
+      "id": "reactflow__edge-38Folder_StudyArea_rasters-41Folder_RasterCovs"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "ebd_zerofill_SpatialData",
+      "target": "41",
+      "targetHandle": "SpatialData",
+      "id": "reactflow__edge-40ebd_zerofill_SpatialData-41SpatialData"
+    },
+    {
+      "source": "41",
+      "sourceHandle": "vars_dataset",
+      "target": "36",
+      "targetHandle": "ebird_format_file",
+      "id": "reactflow__edge-41vars_dataset-36ebird_format_file"
+    },
+    {
+      "source": "38",
+      "sourceHandle": "Folder_StudyArea_rasters",
+      "target": "36",
+      "targetHandle": "pred_grid",
+      "id": "reactflow__edge-38Folder_StudyArea_rasters-36pred_grid"
+    },
+    {
+      "source": "41",
+      "sourceHandle": "RasterCovs_data",
+      "target": "36",
+      "targetHandle": "checklists_env",
+      "id": "reactflow__edge-41RasterCovs_data-36checklists_env"
+    },
+    {
+      "source": "42",
+      "sourceHandle": null,
+      "target": "39",
+      "targetHandle": "StudyArea_polygon",
+      "id": "reactflow__edge-42-39StudyArea_polygon"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "StudyArea_grid",
+      "target": "36",
+      "targetHandle": "r",
+      "id": "reactflow__edge-39StudyArea_grid-36r"
+    }
+  ],
+  "inputs": {
+    "Density_proxy>Density_proxy.yml@36|iters": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "iters",
+      "type": "int",
+      "example": 2
+    },
+    "Density_proxy>Density_proxy.yml@36|study_area": {
+      "description": "study_area",
+      "label": "study_area",
+      "type": "text",
+      "example": "scripts/Density_proxy/input/RegionFis_Col_WGS84_Andinas.gpkg"
+    },
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|Zonal_statistics": {
+      "description": "method of aggregation for the temperature data",
+      "label": "Zonal_statistics",
+      "type": "options",
+      "options": [
+        "min",
+        "max",
+        "mean",
+        "median",
+        "first"
+      ],
+      "example": "mean"
+    },
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|Folder_rasters": {
+      "description": "STACQuery_url",
+      "label": "Folder_rasters",
+      "type": "text",
+      "example": "http://io.biodiversite-quebec.ca/stac/"
+    },
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|STACQuery_url": {
+      "description": "STACQuery_url",
+      "label": "STACQuery_url",
+      "type": "text",
+      "example": "http://io.biodiversite-quebec.ca/stac/"
+    },
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|STACcollection": {
+      "description": "STACcollection",
+      "label": "STACcollection",
+      "type": "text",
+      "example": "chelsa-clim"
+    },
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|STACselectVars": {
+      "description": "selectVars",
+      "label": "STACselectVars",
+      "type": "text",
+      "example": "all"
+    },
+    "StudyArea_to_grid>StudyArea_to_grid.yml@39|EPSG": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "EPSG",
+      "type": "int",
+      "example": 3395
+    },
+    "StudyArea_to_grid>StudyArea_to_grid.yml@39|gridRes_meters": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "gridRes_meters",
+      "type": "int",
+      "example": 1000
+    },
+    "auk_filter_eBird>auk_filter_eBird.yml@40|ebd_file": {
+      "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt"
+    },
+    "auk_filter_eBird>auk_filter_eBird.yml@40|ebd_sampling_file": {
+      "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_sampling_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt"
+    },
+    "auk_filter_eBird>auk_filter_eBird.yml@40|species": {
+      "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
+      "label": "species",
+      "type": "text",
+      "example": "Setophaga fusca"
+    }
+  },
+  "outputs": {}
+}

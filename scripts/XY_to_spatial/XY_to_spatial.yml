@@ -1,0 +1,29 @@
+script: XY_to_spatial.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dataset:
+    label: dataset
+    description: "dataset"
+    type: text/tab-separated-values
+    example: "scripts/00_pointsdata_to_spatial/input/zf_ebdfile_Setophaga fusca_-76_5_-75_6.txt"
+  xlat:
+    label: xlat
+    description: "xlat"
+    type: text
+    example: "latitude"
+  ylong:
+    label: ylong
+    description: "ylong"
+    type: text
+    example: "longitude"
+  espg_coords:
+    label: espg_coords
+    description: Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.
+    type: int
+    example: 4326
+outputs:
+  spatial_points:
+    label: spatial_points
+    description: "spatial_points"
+    type: application/geo+json
