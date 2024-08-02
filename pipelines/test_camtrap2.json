@@ -245,8 +245,8 @@
       "id": "228",
       "type": "io",
       "position": {
-        "x": 2203,
-        "y": 439.5
+        "x": 885,
+        "y": 691.5
       },
       "data": {
         "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
@@ -256,8 +256,8 @@
       "id": "229",
       "type": "constant",
       "position": {
-        "x": 1789,
-        "y": 303
+        "x": 348.93100298743377,
+        "y": 653.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -269,14 +269,14 @@
       "id": "230",
       "type": "constant",
       "position": {
-        "x": 1815,
-        "y": 344
+        "x": 374.93100298743377,
+        "y": 694.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
         "value": [
-          "Canis familiaris"
+          "Cuniculus paca"
         ]
       }
     },
@@ -284,8 +284,8 @@
       "id": "231",
       "type": "constant",
       "position": {
-        "x": 1797,
-        "y": 391
+        "x": 355.3676802465817,
+        "y": 741.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -297,8 +297,8 @@
       "id": "232",
       "type": "constant",
       "position": {
-        "x": 1789,
-        "y": 432
+        "x": 347.3676802465817,
+        "y": 782.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -310,8 +310,8 @@
       "id": "233",
       "type": "constant",
       "position": {
-        "x": 1789,
-        "y": 473
+        "x": 347.3676802465817,
+        "y": 823.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -323,8 +323,8 @@
       "id": "234",
       "type": "constant",
       "position": {
-        "x": 1789,
-        "y": 514
+        "x": 347.3676802465817,
+        "y": 864.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -336,8 +336,8 @@
       "id": "235",
       "type": "constant",
       "position": {
-        "x": 1789,
-        "y": 555
+        "x": 347.3676802465817,
+        "y": 905.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -349,8 +349,8 @@
       "id": "236",
       "type": "constant",
       "position": {
-        "x": 1789,
-        "y": 596
+        "x": 347.3676802465817,
+        "y": 946.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -362,8 +362,8 @@
       "id": "237",
       "type": "constant",
       "position": {
-        "x": 1797,
-        "y": 637
+        "x": 355.3676802465817,
+        "y": 987.742623637082
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -375,8 +375,8 @@
       "id": "238",
       "type": "constant",
       "position": {
-        "x": 1815,
-        "y": 689
+        "x": 1349,
+        "y": 683
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -405,8 +405,8 @@
       "id": "247",
       "type": "io",
       "position": {
-        "x": 2821.8333129882812,
-        "y": 698
+        "x": 1795.8333129882812,
+        "y": 372
       },
       "data": {
         "descriptionFile": "occ_model_resultsv3>occ_model_resultsv3.yml"
@@ -416,8 +416,8 @@
       "id": "249",
       "type": "constant",
       "position": {
-        "x": 2417.759970703125,
-        "y": 807.5399999999998
+        "x": 1391.759970703125,
+        "y": 481.53999999999985
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -429,8 +429,8 @@
       "id": "250",
       "type": "constant",
       "position": {
-        "x": 2484.259970703125,
-        "y": 893.0399999999998
+        "x": 1458.259970703125,
+        "y": 567.0399999999998
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -442,8 +442,8 @@
       "id": "251",
       "type": "output",
       "position": {
-        "x": 3356.759970703125,
-        "y": 762.5399999999998
+        "x": 1898.3232934439766,
+        "y": 617.7365501493715
       },
       "data": {
         "label": "Output"

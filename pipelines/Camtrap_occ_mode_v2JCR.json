@@ -4,8 +4,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 1539,
-        "y": 707.5
+        "x": 862.9999999999998,
+        "y": 695.5
       },
       "data": {
         "descriptionFile": "Stac_FromGrid>Stac_FromGrid.yml"
@@ -26,8 +26,8 @@
       "id": "60",
       "type": "io",
       "position": {
-        "x": 1514,
-        "y": 618.5
+        "x": 835.9999999999998,
+        "y": 614.5
       },
       "data": {
         "descriptionFile": "AlignRasters_ToGrid>AlignRasters_ToGrid.yml"
@@ -37,8 +37,8 @@
       "id": "66",
       "type": "io",
       "position": {
-        "x": 1937,
-        "y": 129
+        "x": 1445,
+        "y": 269
       },
       "data": {
         "descriptionFile": "00_add_covs>add_covs.yml"
@@ -74,8 +74,8 @@
       "id": "112",
       "type": "constant",
       "position": {
-        "x": 1020,
-        "y": 754.5
+        "x": 458,
+        "y": 790.4999999999999
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -204,8 +204,8 @@
       "id": "161",
       "type": "constant",
       "position": {
-        "x": 1020,
-        "y": 591.5
+        "x": 446,
+        "y": 639.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -219,8 +219,8 @@
       "id": "162",
       "type": "constant",
       "position": {
-        "x": 1020,
-        "y": 680.5
+        "x": 448,
+        "y": 716.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -260,8 +260,8 @@
       "id": "165",
       "type": "io",
       "position": {
-        "x": 2400,
-        "y": 307
+        "x": 1776,
+        "y": 459
       },
       "data": {
         "descriptionFile": "CamTrap_format2>CamTrap_format2.yml"
@@ -336,8 +336,8 @@
       "id": "172",
       "type": "constant",
       "position": {
-        "x": 1969,
-        "y": 619.5
+        "x": 1315,
+        "y": 753.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -351,8 +351,8 @@
       "id": "173",
       "type": "constant",
       "position": {
-        "x": 2001,
-        "y": 403.5
+        "x": 1327,
+        "y": 539.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -364,8 +364,8 @@
       "id": "174",
       "type": "constant",
       "position": {
-        "x": 2001,
-        "y": 444.5
+        "x": 1331,
+        "y": 578.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -377,8 +377,8 @@
       "id": "175",
       "type": "constant",
       "position": {
-        "x": 2001,
-        "y": 485.5
+        "x": 1333,
+        "y": 621.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -390,8 +390,8 @@
       "id": "176",
       "type": "constant",
       "position": {
-        "x": 2001,
-        "y": 526.5
+        "x": 1337,
+        "y": 660.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -403,8 +403,8 @@
       "id": "177",
       "type": "constant",
       "position": {
-        "x": 2010,
-        "y": 567.5
+        "x": 1348,
+        "y": 705.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -416,8 +416,8 @@
       "id": "178",
       "type": "constant",
       "position": {
-        "x": 2010,
-        "y": 351.5
+        "x": 1330,
+        "y": 503.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -429,8 +429,8 @@
       "id": "179",
       "type": "io",
       "position": {
-        "x": 2939,
-        "y": 297
+        "x": 1975,
+        "y": 139
       },
       "data": {
         "descriptionFile": "occ_model_resultsv3>occ_model_resultsv3.yml"
@@ -440,8 +440,8 @@
       "id": "180",
       "type": "constant",
       "position": {
-        "x": 2579,
-        "y": 756.5
+        "x": 1947,
+        "y": 342.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -453,8 +453,8 @@
       "id": "181",
       "type": "constant",
       "position": {
-        "x": 2538,
-        "y": 708.5
+        "x": 1904,
+        "y": 292.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -468,8 +468,8 @@
       "id": "182",
       "type": "constant",
       "position": {
-        "x": 2669,
-        "y": 797.5
+        "x": 2039,
+        "y": 389.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -481,8 +481,8 @@
       "id": "183",
       "type": "output",
       "position": {
-        "x": 3394,
-        "y": 388
+        "x": 2222.9050485339885,
+        "y": 263.5767271247371
       },
       "data": {
         "label": "Output"
