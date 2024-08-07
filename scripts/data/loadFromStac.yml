@@ -10,7 +10,7 @@ inputs:
     label: stac_url
     description: URL of the Stac catalog
     type: text
-    example: https://io.biodiversite-quebec.ca/stac/
+    example: https://stac.geobon.org/
   bbox:
     label: bbox
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
@@ -52,4 +52,4 @@ outputs:
   weight_matrix_with_layers:
     label: Weight matrix with layers
     description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
-    type: text
+    type: text 
