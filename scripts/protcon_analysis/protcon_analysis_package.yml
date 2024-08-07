@@ -24,6 +24,7 @@ inputs:
     options:
       - "m2"
       - "km2"
+    example: "m2"
   distance_threshold:
     label: distance analysis threshold
     description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).
