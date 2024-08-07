@@ -1,7 +1,7 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "stars", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes", "RCurl")
+packages <- c("terra", "rjson", "raster", "stars", "dplyr", "CoordinateCleaner", "lubridate", "remotes", "RCurl")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true")
