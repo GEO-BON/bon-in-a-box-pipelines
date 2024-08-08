@@ -15,6 +15,16 @@ inputs:
     description: State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.
     type: text
     example: null
+  studyarea_file: 
+    label: Study area file
+    description: File path of the study area of interest (leave blank if using data from WDPA)
+    type: text
+    example: null
+  protectedarea_file: 
+    label: Protected areas file
+    description: File path of the shapefile of protected areas (Leave blank if using data from WDPA)
+    type: text
+    example: null
 outputs:
   study_area_polygon:
     label: Polygon of study area

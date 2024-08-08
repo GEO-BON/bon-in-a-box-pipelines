@@ -5,11 +5,11 @@ author:
   - name: Jory Griffith (jory.griffith@mcgill.ca)
 inputs:
   study_area_polygon:
-    label: polygon of study area
+    label: Polygon of study area
     description: Represents the map of the study area
     type: application/geo+json
   protected_area_polygon:
-    label: polygon of protected areas
+    label: Polygon of protected areas
     description: Represents the map of the protected areas within the study area
     type: application/geo+json
   studyarea_epsg:
@@ -27,7 +27,7 @@ inputs:
     example: "m2"
   distance_threshold:
     label: distance analysis threshold
-    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).
+    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5).
     type: int
     example: 10000
   distance_matrix_type:
@@ -43,6 +43,15 @@ inputs:
     description: transboundary buffer distance for protected areas outside of the country or region to contribute to connectivity
     type: int
     example: 0
+  date_column_name:
+    label: Date column name
+    description: Name of the column in the protected area file that specifies when the PA was created (STATUS_YR for WDPA data)
+    type: text
+    example: STATUS_YR
+  #date_column_format:
+   # label: Date column format
+    #description: Format of the date column (e.g. 2000-12-01 would be ymd, 2000 would be y, 01-12-2000 would be mdy)
+    #type: text
   years:
     label: year for cutoff
     description: year for cutoff for PAs
