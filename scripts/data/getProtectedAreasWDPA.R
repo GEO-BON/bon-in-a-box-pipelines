@@ -19,22 +19,50 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json"))
 
 # Define study area
 # If a state is not defined, will pull data for the whole country
-if (is.null(input$studyarea_state)){ # if there is only a country input (no state)
-  input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
-  study_area<- paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", input$studyarea_country) # study area url
-  protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country) # protected areas url
-} else { # if a state is defined
-  input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
-  input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
-  study_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
-  protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
-}
+output<- tryCatch({
+if (is.null(input$studyarea_file)){
+  if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
+    input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL # nolint
+    study_area<- paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", input$studyarea_country) # study area url # nolint
+  } else { # if a state is defined
+   input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
+   input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
+    study_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
+  } } else {study_area <- input$studyarea_file}
 
-crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character() 
+# error code if file not found
+#if (is.null(study_area)){
+#  print("File not found. Check spelling."
+#  )
+#}
+
+if (is.null(input$protectedarea_file)){
+  if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
+    input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
+    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country) # protected areas url
+  } else { # if a state is defined
+   input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
+   input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
+    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
+  } } else {protected_area <- input$protectedarea_file}
+
+                
+
+crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()
 
 # Read in study area and protected area data
 study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
+print(dim(study_area_polygon))
+
+if(is.null(dim(study_area_polygon))){
+  stop("Polygon does not exist. Check spelling of country and state names.")
+}
+
+
 protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
+
+
+
 
 # Save study area and protected area data
 study_area_polygon_path<- file.path(outputFolder, "study_area_polygon.geojson") # Define the file path for the protected area polygon output
@@ -52,6 +80,7 @@ output <- list(
     #"error" = "Some error", # halt the pipeline
     #"warning" = "Some warning", # display a warning without halting the pipeline
 ) 
+}, error = function(e) { list(error= conditionMessage(e)) })
                
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

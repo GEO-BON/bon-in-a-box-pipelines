@@ -1,6 +1,6 @@
 # Script for analyzing ProtConn with the function
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version # nolint
-packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson", "ggrepel", "remotes", "devtools", "jsonlite", "ggpubr", "Rtools") # Define the list of required packages to run the script # nolint
+packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson", "ggrepel", "remotes", "devtools", "jsonlite", "ggpubr") # Define the list of required packages to run the script # nolint
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
 library(devtools)
 library(remotes)
@@ -17,23 +17,30 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 
 output<- tryCatch({
 
- units::units_options(set_units_mode = "standard")
+units::units_options(set_units_mode = "standard")
 # Load study area shapefile
 study_area<- geojsonsf::geojson_sf(input$study_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 
 protected_area<- geojsonsf::geojson_sf(input$protected_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
+
+str(protected_area)
+
+protected_area$year <- lubridate::year(protected_area$created_date)
+print(protected_area$year)
 # filter for year
-protected_area_filt <- protected_area %>% dplyr::filter(STATUS_YR <= input$years)
+protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
 
 protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
 transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
+
+print(protcon_result)
 
 protcon_result.df <- as.data.frame(protcon_result)[c(2,3,4),c(3,4)]
 
 result_plot <- ggplot2::ggplot(protcon_result.df) +
   geom_col(aes(y=Percentage, x=1, fill=`ProtConn indicator`)) +
   coord_polar(theta="y") +
-  xlim(c(0, 1.5))+
+  xlim(c(0, 1.5)) +
   geom_text(aes(y=Percentage, x=1, group=`ProtConn indicator`, label=paste0(round(Percentage, 2), "%")), position=position_stack(vjust=0.5))+
   scale_fill_manual(values=c("seagreen4", "seagreen1", "orchid4"))+
   theme_void() +
@@ -42,15 +49,9 @@ result_plot <- ggplot2::ggplot(protcon_result.df) +
 # Change in protection over time
 # Sequence with start year by interval
 years <- seq(from=input$start_year, to=2024, by=input$year_int)
-
-#for (i in 1:nrow(protected_area)) {
-#  if(is.na(protected_area$STATUS_YR)) 
-#  {protected_area$STATUS_YR <- years[1]}
-#  }
-
 # Calculate ProtConn for each specified year
 protcon_ts <- function(r){
-    protected_area_filt <- protected_area %>% dplyr::filter(STATUS_YR <= r)
+    protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
     protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
         transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
     protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=r) 
@@ -58,29 +59,20 @@ protcon_ts <- function(r){
 }
 
 protcon_ts_result <- lapply(years, FUN=protcon_ts)
-
 result_yrs <- bind_rows(protcon_ts_result)
-#rotected_area_1950 <- protected_area %>% dplyr::filter(STATUS_YR <= 1950)
-#protcon_result_1950 <- Makurhini::MK_ProtConn(nodes=protected_area_1950, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-#transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
-#protcon_result_1950.df <- as.data.frame(protcon_result_1950)[c(1,3,4),c(3,4)] %>% mutate(Year=1950) 
 
-#protected_area_1985 <- protected_area %>% dplyr::filter(STATUS_YR <= 1985)
-#protcon_result_1985 <- Makurhini::MK_ProtConn(nodes=protected_area_1985, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-#transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
-#protcon_result_1985.df <- as.data.frame(protcon_result_1985)[c(1,3,4),c(3,4)] %>% mutate(Year=1985) 
-
-#protected_area_2000 <- protected_area %>% dplyr::filter(STATUS_YR <= 2000)
-#protcon_result_2000 <- Makurhini::MK_ProtConn(nodes=protected_area_2000, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-#transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
-#protcon_result_2000.df <- as.data.frame(protcon_result_2000)[c(1,3,4),c(3,4)] %>% mutate(Year=2000) 
-
-#protcon_result_2024 <- Makurhini::MK_ProtConn(nodes=protected_area, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-#transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
-#protcon_result_2024.df <- as.data.frame(protcon_result_2024)[c(1,3,4),c(3,4)] %>% mutate(Year=2024)
-
-#protcon_result_yrs <- rbind(protcon_result_1950.df, protcon_result_1985.df, protcon_result_2000.df, protcon_result_2024.df)
 xint <- input$start_year + 10
+
+result_yrs_plot <- ggplot(result_yrs, aes(x=Year, y=Percentage, group=`ProtConn indicator`, shape=`ProtConn indicator`, color=`ProtConn indicator`))+
+geom_point() +
+geom_line()+
+labs(y="Percent area", x="Year")+
+geom_hline(yintercept=30, lty=2)+
+annotate("text", x=xint, y=31, label="Kunming-Montreal target")+
+annotate("text", x=xint, y=18, label="Aichi target", color="grey30")+
+geom_line() +
+theme_classic()
+
 
 result_yrs_plot <- ggplot(result_yrs, aes(x=Year, y=Percentage, group=`ProtConn indicator`, shape=`ProtConn indicator`, color=`ProtConn indicator`))+
 geom_point() +
@@ -102,7 +94,6 @@ ggsave(result_plot_path, result_plot, dpi=300)
 
 protcon_result_yrs_path <- file.path(outputFolder, "result_plot_yrs.png")
 ggsave(protcon_result_yrs_path, result_yrs_plot)
-
 
 protcon_result_yrs_path2 <- file.path(outputFolder, "result_plot_yrs.csv")
 write.csv(result_yrs, protcon_result_yrs_path2, row.names=F)
