@@ -4,7 +4,7 @@ channels:
   - r
 dependencies:
   - conda-build
-  - gdal
+  - libgdal
   - r-abind
   - r-base
   - r-curl
