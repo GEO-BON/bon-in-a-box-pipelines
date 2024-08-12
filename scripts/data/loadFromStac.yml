@@ -33,7 +33,7 @@ inputs:
     label: projection system
     description: String, projection of the rasters
     type: text
-    example: "EPSG:6623"
+    example: "EPSG:6624"
   spatial_res:
     label: spatial resolution
     description: Integer, spatial resolution of the rasters
