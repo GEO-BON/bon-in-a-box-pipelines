@@ -22,6 +22,8 @@ print(input)
 
 source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
 
+output<- tryCatch({
+
 get_country<-function(country){
   resp <- req_perform( request(paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=",country)))
   geojson_sf(resp_body_string(resp))
@@ -66,7 +68,7 @@ sf_range_map_path <- if(is.null(input$sf_range_map)){NA}else{input$sf_range_map}
 r_range_map_path <- if(is.null(input$r_range_map)){NA}else{input$r_range_map}
 
 # Elevation_filter
-elevation_filter <- ifelse(input$elevation_filter=="Yes", 1,NA)
+elevation_filter <- ifelse(input$elevation_filter=="Yes", 1, 2)
 # Buffer for elevation values
 elev_buffer <- ifelse(is.null(input$elev_buffer), NA,input$elev_buffer)
 
@@ -186,7 +188,7 @@ for(i in 1:length(sp)){
   
   sf_bbox_analysis <- sf_ext_srs |> st_as_sfc()
   area_bbox_analysis <- sf_bbox_analysis |> st_area()
-  
+
   v_path_bbox_analysis[i] <- file.path(outputFolder ,sp[i], paste0(sp[i],"_st_bbox.gpkg"))
   st_write(sf_bbox_analysis,v_path_bbox_analysis[i],append=F)
   
@@ -194,15 +196,21 @@ for(i in 1:length(sp)){
   
   #Create raster
   r_frame <- rast(terra::ext(sf_ext_srs),resolution=spat_res)
+
   crs(r_frame) <- srs_cube
   values(r_frame) <- 1
   r_aoh <- terra::mask(r_frame,vect(as(sf_area_lim_srs,"Spatial")))
-  
+
   # elevation filters-----------------------------------------------------------
   if(elevation_filter==1){
     # Load elevation preferences
     df_IUCN_sheet <- rredlist::rl_search(sp[i], key = token)$result
+    print(dim(df_IUCN_sheet))
     
+    if(is.null(dim(df_IUCN_sheet))){
+      stop("Species not found in IUCN database. Check name and spelling.")
+    }
+
     df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
       min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
         is.na(elevation_lower) ~ NA_real_,
@@ -267,10 +275,14 @@ for(i in 1:length(sp)){
 path_aoh_areas <- file.path(outputFolder,"df_aoh_areas.tsv")
 write_tsv(df_aoh_areas,file= path_aoh_areas)
 
+
 # Outputing result to JSON -----------------------------------------------------
 output <- list("r_area_of_habitat" = v_path_to_area_of_habitat ,
                "sf_bbox" = v_path_bbox_analysis,
                "df_aoh_areas"= path_aoh_areas)
+
+
+}, error = function(e) { list(error = conditionMessage(e)) })
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

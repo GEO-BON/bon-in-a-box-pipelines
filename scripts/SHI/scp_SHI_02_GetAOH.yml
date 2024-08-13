@@ -54,7 +54,7 @@ inputs:
     type: text[]
     example: 
       [
-        "Saguinus oedipus"
+        "Myrmecophaga tridactyla"
       ]
   range_map_type:
     label: type of range map

@@ -21,6 +21,7 @@ source(file.path(path_script,"SHI/funGet_range_maps.R"), echo=TRUE)
 
 # Inputs -----------------------------------------------------------------------
 # Define species
+output<- tryCatch({
 sp <- str_to_sentence(input$species)
 
 # Define source of expert range maps
@@ -54,7 +55,7 @@ for( i in 1:length(sp)){
     sf_range_map <- st_read(file)
   }else{
     path_to_range_map <- NULL
-    cat("========== No range map available for ", sp[i] ,"at the ", expert_source , " expert source database ==========")
+    stop("No range map available for ", sp[i] ," at the ", expert_source , " expert source database")
   }
   
   if (!dir.exists(file.path(outputFolder,sp[i]))){
@@ -72,6 +73,8 @@ for( i in 1:length(sp)){
 
 # Outputing result to JSON -----------------------------------------------------
 output <- list("sf_range_map" = v_path_to_range_map )
+}, error = function(e) { list(error = conditionMessage(e)) })
+
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

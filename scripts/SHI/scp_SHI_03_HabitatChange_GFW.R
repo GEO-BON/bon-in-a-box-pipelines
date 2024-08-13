@@ -23,6 +23,7 @@ print(input)
 source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
 
 
+output<- tryCatch({
 # Parameters -------------------------------------------------------------------
 # spatial resolution
 spat_res <- ifelse(is.null(input$spat_res), 1000 ,input$spat_res)
@@ -162,7 +163,7 @@ for(i in 1:length(sp)){
               resampling = "near")
   
   print("========== Forest gain layer downloaded ==========")
-  
+
   r_GFW_gain <- cube_to_raster(cube_GFW_gain , format="terra") # convert to raster format
   r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_aoh_rescaled),rcl=cbind(0,NA))
 
@@ -227,6 +228,7 @@ for(i in 1:length(sp)){
   df_conn_score_gfw
 
   write_tsv(df_conn_score_gfw,file.path(outputFolder,sp[i],paste0(sp[i],"_df_conn_scoreGISfrag.tsv")))
+  
   print("========== Connectivity Score generated ==========")
 
 
@@ -237,6 +239,8 @@ for(i in 1:length(sp)){
   print(df_SHS_gfw)
   
   df_SHS_gfw_tidy <- df_SHS_gfw |> pivot_longer(c("HS","CS","SHS"),names_to = "Score", values_to = "Values")
+
+
   v_path_SHS_tidy[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_SHS_table_tidy.tsv"))
   print(df_SHS_gfw_tidy)
   write_tsv(df_SHS_gfw_tidy,file= v_path_SHS_tidy[i])
@@ -270,6 +274,8 @@ output <- list( "img_shs_map" = v_path_SHS_map,
                 "img_shs_timeseries" = v_path_img_SHS_timeseries,
                 "df_shs" = v_path_SHS,
                 "df_shs_tidy" = v_path_SHS_tidy)
+
+}, error = function(e) { list(error = conditionMessage(e)) })
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))
