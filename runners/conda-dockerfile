@@ -27,4 +27,8 @@ RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"Coordinate
 # Packages from GitHub
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
 
+# Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
+# That error would not prevent the correct installation, but it looked like it to the user.
+RUN chmod -R 777 /opt/conda/pkgs/cache
+
 RUN date +"%Y-%m-%d %R" > /version.txt
