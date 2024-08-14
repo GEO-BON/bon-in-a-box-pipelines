@@ -26,7 +26,7 @@ inputs:
     type: text[]
     example: 
       [
-        "Saguinus oedipus"
+        "Myrmecophaga tridactyla"
       ]
   r_area_of_habitat:
     label: area of habitat

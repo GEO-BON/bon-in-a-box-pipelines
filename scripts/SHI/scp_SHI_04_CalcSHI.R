@@ -31,13 +31,19 @@ path_aoh_areas <- input$df_aoh_areas
 print(path_aoh_areas)
 
 # Load SHS tables
-l_df_SHS_sp <- map(path_shs, ~read_tsv(.x))
-df_SHS_sp <- bind_rows(l_df_SHS_sp)
+df_SHS_sp_1 <- map(path_shs, ~read_tsv(.x))
+str(df_SHS_sp_1)
+df_SHS_sp_2 <- read_tsv(input$df_shs_tidy)
+str(df_SHS_sp_2)
+
+df_SHS_sp <- bind_rows(df_SHS_sp_1)
 str(df_SHS_sp)
 
 # Load area tables
 df_aoh_areas <- read_tsv(path_aoh_areas) |> mutate(W_stewardship=area_aoh/area_range_map)
-head(df_aoh_areas)
+str(df_aoh_areas)
+print("this is areas")
+
 # Join tables
 df_SHS_aoh_areas_sp <- df_SHS_sp |> filter(Score=="SHS") |> left_join(df_aoh_areas,by="sci_name",relationship="many-to-one")
 
@@ -45,7 +51,7 @@ df_SHS_aoh_areas_sp <- df_SHS_sp |> filter(Score=="SHS") |> left_join(df_aoh_are
 # Calculate SHI
 #-------------------------------------------------------------------------------
 
-df_SHI <- df_SHS_aoh_areas_sp |> group_by(Year) |> summarise(SHI=mean(Values),Steward_SHI= weighted.mean(Values,W_stewardship))
+df_SHI <- df_SHS_aoh_areas_sp |> group_by(Year) |> summarise(SHI=mean(Values), Steward_SHI= weighted.mean(Values,W_stewardship))
 path_SHI <- file.path(outputFolder,"SHI_table.csv")
 print(df_SHI)
 write_csv(df_SHI,file= path_SHI)

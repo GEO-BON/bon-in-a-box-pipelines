@@ -385,13 +385,6 @@
     },
     {
       "source": "39",
-      "sourceHandle": "df_shs",
-      "target": "40",
-      "targetHandle": "df_shs_tidy",
-      "id": "reactflow__edge-39df_shs-40df_shs_tidy"
-    },
-    {
-      "source": "39",
       "sourceHandle": "img_shs_map",
       "target": "43",
       "targetHandle": null,
@@ -403,13 +396,6 @@
       "target": "41",
       "targetHandle": null,
       "id": "reactflow__edge-39r_habitat_by_tstep-41"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "df_shs_tidy",
-      "target": "42",
-      "targetHandle": null,
-      "id": "reactflow__edge-39df_shs_tidy-42"
     },
     {
       "source": "40",
@@ -438,6 +424,20 @@
       "target": "38",
       "targetHandle": "study_area_opt",
       "id": "reactflow__edge-7-38study_area_opt"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "df_shs_tidy",
+      "target": "40",
+      "targetHandle": "df_shs_tidy",
+      "id": "reactflow__edge-39df_shs_tidy-40df_shs_tidy"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "df_shs",
+      "target": "42",
+      "targetHandle": null,
+      "id": "reactflow__edge-39df_shs-42"
     }
   ],
   "inputs": {
@@ -613,10 +613,10 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@39|df_shs_tidy": {
-      "description": "A TSV (Tab Separated Values) file in long format containing Habitat Score, Connectivity Score and SHS by time step for each species.",
-      "label": "SHS table (long format)",
-      "type": "text/csv",
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@39|df_shs": {
+      "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score and SHS by time step for each species.",
+      "label": "SHS table",
+      "type": "text/tab-separated-values[]",
       "weight": 1
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@39|img_shs_map": {
