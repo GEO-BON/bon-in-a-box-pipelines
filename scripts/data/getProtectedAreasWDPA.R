@@ -50,6 +50,7 @@ if(nrow(study_area_polygon)==0){
 }  # stop if object is empty
 
 print("Study area downloaded")
+# Hello
 
 protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
 
