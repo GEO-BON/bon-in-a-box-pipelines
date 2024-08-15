@@ -877,25 +877,29 @@
         "weighted_raster",
         "unweighted_raster"
       ],
-      "example": "random"
+      "example": "random",
+      "weight": 0
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "number of background points",
       "type": "int",
-      "example": 10000
+      "example": 10000,
+      "weight": 1
     },
     "pipeline@46": {
       "label": "number of runs",
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "type": "int",
-      "example": 2
+      "example": 2,
+      "weight": 2
     },
     "pipeline@57": {
       "label": "projection system",
       "description": "String, projection system",
       "type": "text",
-      "example": "EPSG:6623"
+      "example": "EPSG:6623",
+      "weight": 3
     },
     "pipeline@58": {
       "label": "bbox",
@@ -906,7 +910,8 @@
         -1971146,
         1015207,
         1511916
-      ]
+      ],
+      "weight": 4
     },
     "data>heatmapFromSTAC.yml@67|taxa": {
       "description": "taxonomic group to retrieve GBIF heatmap",
@@ -921,7 +926,8 @@
         "amphibians",
         "all"
       ],
-      "example": "reptiles"
+      "example": "reptiles",
+      "weight": 5
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
@@ -931,19 +937,22 @@
         "gbif_pc",
         "gbif_api"
       ],
-      "example": "gbif_api"
+      "example": "gbif_api",
+      "weight": 6
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
-      "example": 2010
+      "example": 2010,
+      "weight": 7
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
-      "example": 2020
+      "example": 2020,
+      "weight": 8
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
@@ -956,13 +965,15 @@
         "checkerboard1",
         "checkerboard2"
       ],
-      "example": "block"
+      "example": "block",
+      "weight": 9
     },
     "data>loadFromStac.yml@119|stac_url": {
       "description": "URL of the Stac catalog",
       "label": "stac_url",
       "type": "text",
-      "example": "https://io.biodiversite-quebec.ca/stac/"
+      "example": "https://io.biodiversite-quebec.ca/stac/",
+      "weight": 10
     },
     "data>loadFromStac.yml@119|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -971,19 +982,22 @@
       "example": [
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
-      ]
+      ],
+      "weight": 11
     },
     "data>loadFromStac.yml@119|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
       "type": "float",
-      "example": 1000
+      "example": 1000,
+      "weight": 12
     },
     "data>loadFromStac.yml@119|mask": {
       "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
       "type": "application/dbf",
-      "example": null
+      "example": null,
+      "weight": 13
     },
     "pipeline@121": {
       "label": "Taxa list",
@@ -991,7 +1005,8 @@
       "type": "text[]",
       "example": [
         "Acer saccharum"
-      ]
+      ],
+      "weight": 14
     }
   },
   "outputs": {
@@ -999,7 +1014,7 @@
       "description": "Variability of predictions based on range method",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
-      "weight": 6
+      "weight": 0
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "Model predictions from Maxent algorithm",
@@ -1009,7 +1024,7 @@
         0,
         1
       ],
-      "weight": 5
+      "weight": 1
     },
     "pipeline@121|defaultOutput": {
       "label": "Species",
@@ -1017,31 +1032,33 @@
       "example": [
         "Acer saccharum"
       ],
-      "type": "text[]"
+      "type": "text[]",
+      "weight": 2
     },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
       "label": "Presences",
       "type": "text/tab-separated-values",
-      "weight": 2
+      "weight": 3
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "Environmental layers used as predictors in species distribution modeling",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 4
     },
     "data>heatmapFromSTAC.yml@67|raster": {
       "description": "Heatmap of GBIF occurences for plants used for bias correction",
       "label": "Density of GBIF occurrences",
       "type": "image/tiff;application=geotiff",
-      "weight": 4
+      "weight": 5
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
-      "example": "10.15468/dl.j644h5"
+      "example": "10.15468/dl.j644h5",
+      "weight": 6
     }
   },
   "metadata": {
