@@ -1,0 +1,22 @@
+script: LC_from_computer.R
+name: get Landcover
+description: Loads landcover data from local computer and crops it to Area of interest
+author:
+  - name: Simon Pahls
+
+inputs: # 0 to many
+  bbox:
+    label: boundry box
+    description: Vector of float, bbox coordinates of the Boundary Box in the order xmin, ymin, xmax,     
+    type: float[]
+    example: [-99, 16, -95, 21.5]
+
+outputs: # 1 to many
+  TCL:
+     label: Tree cover loss map
+     description: Geotiff of Tree cover loss cropped to area of interest
+     type: image/tiff;application=geotiff
+  TC:
+     label: Tree cover map
+     description: Geotiff of Tree cover cropped to area of interest
+     type: image/tiff;application=geotiff

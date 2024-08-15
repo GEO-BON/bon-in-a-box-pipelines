@@ -1,0 +1,39 @@
+script: Indicators.R
+name: Idicator calculation
+description: Calculates Ne ratio and PM ratio from Habitat data
+author:
+  - name: Simon Pahls
+
+inputs: # 0 to many
+  PDG.TABLE:
+     label: Habitat Area Loss
+     description: Vector of Loss of Habitat Area per year of all habitat areas
+     type: text/tab-separated-values
+  popdensity:
+     label: population density
+     description: Number describing Population density estimate(Individuals per Km^2)
+     type: float
+  NeNcratio:
+     label: Ne/Nc ratio
+     description: Number from 0 to 1 describing estimated Ne/Nc ratio
+     type: float
+     example: 0.1
+  points:
+     label: pointcount
+     description: Number from point observations
+     type: float
+     example: 2000
+
+outputs: # 1 to many
+  Nedata:
+     label: Ne estimates
+     description: Table including Ne estimates(calculated from habitat area, population density a d Ne/Nc ratio), Ne>=500 Indicator and statement if population extinct or not.
+     type: text/csv
+  Neratio:
+     label: Ne>=500 ratio
+     description: ratio of populations Ne over 500 vs Ne under 500( pop. with Ne>=500/total nr of pop.) 
+     type: float
+  PMratio:
+     label: PM ratio
+     description: ratio of populations extinct vs extant( pop. extinct/total nr of pop.)
+     type: float

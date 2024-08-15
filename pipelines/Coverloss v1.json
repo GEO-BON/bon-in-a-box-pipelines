@@ -1,0 +1,314 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 781.5217770954748,
+        "y": 252.31808975933183
+      },
+      "data": {
+        "descriptionFile": "Cover loss>loss_map.yml"
+      }
+    },
+    {
+      "id": "9",
+      "type": "output",
+      "position": {
+        "x": 1251.6936951601886,
+        "y": 229.0933941389669
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "10",
+      "type": "output",
+      "position": {
+        "x": 1251.5838114771375,
+        "y": 459.25483605973966
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "11",
+      "type": "userInput",
+      "position": {
+        "x": 337.2307631714143,
+        "y": 91.9225536846723
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Veracruz",
+          "Chiapas",
+          "Oaxaca",
+          "Tabasco",
+          "Campeche",
+          "Puebla"
+        ]
+      }
+    },
+    {
+      "id": "16",
+      "type": "io",
+      "position": {
+        "x": 803.6557848172945,
+        "y": 523.8121873949108
+      },
+      "data": {
+        "descriptionFile": "Cover loss>relative_loss_wcircles.yml"
+      }
+    },
+    {
+      "id": "17",
+      "type": "userInput",
+      "position": {
+        "x": -60.3781486895366,
+        "y": 132.3613478396594
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          -99,
+          -95
+        ]
+      }
+    },
+    {
+      "id": "19",
+      "type": "userInput",
+      "position": {
+        "x": -91.8361459744226,
+        "y": 193.03034260336813
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          16,
+          21.5
+        ]
+      }
+    },
+    {
+      "id": "20",
+      "type": "userInput",
+      "position": {
+        "x": -61.501648592568245,
+        "y": 257.0698370761718
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Cover loss/Pcinerascens_Observations4326.shp"
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": -62.62514849559989,
+        "y": 427.8418223369815
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Cover loss/tree_cover_lossyear_cmp.tif"
+      }
+    },
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": 251.1015625,
+        "y": 318
+      },
+      "data": {
+        "descriptionFile": "Cover loss>CoverLoss.yml"
+      }
+    },
+    {
+      "id": "24",
+      "type": "constant",
+      "position": {
+        "x": -58.8984375,
+        "y": 338
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Cover loss/tree_cover_2000_cmp.tif"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "map",
+      "target": "9",
+      "targetHandle": null,
+      "id": "reactflow__edge-1map-9"
+    },
+    {
+      "source": "11",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "geoLabels",
+      "id": "reactflow__edge-11-1geoLabels"
+    },
+    {
+      "source": "16",
+      "sourceHandle": "relative_loss_wcircles",
+      "target": "10",
+      "targetHandle": null,
+      "id": "reactflow__edge-16relative_loss_wcircles-10"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "SDM",
+      "id": "reactflow__edge-20-1SDM"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "SDM",
+      "id": "reactflow__edge-20-16SDM"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "lonRANGE",
+      "id": "reactflow__edge-17-1lonRANGE"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "latRANGE",
+      "id": "reactflow__edge-19-1latRANGE"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "TCL",
+      "id": "reactflow__edge-22-23TCL"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "SDM",
+      "id": "reactflow__edge-20-23SDM"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "latRANGE",
+      "id": "reactflow__edge-19-23latRANGE"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "lonRANGE",
+      "id": "reactflow__edge-17-23lonRANGE"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "TC",
+      "id": "reactflow__edge-24-23TC"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "PDG.Table",
+      "target": "16",
+      "targetHandle": "PDG.Table",
+      "id": "reactflow__edge-23PDG.Table-16PDG.Table"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "TC_crop",
+      "target": "1",
+      "targetHandle": "TC",
+      "id": "reactflow__edge-23TC_crop-1TC"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "TCL_bin",
+      "target": "1",
+      "targetHandle": "TCL_bin",
+      "id": "reactflow__edge-23TCL_bin-1TCL_bin"
+    }
+  ],
+  "inputs": {
+    "pipeline@11": {
+      "label": "Geographic labels",
+      "description": "Names of geographic labels added to the map, separated by commas",
+      "type": "text[]",
+      "example": [
+        "Veracruz",
+        "Chiapas",
+        "Oaxaca",
+        "Tabasco",
+        "Campeche",
+        "Puebla"
+      ],
+      "weight": 0
+    },
+    "pipeline@17": {
+      "label": "longitudinal range",
+      "description": "Longitudinal boundaries of area of interest, in the order ymin, ymax",
+      "type": "float[]",
+      "example": [
+        -99,
+        -95
+      ],
+      "weight": 1
+    },
+    "pipeline@19": {
+      "label": "latitudinal range",
+      "description": "Latitudinal boundaries of area of interest,, in the order xmin, xmax",
+      "type": "float[]",
+      "example": [
+        16,
+        21.5
+      ],
+      "weight": 2
+    },
+    "pipeline@20": {
+      "label": "SDM",
+      "description": "directory of a shapefile(.shp) containing Polygons produced by a SDM",
+      "type": "text",
+      "example": "Cover loss/Pcinerascens_Observations4326.shp",
+      "weight": 3
+    }
+  },
+  "outputs": {
+    "Cover loss>loss_map.yml@1|map": {
+      "description": "PDF of plotted cover map",
+      "label": "Covermap",
+      "type": "text/tab-separated-values",
+      "weight": 0
+    },
+    "Cover loss>relative_loss_wcircles.yml@16|relative_loss_wcircles": {
+      "description": "plot the relative loss with circles of area",
+      "label": "relative loss graph",
+      "type": "text/tab-separated-values",
+      "weight": 1
+    }
+  }
+}

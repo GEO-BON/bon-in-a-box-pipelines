@@ -1,0 +1,42 @@
+script: CoverLoss.R
+name: Cover Loss
+description: "This script takes Tree cover, Tree cover loss and SDM data, combines it to calculate 
+  The area of and the cover loss in the according areas of interest given by the SDM"
+author:
+  - name: Simon Pahls
+
+inputs:
+  bbox:
+    label: boundry box
+    description: Vector of float, bbox coordinates of the Boundary Box in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-99, 20, -95, 25]
+  SDM:
+    label: SDM
+    description: directory of a shapefile(.shp) containing Polygons produced by a SDM
+    type: application/geo+json	
+    example: "Cover loss/Pcinerascens_Observations4326.shp"
+  TC:
+    label: Tree cover
+    description: directory of .tif file containing Tree cover data 
+    type: image/tiff;application=geotiff	
+    example: 
+  TCL:
+    label: Tree cover loss
+    description: Name of .tif file containing Tree cover loss data 
+    type: image/tiff;application=geotiff	
+    example: 
+
+
+outputs:
+  
+  PDG.Table:
+     label: Habitat Area Loss
+     description: Vector of Loss of Habitat Area per year of all habitat areas
+     type: text/tab-separated-values
+
+  TCL_bin:
+    label: binarized Tree cover loss
+    description: .tif file of binarized Tree cover loss (loss/no loss)
+    type: image/tiff;application=geotiff	
+    example: 

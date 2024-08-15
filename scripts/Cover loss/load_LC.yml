@@ -1,0 +1,23 @@
+script: load_LC.R
+name: load LC from STAC
+description: This Script loads Tree cover and Tree cover loss data from the https://stac.geobon.org/ STAC and crops it to a specified range given by Xbox
+author:
+  - name: Simon Pahls
+
+inputs:
+  bbox:
+    label: boundary box
+    description: area of interest given by c(xmin, ymin, xmax, ymax)
+    type: float[]
+    example: [-99, 22, -92, 29]
+
+ 
+outputs:
+  TC: 
+    label: Tree cover
+    description: Tif file of Tree cover, cropped to bbox extent
+    type: image/tiff;application=geotiff
+  TCL: 
+    label: Tree cover loss
+    description: Tif file of Tree cover loss, cropped to bbox extent
+    type: image/tiff;application=geotiff
