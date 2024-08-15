@@ -30,12 +30,6 @@ if (is.null(input$studyarea_file)){
     study_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
   } } else {study_area <- input$studyarea_file}
 
-# error code if file not found
-#if (is.null(study_area)){
-#  print("File not found. Check spelling."
-#  )
-#}
-
 if (is.null(input$protectedarea_file)){
   if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
     input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
@@ -44,29 +38,32 @@ if (is.null(input$protectedarea_file)){
    input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
    input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
     protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
-  } } else {protected_area <- input$protectedarea_file}
-
-                
+  } } else {protected_area <- input$protectedarea_file}           
 
 crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()
 
 # Read in study area and protected area data
 study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
-print(dim(study_area_polygon))
 
-if(is.null(dim(study_area_polygon))){
-  stop("Polygon does not exist. Check spelling of country and state names.")
-}
+if(nrow(study_area_polygon)==0){
+  stop("Study area polygon does not exist. Check spelling of country and state names.")
+}  # stop if object is empty
 
+print("Study area downloaded")
 
 protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
 
 
+if(nrow(protected_area_polygon)==0){
+  stop("Protected area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas")
+}  # stop if object is empty
 
+print("Protected areas downloaded")
 
 # Save study area and protected area data
 study_area_polygon_path<- file.path(outputFolder, "study_area_polygon.geojson") # Define the file path for the protected area polygon output
 sf::st_write(study_area_polygon, study_area_polygon_path, delete_dsn = T)
+
 protected_area_polygon_path<- file.path(outputFolder, "protected_area_polygon.geojson") # Define the file path for the protected area polygon output
 sf::st_write(protected_area_polygon, protected_area_polygon_path, delete_dsn = T)
 
