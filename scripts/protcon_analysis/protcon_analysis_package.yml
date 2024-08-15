@@ -13,12 +13,12 @@ inputs:
     description: Represents the map of the protected areas within the study area
     type: application/geo+json
   studyarea_epsg:
-    label: study area EPSG
+    label: Study area EPSG
     description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
     type: int
     example: 3395
   unit_distance:
-    label: unit for distance measurement
+    label: Unit for distance measurement
     description: String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.
     type: options
     options:
@@ -26,45 +26,36 @@ inputs:
       - "km2"
     example: "m2"
   distance_threshold:
-    label: distance analysis threshold
-    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5).
+    label: Distance analysis threshold
+    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.
     type: int
     example: 10000
   distance_matrix_type:
-    label: type of distance matrix
+    label: Type of distance matrix
     description: String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation
     type: options
     options:
       - "centroid"
       - "edge"
     example: "centroid"
-  buffer_zone: 
-    label: transboundary buffer distance
-    description: transboundary buffer distance for protected areas outside of the country or region to contribute to connectivity
-    type: int
-    example: 0
   date_column_name:
     label: Date column name
     description: Name of the column in the protected area file that specifies when the PA was created (STATUS_YR for WDPA data)
     type: text
     example: STATUS_YR
-  #date_column_format:
-   # label: Date column format
-    #description: Format of the date column (e.g. 2000-12-01 would be ymd, 2000 would be y, 01-12-2000 would be mdy)
-    #type: text
   years:
-    label: year for cutoff
-    description: year for cutoff for PAs
+    label: Year for cutoff
+    description: Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)
     type: int
     example: 2024
   start_year: 
-    label: start year
-    description: year for the time series plot to start
+    label: Start year
+    description: Year for the time series plot to start
     type: int
     example: 1950
   year_int: 
-    label: year interval
-    description: year interval to calculate in the time series
+    label: Year interval
+    description: Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)
     type: int
     example: 20
 outputs:
@@ -74,13 +65,17 @@ outputs:
     type: text/csv
   result_plot:
     label: Result plot
-    description: percentage of total area that is protected and percentage of protected area that is connected
+    description: Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected
     type: image/png
   result_yrs_plot:
     label: Result plot yrs
-    description: change in protconn over years
+    description: Change in the percentage area that is protected and the percentage that is protected and connected over time
     type: image/png
   result_yrs:
-    label: yrs result
-    description: yrs
+    label: Year result
+    description: Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified
     type: text/csv
+  result_preset_plot:
+    label: ProtConn plot with dispersal presets
+    description: Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km
+    type: image/png

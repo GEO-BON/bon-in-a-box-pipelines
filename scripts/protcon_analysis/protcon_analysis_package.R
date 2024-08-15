@@ -19,23 +19,32 @@ output<- tryCatch({
 
 units::units_options(set_units_mode = "standard")
 # Load study area shapefile
+print("Loading polygons")
 study_area<- geojsonsf::geojson_sf(input$study_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 
 protected_area<- geojsonsf::geojson_sf(input$protected_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
 
 str(protected_area)
 
-protected_area$year <- lubridate::year(protected_area$created_date)
-print(protected_area$year)
-# filter for year
+protected_area <- protected_area %>% rename(date_column = input$date_column_name)
+
+if(is.character(protected_area$date_column)){
+protected_area$date_column <- lubridate::parse_date_time(protected_area$date_column, orders=c("ymd", "mdy", "dmy"))
+protected_area$year <- lubridate::year(protected_area$date_column)
+} else (protected_area$year <- protected_area$date_column)
+
+if(is.null(protected_area$date_column)){
+  stop("Date column is not in one of the supported formats. Supported formats are year-month-day, month-day-year, day-month-year (or year/month/dat, month/day/year, or day/month/year)")
+}
+
+print("Calculating ProtConn")
 protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
 
 protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
-
-print(protcon_result)
+transboundary=0, distance_thresholds=c(input$distance_threshold))
 
 protcon_result.df <- as.data.frame(protcon_result)[c(2,3,4),c(3,4)]
+protcon_result.df[is.na(protcon_result.df)] <- 0
 
 result_plot <- ggplot2::ggplot(protcon_result.df) +
   geom_col(aes(y=Percentage, x=1, fill=`ProtConn indicator`)) +
@@ -49,17 +58,26 @@ result_plot <- ggplot2::ggplot(protcon_result.df) +
 # Change in protection over time
 # Sequence with start year by interval
 years <- seq(from=input$start_year, to=2024, by=input$year_int)
+
+# assign all PAs with no date to the start date for plotting
+for(i in 1:nrow(protected_area)) {
+ if(is.na(protected_area$year[i])){
+  protected_area$year[i] <- input$start_year
+}
+}
 # Calculate ProtConn for each specified year
+print("Calculating ProtConn time series")
 protcon_ts <- function(r){
-    protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
+    protected_area_filt <- protected_area %>% dplyr::filter(year <= r)
     protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-        transboundary=input$buffer_zone, distance_thresholds=c(input$distance_threshold))
+        transboundary=0, distance_thresholds=c(input$distance_threshold))
     protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=r) 
     return(protcon_result.df)
 }
 
 protcon_ts_result <- lapply(years, FUN=protcon_ts)
 result_yrs <- bind_rows(protcon_ts_result)
+result_yrs[is.na(result_yrs)] <- 0
 
 xint <- input$start_year + 10
 
@@ -85,6 +103,37 @@ annotate("text", x=xint, y=18, label="Aichi target", color="grey30")+
 geom_line() +
 theme_classic()
 
+print("Calculating ProtConn for three most common dispersal distances")
+protcon_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="km2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=0, distance_thresholds=1)
+protcon_result_1km <- as.data.frame(protcon_result_1km)[c(2,3,4),c(3,4)]
+protcon_result_1km[is.na(protcon_result_1km)] <- 0
+protcon_result_1km$distance <- "1 km"
+
+protcon_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="km2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=0, distance_thresholds=10)
+protcon_result_10km <- as.data.frame(protcon_result_10km)[c(2,3,4),c(3,4)]
+protcon_result_10km[is.na(protcon_result_10km)] <- 0
+protcon_result_10km$distance <- "10 km"
+
+protcon_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="km2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=0, distance_thresholds=100)
+protcon_result_100km <- as.data.frame(protcon_result_100km)[c(2,3,4),c(3,4)]
+protcon_result_100km[is.na(protcon_result_100km)] <- 0
+protcon_result_100km$distance <- "100 km"
+
+results_preset <- rbind.data.frame(protcon_result_1km, protcon_result_10km, protcon_result_100km)
+
+result_preset_plot <- ggplot2::ggplot(results_preset) +
+  geom_col(aes(y=Percentage, x=1, fill=`ProtConn indicator`)) +
+  coord_polar(theta="y") +
+  xlim(c(0, 1.5)) +
+  geom_text(aes(y=Percentage, x=1, group=`ProtConn indicator`, label=paste0(round(Percentage, 2), "%")), position=position_stack(vjust=0.5))+
+  scale_fill_manual(values=c("seagreen4", "seagreen1", "orchid4"))+
+  facet_wrap(~distance)+
+  theme_void() +
+  theme(text=element_text(color="White"))
+
 # Define outputs and output paths
 protcon_result_path<- file.path(outputFolder, "protcon_result.csv") # Define the file path for the 'val_wkt_path' output
 write.csv(protcon_result[,c(3,4)], protcon_result_path, row.names = F ) # Write the 'val_wkt_path' output
@@ -98,10 +147,15 @@ ggsave(protcon_result_yrs_path, result_yrs_plot)
 protcon_result_yrs_path2 <- file.path(outputFolder, "result_plot_yrs.csv")
 write.csv(result_yrs, protcon_result_yrs_path2, row.names=F)
 
+result_plot_preset_path <- file.path(outputFolder, "result_preset_plot.png")
+ggsave(result_plot_preset_path, result_preset_plot, dpi=300)
+
+
 output<- list(protcon_result = protcon_result_path,
 result_plot = result_plot_path, 
 result_yrs_plot = protcon_result_yrs_path,
-result_yrs = protcon_result_yrs_path2)
+result_yrs = protcon_result_yrs_path2,
+result_preset_plot = result_plot_preset_path)
 
 
 }, error = function(e) { list(error= conditionMessage(e)) })
