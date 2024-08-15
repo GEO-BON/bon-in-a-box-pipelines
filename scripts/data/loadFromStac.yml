@@ -52,4 +52,17 @@ outputs:
   weight_matrix_with_layers:
     label: Weight matrix with layers
     description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
-    type: text 
+    type: text
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - libgdal
+    - proj
+    - r-gdalcubes
+    - r-rstac
+    - r-sf
+    - r-dplyr
+    - r-rjson
+    - r-rcurl
