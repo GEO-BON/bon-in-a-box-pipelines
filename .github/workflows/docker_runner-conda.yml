@@ -1,4 +1,4 @@
-name: R Runner, main branch
+name: Conda Runner, main branch
 
 on:
   workflow_dispatch:
