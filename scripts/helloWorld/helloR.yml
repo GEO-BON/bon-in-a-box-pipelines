@@ -12,6 +12,7 @@ inputs:
     label: Some raster
     description: |
       Some raster file, with some description here.
+
       _Input descriptions can use MarkDown too._
     type: image/tiff;application=geotiff
     example: http://something-compatible.tiff
