@@ -5,12 +5,14 @@ author:
     email: jean-michel.lord@mcgill.ca
     identifier: https://orcid.org/0009-0007-3826-1125
   - name: Guillaume Larocque
-description: "This sample script shows how it works."
+description: "This sample script shows how it works. Remember that you can use **MarkDown** to style descriptions and add [links](http://boninabox.geobon.org)."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   raster:
     label: Some raster
-    description: Some raster file, with some description here
+    description: |
+      Some raster file, with some description here.
+      _Input descriptions can use MarkDown too._
     type: image/tiff;application=geotiff
     example: http://something-compatible.tiff
   intensity:
@@ -48,7 +50,7 @@ inputs:
 outputs:
   text:
     label: Text
-    description: We can add plain text
+    description: We can add plain text. _Output descirptions can use MarkDown too._
     type: text/plain
   number:
     label: A number (intensity*3)
