@@ -22,9 +22,13 @@ RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
 RUN mamba env create -f /data/r-environment.yml
 
 # These packages are not in conda-forge
-RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \"geodata\", \"OpenStreetMap\"), repos=\"https://cloud.r-project.org/\")'"
+# ADD CRAN PACKAGES HERE
+RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \
+        \"geodata\", \
+        \"OpenStreetMap\"\
+    ), repos=\"https://cloud.r-project.org/\")'"
 
-# Packages from GitHub
+# ADD GITHUB PACKAGES HERE
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
 
 # Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
