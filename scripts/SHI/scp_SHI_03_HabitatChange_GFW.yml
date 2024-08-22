@@ -1,0 +1,101 @@
+script: scp_SHI_03_HabitatChange_GFW.R
+name: Measure habitat change
+description: 
+  This script loads the area of habitat of the species and extracts the land cover layers to measure changes on the habitat of the species.
+author: 
+  - name: Maria Isabel Arce-Plata
+    identifier: https://orcid.org/0000-0003-4024-9268
+  - name: "Guillaume Larocque"
+    identifier: "https://orcid.org/0000-0002-5967-9156"
+license: CC BY 
+external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI 
+inputs:
+  spat_res:
+    label: output spatial resolution
+    description: Spatial resolution (in meters) for the output of the analysis.
+    type: int
+    example: 1000
+  srs:
+    label: spatial reference system
+    description: Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.
+    type: text
+    example: EPSG:3116
+  species:
+    label: species
+    description: Scientific name of the species.
+    type: text[]
+    example: 
+      [
+        "Myrmecophaga tridactyla"
+      ]
+  r_area_of_habitat:
+    label: area of habitat
+    description: Raster file with the area of habitat for each species.
+    type: image/tiff;application=geotiff[]
+    example:
+      [
+        "/scripts/SHI/Saguinus oedipus_r_aoh.tif"
+      ]
+  sf_bbox:
+    label: bounding box
+    description: Bounding box for the area of habitat for each species.
+    type: application/geopackage+sqlite3[]
+    example: 
+      [
+        "/scripts/SHI/Saguinus oedipus_st_bbox.gpkg"
+      ]
+  min_forest:
+    label: min forest
+    description: Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
+    type: int[]
+    example: 
+      [
+        50
+      ]
+  max_forest:
+    label: max forest
+    description: Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus]) 
+    type: int[]
+    example: 
+      [
+        100
+      ]
+  t_0:
+    label: initial time
+    description: Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.
+    type: int
+    example: 2000
+  t_n:
+    label: final time
+    description: Year where the analysis should end (it should be later than Initial time)
+    type: int
+    example: 2020
+  time_step:
+    label: time step
+    description: Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.
+    type: int
+    example: 10
+outputs:
+  img_shs_map:
+    label: SHS map
+    description: Figure showing a map with changes in the habitat for the time range for each species.
+    type: image/png[]
+  r_habitat_by_tstep:
+    label: Habitat by time step
+    description: Raster of habitat by time step.
+    type: image/tiff;application=geotiff[]
+  img_shs_timeseries:
+    label: SHS time series
+    description: Figure showing a time series of SHS values for each time step for each species.
+    type: image/png[]
+  df_shs:
+    label: SHS table
+    description: A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score and SHS by time step for each species.
+    type: text/tab-separated-values[]
+  df_shs_tidy:
+    label: SHS table (long format)
+    description: A TSV (Tab Separated Values) file in long format containing Habitat Score, Connectivity Score and SHS by time step for each species.
+    type: text/tab-separated-values[]
+references:
+- text: Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)
+- text: Jetz, W., McGowan, J., Rinnan, D. S., Possingham, H. P., Visconti, P., O’Donnell, B., & Londoño-Murcia, M. C. (2022). Include biodiversity representation indicators in area-based conservation targets. Nature Ecology & Evolution, 6(2), 123–126. [https://doi.org/10.1038/s41559-021-01620-y](https://www.nature.com/articles/s41559-021-01620-y)

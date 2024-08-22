@@ -1,0 +1,38 @@
+script: scp_SHI_01_GetRangeMap.R
+name: Get range map 
+description: This script downloads the range map of the species according to the expert source chosen. In case that no range map is available (output NULL), at least a species distribution model should be uploaded to continue to the next step to calculate the species habitat index.
+author: 
+  - name: Maria Isabel Arce-Plata
+    identifier: https://orcid.org/0000-0003-4024-9268
+  - name: "Guillaume Larocque"
+    identifier: "https://orcid.org/0000-0002-5967-9156"
+license: CC BY 
+external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI 
+inputs:
+  species:
+    label: species
+    description: Scientific name of the species.
+    type: text[]
+    example: 
+      [
+        "Myrmecophaga tridactyla"
+      ]
+  expert_source:
+    label: source of expert range map
+    description: Source of the expert range map for the species.
+    type: options
+    options:
+      - MOL
+      - IUCN
+      - QC
+    example: IUCN
+outputs:
+  sf_range_map:
+    label: expert range map
+    description: Polygon with expected area for the species.
+    type: application/geopackage+sqlite3[]
+references:
+  - text: Mammal Diversity Database. (2020). Mammal Diversity Database (Version 1.2) [Data set]. Zenodo. http://doi.org/10.5281/zenodo.4139818. Map of Life. (2021). Mammal range maps harmonised to the Mammals Diversity Database [Data set]. Map of Life. [https://doi.org/10.48600/MOL-48VZ-P413]
+  - text: IUCN. 2022. The IUCN Red List of Threatened Species. Version 2022-2. Accessed on May 2022. [https://www.iucnredlist.org/resources/spatial-data-download]
+  - text: Ministère de l’Environnement, Lutte contre les changements climatiques, Faune et Parcs. Aires de répartition des mammifères terrestres, des reptiles, des amphibiens et des poissons d'eau douce . Acessed on May 2022. [https://www.donneesquebec.ca/recherche/dataset/aires-de-repartition-faune]
+  

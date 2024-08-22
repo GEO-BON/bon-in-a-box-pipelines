@@ -1,0 +1,116 @@
+script: scp_SHI_02_GetAOH.R
+name: Get area of habitat
+description: This script loads the data needed to calculate the area of habitat for a species to use it for the Species Habitat Index(SHI)
+author: 
+  - name: Maria Isabel Arce-Plata
+    identifier: https://orcid.org/0000-0003-4024-9268
+  - name: "Guillaume Larocque"
+    identifier: "https://orcid.org/0000-0002-5967-9156"
+license: CC BY 
+inputs:
+  spat_res:
+    label: output spatial resolution
+    description: Spatial resolution (in meters) for the output of the analysis.
+    type: int
+    example: 1000
+  srs:
+    label: spatial reference system
+    description: Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.
+    type: text
+    example: EPSG:3116
+  study_area_opt:
+    label: study area option
+    description: Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.
+    type: options
+    options:
+      - "Country" 
+      - "Region in Country"
+      - "User defined"
+    example: 
+        Country
+  study_area:
+    label: study area
+    description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
+    type: application/geopackage+sqlite3 
+    example: null
+  country_code:
+    label: country
+    description: 'Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
+    type: text
+    example: Colombia
+  region:
+    label: region
+    description: 'For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
+    type: text
+    example: null
+  buff_size:
+    label: buffer for study area
+    description: Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.
+    type: int
+    example: 0
+  species:
+    label: species
+    description: Scientific name of the species.
+    type: text[]
+    example: 
+      [
+        "Myrmecophaga tridactyla"
+      ]
+  range_map_type:
+    label: type of range map
+    description: 'Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.'
+    type: options
+    options:
+      - Polygon
+      - Raster
+      - Both
+    example:
+      Polygon
+  sf_range_map:
+    label: range map (polygon)
+    description: One geopackage file with the polygon or polygons of the expected area for each species. If it is not available from scp_SHI_GetRangeMap.R then it is recommended to add a polygon with the limits of a species distribution model for the species.
+    type: application/geopackage+sqlite3[]
+    example: 
+      [
+        "/scripts/SHI/Saguinus oedipus_range.gpkg"
+      ]
+  r_range_map:
+    label: range map (raster)
+    description: Raster with expected area for the species.
+    type: image/tiff;application=geotiff[]
+    example: 
+      [
+        null
+      ]
+  elevation_filter:
+    label: filter by elevation
+    description: If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.
+    type: options
+    options:
+      - "Yes"
+      - "No"
+    example:
+      "Yes"
+  elev_buffer:
+    label: elevation buffer
+    description: Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.
+    type: int
+    example: null
+outputs:
+  r_area_of_habitat:
+    label: area of habitat
+    description: Raster file with the area of habitat.
+    type: image/tiff;application=geotiff[]
+  sf_bbox:
+    label: bounding box
+    description: Bounding box for the area of habitat.
+    type: application/geopackage+sqlite3[]
+  df_aoh_areas:
+    label: table with size of areas of reference.
+    description: A TSV (Tab Separated Values) file containing the area of the range map loaded (area_range_map), the size of the study area (area_study_a), the area of the bounding box for the analysis (area_bbox_analysis), size of the buffer used to create the bounding box for the analysis, the size of the area of habitat(area_aoh).
+    type: text/tab-separated-values
+references:
+  - text: Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]
+  - text: Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)
+  - text: Jetz, W., McGowan, J., Rinnan, D. S., Possingham, H. P., Visconti, P., O’Donnell, B., & Londoño-Murcia, M. C. (2022). Include biodiversity representation indicators in area-based conservation targets. Nature Ecology & Evolution, 6(2), 123–126. https://doi.org/10.1038/s41559-021-01620-y [https://www.nature.com/articles/s41559-021-01620-y]
+  - text: Soto L. & Roncancio N. 2017. Modelo de distribución de Saguinus oedipus ID PRI-629. Instituto Alexander von Humboldt. [Biomodelos](http://biomodelos.humboldt.org.co/species/visor?species_id=7017.)
