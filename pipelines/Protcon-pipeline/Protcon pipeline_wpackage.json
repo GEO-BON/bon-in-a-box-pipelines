@@ -143,24 +143,31 @@
       "type": "text",
       "weight": 1
     },
+    "data>getProtectedAreasWDPA.yml@1|transboundary_distance": {
+      "description": "Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
+      "label": "Transboundary distance",
+      "type": "int",
+      "example": 0,
+      "weight": 2
+    },
     "data>getProtectedAreasWDPA.yml@1|studyarea_file": {
       "description": "File path of the study area of interest (leave blank if using data from WDPA)",
       "label": "Study area file",
       "type": "text",
-      "weight": 2
+      "weight": 3
     },
     "data>getProtectedAreasWDPA.yml@1|protectedarea_file": {
       "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA)",
       "label": "Protected areas file",
       "type": "text",
-      "weight": 3
+      "weight": 4
     },
     "protcon_analysis>protcon_analysis_package.yml@18|studyarea_epsg": {
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
       "label": "study area EPSG",
       "type": "int",
       "example": 3395,
-      "weight": 4
+      "weight": 5
     },
     "protcon_analysis>protcon_analysis_package.yml@18|unit_distance": {
       "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
@@ -171,14 +178,14 @@
         "km2"
       ],
       "example": "m2",
-      "weight": 5
+      "weight": 6
     },
     "protcon_analysis>protcon_analysis_package.yml@18|distance_threshold": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5).",
       "label": "distance analysis threshold",
       "type": "int",
       "example": 10000,
-      "weight": 6
+      "weight": 7
     },
     "protcon_analysis>protcon_analysis_package.yml@18|distance_matrix_type": {
       "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
@@ -189,35 +196,35 @@
         "edge"
       ],
       "example": "centroid",
-      "weight": 7
+      "weight": 8
     },
     "protcon_analysis>protcon_analysis_package.yml@18|date_column_name": {
       "description": "Name of the column in the protected area file that specifies when the PA was created (STATUS_YR for WDPA data)",
       "label": "Date column name",
       "type": "text",
       "example": "STATUS_YR",
-      "weight": 8
+      "weight": 9
     },
     "protcon_analysis>protcon_analysis_package.yml@18|years": {
       "description": "year for cutoff for PAs",
       "label": "year for cutoff",
       "type": "int",
       "example": 2024,
-      "weight": 9
+      "weight": 10
     },
     "protcon_analysis>protcon_analysis_package.yml@18|start_year": {
       "description": "year for the time series plot to start",
       "label": "start year",
       "type": "int",
       "example": 1950,
-      "weight": 10
+      "weight": 11
     },
     "protcon_analysis>protcon_analysis_package.yml@18|year_int": {
       "description": "year interval to calculate in the time series",
       "label": "year interval",
       "type": "int",
       "example": 20,
-      "weight": 11
+      "weight": 12
     }
   },
   "outputs": {

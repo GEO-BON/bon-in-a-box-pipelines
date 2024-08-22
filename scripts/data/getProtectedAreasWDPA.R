@@ -30,28 +30,54 @@ if (is.null(input$studyarea_file)){
     study_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
   } } else {study_area <- input$studyarea_file}
 
-if (is.null(input$protectedarea_file)){
-  if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
-    input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
-    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country) # protected areas url
-  } else { # if a state is defined
-   input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
-   input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
-    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state)
-  } } else {protected_area <- input$protectedarea_file}           
-
-crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()
-
-# Read in study area and protected area data
+# Read in study area polygon
 study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
 
 if(nrow(study_area_polygon)==0){
   stop("Study area polygon does not exist. Check spelling of country and state names.")
 }  # stop if object is empty
+print("Study area downloaded")
+
+# Convert the input distance into degrees to create buffer for pulling protected areas
+## Get centroid of the study area
+centroid <- st_centroid(study_area_polygon)
+centroid_coords <- st_coordinates(centroid)
+## Define distance in meters
+distance_meters <- input$transboundary_distance
+## Transform point to a CRS that uses meters
+point_meters <- st_transform(centroid_coords, crs = 3857)
+## Calculate offsets in meters
+offset_x <- st_coordinates(point_meters)[,1] + distance_meters # offset in x direction (east)
+offset_y <- st_coordinates(point_meters)[,2] + distance_meters # offset in y direction (west)
+## Create new points with the offsets
+new_point_meters_x <- st_sfc(st_point(c(offset_x, st_coordinates(point_meters)[,2])), crs = 3857)
+new_point_meters_y <- st_sfc(st_point(c(st_coordinates(point_meters)[,1], offset_y)), crs = 3857)
+## Transform the new points back to EPSG:4326
+new_point_degrees_x <- st_transform(new_point_meters_x, crs = 4326)
+new_point_degrees_y <- st_transform(new_point_meters_y, crs = 4326)
+## Calculate the difference in degrees
+longitude_diff <- st_coordinates(new_point_degrees_x)[,1] - longitude
+latitude_diff <- st_coordinates(new_point_degrees_y)[,2] - latitude
+## Take the larger of the two
+if(longitude_diff >= latitude_diff){
+  distance <- longitude_diff
+} else {distance <- latitude_diff}
+
+if (is.null(input$protectedarea_file)){
+  if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
+    input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
+    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country,"&distance=", distance) # protected areas url
+  } else { # if a state is defined
+   input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
+   input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
+    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state, ,"&distance=", distance)
+  } } else {protected_area <- input$protectedarea_file}           
+
+crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()
 
 print("Study area downloaded")
-# Hello
 
+# Read in protected area polygon
 protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
 
 
