@@ -4,41 +4,41 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 429,
-        "y": 292.5
+        "x": 460,
+        "y": 347
       },
       "data": {
-        "descriptionFile": "data>getRangeMap.yml"
+        "descriptionFile": "SHI>scp_SHI_01_GetRangeMap.yml"
       }
     },
     {
       "id": "1",
       "type": "io",
       "position": {
-        "x": 948,
-        "y": 171.5
+        "x": 1070,
+        "y": 174
       },
       "data": {
-        "descriptionFile": "data>getAreaOfHabitat.yml"
+        "descriptionFile": "SHI>scp_SHI_02_GetAOH.yml"
       }
     },
     {
       "id": "2",
       "type": "io",
       "position": {
-        "x": 1597,
-        "y": 90.5
+        "x": 1702,
+        "y": 287.5
       },
       "data": {
-        "descriptionFile": "SHI>habitatChange_GFW.yml"
+        "descriptionFile": "SHI>scp_SHI_03_HabitatChange_GFW.yml"
       }
     },
     {
       "id": "3",
       "type": "userInput",
       "position": {
-        "x": 172,
-        "y": 259.5
+        "x": 192,
+        "y": 304.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -53,7 +53,7 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 300.5
+        "y": 404.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,76 +68,10 @@
     },
     {
       "id": "5",
-      "type": "output",
-      "position": {
-        "x": 1597,
-        "y": 360.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "6",
-      "type": "output",
-      "position": {
-        "x": 2088,
-        "y": 61
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "7",
-      "type": "output",
-      "position": {
-        "x": 2088,
-        "y": 282
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "8",
-      "type": "output",
-      "position": {
-        "x": 2088,
-        "y": 12
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "9",
-      "type": "output",
-      "position": {
-        "x": 2088,
-        "y": 233
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "10",
-      "type": "output",
-      "position": {
-        "x": 2088,
-        "y": 331
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "11",
       "type": "userInput",
       "position": {
-        "x": 572,
-        "y": 141.5
+        "x": 647,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -146,16 +80,259 @@
       }
     },
     {
-      "id": "12",
+      "id": "6",
       "type": "userInput",
       "position": {
-        "x": 561,
-        "y": 175.5
+        "x": 639,
+        "y": 58
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "EPSG:3116"
+      }
+    },
+    {
+      "id": "7",
+      "type": "userInput",
+      "position": {
+        "x": 663,
+        "y": 93
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country",
+        "options": [
+          "Country",
+          "Region in Country",
+          "User defined"
+        ]
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": 432,
+        "y": 128
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "9",
+      "type": "userInput",
+      "position": {
+        "x": 758,
+        "y": 166
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Colombia"
+      }
+    },
+    {
+      "id": "10",
+      "type": "userInput",
+      "position": {
+        "x": 767,
+        "y": 201
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "11",
+      "type": "constant",
+      "position": {
+        "x": 639,
+        "y": 236
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
+    },
+    {
+      "id": "12",
+      "type": "constant",
+      "position": {
+        "x": 718,
+        "y": 285
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Polygon",
+        "options": [
+          "Polygon",
+          "Raster",
+          "Both"
+        ]
+      }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": 437,
+        "y": 477
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff[]",
+        "value": [
+          null
+        ]
+      }
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": 745,
+        "y": 542
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Yes",
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    },
+    {
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": 639,
+        "y": 579
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int"
+      }
+    },
+    {
+      "id": "17",
+      "type": "userInput",
+      "position": {
+        "x": 1389,
+        "y": 375
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          50
+        ]
+      }
+    },
+    {
+      "id": "18",
+      "type": "userInput",
+      "position": {
+        "x": 1386,
+        "y": 410
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          100
+        ]
+      }
+    },
+    {
+      "id": "19",
+      "type": "userInput",
+      "position": {
+        "x": 1398,
+        "y": 445
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2000
+      }
+    },
+    {
+      "id": "20",
+      "type": "userInput",
+      "position": {
+        "x": 1406,
+        "y": 480
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2020
+      }
+    },
+    {
+      "id": "21",
+      "type": "userInput",
+      "position": {
+        "x": 1406,
+        "y": 515
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 10
+      }
+    },
+    {
+      "id": "22",
+      "type": "output",
+      "position": {
+        "x": 2169,
+        "y": 209
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "23",
+      "type": "output",
+      "position": {
+        "x": 2169,
+        "y": 258
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "24",
+      "type": "output",
+      "position": {
+        "x": 2169,
+        "y": 430
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "25",
+      "type": "output",
+      "position": {
+        "x": 1641.628715942124,
+        "y": 199.20921606072204
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -166,6 +343,13 @@
       "target": "0",
       "targetHandle": "species",
       "id": "reactflow__edge-3-0species"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-4-0expert_source"
     },
     {
       "source": "3",
@@ -182,18 +366,88 @@
       "id": "reactflow__edge-3-2species"
     },
     {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "expert_source",
-      "id": "reactflow__edge-4-0expert_source"
-    },
-    {
       "source": "0",
       "sourceHandle": "sf_range_map",
       "target": "1",
       "targetHandle": "sf_range_map",
       "id": "reactflow__edge-0sf_range_map-1sf_range_map"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-5-1spat_res"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-6-1srs"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "study_area_opt",
+      "id": "reactflow__edge-7-1study_area_opt"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-8-1study_area"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "country_code",
+      "id": "reactflow__edge-9-1country_code"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "region",
+      "id": "reactflow__edge-10-1region"
+    },
+    {
+      "source": "11",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "buff_size",
+      "id": "reactflow__edge-11-1buff_size"
+    },
+    {
+      "source": "12",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "range_map_type",
+      "id": "reactflow__edge-12-1range_map_type"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "r_range_map",
+      "id": "reactflow__edge-14-1r_range_map"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "elevation_filter",
+      "id": "reactflow__edge-15-1elevation_filter"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "elev_buffer",
+      "id": "reactflow__edge-16-1elev_buffer"
     },
     {
       "source": "1",
@@ -210,181 +464,84 @@
       "id": "reactflow__edge-1sf_bbox-2sf_bbox"
     },
     {
-      "source": "1",
-      "sourceHandle": "df_aoh_areas",
-      "target": "5",
-      "targetHandle": null,
-      "id": "reactflow__edge-1df_aoh_areas-5"
+      "source": "5",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-5-2spat_res"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-6-2srs"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "min_forest",
+      "id": "reactflow__edge-17-2min_forest"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "max_forest",
+      "id": "reactflow__edge-18-2max_forest"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t_0",
+      "id": "reactflow__edge-19-2t_0"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t_n",
+      "id": "reactflow__edge-20-2t_n"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "time_step",
+      "id": "reactflow__edge-21-2time_step"
     },
     {
       "source": "2",
       "sourceHandle": "img_shs_map",
-      "target": "6",
+      "target": "22",
       "targetHandle": null,
-      "id": "reactflow__edge-2img_shs_map-6"
-    },
-    {
-      "source": "2",
-      "sourceHandle": "r_habitat_by_tstep",
-      "target": "7",
-      "targetHandle": null,
-      "id": "reactflow__edge-2r_habitat_by_tstep-7"
+      "id": "reactflow__edge-2img_shs_map-22"
     },
     {
       "source": "2",
       "sourceHandle": "img_shs_timeseries",
-      "target": "8",
+      "target": "23",
       "targetHandle": null,
-      "id": "reactflow__edge-2img_shs_timeseries-8"
+      "id": "reactflow__edge-2img_shs_timeseries-23"
     },
     {
       "source": "2",
       "sourceHandle": "df_shs",
-      "target": "9",
+      "target": "24",
       "targetHandle": null,
-      "id": "reactflow__edge-2df_shs-9"
+      "id": "reactflow__edge-2df_shs-24"
     },
     {
-      "source": "2",
-      "sourceHandle": "df_shs_tidy",
-      "target": "10",
+      "source": "1",
+      "sourceHandle": "df_aoh_areas",
+      "target": "25",
       "targetHandle": null,
-      "id": "reactflow__edge-2df_shs_tidy-10"
-    },
-    {
-      "source": "11",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "spat_res",
-      "id": "reactflow__edge-11-1spat_res"
-    },
-    {
-      "source": "11",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "spat_res",
-      "id": "reactflow__edge-11-2spat_res"
-    },
-    {
-      "source": "12",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-12-1srs"
-    },
-    {
-      "source": "12",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-12-2srs"
+      "id": "reactflow__edge-1df_aoh_areas-25"
     }
   ],
   "inputs": {
-    "data>getAreaOfHabitat.yml@1|study_area_opt": {
-      "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.",
-      "label": "study area option",
-      "type": "options",
-      "options": [
-        "Country",
-        "Region in Country",
-        "User defined"
-      ],
-      "example": "Region in Country"
-    },
-    "data>getAreaOfHabitat.yml@1|study_area": {
-      "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)",
-      "label": "study area",
-      "type": "application/geopackage+sqlite3",
-      "example": "./getAreaOfHabitat_example.gpkg"
-    },
-    "data>getAreaOfHabitat.yml@1|country_code": {
-      "description": "Name of the country for the analysis. Check the available countries here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/10m-admin-0-details/ or check the name with the option \"Try it out\" at \"country_geojson\" here: https://geoio.biodiversite-quebec.ca/docs#/default/country_geojson_country_geojson__get the \"Response body\" section should show the information for the country.",
-      "label": "country",
-      "type": "text",
-      "example": "Colombia"
-    },
-    "data>getAreaOfHabitat.yml@1|region": {
-      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available regions by putting the Country name at the option \"Try it out\" at \"state_list\" here: https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get",
-      "label": "region",
-      "type": "text",
-      "example": "Bolívar"
-    },
-    "data>getAreaOfHabitat.yml@1|buff_size": {
-      "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
-      "label": "buffer for study area",
-      "type": "int",
-      "example": 0
-    },
-    "data>getAreaOfHabitat.yml@1|range_map_type": {
-      "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
-      "label": "type of range map",
-      "type": "options",
-      "options": [
-        "Polygon",
-        "Raster",
-        "Both"
-      ],
-      "example": "Polygon"
-    },
-    "data>getAreaOfHabitat.yml@1|r_range_map": {
-      "description": "Raster with expected area for the species.",
-      "label": "range map (raster)",
-      "type": "image/tiff;application=geotiff[]",
-      "example": [
-        null
-      ]
-    },
-    "data>getAreaOfHabitat.yml@1|elevation_filter": {
-      "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
-      "label": "filter by elevation",
-      "type": "options",
-      "options": [
-        "Yes",
-        "No"
-      ],
-      "example": "Yes"
-    },
-    "data>getAreaOfHabitat.yml@1|elev_buffer": {
-      "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
-      "label": "elevation buffer",
-      "type": "int",
-      "example": 0
-    },
-    "SHI>habitatChange_GFW.yml@2|min_forest": {
-      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "min forest",
-      "type": "int[]",
-      "example": [
-        50
-      ]
-    },
-    "SHI>habitatChange_GFW.yml@2|max_forest": {
-      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "max forest",
-      "type": "int[]",
-      "example": [
-        100
-      ]
-    },
-    "SHI>habitatChange_GFW.yml@2|t_0": {
-      "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
-      "label": "initial time",
-      "type": "int",
-      "example": 2000
-    },
-    "SHI>habitatChange_GFW.yml@2|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time)",
-      "label": "final time",
-      "type": "int",
-      "example": 2020
-    },
-    "SHI>habitatChange_GFW.yml@2|time_step": {
-      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
-      "label": "time step",
-      "type": "int",
-      "example": 10
-    },
     "pipeline@3": {
       "label": "species",
       "description": "Scientific name of the species.",
@@ -404,49 +561,95 @@
         "QC"
       ]
     },
-    "pipeline@11": {
+    "pipeline@5": {
       "label": "output spatial resolution",
       "description": "Spatial resolution (in meters) for the output of the analysis.",
       "type": "int",
       "example": 1000
     },
-    "pipeline@12": {
+    "pipeline@6": {
       "label": "spatial reference system",
       "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
       "type": "text",
       "example": "EPSG:3116"
+    },
+    "pipeline@7": {
+      "label": "study area option",
+      "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.",
+      "type": "options",
+      "example": "Country",
+      "options": [
+        "Country",
+        "Region in Country",
+        "User defined"
+      ]
+    },
+    "pipeline@9": {
+      "label": "country",
+      "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+      "type": "text",
+      "example": "Colombia"
+    },
+    "pipeline@10": {
+      "label": "region",
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+      "type": "text"
+    },
+    "pipeline@17": {
+      "label": "min forest",
+      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "type": "int[]",
+      "example": [
+        50
+      ]
+    },
+    "pipeline@18": {
+      "label": "max forest",
+      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "type": "int[]",
+      "example": [
+        100
+      ]
+    },
+    "pipeline@19": {
+      "label": "initial time",
+      "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
+      "type": "int",
+      "example": 2000
+    },
+    "pipeline@20": {
+      "label": "final time",
+      "description": "Year where the analysis should end (it should be later than Initial time)",
+      "type": "int",
+      "example": 2020
+    },
+    "pipeline@21": {
+      "label": "time step",
+      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
+      "type": "int",
+      "example": 10
     }
   },
   "outputs": {
-    "data>getAreaOfHabitat.yml@1|df_aoh_areas": {
-      "description": "A TSV (Tab Separated Values) file containing the area of the range map loaded (area_range_map), the size of the study area (area_study_a), the area of the bounding box for the analysis (area_bbox_analysis), size of the buffer used to create the bounding box for the analysis, the size of the area of habitat(area_aoh).",
-      "label": "table with size of areas of reference.",
-      "type": "text/tab-separated-values"
-    },
-    "SHI>habitatChange_GFW.yml@2|img_shs_map": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|img_shs_map": {
       "description": "Figure showing a map with changes in the habitat for the time range for each species.",
       "label": "SHS map",
       "type": "image/png[]"
     },
-    "SHI>habitatChange_GFW.yml@2|r_habitat_by_tstep": {
-      "description": "Raster of habitat by time step.",
-      "label": "Habitat by time step",
-      "type": "image/tiff;application=geotiff[]"
-    },
-    "SHI>habitatChange_GFW.yml@2|img_shs_timeseries": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|img_shs_timeseries": {
       "description": "Figure showing a time series of SHS values for each time step for each species.",
       "label": "SHS time series",
       "type": "image/png[]"
     },
-    "SHI>habitatChange_GFW.yml@2|df_shs": {
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@2|df_shs": {
       "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score and SHS by time step for each species.",
       "label": "SHS table",
       "type": "text/tab-separated-values[]"
     },
-    "SHI>habitatChange_GFW.yml@2|df_shs_tidy": {
-      "description": "A TSV (Tab Separated Values) file in long format containing Habitat Score, Connectivity Score and SHS by time step for each species.",
-      "label": "SHS table (long format)",
-      "type": "text/tab-separated-values[]"
+    "SHI>scp_SHI_02_GetAOH.yml@1|df_aoh_areas": {
+      "description": "A TSV (Tab Separated Values) file containing the area of the range map loaded (area_range_map), the size of the study area (area_study_a), the area of the bounding box for the analysis (area_bbox_analysis), size of the buffer used to create the bounding box for the analysis, the size of the area of habitat(area_aoh).",
+      "label": "table with size of areas of reference.",
+      "type": "text/tab-separated-values"
     }
   },
   "metadata": {
