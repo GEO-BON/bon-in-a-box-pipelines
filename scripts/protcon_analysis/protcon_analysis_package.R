@@ -41,7 +41,7 @@ print("Calculating ProtConn")
 protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
 
 protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=0, distance_thresholds=c(input$distance_threshold))
+transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
 
 protcon_result.df <- as.data.frame(protcon_result)[c(2,3,4),c(3,4)]
 protcon_result.df[is.na(protcon_result.df)] <- 0

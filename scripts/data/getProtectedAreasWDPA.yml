@@ -15,6 +15,11 @@ inputs:
     description: State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.
     type: text
     example: null
+  transboundary_distance:
+    label: Transboundary distance
+    description: Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area. 
+    type: int
+    example: 0
   studyarea_file: 
     label: Study area file
     description: File path of the study area of interest (leave blank if using data from WDPA)
