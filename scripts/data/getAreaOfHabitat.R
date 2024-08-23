@@ -267,7 +267,7 @@ for(i in 1:length(sp)){
   
   # get area for the area of habitat delimited by the study area or country
   r_aoh_area <- terra::cellSize(r_aoh,unit="m")#create raster of areas by pixel
-  area_aoh  <- global(r_aoh_area,sum)$sum 
+  area_aoh  <- global(r_aoh_area*r_aoh,sum,na.rm=T)$sum 
   
   #create dataframe with area values--------------------------------------------
   df_aoh_areas_sp <- tibble(sci_name=sp[i], area_range_map = round(area_range_map), 

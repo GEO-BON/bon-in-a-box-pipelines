@@ -154,12 +154,15 @@ for(i in 1:length(sp)){
     names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
   }
   
+  # resample s_year_loss
+  s_year_loss_resampled <- resample(s_year_loss,r_aoh_rescaled,method="near")
+  
   # mask t0 to AOH
   r_GFW_TC_threshold_mask <- r_GFW_TC_threshold |>
     terra::mask(r_aoh_rescaled) # mask to range map
   
   # mask to t0
-  s_year_loss_mask <- terra::mask(s_year_loss,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
+  s_year_loss_mask <- terra::mask(s_year_loss_resampled,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
   # extract last year
   cat("Extract last year: ",paste0("Loss_",t_n),"\\n")
   s_year_loss_tn <- terra::subset(s_year_loss_mask,paste0("Loss_",t_n))
@@ -184,7 +187,8 @@ for(i in 1:length(sp)){
   print("========== Forest gain layer downloaded ==========")
   
   r_GFW_gain <- cube_to_raster(cube_GFW_gain , format="terra") # convert to raster format
-  r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain ,r_aoh_rescaled),rcl=cbind(0,NA))
+  r_GFW_gain_rescaled <- terra::resample(r_GFW_gain,r_aoh_rescaled,method="mode")
+  r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain_rescaled ,r_aoh_rescaled),rcl=cbind(0,NA))
 
   #load world limits
   sf_world_lim <- st_read(file.path(path_script,"SHI/world-administrative-boundaries.gpkg"))
@@ -204,7 +208,7 @@ for(i in 1:length(sp)){
   print("========== Map of changes in suitable area generated ==========")
 
   #create non masked layers for distance metrics
-  s_habitat0_nomask <- terra::classify(r_GFW_TC_threshold-s_year_loss,rcl=cbind(-1,0))
+  s_habitat0_nomask <- terra::classify(r_GFW_TC_threshold-s_year_loss_resampled,rcl=cbind(-1,0))
   
   s_habitat_nomask <- c(r_GFW_TC_threshold, s_habitat0_nomask)
   # rm(s_habitat0_nomask)
