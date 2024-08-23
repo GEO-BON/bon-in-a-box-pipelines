@@ -4,10 +4,10 @@
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
-              "geodata","gdalcubes","stacatalogue","rredlist","stringr","httr2","geojsonsf")
+              "geodata","gdalcubes","rredlist","stringr","httr2","geojsonsf")
 
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
+#if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
 
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
@@ -67,9 +67,9 @@ sf_range_map_path <- if(is.null(input$sf_range_map)){NA}else{input$sf_range_map}
 r_range_map_path <- if(is.null(input$r_range_map)){NA}else{input$r_range_map}
 
 # Elevation_filter
-elevation_filter <- ifelse(input$elevation_filter=="Yes", 1,NA)
+elevation_filter <- ifelse(input$elevation_filter=="Yes", 1, 2)
 # Buffer for elevation values
-elev_buffer <- ifelse(is.null(input$elev_buffer), NA,input$elev_buffer)
+elev_buffer <- ifelse(is.null(input$elev_buffer), NA, input$elev_buffer)
 
 #credentials
 token <- Sys.getenv("IUCN_TOKEN")
@@ -213,11 +213,13 @@ for(i in 1:length(sp)){
     # Load elevation preferences
     df_IUCN_sheet <- rredlist::rl_search(sp[i], key = token)$result
     
+    print(df_IUCN_sheet)
     print(dim(df_IUCN_sheet))
     
     if(is.null(dim(df_IUCN_sheet))){
       stop("Species not found in IUCN database. Check name and spelling.")
     }
+  print("made it here")
     df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
       min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
         is.na(elevation_lower) ~ NA_real_,
@@ -227,11 +229,13 @@ for(i in 1:length(sp)){
         is.na(elevation_upper) ~ NA_real_,
         !is.na(elevation_upper) ~ as.numeric(elevation_upper) + elev_buffer)
     )
-    
+    print("made it here")
+  
     print(df_IUCN_sheet_condition |> select(elevation_lower, elevation_upper))
     
+    source(file.path(path_script, "data/loadFromStacFun.R"), echo=TRUE) # for load_cube function
     with(df_IUCN_sheet_condition, if(is.na(min_elev)  & is.na(max_elev)){ # if no elevation values are provided then the range map stays the same
-      r_aoh <<- terra::wrap(r_aoh)
+      r_aoh <- terra::wrap(r_aoh)
     }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
       # STRM from Copernicus
       cube_STRM <-
@@ -245,6 +249,9 @@ for(i in 1:length(sp)){
                   t0 = "2021-01-01",
                   t1 = "2021-12-31",
                   resampling = "bilinear")
+      print("made it here")
+      # ISSUE WITH LOADING THE IUCN DATA FROM THE STAC, NEED TO FIX
+      source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo=TRUE)
       cube_STRM_range <- funFilterCube_range(cube_STRM, min = min_elev , max = max_elev) |> select_bands("data")
       
       # convert to raster
