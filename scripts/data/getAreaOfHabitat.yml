@@ -116,7 +116,7 @@ inputs:
     description: Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero.
       Positive values will increase the range by the given number and negative values will reduce the range.
     type: int
-    example: 0
+    example: null
 outputs:
   r_area_of_habitat:
     label: area of habitat
