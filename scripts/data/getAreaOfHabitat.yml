@@ -41,6 +41,7 @@ inputs:
     description: Path to the study area file, if "User defined" study area option was chosen.
       This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3
+    example: null
   country_code:
     label: country
     description: >
