@@ -12,7 +12,7 @@ if(length(new.packages)) install.packages(new.packages)
 lapply(packages,require,character.only=T)
 
 path_script <- Sys.getenv("SCRIPT_LOCATION")
-
+setwd(outputFolder)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)

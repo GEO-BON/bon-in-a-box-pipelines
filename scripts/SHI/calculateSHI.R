@@ -24,6 +24,7 @@ print(input)
 # Load all tables
 #-------------------------------------------------------------------------------
 # Define species
+output<- tryCatch({
 path_shs <- input$df_shs_tidy
 path_aoh_areas <- input$df_aoh_areas
 
@@ -69,6 +70,7 @@ output <- list( "df_shi" = path_SHI,
                 "img_shi_timeseries" = path_img_SHI_timeseries ,
                 "img_w_shi_timeseries" = path_img_W_SHI_timeseries)
 
+}, error = function(e) { list(error = conditionMessage(e)) })
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))
 

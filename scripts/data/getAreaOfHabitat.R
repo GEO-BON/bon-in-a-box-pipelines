@@ -20,7 +20,8 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
+source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo=TRUE)
+output<- tryCatch({
 
 get_country<-function(country){
   resp <- req_perform( request(paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=",country)))
@@ -212,6 +213,11 @@ for(i in 1:length(sp)){
     # Load elevation preferences
     df_IUCN_sheet <- rredlist::rl_search(sp[i], key = token)$result
     
+    print(dim(df_IUCN_sheet))
+    
+    if(is.null(dim(df_IUCN_sheet))){
+      stop("Species not found in IUCN database. Check name and spelling.")
+    }
     df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
       min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
         is.na(elevation_lower) ~ NA_real_,
@@ -281,5 +287,6 @@ output <- list("r_area_of_habitat" = v_path_to_area_of_habitat ,
                "sf_bbox" = v_path_bbox_analysis,
                "df_aoh_areas"= path_aoh_areas)
 
+}, error = function(e) { list(error = conditionMessage(e)) })
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

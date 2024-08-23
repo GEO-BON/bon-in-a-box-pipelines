@@ -20,9 +20,9 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
+source(file.path(path_script,"data/filterCubeRangeFunc.R"), echo=TRUE)
 
-
+output<- tryCatch({
 # Parameters -------------------------------------------------------------------
 # spatial resolution
 spat_res <- ifelse(is.null(input$spat_res), 1000 ,input$spat_res)
@@ -294,6 +294,8 @@ output <- list( "img_shs_map" = v_path_SHS_map,
                 "img_shs_timeseries" = v_path_img_SHS_timeseries,
                 "df_shs" = v_path_SHS,
                 "df_shs_tidy" = v_path_SHS_tidy)
+
+}, error = function(e) { list(error = conditionMessage(e)) })
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

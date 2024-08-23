@@ -20,7 +20,7 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-source(file.path(path_script,"SHI/funFilterCube_range.R"), echo=TRUE)
+source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo=TRUE)
 
 output<- tryCatch({
 

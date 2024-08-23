@@ -160,17 +160,6 @@
       }
     },
     {
-      "id": "47",
-      "type": "io",
-      "position": {
-        "x": 378.14364634323783,
-        "y": 372.4295956468615
-      },
-      "data": {
-        "descriptionFile": "SHI>scp_SHI_01_GetRangeMap.yml"
-      }
-    },
-    {
       "id": "48",
       "type": "io",
       "position": {
@@ -268,23 +257,20 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "57",
+      "type": "io",
+      "position": {
+        "x": 374.54998779296875,
+        "y": 350.7999954223633
+      },
+      "data": {
+        "descriptionFile": "data>getRangeMap.yml"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "47",
-      "targetHandle": "species",
-      "id": "reactflow__edge-3-47species"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "47",
-      "targetHandle": "expert_source",
-      "id": "reactflow__edge-4-47expert_source"
-    },
     {
       "source": "3",
       "sourceHandle": null,
@@ -319,13 +305,6 @@
       "target": "48",
       "targetHandle": "spat_res",
       "id": "reactflow__edge-5-48spat_res"
-    },
-    {
-      "source": "47",
-      "sourceHandle": "sf_range_map",
-      "target": "48",
-      "targetHandle": "sf_range_map",
-      "id": "reactflow__edge-47sf_range_map-48sf_range_map"
     },
     {
       "source": "17",
@@ -438,6 +417,27 @@
       "target": "56",
       "targetHandle": null,
       "id": "reactflow__edge-49img_shs_timeseries-56"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "sf_range_map",
+      "target": "48",
+      "targetHandle": "sf_range_map",
+      "id": "reactflow__edge-57sf_range_map-48sf_range_map"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "species",
+      "id": "reactflow__edge-3-57species"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-4-57expert_source"
     }
   ],
   "inputs": {
@@ -495,13 +495,6 @@
       "example": "Colombia",
       "weight": 5
     },
-    "SHI>scp_SHI_02_GetAOH.yml@48|region": {
-      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
-      "label": "region",
-      "type": "text",
-      "weight": 6,
-      "example": "Bolivar"
-    },
     "pipeline@17": {
       "label": "min forest",
       "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
@@ -509,7 +502,7 @@
       "example": [
         50
       ],
-      "weight": 7
+      "weight": 6
     },
     "pipeline@18": {
       "label": "max forest",
@@ -518,35 +511,48 @@
       "example": [
         100
       ],
-      "weight": 8
+      "weight": 7
     },
     "pipeline@19": {
       "label": "initial time",
       "description": "Year where the analysis should start. Global Forest Watch data is available from the year 2000 to 2020.",
       "type": "int",
       "example": 2000,
-      "weight": 9
+      "weight": 8
     },
     "pipeline@20": {
       "label": "final time",
       "description": "Year where the analysis should end (it should be later than Initial time)",
       "type": "int",
       "example": 2020,
-      "weight": 10
+      "weight": 9
     },
     "pipeline@21": {
       "label": "time step",
       "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
       "type": "int",
       "example": 10,
+      "weight": 10
+    },
+    "SHI>scp_SHI_02_GetAOH.yml@48|study_area": {
+      "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)",
+      "label": "study area",
+      "type": "application/geopackage+sqlite3",
       "weight": 11
+    },
+    "SHI>scp_SHI_02_GetAOH.yml@48|region": {
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+      "label": "region",
+      "type": "text",
+      "weight": 12,
+      "example": "Bolivar"
     },
     "SHI>scp_SHI_02_GetAOH.yml@48|buff_size": {
       "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
       "label": "buffer for study area",
       "type": "int",
       "example": 0,
-      "weight": 12
+      "weight": 13
     },
     "SHI>scp_SHI_02_GetAOH.yml@48|range_map_type": {
       "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
@@ -558,7 +564,7 @@
         "Both"
       ],
       "example": "Polygon",
-      "weight": 13
+      "weight": 14
     },
     "SHI>scp_SHI_02_GetAOH.yml@48|r_range_map": {
       "description": "Raster with expected area for the species.",
@@ -567,7 +573,7 @@
       "example": [
         null
       ],
-      "weight": 14
+      "weight": 15
     },
     "SHI>scp_SHI_02_GetAOH.yml@48|elevation_filter": {
       "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
@@ -578,18 +584,12 @@
         "No"
       ],
       "example": "Yes",
-      "weight": 15
+      "weight": 16
     },
     "SHI>scp_SHI_02_GetAOH.yml@48|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "elevation buffer",
       "type": "int",
-      "weight": 16
-    },
-    "SHI>scp_SHI_02_GetAOH.yml@48|study_area": {
-      "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)",
-      "label": "study area",
-      "type": "application/geopackage+sqlite3",
       "weight": 17
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@49|spat_res": {
