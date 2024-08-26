@@ -40,28 +40,42 @@ print("Study area downloaded")
 
 # Convert the input distance into degrees to create buffer for pulling protected areas
 ## Get centroid of the study area
+if(input$transboundary_distance>0){
 centroid <- st_centroid(study_area_polygon)
-centroid_coords <- st_coordinates(centroid)
+point_degrees <- as.data.frame(st_coordinates(centroid))
+centroid_meters <- st_transform(centroid, crs = 3857) # convert to crs with meters
+#point_meters <- as.data.frame(st_coordinates(centroid_meters))
+
 ## Define distance in meters
 distance_meters <- input$transboundary_distance
 ## Transform point to a CRS that uses meters
-point_meters <- st_transform(centroid_coords, crs = 3857)
+#point_meters <- st_transform(centroid_coords, crs = 3857)
 ## Calculate offsets in meters
-offset_x <- st_coordinates(point_meters)[,1] + distance_meters # offset in x direction (east)
-offset_y <- st_coordinates(point_meters)[,2] + distance_meters # offset in y direction (west)
+offset_x <- st_coordinates(centroid_meters)[,1] + distance_meters # offset in x direction (east)
+print(paste0("x offset is", offset_x))
+offset_y <- st_coordinates(centroid_meters)[,2] + distance_meters # offset in y direction (west)
+print(paste0("y offset is", offset_y))
 ## Create new points with the offsets
-new_point_meters_x <- st_sfc(st_point(c(offset_x, st_coordinates(point_meters)[,2])), crs = 3857)
-new_point_meters_y <- st_sfc(st_point(c(st_coordinates(point_meters)[,1], offset_y)), crs = 3857)
+new_point_meters_x <- st_sfc(st_point(c(offset_x, st_coordinates(centroid_meters)[,2])), crs = 3857)
+print(paste0("new point meters are", new_point_meters_x))
+new_point_meters_y <- st_sfc(st_point(c(st_coordinates(centroid_meters)[,1], offset_y)), crs = 3857)
+print(paste0("new point meters are", new_point_meters_y))
 ## Transform the new points back to EPSG:4326
 new_point_degrees_x <- st_transform(new_point_meters_x, crs = 4326)
 new_point_degrees_y <- st_transform(new_point_meters_y, crs = 4326)
 ## Calculate the difference in degrees
-longitude_diff <- st_coordinates(new_point_degrees_x)[,1] - longitude
-latitude_diff <- st_coordinates(new_point_degrees_y)[,2] - latitude
+longitude_diff <- st_coordinates(new_point_degrees_x)[,1] - point_degrees$X
+print(longitude_diff)
+latitude_diff <- st_coordinates(new_point_degrees_y)[,2] - point_degrees$Y
+print(latitude_diff)
 ## Take the larger of the two
+
 if(longitude_diff >= latitude_diff){
   distance <- longitude_diff
 } else {distance <- latitude_diff}
+
+} else {distance <- 0}
+print(paste("distance is", distance, "degrees"))
 
 if (is.null(input$protectedarea_file)){
   if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
@@ -70,7 +84,7 @@ if (is.null(input$protectedarea_file)){
   } else { # if a state is defined
    input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
    input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
-    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state, ,"&distance=", distance)
+    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state,"&distance=", distance)
   } } else {protected_area <- input$protectedarea_file}           
 
 crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()

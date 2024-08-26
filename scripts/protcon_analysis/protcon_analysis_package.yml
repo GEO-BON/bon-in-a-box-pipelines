@@ -30,6 +30,11 @@ inputs:
     description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.
     type: int
     example: 10000
+  transboundary_distance:
+    label: Transboundary distance
+    description: Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area. 
+    type: int
+    example: 0
   distance_matrix_type:
     label: Type of distance matrix
     description: String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation
