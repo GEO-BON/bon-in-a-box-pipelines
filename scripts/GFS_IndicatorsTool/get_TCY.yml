@@ -1,0 +1,30 @@
+script: get_TCY.R
+name: Get tree canopy cover over time
+description: This Script loads Tree Canopy Cover and forest Cover loss from STAC, crops rasters to the study area, and returns a stack of rasters describing forest presence/absence over time. 
+author:
+  - name: Simon Pahls 
+  - name: Oliver Selmoni
+
+inputs:
+  
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: application/geo+json
+    example: '/userdata/populations.geojson'
+
+  res:
+    label: Resolution of tree cover map
+    description: Desired resolution for tree cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.001 (~100m). 
+    type: float
+    example: 0.01
+
+outputs:
+  TCY: 
+    label: Tree cover year-by-year
+    description: Tif file of year-by-year tree cover, cropped to bbox extent
+    type: image/tiff;application=geotiff
+  time.points: 
+    label: Years with tree cover information 
+    description: List of years for which tree cover information is available.
+    type: text[]

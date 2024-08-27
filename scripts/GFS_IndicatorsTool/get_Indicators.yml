@@ -1,0 +1,77 @@
+script: get_Indicators.R
+name: Get genetic diversity indicators
+description: This script takes the population habitat size information, and use it to compute genetic diversity indicators. 
+author:
+  - name: Simon Pahls 
+  - name: Oliver Selmoni
+
+inputs:
+  
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: application/geo+json
+    example: '/userdata/populations.geojson'
+
+  habitat_map: 
+    label: Binary map of habitat presence/absence
+    description: Tif file describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points. 
+    type: image/tiff;application=geotiff
+    example: '/userdata/TCY.tif'
+
+  popArea: 
+    label: Table of habitat area by population
+    description: Table of estimated habitat area by population (rows). If available, time points are displayed as columns. 
+    type: text/tab-separated-values
+    example: '/userdata/pop_habitat_area.tsv'
+
+  NeNc:
+    label: Ne:Nc ratio estimate
+    description: Estimated Ne:Nc ratio for the studied species. Multiple values can be provided. 
+    type: float[]
+    example: [0.05, 0.1, 0.5]
+
+  PopDensity:
+    label: Population density
+    description: Estimated density of the population [number of individuals per km2]. Multiple values can be provided.
+    type: float[]
+    example: [50, 100, 1000]
+    
+outputs:
+
+  Ne_table: 
+    label: Effective population size 
+    description: Estimated effective size of every population, based on the latest time point of the habitat cover map. 
+    type: text/tab-separated-values
+
+  Ne_plot:
+    label: Effective population size over time
+    description: Plot displaying change of effective population size over time. 
+    type: image/png
+
+  PM: 
+    label: Population maintained 
+    description: Estimated proportion of mantained populations, comparing earliest and latest time point. 
+    type: float
+
+  PM_plot:
+    label: Populations mantained over time
+    description: Plot showing the change in population area (absolute change and relative change) over time. 
+    type: image/png
+
+  POP_plot:
+    label: Map of populations
+    description: Geographic distribution of the studied populations.
+    type: image/png
+
+  
+  # Habitat_change_plot: 
+  #   label: Population mantained 
+  #   description: 
+  #   type: text/tab-separated-values
+
+  # Populations_map: 
+  #   label: Population mantained 
+  #   description: 
+  #   type: text/tab-separated-values
+

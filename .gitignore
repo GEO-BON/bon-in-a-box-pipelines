@@ -5,3 +5,7 @@ runner.env
 **/.cache
 **/.config
 .server
+rosm.cache
+.RData
+.DS_Store
+*.Rproj

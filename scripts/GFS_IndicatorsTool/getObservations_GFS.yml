@@ -1,0 +1,96 @@
+script: getObservations_GFS.R
+name: GBIF Observations < 100 000
+description: "This script gets observations from GBIF database, using the package RGIF. Modified for compatibility with GFS pipeline"
+external_link: https://github.com/ropensci/rgbif
+author:
+  - name: Sarah Valentin
+    identifier: https://orcid.org/0000-0002-9028-681X
+  - name: adapted by Oliver Selmoni
+
+inputs:
+  species:
+    label: species names
+    description: Scientific name of the species
+    type: text
+    example: "Glyptemys insculpta"
+  country:
+    label: country
+    description: Optional string, country to retrieve the occurrences from. Leave blank to ignore administrative boundaries.
+    type: text
+    example: null
+  year_start:
+    label: start year
+    description: Integer, 4 digit year, start date to retrieve occurrences
+    type: int
+    example: 1990
+  year_end:
+    label: end year
+    description: Integer, 4 digit year, end date to retrieve occurrences
+    type: int
+    example: 2020
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297, -1971146,  1015207,  1511916]
+  proj:
+    label: projection system
+    description: String, projection system of the coordinates in bbox
+    type: text
+    example: "EPSG:6623"
+  occurrence_status:
+    label: occurrence status
+    description: String, type of occurrence status (corresponds to the occurrenceStatus GBIF column)
+    type: options
+    options:
+      - present
+      - absent
+      - present absent
+    example: "present"
+  limit:
+    label: limit
+    description: Integer, maximum number of observations to retrieve from GBIF database (upper limit 100000)
+    type: int
+    example: 2000
+  bbox_buffer:
+    label: bbox buffer
+    description: Interger, width of the buffer around the bbox containing the presence points.
+    type: int
+    example: 0
+
+## Inputs specific to GFS pipeline
+
+  POPinput:
+    label: Type of population input
+    description: The script is run only if polygons of populations are not available, and if no species observation points are available. 
+    type: options
+    options: 
+      - countries
+      - bbox
+      - species_obs
+      - population_polygons
+    example: "countries"
+
+  species_obs:
+    label: Coordinates of species occurrence
+    description: Path to table in tsv format, storing the species observation coordinates. The table must incude header with "decimal_longitude" and "decimal_latitude" columns, indicating the coordinates of every observation. 
+    type: text
+    example: '/userdata/obs_data.tsv'
+
+  countries:
+    label: Countries list
+    description: countries of interest, will be used to subset GBIF observations. 
+    type: text[]
+    example: ["Mexico","Guatemala"]
+  
+outputs:
+  n_presence:
+    label: number of presence points
+    description: Integer, number of presence points retrieved
+    type: int
+    example: 8
+  presence:
+     label: presence
+     description: Table, observations retrieved from GBIF database
+     type: text/tab-separated-values
+     example:

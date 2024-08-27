@@ -1,0 +1,49 @@
+script: get_pop_poly.R
+name: Get population polygons
+description: Given the coordinates of species occurrence, the scripts returns polygons describing spatial distribution of species popualtions.  
+author:
+  - name: Simon Pahls
+  - name: Oliver Selmoni
+
+inputs:
+  POPinput:
+    label: Type of population input
+    description: If polygons are already available ("population_polygons"), this script is not run. For the remaining options, the script will use the species observation coordinates previously calculated ("species_obs")
+    type: options
+    options: 
+      - countries
+      - bbox
+      - species_obs
+      - population_polygons
+    example: "countries"
+
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations. [mandatory if Type of Population Input = "population_polygons", otherwise ignored]
+    type: text
+    example: ''
+
+  species_obs:
+    label: Coordinates of species occurrence
+    description: Path to the table storing the species observation coordinates. The table must incude header with "decimal_longitude" and "decimal_latitude" columns, indicating the coordinates of every observation. [mandatory if Type of Population Input = "species_obs", "countries" or "bbox"; otherwise ignored]
+    type: text/tab-separated-values
+    example: '/userdata/obs_data.tsv'
+
+  buffer_size:
+    label: Size of buffer
+    description: Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = "species_obs", "countries" or "bbox"; otherwise ignored]
+    type: float
+    example: 10
+
+  pop_distance:
+    label: Distance between populations
+    description: Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = "species_obs", "countries" or "bbox"; otherwise ignored]
+    type: float
+    example: 50
+
+outputs:
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: application/geo+json
+    example: ''

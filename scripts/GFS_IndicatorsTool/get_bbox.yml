@@ -1,0 +1,48 @@
+script: get_bbox.R
+name: Get bbox
+description: This script returns the bounding box of the study area.
+author:
+  - name: Simon Pahls
+  - name: Oliver Selmoni
+
+inputs:
+  POPinput:
+    label: Type of population input
+    description: Different options are available to calculate the extent of the study area. If the spatial polygons describing the geographic distribution of populations are available, select "population_polygons". Alternatively, if points observation of the studied species are available, select "species_obs". If points are not available, they can be retrieved from GBIF for a user-defined bounding box (select "bbox") or for a list of countries of interest (select "countries")
+    type: options
+    options: 
+      - countries
+      - bbox
+      - species_obs
+      - population_polygons
+    example: "countries"
+
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: text
+    example: ''
+
+  species_obs:
+    label: Coordinates of species occurrence
+    description: Path to table in tsv format, storing the species observation coordinates. The table must incude header with "decimal_longitude" and "decimal_latitude" columns, indicating the coordinates of every observation. 
+    type: text
+    example: '/userdata/obs_data.tsv'
+
+  bbox:
+    label: Bounding box
+    description: bounding box of area of interest, will be used to look for GBIF observations.  
+    type: float[]
+    example: [-99, 22, -92, 29]
+
+  countries:
+    label: Countries list
+    description: countries of interest, will be used to look for GBIF observations. 
+    type: text[]
+    example: ["Mexico","Guatemala"]
+
+outputs:
+  bbox: 
+    label: bbox
+    description: boundary box around area of interest
+    type: float[]

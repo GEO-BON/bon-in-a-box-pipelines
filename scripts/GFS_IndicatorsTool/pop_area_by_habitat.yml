@@ -1,0 +1,33 @@
+script: pop_area_by_habitat.R
+name: Get populations habitat area
+description: This Script loads the populations polygons, one or more binary maps describing the presence/absence of a habitat, and calculates the area of habitat per population. 
+author:
+  - name: Simon Pahls 
+  - name: Oliver Selmoni
+
+inputs:
+  
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: application/geo+json
+    example: '/userdata/populations.geojson'
+
+  habitat_map: 
+    label: Binary map of habitat presence/absence
+    description: Tif file describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points. 
+    type: image/tiff;application=geotiff
+    example: '/userdata/TCY.tif'
+
+  time.points: 
+    label: Time points of habitat map 
+    description: List of time points corresponding to habitat map layers.
+    type: text[]
+    example: ["y2000","y2001","y2002","y2003","y2004","y2005","y2006","y2007","y2008","y2009","y2010","y2011","y2012","y2013","y2014","y2015","y2016","y2017","y2018","y2019","y2020","y2021","y2022","y2023"]
+
+outputs:
+  popArea: 
+    label: Table of habitat area by population
+    description: Table of estimated habitat area by population (rows). If available, time points are displayed as columns. 
+    type: text/tab-separated-values
+
