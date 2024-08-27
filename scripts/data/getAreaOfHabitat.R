@@ -4,11 +4,11 @@
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
-              "geodata","gdalcubes","rredlist","stringr","httr2","geojsonsf")
+              "geodata","gdalcubes","stacatalogue","rredlist","stringr","httr2","geojsonsf")
 
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
-#if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
-
+if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
+library(stacatalogue)
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -21,6 +21,7 @@ print("Inputs: ")
 print(input)
 
 source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo=TRUE)
+
 output<- tryCatch({
 
 get_country<-function(country){
@@ -29,7 +30,7 @@ get_country<-function(country){
 }
 
 get_state<-function(country,region){
-  resp <- request("https://geoio.biodiversite-quebec.ca/state_geojson/") |> req_url_query("state_name" = region, "country_name" = country) |> req_perform()
+  resp <- req_perform( request(paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?state_name=",region,"&country_name=",country)))
   geojson_sf(resp_body_string(resp))
 }
 
@@ -69,7 +70,7 @@ r_range_map_path <- if(is.null(input$r_range_map)){NA}else{input$r_range_map}
 # Elevation_filter
 elevation_filter <- ifelse(input$elevation_filter=="Yes", 1, 2)
 # Buffer for elevation values
-elev_buffer <- ifelse(is.null(input$elev_buffer), NA, input$elev_buffer)
+elev_buffer <- ifelse(is.null(input$elev_buffer), NA,input$elev_buffer)
 
 #credentials
 token <- Sys.getenv("IUCN_TOKEN")
@@ -100,21 +101,12 @@ study_area <- data.frame(text=study_area_opt,
 
 if(study_area$option == 1){
   sf_area_lim1 <- get_country(country_code) |> st_make_valid() # country
-  if(nrow(sf_area_lim1)==0){
-    cat("Country code:",country_code,"invalid")
-  }
 }
 if(study_area$option == 2){
   sf_area_lim1 <- get_state(country_code,region) |> st_make_valid() # region in a country
-  if(nrow(sf_area_lim1)==0){
-    cat("Country code:",country_code,"or","Region code:",region,"invalid")
-  }
 }
 if(study_area$option == 3){
   sf_area_lim1 <- st_read(study_area_path) # user defined area
-  if(nrow(sf_area_lim1)==0){
-    cat("Study area path:",study_area_path,"invalid")
-  }
 }
 if(study_area$option == 4){
   print("A study area is required, please choose one of the options")
@@ -122,7 +114,7 @@ if(study_area$option == 4){
 
 
 sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
-area_study_a <- sf_area_lim1_srs |> st_area()
+area_study_a <<- sf_area_lim1_srs |> st_area()
 
 
 print("==================== Step 1 - Study area loaded =====================")
@@ -196,7 +188,7 @@ for(i in 1:length(sp)){
   
   sf_bbox_analysis <- sf_ext_srs |> st_as_sfc()
   area_bbox_analysis <- sf_bbox_analysis |> st_area()
-  
+
   v_path_bbox_analysis[i] <- file.path(outputFolder ,sp[i], paste0(sp[i],"_st_bbox.gpkg"))
   st_write(sf_bbox_analysis,v_path_bbox_analysis[i],append=F)
   
@@ -204,22 +196,21 @@ for(i in 1:length(sp)){
   
   #Create raster
   r_frame <- rast(terra::ext(sf_ext_srs),resolution=spat_res)
+
   crs(r_frame) <- srs_cube
   values(r_frame) <- 1
   r_aoh <- terra::mask(r_frame,vect(as(sf_area_lim_srs,"Spatial")))
-  
+
   # elevation filters-----------------------------------------------------------
   if(elevation_filter==1){
     # Load elevation preferences
     df_IUCN_sheet <- rredlist::rl_search(sp[i], key = token)$result
-    
-    print(df_IUCN_sheet)
     print(dim(df_IUCN_sheet))
     
     if(is.null(dim(df_IUCN_sheet))){
       stop("Species not found in IUCN database. Check name and spelling.")
     }
-  print("made it here")
+
     df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
       min_elev= case_when( #evaluate if elevation ranges exist and add margin if included
         is.na(elevation_lower) ~ NA_real_,
@@ -229,13 +220,11 @@ for(i in 1:length(sp)){
         is.na(elevation_upper) ~ NA_real_,
         !is.na(elevation_upper) ~ as.numeric(elevation_upper) + elev_buffer)
     )
-    print("made it here")
-  
+    
     print(df_IUCN_sheet_condition |> select(elevation_lower, elevation_upper))
     
-    source(file.path(path_script, "data/loadFromStacFun.R"), echo=TRUE) # for load_cube function
     with(df_IUCN_sheet_condition, if(is.na(min_elev)  & is.na(max_elev)){ # if no elevation values are provided then the range map stays the same
-      r_aoh <- terra::wrap(r_aoh)
+      r_aoh <<- terra::wrap(r_aoh)
     }else{ # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
       # STRM from Copernicus
       cube_STRM <-
@@ -249,9 +238,6 @@ for(i in 1:length(sp)){
                   t0 = "2021-01-01",
                   t1 = "2021-12-31",
                   resampling = "bilinear")
-      print("made it here")
-      # ISSUE WITH LOADING THE IUCN DATA FROM THE STAC, NEED TO FIX
-      source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo=TRUE)
       cube_STRM_range <- funFilterCube_range(cube_STRM, min = min_elev , max = max_elev) |> select_bands("data")
       
       # convert to raster
@@ -273,13 +259,13 @@ for(i in 1:length(sp)){
   print("================== Step 2.3 - Area of habitat created =================")
   
   # get area for the area of habitat delimited by the study area or country
-  r_aoh_area <- terra::cellSize(r_aoh,unit="m")#create raster of areas by pixel
-  area_aoh  <- global(r_aoh_area*r_aoh,sum,na.rm=T)$sum 
+  r_aoh_area <- terra::cellSize(r_aoh,unit="ha")#create raster of areas by pixel
+  area_aoh  <- global(r_aoh_area,sum)$sum 
   
   #create dataframe with area values--------------------------------------------
-  df_aoh_areas_sp <- tibble(sci_name=sp[i], area_range_map = round(area_range_map), 
-                         area_study_a=round(area_study_a), area_bbox_analysis=round(area_bbox_analysis),
-                         buff_size=round(buff_size), area_aoh=round(area_aoh))
+  df_aoh_areas_sp <- tibble(sci_name=sp[i], area_range_map = area_range_map, 
+                         area_study_a=area_study_a, area_bbox_analysis=area_bbox_analysis,
+                         buff_size=buff_size, area_aoh=area_aoh)
   write_tsv(df_aoh_areas_sp,file.path(outputFolder,sp[i],paste0(sp[i],"_df_aoh_areas.tsv")))
   
   df_aoh_areas <- bind_rows(df_aoh_areas,df_aoh_areas_sp)
@@ -289,11 +275,14 @@ for(i in 1:length(sp)){
 path_aoh_areas <- file.path(outputFolder,"df_aoh_areas.tsv")
 write_tsv(df_aoh_areas,file= path_aoh_areas)
 
+
 # Outputing result to JSON -----------------------------------------------------
 output <- list("r_area_of_habitat" = v_path_to_area_of_habitat ,
                "sf_bbox" = v_path_bbox_analysis,
                "df_aoh_areas"= path_aoh_areas)
 
+
 }, error = function(e) { list(error = conditionMessage(e)) })
+
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))
