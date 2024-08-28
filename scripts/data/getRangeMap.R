@@ -56,7 +56,7 @@ for( i in 1:length(sp)){
     sf_range_map <- st_read(file)
   }else{
     path_to_range_map <- NULL
-    stop("========== No range map available for ", sp[i] ,"at the ", expert_source , " expert source database ==========")
+    stop("========== No range map available for ", sp[i] ," at the ", expert_source , " expert source database ==========")
   }
 
   if (!dir.exists(file.path(outputFolder,sp[i]))){

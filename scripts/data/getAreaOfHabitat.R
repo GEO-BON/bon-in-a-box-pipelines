@@ -164,6 +164,9 @@ for(i in 1:length(sp)){
     st_make_valid()
   
   print(sf_area_lim_srs)
+  if(nrow(sf_area_lim_srs)==0){
+    stop("Species range does not fall within chosen study area")
+  }
   # define buffer size 
   if(is.na(buff_size)){
     # Buffer size for range map
