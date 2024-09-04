@@ -324,14 +324,53 @@
     }
   ],
   "inputs": {
+    "SHI>habitatChange_GFW.yml@67|min_forest": {
+      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "min forest",
+      "type": "int[]",
+      "example": [
+        50
+      ],
+      "weight": 0
+    },
+    "SHI>habitatChange_GFW.yml@67|max_forest": {
+      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "max forest",
+      "type": "int[]",
+      "example": [
+        100
+      ],
+      "weight": 1
+    },
+    "SHI>habitatChange_GFW.yml@67|t_0": {
+      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "label": "initial time",
+      "type": "int",
+      "example": 2000,
+      "weight": 2
+    },
+    "SHI>habitatChange_GFW.yml@67|t_n": {
+      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "label": "final time",
+      "type": "int",
+      "example": 2020,
+      "weight": 3
+    },
+    "SHI>habitatChange_GFW.yml@67|time_step": {
+      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
+      "label": "time step",
+      "type": "int",
+      "example": 10,
+      "weight": 4
+    },
     "pipeline@76": {
       "label": "species",
-      "description": "Scientific name of the species.",
+      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
       "type": "text[]",
       "example": [
         "Myrmecophaga tridactyla"
       ],
-      "weight": 0
+      "weight": 5
     },
     "pipeline@77": {
       "label": "source of expert range map",
@@ -343,28 +382,21 @@
         "IUCN",
         "QC"
       ],
-      "weight": 1
+      "weight": 6
     },
-    "data>getAreaOfHabitat.yml@80|range_map_type": {
-      "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
-      "label": "type of range map",
-      "type": "options",
-      "options": [
-        "Polygon",
-        "Raster",
-        "Both"
-      ],
-      "example": "Polygon",
-      "weight": 2
+    "pipeline@78": {
+      "label": "spatial reference system",
+      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
+      "type": "text",
+      "example": "EPSG:3116",
+      "weight": 7
     },
-    "data>getAreaOfHabitat.yml@80|r_range_map": {
-      "description": "Raster with expected area for the species if choosing option \"Raster\"",
-      "label": "range map (raster)",
-      "type": "image/tiff;application=geotiff[]",
-      "example": [
-        null
-      ],
-      "weight": 3
+    "pipeline@79": {
+      "label": "output spatial resolution",
+      "description": "Spatial resolution (in meters) for the output of the analysis.",
+      "type": "int",
+      "example": 1000,
+      "weight": 8
     },
     "data>getAreaOfHabitat.yml@80|study_area_opt": {
       "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.",
@@ -376,86 +408,54 @@
         "User defined"
       ],
       "example": "Country",
-      "weight": 4
+      "weight": 9
+    },
+    "data>getAreaOfHabitat.yml@80|study_area": {
+      "description": "Path to the study area file if you choosing option \"User defined\" for study area option. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder). ",
+      "label": "study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 10,
+      "example": null
     },
     "data>getAreaOfHabitat.yml@80|country_code": {
       "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
       "label": "country",
       "type": "text",
       "example": "Colombia",
-      "weight": 5
+      "weight": 11
     },
     "data>getAreaOfHabitat.yml@80|region": {
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
       "label": "region",
       "type": "text",
-      "weight": 6
-    },
-    "data>getAreaOfHabitat.yml@80|study_area": {
-      "description": "Path to the study area file if you choosing option \"User defined\" for study area option. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder). ",
-      "label": "study area",
-      "type": "application/geopackage+sqlite3",
-      "weight": 7,
-      "example": null
-    },
-    "SHI>habitatChange_GFW.yml@67|min_forest": {
-      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "min forest",
-      "type": "int[]",
-      "example": [
-        50
-      ],
-      "weight": 8
-    },
-    "SHI>habitatChange_GFW.yml@67|max_forest": {
-      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "max forest",
-      "type": "int[]",
-      "example": [
-        100
-      ],
-      "weight": 9
-    },
-    "SHI>habitatChange_GFW.yml@67|t_0": {
-      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
-      "label": "initial time",
-      "type": "int",
-      "example": 2000,
-      "weight": 10
-    },
-    "SHI>habitatChange_GFW.yml@67|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
-      "label": "final time",
-      "type": "int",
-      "example": 2020,
-      "weight": 11
-    },
-    "SHI>habitatChange_GFW.yml@67|time_step": {
-      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
-      "label": "time step",
-      "type": "int",
-      "example": 10,
       "weight": 12
-    },
-    "pipeline@78": {
-      "label": "spatial reference system",
-      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
-      "type": "text",
-      "example": "EPSG:3116",
-      "weight": 13
-    },
-    "pipeline@79": {
-      "label": "output spatial resolution",
-      "description": "Spatial resolution (in meters) for the output of the analysis.",
-      "type": "int",
-      "example": 1000,
-      "weight": 14
     },
     "data>getAreaOfHabitat.yml@80|buff_size": {
       "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
       "label": "buffer for study area",
       "type": "int",
       "example": 0,
+      "weight": 13
+    },
+    "data>getAreaOfHabitat.yml@80|range_map_type": {
+      "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
+      "label": "type of range map",
+      "type": "options",
+      "options": [
+        "Polygon",
+        "Raster",
+        "Both"
+      ],
+      "example": "Polygon",
+      "weight": 14
+    },
+    "data>getAreaOfHabitat.yml@80|r_range_map": {
+      "description": "Raster with expected area for the species if choosing option \"Raster\"",
+      "label": "range map (raster)",
+      "type": "image/tiff;application=geotiff[]",
+      "example": [
+        null
+      ],
       "weight": 15
     },
     "data>getAreaOfHabitat.yml@80|elevation_filter": {
