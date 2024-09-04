@@ -54,17 +54,17 @@ inputs:
     label: min forest
     description: Minimum tree cover percentage required for each species, based on suitable habitat of the species.
       Acts as a filter for the Global Forest Watch Data.
-      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])
+      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla])
     type: int[]
     example:
       [
-        50
+        0
       ]
   max_forest:
     label: max forest
     description: Maximum tree cover percentage required for each species, based on suitable habitat of the species.
       Acts as a filter for the Global Forest Watch Data.
-      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])
+      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla])
     type: int[]
     example:
       [
