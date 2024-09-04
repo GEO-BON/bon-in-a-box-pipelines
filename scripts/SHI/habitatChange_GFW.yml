@@ -28,7 +28,7 @@ inputs:
     example: EPSG:3116
   species:
     label: species
-    description: Scientific name of the species.
+    description: Scientific name of the species. Multiple species names can be specified, separated with a comma.
     type: text[]
     example:
       [

@@ -11,7 +11,7 @@ external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/SHI
 inputs:
   species:
     label: species
-    description: Scientific name of the species.
+    description: Scientific name of the species. Multiple species names can be specified, separated with a comma.
     type: text[]
     example:
       [
