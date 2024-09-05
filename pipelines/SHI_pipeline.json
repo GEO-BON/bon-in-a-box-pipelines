@@ -372,44 +372,17 @@
       "example": 0,
       "weight": 5
     },
-    "SHI>habitatChange_GFW.yml@67|min_forest": {
-      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "min forest",
-      "type": "int[]",
-      "example": [
-        50
+    "data>getAreaOfHabitat.yml@80|range_map_type": {
+      "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
+      "label": "type of range map",
+      "type": "options",
+      "options": [
+        "Polygon",
+        "Raster",
+        "Both"
       ],
+      "example": "Polygon",
       "weight": 6
-    },
-    "SHI>habitatChange_GFW.yml@67|max_forest": {
-      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "max forest",
-      "type": "int[]",
-      "example": [
-        100
-      ],
-      "weight": 7
-    },
-    "SHI>habitatChange_GFW.yml@67|t_0": {
-      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
-      "label": "initial time",
-      "type": "int",
-      "example": 2000,
-      "weight": 8
-    },
-    "SHI>habitatChange_GFW.yml@67|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
-      "label": "final time",
-      "type": "int",
-      "example": 2020,
-      "weight": 9
-    },
-    "SHI>habitatChange_GFW.yml@67|time_step": {
-      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
-      "label": "time step",
-      "type": "int",
-      "example": 10,
-      "weight": 10
     },
     "pipeline@77": {
       "label": "source of expert range map",
@@ -421,33 +394,7 @@
         "IUCN",
         "QC"
       ],
-      "weight": 11
-    },
-    "pipeline@78": {
-      "label": "spatial reference system",
-      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
-      "type": "text",
-      "example": "EPSG:3116",
-      "weight": 12
-    },
-    "pipeline@79": {
-      "label": "output spatial resolution",
-      "description": "Spatial resolution (in meters) for the output of the analysis.",
-      "type": "int",
-      "example": 1000,
-      "weight": 13
-    },
-    "data>getAreaOfHabitat.yml@80|range_map_type": {
-      "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
-      "label": "type of range map",
-      "type": "options",
-      "options": [
-        "Polygon",
-        "Raster",
-        "Both"
-      ],
-      "example": "Polygon",
-      "weight": 14
+      "weight": 7
     },
     "data>getAreaOfHabitat.yml@80|r_range_map": {
       "description": "Raster with expected area for the species if choosing option \"Raster\"",
@@ -456,6 +403,59 @@
       "example": [
         null
       ],
+      "weight": 8
+    },
+    "SHI>habitatChange_GFW.yml@67|min_forest": {
+      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "min forest",
+      "type": "int[]",
+      "example": [
+        50
+      ],
+      "weight": 9
+    },
+    "SHI>habitatChange_GFW.yml@67|max_forest": {
+      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
+      "label": "max forest",
+      "type": "int[]",
+      "example": [
+        100
+      ],
+      "weight": 10
+    },
+    "SHI>habitatChange_GFW.yml@67|t_0": {
+      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "label": "initial time",
+      "type": "int",
+      "example": 2000,
+      "weight": 11
+    },
+    "SHI>habitatChange_GFW.yml@67|t_n": {
+      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "label": "final time",
+      "type": "int",
+      "example": 2020,
+      "weight": 12
+    },
+    "SHI>habitatChange_GFW.yml@67|time_step": {
+      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
+      "label": "time step",
+      "type": "int",
+      "example": 10,
+      "weight": 13
+    },
+    "pipeline@78": {
+      "label": "spatial reference system",
+      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
+      "type": "text",
+      "example": "EPSG:3116",
+      "weight": 14
+    },
+    "pipeline@79": {
+      "label": "output spatial resolution",
+      "description": "Spatial resolution (in meters) for the output of the analysis.",
+      "type": "int",
+      "example": 1000,
       "weight": 15
     },
     "data>getAreaOfHabitat.yml@80|elevation_filter": {
@@ -516,7 +516,7 @@
   },
   "metadata": {
     "name": "Species Habitat Index",
-    "description": "This pipeline takes the outputs from the Species Habitat Score (SHS) pipeline and measures the Species Habitat Index for the species used as inputs, following the methodology proposed for Jetz et al. 2022 (https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf). The index has two componentes an Area Score and a Connectivity score that are measured for the habitat of the required species (Species Habitat Score), and the average between those scores for the study area is the Species Habitat Index. It can also have weight values assigned according to the proportion of the area of the habitat of the species that is located in the study area.",
+    "description": "This pipeline takes the outputs from the Species Habitat Score (SHS) pipeline and measures the Species Habitat Index for the species used as inputs, following the methodology proposed for Jetz et al. 2022 (https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf). The index has two componentes an Area Score and a Connectivity score that are measured for the habitat of the required species (Species Habitat Score),  the Species Habitat Index is the average between those scores for the study area  Index. It can also have weight values assigned according to the proportion of the area of the habitat of the species that is located in the study area.",
     "references": [
       {
         "text": "Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]"
