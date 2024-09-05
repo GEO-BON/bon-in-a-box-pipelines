@@ -36,6 +36,12 @@ inputs:
     description: Estimated density of the population [number of individuals per km2]. Multiple values can be provided.
     type: float[]
     example: [50, 100, 1000]
+
+  RunTitle:
+    label: Title of the run
+    description: Set a name for the pipeline run.
+    type: text
+    example: Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023
     
 outputs:
 
@@ -64,14 +70,7 @@ outputs:
     description: Geographic distribution of the studied populations.
     type: image/png
 
-  
-  # Habitat_change_plot: 
-  #   label: Population mantained 
-  #   description: 
-  #   type: text/tab-separated-values
-
-  # Populations_map: 
-  #   label: Population mantained 
-  #   description: 
-  #   type: text/tab-separated-values
-
+  Interactive_plot: 
+    label: Interactive plot 
+    description: An interactive interface to explore indicators trends across geographical space and time.  
+    type: text/html

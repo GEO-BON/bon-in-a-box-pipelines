@@ -380,6 +380,30 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "96",
+      "type": "output",
+      "position": {
+        "x": 2643.8393226182466,
+        "y": 77.40274725941265
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "97",
+      "type": "userInput",
+      "position": {
+        "x": 1585.1125090031962,
+        "y": 126.05084008051301
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+      }
     }
   ],
   "edges": [
@@ -641,6 +665,20 @@
       "target": "95",
       "targetHandle": null,
       "id": "reactflow__edge-88POP_plot-95"
+    },
+    {
+      "source": "88",
+      "sourceHandle": "Interactive_plot",
+      "target": "96",
+      "targetHandle": null,
+      "id": "reactflow__edge-88Interactive_plot-96"
+    },
+    {
+      "source": "97",
+      "sourceHandle": null,
+      "target": "88",
+      "targetHandle": "RunTitle",
+      "id": "reactflow__edge-97-88RunTitle"
     }
   ],
   "inputs": {
@@ -740,9 +778,9 @@
       "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided.",
       "type": "float[]",
       "example": [
-        0.05,
-        0.1,
-        0.5
+        "0.1",
+        "0.2",
+        "0.5"
       ],
       "weight": 11
     },
@@ -751,43 +789,55 @@
       "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided.",
       "type": "float[]",
       "example": [
-        50,
-        100,
-        1000
+        "500",
+        "100",
+        "1000"
       ],
       "weight": 12
+    },
+    "pipeline@97": {
+      "label": "7 - Title of the run",
+      "description": "Set a title summarizing the pipeline run (studied species, region, habitat loss variable, period). ",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "weight": 13
     }
   },
   "outputs": {
-    "GFS_IndicatorsTool>get_Indicators.yml@88|POP_plot": {
-      "label": "Map of populations",
-      "type": "image/png",
-      "weight": 0,
-      "description": "Geographic distribution of populations across the study area."
-    },
     "GFS_IndicatorsTool>get_Indicators.yml@88|Ne_table": {
       "label": "Effective population size",
       "type": "text/tab-separated-values",
-      "weight": 1,
+      "weight": 0,
       "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map. "
     },
     "GFS_IndicatorsTool>get_Indicators.yml@88|Ne_plot": {
       "label": "Effective population size over time",
       "type": "image/png",
-      "weight": 2,
+      "weight": 1,
       "description": "Plot displaying change of effective population size over time. "
     },
     "GFS_IndicatorsTool>get_Indicators.yml@88|PM": {
       "label": "Population maintained",
       "type": "float",
-      "weight": 3,
+      "weight": 2,
       "description": "Estimated proportion of maintained populations, comparing earliest and latest time point. "
     },
     "GFS_IndicatorsTool>get_Indicators.yml@88|PM_plot": {
       "label": "Populations maintained over time",
       "type": "image/png",
-      "weight": 4,
+      "weight": 3,
       "description": "Plot showing the change in population area (absolute change and relative change) over time. "
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@88|POP_plot": {
+      "label": "Map of populations",
+      "type": "image/png",
+      "weight": 4,
+      "description": "Geographic distribution of populations across the study area."
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@88|Interactive_plot": {
+      "label": "interactive plot",
+      "type": "text/html",
+      "weight": 5
     }
   }
 }
