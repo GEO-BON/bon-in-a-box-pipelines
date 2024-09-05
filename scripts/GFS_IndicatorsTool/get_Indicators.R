@@ -444,7 +444,7 @@ PM_plots = plotly::subplot(HA_plot, HAR_plot, nrows=2, titleX = T, titleY = T) %
 Title = input$RunTitle
 
 ### Get rounded NE>500 indicator
-NE500r = round(mean(NE_table[2,-c(1:2)]>500, na.rm=T),2)
+NE500r = round(mean(as.numeric(NE_table[2,-c(1:2)]>500), na.rm=T),2)
 
 ### Get rounded PM indicator
 PMr = round(PM, 2)

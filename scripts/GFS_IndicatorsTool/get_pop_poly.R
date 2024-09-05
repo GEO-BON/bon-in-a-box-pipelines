@@ -40,10 +40,10 @@ if (POPinput=='population_polygons') { # if input is geojson of pops: use it to 
   
   # calculate distance between point observations
   D = as.dist(st_distance(points_sf))/1000
-  
+
   # use hierarchical clustering to split populations by geographical distancw
   pop_distance = input$pop_distance # maximal distnace to split populations
-  circles_sf$pop = paste0('pop_',cutree(hclust(D, method = 'single'), h=pop_distance))
+  circles_sf$pop = paste0('pop_',cutree(hclust(D, method = 'average'), h=pop_distance))
   
   } else {
     
