@@ -6,22 +6,6 @@ author:
   - name: Oliver Selmoni
 
 inputs:
-  POPinput:
-    label: Type of population input
-    description: If polygons are already available ("population_polygons"), this script is not run. For the remaining options, the script will use the species observation coordinates previously calculated ("species_obs")
-    type: options
-    options: 
-      - countries
-      - bbox
-      - species_obs
-      - population_polygons
-    example: "countries"
-
-  population_polygons:
-    label: Polygons of populations 
-    description: Path to geojson file storing polygons of populations. [mandatory if Type of Population Input = "population_polygons", otherwise ignored]
-    type: text
-    example: ''
 
   species_obs:
     label: Coordinates of species occurrence

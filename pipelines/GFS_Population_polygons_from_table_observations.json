@@ -1,0 +1,127 @@
+{
+  "nodes": [
+    {
+      "id": "5",
+      "type": "io",
+      "position": {
+        "x": 381.2685506880483,
+        "y": 623.5169528370442
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_pop_poly.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "userInput",
+      "position": {
+        "x": -85.476704395735,
+        "y": 577.1759161779029
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/tab-separated-values",
+        "value": "/userdata/obs_data.tsv"
+      }
+    },
+    {
+      "id": "7",
+      "type": "userInput",
+      "position": {
+        "x": 0.9813277674131768,
+        "y": 634.4543624859884
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 10
+      }
+    },
+    {
+      "id": "8",
+      "type": "userInput",
+      "position": {
+        "x": 12.869307189845983,
+        "y": 692.8135341961137
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 50
+      }
+    },
+    {
+      "id": "9",
+      "type": "output",
+      "position": {
+        "x": 1009.7163606217584,
+        "y": 617.162756053359
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "species_obs",
+      "id": "reactflow__edge-6-5species_obs"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "buffer_size",
+      "id": "reactflow__edge-7-5buffer_size"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "pop_distance",
+      "id": "reactflow__edge-8-5pop_distance"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "population_polygons",
+      "target": "9",
+      "targetHandle": null,
+      "id": "reactflow__edge-5population_polygons-9"
+    }
+  ],
+  "inputs": {
+    "pipeline@6": {
+      "label": "Coordinates of species occurrence",
+      "description": "Path to the table storing the species observation coordinates. The table must incude header with \"decimal_longitude\" and \"decimal_latitude\" columns, indicating the coordinates of every observation. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "type": "text/tab-separated-values",
+      "example": "/userdata/obs_data.tsv",
+      "weight": 0
+    },
+    "pipeline@7": {
+      "label": "Size of buffer",
+      "description": "Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "type": "float",
+      "example": 10,
+      "weight": 1
+    },
+    "pipeline@8": {
+      "label": "Distance between populations",
+      "description": "Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "type": "float",
+      "example": 50,
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons": {
+      "description": "Path to geojson file storing polygons of populations.",
+      "label": "Polygons of populations",
+      "type": "application/geo+json",
+      "example": "",
+      "weight": 0
+    }
+  }
+}

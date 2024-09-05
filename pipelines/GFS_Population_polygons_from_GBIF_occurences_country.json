@@ -1,0 +1,354 @@
+{
+  "nodes": [
+    {
+      "id": "5",
+      "type": "io",
+      "position": {
+        "x": 381.2685506880483,
+        "y": 623.5169528370442
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_pop_poly.yml"
+      }
+    },
+    {
+      "id": "7",
+      "type": "userInput",
+      "position": {
+        "x": 0.9813277674131768,
+        "y": 634.4543624859884
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 10
+      }
+    },
+    {
+      "id": "8",
+      "type": "userInput",
+      "position": {
+        "x": 12.869307189845983,
+        "y": 692.8135341961137
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 50
+      }
+    },
+    {
+      "id": "9",
+      "type": "output",
+      "position": {
+        "x": 1009.7163606217584,
+        "y": 617.162756053359
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "10",
+      "type": "io",
+      "position": {
+        "x": -320.13427285519305,
+        "y": 423.89106488353065
+      },
+      "data": {
+        "descriptionFile": "data>getObservations.yml"
+      }
+    },
+    {
+      "id": "12",
+      "type": "userInput",
+      "position": {
+        "x": -560.1975780168027,
+        "y": 358.6952084201229
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Glyptemys insculpta"
+      }
+    },
+    {
+      "id": "14",
+      "type": "userInput",
+      "position": {
+        "x": -662.9137065494849,
+        "y": 452.4355177381866
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1990
+      }
+    },
+    {
+      "id": "15",
+      "type": "userInput",
+      "position": {
+        "x": -660.9586343667108,
+        "y": 501.2565745091717
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2020
+      }
+    },
+    {
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": -675.1189707422312,
+        "y": 566.7211733611748
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": -638.5031781639922,
+        "y": 602.2273964673457
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "present",
+        "options": [
+          "present",
+          "absent",
+          "present absent"
+        ]
+      }
+    },
+    {
+      "id": "18",
+      "type": "constant",
+      "position": {
+        "x": -669.5711233818919,
+        "y": 636.6240501014489
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2000
+      }
+    },
+    {
+      "id": "19",
+      "type": "constant",
+      "position": {
+        "x": -669.571123381892,
+        "y": 671.020703735552
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
+    },
+    {
+      "id": "20",
+      "type": "constant",
+      "position": {
+        "x": -698.2943016155109,
+        "y": 398.8705009626251
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "21",
+      "type": "io",
+      "position": {
+        "x": -1016.5,
+        "y": 467
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_bbox.yml"
+      }
+    },
+    {
+      "id": "22",
+      "type": "userInput",
+      "position": {
+        "x": -1364.5,
+        "y": 469
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Mexico",
+          "Guatemala"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "buffer_size",
+      "id": "reactflow__edge-7-5buffer_size"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "pop_distance",
+      "id": "reactflow__edge-8-5pop_distance"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "population_polygons",
+      "target": "9",
+      "targetHandle": null,
+      "id": "reactflow__edge-5population_polygons-9"
+    },
+    {
+      "source": "10",
+      "sourceHandle": "presence",
+      "target": "5",
+      "targetHandle": "species_obs",
+      "id": "reactflow__edge-10presence-5species_obs"
+    },
+    {
+      "source": "12",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "species",
+      "id": "reactflow__edge-12-10species"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "year_start",
+      "id": "reactflow__edge-14-10year_start"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "year_end",
+      "id": "reactflow__edge-15-10year_end"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-16-10proj"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "occurrence_status",
+      "id": "reactflow__edge-17-10occurrence_status"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "limit",
+      "id": "reactflow__edge-18-10limit"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "bbox_buffer",
+      "id": "reactflow__edge-19-10bbox_buffer"
+    },
+    {
+      "source": "20",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "country",
+      "id": "reactflow__edge-20-10country"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "bbox",
+      "target": "10",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-21bbox-10bbox"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "countries",
+      "id": "reactflow__edge-22-21countries"
+    }
+  ],
+  "inputs": {
+    "pipeline@12": {
+      "label": "Species names",
+      "description": "Scientific name of the species, used to look for occurrences in GBIF. ",
+      "type": "text",
+      "example": "Quercus sartorii",
+      "weight": 0
+    },
+    "pipeline@22": {
+      "label": "Countries list",
+      "description": "countries of interest, will be used to look for GBIF occurrences.",
+      "type": "text[]",
+      "example": [
+        "Mexico",
+        "Guatemala"
+      ],
+      "weight": 1
+    },
+    "pipeline@14": {
+      "label": "Start year",
+      "description": "Integer, 4 digit year, start date to retrieve occurrences",
+      "type": "int",
+      "example": 1980,
+      "weight": 2
+    },
+    "pipeline@15": {
+      "label": "End year",
+      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "type": "int",
+      "example": 2000,
+      "weight": 3
+    },
+    "pipeline@7": {
+      "label": "Size of buffer",
+      "description": "Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "type": "float",
+      "example": 10,
+      "weight": 4
+    },
+    "pipeline@8": {
+      "label": "Distance between populations",
+      "description": "Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "type": "float",
+      "example": 50,
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons": {
+      "description": "Path to geojson file storing polygons of populations.",
+      "label": "Polygons of populations",
+      "type": "application/geo+json",
+      "example": "",
+      "weight": 0
+    }
+  }
+}

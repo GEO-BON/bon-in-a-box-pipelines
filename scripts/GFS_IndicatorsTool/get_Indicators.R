@@ -444,7 +444,7 @@ PM_plots = plotly::subplot(HA_plot, HAR_plot, nrows=2, titleX = T, titleY = T) %
 Title = input$RunTitle
 
 ### Get rounded NE>500 indicator
-NE500r = round(mean(as.numeric(NE_table[2,-c(1:2)]>500), na.rm=T),2)
+NE500r = round(mean(as.numeric(NE_table[2,-c(1:2)])>500, na.rm=T),2)
 
 ### Get rounded PM indicator
 PMr = round(PM, 2)
@@ -464,7 +464,7 @@ htmlwidgets::saveWidget(INT, pathInteractive)
 ## Write output
 
 
-output <- list("Ne_table" = NE_table_path, "Ne_plot"=Ne_plot, 'PM'=PM, 'PM_plot'=PM_plot, 'POP_plot'=POP_plot, 'Interactive_plot'= pathInteractive) 
+output <- list("Ne_table" = NE_table_path, "Ne_plot"=Ne_plot, 'PM'=PM, 'NE500',NE500r, 'PM_plot'=PM_plot, 'POP_plot'=POP_plot, 'Interactive_plot'= pathInteractive) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
 

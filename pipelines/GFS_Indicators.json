@@ -1,0 +1,304 @@
+{
+  "nodes": [
+    {
+      "id": "99",
+      "type": "io",
+      "position": {
+        "x": 366.9632511311818,
+        "y": 340.8352664135316
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>pop_area_by_habitat.yml"
+      }
+    },
+    {
+      "id": "100",
+      "type": "userInput",
+      "position": {
+        "x": -63.16668701171875,
+        "y": 214
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geo+json",
+        "value": "/userdata/populations.geojson"
+      }
+    },
+    {
+      "id": "101",
+      "type": "userInput",
+      "position": {
+        "x": -261.16668701171875,
+        "y": 355
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "image/tiff;application=geotiff",
+        "value": "/userdata/TCY.tif"
+      }
+    },
+    {
+      "id": "102",
+      "type": "userInput",
+      "position": {
+        "x": 13.83331298828125,
+        "y": 495
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "y2000",
+          "y2001",
+          "y2002",
+          "y2003",
+          "y2004",
+          "y2005",
+          "y2006",
+          "y2007",
+          "y2008",
+          "y2009",
+          "y2010",
+          "y2011",
+          "y2012",
+          "y2013",
+          "y2014",
+          "y2015",
+          "y2016",
+          "y2017",
+          "y2018",
+          "y2019",
+          "y2020",
+          "y2021",
+          "y2022",
+          "y2023"
+        ]
+      }
+    },
+    {
+      "id": "104",
+      "type": "io",
+      "position": {
+        "x": 1207.694991173518,
+        "y": 255.35383266322538
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_Indicators.yml"
+      }
+    },
+    {
+      "id": "105",
+      "type": "userInput",
+      "position": {
+        "x": 985.134899680766,
+        "y": 627.9208119363728
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+      }
+    },
+    {
+      "id": "106",
+      "type": "userInput",
+      "position": {
+        "x": 882.0668501112573,
+        "y": 572.2083527096116
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          50,
+          100,
+          1000
+        ]
+      }
+    },
+    {
+      "id": "107",
+      "type": "userInput",
+      "position": {
+        "x": 813.8190875584748,
+        "y": 513.710270521512
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.05,
+          0.1,
+          0.5
+        ]
+      }
+    },
+    {
+      "id": "116",
+      "type": "output",
+      "position": {
+        "x": 1971.030504944259,
+        "y": 266.60755689661545
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "100",
+      "sourceHandle": null,
+      "target": "99",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-100-99population_polygons"
+    },
+    {
+      "source": "101",
+      "sourceHandle": null,
+      "target": "99",
+      "targetHandle": "habitat_map",
+      "id": "reactflow__edge-101-99habitat_map"
+    },
+    {
+      "source": "102",
+      "sourceHandle": null,
+      "target": "99",
+      "targetHandle": "time.points",
+      "id": "reactflow__edge-102-99time.points"
+    },
+    {
+      "source": "100",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-100-104population_polygons"
+    },
+    {
+      "source": "105",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "RunTitle",
+      "id": "reactflow__edge-105-104RunTitle"
+    },
+    {
+      "source": "106",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "PopDensity",
+      "id": "reactflow__edge-106-104PopDensity"
+    },
+    {
+      "source": "107",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "NeNc",
+      "id": "reactflow__edge-107-104NeNc"
+    },
+    {
+      "source": "99",
+      "sourceHandle": "popArea",
+      "target": "104",
+      "targetHandle": "popArea",
+      "id": "reactflow__edge-99popArea-104popArea"
+    },
+    {
+      "source": "101",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "habitat_map",
+      "id": "reactflow__edge-101-104habitat_map"
+    },
+    {
+      "source": "104",
+      "sourceHandle": "Interactive_plot",
+      "target": "116",
+      "targetHandle": null,
+      "id": "reactflow__edge-104Interactive_plot-116"
+    }
+  ],
+  "inputs": {
+    "pipeline@100": {
+      "label": "Polygons of populations",
+      "description": "Path to geojson file storing polygons of populations.",
+      "type": "application/geo+json",
+      "example": "/userdata/population_polygons.geojson",
+      "weight": 0
+    },
+    "pipeline@101": {
+      "label": "Binary map of habitat presence/absence",
+      "description": "Tif file describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points.",
+      "type": "image/tiff;application=geotiff",
+      "example": "/userdata/TCY.tif",
+      "weight": 1
+    },
+    "pipeline@102": {
+      "label": "Time points of habitat map",
+      "description": "List of time points corresponding to habitat map layers.",
+      "type": "text[]",
+      "example": [
+        "y2000",
+        "y2001",
+        "y2002",
+        "y2003",
+        "y2004",
+        "y2005",
+        "y2006",
+        "y2007",
+        "y2008",
+        "y2009",
+        "y2010",
+        "y2011",
+        "y2012",
+        "y2013",
+        "y2014",
+        "y2015",
+        "y2016",
+        "y2017",
+        "y2018",
+        "y2019",
+        "y2020",
+        "y2021",
+        "y2022",
+        "y2023"
+      ],
+      "weight": 2
+    },
+    "pipeline@105": {
+      "label": "Title of the run",
+      "description": "Set a name for the pipeline run, for instance indicating species of interest, region, type of habitat map, and monitoring period. ",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "weight": 3
+    },
+    "pipeline@106": {
+      "label": "Population density",
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, the first one will be used in figures. ",
+      "type": "float[]",
+      "example": [
+        "50",
+        "100",
+        "500"
+      ],
+      "weight": 4
+    },
+    "pipeline@107": {
+      "label": "Ne:Nc ratio estimate",
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, the first one will be used in figure.",
+      "type": "float[]",
+      "example": [
+        "0.1",
+        "0.2"
+      ],
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot": {
+      "description": "An interactive interface to explore indicators trends across geographical space and time.",
+      "label": "Interactive plot",
+      "type": "text/html",
+      "weight": 0
+    }
+  }
+}

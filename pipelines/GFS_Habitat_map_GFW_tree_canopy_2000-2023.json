@@ -1,0 +1,123 @@
+{
+  "nodes": [
+    {
+      "id": "23",
+      "type": "io",
+      "position": {
+        "x": 287.37950514125055,
+        "y": 561.6757601294219
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_TCY.yml"
+      }
+    },
+    {
+      "id": "24",
+      "type": "userInput",
+      "position": {
+        "x": -105.6161264133417,
+        "y": 429.6455534958186
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geo+json",
+        "value": "/userdata/population_polygons.geojson"
+      }
+    },
+    {
+      "id": "25",
+      "type": "userInput",
+      "position": {
+        "x": -125.04751940213669,
+        "y": 504.5952121668847
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.01
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 1007.8271484897987,
+        "y": 480.53729703790043
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "27",
+      "type": "output",
+      "position": {
+        "x": 986.5451466449279,
+        "y": 576.7689575538371
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-24-23population_polygons"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "res",
+      "id": "reactflow__edge-25-23res"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "TCY",
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-23TCY-26"
+    },
+    {
+      "source": "23",
+      "sourceHandle": "time.points",
+      "target": "27",
+      "targetHandle": null,
+      "id": "reactflow__edge-23time.points-27"
+    }
+  ],
+  "inputs": {
+    "pipeline@24": {
+      "label": "Polygons of populations",
+      "description": "Path to geojson file storing polygons of populations.",
+      "type": "application/geo+json",
+      "example": "/userdata/population_polygons.geojson",
+      "weight": 0
+    },
+    "pipeline@25": {
+      "label": "Resolution of tree cover map",
+      "description": "Desired resolution for tree cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.001 (~100m).",
+      "type": "float",
+      "example": 0.01,
+      "weight": 1
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|TCY": {
+      "description": "Tif file of year-by-year tree cover, cropped to bbox extent",
+      "label": "Tree cover year-by-year",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@23|time.points": {
+      "description": "List of years for which tree cover information is available.",
+      "label": "Years with tree cover information",
+      "type": "text[]",
+      "weight": 1
+    }
+  }
+}
