@@ -3,7 +3,9 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- c("magrittr", "data.table", "reshape2", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "red", "gdistance", "BAT", "ape", "geometry", "magic", "hypervolume", "ks", "mclust", "mvtnorm","pracma","fastcluster", "pdist","palmerpenguins","caret","recipes", "timeDate", "gower", "hardhat","ipred", "prodlim", "lava","future.apply", "future", "globals", "listenv", "parallelly", "ModelMetrics","pROC", "nls2", "proto", "vegan","permute","phytools", "combinat", "clusterGeneration", "DEoptim", "expm", "optimParallel", "phangorn", "fastmatch", "scatterplot3d", "predicts") # Define the list of required packages to run the script
+# Install necessary libraries - packages  
+packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
+packagesNeed<- c("magrittr", "data.table", "reshape2", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "red", "gdistance", "BAT", "ape", "geometry", "magic", "hypervolume", "ks", "mclust", "mvtnorm","pracma","fastcluster", "pdist","palmerpenguins","caret","recipes", "timeDate", "gower", "hardhat","ipred", "prodlim", "lava","future.apply", "future", "globals", "listenv", "parallelly", "ModelMetrics","pROC", "nls2", "proto", "vegan","permute","phytools", "combinat", "clusterGeneration", "DEoptim", "expm", "optimParallel", "phangorn", "fastmatch", "scatterplot3d", "predicts","coda", "mnormt", "numDeriv", "quadprog") # Define the list of required packages to run the script
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
 # Load libraries

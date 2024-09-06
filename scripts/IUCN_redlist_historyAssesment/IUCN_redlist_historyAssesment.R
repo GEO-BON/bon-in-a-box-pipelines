@@ -33,7 +33,7 @@ print(token)
 
 UICN_spList<- data.table::fread(input$species_data) %>% as.data.frame()
 
-IUCN_historyAssesment_data <- pbapply::pblapply(UICN_spList[,input$sp_col] , function(x) {
+IUCN_historyAssesment_data <- pbapply::pblapply(UICN_spList[,input$sp_col][1:10], function(x) {
   tryCatch({
     rredlist::rl_history(name = x, key = token)$result %>% 
       dplyr::mutate(scientific_name= x)
