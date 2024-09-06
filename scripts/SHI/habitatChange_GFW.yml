@@ -52,9 +52,9 @@ inputs:
       ]
   min_forest:
     label: min forest
-    description: Minimum tree cover percentage required for each species, based on suitable habitat of the species.
+    description: Minimum tree cover percentage required for each species, based on suitable habitat of the species. 
       Acts as a filter for the Global Forest Watch Data.
-      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla])
+      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as input in species and separate with a comma. 
     type: int[]
     example:
       [
@@ -64,7 +64,7 @@ inputs:
     label: max forest
     description: Maximum tree cover percentage required for each species, based on suitable habitat of the species.
       Acts as a filter for the Global Forest Watch Data.
-      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla])
+      If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as input in species and separate with a comma. 
     type: int[]
     example:
       [
