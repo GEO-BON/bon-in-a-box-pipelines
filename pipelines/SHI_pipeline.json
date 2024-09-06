@@ -4,8 +4,8 @@
       "id": "65",
       "type": "io",
       "position": {
-        "x": 395.953125,
-        "y": 377
+        "x": 302,
+        "y": 299
       },
       "data": {
         "descriptionFile": "data>getRangeMap.yml"
@@ -15,8 +15,8 @@
       "id": "67",
       "type": "io",
       "position": {
-        "x": 1721.953125,
-        "y": 436
+        "x": 1499,
+        "y": 67
       },
       "data": {
         "descriptionFile": "SHI>habitatChange_GFW.yml"
@@ -26,52 +26,19 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 2311.953125,
-        "y": 438
+        "x": 2042,
+        "y": 213
       },
       "data": {
         "descriptionFile": "SHI>calculateSHI.yml"
       }
     },
     {
-      "id": "69",
-      "type": "output",
-      "position": {
-        "x": 2245.953125,
-        "y": 323
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "70",
-      "type": "output",
-      "position": {
-        "x": 2252.953125,
-        "y": 372
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "71",
       "type": "output",
       "position": {
-        "x": 2288.953125,
-        "y": 537
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "72",
-      "type": "output",
-      "position": {
-        "x": 2937.953125,
-        "y": 293
+        "x": 2042,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -81,19 +48,8 @@
       "id": "73",
       "type": "output",
       "position": {
-        "x": 2938.953125,
-        "y": 432
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "74",
-      "type": "output",
-      "position": {
-        "x": 2931.953125,
-        "y": 492
+        "x": 2574,
+        "y": 220
       },
       "data": {
         "label": "Output"
@@ -103,8 +59,8 @@
       "id": "76",
       "type": "userInput",
       "position": {
-        "x": 184.953125,
-        "y": 203
+        "x": 30,
+        "y": 74.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -118,8 +74,8 @@
       "id": "77",
       "type": "userInput",
       "position": {
-        "x": -27.046875,
-        "y": 261
+        "x": 12,
+        "y": 268.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -136,8 +92,8 @@
       "id": "78",
       "type": "userInput",
       "position": {
-        "x": 717.0710336146444,
-        "y": 106.32463375029599
+        "x": 519,
+        "y": 18.333333333333314
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -149,8 +105,8 @@
       "id": "79",
       "type": "userInput",
       "position": {
-        "x": 575.7811359500092,
-        "y": 167.2056465651388
+        "x": 592,
+        "y": -50
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -162,8 +118,8 @@
       "id": "80",
       "type": "io",
       "position": {
-        "x": 887.953125,
-        "y": 400
+        "x": 943,
+        "y": 193
       },
       "data": {
         "descriptionFile": "data>getAreaOfHabitat.yml"
@@ -186,39 +142,11 @@
       "id": "reactflow__edge-67df_shs-71"
     },
     {
-      "source": "67",
-      "sourceHandle": "img_shs_map",
-      "target": "69",
-      "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_map-69"
-    },
-    {
-      "source": "67",
-      "sourceHandle": "img_shs_timeseries",
-      "target": "70",
-      "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_timeseries-70"
-    },
-    {
-      "source": "68",
-      "sourceHandle": "df_shi",
-      "target": "72",
-      "targetHandle": null,
-      "id": "reactflow__edge-68df_shi-72"
-    },
-    {
       "source": "68",
       "sourceHandle": "img_shi_timeseries",
       "target": "73",
       "targetHandle": null,
       "id": "reactflow__edge-68img_shi_timeseries-73"
-    },
-    {
-      "source": "68",
-      "sourceHandle": "img_w_shi_timeseries",
-      "target": "74",
-      "targetHandle": null,
-      "id": "reactflow__edge-68img_w_shi_timeseries-74"
     },
     {
       "source": "76",
@@ -303,6 +231,34 @@
       "target": "80",
       "targetHandle": "species",
       "id": "reactflow__edge-76-80species"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "img_shs_timeseries",
+      "target": "71",
+      "targetHandle": null,
+      "id": "reactflow__edge-67img_shs_timeseries-71"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "df_shi",
+      "target": "73",
+      "targetHandle": null,
+      "id": "reactflow__edge-68df_shi-73"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "img_w_shi_timeseries",
+      "target": "73",
+      "targetHandle": null,
+      "id": "reactflow__edge-68img_w_shi_timeseries-73"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "img_shs_map",
+      "target": "71",
+      "targetHandle": null,
+      "id": "reactflow__edge-67img_shs_map-71"
     }
   ],
   "inputs": {
@@ -465,34 +421,34 @@
       "type": "image/png[]",
       "weight": 0
     },
-    "SHI>habitatChange_GFW.yml@67|img_shs_timeseries": {
-      "description": "Figure showing a time series of SHS values per time step for each species.",
-      "label": "SHS time series",
-      "type": "image/png[]",
-      "weight": 6
-    },
     "SHI>habitatChange_GFW.yml@67|df_shs": {
       "description": "A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
       "label": "SHS table",
       "type": "text/tab-separated-values[]",
-      "weight": 2
+      "weight": 1
     },
     "SHI>calculateSHI.yml@68|df_shi": {
       "description": "Table with SHI and Steward’s SHI values for the complete area of study.",
       "label": "SHI table",
       "type": "text/tab-separated-values",
-      "weight": 3
+      "weight": 2
     },
     "SHI>calculateSHI.yml@68|img_shi_timeseries": {
       "description": "Figure showing a time series of SHI values for each time step, 100% being equal to the reference year.",
       "label": "SHI time series",
       "type": "image/png",
-      "weight": 4
+      "weight": 3
     },
     "SHI>calculateSHI.yml@68|img_w_shi_timeseries": {
       "description": "Figure showing a time series of Steward’s SHI values for each time step. This is weighted by the proportion between the area of habitat for the study area and the total range map of the species. The reference year will start at the proportion of area of habitat in the study area. For example, if half of the species habitat is covered by the study area, the reference year’s value will be 50%.",
       "label": "Steward’s SHI time series",
       "type": "image/png",
+      "weight": 4
+    },
+    "SHI>habitatChange_GFW.yml@67|img_shs_timeseries": {
+      "description": "Figure showing a time series of SHS values per time step for each species.",
+      "label": "SHS time series",
+      "type": "image/png[]",
       "weight": 5
     }
   },

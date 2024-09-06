@@ -23,44 +23,11 @@
       }
     },
     {
-      "id": "69",
-      "type": "output",
-      "position": {
-        "x": 2245.953125,
-        "y": 323
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "70",
-      "type": "output",
-      "position": {
-        "x": 2252.953125,
-        "y": 372
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "71",
       "type": "output",
       "position": {
-        "x": 2288.953125,
-        "y": 537
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "75",
-      "type": "output",
-      "position": {
-        "x": 2236.953125,
-        "y": 623
+        "x": 2290.167319884395,
+        "y": 444.72118878597644
       },
       "data": {
         "label": "Output"
@@ -146,27 +113,6 @@
       "id": "reactflow__edge-67df_shs-71"
     },
     {
-      "source": "67",
-      "sourceHandle": "img_shs_map",
-      "target": "69",
-      "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_map-69"
-    },
-    {
-      "source": "67",
-      "sourceHandle": "img_shs_timeseries",
-      "target": "70",
-      "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_timeseries-70"
-    },
-    {
-      "source": "67",
-      "sourceHandle": "img_shs_timeseries",
-      "target": "75",
-      "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_timeseries-75"
-    },
-    {
       "source": "76",
       "sourceHandle": null,
       "target": "65",
@@ -242,6 +188,20 @@
       "target": "80",
       "targetHandle": "species",
       "id": "reactflow__edge-76-80species"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "img_shs_timeseries",
+      "target": "71",
+      "targetHandle": null,
+      "id": "reactflow__edge-67img_shs_timeseries-71"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "img_shs_map",
+      "target": "71",
+      "targetHandle": null,
+      "id": "reactflow__edge-67img_shs_map-71"
     }
   ],
   "inputs": {
@@ -404,16 +364,16 @@
       "type": "image/png[]",
       "weight": 0
     },
-    "SHI>habitatChange_GFW.yml@67|img_shs_timeseries": {
-      "description": "Figure showing a time series of SHS values per time step for each species.",
-      "label": "SHS time series",
-      "type": "image/png[]",
-      "weight": 3
-    },
     "SHI>habitatChange_GFW.yml@67|df_shs": {
       "description": "A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
       "label": "SHS table",
       "type": "text/tab-separated-values[]",
+      "weight": 1
+    },
+    "SHI>habitatChange_GFW.yml@67|img_shs_timeseries": {
+      "description": "Figure showing a time series of SHS values per time step for each species.",
+      "label": "SHS time series",
+      "type": "image/png[]",
       "weight": 2
     }
   },
