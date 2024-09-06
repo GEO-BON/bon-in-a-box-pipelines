@@ -100,17 +100,6 @@
       }
     },
     {
-      "id": "75",
-      "type": "output",
-      "position": {
-        "x": 2236.953125,
-        "y": 623
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "76",
       "type": "userInput",
       "position": {
@@ -230,13 +219,6 @@
       "target": "74",
       "targetHandle": null,
       "id": "reactflow__edge-68img_w_shi_timeseries-74"
-    },
-    {
-      "source": "67",
-      "sourceHandle": "img_shs_timeseries",
-      "target": "75",
-      "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_timeseries-75"
     },
     {
       "source": "76",
