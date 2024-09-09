@@ -1,0 +1,40 @@
+script: loadFromStac.R
+name: GBIF Heatmap
+description: "Download raster representing the number of observatiosn in GBIF for each pixel for specific taxonomic groups. Take from GEO BON STAC catalogue."
+author:
+  - name: Guillaume Larocque
+    identifier: https://orcid.org/0000-0002-5967-9156
+
+inputs:
+  taxa:
+    label: taxa
+    description: taxonomic group for which to retrieve GBIF heatmap
+    type: options
+    options:
+      - reptiles
+      - plants
+      - mammals
+      - birds
+      - arthropods
+      - amphibians
+      - all
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297, -1971146, 1015207, 1511916]
+  proj:
+    label: projection system
+    description: String, projection of the rasters
+    type: text
+    example: "EPSG:6623"
+  spatial_res:
+    label: spatial resolution
+    description: Integer, spatial resolution of the rasters
+    type: float
+    example: 1000.0
+outputs:
+  rasters:
+    label: density raster
+    description: Array with output raster path
+    type: image/tiff;application=geotiff
