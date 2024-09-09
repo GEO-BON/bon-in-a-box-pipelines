@@ -905,7 +905,7 @@
       "label": "projection system",
       "description": "String, projection system",
       "type": "text",
-      "example": "EPSG:6623",
+      "example": "EPSG:6622",
       "weight": 4
     },
     "pipeline@58": {
