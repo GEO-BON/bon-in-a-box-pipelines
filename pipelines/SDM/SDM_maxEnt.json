@@ -905,7 +905,7 @@
       "label": "projection system",
       "description": "String, projection system",
       "type": "text",
-      "example": "EPSG:6623",
+      "example": "EPSG:6622",
       "weight": 4
     },
     "pipeline@58": {
@@ -933,7 +933,7 @@
         "amphibians",
         "all"
       ],
-      "example": "reptiles",
+      "example": "plants",
       "weight": 6
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
