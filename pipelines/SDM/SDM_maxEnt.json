@@ -164,7 +164,7 @@
         "y": 411
       },
       "data": {
-        "descriptionFile": "data>heatmapFromSTAC.yml"
+        "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
       }
     },
     {
@@ -746,10 +746,10 @@
     },
     {
       "source": "67",
-      "sourceHandle": "raster",
+      "sourceHandle": "rasters",
       "target": "40",
       "targetHandle": "raster",
-      "id": "reactflow__edge-67raster-40raster"
+      "id": "reactflow__edge-67rasters-40raster"
     },
     {
       "source": "102",
@@ -851,10 +851,10 @@
     },
     {
       "source": "67",
-      "sourceHandle": "raster",
+      "sourceHandle": "rasters",
       "target": "125",
       "targetHandle": null,
-      "id": "reactflow__edge-67raster-125"
+      "id": "reactflow__edge-67rasters-125"
     },
     {
       "source": "96",
@@ -920,7 +920,7 @@
       ],
       "weight": 5
     },
-    "data>heatmapFromSTAC.yml@67|taxa": {
+    "data>GBIFHeatmapFromSTAC.yml@67|taxa": {
       "description": "taxonomic group to retrieve GBIF heatmap",
       "label": "taxa",
       "type": "options",
@@ -1030,7 +1030,7 @@
       "type": "text/tab-separated-values",
       "weight": 2
     },
-    "data>heatmapFromSTAC.yml@67|raster": {
+    "data>GBIFHeatmapFromSTAC.yml@67|rasters": {
       "description": "Heatmap of GBIF occurences for plants used for bias correction",
       "label": "Density of GBIF occurrences",
       "type": "image/tiff;application=geotiff",
