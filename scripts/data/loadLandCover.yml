@@ -1,6 +1,12 @@
 script: loadLandCover.R
 name: Land Cover
-description: This script calculate the proportion of each land cover class from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
+description: |
+  This script calculate the proportion of each land cover class from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox).
+
+  - ESA is found on the [GEO BON STAC](https://stac.geobon.org/)
+  - ESA and ESRI collections can be found in the [planetary computer](https://planetarycomputer.microsoft.com/api/stac/v1/).
+    They are named "esa-cci-lc" for ESA (300m) and "io-lulc-9-class" (10m) for ESRI.
+
 author:
   - name: Juan Zuloaga
   - name: Sarah Valentin
@@ -113,8 +119,3 @@ references:
   - text: ESA (1992-2020, 300m) 38 land cover classes (note that class=0 is NO DATA).
     doi: http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf
   - text: ESRI (2017-2022, 10m) 10 land cover classes
-  - text: io path (ESA) is
-    doi: https://stac.geobon.org/
-  - text: PC path (ESA and ESRI) is
-    doi: https://planetarycomputer.microsoft.com/api/stac/v1/
-  - text: collectionS in PC are named "esa-cci-lc" for ESA (300m) and "io-lulc-9-class" (10m) for ESRI.

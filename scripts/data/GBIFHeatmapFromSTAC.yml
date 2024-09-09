@@ -1,6 +1,8 @@
 script: loadFromStac.R
 name: GBIF Heatmap
-description: "Download raster representing the number of observatiosn in GBIF for each pixel for specific taxonomic groups. Take from GEO BON STAC catalogue."
+description: |
+  Download raster representing the number of observations in GBIF for each pixel for specific taxonomic groups.
+  Source layer can be found on the [GEO BON STAC catalog](https://stac.geobon.org/viewer/).
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
