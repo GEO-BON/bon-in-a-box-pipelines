@@ -933,7 +933,7 @@
         "amphibians",
         "all"
       ],
-      "example": "reptiles",
+      "example": "plants",
       "weight": 6
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
