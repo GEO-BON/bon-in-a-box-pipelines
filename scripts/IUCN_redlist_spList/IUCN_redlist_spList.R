@@ -26,9 +26,10 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load inpu
 # Adjust input values to correct and prevent errors in input paths
 input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) { sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) %>% unlist()) 
 
+
+
 # Script body ####
-print(Sys.getenv("SCRIPT_LOCATION"))
-token<- Sys.getenv("IUCN_TOKEN")
+token <- Sys.getenv("IUCN_TOKEN")
 print(token)
 
 ## Load sp country ####
