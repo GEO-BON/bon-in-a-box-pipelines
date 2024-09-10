@@ -1,0 +1,270 @@
+---
+title: "Red List Index"
+output: 
+  html_document:
+    toc: true             
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(knitr)
+knitr::opts_chunk$set(echo = TRUE)
+require("knitr")
+
+```
+
+## General description
+<div style="text-align: justify">  
+
+
+This document explains the script to calculate the Red List Index for endemic species in Colombia
+
+The Red List Index (RLI) has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity's 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010). The RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline indicator for Goal A and Target 4 of the CBD's Kunming-Montreal Global Biodiversity Framework (CBD, 2022).
+
+Beyond global trends, the RLI can be used to track trends in species across different biogeographic realms, political units, ecosystems, habitats, taxonomic groups, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). It is based on the proportion of species in each category on the Red List, and changes in this proportion over time resulting from genuine improvement or deterioration in the status of individual species (Butchart et al., 2004; Butchart et al., 2005). The RLI was initially designed and tested using data on all bird species from 1988–2004 (Butchart et al., 2004). The RLI values range between 0 (indicating all species are extinct) to 1 (indicating all species are Least Concern). 
+
+The revised RLI formula is defined by Butchart et al., 2007 as:<div/>
+
+$$
+RLI_{t}=\frac{M+T_{t}}{M}
+$$
+or:
+
+$$
+RLI_{t}=1-\frac{\sum{W_{c}}}{W_{EX}*N}
+$$
+**Where:**
+
+M = Is the maximum threat score, calculated as the number of species multiplied by the maximum category weight (5 for extinct species, according to the 'equal steps' weights).
+
+T = Is the current threat score, calculated as the sum of the threat scores across all categories and all assessed non-Data Deficient species.
+
+W~c~ = Value from IUCN categories.
+
+W~EX~ = Is the weight assigned to each species (4=”Critically endangered”, 3= “Endangered”, 2= “Vulnerable”, 1= “Near threatened”, 0= “Least concern”).
+
+N = Number or assessed species, excluding “data deficient” and “extinct” (in the first assessed year).
+
+<div style="text-align: justify">
+To ensure accuracy, the RLI formulation requires consistent inclusion of the same set of species across assessments, with category changes reflecting genuine improvements or deteriorations in species status. Adjustments using 'back-casting' may be necessary to account for taxonomic revisions and ensure continuity in Red List categorizations over time (Butchart et al., 2007). For more detailed information on the RLI, visit the [IUCN website](https://www.iucnredlist.org/).<div/>
+
+## Authorship
+
+<div style="text-align: justify"> Species data: IUCN 2024. IUCN Red List of Threatened Species. Version 2024-1. Available: [IUCN website](https://www.iucnredlist.org/).
+
+
+The function for calculate the *RLI*, was made by Maria Camila Diaz (**mdiaz@humboldt.org.co**) and Victor Julio Rincón (**vrincon@humboldt.org.co**), researchers of [Instituto de Investigación de Recursos Biológicos Alexander von Humboldt](http://www.humboldt.org.co/es/), the routine can be found with the name *RLI_endemicas* its last modification in R was July 2024. The documentation of the script to generate the RLI was built by Maria Camila Diaz in July 2024.
+
+
+Literature cited:
+
+- Butchart SHM, Stattersfield AJ, Bennun LA, Shutes SM, Akçakaya HR, et al. 2004. Measuring global trends in the status of biodiversity: Red List Indicesfor birds. PLoS Biology 2: e383.
+
+- Butchart SHM, Stattersfield AJ, Baillie JEM, Bennun LA, Stuart SN, et al. 2005. Using Red List Indices to measure progress towards the 2010 target andbeyond. Philosophical Transactions of the Royal Society of London B 360: 255–268.
+
+- Butchart SH, Resit Akçakaya H, Chanson J, Baillie JE, Collen B, et al. 2007. Improvements to the Red List Index. PLOS ONE 2(1): e140.
+
+- Cardoso, P., Branco, V. 2023. IUCN Redlisting Tools (Package red).
+
+- CBD 2022. Proposed monitoring framework for the post-2020 global biodiversity framework. CBD: Convention on Biological Diversity.
+
+- Global Biodiversity Outlook. 2010. Global biodiversity outlook 3. In Montréal, Canada: Secretariat of the Convention on Biological Diversity.(http://gbo3. cbd. int/) Phil. Trans. R. Soc. B (Vol. 9).
+
+- Rodrigues ASL, Pilgrim JD, Lamoreux JF, Hoffmann M, Brooks TM.2006. The value of the IUCN Red List for Conservation. Trends in Ecology & Evolution21: 71–76. <div/>
+
+
+## Script Description
+### General inputs required
+
+<div style="text-align: justify">**IUCN token:** You most request a token to the IUCN for the script to work.
+
+**Taxon or species group name:** Specify the species group for which you want to calculate the RLI, in this scenario, a list of endemic species was used.
+
+**Country:** Specify the country for which you want to calculate the RLI.<div/>
+
+
+### Process
+
+Load required packages - libraries to run the script
+
+```{r, message = FALSE, warning = FALSE}
+packages <- c("rstudioapi","sf","dplyr","terra","red", "rredlist","ggplot2")
+lapply(packages,require,character.only=T)
+
+```
+
+Set as working directory where the script is saved
+
+```{r, message = FALSE, warning = FALSE}
+dirfolder<- dirname(getSourceEditorContext()$path)
+setwd(dirfolder)
+
+```
+
+Load IUCN token
+token <- "your token"
+
+```{r, include = FALSE, message = FALSE, warning = FALSE}
+token <- "f33e69dfa9b06a6495aca3b049606f6e08ceb37083ff88a9c7c9dfbcd56a9121"
+```
+
+Create ISO table by country of interest
+
+```{r, message = FALSE, warning = FALSE}
+IUCN_countries <- rredlist::rl_countries(key = token)$results
+IUCN_COL <- dplyr::filter(IUCN_countries, isocode == "CO")
+write.csv(IUCN_COL, "data/Iso_COL.csv")
+```
+
+Create species table with historic results
+
+```{r, message = FALSE, warning = FALSE}
+IUCN_sp_col <- rredlist::rl_sp_country('CO', key = token)$result
+
+sp_endemicas <- read.csv2("data/table_2024-07-22-18-20-41.csv", sep = ",")
+colnames(sp_endemicas)[2] <-"scientific_name"
+sp_endemicas <- sp_endemicas[,2] 
+sp_endemicas_IUCN <- filter(IUCN_sp_col,IUCN_sp_col$scientific_name %in%  sp_endemicas)
+
+
+IUCN_history <- lapply(X = sp_endemicas_IUCN$scientific_name, FUN = rredlist::rl_history, key = token)
+
+IUCN_history_DF <- as.data.frame(matrix(NA,0,10))
+for (i in 1:length(IUCN_history)){
+  df=IUCN_history[[i]]$result
+  if (is.data.frame(df)){
+    df$species=IUCN_history[[i]]$name
+    IUCN_history_DF=rbind.data.frame(IUCN_history_DF,df)
+  }
+  else {
+    next
+  }
+} 
+
+write.csv(IUCN_history_DF, "data/IUCN_history_DF.csv")
+
+dataset <- data.frame(sp_col = character())
+dataset1 <- data.frame(time_col = character())
+
+
+historyAssesment_data<-  as.data.frame(IUCN_history_DF)
+form_matrix<- as.formula(paste0("species", "~", "assess_year"))
+
+
+historyAssesment_matrix<-   reshape2::dcast(historyAssesment_data, form_matrix,  value.var = "code",
+                                            fun.aggregate = function(x) {unique(x)[1]}) %>% tibble::column_to_rownames("species") %>% as.data.frame.matrix()
+
+```
+
+Adjust threat matrix
+
+```{r, message = FALSE, warning = FALSE}
+#Redlist code
+adjust_categories<- data.frame(Cat_IUCN= c("CR", "DD", "EN", "EN", "DD", "DD", "LC", "LC", "LC", "NT", "DD", "NT", "RE", "VU", "VU"),
+                               code= c("CR", "DD", "E", "EN", "I", "K", "LC", "LR/cd", "LR/lc", "LR/nt", "NA", "NT", "R", "V", "VU"))
+
+RedList_matrix<- historyAssesment_matrix %>% as.matrix()
+
+for(i in seq(nrow(adjust_categories))){
+  RedList_matrix[ which(RedList_matrix== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN 
+}
+
+for(j in unique(adjust_categories$Cat_IUCN)){
+  key<- c(tolower(j), toupper(j), j) %>% paste0(collapse = "|")
+  RedList_matrix[ which(grepl(key, RedList_matrix), arr.ind = T) ]    <- j
+}
+
+RedList_matrix[which( (!RedList_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(RedList_matrix) , arr.ind = TRUE )]<-NA
+
+```
+
+Remove species that do not have an assessment before the base year, in this case set to the year 2000
+
+```{r, message = FALSE, warning = FALSE}
+replace_na_with_previous <- function(df, target_col) {
+  for (col in 2:(target_col-1)) {
+    df[[target_col]] <- ifelse(is.na(df[[target_col]]), df[[col]], df[[target_col]])
+  }
+  return(df)
+}
+
+df <- replace_na_with_previous(RedList_matrix, which(names(RedList_matrix) == "2000"))
+
+df_clean <- df %>%
+  filter(!is.na(2000))
+
+# Get the index of the base year column
+base_year_index <- which(names(df_clean) == "2000")
+
+# Select only the columns from the base year onward
+df_filtered <- df_clean %>%
+  select(X, all_of(names(df_clean)[base_year_index:ncol(df_clean)]))
+
+```
+
+Redlist result
+
+```{r, message = FALSE, warning = FALSE}
+RedList_data<- red::rli(df_filtered, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
+  dplyr::filter(!Year %in% "Change/year")
+
+RedList_data <- na.omit(RedList_data)
+
+```
+
+
+Redlist figure
+
+```{r, message = FALSE, warning = FALSE}
+RedList_trendPlot<- ggplot(RedList_data, aes(x = Year, y = RLI)) +
+  geom_line(group = 1, col= "red") +
+  geom_point() +
+  coord_cartesian(ylim = c(0,1))+
+  theme_classic()+
+  theme(    panel.grid.major = element_line(color = "gray"),
+  ) + theme(text = element_text(size = 4))
+
+RedList_trendPlot
+
+```
+
+Write results
+
+```{r, message = FALSE, warning = FALSE}
+write.csv(RedList_data, "result/RedList_result.csv", row.names = F)
+write.csv(RedList_matrix, "result/RedList_matrix.csv", row.names = T) 
+ggsave("result/RedList_Plot.png", RedList_trendPlot, height = 2, width = 4)
+```
+
+## Outputs
+
+<div style="text-align: justify">**Red list matrix:** Assessment result for each year. If the species was not assessed it shows an NA.
+
+**Red list result:** RLI result for each year.
+
+**Red list plot:** plot that shows how the RLI change over the years. <div/>
+
+
+## Indicator interpretation
+
+<div style="text-align: justify">The resulting index shows the aggregate extinction risk for species within the country or region relative to its potential contribution to global species extinction risks (within the taxonomic groups included in the RLI). The RLI values range between 0 (indicating all species are extinct) to 1 (indicating all species are Least Concern).<div/>
+
+
+
+## Considerations
+
+<div style="text-align: justify"> When interpreting the *RLI*, the following must be taken into account:
+
+- RLI values are influenced by how often assessments are conducted. Newly assessed species can introduce bias because they may skew the overall RLI until subsequent assessments provide more data.
+
+- In cases where there isn't enough data to retroactively assign Red List categories for earlier assessments (back-casting), species can be excluded until they are reassessed a second time.
+
+- Potential errors in RLI values can arise from inaccuracies in the Red List categories assigned to species due to limited knowledge. However, the IUCN Red List categories are designed with broad thresholds for extinction risk, which helps mitigate uncertainty. For example, a species might be classified as Endangered even if its range estimate has some degree of uncertainty (e.g., between 100 km and 4,999 km).
+
+- Species that are too poorly understood for Red List criteria to be applied are categorized as Data Deficient. These species are excluded from the calculation of the RLI until sufficient data becomes available for assessment.
+
+
+```{r }
+
+```
+
