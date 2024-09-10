@@ -2,7 +2,6 @@ script: IUCN_redlist_spList.R
 description: "It obtains a list of species assessed by the IUCN Red List of Species for a specific country and taxonomic group, including their most recent threat categorization."
 author: 
  - name: Maria Camila Diaz
- - name: Victor Julio Rincon (rincon-v@javeriana.edu.co)
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   country:
@@ -298,7 +297,7 @@ inputs:
       - "tunas_and_billfishes"
       - "wrasses_and_parrotfishes"
 outputs:
-  uicn_spList:
+  uicn_splist:
     label: iucn_splist
     description: "Dataset with the list of species for the specified country and taxonomic group. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv

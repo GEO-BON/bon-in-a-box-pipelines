@@ -63,13 +63,13 @@ redList_matrix[which( (!redList_matrix %in% adjust_categories$Cat_IUCN)  & !is.n
 
 # Redlist data ####
 print("red")
-redList_data<- red::rli(redList_matrix, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
+redlist_data<- red::rli(redList_matrix, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
   dplyr::filter(!Year %in% "Change/year")
-print("redList_data")
+print("redlist_data")
 
 
 # Redlist figura ####
-redlist_trendplot<- ggplot(redList_data, aes(x = Year, y = RLI)) +
+redlist_trendplot<- ggplot(redlist_data, aes(x = Year, y = RLI)) +
   geom_line(group = 1, col= "red") +
   geom_point() +
   coord_cartesian(ylim = c(0,1))+
@@ -80,8 +80,8 @@ redlist_trendplot<- ggplot(redList_data, aes(x = Year, y = RLI)) +
 
 
 ## Write results ####  
-redList_data_path<- file.path(outputFolder, paste0("redList_data", ".csv")) # Define the file path 
-write.csv(redList_data, redList_data_path, row.names = F) # write result
+redlist_data_path<- file.path(outputFolder, paste0("redlist_data", ".csv")) # Define the file path 
+write.csv(redlist_data, redlist_data_path, row.names = F) # write result
 
 redList_matrix_path<- file.path(outputFolder, paste0("redList_matrix", ".csv")) # Define the file path 
 write.csv(redList_matrix, redList_matrix_path, row.names = T) # write result
@@ -92,7 +92,7 @@ ggsave(redlist_trendplot_path, redlist_trendplot, height = 2, width = 4)
 
 #### Outputing result to JSON ####
 
-output<- list(redlist_trendplot= redlist_trendplot_path, redList_data= redList_data_path, redList_matrix= redList_matrix_path )
+output<- list(redlist_trendplot= redlist_trendplot_path, redlist_data= redlist_data_path, redList_matrix= redList_matrix_path )
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)

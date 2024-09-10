@@ -31,11 +31,11 @@ outputs:
     label: redlist_trendplot
     description: "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species."
     type: image/jpg
-  redList_data:
+  redlist_data:
     label: redlist_data
     description: "Dataset containing the results of the Red List Index (RLI) calculation."
     type: text/csv
-  redList_matrix:
+  redlist_matrix:
     label: redlist_matrix
     description: "Matrix showing the distribution of threat categories over time for the group of species."
     type: text/csv
