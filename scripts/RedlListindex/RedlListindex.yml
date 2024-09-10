@@ -21,7 +21,7 @@ inputs:
     description: "Name of the column in 'historyAssesment_data' that contains the periods (years) when the assessments were conducted for each species."
     type: text
     example: 'assess_year'
-  categoryCod_col:
+  categorycod_col:
     label: categorycode_col
     description: "Name of the column in 'historyAssesment_data' that contains the threat category code. The codes should correspond to the IUCN threat category codes (EX, EW, RE, CR, EN, VU, NT, DD, LC)."
     type: text
@@ -31,11 +31,11 @@ outputs:
     label: redlist_trendplot
     description: "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species."
     type: image/jpg
-  RedList_data:
+  redList_data:
     label: redlist_data
     description: "Dataset containing the results of the Red List Index (RLI) calculation."
     type: text/csv
-  RedList_matrix:
+  redList_matrix:
     label: redlist_matrix
     description: "Matrix showing the distribution of threat categories over time for the group of species."
     type: text/csv

@@ -299,6 +299,6 @@ inputs:
       - "wrasses_and_parrotfishes"
 outputs:
   uicn_spList:
-    label: iucn_spList
+    label: iucn_splist
     description: "Dataset with the list of species for the specified country and taxonomic group. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv

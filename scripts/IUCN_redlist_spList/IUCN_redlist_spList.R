@@ -41,13 +41,13 @@ UICN_taxon <- rredlist::rl_comp_groups(group = input$taxonomic_group, key = toke
 
 
 ## Filter country list by taxonomic group ####
-UICN_spList<- UICN_taxon %>% dplyr::filter(taxonid %in% UICN_country$taxonid)
+UICN_splist<- UICN_taxon %>% dplyr::filter(taxonid %in% UICN_country$taxonid)
 
 
 
 # Write results ####  
-UICN_spList_path<- file.path(outputFolder, paste0("UICN_spList", ".csv")) # Define the file path 
-write.csv(UICN_spList, UICN_spList_path, row.names = F) # write result
+UICN_splist_path<- file.path(outputFolder, paste0("UICN_splist", ".csv")) # Define the file path 
+write.csv(UICN_splist, UICN_splist_path, row.names = F) # write result
 
 
 
@@ -56,7 +56,7 @@ write.csv(UICN_spList, UICN_spList_path, row.names = F) # write result
 # Outputing result to JSON ####
 
 #Define final output list
-output<- list(UICN_spList= UICN_spList_path)
+output<- list(UICN_splist= UICN_splist_path)
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)
