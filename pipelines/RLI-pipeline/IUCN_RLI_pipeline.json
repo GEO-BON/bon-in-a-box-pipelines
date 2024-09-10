@@ -424,13 +424,6 @@
       "id": "reactflow__edge-14-13sp_col"
     },
     {
-      "source": "13",
-      "sourceHandle": "iucn_historyassesment_data",
-      "target": "15",
-      "targetHandle": "historyassesment_data",
-      "id": "reactflow__edge-13iucn_historyassesment_data-15historyassesment_data"
-    },
-    {
       "source": "14",
       "sourceHandle": null,
       "target": "15",
@@ -443,20 +436,6 @@
       "target": "15",
       "targetHandle": "time_col",
       "id": "reactflow__edge-16-15time_col"
-    },
-    {
-      "source": "17",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "categorycod_col",
-      "id": "reactflow__edge-17-15categorycod_col"
-    },
-    {
-      "source": "15",
-      "sourceHandle": "redlist_trendplot",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-15redlist_trendplot-18"
     },
     {
       "source": "13",

@@ -11,7 +11,7 @@ inputs:
   historyassesment_data:
     label: historyassesment_data
     description: "Dataset that contains the list of species and their historical threat category assessments."
-    type: "text/csv"
+    type: text
     example: 'scripts/RedlListindex/input/IUCN_historyAssesment_data.csv'
   sp_col:
     label: sp_col
@@ -36,8 +36,8 @@ outputs:
   redlist_data:
     label: redlist_data
     description: "Dataset containing the results of the Red List Index (RLI) calculation."
-    type: text/csv
+    type: text
   redlist_matrix:
     label: redlist_matrix
     description: "Matrix showing the distribution of threat categories over time for the group of species."
-    type: text/csv
+    type: text
