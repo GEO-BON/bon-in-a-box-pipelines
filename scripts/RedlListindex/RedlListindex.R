@@ -31,11 +31,11 @@ input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/
 
 #### Species list by country ####
 #Load IUCN token----
-historyAssesment_data<-  data.table::fread(input$historyAssesment_data) %>% as.data.frame()
+historyassesment_data<-  data.table::fread(input$historyassesment_data) %>% as.data.frame()
 form_matrix<- as.formula(paste0(input$sp_col, "~", input$time_col))
 
 
-historyAssesment_matrix<-   reshape2::dcast(historyAssesment_data, form_matrix,  value.var = "code",
+historyAssesment_matrix<-   reshape2::dcast(historyassesment_data, form_matrix,  value.var = "code",
                                                  fun.aggregate = function(x) {unique(x)[1]}
 ) %>% tibble::column_to_rownames(input$sp_col) %>% as.data.frame.matrix()
 
@@ -47,29 +47,29 @@ historyAssesment_matrix<-   reshape2::dcast(historyAssesment_data, form_matrix, 
 adjust_categories<- data.frame(Cat_IUCN= c("CR", "DD", "EN", "EN", "DD", "DD", "LC", "LC", "LC", "NT", "DD", "NT", "RE", "VU", "VU"),
                                code= c("CR", "DD", "E", "EN", "I", "K", "LC", "LR/cd", "LR/lc", "LR/nt", "NA", "NT", "R", "V", "VU"))
 
-RedList_matrix<- historyAssesment_matrix %>% as.matrix()
+redList_matrix<- historyAssesment_matrix %>% as.matrix()
 
 for(i in seq(nrow(adjust_categories))){
-  RedList_matrix[ which(RedList_matrix== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN 
+  redList_matrix[ which(redList_matrix== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN 
 }
 
 for(j in unique(adjust_categories$Cat_IUCN)){
   key<- c(tolower(j), toupper(j), j) %>% paste0(collapse = "|")
-  RedList_matrix[ which(grepl(key, RedList_matrix), arr.ind = T) ]    <- j
+  redList_matrix[ which(grepl(key, redList_matrix), arr.ind = T) ]    <- j
 }
 
-RedList_matrix[which( (!RedList_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(RedList_matrix) , arr.ind = TRUE )]<-NA
+redList_matrix[which( (!redList_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(redList_matrix) , arr.ind = TRUE )]<-NA
 
 
 # Redlist data ####
 print("red")
-RedList_data<- red::rli(RedList_matrix, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
+redList_data<- red::rli(redList_matrix, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
   dplyr::filter(!Year %in% "Change/year")
-print("RedList_data")
+print("redList_data")
 
 
 # Redlist figura ####
-RedList_trendPlot<- ggplot(RedList_data, aes(x = Year, y = RLI)) +
+redlist_trendplot<- ggplot(redList_data, aes(x = Year, y = RLI)) +
   geom_line(group = 1, col= "red") +
   geom_point() +
   coord_cartesian(ylim = c(0,1))+
@@ -80,19 +80,19 @@ RedList_trendPlot<- ggplot(RedList_data, aes(x = Year, y = RLI)) +
 
 
 ## Write results ####  
-RedList_data_path<- file.path(outputFolder, paste0("RedList_data", ".csv")) # Define the file path 
-write.csv(RedList_data, RedList_data_path, row.names = F) # write result
+redList_data_path<- file.path(outputFolder, paste0("redList_data", ".csv")) # Define the file path 
+write.csv(redList_data, redList_data_path, row.names = F) # write result
 
-RedList_matrix_path<- file.path(outputFolder, paste0("RedList_matrix", ".csv")) # Define the file path 
-write.csv(RedList_matrix, RedList_matrix_path, row.names = T) # write result
+redList_matrix_path<- file.path(outputFolder, paste0("redList_matrix", ".csv")) # Define the file path 
+write.csv(redList_matrix, redList_matrix_path, row.names = T) # write result
 
-RedList_trendPlot_path<- file.path(outputFolder, paste0("RedList_trendPlot", ".jpg")) # Define the file path 
-ggsave(RedList_trendPlot_path, RedList_trendPlot, height = 2, width = 4)
+redlist_trendplot_path<- file.path(outputFolder, paste0("redlist_trendplot", ".jpg")) # Define the file path 
+ggsave(redlist_trendplot_path, redlist_trendplot, height = 2, width = 4)
 
 
 #### Outputing result to JSON ####
 
-output<- list(RedList_trendPlot= RedList_trendPlot_path, RedList_data= RedList_data_path, RedList_matrix= RedList_matrix_path )
+output<- list(redlist_trendplot= redlist_trendplot_path, redList_data= redList_data_path, redList_matrix= redList_matrix_path )
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)

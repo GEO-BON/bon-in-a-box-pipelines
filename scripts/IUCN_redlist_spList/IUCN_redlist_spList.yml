@@ -298,7 +298,7 @@ inputs:
       - "tunas_and_billfishes"
       - "wrasses_and_parrotfishes"
 outputs:
-  UICN_spList:
+  uicn_spList:
     label: iucn_spList
     description: "Dataset with the list of species for the specified country and taxonomic group. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv

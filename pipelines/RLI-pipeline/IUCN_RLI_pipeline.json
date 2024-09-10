@@ -411,10 +411,10 @@
     },
     {
       "source": "10",
-      "sourceHandle": "UICN_spList",
+      "sourceHandle": "uicn_spList",
       "target": "13",
       "targetHandle": "species_data",
-      "id": "reactflow__edge-10UICN_spList-13species_data"
+      "id": "reactflow__edge-10uicn_spList-13species_data"
     },
     {
       "source": "14",
