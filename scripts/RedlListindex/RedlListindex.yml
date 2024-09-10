@@ -1,10 +1,13 @@
 script: RedlListindex.R
 name: RedlListindex
 description: "Estimates the Red List Index (RLI) for a group of species, reflecting trends in the overall extinction risk for that group."
+author: 
+ - name: Maria Camila Diaz
+ - name: Victor Julio Rincon (rincon-v@javeriana.edu.co)
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   historyAssesment_data:
-    label: historyAssesment_data
+    label: historyassesment_data
     description: "Dataset that contains the list of species and their historical threat category assessments."
     type: text/csv
     example: 'scripts/RedlListindex/input/IUCN_historyAssesment_data.csv'
@@ -19,20 +22,20 @@ inputs:
     type: text
     example: 'assess_year'
   categoryCod_col:
-    label: categoryCode_col
+    label: categorycode_col
     description: "Name of the column in 'historyAssesment_data' that contains the threat category code. The codes should correspond to the IUCN threat category codes (EX, EW, RE, CR, EN, VU, NT, DD, LC)."
     type: text
     example: 'code'
 outputs:
   RedList_trendPlot:
-    label: RedList_trendPlot
+    label: redList_trendplot
     description: "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species."
     type: image/jpg
   RedList_data:
-    label: RedList_data
+    label: redList_data
     description: "Dataset containing the results of the Red List Index (RLI) calculation."
     type: text/csv
   RedList_matrix:
-    label: RedList_matrix
+    label: redList_matrix
     description: "Matrix showing the distribution of threat categories over time for the group of species."
     type: text/csv

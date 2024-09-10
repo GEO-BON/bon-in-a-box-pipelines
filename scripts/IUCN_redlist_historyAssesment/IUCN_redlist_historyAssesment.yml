@@ -15,7 +15,7 @@ inputs:
     example: 'scientific_name'
 outputs:
   IUCN_historyAssesment_data:
-    label: IUCN_historyAssesment_data
+    label: iucn_historyAssesment_data
     description:  Dataset that contains the historical IUCN threat category assessments, organized by year, for the listed species.
     type: text/csv
 
