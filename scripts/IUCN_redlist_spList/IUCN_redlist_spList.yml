@@ -1,7 +1,7 @@
 script: IUCN_redlist_spList.R
 description: "It obtains a list of species assessed by the IUCN Red List of Species for a specific country and taxonomic group, including their most recent threat categorization."
 author: 
- - name: Maria Camila Diaz
+  name: Maria Camila Diaz
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   country:
