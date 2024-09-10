@@ -9,7 +9,7 @@ inputs:
   historyassesment_data:
     label: historyassesment_data
     description: "Dataset that contains the list of species and their historical threat category assessments."
-    type: text/csv
+    type: "text/csv"
     example: 'scripts/RedlListindex/input/IUCN_historyAssesment_data.csv'
   sp_col:
     label: sp_col

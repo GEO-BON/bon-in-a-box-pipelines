@@ -1,69 +1,22 @@
 {
   "nodes": [
     {
-      "id": "10",
+      "id": "20",
       "type": "io",
       "position": {
-        "x": 723.5237105465744,
-        "y": 291.4611239414935
+        "x": 662.3347778320312,
+        "y": 436.6666564941406
       },
       "data": {
         "descriptionFile": "IUCN_redlist_splist>IUCN_redlist_splist.yml"
       }
     },
     {
-      "id": "11",
+      "id": "21",
       "type": "constant",
       "position": {
-        "x": 102,
-        "y": 333.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "mammals",
-        "options": [
-          "all",
-          "amphibians",
-          "birds",
-          "mammals",
-          "reptiles",
-          "angelfishes",
-          "blennies",
-          "butterfly_fishes",
-          "cacti",
-          "chameleons",
-          "cone_snails",
-          "conifers",
-          "crocodiles_and_alligators",
-          "cycads",
-          "fw_caridean_shrimps",
-          "fw_crabs",
-          "fw_crayfish",
-          "hagfishes",
-          "lobsters",
-          "magnolias",
-          "mangrove_plants",
-          "pufferfishes",
-          "reef_building_corals",
-          "seabreams_porgies_picarels",
-          "seagrasses",
-          "seasnakes",
-          "sharks_and_rays",
-          "sturgeons",
-          "surgeonfishes",
-          "tarpons_and_ladyfishes",
-          "tunas_and_billfishes",
-          "wrasses_and_parrotfishes"
-        ]
-      }
-    },
-    {
-      "id": "12",
-      "type": "constant",
-      "position": {
-        "x": 62,
-        "y": 252.5
+        "x": 274.33477783203125,
+        "y": 252.66665649414062
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -322,22 +275,69 @@
       }
     },
     {
-      "id": "13",
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 229.33477783203125,
+        "y": 583.6666564941406
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mammals",
+        "options": [
+          "all",
+          "amphibians",
+          "birds",
+          "mammals",
+          "reptiles",
+          "angelfishes",
+          "blennies",
+          "butterfly_fishes",
+          "cacti",
+          "chameleons",
+          "cone_snails",
+          "conifers",
+          "crocodiles_and_alligators",
+          "cycads",
+          "fw_caridean_shrimps",
+          "fw_crabs",
+          "fw_crayfish",
+          "hagfishes",
+          "lobsters",
+          "magnolias",
+          "mangrove_plants",
+          "pufferfishes",
+          "reef_building_corals",
+          "seabreams_porgies_picarels",
+          "seagrasses",
+          "seasnakes",
+          "sharks_and_rays",
+          "sturgeons",
+          "surgeonfishes",
+          "tarpons_and_ladyfishes",
+          "tunas_and_billfishes",
+          "wrasses_and_parrotfishes"
+        ]
+      }
+    },
+    {
+      "id": "23",
       "type": "io",
       "position": {
-        "x": 782,
-        "y": 563.5
+        "x": 1120.3347778320312,
+        "y": 639.6666564941406
       },
       "data": {
         "descriptionFile": "IUCN_redlist_historyAssesment>IUCN_redlist_historyAssesment.yml"
       }
     },
     {
-      "id": "14",
+      "id": "24",
       "type": "constant",
       "position": {
-        "x": 411,
-        "y": 525.5
+        "x": 633.0890503493522,
+        "y": 610.414924392524
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -346,22 +346,22 @@
       }
     },
     {
-      "id": "15",
+      "id": "25",
       "type": "io",
       "position": {
-        "x": 1515,
-        "y": 347.5
+        "x": 1623.6028430260358,
+        "y": 320.87449612870773
       },
       "data": {
         "descriptionFile": "RedlListindex>RedlListindex.yml"
       }
     },
     {
-      "id": "16",
+      "id": "26",
       "type": "constant",
       "position": {
-        "x": 1226.5060046189374,
-        "y": 757.4130869899923
+        "x": 1732.0021087217194,
+        "y": 554.6975987126748
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -370,11 +370,11 @@
       }
     },
     {
-      "id": "17",
+      "id": "27",
       "type": "constant",
       "position": {
-        "x": 1584.4848344880675,
-        "y": 594.0837567359507
+        "x": 1563.7180322129745,
+        "y": 839.290397888319
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -383,11 +383,11 @@
       }
     },
     {
-      "id": "18",
+      "id": "28",
       "type": "output",
       "position": {
-        "x": 1945,
-        "y": 351.5
+        "x": 2124.1376603600793,
+        "y": 323.9657284164321
       },
       "data": {
         "label": "Output"
@@ -396,97 +396,76 @@
   ],
   "edges": [
     {
-      "source": "11",
+      "source": "21",
       "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-11-10taxonomic_group"
-    },
-    {
-      "source": "12",
-      "sourceHandle": null,
-      "target": "10",
+      "target": "20",
       "targetHandle": "country",
-      "id": "reactflow__edge-12-10country"
+      "id": "reactflow__edge-21-20country"
     },
     {
-      "source": "10",
+      "source": "22",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-22-20taxonomic_group"
+    },
+    {
+      "source": "20",
       "sourceHandle": "uicn_splist",
-      "target": "13",
+      "target": "23",
       "targetHandle": "species_data",
-      "id": "reactflow__edge-10uicn_splist-13species_data"
+      "id": "reactflow__edge-20uicn_splist-23species_data"
     },
     {
-      "source": "14",
+      "source": "24",
       "sourceHandle": null,
-      "target": "13",
+      "target": "23",
       "targetHandle": "sp_col",
-      "id": "reactflow__edge-14-13sp_col"
+      "id": "reactflow__edge-24-23sp_col"
     },
     {
-      "source": "13",
+      "source": "23",
       "sourceHandle": "iucn_historyassesment_data",
-      "target": "15",
+      "target": "25",
       "targetHandle": "historyassesment_data",
-      "id": "reactflow__edge-13iucn_historyassesment_data-15historyassesment_data"
+      "id": "reactflow__edge-23iucn_historyassesment_data-25historyassesment_data"
     },
     {
-      "source": "14",
+      "source": "24",
       "sourceHandle": null,
-      "target": "15",
+      "target": "25",
       "targetHandle": "sp_col",
-      "id": "reactflow__edge-14-15sp_col"
+      "id": "reactflow__edge-24-25sp_col"
     },
     {
-      "source": "16",
+      "source": "26",
       "sourceHandle": null,
-      "target": "15",
+      "target": "25",
       "targetHandle": "time_col",
-      "id": "reactflow__edge-16-15time_col"
+      "id": "reactflow__edge-26-25time_col"
     },
     {
-      "source": "17",
+      "source": "27",
       "sourceHandle": null,
-      "target": "15",
+      "target": "25",
       "targetHandle": "categorycod_col",
-      "id": "reactflow__edge-17-15categorycod_col"
+      "id": "reactflow__edge-27-25categorycod_col"
     },
     {
-      "source": "15",
+      "source": "25",
       "sourceHandle": "redlist_trendplot",
-      "target": "18",
+      "target": "28",
       "targetHandle": null,
-      "id": "reactflow__edge-15redlist_trendplot-18"
-    },
-    {
-      "source": "13",
-      "sourceHandle": "iucn_historyassesment_data",
-      "target": "15",
-      "targetHandle": "historyassesment_data",
-      "id": "reactflow__edge-13iucn_historyassesment_data-15historyassesment_data"
-    },
-    {
-      "source": "15",
-      "sourceHandle": "redlist_trendplot",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-15redlist_trendplot-18"
-    },
-    {
-      "source": "17",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "categorycod_col",
-      "id": "reactflow__edge-17-15categorycod_col"
+      "id": "reactflow__edge-25redlist_trendplot-28"
     }
   ],
   "inputs": {},
   "outputs": {
-    "RedlListindex>RedlListindex.yml@15|redlist_trendplot": {
+    "RedlListindex>RedlListindex.yml@25|redlist_trendplot": {
       "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species.",
       "label": "redlist_trendplot",
       "type": "image/jpg",
-      "weight": 1
+      "weight": 0
     }
   }
 }
