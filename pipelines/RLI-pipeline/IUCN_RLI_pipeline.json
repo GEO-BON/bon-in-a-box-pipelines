@@ -425,10 +425,10 @@
     },
     {
       "source": "13",
-      "sourceHandle": "IUCN_historyAssesment_data",
+      "sourceHandle": "iucn_historyassesment_data",
       "target": "15",
       "targetHandle": "historyAssesment_data",
-      "id": "reactflow__edge-13IUCN_historyAssesment_data-15historyAssesment_data"
+      "id": "reactflow__edge-13iucn_historyassesment_data-15historyAssesment_data"
     },
     {
       "source": "14",

@@ -2,8 +2,10 @@ script: IUCN_redlist_historyAssesment.R
 name: IUCN_redlist_historyAssesment
 description: Gets the historical IUCN Red List assessments for a given species list.
 author: 
- - name: Maria Camila Diaz
- - name: Victor Julio Rincon (rincon-v@javeriana.edu.co)
+ - name: 
+    Maria Camila Diaz
+ - name: 
+    Victor Julio Rincon (rincon-v@javeriana.edu.co)
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   species_data:
@@ -17,7 +19,7 @@ inputs:
     type: text
     example: 'scientific_name'
 outputs:
-  IUCN_historyAssesment_data:
+  iucn_historyassesment_data:
     label: iucn_historyassesment_data
     description:  Dataset that contains the historical IUCN threat category assessments, organized by year, for the listed species.
     type: text/csv
