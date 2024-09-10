@@ -1,5 +1,4 @@
 script: IUCN_redlist_historyAssesment.R
-name: IUCN_redlist_historyAssesment
 description: Gets the historical IUCN Red List assessments for a given species list.
 author:
  - name:
