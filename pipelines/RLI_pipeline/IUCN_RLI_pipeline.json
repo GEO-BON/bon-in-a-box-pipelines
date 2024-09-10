@@ -467,5 +467,17 @@
       "type": "image/jpg",
       "weight": 0
     }
+  },
+"metadata": {
+    "name": "Red List Index (RLI) pipeline",
+    "description": "This pipeline calculates the \nRLI by filtering the IUCN data by country and taxonomic group.",
+    "author": [
+      {
+        "name": "Victor Julio Rincon",
+        "identifier": "rincon-v@javeriana.edu.co"
+      }
+    ],
+    "license": "MIT",
+    "external_link": "https://github.com/GEO-BON/biab-2.0"
   }
 }
