@@ -1,5 +1,9 @@
 script: IUCN_redlist_spList.R
+name: IUCN_redlist_spList
 description: "It obtains a list of species assessed by the IUCN Red List of Species for a specific country and taxonomic group, including their most recent threat categorization."
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   country:

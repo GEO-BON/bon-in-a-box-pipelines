@@ -1,6 +1,9 @@
 script: RedlListindex.R
 name: RedlListindex
 description: "Estimates the Red List Index (RLI) for a group of species, reflecting trends in the overall extinction risk for that group."
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
   historyAssesment_data:
