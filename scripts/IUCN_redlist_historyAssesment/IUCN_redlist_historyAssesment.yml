@@ -1,10 +1,10 @@
 script: IUCN_redlist_historyAssesment.R
 name: IUCN_redlist_historyAssesment
 description: Gets the historical IUCN Red List assessments for a given species list.
-author: 
- - name: 
+author:
+ - name:
     Maria Camila Diaz
- - name: 
+ - name:
     Victor Julio Rincon (rincon-v@javeriana.edu.co)
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
