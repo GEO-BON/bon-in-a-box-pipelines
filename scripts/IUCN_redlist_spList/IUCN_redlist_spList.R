@@ -24,7 +24,7 @@ if ( (!exists("outputFolder"))  ) {outputFolder<- {x<- this.path::this.path();  
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # Adjust input values to correct and prevent errors in input paths
-input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) { sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) %>% unlist()) 
+input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) { sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) %>% unlist())
 
 
 
@@ -34,20 +34,20 @@ print(token)
 
 ## Load sp country ####
 UICN_isocode <- rredlist::rl_countries(key = token)$results %>% dplyr::filter(country %in% input$country) %>% {.$isocode}
-UICN_country <- rredlist::rl_sp_country(country= UICN_isocode, key = token)$result 
-  
+UICN_country <- rredlist::rl_sp_country(country= UICN_isocode, key = token)$result
+
 ## Load sp taxonomic group ####
 UICN_taxon <- rredlist::rl_comp_groups(group = input$taxonomic_group, key = token)$result
 
 
 ## Filter country list by taxonomic group ####
-UICN_spList<- UICN_taxon %>% dplyr::filter(taxonid %in% UICN_country$taxonid)
+iucn_splist<- UICN_taxon %>% dplyr::filter(taxonid %in% UICN_country$taxonid)
 
 
 
-# Write results ####  
-UICN_spList_path<- file.path(outputFolder, paste0("UICN_spList", ".csv")) # Define the file path 
-write.csv(UICN_spList, UICN_spList_path, row.names = F) # write result
+# Write results ####
+iucn_splist_path<- file.path(outputFolder, paste0("iucn_splist", ".csv")) # Define the file path
+write.csv(iucn_splist, iucn_splist_path, row.names = F) # write result
 
 
 
@@ -56,7 +56,7 @@ write.csv(UICN_spList, UICN_spList_path, row.names = F) # write result
 # Outputing result to JSON ####
 
 #Define final output list
-output<- list(UICN_spList= UICN_spList_path)
+output<- list(iucn_splist= iucn_splist_path)
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)

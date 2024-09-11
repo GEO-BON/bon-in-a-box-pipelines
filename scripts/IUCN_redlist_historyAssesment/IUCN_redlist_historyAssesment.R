@@ -1,14 +1,14 @@
 
 #### Load required packages - libraries to run the script ####
 
-# Install necessary libraries - packages  
+# Install necessary libraries - packages
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- c("magrittr", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "reshape2") # Define the list of required packages to run the script
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "rredlist", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
-lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
+packagesList<-list("magrittr", "rredlist", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects
+lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
 
 Sys.setenv(outputFolder = "/path/to/output/folder")
 
@@ -22,8 +22,8 @@ if ( (!exists("outputFolder"))  ) {
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) { 
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) 
+input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) {
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} })
 
 
 #### Species list by country ####
@@ -31,21 +31,21 @@ input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/
 token<- Sys.getenv("IUCN_TOKEN")
 print(token)
 
-UICN_spList<- data.table::fread(input$species_data) %>% as.data.frame()
+iucn_splist<- data.table::fread(input$species_data) %>% as.data.frame()
 
-IUCN_historyAssesment_data <- pbapply::pblapply(UICN_spList[,input$sp_col], function(x) {
+iucn_history_assessment_data <- pbapply::pblapply(iucn_splist[,input$sp_col], function(x) {
   tryCatch({
-    rredlist::rl_history(name = x, key = token)$result %>% 
+    rredlist::rl_history(name = x, key = token)$result %>%
       dplyr::mutate(scientific_name= x)
   }, error = function(e) {NULL})
-}) %>% plyr::rbind.fill() %>% list(UICN_spList) %>% plyr::join_all(match = "first")
+}) %>% plyr::rbind.fill() %>% list(iucn_splist) %>% plyr::join_all(match = "first")
 
-## Write results ####  
-IUCN_historyAssesment_data_path<- file.path(outputFolder, paste0("IUCN_historyAssesment_data", ".csv")) # Define the file path 
-write.csv(IUCN_historyAssesment_data, IUCN_historyAssesment_data_path, row.names = F) # write result
+## Write results ####
+iucn_history_assessment_data_path<- file.path(outputFolder, paste0("iucn_history_assessment_data", ".csv")) # Define the file path
+write.csv(iucn_history_assessment_data, iucn_history_assessment_data_path, row.names = F) # write result
 
 # Define final output list
-output<- list(IUCN_historyAssesment_data= IUCN_historyAssesment_data_path)
+output<- list(iucn_history_assessment_data= iucn_history_assessment_data_path)
 
 #### Outputing result to JSON ####
 

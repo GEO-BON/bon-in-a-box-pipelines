@@ -411,10 +411,10 @@
     },
     {
       "source": "10",
-      "sourceHandle": "UICN_spList",
+      "sourceHandle": "iucn_splist",
       "target": "13",
       "targetHandle": "species_data",
-      "id": "reactflow__edge-10UICN_spList-13species_data"
+      "id": "reactflow__edge-10iucn_splist-13species_data"
     },
     {
       "source": "14",
@@ -425,10 +425,10 @@
     },
     {
       "source": "13",
-      "sourceHandle": "IUCN_historyAssesment_data",
+      "sourceHandle": "iucn_history_assessment_data",
       "target": "15",
-      "targetHandle": "historyAssesment_data",
-      "id": "reactflow__edge-13IUCN_historyAssesment_data-15historyAssesment_data"
+      "targetHandle": "history_assessment_data",
+      "id": "reactflow__edge-13iucn_history_assessment_data-15history_assessment_data"
     },
     {
       "source": "14",
@@ -448,22 +448,22 @@
       "source": "17",
       "sourceHandle": null,
       "target": "15",
-      "targetHandle": "categoryCod_col",
-      "id": "reactflow__edge-17-15categoryCod_col"
+      "targetHandle": "threat_category_code_column",
+      "id": "reactflow__edge-17-15threat_category_code_column"
     },
     {
       "source": "15",
-      "sourceHandle": "RedList_trendPlot",
+      "sourceHandle": "redlist_trend_plot",
       "target": "18",
       "targetHandle": null,
-      "id": "reactflow__edge-15RedList_trendPlot-18"
+      "id": "reactflow__edge-15redlist_trend_plot-18"
     }
   ],
   "inputs": {},
   "outputs": {
-    "RedlListindex>RedlListindex.yml@15|RedList_trendPlot": {
+    "RedlListindex>RedlListindex.yml@15|redlist_trend_plot": {
       "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species.",
-      "label": "RedList_trendPlot",
+      "label": "redlist_trend_plot",
       "type": "image/jpg",
       "weight": 0
     }

@@ -1,8 +1,8 @@
 ---
 title: "Red List Index"
-output: 
+output:
   html_document:
-    toc: true             
+    toc: true
 ---
 
 ```{r setup, include=FALSE}
@@ -14,14 +14,14 @@ require("knitr")
 ```
 
 ## General description
-<div style="text-align: justify">  
+<div style="text-align: justify">
 
 
 This document explains the script to calculate the Red List Index for endemic species in Colombia
 
 The Red List Index (RLI) has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity's 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010). The RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline indicator for Goal A and Target 4 of the CBD's Kunming-Montreal Global Biodiversity Framework (CBD, 2022).
 
-Beyond global trends, the RLI can be used to track trends in species across different biogeographic realms, political units, ecosystems, habitats, taxonomic groups, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). It is based on the proportion of species in each category on the Red List, and changes in this proportion over time resulting from genuine improvement or deterioration in the status of individual species (Butchart et al., 2004; Butchart et al., 2005). The RLI was initially designed and tested using data on all bird species from 1988–2004 (Butchart et al., 2004). The RLI values range between 0 (indicating all species are extinct) to 1 (indicating all species are Least Concern). 
+Beyond global trends, the RLI can be used to track trends in species across different biogeographic realms, political units, ecosystems, habitats, taxonomic groups, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). It is based on the proportion of species in each category on the Red List, and changes in this proportion over time resulting from genuine improvement or deterioration in the status of individual species (Butchart et al., 2004; Butchart et al., 2005). The RLI was initially designed and tested using data on all bird species from 1988–2004 (Butchart et al., 2004). The RLI values range between 0 (indicating all species are extinct) to 1 (indicating all species are Least Concern).
 
 The revised RLI formula is defined by Butchart et al., 2007 as:<div/>
 
@@ -123,7 +123,7 @@ IUCN_sp_col <- rredlist::rl_sp_country('CO', key = token)$result
 
 sp_endemicas <- read.csv2("data/table_2024-07-22-18-20-41.csv", sep = ",")
 colnames(sp_endemicas)[2] <-"scientific_name"
-sp_endemicas <- sp_endemicas[,2] 
+sp_endemicas <- sp_endemicas[,2]
 sp_endemicas_IUCN <- filter(IUCN_sp_col,IUCN_sp_col$scientific_name %in%  sp_endemicas)
 
 
@@ -139,7 +139,7 @@ for (i in 1:length(IUCN_history)){
   else {
     next
   }
-} 
+}
 
 write.csv(IUCN_history_DF, "data/IUCN_history_DF.csv")
 
@@ -147,11 +147,11 @@ dataset <- data.frame(sp_col = character())
 dataset1 <- data.frame(time_col = character())
 
 
-historyAssesment_data<-  as.data.frame(IUCN_history_DF)
+history_assessment_data<-  as.data.frame(IUCN_history_DF)
 form_matrix<- as.formula(paste0("species", "~", "assess_year"))
 
 
-historyAssesment_matrix<-   reshape2::dcast(historyAssesment_data, form_matrix,  value.var = "code",
+historyAssesment_matrix<-   reshape2::dcast(history_assessment_data, form_matrix,  value.var = "code",
                                             fun.aggregate = function(x) {unique(x)[1]}) %>% tibble::column_to_rownames("species") %>% as.data.frame.matrix()
 
 ```
@@ -163,18 +163,18 @@ Adjust threat matrix
 adjust_categories<- data.frame(Cat_IUCN= c("CR", "DD", "EN", "EN", "DD", "DD", "LC", "LC", "LC", "NT", "DD", "NT", "RE", "VU", "VU"),
                                code= c("CR", "DD", "E", "EN", "I", "K", "LC", "LR/cd", "LR/lc", "LR/nt", "NA", "NT", "R", "V", "VU"))
 
-RedList_matrix<- historyAssesment_matrix %>% as.matrix()
+redlist_matrix<- historyAssesment_matrix %>% as.matrix()
 
 for(i in seq(nrow(adjust_categories))){
-  RedList_matrix[ which(RedList_matrix== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN 
+  redlist_matrix[ which(redlist_matrix== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN
 }
 
 for(j in unique(adjust_categories$Cat_IUCN)){
   key<- c(tolower(j), toupper(j), j) %>% paste0(collapse = "|")
-  RedList_matrix[ which(grepl(key, RedList_matrix), arr.ind = T) ]    <- j
+  redlist_matrix[ which(grepl(key, redlist_matrix), arr.ind = T) ]    <- j
 }
 
-RedList_matrix[which( (!RedList_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(RedList_matrix) , arr.ind = TRUE )]<-NA
+redlist_matrix[which( (!redlist_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(redlist_matrix) , arr.ind = TRUE )]<-NA
 
 ```
 
@@ -188,7 +188,7 @@ replace_na_with_previous <- function(df, target_col) {
   return(df)
 }
 
-df <- replace_na_with_previous(RedList_matrix, which(names(RedList_matrix) == "2000"))
+df <- replace_na_with_previous(redlist_matrix, which(names(redlist_matrix) == "2000"))
 
 df_clean <- df %>%
   filter(!is.na(2000))
@@ -205,10 +205,10 @@ df_filtered <- df_clean %>%
 Redlist result
 
 ```{r, message = FALSE, warning = FALSE}
-RedList_data<- red::rli(df_filtered, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
+redlist_data<- red::rli(df_filtered, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>%
   dplyr::filter(!Year %in% "Change/year")
 
-RedList_data <- na.omit(RedList_data)
+redlist_data <- na.omit(redlist_data)
 
 ```
 
@@ -216,7 +216,7 @@ RedList_data <- na.omit(RedList_data)
 Redlist figure
 
 ```{r, message = FALSE, warning = FALSE}
-RedList_trendPlot<- ggplot(RedList_data, aes(x = Year, y = RLI)) +
+redlist_trend_plot<- ggplot(redlist_data, aes(x = Year, y = RLI)) +
   geom_line(group = 1, col= "red") +
   geom_point() +
   coord_cartesian(ylim = c(0,1))+
@@ -224,16 +224,16 @@ RedList_trendPlot<- ggplot(RedList_data, aes(x = Year, y = RLI)) +
   theme(    panel.grid.major = element_line(color = "gray"),
   ) + theme(text = element_text(size = 4))
 
-RedList_trendPlot
+redlist_trend_plot
 
 ```
 
 Write results
 
 ```{r, message = FALSE, warning = FALSE}
-write.csv(RedList_data, "result/RedList_result.csv", row.names = F)
-write.csv(RedList_matrix, "result/RedList_matrix.csv", row.names = T) 
-ggsave("result/RedList_Plot.png", RedList_trendPlot, height = 2, width = 4)
+write.csv(redlist_data, "result/RedList_result.csv", row.names = F)
+write.csv(redlist_matrix, "result/redlist_matrix.csv", row.names = T)
+ggsave("result/RedList_Plot.png", redlist_trend_plot, height = 2, width = 4)
 ```
 
 ## Outputs

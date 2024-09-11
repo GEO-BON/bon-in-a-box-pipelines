@@ -1,16 +1,16 @@
 
 #### Load required packages - libraries to run the script ####
 
-# Install necessary libraries - packages  
+# Install necessary libraries - packages
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-# Install necessary libraries - packages  
+# Install necessary libraries - packages
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<- c("magrittr", "data.table", "reshape2", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "red", "gdistance", "BAT", "ape", "geometry", "magic", "hypervolume", "ks", "mclust", "mvtnorm","pracma","fastcluster", "pdist","palmerpenguins","caret","recipes", "timeDate", "gower", "hardhat","ipred", "prodlim", "lava","future.apply", "future", "globals", "listenv", "parallelly", "ModelMetrics","pROC", "nls2", "proto", "vegan","permute","phytools", "combinat", "clusterGeneration", "DEoptim", "expm", "optimParallel", "phangorn", "fastmatch", "scatterplot3d", "predicts","coda", "mnormt", "numDeriv", "quadprog") # Define the list of required packages to run the script
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
 # Load libraries
-packagesList<-list("magrittr", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
-lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
+packagesList<-list("magrittr", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects
+lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
 
 Sys.setenv(outputFolder = "/path/to/output/folder")
 
@@ -24,18 +24,18 @@ if ( (!exists("outputFolder"))  ) {
 input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
 
 # This section adjusts the input values based on specific conditions to rectify and prevent errors in the input paths
-input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) { 
-  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) 
+input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) {
+  sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} })
 
 
 
 #### Species list by country ####
 #Load IUCN token----
-historyAssesment_data<-  data.table::fread(input$historyAssesment_data) %>% as.data.frame()
+history_assessment_data<-  data.table::fread(input$history_assessment_data) %>% as.data.frame()
 form_matrix<- as.formula(paste0(input$sp_col, "~", input$time_col))
 
 
-historyAssesment_matrix<-   reshape2::dcast(historyAssesment_data, form_matrix,  value.var = "code",
+historyAssesment_matrix<-   reshape2::dcast(history_assessment_data, form_matrix,  value.var = "code",
                                                  fun.aggregate = function(x) {unique(x)[1]}
 ) %>% tibble::column_to_rownames(input$sp_col) %>% as.data.frame.matrix()
 
@@ -47,29 +47,29 @@ historyAssesment_matrix<-   reshape2::dcast(historyAssesment_data, form_matrix, 
 adjust_categories<- data.frame(Cat_IUCN= c("CR", "DD", "EN", "EN", "DD", "DD", "LC", "LC", "LC", "NT", "DD", "NT", "RE", "VU", "VU"),
                                code= c("CR", "DD", "E", "EN", "I", "K", "LC", "LR/cd", "LR/lc", "LR/nt", "NA", "NT", "R", "V", "VU"))
 
-RedList_matrix<- historyAssesment_matrix %>% as.matrix()
+redlist_matrix<- historyAssesment_matrix %>% as.matrix()
 
 for(i in seq(nrow(adjust_categories))){
-  RedList_matrix[ which(RedList_matrix== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN 
+  redlist_matrix[ which(redlist_matrix== adjust_categories[i,]$code, arr.ind = TRUE) ]<- adjust_categories[i,]$Cat_IUCN
 }
 
 for(j in unique(adjust_categories$Cat_IUCN)){
   key<- c(tolower(j), toupper(j), j) %>% paste0(collapse = "|")
-  RedList_matrix[ which(grepl(key, RedList_matrix), arr.ind = T) ]    <- j
+  redlist_matrix[ which(grepl(key, redlist_matrix), arr.ind = T) ]    <- j
 }
 
-RedList_matrix[which( (!RedList_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(RedList_matrix) , arr.ind = TRUE )]<-NA
+redlist_matrix[which( (!redlist_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(redlist_matrix) , arr.ind = TRUE )]<-NA
 
 
 # Redlist data ####
 print("red")
-RedList_data<- red::rli(RedList_matrix, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>% 
+redlist_data<- red::rli(redlist_matrix, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>%
   dplyr::filter(!Year %in% "Change/year")
-print("RedList_data")
+print("redlist_data")
 
 
 # Redlist figura ####
-RedList_trendPlot<- ggplot(RedList_data, aes(x = Year, y = RLI)) +
+redlist_trend_plot<- ggplot(redlist_data, aes(x = Year, y = RLI)) +
   geom_line(group = 1, col= "red") +
   geom_point() +
   coord_cartesian(ylim = c(0,1))+
@@ -79,20 +79,20 @@ RedList_trendPlot<- ggplot(RedList_data, aes(x = Year, y = RLI)) +
 
 
 
-## Write results ####  
-RedList_data_path<- file.path(outputFolder, paste0("RedList_data", ".csv")) # Define the file path 
-write.csv(RedList_data, RedList_data_path, row.names = F) # write result
+## Write results ####
+redlist_data_path<- file.path(outputFolder, paste0("redlist_data", ".csv")) # Define the file path
+write.csv(redlist_data, redlist_data_path, row.names = F) # write result
 
-RedList_matrix_path<- file.path(outputFolder, paste0("RedList_matrix", ".csv")) # Define the file path 
-write.csv(RedList_matrix, RedList_matrix_path, row.names = T) # write result
+redlist_matrix_path<- file.path(outputFolder, paste0("redlist_matrix", ".csv")) # Define the file path
+write.csv(redlist_matrix, redlist_matrix_path, row.names = T) # write result
 
-RedList_trendPlot_path<- file.path(outputFolder, paste0("RedList_trendPlot", ".jpg")) # Define the file path 
-ggsave(RedList_trendPlot_path, RedList_trendPlot, height = 2, width = 4)
+redlist_trend_plot_path<- file.path(outputFolder, paste0("redlist_trend_plot", ".jpg")) # Define the file path
+ggsave(redlist_trend_plot_path, redlist_trend_plot, height = 2, width = 4)
 
 
 #### Outputing result to JSON ####
 
-output<- list(RedList_trendPlot= RedList_trendPlot_path, RedList_data= RedList_data_path, RedList_matrix= RedList_matrix_path )
+output<- list(redlist_trend_plot= redlist_trend_plot_path, redlist_data= redlist_data_path, redlist_matrix= redlist_matrix_path )
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)
