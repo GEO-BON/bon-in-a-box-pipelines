@@ -20,6 +20,7 @@ inputs:
       - arthropods
       - amphibians
       - all
+    example: plants
   bbox:
     label: bbox
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
