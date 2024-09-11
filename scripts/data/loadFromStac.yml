@@ -33,7 +33,7 @@ inputs:
     label: projection system
     description: String, projection of the rasters
     type: text
-    example: "EPSG:6623"
+    example: "EPSG:6622"
   spatial_res:
     label: spatial resolution
     description: Integer, spatial resolution of the rasters
@@ -51,5 +51,5 @@ outputs:
     type: image/tiff;application=geotiff[]
   weight_matrix_with_layers:
     label: Weight matrix with layers
-    description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
-    type: text 
+    description: Weight matrix used for BON optimization. Vector of layer links followed by weights.
+    type: text

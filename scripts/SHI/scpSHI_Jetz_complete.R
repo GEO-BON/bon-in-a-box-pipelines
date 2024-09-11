@@ -204,7 +204,7 @@ print("========== Map of suitable area generated ==========")
 #3.1 GFW data-------------------------------------------------------------------
 #forest base map
 cube_GFW_TC <-
-  load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+  load_cube(stac_path = "https://stac.geobon.org/",
             limit = 1000,
             collections = c("gfw-treecover2000"),
             bbox = sf_ext_srs,
@@ -231,7 +231,7 @@ print("========== Base forest layer downloaded ==========")
 
 # Download forest loss maps and create different layers for each year to remove from forest
 cube_GFW_loss <-
-  load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+  load_cube(stac_path = "https://stac.geobon.org/",
             limit = 1000,
             collections = c("gfw-lossyear"),
             bbox = sf_ext_srs,
@@ -261,7 +261,7 @@ if(t_0!=2000){
 r_year_loss_mask_plot <- terra::classify(s_year_loss_mask[[length(l_r_year_loss)]],rcl=cbind(0,NA)) # turn 0 to NA
 
 cube_GFW_gain <-
-  load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac",
+  load_cube(stac_path = "https://stac.geobon.org/",
             limit = 1000,
             collections = c("gfw-gain"),
             bbox = sf_ext_srs,

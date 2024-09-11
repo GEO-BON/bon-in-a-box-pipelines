@@ -1,6 +1,12 @@
 script: loadLandCover.R
 name: Land Cover
-description: This script calculate the proportion of each land cover class from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox)
+description: |
+  This script calculate the proportion of each land cover class from IO or Planetary Computer STAC catalogue for the a predefined extent (bbox).
+
+  - ESA is found on the [GEO BON STAC](https://stac.geobon.org/)
+  - ESA and ESRI collections can be found in the [planetary computer](https://planetarycomputer.microsoft.com/api/stac/v1/).
+    They are named "esa-cci-lc" for ESA (300m) and "io-lulc-9-class" (10m) for ESRI.
+
 author:
   - name: Juan Zuloaga
   - name: Sarah Valentin
@@ -18,7 +24,7 @@ inputs:
     label: STAC catalogue path
     description: path to the STAC catalogue (url). See references for paths tp Planetary Computer.
     type: text
-    example: "https://io.biodiversite-quebec.ca/stac/"
+    example: "https://stac.geobon.org/"
   collections:
     label: collection
     description: name of the collection by default io STAC-catalogue (see reference for names within Planetary Computer)
@@ -31,10 +37,10 @@ inputs:
     example: [-831561.2, 116773.2, 784438.8, 2103773]
   spatial_res:
     label: spatial resolution of the input
-    description: spatial resolution of the input in meters (must be multiple of output spatialr resolution) 
+    description: spatial resolution of the input in meters (must be multiple of output spatialr resolution)
     type: int
     example: 250
-  prop_res: 
+  prop_res:
     label: spatial resolution for the output in meters
     description: Integer, if proportion is TRUE, resolution to calculate the proportion from
     type: int
@@ -54,18 +60,57 @@ inputs:
     description: String (YYYY-MM-DD), end time of study period
     type: text
     example: "2010-12-31"
-  prop: 
+  prop:
     label: land cover proportion
     description: Boolean, should a proportion of land cover classes be calculated
     type: boolean
     example: TRUE
-  select_values: 
+  select_values:
     label: lc_classes
     description: Vector of integers, list of land cover classes to select (in the example all ESA classes are presented, see references for descriptions)
     type: int[]
-    example: [0, 10, 11, 12, 20, 30 ,40, 50, 60, 61, 62, 70, 71, 72, 80, 81, 82, 90, 100, 110, 120, 121, 122, 130, 140, 150, 151, 152, 160, 170, 180, 190, 200, 201, 202, 210, 220]
+    example:
+      [
+        0,
+        10,
+        11,
+        12,
+        20,
+        30,
+        40,
+        50,
+        60,
+        61,
+        62,
+        70,
+        71,
+        72,
+        80,
+        81,
+        82,
+        90,
+        100,
+        110,
+        120,
+        121,
+        122,
+        130,
+        140,
+        150,
+        151,
+        152,
+        160,
+        170,
+        180,
+        190,
+        200,
+        201,
+        202,
+        210,
+        220,
+      ]
 outputs:
-  output_tif: 
+  output_tif:
     label: land cover classes
     description: land cover raster classes (note that class=0 is NO DATA)
     type: image/tiff;application=geotiff[]
@@ -74,8 +119,3 @@ references:
   - text: ESA (1992-2020, 300m) 38 land cover classes (note that class=0 is NO DATA).
     doi: http://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf
   - text: ESRI (2017-2022, 10m) 10 land cover classes
-  - text: io path (ESA) is 
-    doi: https://io.biodiversite-quebec.ca/stac/
-  - text: PC path (ESA and ESRI) is 
-    doi: https://planetarycomputer.microsoft.com/api/stac/v1/
-  - text: collectionS in PC are named "esa-cci-lc" for ESA (300m) and "io-lulc-9-class" (10m) for ESRI.

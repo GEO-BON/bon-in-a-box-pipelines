@@ -61,7 +61,7 @@ if(length(input$ids) == 0) {
 }
 
 predictors <- load_predictors(source = "cube",
-                            cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
+                            cube_args = list(stac_path = "http://stac.geobon.org/",
             limit = 5000,
             collections = input$collection,
             t0 = NULL,
