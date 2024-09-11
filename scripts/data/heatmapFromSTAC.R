@@ -23,7 +23,7 @@ print("Inputs: ")
 print(input)
 
 
-stacURL <- "https://io.biodiversite-quebec.ca/stac/"
+stacURL <- "https://stac.geobon.org/"
 taxa <- input$taxa
 
 # Check if blank of NULL
