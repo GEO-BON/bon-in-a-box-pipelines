@@ -61,6 +61,7 @@ v_time_steps <- seq(t_0,t_n,time_step)
 #-------------------------------------------------------------------------------
 v_path_SHS_map <- c()
 v_path_SHS <- c()
+habitat_change_map_path <- c()
 l_path_habitat_by_tstep <- list()
 v_path_img_SHS_timeseries <- c()
 v_path_SHS_tidy <- c()
@@ -204,7 +205,26 @@ for(i in 1:length(sp)){
 
   v_path_SHS_map[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_change.png"))
   tmap_save(img_map_habitat_changes, v_path_SHS_map[i])
+
+
+  r_GFW_TC_threshold_mask[r_GFW_TC_threshold_mask>0]<-1 # turn no change to 1
+  r_year_loss_mask_plot[r_year_loss_mask_plot>0]<-2 # turn loss value to 2
+  r_GFW_gain_mask[r_GFW_gain_mask>0]<-3 # turn gain value to 3
   
+  # Put no change, loss, and gain together in one raster
+  v1 <- merge(r_year_loss_mask_plot, r_GFW_TC_threshold_mask) # merge loss and no change
+  v2 <- merge(r_GFW_gain_mask, v1) # merge gain
+  v3 <- terra::classify(v2,rcl=cbind(0,NA)) # turn 0 to NA
+  # Recategorize
+  #rast_map <- subst(v2, from=c(1,2,3), to=c("No Change", "Forest Loss", "Forest Gain"))
+
+  habitat_change_map_path[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_loss.tiff"))
+  habitat_change_map<-terra::writeRaster(v3, habitat_change_map_path[i], gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype="COG")
+
+
+  # save loss, gain, and no change as 3 different rasters
+
+
   print("========== Map of changes in suitable area generated ==========")
 
   #create non masked layers for distance metrics
@@ -297,7 +317,8 @@ output <- list( "img_shs_map" = v_path_SHS_map,
                 "r_habitat_by_tstep" = path_habitat_by_tstep ,
                 "img_shs_timeseries" = v_path_img_SHS_timeseries,
                 "df_shs" = v_path_SHS,
-                "df_shs_tidy" = v_path_SHS_tidy)
+                "df_shs_tidy" = v_path_SHS_tidy,
+                "habitat_change_map"= habitat_change_map_path)
 
 }, error = function(e) { list(error = conditionMessage(e)) })
 

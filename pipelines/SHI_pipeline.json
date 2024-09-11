@@ -12,36 +12,14 @@
       }
     },
     {
-      "id": "67",
-      "type": "io",
-      "position": {
-        "x": 1499,
-        "y": 67
-      },
-      "data": {
-        "descriptionFile": "SHI>habitatChange_GFW.yml"
-      }
-    },
-    {
       "id": "68",
       "type": "io",
       "position": {
-        "x": 2042,
-        "y": 213
+        "x": 2256.325877011026,
+        "y": 360.1236574101039
       },
       "data": {
         "descriptionFile": "SHI>calculateSHI.yml"
-      }
-    },
-    {
-      "id": "71",
-      "type": "output",
-      "position": {
-        "x": 2042,
-        "y": 12
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -118,29 +96,81 @@
       "id": "80",
       "type": "io",
       "position": {
-        "x": 943,
-        "y": 193
+        "x": 945,
+        "y": 253
       },
       "data": {
         "descriptionFile": "data>getAreaOfHabitat.yml"
       }
+    },
+    {
+      "id": "96",
+      "type": "io",
+      "position": {
+        "x": 1719.953125,
+        "y": 210
+      },
+      "data": {
+        "descriptionFile": "SHI>habitatChange_GFW.yml"
+      }
+    },
+    {
+      "id": "100",
+      "type": "output",
+      "position": {
+        "x": 2247.5660833221636,
+        "y": 249.90992513328746
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "101",
+      "type": "output",
+      "position": {
+        "x": 2247.5660833221636,
+        "y": 240.81562573422508
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "102",
+      "type": "output",
+      "position": {
+        "x": 2243.0189336226326,
+        "y": 224.1427435026107
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "103",
+      "type": "output",
+      "position": {
+        "x": 2250.5975164551846,
+        "y": 212.0170109705275
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "104",
+      "type": "output",
+      "position": {
+        "x": 2259.953125,
+        "y": 288
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "67",
-      "sourceHandle": "df_shs_tidy",
-      "target": "68",
-      "targetHandle": "df_shs_tidy",
-      "id": "reactflow__edge-67df_shs_tidy-68df_shs_tidy"
-    },
-    {
-      "source": "67",
-      "sourceHandle": "df_shs",
-      "target": "71",
-      "targetHandle": null,
-      "id": "reactflow__edge-67df_shs-71"
-    },
     {
       "source": "68",
       "sourceHandle": "img_shi_timeseries",
@@ -161,27 +191,6 @@
       "target": "65",
       "targetHandle": "expert_source",
       "id": "reactflow__edge-77-65expert_source"
-    },
-    {
-      "source": "76",
-      "sourceHandle": null,
-      "target": "67",
-      "targetHandle": "species",
-      "id": "reactflow__edge-76-67species"
-    },
-    {
-      "source": "78",
-      "sourceHandle": null,
-      "target": "67",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-78-67srs"
-    },
-    {
-      "source": "79",
-      "sourceHandle": null,
-      "target": "67",
-      "targetHandle": "spat_res",
-      "id": "reactflow__edge-79-67spat_res"
     },
     {
       "source": "65",
@@ -206,20 +215,6 @@
     },
     {
       "source": "80",
-      "sourceHandle": "r_area_of_habitat",
-      "target": "67",
-      "targetHandle": "r_area_of_habitat",
-      "id": "reactflow__edge-80r_area_of_habitat-67r_area_of_habitat"
-    },
-    {
-      "source": "80",
-      "sourceHandle": "sf_bbox",
-      "target": "67",
-      "targetHandle": "sf_bbox",
-      "id": "reactflow__edge-80sf_bbox-67sf_bbox"
-    },
-    {
-      "source": "80",
       "sourceHandle": "df_aoh_areas",
       "target": "68",
       "targetHandle": "df_aoh_areas",
@@ -231,13 +226,6 @@
       "target": "80",
       "targetHandle": "species",
       "id": "reactflow__edge-76-80species"
-    },
-    {
-      "source": "67",
-      "sourceHandle": "img_shs_timeseries",
-      "target": "71",
-      "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_timeseries-71"
     },
     {
       "source": "68",
@@ -254,11 +242,81 @@
       "id": "reactflow__edge-68img_w_shi_timeseries-73"
     },
     {
-      "source": "67",
-      "sourceHandle": "img_shs_map",
-      "target": "71",
+      "source": "80",
+      "sourceHandle": "r_area_of_habitat",
+      "target": "96",
+      "targetHandle": "r_area_of_habitat",
+      "id": "reactflow__edge-80r_area_of_habitat-96r_area_of_habitat"
+    },
+    {
+      "source": "80",
+      "sourceHandle": "sf_bbox",
+      "target": "96",
+      "targetHandle": "sf_bbox",
+      "id": "reactflow__edge-80sf_bbox-96sf_bbox"
+    },
+    {
+      "source": "79",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-79-96spat_res"
+    },
+    {
+      "source": "78",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-78-96srs"
+    },
+    {
+      "source": "76",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "species",
+      "id": "reactflow__edge-76-96species"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "df_shs_tidy",
+      "target": "68",
+      "targetHandle": "df_shs_tidy",
+      "id": "reactflow__edge-96df_shs_tidy-68df_shs_tidy"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "df_shs",
+      "target": "100",
       "targetHandle": null,
-      "id": "reactflow__edge-67img_shs_map-71"
+      "id": "reactflow__edge-96df_shs-100"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "img_shs_timeseries",
+      "target": "101",
+      "targetHandle": null,
+      "id": "reactflow__edge-96img_shs_timeseries-101"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "r_habitat_by_tstep",
+      "target": "102",
+      "targetHandle": null,
+      "id": "reactflow__edge-96r_habitat_by_tstep-102"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "img_shs_map",
+      "target": "103",
+      "targetHandle": null,
+      "id": "reactflow__edge-96img_shs_map-103"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "habitat_change_map",
+      "target": "104",
+      "targetHandle": null,
+      "id": "reactflow__edge-96habitat_change_map-104"
     }
   ],
   "inputs": {
@@ -343,50 +401,50 @@
       ],
       "weight": 8
     },
-    "SHI>habitatChange_GFW.yml@67|min_forest": {
-      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "min forest",
-      "type": "int[]",
-      "example": [
-        50
-      ],
-      "weight": 9
-    },
-    "SHI>habitatChange_GFW.yml@67|max_forest": {
-      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "max forest",
-      "type": "int[]",
-      "example": [
-        100
-      ],
-      "weight": 10
-    },
-    "SHI>habitatChange_GFW.yml@67|t_0": {
-      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
-      "label": "initial time",
-      "type": "int",
-      "example": 2000,
-      "weight": 11
-    },
-    "SHI>habitatChange_GFW.yml@67|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
-      "label": "final time",
-      "type": "int",
-      "example": 2020,
-      "weight": 12
-    },
-    "SHI>habitatChange_GFW.yml@67|time_step": {
-      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
-      "label": "time step",
-      "type": "int",
-      "example": 10,
-      "weight": 13
-    },
     "pipeline@78": {
       "label": "spatial reference system",
       "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
       "type": "text",
       "example": "EPSG:3116",
+      "weight": 9
+    },
+    "SHI>habitatChange_GFW.yml@96|min_forest": {
+      "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as input in species and separate with a comma.",
+      "label": "min forest",
+      "type": "int[]",
+      "example": [
+        0
+      ],
+      "weight": 10
+    },
+    "SHI>habitatChange_GFW.yml@96|max_forest": {
+      "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as input in species and separate with a comma.",
+      "label": "max forest",
+      "type": "int[]",
+      "example": [
+        100
+      ],
+      "weight": 11
+    },
+    "SHI>habitatChange_GFW.yml@96|t_0": {
+      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "label": "initial time",
+      "type": "int",
+      "example": 2000,
+      "weight": 12
+    },
+    "SHI>habitatChange_GFW.yml@96|t_n": {
+      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "label": "final time",
+      "type": "int",
+      "example": 2020,
+      "weight": 13
+    },
+    "SHI>habitatChange_GFW.yml@96|time_step": {
+      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
+      "label": "time step",
+      "type": "int",
+      "example": 10,
       "weight": 14
     },
     "pipeline@79": {
@@ -415,41 +473,53 @@
     }
   },
   "outputs": {
-    "SHI>habitatChange_GFW.yml@67|img_shs_map": {
-      "description": "Figure showing a map with changes in the habitat for the time range for each species.",
-      "label": "SHS map",
-      "type": "image/png[]",
-      "weight": 0
-    },
-    "SHI>habitatChange_GFW.yml@67|df_shs": {
-      "description": "A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
-      "label": "SHS table",
-      "type": "text/tab-separated-values[]",
-      "weight": 1
-    },
     "SHI>calculateSHI.yml@68|df_shi": {
       "description": "Table with SHI and Steward’s SHI values for the complete area of study.",
       "label": "SHI table",
       "type": "text/tab-separated-values",
-      "weight": 2
+      "weight": 0
     },
     "SHI>calculateSHI.yml@68|img_shi_timeseries": {
       "description": "Figure showing a time series of SHI values for each time step, 100% being equal to the reference year.",
       "label": "SHI time series",
       "type": "image/png",
-      "weight": 3
+      "weight": 1
     },
     "SHI>calculateSHI.yml@68|img_w_shi_timeseries": {
       "description": "Figure showing a time series of Steward’s SHI values for each time step. This is weighted by the proportion between the area of habitat for the study area and the total range map of the species. The reference year will start at the proportion of area of habitat in the study area. For example, if half of the species habitat is covered by the study area, the reference year’s value will be 50%.",
       "label": "Steward’s SHI time series",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
     },
-    "SHI>habitatChange_GFW.yml@67|img_shs_timeseries": {
+    "SHI>habitatChange_GFW.yml@96|df_shs": {
+      "description": "A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
+      "label": "SHS table",
+      "type": "text/tab-separated-values[]",
+      "weight": 3
+    },
+    "SHI>habitatChange_GFW.yml@96|img_shs_timeseries": {
       "description": "Figure showing a time series of SHS values per time step for each species.",
       "label": "SHS time series",
       "type": "image/png[]",
+      "weight": 4
+    },
+    "SHI>habitatChange_GFW.yml@96|r_habitat_by_tstep": {
+      "description": "Raster of habitat by time step.",
+      "label": "Habitat by time step",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 5
+    },
+    "SHI>habitatChange_GFW.yml@96|img_shs_map": {
+      "description": "Figure showing a map with changes in the habitat for the time range for each species.",
+      "label": "SHS map",
+      "type": "image/png[]",
+      "weight": 6
+    },
+    "SHI>habitatChange_GFW.yml@96|habitat_change_map": {
+      "description": "Figure showing a map with changes in the habitat for the time range for each species.",
+      "label": "Raster plot of forest change",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 7
     }
   },
   "metadata": {
