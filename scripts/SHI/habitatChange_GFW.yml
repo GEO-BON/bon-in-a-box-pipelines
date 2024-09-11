@@ -91,7 +91,7 @@ inputs:
 outputs:
   img_shs_map:
     label: SHS map (png)
-    description: Figure showing a map with changes in the habitat for the time range for each species.
+    description: Figure showing a map with changes in the habitat for the time range for each species (png).
     type: image/png[]
   r_habitat_by_tstep:
     label: Habitat by time step
@@ -113,7 +113,7 @@ outputs:
     type: text/tab-separated-values[]
   habitat_change_map:
     label: SHS Map (raster)
-    description: Figure showing a map with changes in the habitat for the time range for each species.
+    description: Figure showing a map with changes in the habitat for the time range for each species (raster).
     type: image/tiff;application=geotiff[]
 references:
 - text: Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)
