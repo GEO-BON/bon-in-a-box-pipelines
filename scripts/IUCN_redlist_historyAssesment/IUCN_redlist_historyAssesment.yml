@@ -1,5 +1,5 @@
 script: IUCN_redlist_historyAssesment.R
-name: IUCN_redlist_historyAssesment
+name: IUCN Red List history assesment
 description: Gets the historical IUCN Red List assessments for a given species list.
 author:
  - name: Maria Camila diaz (mdiaz@humboldt.org.co)

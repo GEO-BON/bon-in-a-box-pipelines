@@ -1,5 +1,5 @@
 script: RedlListindex.R
-name: RedlListindex
+name: Red List Index
 description: "Estimates the Red List Index (RLI) for a group of species, reflecting trends in the overall extinction risk for that group."
 external_link: https://github.com/GEO-BON/biab-2.0
 author:
