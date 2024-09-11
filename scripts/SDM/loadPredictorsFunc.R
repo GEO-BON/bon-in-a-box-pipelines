@@ -23,7 +23,7 @@
 #' @import terra raster
 #' @export 
 load_predictors <- function(source = "from_cube",
-                            cube_args = list(stac_path = "http://io.biodiversite-quebec.ca/stac/",
+                            cube_args = list(stac_path = "http://stac.geobon.org/",
                                              limit = 5000, 
                                              collections = c("chelsa-clim"),     
                                              t0 = NULL,
