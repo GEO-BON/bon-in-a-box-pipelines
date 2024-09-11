@@ -1,4 +1,4 @@
-script: RedlListindex.R
+script: RedListIndex.R
 name: Red List Index
 description: "Estimates the Red List Index (RLI) for a group of species, reflecting trends in the overall extinction risk for that group."
 external_link: https://nrl.iucnredlist.org/assessment/red-list-index
@@ -10,7 +10,7 @@ inputs:
     label: History assessment data
     description: "Dataset that contains the list of species and their historical threat category assessments."
     type: text/csv
-    example: 'scripts/RedlListindex/input/iucn_history_assessment_data.csv'
+    example: 'scripts/RedListIndex/input/iucn_history_assessment_data.csv'
   sp_col:
     label: Species name column
     description: "Name of the column in 'history_assessment_data' that contains the scientific names of the species."

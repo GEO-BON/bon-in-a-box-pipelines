@@ -43,7 +43,7 @@
         "y": 113.33333333333333
       },
       "data": {
-        "descriptionFile": "RedlListindex>RedlListindex.yml"
+        "descriptionFile": "RedListIndex>RedListIndex.yml"
       }
     },
     {
@@ -436,7 +436,7 @@
     }
   },
   "outputs": {
-    "RedlListindex>RedlListindex.yml@15|redlist_trend_plot": {
+    "RedListIndex>RedListIndex.yml@15|redlist_trend_plot": {
       "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species.",
       "label": "redlist_trend_plot",
       "type": "image/jpg",
