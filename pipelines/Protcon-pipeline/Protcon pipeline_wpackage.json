@@ -207,23 +207,12 @@
       "example": 3395,
       "weight": 4
     },
-    "protcon_analysis>protcon_analysis_package.yml@33|unit_distance": {
-      "description": "String value that defines the measurement unit for calculating distances between spatial units (m or km) and estimating their areas (m2 or km2) in the study area.",
-      "label": "Unit for distance measurement",
-      "type": "options",
-      "options": [
-        "m2",
-        "km2"
-      ],
-      "example": "m2",
-      "weight": 5
-    },
     "protcon_analysis>protcon_analysis_package.yml@33|distance_threshold": {
       "description": "Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
       "label": "Distance analysis threshold",
       "type": "int",
       "example": 10000,
-      "weight": 6
+      "weight": 5
     },
     "protcon_analysis>protcon_analysis_package.yml@33|distance_matrix_type": {
       "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
@@ -234,42 +223,42 @@
         "edge"
       ],
       "example": "centroid",
-      "weight": 7
+      "weight": 6
     },
     "protcon_analysis>protcon_analysis_package.yml@33|date_column_name": {
       "description": "Name of the column in the protected area file that specifies when the PA was created (STATUS_YR for WDPA data)",
       "label": "Date column name",
       "type": "text",
       "example": "STATUS_YR",
-      "weight": 8
+      "weight": 7
     },
     "protcon_analysis>protcon_analysis_package.yml@33|years": {
       "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
       "label": "Year for cutoff",
       "type": "int",
       "example": 2024,
-      "weight": 9
+      "weight": 8
     },
     "protcon_analysis>protcon_analysis_package.yml@33|start_year": {
       "description": "Year for the time series plot to start",
       "label": "Start year",
       "type": "int",
       "example": 1950,
-      "weight": 10
+      "weight": 9
     },
     "protcon_analysis>protcon_analysis_package.yml@33|year_int": {
       "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
       "label": "Year interval",
       "type": "int",
       "example": 20,
-      "weight": 11
+      "weight": 10
     },
     "pipeline@35": {
       "label": "Transboundary distance",
       "description": "Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
       "type": "int",
       "example": 0,
-      "weight": 12
+      "weight": 11
     }
   },
   "outputs": {

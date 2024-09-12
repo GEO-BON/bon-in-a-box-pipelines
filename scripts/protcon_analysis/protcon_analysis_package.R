@@ -4,10 +4,10 @@ packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.pat
 lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
 library(devtools)
 library(remotes)
-install_github("connectscape/Makurhini", dependencies = TRUE, upgrade = "always")
+#install_github("connectscape/Makurhini", dependencies = TRUE, upgrade = "always")
 
 # Load libraries
-packagesList<-list("magrittr", "terra", "tidyverse", "ggrepel") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
+packagesList<-list("magrittr", "terra", "tidyverse", "ggrepel", "Makurhini") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 
 Sys.getenv("SCRIPT_LOCATION")
@@ -40,12 +40,9 @@ if(is.null(protected_area$date_column)){
 print("Calculating ProtConn")
 protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
 # Change transboundary distance to correct unit
-if(input$unit_distance=="km2"){
-  transboundary_distance <- input$transboundary_distance/1000
-} else {transboundary_distance <- input$transboundary_distance}
 
-protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=transboundary_distance, distance_thresholds=c(input$distance_threshold))
+protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
 
 protcon_result.df <- as.data.frame(protcon_result)[c(2,3,4),c(3,4)]
 protcon_result.df[is.na(protcon_result.df)] <- 0
@@ -73,8 +70,8 @@ for(i in 1:nrow(protected_area)) {
 print("Calculating ProtConn time series")
 protcon_ts <- function(r){
     protected_area_filt <- protected_area %>% dplyr::filter(year <= r)
-    protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-        transboundary=, distance_thresholds=c(input$distance_threshold))
+    protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+        transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
     protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=r) 
     return(protcon_result.df)
 }
@@ -108,20 +105,20 @@ geom_line() +
 theme_classic()
 
 print("Calculating ProtConn for three most common dispersal distances")
-protcon_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="km2", distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=0, distance_thresholds=1)
+protcon_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=input$transboundary_distance, distance_thresholds=1000)
 protcon_result_1km <- as.data.frame(protcon_result_1km)[c(2,3,4),c(3,4)]
 protcon_result_1km[is.na(protcon_result_1km)] <- 0
 protcon_result_1km$distance <- "1 km"
 
-protcon_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="km2", distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=0, distance_thresholds=10)
+protcon_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=input$transboundary_distance, distance_thresholds=10000)
 protcon_result_10km <- as.data.frame(protcon_result_10km)[c(2,3,4),c(3,4)]
 protcon_result_10km[is.na(protcon_result_10km)] <- 0
 protcon_result_10km$distance <- "10 km"
 
-protcon_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="km2", distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=0, distance_thresholds=100)
+protcon_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=input$transboundary_distance, distance_thresholds=100000)
 protcon_result_100km <- as.data.frame(protcon_result_100km)[c(2,3,4),c(3,4)]
 protcon_result_100km[is.na(protcon_result_100km)] <- 0
 protcon_result_100km$distance <- "100 km"
