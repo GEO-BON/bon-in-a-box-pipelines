@@ -60,10 +60,25 @@ for(j in unique(adjust_categories$Cat_IUCN)){
 
 redlist_matrix[which( (!redlist_matrix %in% adjust_categories$Cat_IUCN)  & !is.na(redlist_matrix) , arr.ind = TRUE )]<-NA
 
+RedList_matrix_2 = as.data.frame.matrix(redlist_matrix)
+# Remove species that do not have an assessment before the base year, in this case set to the year 2000
+
+replace_na_with_previous <- function(df, target_col) {
+  for (col in 2:(target_col-1)) {
+    df[[target_col]] <- ifelse(is.na(df[[target_col]]), df[[col]], df[[target_col]])
+  }
+  return(df)
+}
+
+matrix_output = RedList_matrix_2
+for(k in 2:ncol(matrix_output)){
+  matrix_output <- replace_na_with_previous(matrix_output, k)
+}
+
 
 # Redlist data ####
 print("red")
-redlist_data<- red::rli(redlist_matrix, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>%
+redlist_data<- red::rli(matrix_output, boot = F) %>% t() %>% as.data.frame() %>% tibble::rownames_to_column("Year") %>%  setNames(c("Year", "RLI")) %>%
   dplyr::filter(!Year %in% "Change/year")
 print("redlist_data")
 
@@ -84,7 +99,7 @@ redlist_data_path<- file.path(outputFolder, paste0("redlist_data", ".csv")) # De
 write.csv(redlist_data, redlist_data_path, row.names = F) # write result
 
 redlist_matrix_path<- file.path(outputFolder, paste0("redlist_matrix", ".csv")) # Define the file path
-write.csv(redlist_matrix, redlist_matrix_path, row.names = T) # write result
+write.csv(matrix_output, redlist_matrix_path, row.names = T) # write result
 
 redlist_trend_plot_path<- file.path(outputFolder, paste0("redlist_trend_plot", ".jpg")) # Define the file path
 ggsave(redlist_trend_plot_path, redlist_trend_plot, height = 2, width = 4)
