@@ -14,12 +14,18 @@ RUN chmod a+w /data
 # Permissions cannot be defined at mount time, hence we create empty folder with the appropriate permissions.
 RUN mkdir /.cache && mkdir /.cache/conda && chmod a+w /.cache/conda
 RUN mkdir /.conda && chmod a+w /.conda
+RUN mkdir /r-libs-user && chmod a+w /r-libs-user
+RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml
 
 # Allow to read bashrc to execute mamba init when using docker exec
 # See https://stackoverflow.com/a/74017557/3519951
 RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
 
 RUN mamba env create -f /data/r-environment.yml
+
+# Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
+# That error would not prevent the correct installation, but it looked like it to the user.
+RUN chmod -R 777 /opt/conda/pkgs/cache
 
 # These packages are not in conda-forge
 # ADD CRAN PACKAGES HERE
@@ -30,9 +36,5 @@ RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"Coordinate
 
 # ADD GITHUB PACKAGES HERE
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
-
-# Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
-# That error would not prevent the correct installation, but it looked like it to the user.
-RUN chmod -R 777 /opt/conda/pkgs/cache
 
 RUN date +"%Y-%m-%d %R" > /version.txt
