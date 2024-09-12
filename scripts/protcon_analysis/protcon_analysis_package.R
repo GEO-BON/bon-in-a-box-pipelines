@@ -40,12 +40,12 @@ if(is.null(protected_area$date_column)){
 print("Calculating ProtConn")
 protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
 # Change transboundary distance to correct unit
-if(input$transboundary_distance=="km2"){
+if(input$unit_distance=="km2"){
   transboundary_distance <- input$transboundary_distance/1000
 } else {transboundary_distance <- input$transboundary_distance}
 
 protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
+transboundary=transboundary_distance, distance_thresholds=c(input$distance_threshold))
 
 protcon_result.df <- as.data.frame(protcon_result)[c(2,3,4),c(3,4)]
 protcon_result.df[is.na(protcon_result.df)] <- 0
@@ -74,7 +74,7 @@ print("Calculating ProtConn time series")
 protcon_ts <- function(r){
     protected_area_filt <- protected_area %>% dplyr::filter(year <= r)
     protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit=input$unit_distance, distance=list(type=input$distance_matrix_type), probability=0.5, 
-        transboundary=0, distance_thresholds=c(input$distance_threshold))
+        transboundary=, distance_thresholds=c(input$distance_threshold))
     protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=r) 
     return(protcon_result.df)
 }
