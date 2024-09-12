@@ -1,7 +1,7 @@
 FROM rocker/geospatial:dev-osgeo
 
 # Additionnal R packages
-RUN R -e 'install.packages(c("rjson", "RCurl", "rstac", "rgbif", "CoordinateCleaner", "dismo", "ENMeval", "ggsci", "landscapemetrics", "geodata", "rredlist", "gdalUtilities", "OpenStreetMap","rnaturalearth","rnaturalearthdata","sf","raster","terra","geojsonsf","TeachingDemos","spatialEco","rgbif","dplyr", "stringr","dplyr","plotly","rgdal","geojsonio"))'
+RUN R -e 'install.packages(c("rjson", "RCurl", "rstac", "rgbif", "CoordinateCleaner", "dismo", "ENMeval", "ggsci", "landscapemetrics", "geodata", "rredlist", "gdalUtilities", "OpenStreetMap","rnaturalearth","rnaturalearthdata","sf","raster","terra","geojsonsf","TeachingDemos","spatialEco","rgbif","dplyr", "stringr","dplyr","plotly","rgdal"))'
 RUN R -e 'devtools::install_github("appelmar/gdalcubes_R")'
 RUN R -e 'devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")'
 RUN R -e 'devtools::install_github("gearslaboratory/gdalUtils")'

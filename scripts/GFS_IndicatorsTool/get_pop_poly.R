@@ -64,8 +64,19 @@ if (nrow(circles_sf)>1) {
 sf_use_s2(F)
 PopPoly = sf_dissolve(circles_sf, 'pop')
 
+
 ## remove overlap between features 
-PopPoly = sf_dissolve((st_intersection(PopPoly)), 'pop')
+PopPoly=sf_dissolve(st_intersection(PopPoly),'pop')
+
+## correct geometries --> if geometry collections--> extract only polygons 
+for (i in which(st_geometry_type(PopPoly)=='GEOMETRYCOLLECTION')) {
+  PopPoly = rbind(PopPoly , st_collection_extract(PopPoly[i,], type=c('POLYGON')))
+}
+PopPoly=PopPoly[which(st_geometry_type(PopPoly)!='GEOMETRYCOLLECTION'),]
+
+## re-dissolve everything: 1 multipolygon per population
+PopPoly=sf_dissolve(PopPoly, 'pop')
+
 
 
 ###prepare output

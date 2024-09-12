@@ -1,4 +1,4 @@
-packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets','geojsonio')
+packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets')
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -10,7 +10,7 @@ library(rnaturalearth)
 library(TeachingDemos)
 library(dplyr)
 library(plotly)
-library(geojsonio)
+library(geojsonsf)
 
 print('loading input data')
 
@@ -23,10 +23,10 @@ pop_habitat_area = read.table(input$popArea, row.names=1, header=T, sep='\t')
 NeNc = input$NeNc
 PDen = input$PopDensity
 
-# 
-# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/7edd27e7423c510347d732e69ada8b70/population_polygons.geojson')
-# habitat = stack('output/GFS_IndicatorsTool/get_LCY/5a772a94d6b8460e694124d43a23cfe3/LCY.tif')
-# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/43b097b7cf8d646f5562e8e110e9e4b5/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
+# # 
+# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/0849da3b1a7f43eb5be94cc1e2070688/population_polygons.geojson')
+# habitat = stack('output/GFS_IndicatorsTool/get_LCY/c7c9684dfcdbc58c0e535eb4ca069128/LCY.tif')
+# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/7b7eec58ceb9a01f9a5bf6e686925a57/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # NeNc = c(0.1)
 # PDen = c(500, 1000)
 
@@ -267,10 +267,9 @@ HabitatNC = habitat[[1]]==1&habitat[[nlayers(habitat)]]==1;HabitatNC[HabitatNC==
 HabitatLOSS = habitat[[1]]==1&habitat[[nlayers(habitat)]]==0;HabitatLOSS[HabitatLOSS==0]=NA
 HabitatGAIN = habitat[[1]]==0&habitat[[nlayers(habitat)]]==1;HabitatGAIN[HabitatGAIN==0]=NA
 
-HabitatNC_poly = fromJSON(geojson_json(st_as_sf(terra::as.polygons(rast(HabitatNC)))))
-HabitatLOSS_poly = fromJSON(geojson_json(st_as_sf(terra::as.polygons(rast(HabitatLOSS)))))
-HabitatGAIN_poly = fromJSON(geojson_json(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))
-
+HabitatNC_poly = fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatNC)))))
+HabitatLOSS_poly = fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatLOSS)))))
+HabitatGAIN_poly = fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))
 
 
 
@@ -279,7 +278,7 @@ HabitatGAIN_poly = fromJSON(geojson_json(st_as_sf(terra::as.polygons(rast(Habita
 popMap = plot_ly()  %>%
   # add shapefile layer: boundaries of study area
   add_sf(
-    data = land,
+    data = st_cast(land,'MULTIPOLYGON'),
     type = "scattermapbox",
     mode = "lines",
     hoverinfo = 'none',
