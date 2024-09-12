@@ -34,10 +34,10 @@ RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"Coordinate
         \"OpenStreetMap\"\
     ), repos=\"https://cloud.r-project.org/\")'"
 
-   
+
 
 # ADD GITHUB PACKAGES HERE
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
-RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"Makurhini\")'"
+RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"connectscape/Makurhini\")'"
 
 RUN date +"%Y-%m-%d %R" > /version.txt
