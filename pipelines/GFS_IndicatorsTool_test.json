@@ -162,32 +162,62 @@
       }
     },
     {
-      "id": "113",
-      "type": "constant",
+      "id": "115",
+      "type": "io",
       "position": {
-        "x": 778.8342944956521,
-        "y": 100.96937842831565
+        "x": 769.6113173100973,
+        "y": 139.1608246648186
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "image/tiff;application=geotiff",
-        "value": "/userdata/grasslands.tif"
+        "descriptionFile": "GFS_Habitat_map_Landcover_1992_2020.json"
       }
     },
     {
-      "id": "114",
-      "type": "constant",
+      "id": "116",
+      "type": "userInput",
       "position": {
-        "x": 755.7263436989633,
-        "y": 230.81405433351932
+        "x": 529.2257895709458,
+        "y": 105.521216094296
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text[]",
+        "type": "int[]",
         "value": [
-          "y2006",
-          "y2018"
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
         ]
+      }
+    },
+    {
+      "id": "117",
+      "type": "userInput",
+      "position": {
+        "x": 450.0825552607329,
+        "y": 163.07993195626932
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          "130"
+        ]
+      }
+    },
+    {
+      "id": "118",
+      "type": "userInput",
+      "position": {
+        "x": 448.88341534694166,
+        "y": 255.41370531818478
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.01
       }
     }
   ],
@@ -270,18 +300,46 @@
       "id": "reactflow__edge-100GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot-112"
     },
     {
-      "source": "113",
-      "sourceHandle": null,
-      "target": "100",
-      "targetHandle": "pipeline@101",
-      "id": "reactflow__edge-113-100pipeline@101"
+      "source": "101",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "115",
+      "targetHandle": "pipeline@116",
+      "id": "reactflow__edge-101GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-115pipeline@116"
     },
     {
-      "source": "114",
+      "source": "116",
       "sourceHandle": null,
+      "target": "115",
+      "targetHandle": "pipeline@118",
+      "id": "reactflow__edge-116-115pipeline@118"
+    },
+    {
+      "source": "117",
+      "sourceHandle": null,
+      "target": "115",
+      "targetHandle": "pipeline@119",
+      "id": "reactflow__edge-117-115pipeline@119"
+    },
+    {
+      "source": "118",
+      "sourceHandle": null,
+      "target": "115",
+      "targetHandle": "pipeline@117",
+      "id": "reactflow__edge-118-115pipeline@117"
+    },
+    {
+      "source": "115",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|LCY",
+      "target": "100",
+      "targetHandle": "pipeline@101",
+      "id": "reactflow__edge-115GFS_IndicatorsTool>get_LCY.yml@115|LCY-100pipeline@101"
+    },
+    {
+      "source": "115",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|time.points",
       "target": "100",
       "targetHandle": "pipeline@102",
-      "id": "reactflow__edge-114-100pipeline@102"
+      "id": "reactflow__edge-115GFS_IndicatorsTool>get_LCY.yml@115|time.points-100pipeline@102"
     }
   ],
   "inputs": {
@@ -289,75 +347,103 @@
       "label": "Title of the run",
       "description": "Set a name for the pipeline run, for instance indicating species of interest, region, type of habitat map, and monitoring period. ",
       "type": "text",
-      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "example": "Rhinanthus alectorolophus, Switzerland Grasslands, Shrublands and Sparse Vegetation, 1995-2020",
       "weight": 0
+    },
+    "pipeline@105": {
+      "label": "Species names",
+      "description": "Scientific name of the species, used to look for occurrences in GBIF. ",
+      "type": "text",
+      "example": "Rhinanthus alectorolophus",
+      "weight": 1
+    },
+    "pipeline@107": {
+      "label": "Start year occurrences",
+      "description": "Integer, 4 digit year, start date to retrieve occurrences from GBIF.",
+      "type": "int",
+      "example": 1980,
+      "weight": 2
+    },
+    "pipeline@108": {
+      "label": "End year occurences",
+      "description": "Integer, 4 digit year, end date to retrieve occurrences from GBIF.",
+      "type": "int",
+      "example": 1995,
+      "weight": 3
+    },
+    "pipeline@116": {
+      "label": "Years of monitoring land cover change",
+      "description": "List of years for which land cover habitat change should be monitored (maximum range 1992 - 2020). The monitoring period should be set after the occurrence retrieval period. ",
+      "type": "int[]",
+      "example": [
+        1995,
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 4
+    },
+    "pipeline@117": {
+      "label": "Landcover classes",
+      "description": "List of landcover class identifiers to be extract (for ex., 130 corresponds to \"grassland\", for complete list of identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png). Multiple classes can be used, separated by comma. ",
+      "type": "int[]",
+      "example": [
+        "120",
+        "130",
+        "150"
+      ],
+      "weight": 5
     },
     "pipeline@103": {
       "label": "Population density",
       "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, the first one will be used in figures. ",
       "type": "float[]",
       "example": [
-        50,
-        100,
-        1000
+        "500",
+        "1000"
       ],
-      "weight": 1
+      "weight": 6
+    },
+    "pipeline@118": {
+      "label": "Resolution of the land cover map",
+      "description": "Desired resolution for land cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.003 (~300m).",
+      "type": "float",
+      "example": 0.01,
+      "weight": 7
     },
     "pipeline@104": {
       "label": "Ne:Nc ratio estimate",
       "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, the first one will be used in figure.",
       "type": "float[]",
       "example": [
-        0.05,
-        0.1,
-        0.5
+        "0.1"
       ],
-      "weight": 2
-    },
-    "pipeline@105": {
-      "label": "Species names",
-      "description": "Scientific name of the species, used to look for occurrences in GBIF. ",
-      "type": "text",
-      "example": "Quercus sartorii",
-      "weight": 3
+      "weight": 8
     },
     "pipeline@106": {
       "label": "Countries list",
       "description": "countries of interest, will be used to look for GBIF occurrences.",
       "type": "text[]",
       "example": [
-        "Mexico",
-        "Guatemala"
+        "Switzerland"
       ],
-      "weight": 4
-    },
-    "pipeline@107": {
-      "label": "Start year",
-      "description": "Integer, 4 digit year, start date to retrieve occurrences",
-      "type": "int",
-      "example": 1980,
-      "weight": 5
-    },
-    "pipeline@108": {
-      "label": "End year",
-      "description": "Integer, 4 digit year, end date to retrieve occurrences",
-      "type": "int",
-      "example": 2000,
-      "weight": 6
+      "weight": 9
     },
     "pipeline@109": {
       "label": "Size of buffer",
-      "description": "Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Radius size [in km] to calculate buffer around species observations.",
       "type": "float",
-      "example": 10,
-      "weight": 7
+      "example": 5,
+      "weight": 10
     },
     "pipeline@110": {
       "label": "Distance between populations",
-      "description": "Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Distance [in km] to separate species observations in different populations. ",
       "type": "float",
-      "example": 50,
-      "weight": 8
+      "example": 25,
+      "weight": 11
     }
   },
   "outputs": {
@@ -367,5 +453,28 @@
       "weight": 0,
       "type": "text/html"
     }
+  },
+  "metadata": {
+    "name": "GFS TOOL - Land cover loss by populations from GBIF occurrences (country)",
+    "description": "Genes from Space tool. Retrieves species occurrence from GBIF, calculates polygons of population distribution, and computes indices of genetic diversity monitoring for land cover habitat loss.",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "ESA. Land Cover CCI Product User Guide Version 2. Tech. Rep. (2017)",
+        "doi": "https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf"
+      }
+    ]
   }
 }

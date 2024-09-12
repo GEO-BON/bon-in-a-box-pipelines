@@ -25,6 +25,12 @@ inputs:
     type: float
     example: 50
 
+  countries:
+    label: Countries of interest
+    description: Optional list of countries to restrict the population polygons calculations. 
+    type: text[]
+    example: ["Mexico", "Guatemala"]
+
 outputs:
   population_polygons:
     label: Polygons of populations 

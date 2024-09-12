@@ -58,6 +58,25 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "28",
+      "type": "userInput",
+      "position": {
+        "x": -117.77380744491222,
+        "y": 595.7898169256646
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ]
+      }
     }
   ],
   "edges": [
@@ -88,6 +107,13 @@
       "target": "27",
       "targetHandle": null,
       "id": "reactflow__edge-23time.points-27"
+    },
+    {
+      "source": "28",
+      "sourceHandle": null,
+      "target": "23",
+      "targetHandle": "YOI",
+      "id": "reactflow__edge-28-23YOI"
     }
   ],
   "inputs": {
@@ -104,6 +130,19 @@
       "type": "float",
       "example": 0.01,
       "weight": 1
+    },
+    "pipeline@28": {
+      "label": "Years of interest",
+      "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
+      "type": "int[]",
+      "example": [
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 2
     }
   },
   "outputs": {
@@ -119,5 +158,28 @@
       "type": "text[]",
       "weight": 1
     }
+  },
+  "metadata": {
+    "name": "GFS  - tool component - Get GFW forest cover change 2000-2023.",
+    "description": "Component of the Genes from Space tool. Given an area of interest, creates a raster stack describing forest habitat presence year-by-year from 2000 to 2023. ",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": "https://teams.issibern.ch/genesfromspace/ https://www.globalforestwatch.org/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "Hansen et al., Science (2013)",
+        "doi": "https://doi.org/10.1126/science.1244693"
+      }
+    ]
   }
 }

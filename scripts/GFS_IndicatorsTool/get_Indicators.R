@@ -1,15 +1,8 @@
-packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets')
+packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets','geojsonio')
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
-if(!"rgdal"%in% installed.packages()){
-  install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source") 
-}
-if(!"gdalUtils"%in% installed.packages()){
-  library(devtools)
-  devtools::install_github("gearslaboratory/gdalUtils")
-}
+
 library(raster)
-library(gdalUtils)
 library(rjson)
 library(terra)
 library(sf)
@@ -17,6 +10,7 @@ library(rnaturalearth)
 library(TeachingDemos)
 library(dplyr)
 library(plotly)
+library(geojsonio)
 
 print('loading input data')
 
@@ -29,12 +23,12 @@ pop_habitat_area = read.table(input$popArea, row.names=1, header=T, sep='\t')
 NeNc = input$NeNc
 PDen = input$PopDensity
 
-
-# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/3515605c5e6c39dd27e7f2cf24574463/population_polygons.geojson')
-# habitat = stack('userdata/grasslands.tif')
-# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/07cfe8878729ea8a5faad3acacb5db63/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
+# 
+# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/7edd27e7423c510347d732e69ada8b70/population_polygons.geojson')
+# habitat = stack('output/GFS_IndicatorsTool/get_LCY/5a772a94d6b8460e694124d43a23cfe3/LCY.tif')
+# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/43b097b7cf8d646f5562e8e110e9e4b5/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # NeNc = c(0.1)
-# PDen = c(500)
+# PDen = c(500, 1000)
 
 
 ### Set population colors for plotting
@@ -164,6 +158,7 @@ HabitatT1 = habitat[[nlayers(habitat)]]==1
 HabitatT0[HabitatT0==0] = NA
 HabitatT1[HabitatT1==0] = NA
 
+
 # get coordinates of population labels
 pop_coord = st_coordinates(st_centroid(pop_poly))
 
@@ -194,14 +189,38 @@ dev.off()
 
 
 
-
-
 ######################## Create interactive plotly output
-##### Create a shared data-frame with shapes of populations, Ne over time, Area over time and Relative Area over time.
 print('creating interactive map')
 
-# add shapes of populations
-merged_DF = pop_poly
+
+### Expand population habitat matrix with intermediary point between years (will facilitate clicking on lines on interactive plots)
+ints = round(50/ncol(pop_habitat_area)) # set number of intermediary points between years
+
+# create expanded dataframe with intermediary points
+int_pop_habitat_area = data.frame()
+
+for (pop in rownames(pop_habitat_area)) {
+  
+  int_area = c(pop_habitat_area[pop,1])
+  
+  for (i in 2:ncol(pop_habitat_area)) {
+    
+    int_area = c(int_area, seq(pop_habitat_area[pop,i-1], pop_habitat_area[pop,i],length.out=ints)[-1])
+    
+  }
+  
+  names(int_area) = paste0('int.',1:length(int_area))
+  names(int_area)[seq(1, length(int_area), by=ints-1)] = colnames(pop_habitat_area)
+  
+  int_pop_habitat_area[pop,names(int_area)] = int_area
+}
+
+
+##### Create a shared data-frame with shapes of populations, Ne over time, Area over time and Relative Area over time.
+
+# Add shapes of populations to shared DF (split polygons in multipolygons, than revert to multipolygon for correct display in mapbox)
+merged_DF = st_cast(st_cast(pop_poly, "POLYGON"),'MULTIPOLYGON')
+
 
 # add colors info
 merged_DF$colorsRGB = paste0('rgba(',apply(col2rgb(PopCol[merged_DF$pop]), 2, paste, collapse=','),',0.3)')
@@ -213,14 +232,14 @@ empty_mp = st_sfc(st_multipolygon(mp), crs = crs(pop_poly))
 
 
 # add estimates of habitat area and NE for different time point, add to merged DF
-for (pop in rownames(pop_habitat_area)) {
+for (pop in rownames(int_pop_habitat_area)) {
 
-  for (y in colnames(pop_habitat_area)) {
+  for (y in colnames(int_pop_habitat_area)) {
 
     
-    HA = pop_habitat_area[pop,y] # total area
+    HA = int_pop_habitat_area[pop,y] # total area
     NE = HA*PDen[1]*NeNc[1] # effective population size estiamate
-    HAR = HA / pop_habitat_area[pop,1] # relative area
+    HAR = HA / int_pop_habitat_area[pop,1] # relative area
 
 
     # Create a new feature with attributes but without geometry
@@ -229,7 +248,7 @@ for (pop in rownames(pop_habitat_area)) {
       geometry = empty_mp, # use empty geometry placeholder
       HA = HA,
       NE = NE,
-      HAR = HAR,
+      HAR = (HAR*100)-100,
       TIME = y,
       colors = PopCol[pop],
       colorsRGB = NA
@@ -243,32 +262,21 @@ for (pop in rownames(pop_habitat_area)) {
 merged_DF_key = highlight_key(merged_DF, ~pop)
 
 
-######## Transform habitat at first and last timepoint from rasters to polygons
-HabitatT0_poly = st_as_sf(terra::as.polygons(rast(HabitatT0)))
-HabitatT1_poly = st_as_sf(terra::as.polygons(rast(HabitatT1)))
+######## Create three polygons describing regions where habitat was lost, increased, or remained stable
+HabitatNC = habitat[[1]]==1&habitat[[nlayers(habitat)]]==1;HabitatNC[HabitatNC==0]=NA
+HabitatLOSS = habitat[[1]]==1&habitat[[nlayers(habitat)]]==0;HabitatLOSS[HabitatLOSS==0]=NA
+HabitatGAIN = habitat[[1]]==0&habitat[[nlayers(habitat)]]==1;HabitatGAIN[HabitatGAIN==0]=NA
+
+HabitatNC_poly = fromJSON(geojson_json(st_as_sf(terra::as.polygons(rast(HabitatNC)))))
+HabitatLOSS_poly = fromJSON(geojson_json(st_as_sf(terra::as.polygons(rast(HabitatLOSS)))))
+HabitatGAIN_poly = fromJSON(geojson_json(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))
+
 
 
 
 ######  Map of populations
 
 popMap = plot_ly()  %>%
-  #Add the shapefile layer: habitat loss
-  add_sf(
-    data = HabitatT0_poly,
-    type = "scattermapbox",
-    mode = "lines",
-    hoverinfo = 'none',
-    fillcolor = 'rgba(183, 247, 163,0.3)',
-    line = list(width = 0)
-  ) %>%
-  add_sf(
-    data = HabitatT1_poly,
-    type = "scattermapbox",
-    mode = "lines",
-    hoverinfo = 'none',
-    fillcolor = 'rgba(87, 133, 73,0.3)',
-    line = list(width = 0)
-  ) %>%
   # add shapefile layer: boundaries of study area
   add_sf(
     data = land,
@@ -287,20 +295,48 @@ popMap = plot_ly()  %>%
     hoverlabel = list(bgcolor = 'white'),
     text=~pop,
     fillcolor = ~colorsRGB,
+    showlegend = FALSE,
     line = list(width = 1, color='grey')
-  ) %>% 
-  # Define Mapbox layout with your Mapbox access token
+  ) %>%
+  # Define Mapbox layout 
   layout(mapbox = list(
     style = 'carto-positron',  
     zoom = 5,          # Adjust zoom level
     center = list(lon = mean(st_coordinates(st_centroid(pop_poly))[,1]), # Center the map
                   lat = mean(st_coordinates(st_centroid(pop_poly))[,2])),
-    domain = list(x = c(0, 1), y = c(0, 1)) # set size  on interface
+    layers = list( ## add background layers of habitat change
+      list( # habitat gain
+        sourcetype = "geojson",
+        source = HabitatGAIN_poly,
+        below = "traces",
+        type = "fill",
+        color = "rgba( 69, 149, 218, 0.6)", 
+        fill = list(outlinecolor =  "rgba(0,0,0,0)"),
+        line = list(width=0)),
+      list( # habitat loss
+        sourcetype = "geojson",
+        source = HabitatLOSS_poly,
+        type = "fill",
+        fill = list(outlinecolor =  "rgba(0,0,0,0)"),
+        below = "traces",
+        color = "rgba( 217, 86, 86, 0.6)",
+        line = list(width=0)),  
+      list( # habitat no change
+        sourcetype = "geojson",
+        source = HabitatNC_poly,
+        type = "fill",
+        fill = list(outlinecolor =  "rgba(0,0,0,0)"),
+        below = "traces",
+        color = "rgba( 73, 208, 76,  0.6)",
+        line = list(width=0))
+      ),  
+      domain = list(x = c(0, 1), y = c(0, 1))
   ),
   xaxis=list(),yaxis=list()
   )  %>%
   # Provide your Mapbox token here
-  config(mapboxAccessToken = 'your_mapbox_access_token') %>% hide_legend()
+  config(mapboxAccessToken = 'your_mapbox_access_token') 
+
 
 
 
@@ -317,7 +353,7 @@ NE_plot = plot_ly(data = merged_DF_key,
                   type = 'scatter', mode='lines') %>%
   layout(
     xaxis = list(
-      tickvals = 0:ncol(pop_habitat_area),  # Custom tick values
+      tickvals = which(colnames(int_pop_habitat_area)%in%colnames(pop_habitat_area))-1,  # Custom tick values
       type='categorical',
       title = 'time',
       showgrid = TRUE,      # Show grid lines (optional)
@@ -337,8 +373,6 @@ NE_plot = plot_ly(data = merged_DF_key,
 
 
 
-
-
 ####### Build Habitat size over time
 
 HA_plot = plot_ly(data = merged_DF_key,
@@ -352,7 +386,7 @@ HA_plot = plot_ly(data = merged_DF_key,
                   type = 'scatter', mode='lines') %>%
   layout(
     xaxis = list(
-      tickvals = 0:ncol(pop_habitat_area),  # Custom tick values
+      tickvals =which(colnames(int_pop_habitat_area)%in%colnames(pop_habitat_area))-1,  # Custom tick values
       type='categorical',
       title = 'time',
       showgrid = TRUE,      # Show grid lines (optional)
@@ -388,7 +422,7 @@ HAR_plot = plot_ly(data = merged_DF_key,
                   type = 'scatter', mode='lines') %>%
   layout(
     xaxis = list(
-      tickvals = 0:ncol(pop_habitat_area),  # Custom tick values
+      tickvals = which(colnames(int_pop_habitat_area)%in%colnames(pop_habitat_area))-1,  # Custom tick values
       type='categorical',
       title = 'time',
       showgrid = TRUE,      # Show grid lines (optional)
@@ -451,7 +485,13 @@ PMr = round(PM, 2)
 
 # assmeble final interface : map + NE outputs + PM plots
 INT = plotly::subplot(popMap, NE_outputs, PM_plots, margin=0.05, titleX =T, titleY = T) %>% 
-  layout(  annotations = list(list(text='Effective population size by Ne:Nc and population density',showarrow=F, x=0.5, y=0.4,xref = "paper",  yref = "paper", xanchor = "center",  yanchor = "bottom" )),
+  layout(  annotations = list(
+    list(text='Effective population size by Ne:Nc and population density',showarrow=F, x=0.5, y=0.4,xref = "paper",  yref = "paper", xanchor = "center",  yanchor = "bottom" ),
+    list(text='<i>Habitat change</i>:',showarrow=F, x=0, y=0, xref = "paper",  yref = "paper", xanchor = "left",  yanchor = "bottom" ),
+    list(text='<b>loss</b>',showarrow=F, x=0.1, y=0,  font = list(color = "rgba( 217, 86, 86, 1)"), xref = "paper",  yref = "paper", xanchor = "right",  yanchor = "bottom" ),
+    list(text='<b>no ch.</b>',showarrow=F, x=0.12, y=0, font = list(color = "rgba(  73, 208, 76, 1)"), xref = "paper",  yref = "paper", xanchor = "center",  yanchor = "bottom" ),
+    list(text='<b>gain</b>',showarrow=F, x=0.14, y=0, font = list(color = "rgba( 69, 149, 218, 1)"), xref = "paper",  yref = "paper", xanchor = "left",  yanchor = "bottom" )
+      ),
     title=paste0(Title,'<br>Ne500 Indicator = ',NE500r,'; Populations Maintained Indicator = ',PMr),
     margin = 0.05)
 
@@ -464,7 +504,8 @@ htmlwidgets::saveWidget(INT, pathInteractive)
 ## Write output
 
 
-output <- list("Ne_table" = NE_table_path, "Ne_plot"=Ne_plot, 'PM'=PM, 'NE500',NE500r, 'PM_plot'=PM_plot, 'POP_plot'=POP_plot, 'Interactive_plot'= pathInteractive) 
+output <- list('Interactive_plot'= pathInteractive) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
+
 

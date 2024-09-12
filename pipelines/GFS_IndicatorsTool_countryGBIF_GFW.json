@@ -184,6 +184,25 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "113",
+      "type": "userInput",
+      "position": {
+        "x": 147.83201527473238,
+        "y": 329.9460667994881
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ]
+      }
     }
   ],
   "edges": [
@@ -291,6 +310,13 @@
       "target": "112",
       "targetHandle": null,
       "id": "reactflow__edge-100GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot-112"
+    },
+    {
+      "source": "113",
+      "sourceHandle": null,
+      "target": "99",
+      "targetHandle": "pipeline@28",
+      "id": "reactflow__edge-113-99pipeline@28"
     }
   ],
   "inputs": {
@@ -319,32 +345,45 @@
       "weight": 2
     },
     "pipeline@107": {
-      "label": "Start year",
-      "description": "Integer, 4 digit year, start date to retrieve occurrences",
+      "label": "Start year occurrences",
+      "description": "Integer, 4 digit year, start date to retrieve occurrences from GBIF",
       "type": "int",
       "example": 1980,
       "weight": 3
     },
     "pipeline@108": {
-      "label": "End year",
-      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "label": "End year occurrences",
+      "description": "Integer, 4 digit year, end date to retrieve occurrences from GBIF",
       "type": "int",
       "example": 2000,
       "weight": 4
     },
+    "pipeline@113": {
+      "label": "Years of monitoring tree cover change",
+      "description": "List of years for which tree cover habitat change should be monitored (maximum range 2000 - 2023). The monitoring period should be set after the occurrence retrieval period. ",
+      "type": "int[]",
+      "example": [
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 5
+    },
     "pipeline@109": {
       "label": "Size of buffer",
-      "description": "Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Radius size [in km] to calculate buffer around species observations. ",
       "type": "float",
       "example": 10,
-      "weight": 5
+      "weight": 6
     },
     "pipeline@110": {
       "label": "Distance between populations",
-      "description": "Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Distance [in km] to separate species observations in different populations. ",
       "type": "float",
       "example": 50,
-      "weight": 6
+      "weight": 7
     },
     "pipeline@104": {
       "label": "Ne:Nc ratio estimate",
@@ -354,7 +393,7 @@
         "0.1",
         "0.2"
       ],
-      "weight": 7
+      "weight": 8
     },
     "pipeline@103": {
       "label": "Population density",
@@ -365,14 +404,14 @@
         "100",
         "500"
       ],
-      "weight": 8
+      "weight": 9
     },
     "pipeline@111": {
       "label": "Resolution of tree cover map",
       "description": "Desired resolution for tree cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.001 (~100m).",
       "type": "float",
       "example": 0.01,
-      "weight": 9
+      "weight": 10
     }
   },
   "outputs": {
@@ -382,5 +421,26 @@
       "weight": 0,
       "type": "text/html"
     }
+  },
+  "metadata": {
+    "name": "GFS TOOL - Forest cover loss by populations from GBIF occurrences (country)",
+    "description": "Genes from Space tool. Retrieves species occurrence from GBIS, calculates polygons of population distribution, and computes indices of genetic diversity monitoring for forest cover habitat loss.",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com"
+      }
+    ],
+    "external_link": "https://teams.issibern.ch/genesfromspace/ , https://www.globalforestwatch.org/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "Hansen et al., Science (2013)",
+        "doi": "https://doi.org/10.1126/science.1244693"
+      }
+    ]
   }
 }

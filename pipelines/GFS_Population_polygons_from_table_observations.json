@@ -60,6 +60,19 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "10",
+      "type": "constant",
+      "position": {
+        "x": 75.57144787645359,
+        "y": 741.1360577146236
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": []
+      }
     }
   ],
   "edges": [
@@ -90,26 +103,33 @@
       "target": "9",
       "targetHandle": null,
       "id": "reactflow__edge-5population_polygons-9"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "countries",
+      "id": "reactflow__edge-10-5countries"
     }
   ],
   "inputs": {
     "pipeline@6": {
       "label": "Coordinates of species occurrence",
-      "description": "Path to the table storing the species observation coordinates. The table must incude header with \"decimal_longitude\" and \"decimal_latitude\" columns, indicating the coordinates of every observation. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Path to the table storing the species observation coordinates. The table must incude header with \"decimal_longitude\" and \"decimal_latitude\" columns, indicating the coordinates of every observation. ",
       "type": "text/tab-separated-values",
       "example": "/userdata/obs_data.tsv",
       "weight": 0
     },
     "pipeline@7": {
       "label": "Size of buffer",
-      "description": "Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Radius size [in km] to calculate buffer around species observations. ",
       "type": "float",
       "example": 10,
       "weight": 1
     },
     "pipeline@8": {
       "label": "Distance between populations",
-      "description": "Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Distance [in km] to separate species observations in different populations.",
       "type": "float",
       "example": 50,
       "weight": 2
@@ -123,5 +143,28 @@
       "example": "",
       "weight": 0
     }
+  },
+  "metadata": {
+    "name": "GFS  - tool component - Get population polygons from species observation.",
+    "description": "Component of the Genes from Space tool. Given a table of species occurrences, the pipeline calculates population polygons based on geographical proximity. ",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": null,
+        "doi": null
+      }
+    ]
   }
 }

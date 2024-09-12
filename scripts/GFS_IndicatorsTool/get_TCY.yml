@@ -19,6 +19,12 @@ inputs:
     type: float
     example: 0.01
 
+  YOI:
+    label: Years of interest
+    description: List of years for which tree cover should be extracted (maximum range 2000 - 2023).
+    type: int[]
+    example: [2000, 2005, 2010, 2015, 2020]
+
 outputs:
   TCY: 
     label: Tree cover year-by-year

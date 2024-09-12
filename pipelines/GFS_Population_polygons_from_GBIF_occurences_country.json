@@ -293,6 +293,13 @@
       "target": "21",
       "targetHandle": "countries",
       "id": "reactflow__edge-22-21countries"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "countries",
+      "id": "reactflow__edge-22-5countries"
     }
   ],
   "inputs": {
@@ -305,7 +312,7 @@
     },
     "pipeline@22": {
       "label": "Countries list",
-      "description": "countries of interest, will be used to look for GBIF occurrences.",
+      "description": "Countries of interest, will be used to look for GBIF occurrences.",
       "type": "text[]",
       "example": [
         "Mexico",
@@ -329,14 +336,14 @@
     },
     "pipeline@7": {
       "label": "Size of buffer",
-      "description": "Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Radius size [in km] to calculate buffer around species observations.",
       "type": "float",
       "example": 10,
       "weight": 4
     },
     "pipeline@8": {
       "label": "Distance between populations",
-      "description": "Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = \"species_obs\", \"countries\" or \"bbox\"; otherwise ignored]",
+      "description": "Distance [in km] to separate species observations in different populations.",
       "type": "float",
       "example": 50,
       "weight": 5
@@ -350,5 +357,28 @@
       "example": "",
       "weight": 0
     }
+  },
+  "metadata": {
+    "name": "GFS  - tool component - Get population polygons for country list.",
+    "description": "Component of the Genes from Space tool. Given a list of countries, a species of interest, and a time window, the pipeline retrives the occurrences of the species from GBIF, and then calculates population polygons based on geographical proximity. ",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": null,
+        "doi": null
+      }
+    ]
   }
 }

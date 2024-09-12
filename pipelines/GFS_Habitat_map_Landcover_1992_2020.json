@@ -1,0 +1,220 @@
+{
+  "nodes": [
+    {
+      "id": "115",
+      "type": "io",
+      "position": {
+        "x": 538.190091303112,
+        "y": 305.30990869688776
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_LCY.yml"
+      }
+    },
+    {
+      "id": "116",
+      "type": "userInput",
+      "position": {
+        "x": 107.84318414983852,
+        "y": 232.1851376179697
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geo+json",
+        "value": "/userdata/population_polygons.geojson"
+      }
+    },
+    {
+      "id": "117",
+      "type": "userInput",
+      "position": {
+        "x": 109.78446696457411,
+        "y": 292.58427121305573
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.01
+      }
+    },
+    {
+      "id": "118",
+      "type": "userInput",
+      "position": {
+        "x": 213.96492385299337,
+        "y": 336.3493588932734
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ]
+      }
+    },
+    {
+      "id": "119",
+      "type": "userInput",
+      "position": {
+        "x": 197.78155879302506,
+        "y": 393.6135737208532
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          130,
+          140
+        ]
+      }
+    },
+    {
+      "id": "120",
+      "type": "output",
+      "position": {
+        "x": 1149.4658756520394,
+        "y": 252.942785122668
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "121",
+      "type": "output",
+      "position": {
+        "x": 1151.9556241228036,
+        "y": 330.12498771636245
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "116",
+      "sourceHandle": null,
+      "target": "115",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-116-115population_polygons"
+    },
+    {
+      "source": "117",
+      "sourceHandle": null,
+      "target": "115",
+      "targetHandle": "res",
+      "id": "reactflow__edge-117-115res"
+    },
+    {
+      "source": "118",
+      "sourceHandle": null,
+      "target": "115",
+      "targetHandle": "YOI",
+      "id": "reactflow__edge-118-115YOI"
+    },
+    {
+      "source": "119",
+      "sourceHandle": null,
+      "target": "115",
+      "targetHandle": "lc_classes",
+      "id": "reactflow__edge-119-115lc_classes"
+    },
+    {
+      "source": "115",
+      "sourceHandle": "LCY",
+      "target": "120",
+      "targetHandle": null,
+      "id": "reactflow__edge-115LCY-120"
+    },
+    {
+      "source": "115",
+      "sourceHandle": "time.points",
+      "target": "121",
+      "targetHandle": null,
+      "id": "reactflow__edge-115time.points-121"
+    }
+  ],
+  "inputs": {
+    "pipeline@116": {
+      "label": "Polygons of populations",
+      "description": "Path to geojson file storing polygons of populations.",
+      "type": "application/geo+json",
+      "example": "/userdata/population_polygons.geojson",
+      "weight": 0
+    },
+    "pipeline@117": {
+      "label": "Resolution of the land cover map",
+      "description": "Desired resolution for land cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.003 (~300m).",
+      "type": "float",
+      "example": 0.01,
+      "weight": 1
+    },
+    "pipeline@118": {
+      "label": "Years of interest",
+      "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
+      "type": "int[]",
+      "example": [
+        1995,
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 2
+    },
+    "pipeline@119": {
+      "label": "Landcover classes",
+      "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
+      "type": "int[]",
+      "example": [
+        130,
+        140
+      ],
+      "weight": 3
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|LCY": {
+      "description": "Tif file showing the year-by-year disrtribution of land cover classes of interest.",
+      "label": "Land cover year-by-year",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@115|time.points": {
+      "description": "List of years for which land cover information is available.",
+      "label": "Years with land cover information",
+      "type": "text[]",
+      "weight": 1
+    }
+  },
+  "metadata": {
+    "name": "GFS  - tool component - Get landcover cover change 1992-2020.",
+    "description": "Component of the Genes from Space tool. Given an area of interest, creates a raster stack describing year-by-year habitat presence for landcove. The time series covers the 1992-2020 period. ",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com",
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "ESA. Land Cover CCI Product User Guide Version 2. Tech. Rep. (2017)",
+        "doi": "https://maps.elie.ucl.ac.be/CCI/viewer/download/ESACCI-LC-Ph2-PUGv2_2.0.pdf"
+      }
+    ]
+  }
+}

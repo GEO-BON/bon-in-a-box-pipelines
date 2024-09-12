@@ -1,0 +1,42 @@
+script: get_LCY.R
+name: Get land cover over time
+description: This Script loads ESACCI Land Cover from STAC, crops rasters to the study area, and returns a stack of rasters describing presence/absence of land cover classes of interest over time. 
+author:
+  - name: Oliver Selmoni
+
+inputs:
+  
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: application/geo+json
+    example: '/userdata/population_polygons.geojson'
+
+  res:
+    label: Resolution of the land cover map
+    description: Desired resolution for land cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.003 (~300m). 
+    type: float
+    example: 0.01
+
+  YOI:
+    label: Years of interest
+    description: List of years for which landcover should be extracted (maximum range 1992 - 2020).
+    type: int[]
+    example: [1995, 2000, 2005, 2010, 2015, 2020]
+
+  lc_classes:
+    label: Landcover classes
+    description: List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)
+    type: int[]
+    example: [130, 140]
+
+
+outputs:
+  LCY: 
+    label: Land cover year-by-year
+    description: Tif file showing the year-by-year disrtribution of land cover classes of interest. 
+    type: image/tiff;application=geotiff
+  time.points: 
+    label: Years with land cover information 
+    description: List of years for which land cover information is available.
+    type: text[]
