@@ -24,9 +24,9 @@ NeNc = input$NeNc
 PDen = input$PopDensity
 
 # # 
-# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/0849da3b1a7f43eb5be94cc1e2070688/population_polygons.geojson')
-# habitat = stack('output/GFS_IndicatorsTool/get_LCY/c7c9684dfcdbc58c0e535eb4ca069128/LCY.tif')
-# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/7b7eec58ceb9a01f9a5bf6e686925a57/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
+# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/1c00ffe1a27b5e301d22978b4f72d626/population_polygons.geojson')
+# habitat = stack('output/GFS_IndicatorsTool/get_TCY/6d9c7ab8acc42796fa676832a5801900/TCY.tif')
+# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/f4e5632c6255fa056767ced1ad56705c/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # NeNc = c(0.1)
 # PDen = c(500, 1000)
 

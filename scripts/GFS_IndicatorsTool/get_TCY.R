@@ -13,7 +13,6 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 pop_poly <-st_read(input$population_polygons)
 
-
 bbox = st_bbox(pop_poly)
 
 
@@ -67,11 +66,13 @@ load_stac<-function(staccollection){
     
     print(i/length(lcpri_url))
     raster_server = rast(lcpri_url[i])
-    raster_i = crop(rast(lcpri_url[1]), bbox[c(1,3,2,4)]) # crop
+    raster_i = crop(raster_server, bbox[c(1,3,2,4)]) # crop
 
     # add to final raster
     raster = mosaic(raster, raster_i)
-  
+    gc()
+    rm(raster_server)
+    rm(raster_i)
   }
 
   }
@@ -80,17 +81,15 @@ load_stac<-function(staccollection){
  
 print("Loading TC layers...", )
 
- 
+### Load and resample rasters 
+res = input$res #get desired resolution from input
+
 TCnative = load_stac("gfw-treecover2000")
-TCLnative = load_stac("gfw-lossyear")
-
-### Resample rasters 
-print("resampling layers...")
-
-#get desired resolution from input
-res = input$res
-
 TC = terra::resample(TCnative, rast(res=c(res,res), ext=ext(TCnative)), method='average') # resampling: get average canopy cover in 2000 per pixel
+gc()
+
+print("Loading TCL layers...", )
+TCLnative = load_stac("gfw-lossyear")
 TCL0 = terra::resample(TCLnative, rast(res=c(res,res), ext=ext(TCLnative)), method='med') # resampling: median value, if median = 0 --> at least 50% of pixel did not loss forest 
 TCL = terra::resample(TCLnative, rast(res=c(res,res), ext=ext(TCLnative)), method='mode') # resampling: mode while excluding 0s, find out in which year most of the pixel was lost. 
 
