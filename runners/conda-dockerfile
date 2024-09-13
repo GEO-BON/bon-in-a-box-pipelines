@@ -16,6 +16,7 @@ RUN mkdir /.cache && mkdir /.cache/conda && chmod a+w /.cache/conda
 RUN mkdir /.conda && chmod a+w /.conda
 RUN mkdir /r-libs-user && chmod a+w /r-libs-user
 RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml
+RUN touch .condarc && chmod 777 .condarc
 
 # Allow to read bashrc to execute mamba init when using docker exec
 # See https://stackoverflow.com/a/74017557/3519951
@@ -26,6 +27,13 @@ RUN mamba env create -f /data/r-environment.yml
 # Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
 # That error would not prevent the correct installation, but it looked like it to the user.
 RUN chmod -R 777 /opt/conda/pkgs/cache
+
+# This library should be leaded by default all the time, since we need to read inputs and write outputs in R.
+RUN conda config --add create_default_packages r-rjson
+
+# This fixes a problem with R package sf, where it cannot be loaded in an environment that was just created.
+# The other workaround was to create AND update the conda environment.
+RUN conda config --add create_default_packages r-sf
 
 # These packages are not in conda-forge
 # ADD CRAN PACKAGES HERE

@@ -62,7 +62,5 @@ conda:
     - proj
     - r-gdalcubes
     - r-rstac
-    - r-sf
     - r-dplyr
-    - r-rjson
     - r-rcurl
