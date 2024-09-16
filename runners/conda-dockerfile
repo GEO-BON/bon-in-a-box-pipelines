@@ -7,8 +7,11 @@ WORKDIR /data
 RUN mamba init
 
 # Since we are using the user from the client computer to run the scripts,
-# we need to create and open the permissions of a few directories.
+# we need to create and open the permissions of a few files/directories.
 RUN chmod a+w /data
+
+COPY .condarc /.condarc
+RUN chmod 777 /.condarc
 
 # Conda cache and environments folder will be replaced by a virtual volume, but we want them to be writable by the runtime user.
 # Permissions cannot be defined at mount time, hence we create empty folder with the appropriate permissions.
@@ -16,6 +19,9 @@ RUN mkdir /.cache && mkdir /.cache/conda && chmod a+w /.cache/conda
 RUN mkdir /.conda && chmod a+w /.conda
 RUN mkdir /r-libs-user && chmod a+w /r-libs-user
 RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml
+
+# Initialize mamba when logging in with bash
+RUN echo 'eval "$(conda shell.bash hook)"; source /opt/conda/etc/profile.d/mamba.sh' > /.bashrc && chmod a+x /.bashrc
 
 # Allow to read bashrc to execute mamba init when using docker exec
 # See https://stackoverflow.com/a/74017557/3519951
@@ -40,8 +46,5 @@ RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"Coordinate
 # ADD GITHUB PACKAGES HERE
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"connectscape/Makurhini\")'"
-
-COPY .condarc /.condarc
-RUN chmod 777 /.condarc
 
 RUN date +"%Y-%m-%d %R" > /version.txt
