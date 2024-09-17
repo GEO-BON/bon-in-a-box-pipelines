@@ -89,7 +89,7 @@ bbox <- points_to_bbox(obs_pts, buffer = buffer)
 We used `chelsa-monthly` collection that spans from 1981 to 2010 at ~1Km^2 resolution.
 
 ```{r}
-stac("https://io.biodiversite-quebec.ca/stac/") |>
+stac("https://stac.geobon.org") |>
   collections() |>
   get_request()
 
@@ -98,7 +98,7 @@ stac("https://io.biodiversite-quebec.ca/stac/") |>
 
 ```{r}
 
-get_info_collection(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+get_info_collection(stac_path = "https://stac.geobon.org/",
                                 limit = 20,
                                 collections = c("chelsa-monthly"),
                                 bbox =  NULL
@@ -115,7 +115,7 @@ To save some time we used: spatial resolution = **~10,000 m** and  temporal reso
 
 
 cube_current <- 
-  load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+  load_cube(stac_path = "https://stac.geobon.org/",
            limit = 5000, 
            collections = c('chelsa-monthly'), 
            bbox = bbox,
@@ -154,7 +154,7 @@ we used `bio` layers from each GMC.
 
 ```{r, warning=FALSE}
 cube_future <- load_cube_projection(stac_path = 
-                                    "https://io.biodiversite-quebec.ca/stac/",
+                                    "https://stac.geobon.org/",
                                   limit = 5000, 
                                   collections = c('chelsa-clim-proj'), 
                                   #use.obs = T,
