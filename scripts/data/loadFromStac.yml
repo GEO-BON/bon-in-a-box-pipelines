@@ -1,6 +1,6 @@
 script: loadFromStac.R
 name: Load from STAC
-description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+description: "Extract individual unprocessed items from various collections on the GEO BON Stac Catalog."
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -33,7 +33,7 @@ inputs:
     label: projection system
     description: String, projection of the rasters
     type: text
-    example: "EPSG:6624"
+    example: "EPSG:6622"
   spatial_res:
     label: spatial resolution
     description: Integer, spatial resolution of the rasters
