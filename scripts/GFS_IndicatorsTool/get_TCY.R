@@ -1,8 +1,17 @@
 packages <- c("raster", "rjson", "geojsonsf", "terra",'sf')
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
+if(!"rgdal"%in% installed.packages()){
+  install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source") 
+}
+if(!"gdalUtils"%in% installed.packages()){
+  library(devtools)
+  devtools::install_github("gearslaboratory/gdalUtils")
+}
+
 
 library(raster)
+library(gdalUtils)
 library(rjson)
 library(terra)
 library(sf)
@@ -31,15 +40,13 @@ lonRANGE = c(bbox[1],bbox[3])
 latRANGE = c(bbox[2],bbox[4])
 
 
-load_stac<-function(staccollection){
-
+load_stac<-function(staccollection, resamplingMethod){
   stac_query <- rstac::stac(
     "https://stac.geobon.org/"
   ) |>
     rstac::stac_search(
       collections = staccollection,
       bbox = bbox,
-      limit = 100
     ) |>
     rstac::get_request()
   
@@ -55,43 +62,37 @@ load_stac<-function(staccollection){
   
   lcpri_url <- make_vsicurl_url(rstac::assets_url(stac_query, "data"))
   lcpri_url
-
   
-  # open rasters from server
-  raster = crop(rast(lcpri_url[1]), bbox[c(1,3,2,4)]) # crop
+  out_file <- tempfile(fileext = ".tif")
   
-  if (length(lcpri_url)>1) {
-  
-  for (i in 2:length(lcpri_url)) {
-    
-    print(i/length(lcpri_url))
-    raster_server = rast(lcpri_url[i])
-    raster_i = crop(raster_server, bbox[c(1,3,2,4)]) # crop
+  paths<-c()
+  for (i in 1:length(lcpri_url)){
+    out_file<-tempfile(pattern = paste0("tempfile_", i, "_"),fileext = ".tif")
+    gdalwarp(srcfile = lcpri_url[i], 
+             dstfile = out_file, 
+             tr = c(res,res), 
+             r = resamplingMethod)
+    paths[i]<-out_file
+  }
+  rasters <- lapply(paths, raster)
+  for (i in 1:length(rasters)){
+    rasters[[i]]<-crop(rasters[[i]], c(lonRANGE,latRANGE))
+  }
+  if(length(rasters)>1){
+    rasters <- do.call(terra::mosaic, c(rasters, list(fun = "mean")))
+  }
+  else(rasters<-rasters[[1]])
+  return(rasters)
+}
 
-    # add to final raster
-    raster = mosaic(raster, raster_i)
-    gc()
-    rm(raster_server)
-    rm(raster_i)
-  }
-
-  }
-  return(raster)
-  }
- 
 print("Loading TC layers...", )
-
 ### Load and resample rasters 
 res = input$res #get desired resolution from input
-
-TCnative = load_stac("gfw-treecover2000")
-TC = terra::resample(TCnative, rast(res=c(res,res), ext=ext(TCnative)), method='average') # resampling: get average canopy cover in 2000 per pixel
-gc()
+TC = load_stac("gfw-treecover2000", resamplingMethod  = 'average')
 
 print("Loading TCL layers...", )
-TCLnative = load_stac("gfw-lossyear")
-TCL0 = terra::resample(TCLnative, rast(res=c(res,res), ext=ext(TCLnative)), method='med') # resampling: median value, if median = 0 --> at least 50% of pixel did not loss forest 
-TCL = terra::resample(TCLnative, rast(res=c(res,res), ext=ext(TCLnative)), method='mode') # resampling: mode while excluding 0s, find out in which year most of the pixel was lost. 
+TCL0 = load_stac("gfw-lossyear", resamplingMethod = 'med') # resampling: median value, if median = 0 --> at least 50% of pixel did not loss forest 
+TCL = load_stac("gfw-lossyear", resamplingMethod = 'mode') # resampling: mode while excluding 0s, find out in which year most of the pixel was lost. 
 
 
 TCL[TCL0==0] = 0 # set to 0 (no loss) pixels where >50% of area did not show forest loss
@@ -122,6 +123,7 @@ TCY[is.na(TCY)] = 0
 
 # subset output to years of interest
 YOI = input$YOI
+
 
 TCY = TCY[[paste0('y',as.character(YOI))]]
 

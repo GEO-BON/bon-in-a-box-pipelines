@@ -23,12 +23,13 @@ pop_habitat_area = read.table(input$popArea, row.names=1, header=T, sep='\t')
 NeNc = input$NeNc
 PDen = input$PopDensity
 
-# # 
+# # # 
 # pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/1c00ffe1a27b5e301d22978b4f72d626/population_polygons.geojson')
 # habitat = stack('output/GFS_IndicatorsTool/get_TCY/6d9c7ab8acc42796fa676832a5801900/TCY.tif')
 # pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/f4e5632c6255fa056767ced1ad56705c/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # NeNc = c(0.1)
 # PDen = c(500, 1000)
+
 
 
 ### Set population colors for plotting
@@ -267,9 +268,12 @@ HabitatNC = habitat[[1]]==1&habitat[[nlayers(habitat)]]==1;HabitatNC[HabitatNC==
 HabitatLOSS = habitat[[1]]==1&habitat[[nlayers(habitat)]]==0;HabitatLOSS[HabitatLOSS==0]=NA
 HabitatGAIN = habitat[[1]]==0&habitat[[nlayers(habitat)]]==1;HabitatGAIN[HabitatGAIN==0]=NA
 
-HabitatNC_poly = fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatNC)))))
-HabitatLOSS_poly = fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatLOSS)))))
-HabitatGAIN_poly = fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))
+
+
+### Convert to polygon. If no polygons (e.g. no gain, then return an empty list)
+HabitatNC_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatNC)))))} , error = function(e) {list()})
+HabitatLOSS_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatLOSS)))))} , error = function(e) {list()})
+HabitatGAIN_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))} , error = function(e) {list()})
 
 
 
