@@ -12,32 +12,6 @@
       }
     },
     {
-      "id": "24",
-      "type": "userInput",
-      "position": {
-        "x": -105.6161264133417,
-        "y": 429.6455534958186
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/geo+json",
-        "value": "/userdata/population_polygons.geojson"
-      }
-    },
-    {
-      "id": "25",
-      "type": "userInput",
-      "position": {
-        "x": -125.04751940213669,
-        "y": 504.5952121668847
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0.01
-      }
-    },
-    {
       "id": "26",
       "type": "output",
       "position": {
@@ -58,42 +32,9 @@
       "data": {
         "label": "Output"
       }
-    },
-    {
-      "id": "28",
-      "type": "userInput",
-      "position": {
-        "x": -117.77380744491222,
-        "y": 595.7898169256646
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int[]",
-        "value": [
-          2000,
-          2005,
-          2010,
-          2015,
-          2020
-        ]
-      }
     }
   ],
   "edges": [
-    {
-      "source": "24",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "population_polygons",
-      "id": "reactflow__edge-24-23population_polygons"
-    },
-    {
-      "source": "25",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "res",
-      "id": "reactflow__edge-25-23res"
-    },
     {
       "source": "23",
       "sourceHandle": "TCY",
@@ -107,33 +48,26 @@
       "target": "27",
       "targetHandle": null,
       "id": "reactflow__edge-23time.points-27"
-    },
-    {
-      "source": "28",
-      "sourceHandle": null,
-      "target": "23",
-      "targetHandle": "YOI",
-      "id": "reactflow__edge-28-23YOI"
     }
   ],
   "inputs": {
-    "pipeline@24": {
-      "label": "Polygons of populations",
+    "GFS_IndicatorsTool>get_TCY.yml@23|population_polygons": {
       "description": "Path to geojson file storing polygons of populations.",
+      "label": "Polygons of populations",
       "type": "application/geo+json",
-      "example": "/userdata/population_polygons.geojson",
+      "example": "/userdata/populations.geojson",
       "weight": 0
     },
-    "pipeline@25": {
-      "label": "Resolution of tree cover map",
+    "GFS_IndicatorsTool>get_TCY.yml@23|res": {
       "description": "Desired resolution for tree cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.001 (~100m).",
+      "label": "Resolution of tree cover map",
       "type": "float",
       "example": 0.01,
       "weight": 1
     },
-    "pipeline@28": {
-      "label": "Years of interest",
+    "GFS_IndicatorsTool>get_TCY.yml@23|YOI": {
       "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
+      "label": "Years of interest",
       "type": "int[]",
       "example": [
         2000,
@@ -160,7 +94,7 @@
     }
   },
   "metadata": {
-    "name": "GFS  - tool component - Get GFW forest cover change 2000-2023.",
+    "name": "Get GFW forest cover change 2000-2023",
     "description": "Component of the Genes from Space tool. Given an area of interest, creates a raster stack describing forest habitat presence year-by-year from 2000 to 2023. ",
     "author": [
       {

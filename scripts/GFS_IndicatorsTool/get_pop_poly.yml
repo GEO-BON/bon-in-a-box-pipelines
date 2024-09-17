@@ -9,19 +9,19 @@ inputs:
 
   species_obs:
     label: Coordinates of species occurrence
-    description: Path to the table storing the species observation coordinates. The table must incude header with "decimal_longitude" and "decimal_latitude" columns, indicating the coordinates of every observation. [mandatory if Type of Population Input = "species_obs", "countries" or "bbox"; otherwise ignored]
+    description: Path to the table storing the species observation coordinates. The table must incude header with "decimal_longitude" and "decimal_latitude" columns, indicating the coordinates of every observation. 
     type: text/tab-separated-values
     example: '/userdata/obs_data.tsv'
 
   buffer_size:
     label: Size of buffer
-    description: Radius size [in km] to calculate buffer around species observations. [mandatory if Type of Population Input = "species_obs", "countries" or "bbox"; otherwise ignored]
+    description: Radius size [in km] to determine population presence around the coordinates of species observations. 
     type: float
     example: 10
 
   pop_distance:
     label: Distance between populations
-    description: Distance [in km] to separate species observations in different populations. [mandatory if Type of Population Input = "species_obs", "countries" or "bbox"; otherwise ignored]
+    description: Distance [in km] to separate species observations in different populations. 
     type: float
     example: 50
 

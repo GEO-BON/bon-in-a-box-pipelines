@@ -11,29 +11,29 @@ inputs:
     label: Polygons of populations 
     description: Path to geojson file storing polygons of populations.  
     type: application/geo+json
-    example: '/userdata/populations.geojson'
+    example: '/userdata/population_polygons.geojson'
 
   habitat_map: 
     label: Binary map of habitat presence/absence
-    description: Tif file describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points. 
+    description: Tif file of maps of presence (1) or absence (0) of suitable habitat. Multiple layers can stacked and used to describe habitat availability at different time points. 
     type: image/tiff;application=geotiff
     example: '/userdata/TCY.tif'
 
   popArea: 
     label: Table of habitat area by population
-    description: Table of estimated habitat area by population (rows). If available, time points are displayed as columns. 
+    description: Table of estimated habitat area by population (rows). If provided, time points are displayed as columns. 
     type: text/tab-separated-values
     example: '/userdata/pop_habitat_area.tsv'
 
   NeNc:
     label: Ne:Nc ratio estimate
-    description: Estimated Ne:Nc ratio for the studied species. Multiple values can be provided. 
+    description: Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma. 
     type: float[]
-    example: [0.05, 0.1, 0.5]
+    example: [0.1, 0.2]
 
   PopDensity:
     label: Population density
-    description: Estimated density of the population [number of individuals per km2]. Multiple values can be provided.
+    description: Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma. 
     type: float[]
     example: [50, 100, 1000]
 

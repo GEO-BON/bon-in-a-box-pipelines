@@ -1,0 +1,209 @@
+{
+  "nodes": [
+    {
+      "id": "114",
+      "type": "io",
+      "position": {
+        "x": 293.183349609375,
+        "y": 463
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json"
+      }
+    },
+    {
+      "id": "115",
+      "type": "io",
+      "position": {
+        "x": 325.183349609375,
+        "y": 165
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json"
+      }
+    },
+    {
+      "id": "116",
+      "type": "io",
+      "position": {
+        "x": 1210.5420556874246,
+        "y": 338.14186502878215
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
+      }
+    },
+    {
+      "id": "117",
+      "type": "output",
+      "position": {
+        "x": 1913.6897208503995,
+        "y": 344.0062774587277
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "114",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|TCY",
+      "target": "116",
+      "targetHandle": "pipeline@101",
+      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|TCY-116pipeline@101"
+    },
+    {
+      "source": "114",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|time.points",
+      "target": "116",
+      "targetHandle": "pipeline@102",
+      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|time.points-116pipeline@102"
+    },
+    {
+      "source": "115",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "116",
+      "targetHandle": "pipeline@100",
+      "id": "reactflow__edge-115GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-116pipeline@100"
+    },
+    {
+      "source": "116",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot",
+      "target": "117",
+      "targetHandle": null,
+      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot-117"
+    },
+    {
+      "source": "115",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "114",
+      "targetHandle": "GFS_IndicatorsTool>get_TCY.yml@23|population_polygons",
+      "id": "reactflow__edge-115GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-114GFS_IndicatorsTool>get_TCY.yml@23|population_polygons"
+    }
+  ],
+  "inputs": {
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json@114|GFS_IndicatorsTool>get_TCY.yml@23|res": {
+      "description": "Desired resolution for tree cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.001 (~100m).",
+      "label": "Resolution of tree cover map",
+      "weight": 0,
+      "type": "float",
+      "example": 0.01
+    },
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json@114|GFS_IndicatorsTool>get_TCY.yml@23|YOI": {
+      "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
+      "label": "Years of interest",
+      "weight": 1,
+      "type": "int[]",
+      "example": [
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|pipeline@12": {
+      "description": "Scientific name of the species, used to look for occurrences in GBIF. ",
+      "label": "Species names",
+      "weight": 2,
+      "type": "text",
+      "example": "Quercus sartorii"
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
+      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
+      "label": "Size of buffer",
+      "weight": 3,
+      "type": "float",
+      "example": 10
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
+      "description": "Distance [in km] to separate species observations in different populations.",
+      "label": "Distance between populations",
+      "weight": 4,
+      "type": "float",
+      "example": 50
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|pipeline@15": {
+      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "label": "End year",
+      "weight": 5,
+      "type": "int",
+      "example": 2000
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|pipeline@14": {
+      "description": "Integer, 4 digit year, start date to retrieve occurrences",
+      "label": "Start year",
+      "weight": 6,
+      "type": "int",
+      "example": 1980
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|pipeline@107": {
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, the first one will be used in figure.",
+      "label": "Ne:Nc ratio estimate",
+      "weight": 7,
+      "type": "float[]",
+      "example": [
+        "0.1",
+        "0.2"
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|pipeline@105": {
+      "description": "Set a name for the pipeline run, for instance indicating species of interest, region, type of habitat map, and monitoring period. ",
+      "label": "Title of the run",
+      "weight": 8,
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|pipeline@106": {
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, the first one will be used in figures. ",
+      "label": "Population density",
+      "weight": 9,
+      "type": "float[]",
+      "example": [
+        "50",
+        "100",
+        "500"
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|pipeline@22": {
+      "description": "countries of interest, will be used to look for GBIF observations.",
+      "label": "Countries list",
+      "weight": 10,
+      "type": "text[]",
+      "example": [
+        "Mexico",
+        "Guatemala"
+      ]
+    }
+  },
+  "outputs": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot": {
+      "description": "An interactive interface to explore indicators trends across geographical space and time.",
+      "label": "Interactive plot",
+      "weight": 0,
+      "type": "text/html"
+    }
+  },
+  "metadata": {
+    "name": "Forest cover loss by populations from GBIF occurrences (country)",
+    "description": "Genes from Space tool. Retrieves species occurrence from GBIS, calculates polygons of population distribution, and computes indices of genetic diversity monitoring for forest cover habitat loss.",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com"
+      }
+    ],
+    "external_link": "https://teams.issibern.ch/genesfromspace/ , https://www.globalforestwatch.org/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "Hansen et al., Science (2013)",
+        "doi": "https://doi.org/10.1126/science.1244693"
+      }
+    ]
+  }
+}

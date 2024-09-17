@@ -11,7 +11,7 @@ inputs:
     label: Polygons of populations 
     description: Path to geojson file storing polygons of populations.  
     type: application/geo+json
-    example: '/userdata/populations.geojson'
+    example: '/userdata/population_polygons.geojson'
 
   res:
     label: Resolution of tree cover map

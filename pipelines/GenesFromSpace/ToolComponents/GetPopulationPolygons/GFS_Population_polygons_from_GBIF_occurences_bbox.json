@@ -12,32 +12,6 @@
       }
     },
     {
-      "id": "7",
-      "type": "userInput",
-      "position": {
-        "x": 0.9813277674131768,
-        "y": 634.4543624859884
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 10
-      }
-    },
-    {
-      "id": "8",
-      "type": "userInput",
-      "position": {
-        "x": 12.869307189845983,
-        "y": 692.8135341961137
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 50
-      }
-    },
-    {
       "id": "9",
       "type": "output",
       "position": {
@@ -169,47 +143,37 @@
     },
     {
       "id": "21",
-      "type": "io",
+      "type": "userInput",
       "position": {
-        "x": -1016.5,
-        "y": 467
+        "x": -712.0306639498071,
+        "y": 530.739579371869
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "descriptionFile": "GFS_IndicatorsTool>get_bbox.yml"
+        "type": "float[]",
+        "value": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
       }
     },
     {
-      "id": "22",
-      "type": "userInput",
+      "id": "23",
+      "type": "constant",
       "position": {
-        "x": -1364.5,
-        "y": 469
+        "x": 4.954442201966344,
+        "y": 763.4741825425302
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": [
-          "Mexico",
-          "Guatemala"
-        ]
+        "value": []
       }
     }
   ],
   "edges": [
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "buffer_size",
-      "id": "reactflow__edge-7-5buffer_size"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "pop_distance",
-      "id": "reactflow__edge-8-5pop_distance"
-    },
     {
       "source": "5",
       "sourceHandle": "population_polygons",
@@ -282,24 +246,17 @@
     },
     {
       "source": "21",
-      "sourceHandle": "bbox",
+      "sourceHandle": null,
       "target": "10",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-21bbox-10bbox"
+      "id": "reactflow__edge-21-10bbox"
     },
     {
-      "source": "22",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "countries",
-      "id": "reactflow__edge-22-21countries"
-    },
-    {
-      "source": "22",
+      "source": "23",
       "sourceHandle": null,
       "target": "5",
       "targetHandle": "countries",
-      "id": "reactflow__edge-22-5countries"
+      "id": "reactflow__edge-23-5countries"
     }
   ],
   "inputs": {
@@ -310,13 +267,15 @@
       "example": "Quercus sartorii",
       "weight": 0
     },
-    "pipeline@22": {
-      "label": "Countries list",
-      "description": "Countries of interest, will be used to look for GBIF occurrences.",
-      "type": "text[]",
+    "pipeline@21": {
+      "label": "Bounding box ",
+      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
       "example": [
-        "Mexico",
-        "Guatemala"
+        "-99",
+        "22",
+        "-92",
+        "29"
       ],
       "weight": 1
     },
@@ -334,16 +293,16 @@
       "example": 2000,
       "weight": 3
     },
-    "pipeline@7": {
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
+      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
       "label": "Size of buffer",
-      "description": "Radius size [in km] to calculate buffer around species observations.",
       "type": "float",
       "example": 10,
       "weight": 4
     },
-    "pipeline@8": {
-      "label": "Distance between populations",
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
       "description": "Distance [in km] to separate species observations in different populations.",
+      "label": "Distance between populations",
       "type": "float",
       "example": 50,
       "weight": 5
@@ -359,8 +318,8 @@
     }
   },
   "metadata": {
-    "name": "GFS  - tool component - Get population polygons for country list.",
-    "description": "Component of the Genes from Space tool. Given a list of countries, a species of interest, and a time window, the pipeline retrives the occurrences of the species from GBIF, and then calculates population polygons based on geographical proximity. ",
+    "name": "Get population polygons from bounding box",
+    "description": "Component of the Genes from Space tool. Given a geographical bounding box, a species of interest, and a time window, the pipeline retrives the occurrences of the species from GBIF, and then calculates population polygons based on geographical proximity. ",
     "author": [
       {
         "name": "Oliver Selmoni",

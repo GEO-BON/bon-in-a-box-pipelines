@@ -12,45 +12,6 @@
       }
     },
     {
-      "id": "6",
-      "type": "userInput",
-      "position": {
-        "x": -85.476704395735,
-        "y": 577.1759161779029
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text/tab-separated-values",
-        "value": "/userdata/obs_data.tsv"
-      }
-    },
-    {
-      "id": "7",
-      "type": "userInput",
-      "position": {
-        "x": 0.9813277674131768,
-        "y": 634.4543624859884
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 10
-      }
-    },
-    {
-      "id": "8",
-      "type": "userInput",
-      "position": {
-        "x": 12.869307189845983,
-        "y": 692.8135341961137
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 50
-      }
-    },
-    {
       "id": "9",
       "type": "output",
       "position": {
@@ -77,27 +38,6 @@
   ],
   "edges": [
     {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "species_obs",
-      "id": "reactflow__edge-6-5species_obs"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "buffer_size",
-      "id": "reactflow__edge-7-5buffer_size"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "pop_distance",
-      "id": "reactflow__edge-8-5pop_distance"
-    },
-    {
       "source": "5",
       "sourceHandle": "population_polygons",
       "target": "9",
@@ -113,23 +53,23 @@
     }
   ],
   "inputs": {
-    "pipeline@6": {
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|species_obs": {
+      "description": "Path to the table storing the species observation coordinates. The table must incude header with \"decimal_longitude\" and \"decimal_latitude\" columns, indicating the coordinates of every observation.",
       "label": "Coordinates of species occurrence",
-      "description": "Path to the table storing the species observation coordinates. The table must incude header with \"decimal_longitude\" and \"decimal_latitude\" columns, indicating the coordinates of every observation. ",
       "type": "text/tab-separated-values",
       "example": "/userdata/obs_data.tsv",
       "weight": 0
     },
-    "pipeline@7": {
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
+      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
       "label": "Size of buffer",
-      "description": "Radius size [in km] to calculate buffer around species observations. ",
       "type": "float",
       "example": 10,
       "weight": 1
     },
-    "pipeline@8": {
-      "label": "Distance between populations",
+    "GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
       "description": "Distance [in km] to separate species observations in different populations.",
+      "label": "Distance between populations",
       "type": "float",
       "example": 50,
       "weight": 2
@@ -145,7 +85,7 @@
     }
   },
   "metadata": {
-    "name": "GFS  - tool component - Get population polygons from species observation.",
+    "name": "Get population polygons from species observation",
     "description": "Component of the Genes from Space tool. Given a table of species occurrences, the pipeline calculates population polygons based on geographical proximity. ",
     "author": [
       {

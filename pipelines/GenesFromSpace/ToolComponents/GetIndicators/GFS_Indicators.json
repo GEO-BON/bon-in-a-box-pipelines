@@ -302,7 +302,7 @@
     }
   },
   "metadata": {
-    "name": "GFS  - tool component - Calculate genetic diversity indicators",
+    "name": "Calculate genetic diversity indicators",
     "description": "Component of the Genes from Space tool. Given poylgons of population distribution (geojson format) and a raster stack describing habitat availability over time (geotiff format), the pipeline returns genetic diversity loss indicators, displayed through an interactive interface. ",
     "author": [
       {
