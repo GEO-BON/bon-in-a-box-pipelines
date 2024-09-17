@@ -219,8 +219,17 @@ for (pop in rownames(pop_habitat_area)) {
 
 ##### Create a shared data-frame with shapes of populations, Ne over time, Area over time and Relative Area over time.
 
-# Add shapes of populations to shared DF (split polygons in multipolygons, than revert to multipolygon for correct display in mapbox)
-merged_DF = st_cast(st_cast(pop_poly, "POLYGON"),'MULTIPOLYGON')
+# Plotly does not allow to click on polygon fills, but only on edges. We therefore split population polygons into a grid to facilitate selection on interactive map. 
+
+gridRes = as.numeric(sqrt(sum(st_area(pop_poly)/1000000)/(250))/100) ### grid resolution to obtain ~500 cells
+
+# make grid
+grid = st_make_grid(pop_poly, cellsize = c(gridRes,gridRes))
+pop_grid = st_intersection(pop_poly, grid)
+
+# create shared dataframe object (force convertion to multipolygon)
+merged_DF = st_cast(pop_grid, 'MULTIPOLYGON')
+
 
 
 # add colors info
@@ -299,7 +308,7 @@ popMap = plot_ly()  %>%
     text=~pop,
     fillcolor = ~colorsRGB,
     showlegend = FALSE,
-    line = list(width = 1, color='grey')
+    line = list(width = 0, color='Null')
   ) %>%
   # Define Mapbox layout 
   layout(mapbox = list(
