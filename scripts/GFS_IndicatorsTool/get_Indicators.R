@@ -44,23 +44,23 @@ print('calculating Ne500 indicator')
 Pop_HA_T = pop_habitat_area[,ncol(pop_habitat_area),drop=F]
 
 # Create table showing populations Ne, calculated using different NeNC and PDen estimates
-NE_table = c()
+Ne_table = c()
 
 for (pden in PDen) {
   
   for (nenc in NeNc) {
     
       NEs = round(Pop_HA_T*pden*nenc)
-      NE_table = rbind(NE_table, c(pden, nenc, NEs[,1]))
+      Ne_table = rbind(Ne_table, c(pden, nenc, NEs[,1]))
     
     
   }
 }
 
-NE_table = data.frame(rbind(c('Pden', 'Ne:Nc', rownames(Pop_HA_T)), NE_table))
-NE_table_path = file.path(outputFolder, 'NE.tsv')
+Ne_table = data.frame(rbind(c('Pden', 'Ne:Nc', rownames(Pop_HA_T)), Ne_table))
+Ne_table_path = file.path(outputFolder, 'NE.tsv')
 
-write.table(NE_table, NE_table_path,
+write.table(Ne_table, Ne_table_path,
             append = F, row.names = F, col.names = F, sep = "\t", quote=F)
 
 
@@ -95,11 +95,13 @@ for (pden in PDen) {
   title(ylab='log(Ne)', line=2)  
     
   }
-  
 
-}
+
+ggplot()
 dev.off()
 }
+}
+
 
 
 ##########  Calculate populations mantained
@@ -446,7 +448,7 @@ HAR_plot = plot_ly(data = merged_DF_key,
 
 ####### Build Ne table over time by Ne:Nc and Pden estimate
 
-NE_matrix = as.matrix(NE_table)
+NE_matrix = as.matrix(Ne_table)
 NE_matrix[is.na(NE_matrix)] = '-'
 
 NE_mat =  plot_ly(
@@ -481,10 +483,10 @@ PM_plots = plotly::subplot(HA_plot, HAR_plot, nrows=2, titleX = T, titleY = T) %
 Title = input$RunTitle
 
 ### Get rounded NE>500 indicator
-NE500r = round(mean(as.numeric(NE_table[2,-c(1:2)])>500, na.rm=T),2)
+Ne500 = round(mean(as.numeric(Ne_table[2,-c(1:2)])>500, na.rm=T),2)
 
 ### Get rounded PM indicator
-PMr = round(PM, 2)
+PM = round(PM, 2)
 
 # assmeble final interface : map + NE outputs + PM plots
 INT = plotly::subplot(popMap, NE_outputs, PM_plots, margin=0.05, titleX =T, titleY = T) %>% 
@@ -495,19 +497,24 @@ INT = plotly::subplot(popMap, NE_outputs, PM_plots, margin=0.05, titleX =T, titl
     list(text='<b>no ch.</b>',showarrow=F, x=0.12, y=0, font = list(color = "rgba(  73, 208, 76, 1)"), xref = "paper",  yref = "paper", xanchor = "center",  yanchor = "bottom" ),
     list(text='<b>gain</b>',showarrow=F, x=0.14, y=0, font = list(color = "rgba( 69, 149, 218, 1)"), xref = "paper",  yref = "paper", xanchor = "left",  yanchor = "bottom" )
       ),
-    title=paste0(Title,'<br>Ne500 Indicator = ',NE500r,'; Populations Maintained Indicator = ',PMr),
+    title=paste0(Title,'<br>Ne500 Indicator = ',Ne500,'; Populations Maintained Indicator = ',PM),
     margin = 0.05)
 
 
 pathInteractive = file.path(outputFolder, 'interactive_plot.html')
 htmlwidgets::saveWidget(INT, pathInteractive)
 
+# Output Ne500 value
 
 
 ## Write output
 
+output <- list('Interactive_plot'= pathInteractive,
+'Ne_table'= Ne_table_path,
+'Ne500'= Ne500,
+'PM' = PM
+) 
 
-output <- list('Interactive_plot'= pathInteractive) 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
 

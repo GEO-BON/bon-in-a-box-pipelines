@@ -15,8 +15,8 @@
       "id": "120",
       "type": "io",
       "position": {
-        "x": 862.92803302926,
-        "y": 119.88031839113398
+        "x": 878.085198694364,
+        "y": 125.94318465717555
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
@@ -26,24 +26,11 @@
       "id": "121",
       "type": "io",
       "position": {
-        "x": 10.955955035467923,
-        "y": 8.146275375554723
+        "x": 51.95595503546792,
+        "y": 54.14627537555472
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json"
-      }
-    },
-    {
-      "id": "122",
-      "type": "userInput",
-      "position": {
-        "x": 737.7207561450894,
-        "y": 402.47572740227577
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
       }
     },
     {
@@ -101,11 +88,55 @@
       }
     },
     {
-      "id": "130",
+      "id": "134",
       "type": "output",
       "position": {
-        "x": 1565.0546514186863,
-        "y": 127.63800553827363
+        "x": 713.984375,
+        "y": -35
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "141",
+      "type": "output",
+      "position": {
+        "x": 1602.984375,
+        "y": 131
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "142",
+      "type": "output",
+      "position": {
+        "x": 1596.984375,
+        "y": 150
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "143",
+      "type": "output",
+      "position": {
+        "x": 1593.984375,
+        "y": 144
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "144",
+      "type": "output",
+      "position": {
+        "x": 1587.984375,
+        "y": 177
       },
       "data": {
         "label": "Output"
@@ -133,13 +164,6 @@
       "target": "120",
       "targetHandle": "pipeline@100",
       "id": "reactflow__edge-121GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-120pipeline@100"
-    },
-    {
-      "source": "122",
-      "sourceHandle": null,
-      "target": "120",
-      "targetHandle": "pipeline@105",
-      "id": "reactflow__edge-122-120pipeline@105"
     },
     {
       "source": "123",
@@ -177,18 +201,46 @@
       "id": "reactflow__edge-121GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-119GFS_IndicatorsTool>get_LCY.yml@115|population_polygons"
     },
     {
-      "source": "120",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot",
-      "target": "130",
-      "targetHandle": null,
-      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot-130"
-    },
-    {
       "source": "124",
       "sourceHandle": null,
       "target": "121",
       "targetHandle": "pipeline@22",
       "id": "reactflow__edge-124-121pipeline@22"
+    },
+    {
+      "source": "121",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "134",
+      "targetHandle": null,
+      "id": "reactflow__edge-121GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-134"
+    },
+    {
+      "source": "120",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|PM",
+      "target": "141",
+      "targetHandle": null,
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|PM-141"
+    },
+    {
+      "source": "120",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|Ne500",
+      "target": "142",
+      "targetHandle": null,
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|Ne500-142"
+    },
+    {
+      "source": "120",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot",
+      "target": "143",
+      "targetHandle": null,
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot-143"
+    },
+    {
+      "source": "120",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table",
+      "target": "144",
+      "targetHandle": null,
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table-144"
     }
   ],
   "inputs": {
@@ -234,32 +286,6 @@
       "example": 1995,
       "weight": 4
     },
-    "pipeline@122": {
-      "label": "Title of the run",
-      "description": "Set a name for the pipeline run, for instance indicating species of interest, region, type of habitat map, and monitoring period. ",
-      "type": "text",
-      "example": "Rhinanthus alectorolophus, Switzerland Grasslands, Shrublands and Sparse Vegetation, 1995-2020",
-      "weight": 5
-    },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|pipeline@107": {
-      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, the first one will be used in figure.",
-      "label": "Ne:Nc ratio estimate",
-      "weight": 6,
-      "type": "float[]",
-      "example": [
-        "0.1",
-        "0.2"
-      ]
-    },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|pipeline@106": {
-      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, the first one will be used in figures. ",
-      "label": "Population density",
-      "weight": 7,
-      "type": "float[]",
-      "example": [
-        "1000"
-      ]
-    },
     "pipeline@124": {
       "label": "Countries list",
       "description": "countries of interest, will be used to look for GBIF observations.",
@@ -267,40 +293,93 @@
       "example": [
         "Switzerland"
       ],
-      "weight": 8
+      "weight": 5
     },
     "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
       "description": "Distance [in km] to separate species observations in different populations.",
       "label": "Distance between populations",
-      "weight": 9,
+      "weight": 6,
       "type": "float",
       "example": 25
     },
     "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
       "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
       "label": "Size of buffer",
-      "weight": 10,
+      "weight": 7,
       "type": "float",
       "example": 5
     },
     "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|lc_classes": {
       "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
       "label": "Landcover classes",
-      "weight": 11,
+      "weight": 8,
       "type": "int[]",
       "example": [
         "120",
         "130",
         "150"
       ]
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|PopDensity": {
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
+      "label": "Population density",
+      "weight": 9,
+      "type": "float[]",
+      "example": [
+        50,
+        100,
+        1000
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|NeNc": {
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
+      "label": "Ne:Nc ratio estimate",
+      "weight": 10,
+      "type": "float[]",
+      "example": [
+        0.1,
+        0.2
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|RunTitle": {
+      "description": "Set a name for the pipeline run.",
+      "label": "Title of the run",
+      "weight": 11,
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
     }
   },
   "outputs": {
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table": {
+      "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
+      "label": "Effective population size",
+      "weight": 0,
+      "type": "text/tab-separated-values"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|PM": {
+      "description": "Estimated proportion of mantained populations, comparing earliest and latest time point.",
+      "label": "Population maintained indicator",
+      "weight": 1,
+      "type": "float"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot": {
       "description": "An interactive interface to explore indicators trends across geographical space and time.",
       "label": "Interactive plot",
-      "weight": 0,
+      "weight": 2,
       "type": "text/html"
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons": {
+      "description": "Path to geojson file storing polygons of populations.",
+      "label": "Polygons of populations",
+      "weight": 3,
+      "type": "application/geo+json",
+      "example": ""
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|Ne500": {
+      "description": "Estimated proportion of populations with Ne>500 at latest time point.",
+      "label": "Ne>500 indicator",
+      "weight": 4,
+      "type": "float"
     }
   },
   "metadata": {

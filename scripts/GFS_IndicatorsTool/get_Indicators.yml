@@ -50,32 +50,32 @@ outputs:
     description: Estimated effective size of every population, based on the latest time point of the habitat cover map. 
     type: text/tab-separated-values
 
-  Ne_plot:
-    label: Effective population size over time
-    description: Plot displaying change of effective population size over time. 
-    type: image/png
+  #Ne_plot:
+   # label: Effective population size over time
+   # description: Plot displaying change of effective population size over time. 
+   # type: image/png
 
   PM: 
     label: Population maintained indicator 
-    description: Estimated proportion of mantained populations, comparing earliest and latest time point. 
+    description: Estimated proportion of mantained populations, comparing earliest and latest time point. A value of 1 means that no populations went extinct over the time frame.
     type: float
 
-  PM_plot:
-    label: Populations mantained over time
-    description: Plot showing the change in population area (absolute change and relative change) over time. 
-    type: image/png
+  #PM_plot:
+  #  label: Populations mantained over time
+  #  description: Plot showing the change in population area (absolute change and relative change) over time. 
+  #  type: image/png
 
-  POP_plot:
-    label: Map of populations
-    description: Geographic distribution of the studied populations.
-    type: image/png
+  #POP_plot:
+  #  label: Map of populations
+  #  description: Geographic distribution of the studied populations.
+  #  type: image/png
 
   Interactive_plot: 
     label: Interactive plot 
     description: An interactive interface to explore indicators trends across geographical space and time.  
     type: text/html
 
-  NE500: 
+  Ne500: 
     label: Ne>500 indicator 
     description: Estimated proportion of populations with Ne>500 at latest time point. 
     type: float

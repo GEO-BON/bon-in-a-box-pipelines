@@ -76,69 +76,55 @@
       }
     },
     {
-      "id": "104",
+      "id": "127",
       "type": "io",
       "position": {
-        "x": 1207.694991173518,
-        "y": 255.35383266322538
+        "x": 1248.3656076750929,
+        "y": 289.88471027697466
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_Indicators.yml"
       }
     },
     {
-      "id": "105",
-      "type": "userInput",
-      "position": {
-        "x": 985.134899680766,
-        "y": 627.9208119363728
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
-      }
-    },
-    {
-      "id": "106",
-      "type": "userInput",
-      "position": {
-        "x": 882.0668501112573,
-        "y": 572.2083527096116
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          50,
-          100,
-          1000
-        ]
-      }
-    },
-    {
-      "id": "107",
-      "type": "userInput",
-      "position": {
-        "x": 813.8190875584748,
-        "y": 513.710270521512
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          0.05,
-          0.1,
-          0.5
-        ]
-      }
-    },
-    {
-      "id": "116",
+      "id": "139",
       "type": "output",
       "position": {
-        "x": 1971.030504944259,
-        "y": 266.60755689661545
+        "x": 1880.984375,
+        "y": 291
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "140",
+      "type": "output",
+      "position": {
+        "x": 1871.984375,
+        "y": 304
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "141",
+      "type": "output",
+      "position": {
+        "x": 1934.984375,
+        "y": 320
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "142",
+      "type": "output",
+      "position": {
+        "x": 1928.984375,
+        "y": 333
       },
       "data": {
         "label": "Output"
@@ -168,53 +154,53 @@
       "id": "reactflow__edge-102-99time.points"
     },
     {
-      "source": "100",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "population_polygons",
-      "id": "reactflow__edge-100-104population_polygons"
-    },
-    {
-      "source": "105",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "RunTitle",
-      "id": "reactflow__edge-105-104RunTitle"
-    },
-    {
-      "source": "106",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "PopDensity",
-      "id": "reactflow__edge-106-104PopDensity"
-    },
-    {
-      "source": "107",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "NeNc",
-      "id": "reactflow__edge-107-104NeNc"
-    },
-    {
       "source": "99",
       "sourceHandle": "popArea",
-      "target": "104",
+      "target": "127",
       "targetHandle": "popArea",
-      "id": "reactflow__edge-99popArea-104popArea"
+      "id": "reactflow__edge-99popArea-127popArea"
     },
     {
       "source": "101",
       "sourceHandle": null,
-      "target": "104",
+      "target": "127",
       "targetHandle": "habitat_map",
-      "id": "reactflow__edge-101-104habitat_map"
+      "id": "reactflow__edge-101-127habitat_map"
     },
     {
-      "source": "104",
-      "sourceHandle": "Interactive_plot",
-      "target": "116",
+      "source": "100",
+      "sourceHandle": null,
+      "target": "127",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-100-127population_polygons"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "Ne_table",
+      "target": "139",
       "targetHandle": null,
-      "id": "reactflow__edge-104Interactive_plot-116"
+      "id": "reactflow__edge-127Ne_table-139"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "PM",
+      "target": "140",
+      "targetHandle": null,
+      "id": "reactflow__edge-127PM-140"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "Interactive_plot",
+      "target": "141",
+      "targetHandle": null,
+      "id": "reactflow__edge-127Interactive_plot-141"
+    },
+    {
+      "source": "127",
+      "sourceHandle": "Ne500",
+      "target": "142",
+      "targetHandle": null,
+      "id": "reactflow__edge-127Ne500-142"
     }
   ],
   "inputs": {
@@ -264,41 +250,59 @@
       ],
       "weight": 2
     },
-    "pipeline@105": {
-      "label": "Title of the run",
-      "description": "Set a name for the pipeline run, for instance indicating species of interest, region, type of habitat map, and monitoring period. ",
-      "type": "text",
-      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
-      "weight": 3
-    },
-    "pipeline@106": {
-      "label": "Population density",
-      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, the first one will be used in figures. ",
+    "GFS_IndicatorsTool>get_Indicators.yml@127|NeNc": {
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
+      "label": "Ne:Nc ratio estimate",
       "type": "float[]",
       "example": [
-        "50",
-        "100",
-        "500"
+        0.1,
+        0.2
+      ],
+      "weight": 3
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|PopDensity": {
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
+      "label": "Population density",
+      "type": "float[]",
+      "example": [
+        50,
+        100,
+        1000
       ],
       "weight": 4
     },
-    "pipeline@107": {
-      "label": "Ne:Nc ratio estimate",
-      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, the first one will be used in figure.",
-      "type": "float[]",
-      "example": [
-        "0.1",
-        "0.2"
-      ],
+    "GFS_IndicatorsTool>get_Indicators.yml@127|RunTitle": {
+      "description": "Set a name for the pipeline run.",
+      "label": "Title of the run",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
       "weight": 5
     }
   },
   "outputs": {
-    "GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table": {
+      "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
+      "label": "Effective population size",
+      "type": "text/tab-separated-values",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|PM": {
+      "description": "Estimated proportion of mantained populations, comparing earliest and latest time point.",
+      "label": "Population maintained indicator",
+      "type": "float",
+      "weight": 1
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot": {
       "description": "An interactive interface to explore indicators trends across geographical space and time.",
       "label": "Interactive plot",
       "type": "text/html",
-      "weight": 0
+      "weight": 2
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@127|Ne500": {
+      "description": "Estimated proportion of populations with Ne>500 at latest time point.",
+      "label": "Ne>500 indicator",
+      "type": "float",
+      "weight": 3
     }
   },
   "metadata": {
