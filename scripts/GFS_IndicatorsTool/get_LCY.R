@@ -93,8 +93,9 @@ names(LC_bin) = paste0('y',YOI)
 
 
 # write output
-LCY_p<-file.path(outputFolder, "LCY.tif")
-writeRaster(LC_bin, filename = LCY_p, filetype = "GTiff", overwrite=T)
+LCY_p<-file.path(outputFolder, "LCY.tiff")
+writeRaster(LC_bin, filename = LCY_p, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+
 
 ## Outputing result to JSON
 output <- list("LCY"=LCY_p, 'time.points'=names(LC_bin)) 

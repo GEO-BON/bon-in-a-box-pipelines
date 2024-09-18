@@ -130,9 +130,8 @@ TCY = TCY[[paste0('y',as.character(YOI))]]
 
 
 # write output
-TCY_p<-file.path(outputFolder, "TCY.tif")
-
-writeRaster(TCY, filename = TCY_p, filetype = "GTiff", overwrite=T)
+TCY_p<-file.path(outputFolder, "TCY.tiff")
+writeRaster(TCY, filename = TCY_p, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
 
 ## Outputing result to JSON
 output <- list("TCY"=TCY_p, 'time.points'=names(TCY)) 

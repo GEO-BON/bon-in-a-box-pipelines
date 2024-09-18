@@ -12,6 +12,11 @@ inputs:
     description: countries of interest, will be used to look for GBIF observations. 
     type: text[]
     example: ["Mexico","Guatemala"]
+  proj:
+    label: projection system
+    description: Integer, projection system
+    type: int
+    example: 4326
 
 outputs:
   bbox: 

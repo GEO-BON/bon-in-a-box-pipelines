@@ -7,6 +7,7 @@ library("sf")
 library("spatialEco")
 library("rnaturalearth")
 
+output<- tryCatch({
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 # load points from file
@@ -36,13 +37,20 @@ radius <- input$buffer_size  # in kilometers
 ###clean point
 points = obs_data[,c("decimal_longitude", "decimal_latitude")]
 colnames(points) = c("longitude","latitude")
-  
+print(nrow(points))
+
+#if(nrow(points==0)){
+#  stop("No occurences of chosen species in the study area")
+#}
+
+ 
 ###Define the coordinates of the center points (longitude, latitude)
 points_sf <- st_as_sf(points, coords = c("longitude","latitude"), crs = 4326)
-  
+
 # Create circular buffers around each point
 circles_sf <- st_buffer(points_sf, dist = radius*1000)
 
+#####
 if (nrow(circles_sf)>1) {
   
   # calculate distance between point observations
@@ -84,6 +92,7 @@ path <- file.path(outputFolder, "population_polygons.geojson")
 st_write(PopPoly, path)
 
 output <- list("population_polygons"=path) 
+}, error = function(e) { list(error= conditionMessage(e)) })
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
