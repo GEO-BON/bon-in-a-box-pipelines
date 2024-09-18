@@ -21,7 +21,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
-        "value": "mammals",
+        "value": "amphibians",
         "options": [
           "all",
           "amphibians",

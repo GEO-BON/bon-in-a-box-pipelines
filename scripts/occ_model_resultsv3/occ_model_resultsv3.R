@@ -76,11 +76,16 @@ occ_dredge <- MuMIn::dredge(occ_model)
 
   
   
-occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 1000)
+#occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 1000)
 
 # average models based on model weights 
-test_models<- dplyr::filter(as.data.frame(occ_dredge), delta <= 1000)
+#test_models<- dplyr::filter(as.data.frame(occ_dredge), delta <= 1000)
   
+occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = cumsum(weight) <= 1)
+
+# average models based on model weights 
+test_models<- dplyr::filter(as.data.frame(occ_dredge),  cumsum(weight) <= 1)
+
 occ_avg<- if(nrow(test_models)<=1){
     occ_dredge_delta[[1]]
   } else {
