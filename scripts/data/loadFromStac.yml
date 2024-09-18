@@ -1,6 +1,6 @@
 script: loadFromStac.R
 name: Load from STAC
-description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+description: "Extract individual unprocessed items from various collections on the GEO BON Stac catalog."
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -39,6 +39,37 @@ inputs:
     description: Integer, spatial resolution of the rasters
     type: float
     example: 1000.0
+  resampling:
+    label: resampling
+    description: Resampling method used when rescaling the raster layers. See gdalwarp for description https://gdal.org/en/latest/programs/gdalwarp.html
+    type: options
+    options:
+      - near
+      - bilinear
+      - average
+      - mode
+      - cubic
+      - cubicspline
+      - lanczos
+      - rms
+      - min
+      - max
+      - sum
+      - med
+      - q1
+      - q3
+    example: near
+  aggregation:
+    label: aggregation
+    description: Method used to aggregate items that overlay each other
+    type: options
+    options:
+      - first
+      - min
+      - max
+      - mean
+      - median
+    example: first
   mask:
     label: mask
     description: Shapefile, used to mask the output rasters
