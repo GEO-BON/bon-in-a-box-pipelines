@@ -1,9 +1,9 @@
 # Set session parameters ####
 ## Check and Install necessary libraries ####
-packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- c("magrittr", "this.path", "rjson", "dplyr", "rredlist") # List of libraries required to run the code
-new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; # Identify the libraries that are not installed
-if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install the required packages that are not already installed
+# packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
+# packagesNeed<- c("magrittr", "this.path", "rjson", "dplyr", "rredlist") # List of libraries required to run the code
+# new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; # Identify the libraries that are not installed
+# if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install the required packages that are not already installed
 
 ## Load libraries ###
 packagesList<-list("magrittr") # Explicitly list packages needed that must be fully loaded in the environment. Functions from other libraries will be accessible via '::'.

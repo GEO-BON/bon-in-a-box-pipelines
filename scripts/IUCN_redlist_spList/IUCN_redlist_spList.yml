@@ -5,6 +5,17 @@ author:
  - name: Maria Camila diaz (mdiaz@humboldt.org.co)
  - name: Victor Julio Rincon (rincon-v@javeriana.edu.co)
 external_link: https://github.com/GEO-BON/biab-2.0
+# TEMP just to run it more easily. To be removed from the PR before merge
+# Missing ones were added to the central conda environment.
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist
+    - r-this.path
 inputs:
   country:
     label: Country
