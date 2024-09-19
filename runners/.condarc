@@ -1,0 +1,8 @@
+
+create_default_packages:
+  # This library should be loaded by default all the time, since we need to read inputs and write outputs in R.
+  - r-rjson
+
+  # This fixes a problem with R package sf, where it cannot be loaded in an environment that was just created.
+  # The other workaround was to create AND update the conda environment.
+  - r-sf

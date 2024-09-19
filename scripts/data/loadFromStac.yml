@@ -1,6 +1,6 @@
 script: loadFromStac.R
 name: Load from STAC
-description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+description: "Extract individual unprocessed items from various collections on the GEO BON Stac Catalog."
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -51,5 +51,17 @@ outputs:
     type: image/tiff;application=geotiff[]
   weight_matrix_with_layers:
     label: Weight matrix with layers
-    description: Weight matrix used for BON optimization. Vector of layer links followed by weights.
+    description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
     type: text
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - libgdal
+    - proj
+    - r-proj
+    - r-gdalcubes
+    - r-rstac
+    - r-dplyr
+    - r-rcurl
