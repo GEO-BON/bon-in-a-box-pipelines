@@ -37,7 +37,8 @@
       "description": "A number that we will increment",
       "label": "Some int",
       "type": "int",
-      "example": 3
+      "example": 3,
+      "weight": 0
     }
   },
   "outputs": {
@@ -45,7 +46,8 @@
       "description": "bla bla",
       "label": "A number (input++)",
       "type": "int",
-      "example": 4
+      "example": 4,
+      "weight": 0
     }
   },
   "metadata": {

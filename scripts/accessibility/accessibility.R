@@ -48,7 +48,7 @@ bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
 n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)) + 1 
 temporal_res <- paste0("P", n_year, "Y")
 
-  accessibility <- stacatalogue:: load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+  accessibility <- stacatalogue:: load_cube(stac_path = "https://stac.geobon.org/",
                                         collections = c("accessibility_to_cities"), 
                                         bbox = bbox,
                                         srs.cube = input$srs_cube,
