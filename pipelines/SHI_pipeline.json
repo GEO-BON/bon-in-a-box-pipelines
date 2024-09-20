@@ -428,14 +428,14 @@
       "weight": 11
     },
     "SHI>habitatChange_GFW.yml@96|t_0": {
-      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://stac.geobon.org/collections/gfw-lossyear.",
       "label": "initial time",
       "type": "int",
       "example": 2000,
       "weight": 12
     },
     "SHI>habitatChange_GFW.yml@96|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://io.biodiversite-quebec.ca/stac/collections/gfw-lossyear.",
+      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://stac.geobon.org/collections/gfw-lossyear.",
       "label": "final time",
       "type": "int",
       "example": 2020,

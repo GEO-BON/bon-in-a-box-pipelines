@@ -1,5 +1,5 @@
 load_cube <-
-  function(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+  function(stac_path = "https://stac.geobon.org/",
            limit = NULL,
            collections = c("chelsa-clim"),
            bbox = NULL,

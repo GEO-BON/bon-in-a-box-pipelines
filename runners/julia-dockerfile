@@ -9,4 +9,7 @@ RUN  julia -e 'pwd(); using Pkg; \
     Pkg.add.(["SpeciesDistributionToolkit", "Dates", "Clustering", "JSON", "CSV", "DataFrames", "StatsBase", "EvoTrees", "MultivariateStats" ]); \
     Pkg.instantiate();'
 
+RUN chmod -R 777 /julia_depot
+RUN chmod -R 777 /tmp
+
 RUN date +"%Y-%m-%d %R" > /version.txt

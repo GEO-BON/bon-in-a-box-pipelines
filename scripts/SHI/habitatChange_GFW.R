@@ -78,7 +78,7 @@ for(i in 1:length(sp)){
 
   r_aoh <- rast(v_path_to_area_of_habitat[i])
   print(r_aoh)
-  
+
   if (!dir.exists(file.path(outputFolder,sp[i]))){
     dir.create(file.path(outputFolder,sp[i]))
   }else{
@@ -91,7 +91,7 @@ for(i in 1:length(sp)){
   #2.1 GFW data-------------------------------------------------------------------
   #forest base map
   cube_GFW_TC <-
-    load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+    load_cube(stac_path = "https://stac.geobon.org/",
               limit = 1000,
               collections = c("gfw-treecover2000"),
               bbox = sf_ext_srs,
@@ -117,7 +117,7 @@ for(i in 1:length(sp)){
 
   # Download forest loss maps and create different layers for each year to remove from forest
   cube_GFW_loss <-
-    load_cube(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+    load_cube(stac_path = "https://stac.geobon.org/",
               limit = 1000,
               collections = c("gfw-lossyear"),
               bbox = sf_ext_srs,
@@ -128,7 +128,7 @@ for(i in 1:length(sp)){
               t1 = "2000-12-31",
               resampling = "mode",
               aggregation = "first")
-  
+
   print("========== Forest loss layer downloaded ==========")
 
   times <- as.numeric(substr(v_time_steps[v_time_steps>2000],start=3,stop=4))
@@ -136,7 +136,7 @@ for(i in 1:length(sp)){
   l_year_loss <- map(times, ~ funFilterCube_range(cube = cube_GFW_loss, max=.x, type_max=1, min=1, type_min=1, value=FALSE))
   # turn cube to raster
   l_r_year_loss <- map(l_year_loss, cube_to_raster, format="terra")
-  s_year_loss_w_nas <- rast(l_r_year_loss) 
+  s_year_loss_w_nas <- rast(l_r_year_loss)
   # turn NAs into 0 for raster operations
   s_year_loss <- s_year_loss_w_nas |> terra::classify(rcl=cbind(NA,0)) # faster than with ifel
 
@@ -154,22 +154,22 @@ for(i in 1:length(sp)){
   }else{
     names(s_year_loss) <- paste0("Loss_",v_time_steps[v_time_steps>t_0])
   }
-  
+
   # resample s_year_loss
   s_year_loss_resampled <- resample(s_year_loss,r_aoh_rescaled,method="near")
-  
+
   # mask t0 to AOH
   r_GFW_TC_threshold_mask <- r_GFW_TC_threshold |>
     terra::mask(r_aoh_rescaled) # mask to range map
-  
+
   # mask to t0
   s_year_loss_mask <- terra::mask(s_year_loss_resampled,r_GFW_TC_threshold_mask, maskvalues=1, inverse=TRUE)
   # extract last year
   cat("Extract last year: ",paste0("Loss_",t_n),"\\n")
   s_year_loss_tn <- terra::subset(s_year_loss_mask,paste0("Loss_",t_n))
-  
-  
-  
+
+
+
   #-------------------------- figure ----------------------------------------------
   r_year_loss_mask_plot <- terra::classify(s_year_loss_tn,rcl=cbind(0,NA)) # turn 0 to NA
 
@@ -184,9 +184,9 @@ for(i in 1:length(sp)){
               t0 = "2000-01-01",
               t1 = "2000-12-31",
               resampling = "near")
-  
+
   print("========== Forest gain layer downloaded ==========")
-  
+
   r_GFW_gain <- cube_to_raster(cube_GFW_gain , format="terra") # convert to raster format
   r_GFW_gain_rescaled <- terra::resample(r_GFW_gain,r_aoh_rescaled,method="mode")
   r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain_rescaled ,r_aoh_rescaled),rcl=cbind(0,NA))
@@ -210,7 +210,7 @@ for(i in 1:length(sp)){
   r_GFW_TC_threshold_mask[r_GFW_TC_threshold_mask>0]<-1 # turn no change to 1
   r_year_loss_mask_plot[r_year_loss_mask_plot>0]<-2 # turn loss value to 2
   r_GFW_gain_mask[r_GFW_gain_mask>0]<-3 # turn gain value to 3
-  
+
   # Put no change, loss, and gain together in one raster
   v1 <- merge(r_year_loss_mask_plot, r_GFW_TC_threshold_mask) # merge loss and no change
   v2 <- merge(r_GFW_gain_mask, v1) # merge gain
@@ -229,14 +229,14 @@ for(i in 1:length(sp)){
 
   #create non masked layers for distance metrics
   s_habitat0_nomask <- terra::classify(r_GFW_TC_threshold-s_year_loss_resampled,rcl=cbind(-1,0))
-  
+
   s_habitat_nomask <- c(r_GFW_TC_threshold, s_habitat0_nomask)
   # rm(s_habitat0_nomask)
   names(s_habitat_nomask) <- paste0("habitat_",v_time_steps)
 
   s_habitat <- terra::mask(s_habitat_nomask , r_aoh_rescaled )
   s_habitat <- terra::classify(s_habitat , rcl=cbind(0,NA))
-  
+
   l_path_habitat_by_tstep[[i]] <- file.path(outputFolder, sp[i], paste0(sp[i],"_GFW_",names(s_habitat),".tif"))
   print(l_path_habitat_by_tstep[[i]])
   map2(as.list(s_habitat), unlist(l_path_habitat_by_tstep[[i]]), ~terra::writeRaster(.x,filename=.y,overwrite=T, gdal=c("COMPRESS=DEFLATE"), filetype="COG"))
@@ -282,12 +282,12 @@ for(i in 1:length(sp)){
   print(df_SHS_gfw)
   df_SHS_gfw <- df_SHS_gfw |> dplyr::mutate(SHS=(AS+CS)/2, info="GFW", Year=v_time_steps)
   print(df_SHS_gfw)
-  
+
   df_SHS_gfw_tidy <- df_SHS_gfw |> pivot_longer(c("AS","CS","SHS"),names_to = "Score", values_to = "Values")
   v_path_SHS_tidy[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_SHS_table_tidy.tsv"))
   print(df_SHS_gfw_tidy)
   write_tsv(df_SHS_gfw_tidy,file= v_path_SHS_tidy[i])
-  
+
   colnames(df_SHS_gfw) <- c("Species","Area Score","Connectivity Score","Species Habitat Score","Source","Year")
   print(df_SHS_gfw)
 

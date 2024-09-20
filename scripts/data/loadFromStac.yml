@@ -1,6 +1,6 @@
 script: loadFromStac.R
 name: Load from STAC
-description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+description: "Extract individual unprocessed items from various collections on the GEO BON Stac Catalog."
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -10,7 +10,7 @@ inputs:
     label: stac_url
     description: URL of the Stac catalog
     type: text
-    example: https://io.biodiversite-quebec.ca/stac/
+    example: https://stac.geobon.org/
   bbox:
     label: bbox
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
@@ -33,7 +33,7 @@ inputs:
     label: projection system
     description: String, projection of the rasters
     type: text
-    example: "EPSG:6623"
+    example: "EPSG:6622"
   spatial_res:
     label: spatial resolution
     description: Integer, spatial resolution of the rasters
@@ -53,3 +53,15 @@ outputs:
     label: Weight matrix with layers
     description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
     type: text
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - libgdal
+    - proj
+    - r-proj
+    - r-gdalcubes
+    - r-rstac
+    - r-dplyr
+    - r-rcurl
