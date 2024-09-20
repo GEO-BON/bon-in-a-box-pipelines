@@ -16,6 +16,7 @@ conda:
     - r-dplyr
     - r-rredlist
     - r-this.path
+    - r-rjson
 inputs:
   country:
     label: Country

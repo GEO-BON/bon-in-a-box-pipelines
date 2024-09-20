@@ -71,6 +71,7 @@ conda:
     - r-quadprog
     - r-dismo
     - r-geosphere
+    - r-rjson
 
 inputs:
   history_assessment_data:

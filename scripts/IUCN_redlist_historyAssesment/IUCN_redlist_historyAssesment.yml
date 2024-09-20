@@ -22,6 +22,7 @@ conda:
     - r-rredlist
     - r-plyr
     - r-reshape2
+    - r-rjson
 
 inputs:
   species_data:
