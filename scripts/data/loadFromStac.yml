@@ -1,6 +1,6 @@
 script: loadFromStac.R
 name: Load from STAC
-description: "Extract individual unprocessed items from various collections on the IO Stac Catalog."
+description: "Extract individual unprocessed items from various collections on the GEO BON Stac Catalog."
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -10,7 +10,7 @@ inputs:
     label: stac_url
     description: URL of the Stac catalog
     type: text
-    example: https://io.biodiversite-quebec.ca/stac/
+    example: https://stac.geobon.org/
   bbox:
     label: bbox
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
@@ -23,7 +23,7 @@ inputs:
     example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
   weight_matrix_with_ids:
     label: Weight matrix with ids
-    description: Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set. 
+    description: Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.
     type: text
     example: |
       layer, current, change
@@ -33,12 +33,12 @@ inputs:
     label: projection system
     description: String, projection of the rasters
     type: text
-    example: "EPSG:6623"
+    example: "EPSG:6622"
   spatial_res:
     label: spatial resolution
     description: Integer, spatial resolution of the rasters
-    type: int
-    example: 1000
+    type: float
+    example: 1000.0
   mask:
     label: mask
     description: Shapefile, used to mask the output rasters
@@ -53,3 +53,15 @@ outputs:
     label: Weight matrix with layers
     description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
     type: text
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - libgdal
+    - proj
+    - r-proj
+    - r-gdalcubes
+    - r-rstac
+    - r-dplyr
+    - r-rcurl

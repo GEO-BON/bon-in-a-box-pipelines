@@ -49,16 +49,18 @@ write("Sepal length	Sepal width	Petal length	Petal width	Species
 ## Outputing result to JSON
 # notice that the warning string is not part of the yml spec, so it cannot be used by other scripts, but will still be displayed.
 output <- list(#"error" = "Some error", # Use error key to stop the rest of the pipeline
+                "info" = "Some information message",
                 "warning" = "Some warning",
                 "text" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long text it will need to be unfolded to see it all.",
                 "number" = input$intensity * 3,
-                "heat_map" = example_tiff, 
+                "heat_map" = example_tiff,
                 "geo_json" = example_json,
                 "some_csv_data" = some_csv_data,
                 "some_tsv_data" = some_tsv_data,
                 "some_picture" = example_jpg,
-                "undocumented_output" = "Some debug output") 
-                
+                "userdata_available" = list.files(file.path(Sys.getenv("USERDATA_LOCATION"))),
+                "undocumented_output" = "Some debug output")
+
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
 

@@ -2,14 +2,18 @@ script: helloR.R
 name: R Example
 author:
   - name: Jean-Michel Lord
+    email: jean-michel.lord@mcgill.ca
     identifier: https://orcid.org/0009-0007-3826-1125
   - name: Guillaume Larocque
-description: "This sample script shows how it works."
+description: "This sample script shows how it works. Remember that you can use **MarkDown** to style descriptions and add [links](http://boninabox.geobon.org)."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
-  occurence:
-    label: Occurence
-    description: Occurrence data, some description here
+  raster:
+    label: Some raster
+    description: |
+      Some raster file, with some description here.
+
+      _Input descriptions can use MarkDown too._
     type: image/tiff;application=geotiff
     example: http://something-compatible.tiff
   intensity:
@@ -36,10 +40,18 @@ inputs:
       - second option
       - third option
     example: third option
+  freeflow_text:
+    label: Freeflow text
+    description: This is regular text, and can have multiple lines.
+    type: text/plain
+    example: |
+      This is a multiline example.
+      Once there is a line break in the example, it becomes a textarea in the UI.
+
 outputs:
   text:
     label: Text
-    description: We can add plain text
+    description: We can add plain text. _Output descirptions can use MarkDown too._
     type: text/plain
   number:
     label: A number (intensity*3)
@@ -71,6 +83,13 @@ outputs:
     description: Some picture/graph/etc that shows bla bla...
     type: image/jpg
     example: /path/to/some/example.jpg
+  userdata_available:
+    label: Available user data
+    description: This is just printing out the content of userdata folder, to show that you can use data uploaded there.
+    type: text[]
+    example:
+      - file1.txt
+      - file2.tiff
 references:
   - text: John Doe, The ins and outs of copy-pasting, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
     doi: 10.1093/biosci/biab041

@@ -40,7 +40,7 @@ n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)
 temporal_res <- paste0("P", n_year, "Y")
 
 if (input$stac_source == "IO") {
-  lc_raster <- stacatalogue::load_prop_values(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+  lc_raster <- stacatalogue::load_prop_values(stac_path = "https://stac.geobon.org/",
                                 collections = input$collections, 
                               bbox = bbox,
                                srs.cube = input$srs_cube,
