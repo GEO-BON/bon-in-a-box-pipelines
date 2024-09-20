@@ -6,11 +6,6 @@ author:
 description: "This sample script shows how it works in Julia."
 external_link: https://github.com/GEO-BON/biab-2.0
 inputs:
-  number:
-    label: A number
-    description: bla bla
-    type: int
-    example: 9
 outputs:
   number:
     label: A number
