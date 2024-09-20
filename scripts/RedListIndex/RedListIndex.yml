@@ -3,8 +3,75 @@ name: Red List Index
 description: "Estimates the Red List Index (RLI) for a group of species, reflecting trends in the overall extinction risk for that group."
 external_link: https://nrl.iucnredlist.org/assessment/red-list-index
 author:
- - name: Maria Camila diaz (mdiaz@humboldt.org.co)
- - name: Victor Julio Rincon (rincon-v@javeriana.edu.co)
+ - name: Maria Camila diaz
+   email: mdiaz@humboldt.org.co
+ - name: Victor Julio Rincon
+   email: rincon-v@javeriana.edu.co
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - r-magrittr
+    - r-data.table
+    - r-reshape2
+    - r-dplyr
+    - r-plyr
+    - r-ggplot2
+    - r-tibble
+    - r-pbapply
+    - r-rredlist
+    - r-plyr
+    # - r-red (not in channels)
+    - r-gdistance
+    - r-BAT
+    - r-ape
+    - r-geometry
+    - r-magic
+    - r-hypervolume
+    - r-ks
+    - r-mclust
+    - r-mvtnorm
+    - r-pracma
+    - r-fastcluster
+    - r-pdist
+    - r-palmerpenguins
+    - r-caret
+    - r-recipes
+    - r-timeDate
+    - r-gower
+    - r-hardhat
+    - r-ipred
+    - r-prodlim
+    - r-lava
+    - r-future.apply
+    - r-future
+    - r-globals
+    - r-listenv
+    - r-parallelly
+    - r-ModelMetrics
+    - r-pROC
+    - r-nls2
+    - r-proto
+    - r-vegan
+    - r-permute
+    - r-phytools
+    - r-combinat
+    - r-clusterGeneration
+    - r-DEoptim
+    - r-expm
+    - r-optimParallel
+    - r-phangorn
+    - r-fastmatch
+    - r-scatterplot3d
+    - r-predicts
+    - r-coda
+    - r-mnormt
+    - r-numDeriv
+    - r-quadprog
+    - r-dismo
+    - r-geosphere
+
 inputs:
   history_assessment_data:
     label: History assessment data

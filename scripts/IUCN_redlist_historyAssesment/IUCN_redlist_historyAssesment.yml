@@ -7,6 +7,22 @@ author:
  - name: Victor Julio Rincon
    email: rincon-v@javeriana.edu.co
 external_link: https://github.com/GEO-BON/biab-2.0
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - r-magrittr
+    - r-data.table
+    - r-dplyr
+    - r-plyr
+    - r-ggplot2
+    - r-tibble
+    - r-pbapply
+    - r-rredlist
+    - r-plyr
+    - r-reshape2
+
 inputs:
   species_data:
     label: Species data
