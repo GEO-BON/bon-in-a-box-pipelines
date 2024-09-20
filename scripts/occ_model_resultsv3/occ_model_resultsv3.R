@@ -3,7 +3,7 @@
 # Install necessary libraries - packages 
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
 packagesNeed<-c("magrittr", "data.table", "tools", "Rcpp", "this.path", "rjson", "dplyr", "plyr",  "raster", "terra", "auk",
-                   "lme4", "minqa", "nloptr", "unmarked", "MuMIn", "VGAM", "AICcmodavg", "ggplot2", "janitor", "snakecase")
+                   "lme4", "minqa", "nloptr", "unmarked", "MuMIn", "VGAM", "AICcmodavg", "ggplot2", "janitor", "snakecase", "knitr")
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
 # Load libraries
@@ -74,8 +74,13 @@ occ_model <- occu(formula_occ, data = occ_um, starts = start_vals)
 
 occ_dredge <- MuMIn::dredge(occ_model)
 
-  
-  
+# model comparison
+#model_comparasion<- select(occ_dredge, starts_with("psi(p"), df, AICc, delta, weight) %>% 
+#  dplyr::mutate_all(~ round(., 3)) %>% 
+#  knitr::kable()
+# model comparison
+#write.csv(final, final_path, row.names = T ) # Write the 'val_wkt_path' output
+
 #occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = delta <= 1000)
 
 # average models based on model weights 
@@ -84,7 +89,10 @@ occ_dredge <- MuMIn::dredge(occ_model)
 occ_dredge_delta <- MuMIn::get.models(occ_dredge, subset = cumsum(weight) <= 1)
 
 # average models based on model weights 
+# test models data frame
+test_models_table<- file.path(outputFolder, "test_models.csv") # Define the file path for the 'val_wkt_path' output
 test_models<- dplyr::filter(as.data.frame(occ_dredge),  cumsum(weight) <= 1)
+write.csv(test_models, test_models_table, row.names = T ) # Write the 'val_wkt_path' output
 
 occ_avg<- if(nrow(test_models)<=1){
     occ_dredge_delta[[1]]
@@ -282,6 +290,7 @@ occ_avg<- if(nrow(test_models)<=1){
   #####
   final_path<- file.path(outputFolder, "final.csv") # Define the file path for the 'val_wkt_path' output
   write.csv(final, final_path, row.names = T ) # Write the 'val_wkt_path' output
+  
 
   summary_occ_path<- file.path(outputFolder, "summary_occModel.txt") # Define the file path for the 'val_wkt_path' output
   
@@ -294,7 +303,8 @@ occ_avg<- if(nrow(test_models)<=1){
                 occse_raster_export = occse_raster_path,
                 occPlotFacet= occPlotFacet_path,
                 final_export = final_path, VEB_export = FVEB,
-                summary_occ_path= summary_occ_path)
+                summary_occ_path= summary_occ_path, 
+                test_models_table = test_models_table)
   
 
 

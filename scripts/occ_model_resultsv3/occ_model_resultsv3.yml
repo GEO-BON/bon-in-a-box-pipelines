@@ -33,6 +33,10 @@ inputs:
     type: boolean
     example: false
 outputs:
+  test_models:
+    label: test_models
+    description: "Summary of test models"
+    type: text/csv
   summary_occ_path:
     label: summary_occ_path
     description: "Summary of ocupation model"
@@ -57,3 +61,4 @@ outputs:
     label: FVEB
     description: "Result of Essential biodiversity variable in terms of Occupancy area VEB (Ψ>0.6)"
     type: text
+  
