@@ -82,5 +82,17 @@ outputs:
     type: image/tiff;application=geotiff[]
   weight_matrix_with_layers:
     label: Weight matrix with layers
-    description: Weight matrix used for BON optimization. Vector of layer links followed by weights.
+    description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
     type: text
+conda:
+  channels:
+    - r
+    - conda-forge
+  dependencies:
+    - libgdal
+    - proj
+    - r-proj
+    - r-gdalcubes
+    - r-rstac
+    - r-dplyr
+    - r-rcurl

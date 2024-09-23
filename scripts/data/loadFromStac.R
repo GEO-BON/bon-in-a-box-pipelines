@@ -1,23 +1,14 @@
 
 
 ## Install required packages
-packages <- c("terra", "rjson", "raster", "stars", "dplyr", "CoordinateCleaner", "lubridate", "rgdal", "remotes", "RCurl")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true")
-library("devtools")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
-
 
 ## Load required packages
 
-library("terra")
 library("rjson")
-library("raster")
 library("dplyr")
 library("gdalcubes")
-library("stringr")
+library("sf")
+sf_use_s2(FALSE)
 
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "/data/loadFromStacFun.R", sep = "/"))
 
@@ -25,6 +16,18 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
+gdalcubes_set_gdal_config("VSI_CACHE", "TRUE")
+gdalcubes_set_gdal_config("GDAL_CACHEMAX","30%")
+gdalcubes_set_gdal_config("VSI_CACHE_SIZE","10000000")
+gdalcubes_set_gdal_config("GDAL_HTTP_MULTIPLEX","YES")
+gdalcubes_set_gdal_config("GDAL_INGESTED_BYTES_AT_OPEN","32000")
+gdalcubes_set_gdal_config("GDAL_DISABLE_READDIR_ON_OPEN","EMPTY_DIR")
+gdalcubes_set_gdal_config("GDAL_HTTP_VERSION","2")
+gdalcubes_set_gdal_config("GDAL_HTTP_MERGE_CONSECUTIVE_RANGES","YES")
+gdalcubes_set_gdal_config("CHECK_WITH_INVERT_PROJ","FALSE")
+gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1)
+
+gdalcubes::gdalcubes_options(parallel = 1)
 
 # Case 1: we create an extent from a set of observations
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
