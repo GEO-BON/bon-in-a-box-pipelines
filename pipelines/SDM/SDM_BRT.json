@@ -37,7 +37,7 @@
       "id": "57",
       "type": "userInput",
       "position": {
-        "x": 120,
+        "x": 148,
         "y": 263.16666666666663
       },
       "dragHandle": ".dragHandle",
@@ -50,8 +50,8 @@
       "id": "58",
       "type": "userInput",
       "position": {
-        "x": 98.96706003242969,
-        "y": 152.38564391568286
+        "x": 33.07977865102396,
+        "y": 167.2102822264992
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -81,8 +81,8 @@
       "id": "96",
       "type": "io",
       "position": {
-        "x": 482,
-        "y": 96.5
+        "x": 510,
+        "y": 14.5
       },
       "data": {
         "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
@@ -92,8 +92,8 @@
       "id": "119",
       "type": "io",
       "position": {
-        "x": 1259.5371801918095,
-        "y": 443.02055183687617
+        "x": 1219.5371801918095,
+        "y": 295.0205518368761
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -142,8 +142,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2047,
-        "y": 111
+        "x": 2130.7794470232584,
+        "y": 79.43093300572878
       },
       "data": {
         "label": "Output"
@@ -153,8 +153,8 @@
       "id": "126",
       "type": "output",
       "position": {
-        "x": 1030,
-        "y": 193
+        "x": 1015,
+        "y": 157
       },
       "data": {
         "label": "Output"
@@ -164,8 +164,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 115,
-        "y": 298.16666666666663
+        "x": 78.69248438221689,
+        "y": 346.18628409663785
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -188,8 +188,8 @@
       "id": "132",
       "type": "io",
       "position": {
-        "x": 2646.5999755859375,
-        "y": 307.6666717529297
+        "x": 2009.7864730818396,
+        "y": 437.7408113575266
       },
       "data": {
         "descriptionFile": "SDM>BRT>fitBRT.yml"
@@ -199,8 +199,8 @@
       "id": "133",
       "type": "output",
       "position": {
-        "x": 3024.827738466697,
-        "y": 347.4132734323678
+        "x": 2525.8433165735396,
+        "y": 503.7414140634203
       },
       "data": {
         "label": "Output"
@@ -210,8 +210,8 @@
       "id": "134",
       "type": "output",
       "position": {
-        "x": 3028.3707164509856,
-        "y": 304.89753762090464
+        "x": 2524.3707164509856,
+        "y": 414.89753762090464
       },
       "data": {
         "label": "Output"
@@ -221,19 +221,94 @@
       "id": "135",
       "type": "output",
       "position": {
-        "x": 3034.2756797581333,
-        "y": 260.01981648658244
+        "x": 2518.2756797581333,
+        "y": 314.01981648658244
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "136",
+      "id": "137",
+      "type": "userInput",
+      "position": {
+        "x": 100.76931405023402,
+        "y": 413.54365929358687
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio2"
+        ]
+      }
+    },
+    {
+      "id": "138",
       "type": "output",
       "position": {
-        "x": 3030.732701773845,
-        "y": 198.60819809224688
+        "x": 2493.144875862962,
+        "y": 595.9242107095097
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "139",
+      "type": "io",
+      "position": {
+        "x": 943.0266262736725,
+        "y": 486.4189858067559
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "140",
+      "type": "constant",
+      "position": {
+        "x": 166.61513963965388,
+        "y": 520.9366465551192
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "esacci-lc|esacci-lc-2020"
+        ]
+      }
+    },
+    {
+      "id": "141",
+      "type": "output",
+      "position": {
+        "x": 2455.1854528738468,
+        "y": 244.5904097986591
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "142",
+      "type": "output",
+      "position": {
+        "x": 2483.316650390625,
+        "y": 756
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "143",
+      "type": "output",
+      "position": {
+        "x": 2531.316650390625,
+        "y": 672
       },
       "data": {
         "label": "Output"
@@ -389,18 +464,88 @@
       "id": "reactflow__edge-132sdm_uncertainty-135"
     },
     {
-      "source": "132",
-      "sourceHandle": "sdm",
-      "target": "136",
-      "targetHandle": null,
-      "id": "reactflow__edge-132sdm-136"
-    },
-    {
       "source": "119",
       "sourceHandle": "rasters",
       "target": "132",
       "targetHandle": "predictors",
       "id": "reactflow__edge-119rasters-132predictors"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "132",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-132bbox"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "132",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-57-132crs"
+    },
+    {
+      "source": "137",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-137-119collections_items"
+    },
+    {
+      "source": "132",
+      "sourceHandle": "pseudoabsences",
+      "target": "138",
+      "targetHandle": null,
+      "id": "reactflow__edge-132pseudoabsences-138"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-139spatial_res"
+    },
+    {
+      "source": "140",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-140-139collections_items"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-139proj"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-139rasters-132water_mask"
+    },
+    {
+      "source": "132",
+      "sourceHandle": "predicted_sdm",
+      "target": "141",
+      "targetHandle": null,
+      "id": "reactflow__edge-132predicted_sdm-141"
+    },
+    {
+      "source": "132",
+      "sourceHandle": "tuning",
+      "target": "142",
+      "targetHandle": null,
+      "id": "reactflow__edge-132tuning-142"
+    },
+    {
+      "source": "132",
+      "sourceHandle": "env_corners",
+      "target": "143",
+      "targetHandle": null,
+      "id": "reactflow__edge-132env_corners-143"
     }
   ],
   "inputs": {
@@ -464,29 +609,19 @@
       "example": "https://stac.geobon.org",
       "weight": 6
     },
-    "data>loadFromStac.yml@119|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "collections_items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 7
-    },
     "data>loadFromStac.yml@119|mask": {
       "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
       "type": "application/dbf",
       "example": null,
-      "weight": 8
+      "weight": 7
     },
     "pipeline@128": {
       "label": "spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 9
+      "weight": 8
     },
     "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
       "description": "taxonomic group for which to retrieve GBIF heatmap",
@@ -501,8 +636,50 @@
         "amphibians",
         "all"
       ],
-      "weight": 10,
+      "weight": 9,
       "example": "plants"
+    },
+    "pipeline@137": {
+      "label": "collections_items",
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 10
+    },
+    "data>loadFromStac.yml@139|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 11
+    },
+    "data>loadFromStac.yml@139|bbox": {
+      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+      "label": "bbox",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
+      "weight": 12
+    },
+    "data>loadFromStac.yml@139|weight_matrix_with_ids": {
+      "description": "Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.",
+      "label": "Weight matrix with ids",
+      "type": "text",
+      "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n",
+      "weight": 13
+    },
+    "data>loadFromStac.yml@139|mask": {
+      "description": "Shapefile, used to mask the output rasters",
+      "label": "mask",
+      "type": "application/dbf",
+      "weight": 14
     }
   },
   "outputs": {
@@ -546,11 +723,29 @@
       "type": "image/tiff;application=geotiff",
       "weight": 5
     },
-    "SDM>BRT>fitBRT.yml@132|sdm": {
-      "description": "map of predicted occurrence probability",
-      "label": "sdm",
-      "type": "image/tiff;application=geotiff",
+    "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
+      "description": "pseudoabsence coordinates",
+      "label": "pseudoabsences",
+      "type": "text/csv",
       "weight": 6
+    },
+    "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
+      "description": "map of predicted occurrence probability",
+      "label": "predicted sdm",
+      "type": "image/tiff;application=geotiff",
+      "weight": 7
+    },
+    "SDM>BRT>fitBRT.yml@132|tuning": {
+      "description": "tuning curve",
+      "label": "tuning curve",
+      "type": "image/jpg",
+      "weight": 8
+    },
+    "SDM>BRT>fitBRT.yml@132|env_corners": {
+      "description": "location of presences and pseudoabsences in environment space",
+      "label": "env_corners",
+      "type": "image/jpg",
+      "weight": 9
     }
   },
   "metadata": {

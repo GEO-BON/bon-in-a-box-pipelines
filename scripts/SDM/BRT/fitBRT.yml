@@ -15,9 +15,24 @@ inputs:
     description: paths to geotiff
     type: image/tiff;application=geotiff[]
     example: "/output/foo/bar"
+  bbox:
+    label: bounding box
+    description: the bounding box
+    type: float[]
+    example: [-2316297, -1971146, 1015207, 1511916]
+  crs:
+    label: coordinate reference system
+    description: cooridnate reference system for input layers and occurrences
+    type: text
+    example: EPSG:4326
+  water_mask:
+    label: water mask
+    description: landcover layer containing open water pixels
+    type: image/tiff;application=geotiff[]
+    example: "/output/foo/bar"
 outputs:
-  sdm:
-    label: sdm
+  predicted_sdm:
+    label: predicted sdm
     description: map of predicted occurrence probability
     type: image/tiff;application=geotiff
   sdm_uncertainty:
@@ -32,4 +47,15 @@ outputs:
     label: range
     description: range map thresholded at todo
     type: image/tiff;application=geotiff
-
+  pseudoabsences:
+    label: pseudoabsences
+    description: pseudoabsence coordinates
+    type: text/csv
+  env_corners:
+    label: env_corners
+    description: location of presences and pseudoabsences in environment space
+    type: image/jpg
+  tuning:
+    label: tuning curve
+    description: tuning curve
+    type: image/jpg
