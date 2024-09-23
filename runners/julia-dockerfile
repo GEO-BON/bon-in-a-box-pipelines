@@ -5,11 +5,10 @@ FROM julia:1.10.5
 ENV JULIA_DEPOT_PATH="/julia_depot/"
 
 # Pre-compiling Julia dependencies
-RUN  julia -e 'pwd(); using Pkg; \
-    Pkg.add.(["SpeciesDistributionToolkit", "Dates", "Clustering", "JSON", "CSV", "DataFrames", "StatsBase", "EvoTrees", "MultivariateStats" ]); \
+RUN  julia --project=${JULIA_DEPOT_PATH} -e 'pwd(); using Pkg; \
+    Pkg.add.(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees" ]); \
     Pkg.instantiate(); Pkg.precompile()'
 
 RUN chmod -R 777 /julia_depot
-RUN chmod -R 777 /tmp
 
 RUN date +"%Y-%m-%d %R" > /version.txt
