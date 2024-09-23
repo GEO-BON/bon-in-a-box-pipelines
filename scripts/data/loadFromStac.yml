@@ -41,7 +41,7 @@ inputs:
     example: 1000.0
   resampling:
     label: resampling
-    description: Resampling method used when rescaling the raster layers. See gdalwarp for description https://gdal.org/en/latest/programs/gdalwarp.html
+    description: Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.
     type: options
     options:
       - near
