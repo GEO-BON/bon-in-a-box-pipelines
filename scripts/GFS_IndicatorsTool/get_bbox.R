@@ -13,7 +13,7 @@ print(input)
 country<-input$countries
   
 
-bbox<-unname(st_bbox(ne_states(geounit=country), crs=input$crs))
+bbox<-unname(st_bbox(ne_states(geounit=country), crs=st_crs(input$proj)))
 
 output <- list("bbox"=bbox)
   

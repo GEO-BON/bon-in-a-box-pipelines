@@ -14,7 +14,7 @@ inputs:
   proj:
     label: projection system
     description: Integer, projection system
-    type: int
+    type: text
     example: 4326
 
 outputs:
@@ -22,7 +22,7 @@ outputs:
     label: bbox
     description: boundary box around area of interest
     type: float[]
-conda: # Optional, only needed if your script has specific package dependencies
+conda:
   channels:
     - r
   dependencies:
