@@ -10,7 +10,7 @@ packages <- c("rjson", "dplyr","tidyr","purrr","terra","stars","sf","readr",
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
-#lapply(packages,require,character.only=T)
+lapply(packages,require,character.only=T)
 
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 
@@ -46,7 +46,7 @@ srs_cube <- suppressWarnings(if(check_srs){
   auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(suppressWarnings(try(st_crs(.x),silent=TRUE))))
   if(sum(auth_srid_test)!=1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
 }else srs )# paste Authority in case SRID is used 
-
+print("made it here")
 # Define area of interest, country or region
 study_area_opt <- input$study_area_opt
 study_area_path <- ifelse(is.null(input$study_area), NA,input$study_area)
@@ -144,7 +144,7 @@ for(i in 1:length(sp)){
     sf_range_map <<- st_read(sf_range_map_path[i])
     r_range_map <- rast(r_range_map_path[i])
     r_range_map2 <- project(r_range_map, crs(sf_range_map), method="near")
-    r_range_map2 <- mask(crop(r_range_map2, sf_range_map), sf_range_map)
+    r_range_map2 <- terra::mask(crop(r_range_map2, sf_range_map), sf_range_map)
     sf_range_map <<- as.polygons(ifel(r_range_map2==1,1,NA)) |> st_as_sf()
   }
   

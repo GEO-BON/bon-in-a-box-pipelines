@@ -102,6 +102,28 @@
       "data": {
         "descriptionFile": "data>getAreaOfHabitat.yml"
       }
+    },
+    {
+      "id": "81",
+      "type": "output",
+      "position": {
+        "x": 2262.859375,
+        "y": 510
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "82",
+      "type": "output",
+      "position": {
+        "x": 2268.859375,
+        "y": 453
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -202,6 +224,20 @@
       "target": "71",
       "targetHandle": null,
       "id": "reactflow__edge-67img_shs_map-71"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "habitat_change_map",
+      "target": "81",
+      "targetHandle": null,
+      "id": "reactflow__edge-67habitat_change_map-81"
+    },
+    {
+      "source": "67",
+      "sourceHandle": "r_habitat_by_tstep",
+      "target": "82",
+      "targetHandle": null,
+      "id": "reactflow__edge-67r_habitat_by_tstep-82"
     }
   ],
   "inputs": {
@@ -375,6 +411,18 @@
       "label": "SHS time series",
       "type": "image/png[]",
       "weight": 2
+    },
+    "SHI>habitatChange_GFW.yml@67|habitat_change_map": {
+      "description": "Figure showing a map with changes in the habitat for the time range for each species (raster).",
+      "label": "SHS Map (raster)",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
+    },
+    "SHI>habitatChange_GFW.yml@67|r_habitat_by_tstep": {
+      "description": "Raster of habitat by time step.",
+      "label": "Habitat by time step",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 4
     }
   },
   "metadata": {

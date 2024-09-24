@@ -4,16 +4,16 @@
 # Script location can be used to access other scripts
 
 print(Sys.getenv("SCRIPT_LOCATION"))
-#packages <- c("rjson","dplyr","tidyr","purrr","sf","stringr")
+packages <- c("rjson","dplyr","tidyr","purrr","sf","stringr")
 
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
-#lapply(packages,require,character.only=T)
+lapply(packages,require,character.only=T)
 
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 
-input <- jsonlite::fromJSON(file=file.path(outputFolder, "input.json"))
+input <- rjson::fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 print(outputFolder)
@@ -75,5 +75,5 @@ for( i in 1:length(sp)){
 # Outputing result to JSON -----------------------------------------------------
 output <- list("sf_range_map" = v_path_to_range_map )
 }, error = function(e) { list(error = conditionMessage(e)) })
-jsonData <- toJSON(output, indent=2)
+jsonData <- rjson::toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder, "output.json"))

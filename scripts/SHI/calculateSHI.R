@@ -9,8 +9,8 @@ options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("dplyr","purrr","readr","ggplot2","rjson")
 
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
 lapply(packages,require,character.only=T)
 

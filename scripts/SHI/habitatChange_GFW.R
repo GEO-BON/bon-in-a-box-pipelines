@@ -3,14 +3,14 @@
 #-------------------------------------------------------------------------------
 options(timeout = max(60000000, getOption("timeout")))
 
-packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr","tmap",
-              "geodata","gdalcubes","stacatalogue","rredlist","stringr","tmaptools","ggplot2")
+packages <- c("rjson", "dplyr","tidyr","purrr","terra","stars","sf","readr","tmap",
+              "geodata","gdalcubes","rredlist","stringr","tmaptools","ggplot2", "rstac")
 
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
+#if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
+#if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
 
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
 lapply(packages,require,character.only=T)
 
@@ -20,7 +20,8 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-source(file.path(path_script,"data/filterCubeRangeFunc.R"), echo=TRUE)
+source(file.path(path_script,"data/filterCubeRangeFunc.R"), echo=TRUE) 
+source(file.path(path_script,"SHI/loadCubeFunc.R"), echo=TRUE)
 
 output<- tryCatch({
 # Parameters -------------------------------------------------------------------
