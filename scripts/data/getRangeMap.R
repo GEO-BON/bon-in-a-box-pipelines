@@ -4,16 +4,16 @@
 # Script location can be used to access other scripts
 
 print(Sys.getenv("SCRIPT_LOCATION"))
-packages <- c("rjson","dplyr","tidyr","purrr","sf","stringr")
+#packages <- c("rjson","dplyr","tidyr","purrr","sf","stringr")
 
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
-lapply(packages,require,character.only=T)
+#lapply(packages,require,character.only=T)
 
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
+input <- jsonlite::fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 print(outputFolder)

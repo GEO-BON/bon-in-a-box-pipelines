@@ -109,6 +109,24 @@ outputs:
     label: table with size of areas of reference.
     description: A TSV (Tab Separated Values) file containing the area of the range map loaded (area_range_map), the size of the study area (area_study_a), the area of the bounding box for the analysis (area_bbox_analysis), size of the buffer used to create the bounding box for the analysis, the size of the area of habitat(area_aoh).
     type: text/tab-separated-values
+conda: # Optional, only needed if your script has specific package dependencies
+  channels:
+    - r
+  dependencies:
+    - r-rjson
+    - r-dplyr
+    - r-tidyr
+    - r-purrr
+    - r-terra
+    - r-stars
+    - r-sf
+    - r-readr
+    - r-geodata
+    - r-gdalcubes
+    - r-rredlist
+    - r-stringr
+    - r-httr2
+    - r-geojsonsf
 references:
   - text: Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]
   - text: Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)

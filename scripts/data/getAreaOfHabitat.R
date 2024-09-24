@@ -3,16 +3,14 @@
 #-------------------------------------------------------------------------------
 options(timeout = max(60000000, getOption("timeout")))
 
-packages <- c("rjson","remotes","dplyr","tidyr","purrr","terra","stars","sf","readr",
-              "geodata","gdalcubes","stacatalogue","rredlist","stringr","httr2","geojsonsf")
+packages <- c("rjson", "dplyr","tidyr","purrr","terra","stars","sf","readr",
+              "geodata","gdalcubes","rredlist","stringr","httr2","geojsonsf")
 
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/ReseauBiodiversiteQuebec/stac-catalogue")
-library(stacatalogue)
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
-lapply(packages,require,character.only=T)
+#lapply(packages,require,character.only=T)
 
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 
