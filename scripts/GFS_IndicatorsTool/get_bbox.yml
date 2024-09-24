@@ -6,7 +6,6 @@ author:
   - name: Oliver Selmoni
 
 inputs:
-
   countries:
     label: Countries list
     description: countries of interest, will be used to look for GBIF observations. 
@@ -23,3 +22,10 @@ outputs:
     label: bbox
     description: boundary box around area of interest
     type: float[]
+conda: # Optional, only needed if your script has specific package dependencies
+  channels:
+    - r
+  dependencies:
+    - r-rnaturalearth
+    - r-rjson
+    - r-sf

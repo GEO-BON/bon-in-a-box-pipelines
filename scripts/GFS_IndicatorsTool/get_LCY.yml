@@ -40,3 +40,4 @@ outputs:
     label: Years with land cover information 
     description: List of years for which land cover information is available.
     type: text[]
+    

@@ -1,6 +1,6 @@
-packages <- c("raster", "rjson", "geojsonsf", "terra",'sf')
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#packages <- c("raster", "rjson", "geojsonsf", "terra",'sf')
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
 library(raster)
 library(rjson)

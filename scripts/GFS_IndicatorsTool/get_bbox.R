@@ -1,6 +1,6 @@
-packages <- c("sf","rjson", 'rnaturalearth','rnaturalearthdata' )
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+#packages <- c("sf","rjson", 'rnaturalearth','rnaturalearthdata' )
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
 library('rnaturalearth')
 library("rjson")

@@ -1,13 +1,13 @@
-packages <- c("raster", "rjson", "geojsonsf", "terra",'sf')
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-if(!"rgdal"%in% installed.packages()){
-  install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source") 
-}
-if(!"gdalUtils"%in% installed.packages()){
-  library(devtools)
-  devtools::install_github("gearslaboratory/gdalUtils")
-}
+#packages <- c("raster", "rjson", "geojsonsf", "terra",'sf')
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
+#if(!"rgdal"%in% installed.packages()){
+ # install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source") 
+#}
+#if(!"gdalUtils"%in% installed.packages()){
+#  library(devtools)
+#  devtools::install_github("gearslaboratory/gdalUtils")
+#}
 
 
 library(raster)

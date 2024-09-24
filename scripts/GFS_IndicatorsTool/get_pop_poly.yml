@@ -37,3 +37,11 @@ outputs:
     description: Path to geojson file storing polygons of populations.  
     type: application/geo+json
     example: ''
+conda: # Optional, only needed if your script has specific package dependencies
+  channels:
+    - r
+  dependencies:
+    - r-rjson
+    - r-sf
+    - r-spatialEco
+    - r-rnaturalearth
