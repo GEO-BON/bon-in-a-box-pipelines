@@ -22,10 +22,3 @@ outputs:
     label: bbox
     description: boundary box around area of interest
     type: float[]
-conda:
-  channels:
-    - r
-  dependencies:
-    - r-rnaturalearth
-    - r-rjson
-    - r-sf

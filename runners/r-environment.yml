@@ -30,3 +30,5 @@ dependencies:
   - r-stars
   - r-terra
   - r-tidyselect
+  - r-rnaturalearth
+  - r-spatialEco

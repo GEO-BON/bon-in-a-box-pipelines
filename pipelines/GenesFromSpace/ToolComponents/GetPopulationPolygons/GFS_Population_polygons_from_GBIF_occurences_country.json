@@ -309,7 +309,7 @@
       "label": "projection system",
       "description": "String, projection system of the coordinates in bbox",
       "type": "text",
-      "example": "EPSG:6623",
+      "example": "EPSG:4326",
       "weight": 5
     },
     "pipeline@22": {

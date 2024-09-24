@@ -18,7 +18,7 @@ countries = input$countries
 
 if (length(countries)>0) {
 
-  countries_poly = ne_states(geounit=countries)
+  countries_poly = rnaturalearth::ne_states(geounit=countries)
 
   # Convert points data frame to an sf object
   points_sf <- st_as_sf(obs_data, coords = c("decimal_longitude", "decimal_latitude"), crs = 4326)  # EPSG:4326 is the CRS for WGS84 (lon/lat)
