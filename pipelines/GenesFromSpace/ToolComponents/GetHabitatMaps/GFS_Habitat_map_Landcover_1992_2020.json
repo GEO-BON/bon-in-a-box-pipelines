@@ -37,17 +37,17 @@
   "edges": [
     {
       "source": "115",
-      "sourceHandle": "LCY",
+      "sourceHandle": "lcyy",
       "target": "120",
       "targetHandle": null,
-      "id": "reactflow__edge-115LCY-120"
+      "id": "reactflow__edge-115lcyy-120"
     },
     {
       "source": "115",
-      "sourceHandle": "time.points",
+      "sourceHandle": "time_points",
       "target": "121",
       "targetHandle": null,
-      "id": "reactflow__edge-115time.points-121"
+      "id": "reactflow__edge-115time_points-121"
     }
   ],
   "inputs": {
@@ -65,7 +65,7 @@
       "example": 0.01,
       "weight": 1
     },
-    "GFS_IndicatorsTool>get_LCY.yml@115|YOI": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|yoi": {
       "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
       "label": "Years of interest",
       "type": "int[]",
@@ -91,13 +91,13 @@
     }
   },
   "outputs": {
-    "GFS_IndicatorsTool>get_LCY.yml@115|LCY": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|lcyy": {
       "description": "Tif file showing the year-by-year disrtribution of land cover classes of interest.",
       "label": "Land cover year-by-year",
       "type": "image/tiff;application=geotiff",
       "weight": 0
     },
-    "GFS_IndicatorsTool>get_LCY.yml@115|time.points": {
+    "GFS_IndicatorsTool>get_LCY.yml@115|time_points": {
       "description": "List of years for which land cover information is available.",
       "label": "Years with land cover information",
       "type": "text[]",

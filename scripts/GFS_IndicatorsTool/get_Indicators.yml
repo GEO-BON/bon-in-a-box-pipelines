@@ -17,27 +17,27 @@ inputs:
     label: Binary map of habitat presence/absence
     description: Tif file of maps of presence (1) or absence (0) of suitable habitat. Multiple layers can stacked and used to describe habitat availability at different time points. 
     type: image/tiff;application=geotiff
-    example: '/userdata/TCY.tif'
+    example: '/userdata/tcyy.tif'
 
-  popArea: 
+  poparea: 
     label: Table of habitat area by population
     description: Table of estimated habitat area by population (rows). If provided, time points are displayed as columns. 
     type: text/tab-separated-values
     example: '/userdata/pop_habitat_area.tsv'
 
-  NeNc:
+  ne_nc:
     label: Ne:Nc ratio estimate
     description: Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma. 
     type: float[]
     example: [0.1, 0.2]
 
-  PopDensity:
+  pop_density:
     label: Population density
     description: Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma. 
     type: float[]
     example: [50, 100, 1000]
 
-  RunTitle:
+  runtitle:
     label: Title of the run
     description: Set a name for the pipeline run.
     type: text
@@ -45,37 +45,37 @@ inputs:
     
 outputs:
 
-  Ne_table: 
+  ne_table: 
     label: Effective population size 
     description: Estimated effective size of every population, based on the latest time point of the habitat cover map. 
     type: text/tab-separated-values
 
-  Ne_plot:
+  ne_plot:
     label: Effective population size over time
     description: Plot displaying change of effective population size over time. 
     type: image/png
 
-  PM: 
+  pm: 
     label: Population maintained indicator 
     description: Estimated proportion of mantained populations, comparing earliest and latest time point. 
     type: float
 
-  PM_plot:
+  pm_plot:
     label: Populations mantained over time
     description: Plot showing the change in population area (absolute change and relative change) over time. 
     type: image/png
 
-  POP_plot:
+  pop_plot:
     label: Map of populations
     description: Geographic distribution of the studied populations.
     type: image/png
 
-  Interactive_plot: 
+  interactive_plot: 
     label: Interactive plot 
     description: An interactive interface to explore indicators trends across geographical space and time.  
     type: text/html
 
-  NE500: 
+  ne500: 
     label: Ne>500 indicator 
     description: Estimated proportion of populations with Ne>500 at latest time point. 
     type: float

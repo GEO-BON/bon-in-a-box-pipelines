@@ -34,10 +34,10 @@ latRANGE = c(bbox[2],bbox[4])
 res = input$res
 
 ## get years of interest
-YOI = input$YOI
+yoi = input$yoi
 
-startY = min(as.numeric(YOI))
-endY = max(as.numeric(YOI))
+startY = min(as.numeric(yoi))
+endY = max(as.numeric(yoi))
 
 ## load land cover data from STAC
 load_stac<-function(staccollection='esacci-lc', resamplingMethod='mode', noData=NULL){
@@ -64,7 +64,7 @@ load_stac<-function(staccollection='esacci-lc', resamplingMethod='mode', noData=
   }
   
   # get download URLs
-  lcpri_url <- make_vsicurl_url(rstac::assets_url(stac_query, paste0('esacci-lc-',YOI)))
+  lcpri_url <- make_vsicurl_url(rstac::assets_url(stac_query, paste0('esacci-lc-',yoi)))
   lcpri_url
   
   
@@ -89,15 +89,15 @@ user_classes = as.numeric(input$lc_classes)
 
 # subset landcover map to classes of interst
 LC_bin = LC%in%user_classes+0
-names(LC_bin) = paste0('y',YOI)
+names(LC_bin) = paste0('y',yoi)
 
 
 # write output
-LCY_p<-file.path(outputFolder, "LCY.tif")
-writeRaster(LC_bin, filename = LCY_p, filetype = "GTiff", overwrite=T)
+lcyy_p<-file.path(outputFolder, "lcyy.tif")
+writeRaster(LC_bin, filename = lcyy_p, filetype = "GTiff", overwrite=T)
 
 ## Outputing result to JSON
-output <- list("LCY"=LCY_p, 'time.points'=names(LC_bin)) 
+output <- list("lcyy"=lcyy_p, 'time_points'=names(LC_bin)) 
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

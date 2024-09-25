@@ -15,9 +15,9 @@ if(is.null(input$popdensity)){
   popdensity<-pointcount/sum(PDG.TABLE[1])
 }else(popdensity<-input$popdensity)
 print(popdensity)
-NeNcratio<-input$NeNcratio
+ne_ncratio<-input$ne_ncratio
 
-Ne<-PDG.TABLE[22]*popdensity*NeNcratio
+Ne<-PDG.TABLE[22]*popdensity*ne_ncratio
 Ne500<-Ne>=500
 Neratio<-sum(Ne500)/length(Ne[,1])
 

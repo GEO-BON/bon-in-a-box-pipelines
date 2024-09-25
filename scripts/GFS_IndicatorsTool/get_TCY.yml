@@ -19,18 +19,18 @@ inputs:
     type: float
     example: 0.01
 
-  YOI:
+  yoi:
     label: Years of interest
     description: List of years for which tree cover should be extracted (maximum range 2000 - 2023).
     type: int[]
     example: [2000, 2005, 2010, 2015, 2020]
 
 outputs:
-  TCY: 
+  tcyy: 
     label: Tree cover year-by-year
     description: Tif file of year-by-year tree cover, cropped to bbox extent
     type: image/tiff;application=geotiff
-  time.points: 
+  time_points: 
     label: Years with tree cover information 
     description: List of years for which tree cover information is available.
     type: text[]

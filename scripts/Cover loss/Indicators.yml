@@ -13,7 +13,7 @@ inputs: # 0 to many
      label: population density
      description: Number describing Population density estimate(Individuals per Km^2)
      type: float
-  NeNcratio:
+  ne_ncratio:
      label: Ne/Nc ratio
      description: Number from 0 to 1 describing estimated Ne/Nc ratio
      type: float

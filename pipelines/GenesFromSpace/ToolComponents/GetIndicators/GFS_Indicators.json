@@ -34,7 +34,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "image/tiff;application=geotiff",
-        "value": "/userdata/TCY.tif"
+        "value": "/userdata/tcyy.tif"
       }
     },
     {
@@ -164,8 +164,8 @@
       "source": "102",
       "sourceHandle": null,
       "target": "99",
-      "targetHandle": "time.points",
-      "id": "reactflow__edge-102-99time.points"
+      "targetHandle": "time_points",
+      "id": "reactflow__edge-102-99time_points"
     },
     {
       "source": "100",
@@ -178,29 +178,29 @@
       "source": "105",
       "sourceHandle": null,
       "target": "104",
-      "targetHandle": "RunTitle",
-      "id": "reactflow__edge-105-104RunTitle"
+      "targetHandle": "runtitle",
+      "id": "reactflow__edge-105-104runtitle"
     },
     {
       "source": "106",
       "sourceHandle": null,
       "target": "104",
-      "targetHandle": "PopDensity",
-      "id": "reactflow__edge-106-104PopDensity"
+      "targetHandle": "pop_density",
+      "id": "reactflow__edge-106-104pop_density"
     },
     {
       "source": "107",
       "sourceHandle": null,
       "target": "104",
-      "targetHandle": "NeNc",
-      "id": "reactflow__edge-107-104NeNc"
+      "targetHandle": "ne_nc",
+      "id": "reactflow__edge-107-104ne_nc"
     },
     {
       "source": "99",
-      "sourceHandle": "popArea",
+      "sourceHandle": "poparea",
       "target": "104",
-      "targetHandle": "popArea",
-      "id": "reactflow__edge-99popArea-104popArea"
+      "targetHandle": "poparea",
+      "id": "reactflow__edge-99poparea-104poparea"
     },
     {
       "source": "101",
@@ -211,10 +211,10 @@
     },
     {
       "source": "104",
-      "sourceHandle": "Interactive_plot",
+      "sourceHandle": "interactive_plot",
       "target": "116",
       "targetHandle": null,
-      "id": "reactflow__edge-104Interactive_plot-116"
+      "id": "reactflow__edge-104interactive_plot-116"
     }
   ],
   "inputs": {
@@ -229,7 +229,7 @@
       "label": "Binary map of habitat presence/absence",
       "description": "Tif file describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points.",
       "type": "image/tiff;application=geotiff",
-      "example": "/userdata/TCY.tif",
+      "example": "/userdata/tcyy.tif",
       "weight": 1
     },
     "pipeline@102": {
@@ -294,7 +294,7 @@
     }
   },
   "outputs": {
-    "GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot": {
+    "GFS_IndicatorsTool>get_Indicators.yml@104|interactive_plot": {
       "description": "An interactive interface to explore indicators trends across geographical space and time.",
       "label": "Interactive plot",
       "type": "text/html",

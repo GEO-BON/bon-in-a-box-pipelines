@@ -48,17 +48,17 @@
   "edges": [
     {
       "source": "114",
-      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|TCY",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|tcyy",
       "target": "116",
       "targetHandle": "pipeline@101",
-      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|TCY-116pipeline@101"
+      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|tcyy-116pipeline@101"
     },
     {
       "source": "114",
-      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|time.points",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|time_points",
       "target": "116",
       "targetHandle": "pipeline@102",
-      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|time.points-116pipeline@102"
+      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|time_points-116pipeline@102"
     },
     {
       "source": "115",
@@ -69,10 +69,10 @@
     },
     {
       "source": "116",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@104|interactive_plot",
       "target": "117",
       "targetHandle": null,
-      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot-117"
+      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@104|interactive_plot-117"
     },
     {
       "source": "115",
@@ -90,7 +90,7 @@
       "type": "float",
       "example": 0.01
     },
-    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json@114|GFS_IndicatorsTool>get_TCY.yml@23|YOI": {
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json@114|GFS_IndicatorsTool>get_TCY.yml@23|yoi": {
       "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
       "label": "Years of interest",
       "weight": 1,
@@ -178,7 +178,7 @@
     }
   },
   "outputs": {
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@104|interactive_plot": {
       "description": "An interactive interface to explore indicators trends across geographical space and time.",
       "label": "Interactive plot",
       "weight": 0,

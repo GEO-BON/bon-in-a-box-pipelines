@@ -105,8 +105,8 @@ TCL[TCL0==0] = 0 # set to 0 (no loss) pixels where >50% of area did not show for
 ## calculate year-by-year forest presence/absence
 print('Calculating year-by-year forest presence/absence')
 ## 2000
-TCY = (TC>30)+0 # first year: TC when canopy density >30%
-names(TCY) = 'y2000'
+tcyy = (TC>30)+0 # first year: TC when canopy density >30%
+names(tcyy) = 'y2000'
 
 
 
@@ -114,32 +114,32 @@ names(TCY) = 'y2000'
 for (y in 1:23) {
   print(paste0('y20',sprintf('%02d', y)))
   # get forest presence/absence for current year
-  tcy = (TCY[[paste0('y20',sprintf('%02d', y-1))]]==1)& # forest exist if: (1) forest was there the previous year ...
+  tcy = (tcyy[[paste0('y20',sprintf('%02d', y-1))]]==1)& # forest exist if: (1) forest was there the previous year ...
         (TCL!=y) # ...and (2) forest present did not disappeaer during current year.
   
   # add to stack
-  TCY[[paste0('y20',sprintf('%02d', y))]] = tcy+0
+  tcyy[[paste0('y20',sprintf('%02d', y))]] = tcy+0
 
 }
 
-layersNames = names(TCY)
+layersNames = names(tcyy)
 
 # set NAs to 0
-TCY[is.na(TCY)] = 0
-names(TCY) = layersNames
+tcyy[is.na(tcyy)] = 0
+names(tcyy) = layersNames
 
 # subset output to years of interest
-YOI = input$YOI
-TCY = TCY[[paste0('y',as.character(YOI))]]
+yoi = input$yoi
+tcyy = tcyy[[paste0('y',as.character(yoi))]]
 
 
 # write output
-TCY_p<-file.path(outputFolder, "TCY.tif")
+tcyy_p<-file.path(outputFolder, "tcyy.tif")
 
-writeRaster(TCY, filename = TCY_p, filetype = "GTiff", overwrite=T)
+writeRaster(tcyy, filename = tcyy_p, filetype = "GTiff", overwrite=T)
 
 ## Outputing result to JSON
-output <- list("TCY"=TCY_p, 'time.points'=names(TCY)) 
+output <- list("tcyy"=tcyy_p, 'time_points'=names(tcyy)) 
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
