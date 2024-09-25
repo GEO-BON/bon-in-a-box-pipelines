@@ -55,8 +55,8 @@ outputs:
     type: text
 conda:
   channels:
-    - r
     - conda-forge
+    - r
   dependencies:
     - libgdal
     - proj
