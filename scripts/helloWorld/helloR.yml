@@ -90,6 +90,11 @@ outputs:
     example:
       - file1.txt
       - file2.tiff
+  some_html_output:
+    label: HTML output
+    description: Some interactive graph
+    type: text/html
+    example: /path/to/some/example.html
 references:
   - text: John Doe, The ins and outs of copy-pasting, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
     doi: 10.1093/biosci/biab041
