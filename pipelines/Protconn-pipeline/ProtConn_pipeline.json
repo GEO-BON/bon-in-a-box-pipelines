@@ -257,24 +257,27 @@
   },
   "metadata": {
     "name": "ProtConn analysis pipeline",
-    "description": null,
+    "description": "This pipeline calculates ProtConn (Protected Connected Index) from protected area polygons using data pulled from the World Database of Protected Areas or user-input polygons. The pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
     "author": [
       {
-        "name": null,
-        "email": null,
-        "identifier": null
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca"
       }
     ],
     "license": null,
     "external_link": null,
     "references": [
       {
-        "text": null,
-        "doi": null
+        "text": "Saura et al. 2017",
+        "doi": "10.1016/j.ecolind.2016.12.047"
       },
       {
-        "text": null,
-        "doi": null
+        "text": "Saura et al. 2018",
+        "doi": "10.1016/j.biocon.2017.12.020"
+      },
+      {
+        "text": "Godínez-Gómez and Correa Ayram 2020",
+        "doi": "10.5281/zenodo.3771605"
       }
     ]
   }
