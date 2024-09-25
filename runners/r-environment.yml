@@ -30,3 +30,4 @@ dependencies:
   - r-stars
   - r-terra
   - r-tidyselect
+  - r-ggrepel

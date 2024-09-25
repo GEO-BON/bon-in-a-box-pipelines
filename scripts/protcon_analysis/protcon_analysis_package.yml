@@ -76,3 +76,13 @@ outputs:
     label: ProtConn plot with dispersal presets
     description: Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km
     type: image/png
+# conda:
+#   channels:
+#     - r
+#   dependencies:
+#     - r-terra
+#     - r-dplyr
+#     - r-ggplot2
+#     - r-ggrepel
+#     #- r-Makurhini - not yet in anaconda
+#     - r-rjson
