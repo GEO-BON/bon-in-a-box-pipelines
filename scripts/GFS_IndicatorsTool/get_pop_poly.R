@@ -14,6 +14,7 @@ obs_data = read.table(input$species_obs, header=T)
 
 # restrict observation to countries of interest, if specified
 countries = input$countries
+sf_use_s2(F)
 
 if (length(countries)>0) {
 
@@ -28,6 +29,7 @@ if (length(countries)>0) {
   obs_data = obs_data[lengths(points_in_poly)>0,]
 
 }
+sf_use_s2(T)
 
 
 # get radius for buffer calculation
@@ -66,7 +68,7 @@ PopPoly = sf_dissolve(circles_sf, 'pop')
 
 
 ## remove overlap between features 
-PopPoly=sf_dissolve(st_intersection(PopPoly),'pop')
+PopPoly=sf_dissolve(st_intersection(st_cast(PopPoly,'MULTIPOLYGON')),'pop')
 
 ## correct geometries --> if geometry collections--> extract only polygons 
 for (i in which(st_geometry_type(PopPoly)=='GEOMETRYCOLLECTION')) {
@@ -75,7 +77,8 @@ for (i in which(st_geometry_type(PopPoly)=='GEOMETRYCOLLECTION')) {
 PopPoly=PopPoly[which(st_geometry_type(PopPoly)!='GEOMETRYCOLLECTION'),]
 
 ## re-dissolve everything: 1 multipolygon per population
-PopPoly=sf_dissolve(PopPoly, 'pop')
+PopPoly=sf_dissolve(st_cast(PopPoly,'MULTIPOLYGON'), 'pop')
+
 
 
 

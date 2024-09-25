@@ -1,4 +1,4 @@
-packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets')
+packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets','colorspace')
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 
@@ -11,6 +11,7 @@ library(TeachingDemos)
 library(dplyr)
 library(plotly)
 library(geojsonsf)
+library(colorspace)
 
 print('loading input data')
 
@@ -23,19 +24,18 @@ pop_habitat_area = read.table(input$popArea, row.names=1, header=T, sep='\t')
 NeNc = input$NeNc
 PDen = input$PopDensity
 
-# # # 
-# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/1c00ffe1a27b5e301d22978b4f72d626/population_polygons.geojson')
-# habitat = stack('output/GFS_IndicatorsTool/get_TCY/6d9c7ab8acc42796fa676832a5801900/TCY.tif')
-# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/f4e5632c6255fa056767ced1ad56705c/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
+# # # #
+# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/0849da3b1a7f43eb5be94cc1e2070688/population_polygons.geojson')
+# habitat = stack('output/GFS_IndicatorsTool/get_LCY/c7c9684dfcdbc58c0e535eb4ca069128/LCY.tif')
+# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/7b7eec58ceb9a01f9a5bf6e686925a57/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # NeNc = c(0.1)
 # PDen = c(500, 1000)
 
 
 
 ### Set population colors for plotting
-set.seed(123);PopCol = sample(rainbow(nrow(pop_habitat_area)), size = nrow(pop_habitat_area), replace = F) 
+set.seed(123);PopCol = darken(sample(rainbow(nrow(pop_habitat_area)), size = nrow(pop_habitat_area), replace = F) , 0.2)
 names(PopCol) = rownames(pop_habitat_area)
-
 
 ######### Calculate Ne<500 indicator
 print('calculating Ne500 indicator')
@@ -65,7 +65,7 @@ write.table(NE_table, NE_table_path,
 
 
 ##########  Plot Ne change over time
-max_Ne = log(max(pop_habitat_area,na.rm=T)*max(PDen)*max(NeNc))
+max_Ne = (max(pop_habitat_area,na.rm=T)*max(PDen)*max(NeNc))
 
 Ne_plot = file.path(outputFolder, 'NE.png')
 
@@ -76,12 +76,12 @@ for (pden in PDen) {
   
   for (nenc in NeNc) {
     
-    plot(NA, ylim=range(0,max_Ne), xlim=c(0,ncol(pop_habitat_area)+1), main=paste0('Pden=',pden,' , Ne:Nc=',nenc), axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
-    abline(h=log(500), lwd=2)
+    plot(NA, ylim=range(0,max(c(500,max_Ne))), xlim=c(0,ncol(pop_habitat_area)+1), main=paste0('Pden=',pden,' , Ne:Nc=',nenc), axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
+    abline(h=(500), lwd=2)
     
     for (pop in rownames(pop_habitat_area)) {
     
-      lNEs = log(round(pop_habitat_area[pop,]*pden*nenc))
+      lNEs = (round(pop_habitat_area[pop,]*pden*nenc))
       lNEs[is.finite(as.numeric(lNEs))==F] = 0
       
       
@@ -92,7 +92,7 @@ for (pden in PDen) {
     
   axis(1, at=1:ncol(pop_habitat_area), labels = colnames(pop_habitat_area), las=2)
   axis(2)
-  title(ylab='log(Ne)', line=2)  
+  title(ylab='Ne', line=2)  
     
   }
   
@@ -130,8 +130,8 @@ PM_plot = file.path(outputFolder, 'PM.png')
     
   ### Plot relative change in population habitat area over time
   
-  rel_pop_habitat_area = na.omit(as.matrix(pop_habitat_area)/as.numeric(pop_habitat_area[,1]))
-      
+  rel_pop_habitat_area = as.matrix(pop_habitat_area)/as.numeric(pop_habitat_area[,1])
+  rel_pop_habitat_area[is.na(rel_pop_habitat_area)] = 0    
 
   plot(NA, ylim=c(0,max(rel_pop_habitat_area,na.rm=T)), xlim=c(0,ncol(rel_pop_habitat_area)+1), main='Rel. Pop. Area', axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
 
@@ -285,7 +285,6 @@ HabitatLOSS_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(ra
 HabitatGAIN_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))} , error = function(e) {list()})
 
 
-
 ######  Map of populations
 
 popMap = plot_ly()  %>%
@@ -308,7 +307,7 @@ popMap = plot_ly()  %>%
     text=~pop,
     fillcolor = ~colorsRGB,
     showlegend = FALSE,
-    line = list(width = 0, color='Null')
+    line = list(width = 0)
   ) %>%
   # Define Mapbox layout 
   layout(mapbox = list(
@@ -322,7 +321,7 @@ popMap = plot_ly()  %>%
         source = HabitatGAIN_poly,
         below = "traces",
         type = "fill",
-        color = "rgba( 69, 149, 218, 0.6)", 
+        color = "rgba(  136, 200, 254 , 0.6)", 
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         line = list(width=0)),
       list( # habitat loss
@@ -331,7 +330,7 @@ popMap = plot_ly()  %>%
         type = "fill",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         below = "traces",
-        color = "rgba( 217, 86, 86, 0.6)",
+        color = "rgba(  254, 174, 174 , 0.6)",
         line = list(width=0)),  
       list( # habitat no change
         sourcetype = "geojson",
@@ -339,7 +338,7 @@ popMap = plot_ly()  %>%
         type = "fill",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         below = "traces",
-        color = "rgba( 73, 208, 76,  0.6)",
+        color = "rgba(   174, 251, 137,  0.6)",
         line = list(width=0))
       ),  
       domain = list(x = c(0, 1), y = c(0, 1))
@@ -354,7 +353,8 @@ popMap = plot_ly()  %>%
 
 ####### Build Ne plot over time
 
-NE_plot = plot_ly(data = merged_DF_key,
+ne500line = data.frame('TIME' = colnames(pop_habitat_area), 'ne500' = 500)
+NE_plot =   plot_ly(data = merged_DF_key,
                   x= ~TIME,
                   y= ~NE ,
                   hoverinfo = 'text',
@@ -362,7 +362,8 @@ NE_plot = plot_ly(data = merged_DF_key,
                   text=~pop,
                   color= ~pop,
                   colors = PopCol[unique(merged_DF$pop)],
-                  type = 'scatter', mode='lines') %>%
+                  type = 'scatter', mode='lines') %>% 
+    add_trace(data = ne500line, x = ~TIME, y = ~ne500, color=I('black'), line = list(width=5, dash='dot')) %>% # add line at NE500
   layout(
     xaxis = list(
       tickvals = which(colnames(int_pop_habitat_area)%in%colnames(pop_habitat_area))-1,  # Custom tick values

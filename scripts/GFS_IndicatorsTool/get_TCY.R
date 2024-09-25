@@ -41,12 +41,14 @@ latRANGE = c(bbox[2],bbox[4])
 
 
 load_stac<-function(staccollection, resamplingMethod){
+
   stac_query <- rstac::stac(
     "https://stac.geobon.org/"
   ) |>
     rstac::stac_search(
       collections = staccollection,
       bbox = bbox,
+      limit=50
     ) |>
     rstac::get_request()
   
@@ -85,10 +87,13 @@ load_stac<-function(staccollection, resamplingMethod){
   return(rasters)
 }
 
+
+
 print("Loading TC layers...", )
 ### Load and resample rasters 
 res = input$res #get desired resolution from input
 TC = load_stac("gfw-treecover2000", resamplingMethod  = 'average')
+
 
 print("Loading TCL layers...", )
 TCL0 = load_stac("gfw-lossyear", resamplingMethod = 'med') # resampling: median value, if median = 0 --> at least 50% of pixel did not loss forest 
@@ -96,7 +101,6 @@ TCL = load_stac("gfw-lossyear", resamplingMethod = 'mode') # resampling: mode wh
 
 
 TCL[TCL0==0] = 0 # set to 0 (no loss) pixels where >50% of area did not show forest loss
-
 
 ## calculate year-by-year forest presence/absence
 print('Calculating year-by-year forest presence/absence')
@@ -118,15 +122,15 @@ for (y in 1:23) {
 
 }
 
+layersNames = names(TCY)
+
 # set NAs to 0
 TCY[is.na(TCY)] = 0
+names(TCY) = layersNames
 
 # subset output to years of interest
 YOI = input$YOI
-
-
 TCY = TCY[[paste0('y',as.character(YOI))]]
-
 
 
 # write output
