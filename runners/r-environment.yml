@@ -30,13 +30,13 @@ dependencies:
   - r-stars
   - r-terra
   - r-tidyselect
-  - r-OpenStreetMap
+  - r-openstreetmap
   - r-rnaturalearth
   - r-rnaturalearthdata
   - r-raster
   - r-geojsonsf
-  - r-TeachingDemo
-  - r-spatialEco
+  - r-teachingdemos
+  - r-spatialeco
   - r-dplyr
   - r-stringr
   - r-plotly
