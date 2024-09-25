@@ -284,6 +284,25 @@
         "WDPA_PID"
       ],
       "weight": 10
+    },
+    "data>getProtectedAreasWDPA.yml@48|transboundary_distance": {
+      "description": "Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
+      "label": "Transboundary distance",
+      "type": "int",
+      "example": 0,
+      "weight": 11
+    },
+    "data>getProtectedAreasWDPA.yml@48|studyarea_file": {
+      "description": "File path of the study area of interest (leave blank if using data from WDPA)",
+      "label": "Study area file",
+      "type": "text",
+      "weight": 12
+    },
+    "data>getProtectedAreasWDPA.yml@48|protectedarea_file": {
+      "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA)",
+      "label": "Protected areas file",
+      "type": "text",
+      "weight": 13
     }
   },
   "outputs": {
