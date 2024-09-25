@@ -1,84 +1,88 @@
-script: protcon_analysis.R
-name: Connectivity of Protected Areas (PAs)
-author: 
- - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
- - name: Victor Julio Rincon (vrincon@humboldt.org.co)
-description: This script a connectivity analysis between spatial units (ej. protected areas) using a distance matrix within a specified study area. It identifies connected pairs of spatial units based on a specified distance threshold and generates a connectivity table with connectivity status
-external_link: https://github.com/GEO-BON/biab-2.0/scripts/studyarea_to_WKT/studyarea_to_WKT.R
-
+script: protcon_analysis_package.R
+name: Protcon analysis with Makurhini package
+description: This script calculates ProtConn using the MK_ProtConn function in the Makurhini package
+author:
+  - name: Jory Griffith (jory.griffith@mcgill.ca)
 inputs:
-  mtx_distance:
-    label: distance matrix
-    description: String path that represents the file location of a distance matrix containing distances between spatial units. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km). 
-    type: text/csv
-    example: "/scripts/protcon_analysis/input/mtx_distance.csv"
-  area_study_area:
-    label: total study area
-    description: Refers to the total area of the analyzed study area. The unit of area in which it is defined is explicitly specified as the square of the unit_distance input (m2 or km2). 
+  study_area_polygon:
+    label: Polygon of study area
+    description: Represents the map of the study area
+    type: application/geo+json
+  protected_area_polygon:
+    label: Polygon of protected areas
+    description: Represents the map of the protected areas within the study area
+    type: application/geo+json
+  studyarea_epsg:
+    label: Study area EPSG
+    description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
     type: int
-    example: 11000000000
-  distance_analysis:
-    label: distance analysis threshold
-    description: Refers to the threshold distance used to estimate if the areas are connected in a spatial analysis. This threshold value defines the maximum distance allowed between two spatial units for them to be considered as connected or neighboring. The unit of distance in which it is defined is explicitly specified in the unit_distance input (m or km).
+    example: 3395
+  distance_threshold:
+    label: Distance analysis threshold
+    description: Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.
     type: int
     example: 10000
-  unit_distance:
-    label: unit for distance measurement
-    description: Refers to the distance measurement unit (m or km) used to estimate connectivity between spatial analysis units. It defines the distance threshold for determining whether areas are considered connected.
+  transboundary_distance:
+    label: Transboundary distance
+    description: Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area. 
+    type: int
+    example: 0
+  distance_matrix_type:
+    label: Type of distance matrix
+    description: String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation
     type: options
     options:
-      - m
-      - km
-    example: "m"
-  data_spatial_unit:
-    label: path to spatial unit 
-    description: String refers to the path string where the .csv file containing information required for the calculation of the indicator is located. There must be an ID for each spatial unit, name (if any) and the area of each one of them. If the analysis is done in time, specify a date, for example if the spatial units or nodes are protected areas, specify the date of their declaration.
-    type: text/csv
-    example: "/scripts/protcon_analysis/input/spatialunits_studyarea_data.csv"
-  column_spatial_unit:
-    label: spatial unit 
-    description: String that refers to the name of the column in the spatial file with the levels used to define the spatial units. In cases where there are multiple polygons per level, they will be grouped together, and the attributes of the first listed polygon will be taken into account.
+      - "centroid"
+      - "edge"
+    example: "centroid"
+  date_column_name:
+    label: Date column name
+    description: Name of the column in the protected area file that specifies when the PA was created (STATUS_YR for WDPA data)
     type: text
-    example: "spatial_unit"
-  column_area:
-    label: path to study area geometry  
-    description: Text string representing the file path to the spatial file containing the spatial boundaries pertaining to the study area. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF) or  GeoPackage (.gpkg). This path specifies the complete path location of the file within the file system and is utilized for identifying and accessing the spatial boundaries contained within the file.
-    type: text
-    example: "area_spatial_unit"
-  column_date:
-    label: date information column 
-    description: String that refers to the name of the column in the data_spatial_unit containing the date or time information corresponding to the spatial unit levels.
-    type: text
-    example: "created_date"
-  time_interval:
-    label: time intervals
-    description: Represents the periods or intervals used for analysis. It specifies the length and units of time that will be considered for analyzing the data. For example, time intervals like 10Y (10 years), 5Y (5 years), 4M (4 months) can be used to define the time granularity for conducting the analysis.
-    type: text
-    example: "10Y"
-  time_start:
-    label: start time
-    description: Refers to the starting date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis
-    type: text
-    example: null
-  time_end:
-    label: end time 
-    description: Refers to the ending date of the time_interval. If this value is null or not provided, the minimum date from the column_date will be automatically taken as the starting date for the analysis
-    type: text
-    example: null
+    example: STATUS_YR
+  years:
+    label: Year for cutoff
+    description: Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)
+    type: int
+    example: 2024
+  start_year: 
+    label: Start year
+    description: Year for the time series plot to start
+    type: int
+    example: 1950
+  year_int: 
+    label: Year interval
+    description: Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)
+    type: int
+    example: 20
 outputs:
   protcon_result:
-    label: protcon results
+    label: Protcon results
     description: "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities"
     type: text/csv
-  donut_chart:
-    label: Donut chart
-    description: percentage of total area that is protected and percentage of protected area that is connected
+  result_plot:
+    label: Result plot
+    description: Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected
     type: image/png
-  protcon_result_preset:
-    label: protcon result with recommended preset thresholds
-    description: "Contains the result of the connectivity analysis with 3 preset thresholds of 1, 10, and 100km that cover most of the common dispersal distances"
-    type: type/csv
-  donut_chart_preset:
-    label: Donut chart with 3 thresholds
-    description: percentage of total area that is protected and percentage of protected area that is connected with 3 preset distances
+  result_yrs_plot:
+    label: Result plot yrs
+    description: Change in the percentage area that is protected and the percentage that is protected and connected over time
     type: image/png
+  result_yrs:
+    label: Year result
+    description: Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified
+    type: text/csv
+  result_preset_plot:
+    label: ProtConn plot with dispersal presets
+    description: Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km
+    type: image/png
+# conda:
+#   channels:
+#     - r
+#   dependencies:
+#     - r-terra
+#     - r-dplyr
+#     - r-ggplot2
+#     - r-ggrepel
+#     #- r-Makurhini - not yet in anaconda
+#     - r-rjson
