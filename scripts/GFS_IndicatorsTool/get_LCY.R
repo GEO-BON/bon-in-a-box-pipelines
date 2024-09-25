@@ -2,7 +2,6 @@
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
-library(raster)
 library(rjson)
 library(terra)
 library(sf)
