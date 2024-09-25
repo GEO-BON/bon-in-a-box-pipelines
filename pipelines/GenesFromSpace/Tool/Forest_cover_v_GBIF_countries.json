@@ -4,8 +4,8 @@
       "id": "114",
       "type": "io",
       "position": {
-        "x": 293.183349609375,
-        "y": 463
+        "x": 754,
+        "y": 155
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json"
@@ -15,8 +15,8 @@
       "id": "115",
       "type": "io",
       "position": {
-        "x": 325.183349609375,
-        "y": 165
+        "x": 62,
+        "y": 22
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json"
@@ -26,30 +26,30 @@
       "id": "116",
       "type": "io",
       "position": {
-        "x": 1210.5420556874246,
-        "y": 338.14186502878215
+        "x": 1501,
+        "y": 52
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
       }
     },
     {
-      "id": "117",
+      "id": "118",
       "type": "output",
       "position": {
-        "x": 1913.6897208503995,
-        "y": 344.0062774587277
+        "x": 754,
+        "y": 23
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "118",
+      "id": "119",
       "type": "output",
       "position": {
-        "x": 1014.984375,
-        "y": 111
+        "x": 2261.485593095917,
+        "y": 68.9412798016136
       },
       "data": {
         "label": "Output"
@@ -59,17 +59,17 @@
   "edges": [
     {
       "source": "114",
-      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|TCY",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|tcyy",
       "target": "116",
       "targetHandle": "pipeline@101",
-      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|TCY-116pipeline@101"
+      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|tcyy-116pipeline@101"
     },
     {
       "source": "114",
-      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|time.points",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@23|time_points",
       "target": "116",
       "targetHandle": "pipeline@102",
-      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|time.points-116pipeline@102"
+      "id": "reactflow__edge-114GFS_IndicatorsTool>get_TCY.yml@23|time_points-116pipeline@102"
     },
     {
       "source": "115",
@@ -77,13 +77,6 @@
       "target": "116",
       "targetHandle": "pipeline@100",
       "id": "reactflow__edge-115GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-116pipeline@100"
-    },
-    {
-      "source": "116",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot",
-      "target": "117",
-      "targetHandle": null,
-      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot-117"
     },
     {
       "source": "115",
@@ -98,6 +91,34 @@
       "target": "118",
       "targetHandle": null,
       "id": "reactflow__edge-115GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-118"
+    },
+    {
+      "source": "116",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot",
+      "target": "119",
+      "targetHandle": null,
+      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot-119"
+    },
+    {
+      "source": "116",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|ne_table",
+      "target": "119",
+      "targetHandle": null,
+      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@127|ne_table-119"
+    },
+    {
+      "source": "116",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|pm",
+      "target": "119",
+      "targetHandle": null,
+      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@127|pm-119"
+    },
+    {
+      "source": "116",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|ne500",
+      "target": "119",
+      "targetHandle": null,
+      "id": "reactflow__edge-116GFS_IndicatorsTool>get_Indicators.yml@127|ne500-119"
     }
   ],
   "inputs": {
@@ -108,7 +129,7 @@
       "type": "float",
       "example": 0.01
     },
-    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json@114|GFS_IndicatorsTool>get_TCY.yml@23|YOI": {
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json@114|GFS_IndicatorsTool>get_TCY.yml@23|yoi": {
       "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
       "label": "Years of interest",
       "weight": 1,
@@ -156,56 +177,81 @@
       "type": "int",
       "example": 1980
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|pipeline@107": {
-      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, the first one will be used in figure.",
-      "label": "Ne:Nc ratio estimate",
-      "weight": 7,
-      "type": "float[]",
-      "example": [
-        "0.1",
-        "0.2"
-      ]
-    },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|pipeline@105": {
-      "description": "Set a name for the pipeline run, for instance indicating species of interest, region, type of habitat map, and monitoring period. ",
-      "label": "Title of the run",
-      "weight": 8,
-      "type": "text",
-      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
-    },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|pipeline@106": {
-      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, the first one will be used in figures. ",
-      "label": "Population density",
-      "weight": 9,
-      "type": "float[]",
-      "example": [
-        "50",
-        "100",
-        "500"
-      ]
-    },
     "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|pipeline@22": {
       "description": "countries of interest, will be used to look for GBIF observations.",
       "label": "Countries list",
-      "weight": 10,
+      "weight": 7,
       "type": "text[]",
       "example": [
         "Mexico",
         "Guatemala"
       ]
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|pipeline@16": {
+      "description": "String, projection system of the coordinates in bbox",
+      "label": "projection system",
+      "weight": 8,
+      "type": "text",
+      "example": "EPSG:4326"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@127|ne_nc": {
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
+      "label": "Ne:Nc ratio estimate",
+      "weight": 9,
+      "type": "float[]",
+      "example": [
+        0.1,
+        0.2
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@127|pop_density": {
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
+      "label": "Population density",
+      "weight": 10,
+      "type": "float[]",
+      "example": [
+        50,
+        100,
+        1000
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@127|runtitle": {
+      "description": "Set a name for the pipeline run.",
+      "label": "Title of the run",
+      "weight": 11,
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
     }
   },
   "outputs": {
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@104|Interactive_plot": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot": {
       "description": "An interactive interface to explore indicators trends across geographical space and time.",
       "label": "Interactive plot",
       "weight": 0,
       "type": "text/html"
     },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@127|ne500": {
+      "description": "Estimated proportion of populations with Ne>500 at latest time point.",
+      "label": "Ne>500 indicator",
+      "weight": 1,
+      "type": "float"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@127|pm": {
+      "description": "Estimated proportion of mantained populations, comparing earliest and latest time point.",
+      "label": "Population maintained indicator",
+      "weight": 2,
+      "type": "float"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@116|GFS_IndicatorsTool>get_Indicators.yml@127|ne_table": {
+      "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
+      "label": "Effective population size",
+      "weight": 3,
+      "type": "text/tab-separated-values"
+    },
     "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@115|GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons": {
       "description": "Path to geojson file storing polygons of populations.",
       "label": "Polygons of populations",
-      "weight": 1,
+      "weight": 4,
       "type": "application/geo+json",
       "example": ""
     }

@@ -37,17 +37,17 @@
   "edges": [
     {
       "source": "23",
-      "sourceHandle": "TCY",
+      "sourceHandle": "tcyy",
       "target": "26",
       "targetHandle": null,
-      "id": "reactflow__edge-23TCY-26"
+      "id": "reactflow__edge-23tcyy-26"
     },
     {
       "source": "23",
-      "sourceHandle": "time.points",
+      "sourceHandle": "time_points",
       "target": "27",
       "targetHandle": null,
-      "id": "reactflow__edge-23time.points-27"
+      "id": "reactflow__edge-23time_points-27"
     }
   ],
   "inputs": {
@@ -65,7 +65,7 @@
       "example": 0.01,
       "weight": 1
     },
-    "GFS_IndicatorsTool>get_TCY.yml@23|YOI": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|yoi": {
       "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
       "label": "Years of interest",
       "type": "int[]",
@@ -80,13 +80,13 @@
     }
   },
   "outputs": {
-    "GFS_IndicatorsTool>get_TCY.yml@23|TCY": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|tcyy": {
       "description": "Tif file of year-by-year tree cover, cropped to bbox extent",
       "label": "Tree cover year-by-year",
       "type": "image/tiff;application=geotiff",
       "weight": 0
     },
-    "GFS_IndicatorsTool>get_TCY.yml@23|time.points": {
+    "GFS_IndicatorsTool>get_TCY.yml@23|time_points": {
       "description": "List of years for which tree cover information is available.",
       "label": "Years with tree cover information",
       "type": "text[]",

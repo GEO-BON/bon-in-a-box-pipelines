@@ -1,4 +1,4 @@
-#packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets')
+#packages <- c("raster", "rjson", "geojsonsf", "terra",'sf','rnaturalearth','rnaturalearthdata', 'TeachingDemos','dplyr','plotly','htmlwidgets','colorspace')
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
@@ -11,6 +11,7 @@ library(TeachingDemos)
 library(dplyr)
 library(plotly)
 library(geojsonsf)
+library(colorspace)
 
 print('loading input data')
 
@@ -19,23 +20,22 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 pop_poly <-st_read(input$population_polygons)
 habitat = stack(input$habitat_map)
-pop_habitat_area = read.table(input$popArea, row.names=1, header=T, sep='\t')
-NeNc = input$NeNc
-PDen = input$PopDensity
+pop_habitat_area = read.table(input$pop_area, row.names=1, header=T, sep='\t')
+ne_nc = input$ne_nc
+PDen = input$pop_density
 
-# # # 
-# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/1c00ffe1a27b5e301d22978b4f72d626/population_polygons.geojson')
-# habitat = stack('output/GFS_IndicatorsTool/get_TCY/6d9c7ab8acc42796fa676832a5801900/TCY.tif')
-# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/f4e5632c6255fa056767ced1ad56705c/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
-# NeNc = c(0.1)
+# # # #
+# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/0849da3b1a7f43eb5be94cc1e2070688/population_polygons.geojson')
+# habitat = stack('output/GFS_IndicatorsTool/get_LCY/c7c9684dfcdbc58c0e535eb4ca069128/lcyy.tif')
+# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/7b7eec58ceb9a01f9a5bf6e686925a57/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
+# ne_nc = c(0.1)
 # PDen = c(500, 1000)
 
 
 
 ### Set population colors for plotting
-set.seed(123);PopCol = sample(rainbow(nrow(pop_habitat_area)), size = nrow(pop_habitat_area), replace = F) 
+set.seed(123);PopCol = darken(sample(rainbow(nrow(pop_habitat_area)), size = nrow(pop_habitat_area), replace = F) , 0.2)
 names(PopCol) = rownames(pop_habitat_area)
-
 
 ######### Calculate Ne<500 indicator
 print('calculating Ne500 indicator')
@@ -43,57 +43,57 @@ print('calculating Ne500 indicator')
 # get populations habitat area at last time point
 Pop_HA_T = pop_habitat_area[,ncol(pop_habitat_area),drop=F]
 
-# Create table showing populations Ne, calculated using different NeNC and PDen estimates
-Ne_table = c()
+# Create table showing populations Ne, calculated using different ne_nc and PDen estimates
+ne_table = c()
 
 for (pden in PDen) {
-  
-  for (nenc in NeNc) {
-    
-      NEs = round(Pop_HA_T*pden*nenc)
-      Ne_table = rbind(Ne_table, c(pden, nenc, NEs[,1]))
-    
-    
+
+  for (nenc_single_sp in ne_nc) {
+
+      NEs = round(Pop_HA_T*pden*nenc_single_sp)
+      ne_table = rbind(ne_table, c(pden, nenc_single_sp, NEs[,1]))
+
+
   }
 }
 
-Ne_table = data.frame(rbind(c('Pden', 'Ne:Nc', rownames(Pop_HA_T)), Ne_table))
-Ne_table_path = file.path(outputFolder, 'NE.tsv')
+ne_table = data.frame(rbind(c('Pden', 'Ne:Nc', rownames(Pop_HA_T)), ne_table))
+ne_table_path = file.path(outputFolder, 'NE.tsv')
 
-write.table(Ne_table, Ne_table_path,
+write.table(ne_table, ne_table_path,
             append = F, row.names = F, col.names = F, sep = "\t", quote=F)
 
 
 ##########  Plot Ne change over time
-max_Ne = log(max(pop_habitat_area,na.rm=T)*max(PDen)*max(NeNc))
+max_Ne = (max(pop_habitat_area,na.rm=T)*max(PDen)*max(ne_nc))
 
-Ne_plot = file.path(outputFolder, 'NE.png')
+ne_plot = file.path(outputFolder, 'NE.png')
 
 {
-png(filename = Ne_plot, width = 1000*length(PDen), height = 1000*length(NeNc), res = 300)
-par(mfrow=c(length(PDen), length(NeNc)));par(mar=c(3,3,4,1))
+png(filename = ne_plot, width = 1000*length(PDen), height = 1000*length(ne_nc), res = 300)
+par(mfrow=c(length(PDen), length(ne_nc)));par(mar=c(3,3,4,1))
 for (pden in PDen) {
-  
-  for (nenc in NeNc) {
-    
-    plot(NA, ylim=range(0,max_Ne), xlim=c(0,ncol(pop_habitat_area)+1), main=paste0('Pden=',pden,' , Ne:Nc=',nenc), axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
-    abline(h=log(500), lwd=2)
-    
+
+  for (nenc_single_sp in ne_nc) {
+
+    plot(NA, ylim=range(0,max(c(500,max_Ne))), xlim=c(0,ncol(pop_habitat_area)+1), main=paste0('Pden=',pden,' , Ne:Nc=',nenc_single_sp), axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
+    abline(h=(500), lwd=2)
+
     for (pop in rownames(pop_habitat_area)) {
-    
-      lNEs = log(round(pop_habitat_area[pop,]*pden*nenc))
+
+      lNEs = (round(pop_habitat_area[pop,]*pden*nenc_single_sp))
       lNEs[is.finite(as.numeric(lNEs))==F] = 0
-      
-      
+
+
       lines(1:length(lNEs), lNEs, col=adjustcolor(PopCol[pop], 0.7))
       shadowtext(length(lNEs), lNEs[length(lNEs)], pos=2, rownames(lNEs), cex=0.75, col=adjustcolor(PopCol[pop],0.7))
-      
-    } 
-    
+
+    }
+
   axis(1, at=1:ncol(pop_habitat_area), labels = colnames(pop_habitat_area), las=2)
   axis(2)
-  title(ylab='log(Ne)', line=2)  
-    
+  title(ylab='Ne', line=2)
+
   }
 
 
@@ -112,38 +112,38 @@ PM = 1-mean(pop_habitat_area[,ncol(pop_habitat_area)][pop_habitat_area[,1]!=0]==
 
 ##########  Plot changes in population area
 
-PM_plot = file.path(outputFolder, 'PM.png')
+pm_plot = file.path(outputFolder, 'PM.png')
 
 {
-  png(filename = PM_plot, width = 2000, height = 1000, res = 300)
+  png(filename = pm_plot, width = 2000, height = 1000, res = 300)
   par(mfrow=c(1,2));par(mar=c(3,3,3,2))
-  
+
   ### Plot population habitat area over time
   plot(NA, ylim=c(0,max(pop_habitat_area, na.rm=T)), xlim=c(0,ncol(pop_habitat_area)+1), main='Pop. Area [km2]', axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
-  
+
   for (pop in rownames(pop_habitat_area)) {
         lines(1:ncol(pop_habitat_area), pop_habitat_area[pop,], col=adjustcolor(PopCol[pop], 0.7))
         shadowtext(ncol(pop_habitat_area), pop_habitat_area[pop,ncol(pop_habitat_area)], pos=2, pop, cex=0.75, col=adjustcolor(PopCol[pop],0.7))
-      } 
+      }
       axis(1, at=1:ncol(pop_habitat_area), labels = colnames(pop_habitat_area), las=2)
       axis(2)
-      title(ylab='area [km2]', line=2)  
-    
-    
+      title(ylab='area [km2]', line=2)
+
+
   ### Plot relative change in population habitat area over time
-  
-  rel_pop_habitat_area = na.omit(as.matrix(pop_habitat_area)/as.numeric(pop_habitat_area[,1]))
-      
+
+  rel_pop_habitat_area = as.matrix(pop_habitat_area)/as.numeric(pop_habitat_area[,1])
+  rel_pop_habitat_area[is.na(rel_pop_habitat_area)] = 0
 
   plot(NA, ylim=c(0,max(rel_pop_habitat_area,na.rm=T)), xlim=c(0,ncol(rel_pop_habitat_area)+1), main='Rel. Pop. Area', axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
 
   for (pop in rownames(rel_pop_habitat_area)) {
     lines(1:ncol(rel_pop_habitat_area), rel_pop_habitat_area[pop,], col=adjustcolor(PopCol[pop], 0.7))
     shadowtext(ncol(rel_pop_habitat_area), rel_pop_habitat_area[pop,ncol(pop_habitat_area)], pos=2, pop, cex=0.75, col=adjustcolor(PopCol[pop],0.7))
-  } 
+  }
   axis(1, at=1:ncol(rel_pop_habitat_area), labels = colnames(rel_pop_habitat_area), las=2)
   axis(2)
-  title(ylab='% area change', line=2)  
+  title(ylab='% area change', line=2)
 
   dev.off()
 }
@@ -171,14 +171,14 @@ lab_pos[which.min(pop_coord[,1])] = 4
 lab_pos[which.max(pop_coord[,1])] = 2
 lab_pos[which.min(pop_coord[,2])] = 3
 
-# calculate lon-lat ratio for map proportions 
+# calculate lon-lat ratio for map proportions
 LLratio = nrow(HabitatT0)/ncol(HabitatT0)
 
 # set figure path
-POP_plot = file.path(outputFolder, 'POP_labels.png')
+pop_plot = file.path(outputFolder, 'POP_labels.png')
 
 {
-png(POP_plot, width = 1000, height = 1000*LLratio)
+png(pop_plot, width = 1000, height = 1000*LLratio)
 par(mar=c(0,0,0,0))
 plot(NA, xlim=extent(HabitatT0)[1:2], ylim=extent(HabitatT0)[3:4], xaxs='i', yaxs='i')
 plot(HabitatT0, add=T, legend=F, col=adjustcolor('green2',0.2))
@@ -203,26 +203,35 @@ ints = round(50/ncol(pop_habitat_area)) # set number of intermediary points betw
 int_pop_habitat_area = data.frame()
 
 for (pop in rownames(pop_habitat_area)) {
-  
+
   int_area = c(pop_habitat_area[pop,1])
-  
+
   for (i in 2:ncol(pop_habitat_area)) {
-    
+
     int_area = c(int_area, seq(pop_habitat_area[pop,i-1], pop_habitat_area[pop,i],length.out=ints)[-1])
-    
+
   }
-  
+
   names(int_area) = paste0('int.',1:length(int_area))
   names(int_area)[seq(1, length(int_area), by=ints-1)] = colnames(pop_habitat_area)
-  
+
   int_pop_habitat_area[pop,names(int_area)] = int_area
 }
 
 
 ##### Create a shared data-frame with shapes of populations, Ne over time, Area over time and Relative Area over time.
 
-# Add shapes of populations to shared DF (split polygons in multipolygons, than revert to multipolygon for correct display in mapbox)
-merged_DF = st_cast(st_cast(pop_poly, "POLYGON"),'MULTIPOLYGON')
+# Plotly does not allow to click on polygon fills, but only on edges. We therefore split population polygons into a grid to facilitate selection on interactive map.
+
+gridRes = as.numeric(sqrt(sum(st_area(pop_poly)/1000000)/(250))/100) ### grid resolution to obtain ~500 cells
+
+# make grid
+grid = st_make_grid(pop_poly, cellsize = c(gridRes,gridRes))
+pop_grid = st_intersection(pop_poly, grid)
+
+# create shared dataframe object (force convertion to multipolygon)
+merged_DF = st_cast(pop_grid, 'MULTIPOLYGON')
+
 
 
 # add colors info
@@ -239,9 +248,9 @@ for (pop in rownames(int_pop_habitat_area)) {
 
   for (y in colnames(int_pop_habitat_area)) {
 
-    
+
     HA = int_pop_habitat_area[pop,y] # total area
-    NE = HA*PDen[1]*NeNc[1] # effective population size estiamate
+    NE = HA*PDen[1]*ne_nc[1] # effective population size estiamate
     HAR = HA / int_pop_habitat_area[pop,1] # relative area
 
 
@@ -278,7 +287,6 @@ HabitatLOSS_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(ra
 HabitatGAIN_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))} , error = function(e) {list()})
 
 
-
 ######  Map of populations
 
 popMap = plot_ly()  %>%
@@ -301,11 +309,11 @@ popMap = plot_ly()  %>%
     text=~pop,
     fillcolor = ~colorsRGB,
     showlegend = FALSE,
-    line = list(width = 1, color='grey')
+    line = list(width = 0)
   ) %>%
-  # Define Mapbox layout 
+  # Define Mapbox layout
   layout(mapbox = list(
-    style = 'carto-positron',  
+    style = 'carto-positron',
     zoom = 5,          # Adjust zoom level
     center = list(lon = mean(st_coordinates(st_centroid(pop_poly))[,1]), # Center the map
                   lat = mean(st_coordinates(st_centroid(pop_poly))[,2])),
@@ -315,7 +323,7 @@ popMap = plot_ly()  %>%
         source = HabitatGAIN_poly,
         below = "traces",
         type = "fill",
-        color = "rgba( 69, 149, 218, 0.6)", 
+        color = "rgba(  136, 200, 254 , 0.6)",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         line = list(width=0)),
       list( # habitat loss
@@ -324,30 +332,31 @@ popMap = plot_ly()  %>%
         type = "fill",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         below = "traces",
-        color = "rgba( 217, 86, 86, 0.6)",
-        line = list(width=0)),  
+        color = "rgba(  254, 174, 174 , 0.6)",
+        line = list(width=0)),
       list( # habitat no change
         sourcetype = "geojson",
         source = HabitatNC_poly,
         type = "fill",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         below = "traces",
-        color = "rgba( 73, 208, 76,  0.6)",
+        color = "rgba(   174, 251, 137,  0.6)",
         line = list(width=0))
-      ),  
+      ),
       domain = list(x = c(0, 1), y = c(0, 1))
   ),
   xaxis=list(),yaxis=list()
   )  %>%
   # Provide your Mapbox token here
-  config(mapboxAccessToken = 'your_mapbox_access_token') 
+  config(mapboxAccessToken = 'your_mapbox_access_token')
 
 
 
 
 ####### Build Ne plot over time
 
-NE_plot = plot_ly(data = merged_DF_key,
+ne500line = data.frame('TIME' = colnames(pop_habitat_area), 'ne500' = 500)
+NE_plot =   plot_ly(data = merged_DF_key,
                   x= ~TIME,
                   y= ~NE ,
                   hoverinfo = 'text',
@@ -356,6 +365,7 @@ NE_plot = plot_ly(data = merged_DF_key,
                   color= ~pop,
                   colors = PopCol[unique(merged_DF$pop)],
                   type = 'scatter', mode='lines') %>%
+    add_trace(data = ne500line, x = ~TIME, y = ~ne500, color=I('black'), line = list(width=5, dash='dot')) %>% # add line at ne500
   layout(
     xaxis = list(
       tickvals = which(colnames(int_pop_habitat_area)%in%colnames(pop_habitat_area))-1,  # Custom tick values
@@ -407,7 +417,7 @@ HA_plot = plot_ly(data = merged_DF_key,
       showticklabels = TRUE, # Show axis tick labels
       domain = c(0.1,0.9)
     )
-  ) %>% hide_legend() 
+  ) %>% hide_legend()
 
 
 
@@ -448,7 +458,7 @@ HAR_plot = plot_ly(data = merged_DF_key,
 
 ####### Build Ne table over time by Ne:Nc and Pden estimate
 
-NE_matrix = as.matrix(Ne_table)
+NE_matrix = as.matrix(ne_table)
 NE_matrix[is.na(NE_matrix)] = '-'
 
 NE_mat =  plot_ly(
@@ -477,19 +487,19 @@ NE_mat =  plot_ly(
 NE_outputs = plotly::subplot(NE_plot, NE_mat, nrows=2, titleX = T, titleY = T) %>% hide_legend()
 
 # merge PM plots
-PM_plots = plotly::subplot(HA_plot, HAR_plot, nrows=2, titleX = T, titleY = T) %>% hide_legend()
+pm_plots = plotly::subplot(HA_plot, HAR_plot, nrows=2, titleX = T, titleY = T) %>% hide_legend()
 
 ### Get plot title
-Title = input$RunTitle
+Title = input$runtitle
 
 ### Get rounded NE>500 indicator
-Ne500 = round(mean(as.numeric(Ne_table[2,-c(1:2)])>500, na.rm=T),2)
+ne500r = round(mean(as.numeric(ne_table[2,-c(1:2)])>500, na.rm=T),2)
 
 ### Get rounded PM indicator
-PM = round(PM, 2)
+PMr = round(PM, 2)
 
 # assmeble final interface : map + NE outputs + PM plots
-INT = plotly::subplot(popMap, NE_outputs, PM_plots, margin=0.05, titleX =T, titleY = T) %>% 
+INT = plotly::subplot(popMap, NE_outputs, pm_plots, margin=0.05, titleX =T, titleY = T) %>%
   layout(  annotations = list(
     list(text='Effective population size by Ne:Nc and population density',showarrow=F, x=0.5, y=0.4,xref = "paper",  yref = "paper", xanchor = "center",  yanchor = "bottom" ),
     list(text='<i>Habitat change</i>:',showarrow=F, x=0, y=0, xref = "paper",  yref = "paper", xanchor = "left",  yanchor = "bottom" ),
@@ -497,7 +507,7 @@ INT = plotly::subplot(popMap, NE_outputs, PM_plots, margin=0.05, titleX =T, titl
     list(text='<b>no ch.</b>',showarrow=F, x=0.12, y=0, font = list(color = "rgba(  73, 208, 76, 1)"), xref = "paper",  yref = "paper", xanchor = "center",  yanchor = "bottom" ),
     list(text='<b>gain</b>',showarrow=F, x=0.14, y=0, font = list(color = "rgba( 69, 149, 218, 1)"), xref = "paper",  yref = "paper", xanchor = "left",  yanchor = "bottom" )
       ),
-    title=paste0(Title,'<br>Ne500 Indicator = ',Ne500,'; Populations Maintained Indicator = ',PM),
+    title=paste0(Title,'<br>Ne500 Indicator = ',ne500r,'; Populations Maintained Indicator = ', PMr),
     margin = 0.05)
 
 
@@ -509,11 +519,11 @@ htmlwidgets::saveWidget(INT, pathInteractive)
 
 ## Write output
 
-output <- list('Interactive_plot'= pathInteractive,
-'Ne_table'= Ne_table_path,
-'Ne500'= Ne500,
-'PM' = PM
-) 
+output <- list('interactive_plot'= pathInteractive,
+'ne_table'= ne_table_path,
+'ne500'= ne500r,
+'pm' = PM
+)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

@@ -9,3 +9,4 @@ rosm.cache
 .RData
 .DS_Store
 *.Rproj
+lib/

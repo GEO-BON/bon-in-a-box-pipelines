@@ -34,7 +34,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "image/tiff;application=geotiff",
-        "value": "/userdata/TCY.tif"
+        "value": "/userdata/tcyy.tif"
       }
     },
     {
@@ -150,15 +150,15 @@
       "source": "102",
       "sourceHandle": null,
       "target": "99",
-      "targetHandle": "time.points",
-      "id": "reactflow__edge-102-99time.points"
+      "targetHandle": "time_points",
+      "id": "reactflow__edge-102-99time_points"
     },
     {
       "source": "99",
-      "sourceHandle": "popArea",
+      "sourceHandle": "pop_area",
       "target": "127",
-      "targetHandle": "popArea",
-      "id": "reactflow__edge-99popArea-127popArea"
+      "targetHandle": "pop_area",
+      "id": "reactflow__edge-99pop_area-127pop_area"
     },
     {
       "source": "101",
@@ -176,31 +176,31 @@
     },
     {
       "source": "127",
-      "sourceHandle": "Ne_table",
+      "sourceHandle": "ne_table",
       "target": "139",
       "targetHandle": null,
-      "id": "reactflow__edge-127Ne_table-139"
+      "id": "reactflow__edge-127ne_table-139"
     },
     {
       "source": "127",
-      "sourceHandle": "PM",
+      "sourceHandle": "pm",
       "target": "140",
       "targetHandle": null,
-      "id": "reactflow__edge-127PM-140"
+      "id": "reactflow__edge-127pm-140"
     },
     {
       "source": "127",
-      "sourceHandle": "Interactive_plot",
+      "sourceHandle": "interactive_plot",
       "target": "141",
       "targetHandle": null,
-      "id": "reactflow__edge-127Interactive_plot-141"
+      "id": "reactflow__edge-127interactive_plot-141"
     },
     {
       "source": "127",
-      "sourceHandle": "Ne500",
+      "sourceHandle": "ne500",
       "target": "142",
       "targetHandle": null,
-      "id": "reactflow__edge-127Ne500-142"
+      "id": "reactflow__edge-127ne500-142"
     }
   ],
   "inputs": {
@@ -215,7 +215,7 @@
       "label": "Binary map of habitat presence/absence",
       "description": "Tif file describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points.",
       "type": "image/tiff;application=geotiff",
-      "example": "/userdata/TCY.tif",
+      "example": "/userdata/tcyy.tif",
       "weight": 1
     },
     "pipeline@102": {
@@ -250,7 +250,7 @@
       ],
       "weight": 2
     },
-    "GFS_IndicatorsTool>get_Indicators.yml@127|NeNc": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne_nc": {
       "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
       "label": "Ne:Nc ratio estimate",
       "type": "float[]",
@@ -260,7 +260,7 @@
       ],
       "weight": 3
     },
-    "GFS_IndicatorsTool>get_Indicators.yml@127|PopDensity": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|pop_density": {
       "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
       "label": "Population density",
       "type": "float[]",
@@ -271,7 +271,7 @@
       ],
       "weight": 4
     },
-    "GFS_IndicatorsTool>get_Indicators.yml@127|RunTitle": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|runtitle": {
       "description": "Set a name for the pipeline run.",
       "label": "Title of the run",
       "type": "text",
@@ -280,25 +280,25 @@
     }
   },
   "outputs": {
-    "GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne_table": {
       "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
       "label": "Effective population size",
       "type": "text/tab-separated-values",
       "weight": 0
     },
-    "GFS_IndicatorsTool>get_Indicators.yml@127|PM": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|pm": {
       "description": "Estimated proportion of mantained populations, comparing earliest and latest time point.",
       "label": "Population maintained indicator",
       "type": "float",
       "weight": 1
     },
-    "GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot": {
       "description": "An interactive interface to explore indicators trends across geographical space and time.",
       "label": "Interactive plot",
       "type": "text/html",
       "weight": 2
     },
-    "GFS_IndicatorsTool>get_Indicators.yml@127|Ne500": {
+    "GFS_IndicatorsTool>get_Indicators.yml@127|ne500": {
       "description": "Estimated proportion of populations with Ne>500 at latest time point.",
       "label": "Ne>500 indicator",
       "type": "float",

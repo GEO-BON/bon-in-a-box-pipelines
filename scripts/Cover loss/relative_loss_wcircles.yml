@@ -1,19 +1,19 @@
 script: relative_loss_wcircles.R
 name: relative loss with circles
 description: plot relative loss
-author: 
+author:
   - name: Simon Pahls
 
-inputs: 
-  PDG.Table:
+inputs:
+  pdg_table:
      label: Habitat Area Loss
      description: Vector of Loss of Habitat Area per year of all habitat areas
      type: text/tab-separated-values
-     example: 
+     example:
   SDM:
     label: SDM
     description: directory of a shapefile(.shp) containing Polygons produced by a SDM
-    type: application/geo+json	
+    type: application/geo+json
     example: "Cover loss/Pcinerascens_Observations4326.shp"
 
 outputs:

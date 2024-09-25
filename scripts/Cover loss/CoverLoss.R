@@ -40,7 +40,7 @@ TCL = crop(raster(input$TCL), c(lonRANGE,latRANGE))
 #   if(is.null(SDM$DN)){
 #     SDM$ID<-SDM$FID
 #   }else{SDM$ID=SDM$DN}
-#   
+#
 # }
 SDM$ID<-row.names(SDM)
 ### crop SDM to extent of boundaries
@@ -67,14 +67,14 @@ names(PDG.TL)=SDM$ID
 AREAS=by(area(SDM)/1000000, SDM$ID, sum)
 
 ### Summarize cells of tree-cover-loss by PDG
-PDG.TABLE=data.frame(matrix(nrow=0, ncol=23));colnames(PDG.TABLE)=0:22
+pdg_table=data.frame(matrix(nrow=0, ncol=23));colnames(pdg_table)=0:22
 
 for (pdg in as.character(unique(SDM$ID))) {
   ### get cells from PDG
   e_PDG.TL=unlist(PDG.TL[names(PDG.TL)==pdg])
   e_PDG.TC=unlist(PDG.TC[names(PDG.TC)==pdg])
 
-  
+
 
   ### get initial tree cover
   tci = AREAS[pdg]*mean(e_PDG.TC)/100 # total area * average tree cover in all pixels
@@ -95,25 +95,25 @@ for (pdg in as.character(unique(SDM$ID))) {
   }
 
   ### count number of cells per year of loss
-  PDG.TABLE[pdg,1:23] = tci
+  pdg_table[pdg,1:23] = tci
 
 }
 ###define Path for outputs
 TCL_bin_p<-file.path(outputFolder, "TCL_bin.tif")
-PDG.TABLE_p<-file.path(outputFolder, "PDG.TABLE.csv")
+pdg_table_p<-file.path(outputFolder, "pdg_table.csv")
 
 ### write outputs
-write.csv(PDG.TABLE,PDG.TABLE_p, row.names = F)
+write.csv(pdg_table,pdg_table_p, row.names = F)
 writeRaster(TCL_bin,TCL_bin_p, overwrite=TRUE, format = "GTiff")
 
 
 ### Output result to JSON
-output <- list("AREAS"=AREAS, "PDG.Table"=PDG.TABLE_p, "TCL_bin"=TCL_bin_p#"cols"=CC
+output <- list("AREAS"=AREAS, "pdg_table"=pdg_table_p, "TCL_bin"=TCL_bin_p#"cols"=CC
   # Add your outputs here "key" = "value"
   # The output keys correspond to those described in the yml file.
     #"error" = "Some error", # halt the pipeline
     #"warning" = "Some warning", # display a warning without halting the pipeline
-) 
+)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

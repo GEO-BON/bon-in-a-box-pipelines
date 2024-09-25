@@ -9,28 +9,28 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 
 pointcount<-input$points
-PDG.TABLE<-read.csv(input$PDG.TABLE)
+pdg_table<-read.csv(input$pdg_table)
 
-if(is.null(input$popdensity)){
-  popdensity<-pointcount/sum(PDG.TABLE[1])
-}else(popdensity<-input$popdensity)
-print(popdensity)
-NeNcratio<-input$NeNcratio
+if(is.null(input$pop_density)){
+  pop_density<-pointcount/sum(pdg_table[1])
+}else(pop_density<-input$pop_density)
+print(pop_density)
+ne_ncratio<-input$ne_ncratio
 
-Ne<-PDG.TABLE[22]*popdensity*NeNcratio
+Ne<-pdg_table[22]*pop_density*ne_ncratio
 Ne500<-Ne>=500
-Neratio<-sum(Ne500)/length(Ne[,1])
+ne_ratio<-sum(Ne500)/length(Ne[,1])
 
-PM<-PDG.TABLE[22]!=0
-PMratio<-sum(PM)/length(PM)
+PM<-pdg_table[22]!=0
+pm_ratio<-sum(PM)/length(PM)
 
-Nedata<-data.frame(c(1:length(Ne[,1])),Ne, Ne500, !PM)
-colnames(Nedata)<-c("Population ID","Ne","Ne>=500","extinct")
-path<- file.path(outputFolder, "Nedata.csv")
-write.csv(Nedata, path)
+ne_data<-data.frame(c(1:length(Ne[,1])),Ne, Ne500, !PM)
+colnames(ne_data)<-c("Population ID","Ne","Ne>=500","extinct")
+path<- file.path(outputFolder, "ne_data.csv")
+write.csv(ne_data, path)
 
 ## Outputing result to JSON
-output <- list("Nedata"=path, "Neratio"=Neratio, "PMratio"=PMratio)
+output <- list("ne_data"=path, "ne_ratio"=ne_ratio, "pm_ratio"=pm_ratio)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

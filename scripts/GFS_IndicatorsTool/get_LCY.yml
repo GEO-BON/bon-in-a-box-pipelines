@@ -18,7 +18,7 @@ inputs:
     type: float
     example: 0.01
 
-  YOI:
+  yoi:
     label: Years of interest
     description: List of years for which landcover should be extracted (maximum range 1992 - 2020).
     type: int[]
@@ -32,11 +32,11 @@ inputs:
 
 
 outputs:
-  LCY: 
+  lcyy: 
     label: Land cover year-by-year
     description: Tif file showing the year-by-year disrtribution of land cover classes of interest. 
     type: image/tiff;application=geotiff
-  time.points: 
+  time_points: 
     label: Years with land cover information 
     description: List of years for which land cover information is available.
     type: text[]

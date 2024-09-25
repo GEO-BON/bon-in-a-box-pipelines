@@ -146,17 +146,17 @@
   "edges": [
     {
       "source": "119",
-      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|LCY",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|lcyy",
       "target": "120",
       "targetHandle": "pipeline@101",
-      "id": "reactflow__edge-119GFS_IndicatorsTool>get_LCY.yml@115|LCY-120pipeline@101"
+      "id": "reactflow__edge-119GFS_IndicatorsTool>get_LCY.yml@115|lcyy-120pipeline@101"
     },
     {
       "source": "119",
-      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|time.points",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|time_points",
       "target": "120",
       "targetHandle": "pipeline@102",
-      "id": "reactflow__edge-119GFS_IndicatorsTool>get_LCY.yml@115|time.points-120pipeline@102"
+      "id": "reactflow__edge-119GFS_IndicatorsTool>get_LCY.yml@115|time_points-120pipeline@102"
     },
     {
       "source": "121",
@@ -216,31 +216,31 @@
     },
     {
       "source": "120",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|PM",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|pm",
       "target": "141",
       "targetHandle": null,
-      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|PM-141"
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|pm-141"
     },
     {
       "source": "120",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|Ne500",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|ne500",
       "target": "142",
       "targetHandle": null,
-      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|Ne500-142"
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|ne500-142"
     },
     {
       "source": "120",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot",
       "target": "143",
       "targetHandle": null,
-      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot-143"
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot-143"
     },
     {
       "source": "120",
-      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@127|ne_table",
       "target": "144",
       "targetHandle": null,
-      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table-144"
+      "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|ne_table-144"
     }
   ],
   "inputs": {
@@ -251,7 +251,7 @@
       "type": "float",
       "example": 0.01
     },
-    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|YOI": {
+    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|yoi": {
       "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
       "label": "Years of interest",
       "weight": 1,
@@ -320,7 +320,7 @@
         "150"
       ]
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|PopDensity": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|pop_density": {
       "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
       "label": "Population density",
       "weight": 9,
@@ -331,7 +331,7 @@
         1000
       ]
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|NeNc": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne_nc": {
       "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
       "label": "Ne:Nc ratio estimate",
       "weight": 10,
@@ -341,28 +341,35 @@
         0.2
       ]
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|RunTitle": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|runtitle": {
       "description": "Set a name for the pipeline run.",
       "label": "Title of the run",
       "weight": 11,
       "type": "text",
       "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|pipeline@16": {
+      "description": "String, projection system of the coordinates in bbox",
+      "label": "projection system",
+      "weight": 12,
+      "type": "text",
+      "example": "EPSG:4326"
     }
   },
   "outputs": {
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|Ne_table": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne_table": {
       "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
       "label": "Effective population size",
       "weight": 0,
       "type": "text/tab-separated-values"
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|PM": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|pm": {
       "description": "Estimated proportion of mantained populations, comparing earliest and latest time point.",
       "label": "Population maintained indicator",
       "weight": 1,
       "type": "float"
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|Interactive_plot": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|interactive_plot": {
       "description": "An interactive interface to explore indicators trends across geographical space and time.",
       "label": "Interactive plot",
       "weight": 2,
@@ -375,7 +382,7 @@
       "type": "application/geo+json",
       "example": ""
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|Ne500": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne500": {
       "description": "Estimated proportion of populations with Ne>500 at latest time point.",
       "label": "Ne>500 indicator",
       "weight": 4,

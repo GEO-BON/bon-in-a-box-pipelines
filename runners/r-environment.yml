@@ -11,15 +11,19 @@ dependencies:
   - r-devtools
   - r-dismo
   - r-downloader
+  - r-dplyr
   - r-enmeval
   - r-essentials
   - r-gdalcubes
   - r-gdalutilities
   - r-gdalutils
+  - r-geojsonsf
   - r-ggsci
   - r-rjava
   - r-jpeg
   - r-landscapemetrics
+  - r-rnaturalearth
+  - r-rnaturalearthdata
   - r-png
   - r-rcurl
   - r-rgbif
@@ -27,8 +31,8 @@ dependencies:
   - r-rredlist
   - r-rstac
   - r-sf
+  # - r-spatialeco # installation from conda for this package currently does not work properly
   - r-stars
+  - r-stringr
   - r-terra
   - r-tidyselect
-  - r-rnaturalearth
-  - r-spatialEco
