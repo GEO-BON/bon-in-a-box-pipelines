@@ -1,13 +1,10 @@
 # Script for analyzing ProtConn with the function
-packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version # nolint
-packagesNeed<- list("magrittr", "terra", "sf", "fasterize", "pbapply", "this.path", "rjson", "ggrepel", "remotes", "devtools", "jsonlite", "ggpubr") # Define the list of required packages to run the script # nolint
-lapply(packagesNeed, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
-library(devtools)
-library(remotes)
-#install_github("connectscape/Makurhini", dependencies = TRUE, upgrade = "always")
+#packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version # nolint
+packagesList<-list("terra", "tidyverse", "ggrepel", "Makurhini", "rjson")
+#lapply(packagesList, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
+#remotes::install_github("connectscape/Makurhini", dependencies = TRUE, upgrade = "always")
 
 # Load libraries
-packagesList<-list("magrittr", "terra", "tidyverse", "ggrepel", "Makurhini") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects 
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 
 Sys.getenv("SCRIPT_LOCATION")
@@ -139,17 +136,17 @@ result_preset_plot <- ggplot2::ggplot(results_preset) +
 protcon_result_path<- file.path(outputFolder, "protcon_result.csv") # Define the file path for the 'val_wkt_path' output
 write.csv(protcon_result[,c(3,4)], protcon_result_path, row.names = F ) # Write the 'val_wkt_path' output
 
-result_plot_path <- file.path(outputFolder, "result_plot.png")
-ggsave(result_plot_path, result_plot, dpi=300)
+result_plot_path <- file.path(outputFolder, "result_plot.png") # save protconn result
+ggsave(result_plot_path, result_plot, dpi=300, height=7, width=7)
 
-protcon_result_yrs_path <- file.path(outputFolder, "result_plot_yrs.png")
+protcon_result_yrs_path <- file.path(outputFolder, "result_plot_yrs.png") # save protconn result with dispersal presets
 ggsave(protcon_result_yrs_path, result_yrs_plot)
 
 protcon_result_yrs_path2 <- file.path(outputFolder, "result_plot_yrs.csv")
 write.csv(result_yrs, protcon_result_yrs_path2, row.names=F)
 
 result_plot_preset_path <- file.path(outputFolder, "result_preset_plot.png")
-ggsave(result_plot_preset_path, result_preset_plot, dpi=300)
+ggsave(result_plot_preset_path, result_preset_plot, dpi=300, height=8, width=12)
 
 
 output<- list(protcon_result = protcon_result_path,
@@ -162,4 +159,5 @@ result_preset_plot = result_plot_preset_path)
 }, error = function(e) { list(error= conditionMessage(e)) })
 
 setwd(outputFolder)
-jsonlite::write_json(output, "output.json", auto_unbox = TRUE, pretty = TRUE)
+jsonData <- toJSON(output, indent=2)
+write(jsonData, file.path(outputFolder,"output.json"))

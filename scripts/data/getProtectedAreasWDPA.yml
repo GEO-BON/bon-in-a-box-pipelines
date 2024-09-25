@@ -1,5 +1,5 @@
 script: getProtectedAreasWDPA.R
-name: Fetch protected areas
+name: Get protected areas
 description: This script finds and saves a polygon of the country and state that is specified in the input and the polygon of protected areas in that region from the world database of protected areas (WDPA).
 author:
   - name: Jory Griffith (jory.griffith@mcgill.ca)
