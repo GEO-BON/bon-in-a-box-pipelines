@@ -23,82 +23,6 @@
       }
     },
     {
-      "id": "121",
-      "type": "io",
-      "position": {
-        "x": 51.95595503546792,
-        "y": 54.14627537555472
-      },
-      "data": {
-        "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json"
-      }
-    },
-    {
-      "id": "123",
-      "type": "userInput",
-      "position": {
-        "x": -302.75291318297263,
-        "y": -43.30480366762808
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Rhinanthus alectorolophus"
-      }
-    },
-    {
-      "id": "124",
-      "type": "userInput",
-      "position": {
-        "x": -337.91052936649737,
-        "y": 1.1941266105321233
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "Switzerland"
-        ]
-      }
-    },
-    {
-      "id": "125",
-      "type": "userInput",
-      "position": {
-        "x": -335.179434467948,
-        "y": 78.08961216218418
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1995
-      }
-    },
-    {
-      "id": "126",
-      "type": "userInput",
-      "position": {
-        "x": -319.7038177155739,
-        "y": 134.83354025422244
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 1970
-      }
-    },
-    {
-      "id": "134",
-      "type": "output",
-      "position": {
-        "x": 713.984375,
-        "y": -35
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "141",
       "type": "output",
       "position": {
@@ -141,6 +65,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "145",
+      "type": "io",
+      "position": {
+        "x": -89.015625,
+        "y": 105
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json"
+      }
     }
   ],
   "edges": [
@@ -157,62 +92,6 @@
       "target": "120",
       "targetHandle": "pipeline@102",
       "id": "reactflow__edge-119GFS_IndicatorsTool>get_LCY.yml@115|time_points-120pipeline@102"
-    },
-    {
-      "source": "121",
-      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
-      "target": "120",
-      "targetHandle": "pipeline@100",
-      "id": "reactflow__edge-121GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-120pipeline@100"
-    },
-    {
-      "source": "123",
-      "sourceHandle": null,
-      "target": "121",
-      "targetHandle": "pipeline@12",
-      "id": "reactflow__edge-123-121pipeline@12"
-    },
-    {
-      "source": "124",
-      "sourceHandle": null,
-      "target": "121",
-      "targetHandle": "GFS_IndicatorsTool>get_bbox.yml@21|countries",
-      "id": "reactflow__edge-124-121GFS_IndicatorsTool>get_bbox.yml@21|countries"
-    },
-    {
-      "source": "125",
-      "sourceHandle": null,
-      "target": "121",
-      "targetHandle": "pipeline@15",
-      "id": "reactflow__edge-125-121pipeline@15"
-    },
-    {
-      "source": "126",
-      "sourceHandle": null,
-      "target": "121",
-      "targetHandle": "pipeline@14",
-      "id": "reactflow__edge-126-121pipeline@14"
-    },
-    {
-      "source": "121",
-      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
-      "target": "119",
-      "targetHandle": "GFS_IndicatorsTool>get_LCY.yml@115|population_polygons",
-      "id": "reactflow__edge-121GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-119GFS_IndicatorsTool>get_LCY.yml@115|population_polygons"
-    },
-    {
-      "source": "124",
-      "sourceHandle": null,
-      "target": "121",
-      "targetHandle": "pipeline@22",
-      "id": "reactflow__edge-124-121pipeline@22"
-    },
-    {
-      "source": "121",
-      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
-      "target": "134",
-      "targetHandle": null,
-      "id": "reactflow__edge-121GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-134"
     },
     {
       "source": "120",
@@ -241,6 +120,20 @@
       "target": "144",
       "targetHandle": null,
       "id": "reactflow__edge-120GFS_IndicatorsTool>get_Indicators.yml@127|ne_table-144"
+    },
+    {
+      "source": "145",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "120",
+      "targetHandle": "pipeline@100",
+      "id": "reactflow__edge-145GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-120pipeline@100"
+    },
+    {
+      "source": "145",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "119",
+      "targetHandle": "GFS_IndicatorsTool>get_LCY.yml@115|population_polygons",
+      "id": "reactflow__edge-145GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-119GFS_IndicatorsTool>get_LCY.yml@115|population_polygons"
     }
   ],
   "inputs": {
@@ -265,54 +158,10 @@
         2020
       ]
     },
-    "pipeline@123": {
-      "label": "Species names",
-      "description": "Scientific name of the species, used to look for occurrences in GBIF. ",
-      "type": "text",
-      "example": "Rhinanthus alectorolophus",
-      "weight": 2
-    },
-    "pipeline@126": {
-      "label": "Start year",
-      "description": "Integer, 4 digit year, start date to retrieve occurrences",
-      "type": "int",
-      "example": 1970,
-      "weight": 3
-    },
-    "pipeline@125": {
-      "label": "End year",
-      "description": "Integer, 4 digit year, end date to retrieve occurrences",
-      "type": "int",
-      "example": 1995,
-      "weight": 4
-    },
-    "pipeline@124": {
-      "label": "Countries list",
-      "description": "countries of interest, will be used to look for GBIF observations.",
-      "type": "text[]",
-      "example": [
-        "Switzerland"
-      ],
-      "weight": 5
-    },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
-      "description": "Distance [in km] to separate species observations in different populations.",
-      "label": "Distance between populations",
-      "weight": 6,
-      "type": "float",
-      "example": 25
-    },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
-      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
-      "label": "Size of buffer",
-      "weight": 7,
-      "type": "float",
-      "example": 5
-    },
     "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|lc_classes": {
       "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
       "label": "Landcover classes",
-      "weight": 8,
+      "weight": 2,
       "type": "int[]",
       "example": [
         "120",
@@ -323,7 +172,7 @@
     "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|pop_density": {
       "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
       "label": "Population density",
-      "weight": 9,
+      "weight": 3,
       "type": "float[]",
       "example": [
         50,
@@ -334,7 +183,7 @@
     "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne_nc": {
       "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
       "label": "Ne:Nc ratio estimate",
-      "weight": 10,
+      "weight": 4,
       "type": "float[]",
       "example": [
         0.1,
@@ -344,14 +193,73 @@
     "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|runtitle": {
       "description": "Set a name for the pipeline run.",
       "label": "Title of the run",
-      "weight": 11,
+      "weight": 5,
       "type": "text",
       "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
     },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|pipeline@16": {
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|pipeline@22": {
+      "description": "countries of interest, will be used to look for GBIF observations.",
+      "label": "Countries list",
+      "weight": 6,
+      "type": "text[]",
+      "example": [
+        "Mexico",
+        "Guatemala"
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
+      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
+      "label": "Size of buffer",
+      "weight": 7,
+      "type": "float",
+      "example": 10
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|data>pyLoadObservations>pyLoadObservations.yml@23|data_source": {
+      "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
+      "label": "Data source",
+      "weight": 8,
+      "type": "options",
+      "options": [
+        "gbif_pc",
+        "gbif_api"
+      ],
+      "example": "gbif_api"
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|data>pyLoadObservations>pyLoadObservations.yml@23|taxa": {
+      "description": "Array of taxa values",
+      "label": "Taxa list",
+      "weight": 9,
+      "type": "text[]",
+      "example": [
+        "Acer saccharum",
+        "Bubo scandiacus"
+      ]
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
+      "description": "Distance [in km] to separate species observations in different populations.",
+      "label": "Distance between populations",
+      "weight": 10,
+      "type": "float",
+      "example": 50
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|data>pyLoadObservations>pyLoadObservations.yml@23|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "weight": 11,
+      "type": "int",
+      "example": 2020
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|data>pyLoadObservations>pyLoadObservations.yml@23|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "weight": 12,
+      "type": "int",
+      "example": 2010
+    },
+    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country_pyload.json@145|pipeline@16": {
       "description": "String, projection system of the coordinates in bbox",
       "label": "projection system",
-      "weight": 12,
+      "weight": 13,
       "type": "text",
       "example": "EPSG:4326"
     }
@@ -375,17 +283,10 @@
       "weight": 2,
       "type": "text/html"
     },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@121|GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons": {
-      "description": "Path to geojson file storing polygons of populations.",
-      "label": "Polygons of populations",
-      "weight": 3,
-      "type": "application/geo+json",
-      "example": ""
-    },
     "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@120|GFS_IndicatorsTool>get_Indicators.yml@127|ne500": {
       "description": "Estimated proportion of populations with Ne>500 at latest time point.",
       "label": "Ne>500 indicator",
-      "weight": 4,
+      "weight": 3,
       "type": "float"
     }
   },
