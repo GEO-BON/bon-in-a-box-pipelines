@@ -31,7 +31,7 @@ protected_area$year <- lubridate::year(protected_area$date_column)
 } else (protected_area$year <- protected_area$date_column)
 
 if(is.null(protected_area$date_column)){
-  stop("Date column is not in one of the supported formats. Supported formats are year-month-day, month-day-year, day-month-year (or year/month/dat, month/day/year, or day/month/year)")
+  stop("Date column is not in one of the supported formats. Supported formats are year-month-day, month-day-year, day-month-year (or year/month/date, month/day/year, or day/month/year)")
 }
 
 print("Calculating ProtConn")

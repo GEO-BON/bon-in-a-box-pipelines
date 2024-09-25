@@ -1,0 +1,281 @@
+{
+  "nodes": [
+    {
+      "id": "47",
+      "type": "io",
+      "position": {
+        "x": 747.859375,
+        "y": 356
+      },
+      "data": {
+        "descriptionFile": "protconn_analysis>protconn_analysis.yml"
+      }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": 181.859375,
+        "y": 312
+      },
+      "data": {
+        "descriptionFile": "data>getProtectedAreasWDPA.yml"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 1279.859375,
+        "y": 359
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 1283.859375,
+        "y": 371
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "output",
+      "position": {
+        "x": 1278.859375,
+        "y": 389
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "52",
+      "type": "output",
+      "position": {
+        "x": 1277.859375,
+        "y": 400
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "53",
+      "type": "output",
+      "position": {
+        "x": 1270.859375,
+        "y": 416
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "48",
+      "sourceHandle": "study_area_polygon",
+      "target": "47",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-48study_area_polygon-47study_area_polygon"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "protected_area_polygon",
+      "target": "47",
+      "targetHandle": "protected_area_polygon",
+      "id": "reactflow__edge-48protected_area_polygon-47protected_area_polygon"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "protcon_result",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-47protcon_result-49"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "result_plot",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-47result_plot-50"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "result_yrs_plot",
+      "target": "51",
+      "targetHandle": null,
+      "id": "reactflow__edge-47result_yrs_plot-51"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "result_yrs",
+      "target": "52",
+      "targetHandle": null,
+      "id": "reactflow__edge-47result_yrs-52"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "result_preset_plot",
+      "target": "53",
+      "targetHandle": null,
+      "id": "reactflow__edge-47result_preset_plot-53"
+    }
+  ],
+  "inputs": {
+    "protconn_analysis>protconn_analysis.yml@47|studyarea_epsg": {
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.",
+      "label": "Study area EPSG",
+      "type": "int",
+      "example": 3395,
+      "weight": 0
+    },
+    "protconn_analysis>protconn_analysis.yml@47|distance_threshold": {
+      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
+      "label": "Distance analysis threshold",
+      "type": "int",
+      "example": 10000,
+      "weight": 1
+    },
+    "protconn_analysis>protconn_analysis.yml@47|transboundary_distance": {
+      "description": "Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
+      "label": "Transboundary distance",
+      "type": "int",
+      "example": 0,
+      "weight": 2
+    },
+    "protconn_analysis>protconn_analysis.yml@47|distance_matrix_type": {
+      "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
+      "label": "Type of distance matrix",
+      "type": "options",
+      "options": [
+        "centroid",
+        "edge"
+      ],
+      "example": "centroid",
+      "weight": 3
+    },
+    "protconn_analysis>protconn_analysis.yml@47|date_column_name": {
+      "description": "Name of the column in the protected area file that specifies when the PA was created (STATUS_YR for WDPA data)",
+      "label": "Date column name",
+      "type": "text",
+      "example": "STATUS_YR",
+      "weight": 4
+    },
+    "protconn_analysis>protconn_analysis.yml@47|years": {
+      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
+      "label": "Year for cutoff",
+      "type": "int",
+      "example": 2024,
+      "weight": 5
+    },
+    "protconn_analysis>protconn_analysis.yml@47|start_year": {
+      "description": "Year for the time series plot to start",
+      "label": "Start year",
+      "type": "int",
+      "example": 1950,
+      "weight": 6
+    },
+    "protconn_analysis>protconn_analysis.yml@47|year_int": {
+      "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
+      "label": "Year interval",
+      "type": "int",
+      "example": 20,
+      "weight": 7
+    },
+    "data>getProtectedAreasWDPA.yml@48|studyarea_country": {
+      "description": "Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get.",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 8
+    },
+    "data>getProtectedAreasWDPA.yml@48|studyarea_state": {
+      "description": "State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.",
+      "label": "State/Province",
+      "type": "text",
+      "weight": 9
+    },
+    "data>getProtectedAreasWDPA.yml@48|transboundary_distance": {
+      "description": "Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
+      "label": "Transboundary distance",
+      "type": "int",
+      "example": 0,
+      "weight": 10
+    },
+    "data>getProtectedAreasWDPA.yml@48|studyarea_file": {
+      "description": "File path of the study area of interest (leave blank if using data from WDPA)",
+      "label": "Study area file",
+      "type": "text",
+      "weight": 11
+    },
+    "data>getProtectedAreasWDPA.yml@48|protectedarea_file": {
+      "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA)",
+      "label": "Protected areas file",
+      "type": "text",
+      "weight": 12
+    }
+  },
+  "outputs": {
+    "protconn_analysis>protconn_analysis.yml@47|protcon_result": {
+      "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
+      "label": "Protcon results",
+      "type": "text/csv",
+      "weight": 0
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_plot": {
+      "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
+      "label": "Result plot",
+      "type": "image/png",
+      "weight": 1
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_yrs_plot": {
+      "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
+      "label": "Result plot yrs",
+      "type": "image/png",
+      "weight": 2
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_yrs": {
+      "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
+      "label": "Year result",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_preset_plot": {
+      "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
+      "label": "ProtConn plot with dispersal presets",
+      "type": "image/png",
+      "weight": 4
+    }
+  },
+  "metadata": {
+    "name": "ProtConn analysis pipeline",
+    "description": null,
+    "author": [
+      {
+        "name": null,
+        "email": null,
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": null,
+    "references": [
+      {
+        "text": null,
+        "doi": null
+      },
+      {
+        "text": null,
+        "doi": null
+      }
+    ]
+  }
+}

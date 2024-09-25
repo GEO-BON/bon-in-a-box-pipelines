@@ -1,6 +1,6 @@
-script: protcon_analysis_package.R
-name: Protcon analysis with Makurhini package
-description: This script calculates ProtConn using the MK_ProtConn function in the Makurhini package
+script: protconn_analysis.R
+name: Protconn Analysis
+description: This script calculates ProtConn from protected area polygons using the MK_ProtConn function in the Makurhini package
 author:
   - name: Jory Griffith (jory.griffith@mcgill.ca)
 inputs:
