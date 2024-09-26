@@ -38,7 +38,7 @@ if(nrow(study_area_polygon)==0){
   stop("Study area polygon does not exist. Check spelling of country and state names.")
 }  # stop if object is empty
 print("Study area downloaded")
-
+print(st_crs(study_area_polygon))
 # Convert the input distance into degrees to create buffer for pulling protected areas
 ## Get centroid of the study area
 if(input$transboundary_distance>0){
@@ -51,31 +51,31 @@ if(input$pa_input_type == "WDPA"){
     if(is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
       input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
       protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country,"&distance=", distance) # protected areas url
-      protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
+      protected_area_polygon<- sf::st_read(protected_area) %>% st_transform(st_crs(study_area_polygon)) # load protected areas as sf object
     } else { # if a state is defined
       input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
       input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
       protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state,"&distance=", distance)
-      protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
+      protected_area_polygon<- sf::st_read(protected_area) %>% st_transform(st_crs(study_area_polygon)) # load protected areas as sf object
     } 
 } else if(input$pa_input_type == "Both") {
   # load wdpa
     if(is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
       input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
       protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country,"&distance=", distance) # protected areas url
-      protected_area_polygon_wdpa <- sf::st_read(protected_area)  # load protected areas as sf object
+      protected_area_polygon_wdpa <- sf::st_read(protected_area) %>% st_transform(st_crs(study_area_polygon)) # load protected areas as sf object
     } else { # if a state is defined
       input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
       input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
       protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state,"&distance=", distance)
-      protected_area_polygon_wdpa <- sf::st_read(protected_area)  # load protected areas as sf object
+      protected_area_polygon_wdpa <- sf::st_read(protected_area) %>% st_transform(st_crs(study_area_polygon)) # load protected areas as sf object
     }
     # load file
-    protected_area_polygon_file <- sf::st_read(input$protectedarea_file)
+    protected_area_polygon_file <- sf::st_read(input$protectedarea_file) %>% st_transform(st_crs(study_area_polygon))
     # combine wdpa and file
     protected_area_polygon <- rbind(protected_area_polygon_wdpa, protected_area_polygon_file)
 } else {
-    protected_area_polygon <- sf::st_read(input$protectedarea_file)
+    protected_area_polygon <- sf::st_read(input$protectedarea_file) %>% st_transform(st_crs(study_area_polygon))
 }           
 
 
