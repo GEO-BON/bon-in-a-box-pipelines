@@ -5,6 +5,15 @@ author:
   - name: Jory Griffith (jory.griffith@mcgill.ca)
 external_link: https://github.com/GEO-BON/biab-2.0/getProtectedAreasWDPA.R
 inputs:
+  pa_input_type:
+    label: Protected area input
+    description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons. 
+    type: options
+    options:
+      - WDPA
+      - User input
+      - Both
+    example: WDPA
   studyarea_country:
     label: Country
     description: Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get. 

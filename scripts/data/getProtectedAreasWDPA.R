@@ -16,13 +16,15 @@ input <- rjson::fromJSON(file=file.path(outputFolder, "input.json"))
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "data/metersToDegreesFun.R", sep = "/"))
 
-# Define study area
-# If a state is not defined, will pull data for the whole country
 output<- tryCatch({
-if (is.null(input$studyarea_file)){
-  if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
-    input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL # nolint
-    study_area<- paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", input$studyarea_country) # study area url # nolint
+# Define study area
+
+
+# If a state is not defined, will pull data for the whole country
+if (is.null(input$studyarea_file)){ # if there is no study area file input
+  if (is.null(input$studyarea_state)){ # if there is only a country input (no state) 
+    input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL 
+    study_area<- paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", input$studyarea_country) # study area url 
   } else { # if a state is defined
    input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
    input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
@@ -44,29 +46,46 @@ distance <- m_to_deg(distance_meters=input$transboundary_distance, study_area=st
  } else {distance <- 0}
 print(paste("distance is", distance, "degrees"))
 
-if (is.null(input$protectedarea_file)){
-  if (is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
-    input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
-    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country,"&distance=", distance) # protected areas url
-  } else { # if a state is defined
-   input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
-   input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
-    protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state,"&distance=", distance)
-  } } else {protected_area <- input$protectedarea_file}           
+# Load protected area from WDPA
+if(input$pa_input_type == "WDPA"){
+    if(is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
+      input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
+      protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country,"&distance=", distance) # protected areas url
+      protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
+    } else { # if a state is defined
+      input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
+      input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
+      protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state,"&distance=", distance)
+      protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
+    } 
+} else if(input$pa_input_type == "Both") {
+  # load wdpa
+    if(is.null(input$studyarea_state)){ # if there is only a country input (no state) # nolint
+      input$studyarea_country <- gsub(" ", "+", input$studyarea_country) # Change spaces to + signs to work in the URL
+      protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_country_geojson/?country_name=", input$studyarea_country,"&distance=", distance) # protected areas url
+      protected_area_polygon_wdpa <- sf::st_read(protected_area)  # load protected areas as sf object
+    } else { # if a state is defined
+      input$studyarea_country <- gsub(" ", "+", input$studyarea_country)
+      input$studyarea_state <- gsub(" ", "+", input$studyarea_state)
+      protected_area<- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$studyarea_country, "&state_name=", input$studyarea_state,"&distance=", distance)
+      protected_area_polygon_wdpa <- sf::st_read(protected_area)  # load protected areas as sf object
+    }
+    # load file
+    protected_area_polygon_file <- sf::st_read(input$protectedarea_file)
+    # combine wdpa and file
+    protected_area_polygon <- rbind(protected_area_polygon_wdpa, protected_area_polygon_file)
+} else {
+    protected_area_polygon <- sf::st_read(input$protectedarea_file)
+}           
 
-crs_polygon<- terra::crs("+init=epsg:4326") %>% as.character()
 
-print("Study area downloaded")
 
-# Read in protected area polygon
-protected_area_polygon<- sf::st_read(protected_area)  # load protected areas as sf object
+print("Protected area downloaded")
 
 
 if(nrow(protected_area_polygon)==0){
   stop("Protected area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas")
 }  # stop if object is empty
-
-print("Protected areas downloaded")
 
 # Save study area and protected area data
 study_area_polygon_path<- file.path(outputFolder, "study_area_polygon.geojson") # Define the file path for the protected area polygon output
@@ -85,6 +104,7 @@ output <- list(
     #"error" = "Some error", # halt the pipeline
     #"warning" = "Some warning", # display a warning without halting the pipeline
 ) 
+
 }, error = function(e) { list(error= conditionMessage(e)) })
                
 jsonData <- toJSON(output, indent=2)

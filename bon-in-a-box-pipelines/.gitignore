@@ -1,0 +1,7 @@
+runner.env
+.Rproj.user
+.Rhistory
+.vscode
+**/.cache
+**/.config
+.server
