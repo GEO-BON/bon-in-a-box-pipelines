@@ -15,8 +15,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 181.859375,
-        "y": 312
+        "x": 180.859375,
+        "y": 310
       },
       "data": {
         "descriptionFile": "data>getProtectedAreasWDPA.yml"
@@ -76,6 +76,28 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "54",
+      "type": "output",
+      "position": {
+        "x": 678.859375,
+        "y": 308
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "55",
+      "type": "output",
+      "position": {
+        "x": 674.859375,
+        "y": 331
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -127,6 +149,20 @@
       "target": "53",
       "targetHandle": null,
       "id": "reactflow__edge-47result_preset_plot-53"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "study_area_polygon",
+      "target": "54",
+      "targetHandle": null,
+      "id": "reactflow__edge-48study_area_polygon-54"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "protected_area_polygon",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-48protected_area_polygon-55"
     }
   ],
   "inputs": {
@@ -264,6 +300,18 @@
       "label": "ProtConn plot with dispersal presets",
       "type": "image/png",
       "weight": 4
+    },
+    "data>getProtectedAreasWDPA.yml@48|study_area_polygon": {
+      "description": "Represents the map of the study area",
+      "label": "Polygon of study area",
+      "type": "application/geo+json",
+      "weight": 5
+    },
+    "data>getProtectedAreasWDPA.yml@48|protected_area_polygon": {
+      "description": "Represents the map of the protected areas within the study area",
+      "label": "Polygon of protected areas",
+      "type": "application/geo+json",
+      "weight": 6
     }
   },
   "metadata": {
