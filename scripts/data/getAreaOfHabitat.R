@@ -4,7 +4,7 @@
 options(timeout = max(60000000, getOption("timeout")))
 
 packages <- c("rjson", "dplyr","tidyr","purrr","terra","stars","sf","readr",
-              "geodata","gdalcubes","rredlist","stringr","httr2","geojsonsf")
+              "geodata","gdalcubes","rredlist","stringr","httr2","geojsonsf", 'rstac')
 
 #if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
@@ -19,6 +19,7 @@ print("Inputs: ")
 print(input)
 
 source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo=TRUE)
+source(file.path(path_script,"data/loadCubeFunc.R"), echo=TRUE)
 
 output<- tryCatch({
 
