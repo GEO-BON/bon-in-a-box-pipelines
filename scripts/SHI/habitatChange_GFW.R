@@ -21,7 +21,7 @@ print("Inputs: ")
 print(input)
 
 source(file.path(path_script,"data/filterCubeRangeFunc.R"), echo=TRUE) 
-source(file.path(path_script,"data/loadCubeFunc.R"), echo=TRUE)
+source(file.path(path_script,"SHI/loadCubeFunc.R"), echo=TRUE)
 
 output<- tryCatch({
 # Parameters -------------------------------------------------------------------
