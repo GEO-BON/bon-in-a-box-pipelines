@@ -131,8 +131,8 @@
       "id": "122",
       "type": "output",
       "position": {
-        "x": 482,
-        "y": 222.5
+        "x": 512,
+        "y": -72.5
       },
       "data": {
         "label": "Output"
@@ -171,17 +171,6 @@
       "data": {
         "type": "float",
         "value": 1000
-      }
-    },
-    {
-      "id": "130",
-      "type": "io",
-      "position": {
-        "x": 1101.2318573116163,
-        "y": 755.6009295569135
-      },
-      "data": {
-        "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
       }
     },
     {
@@ -408,27 +397,6 @@
       "id": "reactflow__edge-128-119spatial_res"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-130bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-130proj"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-130spatial_res"
-    },
-    {
       "source": "34",
       "sourceHandle": "clean_presence",
       "target": "132",
@@ -623,22 +591,6 @@
       "example": 1000,
       "weight": 8
     },
-    "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
-      "description": "taxonomic group for which to retrieve GBIF heatmap",
-      "label": "taxa",
-      "type": "options",
-      "options": [
-        "reptiles",
-        "plants",
-        "mammals",
-        "birds",
-        "arthropods",
-        "amphibians",
-        "all"
-      ],
-      "weight": 9,
-      "example": "plants"
-    },
     "pipeline@137": {
       "label": "collections_items",
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -647,14 +599,14 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 10
+      "weight": 9
     },
     "data>loadFromStac.yml@139|stac_url": {
       "description": "URL of the Stac catalog",
       "label": "stac_url",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 11
+      "weight": 10
     },
     "data>loadFromStac.yml@139|bbox": {
       "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
@@ -666,20 +618,20 @@
         1015207,
         1511916
       ],
-      "weight": 12
+      "weight": 11
     },
     "data>loadFromStac.yml@139|weight_matrix_with_ids": {
       "description": "Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.",
       "label": "Weight matrix with ids",
       "type": "text",
       "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n",
-      "weight": 13
+      "weight": 12
     },
     "data>loadFromStac.yml@139|mask": {
       "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
       "type": "application/dbf",
-      "weight": 14
+      "weight": 13
     }
   },
   "outputs": {
