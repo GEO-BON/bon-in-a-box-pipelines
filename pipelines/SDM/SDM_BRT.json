@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1755.4215439772288,
-        "y": 14.605256333649578
+        "x": 1611.393412006486,
+        "y": 12.803293996757034
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -50,8 +50,8 @@
       "id": "58",
       "type": "userInput",
       "position": {
-        "x": 33.07977865102396,
-        "y": 167.2102822264992
+        "x": 123.61417569800324,
+        "y": 175.44068195804283
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -92,24 +92,11 @@
       "id": "119",
       "type": "io",
       "position": {
-        "x": 1219.5371801918095,
-        "y": 295.0205518368761
+        "x": 1143.3708876970907,
+        "y": 238.90983473453917
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "120",
-      "type": "constant",
-      "position": {
-        "x": 12,
-        "y": 221.16666666666666
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": ""
       }
     },
     {
@@ -125,17 +112,6 @@
         "value": [
           "Acer saccharum"
         ]
-      }
-    },
-    {
-      "id": "122",
-      "type": "output",
-      "position": {
-        "x": 512,
-        "y": -72.5
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -248,8 +224,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 948.8423952746211,
-        "y": 608.7874478048584
+        "x": 1133.4923842871444,
+        "y": 473.97024345293426
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -304,11 +280,23 @@
       }
     },
     {
-      "id": "147",
-      "type": "constant",
+      "id": "144",
+      "type": "userInput",
       "position": {
-        "x": 116.71676733631944,
-        "y": 592.5145803017381
+        "x": 385.316650390625,
+        "y": 585
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf"
+      }
+    },
+    {
+      "id": "146",
+      "type": "userInput",
+      "position": {
+        "x": 172.316650390625,
+        "y": 463
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -317,16 +305,16 @@
       }
     },
     {
-      "id": "148",
-      "type": "userInput",
+      "id": "147",
+      "type": "constant",
       "position": {
-        "x": 59.68996702544064,
-        "y": 452.43547597567886
+        "x": 217.766078245779,
+        "y": 726.9710401672294
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "application/dbf",
-        "value": null
+        "type": "text",
+        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
       }
     }
   ],
@@ -381,25 +369,11 @@
       "id": "reactflow__edge-58-119bbox"
     },
     {
-      "source": "120",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-120-119weight_matrix_with_ids"
-    },
-    {
       "source": "121",
       "sourceHandle": null,
       "target": "96",
       "targetHandle": "taxa",
       "id": "reactflow__edge-121-96taxa"
-    },
-    {
-      "source": "121",
-      "sourceHandle": null,
-      "target": "122",
-      "targetHandle": null,
-      "id": "reactflow__edge-121-122"
     },
     {
       "source": "34",
@@ -542,11 +516,32 @@
       "id": "reactflow__edge-132env_corners-143"
     },
     {
-      "source": "120",
+      "source": "144",
       "sourceHandle": null,
       "target": "139",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-120-139weight_matrix_with_ids"
+      "targetHandle": "mask",
+      "id": "reactflow__edge-144-139mask"
+    },
+    {
+      "source": "144",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-144-119mask"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-139stac_url"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-119stac_url"
     },
     {
       "source": "58",
@@ -559,44 +554,43 @@
       "source": "147",
       "sourceHandle": null,
       "target": "139",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-147-139stac_url"
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-147-139weight_matrix_with_ids"
     },
     {
-      "source": "148",
+      "source": "147",
       "sourceHandle": null,
       "target": "119",
-      "targetHandle": "mask",
-      "id": "reactflow__edge-148-119mask"
-    },
-    {
-      "source": "148",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "mask",
-      "id": "reactflow__edge-148-139mask"
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-147-119weight_matrix_with_ids"
     }
   ],
   "inputs": {
     "pipeline@121": {
-      "label": "Taxa list",
-      "description": "Array of taxa values",
+      "label": "Species",
+      "description": "Name of species",
       "type": "text[]",
       "example": [
         "Acer saccharum"
       ],
       "weight": 0
     },
-    "pipeline@57": {
-      "label": "projection system",
-      "description": "String, projection system",
-      "type": "text",
-      "example": "EPSG:6622",
+    "pipeline@137": {
+      "label": "Environmental Predictors",
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio3",
+        "chelsa-clim|bio4",
+        "chelsa-clim|bio12",
+        "chelsa-clim|bio15"
+      ],
       "weight": 1
     },
     "pipeline@58": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "label": "Bounding Box",
+      "description": "Vector of floating point numbers. Represent the bounding box in the order xmin, ymin, xmax, ymax. Must be in the same CRS as the CRS input.",
       "type": "float[]",
       "example": [
         -2316297,
@@ -605,6 +599,13 @@
         1511916
       ],
       "weight": 2
+    },
+    "pipeline@57": {
+      "label": "Coordinate Reference System",
+      "description": "String, Projection System as an EPSG code.",
+      "type": "text",
+      "example": "EPSG:6622",
+      "weight": 3
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
@@ -615,118 +616,98 @@
         "gbif_api"
       ],
       "example": "gbif_api",
-      "weight": 3
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
-      "type": "int",
-      "example": 2010,
       "weight": 4
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
-      "description": "Max year observations wanted",
-      "label": "maximum year",
+    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
+      "description": "Earliest year of occurrence records",
+      "label": "Start Year",
       "type": "int",
-      "example": 2020,
+      "example": 2010,
       "weight": 5
     },
-    "pipeline@128": {
-      "label": "spatial resolution",
-      "description": "Integer, spatial resolution of the rasters",
-      "type": "float",
-      "example": 1000,
+    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
+      "description": "Latest year of occurrence records ",
+      "label": "End Year",
+      "type": "int",
+      "example": 2023,
       "weight": 6
     },
-    "pipeline@137": {
-      "label": "collections_items",
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
+    "pipeline@128": {
+      "label": "Spatial Resolution",
+      "description": "Integer, spatial resolution of the rasters in meters",
+      "type": "float",
+      "example": 1000,
       "weight": 7
     },
-    "data>loadFromStac.yml@119|stac_url": {
-      "description": "URL of the Stac catalog",
-      "label": "stac_url",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 8
-    },
-    "pipeline@148": {
-      "label": "mask",
+    "pipeline@144": {
+      "label": "Mask",
       "description": "Shapefile, used to mask the output rasters",
       "type": "application/dbf",
-      "example": null,
+      "weight": 8
+    },
+    "pipeline@146": {
+      "label": "STAC URL",
+      "description": "URL of the Stac Catalog to pull environmental predictors and water mask from.",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
       "weight": 9
     }
   },
   "outputs": {
-    "pipeline@121|defaultOutput": {
-      "label": "Species",
-      "description": "Species for which this model was run.",
-      "example": [
-        "Acer saccharum"
-      ],
-      "type": "text[]",
+    "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
+      "description": "Map of occurrence score between 0 and 1.",
+      "label": "Predicted SDM",
+      "type": "image/tiff;application=geotiff",
       "weight": 0
+    },
+    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
+      "description": "Map of the BRT's relative uncertainty for each location.",
+      "label": "SDM Uncertainty",
+      "type": "image/tiff;application=geotiff",
+      "weight": 1
+    },
+    "SDM>BRT>fitBRT.yml@132|fit_stats": {
+      "description": "JSON of BRT fit statistics and optimal threshold value.",
+      "label": "Fit Statistics",
+      "type": "text/json",
+      "weight": 2
+    },
+    "SDM>BRT>fitBRT.yml@132|range": {
+      "description": "Range map thresholded at the optimal value.",
+      "label": "Range",
+      "type": "image/tiff;application=geotiff",
+      "weight": 3
+    },
+    "SDM>BRT>fitBRT.yml@132|env_corners": {
+      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (red) in environment space for up to the first 5 predictors.",
+      "label": "Environment Space",
+      "type": "image/jpg",
+      "weight": 4
+    },
+    "SDM>BRT>fitBRT.yml@132|tuning": {
+      "description": "tuning curve",
+      "label": "Tuning Curve",
+      "type": "image/jpg",
+      "weight": 5
+    },
+    "filtering>cleanCoordinates.yml@34|clean_presence": {
+      "description": "Occurrences from GBIF after cleaning",
+      "label": "Presences",
+      "type": "text/tab-separated-values",
+      "weight": 6
+    },
+    "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
+      "description": "pseudoabsence coordinates",
+      "label": "pseudoabsences",
+      "type": "text/csv",
+      "weight": 7
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 1
-    },
-    "filtering>cleanCoordinates.yml@34|clean_presence": {
-      "description": "Occurrences from GBIF after cleaning",
-      "label": "Presences",
-      "type": "text/tab-separated-values",
-      "weight": 2
-    },
-    "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
-      "description": "pseudoabsence coordinates",
-      "label": "pseudoabsences",
-      "type": "text/csv",
-      "weight": 3
-    },
-    "SDM>BRT>fitBRT.yml@132|range": {
-      "description": "range map thresholded at todo",
-      "label": "range",
-      "type": "image/tiff;application=geotiff",
-      "weight": 4
-    },
-    "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
-      "description": "map of predicted occurrence probability",
-      "label": "predicted sdm",
-      "type": "image/tiff;application=geotiff",
-      "weight": 5
-    },
-    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
-      "description": "map of relative uncertainty",
-      "label": "sdm uncertainty",
-      "type": "image/tiff;application=geotiff",
-      "weight": 6
-    },
-    "SDM>BRT>fitBRT.yml@132|fit_stats": {
-      "description": "JSON of model fit stats and threshold",
-      "label": "fit statistics",
-      "type": "text/json",
-      "weight": 7
-    },
-    "SDM>BRT>fitBRT.yml@132|tuning": {
-      "description": "tuning curve",
-      "label": "tuning curve",
-      "type": "image/jpg",
       "weight": 8
-    },
-    "SDM>BRT>fitBRT.yml@132|env_corners": {
-      "description": "location of presences and pseudoabsences in environment space",
-      "label": "env_corners",
-      "type": "image/jpg",
-      "weight": 9
     }
   },
   "metadata": {
@@ -739,6 +720,6 @@
       }
     ],
     "license": "MIT",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runMaxent.R"
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT"
   }
 }

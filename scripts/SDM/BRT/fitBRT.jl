@@ -1,7 +1,6 @@
 using Pkg
 Pkg.activate("/julia_depot")
 
-
 using EvoTrees
 using CSV
 using DataFrames
@@ -22,7 +21,7 @@ include("util.jl")
 
 function mask_water!(water, occurrence, predictor_layers)
     mask!(occurrence, water)
-    map(l->mask!(l, water), predictor_layers)
+    map(l -> mask!(l, water), predictor_layers)
 end
 
 function process_inputs(RUNTIME_DIR)
@@ -31,7 +30,7 @@ function process_inputs(RUNTIME_DIR)
     crs = inputs["crs"]
     transformer = _PROJ.Transformation(crs, "EPSG:4326", always_xy=true)
     bbox = _get_wgs84_bbox(transformer, inputs["bbox"]...)
-  
+
     predictor_layers = SDMLayer.(inputs["predictors"]; bbox...)
     water = _get_water_mask(inputs["water_mask"])
 
@@ -45,10 +44,10 @@ end
 
 function get_rangemap(predicted_sdm, threshold)
     rangemap = copy(predicted_sdm)
-    rangemap.grid[rangemap.indices] .= 0 
+    rangemap.grid[rangemap.indices] .= 0
     rangemap.grid[findall(predicted_sdm .> threshold)] .= 1
     return rangemap
-end 
+end
 
 
 function predict_sdm(model, predictors)
@@ -61,7 +60,7 @@ function predict_sdm(model, predictors)
     uncertainty.grid[uncertainty.indices] .= preds[:, 2]
 
     return predicted_sdm, uncertainty
-end 
+end
 
 
 function main()

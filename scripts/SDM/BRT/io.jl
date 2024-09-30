@@ -69,12 +69,14 @@ function write_outputs(
     corners_path = joinpath(runtime_dir, "corners.png")
     tuning_path = joinpath(runtime_dir, "tuning.png")
 
+    fit_stats_path = joinpath(runtime_dir, "fit_stats.json")
+
     save(corners_path, corners)
     save(tuning_path, tuning)
 
     open(output_json_path, "w") do f
         write(f, JSON.json(Dict(
-            :fit_stats => fit_stats,
+            :fit_stats => fit_stats_path,
             :sdm_uncertainty => uncert_path,
             :range => range_path,
             :predicted_sdm => sdm_path,
@@ -84,8 +86,9 @@ function write_outputs(
         )))
     end
 
-    
-
+    open(fit_stats_path, "w") do f
+        write(f, JSON.json(fit_stats))
+    end
     CSV.write(pa_path, pseudoabsences)
     _write_tif(predicted_sdm, sdm_path)
     _write_tif(uncertainty, uncert_path)
