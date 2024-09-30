@@ -302,6 +302,19 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "147",
+      "type": "constant",
+      "position": {
+        "x": 158.71676733631944,
+        "y": 484.51458030173814
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
     }
   ],
   "edges": [
@@ -521,6 +534,20 @@
       "target": "139",
       "targetHandle": "weight_matrix_with_ids",
       "id": "reactflow__edge-120-139weight_matrix_with_ids"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-139bbox"
+    },
+    {
+      "source": "147",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-147-139stac_url"
     }
   ],
   "inputs": {
@@ -601,37 +628,18 @@
       ],
       "weight": 8
     },
-    "data>loadFromStac.yml@139|bbox": {
-      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
-      "label": "bbox",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 9
-    },
     "data>loadFromStac.yml@139|mask": {
       "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
       "type": "application/dbf",
-      "weight": 10
+      "weight": 9
     },
     "data>loadFromStac.yml@119|stac_url": {
       "description": "URL of the Stac catalog",
       "label": "stac_url",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 11
-    },
-    "data>loadFromStac.yml@139|stac_url": {
-      "description": "URL of the Stac catalog",
-      "label": "stac_url",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 12
+      "weight": 10
     }
   },
   "outputs": {
