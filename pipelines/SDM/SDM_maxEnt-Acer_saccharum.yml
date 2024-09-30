@@ -9,7 +9,7 @@ data>loadFromStac.yml@119|collections_items:
   - earthenv_landcover|class_12
   - earthenv_landcover|class_3
   - earthenv_landcover|class_1
-data>loadFromStac.yml@119|stac_url: https://io.biodiversite-quebec.ca/stac/
+data>loadFromStac.yml@119|stac_url: https://stac.geobon.org/
 data>loadFromStac.yml@119|weight_matrix_with_ids: ""
 data>loadFromStac.yml@119|mask: ""
 data>loadFromStac.yml@119|spatial_res: 1000
