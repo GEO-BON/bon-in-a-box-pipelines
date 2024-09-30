@@ -11,4 +11,7 @@ RUN  julia --project=${JULIA_DEPOT_PATH} -e 'pwd(); using Pkg; \
 
 RUN chmod -R 777 /julia_depot
 
+RUN chmod -R 777 /julia_depot
+RUN chmod -R 777 /tmp
+
 RUN date +"%Y-%m-%d %R" > /version.txt

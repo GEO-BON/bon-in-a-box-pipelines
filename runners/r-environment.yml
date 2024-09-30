@@ -30,3 +30,6 @@ dependencies:
   - r-stars
   - r-terra
   - r-tidyselect
+  - r-purrr
+  - r-tidyverse
+  - r-stringr

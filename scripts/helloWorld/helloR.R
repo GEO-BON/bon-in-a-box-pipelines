@@ -46,6 +46,13 @@ write("Sepal length	Sepal width	Petal length	Petal width	Species
 5.0	3.6	1.4	0.2	I. setosa
 ", some_tsv_data)
 
+# Example from https://en.wikipedia.org/wiki/Tab-separated_values
+some_html_output = file.path(outputFolder, "some_page.html")
+write(
+    "<h1>This is a page</h1><p>With a fancy interactive graph or the like.</p>",
+    some_html_output
+)
+
 ## Outputing result to JSON
 # notice that the warning string is not part of the yml spec, so it cannot be used by other scripts, but will still be displayed.
 output <- list(#"error" = "Some error", # Use error key to stop the rest of the pipeline
@@ -57,6 +64,7 @@ output <- list(#"error" = "Some error", # Use error key to stop the rest of the 
                 "geo_json" = example_json,
                 "some_csv_data" = some_csv_data,
                 "some_tsv_data" = some_tsv_data,
+                "some_html_output" = some_html_output,
                 "some_picture" = example_jpg,
                 "userdata_available" = list.files(file.path(Sys.getenv("USERDATA_LOCATION"))),
                 "undocumented_output" = "Some debug output")
