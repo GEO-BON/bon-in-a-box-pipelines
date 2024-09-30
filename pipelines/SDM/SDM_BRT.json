@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1613,
-        "y": 12
+        "x": 1713.4215439772288,
+        "y": 10.605256333649578
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -142,8 +142,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2130.7794470232584,
-        "y": 79.43093300572878
+        "x": 2185.1744500109244,
+        "y": 30.614904683464573
       },
       "data": {
         "label": "Output"
@@ -177,7 +177,7 @@
       "id": "132",
       "type": "io",
       "position": {
-        "x": 2009.7864730818396,
+        "x": 2131.129172054325,
         "y": 437.7408113575266
       },
       "data": {
@@ -188,7 +188,7 @@
       "id": "133",
       "type": "output",
       "position": {
-        "x": 2525.8433165735396,
+        "x": 2624.870116884418,
         "y": 503.7414140634203
       },
       "data": {
@@ -199,7 +199,7 @@
       "id": "134",
       "type": "output",
       "position": {
-        "x": 2524.3707164509856,
+        "x": 2623.397516761864,
         "y": 414.89753762090464
       },
       "data": {
@@ -210,7 +210,7 @@
       "id": "135",
       "type": "output",
       "position": {
-        "x": 2518.2756797581333,
+        "x": 2617.302480069012,
         "y": 314.01981648658244
       },
       "data": {
@@ -237,7 +237,7 @@
       "id": "138",
       "type": "output",
       "position": {
-        "x": 2493.144875862962,
+        "x": 2592.1716761738408,
         "y": 595.9242107095097
       },
       "data": {
@@ -248,8 +248,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 943.0266262736725,
-        "y": 486.4189858067559
+        "x": 938.8423952746211,
+        "y": 494.7874478048584
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -274,7 +274,7 @@
       "id": "141",
       "type": "output",
       "position": {
-        "x": 2455.1854528738468,
+        "x": 2554.2122531847253,
         "y": 244.5904097986591
       },
       "data": {
@@ -285,7 +285,7 @@
       "id": "142",
       "type": "output",
       "position": {
-        "x": 2483.316650390625,
+        "x": 2582.3434507015036,
         "y": 756
       },
       "data": {
@@ -296,7 +296,7 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 2531.316650390625,
+        "x": 2630.3434507015036,
         "y": 672
       },
       "data": {
@@ -314,6 +314,19 @@
       "data": {
         "type": "text",
         "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "148",
+      "type": "userInput",
+      "position": {
+        "x": 59.68996702544064,
+        "y": 452.43547597567886
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/dbf",
+        "value": null
       }
     }
   ],
@@ -548,6 +561,20 @@
       "target": "139",
       "targetHandle": "stac_url",
       "id": "reactflow__edge-147-139stac_url"
+    },
+    {
+      "source": "148",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-148-119mask"
+    },
+    {
+      "source": "148",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "mask",
+      "id": "reactflow__edge-148-139mask"
     }
   ],
   "inputs": {
@@ -604,19 +631,12 @@
       "example": 2020,
       "weight": 5
     },
-    "data>loadFromStac.yml@119|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf",
-      "example": null,
-      "weight": 6
-    },
     "pipeline@128": {
       "label": "spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 7
+      "weight": 6
     },
     "pipeline@137": {
       "label": "collections_items",
@@ -626,20 +646,21 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 8
-    },
-    "data>loadFromStac.yml@139|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf",
-      "weight": 9
+      "weight": 7
     },
     "data>loadFromStac.yml@119|stac_url": {
       "description": "URL of the Stac catalog",
       "label": "stac_url",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 10
+      "weight": 8
+    },
+    "pipeline@148": {
+      "label": "mask",
+      "description": "Shapefile, used to mask the output rasters",
+      "type": "application/dbf",
+      "example": null,
+      "weight": 9
     }
   },
   "outputs": {
@@ -665,34 +686,34 @@
       "type": "text/tab-separated-values",
       "weight": 2
     },
-    "SDM>BRT>fitBRT.yml@132|range": {
-      "description": "range map thresholded at todo",
-      "label": "range",
-      "type": "image/tiff;application=geotiff",
-      "weight": 3
-    },
-    "SDM>BRT>fitBRT.yml@132|fit_stats": {
-      "description": "JSON of model fit stats and threshold",
-      "label": "fit statistics",
-      "type": "text/json",
-      "weight": 4
-    },
-    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
-      "description": "map of relative uncertainty",
-      "label": "sdm uncertainty",
-      "type": "image/tiff;application=geotiff",
-      "weight": 5
-    },
     "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
       "description": "pseudoabsence coordinates",
       "label": "pseudoabsences",
       "type": "text/csv",
-      "weight": 6
+      "weight": 3
+    },
+    "SDM>BRT>fitBRT.yml@132|range": {
+      "description": "range map thresholded at todo",
+      "label": "range",
+      "type": "image/tiff;application=geotiff",
+      "weight": 4
     },
     "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
       "description": "map of predicted occurrence probability",
       "label": "predicted sdm",
       "type": "image/tiff;application=geotiff",
+      "weight": 5
+    },
+    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
+      "description": "map of relative uncertainty",
+      "label": "sdm uncertainty",
+      "type": "image/tiff;application=geotiff",
+      "weight": 6
+    },
+    "SDM>BRT>fitBRT.yml@132|fit_stats": {
+      "description": "JSON of model fit stats and threshold",
+      "label": "fit statistics",
+      "type": "text/json",
       "weight": 7
     },
     "SDM>BRT>fitBRT.yml@132|tuning": {
