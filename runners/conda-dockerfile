@@ -42,6 +42,11 @@ RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"Coordinate
     ), repos=\"https://cloud.r-project.org/\")'"
 
 
+# CMake needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends cmake; \
+    apt-get clean all;
 
 # ADD GITHUB PACKAGES HERE
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
