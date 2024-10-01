@@ -10,7 +10,7 @@ inputs: # 0 to many
     description: Vector of float, bbox coordinates of the Boundary Box in the order xmin, ymin, xmax,       ymax
     type: float[]
     example: [-99, -95]
-  TC:
+  tree_cover:
     label: Tree cover
     description: .tif file of Tree cover
     type: image/tiff;application=geotiff

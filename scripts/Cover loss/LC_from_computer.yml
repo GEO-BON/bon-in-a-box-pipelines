@@ -16,7 +16,7 @@ outputs: # 1 to many
      label: Tree cover loss map
      description: Geotiff of Tree cover loss cropped to area of interest
      type: image/tiff;application=geotiff
-  TC:
+  tree_cover:
      label: Tree cover map
      description: Geotiff of Tree cover cropped to area of interest
      type: image/tiff;application=geotiff

@@ -16,7 +16,7 @@ inputs:
     description: directory of a shapefile(.shp) containing Polygons produced by a SDM
     type: application/geo+json
     example: "Cover loss/Pcinerascens_Observations4326.shp"
-  TC:
+  tree_cover:
     label: Tree cover
     description: directory of .tif file containing Tree cover data
     type: image/tiff;application=geotiff

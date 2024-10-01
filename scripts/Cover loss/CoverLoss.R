@@ -28,8 +28,8 @@ if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))){
   SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))
 }else{SDM= geojson_sf(input$SDM)}
 ### Load tree cover in 2000
-print(input$TC)
-TC = crop(raster(input$TC), c(lonRANGE,latRANGE))
+print(input$tree_cover)
+TC = crop(raster(input$tree_cover), c(lonRANGE,latRANGE))
 
 ### Load tree cover year loss
 print(input$tree_cover_loss)

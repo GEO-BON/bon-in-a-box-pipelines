@@ -13,7 +13,7 @@ inputs:
 
 
 outputs:
-  TC:
+  tree_cover:
     label: Tree cover
     description: Tif file of Tree cover, cropped to bbox extent
     type: image/tiff;application=geotiff

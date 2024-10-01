@@ -23,7 +23,7 @@ if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))){
   SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))
 }else{SDM= geojson_sf(input$SDM)}
 ### find pixels with canopy cover > 30% (for plotting)
-TC30 = raster(input$TC)>30
+TC30 = raster(input$tree_cover)>30
 ### Create SDM IDs
 SDM<-as(SDM, 'Spatial')
 SDM$ID<-row.names(SDM)
