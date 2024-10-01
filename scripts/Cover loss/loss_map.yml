@@ -25,7 +25,7 @@ inputs: # 0 to many
     description: directory of a shapefile(.shp) containing Polygons produced by a SDM
     type: application/geo+json
     example: "Cover loss/Pcinerascens_Observations4326.shp"
-  geoLabels:
+  geo_labels:
     label: Geographic labels
     description: Names of geographic labels added to the map, separated by commas
     type: text[]

@@ -17,7 +17,7 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 lonRANGE = c(input$bbox[1],input$bbox[3])
 latRANGE = c(input$bbox[2],input$bbox[4])
 tree_cover_loss=raster(input$tree_cover_loss)
-geoLabels = geocode_OSM(input$geoLabels)
+geo_labels = geocode_OSM(input$geo_labels)
 tree_cover_loss_bin = raster(input$tree_cover_loss_bin)
 if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))){
   SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))
@@ -48,7 +48,7 @@ map<-file.path(outputFolder, "map.pdf")
   plot(tree_cover_loss_bin, col=c(NA, adjustcolor('red2',0.5)), add=T, legend=F)
 
   plot(SDM, border=CC[as.character(SDM$ID)], col=adjustcolor(CC[as.character(SDM$ID)], 0.1), lwd=3,  add=T)
-  text(geoLabels$lon, geoLabels$lat,  geoLabels$query, cex=2, col=adjustcolor(1,0.2))
+  text(geo_labels$lon, geo_labels$lat,  geo_labels$query, cex=2, col=adjustcolor(1,0.2))
   Scalebar(lbar = 50, bar.text = '50 km', xpos = 0.50, ypos=0.1)
   dev.off()
 }
