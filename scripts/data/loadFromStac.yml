@@ -1,6 +1,6 @@
 script: loadFromStac.R
 name: Load from STAC
-description: "Extract individual unprocessed items from various collections on the GEO BON Stac catalog."
+description: "Extract individual unprocessed items from various collections on the GEO BON STAC catalog."
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -8,7 +8,7 @@ author:
 inputs:
   stac_url:
     label: stac_url
-    description: URL of the Stac catalog
+    description: URL of the STAC catalog.
     type: text
     example: https://stac.geobon.org/
   bbox:
@@ -23,7 +23,7 @@ inputs:
     example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
   weight_matrix_with_ids:
     label: Weight matrix with ids
-    description: Weight matrix used for Bon optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. Cannot be used if collection_items is set.
+    description: Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.
     type: text
     example: |
       layer, current, change
