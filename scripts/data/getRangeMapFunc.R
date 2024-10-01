@@ -1,6 +1,7 @@
 if (!"gdalUtilities" %in% installed.packages()[,"Package"]) install.packages("gdalUtilities")
 library(gdalUtilities)
 
+setwd(outputFolder)
 get_iucn_range_map <- function(species_name){
   species_map<-read.csv('https://object-arbutus.cloud.computecanada.ca/bq-io/io/IUCN_rangemaps/iucn_fid_binomials.csv')
   row=species_map |> subset(binomial == species_name)

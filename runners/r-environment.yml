@@ -36,3 +36,6 @@ dependencies:
   - r-stringr
   - r-terra
   - r-tidyselect
+  - r-purrr
+  - r-tidyverse
+  - r-stringr
