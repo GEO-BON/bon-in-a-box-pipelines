@@ -24,12 +24,12 @@ pop_habitat_area = read.table(input$pop_area, row.names=1, header=T, sep='\t')
 ne_nc = input$ne_nc
 PDen = input$pop_density
 
-# # # #
-# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/0849da3b1a7f43eb5be94cc1e2070688/population_polygons.geojson')
-# habitat = stack('output/GFS_IndicatorsTool/get_LCY/c7c9684dfcdbc58c0e535eb4ca069128/lcyy.tif')
-# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/7b7eec58ceb9a01f9a5bf6e686925a57/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
+# # # # #
+# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/9b39fc6dfd1badbee9e004a0aeffc008/population_polygons.geojson')
+# habitat = stack('output/GFS_IndicatorsTool/get_LCY/4d75a04ceef2cb0acbdf4564ee1f22da/lcyy.tif')
+# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/1b0d13bac38e3c6a8381352186ebc447/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # ne_nc = c(0.1)
-# PDen = c(500, 1000)
+# PDen = c(1000)
 
 
 
@@ -40,8 +40,8 @@ names(PopCol) = rownames(pop_habitat_area)
 ######### Calculate Ne<500 indicator
 print('calculating Ne500 indicator')
 
-# get populations habitat area at last time point
-Pop_HA_T = pop_habitat_area[,ncol(pop_habitat_area),drop=F]
+# get minimal populations habitat area over time
+Pop_HA_T = as.matrix(apply(pop_habitat_area,1,min))
 
 # Create table showing populations Ne, calculated using different ne_nc and PDen estimates
 ne_table = c()
@@ -134,7 +134,8 @@ pm_plot = file.path(outputFolder, 'PM.png')
 
   rel_pop_habitat_area = as.matrix(pop_habitat_area)/as.numeric(pop_habitat_area[,1])
   rel_pop_habitat_area[is.na(rel_pop_habitat_area)] = 0
-
+  rel_pop_habitat_area[is.finite(rel_pop_habitat_area)==F] = 0    
+  
   plot(NA, ylim=c(0,max(rel_pop_habitat_area,na.rm=T)), xlim=c(0,ncol(rel_pop_habitat_area)+1), main='Rel. Pop. Area', axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
 
   for (pop in rownames(rel_pop_habitat_area)) {
@@ -246,13 +247,16 @@ empty_mp = st_sfc(st_multipolygon(mp), crs = crs(pop_poly))
 # add estimates of habitat area and NE for different time point, add to merged DF
 for (pop in rownames(int_pop_habitat_area)) {
 
+  HA_min_past = int_pop_habitat_area[pop,1] # set minimal habitat area observed in past (set first year to start) 
+  
   for (y in colnames(int_pop_habitat_area)) {
 
-
     HA = int_pop_habitat_area[pop,y] # total area
-    NE = HA*PDen[1]*ne_nc[1] # effective population size estiamate
+    NE = min(c(HA,HA_min_past))*PDen[1]*ne_nc[1] # effective population size estiamate, if there is an area increase, uses minimal past area (area decline decrease Ne, but area expansion does not increase Ne)
     HAR = HA / int_pop_habitat_area[pop,1] # relative area
 
+    # update HA_min_past
+    HA_min_past = min(c(HA, HA_min_past))
 
     # Create a new feature with attributes but without geometry
     new_feature <- st_sf(
