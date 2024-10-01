@@ -1,0 +1,14 @@
+script: speedTest.R
+name: Speed test of bon in a box vs. r studio
+description: This script takes about 1 second to run in Rstudio on a macbook M1
+author:
+  - name: Oliver Selmoni
+
+inputs:
+
+outputs:
+  test:
+    label: test
+    description: test
+    type: text/plain
+ 
