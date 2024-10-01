@@ -246,14 +246,14 @@
   },
   "metadata": {
     "name": "Forest cover loss by populations from GBIF occurrences (country)",
-    "description": "Genes from Space tool. Retrieves species occurrence from GBIS, calculates polygons of population distribution, and computes indices of genetic diversity monitoring for forest cover habitat loss.",
+    "description": "Genes from Space tool. Retrieves species occurrence from GBIF, calculates polygons of population distribution, and computes indices of genetic diversity monitoring for forest cover habitat loss.\n\nForest cover loss data comes from [Global Forest Watch](https://www.globalforestwatch.org/)",
     "author": [
       {
         "name": "Oliver Selmoni",
         "email": "oliver.selmoni@gmail.com"
       }
     ],
-    "external_link": "https://teams.issibern.ch/genesfromspace/ , https://www.globalforestwatch.org/",
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
     "references": [
       {
         "text": "Schuman et al., EcoEvoRxiv.",
