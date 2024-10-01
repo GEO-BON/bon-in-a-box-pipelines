@@ -114,6 +114,7 @@ conda:
     - r
   dependencies:
     - r-rjson
+    - r-rstac
     - r-dplyr
     - r-tidyr
     - r-purrr
