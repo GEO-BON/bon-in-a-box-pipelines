@@ -19,15 +19,15 @@ dependencies:
   - r-gdalutils
   - r-geojsonsf
   - r-ggsci
-  - r-rjava
   - r-jpeg
   - r-landscapemetrics
-  - r-rnaturalearth
-  - r-rnaturalearthdata
   - r-png
   - r-rcurl
   - r-rgbif
+  - r-rjava
   - r-rjson
+  - r-rnaturalearth
+  - r-rnaturalearthdata
   - r-rredlist
   - r-rstac
   - r-sf
