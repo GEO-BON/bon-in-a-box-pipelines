@@ -3,7 +3,7 @@ packages <- c("raster", "rjson", "geojsonsf", "terra")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 if(!"rgdal"%in% installed.packages()){
-  install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source") 
+  install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source")
 }
 if(!"gdalUtils"%in% installed.packages()){
   library(devtools)
@@ -40,28 +40,28 @@ load_stac<-function(staccollection){
       bbox = bbox,
     ) |>
     rstac::get_request()
-  
+
   make_vsicurl_url <- function(base_url) {
     paste0(
-      "/vsicurl", 
+      "/vsicurl",
       "?pc_url_signing=no",
       paste0("&pc_collection=",staccollection),
       "&url=",
       base_url
     )
   }
-  
+
   lcpri_url <- make_vsicurl_url(rstac::assets_url(stac_query, "data"))
   lcpri_url
-  
+
   out_file <- tempfile(fileext = ".tif")
-  
+
   paths<-c()
   for (i in 1:length(lcpri_url)){
     out_file<-tempfile(pattern = paste0("tempfile_", i, "_"),fileext = ".tif")
-    gdalwarp(srcfile = lcpri_url[i], 
-             dstfile = out_file, 
-             tr = c(0.001, 0.001), 
+    gdalwarp(srcfile = lcpri_url[i],
+             dstfile = out_file,
+             tr = c(0.001, 0.001),
              r = "average")
     paths[i]<-out_file
   }
@@ -77,18 +77,18 @@ load_stac<-function(staccollection){
 }
 print("Loading TC:")
 TC<-load_stac("gfw-treecover2000")
-print("Loading TCL:")
-TCL<-load_stac("gfw-lossyear")
+print("Loading tree_cover_loss:")
+tree_cover_loss<-load_stac("gfw-lossyear")
 
-TCL_p<-file.path(outputFolder, "TCL.tif")
+tree_cover_loss_p<-file.path(outputFolder, "tree_cover_loss.tif")
 TC_p<-file.path(outputFolder, "TC.tif")
 
 
-writeRaster(TCL[[1]], TCL_p, format = "GTiff")
+writeRaster(tree_cover_loss[[1]], tree_cover_loss_p, format = "GTiff")
 writeRaster(TC[[1]], TC_p, format = "GTiff")
 
 ## Outputing result to JSON
-output <- list("TCL"=TCL_p, "TC"=TC_p) 
+output <- list("tree_cover_loss"=tree_cover_loss_p, "TC"=TC_p)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

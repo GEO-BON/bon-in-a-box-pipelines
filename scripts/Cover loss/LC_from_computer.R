@@ -3,7 +3,7 @@ packages <- c("raster", "rjson", "stringr","geojsonsf", "ggOceanMaps")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
 if(!"rgdal"%in% installed.packages()){
-  install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source") 
+  install.packages("rgdal", repos="http://R-Forge.R-project.org", type="source")
 }
 if(!"gdalUtils"%in% installed.packages()){
   library(devtools)
@@ -49,23 +49,23 @@ create_path<-function(bbox, covertype){
 print(create_path(bbox,"treecover2000"))
 print(create_path(bbox,"lossyear"))
 
-gdalwarp(srcfile = create_path(bbox,"treecover2000"), 
-             dstfile = file.path(outputFolder, "TC.tif"), 
-             tr = c(0.01, 0.01), 
+gdalwarp(srcfile = create_path(bbox,"treecover2000"),
+             dstfile = file.path(outputFolder, "TC.tif"),
+             tr = c(0.01, 0.01),
              r = "average")
-gdalwarp(srcfile = create_path(bbox,"lossyear"), 
-         dstfile =file.path(outputFolder, "TCL.tif"), 
-         tr = c(0.01, 0.01), 
+gdalwarp(srcfile = create_path(bbox,"lossyear"),
+         dstfile =file.path(outputFolder, "tree_cover_loss.tif"),
+         tr = c(0.01, 0.01),
          r = "average")
 
-TCL_crop_p<-file.path(outputFolder, "TCL.tif")
+tree_cover_loss_crop_p<-file.path(outputFolder, "tree_cover_loss.tif")
 TC_crop_p<-file.path(outputFolder, "TC.tif")
 # ###Write Files
-# writeRaster(TCL, TCL_crop_p, format = "GTiff")
+# writeRaster(tree_cover_loss, tree_cover_loss_crop_p, format = "GTiff")
 # writeRaster(TC, TC_crop_p, format = "GTiff")
 
 ## Outputing result to JSON
-output <- list("TCL"=TCL_crop_p, "TC"=TC_crop_p) 
+output <- list("tree_cover_loss"=tree_cover_loss_crop_p, "TC"=TC_crop_p)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

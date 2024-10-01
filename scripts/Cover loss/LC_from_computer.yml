@@ -7,12 +7,12 @@ author:
 inputs: # 0 to many
   bbox:
     label: boundry box
-    description: Vector of float, bbox coordinates of the Boundary Box in the order xmin, ymin, xmax,     
+    description: Vector of float, bbox coordinates of the Boundary Box in the order xmin, ymin, xmax,
     type: float[]
     example: [-99, 16, -95, 21.5]
 
 outputs: # 1 to many
-  TCL:
+  tree_cover_loss:
      label: Tree cover loss map
      description: Geotiff of Tree cover loss cropped to area of interest
      type: image/tiff;application=geotiff

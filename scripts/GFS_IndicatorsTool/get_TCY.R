@@ -95,12 +95,12 @@ res = input$res #get desired resolution from input
 TC = load_stac("gfw-treecover2000", resamplingMethod  = 'average')
 
 
-print("Loading TCL layers...", )
-TCL0 = load_stac("gfw-lossyear", resamplingMethod = 'med') # resampling: median value, if median = 0 --> at least 50% of pixel did not loss forest
-TCL = load_stac("gfw-lossyear", resamplingMethod = 'mode') # resampling: mode while excluding 0s, find out in which year most of the pixel was lost.
+print("Loading tree_cover_loss layers...", )
+tree_cover_loss0 = load_stac("gfw-lossyear", resamplingMethod = 'med') # resampling: median value, if median = 0 --> at least 50% of pixel did not loss forest
+tree_cover_loss = load_stac("gfw-lossyear", resamplingMethod = 'mode') # resampling: mode while excluding 0s, find out in which year most of the pixel was lost.
 
 
-TCL[TCL0==0] = 0 # set to 0 (no loss) pixels where >50% of area did not show forest loss
+tree_cover_loss[tree_cover_loss0==0] = 0 # set to 0 (no loss) pixels where >50% of area did not show forest loss
 
 ## calculate year-by-year forest presence/absence
 print('Calculating year-by-year forest presence/absence')
@@ -115,7 +115,7 @@ for (y in 1:23) {
   print(paste0('y20',sprintf('%02d', y)))
   # get forest presence/absence for current year
   tcy = (tcyy[[paste0('y20',sprintf('%02d', y-1))]]==1)& # forest exist if: (1) forest was there the previous year ...
-        (TCL!=y) # ...and (2) forest present did not disappeaer during current year.
+        (tree_cover_loss!=y) # ...and (2) forest present did not disappeaer during current year.
 
   # add to stack
   tcyy[[paste0('y20',sprintf('%02d', y))]] = tcy+0

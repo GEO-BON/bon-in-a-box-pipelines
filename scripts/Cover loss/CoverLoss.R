@@ -32,8 +32,8 @@ print(input$TC)
 TC = crop(raster(input$TC), c(lonRANGE,latRANGE))
 
 ### Load tree cover year loss
-print(input$TCL)
-TCL = crop(raster(input$TCL), c(lonRANGE,latRANGE))
+print(input$tree_cover_loss)
+tree_cover_loss = crop(raster(input$tree_cover_loss), c(lonRANGE,latRANGE))
 
 ### add ID to SDM
 # if (is.null(SDM$ID)){
@@ -49,7 +49,7 @@ SDM<-clip_shapefile(SDM,boundary)
 SDM<-st_cast(SDM, "POLYGON")
 SDM<-as(SDM, 'Spatial')
 ### get binary raster of tree cover loss
-TCL_bin<-TCL>0
+tree_cover_loss_bin<-tree_cover_loss>0
 
 
 ###Extract raster values by PDG
@@ -58,7 +58,7 @@ extract_values <- function(values, coverage_fractions) {
   return(values)
 }
 
-PDG.TL<-exact_extract(TCL,SDM, fun = extract_values)
+PDG.TL<-exact_extract(tree_cover_loss,SDM, fun = extract_values)
 PDG.TC<-exact_extract(TC,SDM, fun = extract_values)
 names(PDG.TC)=SDM$ID
 names(PDG.TL)=SDM$ID
@@ -99,16 +99,16 @@ for (pdg in as.character(unique(SDM$ID))) {
 
 }
 ###define Path for outputs
-TCL_bin_p<-file.path(outputFolder, "TCL_bin.tif")
+tree_cover_loss_bin_p<-file.path(outputFolder, "tree_cover_loss_bin.tif")
 pdg_table_p<-file.path(outputFolder, "pdg_table.csv")
 
 ### write outputs
 write.csv(pdg_table,pdg_table_p, row.names = F)
-writeRaster(TCL_bin,TCL_bin_p, overwrite=TRUE, format = "GTiff")
+writeRaster(tree_cover_loss_bin,tree_cover_loss_bin_p, overwrite=TRUE, format = "GTiff")
 
 
 ### Output result to JSON
-output <- list("AREAS"=AREAS, "pdg_table"=pdg_table_p, "TCL_bin"=TCL_bin_p#"cols"=CC
+output <- list("AREAS"=AREAS, "pdg_table"=pdg_table_p, "tree_cover_loss_bin"=tree_cover_loss_bin_p#"cols"=CC
   # Add your outputs here "key" = "value"
   # The output keys correspond to those described in the yml file.
     #"error" = "Some error", # halt the pipeline

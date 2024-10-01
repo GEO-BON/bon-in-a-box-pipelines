@@ -11,13 +11,13 @@ inputs:
     type: float[]
     example: [-99, 22, -92, 29]
 
- 
+
 outputs:
-  TC: 
+  TC:
     label: Tree cover
     description: Tif file of Tree cover, cropped to bbox extent
     type: image/tiff;application=geotiff
-  TCL: 
+  tree_cover_loss:
     label: Tree cover loss
     description: Tif file of Tree cover loss, cropped to bbox extent
     type: image/tiff;application=geotiff

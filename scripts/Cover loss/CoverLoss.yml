@@ -21,7 +21,7 @@ inputs:
     description: directory of .tif file containing Tree cover data
     type: image/tiff;application=geotiff
     example:
-  TCL:
+  tree_cover_loss:
     label: Tree cover loss
     description: Name of .tif file containing Tree cover loss data
     type: image/tiff;application=geotiff
@@ -35,7 +35,7 @@ outputs:
      description: Vector of Loss of Habitat Area per year of all habitat areas
      type: text/tab-separated-values
 
-  TCL_bin:
+  tree_cover_loss_bin:
     label: binarized Tree cover loss
     description: .tif file of binarized Tree cover loss (loss/no loss)
     type: image/tiff;application=geotiff

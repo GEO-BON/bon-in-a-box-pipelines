@@ -16,9 +16,9 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 ### Load Inputs
 lonRANGE = c(input$bbox[1],input$bbox[3])
 latRANGE = c(input$bbox[2],input$bbox[4])
-TCL=raster(input$TCL)
+tree_cover_loss=raster(input$tree_cover_loss)
 geoLabels = geocode_OSM(input$geoLabels)
-TCL_bin = raster(input$TCL_bin)
+tree_cover_loss_bin = raster(input$tree_cover_loss_bin)
 if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))){
   SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))
 }else{SDM= geojson_sf(input$SDM)}
@@ -31,7 +31,7 @@ if (is.null(SDM$ID)){
   if(is.null(SDM$DN)){
     SDM$ID<-SDM$FID
   }else{SDM$ID=SDM$DN}
-  
+
 }
 ###Create Color pallette
 CC<-viridis(length(unique(SDM$ID)));names(CC)=unique(SDM$ID)
@@ -45,8 +45,8 @@ map<-file.path(outputFolder, "map.pdf")
   par(mar=c(0,0,0,0))
   plot(NA, xlim=lonRANGE, ylim=latRANGE, axes=F, xaxs='i', yaxs='i')
   plot(TC30, col=c('white','lightgreen'), add=T, legend=F)
-  plot(TCL_bin, col=c(NA, adjustcolor('red2',0.5)), add=T, legend=F)
-  
+  plot(tree_cover_loss_bin, col=c(NA, adjustcolor('red2',0.5)), add=T, legend=F)
+
   plot(SDM, border=CC[as.character(SDM$ID)], col=adjustcolor(CC[as.character(SDM$ID)], 0.1), lwd=3,  add=T)
   text(geoLabels$lon, geoLabels$lat,  geoLabels$query, cex=2, col=adjustcolor(1,0.2))
   Scalebar(lbar = 50, bar.text = '50 km', xpos = 0.50, ypos=0.1)
@@ -54,7 +54,7 @@ map<-file.path(outputFolder, "map.pdf")
 }
 ### Outputing result to JSON
 
-output <- list("map"=map) 
-                
+output <- list("map"=map)
+
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
