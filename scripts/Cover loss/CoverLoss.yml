@@ -11,7 +11,7 @@ inputs:
     description: Vector of float, bbox coordinates of the Boundary Box in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-99, 20, -95, 25]
-  SDM:
+  sdm:
     label: SDM
     description: directory of a shapefile(.shp) containing Polygons produced by a SDM
     type: application/geo+json

@@ -10,7 +10,7 @@ inputs:
      description: Vector of Loss of Habitat Area per year of all habitat areas
      type: text/tab-separated-values
      example:
-  SDM:
+  sdm:
     label: SDM
     description: directory of a shapefile(.shp) containing Polygons produced by a SDM
     type: application/geo+json

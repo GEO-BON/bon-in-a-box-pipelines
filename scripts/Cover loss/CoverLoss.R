@@ -24,9 +24,9 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 lonRANGE = c(input$bbox[1],input$bbox[3])
 latRANGE = c(input$bbox[2],input$bbox[4])
 ### load SDM
-if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))){
-  SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))
-}else{SDM= geojson_sf(input$SDM)}
+if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$sdm, sep = "/"))){
+  SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$sdm, sep = "/"))
+}else{SDM= geojson_sf(input$sdm)}
 ### Load tree cover in 2000
 print(input$tree_cover)
 TC = crop(raster(input$tree_cover), c(lonRANGE,latRANGE))

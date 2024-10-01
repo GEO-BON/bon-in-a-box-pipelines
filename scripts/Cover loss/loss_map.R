@@ -19,9 +19,9 @@ latRANGE = c(input$bbox[2],input$bbox[4])
 tree_cover_loss=raster(input$tree_cover_loss)
 geo_labels = geocode_OSM(input$geo_labels)
 tree_cover_loss_bin = raster(input$tree_cover_loss_bin)
-if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))){
-  SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))
-}else{SDM= geojson_sf(input$SDM)}
+if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$sdm, sep = "/"))){
+  SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$sdm, sep = "/"))
+}else{SDM= geojson_sf(input$sdm)}
 ### find pixels with canopy cover > 30% (for plotting)
 TC30 = raster(input$tree_cover)>30
 ### Create SDM IDs

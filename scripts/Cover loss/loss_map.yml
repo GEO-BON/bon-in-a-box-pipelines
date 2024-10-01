@@ -20,7 +20,7 @@ inputs: # 0 to many
     description: .tif file of binarized Tree cover loss (loss/no loss)
     type: image/tiff;application=geotiff
     example:
-  SDM:
+  sdm:
     label: SDM
     description: directory of a shapefile(.shp) containing Polygons produced by a SDM
     type: application/geo+json

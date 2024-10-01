@@ -19,9 +19,9 @@ library("geojsonsf")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 ### load Inputs
-if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))){
-  SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$SDM, sep = "/"))
-}else{SDM= geojson_sf(input$SDM)}
+if(file.exists(paste(Sys.getenv("SCRIPT_LOCATION"), input$sdm, sep = "/"))){
+  SDM=shapefile(paste(Sys.getenv("SCRIPT_LOCATION"), input$sdm, sep = "/"))
+}else{SDM= geojson_sf(input$sdm)}
 
 pdg_table<-read.csv(input$pdg_table)
 
