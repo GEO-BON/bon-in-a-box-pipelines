@@ -57,19 +57,19 @@ inputs:
     example: 20
 outputs:
   protcon_result:
-    label: Protcon results
-    description: "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities"
+    label: ProtConn results
+    description: Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities
     type: text/csv
   result_plot:
-    label: Result plot
+    label: ProtConn result plot
     description: Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected
     type: image/png
   result_yrs_plot:
-    label: Result plot yrs
+    label: ProtConn time series plot
     description: Change in the percentage area that is protected and the percentage that is protected and connected over time
     type: image/png
   result_yrs:
-    label: Year result
+    label: ProtConn time series results
     description: Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified
     type: text/csv
   result_preset_plot:

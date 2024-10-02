@@ -280,7 +280,8 @@
         "User input",
         "Both"
       ],
-      "weight": 11
+      "weight": 11,
+      "example": "WDPA"
     },
     "pipeline@56": {
       "label": "Transboundary distance",

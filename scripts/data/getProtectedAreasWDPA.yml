@@ -10,10 +10,10 @@ inputs:
     description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons. 
     type: options
     options:
-      - WDPA
-      - User input
-      - Both
-    example: WDPA
+      - "WDPA"
+      - "User input"
+      - "Both"
+    example: "WDPA"
   studyarea_country:
     label: Country
     description: Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get. 
