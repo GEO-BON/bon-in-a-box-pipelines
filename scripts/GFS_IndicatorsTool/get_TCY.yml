@@ -42,6 +42,6 @@ conda:
     - r-rjson
     - r-sf
     - r-terra
-    - r-gdalUtils
+    - r-gdalutils
     - r-rstac
 
