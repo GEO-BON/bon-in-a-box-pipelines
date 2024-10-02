@@ -96,3 +96,5 @@ conda:
     - r-rstac
     - r-dplyr
     - r-rcurl
+    - r-rjson
+    - r-sf
