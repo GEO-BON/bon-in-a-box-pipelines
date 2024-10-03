@@ -4,8 +4,8 @@
       "id": "47",
       "type": "io",
       "position": {
-        "x": 747.859375,
-        "y": 356
+        "x": 839,
+        "y": 134.5
       },
       "data": {
         "descriptionFile": "protconn_analysis>protconn_analysis.yml"
@@ -15,8 +15,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 180.859375,
-        "y": 310
+        "x": 265,
+        "y": 41.5
       },
       "data": {
         "descriptionFile": "data>getProtectedAreasWDPA.yml"
@@ -26,8 +26,8 @@
       "id": "49",
       "type": "output",
       "position": {
-        "x": 1279.859375,
-        "y": 359
+        "x": 1484.7731554357242,
+        "y": 77.64729605188745
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "50",
       "type": "output",
       "position": {
-        "x": 1283.859375,
-        "y": 371
+        "x": 1484.7731554357242,
+        "y": 131.78308880425556
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "51",
       "type": "output",
       "position": {
-        "x": 1278.859375,
-        "y": 389
+        "x": 1487.9863314227523,
+        "y": 200.06401233078253
       },
       "data": {
         "label": "Output"
@@ -59,8 +59,8 @@
       "id": "52",
       "type": "output",
       "position": {
-        "x": 1277.859375,
-        "y": 400
+        "x": 1487.9863314227523,
+        "y": 258.3893791243992
       },
       "data": {
         "label": "Output"
@@ -70,8 +70,8 @@
       "id": "53",
       "type": "output",
       "position": {
-        "x": 1270.859375,
-        "y": 416
+        "x": 1489.5929194162663,
+        "y": 312.5233042724092
       },
       "data": {
         "label": "Output"
@@ -81,8 +81,8 @@
       "id": "54",
       "type": "output",
       "position": {
-        "x": 678.859375,
-        "y": 308
+        "x": 839,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -92,8 +92,8 @@
       "id": "55",
       "type": "output",
       "position": {
-        "x": 674.859375,
-        "y": 331
+        "x": 839,
+        "y": 65.69016938798944
       },
       "data": {
         "label": "Output"
@@ -103,8 +103,8 @@
       "id": "56",
       "type": "userInput",
       "position": {
-        "x": -64.55001831054688,
-        "y": 296.7999954223633
+        "x": 8.78682401297192,
+        "y": 182.77512226453885
       },
       "dragHandle": ".dragHandle",
       "data": {
