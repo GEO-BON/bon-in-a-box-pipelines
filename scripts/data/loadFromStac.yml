@@ -59,17 +59,6 @@ inputs:
       - q1
       - q3
     example: near
-  aggregation:
-    label: aggregation
-    description: Method used to aggregate items that overlay each other
-    type: options
-    options:
-      - first
-      - min
-      - max
-      - mean
-      - median
-    example: first
   mask:
     label: mask
     description: Shapefile, used to mask the output rasters
