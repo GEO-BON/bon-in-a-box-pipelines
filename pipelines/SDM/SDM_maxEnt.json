@@ -548,6 +548,29 @@
           "q3"
         ]
       }
+<<<<<<< HEAD
+=======
+    },
+    {
+      "id": "132",
+      "type": "constant",
+      "position": {
+        "x": 180.433349609375,
+        "y": 432
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+>>>>>>> main
     }
   ],
   "edges": [
@@ -914,6 +937,16 @@
       "target": "119",
       "targetHandle": "resampling",
       "id": "reactflow__edge-131-119resampling"
+<<<<<<< HEAD
+=======
+    },
+    {
+      "source": "132",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-132-119aggregation"
+>>>>>>> main
     }
   ],
   "inputs": {

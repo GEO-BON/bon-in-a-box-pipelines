@@ -4,6 +4,18 @@ ADD ./r-environment.yml /data/r-environment.yml
 
 WORKDIR /data
 
+
+# Setting Time zone (necessary to install cmake, + will persist at runtime)
+ENV TZ=Etc/UTC
+
+# CMake needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
+ARG DEBIAN_FRONTEND=noninteractive
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends cmake; \
+    apt-get clean all;
+
+## MAMBA ISTALLATION
 RUN mamba init
 
 # Since we are using the user from the client computer to run the scripts,
@@ -34,16 +46,13 @@ RUN mamba env create -f /data/r-environment.yml
 RUN chmod -R 777 /opt/conda/pkgs/cache
 
 
-# These packages are not in conda-forge
-# ADD CRAN PACKAGES HERE
+## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
 RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \
         \"geodata\", \
         \"OpenStreetMap\"\
     ), repos=\"https://cloud.r-project.org/\")'"
 
-
-
-# ADD GITHUB PACKAGES HERE
+## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN)
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"connectscape/Makurhini\")'"
 
