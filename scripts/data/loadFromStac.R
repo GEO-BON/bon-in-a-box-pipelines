@@ -40,11 +40,6 @@ if("resampling" %in% names(input)){
   resampling="near"
 }
 
-if("aggregation" %in% names(input)){
-  aggregation=input$aggregation
-}else{
-  aggregation="first"
-}
 
 if("taxa" %in% names(input)){ #EXTRACT GBIF HEATMAPS
   collections_items <- paste0("gbif_heatmaps|", input$taxa, "-heatmap")
@@ -76,7 +71,7 @@ cube_args <- list(stac_path = input$stac_url,
   t1 = NULL,
   spatial.res = input$spatial_res, # in meters
   temporal.res = "P1D",
-  aggregation = aggregation,
+  aggregation = "first",
   resampling = resampling)
 
 proj <- input$proj

@@ -417,8 +417,8 @@
       "id": "119",
       "type": "io",
       "position": {
-        "x": 521.7177806924453,
-        "y": 279.83554287387864
+        "x": 514.7177806924453,
+        "y": 273.83554287387864
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -546,26 +546,6 @@
           "med",
           "q1",
           "q3"
-        ]
-      }
-    },
-    {
-      "id": "132",
-      "type": "constant",
-      "position": {
-        "x": 180.433349609375,
-        "y": 432
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first",
-        "options": [
-          "first",
-          "min",
-          "max",
-          "mean",
-          "median"
         ]
       }
     }
@@ -934,13 +914,6 @@
       "target": "119",
       "targetHandle": "resampling",
       "id": "reactflow__edge-131-119resampling"
-    },
-    {
-      "source": "132",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-132-119aggregation"
     }
   ],
   "inputs": {
