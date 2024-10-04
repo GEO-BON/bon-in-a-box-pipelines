@@ -1,0 +1,38 @@
+# This auto-detect solution was trying to convert some binary files. Replaced by long list below.
+# Auto detect text files and perform LF normalization https://tsalikis.blog/posts/gitattributes/
+# Also https://delitescere.medium.com/docker-file-permissions-and-line-endings-9aced07d70f8
+# * text eol=lf
+
+# Most files (including script files and description files) should have LF
+*.yml	text eol=lf
+*.yaml	text eol=lf
+*.json	text eol=lf
+
+*.R	text eol=lf
+*.r	text eol=lf
+*.py	text eol=lf
+*.jl	text eol=lf
+*.sh	text eol=lf
+*.md	text eol=lf
+*.Rmd	text eol=lf
+*.rmd	text eol=lf
+*.csv	text eol=lf
+*.tsv	text eol=lf
+
+*.js	text eol=lf
+*.jsx	text eol=lf
+*.html	text eol=lf
+*.css	text eol=lf
+*.kt	text eol=lf
+*.kts	text eol=lf
+
+*.env	text eol=lf
+*.conf	text eol=lf
+*.xml	text eol=lf
+*.gitignore	text eol=lf
+*.txt	text eol=lf
+*.properties	text eol=lf
+
+# Any Windows-specific file should be kept as crlf
+*.bat	text eol=crlf
+*.cmd	text eol=crlf
