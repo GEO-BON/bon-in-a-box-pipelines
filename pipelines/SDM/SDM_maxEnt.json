@@ -66,11 +66,7 @@
       "data": {
         "type": "options",
         "value": "bootstrap",
-        "options": [
-          "bootstrap",
-          "crossvalidation",
-          "none"
-        ]
+        "options": ["bootstrap", "crossvalidation", "none"]
       }
     },
     {
@@ -135,12 +131,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
+        "value": [-2316297, -1971146, 1015207, 1511916]
       }
     },
     {
@@ -211,13 +202,7 @@
       "data": {
         "type": "options",
         "value": "vif.cor",
-        "options": [
-          "vif.cor",
-          "vif.step",
-          "pearson",
-          "spearman",
-          "kendall"
-        ]
+        "options": ["vif.cor", "vif.step", "pearson", "spearman", "kendall"]
       }
     },
     {
@@ -231,11 +216,7 @@
       "data": {
         "type": "options",
         "value": "pearson",
-        "options": [
-          "pearson",
-          "spearman",
-          "kendall"
-        ]
+        "options": ["pearson", "spearman", "kendall"]
       }
     },
     {
@@ -299,12 +280,7 @@
       "data": {
         "type": "options",
         "value": "bbox",
-        "options": [
-          "box",
-          "mcp",
-          "buffer",
-          "bbox"
-        ]
+        "options": ["box", "mcp", "buffer", "bbox"]
       }
     },
     {
@@ -352,11 +328,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": [
-          "L",
-          "LQ",
-          "LQHP"
-        ]
+        "value": ["L", "LQ", "LQHP"]
       }
     },
     {
@@ -369,11 +341,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [
-          0.5,
-          1,
-          2
-        ]
+        "value": [0.5, 1, 2]
       }
     },
     {
@@ -387,11 +355,7 @@
       "data": {
         "type": "options",
         "value": "AUC",
-        "options": [
-          "p10",
-          "AIC",
-          "AUC"
-        ]
+        "options": ["p10", "AIC", "AUC"]
       }
     },
     {
@@ -405,12 +369,7 @@
       "data": {
         "type": "options",
         "value": "lat_lon",
-        "options": [
-          "lat_lon",
-          "lon_lat",
-          "lon_lon",
-          "lat_lat"
-        ]
+        "options": ["lat_lon", "lon_lat", "lon_lon", "lat_lat"]
       }
     },
     {
@@ -447,9 +406,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": [
-          "Acer saccharum"
-        ]
+        "value": ["Acer saccharum"]
       }
     },
     {
@@ -548,29 +505,6 @@
           "q3"
         ]
       }
-<<<<<<< HEAD
-=======
-    },
-    {
-      "id": "132",
-      "type": "constant",
-      "position": {
-        "x": 180.433349609375,
-        "y": 432
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first",
-        "options": [
-          "first",
-          "min",
-          "max",
-          "mean",
-          "median"
-        ]
-      }
->>>>>>> main
     }
   ],
   "edges": [
@@ -937,16 +871,6 @@
       "target": "119",
       "targetHandle": "resampling",
       "id": "reactflow__edge-131-119resampling"
-<<<<<<< HEAD
-=======
-    },
-    {
-      "source": "132",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-132-119aggregation"
->>>>>>> main
     }
   ],
   "inputs": {
@@ -954,9 +878,7 @@
       "label": "Taxa list",
       "description": "Array of taxa values",
       "type": "text[]",
-      "example": [
-        "Acer saccharum"
-      ],
+      "example": ["Acer saccharum"],
       "weight": 0
     },
     "SDM>selectBackground.yml@40|method_background": {
@@ -997,22 +919,14 @@
       "label": "bbox",
       "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
       "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
+      "example": [-2316297, -1971146, 1015207, 1511916],
       "weight": 5
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
       "label": "Data source",
       "type": "options",
-      "options": [
-        "gbif_pc",
-        "gbif_api"
-      ],
+      "options": ["gbif_pc", "gbif_api"],
       "example": "gbif_api",
       "weight": 6
     },
@@ -1055,10 +969,7 @@
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "label": "collections_items",
       "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
+      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"],
       "weight": 11
     },
     "data>loadFromStac.yml@119|mask": {
@@ -1096,9 +1007,7 @@
     "pipeline@121|defaultOutput": {
       "label": "Species",
       "description": "Species for which this model was run.",
-      "example": [
-        "Acer saccharum"
-      ],
+      "example": ["Acer saccharum"],
       "type": "text[]",
       "weight": 0
     },
@@ -1125,10 +1034,7 @@
       "description": "Model predictions from Maxent algorithm",
       "label": "Predictions",
       "type": "image/tiff;application=geotiff",
-      "range": [
-        0,
-        1
-      ],
+      "range": [0, 1],
       "weight": 4
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
