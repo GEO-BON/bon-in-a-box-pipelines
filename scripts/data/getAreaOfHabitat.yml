@@ -111,6 +111,7 @@ outputs:
     type: text/tab-separated-values
 conda: 
   channels:
+    - conda-forge
     - r
   dependencies:
     - r-rjson

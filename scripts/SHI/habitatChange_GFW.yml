@@ -117,6 +117,7 @@ outputs:
     type: image/tiff;application=geotiff[]
 conda: 
   channels:
+    - conda-forge
     - r
   dependencies:
     - r-rjson

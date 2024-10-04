@@ -492,28 +492,28 @@
       "type": "image/png",
       "weight": 2
     },
-    "SHI>habitatChange_GFW.yml@96|df_shs": {
-      "description": "A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
-      "label": "SHS table",
-      "type": "text/tab-separated-values[]",
-      "weight": 3
-    },
     "SHI>habitatChange_GFW.yml@96|img_shs_timeseries": {
       "description": "Figure showing a time series of SHS values per time step for each species.",
       "label": "SHS time series",
       "type": "image/png[]",
-      "weight": 4
-    },
-    "SHI>habitatChange_GFW.yml@96|r_habitat_by_tstep": {
-      "description": "Raster of habitat by time step.",
-      "label": "Habitat by time step",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 5
+      "weight": 3
     },
     "SHI>habitatChange_GFW.yml@96|img_shs_map": {
       "description": "Figure showing a map with changes in the habitat for the time range for each species.",
       "label": "SHS map",
       "type": "image/png[]",
+      "weight": 4
+    },
+    "SHI>habitatChange_GFW.yml@96|df_shs": {
+      "description": "A TSV (Tab Separated Values) file containing Area Score, Connectivity Score and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
+      "label": "SHS table",
+      "type": "text/tab-separated-values[]",
+      "weight": 5
+    },
+    "SHI>habitatChange_GFW.yml@96|r_habitat_by_tstep": {
+      "description": "Raster of habitat by time step.",
+      "label": "Habitat by time step",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 6
     },
     "SHI>habitatChange_GFW.yml@96|habitat_change_map": {
