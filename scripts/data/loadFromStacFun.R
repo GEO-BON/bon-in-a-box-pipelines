@@ -12,7 +12,7 @@ load_cube <-
            t1 =  format(lubridate::as_datetime('2200-01-01'), "%Y-%m-%dT%H:%M:%SZ"),
            spatial.res = NULL,
            temporal.res = "P1Y",
-           aggregation = "mean",
+           aggregation = "first",
            resampling = "near") {
     s <- rstac::stac(stac_path)
     if (!inherits(bbox, "bbox"))
