@@ -1,6 +1,6 @@
 # Script for analyzing ProtConn with the function
 #packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version # nolint
-packagesList<-list("terra", "tidyverse", "ggrepel", "Makurhini", "rjson")
+packagesList<-list("terra", "dplyr", "ggrepel", "Makurhini", "rjson")
 #lapply(packagesList, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
 #remotes::install_github("connectscape/Makurhini", dependencies = TRUE, upgrade = "always")
 

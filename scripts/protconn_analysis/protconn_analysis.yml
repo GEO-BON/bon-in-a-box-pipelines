@@ -3,6 +3,8 @@ name: Protconn Analysis
 description: This script calculates ProtConn from protected area polygons using the MK_ProtConn function in the Makurhini package. This creates a distance matrix from protected area polygons and calculates ProtConn using dispersal probabilities between protected areas. 
 author:
   - name: Jory Griffith (jory.griffith@mcgill.ca)
+license: CC BY
+external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/protconn_analysis
 inputs:
   study_area_polygon:
     label: Polygon of study area
@@ -76,13 +78,21 @@ outputs:
     label: ProtConn plot with dispersal presets
     description: Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km
     type: image/png
-# conda:
-#   channels:
-#     - r
-#   dependencies:
-#     - r-terra
-#     - r-dplyr
-#     - r-ggplot2
-#     - r-ggrepel
-#     #- r-Makurhini - not yet in anaconda
-#     - r-rjson
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-terra
+    - r-dplyr
+    - r-ggplot2
+    - r-ggrepel
+   # - r-Makurhini - not yet in anaconda
+    - r-rjson
+references:
+- text: Saura et al. 2017
+  doi: 10.1016/j.ecolind.2016.12.047
+- text: Saura et al. 2018
+  doi: 10.1016/j.biocon.2017.12.020
+- text: Godínez-Gómez and Correa Ayram 2020
+  doi: 10.5281/zenodo.3771605

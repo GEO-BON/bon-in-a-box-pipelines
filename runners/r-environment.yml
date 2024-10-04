@@ -16,7 +16,6 @@ dependencies:
   - r-gdalcubes
   - r-gdalutilities
   - r-gdalutils
-  - r-ggrepel
   - r-ggsci
   - r-jpeg
   - r-landscapemetrics
