@@ -59,8 +59,6 @@ inputs:
       - q1
       - q3
     example: near
-<<<<<<< HEAD
-=======
   aggregation:
     label: aggregation
     description: Method used to aggregate items that overlay each other
@@ -72,7 +70,6 @@ inputs:
       - mean
       - median
     example: first
->>>>>>> main
   mask:
     label: mask
     description: Shapefile, used to mask the output rasters
