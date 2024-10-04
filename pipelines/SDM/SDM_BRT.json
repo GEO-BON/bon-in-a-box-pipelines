@@ -685,7 +685,7 @@
       "weight": 4
     },
     "SDM>BRT>fitBRT.yml@132|tuning": {
-      "description": "tuning curve",
+      "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1.",
       "label": "Tuning Curve",
       "type": "image/jpg",
       "weight": 5
@@ -697,8 +697,8 @@
       "weight": 6
     },
     "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
-      "description": "pseudoabsence coordinates",
-      "label": "pseudoabsences",
+      "description": "Pseudoabsence coordinates",
+      "label": "Pseudoabsences",
       "type": "text/csv",
       "weight": 7
     },
