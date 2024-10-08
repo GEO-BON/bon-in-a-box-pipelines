@@ -39,7 +39,7 @@ function process_inputs(RUNTIME_DIR)
 
     mask_water!(water, occurrence_layer, predictor_layers)
 
-    return predictor_layers, occurrence_layer, transformer
+    return predictor_layers, occurrence_layer
 end
 
 function get_rangemap(predicted_sdm, threshold)
@@ -48,7 +48,6 @@ function get_rangemap(predicted_sdm, threshold)
     rangemap.grid[findall(predicted_sdm .> threshold)] .= 1
     return rangemap
 end
-
 
 function predict_sdm(model, predictors)
     Xp = Float32.([predictors[i][k] for k in keys(predictors[1]), i in eachindex(predictors)])
@@ -62,15 +61,14 @@ function predict_sdm(model, predictors)
     return predicted_sdm, uncertainty
 end
 
-
 function main()
     RUNTIME_DIR = ARGS[1]
 
     @info "Loading inputs..."
-    predictors, presence_layer, transformer = process_inputs(RUNTIME_DIR)
+    predictors, presence_layer = process_inputs(RUNTIME_DIR)
 
     @info "Generating pseudoabsences..."
-    pseudoabsences, pseudoabsence_df = generate_pseudoabsences(presence_layer, transformer)
+    pseudoabsences, pseudoabsence_df = generate_pseudoabsences(presence_layer)
 
     features, labels = get_features_and_labels(predictors, presence_layer, pseudoabsences)
     train_idx, test_idx = crossvalidation_split(labels)

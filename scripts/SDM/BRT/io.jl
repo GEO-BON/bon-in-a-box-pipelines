@@ -63,7 +63,7 @@ function write_outputs(
     sdm_path = joinpath(runtime_dir, "sdm.tif")
     range_path = joinpath(runtime_dir, "range.tif")
     uncert_path = joinpath(runtime_dir, "uncertainty.tif")
-    pa_path = joinpath(runtime_dir, "pseudoabsences.csv")
+    pa_path = joinpath(runtime_dir, "pseudoabsences.tsv")
     output_json_path = joinpath(runtime_dir, "output.json")
 
     corners_path = joinpath(runtime_dir, "corners.png")
@@ -89,7 +89,8 @@ function write_outputs(
     open(fit_stats_path, "w") do f
         write(f, JSON.json(fit_stats))
     end
-    CSV.write(pa_path, pseudoabsences)
+
+    CSV.write(pa_path, pseudoabsences, delim="\t")
     _write_tif(predicted_sdm, sdm_path)
     _write_tif(uncertainty, uncert_path)
     _write_tif(rangemap, range_path)

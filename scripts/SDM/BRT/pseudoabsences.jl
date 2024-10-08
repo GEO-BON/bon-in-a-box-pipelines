@@ -1,6 +1,5 @@
 function generate_pseudoabsences(
-    presence_layer,
-    transformer;
+    presence_layer;
     min_distance=20.0,
     num_candidate_pas=100_000,
     num_pas=sum(presence_layer)
@@ -18,8 +17,9 @@ function generate_pseudoabsences(
     bgpoints = backgroundpoints(pa_mask, num_pas)
 
     es, ns = eastings(bgpoints), northings(bgpoints)
-    _wgs84_pa_coords = [transformer(es[x[2]], ns[x[1]]) for x in findall(isone, bgpoints)]
-    pa_df = DataFrame(lon=[x[1] for x in _wgs84_pa_coords], lat=[x[2] for x in _wgs84_pa_coords])
+    _pa_coords = [(es[x[2]], ns[x[1]]) for x in findall(isone, bgpoints)]
+    
+    pa_df = DataFrame(lon=[x[1] for x in _pa_coords], lat=[x[2] for x in _pa_coords])
 
     return bgpoints, pa_df
 end

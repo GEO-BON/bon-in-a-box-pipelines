@@ -50,7 +50,7 @@ outputs:
   pseudoabsences:
     label: pseudoabsences
     description: pseudoabsence coordinates
-    type: text/csv
+    type: text/tab-separated-values
   env_corners:
     label: env_corners
     description: location of presences and pseudoabsences in environment space

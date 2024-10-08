@@ -49,12 +49,13 @@ function compute_fit_stats(model, features, labels, test_idx)
     end
     rocauc = auc(fpr.(M), tpr.(M)) 
     prauc = auc(tpr.(M), ppv.(M))  
-    τ = T[last(findmax(vec(mcc.(M))))]
+    thresh_idx = last(findmax(vec(mcc.(M))))
+    τ = T[thresh_idx]
 
     return Dict(
         :rocauc => rocauc,
         :prauc => prauc,
-        :mcc => mcc.(M),
+        :mcc => mcc(M[thresh_idx]),
         :threshold => τ
     ), M
 end 
