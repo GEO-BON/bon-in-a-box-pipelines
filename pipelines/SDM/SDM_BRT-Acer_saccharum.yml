@@ -1,0 +1,27 @@
+SDM>runMaxent.yml@108|partition_type: block
+SDM>selectBackground.yml@40|method_background: random
+SDM>selectBackground.yml@40|n_background: 10000
+data>heatmapFromSTAC.yml@67|taxa: plants
+data>loadFromStac.yml@119|collections_items:
+  - chelsa-clim|bio1
+  - chelsa-clim|bio2
+  - chelsa-clim|bio12
+  - earthenv_landcover|class_12
+  - earthenv_landcover|class_3
+  - earthenv_landcover|class_1
+data>loadFromStac.yml@119|stac_url: https://io.biodiversite-quebec.ca/stac/
+data>loadFromStac.yml@119|weight_matrix_with_ids: ""
+data>loadFromStac.yml@119|mask: ""
+data>loadFromStac.yml@119|spatial_res: 1000
+data>pyLoadObservations>pyLoadObservations.yml@96|data_source: gbif_api
+data>pyLoadObservations>pyLoadObservations.yml@96|max_year: 2022
+data>pyLoadObservations>pyLoadObservations.yml@96|min_year: 2008
+data>pyLoadObservations>pyLoadObservations.yml@96|taxa:
+  - Acer saccharum
+pipeline@46: 4
+pipeline@57: EPSG:6623
+pipeline@58:
+  - -2316297
+  - -800000
+  - 1015207
+  - 1511916

@@ -1,0 +1,61 @@
+script: fitBRT.jl
+name: BRT
+description: "This script creates a Species Distribution Model (SDM) and uncertainty map based on using Boosted Regression Trees (BRTs) using the package SpeciesDistributionToolkit.jl and EvoTrees.jl"
+author:
+  - name: Michael D. Catchen
+    identifier: https://orcid.org/0000-0002-6506-6487
+inputs:
+  occurrence:
+    label: occurrence coordinate dataframe
+    description: Dataframe, presence data.
+    type: text/tab-separated-values
+    example: "/output/data/getObservations/9f7d1cc148464cd0517e01c67af0ab5b/obs_data.tsv"
+  predictors:
+    label: geotiff predictor paths
+    description: paths to geotiff
+    type: image/tiff;application=geotiff[]
+    example: "/output/foo/bar"
+  bbox:
+    label: bounding box
+    description: the bounding box
+    type: float[]
+    example: [-2316297, -1971146, 1015207, 1511916]
+  crs:
+    label: coordinate reference system
+    description: cooridnate reference system for input layers and occurrences
+    type: text
+    example: EPSG:4326
+  water_mask:
+    label: water mask
+    description: landcover layer containing open water pixels
+    type: image/tiff;application=geotiff[]
+    example: "/output/foo/bar"
+outputs:
+  predicted_sdm:
+    label: predicted sdm
+    description: map of predicted occurrence probability
+    type: image/tiff;application=geotiff
+  sdm_uncertainty:
+    label: sdm uncertainty
+    description: map of relative uncertainty
+    type: image/tiff;application=geotiff
+  fit_stats:
+    label: fit statistics
+    description: JSON of model fit stats and threshold
+    type: text/json
+  range:
+    label: range
+    description: range map thresholded at todo
+    type: image/tiff;application=geotiff
+  pseudoabsences:
+    label: pseudoabsences
+    description: pseudoabsence coordinates
+    type: text/tab-separated-values
+  env_corners:
+    label: env_corners
+    description: location of presences and pseudoabsences in environment space
+    type: image/jpg
+  tuning:
+    label: tuning curve
+    description: tuning curve
+    type: image/jpg
