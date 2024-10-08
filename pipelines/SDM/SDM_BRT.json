@@ -210,17 +210,6 @@
       }
     },
     {
-      "id": "138",
-      "type": "output",
-      "position": {
-        "x": 2824.1716761738408,
-        "y": 705.9242107095097
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "139",
       "type": "io",
       "position": {
@@ -315,6 +304,17 @@
       "data": {
         "type": "text",
         "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+      }
+    },
+    {
+      "id": "148",
+      "type": "output",
+      "position": {
+        "x": 2831.1682994785438,
+        "y": 710.9197209041046
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -460,13 +460,6 @@
       "id": "reactflow__edge-137-119collections_items"
     },
     {
-      "source": "132",
-      "sourceHandle": "pseudoabsences",
-      "target": "138",
-      "targetHandle": null,
-      "id": "reactflow__edge-132pseudoabsences-138"
-    },
-    {
       "source": "128",
       "sourceHandle": null,
       "target": "139",
@@ -563,6 +556,13 @@
       "target": "119",
       "targetHandle": "weight_matrix_with_ids",
       "id": "reactflow__edge-147-119weight_matrix_with_ids"
+    },
+    {
+      "source": "132",
+      "sourceHandle": "pseudoabsences",
+      "target": "148",
+      "targetHandle": null,
+      "id": "reactflow__edge-132pseudoabsences-148"
     }
   ],
   "inputs": {
@@ -696,17 +696,17 @@
       "type": "text/tab-separated-values",
       "weight": 6
     },
-    "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
-      "description": "Pseudoabsence coordinates",
-      "label": "Pseudoabsences",
-      "type": "text/csv",
-      "weight": 7
-    },
     "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
+      "weight": 7
+    },
+    "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
+      "description": "pseudoabsence coordinates",
+      "label": "pseudoabsences",
+      "type": "text/tab-separated-values",
       "weight": 8
     }
   },
