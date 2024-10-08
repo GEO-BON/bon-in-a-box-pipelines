@@ -80,7 +80,7 @@ load_stac<-function(staccollection, resamplingMethod){
     rasters[[i]]<-crop(rasters[[i]], c(lonRANGE,latRANGE))
   }
   if(length(rasters)>1){
-    rasters <- do.call(terra::mosaic, c(rasters, list(fun = "mean")))
+    rasters <- do.call(terra::mosaic, c(rasters, list(fun = "first")))
   }
   else(rasters<-rasters[[1]])
 
