@@ -34,14 +34,5 @@ outputs:
     label: Years with tree cover information
     description: List of years for which tree cover information is available.
     type: text[]
-conda:
-  channels:
-    - conda-forge
-    - r
-  dependencies:
-    - r-rjson
-    - r-sf
-    - r-terra
-    - r-gdalutils
-    - r-rstac
+
 
