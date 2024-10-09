@@ -323,20 +323,15 @@
     "author": [
       {
         "name": "Oliver Selmoni",
-        "email": "oliver.selmoni@gmail.com",
-        "identifier": null
+        "email": "oliver.selmoni@gmail.com"
       }
     ],
-    "license": null,
+    "license": "MIT",
     "external_link": "https://teams.issibern.ch/genesfromspace/",
     "references": [
       {
         "text": "Schuman et al., EcoEvoRxiv.",
         "doi": "https://doi.org/10.32942/X2RS58"
-      },
-      {
-        "text": null,
-        "doi": null
       }
     ]
   }

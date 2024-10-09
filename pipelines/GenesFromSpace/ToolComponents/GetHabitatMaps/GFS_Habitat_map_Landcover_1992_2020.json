@@ -110,11 +110,10 @@
     "author": [
       {
         "name": "Oliver Selmoni",
-        "email": "oliver.selmoni@gmail.com",
-        "identifier": null
+        "email": "oliver.selmoni@gmail.com"
       }
     ],
-    "license": null,
+    "license": "MIT",
     "external_link": "https://teams.issibern.ch/genesfromspace/",
     "references": [
       {
