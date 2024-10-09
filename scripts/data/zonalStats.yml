@@ -27,7 +27,7 @@ inputs:
     label: collections_items
     description: Vector of strings, collection name followed by '|' followed by item id
     type: text[]
-    example: [bii_nhm_10km_2000, bii_nhm_10km_2005, bii_nhm_10km_2010, bii_nhm_10km_2015, bii_nhm_10km_2020]
+    example: [bii_nhm|bii_nhm_10km_2000, bii_nhm|bii_nhm_10km_2005, bii_nhm|bii_nhm_10km_2010, bii_nhm|bii_nhm_10km_2015, bii_nhm|bii_nhm_10km_2020]
   proj:
     label: projection system
     description: String, projection of the rasters
