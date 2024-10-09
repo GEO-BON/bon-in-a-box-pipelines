@@ -2,7 +2,6 @@
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
-library(raster)
 library(rjson)
 library(terra)
 library(sf)
@@ -19,7 +18,8 @@ print('loading input data')
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 pop_poly <-st_read(input$population_polygons)
-habitat = stack(input$habitat_map)
+
+habitat = rast(input$habitat_map)
 pop_habitat_area = read.table(input$pop_area, row.names=1, header=T, sep='\t')
 ne_nc = input$ne_nc
 PDen = input$pop_density
@@ -31,7 +31,7 @@ PDen = input$pop_density
 # ne_nc = c(0.1)
 # PDen = c(1000)
 
-
+print("made it here")
 
 ### Set population colors for plotting
 set.seed(123);PopCol = darken(sample(rainbow(nrow(pop_habitat_area)), size = nrow(pop_habitat_area), replace = F) , 0.2)
@@ -154,11 +154,11 @@ pm_plot = file.path(outputFolder, 'PM.png')
 sf_use_s2(F)
 
 # get land polygons for plotting
-land = st_crop(ne_countries(scale = 'large') , extent(habitat))
+land = st_crop(ne_countries(scale = 'large') , ext(habitat))
 
 # calculate bg map of habitat at first and last time point
 HabitatT0 = habitat[[1]]==1
-HabitatT1 = habitat[[nlayers(habitat)]]==1
+HabitatT1 = habitat[[nlyr(habitat)]]==1
 HabitatT0[HabitatT0==0] = NA
 HabitatT1[HabitatT1==0] = NA
 
@@ -181,7 +181,7 @@ pop_plot = file.path(outputFolder, 'POP_labels.png')
 {
 png(pop_plot, width = 1000, height = 1000*LLratio)
 par(mar=c(0,0,0,0))
-plot(NA, xlim=extent(HabitatT0)[1:2], ylim=extent(HabitatT0)[3:4], xaxs='i', yaxs='i')
+plot(NA, xlim=ext(HabitatT0)[1:2], ylim=ext(HabitatT0)[3:4], xaxs='i', yaxs='i')
 plot(HabitatT0, add=T, legend=F, col=adjustcolor('green2',0.2))
 plot(HabitatT1, add=T, legend=F, col=adjustcolor('green4',0.2))
 plot(land, border='grey70', col=adjustcolor('grey90',0.2), add=T)
@@ -279,9 +279,9 @@ merged_DF_key = highlight_key(merged_DF, ~pop)
 
 
 ######## Create three polygons describing regions where habitat was lost, increased, or remained stable
-HabitatNC = habitat[[1]]==1&habitat[[nlayers(habitat)]]==1;HabitatNC[HabitatNC==0]=NA
-HabitatLOSS = habitat[[1]]==1&habitat[[nlayers(habitat)]]==0;HabitatLOSS[HabitatLOSS==0]=NA
-HabitatGAIN = habitat[[1]]==0&habitat[[nlayers(habitat)]]==1;HabitatGAIN[HabitatGAIN==0]=NA
+HabitatNC = habitat[[1]]==1&habitat[[nlyr(habitat)]]==1;HabitatNC[HabitatNC==0]=NA
+HabitatLOSS = habitat[[1]]==1&habitat[[nlyr(habitat)]]==0;HabitatLOSS[HabitatLOSS==0]=NA
+HabitatGAIN = habitat[[1]]==0&habitat[[nlyr(habitat)]]==1;HabitatGAIN[HabitatGAIN==0]=NA
 
 
 

@@ -39,6 +39,5 @@ dependencies:
   - r-purrr
   - r-tidyverse
   - r-stringr
-  - r-teachingdemos
-  - r-plotly
+
   

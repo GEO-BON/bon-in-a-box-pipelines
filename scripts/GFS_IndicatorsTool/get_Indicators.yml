@@ -79,3 +79,17 @@ outputs:
     label: Ne>500 indicator
     description: Estimated proportion of populations with Ne>500 at latest time point.
     type: float
+conda: 
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson 
+    - r-terra
+    - r-sf
+    - r-rnaturalearth
+    - r-teachingdemos
+    - r-dplyr
+    - r-plotly
+    - r-geojsonsf
+    - r-colorspace
