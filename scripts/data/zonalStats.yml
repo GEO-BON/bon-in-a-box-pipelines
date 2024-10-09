@@ -1,0 +1,48 @@
+script: zonalStats.R
+name: Zonal statistics
+description: "Extract items and calculate zonal statistics from various collections on the GEO BON Stac Catalog."
+author:
+  - name: Jory Griffith
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  stac_url:
+    label: stac_url
+    description: URL of the Stac catalog
+    type: text
+    example: https://stac.geobon.org/
+  country:
+    label: Country
+    description: Country of interest
+    type: text
+  state:
+    label: State/Province
+    description: State or province of interest
+    type: text
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297, -1971146, 1015207, 1511916]
+  collections_items:
+    label: collections_items
+    description: Vector of strings, collection name followed by '|' followed by item id
+    type: text[]
+    example: [bii_nhm_10km_2000, bii_nhm_10km_2005, bii_nhm_10km_2010, bii_nhm_10km_2015, bii_nhm_10km_2020]
+  proj:
+    label: projection system
+    description: String, projection of the rasters
+    type: text
+    example: "EPSG:6622"
+  summary_statistic: 
+    label: Summary statistic
+    description: Summary statistic for layers
+outputs:
+  # rasters:
+  #   label: rasters
+  #   description: array of output raster paths
+  #   type: image/tiff;application=geotiff[]
+  stats:
+    label: stats
+    description: statistics
+    type: text/csv
+  
