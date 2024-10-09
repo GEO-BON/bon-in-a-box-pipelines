@@ -106,7 +106,7 @@
   },
   "metadata": {
     "name": "Get landcover cover change 1992-2020",
-    "description": "Component of the Genes from Space tool. Given an area of interest, creates a raster stack describing year-by-year habitat presence for landcove. The time series covers the 1992-2020 period. ",
+    "description": "Component of the Genes from Space tool. Given an area of interest, the tool creates a raster stack describing habitat presence for landcover classes and for years of interest (allowed time window range: 1992-2020). ",
     "author": [
       {
         "name": "Oliver Selmoni",

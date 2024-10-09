@@ -334,7 +334,7 @@
   },
   "metadata": {
     "name": "Get population polygons for country list",
-    "description": "Component of the Genes from Space tool. Given a list of countries, a species of interest, and a time window, the pipeline retrives the occurrences of the species from GBIF, and then calculates population polygons based on geographical proximity. ",
+    "description": "Component of the Genes from Space tool. Given a list of countries, a species of interest, and a time window, the tool retrives the occurrences of the species from GBIF, and then calculates population polygons based on geographical proximity. ",
     "author": [
       {
         "name": "Oliver Selmoni",

@@ -86,12 +86,12 @@
   },
   "metadata": {
     "name": "Get population polygons from species observation",
-    "description": "Component of the Genes from Space tool. Given a table of species occurrences, the pipeline calculates population polygons based on geographical proximity. ",
+    "description": "Component of the Genes from Space tool. Given a table of species occurrences, the tool calculates population polygons based on geographical proximity. ",
     "author": [
       {
         "name": "Oliver Selmoni",
         "email": "oliver.selmoni@gmail.com"
-        }
+      }
     ],
     "license": "MIT",
     "external_link": "https://teams.issibern.ch/genesfromspace/",

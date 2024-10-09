@@ -182,14 +182,14 @@
     },
     "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|pipeline@14": {
       "description": "Integer, 4 digit year, start date to retrieve occurrences",
-      "label": "Start year",
+      "label": "Start year - GBIF observations",
       "weight": 3,
       "type": "int",
       "example": 1970
     },
     "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json@146|pipeline@15": {
       "description": "Integer, 4 digit year, end date to retrieve occurrences",
-      "label": "End year",
+      "label": "End year - GBIF observations",
       "weight": 4,
       "type": "int",
       "example": 1995
@@ -220,7 +220,7 @@
     },
     "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@119|GFS_IndicatorsTool>get_LCY.yml@115|yoi": {
       "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
-      "label": "Years of interest",
+      "label": "Years of interest - habitat change",
       "weight": 8,
       "type": "int[]",
       "example": [
@@ -289,7 +289,7 @@
   },
   "metadata": {
     "name": "Land cover loss by populations from GBIF occurrences (country)",
-    "description": "Genes from Space tool. Retrieves species occurrence from GBIF, calculates polygons of population distribution, and computes indices of genetic diversity monitoring for land cover habitat loss.",
+    "description": "Genes from Space tool. The tool retrieves species occurrence from GBIF, then used to define polygons of population distribution based on geographic proximity.  The tool then draws a habitat suitability map over time, based on the presence of land cover classes of interest.  Finally, the tool estimates the size of suitable habitat over time for every population, and computes indicators of genetic diversity monitoring accordingly (Ne500 and Populations Maintained indicators). Population maps and genetic diversity indicators are displayed through an interactive interface. ",
     "author": [
       {
         "name": "Oliver Selmoni",
