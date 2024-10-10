@@ -1,0 +1,28 @@
+script: getBoundingBox.R
+name: Get bounding box
+description: "Extract items and calculate zonal statistics from various collections on the GEO BON Stac Catalog."
+author:
+  - name: Jory Griffith
+    identifier: https://orcid.org/0000-0001-6020-6690 
+inputs:
+  country:
+    label: Country
+    description: Country of interest
+    type: text
+  state:
+    label: State/Province
+    description: State or province of interest
+    type: text
+  study_area_file:
+    label: File for study area
+    description: Upload a file of a custom study area
+    type: text
+outputs:
+  study_area_polygon:
+    label: Polygon of study area
+    description: Represents the map of the study area
+    type: application/geo+json
+  bbox:
+    label: bbox
+    description: boundary box around area of interest
+    type: float[]

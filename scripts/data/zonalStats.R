@@ -12,10 +12,7 @@ source(paste(Sys.getenv("SCRIPT_LOCATION"), "/data/loadFromStacFun.R", sep = "/"
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
-# create bounding box
-bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
-
+output<- tryCatch({
 # Collections items
 if (length(input$collections_items) == 0) {
     stop('Please specify collections_items') # if no collections items are specified
@@ -23,31 +20,59 @@ if (length(input$collections_items) == 0) {
     collections_items <- input$collections_items
 }
 
-# define study area
-if (is.null(input$studyarea_file)){ # if there is no study area file input
-  if (is.null(input$state)){ # if there is only a country input (no state) 
-    input$country <- gsub(" ", "+", input$country) # Change spaces to + signs to work in the URL 
-    study_area<- paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", input$country) # study area url 
-  } else { # if a state is defined
-   input$country <- gsub(" ", "+", input$country)
-   input$state <- gsub(" ", "+", input$state)
-    study_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$country, "&state_name=", input$state)
-  } } else {study_area <- input$studyarea_file}
+# Load study area
+study_area <- st_read(input$study_area_polygon) %>% st_transform("EPSG:4326")
 
-# Read in study area polygon
-study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
-
+# Define bounding box
+bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs=st_crs(4326)) 
 
 # Load cube using the loadFromStacFun
-dat_cube <- load_cube(stac_path=input$stac_url, collections=collections_items, bbox=bbox,
-                        srs.cube = input$proj)
+raster_layers <- list()
+stats_list <- list()
+for(i in 1:length(collections_items)){
 
+  ci <- strsplit(collections_items[i], split = "|", fixed=TRUE)[[1]] # split into collection and layers
 
-# Calculate summary statistics - mean
-stats <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area_polygon, FUN=mean)
+  dat_cube <- load_cube(stac_path=input$stac_url, collections=ci[1], ids=ci[2], bbox=bbox,
+                           srs.cube = "EPSG:4326", layers=NULL, variable=NULL,
+                            t0 = NULL,   t1 = NULL, temporal.res = "P1D", aggregation = "mean",  resampling = "near")
+raster_layers[[i]]=dat_cube # add to a list of raster layers
+names(raster_layers)[i] <- ci[2]
+
+if(input$summary_statistic == "mean"){
+stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=mean, reduce_time=TRUE)
+} else if(input$summary_statistic == "median"){
+  stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=median, reduce_time=TRUE)
+} else {
+  stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=mode, reduce_time=TRUE)}
+
+stats_each$name <- ci[2]
+stats_list[[i]] = as.data.frame(stats_each)
+}
+
+stats <- bind_rows(stats_list)
+stats <- stats[,c(3,2)]
+names(stats)[names(stats) == 'data']<-input$summary_statistic
+
 stats_path <- file.path(outputFolder, "stats.csv")
+write.csv(stats, stats_path, row.names=F)
 
-output <- list("stats" = stats_path)
+layer_paths<-c()
+# need to rename these to be more descriptive
+output_raster_layers <- file.path(outputFolder)
+
+for (i in 1:length(raster_layers)) {
+  ff <- tempfile(pattern = paste0(names(raster_layers[i]),'_'))
+  out<-gdalcubes::write_tif(raster_layers[i][[1]], dir = output_raster_layers, prefix=basename(ff), creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=TRUE)
+  fp <- paste0(out[1])
+  layer_paths <- cbind(layer_paths,fp)
+}
+
+
+output <- list("stats" = stats_path, "rasters" = layer_paths)
+}, error = function(e) { list(error = conditionMessage(e)) })
+
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
 

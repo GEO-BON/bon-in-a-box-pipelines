@@ -60,6 +60,7 @@ conda:
   dependencies:
     - libgdal
     - proj
+    - r-rjson
     - r-proj
     - r-gdalcubes
     - r-rstac

@@ -1,0 +1,168 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 184.859375,
+        "y": 226
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 815.859375,
+        "y": 262
+      },
+      "data": {
+        "descriptionFile": "data>zonalStats.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "output",
+      "position": {
+        "x": 648.859375,
+        "y": 224
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "3",
+      "type": "output",
+      "position": {
+        "x": 1221.859375,
+        "y": 263
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "4",
+      "type": "output",
+      "position": {
+        "x": 1205.859375,
+        "y": 276
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "study_area_polygon",
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-0study_area_polygon-2"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "bbox",
+      "target": "1",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-0bbox-1bbox"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "rasters",
+      "target": "3",
+      "targetHandle": null,
+      "id": "reactflow__edge-1rasters-3"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "stats",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-1stats-4"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "study_area_polygon",
+      "target": "1",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-0study_area_polygon-1study_area_polygon"
+    }
+  ],
+  "inputs": {
+    "data>getBoundingBox.yml@0|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "data>getBoundingBox.yml@0|state": {
+      "description": "State or province of interest",
+      "label": "State/Province",
+      "type": "text",
+      "weight": 1
+    },
+    "data>getBoundingBox.yml@0|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 2
+    },
+    "data>zonalStats.yml@1|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 3
+    },
+    "data>zonalStats.yml@1|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "bii_nhm|bii_nhm_10km_2000",
+        "bii_nhm|bii_nhm_10km_2005",
+        "bii_nhm|bii_nhm_10km_2010",
+        "bii_nhm|bii_nhm_10km_2015",
+        "bii_nhm|bii_nhm_10km_2020"
+      ],
+      "weight": 4
+    },
+    "data>zonalStats.yml@1|summary_statistic": {
+      "description": "Summary statistic for layers",
+      "label": "Summary statistic",
+      "type": "options",
+      "options": [
+        "mean",
+        "median",
+        "mode"
+      ],
+      "example": "mean",
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "data>getBoundingBox.yml@0|study_area_polygon": {
+      "description": "Represents the map of the study area",
+      "label": "Polygon of study area",
+      "type": "application/geo+json",
+      "weight": 0
+    },
+    "data>zonalStats.yml@1|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 1
+    },
+    "data>zonalStats.yml@1|stats": {
+      "description": "Summary statistic in the polygon",
+      "label": "Summary statistic",
+      "type": "text/csv",
+      "weight": 2
+    }
+  }
+}

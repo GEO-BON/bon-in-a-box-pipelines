@@ -82,6 +82,7 @@ load_cube <-
       feats<-it_obj$features
     }
     print(ids)
+    print(feats)
     if (!is.null(variable)) {
       print("Variable is null")
       st <- gdalcubes::stac_image_collection(

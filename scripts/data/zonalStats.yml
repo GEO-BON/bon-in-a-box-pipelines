@@ -10,39 +10,36 @@ inputs:
     description: URL of the Stac catalog
     type: text
     example: https://stac.geobon.org/
-  country:
-    label: Country
-    description: Country of interest
-    type: text
-  state:
-    label: State/Province
-    description: State or province of interest
-    type: text
   bbox:
-    label: bbox
-    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
-    type: float[]
-    example: [-2316297, -1971146, 1015207, 1511916]
+     label: bbox
+     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+     type: float[]
+     example: null
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area of interest
+    type: application/geo+json
   collections_items:
     label: collections_items
     description: Vector of strings, collection name followed by '|' followed by item id
     type: text[]
     example: [bii_nhm|bii_nhm_10km_2000, bii_nhm|bii_nhm_10km_2005, bii_nhm|bii_nhm_10km_2010, bii_nhm|bii_nhm_10km_2015, bii_nhm|bii_nhm_10km_2020]
-  proj:
-    label: projection system
-    description: String, projection of the rasters
-    type: text
-    example: "EPSG:6622"
   summary_statistic: 
     label: Summary statistic
     description: Summary statistic for layers
+    type: options
+    options:
+    - mean
+    - median
+    - mode
+    example: mean
 outputs:
-  # rasters:
-  #   label: rasters
-  #   description: array of output raster paths
-  #   type: image/tiff;application=geotiff[]
+  rasters:
+     label: Rasters
+     description: array of output raster paths
+     type: image/tiff;application=geotiff[]
   stats:
-    label: stats
-    description: statistics
+    label: Summary statistic
+    description: Summary statistic in the polygon
     type: text/csv
   
