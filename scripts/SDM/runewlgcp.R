@@ -125,7 +125,7 @@ crs(sdms) <- crs(region)
 
 sdm_pred <- sdms#[["mean"]]
 #names(sdm_pred) <- "prediction"
-sdm_runs <- sdms[[c("0.025quant", "0.975quant")]]
+sdm_ci <- sdms[["0.975quant"]] - sdms[["0.025quant"]]
 
 ### temporary rescaling to display in the 0-1 viewer
 #sdm_pred <- sdm_pred / global(sdm_pred,"max", na.rm = TRUE)[1,1]
@@ -133,7 +133,7 @@ sdm_runs <- sdms[[c("0.025quant", "0.975quant")]]
 #print(sdm_pred)
 
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
-runs.output <- paste0(outputFolder, "/sdm_runs_", 1:nlyr(sdm_runs), ".tif")
+ci.output <- file.path(outputFolder, "sdm_ci.tif")
 unc.output <- file.path(outputFolder, "sdm_unc.tif")
 
 terra::writeRaster(x = sdm_pred[["mean"]],
@@ -148,18 +148,15 @@ terra::writeRaster(x = sdm_pred,
                           wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
 
-for (i in 1:nlyr(sdm_runs)){
-    terra::writeRaster(x = sdm_runs[[i]],
-    filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),
-    filetype = "COG",
-    wopt= list(gdal=c("COMPRESS=DEFLATE")),
-    overwrite = TRUE)
-}
-
+terra::writeRaster(x = sdm_ci,
+                          filename = ci.output,
+                          filetype = "COG",
+                          wopt= list(gdal=c("COMPRESS=DEFLATE")),
+                          overwrite = TRUE)
 
 output <- list("sdm_pred" = pred.output,
   "sdm_unc" = unc.output,
-  "sdm_runs" = runs.output) 
+  "sdm_ci" = ci.output) 
 
 jsonData <- toJSON(output, indent = 2)
 write(jsonData, file.path(outputFolder, "output.json"))

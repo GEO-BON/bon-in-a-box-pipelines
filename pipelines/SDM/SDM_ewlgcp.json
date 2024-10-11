@@ -157,28 +157,6 @@
       }
     },
     {
-      "id": "68",
-      "type": "io",
-      "position": {
-        "x": 4050,
-        "y": 637.5
-      },
-      "data": {
-        "descriptionFile": "SDM>rangePredictions.yml"
-      }
-    },
-    {
-      "id": "69",
-      "type": "output",
-      "position": {
-        "x": 4323,
-        "y": 808
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "96",
       "type": "io",
       "position": {
@@ -324,8 +302,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 3992,
-        "y": 837.5
+        "x": 4046,
+        "y": 623.5
       },
       "data": {
         "label": "Output"
@@ -472,8 +450,19 @@
       "id": "132",
       "type": "output",
       "position": {
-        "x": 4058.6079892458283,
-        "y": 748.2011824994986
+        "x": 4040.6079892458283,
+        "y": 742.2011824994986
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "133",
+      "type": "output",
+      "position": {
+        "x": 4048.7883068492833,
+        "y": 875.6118011474609
       },
       "data": {
         "label": "Output"
@@ -494,13 +483,6 @@
       "target": "44",
       "targetHandle": "presence",
       "id": "reactflow__edge-34clean_presence-44presence"
-    },
-    {
-      "source": "68",
-      "sourceHandle": "range_predictions",
-      "target": "69",
-      "targetHandle": null,
-      "id": "reactflow__edge-68range_predictions-69"
     },
     {
       "source": "96",
@@ -804,13 +786,6 @@
       "id": "reactflow__edge-131sdm_pred-109"
     },
     {
-      "source": "131",
-      "sourceHandle": "sdm_runs",
-      "target": "68",
-      "targetHandle": "predictions",
-      "id": "reactflow__edge-131sdm_runs-68predictions"
-    },
-    {
       "source": "116",
       "sourceHandle": null,
       "target": "131",
@@ -823,6 +798,13 @@
       "target": "132",
       "targetHandle": null,
       "id": "reactflow__edge-131sdm_unc-132"
+    },
+    {
+      "source": "131",
+      "sourceHandle": "sdm_ci",
+      "target": "133",
+      "targetHandle": null,
+      "id": "reactflow__edge-131sdm_ci-133"
     }
   ],
   "inputs": {
@@ -992,10 +974,14 @@
       ],
       "weight": 3
     },
-    "SDM>rangePredictions.yml@68|range_predictions": {
+    "SDM>runewlgcp.yml@131|sdm_ci": {
       "description": "Difference between the upper (0.025) and lower (0.975) CI",
       "label": "Range of confidence interval (CI)",
-      "type": "image/tiff;application=geotiff",
+      "type": "image/tiff;application=geotiff[]",
+      "range": [
+        0,
+        1
+      ],
       "weight": 4
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
