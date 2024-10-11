@@ -379,17 +379,6 @@
       }
     },
     {
-      "id": "123",
-      "type": "output",
-      "position": {
-        "x": 2047,
-        "y": 111
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "124",
       "type": "output",
       "position": {
@@ -485,6 +474,17 @@
       "position": {
         "x": 4209.065947123696,
         "y": 995.4207325815185
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "136",
+      "type": "output",
+      "position": {
+        "x": 4031.1690878729783,
+        "y": 761.4260856984574
       },
       "data": {
         "label": "Output"
@@ -717,13 +717,6 @@
       "id": "reactflow__edge-121-122"
     },
     {
-      "source": "34",
-      "sourceHandle": "clean_presence",
-      "target": "123",
-      "targetHandle": null,
-      "id": "reactflow__edge-34clean_presence-123"
-    },
-    {
       "source": "97",
       "sourceHandle": "rasters_selected",
       "target": "124",
@@ -841,6 +834,13 @@
       "target": "135",
       "targetHandle": null,
       "id": "reactflow__edge-131sdm_dmesh-135"
+    },
+    {
+      "source": "131",
+      "sourceHandle": "sdm_obs",
+      "target": "136",
+      "targetHandle": null,
+      "id": "reactflow__edge-131sdm_obs-136"
     }
   ],
   "inputs": {
@@ -984,10 +984,10 @@
       "type": "text[]",
       "weight": 0
     },
-    "filtering>cleanCoordinates.yml@34|clean_presence": {
-      "description": "Occurrences from GBIF after cleaning",
+    "SDM>runewlgcp.yml@131|sdm_obs": {
+      "description": "GBIF observations used for the sdm model",
       "label": "Presences",
-      "type": "text/tab-separated-values",
+      "type": "application/geo+json",
       "weight": 1
     },
     "SDM>runewlgcp.yml@131|sdm_pred": {

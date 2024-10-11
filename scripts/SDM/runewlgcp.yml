@@ -65,6 +65,10 @@ outputs:
     description: difference between the upper and the lower CI bound
     type: image/tiff;application=geotiff[]
     range: [0, 1]
+  sdm_obs:
+    label: observations
+    description: GBIF observations used for the sdm model
+    type: application/geo+json
   sdm_bg:
     label: background
     description: background points used for the sdm model
