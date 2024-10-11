@@ -20,15 +20,15 @@ library("sf")
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
 if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 if (!"INLA" %in% installed.packages()[,"Package"]) install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
-if (!"ewlgcpSDM" %in% installed.packages()[,"Package"]) devtools::install_github("frousseu/ewlgcpSDM")
+if (!"ewlgcpSDM" %in% installed.packages()[,"Package"]) devtools::install_github("BiodiversiteQuebec/ewlgcpSDM")
 library("stacatalogue")
 library(INLA)
 library(ewlgcpSDM)
 
 
 ## Load functions
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/runMaxentFunc.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
+#source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/runMaxentFunc.R", sep = "/"))
+#source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))

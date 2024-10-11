@@ -991,8 +991,8 @@
       "weight": 1
     },
     "SDM>runewlgcp.yml@131|sdm_pred": {
-      "description": "Model intensity predictions",
-      "label": "Predicted intensities",
+      "description": "Model predictions while trained on the whole dataset",
+      "label": "Predictions",
       "type": "image/tiff;application=geotiff",
       "range": [
         0,
@@ -1001,8 +1001,8 @@
       "weight": 2
     },
     "SDM>runewlgcp.yml@131|sdm_unc": {
-      "description": "Model outputs, uncertainty and spatial component",
-      "label": "Uncertainty and model outputs",
+      "description": "Model uncertainty metrics",
+      "label": "Uncertainty",
       "type": "image/tiff;application=geotiff",
       "range": [
         0,
@@ -1011,8 +1011,8 @@
       "weight": 3
     },
     "SDM>runewlgcp.yml@131|sdm_ci": {
-      "description": "Difference between the upper (0.025) and lower (0.975) CI",
-      "label": "Range of confidence interval (CI)",
+      "description": "Difference between the upper (0.975) and the lower (0.025) CI bound",
+      "label": "CI range",
       "type": "image/tiff;application=geotiff[]",
       "range": [
         0,
@@ -1026,29 +1026,29 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 5
     },
+    "SDM>runewlgcp.yml@131|sdm_bg": {
+      "description": "Background points used for the sdm model",
+      "label": "Background",
+      "type": "application/geo+json",
+      "weight": 6
+    },
+    "SDM>runewlgcp.yml@131|sdm_dmesh": {
+      "description": "Dual mesh used by the sdm model",
+      "label": "Dmesh",
+      "type": "application/geo+json",
+      "weight": 7
+    },
     "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 6
-    },
-    "SDM>runewlgcp.yml@131|sdm_bg": {
-      "description": "Background points used for the sdm model",
-      "label": "Background",
-      "type": "application/geo+json",
-      "weight": 7
-    },
-    "SDM>runewlgcp.yml@131|sdm_dmesh": {
-      "description": "Dual mesh used by the sdm model",
-      "label": "Dual mesh",
-      "type": "application/geo+json",
       "weight": 8
     }
   },
   "metadata": {
-    "name": "Species distribution modeling with ewlgcp",
-    "description": "This pipeline generates predictions for a species distribution model using a point process approach and the effort-weighted Log-Gaussian Cox Process (ewlgcp) implemented in the R package [ewlgcpSDM](https://github.com/frousseu/ewlgcpSDM).",
+    "name": "Species distribution modeling with ewlgcpSDM",
+    "description": "This pipeline generates predictions from a species distribution model  using a point process approach and the effort-weighted Log-Gaussian  Cox Process (ewlgcp) implemented in the R package [ewlgcpSDM](https://github.com/BiodiversiteQuebec/ewlgcpSDM).",
     "author": [
       {
         "name": "François Rousseu",
@@ -1064,6 +1064,6 @@
       }
     ],
     "license": "MIT",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runMaxent.R"
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/runewlgcp.R"
   }
 }

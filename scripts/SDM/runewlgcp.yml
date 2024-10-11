@@ -1,7 +1,7 @@
 script: runewlgcp.R
 name: ewlgcp
 description: "This script runs an effort-weighted Log Gaussian Cox Process based on the ewlgcpSDM R package."
-external_link: https://github.com/frousseu/ewlgcpSDM
+external_link: https://github.com/BiodiversiteQuebec/ewlgcpSDM
 author:
   - name: François Rousseu
     identifier: https://orcid.org/0000-0002-2400-2479
