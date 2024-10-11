@@ -135,6 +135,8 @@ sdm_ci <- sdms[["0.975quant"]] - sdms[["0.025quant"]]
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
 ci.output <- file.path(outputFolder, "sdm_ci.tif")
 unc.output <- file.path(outputFolder, "sdm_unc.tif")
+bg.output <- file.path(outputFolder, "sdm_bg.geojson")
+dmesh.output <- file.path(outputFolder, "sdm_dmesh.geojson")
 
 terra::writeRaster(x = sdm_pred[["mean"]],
                           filename = pred.output,
@@ -154,9 +156,15 @@ terra::writeRaster(x = sdm_ci,
                           wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
 
+sf::st_write(st_transform(bg, 4326), bg.output, append = FALSE)      
+sf::st_write(st_transform(params$dmesh, 4326), dmesh.output, append = FALSE)  
+
 output <- list("sdm_pred" = pred.output,
   "sdm_unc" = unc.output,
-  "sdm_ci" = ci.output) 
+  "sdm_ci" = ci.output,
+  "sdm_bg" = bg.output,
+  "sdm_dmesh" = dmesh.output
+  ) 
 
 jsonData <- toJSON(output, indent = 2)
 write(jsonData, file.path(outputFolder, "output.json"))

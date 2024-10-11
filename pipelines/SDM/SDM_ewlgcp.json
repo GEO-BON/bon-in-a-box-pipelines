@@ -302,8 +302,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 4046,
-        "y": 623.5
+        "x": 4174,
+        "y": 459.5
       },
       "data": {
         "label": "Output"
@@ -450,8 +450,8 @@
       "id": "132",
       "type": "output",
       "position": {
-        "x": 4040.6079892458283,
-        "y": 742.2011824994986
+        "x": 4202.607989245828,
+        "y": 594.2011824994986
       },
       "data": {
         "label": "Output"
@@ -461,8 +461,30 @@
       "id": "133",
       "type": "output",
       "position": {
-        "x": 4048.7883068492833,
-        "y": 875.6118011474609
+        "x": 4182.788306849283,
+        "y": 713.6118011474609
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "134",
+      "type": "output",
+      "position": {
+        "x": 4177.009237501298,
+        "y": 820.2915236674507
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "135",
+      "type": "output",
+      "position": {
+        "x": 4209.065947123696,
+        "y": 995.4207325815185
       },
       "data": {
         "label": "Output"
@@ -805,6 +827,20 @@
       "target": "133",
       "targetHandle": null,
       "id": "reactflow__edge-131sdm_ci-133"
+    },
+    {
+      "source": "131",
+      "sourceHandle": "sdm_bg",
+      "target": "134",
+      "targetHandle": null,
+      "id": "reactflow__edge-131sdm_bg-134"
+    },
+    {
+      "source": "131",
+      "sourceHandle": "sdm_dmesh",
+      "target": "135",
+      "targetHandle": null,
+      "id": "reactflow__edge-131sdm_dmesh-135"
     }
   ],
   "inputs": {
@@ -818,8 +854,8 @@
       "weight": 0
     },
     "SDM>selectBackground.yml@40|method_background": {
-      "description": "method used to sample background points",
-      "label": "method background",
+      "description": "Method used to sample background points",
+      "label": "Method background",
       "type": "options",
       "options": [
         "random",
@@ -831,21 +867,21 @@
       "weight": 1
     },
     "SDM>selectBackground.yml@40|n_background": {
-      "description": "number of background points",
-      "label": "number of background points",
+      "description": "Number of background points",
+      "label": "Number of background points",
       "type": "int",
       "example": 100000,
       "weight": 2
     },
     "pipeline@46": {
-      "label": "number of runs",
-      "description": "number of runs (in bootstrap or crossvalidation method)",
+      "label": "Number of blocks",
+      "description": "Number of blocks (for crossvalidation method, currently ignored)",
       "type": "int",
       "example": 2,
       "weight": 3
     },
     "pipeline@57": {
-      "label": "projection system",
+      "label": "Projection system",
       "description": "String, projection system",
       "type": "text",
       "example": "EPSG:6622",
@@ -875,29 +911,29 @@
       "weight": 6
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
+      "description": "Min. year observations wanted",
+      "label": "Minimum year",
       "type": "int",
       "example": 1990,
       "weight": 7
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
-      "description": "Max year observations wanted",
-      "label": "maximum year",
+      "description": "Max. year observations wanted",
+      "label": "Maximum year",
       "type": "int",
       "example": 2022,
       "weight": 8
     },
     "data>loadFromStac.yml@119|stac_url": {
       "description": "URL of the Stac catalog",
-      "label": "stac_url",
+      "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org",
       "weight": 9
     },
     "data>loadFromStac.yml@119|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "collections_items",
+      "label": "Collections items",
       "type": "text[]",
       "example": [
         "chelsa-clim|bio5",
@@ -909,21 +945,21 @@
     },
     "data>loadFromStac.yml@119|mask": {
       "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
+      "label": "Mask",
       "type": "application/dbf",
       "example": null,
       "weight": 11
     },
     "pipeline@128": {
-      "label": "spatial resolution",
+      "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
       "weight": 12
     },
     "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
-      "description": "taxonomic group for which to retrieve GBIF heatmap",
-      "label": "taxa",
+      "description": "Taxonomic group for which to retrieve GBIF heatmap and create a target-group background",
+      "label": "Target-group taxa",
       "type": "options",
       "options": [
         "reptiles",
@@ -941,7 +977,7 @@
   "outputs": {
     "pipeline@121|defaultOutput": {
       "label": "Species",
-      "description": "Species for which this model was run.",
+      "description": "Species for which the model was run.",
       "example": [
         "Acer saccharum"
       ],
@@ -996,6 +1032,18 @@
       "type": "text",
       "example": "10.15468/dl.j644h5",
       "weight": 6
+    },
+    "SDM>runewlgcp.yml@131|sdm_bg": {
+      "description": "Background points used for the sdm model",
+      "label": "Background",
+      "type": "application/geo+json",
+      "weight": 7
+    },
+    "SDM>runewlgcp.yml@131|sdm_dmesh": {
+      "description": "Dual mesh used by the sdm model",
+      "label": "Dual mesh",
+      "type": "application/geo+json",
+      "weight": 8
     }
   },
   "metadata": {

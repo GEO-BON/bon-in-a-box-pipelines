@@ -65,3 +65,11 @@ outputs:
     description: difference between the upper and the lower CI bound
     type: image/tiff;application=geotiff[]
     range: [0, 1]
+  sdm_bg:
+    label: background
+    description: background points used for the sdm model
+    type: application/geo+json
+  sdm_dmesh:
+    label: dmesh
+    description: dual mesh used by the sdm model
+    type: application/geo+json
