@@ -29,27 +29,6 @@ inputs:
         "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif",
         "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif",
       ]
-  fc:
-    label: feature classes
-    description: Vector of strings, feature classes for MaxEnt algorithm.
-    type: text[]
-    example: ["L", "LQ", "LQHP"]
-  rm:
-    label: regularization multiplier
-    description: Vector of numbers, regularization multipliers for MaxEnt algorithm.
-    type: float[]
-    example: [0.5, 1, 2]
-  partition_type:
-    label: partition type
-    description: String, name of partitioning technique.
-    type: options
-    options:
-      - randomkfold
-      - jackknife
-      - block
-      - checkerboard1
-      - checkerboard2
-    example: "block"
   orientation_block:
     label: orientation block
     description: String, order of spatial partitioning for block technique..
@@ -70,19 +49,15 @@ inputs:
     description: Integer, number of random k-folds for randomkfold technique.
     type: int
     example: 5
-  method_select_params:
-    label: params selection method
-    description: String, method to select the best combination of MaxEnt parameters.
-    type: options
-    options:
-      - p10
-      - AIC
-      - AUC
-    example: p10
 outputs:
   sdm_pred:
     label: predictions
     description: model predictions while trained on the whole dataset
+    type: image/tiff;application=geotiff
+    range: [0, 1]
+  sdm_unc:
+    label: uncertainty
+    description: model uncertainty metrics
     type: image/tiff;application=geotiff
     range: [0, 1]
   sdm_runs:

@@ -47,7 +47,7 @@ domain <- st_sample(st_buffer(region, 5000), 5000)
 domain <- inla.nonconvex.hull(st_coordinates(domain), convex = -0.015, resolution = 75)
 
 # We then create the INLA mesh over the study area. We use a coarse resolution for the mesh edges corresponding to approximately 1% of the study area diameter and a relatively large outer area for reducing edge effects. See [virgilio]() for advices on creating a good mesh.
-pedge <- 0.005
+pedge <- 0.01
 edge <- min(c(diff(st_bbox(region)[c(1, 3)]) * pedge, diff(st_bbox(region)[c(2, 4)]) * pedge))
 
 mesh <- inla.mesh.2d(loc.domain = NULL, 
@@ -123,8 +123,8 @@ sdms <- mask(sdms, vect(region))
 crs(sdms) <- crs(region)
 
 
-sdm_pred <- sdms[["mean"]]
-names(sdm_pred) <- "prediction"
+sdm_pred <- sdms#[["mean"]]
+#names(sdm_pred) <- "prediction"
 sdm_runs <- sdms[[c("0.025quant", "0.975quant")]]
 
 ### temporary rescaling to display in the 0-1 viewer
@@ -133,14 +133,21 @@ sdm_runs <- sdms[[c("0.025quant", "0.975quant")]]
 #print(sdm_pred)
 
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
-runs.output <- paste0(outputFolder,"/sdm_runs_", 1:nlyr(sdm_runs), ".tif")
-#runs.output <- file.path(outputFolder, "sdm_runs.tif")
+runs.output <- paste0(outputFolder, "/sdm_runs_", 1:nlyr(sdm_runs), ".tif")
+unc.output <- file.path(outputFolder, "sdm_unc.tif")
 
-terra::writeRaster(x = sdm_pred,
+terra::writeRaster(x = sdm_pred[["mean"]],
                           filename = pred.output,
                           filetype = "COG",
                           wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
+
+terra::writeRaster(x = sdm_pred,
+                          filename = unc.output,
+                          filetype = "COG",
+                          wopt= list(gdal=c("COMPRESS=DEFLATE")),
+                          overwrite = TRUE)
+
 for (i in 1:nlyr(sdm_runs)){
     terra::writeRaster(x = sdm_runs[[i]],
     filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),
@@ -151,6 +158,7 @@ for (i in 1:nlyr(sdm_runs)){
 
 
 output <- list("sdm_pred" = pred.output,
+  "sdm_unc" = unc.output,
   "sdm_runs" = runs.output) 
 
 jsonData <- toJSON(output, indent = 2)

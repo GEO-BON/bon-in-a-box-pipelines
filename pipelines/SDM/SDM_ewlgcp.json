@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3008,
-        "y": 652.5
+        "x": 3028,
+        "y": 518.5
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 2735,
-        "y": 802.5
+        "x": 2795,
+        "y": 914.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -332,58 +332,6 @@
       }
     },
     {
-      "id": "110",
-      "type": "constant",
-      "position": {
-        "x": 3210,
-        "y": 848.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "L",
-          "LQ",
-          "LQHP"
-        ]
-      }
-    },
-    {
-      "id": "111",
-      "type": "constant",
-      "position": {
-        "x": 3205,
-        "y": 897.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          0.5,
-          1,
-          2
-        ]
-      }
-    },
-    {
-      "id": "115",
-      "type": "constant",
-      "position": {
-        "x": 3288,
-        "y": 1010.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "AUC",
-        "options": [
-          "p10",
-          "AIC",
-          "AUC"
-        ]
-      }
-    },
-    {
       "id": "116",
       "type": "constant",
       "position": {
@@ -513,11 +461,22 @@
       "id": "131",
       "type": "io",
       "position": {
-        "x": 3588.6998197537473,
-        "y": 679.359264222406
+        "x": 3610.6998197537473,
+        "y": 711.359264222406
       },
       "data": {
         "descriptionFile": "SDM>runewlgcp.yml"
+      }
+    },
+    {
+      "id": "132",
+      "type": "output",
+      "position": {
+        "x": 4058.6079892458283,
+        "y": 748.2011824994986
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -817,34 +776,6 @@
       "id": "reactflow__edge-44presence_background-131presence_background"
     },
     {
-      "source": "110",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "fc",
-      "id": "reactflow__edge-110-131fc"
-    },
-    {
-      "source": "111",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "rm",
-      "id": "reactflow__edge-111-131rm"
-    },
-    {
-      "source": "116",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "orientation_block",
-      "id": "reactflow__edge-116-131orientation_block"
-    },
-    {
-      "source": "115",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "method_select_params",
-      "id": "reactflow__edge-115-131method_select_params"
-    },
-    {
       "source": "97",
       "sourceHandle": "rasters_selected",
       "target": "131",
@@ -878,6 +809,20 @@
       "target": "68",
       "targetHandle": "predictions",
       "id": "reactflow__edge-131sdm_runs-68predictions"
+    },
+    {
+      "source": "116",
+      "sourceHandle": null,
+      "target": "131",
+      "targetHandle": "orientation_block",
+      "id": "reactflow__edge-116-131orientation_block"
+    },
+    {
+      "source": "131",
+      "sourceHandle": "sdm_unc",
+      "target": "132",
+      "targetHandle": null,
+      "id": "reactflow__edge-131sdm_unc-132"
     }
   ],
   "inputs": {
@@ -951,14 +896,14 @@
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
-      "example": 2010,
+      "example": 1990,
       "weight": 7
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
-      "example": 2020,
+      "example": 2022,
       "weight": 8
     },
     "data>loadFromStac.yml@119|stac_url": {
@@ -973,8 +918,9 @@
       "label": "collections_items",
       "type": "text[]",
       "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2",
+        "chelsa-clim|bio5",
+        "earthenv_landcover|class_1",
+        "earthenv_landcover|class_7",
         "earthenv_landcover|class_3"
       ],
       "weight": 10
@@ -1008,39 +954,9 @@
       ],
       "weight": 13,
       "example": "plants"
-    },
-    "SDM>runewlgcp.yml@131|partition_type": {
-      "description": "String, name of partitioning technique.",
-      "label": "partition type",
-      "type": "options",
-      "options": [
-        "randomkfold",
-        "jackknife",
-        "block",
-        "checkerboard1",
-        "checkerboard2"
-      ],
-      "example": "block",
-      "weight": 14
     }
   },
   "outputs": {
-    "SDM>rangePredictions.yml@68|range_predictions": {
-      "description": "Variability of predictions based on range method",
-      "label": "Variability of predictions",
-      "type": "image/tiff;application=geotiff",
-      "weight": 0
-    },
-    "SDM>runewlgcp.yml@131|sdm_pred": {
-      "description": "model predictions while trained on the whole dataset",
-      "label": "predictions",
-      "type": "image/tiff;application=geotiff",
-      "range": [
-        0,
-        1
-      ],
-      "weight": 1
-    },
     "pipeline@121|defaultOutput": {
       "label": "Species",
       "description": "Species for which this model was run.",
@@ -1048,19 +964,38 @@
         "Acer saccharum"
       ],
       "type": "text[]",
-      "weight": 2
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
-      "description": "DOI of GBIF download. Used for citing downloaded data.",
-      "label": "DOI of GBIF download",
-      "type": "text",
-      "example": "10.15468/dl.j644h5",
-      "weight": 3
+      "weight": 0
     },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
       "label": "Presences",
       "type": "text/tab-separated-values",
+      "weight": 1
+    },
+    "SDM>runewlgcp.yml@131|sdm_pred": {
+      "description": "Model intensity predictions",
+      "label": "Predicted intensities",
+      "type": "image/tiff;application=geotiff",
+      "range": [
+        0,
+        1
+      ],
+      "weight": 2
+    },
+    "SDM>runewlgcp.yml@131|sdm_unc": {
+      "description": "Model outputs, uncertainty and spatial component",
+      "label": "Uncertainty and model outputs",
+      "type": "image/tiff;application=geotiff",
+      "range": [
+        0,
+        1
+      ],
+      "weight": 3
+    },
+    "SDM>rangePredictions.yml@68|range_predictions": {
+      "description": "Difference between the upper (0.025) and lower (0.975) CI",
+      "label": "Range of confidence interval (CI)",
+      "type": "image/tiff;application=geotiff",
       "weight": 4
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
@@ -1068,6 +1003,13 @@
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
       "weight": 5
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
+      "weight": 6
     }
   },
   "metadata": {
