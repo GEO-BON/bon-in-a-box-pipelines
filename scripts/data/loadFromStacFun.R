@@ -49,18 +49,20 @@ load_cube <-
       t1 <- t0
     }
     RCurl::url.exists(stac_path)
-    it_obj <-
-      s %>% rstac::stac_search(
-        bbox = bbox.wgs84,
-        collections = collections,
-        datetime = datetime,
-        limit = limit
-      ) %>% rstac::get_request()
+   # it_obj <-
+   #   s %>% rstac::stac_search(
+   #     bbox = bbox.wgs84,
+   #     collections = collections,
+   #     datetime = datetime,
+   #     limit = limit
+   #   ) %>% rstac::get_request()
 
+    it_obj <- s |> rstac::collections(collections) |> rstac::items(ids) |> rstac::get_request()
+    print(it_obj)
     # Force each dataset to have the data role. Fix 08/2023
-    for (i in 1:length(it_obj$features)){
-        it_obj$features[[i]]$assets[[1]]$roles<-'data'
-    }
+    #for (i in 1:length(it_obj$features)){
+    #    it_obj$features[[i]]$assets[[1]]$roles<-'data'
+    #}
     
 
     if (is.null(spatial.res)) {
@@ -71,28 +73,32 @@ load_cube <-
         it_obj$features[[1]]$assets[[name1]]$`raster:bands`[[1]]$spatial_resolution
     }
     if (is.null(layers)) {
-      layers <- unlist(lapply(it_obj$features, function(x) {
-        names(x$assets)
-      }))
+      layers <- names(it_obj$assets)
+      print('Layers')
+      print(layers)
     }
     if (!is.null(ids)) {
-      feats<-it_obj$features[lapply(it_obj$features,function(f){f$id %in% ids})==TRUE]
-      print(feats[ids])
+      #feats<-it_obj$features[lapply(it_obj$features,function(f){f$id %in% ids})==TRUE]
+      #print(feats[ids])
+      feats<-it_obj
     }else{
       feats<-it_obj$features
     }
+    print('IDS')
     print(ids)
+    print('feats')
+    print(feats)
     if (!is.null(variable)) {
       print("Variable is null")
       st <- gdalcubes::stac_image_collection(
-        feats,
+        list(feats),
         asset_names = layers,
         property_filter = function(x) {
           x[["variable"]] %in% variable
         }
       )
     } else {
-      st <- gdalcubes::stac_image_collection(feats,
+      st <- gdalcubes::stac_image_collection(list(feats),
                                              asset_names = layers)
     }
     v <- gdalcubes::cube_view(

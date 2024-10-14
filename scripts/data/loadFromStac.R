@@ -70,7 +70,8 @@ raster_layers <- list()
 nc_names <- c()
 for (coll_it in collections_items){
     ci <- strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
-
+    print("ci")
+    print(ci)
     cube_args_c <- append(cube_args, list(collections=ci[1],
                                           srs.cube = proj, 
                                           bbox = bbox,
