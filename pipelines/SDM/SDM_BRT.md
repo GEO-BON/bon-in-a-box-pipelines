@@ -17,7 +17,7 @@ arbitrary STAC Catalogue.
 In particular, this pipeline uses a specific model called a Boosted Regression
 Tree (BRT), a machine-learning model which tends to work well with spatial data. The
 details of how a BRT works are in the description of the key script in the
-pipeline, [`fitBRT.jl`](LINK).
+pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 
 ## Inputs:
 - **Species**: The name of the taxon the build a species distribution model for
