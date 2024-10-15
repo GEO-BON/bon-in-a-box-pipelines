@@ -85,6 +85,7 @@ conda:
     - conda-forge
     - r
   dependencies:
+    - r-base=4.4.1
     - r-terra
     - r-dplyr
     - r-ggplot2

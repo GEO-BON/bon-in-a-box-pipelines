@@ -1,11 +1,10 @@
 # Script for analyzing ProtConn with the function
 #packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version # nolint
-print(R.version)
 packagesList<-list("terra", "dplyr", "ggrepel", "rjson", "Makurhini")
 #lapply(packagesList, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
 library(sf)
 library(rmapshaper)
-remotes::install_github("connectscape/Makurhini", dependencies = TRUE, upgrade = "always")
+remotes::install_github("connectscape/Makurhini", dependencies = TRUE)
 # Load libraries
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 Sys.getenv("SCRIPT_LOCATION")
@@ -18,9 +17,9 @@ output<- tryCatch({
 units::units_options(set_units_mode = "standard")
 # Load study area shapefile
 print("Loading polygons")
-study_area<- geojsonsf::geojson_sf(input$study_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
+study_area<- st_read(input$study_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 
-protected_area<- geojsonsf::geojson_sf(input$protected_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
+protected_area<- st_read(input$protected_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
 
 str(protected_area)
 
@@ -30,7 +29,7 @@ if(is.character(protected_area$date_column)){
 protected_area$date_column <- lubridate::parse_date_time(protected_area$date_column, orders=c("ymd", "mdy", "dmy"))
 protected_area$year <- lubridate::year(protected_area$date_column)
 } else (protected_area$year <- protected_area$date_column)
-
+print(protected_area$year)
 if(is.null(protected_area$date_column)){
   stop("Date column is not in one of the supported formats. Supported formats are year-month-day, month-day-year, day-month-year (or year/month/date, month/day/year, or day/month/year)")
 }
@@ -57,7 +56,7 @@ result_plot <- ggplot2::ggplot(protcon_result.df) +
 # Change in protection over time
 # Sequence with start year by interval
 years <- seq(from=input$start_year, to=2024, by=input$year_int)
-
+years <- c(years, input$years)
 # assign all PAs with no date to the start date for plotting
 for(i in 1:nrow(protected_area)) {
  if(is.na(protected_area$year[i])){
@@ -66,30 +65,28 @@ for(i in 1:nrow(protected_area)) {
 }
 # Calculate ProtConn for each specified year
 print("Calculating ProtConn time series")
-protcon_ts <- function(r){
-    protected_area_filt <- protected_area %>% dplyr::filter(year <= r)
+
+protcon_ts_result <- list()
+print(summary(protected_area$year))
+
+for (i in 1:length(years)){
+  print(years[i])
+    protected_area_filt <- protected_area %>% dplyr::filter(year <= years[i])
+    print(nrow(protected_area_filt))
+    if(nrow(protected_area_filt)==0) {
+      print(paste("No protected area data from", years, "beginning calculations at first year with data"))
+      next
+    } else {
     protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
         transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
-    protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=r) 
-    return(protcon_result.df)
+    protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=years[i]) 
+    protcon_ts_result[[i]] <- protcon_result.df}
 }
 
-protcon_ts_result <- lapply(years, FUN=protcon_ts)
 result_yrs <- bind_rows(protcon_ts_result)
 result_yrs[is.na(result_yrs)] <- 0
 
-xint <- input$start_year + 10
-
-result_yrs_plot <- ggplot(result_yrs, aes(x=Year, y=Percentage, group=`ProtConn indicator`, shape=`ProtConn indicator`, color=`ProtConn indicator`))+
-geom_point() +
-geom_line()+
-labs(y="Percent area", x="Year")+
-geom_hline(yintercept=30, lty=2)+
-annotate("text", x=xint, y=31, label="Kunming-Montreal target")+
-annotate("text", x=xint, y=18, label="Aichi target", color="grey30")+
-geom_line() +
-theme_classic()
-
+xint <- min(result_yrs$Year) + 10
 
 result_yrs_plot <- ggplot(result_yrs, aes(x=Year, y=Percentage, group=`ProtConn indicator`, shape=`ProtConn indicator`, color=`ProtConn indicator`))+
 geom_point() +
