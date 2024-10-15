@@ -92,8 +92,8 @@
       "id": "119",
       "type": "io",
       "position": {
-        "x": 1143.3708876970907,
-        "y": 238.90983473453917
+        "x": 1141.5956650225519,
+        "y": 246.01072543269515
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -312,6 +312,28 @@
       "position": {
         "x": 2831.1682994785438,
         "y": 710.9197209041046
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "149",
+      "type": "output",
+      "position": {
+        "x": 1825.4298528831805,
+        "y": 798.5621838659498
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "151",
+      "type": "output",
+      "position": {
+        "x": 1668.9046885641724,
+        "y": 921.9798661611901
       },
       "data": {
         "label": "Output"
@@ -563,6 +585,20 @@
       "target": "148",
       "targetHandle": null,
       "id": "reactflow__edge-132pseudoabsences-148"
+    },
+    {
+      "source": "121",
+      "sourceHandle": null,
+      "target": "149",
+      "targetHandle": null,
+      "id": "reactflow__edge-121-149"
+    },
+    {
+      "source": "119",
+      "sourceHandle": "rasters",
+      "target": "151",
+      "targetHandle": null,
+      "id": "reactflow__edge-119rasters-151"
     }
   ],
   "inputs": {
@@ -643,7 +679,8 @@
       "label": "Mask",
       "description": "Shapefile, used to mask the output rasters",
       "type": "application/dbf",
-      "weight": 8
+      "weight": 8,
+      "example": null
     },
     "pipeline@146": {
       "label": "STAC URL",
@@ -654,60 +691,75 @@
     }
   },
   "outputs": {
-    "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
-      "description": "Map of occurrence score between 0 and 1.",
-      "label": "Predicted SDM",
-      "type": "image/tiff;application=geotiff",
+    "pipeline@121": {
+      "label": "Species",
+      "description": "Name of species",
+      "example": [
+        "Acer saccharum"
+      ],
+      "type": "text[]",
       "weight": 0
-    },
-    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
-      "description": "Map of the BRT's relative uncertainty for each location.",
-      "label": "SDM Uncertainty",
-      "type": "image/tiff;application=geotiff",
-      "weight": 1
-    },
-    "SDM>BRT>fitBRT.yml@132|fit_stats": {
-      "description": "JSON of BRT fit statistics and optimal threshold value.",
-      "label": "Fit Statistics",
-      "type": "text/json",
-      "weight": 2
-    },
-    "SDM>BRT>fitBRT.yml@132|range": {
-      "description": "Range map thresholded at the optimal value.",
-      "label": "Range",
-      "type": "image/tiff;application=geotiff",
-      "weight": 3
-    },
-    "SDM>BRT>fitBRT.yml@132|env_corners": {
-      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (red) in environment space for up to the first 5 predictors.",
-      "label": "Environment Space",
-      "type": "image/jpg",
-      "weight": 4
-    },
-    "SDM>BRT>fitBRT.yml@132|tuning": {
-      "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1.",
-      "label": "Tuning Curve",
-      "type": "image/jpg",
-      "weight": 5
-    },
-    "filtering>cleanCoordinates.yml@34|clean_presence": {
-      "description": "Occurrences from GBIF after cleaning",
-      "label": "Presences",
-      "type": "text/tab-separated-values",
-      "weight": 6
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 7
+      "weight": 1
+    },
+    "filtering>cleanCoordinates.yml@34|clean_presence": {
+      "description": "Occurrences from GBIF after cleaning",
+      "label": "Presences",
+      "type": "text/tab-separated-values",
+      "weight": 2
+    },
+    "data>loadFromStac.yml@119|rasters": {
+      "description": "Environmental layers used as predictors",
+      "label": "Environmental predictors",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
     },
     "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
       "description": "pseudoabsence coordinates",
-      "label": "pseudoabsences",
+      "label": "Pseudoabsences",
       "type": "text/tab-separated-values",
+      "weight": 4
+    },
+    "SDM>BRT>fitBRT.yml@132|env_corners": {
+      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (red) in environment space for up to the first 5 predictors.",
+      "label": "Environment Space",
+      "type": "image/jpg",
+      "weight": 5
+    },
+    "SDM>BRT>fitBRT.yml@132|tuning": {
+      "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1.",
+      "label": "Tuning Curve",
+      "type": "image/jpg",
+      "weight": 6
+    },
+    "SDM>BRT>fitBRT.yml@132|fit_stats": {
+      "description": "JSON of BRT fit statistics and optimal threshold value.",
+      "label": "Fit Statistics",
+      "type": "text/json",
+      "weight": 7
+    },
+    "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
+      "description": "Map of occurrence score between 0 and 1.",
+      "label": "Predicted SDM",
+      "type": "image/tiff;application=geotiff",
       "weight": 8
+    },
+    "SDM>BRT>fitBRT.yml@132|range": {
+      "description": "Range map thresholded at the optimal value.",
+      "label": "Range",
+      "type": "image/tiff;application=geotiff",
+      "weight": 9
+    },
+    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
+      "description": "Map of the BRT's relative uncertainty for each location.",
+      "label": "SDM Uncertainty",
+      "type": "image/tiff;application=geotiff",
+      "weight": 10
     }
   },
   "metadata": {
