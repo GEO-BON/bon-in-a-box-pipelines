@@ -53,7 +53,7 @@ Here is a conceptual overview of the steps within this script:
 5. Generates pseudoabsences using background thickening with a buffer radius. 
 
 > [!WARNING]  
-> Yes, I know `generateBackgroundPoints.R` exists. There are some changes that
+> Yes, I know `selectBackground.R` exists. There are some changes that
 > need to be made to the way that script outputs PAs to make it more
 > interoperable than it currently is.
 
