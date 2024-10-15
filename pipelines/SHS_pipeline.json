@@ -273,7 +273,8 @@
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
       "label": "region",
       "type": "text",
-      "weight": 3
+      "weight": 3,
+      "example": null
     },
     "data>getAreaOfHabitat.yml@80|study_area": {
       "description": "Path to the study area file if you choosing option \"User defined\" for study area option. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder). ",
@@ -390,7 +391,8 @@
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "elevation buffer",
       "type": "int",
-      "weight": 17
+      "weight": 17,
+      "example": null
     }
   },
   "outputs": {
