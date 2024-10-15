@@ -23,6 +23,7 @@ dependencies:
   - r-purrr
   - r-rcurl
   - r-rgbif
+  - r-remotes
   - r-rjava
   - r-rjson
   - r-rredlist

@@ -10,10 +10,12 @@ inputs:
     label: Polygon of study area
     description: Represents the map of the study area
     type: application/geo+json
+    example: null
   protected_area_polygon:
     label: Polygon of protected areas
     description: Represents the map of the protected areas within the study area
     type: application/geo+json
+    example: null
   studyarea_epsg:
     label: Study area EPSG
     description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
@@ -89,6 +91,8 @@ conda:
     - r-ggrepel
    # - r-Makurhini - not yet in anaconda
     - r-rjson
+    - r-sf
+    - r-rmapshaper
 references:
 - text: Saura et al. 2017
   doi: 10.1016/j.ecolind.2016.12.047
