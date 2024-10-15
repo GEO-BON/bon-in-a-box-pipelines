@@ -20,9 +20,11 @@ BON in a Box has created a pipeline to calculate ProtConn for a given country or
 
 The pipeline creates the following outputs:
 * **ProtConn results:** The pipeline gives a table with several measures
+  * Prot - percentage of study area that is protected
+  * Unprotected - percentage of study area that is unprotected
   * ProtConn - percentage of the study area that is protected and connected
   * ProtUnconn - percentage of the study area that is protected and unconnected
-  * Etc.
+  * RelConn - percentage of the protected area that is protected and connected
 * **Result plot:** donut plot of percentage of the study area that is unprotected, protected and unconnected, and protected and connected.
 * **Result with standardized distances:** ProtConn results for 3 standardized dispersal distances (1km, 10km, and 100km) that cover common dispersal distances for a range of species.
 * **Result plot with standardized distances:** donut plot of percentage of the study area that is unprotected, protected and unconnected, and protected and connected for each dispersal distance.
