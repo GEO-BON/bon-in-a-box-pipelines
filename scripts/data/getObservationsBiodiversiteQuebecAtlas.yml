@@ -13,7 +13,7 @@ inputs:
     example: [Acer saccharum, Bubo scandiacus]
   bbox:
     label: bbox
-    description: Vector of float, bbox coordinates of the bbox in the order long min, lat ymin, long xmax, lat ymax
+    description: Vector of float, bbox coordinates of the bbox in the order long xmin, lat ymin, long xmax, lat ymax
     type: float[]
     example: [-80, 44.8, -50.7, 63]
   min_year:
