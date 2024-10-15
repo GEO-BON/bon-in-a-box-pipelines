@@ -1,71 +1,74 @@
-# Species Distribution Modeling with Boosted Regression Trees 
+# fitBRT.jl
 
-This document describes the methodology behind the BON-in-a-Box (BiaB) pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
+The script `fitBRT.jl` creates a Species Distribution Model (SDM) and
+uncertainty map based on using Boosted Regression Trees (BRTs) using the package
+SpeciesDistributionToolkit.jl and EvoTrees.jl.
 
-> [!CAUTION]
-> dont fucking review this its not done 
+## Inputs
 
-**Table of Contents**
-1. [Summary](#summary)
-2. [Pipeline Steps](#pipeline-steps)
-    1. [Load Environment Layers]()
-    2. [Load Occurrences]()
-    3. [Clean Occurrences]()
-    4. [Generating Pseudoabsences](#third-example)
-    5. [Boosted Regression Trees](#third-example)
-    6. [Crossvalidation](#fourth-examplehttpwwwfourthexamplecom)
-    7. [Diagnostic Plots](#foo)
-    8. [Uncertainty Maps](#uncert)
-3. Technical nonsense
+The script requires the following **inputs**, which are the paths to:
 
----
+- A tab-separated-value **occurrence** file with the coordinates of the
+  longitudes in a column titled *lon*, and latitudes in a column titled *lat*.  
+- GeoTiffs used as **environmental predictors** of species occurrence
+- The **bounding box** of the environmental predictors
+- The **coordinate reference system**, which all occurrences, bounding-box
+  coordinates, and environmental predictors must be in 
+- A **GeoTiff mask** of locations not to be considered. By default this is
+  assumed to be water, as the default inputs are for the terrestrial species
+  _Acer saccarum_.  
 
-# Summary
+and produces the following **outputs**:
 
-This is a pipeline 
+## Outputs
 
-# Pipeline Steps
+- A **predicted species distribution** as a GeoTiff, which contains the predicted occurrence score between 0 and 1.
+- **SDM uncertainty** as a GeoTiff, representing the relative uncertainty of the
+  model at that location. Note that this is uncertainty computed via [maximum
+  likelihood estimate of each node as a Gaussian], not bootstrap uncertainty.
+  This is explained below. 
+- Model **Fit Statistics** in a JSON, which describe different metrics of how
+  good the model is on the test set
+- A **Range Map** as a GeoTiff, which is thresholded at the optimum threshold
+  (defined as the threshold the maximizes the Matthew's Correlation Coefficient)
+- The coordinates of **Pseudoabsences** as a tab-seperated-value file.
+- A diagnostic **corners plot** of the locations of occurrences and
+  pseudoabsences in environmetal space
+- A diagnostic **tuning curve** plot of the value of the Matthew's Correlation
+  Coefficient across various thresholding values between 0 and 1. 
 
-```mermaid
-flowchart LR
-    a{input species} --> b[Load GBIF Occurrences]
-    c{input bounding box} --> b
-    d{input layers} --> e[Load Layers from STAC]
-    c --> e
-    b --> f[Clean presences]
-    f --> g[Generate Pseudoabsences]
-    c --> g
-    g --> h[Fit BRT]
-    e --> h
-    h --> i(predicted sdm)
-    h --> j(uncertainty map)
-    c --> k[create water mask]
-    h --> l[model fit statistics]
-    h --> m[diagnostic plots]
-    k --> h
-```
+# What steps are in this script
 
-**Inputs:**
-- Species
-- Environmental Predictors
-- Bounding Box
-- Coordinate Reference System
-- GBIF Data Source
-- Start Year
-- End Year
-- Spatial Resolution
-- Mask
-- STAC URL
+> [!IMPORTANT]  
+> This script does too much. There are many things that could be improved, but
+> require refactoring other preexisting R scripts, and therefore this has been
+> punted until after COP16. 
 
-**Outputs**
-- `predicted_sdm.tif`
-- `uncertainty.tif`
-- `fit_statistics.json`
+Here is a conceptual overview of the steps within this script:
 
-## Boosted Regression Trees
+1. Read the input JSON
+2. Load the occurrence `.tsv` file, and convert it into an `SDMLayer`.
+3. Load the predictor `.tif`s into `SDMLayers`
+4. Load the mask `.tif` and mask the predictor and occurrence layers.
+5. Generates pseudoabsences using background thickening with a buffer radius. 
+
+> [!WARNING]  
+> Yes, I know `generateBackgroundPoints.R` exists. There are some changes that
+> need to be made to the way that script outputs PAs to make it more
+> interoperable than it currently is.
+
+6. Converts the predictors and occurrence/pseudoabsence layers into a matrix of
+   _features_ and a vector _labels_.
+7. Do a single crossvalidation split to get a set of training data and a set of test data.
+8. Fit a Boosted-Regression-Tree on the training data
+9. Compute the fit statistics of the BRT on the test data
+10. Creates the predicted SDM and uncertainty `SDMLayer`s
+11. Creates diagnostic plots
+12. Writes all the outputs
 
 
-## What is a Boosted Regression Tree?
+# What is a Boosted Regression Tree?
+
 
 ### Species Distribution Modeling as a Classification Problem
 
@@ -129,9 +132,7 @@ Boosted Regression Trees combine gradient boosting with _Random Forest_ style ba
 We can associated uncertainty with the predictions made using a BRT by using [maximum likelihood estimation (MLE)](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) to estimate the values of the splits. We do this using the `GaussianMLE` loss function in [EvoTrees.jl](https://github.com/Evovest/EvoTrees.jl/blob/4caa1269e1a663830887e248e980dc63494dfe3e/src/loss.jl#L87 ),  For example, if each rule $j$ of the decision tree has the from $x_i > \alpha_j$ , the value of $\alpha_j$ is inferred by [Gaussian MLE](http://jrmeyer.github.io/machinelearning/2017/08/18/mle.html), where the true value of $\alpha_j \sim \mathcal{N}(\mu_j, \sigma_j)$. This means for a fitted tree, we can infer the uncertainty associated with each set of input features $\vec{x}_i$  by summing up the $\sigma_j$ values at each decision rule $j$ in the tree that each input feature goes through on the way to an output score $p_i$.
 
 
+# Future Steps
 
-
-
-> [!IMPORTANT]  
-> Using BRTs to fit a species distribution model requires _absence data_. For the majority of species where no absence data is available, there are various methods to generate pseudoabsences (PAs) based on heuristics about species occurrence. However, the performance characteristics of an SDM fit using PAs can be widely variable depending on the method and parameters used to generate PAs. This means the results of BRT should be explicitly considered as a function of how PAs were generated, and sensitivity analysis to different PAs is _highly_ encouraged. 
-
+- CV splits are its own thing
+- fitBRT should take absences as an input, and PA separated into a different script (either by refactoring `genreateBackgroundPoints.R`) or by adding a `backgroundThickening.jl`
