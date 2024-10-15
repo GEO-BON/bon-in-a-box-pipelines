@@ -93,3 +93,4 @@ conda:
     - r-plotly
     - r-geojsonsf
     - r-colorspace
+    - r-lwgeom

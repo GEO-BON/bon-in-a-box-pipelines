@@ -286,9 +286,9 @@ HabitatGAIN = habitat[[1]]==0&habitat[[nlyr(habitat)]]==1;HabitatGAIN[HabitatGAI
 
 
 ### Convert to polygon. If no polygons (e.g. no gain, then return an empty list)
-HabitatNC_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatNC)))))} , error = function(e) {list()})
-HabitatLOSS_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatLOSS)))))} , error = function(e) {list()})
-HabitatGAIN_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons(rast(HabitatGAIN)))))} , error = function(e) {list()})
+HabitatNC_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons((HabitatNC)))))} , error = function(e) {list()})
+HabitatLOSS_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons((HabitatLOSS)))))} , error = function(e) {list()})
+HabitatGAIN_poly = tryCatch( {fromJSON(sf_geojson(st_as_sf(terra::as.polygons((HabitatGAIN)))))} , error = function(e) {list()})
 
 
 ######  Map of populations

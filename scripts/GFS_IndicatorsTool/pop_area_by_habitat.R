@@ -19,7 +19,7 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 pop_poly <-st_read(input$population_polygons)
 
-habitat = stack(input$habitat_map)
+habitat = rast(input$habitat_map)
 
 time_points = input$time_points
 
@@ -31,7 +31,8 @@ POP_AREA = st_area(pop_poly)/1000000
 names(POP_AREA) = pop_poly$pop
 
 ## Extract habitat cover %
-POP_HABITAT = as.matrix(terra::extract(rast(habitat), pop_poly, fun=mean))[,-1,drop=F]
+POP_HABITAT = as.matrix(terra::extract(habitat, pop_poly, fun=mean))[,-1,drop=F]
+
 
 ## Calculate population habitat area
 POP_HABITAT_AREA = round(POP_HABITAT*POP_AREA,2)
