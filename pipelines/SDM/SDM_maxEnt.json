@@ -890,6 +890,31 @@
       ],
       "weight": 0
     },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 1
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2020,
+      "weight": 2
+    },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
+      "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
+      "label": "Data source",
+      "type": "options",
+      "options": [
+        "gbif_pc",
+        "gbif_api"
+      ],
+      "example": "gbif_api",
+      "weight": 3
+    },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
       "label": "method background",
@@ -901,132 +926,14 @@
         "unweighted_raster"
       ],
       "example": "random",
-      "weight": 1
+      "weight": 4
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 2
-    },
-    "pipeline@46": {
-      "label": "number of runs",
-      "description": "number of runs (in bootstrap or crossvalidation method)",
-      "type": "int",
-      "example": 2,
-      "weight": 3
-    },
-    "pipeline@57": {
-      "label": "projection system",
-      "description": "String, projection system",
-      "type": "text",
-      "example": "EPSG:6622",
-      "weight": 4
-    },
-    "pipeline@58": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
       "weight": 5
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
-      "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
-      "label": "Data source",
-      "type": "options",
-      "options": [
-        "gbif_pc",
-        "gbif_api"
-      ],
-      "example": "gbif_api",
-      "weight": 6
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
-      "type": "int",
-      "example": 2010,
-      "weight": 7
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
-      "description": "Max year observations wanted",
-      "label": "maximum year",
-      "type": "int",
-      "example": 2020,
-      "weight": 8
-    },
-    "SDM>runMaxent.yml@108|partition_type": {
-      "description": "String, name of partitioning technique.",
-      "label": "partition type",
-      "type": "options",
-      "options": [
-        "randomkfold",
-        "jackknife",
-        "block",
-        "checkerboard1",
-        "checkerboard2"
-      ],
-      "example": "block",
-      "weight": 9
-    },
-    "pipeline@110": {
-      "label": "feature classes",
-      "description": "Vector of strings, feature classes for MaxEnt algorithm. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
-      "type": "text[]",
-      "example": [
-        "L",
-        "LQ",
-        "LQHP"
-      ],
-      "weight": 10
-    },
-    "pipeline@111": {
-      "label": "regularization multiplier",
-      "description": "Vector of numbers, regularization multipliers for MaxEnt algorithm.",
-      "type": "float[]",
-      "example": [
-        0.5,
-        1,
-        2
-      ],
-      "weight": 11
-    },
-    "data>loadFromStac.yml@119|stac_url": {
-      "description": "URL of the Stac catalog",
-      "label": "stac_url",
-      "type": "text",
-      "example": "https://stac.geobon.org",
-      "weight": 12
-    },
-    "data>loadFromStac.yml@119|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "collections_items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 13
-    },
-    "data>loadFromStac.yml@119|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf",
-      "example": null,
-      "weight": 14
-    },
-    "pipeline@128": {
-      "label": "spatial resolution",
-      "description": "Integer, spatial resolution of the rasters",
-      "type": "float",
-      "example": 1000,
-      "weight": 15
     },
     "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
       "description": "taxonomic group for which to retrieve GBIF heatmap",
@@ -1041,8 +948,101 @@
         "amphibians",
         "all"
       ],
-      "weight": 16,
+      "weight": 6,
       "example": "plants"
+    },
+    "pipeline@57": {
+      "label": "projection system",
+      "description": "String, projection system",
+      "type": "text",
+      "example": "EPSG:6622",
+      "weight": 7
+    },
+    "pipeline@58": {
+      "label": "bbox",
+      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
+      "weight": 8
+    },
+    "data>loadFromStac.yml@119|mask": {
+      "description": "Shapefile, used to mask the output rasters",
+      "label": "mask",
+      "type": "application/dbf",
+      "example": null,
+      "weight": 9
+    },
+    "data>loadFromStac.yml@119|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://stac.geobon.org",
+      "weight": 10
+    },
+    "data>loadFromStac.yml@119|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 11
+    },
+    "pipeline@128": {
+      "label": "spatial resolution",
+      "description": "Integer, spatial resolution of the rasters",
+      "type": "float",
+      "example": 1000,
+      "weight": 12
+    },
+    "pipeline@110": {
+      "label": "feature classes",
+      "description": "Vector of strings, feature classes for MaxEnt algorithm. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
+      "type": "text[]",
+      "example": [
+        "L",
+        "LQ",
+        "LQHP"
+      ],
+      "weight": 13
+    },
+    "pipeline@111": {
+      "label": "regularization multiplier",
+      "description": "Vector of numbers, regularization multipliers for MaxEnt algorithm.",
+      "type": "float[]",
+      "example": [
+        0.5,
+        1,
+        2
+      ],
+      "weight": 14
+    },
+    "SDM>runMaxent.yml@108|partition_type": {
+      "description": "String, name of partitioning technique.",
+      "label": "partition type",
+      "type": "options",
+      "options": [
+        "randomkfold",
+        "jackknife",
+        "block",
+        "checkerboard1",
+        "checkerboard2"
+      ],
+      "example": "block",
+      "weight": 15
+    },
+    "pipeline@46": {
+      "label": "number of runs",
+      "description": "number of runs (in bootstrap or crossvalidation method)",
+      "type": "int",
+      "example": 2,
+      "weight": 16
     }
   },
   "outputs": {
@@ -1081,7 +1081,7 @@
       "type": "image/tiff;application=geotiff",
       "weight": 4
     },
-    "pipeline@121": {
+    "pipeline@121|default_output": {
       "label": "Taxa list",
       "description": "Array of taxa values",
       "example": [
