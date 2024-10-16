@@ -4,6 +4,11 @@ runner.env
 **/.config
 .server
 
+rosm.cache
+.RData
+*.Rproj
+lib/
+
 # R temporary files
 .Rproj.user
 .Rhistory

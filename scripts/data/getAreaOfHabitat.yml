@@ -1,12 +1,12 @@
 script: getAreaOfHabitat.R
 name: Get area of habitat
 description: This script loads the data needed to calculate the area of habitat for a species to use it for the Species Habitat Index(SHI)
-author: 
+author:
   - name: Maria Isabel Arce-Plata
     identifier: https://orcid.org/0000-0003-4024-9268
   - name: "Guillaume Larocque"
     identifier: "https://orcid.org/0000-0002-5967-9156"
-license: CC BY 
+license: CC BY
 inputs:
   spat_res:
     label: output spatial resolution
@@ -23,15 +23,15 @@ inputs:
     description: Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.
     type: options
     options:
-      - "Country" 
+      - "Country"
       - "Region in Country"
       - "User defined"
-    example: 
+    example:
         Country
   study_area:
     label: study area
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
-    type: application/geopackage+sqlite3 
+    type: application/geopackage+sqlite3
     example: null
   country_code:
     label: country
@@ -52,7 +52,7 @@ inputs:
     label: species
     description: Scientific name of the species. Multiple species names can be specified, separated with a comma.
     type: text[]
-    example: 
+    example:
       [
         "Myrmecophaga tridactyla"
       ]
@@ -70,7 +70,7 @@ inputs:
     label: range map (polygon)
     description: One geopackage file with the polygon or polygons of the expected area for each species. If it is not available from scp_SHI_GetRangeMap.R then it is recommended to add a polygon with the limits of a species distribution model for the species.
     type: application/geopackage+sqlite3[]
-    example: 
+    example:
       [
         "/scripts/SHI/Saguinus oedipus_range.gpkg"
       ]
@@ -78,7 +78,7 @@ inputs:
     label: range map (raster)
     description: Raster with expected area for the species.
     type: image/tiff;application=geotiff[]
-    example: 
+    example:
       [
         null
       ]
@@ -109,8 +109,9 @@ outputs:
     label: table with size of areas of reference.
     description: A TSV (Tab Separated Values) file containing the area of the range map loaded (area_range_map), the size of the study area (area_study_a), the area of the bounding box for the analysis (area_bbox_analysis), size of the buffer used to create the bounding box for the analysis, the size of the area of habitat(area_aoh).
     type: text/tab-separated-values
-conda: 
+conda:
   channels:
+    - conda-forge
     - r
   dependencies:
     - r-rjson
