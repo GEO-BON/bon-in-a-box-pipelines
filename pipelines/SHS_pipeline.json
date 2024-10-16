@@ -4,8 +4,8 @@
       "id": "65",
       "type": "io",
       "position": {
-        "x": 395.953125,
-        "y": 377
+        "x": 303.953125,
+        "y": 519
       },
       "data": {
         "descriptionFile": "data>getRangeMap.yml"
@@ -15,8 +15,8 @@
       "id": "67",
       "type": "io",
       "position": {
-        "x": 1721.953125,
-        "y": 436
+        "x": 1671.953125,
+        "y": 284
       },
       "data": {
         "descriptionFile": "SHI>habitatChange_GFW.yml"
@@ -26,8 +26,8 @@
       "id": "71",
       "type": "output",
       "position": {
-        "x": 2290.167319884395,
-        "y": 444.72118878597644
+        "x": 2330.09816271835,
+        "y": 304.0557197118165
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "76",
       "type": "userInput",
       "position": {
-        "x": 184.953125,
-        "y": 203
+        "x": 0.953125,
+        "y": 385
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +52,8 @@
       "id": "77",
       "type": "userInput",
       "position": {
-        "x": -27.046875,
-        "y": 261
+        "x": -63.046875,
+        "y": 535
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -70,8 +70,8 @@
       "id": "78",
       "type": "userInput",
       "position": {
-        "x": 717.0710336146444,
-        "y": 106.32463375029599
+        "x": 223.07103361464442,
+        "y": 216.324633750296
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -83,8 +83,8 @@
       "id": "79",
       "type": "userInput",
       "position": {
-        "x": 575.7811359500092,
-        "y": 167.2056465651388
+        "x": 233.78113595000923,
+        "y": 169.2056465651388
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -107,8 +107,8 @@
       "id": "81",
       "type": "output",
       "position": {
-        "x": 2262.859375,
-        "y": 510
+        "x": 2332.7383499594216,
+        "y": 394.7450672747206
       },
       "data": {
         "label": "Output"
@@ -118,8 +118,8 @@
       "id": "82",
       "type": "output",
       "position": {
-        "x": 2268.859375,
-        "y": 453
+        "x": 2330.5706775615668,
+        "y": 350.4503354491608
       },
       "data": {
         "label": "Output"

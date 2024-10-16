@@ -4,8 +4,8 @@
       "id": "65",
       "type": "io",
       "position": {
-        "x": 302,
-        "y": 299
+        "x": 278,
+        "y": 361
       },
       "data": {
         "descriptionFile": "data>getRangeMap.yml"
@@ -26,8 +26,8 @@
       "id": "73",
       "type": "output",
       "position": {
-        "x": 2574,
-        "y": 220
+        "x": 2776,
+        "y": 368
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "76",
       "type": "userInput",
       "position": {
-        "x": 30,
-        "y": 74.75
+        "x": -126,
+        "y": 136.75
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +52,8 @@
       "id": "77",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 268.5
+        "x": -84,
+        "y": 374.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -107,8 +107,8 @@
       "id": "96",
       "type": "io",
       "position": {
-        "x": 1609.953125,
-        "y": 210
+        "x": 1587.953125,
+        "y": 130
       },
       "data": {
         "descriptionFile": "SHI>habitatChange_GFW.yml"
@@ -118,8 +118,8 @@
       "id": "100",
       "type": "output",
       "position": {
-        "x": 2247.5660833221636,
-        "y": 249.90992513328746
+        "x": 2251.5660833221636,
+        "y": 255.90992513328746
       },
       "data": {
         "label": "Output"
@@ -129,8 +129,8 @@
       "id": "101",
       "type": "output",
       "position": {
-        "x": 2247.5660833221636,
-        "y": 240.81562573422508
+        "x": 2251.5660833221636,
+        "y": 208.81562573422508
       },
       "data": {
         "label": "Output"
@@ -140,8 +140,8 @@
       "id": "102",
       "type": "output",
       "position": {
-        "x": 2243.0189336226326,
-        "y": 224.1427435026107
+        "x": 2251.0189336226326,
+        "y": 160.1427435026107
       },
       "data": {
         "label": "Output"
@@ -152,7 +152,7 @@
       "type": "output",
       "position": {
         "x": 2250.5975164551846,
-        "y": 212.0170109705275
+        "y": 110.01701097052751
       },
       "data": {
         "label": "Output"
@@ -162,8 +162,8 @@
       "id": "104",
       "type": "output",
       "position": {
-        "x": 2259.953125,
-        "y": 288
+        "x": 2251.953125,
+        "y": 302
       },
       "data": {
         "label": "Output"
