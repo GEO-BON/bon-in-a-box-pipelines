@@ -30,6 +30,13 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs : ")
 print(input)
 
+# based on https://github.com/jamiemkass/ENMeval/blob/master/R/enm.maxnet.R
+all.fc <- unlist(sapply(1:5, function(x) apply(combn(c("L", "Q", "H", "P", "T"), x), 2, function(y) paste(y, collapse = ""))))
+if(!all(input$fc %in% all.fc)){
+  stop(paste("Feature classes (fc) need to be given in the order", paste(c("L","Q", "H", "P", "T"), collapse = ", "),
+  paste("\nValue given", paste(input$fc[!input$fc %in% all.fc], collapse = ", "), "not accepted"), 
+  "\nAccepted values are", paste(all.fc, collapse = ", ")))
+}
 
 presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE) 
 predictors <- terra::rast(unlist(input$predictors))
@@ -51,8 +58,6 @@ mod_tuning <- run_maxent(presence_background,
 
 res_tuning <- mod_tuning@results
 tuned_param <- select_param(res_tuning, method = input$method_select_params, list = T)
-
-#predictors <- raster::stack(predictors)
 
 sdms <- predict_maxent(presence_background,
   algorithm = "maxent.jar", 
