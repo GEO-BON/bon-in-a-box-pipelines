@@ -4,7 +4,7 @@ packagesList<-list("terra", "dplyr", "ggrepel", "rjson", "Makurhini")
 #lapply(packagesList, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
 library(sf)
 library(rmapshaper)
-remotes::install_github("connectscape/Makurhini", dependencies = TRUE)
+#remotes::install_github("connectscape/Makurhini", dependencies = TRUE)
 # Load libraries
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 Sys.getenv("SCRIPT_LOCATION")
