@@ -37,8 +37,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 2483,
-        "y": 140
+        "x": 2607,
+        "y": 146
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3028,
-        "y": 518.5
+        "x": 3058,
+        "y": 454.5
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -259,7 +259,7 @@
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2047,
+        "x": 2057,
         "y": 258.5
       },
       "data": {
@@ -428,8 +428,8 @@
       "id": "131",
       "type": "io",
       "position": {
-        "x": 3610.6998197537473,
-        "y": 711.359264222406
+        "x": 3612.6998197537473,
+        "y": 701.359264222406
       },
       "data": {
         "descriptionFile": "SDM>runewlgcp.yml"
@@ -975,9 +975,9 @@
     }
   },
   "outputs": {
-    "pipeline@121|defaultOutput": {
-      "label": "Species",
-      "description": "Species for which the model was run.",
+    "pipeline@121|default_output": {
+      "label": "Species name",
+      "description": "Species for which distribution is being modeled",
       "example": [
         "Acer saccharum"
       ],
@@ -990,6 +990,31 @@
       "type": "application/geo+json",
       "weight": 1
     },
+    "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
+      "weight": 2
+    },
+    "SDM>removeCollinearity.yml@97|rasters_selected": {
+      "description": "Environmental layers used as predictors in species distribution modeling",
+      "label": "Environmental predictors",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
+    },
+    "SDM>runewlgcp.yml@131|sdm_dmesh": {
+      "description": "Dual mesh used by the sdm model",
+      "label": "Dmesh",
+      "type": "application/geo+json",
+      "weight": 4
+    },
+    "SDM>runewlgcp.yml@131|sdm_bg": {
+      "description": "Background points used for the sdm model",
+      "label": "Background",
+      "type": "application/geo+json",
+      "weight": 5
+    },
     "SDM>runewlgcp.yml@131|sdm_pred": {
       "description": "Model predictions while trained on the whole dataset",
       "label": "Predictions",
@@ -998,7 +1023,7 @@
         0,
         1
       ],
-      "weight": 2
+      "weight": 6
     },
     "SDM>runewlgcp.yml@131|sdm_unc": {
       "description": "Model uncertainty metrics",
@@ -1008,7 +1033,7 @@
         0,
         1
       ],
-      "weight": 3
+      "weight": 7
     },
     "SDM>runewlgcp.yml@131|sdm_ci": {
       "description": "Difference between the upper (0.975) and the lower (0.025) CI bound",
@@ -1018,31 +1043,6 @@
         0,
         1
       ],
-      "weight": 4
-    },
-    "SDM>removeCollinearity.yml@97|rasters_selected": {
-      "description": "Environmental layers used as predictors in species distribution modeling",
-      "label": "Environmental predictors",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 5
-    },
-    "SDM>runewlgcp.yml@131|sdm_bg": {
-      "description": "Background points used for the sdm model",
-      "label": "Background",
-      "type": "application/geo+json",
-      "weight": 6
-    },
-    "SDM>runewlgcp.yml@131|sdm_dmesh": {
-      "description": "Dual mesh used by the sdm model",
-      "label": "Dmesh",
-      "type": "application/geo+json",
-      "weight": 7
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
-      "description": "DOI of GBIF download. Used for citing downloaded data.",
-      "label": "DOI of GBIF download",
-      "type": "text",
-      "example": "10.15468/dl.j644h5",
       "weight": 8
     }
   },
