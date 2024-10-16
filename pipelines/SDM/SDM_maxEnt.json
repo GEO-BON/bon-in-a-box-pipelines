@@ -66,7 +66,11 @@
       "data": {
         "type": "options",
         "value": "bootstrap",
-        "options": ["bootstrap", "crossvalidation", "none"]
+        "options": [
+          "bootstrap",
+          "crossvalidation",
+          "none"
+        ]
       }
     },
     {
@@ -131,7 +135,12 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [-2316297, -1971146, 1015207, 1511916]
+        "value": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
       }
     },
     {
@@ -202,7 +211,13 @@
       "data": {
         "type": "options",
         "value": "vif.cor",
-        "options": ["vif.cor", "vif.step", "pearson", "spearman", "kendall"]
+        "options": [
+          "vif.cor",
+          "vif.step",
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
       }
     },
     {
@@ -216,7 +231,11 @@
       "data": {
         "type": "options",
         "value": "pearson",
-        "options": ["pearson", "spearman", "kendall"]
+        "options": [
+          "pearson",
+          "spearman",
+          "kendall"
+        ]
       }
     },
     {
@@ -280,7 +299,12 @@
       "data": {
         "type": "options",
         "value": "bbox",
-        "options": ["box", "mcp", "buffer", "bbox"]
+        "options": [
+          "box",
+          "mcp",
+          "buffer",
+          "bbox"
+        ]
       }
     },
     {
@@ -320,56 +344,73 @@
     },
     {
       "id": "110",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": 3210,
-        "y": 848.5
+        "x": 3202,
+        "y": 864.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["L", "LQ", "LQHP"]
+        "value": [
+          "L",
+          "LQ",
+          "LQHP"
+        ]
       }
     },
     {
       "id": "111",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": 3205,
-        "y": 897.5
+        "x": 3199,
+        "y": 969.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float[]",
-        "value": [0.5, 1, 2]
+        "value": [
+          0.5,
+          1,
+          2
+        ]
       }
     },
     {
       "id": "115",
       "type": "constant",
       "position": {
-        "x": 3288,
-        "y": 1010.5
+        "x": 3306,
+        "y": 1180.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "AUC",
-        "options": ["p10", "AIC", "AUC"]
+        "options": [
+          "p10",
+          "AIC",
+          "AUC"
+        ]
       }
     },
     {
       "id": "116",
       "type": "constant",
       "position": {
-        "x": 3270,
-        "y": 946.5
+        "x": 3272,
+        "y": 1088.5
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "lat_lon",
-        "options": ["lat_lon", "lon_lat", "lon_lon", "lat_lat"]
+        "options": [
+          "lat_lon",
+          "lon_lat",
+          "lon_lon",
+          "lat_lat"
+        ]
       }
     },
     {
@@ -406,7 +447,9 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text[]",
-        "value": ["Acer saccharum"]
+        "value": [
+          "Acer saccharum"
+        ]
       }
     },
     {
@@ -842,7 +885,9 @@
       "label": "Taxa list",
       "description": "Array of taxa values",
       "type": "text[]",
-      "example": ["Acer saccharum"],
+      "example": [
+        "Acer saccharum"
+      ],
       "weight": 0
     },
     "SDM>selectBackground.yml@40|method_background": {
@@ -883,14 +928,22 @@
       "label": "bbox",
       "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
       "type": "float[]",
-      "example": [-2316297, -1971146, 1015207, 1511916],
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
       "weight": 5
     },
     "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
       "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
       "label": "Data source",
       "type": "options",
-      "options": ["gbif_pc", "gbif_api"],
+      "options": [
+        "gbif_pc",
+        "gbif_api"
+      ],
       "example": "gbif_api",
       "weight": 6
     },
@@ -922,33 +975,58 @@
       "example": "block",
       "weight": 9
     },
+    "pipeline@110": {
+      "label": "feature classes",
+      "description": "Vector of strings, feature classes for MaxEnt algorithm. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
+      "type": "text[]",
+      "example": [
+        "L",
+        "LQ",
+        "LQHP"
+      ],
+      "weight": 10
+    },
+    "pipeline@111": {
+      "label": "regularization multiplier",
+      "description": "Vector of numbers, regularization multipliers for MaxEnt algorithm.",
+      "type": "float[]",
+      "example": [
+        0.5,
+        1,
+        2
+      ],
+      "weight": 11
+    },
     "data>loadFromStac.yml@119|stac_url": {
       "description": "URL of the Stac catalog",
       "label": "stac_url",
       "type": "text",
       "example": "https://stac.geobon.org",
-      "weight": 10
+      "weight": 12
     },
     "data>loadFromStac.yml@119|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "label": "collections_items",
       "type": "text[]",
-      "example": ["chelsa-clim|bio1", "chelsa-clim|bio2"],
-      "weight": 11
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 13
     },
     "data>loadFromStac.yml@119|mask": {
       "description": "Shapefile, used to mask the output rasters",
       "label": "mask",
       "type": "application/dbf",
       "example": null,
-      "weight": 12
+      "weight": 14
     },
     "pipeline@128": {
       "label": "spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 13
+      "weight": 15
     },
     "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
       "description": "taxonomic group for which to retrieve GBIF heatmap",
@@ -963,48 +1041,53 @@
         "amphibians",
         "all"
       ],
-      "weight": 14,
+      "weight": 16,
       "example": "plants"
     }
   },
   "outputs": {
-    "pipeline@121|defaultOutput": {
-      "label": "Species",
-      "description": "Species for which this model was run.",
-      "example": ["Acer saccharum"],
-      "type": "text[]",
-      "weight": 0
-    },
     "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 1
+      "weight": 0
     },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
       "label": "Presences",
       "type": "text/tab-separated-values",
-      "weight": 2
+      "weight": 1
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "Environmental layers used as predictors in species distribution modeling",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 2
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "Model predictions from Maxent algorithm",
       "label": "Predictions",
       "type": "image/tiff;application=geotiff",
-      "range": [0, 1],
-      "weight": 4
+      "range": [
+        0,
+        1
+      ],
+      "weight": 3
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
       "description": "Variability of predictions based on range method",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
+      "weight": 4
+    },
+    "pipeline@121": {
+      "label": "Taxa list",
+      "description": "Array of taxa values",
+      "example": [
+        "Acer saccharum"
+      ],
+      "type": "text[]",
       "weight": 5
     }
   },
