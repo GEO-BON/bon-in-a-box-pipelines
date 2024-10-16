@@ -25,18 +25,16 @@ str(protected_area)
 
 protected_area <- protected_area %>% rename(date_column = input$date_column_name)
 
-if(is.character(protected_area$date_column)){
-protected_area$date_column <- lubridate::parse_date_time(protected_area$date_column, orders=c("ymd", "mdy", "dmy"))
-protected_area$year <- lubridate::year(protected_area$date_column)
-} else (protected_area$year <- protected_area$date_column)
-print(protected_area$year)
-if(is.null(protected_area$date_column)){
-  stop("Date column is not in one of the supported formats. Supported formats are year-month-day, month-day-year, day-month-year (or year/month/date, month/day/year, or day/month/year)")
-}
+ if(is.character(protected_area$date_column)){
+ protected_area$date_column <- lubridate::parse_date_time(protected_area$date_column, orders=c("ymd", "mdy", "dmy"))
+ protected_area$year <- lubridate::year(protected_area$date_column)
+ } else (protected_area$year <- protected_area$date_column)
+ if(is.null(protected_area$date_column)){
+   stop("Date column is not in one of the supported formats. Supported formats are year-month-day, month-day-year, day-month-year (or year/month/date, month/day/year, or day/month/year)")
+ }
 
 print("Calculating ProtConn")
 protected_area_filt <- protected_area %>% dplyr::filter(year <= input$years)
-# Change transboundary distance to correct unit
 
 protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
 transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
@@ -67,22 +65,20 @@ for(i in 1:nrow(protected_area)) {
 print("Calculating ProtConn time series")
 
 protcon_ts_result <- list()
-print(summary(protected_area$year))
 
 for (i in 1:length(years)){
   print(years[i])
-    protected_area_filt <- protected_area %>% dplyr::filter(year <= years[i])
-    print(nrow(protected_area_filt))
-    if(nrow(protected_area_filt)==0) {
+    protected_area_filt_yr <- protected_area %>% dplyr::filter(year <= years[i])
+    if(nrow(protected_area_filt_yr)==0) {
       print(paste("No protected area data from", years, "beginning calculations at first year with data"))
       next
     } else {
-    protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+    protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt_yr, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
         transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
     protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=years[i]) 
     protcon_ts_result[[i]] <- protcon_result.df}
 }
-
+print("here")
 result_yrs <- bind_rows(protcon_ts_result)
 result_yrs[is.na(result_yrs)] <- 0
 

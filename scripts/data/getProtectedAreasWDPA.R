@@ -3,7 +3,7 @@ Sys.getenv("SCRIPT_LOCATION")
 
 ## Install required packages
 #packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesList<- list("sf", "rjson", "dplyr", "terra") # Define the list of required packages to run the script
+packagesList<- list("sf", "rjson", "dplyr") # Define the list of required packages to run the script
 #lapply(packagesList, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed
 
 
@@ -78,14 +78,13 @@ if(input$pa_input_type == "WDPA"){
     protected_area_polygon <- sf::st_read(input$protectedarea_file) %>% st_transform(st_crs(study_area_polygon))
 }           
 
-
-
-print("Protected area downloaded")
-
-
 if(nrow(protected_area_polygon)==0){
   stop("Protected area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas")
 }  # stop if object is empty
+
+print("Protected area downloaded")
+print(protected_area_polygon)
+
 
 # Save study area and protected area data
 study_area_polygon_path<- file.path(outputFolder, "study_area_polygon.geojson") # Define the file path for the protected area polygon output

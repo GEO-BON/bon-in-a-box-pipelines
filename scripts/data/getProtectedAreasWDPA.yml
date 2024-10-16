@@ -48,3 +48,5 @@ outputs:
     label: Polygon of protected areas
     description: Represents the map of the protected areas within the study area
     type: application/geo+json
+references:
+- text: UNEP-WCMC and IUCN (2024), Protected Planet. The World Database on Protected Areas (WDPA)[On-line], [October 2024], Cambridge, UK. UNEP-WCMC and IUCN. Available at. https://doi.org/10.34892/6fwd-af11
