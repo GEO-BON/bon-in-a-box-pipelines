@@ -7,7 +7,7 @@ load_cube <-
            variable = NULL,
            ids = NULL,
            mask = NULL,
-           srs.cube = "EPSG:6623",
+           srs.cube = NULL,
            t0 =  format(lubridate::as_datetime('1900-01-01'), "%Y-%m-%dT%H:%M:%SZ"),
            t1 =  format(lubridate::as_datetime('2200-01-01'), "%Y-%m-%dT%H:%M:%SZ"),
            spatial.res = NULL,
@@ -59,13 +59,18 @@ load_cube <-
       t1 <- t0
     }
     RCurl::url.exists(stac_path)
+    name1 <- names(it_obj$assets)[1]
 
-    if (is.null(spatial.res)) {
-      name1 <- unlist(lapply(it_obj$features, function(x) {
-        names(x$assets)
-      }))[1]
+    if (is.null(spatial.res)) { # obtain spatial resolution from metadata
       spatial.res <-
-        it_obj$features[[1]]$assets[[name1]]$`raster:bands`[[1]]$spatial_resolution
+        it_obj$assets[[name1]]$`raster:bands`[[1]]$spatial_resolution
+    }
+    if (is.null(srs.cube)) { # obtain spatial resolution from metadata
+      if('proj:epsg' %in% names(it_obj$properties)){
+        srs.cube <- paste0("EPSG:",it_obj$properties$`proj:epsg`)
+      }else if (`proj:wkt2` %in% names(it_obj$properties)){
+        srs.cube <- it_obj$properties$`proj:wkt2`
+      }
     }
     if (is.null(layers)) {
       layers <- names(it_obj$assets)
