@@ -98,19 +98,22 @@
       "description": "Country of interest",
       "label": "Country",
       "type": "text",
-      "weight": 0
+      "weight": 0,
+      "example": null
     },
     "data>getBoundingBox.yml@0|state": {
       "description": "State or province of interest",
       "label": "State/Province",
       "type": "text",
-      "weight": 1
+      "weight": 1,
+      "example": null
     },
     "data>getBoundingBox.yml@0|study_area_file": {
       "description": "Upload a file of a custom study area",
       "label": "File for study area",
       "type": "text",
-      "weight": 2
+      "weight": 2,
+      "example": null
     },
     "data>zonalStats.yml@1|stac_url": {
       "description": "URL of the Stac catalog",
