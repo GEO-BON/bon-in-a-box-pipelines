@@ -30,6 +30,21 @@ inputs:
     description: landcover layer containing open water pixels
     type: image/tiff;application=geotiff[]
     example: "/output/foo/bar"
+  max_candidate_pseudoabsences:
+    label: max candidate pseudoabsences
+    description: helps w large rasters
+    type: int
+    example: 100000
+  pseudoabsence_buffer:
+    label: pseudoabsence buffer
+    description: minimum distance to a presence in kilometers
+    type: float
+    example: 10.0
+  pa_proportion:
+    label: Pseudoabsence proportion
+    description: The number of PAs, given by the proportion of the total occurrences to use.
+    type: float
+    example: 2.4
 outputs:
   predicted_sdm:
     label: predicted sdm

@@ -1,18 +1,30 @@
 function generate_pseudoabsences(
     presence_layer;
     min_distance=20.0,
-    num_candidate_pas=100_000,
-    num_pas=sum(presence_layer)
+    max_candidate_pas=100_000,
+    pa_proportion=1.0
 )
-    candidate_pa = backgroundpoints(pseudoabsencemask(RandomSelection, presence_layer), num_candidate_pas)
+
+    num_pas = Int(floor(pa_proportion*sum(presence_layer)))
+
+    num_possible_pas = sum(presence_layer.indices)
+    candidate_pa = copy(presence_layer)
+    if num_possible_pas > max_candidate_pas
+        candidate_pa = backgroundpoints(pseudoabsencemask(RandomSelection, presence_layer), max_candidate_pas)
+    else
+        candidate_pa.indices[findall(presence_layer)] .= 0
+        candidate_pa.indices[.!presence_layer.indices] .= 1
+    end
 
     candidate_pres = copy(presence_layer)
     candidate_pres.indices[findall(iszero, candidate_pres)] .= 0
     candidate_pres.indices[findall(candidate_pa)] .= 1
 
+
     dte = pseudoabsencemask(DistanceToEvent, candidate_pres)
     pa_mask = copy(dte)
     pa_mask.indices[findall(x -> x < min_distance, dte)] .= false
+
 
     bgpoints = backgroundpoints(pa_mask, num_pas)
 
