@@ -39,7 +39,7 @@ function process_inputs(RUNTIME_DIR)
 
     mask_water!(water, occurrence_layer, predictor_layers)
 
-    return predictor_layers, occurrence_layer
+    return inputs, predictor_layers, occurrence_layer
 end
 
 function get_rangemap(predicted_sdm, threshold)
@@ -65,10 +65,13 @@ function main()
     RUNTIME_DIR = ARGS[1]
 
     @info "Loading inputs..."
-    predictors, presence_layer = process_inputs(RUNTIME_DIR)
+    inputs, predictors, presence_layer = process_inputs(RUNTIME_DIR)
 
+    max_candidate_pseudoabsences = inputs["max_candidate_pseudoabsences"]
+    pa_buffer_distance = inputs["pseudoabsence_buffer"]
+    pa_prop = inputs["pa_proportion"]
     @info "Generating pseudoabsences..."
-    pseudoabsences, pseudoabsence_df = generate_pseudoabsences(presence_layer)
+    pseudoabsences, pseudoabsence_df = generate_pseudoabsences(presence_layer, min_distance=pa_buffer_distance, max_candidate_pas=max_candidate_pseudoabsences, pa_proportion=pa_prop)
 
     features, labels = get_features_and_labels(predictors, presence_layer, pseudoabsences)
     train_idx, test_idx = crossvalidation_split(labels)
