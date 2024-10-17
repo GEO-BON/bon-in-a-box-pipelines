@@ -17,19 +17,20 @@ dependencies:
   - r-gdalutilities
   - r-gdalutils
   - r-ggsci
-  - r-rjava
   - r-jpeg
   - r-landscapemetrics
   - r-png
+  - r-purrr
   - r-rcurl
   - r-rgbif
+  - r-remotes
+  - r-rjava
   - r-rjson
   - r-rredlist
   - r-rstac
   - r-sf
   - r-stars
+  - r-stringr
   - r-terra
   - r-tidyselect
-  - r-purrr
   - r-tidyverse
-  - r-stringr

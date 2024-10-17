@@ -1,0 +1,79 @@
+script: runewlgcp.R
+name: SDM with ewlgcpSDM
+description: "This script runs an effort-weighted Log Gaussian Cox Process based on the ewlgcpSDM R package."
+external_link: https://github.com/BiodiversiteQuebec/ewlgcpSDM
+author:
+  - name: François Rousseu
+    identifier: https://orcid.org/0000-0002-2400-2479
+references:
+  - text: in prep
+    doi: .
+
+inputs:
+  presence_background:
+    label: presence background
+    description: presence
+    type: text/tab-separated-values
+    example: "/scripts/SDM/runModel_presence_background.tsv"
+  predictors:
+    label: predictors
+    description: layer names (predictors) as a list, or path to a list
+    type: image/tiff;application=geotiff[]
+    example:
+      [
+        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif",
+        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif",
+        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif",
+        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif",
+        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif",
+        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif",
+        "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif",
+      ]
+  orientation_block:
+    label: orientation block
+    description: String, order of spatial partitioning for block technique..
+    type: options
+    options:
+      - lat_lon
+      - lon_lat
+      - lon_lon
+      - lat_lat
+    example: lat_lon
+  proj:
+    label: projection system
+    description: String, projection of the predictors
+    type: text
+    example: "EPSG:6623"
+  n_folds:
+    label: number of folds
+    description: Integer, number of random k-folds for randomkfold technique.
+    type: int
+    example: 5
+outputs:
+  sdm_pred:
+    label: predictions
+    description: model predictions while trained on the whole dataset
+    type: image/tiff;application=geotiff
+    range: [0, 1]
+  sdm_unc:
+    label: uncertainty
+    description: model uncertainty metrics
+    type: image/tiff;application=geotiff
+    range: [0, 1]
+  sdm_ci:
+    label: CI range
+    description: difference between the upper and the lower CI bound
+    type: image/tiff;application=geotiff[]
+    range: [0, 1]
+  sdm_obs:
+    label: observations
+    description: GBIF observations used for the sdm model
+    type: application/geo+json
+  sdm_bg:
+    label: background
+    description: background points used for the sdm model
+    type: application/geo+json
+  sdm_dmesh:
+    label: dmesh
+    description: dual mesh used by the sdm model
+    type: application/geo+json
