@@ -49,3 +49,57 @@ Elith, J., & Leathwick, J. R. (2009). Species Distribution Models: Ecological Ex
 Kass JM, Muscarella R, Galante PJ, Bohl CL, Pinilla-Buitrago GE, Boria RA, Soley-Guardia M, Anderson RP (2021). “ENMeval 2.0: Redesigned for customizable and reproducible modeling of species’ niches and distributions.” Methods in Ecology and Evolution, 12(9), 1602-1608. https://doi.org/10.1111/2041-210X.13628.
 
 Peterson, A. T. (2001). Predicting Species’ Geographic Distributions Based on Ecological Niche Modeling. The Condor, 103(3), 599–605. [https://doi.org/10.1093/condor/103.3.599](https://doi.org/10.1093/condor/103.3.599)
+
+
+
+### **ewlgcpSDM (mapSpecies)**
+
+**Methods:**
+The species distribution modeling method provided in the package ewlgcpSDM (Effort-Weighted Log-Gaussian Cox Process) is based on spatial point processes and presence-only observations. It implements the method proposed by Simpson et al. (2016) to estimate log-Gaussian Cox processes using INLA (Rue et al. 2009) and the SPDE approach (Lindgren et al. 2009). The model relies on a discrete grid (the mesh) of arbitrary resolution to approximate the spatial component of the model. The method proposed in ewlgcpSDM contains three key aspects for species distribution modeling, namely: 
+
+* a spatial component that can help in accounting for variation in relative intensities not explained by predictors
+* an effort-weighted adjustment analogous to target-group background selection (Phillips et al. 2009)
+* a suit of model-based prediction uncertainty layers thanks to the bayesian approach used by INLA
+
+The current version of the pipeline does not make use of the spatial component yet as some more work is needed to allow the adjustments necessary for the spatial component to work properly. The current version of the pipeline thus corresponds to an effort-weighted inhomogeneous Poisson point process.
+
+**BON in a Box pipeline:**
+The pipeline is used to run an SDM for a set of species in a specific region and using a set of environmental predictors. Some inputs are yet to be added to the list of inputs required by the user. Currently, the pipeline mostly reuses the same inputs as the MaxEnt pipeline, namely:
+
+* **Taxa list:** The user can specify the species (or multiple species) they are interested in. 
+* **Bounding box: The user can specify the bounding box where they want to distribution to be predicted (units must be in the chosen CRS).
+* **Projection system: The user can specify a projection system.
+* **Data source: The user can pull species’ occurrences using the GBIF API or from GBIF on the planetary computer.
+* **Environmental layers: The user specifies the environmental layers that they want to include in the species distribution model, pulled from a STAC catalog.
+* **Minimum and maximum year: The user can specify the year range for which they want to pull GBIF observations.
+* **Method background: The user chooses a method to sample background points (pseudo absences) from a drop down menu
+* **Number of background points: The user specifies the number of background points to use
+* **Number of blocks: The number of cross-validation blocks used to compute predictive performance metrics (not implemented yet).
+* **Mask: If the user is only interested in a specific country or study area, they can upload a polygon and the pipeline will crop the results to only that area.
+* **Spatial resolution: The spatial resolution of the predictors used
+
+The pipeline creates the following outputs:
+* **Predictions**: model intensity predictions (analogous to relative densities)
+* **Species list:** a list of species for which the model was run
+* **Presences:** GBIF observations used for the model
+* **Uncertainty:** a list of raster layers with model outputs and uncertainties (e.g. 95% credible interval, standard deviation, spatial component, etc.)
+* **CI range:** difference between the upper (0.975) and the lower (0.025) credible interval bound
+* **Environmental predictors:** layers used as predictors
+* **Background:** background points used for the effort weighting
+* **Dmesh:** dual mesh used by the sdm model (INLA mesh)
+* **DOI of GBIF download:** Used for citing downloaded data.
+
+**Contributors:**
+* François Rousseu (https://orcid.org/0000-0002-2400-2479)
+* Guillaume Blanchet (https://orcid.org/0000-0001-5149-2488)
+* Dominique Gravel (https://orcid.org/0000-0002-4498-7076)
+
+**Citations:**
+Lindgren, F., Rue, H., and Lindström, J. 2011. An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4): 423-498.
+
+Phillips, S. J., Dudík, M., Elith, J., Graham, C. H., Lehmann, A., Leathwick, J. and Ferrier, S. 2009. Sample selection bias and presence-only distribution models: implications for background and pseudo-absence data. Ecological Applications, 19(1): 181-197, https://doi.org/10.1890/07-2153.1
+
+Rue, H., Martino, S. and Chopin, N. 2009. Approximate Bayesian Inference for Latent Gaussian models by using Integrated Nested Laplace Approximations, Journal of the Royal Statistical Society Series B: Statistical Methodology, 71(2): 319–392, https://doi.org/10.1111/j.1467-9868.2008.00700.x
+
+Simpson, D., Illian, J. B., Lindgren, F., Sørbye, S. H. and H. Rue. 2016. Going off grid: computationally efficient inference for log-Gaussian Cox processes, Biometrika 103(1): 49–70, https://doi.org/10.1093/biomet/asv064
+
