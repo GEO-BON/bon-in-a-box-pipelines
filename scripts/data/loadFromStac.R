@@ -98,10 +98,6 @@ for (coll_it in collections_items){
 
      raster_layers[[ci[2]]]=pred
 }
-<<<<<<< HEAD
-=======
-print(names(raster_layers))
->>>>>>> main
 
 output_raster_layers <- file.path(outputFolder)
 
