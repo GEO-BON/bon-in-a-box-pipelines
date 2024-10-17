@@ -1,5 +1,5 @@
 script: runewlgcp.R
-name: ewlgcp
+name: SDM with ewlgcpSDM
 description: "This script runs an effort-weighted Log Gaussian Cox Process based on the ewlgcpSDM R package."
 external_link: https://github.com/BiodiversiteQuebec/ewlgcpSDM
 author:
