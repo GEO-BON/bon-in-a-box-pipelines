@@ -295,46 +295,46 @@
     }
   },
   "outputs": {
-    "protconn_analysis>protconn_analysis.yml@47|protcon_result": {
-      "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
-      "label": "Protcon results",
-      "type": "text/csv",
-      "weight": 0
-    },
-    "protconn_analysis>protconn_analysis.yml@47|result_plot": {
-      "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
-      "label": "Result plot",
-      "type": "image/png",
-      "weight": 1
-    },
-    "protconn_analysis>protconn_analysis.yml@47|result_yrs_plot": {
-      "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
-      "label": "Result plot yrs",
-      "type": "image/png",
-      "weight": 2
-    },
-    "protconn_analysis>protconn_analysis.yml@47|result_yrs": {
-      "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
-      "label": "Year result",
-      "type": "text/csv",
-      "weight": 3
-    },
-    "protconn_analysis>protconn_analysis.yml@47|result_preset_plot": {
-      "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
-      "label": "ProtConn plot with dispersal presets",
-      "type": "image/png",
-      "weight": 4
-    },
     "data>getProtectedAreasWDPA.yml@48|study_area_polygon": {
       "description": "Represents the map of the study area",
       "label": "Polygon of study area",
       "type": "application/geo+json",
-      "weight": 5
+      "weight": 0
     },
     "data>getProtectedAreasWDPA.yml@48|protected_area_polygon": {
       "description": "Represents the map of the protected areas within the study area",
       "label": "Polygon of protected areas",
       "type": "application/geo+json",
+      "weight": 1
+    },
+    "protconn_analysis>protconn_analysis.yml@47|protcon_result": {
+      "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
+      "label": "Protcon results",
+      "type": "text/csv",
+      "weight": 2
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_plot": {
+      "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
+      "label": "Result plot",
+      "type": "image/png",
+      "weight": 3
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_yrs_plot": {
+      "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
+      "label": "Result plot yrs",
+      "type": "image/png",
+      "weight": 4
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_yrs": {
+      "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
+      "label": "Year result",
+      "type": "text/csv",
+      "weight": 5
+    },
+    "protconn_analysis>protconn_analysis.yml@47|result_preset_plot": {
+      "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
+      "label": "ProtConn plot with dispersal presets",
+      "type": "image/png",
       "weight": 6
     }
   },
