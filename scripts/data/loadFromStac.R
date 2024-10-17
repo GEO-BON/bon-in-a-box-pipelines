@@ -17,7 +17,7 @@ print("Inputs: ")
 print(input)
 
 
-gdalcubes::gdalcubes_options(parallel = TRUE)
+gdalcubes::gdalcubes_options(parallel = 1)
 
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
             xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
