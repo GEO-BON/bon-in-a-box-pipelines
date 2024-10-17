@@ -1,0 +1,183 @@
+{
+  "nodes": [
+    {
+      "id": "9",
+      "type": "io",
+      "position": {
+        "x": 72,
+        "y": 28
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "15",
+      "type": "io",
+      "position": {
+        "x": 499,
+        "y": 145
+      },
+      "data": {
+        "descriptionFile": "BII>BIIZonalStats.yml"
+      }
+    },
+    {
+      "id": "16",
+      "type": "output",
+      "position": {
+        "x": 1009,
+        "y": 164
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "17",
+      "type": "output",
+      "position": {
+        "x": 1009,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "18",
+      "type": "output",
+      "position": {
+        "x": 1009,
+        "y": 62
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "9",
+      "sourceHandle": "bbox",
+      "target": "15",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-9bbox-15bbox"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "study_area_polygon",
+      "target": "15",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-9study_area_polygon-15study_area_polygon"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "ts_plot",
+      "target": "16",
+      "targetHandle": null,
+      "id": "reactflow__edge-15ts_plot-16"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "stats",
+      "target": "17",
+      "targetHandle": null,
+      "id": "reactflow__edge-15stats-17"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "rasters",
+      "target": "18",
+      "targetHandle": null,
+      "id": "reactflow__edge-15rasters-18"
+    }
+  ],
+  "inputs": {
+    "data>getBoundingBox.yml@9|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0,
+      "example": null
+    },
+    "data>getBoundingBox.yml@9|state": {
+      "description": "State or province of interest",
+      "label": "State/Province",
+      "type": "text",
+      "weight": 1,
+      "example": null
+    },
+    "BII>BIIZonalStats.yml@15|stac_url": {
+      "description": "URL of the Stac catalog",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 2
+    },
+    "BII>BIIZonalStats.yml@15|summary_statistic": {
+      "description": "Summary statistic for layers",
+      "label": "Summary statistic",
+      "type": "options",
+      "options": [
+        "Mean",
+        "Median",
+        "Mode"
+      ],
+      "example": "Mean",
+      "weight": 3
+    },
+    "data>getBoundingBox.yml@9|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 4,
+      "example": null
+    },
+    "BII>BIIZonalStats.yml@15|start_year": {
+      "label": "Start year for BII raster comparison",
+      "type": "options",
+      "options": [
+        "2000",
+        "2005",
+        "2010",
+        "2015"
+      ],
+      "example": "2000",
+      "weight": 5
+    },
+    "BII>BIIZonalStats.yml@15|end_year": {
+      "description": "BII layer to compare to the start year",
+      "label": "End year for BII comparison",
+      "type": "options",
+      "options": [
+        "2005",
+        "2010",
+        "2015",
+        "2020"
+      ],
+      "weight": 6,
+      "example": null
+    }
+  },
+  "outputs": {
+    "BII>BIIZonalStats.yml@15|ts_plot": {
+      "description": "Time series plot of BII values in zone of interest",
+      "label": "Time series plot",
+      "type": "image/png",
+      "weight": 0
+    },
+    "BII>BIIZonalStats.yml@15|stats": {
+      "description": "Summary statistic in the polygon",
+      "label": "Summary statistic",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "BII>BIIZonalStats.yml@15|rasters": {
+      "description": "Array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
+    }
+  }
+}

@@ -1,0 +1,68 @@
+script: BIIZonalStats.R
+name: Biodiversity Intactness Index
+description: "Extract items and calculate zonal statistics from various collections on the GEO BON Stac Catalog."
+author:
+  - name: Jory Griffith
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  stac_url:
+    label: stac_url
+    description: URL of the Stac catalog
+    type: text
+    example: https://stac.geobon.org/
+  bbox:
+     label: bbox
+     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+     type: float[]
+     example: null
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area of interest
+    type: application/geo+json
+  summary_statistic: 
+    label: Summary statistic
+    description: Summary statistic for layers
+    type: options
+    options:
+    - Mean
+    - Median
+    - Mode
+    example: Mean
+  start_year:
+    label: Start year for BII raster comparison
+    type: options
+    description: Reference BII year for raster plotting
+    options:
+    - "2000"
+    - "2005"
+    - "2010"
+    - "2015"
+    example: "2000"
+  end_year:
+    label: End year for BII comparison
+    description: BII layer to compare to the start year
+    type: options
+    options:
+    - "2005"
+    - "2010"
+    - "2015"
+    - "2020"
+    example: "2020"
+outputs:
+  rasters:
+     label: Rasters
+     description: Array of output raster paths
+     type: image/tiff;application=geotiff[]
+  stats:
+    label: Summary statistic
+    description: Summary statistic in the polygon
+    type: text/csv
+  ts_plot:
+    label: Time series plot
+    description: Time series plot of BII values in zone of interest
+    type: image/png
+  bii_change:
+    label: Change in BII
+    description: Raster plot of change in BII
+    type: image/tiff;application=geotiff[]
+  
