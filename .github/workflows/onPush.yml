@@ -19,7 +19,7 @@ jobs:
         ref: 'conda'
 
         # Relative path under $GITHUB_WORKSPACE to place the repository
-        path: '.server'
+        # path: '.server'
 
     - name: Creating empty runner.env
       working-directory: .
