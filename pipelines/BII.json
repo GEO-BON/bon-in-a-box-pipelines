@@ -26,8 +26,8 @@
       "id": "16",
       "type": "output",
       "position": {
-        "x": 1009,
-        "y": 164
+        "x": 1060,
+        "y": 110
       },
       "data": {
         "label": "Output"
@@ -50,6 +50,28 @@
       "position": {
         "x": 1009,
         "y": 62
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "19",
+      "type": "io",
+      "position": {
+        "x": 1113.046875,
+        "y": 196
+      },
+      "data": {
+        "descriptionFile": "BII>BIIChange.yml"
+      }
+    },
+    {
+      "id": "20",
+      "type": "output",
+      "position": {
+        "x": 1698.046875,
+        "y": 201
       },
       "data": {
         "label": "Output"
@@ -91,6 +113,20 @@
       "target": "18",
       "targetHandle": null,
       "id": "reactflow__edge-15rasters-18"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "rasters",
+      "target": "19",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-15rasters-19rasters"
+    },
+    {
+      "source": "19",
+      "sourceHandle": "bii_change",
+      "target": "20",
+      "targetHandle": null,
+      "id": "reactflow__edge-19bii_change-20"
     }
   ],
   "inputs": {
@@ -134,7 +170,8 @@
       "weight": 4,
       "example": null
     },
-    "BII>BIIZonalStats.yml@15|start_year": {
+    "BII>BIIChange.yml@19|start_year": {
+      "description": "Reference BII year for raster plotting",
       "label": "Start year for BII raster comparison",
       "type": "options",
       "options": [
@@ -146,7 +183,7 @@
       "example": "2000",
       "weight": 5
     },
-    "BII>BIIZonalStats.yml@15|end_year": {
+    "BII>BIIChange.yml@19|end_year": {
       "description": "BII layer to compare to the start year",
       "label": "End year for BII comparison",
       "type": "options",
@@ -156,8 +193,8 @@
         "2015",
         "2020"
       ],
-      "weight": 6,
-      "example": null
+      "example": "2020",
+      "weight": 6
     }
   },
   "outputs": {
@@ -178,6 +215,12 @@
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 2
+    },
+    "BII>BIIChange.yml@19|bii_change": {
+      "description": "Raster plot of change in BII",
+      "label": "Change in BII",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
     }
   }
 }

@@ -1,4 +1,10 @@
 
+script: BIIChange.R
+name: Biodiversity Intactness Index Change
+description: "Look at change in the Biodiversity Intactness Index over time."
+author:
+  - name: Jory Griffith
+    identifier: https://orcid.org/0000-0001-6020-6690
 inputs: 
   rasters:
     label: Rasters of BII

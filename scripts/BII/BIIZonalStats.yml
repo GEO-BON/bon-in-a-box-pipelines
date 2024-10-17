@@ -28,26 +28,6 @@ inputs:
     - Median
     - Mode
     example: Mean
-  start_year:
-    label: Start year for BII raster comparison
-    type: options
-    description: Reference BII year for raster plotting
-    options:
-    - "2000"
-    - "2005"
-    - "2010"
-    - "2015"
-    example: "2000"
-  end_year:
-    label: End year for BII comparison
-    description: BII layer to compare to the start year
-    type: options
-    options:
-    - "2005"
-    - "2010"
-    - "2015"
-    - "2020"
-    example: "2020"
 outputs:
   rasters:
      label: Rasters
