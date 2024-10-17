@@ -4,7 +4,7 @@ description: "Estimates the Red List Index (RLI) for a group of species, reflect
 external_link: https://nrl.iucnredlist.org/assessment/red-list-index
 author:
  - name: Maria Camila diaz
-   email: mdiaz@humboldt.org.co
+   email: maria.camila.diaz.corzo@usherbrooke.ca
  - name: Victor Julio Rincon
    email: rincon-v@javeriana.edu.co
 conda:

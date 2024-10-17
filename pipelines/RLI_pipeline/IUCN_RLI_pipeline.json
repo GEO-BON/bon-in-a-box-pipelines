@@ -50,8 +50,8 @@
       "id": "18",
       "type": "output",
       "position": {
-        "x": 1476.908243849231,
-        "y": 107.16148339439854
+        "x": 1578.908243849231,
+        "y": 91.16148339439854
       },
       "data": {
         "label": "Output"
@@ -81,6 +81,17 @@
       "data": {
         "type": "text",
         "value": "code"
+      }
+    },
+    {
+      "id": "21",
+      "type": "output",
+      "position": {
+        "x": 1576.0163269042969,
+        "y": 134.66665649414062
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -133,6 +144,13 @@
       "target": "15",
       "targetHandle": "threat_category_code_column",
       "id": "reactflow__edge-20-15threat_category_code_column"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "redlist_data",
+      "target": "21",
+      "targetHandle": null,
+      "id": "reactflow__edge-15redlist_data-21"
     }
   ],
   "inputs": {
@@ -437,10 +455,16 @@
   },
   "outputs": {
     "RedListIndex>RedListIndex.yml@15|redlist_trend_plot": {
-      "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species.",
-      "label": "redlist_trend_plot",
+      "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species. For more information about the workflow and the interpretation of the results consult the documentation [RLI documentation](https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html) ",
+      "label": "redlist trend plot",
       "type": "image/jpg",
       "weight": 0
+    },
+    "RedListIndex>RedListIndex.yml@15|redlist_data": {
+      "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
+      "label": "redList data",
+      "type": "text/csv",
+      "weight": 1
     }
   },
   "metadata": {
@@ -450,9 +474,13 @@
       {
         "name": "Victor Julio Rincon",
         "identifier": "rincon-v@javeriana.edu.co"
+      },
+      {
+        "name": "Maria Camila Diaz",
+        "identifier": "maria.camila.diaz.corzo@usherbrooke.ca"
       }
     ],
     "license": "MIT",
-    "external_link": "https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html"
+    "external_link":"https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html" 
   }
 }

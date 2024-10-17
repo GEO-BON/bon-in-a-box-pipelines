@@ -64,11 +64,12 @@ RedList_matrix_2 = as.data.frame.matrix(redlist_matrix)
 # Remove species that do not have an assessment before the base year, in this case set to the year 2000
 
 replace_na_with_previous <- function(df, target_col) {
-  for (col in 2:(target_col-1)) {
+  for (col in (target_col-1):2) {
     df[[target_col]] <- ifelse(is.na(df[[target_col]]), df[[col]], df[[target_col]])
-  }
-  return(df)
-}
+  }; return(df) }
+
+df = RedList_matrix_2 %>% as.data.frame.matrix()
+for(k in 2:ncol(RedList_matrix_2)){ df <- replace_na_with_previous(df, k) }
 
 matrix_output = RedList_matrix_2
 for(k in 2:ncol(matrix_output)){
@@ -84,14 +85,17 @@ print("redlist_data")
 
 
 # Redlist figura ####
-redlist_trend_plot<- ggplot(redlist_data, aes(x = Year, y = RLI)) +
-  geom_line(group = 1, col= "red") +
-  geom_point() +
-  coord_cartesian(ylim = c(0,1))+
+redlist_trend_plot<- ggplot(redlist_data, aes(x = as.numeric(Year), y = RLI))+
+  scale_x_continuous(breaks = seq(1960, as.numeric(format(Sys.Date(), "%Y")), by = 2))+
+  labs(x = "year", y = "Red List Index")+
+  geom_line(group = 1, col= "red")+
+  geom_point()+
+  coord_cartesian(xlim =c(1960,as.numeric(format(Sys.Date(), "%Y"))), ylim = c(0,1))+
   theme_classic()+
-  theme(    panel.grid.major = element_line(color = "gray"),
-) + theme(text = element_text(size = 4))
-
+  theme(panel.grid.major = element_line(color = "gray"))+ 
+  theme(text = element_text(size = 4)) +  
+  ggtitle("RLI for selected taxonomy group and country")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 2))
 
 
 ## Write results ####
