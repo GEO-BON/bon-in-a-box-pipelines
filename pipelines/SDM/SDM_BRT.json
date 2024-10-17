@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1611.393412006486,
-        "y": 12.803293996757034
+        "x": 1051,
+        "y": 356.83333333333326
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1252,
-        "y": 42
+        "x": 690,
+        "y": 291.83333333333326
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -37,8 +37,8 @@
       "id": "57",
       "type": "userInput",
       "position": {
-        "x": 148,
-        "y": 263.16666666666663
+        "x": 101,
+        "y": 385.49999999999994
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "58",
       "type": "userInput",
       "position": {
-        "x": 123.61417569800324,
-        "y": 175.44068195804283
+        "x": 88,
+        "y": 196.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,8 +68,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1228,
-        "y": 151
+        "x": 666,
+        "y": 400.83333333333326
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -81,8 +81,8 @@
       "id": "96",
       "type": "io",
       "position": {
-        "x": 510,
-        "y": 14.5
+        "x": 513,
+        "y": 61
       },
       "data": {
         "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
@@ -92,8 +92,8 @@
       "id": "119",
       "type": "io",
       "position": {
-        "x": 1141.5956650225519,
-        "y": 246.01072543269515
+        "x": 539,
+        "y": 502.83333333333326
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -103,8 +103,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 112,
-        "y": 96.5
+        "x": 93,
+        "y": 64.33333333333337
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -118,8 +118,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2181.1744500109244,
-        "y": 36.61490468346457
+        "x": 1565,
+        "y": 425.33333333333326
       },
       "data": {
         "label": "Output"
@@ -129,8 +129,8 @@
       "id": "126",
       "type": "output",
       "position": {
-        "x": 1015,
-        "y": 157
+        "x": 1051,
+        "y": 157.5
       },
       "data": {
         "label": "Output"
@@ -140,8 +140,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 78.69248438221689,
-        "y": 346.18628409663785
+        "x": 96,
+        "y": 559.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -153,8 +153,8 @@
       "id": "132",
       "type": "io",
       "position": {
-        "x": 2267.129172054325,
-        "y": 623.7408113575266
+        "x": 1565,
+        "y": 631.3333333333333
       },
       "data": {
         "descriptionFile": "SDM>BRT>fitBRT.yml"
@@ -164,8 +164,8 @@
       "id": "133",
       "type": "output",
       "position": {
-        "x": 2820.870116884418,
-        "y": 623.7414140634203
+        "x": 1910,
+        "y": 804.8333333333333
       },
       "data": {
         "label": "Output"
@@ -175,8 +175,8 @@
       "id": "134",
       "type": "output",
       "position": {
-        "x": 2819.397516761864,
-        "y": 534.8975376209046
+        "x": 1910,
+        "y": 552.8333333333333
       },
       "data": {
         "label": "Output"
@@ -186,8 +186,8 @@
       "id": "135",
       "type": "output",
       "position": {
-        "x": 2813.302480069012,
-        "y": 434.01981648658244
+        "x": 1910,
+        "y": 601.8333333333333
       },
       "data": {
         "label": "Output"
@@ -197,8 +197,8 @@
       "id": "137",
       "type": "userInput",
       "position": {
-        "x": 100.76931405023402,
-        "y": 413.54365929358687
+        "x": 93,
+        "y": 231.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -213,8 +213,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 1133.4923842871444,
-        "y": 473.97024345293426
+        "x": 539,
+        "y": 681.8333333333333
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -224,8 +224,8 @@
       "id": "140",
       "type": "constant",
       "position": {
-        "x": 128.61513963965376,
-        "y": 634.9366465551192
+        "x": 12,
+        "y": 649.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -239,8 +239,8 @@
       "id": "141",
       "type": "output",
       "position": {
-        "x": 2750.2122531847253,
-        "y": 364.5904097986591
+        "x": 1910,
+        "y": 454.83333333333326
       },
       "data": {
         "label": "Output"
@@ -250,8 +250,8 @@
       "id": "142",
       "type": "output",
       "position": {
-        "x": 2778.3434507015036,
-        "y": 876
+        "x": 1910,
+        "y": 853.8333333333333
       },
       "data": {
         "label": "Output"
@@ -261,8 +261,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 2826.3434507015036,
-        "y": 792
+        "x": 1910,
+        "y": 755.8333333333333
       },
       "data": {
         "label": "Output"
@@ -272,8 +272,8 @@
       "id": "144",
       "type": "userInput",
       "position": {
-        "x": 385.316650390625,
-        "y": 585
+        "x": 19,
+        "y": 594.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -284,8 +284,8 @@
       "id": "146",
       "type": "userInput",
       "position": {
-        "x": 172.316650390625,
-        "y": 463
+        "x": 101,
+        "y": 308.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -297,8 +297,8 @@
       "id": "147",
       "type": "constant",
       "position": {
-        "x": 217.766078245779,
-        "y": 726.9710401672294
+        "x": 20,
+        "y": 420.49999999999994
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -310,8 +310,8 @@
       "id": "148",
       "type": "output",
       "position": {
-        "x": 2831.1682994785438,
-        "y": 710.9197209041046
+        "x": 1910,
+        "y": 503.83333333333326
       },
       "data": {
         "label": "Output"
@@ -321,8 +321,8 @@
       "id": "149",
       "type": "output",
       "position": {
-        "x": 1825.4298528831805,
-        "y": 798.5621838659498
+        "x": 513,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -332,8 +332,8 @@
       "id": "151",
       "type": "output",
       "position": {
-        "x": 1668.9046885641724,
-        "y": 921.9798661611901
+        "x": 1051,
+        "y": 262.33333333333326
       },
       "data": {
         "label": "Output"
@@ -343,8 +343,8 @@
       "id": "152",
       "type": "userInput",
       "position": {
-        "x": 1889.6500244140625,
-        "y": 742.5
+        "x": 1218,
+        "y": 717.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -356,8 +356,8 @@
       "id": "153",
       "type": "userInput",
       "position": {
-        "x": 1936.6500244140625,
-        "y": 700.5
+        "x": 1232,
+        "y": 682.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -369,13 +369,111 @@
       "id": "154",
       "type": "userInput",
       "position": {
-        "x": 1975.1500244140625,
-        "y": 864
+        "x": 1218,
+        "y": 752.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "float",
         "value": 2.4
+      }
+    },
+    {
+      "id": "155",
+      "type": "constant",
+      "position": {
+        "x": 50,
+        "y": 266.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "156",
+      "type": "constant",
+      "position": {
+        "x": 72,
+        "y": 343.49999999999994
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "157",
+      "type": "constant",
+      "position": {
+        "x": 50,
+        "y": 713.8333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "158",
+      "type": "constant",
+      "position": {
+        "x": 72,
+        "y": 755.8333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
       }
     }
   ],
@@ -659,6 +757,34 @@
       "target": "132",
       "targetHandle": "pa_proportion",
       "id": "reactflow__edge-154-132pa_proportion"
+    },
+    {
+      "source": "155",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-155-119resampling"
+    },
+    {
+      "source": "156",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-156-119aggregation"
+    },
+    {
+      "source": "157",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-157-139resampling"
+    },
+    {
+      "source": "158",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-158-139aggregation"
     }
   ],
   "inputs": {
