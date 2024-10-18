@@ -16,25 +16,28 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs: ")
 print(input)
 
-gdalcubes_set_gdal_config("VSI_CACHE", "TRUE")
-gdalcubes_set_gdal_config("GDAL_CACHEMAX","30%")
-gdalcubes_set_gdal_config("VSI_CACHE_SIZE","10000000")
-gdalcubes_set_gdal_config("GDAL_HTTP_MULTIPLEX","YES")
-gdalcubes_set_gdal_config("GDAL_INGESTED_BYTES_AT_OPEN","32000")
-gdalcubes_set_gdal_config("GDAL_DISABLE_READDIR_ON_OPEN","EMPTY_DIR")
-gdalcubes_set_gdal_config("GDAL_HTTP_VERSION","2")
-gdalcubes_set_gdal_config("GDAL_HTTP_MERGE_CONSECUTIVE_RANGES","YES")
-gdalcubes_set_gdal_config("CHECK_WITH_INVERT_PROJ","FALSE")
-gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1)
 
 gdalcubes::gdalcubes_options(parallel = 1)
 
-# Case 1: we create an extent from a set of observations
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
             xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
 weight_matrix <- NULL
+
+if("resampling" %in% names(input)){
+  resampling=input$resampling
+}else{
+  resampling="near"
+}
+
+if("aggregation" %in% names(input)){
+  aggregation=input$aggregation
+}else{
+  aggregation="first"
+}
+
 if("taxa" %in% names(input)){ #EXTRACT GBIF HEATMAPS
   collections_items <- paste0("gbif_heatmaps|", input$taxa, "-heatmap")
+  resampling="sum" #Sum number of occurences when upscaling
 }else{ #EXTRACT OTHER LAYERS
   if (length(input$collections_items) == 0) {
     if (length(input$weight_matrix_with_ids) == 0) {
@@ -49,18 +52,21 @@ if("taxa" %in% names(input)){ #EXTRACT GBIF HEATMAPS
     collections_items <- input$collections_items
   }
 }
+
 if(!("stac_url" %in% names(input))){
   input$stac_url <- "https://stac.geobon.org"
 }
+
+
 
 cube_args <- list(stac_path = input$stac_url,
   limit = 5000,
   t0 = NULL,
   t1 = NULL,
-  spatial.res = input$spatial_res, # in meters
+  spatial.res = input$spatial_res,  #in meters
   temporal.res = "P1D",
-  aggregation = "mean",
-  resampling = "near")
+  aggregation = aggregation,
+  resampling = resampling)
 
 proj <- input$proj
 as_list <- FALSE
@@ -70,7 +76,8 @@ raster_layers <- list()
 nc_names <- c()
 for (coll_it in collections_items){
     ci <- strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
-
+    print("ci")
+    print(ci)
     cube_args_c <- append(cube_args, list(collections=ci[1],
                                           srs.cube = proj, 
                                           bbox = bbox,
@@ -91,7 +98,6 @@ for (coll_it in collections_items){
 
      raster_layers[[ci[2]]]=pred
 }
-  print(names(raster_layers))
 
 output_raster_layers <- file.path(outputFolder)
 

@@ -22,8 +22,10 @@ dependencies:
   - r-jpeg
   - r-landscapemetrics
   - r-png
+  - r-purrr
   - r-rcurl
   - r-rgbif
+  - r-remotes
   - r-rjava
   - r-rjson
   - r-rnaturalearth
@@ -36,8 +38,5 @@ dependencies:
   - r-stringr
   - r-terra
   - r-tidyselect
-  - r-purrr
   - r-tidyverse
   - r-stringr
-
-  

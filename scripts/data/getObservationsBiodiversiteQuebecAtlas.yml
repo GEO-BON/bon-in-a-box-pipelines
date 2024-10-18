@@ -1,0 +1,51 @@
+script: getObservationsBiodiversiteQuebecAtlas.R
+name: Observations from the Biodiversité Québec Atlas
+description: Load observations from [Biodiversité Québec's Atlas](https://biodiversite-quebec.ca/atlas)
+author:
+  - name: Guillaume Larocque
+    identifier: https://orcid.org/0000-0002-5967-9156
+
+inputs:
+  taxa:
+    description: Array of taxa values
+    label: Taxa list
+    type: text[]
+    example: [Acer saccharum, Bubo scandiacus]
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the bbox in the order long xmin, lat ymin, long xmax, lat ymax
+    type: float[]
+    example: [-80, 44.8, -50.7, 63]
+  min_year:
+    description: Min year observations wanted
+    label: minimum year
+    type: int
+    example: 2010
+  max_year:
+    description: Max year observations wanted
+    label: maximum year
+    type: int
+    example: 2020
+outputs:
+  observations_file:
+    label: Observations
+    description: Output file with observations
+    type: text/csv
+    example: hfn7s62sq.csv
+  total_records:
+    label: Total number of occurrences
+    description: Total number of occurrences in csv file
+    type: int
+    example: 1234
+  database_date:
+    label: Date of database update
+    description: Date at which the database was last updated
+    type: text
+    example: "2024-01-01"
+conda: # Optional, only needed if your script has specific package dependencies
+  channels:
+    - conda-forge
+  dependencies:
+    - r-duckdb=1.0.0 #package=version
+    - r-dplyr
+    - r-rjson
