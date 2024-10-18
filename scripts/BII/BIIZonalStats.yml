@@ -1,0 +1,46 @@
+script: BIIZonalStats.R
+name: Biodiversity Intactness Index
+description: "This script extracts items and calculate zonal statistics from the Biodiversity Intactness layers in the GEO BON Stac Catalog."
+license: CC-BY-NC-SA
+author:
+  - name: Jory Griffith
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  bbox:
+     label: bbox
+     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+     type: float[]
+     example: null
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area of interest
+    type: application/geo+json
+  summary_statistic: 
+    label: Summary statistic
+    description: Summary statistic for layers
+    type: options
+    options:
+    - Mean
+    - Median
+    - Mode
+    example: Mean
+outputs:
+  rasters:
+     label: Rasters
+     description: Array of output raster paths
+     type: image/tiff;application=geotiff[]
+  stats:
+    label: Summary statistic
+    description: Summary statistic in the polygon
+    type: text/csv
+  ts_plot:
+    label: Time series plot
+    description: Time series plot of BII values in zone of interest
+    type: image/png
+  bii_change:
+    label: Change in BII
+    description: Raster plot of change in BII
+    type: image/tiff;application=geotiff[]
+references:
+- text: Adriana De Palma; Sara Contu; Gareth E Thomas; Connor Duffin; Sabine Nix; Andy Purvis (2024). The Biodiversity Intactness Index developed by The Natural History Museum, London, v2.1.1 (Open Access, Limited Release) [Data set]. Natural History Museum. https://doi.org/10.5519/k33reyb6
+  
