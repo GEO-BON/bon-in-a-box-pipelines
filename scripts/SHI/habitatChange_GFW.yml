@@ -115,8 +115,9 @@ outputs:
     label: SHS Map (raster)
     description: Figure showing a map with changes in the habitat for the time range for each species (raster).
     type: image/tiff;application=geotiff[]
-conda: 
+conda:
   channels:
+    - conda-forge
     - r
   dependencies:
     - r-rjson
