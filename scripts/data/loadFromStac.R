@@ -30,7 +30,7 @@ gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1)
 gdalcubes::gdalcubes_options(parallel = 1)
 
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj))
 weight_matrix <- NULL
 
 if("resampling" %in% names(input)){
@@ -87,7 +87,7 @@ nc_names <- c()
 for (coll_it in collections_items){
     ci <- strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
     cube_args_c <- append(cube_args, list(collections=ci[1],
-                                          srs.cube = proj, 
+                                          srs.cube = proj,
                                           bbox = bbox,
                                           layers=NULL,
                                           variable = NULL,
