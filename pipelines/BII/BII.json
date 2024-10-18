@@ -144,12 +144,12 @@
       "weight": 1,
       "example": null
     },
-    "BII>BIIZonalStats.yml@15|stac_url": {
-      "description": "URL of the Stac catalog",
-      "label": "stac_url",
+    "data>getBoundingBox.yml@9|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
       "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 2
+      "weight": 2,
+      "example": null
     },
     "BII>BIIZonalStats.yml@15|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -163,13 +163,6 @@
       "example": "Mean",
       "weight": 3
     },
-    "data>getBoundingBox.yml@9|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "weight": 4,
-      "example": null
-    },
     "BII>BIIChange.yml@19|start_year": {
       "description": "Reference BII year for raster plotting",
       "label": "Start year for BII raster comparison",
@@ -181,7 +174,7 @@
         "2015"
       ],
       "example": "2000",
-      "weight": 5
+      "weight": 4
     },
     "BII>BIIChange.yml@19|end_year": {
       "description": "BII layer to compare to the start year",
@@ -194,7 +187,7 @@
         "2020"
       ],
       "example": "2020",
-      "weight": 6
+      "weight": 5
     }
   },
   "outputs": {
@@ -222,5 +215,26 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 3
     }
+  },
+  "metadata": {
+    "name": "Biodiversity Intactness Index",
+    "description": "This pipeline calculates zonal statistics of the biodiversity intactness index of a given country or region and change over time using the BII layers developed by the Natural History Museum.",
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca"
+      }
+    ],
+    "license": "CC-BY-NC-SA",
+    "references": [
+      {
+        "text": "De Palma et al. 2024",
+        "doi": "https://doi.org/10.5519/k33reyb6"
+      },
+      {
+        "text": "Newbold et al. 2016",
+        "doi": "https://doi.org/10.1126/science.aaf2201"
+      }
+    ]
   }
 }

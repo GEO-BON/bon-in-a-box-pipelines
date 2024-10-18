@@ -1,7 +1,7 @@
 
 script: BIIChange.R
 name: Biodiversity Intactness Index Change
-description: "Look at change in the Biodiversity Intactness Index over time."
+description: "This script generates a raster of the change in the Biodiversity Intactness Index betwen two chosen time points"
 author:
   - name: Jory Griffith
     identifier: https://orcid.org/0000-0001-6020-6690
@@ -33,5 +33,5 @@ inputs:
 outputs:
   bii_change:
     label: Change in BII
-    description: Raster plot of change in BII
+    description: Raster plot of change in BII. Higher numbers indicate greater BII loss.
     type: image/tiff;application=geotiff[]

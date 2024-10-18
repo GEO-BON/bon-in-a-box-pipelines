@@ -38,7 +38,7 @@ for(i in 1:length(collections_items)){
 
   ci <- strsplit(collections_items[i], split = "|", fixed=TRUE)[[1]] # split into collection and layers
 
-  dat_cube <- load_cube(stac_path=input$stac_url, collections=ci[1], ids=ci[2], bbox=bbox,
+  dat_cube <- load_cube(stac_path="https://stac.geobon.org/", collections=ci[1], ids=ci[2], bbox=bbox,
                            srs.cube = "EPSG:4326", layers=NULL, variable=NULL, spatial.res=0.08,
                             t0 = NULL, t1 = NULL, temporal.res = "P1D", aggregation = "mean",  resampling = "near") # load cube from loacFromStacFun
 

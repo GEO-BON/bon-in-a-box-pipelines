@@ -11,7 +11,7 @@ inputs:
     type: text
   state:
     label: State/Province
-    description: State or province of interest
+    description: State or province of interest (leave blank if you want the full country)
     type: text
   study_area_file:
     label: File for study area
