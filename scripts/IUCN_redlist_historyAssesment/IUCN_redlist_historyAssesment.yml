@@ -9,8 +9,8 @@ author:
 external_link: https://github.com/GEO-BON/biab-2.0
 conda:
   channels:
-    - r
     - conda-forge
+    - r
   dependencies:
     - r-magrittr
     - r-data.table

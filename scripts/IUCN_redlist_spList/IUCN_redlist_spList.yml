@@ -11,8 +11,8 @@ external_link: https://github.com/GEO-BON/biab-2.0
 # Missing ones were added to the central conda environment.
 conda:
   channels:
-    - r
     - conda-forge
+    - r
   dependencies:
     - r-magrittr
     - r-dplyr

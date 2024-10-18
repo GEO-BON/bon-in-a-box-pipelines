@@ -9,8 +9,8 @@ author:
    email: rincon-v@javeriana.edu.co
 conda:
   channels:
-    - r
     - conda-forge
+    - r
   dependencies:
     - r-magrittr
     - r-data.table
