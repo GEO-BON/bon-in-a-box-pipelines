@@ -10,7 +10,6 @@ The BON in a Box RLI pipeline allows you to calculate RLI for specific taxon or 
 * **Country:** The user can specify the country for which you want to calculate RLI
 
 The pipeline creates the following outputs:
-* **Red list matrix:** Table of assessment results for each year. This can be downloaded as a CSV.
 * **Red list result:** Table of red list results for each year. This can be downloaded as a CSV.
 * **Red list plot:** Displays the change in the Red List Index over years.
 
