@@ -4,8 +4,8 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 72,
-        "y": 28
+        "x": 284,
+        "y": 110
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
@@ -15,8 +15,8 @@
       "id": "15",
       "type": "io",
       "position": {
-        "x": 499,
-        "y": 145
+        "x": 756,
+        "y": 190
       },
       "data": {
         "descriptionFile": "BII>BIIZonalStats.yml"
@@ -26,8 +26,8 @@
       "id": "16",
       "type": "output",
       "position": {
-        "x": 1060,
-        "y": 110
+        "x": 1308,
+        "y": 258.5
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "17",
       "type": "output",
       "position": {
-        "x": 1009,
-        "y": 12
+        "x": 1308,
+        "y": 307.5
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "18",
       "type": "output",
       "position": {
-        "x": 1009,
-        "y": 62
+        "x": 1308,
+        "y": 209.5
       },
       "data": {
         "label": "Output"
@@ -59,8 +59,8 @@
       "id": "19",
       "type": "io",
       "position": {
-        "x": 1113.046875,
-        "y": 196
+        "x": 1308,
+        "y": 119.5
       },
       "data": {
         "descriptionFile": "BII>BIIChange.yml"
@@ -70,8 +70,43 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 1698.046875,
-        "y": 201
+        "x": 1869,
+        "y": 180
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "22",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 23.166666666666664
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "23",
+      "type": "userInput",
+      "position": {
+        "x": 13,
+        "y": 78.16666666666666
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "24",
+      "type": "output",
+      "position": {
+        "x": 284,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -127,28 +162,35 @@
       "target": "20",
       "targetHandle": null,
       "id": "reactflow__edge-19bii_change-20"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "country",
+      "id": "reactflow__edge-22-9country"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "state",
+      "id": "reactflow__edge-23-9state"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-22-24"
     }
   ],
   "inputs": {
-    "data>getBoundingBox.yml@9|country": {
-      "description": "Country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0,
-      "example": null
-    },
-    "data>getBoundingBox.yml@9|state": {
-      "description": "State or province of interest",
-      "label": "State/Province",
-      "type": "text",
-      "weight": 1,
-      "example": null
-    },
     "data>getBoundingBox.yml@9|study_area_file": {
       "description": "Upload a file of a custom study area",
       "label": "File for study area",
       "type": "text",
-      "weight": 2,
+      "weight": 0,
       "example": null
     },
     "BII>BIIZonalStats.yml@15|summary_statistic": {
@@ -161,7 +203,7 @@
         "Mode"
       ],
       "example": "Mean",
-      "weight": 3
+      "weight": 1
     },
     "BII>BIIChange.yml@19|start_year": {
       "description": "Reference BII year for raster plotting",
@@ -174,7 +216,7 @@
         "2015"
       ],
       "example": "2000",
-      "weight": 4
+      "weight": 2
     },
     "BII>BIIChange.yml@19|end_year": {
       "description": "BII layer to compare to the start year",
@@ -187,33 +229,53 @@
         "2020"
       ],
       "example": "2020",
+      "weight": 3
+    },
+    "pipeline@22": {
+      "label": "Country",
+      "description": "Country of interest",
+      "type": "text",
+      "example": null,
+      "weight": 4
+    },
+    "pipeline@23": {
+      "label": "State/Province",
+      "description": "State or province of interest (leave blank if you want the full country)",
+      "type": "text",
+      "example": null,
       "weight": 5
     }
   },
   "outputs": {
-    "BII>BIIZonalStats.yml@15|ts_plot": {
-      "description": "Time series plot of BII values in zone of interest",
-      "label": "Time series plot",
-      "type": "image/png",
+    "pipeline@22|default_output": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
       "weight": 0
     },
     "BII>BIIZonalStats.yml@15|stats": {
-      "description": "Summary statistic in the polygon",
-      "label": "Summary statistic",
+      "description": "Summary statistic",
+      "label": "Statistical measure",
       "type": "text/csv",
       "weight": 1
     },
     "BII>BIIZonalStats.yml@15|rasters": {
       "description": "Array of output raster paths",
-      "label": "Rasters",
+      "label": "BII layers for each year",
       "type": "image/tiff;application=geotiff[]",
       "weight": 2
+    },
+    "BII>BIIZonalStats.yml@15|ts_plot": {
+      "description": "Time series plot of BII values in zone of interest",
+      "label": "Time series plot",
+      "type": "image/png",
+      "weight": 3
     },
     "BII>BIIChange.yml@19|bii_change": {
       "description": "Raster plot of change in BII",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 4
     }
   },
   "metadata": {
