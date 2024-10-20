@@ -36,7 +36,7 @@ The pipeline creates the following outputs:
 - **Predictions:** SDM prediction probabilities can be viewed as a raster.
 - **Variability of predictions:** The variability of the 95% confidence of each prediction can be viewed on a map to show uncertainty.
 
-[See an example output here](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_maxEnt%3E1909d7b9814b83b286a980cf2ec239ab)
+[See an example output here](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_maxEnt%3E78ed53b7ea6b96ef58008075a4dfb487)
 
 **Contributors:**
 
@@ -57,10 +57,6 @@ Peterson, A. T. (2001). Predicting Species’ Geographic Distributions Based on 
 This document describes the methodology behind the BON-in-a-Box (BiaB) pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
 
 # Summary
-
-> [!WARNING]  
-> This really should change to PAs being in a separate script from BRT, but that
-> isn't how `fitBRT.jl` works at the moment
 
 This pipeline builds a model to predict the distribution of a species (a type of
 essential biodiversity variable), by using occurrence data from the Global
