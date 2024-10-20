@@ -5,13 +5,17 @@ Most species move between categories on the IUCN Red List due to improvements in
 
 **BON in a Box pipeline:**
 The BON in a Box RLI pipeline allows you to calculate RLI for specific taxon or species groups and a country of interest. The inputs to the pipeline are:
-* **IUCN token:** You must request a token to the IUCN for the script to work
-* **Taxon or species group name:** The user can specify the species group for which they want to calculate RLI. This can be taxonomic groups (birds, mammals, amphibians, etc.) or groups of species (endemic species, pollinators, etc.)
-* **Country:** The user can specify the country for which you want to calculate RLI
+
+- **IUCN token:** You must request a token to the IUCN for the script to work
+- **Taxon or species group name:** The user can specify the species group for which they want to calculate RLI. This can be taxonomic groups (birds, mammals, amphibians, etc.) or groups of species (endemic species, pollinators, etc.)
+- **Country:** The user can specify the country for which you want to calculate RLI
 
 The pipeline creates the following outputs:
-* **Red list result:** Table of red list results for each year. This can be downloaded as a CSV.
-* **Red list plot:** Displays the change in the Red List Index over years.
+
+- **Red list result:** Table of red list results for each year. This can be downloaded as a CSV.
+- **Red list plot:** Displays the change in the Red List Index over years.
+
+[See an example output here](https://pipelines-results.geobon.org/viewer/RLI_pipeline%3EIUCN_RLI_pipeline%3E46192f03723b43152495c84ac15175cf)
 
 See an example RLI output here (coming soon):
 
