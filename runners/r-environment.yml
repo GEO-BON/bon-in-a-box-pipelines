@@ -21,6 +21,7 @@ dependencies:
   - r-ggsci
   - r-jpeg
   - r-landscapemetrics
+  - r-magrittr
   - r-png
   - r-purrr
   - r-rcurl
@@ -37,6 +38,7 @@ dependencies:
   - r-stars
   - r-stringr
   - r-terra
+  - r-this.path
   - r-tidyselect
   - r-tidyverse
   - r-stringr
