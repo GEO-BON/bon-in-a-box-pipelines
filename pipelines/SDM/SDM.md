@@ -52,11 +52,11 @@ Kass JM, Muscarella R, Galante PJ, Bohl CL, Pinilla-Buitrago GE, Boria RA, Soley
 
 Peterson, A. T. (2001). Predicting Species’ Geographic Distributions Based on Ecological Niche Modeling. The Condor, 103(3), 599–605. [https://doi.org/10.1093/condor/103.3.599](https://doi.org/10.1093/condor/103.3.599)
 
-### Boosted Regression Trees
+### **Boosted Regression Trees**
 
 This document describes the methodology behind the BON-in-a-Box (BiaB) pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
 
-# Summary
+**Summary**
 
 This pipeline builds a model to predict the distribution of a species (a type of
 essential biodiversity variable), by using occurrence data from the Global
@@ -68,7 +68,7 @@ Tree (BRT), a machine-learning model which tends to work well with spatial data.
 details of how a BRT works are in the description of the key script in the
 pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 
-## Inputs:
+**Inputs**:
 
 - **Species**: The name of the taxon the build a species distribution model for
 - **Environmental Predictors**: The set of environmental predictors to use
@@ -82,7 +82,7 @@ pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 - **Mask**: a mask of regions to ignore
 - **STAC URL**: the URL to the STAC catalogue where the environmental predictors are hosted
 
-## Outputs
+**Outputs**
 
 - **Predicted SDM**: map of the predicted occurrence score at each location
 - **SDM Uncertainty**: map of relative uncertainty of the SDM at each location
@@ -106,7 +106,7 @@ pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 - **Presences**: cleaned occurrence data after cleaning
 - **DOI of GBIF download**
 
-# Pipeline Steps
+**Pipeline Steps**
 
 ```mermaid
 flowchart LR
@@ -142,16 +142,16 @@ The current version of the pipeline does not make use of the spatial component y
 The pipeline is used to run an SDM for a set of species in a specific region and using a set of environmental predictors. Some inputs are yet to be added to the list of inputs required by the user. Currently, the pipeline mostly reuses the same inputs as the MaxEnt pipeline, namely:
 
 - **Taxa list:** The user can specify the species (or multiple species) they are interested in.
-- \*\*Bounding box: The user can specify the bounding box where they want to distribution to be predicted (units must be in the chosen CRS).
-- \*\*Projection system: The user can specify a projection system.
-- \*\*Data source: The user can pull species’ occurrences using the GBIF API or from GBIF on the planetary computer.
+- **Bounding box**: The user can specify the bounding box where they want to distribution to be predicted (units must be in the chosen CRS).
+- **Projection system**: The user can specify a projection system.
+- **Data source**: The user can pull species’ occurrences using the GBIF API or from GBIF on the planetary computer.
 - \*\*Environmental layers: The user specifies the environmental layers that they want to include in the species distribution model, pulled from a STAC catalog.
-- \*\*Minimum and maximum year: The user can specify the year range for which they want to pull GBIF observations.
-- \*\*Method background: The user chooses a method to sample background points (pseudo absences) from a drop down menu
-- \*\*Number of background points: The user specifies the number of background points to use
-- \*\*Number of blocks: The number of cross-validation blocks used to compute predictive performance metrics (not implemented yet).
-- \*\*Mask: If the user is only interested in a specific country or study area, they can upload a polygon and the pipeline will crop the results to only that area.
-- \*\*Spatial resolution: The spatial resolution of the predictors used
+- **Minimum and maximum year**: The user can specify the year range for which they want to pull GBIF observations.
+- **Method background**: The user chooses a method to sample background points (pseudo absences) from a drop down menu
+- **Number of background points**: The user specifies the number of background points to use
+- **Number of blocks**: The number of cross-validation blocks used to compute predictive performance metrics (not implemented yet).
+- **Mask**: If the user is only interested in a specific country or study area, they can upload a polygon and the pipeline will crop the results to only that area.
+- **Spatial resolution**: The spatial resolution of the predictors used
 
 The pipeline creates the following outputs:
 
@@ -165,7 +165,7 @@ The pipeline creates the following outputs:
 - **Dmesh:** dual mesh used by the sdm model (INLA mesh)
 - **DOI of GBIF download:** Used for citing downloaded data.
 
-[See an example pipeline output](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_ewlgcp%3Edfbdc18c5e923c2a9fa426efc502843c)
+[See an example pipeline output here](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_ewlgcp%3Edfbdc18c5e923c2a9fa426efc502843c)
 
 **Contributors:**
 
