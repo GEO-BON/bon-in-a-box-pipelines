@@ -5,6 +5,9 @@ runner.env
 **/.cache
 **/.config
 .server
+<<<<<<< Updated upstream
 /output/
 /scripts/00_auk_filter/input/original/
 scripts/00_auk_filter_v2/input/original/
+=======
+>>>>>>> Stashed changes

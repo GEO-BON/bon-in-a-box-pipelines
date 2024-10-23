@@ -2,7 +2,7 @@
 
 # Install necessary libraries - packages  
 packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed<- c("magrittr", "data.table", "terra", "raster", "sf", "pbapply", "this.path", "rjson", "tools", "unmarked", "reshape2", "Rcpp" , "RcppEigen", "RcppParallel", "RcppNumerical", "secr", "camtrapR") # Define the list of required packages to run the script
+packagesNeed<- c("magrittr", "data.table", "terra", "raster", "sf", "pbapply", "this.path", "rjson", "tools", "unmarked", "reshape2", "Rcpp" , "RcppEigen", "RcppParallel", "RcppNumerical", "secr", "camtrapR", "mvtnorm") # Define the list of required packages to run the script
 new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]; if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install required packages that are not previously installed
 
 # Load libraries
