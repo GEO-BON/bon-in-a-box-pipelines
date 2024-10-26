@@ -3,9 +3,17 @@
 # Start the BON in a Box microservices locally.
 # The UI can then be accessed throught the localhost of this machine.
 
-# Optional arg 1: branch name of server repo, default "main"
+
+# Param --offline to start the server without attempting to pull the new server.
+if [[ "--offline" == "$1" ]] ; then
+    ./.server/prod-server.sh command up $options
+    exit
+fi
+
+# Optional arg: branch name of server repo, default "main"
 branch=${1:-"main"}
 shift
+
 # Additionnal optional args will be appended to the docker compose up command.
 # Typical use is to give a specific service name to (re)start only that one.
 options=$@
