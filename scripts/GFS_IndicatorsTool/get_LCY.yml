@@ -12,12 +12,6 @@ inputs:
     type: application/geo+json
     example: '/userdata/population_polygons.geojson'
 
-  res:
-    label: Resolution of the land cover map
-    description: Desired resolution for land cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.003 (~300m). 
-    type: float
-    example: 0.01
-
   yoi:
     label: Years of interest
     description: List of years for which landcover should be extracted (maximum range 1992 - 2020).
@@ -34,10 +28,6 @@ inputs:
 outputs:
   lcyy: 
     label: Land cover year-by-year
-    description: Tif file showing the year-by-year disrtribution of land cover classes of interest. 
-    type: image/tiff;application=geotiff
-  time_points: 
-    label: Years with land cover information 
-    description: List of years for which land cover information is available.
-    type: text[]
+    description: Path to folder with tif files showing the year-by-year disrtribution of land cover classes of interest across populations. 
+    type: text
     

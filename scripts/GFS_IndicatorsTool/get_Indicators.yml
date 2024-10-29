@@ -14,10 +14,10 @@ inputs:
     example: '/userdata/population_polygons.geojson'
 
   habitat_map:
-    label: Binary map of habitat presence/absence
-    description: Tif file of maps of presence (1) or absence (0) of suitable habitat. Multiple layers can stacked and used to describe habitat availability at different time points.
-    type: image/tiff;application=geotiff
-    example: '/userdata/tcyy.tif'
+    label: Folder with habitat maps
+    description: Folder with tif files (one per population) describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points.
+    type: text
+    example: '/userdata/tcyy/'
 
   pop_area:
     label: Table of habitat area by population

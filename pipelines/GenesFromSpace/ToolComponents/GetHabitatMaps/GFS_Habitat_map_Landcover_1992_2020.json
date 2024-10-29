@@ -21,17 +21,6 @@
       "data": {
         "label": "Output"
       }
-    },
-    {
-      "id": "121",
-      "type": "output",
-      "position": {
-        "x": 1151.9556241228036,
-        "y": 330.12498771636245
-      },
-      "data": {
-        "label": "Output"
-      }
     }
   ],
   "edges": [
@@ -41,13 +30,6 @@
       "target": "120",
       "targetHandle": null,
       "id": "reactflow__edge-115lcyy-120"
-    },
-    {
-      "source": "115",
-      "sourceHandle": "time_points",
-      "target": "121",
-      "targetHandle": null,
-      "id": "reactflow__edge-115time_points-121"
     }
   ],
   "inputs": {
@@ -57,13 +39,6 @@
       "type": "application/geo+json",
       "example": "/userdata/population_polygons.geojson",
       "weight": 0
-    },
-    "GFS_IndicatorsTool>get_LCY.yml@115|res": {
-      "description": "Desired resolution for land cover map, will be obtained via resampling. To be specified in decimal degrees (0.01 ~ 1 km). Minimal value 0.003 (~300m).",
-      "label": "Resolution of the land cover map",
-      "type": "float",
-      "example": 0.01,
-      "weight": 1
     },
     "GFS_IndicatorsTool>get_LCY.yml@115|yoi": {
       "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
@@ -77,7 +52,7 @@
         2015,
         2020
       ],
-      "weight": 2
+      "weight": 1
     },
     "GFS_IndicatorsTool>get_LCY.yml@115|lc_classes": {
       "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
@@ -87,7 +62,7 @@
         130,
         140
       ],
-      "weight": 3
+      "weight": 2
     }
   },
   "outputs": {
@@ -96,12 +71,6 @@
       "label": "Land cover year-by-year",
       "type": "image/tiff;application=geotiff",
       "weight": 0
-    },
-    "GFS_IndicatorsTool>get_LCY.yml@115|time_points": {
-      "description": "List of years for which land cover information is available.",
-      "label": "Years with land cover information",
-      "type": "text[]",
-      "weight": 1
     }
   },
   "metadata": {

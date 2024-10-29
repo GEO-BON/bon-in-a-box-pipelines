@@ -15,23 +15,6 @@ pop_poly <-st_read(input$population_polygons)
 bbox = st_bbox(pop_poly)
 
 
-## extend population polygons by 20%
-dX = abs(bbox[3]-bbox[1])
-dY = abs(bbox[4]-bbox[2])
-
-bbox[1] = bbox[1]-dX*0.1
-bbox[3] = bbox[3]+dX*0.1
-bbox[2] = bbox[2]-dY*0.1
-bbox[4] = bbox[4]+dY*0.1
-
-
-# get ranges
-lonRANGE = c(bbox[1],bbox[3])
-latRANGE = c(bbox[2],bbox[4])
-
-## get desired resolution from input
-res = input$res
-
 ## get years of interest
 yoi = input$yoi
 
@@ -39,7 +22,7 @@ startY = min(as.numeric(yoi))
 endY = max(as.numeric(yoi))
 
 ## load land cover data from STAC
-load_stac<-function(staccollection='esacci-lc', resamplingMethod='mode', noData=NULL){
+load_stac<-function(staccollection='esacci-lc'){
 
   stac_query <- rstac::stac(
     "https://stac.geobon.org/"
@@ -72,32 +55,52 @@ load_stac<-function(staccollection='esacci-lc', resamplingMethod='mode', noData=
 
   # process rasters from server (crop to study area , reasample)
   raster = crop(raster_server, bbox[c(1,3,2,4)]) # crop
-  raster = resample(raster, rast(res=c(res,res), extent=(raster)), method = resamplingMethod) # resample
 
   return(raster)
 }
 
 
 print("Loading Land Cover from STAC:", )
-LC<-load_stac("esacci-lc", resamplingMethod = 'mode')
-
+LC<-load_stac("esacci-lc")
 
 ## get landcover classes of interest
 user_classes = as.numeric(input$lc_classes)
 
+# create output director
+dir.create(file.path(outputFolder, "/lcyy/"))
 
-# subset landcover map to classes of interst
-LC_bin = LC%in%user_classes+0
-names(LC_bin) = paste0('y',yoi)
+#### Create local raster output for every population
+
+for (pop in pop_poly$pop) {
+
+  print(pop)
+  
+  # crop rasters to pop extent
+  LC_pop = crop(LC, pop_poly[pop_poly$pop==pop,], mask=T)
+
+  LC_pop_cl = (LC_pop%in%user_classes)+0
+
+  LC_pop_cl[is.na(LC_pop)] = NA
+  
+  lcy = LC_pop_cl
+  
+  names(lcy)=paste0('y',yoi)
+  
+  # write output
+  terra::writeRaster(lcy, filename = paste0(outputFolder, "/lcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+  
+}
 
 
 # write output
-lcyy_p<-file.path(outputFolder, "lcyy.tif")
-writeRaster(LC_bin, filename = lcyy_p, gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+lcyy_p<-file.path(outputFolder, "lcyy/")
+
+# Flush all remaining temporary files
+unlink(paste0(normalizePath(tempdir()), "/", dir(tempdir())), recursive = TRUE)
 
 
 ## Outputing result to JSON
-output <- list("lcyy"=lcyy_p, 'time_points'=names(LC_bin))
+output <- list("lcyy"=lcyy_p)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
