@@ -23,17 +23,6 @@
       }
     },
     {
-      "id": "38",
-      "type": "io",
-      "position": {
-        "x": -468,
-        "y": -51
-      },
-      "data": {
-        "descriptionFile": "StudyArea_covs_rast>StudyArea_covs_rast.yml"
-      }
-    },
-    {
       "id": "39",
       "type": "io",
       "position": {
@@ -78,29 +67,37 @@
         "type": "application/geopackage+sqlite3",
         "value": "/scripts/00_studyarea_to_WKT/input/Caldas.gpkg"
       }
+    },
+    {
+      "id": "43",
+      "type": "output",
+      "position": {
+        "x": 940.0532635394316,
+        "y": 28.61389281771931
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "44",
+      "type": "io",
+      "position": {
+        "x": -483.18982257825417,
+        "y": -84.95232631180171
+      },
+      "data": {
+        "descriptionFile": "StudyArea_covs_rast>StudyArea_covs_rast.yml"
+      }
     }
   ],
   "edges": [
     {
       "source": "39",
       "sourceHandle": "StudyArea_grid",
-      "target": "38",
-      "targetHandle": "StudyArea_grid",
-      "id": "reactflow__edge-39StudyArea_grid-38StudyArea_grid"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "StudyArea_grid",
       "target": "40",
       "targetHandle": "studyarea",
       "id": "reactflow__edge-39StudyArea_grid-40studyarea"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "Folder_StudyArea_rasters",
-      "target": "41",
-      "targetHandle": "Folder_RasterCovs",
-      "id": "reactflow__edge-38Folder_StudyArea_rasters-41Folder_RasterCovs"
     },
     {
       "source": "40",
@@ -115,13 +112,6 @@
       "target": "36",
       "targetHandle": "ebird_format_file",
       "id": "reactflow__edge-41vars_dataset-36ebird_format_file"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "Folder_StudyArea_rasters",
-      "target": "36",
-      "targetHandle": "pred_grid",
-      "id": "reactflow__edge-38Folder_StudyArea_rasters-36pred_grid"
     },
     {
       "source": "41",
@@ -143,6 +133,34 @@
       "target": "36",
       "targetHandle": "r",
       "id": "reactflow__edge-39StudyArea_grid-36r"
+    },
+    {
+      "source": "36",
+      "sourceHandle": "ppms_predict",
+      "target": "43",
+      "targetHandle": null,
+      "id": "reactflow__edge-36ppms_predict-43"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "StudyArea_grid",
+      "target": "44",
+      "targetHandle": "StudyArea_grid",
+      "id": "reactflow__edge-39StudyArea_grid-44StudyArea_grid"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "Folder_StudyArea_rasters",
+      "target": "36",
+      "targetHandle": "pred_grid",
+      "id": "reactflow__edge-44Folder_StudyArea_rasters-36pred_grid"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "Folder_StudyArea_rasters",
+      "target": "41",
+      "targetHandle": "Folder_RasterCovs",
+      "id": "reactflow__edge-44Folder_StudyArea_rasters-41Folder_RasterCovs"
     }
   ],
   "inputs": {
@@ -160,7 +178,49 @@
       "example": "scripts/Density_proxy/input/RegionFis_Col_WGS84_Andinas.gpkg",
       "weight": 1
     },
-    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|Zonal_statistics": {
+    "StudyArea_to_grid>StudyArea_to_grid.yml@39|EPSG": {
+      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
+      "label": "EPSG",
+      "type": "int",
+      "example": 3395,
+      "weight": 2
+    },
+    "StudyArea_to_grid>StudyArea_to_grid.yml@39|gridRes_meters": {
+      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
+      "label": "gridRes_meters",
+      "type": "int",
+      "example": 1000,
+      "weight": 3
+    },
+    "StudyArea_to_grid>StudyArea_to_grid.yml@39|name_layer": {
+      "description": "name_layer",
+      "label": "name_layer",
+      "type": "text",
+      "example": "ID_grid",
+      "weight": 4
+    },
+    "auk_filter_eBird>auk_filter_eBird.yml@40|ebd_file": {
+      "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt",
+      "weight": 5
+    },
+    "auk_filter_eBird>auk_filter_eBird.yml@40|ebd_sampling_file": {
+      "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
+      "label": "ebd_sampling_file",
+      "type": "text",
+      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt",
+      "weight": 6
+    },
+    "auk_filter_eBird>auk_filter_eBird.yml@40|species": {
+      "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
+      "label": "species",
+      "type": "text",
+      "example": "Setophaga fusca",
+      "weight": 7
+    },
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@44|Zonal_statistics": {
       "description": "method of aggregation for the temperature data",
       "label": "Zonal_statistics",
       "type": "options",
@@ -172,78 +232,43 @@
         "first"
       ],
       "example": "mean",
-      "weight": 2
+      "weight": 8
     },
-    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|Folder_rasters": {
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@44|Folder_rasters": {
       "description": "STACQuery_url",
       "label": "Folder_rasters",
       "type": "text",
       "example": "http://io.biodiversite-quebec.ca/stac/",
-      "weight": 3
+      "weight": 9
     },
-    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|STACQuery_url": {
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@44|STACQuery_url": {
       "description": "STACQuery_url",
       "label": "STACQuery_url",
       "type": "text",
       "example": "http://io.biodiversite-quebec.ca/stac/",
-      "weight": 4
+      "weight": 10
     },
-    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|STACcollection": {
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@44|STACcollection": {
       "description": "STACcollection",
       "label": "STACcollection",
       "type": "text",
       "example": "chelsa-clim",
-      "weight": 5
+      "weight": 11
     },
-    "StudyArea_covs_rast>StudyArea_covs_rast.yml@38|STACselectVars": {
+    "StudyArea_covs_rast>StudyArea_covs_rast.yml@44|STACselectVars": {
       "description": "selectVars",
       "label": "STACselectVars",
       "type": "text",
       "example": "all",
-      "weight": 6
-    },
-    "StudyArea_to_grid>StudyArea_to_grid.yml@39|EPSG": {
-      "description": "Numerical value for the EPSG code (European Petroleum Survey Group) associated with the spatial reference system (projection and geodetic datum) to be used for data in the study area. For further information on coordinate systems and EPSG codes visit https://epsg.org/home.html.",
-      "label": "EPSG",
-      "type": "int",
-      "example": 3395,
-      "weight": 7
-    },
-    "StudyArea_to_grid>StudyArea_to_grid.yml@39|gridRes_meters": {
-      "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.",
-      "label": "gridRes_meters",
-      "type": "int",
-      "example": 1000,
-      "weight": 8
-    },
-    "StudyArea_to_grid>StudyArea_to_grid.yml@39|name_layer": {
-      "description": "name_layer",
-      "label": "name_layer",
-      "type": "text",
-      "example": "ID_grid",
-      "weight": 9
-    },
-    "auk_filter_eBird>auk_filter_eBird.yml@40|ebd_file": {
-      "description": "eBird Basic Dataset (EBD). This is a tab-separated text file, released monthly, containing all validated raw eBird observations and associated metadata at the time of release. Each row corresponds to the sightings of a single species within a checklist and in addition contains information about the individuals observed and the conditions under which the checklist was constructed. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
-      "label": "ebd_file",
-      "type": "text",
-      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023.txt",
-      "weight": 10
-    },
-    "auk_filter_eBird>auk_filter_eBird.yml@40|ebd_sampling_file": {
-      "description": "Sampling Event Data (SED). This is a tab-separated text file, released monthly, containing checklist data, but it includes only the effort data, not the associated bird data. Each row corresponds to a checklist. This file is required to zero-fill the data and therefor to run occupancy models. For more information, visit: https://science.ebird.org/en/use-ebird-data/download-ebird-data-products",
-      "label": "ebd_sampling_file",
-      "type": "text",
-      "example": "scripts/00_auk_filter/input/sample/ebd_CO_smp_relJul-2023_sampling.txt",
-      "weight": 11
-    },
-    "auk_filter_eBird>auk_filter_eBird.yml@40|species": {
-      "description": "Scientific name of the species of interest for occupancy models. Scientific name correspond to the eBird taxonomy which is updated annually. For more information, visit: https://science.ebird.org/es-419/use-ebird-data/the-ebird-taxonomy",
-      "label": "species",
-      "type": "text",
-      "example": "Setophaga fusca",
       "weight": 12
     }
   },
-  "outputs": {}
+  "outputs": {
+    "Density_proxy>Density_proxy.yml@36|ppms_predict": {
+      "description": "Get a table with occupied area by specie, porcetage area by 5 levels of Ψ",
+      "label": "ppms_predict",
+      "type": "text/csv",
+      "weight": 0
+    }
+  }
 }
