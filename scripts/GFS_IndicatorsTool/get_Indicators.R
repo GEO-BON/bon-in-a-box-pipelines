@@ -2,6 +2,9 @@
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
+library(devtools)
+if (!"rnaturalearthhires" %in% installed.packages()[,"Package"]) devtools::install_github("ropensci/rnaturalearthhires")
+
 library(rjson)
 library(terra)
 library(sf)
@@ -134,8 +137,8 @@ pm_plot = file.path(outputFolder, 'PM.png')
 
   rel_pop_habitat_area = as.matrix(pop_habitat_area)/as.numeric(pop_habitat_area[,1])
   rel_pop_habitat_area[is.na(rel_pop_habitat_area)] = 0
-  rel_pop_habitat_area[is.finite(rel_pop_habitat_area)==F] = 0    
-  
+  rel_pop_habitat_area[is.finite(rel_pop_habitat_area)==F] = 0
+
   plot(NA, ylim=c(0,max(rel_pop_habitat_area,na.rm=T)), xlim=c(0,ncol(rel_pop_habitat_area)+1), main='Rel. Pop. Area', axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
 
   for (pop in rownames(rel_pop_habitat_area)) {
@@ -247,8 +250,8 @@ empty_mp = st_sfc(st_multipolygon(mp), crs = crs(pop_poly))
 # add estimates of habitat area and NE for different time point, add to merged DF
 for (pop in rownames(int_pop_habitat_area)) {
 
-  HA_min_past = int_pop_habitat_area[pop,1] # set minimal habitat area observed in past (set first year to start) 
-  
+  HA_min_past = int_pop_habitat_area[pop,1] # set minimal habitat area observed in past (set first year to start)
+
   for (y in colnames(int_pop_habitat_area)) {
 
     HA = int_pop_habitat_area[pop,y] # total area
