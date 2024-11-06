@@ -60,21 +60,8 @@
       }
     },
     {
-      "id": "15",
-      "type": "userInput",
-      "position": {
-        "x": -660.9586343667108,
-        "y": 501.2565745091717
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 2020
-      }
-    },
-    {
       "id": "16",
-      "type": "userInput",
+      "type": "constant",
       "position": {
         "x": -1378.1189707422313,
         "y": 575.7211733611748
@@ -89,8 +76,8 @@
       "id": "17",
       "type": "constant",
       "position": {
-        "x": -638.5031781639922,
-        "y": 602.2273964673457
+        "x": -658.3843837901529,
+        "y": 596.0145197091705
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -199,13 +186,6 @@
       "id": "reactflow__edge-14-10year_start"
     },
     {
-      "source": "15",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "year_end",
-      "id": "reactflow__edge-15-10year_end"
-    },
-    {
       "source": "16",
       "sourceHandle": null,
       "target": "10",
@@ -284,33 +264,19 @@
       "example": 1980,
       "weight": 1
     },
-    "pipeline@15": {
-      "label": "End year",
-      "description": "Integer, 4 digit year, end date to retrieve occurrences",
-      "type": "int",
-      "example": 2000,
-      "weight": 2
-    },
     "GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
       "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
       "label": "Size of buffer",
       "type": "float",
       "example": 10,
-      "weight": 3
+      "weight": 2
     },
     "GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
       "description": "Distance [in km] to separate species observations in different populations.",
       "label": "Distance between populations",
       "type": "float",
       "example": 50,
-      "weight": 4
-    },
-    "pipeline@16": {
-      "label": "projection system",
-      "description": "String, projection system of the coordinates in bbox",
-      "type": "text",
-      "example": "EPSG:4326",
-      "weight": 5
+      "weight": 3
     },
     "pipeline@22": {
       "label": "Countries list",
@@ -320,7 +286,14 @@
         "Mexico",
         "Guatemala"
       ],
-      "weight": 6
+      "weight": 4
+    },
+    "data>getObservations.yml@10|year_end": {
+      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "label": "end year",
+      "type": "int",
+      "example": 2020,
+      "weight": 5
     }
   },
   "outputs": {

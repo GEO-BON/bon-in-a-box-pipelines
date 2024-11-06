@@ -25,5 +25,10 @@ outputs:
     description: Path to folder with tif files summarizing year-by-year treecover of every population.
     type: text
 
+  output_maps:
+    label: Cover, cover gain and cover loss map
+    description: resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot
+    type: text
+
 
 

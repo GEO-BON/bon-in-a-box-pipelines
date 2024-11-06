@@ -13,6 +13,7 @@ library(gdalUtils)
 library(rjson)
 library(terra)
 library(sf)
+library(raster)
 
 
 ## get bbox from polygons of population
@@ -81,57 +82,87 @@ print('Calculating year-by-year forest presence/absence')
 
 # subset output to years of interest
 yoi = input$yoi
+  
 
-# create output director
+#calculate tree cover absence
+tree_cover_loss[TC<30]=NA
+tcy=c()
+
+# Get year-by-year tree cover for whole area
+for (y in as.numeric(substr(yoi, 3,4))) {
+  
+  # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
+  tci = TC>30 & (tree_cover_loss==0 | tree_cover_loss > y) 
+  
+  
+  tcy = c(tcy, tci+0)
+  
+}
+
+names(tcy)=paste0('y',yoi)
+
+tcy = rast(tcy)
+
+###create cover maps for each population
+# create output directory for population maps
 dir.create(file.path(outputFolder, "/tcyy/"))
 
-
-#### Create local raster output for every population
-
 for (pop in pop_poly$pop) {
-
+  
   print(pop)
+  tcy_pop = crop(tcy, pop_poly[pop_poly$pop==pop,], mask=T)
   
-  # crop rasters to pop extent
-  TC_pop = crop(TC, pop_poly[pop_poly$pop==pop,], mask=T)
-  tree_cover_loss_pop = crop(tree_cover_loss, pop_poly[pop_poly$pop==pop,], mask=T)
-  
-  tree_cover_loss_pop[TC_pop<30] = NA
-  
-  
-  
-  # container of rasters
-  tcy=c()
-  
-  # Get year-by-year tree cover
-  for (y in as.numeric(substr(yoi, 3,4))) {
-    
-      # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
-      tci = TC_pop>30 & (tree_cover_loss_pop==0 | tree_cover_loss_pop > y) 
-
-    
-    tcy = c(tcy, tci+0)
-    
-  }
-  
-  names(tcy)=paste0('y',yoi)
-  
-  tcy = rast(tcy)
-
-  # write output
-  terra::writeRaster(tcy, filename = paste0(outputFolder, "/tcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+  terra::writeRaster(tcy_pop, filename = paste0(outputFolder, "/tcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
   
 }
 
 
-# write output
+######## Resample Pixels and create three polygons describing regions where habitat was lost, increased, or remained stable
+# create output directory for cover maps
+dir.create(file.path(outputFolder, "/cover maps/"))
+
+# calculate ∂ between habitat pop at first and last timepoint
+D_tcy = tcy[[nlyr(tcy)]]-tcy[[1]]
+
+### resample
+D_tcy_canvas = D_tcy
+res(D_tcy_canvas) = c(0.01,0.01)
+D_tcy = resample(D_tcy, D_tcy_canvas, method='average') 
+
+# find pixel without habitat: outside poly, or no habitat within poly
+No_habitat = (tcy[[nlyr(tcy)]]==0 & tcy[[1]]==0) | is.na(tcy[[1]])
+
+# resample information on habitat absence
+no_habitat_canvas = No_habitat
+res(no_habitat_canvas) = c(0.01,0.01)
+No_habitat = resample(No_habitat, no_habitat_canvas, method='med') # find which resampled pixels are covered by at least 50% habitat
+
+# remove missing habitat from delta 
+D_tcy[No_habitat] = NA
+
+
+## Gain/Loss if at least 10% of resampled pixel area was gained/lost
+HabitatNC = (D_tcy>(-0.1)&D_tcy<(+0.1))+0;HabitatNC[HabitatNC==0]=NA
+HabitatLOSS = (D_tcy<(-0.1))+0;HabitatLOSS[HabitatLOSS==0]=NA
+HabitatGAIN = (D_tcy>(+0.1))+0;HabitatGAIN[HabitatGAIN==0]=NA
+
+
+#write cover maps to output directory
+terra::writeRaster(HabitatNC, filename = paste0(outputFolder, "/cover maps/HabitatNC.tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+terra::writeRaster(HabitatLOSS, filename = paste0(outputFolder, "/cover maps/HabitatLOSS.tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+terra::writeRaster(HabitatGAIN, filename = paste0(outputFolder, "/cover maps/HabitatGAIN.tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+
+
+# write output path for population maps
 tcyy_p<-file.path(outputFolder, "tcyy/")
+# write output path for cover maps
+output_maps<-file.path(outputFolder, "cover maps/")
 
 # Flush all remaining temporary files
 unlink(paste0(normalizePath(tempdir()), "/", dir(tempdir())), recursive = TRUE)
 
 ## Outputing result to JSON
-output <- list("tcyy"=tcyy_p)
+output <- list("tcyy"=tcyy_p, "output_maps"=output_maps)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

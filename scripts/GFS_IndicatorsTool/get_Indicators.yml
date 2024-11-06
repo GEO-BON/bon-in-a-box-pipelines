@@ -7,6 +7,12 @@ author:
 
 inputs:
 
+  cover_maps:
+    label: Cover, cover gain and cover loss map
+    description: resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot
+    type: text
+    example: '/userdata/cover_maps'
+
   population_polygons:
     label: Polygons of populations
     description: Path to geojson file storing polygons of populations.

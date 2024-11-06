@@ -25,13 +25,18 @@ pop_habitat_area = read.table(input$pop_area, row.names=1, header=T, sep='\t')
 ne_nc = input$ne_nc
 PDen = input$pop_density
 
+#import habitat change maps for plotting
+output_maps<-input$cover_maps
+HabitatNC=rast(paste0(output_maps, "/HabitatNC.tif"))
+HabitatLOSS=rast(paste0(output_maps, "/HabitatLOSS.tif"))
+HabitatGAIN=rast(paste0(output_maps, "/HabitatGAIN.tif"))
+
 # # # # #
 # pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/9b39fc6dfd1badbee9e004a0aeffc008/population_polygons.geojson')
 # habitat = stack('output/GFS_IndicatorsTool/get_LCY/4d75a04ceef2cb0acbdf4564ee1f22da/lcyy.tif')
 # pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/1b0d13bac38e3c6a8381352186ebc447/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # ne_nc = c(0.1)
 # PDen = c(1000)
-
 
 ### Set population colors for plotting
 set.seed(123);PopCol = darken(sample(rainbow(nrow(pop_habitat_area)), size = nrow(pop_habitat_area), replace = F) , 0.2)
@@ -75,8 +80,8 @@ PM = 1-mean(pop_habitat_area[,ncol(pop_habitat_area)][pop_habitat_area[,1]!=0]==
 
 # get land polygons for plotting
 sf_use_s2(F)
-land = st_crop(ne_countries(scale = 'large') , st_bbox(pop_poly))
-
+land = st_crop(rnaturalearth::ne_countries(scale = 'large'), st_bbox(pop_poly))
+#land=st_bbox
 ######################## Create interactive plotly output
 print('creating interactive map')
 
@@ -160,45 +165,6 @@ for (pop in rownames(int_pop_habitat_area)) {
 
 ## Format key of merged DF
 merged_DF_key = highlight_key(merged_DF, ~pop)
-
-
-######## Create three polygons describing regions where habitat was lost, increased, or remained stable
-## resample rasters 
-rs_habitat = c()
-for (pop in pop_poly$pop) {
-  
-  habitat_pop = rast(paste0(habitat_p,'/',pop,'.tif'))
-  
-  # calculate ∂ between habitat pop at first and last timepoint
-  D_habitat_pop = habitat_pop[[nlyr(habitat_pop)]]-habitat_pop[[1]]
-  
-  ### resample
-  D_habitat_pop_canvas = D_habitat_pop
-  res(D_habitat_pop_canvas) = c(0.01,0.01)
-  D_habitat_pop = resample(D_habitat_pop, D_habitat_pop_canvas, method='average') 
-  
-  # find pixel without habitat: outside poly, or no habitat within poly
-  No_habitat = (habitat_pop[[nlyr(habitat_pop)]]==0 & habitat_pop[[1]]==0) | is.na(habitat_pop[[1]])
-  
-  # resample information on habitat absence
-  no_habitat_canvas = No_habitat
-  res(no_habitat_canvas) = c(0.01,0.01)
-  No_habitat = resample(No_habitat, no_habitat_canvas, method='med') # find which resampled pixels are covered by at least 50% habitat
-  
-  # remove missing habitat from delta 
-  D_habitat_pop[No_habitat] = NA
-  
-  # add to container
-  rs_habitat = c(rs_habitat, D_habitat_pop)
-  
-}
-
-habitat = merge(sprc(rs_habitat))
-
-## Gain/Loss if at least 10% of resampled pixel area was gained/lost
-HabitatNC = (habitat>(-0.1)&habitat<(+0.1))+0;HabitatNC[HabitatNC==0]=NA
-HabitatLOSS = (habitat<(-0.1))+0;HabitatLOSS[HabitatLOSS==0]=NA
-HabitatGAIN = (habitat>(+0.1))+0;HabitatGAIN[HabitatGAIN==0]=NA
 
 
 ### Convert to polygon. If no polygons (e.g. no gain, then return an empty list)
