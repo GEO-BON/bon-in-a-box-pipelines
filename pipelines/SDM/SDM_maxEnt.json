@@ -1087,7 +1087,7 @@
     }
   },
   "outputs": {
-    "pipeline@121|defaultOutput": {
+    "pipeline@121|default_output": {
       "label": "Species",
       "description": "Species for which this model was run.",
       "example": [
