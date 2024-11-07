@@ -4,8 +4,8 @@
       "id": "5",
       "type": "io",
       "position": {
-        "x": 381.2685506880483,
-        "y": 623.5169528370442
+        "x": 1277,
+        "y": -41
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_pop_poly.yml"
@@ -15,8 +15,8 @@
       "id": "9",
       "type": "output",
       "position": {
-        "x": 1009.7163606217584,
-        "y": 617.162756053359
+        "x": 1831,
+        "y": -46.5
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "10",
       "type": "io",
       "position": {
-        "x": -320.13427285519305,
-        "y": 423.89106488353065
+        "x": 714,
+        "y": 89
       },
       "data": {
         "descriptionFile": "data>getObservations.yml"
@@ -37,8 +37,8 @@
       "id": "12",
       "type": "userInput",
       "position": {
-        "x": -560.1975780168027,
-        "y": 358.6952084201229
+        "x": 432,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "14",
       "type": "userInput",
       "position": {
-        "x": -662.9137065494849,
-        "y": 452.4355177381866
+        "x": 441,
+        "y": 89
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -63,8 +63,8 @@
       "id": "15",
       "type": "userInput",
       "position": {
-        "x": -660.9586343667108,
-        "y": 501.2565745091717
+        "x": 441,
+        "y": 124
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -76,8 +76,8 @@
       "id": "16",
       "type": "userInput",
       "position": {
-        "x": -1378.1189707422313,
-        "y": 575.7211733611748
+        "x": -22,
+        "y": 146.66666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,8 +89,8 @@
       "id": "17",
       "type": "constant",
       "position": {
-        "x": -638.5031781639922,
-        "y": 602.2273964673457
+        "x": 356,
+        "y": 260
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -107,8 +107,8 @@
       "id": "18",
       "type": "constant",
       "position": {
-        "x": -669.5711233818919,
-        "y": 636.6240501014489
+        "x": 333,
+        "y": 302
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -120,8 +120,8 @@
       "id": "19",
       "type": "constant",
       "position": {
-        "x": -669.571123381892,
-        "y": 671.020703735552
+        "x": 333,
+        "y": 344
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -133,8 +133,8 @@
       "id": "20",
       "type": "constant",
       "position": {
-        "x": -698.2943016155109,
-        "y": 398.8705009626251
+        "x": 324,
+        "y": 47
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -145,8 +145,8 @@
       "id": "21",
       "type": "io",
       "position": {
-        "x": -1016.5,
-        "y": 467
+        "x": 298,
+        "y": 179
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_bbox.yml"
@@ -156,8 +156,8 @@
       "id": "22",
       "type": "userInput",
       "position": {
-        "x": -1366.72140554554,
-        "y": 465.8478553564421
+        "x": 72,
+        "y": -58.666666666666686
       },
       "dragHandle": ".dragHandle",
       "data": {

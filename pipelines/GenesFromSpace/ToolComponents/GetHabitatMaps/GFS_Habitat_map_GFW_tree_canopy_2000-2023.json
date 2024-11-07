@@ -4,8 +4,8 @@
       "id": "23",
       "type": "io",
       "position": {
-        "x": 287.37950514125055,
-        "y": 561.6757601294219
+        "x": -16,
+        "y": 49.5
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_TCY.yml"
@@ -15,8 +15,8 @@
       "id": "26",
       "type": "output",
       "position": {
-        "x": 1007.8271484897987,
-        "y": 480.53729703790043
+        "x": 654,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "27",
       "type": "output",
       "position": {
-        "x": 986.5451466449279,
-        "y": 576.7689575538371
+        "x": 654,
+        "y": 102
       },
       "data": {
         "label": "Output"

@@ -4,8 +4,8 @@
       "id": "119",
       "type": "io",
       "position": {
-        "x": -4.562662050029303,
-        "y": 374.3856385932867
+        "x": 1168,
+        "y": -88
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json"
@@ -15,8 +15,8 @@
       "id": "120",
       "type": "io",
       "position": {
-        "x": 878.085198694364,
-        "y": 125.94318465717555
+        "x": 2069,
+        "y": 110
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
@@ -26,8 +26,8 @@
       "id": "141",
       "type": "output",
       "position": {
-        "x": 1602.984375,
-        "y": 131
+        "x": 2852,
+        "y": 84.5
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "142",
       "type": "output",
       "position": {
-        "x": 1596.984375,
-        "y": 150
+        "x": 2854,
+        "y": 161.5
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 1593.984375,
-        "y": 144
+        "x": 2852,
+        "y": 218.5
       },
       "data": {
         "label": "Output"
@@ -59,8 +59,8 @@
       "id": "144",
       "type": "output",
       "position": {
-        "x": 1587.984375,
-        "y": 177
+        "x": 2852,
+        "y": 35.5
       },
       "data": {
         "label": "Output"
@@ -70,8 +70,8 @@
       "id": "146",
       "type": "io",
       "position": {
-        "x": 28.039472064512438,
-        "y": 41.252301705894325
+        "x": 372,
+        "y": 22
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json"
@@ -81,8 +81,8 @@
       "id": "147",
       "type": "constant",
       "position": {
-        "x": -315.04099349657173,
-        "y": 100.34633768936759
+        "x": -6,
+        "y": 78
       },
       "dragHandle": ".dragHandle",
       "data": {

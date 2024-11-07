@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1051,
-        "y": 356.83333333333326
+        "x": 1101,
+        "y": 358.83333333333326
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 690,
-        "y": 291.83333333333326
+        "x": 694,
+        "y": 279.83333333333326
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -118,8 +118,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 1565,
-        "y": 425.33333333333326
+        "x": 1535,
+        "y": 381.33333333333326
       },
       "data": {
         "label": "Output"
@@ -129,8 +129,8 @@
       "id": "126",
       "type": "output",
       "position": {
-        "x": 1051,
-        "y": 157.5
+        "x": 1099,
+        "y": 85.5
       },
       "data": {
         "label": "Output"
@@ -164,8 +164,8 @@
       "id": "133",
       "type": "output",
       "position": {
-        "x": 1910,
-        "y": 804.8333333333333
+        "x": 2028,
+        "y": 662.8333333333333
       },
       "data": {
         "label": "Output"
@@ -175,8 +175,8 @@
       "id": "134",
       "type": "output",
       "position": {
-        "x": 1910,
-        "y": 552.8333333333333
+        "x": 2028,
+        "y": 600.8333333333333
       },
       "data": {
         "label": "Output"
@@ -186,8 +186,8 @@
       "id": "135",
       "type": "output",
       "position": {
-        "x": 1910,
-        "y": 601.8333333333333
+        "x": 2030,
+        "y": 527.8333333333333
       },
       "data": {
         "label": "Output"
@@ -224,8 +224,8 @@
       "id": "140",
       "type": "constant",
       "position": {
-        "x": 12,
-        "y": 649.8333333333333
+        "x": 14,
+        "y": 689.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -239,8 +239,8 @@
       "id": "141",
       "type": "output",
       "position": {
-        "x": 1910,
-        "y": 454.83333333333326
+        "x": 2028,
+        "y": 472.83333333333326
       },
       "data": {
         "label": "Output"
@@ -250,8 +250,8 @@
       "id": "142",
       "type": "output",
       "position": {
-        "x": 1910,
-        "y": 853.8333333333333
+        "x": 2030,
+        "y": 831.8333333333333
       },
       "data": {
         "label": "Output"
@@ -261,8 +261,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 1910,
-        "y": 755.8333333333333
+        "x": 2028,
+        "y": 779.8333333333333
       },
       "data": {
         "label": "Output"
@@ -310,8 +310,8 @@
       "id": "148",
       "type": "output",
       "position": {
-        "x": 1910,
-        "y": 503.83333333333326
+        "x": 2028,
+        "y": 723.8333333333333
       },
       "data": {
         "label": "Output"
@@ -332,8 +332,8 @@
       "id": "151",
       "type": "output",
       "position": {
-        "x": 1051,
-        "y": 262.33333333333326
+        "x": 1101,
+        "y": 466.33333333333326
       },
       "data": {
         "label": "Output"
@@ -343,8 +343,8 @@
       "id": "152",
       "type": "userInput",
       "position": {
-        "x": 1218,
-        "y": 717.8333333333333
+        "x": 1206,
+        "y": 775.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -356,8 +356,8 @@
       "id": "153",
       "type": "userInput",
       "position": {
-        "x": 1232,
-        "y": 682.8333333333333
+        "x": 1220,
+        "y": 740.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -369,8 +369,8 @@
       "id": "154",
       "type": "userInput",
       "position": {
-        "x": 1218,
-        "y": 752.8333333333333
+        "x": 1206,
+        "y": 810.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -431,8 +431,8 @@
       "id": "157",
       "type": "constant",
       "position": {
-        "x": 50,
-        "y": 713.8333333333333
+        "x": 52,
+        "y": 753.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -460,8 +460,8 @@
       "id": "158",
       "type": "constant",
       "position": {
-        "x": 72,
-        "y": 755.8333333333333
+        "x": 74,
+        "y": 795.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {

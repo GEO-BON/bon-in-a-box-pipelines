@@ -4,8 +4,8 @@
       "id": "99",
       "type": "io",
       "position": {
-        "x": 366.9632511311818,
-        "y": 340.8352664135316
+        "x": 475,
+        "y": 140.5
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>pop_area_by_habitat.yml"
@@ -15,8 +15,8 @@
       "id": "100",
       "type": "userInput",
       "position": {
-        "x": -63.16668701171875,
-        "y": 214
+        "x": 69,
+        "y": 67.16666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -28,8 +28,8 @@
       "id": "101",
       "type": "userInput",
       "position": {
-        "x": -261.16668701171875,
-        "y": 355
+        "x": 12,
+        "y": 102.16666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -41,8 +41,8 @@
       "id": "102",
       "type": "userInput",
       "position": {
-        "x": 13.83331298828125,
-        "y": 495
+        "x": 185,
+        "y": 137.16666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -79,8 +79,8 @@
       "id": "127",
       "type": "io",
       "position": {
-        "x": 1248.3656076750929,
-        "y": 289.88471027697466
+        "x": 1210,
+        "y": 90.5
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_Indicators.yml"
@@ -90,8 +90,8 @@
       "id": "139",
       "type": "output",
       "position": {
-        "x": 1880.984375,
-        "y": 291
+        "x": 2001,
+        "y": 49
       },
       "data": {
         "label": "Output"
@@ -101,8 +101,8 @@
       "id": "140",
       "type": "output",
       "position": {
-        "x": 1871.984375,
-        "y": 304
+        "x": 2003,
+        "y": 100
       },
       "data": {
         "label": "Output"
@@ -112,8 +112,8 @@
       "id": "141",
       "type": "output",
       "position": {
-        "x": 1934.984375,
-        "y": 320
+        "x": 2003,
+        "y": 151
       },
       "data": {
         "label": "Output"
@@ -123,8 +123,8 @@
       "id": "142",
       "type": "output",
       "position": {
-        "x": 1928.984375,
-        "y": 333
+        "x": 2007,
+        "y": 200
       },
       "data": {
         "label": "Output"

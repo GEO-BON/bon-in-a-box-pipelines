@@ -4,8 +4,8 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 284,
-        "y": 110
+        "x": 294,
+        "y": 80.5
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
@@ -16,7 +16,7 @@
       "type": "io",
       "position": {
         "x": 756,
-        "y": 190
+        "y": 84.5
       },
       "data": {
         "descriptionFile": "BII>BIIZonalStats.yml"
@@ -27,7 +27,7 @@
       "type": "output",
       "position": {
         "x": 1308,
-        "y": 258.5
+        "y": 200
       },
       "data": {
         "label": "Output"
@@ -38,7 +38,7 @@
       "type": "output",
       "position": {
         "x": 1308,
-        "y": 307.5
+        "y": 151
       },
       "data": {
         "label": "Output"
@@ -49,7 +49,7 @@
       "type": "output",
       "position": {
         "x": 1308,
-        "y": 209.5
+        "y": 102
       },
       "data": {
         "label": "Output"
@@ -60,7 +60,7 @@
       "type": "io",
       "position": {
         "x": 1308,
-        "y": 119.5
+        "y": 12
       },
       "data": {
         "descriptionFile": "BII>BIIChange.yml"
@@ -70,8 +70,8 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 1869,
-        "y": 180
+        "x": 1907,
+        "y": 6.5
       },
       "data": {
         "label": "Output"
@@ -81,8 +81,8 @@
       "id": "22",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 23.166666666666664
+        "x": 22,
+        "y": 12.666666666666686
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -93,8 +93,8 @@
       "id": "23",
       "type": "userInput",
       "position": {
-        "x": 13,
-        "y": 78.16666666666666
+        "x": 22,
+        "y": 88
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -105,8 +105,8 @@
       "id": "24",
       "type": "output",
       "position": {
-        "x": 284,
-        "y": 12
+        "x": 294,
+        "y": 1.5
       },
       "data": {
         "label": "Output"
