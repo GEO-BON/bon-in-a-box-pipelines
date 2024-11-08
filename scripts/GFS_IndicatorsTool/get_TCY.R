@@ -89,7 +89,7 @@ tree_cover_loss[TC<30]=NA
 tcy=c()
 
 # Get year-by-year tree cover for whole area
-for (y in as.numeric(substr(yoi, 3,4))) {
+for (y in as.numeric(substr(c(yoi[1],yoi[length(yoi)]), 3,4))) {
   
   # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
   tci = TC>30 & (tree_cover_loss==0 | tree_cover_loss > y) 
@@ -99,28 +99,47 @@ for (y in as.numeric(substr(yoi, 3,4))) {
   
 }
 
-names(tcy)=paste0('y',yoi)
+names(tcy)=paste0('y',c(yoi[1],yoi[length(yoi)]))
 
-tcy = rast(tcy)
+tcytot = rast(tcy)
 
 ###create cover maps for each population
 # create output directory for population maps
 dir.create(file.path(outputFolder, "/tcyy/"))
-
 for (pop in pop_poly$pop) {
-  
+
   print(pop)
-  tcy_pop = crop(tcy, pop_poly[pop_poly$pop==pop,], mask=T)
   
-  terra::writeRaster(tcy_pop, filename = paste0(outputFolder, "/tcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+  # crop rasters to pop extent
+  TC_pop = crop(TC, pop_poly[pop_poly$pop==pop,], mask=T)
+  tree_cover_loss_pop = crop(tree_cover_loss, pop_poly[pop_poly$pop==pop,], mask=T)
+  
+  # container of rasters
+  tcy=c()
+  
+  # Get year-by-year tree cover
+  for (y in as.numeric(substr(yoi, 3,4))) {
+    
+      # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
+      tci = TC_pop>30 & (tree_cover_loss_pop==0 | tree_cover_loss_pop > y) 
+
+    
+    tcy = c(tcy, tci+0)
+    
+  }
+  
+  names(tcy)=paste0('y',yoi)
+  
+  tcy = rast(tcy)
+
+  # write output
+  terra::writeRaster(tcy, filename = paste0(outputFolder, "/tcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
   
 }
-
-
 ######## Resample Pixels and create three polygons describing regions where habitat was lost, increased, or remained stable
 # create output directory for cover maps
 dir.create(file.path(outputFolder, "/cover maps/"))
-
+tcy<-tcytot
 # calculate ∂ between habitat pop at first and last timepoint
 D_tcy = tcy[[nlyr(tcy)]]-tcy[[1]]
 

@@ -69,8 +69,10 @@ user_classes = as.numeric(input$lc_classes)
 # create output director
 dir.create(file.path(outputFolder, "/lcyy/"))
 
-#### Create local raster output for every population
 
+
+
+#### Create local raster output for every population
 for (pop in pop_poly$pop) {
 
   print(pop)
@@ -90,17 +92,59 @@ for (pop in pop_poly$pop) {
   terra::writeRaster(lcy, filename = paste0(outputFolder, "/lcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
   
 }
+lcy = LC
+lcy = (LC%in%user_classes)+0
+
+lcy[is.na(LC)] = NA
+
+names(lcy)=paste0('y',yoi)
+### Resample Pixels and create three polygons describing regions where habitat was lost, increased, or remained stable
+# create output directory for cover maps
+dir.create(file.path(outputFolder, "cover maps/"))
+
+# calculate ∂ between habitat pop at first and last timepoint
+D_lcy = lcy[[nlyr(lcy)]]-lcy[[1]]
+
+### resample
+D_lcy_canvas = D_lcy
+res(D_lcy_canvas) = c(0.01,0.01)
+D_lcy = resample(D_lcy, D_lcy_canvas, method='average') 
+
+# find pixel without habitat: outside poly, or no habitat within poly
+No_habitat = (lcy[[nlyr(lcy)]]==0 & lcy[[1]]==0) | is.na(lcy[[1]])
+
+# resample information on habitat absence
+no_habitat_canvas = No_habitat
+res(no_habitat_canvas) = c(0.01,0.01)
+No_habitat = resample(No_habitat, no_habitat_canvas, method='med') # find which resampled pixels are covered by at least 50% habitat
+
+# remove missing habitat from delta 
+D_lcy[No_habitat] = NA
+
+
+## Gain/Loss if at least 10% of resampled pixel area was gained/lost
+HabitatNC = (D_lcy>(-0.1)&D_lcy<(+0.1))+0;HabitatNC[HabitatNC==0]=NA
+HabitatLOSS = (D_lcy<(-0.1))+0;HabitatLOSS[HabitatLOSS==0]=NA
+HabitatGAIN = (D_lcy>(+0.1))+0;HabitatGAIN[HabitatGAIN==0]=NA
+
+
+#write cover maps to output directory
+terra::writeRaster(HabitatNC, filename = paste0(outputFolder, "/cover maps/HabitatNC.tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+terra::writeRaster(HabitatLOSS, filename = paste0(outputFolder, "/cover maps/HabitatLOSS.tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+terra::writeRaster(HabitatGAIN, filename = paste0(outputFolder, "/cover maps/HabitatGAIN.tif"), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+
 
 
 # write output
 lcyy_p<-file.path(outputFolder, "lcyy/")
+output_maps<-file.path(outputFolder, "cover maps/")
 
 # Flush all remaining temporary files
 unlink(paste0(normalizePath(tempdir()), "/", dir(tempdir())), recursive = TRUE)
 
 
 ## Outputing result to JSON
-output <- list("lcyy"=lcyy_p)
+output <- list("lcyy"=lcyy_p, "output_maps"=output_maps)
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

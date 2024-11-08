@@ -31,3 +31,8 @@ outputs:
     description: Path to folder with tif files showing the year-by-year disrtribution of land cover classes of interest across populations. 
     type: text
     
+  output_maps:
+    label: Cover, cover gain and cover loss map
+    description: resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot
+    type: text
+
