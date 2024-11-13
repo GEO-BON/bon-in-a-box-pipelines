@@ -7,12 +7,12 @@ author:
 inputs:
   country:
     label: Country
-    description: Country of interest
+    description: Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.
     type: text
     example: Colombia
   state:
     label: State/Province
-    description: State or province of interest (leave blank if you want the full country)
+    description: State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get. 
     type: text
     example: Putumayo
   study_area_file:
