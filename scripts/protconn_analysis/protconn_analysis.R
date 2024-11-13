@@ -1,9 +1,11 @@
 # Script for analyzing ProtConn with the function
 #packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version # nolint
-packagesList<-list("terra", "dplyr", "ggrepel", "rjson", "Makurhini")
+packagesList<-list("terra", "dplyr", "ggrepel", "rjson", "Makurhini", "doParallel", "sf", "foreach")
 #lapply(packagesList, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
-library(sf)
-library(rmapshaper)
+#library(sf)
+#library(rmapshaper)
+library(devtools)
+if (!"Makurhini" %in% installed.packages()[,"Package"]) devtools::install_github("connectscape/Makurhini")
 # Load libraries
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages  
 Sys.getenv("SCRIPT_LOCATION")
@@ -54,6 +56,8 @@ result_plot <- ggplot2::ggplot(protcon_result.df) +
 # Sequence with start year by interval
 years <- seq(from=input$start_year, to=2024, by=input$year_int)
 years <- c(years, input$years)
+
+
 # assign all PAs with no date to the start date for plotting
 for(i in 1:nrow(protected_area)) {
  if(is.na(protected_area$year[i])){
@@ -65,8 +69,20 @@ print("Calculating ProtConn time series")
 
 protcon_ts_result <- list()
 
-for (i in 1:length(years)){
-  print(years[i])
+n.cores <- parallel::detectCores() - 1
+
+my.cluster <- parallel::makeCluster(
+  n.cores, 
+  type = "FORK"
+  )
+
+doParallel::registerDoParallel(cl = my.cluster)
+
+protcon_ts_result <- foreach(
+  i = 1:length(years), 
+  .combine='c'
+) %dopar% {
+#for (i in 1:length(years)){
     protected_area_filt_yr <- protected_area %>% dplyr::filter(year <= years[i])
     if(nrow(protected_area_filt_yr)==0) {
       print(paste("No protected area data from", years, "beginning calculations at first year with data"))
@@ -74,54 +90,86 @@ for (i in 1:length(years)){
     } else {
     protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt_yr, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
         transboundary=input$transboundary_distance, distance_thresholds=c(input$distance_threshold))
-    protcon_result.df <- as.data.frame(protcon_result)[c(1,3,4),c(3,4)] %>% mutate(Year=years[i]) 
-    protcon_ts_result[[i]] <- protcon_result.df}
+    
+    protcon_ts_result <- list(
+      Indicator = protcon_result$`ProtConn indicator`,
+      Percentage = protcon_result$Percentage,
+      Year = years[i])
+    
+    protcon_ts_result <- list(protcon_ts_result)
 }
-print("here")
+}
+
+
 result_yrs <- bind_rows(protcon_ts_result)
+result_yrs <- result_yrs %>% filter(Indicator %in% c('Prot', 'ProtConn', 'ProtUnconn'))
 result_yrs[is.na(result_yrs)] <- 0
+print(result_yrs)
 
-xint <- min(result_yrs$Year) + 10
+xint <- min(result_yrs$year) + 15
 
-result_yrs_plot <- ggplot(result_yrs, aes(x=Year, y=Percentage, group=`ProtConn indicator`, shape=`ProtConn indicator`, color=`ProtConn indicator`))+
+result_yrs_plot <- ggplot(result_yrs, mapping=aes(x=Year, y=Percentage, group=Indicator, shape=Indicator, color=Indicator))+
 geom_point() +
 geom_line()+
 labs(y="Percent area", x="Year")+
 geom_hline(yintercept=30, lty=2)+
 annotate("text", x=xint, y=31, label="Kunming-Montreal target")+
-geom_hline(yintercept=17, lty=2, color="grey30")+
-annotate("text", x=xint, y=18, label="Aichi target", color="grey30")+
 geom_line() +
 theme_classic()
 
 print("Calculating ProtConn for three most common dispersal distances")
-protcon_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=input$transboundary_distance, distance_thresholds=1000)
-protcon_result_1km <- as.data.frame(protcon_result_1km)[c(2,3,4),c(3,4)]
-protcon_result_1km[is.na(protcon_result_1km)] <- 0
-protcon_result_1km$distance <- "1 km"
+# protcon_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+# transboundary=input$transboundary_distance, distance_thresholds=1000)
+# protcon_result_1km <- as.data.frame(protcon_result_1km)[c(2,3,4),c(3,4)]
+# protcon_result_1km[is.na(protcon_result_1km)] <- 0
+# protcon_result_1km$distance <- "1 km"
 
-protcon_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=input$transboundary_distance, distance_thresholds=10000)
-protcon_result_10km <- as.data.frame(protcon_result_10km)[c(2,3,4),c(3,4)]
-protcon_result_10km[is.na(protcon_result_10km)] <- 0
-protcon_result_10km$distance <- "10 km"
 
-protcon_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
-transboundary=input$transboundary_distance, distance_thresholds=100000)
-protcon_result_100km <- as.data.frame(protcon_result_100km)[c(2,3,4),c(3,4)]
-protcon_result_100km[is.na(protcon_result_100km)] <- 0
-protcon_result_100km$distance <- "100 km"
+# protcon_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+# transboundary=input$transboundary_distance, distance_thresholds=10000)
+# protcon_result_10km <- as.data.frame(protcon_result_10km)[c(2,3,4),c(3,4)]
+# protcon_result_10km[is.na(protcon_result_10km)] <- 0
+# protcon_result_10km$distance <- "10 km"
 
-results_preset <- rbind.data.frame(protcon_result_1km, protcon_result_10km, protcon_result_100km)
+# protcon_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+# transboundary=input$transboundary_distance, distance_thresholds=100000)
+# protcon_result_100km <- as.data.frame(protcon_result_100km)[c(2,3,4),c(3,4)]
+# protcon_result_100km[is.na(protcon_result_100km)] <- 0
+# protcon_result_100km$distance <- "100 km"
 
-result_preset_plot <- ggplot2::ggplot(results_preset) +
-  geom_col(aes(y=Percentage, x=1, fill=`ProtConn indicator`)) +
+distances <- c(1000, 10000, 100000)
+protcon_dist_result <- list()
+
+protcon_dist_result <- foreach(
+   i = 1:length(distances), 
+   .combine='c'
+ ) %dopar% {
+#for (i in 1:length(distances)){
+protcon_result <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5, 
+transboundary=input$transboundary_distance, distance_thresholds=c(distances[i]))
+
+protcon_dist_result <- list(
+      Indicator = protcon_result$`ProtConn indicator`,
+      Percentage = protcon_result$Percentage,
+      Distance = distances[i])
+    
+    protcon_dist_result <- list(protcon_dist_result)
+}  
+
+result_dist <- bind_rows(protcon_dist_result)
+print(result_dist)
+result_dist <- result_dist %>% filter(Indicator %in% c('Prot', 'ProtConn', 'ProtUnconn'))
+result_dist[is.na(result_dist)] <- 0
+print(result_dist)
+#results_preset <- rbind.data.frame(protcon_result_1km, protcon_result_10km, protcon_result_100km)
+
+result_preset_plot <- ggplot2::ggplot(result_dist) +
+  geom_col(aes(y=Percentage, x=1, fill=Indicator)) +
   coord_polar(theta="y") +
   xlim(c(0, 1.5)) +
-  geom_text(aes(y=Percentage, x=1, group=`ProtConn indicator`, label=paste0(round(Percentage, 2), "%")), position=position_stack(vjust=0.5))+
+  geom_text(aes(y=Percentage, x=1, group=Indicator, label=paste0(round(Percentage, 2), "%")), position=position_stack(vjust=0.5))+
   scale_fill_manual(values=c("seagreen4", "seagreen1", "orchid4"))+
-  facet_wrap(~distance)+
+  facet_wrap(~Distance)+
   theme_void() +
   theme(text=element_text(color="White"))
 
