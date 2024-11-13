@@ -68,7 +68,7 @@ print("Calculating ProtConn time series")
 
 protcon_ts_result <- list()
 
-n.cores <- parallel::detectCores() - 1
+n.cores <- parallel::detectCores()
 
 my.cluster <- parallel::makeCluster(
   n.cores, 
