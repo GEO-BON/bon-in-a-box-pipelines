@@ -1,6 +1,6 @@
 script: getBoundingBox.R
 name: Get bounding box
-description: "Extract items and calculate zonal statistics from various collections on the GEO BON Stac Catalog."
+description: "Exrtact the bounding box of a country or region of interest."
 author:
   - name: Jory Griffith
     identifier: https://orcid.org/0000-0001-6020-6690
