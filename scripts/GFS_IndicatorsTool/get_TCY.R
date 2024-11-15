@@ -14,6 +14,7 @@ library(rjson)
 library(terra)
 library(sf)
 library(raster)
+library(geosphere)
 
 
 ## get bbox from polygons of population
@@ -23,6 +24,14 @@ pop_poly <-st_read(input$population_polygons)
 
 bbox = st_bbox(pop_poly)
 
+###Check if Inputs correct
+
+if (min(input$yoi)<2000 | max(input$yoi>2023)){
+  stop("\n****************************************\n",
+       "*** ERROR: YEARS OF INTEREST OUT OF BOUND ***\n",
+       "****************************************\n",
+       "Error Message: Years of interest out of bound. Must be between 2000 and 2023.\n\n")
+}
 
 ### function to download raster tiles from stac
 load_stac<-function(staccollection){

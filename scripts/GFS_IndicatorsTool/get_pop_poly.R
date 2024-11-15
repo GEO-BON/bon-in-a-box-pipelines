@@ -7,11 +7,20 @@ library("sf")
 library("spatialEco")
 library("rnaturalearth")
 
-output<- tryCatch({
+
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 # load points from file
 obs_data = read.table(input$species_obs, header=T)
+
+##Check if Inputs correct
+if(!("decimal_longitude" %in% names(obs_data))|!("decimal_latitude" %in% names(obs_data))){
+  stop("\n****************************************\n",
+  "*** ERROR: COLLUMN NAMES NOT CORRECT ***\n",
+  "****************************************\n",
+  "Error Message: Column names not correct. Check if 'decimal_longitude' 
+  and 'decimal_latitude' columns are present.\n\n")
+}
 
 # restrict observation to countries of interest, if specified
 countries = input$countries
@@ -95,7 +104,6 @@ path <- file.path(outputFolder, "population_polygons.geojson")
 st_write(PopPoly, path)
 
 output <- list("population_polygons"=path)
-}, error = function(e) { list(error= conditionMessage(e)) })
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

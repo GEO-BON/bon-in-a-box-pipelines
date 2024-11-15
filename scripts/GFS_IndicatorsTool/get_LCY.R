@@ -18,6 +18,14 @@ bbox = st_bbox(pop_poly)
 ## get years of interest
 yoi = input$yoi
 
+##Check if Inputs correct
+if (min(input$yoi)<1992 | max(input$yoi>2020)){
+  stop("\n*********************************************\n",
+       "*** ERROR: YEARS OF INTEREST OUT OF BOUND ***\n",
+       "*********************************************\n",
+       "Error Message: Years of interest out of bound. Must be between 1992 and 2020.\n\n")
+}
+
 startY = min(as.numeric(yoi))
 endY = max(as.numeric(yoi))
 

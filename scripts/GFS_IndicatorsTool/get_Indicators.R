@@ -19,8 +19,6 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 pop_poly <-st_read(input$population_polygons)
 
-habitat_p = input$habitat_map
-
 pop_habitat_area = read.table(input$pop_area, row.names=1, header=T, sep='\t')
 ne_nc = input$ne_nc
 PDen = input$pop_density
@@ -37,6 +35,32 @@ HabitatGAIN=rast(paste0(output_maps, "/HabitatGAIN.tif"))
 # pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/1b0d13bac38e3c6a8381352186ebc447/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
 # ne_nc = c(0.1)
 # PDen = c(1000)
+
+##Input control:
+if (all(st_bbox(HabitatGAIN)!=st_bbox(HabitatLOSS)) | all(st_bbox(HabitatGAIN)!=st_bbox(HabitatNC)) | all(st_bbox(HabitatLOSS)!= st_bbox(HabitatNC))){
+  stop("\n**************************************\n",
+       "*** ERROR: COVER MAPS NOT MATCHING ***\n",
+       "**************************************\n",
+       "Error Message: Cover maps not matching. Check Habitat files in cover map folder \n\n")
+}
+
+if(all(st_bbox(pop_poly)!=st_bbox(HabitatGAIN))) {
+  
+  stop("\n***************************************************************\n",
+       "*** ERROR: POPULATION POLYGONS AND COVER MAPS DON'T OVERLAP ***\n",
+       "***************************************************************\n",
+       "Error Message: Population polygons don't overlap with Cover maps. Check extent of input files.\n\n")
+  stop("Error: the population polygons dont overlap with the cover maps. Check input")
+  
+  
+}
+
+if( any(ne_nc>1)){
+  stop("\n**************************************\n",
+       "*** ERROR: NE:NC RATIO NOT CORRECT ***\n",
+       "**************************************\n",
+       "Error Message: Ne:Nc ratio cant be above 1 \n\n")
+}
 
 ### Set population colors for plotting
 set.seed(123);PopCol = darken(sample(rainbow(nrow(pop_habitat_area)), size = nrow(pop_habitat_area), replace = F) , 0.2)

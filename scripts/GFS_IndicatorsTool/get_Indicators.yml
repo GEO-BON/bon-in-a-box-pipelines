@@ -19,12 +19,6 @@ inputs:
     type: application/geo+json
     example: '/userdata/population_polygons.geojson'
 
-  habitat_map:
-    label: Folder with habitat maps
-    description: Folder with tif files (one per population) describing presence (1) or absence (0) of suitable habitat. Multiple layers can be used to describe habitat availability at different time points.
-    type: text
-    example: '/userdata/tcyy/'
-
   pop_area:
     label: Table of habitat area by population
     description: Table of estimated habitat area by population (rows). If provided, time points are displayed as columns.
