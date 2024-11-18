@@ -206,14 +206,14 @@
       "example": "WDPA"
     },
     "data>getProtectedAreasWDPA.yml@48|studyarea_country": {
-      "description": "Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get.",
+      "description": "Country in which to calculate ProtConn. Must be capitalized. List of available countries:  [https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get](https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get).",
       "label": "Country",
       "type": "text",
       "example": "Colombia",
       "weight": 1
     },
     "data>getProtectedAreasWDPA.yml@48|studyarea_state": {
-      "description": "State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.",
+      "description": "State or province in which to calculate ProtConn. List of available states/provinces: [https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get](https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get).\nIf left blank, will calculate ProtConn for the whole country.",
       "label": "State/Province",
       "type": "text",
       "weight": 2,
