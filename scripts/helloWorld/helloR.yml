@@ -40,6 +40,18 @@ inputs:
       - second option
       - third option
     example: third option
+  multi_options_example:
+    label: Multiselect options
+    description: The user can select 0 to many from a fixed number of text options. The script receives the selected option as an array of text.
+    type: options[]
+    options:
+      - first option
+      - second option
+      - third option
+      - fourth option
+    example:
+      - third option
+      - fourth option
   freeflow_text:
     label: Freeflow text
     description: This is regular text, and can have multiple lines.
