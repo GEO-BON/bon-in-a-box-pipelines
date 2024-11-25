@@ -14,11 +14,7 @@ inputs:
   fun_summary:
     label: fun_summary
     description: 'Estadistica resumen de cada capa de la coleccion. https://rdrr.io/cran/terra/man/global.html'
-    type: options
-    options:
-      - mean
-      - sum
-      - mode
+    type: text
     example: mean
   projection_factor:
     label: projection_factor
