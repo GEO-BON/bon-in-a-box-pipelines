@@ -36,25 +36,6 @@ HabitatGAIN=rast(paste0(output_maps, "/HabitatGAIN.tif"))
 # ne_nc = c(0.1)
 # PDen = c(1000)
 
-##Input control:
-if (all(st_bbox(HabitatGAIN)!=st_bbox(HabitatLOSS)) | all(st_bbox(HabitatGAIN)!=st_bbox(HabitatNC)) | all(st_bbox(HabitatLOSS)!= st_bbox(HabitatNC))){
-  stop("\n**************************************\n",
-       "*** ERROR: COVER MAPS NOT MATCHING ***\n",
-       "**************************************\n",
-       "Error Message: Cover maps not matching. Check Habitat files in cover map folder \n\n")
-}
-
-if(all(st_bbox(pop_poly)!=st_bbox(HabitatGAIN))) {
-  
-  stop("\n***************************************************************\n",
-       "*** ERROR: POPULATION POLYGONS AND COVER MAPS DON'T OVERLAP ***\n",
-       "***************************************************************\n",
-       "Error Message: Population polygons don't overlap with Cover maps. Check extent of input files.\n\n")
-  stop("Error: the population polygons dont overlap with the cover maps. Check input")
-  
-  
-}
-
 if( any(ne_nc>1)){
   stop("\n**************************************\n",
        "*** ERROR: NE:NC RATIO NOT CORRECT ***\n",
