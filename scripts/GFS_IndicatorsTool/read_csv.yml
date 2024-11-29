@@ -1,0 +1,20 @@
+script: read_csv.py
+name: Read CSV
+author: 
+  - name: Jean-Michel Lord
+    identifier: https://orcid.org/0009-0007-3826-1125
+license: CC0
+description: "Sample python script that increments a number."
+timeout: 1
+inputs:
+  csv:
+    label: csv code
+    description: to be loaded
+    type: text
+    example: "[('ID', 'Value'), (1, 'a'), (2, 'b'), (3, 'c')]"
+outputs:
+  csv_out:
+    label: csv file
+    description: directory to csv file
+    type: text/tab-separated-values
+    example: 

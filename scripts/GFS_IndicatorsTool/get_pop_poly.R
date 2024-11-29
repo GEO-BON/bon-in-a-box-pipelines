@@ -6,12 +6,13 @@ library("rjson")
 library("sf")
 library("spatialEco")
 library("rnaturalearth")
+library("readr")
 
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 # load points from file
-obs_data = read.table(input$species_obs, header=T)
+obs_data = read_csv(input$species_obs)
 
 ##Check if Inputs correct
 if(!("decimal_longitude" %in% names(obs_data))|!("decimal_latitude" %in% names(obs_data))){
