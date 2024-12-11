@@ -49,9 +49,16 @@ inputs:
       - second option
       - third option
       - fourth option
+      - fifth options
+      - sixth options
+      - seventh option
+      - eight option
+      - ninth option
+      - tenth option
+      - eleventh option
     example:
-      - third option
-      - fourth option
+      - first option
+      - eleventh option
   freeflow_text:
     label: Freeflow text
     description: This is regular text, and can have multiple lines.
