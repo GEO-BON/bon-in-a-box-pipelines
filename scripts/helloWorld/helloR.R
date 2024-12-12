@@ -2,13 +2,13 @@
 # Script location can be used to access other scripts
 print(Sys.getenv("SCRIPT_LOCATION"))
 
-## Install required packages
-packages <- c("rjson")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
+## Install required packages that are not available on Anaconda
+#packages <- c("someRarePackage")
+#new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
+#if(length(new.packages)) install.packages(new.packages)
 
-library("rjson")
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
+# Reading inputs
+input <- biab_inputs()
 print("Inputs: ")
 print(input)
 
@@ -25,7 +25,8 @@ if(!file.exists(example_tiff)) {
 }
 biab_outputs("heat_map", example_tiff)
 
-biab_error_stop("Stop it!")
+# Uncomment this to stop the script here with an error message
+#biab_error_stop("Some error")
 
 example_json = file.path(outputFolder, "sample.json")
 if(!file.exists(example_json)) {
@@ -59,19 +60,14 @@ write(
     "<h1>This is a page</h1><p>With a fancy interactive graph or the like.</p>",
     some_html_output
 )
-biab_outputs("some_html_output" = some_html_output)
+biab_outputs("some_html_output", some_html_output)
 
-## Outputing result to JSON
-# notice that the warning string is not part of the yml spec, so it cannot be used by other scripts, but will still be displayed.
-# output <- list(#"error" = "Some error", # Use error key to stop the rest of the pipeline
-#                 "info" = "Some information message",
-#                 "warning" = "Some warning",
-#                 "text" = "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long text it will need to be unfolded to see it all.",
-#                 "number" = input$intensity * 3,
-#                 "userdata_available" = list.files(file.path(Sys.getenv("USERDATA_LOCATION"))),
-#                 "undocumented_output" = "Some debug output")
+biab_info("Some information message")
+biab_warning("Some warning")
 
-# jsonData <- toJSON(output, indent=2)
-# write(jsonData, file.path(outputFolder,"output.json"))
+biab_outputs("text", "This is just an example. In case you have a very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very, very long text it will need to be unfolded to see it all.")
+biab_outputs("number", input$intensity * 3)
+biab_outputs("userdata_available", list.files(file.path(Sys.getenv("USERDATA_LOCATION"))))
+biab_outputs("undocumented_output", "Some debug output")
 
-# (If we get a problem with encoding, we could use utf-8 library to clean the output, since the server reads it as utf-8)
+# (If there is a problem with encoding, one could use utf-8 library to clean the output, since the server reads it as utf-8)
