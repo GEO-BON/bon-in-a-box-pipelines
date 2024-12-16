@@ -39,6 +39,7 @@ dependencies:
   - r-stringr
   - r-terra
   - r-this.path
-  - r-tidyselect
+  - r-tidyselect  ssh -i ~/.ssh/id_rsa ubuntu@130.60.24.27
   - r-tidyverse
   - r-stringr
+  - r-ecmwfr

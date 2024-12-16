@@ -1,0 +1,39 @@
+script: getClimateNicheLand.R
+name: Get Climate Niche Land
+description: This script creates a table of estimated habitat area by population based on habitat maps and population polygons.
+author:
+  - name: Simon Pahls
+  - name: Oliver Selmoni
+
+inputs:
+
+  pop_poly:
+    label: Population polygons
+    description: Population polygons extracted from the input JSON file.
+    type: text
+    example: 'Extracted from input JSON'
+
+  start_year:
+    label: Starting year of species observation
+    description: Starting year of species observation extracted from the input JSON file.
+    type: int
+    example: 'Extracted from input JSON'
+
+  end_year:
+    label: Ending year of species observation
+    description: Ending year of species observation extracted from the input JSON file.
+    type: int
+    example: 'Extracted from input JSON'
+  
+  yoi:
+    label: Years of interest
+    description: Years of interest extracted from the input JSON file.
+    type: int[]
+    example: 'Extracted from input JSON'
+
+outputs:
+  climate_map:
+    label: Climate map
+    description: Climate map of the species habitat
+    type: text/tab-separated-values
+
