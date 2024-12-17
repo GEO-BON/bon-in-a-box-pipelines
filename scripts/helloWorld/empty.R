@@ -1,9 +1,6 @@
 # Script location can be used to access other scripts source
 #Sys.getenv("SCRIPT_LOCATION")
 
-## Install required packages
-packages <- c("rjson")
-
 ## Receiving arguments from input.json.
 ## outputFolder is already defined by server
 library("rjson")
@@ -27,12 +24,6 @@ if (<SOME CONDITION>){
 
 ## Outputing result to JSON
 biab_output(
-    # Add your outputs here "key" = "value"
-    # The output keys correspond to those described in the yml file.
-    <YOUR OUTPUTS HERE>
-    #"error" = "Some error", # halt the pipeline
-    #"warning" = "Some warning", # display a warning without halting the pipeline
+    "<OUTPUT NAME>", <OUTPUT FILE PATH>
 ) 
                 
-jsonData <- toJSON(output, indent=2)
-write(jsonData, file.path(outputFolder,"output.json"))
