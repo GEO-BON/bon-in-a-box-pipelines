@@ -3,13 +3,11 @@
 
 ## Install required packages
 packages <- c("rjson")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
 
 ## Receiving arguments from input.json.
 ## outputFolder is already defined by server
 library("rjson")
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
+input <- biab_inputs()
 
 ## Parameter validation
 <YOUR VALIDATION HERE>
@@ -17,8 +15,18 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 ## Script body
 <YOUR CODE HERE>
 
+## Error
+if (<SOME CONDITION>){
+    biab_error_stop("ERROR MESSAGE")
+}
+
+## Warning
+if (<SOME CONDITION>){
+    biab_warning("WARNING MESSAGE")
+}
+
 ## Outputing result to JSON
-output <- list(
+biab_output(
     # Add your outputs here "key" = "value"
     # The output keys correspond to those described in the yml file.
     <YOUR OUTPUTS HERE>
