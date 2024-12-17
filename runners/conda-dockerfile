@@ -1,5 +1,4 @@
 FROM  condaforge/mambaforge
-
 WORKDIR /data
 
 # Setting Time zone (necessary to install cmake, + will persist at runtime)
