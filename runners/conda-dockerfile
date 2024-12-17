@@ -1,9 +1,6 @@
 FROM  condaforge/mambaforge
 
-ADD ./r-environment.yml /data/r-environment.yml
-
 WORKDIR /data
-
 
 # Setting Time zone (necessary to install cmake, + will persist at runtime)
 ENV TZ=Etc/UTC
@@ -39,12 +36,8 @@ RUN echo 'eval "$(conda shell.bash hook)"; source /opt/conda/etc/profile.d/mamba
 # See https://stackoverflow.com/a/74017557/3519951
 RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
 
+ADD ./r-environment.yml /data/r-environment.yml
 RUN mamba env create -f /data/r-environment.yml
-
-# Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
-# That error would not prevent the correct installation, but it looked like it to the user.
-RUN chmod -R 777 /opt/conda/pkgs/cache
-
 
 ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
 RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \
@@ -58,6 +51,9 @@ RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"conn
 
 ADD ./python-environment.yml /data/python-environment.yml
 RUN mamba env create -f /data/python-environment.yml
+
+# Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
+# That error would not prevent the correct installation, but it looked like it to the user.
 RUN chmod -R 777 /opt/conda/pkgs/cache
 
 RUN date +"%Y-%m-%d %R" > /version.txt
