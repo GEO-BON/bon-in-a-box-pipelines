@@ -12,15 +12,9 @@ sf_use_s2(FALSE)
 # load from STAC function to load data cube
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "/data/loadFromStacFun.R", sep = "/"))
 
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
+input <- biab_inputs()
 
-output<- tryCatch({
-# # Collections items
-# if (length(input$collections_items) == 0) {
-#     stop('Please specify collections_items') # if no collections items are specified
-# } else {
-#     collections_items <- input$collections_items
-# }
+
 collections_items <- c("bii_nhm|bii_nhm_10km_2000", 
     "bii_nhm|bii_nhm_10km_2005", "bii_nhm|bii_nhm_10km_2010", "bii_nhm|bii_nhm_10km_2015", "bii_nhm|bii_nhm_10km_2020")
 
@@ -52,8 +46,6 @@ stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=mean, re
 } else {
   stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=mode, reduce_time=TRUE)}
 print(stats_each)
-#stats_each$name <- ci[2]
-#stats_each <- as.data.frame(stats_each)
 stats_layer <- data.frame(name=ci[2], statistic=stats_each[1,2])
 stats_list[[i]] <- stats_layer
 }
@@ -72,9 +64,11 @@ ts_plot <- ggplot(stats, aes(x=year, y=statistic)) +
 
 stats_path <- file.path(outputFolder, "stats.csv")
 write.csv(stats, stats_path, row.names=F)
+biab_output("stats", stats_path)
 
 ts_plot_path <- file.path(outputFolder, "ts_plot.png")
 ggsave(ts_plot_path, ts_plot)
+biab_output("ts_plot", ts_plot_path)
 
 layer_paths<-c()
 # need to rename these to be more descriptive
@@ -86,11 +80,7 @@ for (i in 1:length(raster_layers)) {
   fp <- paste0(out[1])
   layer_paths <- cbind(layer_paths,fp)
 }
+biab_output("rasters", layer_paths)
 
-output <- list("stats" = stats_path, "rasters" = layer_paths, "ts_plot" = ts_plot_path)
-}, error = function(e) { list(error = conditionMessage(e)) })
-
-jsonData <- toJSON(output, indent=2)
-write(jsonData, file.path(outputFolder,"output.json"))
 
 
