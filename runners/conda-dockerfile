@@ -56,4 +56,8 @@ RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"Coordinate
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
 RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"connectscape/Makurhini\")'"
 
+ADD ./python-environment.yml /data/python-environment.yml
+RUN mamba env create -f /data/python-environment.yml
+RUN chmod -R 777 /opt/conda/pkgs/cache
+
 RUN date +"%Y-%m-%d %R" > /version.txt
