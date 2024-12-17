@@ -25,7 +25,7 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
 
-    - name: Extract metadata (tags, labels) for Docker, main branch
+    - name: Extract metadata (tags, labels) for Docker
       if: github.ref == 'refs/heads/main'
       id: metadata-main
       uses: docker/metadata-action@v4

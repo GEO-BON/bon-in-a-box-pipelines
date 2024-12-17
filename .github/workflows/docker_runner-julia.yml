@@ -1,4 +1,4 @@
-name: Julia Runner, main branch
+name: Julia Runner
 
 on:
   workflow_dispatch:
