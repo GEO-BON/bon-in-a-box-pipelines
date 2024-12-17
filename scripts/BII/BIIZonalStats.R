@@ -36,9 +36,12 @@ for(i in 1:length(collections_items)){
                            srs.cube = "EPSG:4326", layers=NULL, variable=NULL, spatial.res=0.08,
                             t0 = NULL, t1 = NULL, temporal.res = "P1D", aggregation = "mean",  resampling = "near") # load cube from loacFromStacFun
 
+  summary(dat_cube)
+  dat_cube <-  filter_geom(cube=dat_cube, geom=study_area$geometry, srs="EPSG:4326")
+
 raster_layers[[i]] <- dat_cube # add to a list of raster layers
 names(raster_layers)[i] <- ci[2]
-
+print(names(raster_layers))
 if(input$summary_statistic == "Mean"){
 stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=mean, reduce_time=TRUE)
 } else if(input$summary_statistic == "Median"){
@@ -46,6 +49,7 @@ stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=mean, re
 } else {
   stats_each <- gdalcubes::extract_geom(cube=dat_cube, sf=study_area, FUN=mode, reduce_time=TRUE)}
 print(stats_each)
+
 stats_layer <- data.frame(name=ci[2], statistic=stats_each[1,2])
 stats_list[[i]] <- stats_layer
 }

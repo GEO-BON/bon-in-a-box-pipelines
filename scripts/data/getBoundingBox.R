@@ -4,7 +4,8 @@ library("rjson")
 library("sf")
 
 input <- biab_inputs()
-  
+
+
 # define study area
 if (is.null(input$studyarea_file)){ # if there is no study area file input
   if (is.null(input$state)){ # if there is only a country input (no state) 
@@ -21,6 +22,7 @@ print(st_crs(study_area_polygon))
 
 if(nrow(study_area_polygon)==0){
   biab_error_stop("Study area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas")
+
 }  # stop if object is empty
 
 # Save study area and protected area data
@@ -34,8 +36,3 @@ bbox <- st_transform(study_area_polygon, st_crs(4326))
 
 bbox <- unname(st_bbox(study_area_polygon))
 biab_output("bbox", bbox)
-
-
-### return outpu
-#jsonData <- toJSON(output, indent=2)
-#write(jsonData, file.path(outputFolder,"output.json"))
