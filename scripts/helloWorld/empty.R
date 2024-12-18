@@ -6,7 +6,7 @@
 library("rjson")
 input <- biab_inputs()
 
-## Parameter validation
+## Parameter validation, use biab_error_stop("message") if something is wrong.
 <YOUR VALIDATION HERE>
 
 ## Script body
