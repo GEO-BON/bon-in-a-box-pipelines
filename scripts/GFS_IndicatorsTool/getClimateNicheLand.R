@@ -1,16 +1,13 @@
 #### Load packages
 
-packages <- c("dismo", "ecmwfr", "elevatr", "terra", "raster", "foreach", "doParallel", "sf")
+packages <- c("ecmwfr")
 new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 if(length(new.packages)) install.packages(new.packages)
-
+ 
 library(dismo) # for maxent
 library(ecmwfr) # to get climate data
-library(elevatr) # to get altitude data
 library(terra)
 library(raster)
-library(foreach)
-library(doParallel)
 library(sf)
 
 
@@ -54,8 +51,7 @@ maxY = max(yoi)
 ############
 ############  Get climate data 
 ############
-print(packageVersion('ecmwfr') )
-options(keyring_backend = "file")
+options(keyring_backend = "env")
 wf_set_key(user = APIuserID, key = APIkey)
 
 ### set name of temporary variables

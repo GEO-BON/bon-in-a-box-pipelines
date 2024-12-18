@@ -43,3 +43,4 @@ dependencies:
   - r-tidyverse
   - r-stringr
   - r-ecmwfr
+  - r-dismo

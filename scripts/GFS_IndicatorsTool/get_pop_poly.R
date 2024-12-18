@@ -12,42 +12,19 @@ library("readr")
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 
 # load points from file
-obs_data = read_csv(input$species_obs)
+obs_data = read_tsv(input$species_obs )
 
-##Check if Inputs correct
-if(!("decimal_longitude" %in% names(obs_data))|!("decimal_latitude" %in% names(obs_data))){
-  stop("\n****************************************\n",
-  "*** ERROR: COLLUMN NAMES NOT CORRECT ***\n",
-  "****************************************\n",
-  "Error Message: Column names not correct. Check if 'decimal_longitude' 
-  and 'decimal_latitude' columns are present.\n\n")
-}
 
 # restrict observation to countries of interest, if specified
 countries = input$countries
-sf_use_s2(F)
-
-if (length(countries)>0) {
-
-  countries_poly = rnaturalearth::ne_states(geounit=countries)
-
-  # Convert points data frame to an sf object
-  points_sf <- st_as_sf(obs_data, coords = c("decimal_longitude", "decimal_latitude"), crs = 4326)  # EPSG:4326 is the CRS for WGS84 (lon/lat)
-
-  # check which observation are within the polygons
-  points_in_poly = st_within(points_sf, countries_poly)
-
-  obs_data = obs_data[lengths(points_in_poly)>0,]
-
-}
-sf_use_s2(T)
 
 
 # get radius for buffer calculation
 radius <- input$buffer_size  # in kilometers
 
+print(obs_data)
 ###clean point
-points = obs_data[,c("decimal_longitude", "decimal_latitude")]
+points = obs_data[c("decimal_longitude", "decimal_latitude")]
 colnames(points) = c("longitude","latitude")
 print(nrow(points))
 

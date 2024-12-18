@@ -10,30 +10,33 @@ inputs:
   pop_poly:
     label: Population polygons
     description: Population polygons extracted from the input JSON file.
-    type: text
-    example: 'Extracted from input JSON'
+    type: application/geo+json
+    example: /userdata/population_polygons_switzerland.geojson
 
   start_year:
     label: Starting year of species observation
     description: Starting year of species observation extracted from the input JSON file.
     type: int
-    example: 'Extracted from input JSON'
+    example: 1990
 
   end_year:
     label: Ending year of species observation
     description: Ending year of species observation extracted from the input JSON file.
     type: int
-    example: 'Extracted from input JSON'
+    example: 2000
   
   yoi:
     label: Years of interest
     description: Years of interest extracted from the input JSON file.
     type: int[]
-    example: 'Extracted from input JSON'
+    example: [2000, 2005, 2010, 2015, 2020]
 
 outputs:
   climate_map:
-    label: Climate map
-    description: Climate map of the species habitat
-    type: text/tab-separated-values
-
+    label: pop_map
+    description: Population map of the species habitat
+    type: text
+  yearly_cover:
+    label: Yearly cover
+    description: Yearly cover of the species habitat
+    type: text
