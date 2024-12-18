@@ -21,7 +21,7 @@ study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
 print(st_crs(study_area_polygon))
 
 if(nrow(study_area_polygon)==0){
-  biab_error_stop("Study area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas")
+  biab_error_stop("Study area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas.")
 
 }  # stop if object is empty
 
