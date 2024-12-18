@@ -3,9 +3,9 @@
 library("rjson")
 library("sf")
 
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
+input <- biab_inputs()
 
-output<- tryCatch({
+
 # define study area
 if (is.null(input$studyarea_file)){ # if there is no study area file input
   if (is.null(input$state)){ # if there is only a country input (no state) 
@@ -19,23 +19,20 @@ if (is.null(input$studyarea_file)){ # if there is no study area file input
 
 study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
 print(st_crs(study_area_polygon))
+
 if(nrow(study_area_polygon)==0){
-  stop("Study area polygon does not exist. Check spelling of country and state names.")
+  biab_error_stop("Study area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas.")
+
 }  # stop if object is empty
 
 # Save study area and protected area data
 study_area_polygon_path<- file.path(outputFolder, "study_area_polygon.geojson") # Define the file path for the protected area polygon output
 sf::st_write(study_area_polygon, study_area_polygon_path, delete_dsn = T)
-
+biab_output("study_area_polygon", study_area_polygon_path)
 
 # create bounding box
 bbox <- sf::st_bbox(study_area_polygon) 
 bbox <- st_transform(study_area_polygon, st_crs(4326))
 
-bbox<-unname(st_bbox(study_area_polygon))
-
-output <- list("bbox" = bbox, "study_area_polygon" = study_area_polygon_path)
-}, error = function(e) { list(error = conditionMessage(e)) })
-### return outpu
-jsonData <- toJSON(output, indent=2)
-write(jsonData, file.path(outputFolder,"output.json"))
+bbox <- unname(st_bbox(study_area_polygon))
+biab_output("bbox", bbox)
