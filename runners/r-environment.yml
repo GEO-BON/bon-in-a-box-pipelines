@@ -10,10 +10,12 @@ dependencies:
   - r-curl
   - r-devtools
   - r-dismo
+  - r-doParallel
   - r-downloader
   - r-dplyr
   - r-enmeval
   - r-essentials
+  - r-foreach
   - r-gdalcubes
   - r-gdalutilities
   - r-gdalutils
