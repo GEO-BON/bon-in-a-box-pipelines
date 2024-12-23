@@ -31,7 +31,7 @@ endY = max(as.numeric(yoi))
 
 ## load land cover data from STAC
 load_stac<-function(staccollection='esacci-lc'){
-
+  
   stac_query <- rstac::stac(
     "https://stac.geobon.org/"
   ) |>
@@ -41,8 +41,8 @@ load_stac<-function(staccollection='esacci-lc'){
       limit = 50
     ) |>
     rstac::get_request()
-
-
+  
+  
   make_vsicurl_url <- function(base_url) {
     paste0(
       "/vsicurl",
@@ -52,18 +52,18 @@ load_stac<-function(staccollection='esacci-lc'){
       base_url
     )
   }
-
+  
   # get download URLs
   lcpri_url <- make_vsicurl_url(rstac::assets_url(stac_query, paste0('esacci-lc-',yoi)))
   lcpri_url
-
-
+  
+  
   # open rasters from server
   raster_server = rast(lcpri_url)
-
+  
   # process rasters from server (crop to study area , reasample)
   raster = crop(raster_server, bbox[c(1,3,2,4)]) # crop
-
+  
   return(raster)
 }
 
@@ -74,6 +74,28 @@ LC<-load_stac("esacci-lc")
 ## get landcover classes of interest
 user_classes = as.numeric(input$lc_classes)
 
+## If classes are set to 0 --> guess top classes from data
+if (user_classes==0) {
+  
+  # get lc classes of first time point at populations polygons
+  pop_lc= extract(LC[[1]], pop_poly, ID=F)
+
+  # sort pop classes (from most frequent to most rare)
+  pop_lc_sorted = sort(table(pop_lc), decreasing = T)
+  
+  # find out which classes make up 50% of all pixels at population polygons
+  pop_lc_sorted_cum =   cumsum(pop_lc_sorted)/sum(pop_lc_sorted)
+
+  # set dominant classes
+  dominant_classes = pop_lc_sorted_cum[1:which(pop_lc_sorted_cum>0.5)[1]]
+  
+  # re-define user_classes
+  user_classes = as.numeric(names(dominant_classes))
+  
+  print(paste0('Select LC classes: ', paste(user_classes, collapse=',')))
+  
+}
+
 # create output director
 dir.create(file.path(outputFolder, "/lcyy/"))
 
@@ -82,20 +104,20 @@ dir.create(file.path(outputFolder, "/lcyy/"))
 
 #### Create local raster output for every population
 for (pop in pop_poly$pop) {
-
+  
   print(pop)
   
   # crop rasters to pop extent
   LC_pop = crop(LC, pop_poly[pop_poly$pop==pop,], mask=T)
-
+  
   LC_pop_cl = (LC_pop%in%user_classes)+0
-
+  
   LC_pop_cl[is.na(LC_pop)] = NA
   
   lcy = LC_pop_cl
   
   names(lcy)=paste0('y',yoi)
-  
+  plot(lcy)
   # write output
   terra::writeRaster(lcy, filename = paste0(outputFolder, "/lcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
   
