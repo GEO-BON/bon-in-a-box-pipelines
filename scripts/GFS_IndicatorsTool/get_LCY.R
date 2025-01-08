@@ -75,7 +75,7 @@ LC<-load_stac("esacci-lc")
 user_classes = as.numeric(input$lc_classes)
 
 ## If classes are set to 0 --> guess top classes from data
-if (user_classes==0) {
+if (length(user_classes)==1&user_classes[1]==0) {
   
   # get lc classes of first time point at populations polygons
   pop_lc= extract(LC[[1]], pop_poly, ID=F)
