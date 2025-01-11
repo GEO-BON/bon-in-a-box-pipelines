@@ -1,0 +1,92 @@
+script: TestScript.R
+name: Test script for tutorial
+description: This script is to demonstrate how to create a YML file and an R script for BON in a Box. More description here to set context for the script.
+license: CC-BY
+author: 
+  - name: Jory Griffith
+  - identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  country_polygon:
+    label: Country polygon
+    description: Polygon of the country of interest
+    type: application/geo+json
+    example: null
+  crs:
+    label: Coordinate reference system
+    description: Coordinate reference system for the analysis
+    type: text
+    example: "EPSG:3857"
+  rasters:
+    label: Rasters
+    description: Raster layers of the variable of interest
+    type: image/tiff;application=geotiff[]
+    example: null 
+outputs:
+  raster_change:
+    label: Raster change
+    description: Differences between raster values
+    type: image/tiff;application=geotiff
+  means_plot:
+    label: Plot of raster means
+    description: Plot of means of raster layers
+    type: image/png
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-sf
+    - r-dplyr
+    - r-terra
+    - r-ggplot2
+references:
+  - text: reference in format of choice
+  - doi: doi link
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

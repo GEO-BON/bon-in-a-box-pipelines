@@ -18,10 +18,9 @@ if (is.null(input$studyarea_file)){ # if there is no study area file input
   } } else {study_area <- input$studyarea_file}
 
 study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
-print(st_crs(study_area_polygon))
 
 if(nrow(study_area_polygon)==0){
-  biab_error_stop("Study area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas.")
+  biab_error_stop("Study area polygon does not exist. Check spelling of country and state names. ")
 
 }  # stop if object is empty
 
@@ -32,7 +31,7 @@ biab_output("study_area_polygon", study_area_polygon_path)
 
 # create bounding box
 bbox <- sf::st_bbox(study_area_polygon) 
-bbox <- st_transform(study_area_polygon, st_crs(4326))
+bbox <- st_transform(bbox, crs=input$crs)
 
-bbox <- unname(st_bbox(study_area_polygon))
+bbox <- unname(bbox)
 biab_output("bbox", bbox)

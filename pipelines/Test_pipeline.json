@@ -1,0 +1,314 @@
+{
+  "nodes": [
+    {
+      "id": "134",
+      "type": "io",
+      "position": {
+        "x": 636.09375,
+        "y": 315
+      },
+      "data": {
+        "descriptionFile": "TestScript.yml"
+      }
+    },
+    {
+      "id": "135",
+      "type": "io",
+      "position": {
+        "x": 82.09375,
+        "y": 203
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "136",
+      "type": "io",
+      "position": {
+        "x": 244.82831914886492,
+        "y": 452.9005133300444
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "137",
+      "type": "userInput",
+      "position": {
+        "x": -362.9127940054424,
+        "y": 269.67593734104327
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "138",
+      "type": "output",
+      "position": {
+        "x": 1154.09375,
+        "y": 254
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "139",
+      "type": "output",
+      "position": {
+        "x": 1130.09375,
+        "y": 331
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "140",
+      "type": "output",
+      "position": {
+        "x": 599.09375,
+        "y": 180
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "141",
+      "type": "output",
+      "position": {
+        "x": 722.8040433696153,
+        "y": 466.0163600136059
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "136",
+      "sourceHandle": "rasters",
+      "target": "134",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-136rasters-134rasters"
+    },
+    {
+      "source": "135",
+      "sourceHandle": "study_area_polygon",
+      "target": "134",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-135study_area_polygon-134country_polygon"
+    },
+    {
+      "source": "137",
+      "sourceHandle": null,
+      "target": "135",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-137-135crs"
+    },
+    {
+      "source": "137",
+      "sourceHandle": null,
+      "target": "134",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-137-134crs"
+    },
+    {
+      "source": "137",
+      "sourceHandle": null,
+      "target": "136",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-137-136proj"
+    },
+    {
+      "source": "134",
+      "sourceHandle": "raster_change",
+      "target": "138",
+      "targetHandle": null,
+      "id": "reactflow__edge-134raster_change-138"
+    },
+    {
+      "source": "134",
+      "sourceHandle": "means_plot",
+      "target": "139",
+      "targetHandle": null,
+      "id": "reactflow__edge-134means_plot-139"
+    },
+    {
+      "source": "135",
+      "sourceHandle": "bbox",
+      "target": "140",
+      "targetHandle": null,
+      "id": "reactflow__edge-135bbox-140"
+    },
+    {
+      "source": "136",
+      "sourceHandle": "rasters",
+      "target": "141",
+      "targetHandle": null,
+      "id": "reactflow__edge-136rasters-141"
+    },
+    {
+      "source": "135",
+      "sourceHandle": "bbox",
+      "target": "136",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-135bbox-136bbox"
+    }
+  ],
+  "inputs": {
+    "data>getBoundingBox.yml@135|country": {
+      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
+      "label": "Country",
+      "type": "text",
+      "example": "Canada",
+      "weight": 0
+    },
+    "data>getBoundingBox.yml@135|state": {
+      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
+      "label": "State/Province",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
+    "data>getBoundingBox.yml@135|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 2,
+      "example": null
+    },
+    "data>loadFromStac.yml@136|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 3
+    },
+    "data>loadFromStac.yml@136|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "bii_nhm|bii_nhm_10km_2000",
+        "bii_nhm|bii_nhm_10km_2020"
+      ],
+      "weight": 4
+    },
+    "data>loadFromStac.yml@136|weight_matrix_with_ids": {
+      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
+      "label": "Weight matrix with ids",
+      "type": "text",
+      "example": "\n",
+      "weight": 5
+    },
+    "data>loadFromStac.yml@136|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters",
+      "label": "spatial resolution",
+      "type": "float",
+      "example": 10000,
+      "weight": 6
+    },
+    "data>loadFromStac.yml@136|resampling": {
+      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "label": "resampling",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
+      "weight": 7
+    },
+    "data>loadFromStac.yml@136|aggregation": {
+      "description": "Method used to aggregate items that overlay each other",
+      "label": "aggregation",
+      "type": "options",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "example": "first",
+      "weight": 8
+    },
+    "data>loadFromStac.yml@136|mask": {
+      "description": "Shapefile, used to mask the output rasters",
+      "label": "mask",
+      "type": "application/dbf",
+      "weight": 9,
+      "example": null
+    },
+    "pipeline@137": {
+      "label": "Coordinate reference system",
+      "description": "Coordinate reference system of the country polygon",
+      "type": "text",
+      "example": "EPSG:3857",
+      "weight": 10
+    }
+  },
+  "outputs": {
+    "TestScript.yml@134|raster_change": {
+      "description": "Change in raster values over time",
+      "label": "Raster change",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    },
+    "TestScript.yml@134|means_plot": {
+      "description": "Plot of means of all raster layers in time series",
+      "label": "Plot of raster means",
+      "type": "image/png",
+      "weight": 1
+    },
+    "data>getBoundingBox.yml@135|bbox": {
+      "description": "boundary box around area of interest",
+      "label": "bbox",
+      "type": "float[]",
+      "weight": 2
+    },
+    "data>loadFromStac.yml@136|rasters": {
+      "description": "array of output raster paths",
+      "label": "rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
+    }
+  },
+  "metadata": {
+    "name": "Test pipeline",
+    "description": "Test pipeline for tutorial",
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca"
+      }
+    ],
+    "license": "CC-BY",
+    "references": [
+      {
+        "text": "Author, F.F., Journal of biology, year",
+        "doi": "doi:10.1038/nature11148"
+      }
+    ]
+  }
+}

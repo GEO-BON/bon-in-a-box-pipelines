@@ -20,6 +20,11 @@ inputs:
     description: Upload a file of a custom study area
     type: text
     example: null
+  crs:
+    label: Coordinate reference system
+    description: Coordinate reference system of the country polygon
+    type: text
+    example: "EPSG:4326"
 outputs:
   study_area_polygon:
     label: Polygon of study area
