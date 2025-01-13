@@ -91,6 +91,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "168",
+      "type": "output",
+      "position": {
+        "x": 1559.09716796875,
+        "y": 276.22916412353516
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -149,6 +160,13 @@
       "target": "167",
       "targetHandle": null,
       "id": "reactflow__edge-162ne500-167"
+    },
+    {
+      "source": "99",
+      "sourceHandle": "pop_area",
+      "target": "168",
+      "targetHandle": null,
+      "id": "reactflow__edge-99pop_area-168"
     }
   ],
   "inputs": {
@@ -226,6 +244,12 @@
       "label": "Ne>500 indicator",
       "type": "float",
       "weight": 3
+    },
+    "GFS_IndicatorsTool>pop_area_by_habitat.yml@99|pop_area": {
+      "description": "Table of estimated habitat area by population (rows). If available, time points are displayed as columns.",
+      "label": "Table of habitat area by population",
+      "type": "text/tab-separated-values",
+      "weight": 4
     }
   },
   "metadata": {

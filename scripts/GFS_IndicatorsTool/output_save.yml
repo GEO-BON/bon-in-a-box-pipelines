@@ -1,0 +1,37 @@
+script: output_save.R
+name: Output Save
+author:
+  - name: Jean-Michel Lord
+    email: jean-michel.lord@mcgill.ca
+    identifier: https://orcid.org/0009-0007-3826-1125
+  - name: Guillaume Larocque
+description: "This script saves the Ouptuts of the analysis that are also used for the html report as a seperate list. This can then be used as a standardized output for further analysis."
+
+inputs:
+  poparea:
+    label: area of population
+    description: The area of the population in the area of interest.
+    type: text/tab-separated-values
+    example:
+  popsize:
+    label: Population Size
+    description: The size of the population in the area of interest, depending on a given poipulation density.
+    type: text/tab-separated-values
+    example: 
+  geojson:
+    label: population polygon
+    description: The polygon of the population in the area of interest given as a geojson file.
+    type: application/geo+json
+    example: 
+  coverchange:
+    label: cover change
+    description: The change in land cover in the area of interest.
+    type: text
+    example: 
+  
+outputs:
+  list:
+    label: list
+    description: List of all the Inputs given to the script
+    type: text/plain
+  

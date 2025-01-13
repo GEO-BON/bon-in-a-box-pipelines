@@ -1,0 +1,756 @@
+{
+  "nodes": [
+    {
+      "id": "189",
+      "type": "io",
+      "position": {
+        "x": 1371,
+        "y": 238
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_GFW_tree_canopy_2000-2023.json"
+      }
+    },
+    {
+      "id": "199",
+      "type": "io",
+      "position": {
+        "x": 615,
+        "y": 268
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_bbox.json"
+      }
+    },
+    {
+      "id": "204",
+      "type": "io",
+      "position": {
+        "x": 2209,
+        "y": 291
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
+      }
+    },
+    {
+      "id": "205",
+      "type": "output",
+      "position": {
+        "x": 2998,
+        "y": 214
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "206",
+      "type": "output",
+      "position": {
+        "x": 2998,
+        "y": 166
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "207",
+      "type": "output",
+      "position": {
+        "x": 2998,
+        "y": 262
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "208",
+      "type": "output",
+      "position": {
+        "x": 2998,
+        "y": 496
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "209",
+      "type": "io",
+      "position": {
+        "x": 929,
+        "y": 493
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>Input_save.yml"
+      }
+    },
+    {
+      "id": "210",
+      "type": "userInput",
+      "position": {
+        "x": 126,
+        "y": 116
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Quercus sartorii"
+      }
+    },
+    {
+      "id": "211",
+      "type": "userInput",
+      "position": {
+        "x": 120,
+        "y": 150
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          "-99",
+          "22",
+          "-92",
+          "29"
+        ]
+      }
+    },
+    {
+      "id": "212",
+      "type": "userInput",
+      "position": {
+        "x": 134,
+        "y": 184
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 10
+      }
+    },
+    {
+      "id": "213",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 252
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 50
+      }
+    },
+    {
+      "id": "214",
+      "type": "userInput",
+      "position": {
+        "x": 182,
+        "y": 286
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2000
+      }
+    },
+    {
+      "id": "215",
+      "type": "userInput",
+      "position": {
+        "x": 174,
+        "y": 320
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1980
+      }
+    },
+    {
+      "id": "216",
+      "type": "userInput",
+      "position": {
+        "x": 116,
+        "y": 48
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ]
+      }
+    },
+    {
+      "id": "217",
+      "type": "userInput",
+      "position": {
+        "x": 71,
+        "y": 14
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "218",
+      "type": "userInput",
+      "position": {
+        "x": 130,
+        "y": 82
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+      }
+    },
+    {
+      "id": "219",
+      "type": "userInput",
+      "position": {
+        "x": 85,
+        "y": 218
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          50,
+          100,
+          1000
+        ]
+      }
+    },
+    {
+      "id": "220",
+      "type": "userInput",
+      "position": {
+        "x": 159,
+        "y": 542.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "johndoe@example.com"
+      }
+    },
+    {
+      "id": "221",
+      "type": "userInput",
+      "position": {
+        "x": 162,
+        "y": 508.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "johndoe"
+      }
+    },
+    {
+      "id": "222",
+      "type": "constant",
+      "position": {
+        "x": 89,
+        "y": 576.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "NA"
+      }
+    },
+    {
+      "id": "223",
+      "type": "constant",
+      "position": {
+        "x": 89,
+        "y": 617.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "NA"
+      }
+    },
+    {
+      "id": "224",
+      "type": "output",
+      "position": {
+        "x": 1371,
+        "y": 464
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "225",
+      "type": "io",
+      "position": {
+        "x": 2998,
+        "y": 414
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>output_save.yml"
+      }
+    },
+    {
+      "id": "226",
+      "type": "output",
+      "position": {
+        "x": 3346,
+        "y": 385
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "199",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "189",
+      "targetHandle": "pipeline@37",
+      "id": "reactflow__edge-199GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-189pipeline@37"
+    },
+    {
+      "source": "189",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@36|tcyy",
+      "target": "204",
+      "targetHandle": "pipeline@160",
+      "id": "reactflow__edge-189GFS_IndicatorsTool>get_TCY.yml@36|tcyy-204pipeline@160"
+    },
+    {
+      "source": "189",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@36|output_maps",
+      "target": "204",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|cover_maps",
+      "id": "reactflow__edge-189GFS_IndicatorsTool>get_TCY.yml@36|output_maps-204GFS_IndicatorsTool>get_Indicators.yml@162|cover_maps"
+    },
+    {
+      "source": "199",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "204",
+      "targetHandle": "pipeline@161",
+      "id": "reactflow__edge-199GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-204pipeline@161"
+    },
+    {
+      "source": "204",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|pm",
+      "target": "205",
+      "targetHandle": null,
+      "id": "reactflow__edge-204GFS_IndicatorsTool>get_Indicators.yml@162|pm-205"
+    },
+    {
+      "source": "204",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|ne500",
+      "target": "206",
+      "targetHandle": null,
+      "id": "reactflow__edge-204GFS_IndicatorsTool>get_Indicators.yml@162|ne500-206"
+    },
+    {
+      "source": "204",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|ne_table",
+      "target": "207",
+      "targetHandle": null,
+      "id": "reactflow__edge-204GFS_IndicatorsTool>get_Indicators.yml@162|ne_table-207"
+    },
+    {
+      "source": "204",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|interactive_plot",
+      "target": "208",
+      "targetHandle": null,
+      "id": "reactflow__edge-204GFS_IndicatorsTool>get_Indicators.yml@162|interactive_plot-208"
+    },
+    {
+      "source": "210",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "pipeline@12",
+      "id": "reactflow__edge-210-199pipeline@12"
+    },
+    {
+      "source": "211",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "pipeline@21",
+      "id": "reactflow__edge-211-199pipeline@21"
+    },
+    {
+      "source": "212",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size",
+      "id": "reactflow__edge-212-199GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size"
+    },
+    {
+      "source": "213",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance",
+      "id": "reactflow__edge-213-199GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance"
+    },
+    {
+      "source": "214",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "pipeline@15",
+      "id": "reactflow__edge-214-199pipeline@15"
+    },
+    {
+      "source": "215",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "pipeline@14",
+      "id": "reactflow__edge-215-199pipeline@14"
+    },
+    {
+      "source": "215",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "startyear",
+      "id": "reactflow__edge-215-209startyear"
+    },
+    {
+      "source": "214",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "endyear",
+      "id": "reactflow__edge-214-209endyear"
+    },
+    {
+      "source": "213",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "popdistance",
+      "id": "reactflow__edge-213-209popdistance"
+    },
+    {
+      "source": "212",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-212-209buffer"
+    },
+    {
+      "source": "211",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-211-209bbox"
+    },
+    {
+      "source": "210",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "speciesname",
+      "id": "reactflow__edge-210-209speciesname"
+    },
+    {
+      "source": "216",
+      "sourceHandle": null,
+      "target": "189",
+      "targetHandle": "pipeline@38",
+      "id": "reactflow__edge-216-189pipeline@38"
+    },
+    {
+      "source": "216",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "yoi",
+      "id": "reactflow__edge-216-209yoi"
+    },
+    {
+      "source": "217",
+      "sourceHandle": null,
+      "target": "204",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|ne_nc",
+      "id": "reactflow__edge-217-204GFS_IndicatorsTool>get_Indicators.yml@162|ne_nc"
+    },
+    {
+      "source": "217",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "nenc",
+      "id": "reactflow__edge-217-209nenc"
+    },
+    {
+      "source": "218",
+      "sourceHandle": null,
+      "target": "204",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|runtitle",
+      "id": "reactflow__edge-218-204GFS_IndicatorsTool>get_Indicators.yml@162|runtitle"
+    },
+    {
+      "source": "218",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "title",
+      "id": "reactflow__edge-218-209title"
+    },
+    {
+      "source": "219",
+      "sourceHandle": null,
+      "target": "204",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|pop_density",
+      "id": "reactflow__edge-219-204GFS_IndicatorsTool>get_Indicators.yml@162|pop_density"
+    },
+    {
+      "source": "219",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "popdensity",
+      "id": "reactflow__edge-219-209popdensity"
+    },
+    {
+      "source": "220",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "useremail",
+      "id": "reactflow__edge-220-209useremail"
+    },
+    {
+      "source": "221",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "username",
+      "id": "reactflow__edge-221-209username"
+    },
+    {
+      "source": "222",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "country",
+      "id": "reactflow__edge-222-209country"
+    },
+    {
+      "source": "223",
+      "sourceHandle": null,
+      "target": "209",
+      "targetHandle": "LCtype",
+      "id": "reactflow__edge-223-209LCtype"
+    },
+    {
+      "source": "209",
+      "sourceHandle": "list",
+      "target": "224",
+      "targetHandle": null,
+      "id": "reactflow__edge-209list-224"
+    },
+    {
+      "source": "204",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|ne_table",
+      "target": "225",
+      "targetHandle": "popsize",
+      "id": "reactflow__edge-204GFS_IndicatorsTool>get_Indicators.yml@162|ne_table-225popsize"
+    },
+    {
+      "source": "189",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@36|output_maps",
+      "target": "225",
+      "targetHandle": "coverchange",
+      "id": "reactflow__edge-189GFS_IndicatorsTool>get_TCY.yml@36|output_maps-225coverchange"
+    },
+    {
+      "source": "199",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "225",
+      "targetHandle": "geojson",
+      "id": "reactflow__edge-199GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-225geojson"
+    },
+    {
+      "source": "204",
+      "sourceHandle": "GFS_IndicatorsTool>pop_area_by_habitat.yml@99|pop_area",
+      "target": "225",
+      "targetHandle": "poparea",
+      "id": "reactflow__edge-204GFS_IndicatorsTool>pop_area_by_habitat.yml@99|pop_area-225poparea"
+    },
+    {
+      "source": "225",
+      "sourceHandle": "list",
+      "target": "226",
+      "targetHandle": null,
+      "id": "reactflow__edge-225list-226"
+    }
+  ],
+  "inputs": {
+    "pipeline@210": {
+      "label": "Species names",
+      "description": "Scientific name of the species, used to look for occurrences in GBIF. ",
+      "type": "text",
+      "example": "Quercus sartorii",
+      "weight": 0
+    },
+    "pipeline@211": {
+      "label": "Bounding box ",
+      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
+      "example": [
+        "-99",
+        "22",
+        "-92",
+        "29"
+      ],
+      "weight": 1
+    },
+    "pipeline@216": {
+      "label": "Years of interest",
+      "description": "List of years for which tree cover should be extracted (maximum range 2000 - 2023).",
+      "type": "int[]",
+      "example": [
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 2
+    },
+    "pipeline@215": {
+      "label": "Start year",
+      "description": "Integer, 4 digit year, start date to retrieve occurrences",
+      "type": "int",
+      "example": 1980,
+      "weight": 3
+    },
+    "pipeline@214": {
+      "label": "End year",
+      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "type": "int",
+      "example": 2000,
+      "weight": 4
+    },
+    "pipeline@217": {
+      "label": "Ne:Nc ratio estimate",
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
+      "type": "float[]",
+      "example": [
+        0.1,
+        0.2
+      ],
+      "weight": 5
+    },
+    "pipeline@212": {
+      "label": "Size of buffer",
+      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
+      "type": "float",
+      "example": 10,
+      "weight": 6
+    },
+    "pipeline@219": {
+      "label": "Population density",
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
+      "type": "float[]",
+      "example": [
+        50,
+        100,
+        1000
+      ],
+      "weight": 7
+    },
+    "pipeline@213": {
+      "label": "Distance between populations",
+      "description": "Distance [in km] to separate species observations in different populations.",
+      "type": "float",
+      "example": 50,
+      "weight": 8
+    },
+    "pipeline@218": {
+      "label": "Title of the run",
+      "description": "Set a name for the pipeline run.",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "weight": 9
+    },
+    "pipeline@220": {
+      "label": "User Email",
+      "description": "The email address of the person conducting the analysis.",
+      "type": "text",
+      "example": "johndoe@example.com",
+      "weight": 10
+    },
+    "pipeline@221": {
+      "label": "Username",
+      "description": "The username of the person conducting the analysis.",
+      "type": "text",
+      "example": "johndoe",
+      "weight": 11
+    }
+  },
+  "outputs": {
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@204|GFS_IndicatorsTool>get_Indicators.yml@162|pm": {
+      "description": "Estimated proportion of mantained populations, comparing earliest and latest time point. A value of 1 means that no populations went extinct over the time frame.",
+      "label": "Population maintained indicator",
+      "weight": 0,
+      "type": "float"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@204|GFS_IndicatorsTool>get_Indicators.yml@162|ne500": {
+      "description": "Estimated proportion of populations with Ne>500 at latest time point.",
+      "label": "Ne>500 indicator",
+      "weight": 1,
+      "type": "float"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@204|GFS_IndicatorsTool>get_Indicators.yml@162|ne_table": {
+      "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
+      "label": "Effective population size",
+      "weight": 2,
+      "type": "text/tab-separated-values"
+    },
+    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@204|GFS_IndicatorsTool>get_Indicators.yml@162|interactive_plot": {
+      "description": "An interactive interface to explore indicators trends across geographical space and time.",
+      "label": "Interactive plot",
+      "weight": 3,
+      "type": "text/html"
+    },
+    "GFS_IndicatorsTool>Input_save.yml@209|list": {
+      "description": "List of all the Inputs given to the script",
+      "label": "Input List",
+      "type": "text/plain",
+      "weight": 4
+    },
+    "GFS_IndicatorsTool>output_save.yml@225|list": {
+      "description": "List of all the Inputs given to the script",
+      "label": "Input List",
+      "type": "text/plain",
+      "weight": 5
+    }
+  },
+  "metadata": {
+    "name": "Forest cover loss by populations from GBIF occurrences (bbox) Input test",
+    "description": "Genes from Space tool. The tool retrieves species occurrence from GBIF, then used to define polygons of population distribution based on geographic proximity.  The tool then draws a habitat suitability map over time, based on the presence of forest cover.  Finally, the tool estimates the size of suitable habitat over time for every population, and computes indicators of genetic diversity monitoring accordingly (Ne500 and Populations Maintained indicators). Population maps and genetic diversity indicators are displayed through an interactive interface.  Forest cover loss data comes from [Global Forest Watch](https://www.globalforestwatch.org/)",
+    "author": [
+      {
+        "name": "Oliver Selmoni",
+        "email": "oliver.selmoni@gmail.com"
+      }
+    ],
+    "external_link": "https://teams.issibern.ch/genesfromspace/",
+    "references": [
+      {
+        "text": "Schuman et al., EcoEvoRxiv.",
+        "doi": "https://doi.org/10.32942/X2RS58"
+      },
+      {
+        "text": "Hansen et al., Science (2013)",
+        "doi": "https://doi.org/10.1126/science.1244693"
+      }
+    ]
+  }
+}

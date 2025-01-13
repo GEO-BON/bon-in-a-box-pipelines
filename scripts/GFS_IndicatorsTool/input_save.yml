@@ -1,0 +1,87 @@
+script: input_save.R
+name: Input Save
+author:
+  - name: Jean-Michel Lord
+    email: jean-michel.lord@mcgill.ca
+    identifier: https://orcid.org/0009-0007-3826-1125
+  - name: Guillaume Larocque
+description: "This sample script shows how it works. Remember that you can use **MarkDown** to style descriptions and add [links](http://boninabox.geobon.org)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  yoi:
+    label: Year of Interest
+    description: The year of interest for the analysis.
+    type: int[]
+    example: 2021
+  nenc:
+    label: Ne:Nc ratio
+    description: The number of encounters recorded.
+    type: float[]
+    example: 5
+  title:
+    label: Title
+    description: The title of the project or analysis.
+    type: text
+    example: "Analysis of Species Distribution"
+  popdensity:
+    label: Population Density
+    description: The population density in the area of interest.
+    type: float[]
+    example: 123.45
+  speciesname:
+    label: Species Name
+    description: The name of the species being studied.
+    type: text
+    example: "Acer saccharum"
+  bbox:
+    label: Bounding Box
+    description: The bounding box coordinates for the area of interest.
+    type: float[]
+    example: "xmin, ymin, xmax, ymax"
+  buffer:
+    label: Buffer
+    description: The buffer distance around the area of interest.
+    type: float[]
+    example: 10.0
+  popdistance:
+    label: Population Distance
+    description: The distance to the nearest population center.
+    type: float[]
+    example: 50.0
+  startyear:
+    label: Start Year
+    description: The start year for the analysis period.
+    type: int
+    example: 2000
+  endyear:
+    label: End Year
+    description: The end year for the analysis period.
+    type: int
+    example: 2020
+  username:
+    label: Username
+    description: The username of the person conducting the analysis.
+    type: text
+    example: "johndoe"
+  useremail:
+    label: User Email
+    description: The email address of the person conducting the analysis.
+    type: text
+    example: "johndoe@example.com"
+  country:
+    label: Country
+    description: The country of the area of interest.
+    type: text
+    example: "Canada"
+  LCtype:
+    label: Land Cover Type
+    description: The type of land cover in the area of interest.
+    type: text
+    example: "Forest"
+
+outputs:
+  list:
+    label: Input List
+    description: List of all the Inputs given to the script
+    type: text/plain
+  
