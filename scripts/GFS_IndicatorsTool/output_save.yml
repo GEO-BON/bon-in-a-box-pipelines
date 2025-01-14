@@ -1,10 +1,9 @@
 script: output_save.R
 name: Output Save
 author:
-  - name: Jean-Michel Lord
-    email: jean-michel.lord@mcgill.ca
-    identifier: https://orcid.org/0009-0007-3826-1125
-  - name: Guillaume Larocque
+  - name: Simon Pahls
+    email: simon.pahls@uzh.ch
+  - name: Oliver Selmoni
 description: "This script saves the Ouptuts of the analysis that are also used for the html report as a seperate list. This can then be used as a standardized output for further analysis."
 
 inputs:

@@ -1,12 +1,10 @@
 script: input_save.R
 name: Input Save
 author:
-  - name: Jean-Michel Lord
-    email: jean-michel.lord@mcgill.ca
-    identifier: https://orcid.org/0009-0007-3826-1125
-  - name: Guillaume Larocque
-description: "This sample script shows how it works. Remember that you can use **MarkDown** to style descriptions and add [links](http://boninabox.geobon.org)."
-external_link: https://github.com/GEO-BON/biab-2.0
+  - name: Simon Pahls
+    email: simon.pahls@uzh.ch
+  - name: Oliver Selmoni
+description: "This script saves the input data for the GFS Indicators Tool into a List for further, standardized processing."
 inputs:
   yoi:
     label: Year of Interest
