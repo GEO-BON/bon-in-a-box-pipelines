@@ -71,13 +71,13 @@ inputs:
   country:
     label: Country
     description: The country of the area of interest.
-    type: text
+    type: text[]
     example: "Canada"
   LCtype:
     label: Land Cover Type
     description: The type of land cover in the area of interest.
-    type: text
-    example: "Forest"
+    type: int[]
+    example: 120
 
 outputs:
   list:

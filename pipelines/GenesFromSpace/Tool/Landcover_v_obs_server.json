@@ -4,8 +4,8 @@
       "id": "32",
       "type": "io",
       "position": {
-        "x": 1087.1599809209606,
-        "y": 385.4174939900695
+        "x": 2273,
+        "y": 454
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
@@ -15,8 +15,8 @@
       "id": "34",
       "type": "output",
       "position": {
-        "x": 1854.9598863782414,
-        "y": 387.1786376811131
+        "x": 3075,
+        "y": 143
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "35",
       "type": "output",
       "position": {
-        "x": 1854.9598863782414,
-        "y": 399.0250025285565
+        "x": 3075,
+        "y": 239
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "36",
       "type": "output",
       "position": {
-        "x": 1854.9598863782414,
-        "y": 413.2406403454886
+        "x": 3075,
+        "y": 191
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "37",
       "type": "output",
       "position": {
-        "x": 1857.32915934773,
-        "y": 428.640914647165
+        "x": 3075,
+        "y": 559
       },
       "data": {
         "label": "Output"
@@ -59,8 +59,8 @@
       "id": "39",
       "type": "io",
       "position": {
-        "x": 335.10330811983954,
-        "y": 380.21152143927293
+        "x": 1476,
+        "y": 516
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json"
@@ -70,8 +70,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": -80.31164271190505,
-        "y": 567.3753556814486
+        "x": 496,
+        "y": 671
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_table_observations.json"
@@ -81,11 +81,258 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": -559,
-        "y": 582.2291641235352
+        "x": 101,
+        "y": 165.66666666666669
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>read_csv.yml"
+      }
+    },
+    {
+      "id": "43",
+      "type": "userInput",
+      "position": {
+        "x": 62,
+        "y": 130.66666666666669
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 50
+      }
+    },
+    {
+      "id": "44",
+      "type": "userInput",
+      "position": {
+        "x": 183,
+        "y": 95.66666666666667
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 10
+      }
+    },
+    {
+      "id": "45",
+      "type": "userInput",
+      "position": {
+        "x": 1000,
+        "y": 519.3333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          130,
+          140
+        ]
+      }
+    },
+    {
+      "id": "46",
+      "type": "userInput",
+      "position": {
+        "x": 1016,
+        "y": 304
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ]
+      }
+    },
+    {
+      "id": "47",
+      "type": "userInput",
+      "position": {
+        "x": 971,
+        "y": 192
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "48",
+      "type": "userInput",
+      "position": {
+        "x": 1030,
+        "y": 269
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+      }
+    },
+    {
+      "id": "49",
+      "type": "userInput",
+      "position": {
+        "x": 985,
+        "y": 459
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          50,
+          100,
+          1000
+        ]
+      }
+    },
+    {
+      "id": "50",
+      "type": "io",
+      "position": {
+        "x": 1797,
+        "y": 143
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>input_save.yml"
+      }
+    },
+    {
+      "id": "51",
+      "type": "constant",
+      "position": {
+        "x": 989,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "NA"
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": 952,
+        "y": 54
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          "NA"
+        ]
+      }
+    },
+    {
+      "id": "53",
+      "type": "constant",
+      "position": {
+        "x": 998,
+        "y": 150
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
+    },
+    {
+      "id": "54",
+      "type": "constant",
+      "position": {
+        "x": 998,
+        "y": 227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
+    },
+    {
+      "id": "55",
+      "type": "userInput",
+      "position": {
+        "x": 1061,
+        "y": 339
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "johndoe"
+      }
+    },
+    {
+      "id": "56",
+      "type": "userInput",
+      "position": {
+        "x": 1059,
+        "y": 374
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "johndoe@example.com"
+      }
+    },
+    {
+      "id": "57",
+      "type": "constant",
+      "position": {
+        "x": 957,
+        "y": 409
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "NA"
+        ]
+      }
+    },
+    {
+      "id": "58",
+      "type": "output",
+      "position": {
+        "x": 2273,
+        "y": 114
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "59",
+      "type": "io",
+      "position": {
+        "x": 3075,
+        "y": 607
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>output_save.yml"
+      }
+    },
+    {
+      "id": "60",
+      "type": "output",
+      "position": {
+        "x": 3471.1969899329433,
+        "y": 604.6277661495661
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -152,41 +399,208 @@
       "target": "40",
       "targetHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|species_obs",
       "id": "reactflow__edge-42csv_out-40GFS_IndicatorsTool>get_pop_poly.yml@5|species_obs"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance",
+      "id": "reactflow__edge-43-40GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "40",
+      "targetHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size",
+      "id": "reactflow__edge-44-40GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "39",
+      "targetHandle": "pipeline@124",
+      "id": "reactflow__edge-45-39pipeline@124"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "39",
+      "targetHandle": "pipeline@123",
+      "id": "reactflow__edge-46-39pipeline@123"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "32",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|ne_nc",
+      "id": "reactflow__edge-47-32GFS_IndicatorsTool>get_Indicators.yml@162|ne_nc"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "32",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|runtitle",
+      "id": "reactflow__edge-48-32GFS_IndicatorsTool>get_Indicators.yml@162|runtitle"
+    },
+    {
+      "source": "49",
+      "sourceHandle": null,
+      "target": "32",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|pop_density",
+      "id": "reactflow__edge-49-32GFS_IndicatorsTool>get_Indicators.yml@162|pop_density"
+    },
+    {
+      "source": "49",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "popdensity",
+      "id": "reactflow__edge-49-50popdensity"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "title",
+      "id": "reactflow__edge-48-50title"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "nenc",
+      "id": "reactflow__edge-47-50nenc"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "LCtype",
+      "id": "reactflow__edge-45-50LCtype"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "yoi",
+      "id": "reactflow__edge-46-50yoi"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-44-50buffer"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "popdistance",
+      "id": "reactflow__edge-43-50popdistance"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "speciesname",
+      "id": "reactflow__edge-51-50speciesname"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-52-50bbox"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "startyear",
+      "id": "reactflow__edge-53-50startyear"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "endyear",
+      "id": "reactflow__edge-54-50endyear"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "username",
+      "id": "reactflow__edge-55-50username"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "useremail",
+      "id": "reactflow__edge-56-50useremail"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "50",
+      "targetHandle": "country",
+      "id": "reactflow__edge-57-50country"
+    },
+    {
+      "source": "50",
+      "sourceHandle": "list",
+      "target": "58",
+      "targetHandle": null,
+      "id": "reactflow__edge-50list-58"
+    },
+    {
+      "source": "40",
+      "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
+      "target": "59",
+      "targetHandle": "geojson",
+      "id": "reactflow__edge-40GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-59geojson"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|output_maps",
+      "target": "59",
+      "targetHandle": "coverchange",
+      "id": "reactflow__edge-39GFS_IndicatorsTool>get_LCY.yml@115|output_maps-59coverchange"
+    },
+    {
+      "source": "32",
+      "sourceHandle": "GFS_IndicatorsTool>pop_area_by_habitat.yml@99|pop_area",
+      "target": "59",
+      "targetHandle": "poparea",
+      "id": "reactflow__edge-32GFS_IndicatorsTool>pop_area_by_habitat.yml@99|pop_area-59poparea"
+    },
+    {
+      "source": "32",
+      "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|ne_table",
+      "target": "59",
+      "targetHandle": "popsize",
+      "id": "reactflow__edge-32GFS_IndicatorsTool>get_Indicators.yml@162|ne_table-59popsize"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "list",
+      "target": "60",
+      "targetHandle": null,
+      "id": "reactflow__edge-59list-60"
     }
   ],
   "inputs": {
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@32|GFS_IndicatorsTool>get_Indicators.yml@162|ne_nc": {
-      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
-      "label": "Ne:Nc ratio estimate",
-      "weight": 0,
-      "type": "float[]",
-      "example": [
-        0.1,
-        0.2
-      ]
+    "pipeline@44": {
+      "label": "Size of buffer",
+      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
+      "type": "float",
+      "example": 10,
+      "weight": 0
     },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@32|GFS_IndicatorsTool>get_Indicators.yml@162|runtitle": {
-      "description": "Set a name for the pipeline run.",
-      "label": "Title of the run",
-      "weight": 1,
-      "type": "text",
-      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
-    },
-    "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json@32|GFS_IndicatorsTool>get_Indicators.yml@162|pop_density": {
-      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
-      "label": "Population density",
-      "weight": 2,
-      "type": "float[]",
-      "example": [
-        50,
-        100,
-        1000
-      ]
-    },
-    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@39|pipeline@123": {
-      "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
+    "pipeline@46": {
       "label": "Years of interest",
-      "weight": 3,
+      "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
       "type": "int[]",
       "example": [
         1995,
@@ -195,31 +609,53 @@
         2010,
         2015,
         2020
-      ]
+      ],
+      "weight": 1
     },
-    "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json@39|pipeline@124": {
-      "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
+    "pipeline@43": {
+      "label": "Distance between populations",
+      "description": "Distance [in km] to separate species observations in different populations.",
+      "type": "float",
+      "example": 50,
+      "weight": 2
+    },
+    "pipeline@45": {
       "label": "Landcover classes",
-      "weight": 4,
+      "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
       "type": "int[]",
       "example": [
         130,
         140
-      ]
+      ],
+      "weight": 3
     },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_table_observations.json@40|GFS_IndicatorsTool>get_pop_poly.yml@5|buffer_size": {
-      "description": "Radius size [in km] to determine population presence around the coordinates of species observations.",
-      "label": "Size of buffer",
-      "weight": 5,
-      "type": "float",
-      "example": 10
+    "pipeline@47": {
+      "label": "Ne:Nc ratio estimate",
+      "description": "Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.",
+      "type": "float[]",
+      "example": [
+        0.1,
+        0.2
+      ],
+      "weight": 4
     },
-    "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_table_observations.json@40|GFS_IndicatorsTool>get_pop_poly.yml@5|pop_distance": {
-      "description": "Distance [in km] to separate species observations in different populations.",
-      "label": "Distance between populations",
-      "weight": 6,
-      "type": "float",
-      "example": 50
+    "pipeline@49": {
+      "label": "Population density",
+      "description": "Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.",
+      "type": "float[]",
+      "example": [
+        50,
+        100,
+        1000
+      ],
+      "weight": 5
+    },
+    "pipeline@48": {
+      "label": "Title of the run",
+      "description": "Set a name for the pipeline run.",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "weight": 6
     },
     "GFS_IndicatorsTool>read_csv.yml@42|csv": {
       "description": "to be loaded",
@@ -227,6 +663,20 @@
       "type": "text",
       "example": "[('ID', 'Value'), (1, 'a'), (2, 'b'), (3, 'c')]",
       "weight": 7
+    },
+    "pipeline@55": {
+      "label": "Username",
+      "description": "The username of the person conducting the analysis.",
+      "type": "text",
+      "example": "johndoe",
+      "weight": 8
+    },
+    "pipeline@56": {
+      "label": "User Email",
+      "description": "The email address of the person conducting the analysis.",
+      "type": "text",
+      "example": "johndoe@example.com",
+      "weight": 9
     }
   },
   "outputs": {
@@ -253,6 +703,18 @@
       "label": "Interactive plot",
       "weight": 3,
       "type": "text/html"
+    },
+    "GFS_IndicatorsTool>input_save.yml@50|list": {
+      "description": "List of all the Inputs given to the script",
+      "label": "Input List",
+      "type": "text/plain",
+      "weight": 4
+    },
+    "GFS_IndicatorsTool>output_save.yml@59|list": {
+      "description": "List of all the Inputs given to the script",
+      "label": "list",
+      "type": "text/plain",
+      "weight": 5
     }
   },
   "metadata": {
