@@ -136,6 +136,13 @@
       "target": "32",
       "targetHandle": "pipeline@161",
       "id": "reactflow__edge-40-32pipeline@161"
+    },
+    {
+      "source": "33",
+      "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@36|lc_classes",
+      "target": "32",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes",
+      "id": "reactflow__edge-33GFS_IndicatorsTool>get_TCY.yml@36|lc_classes-32GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes"
     }
   ],
   "inputs": {

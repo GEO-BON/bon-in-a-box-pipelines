@@ -254,7 +254,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Canada"
+        "value": "NA"
       }
     },
     {
@@ -599,6 +599,13 @@
       "target": "202",
       "targetHandle": null,
       "id": "reactflow__edge-184list-202"
+    },
+    {
+      "source": "176",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|lc_classes",
+      "target": "177",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes",
+      "id": "reactflow__edge-176GFS_IndicatorsTool>get_LCY.yml@115|lc_classes-177GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes"
     }
   ],
   "inputs": {

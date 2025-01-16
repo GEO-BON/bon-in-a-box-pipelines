@@ -218,6 +218,13 @@
       "type": "text",
       "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
       "weight": 5
+    },
+    "GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes": {
+      "description": "ID of LC classes used to evaluate habitat change",
+      "label": "Land cover classes ID",
+      "type": "text",
+      "example": "120,140",
+      "weight": 6
     }
   },
   "outputs": {

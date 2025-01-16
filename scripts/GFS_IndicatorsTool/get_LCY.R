@@ -172,9 +172,8 @@ output_maps<-file.path(outputFolder, "cover maps/")
 # Flush all remaining temporary files
 unlink(paste0(normalizePath(tempdir()), "/", dir(tempdir())), recursive = TRUE)
 
-
 ## Outputing result to JSON
-output <- list("lcyy"=lcyy_p, "output_maps"=output_maps)
+output <- list("lcyy"=lcyy_p, "output_maps"=output_maps, 'lc_classes'=paste(user_classes,collapse = ','))
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))

@@ -29,12 +29,17 @@ HabitatNC=rast(paste0(output_maps, "/HabitatNC.tif"))
 HabitatLOSS=rast(paste0(output_maps, "/HabitatLOSS.tif"))
 HabitatGAIN=rast(paste0(output_maps, "/HabitatGAIN.tif"))
 
-# # # # #
-# pop_poly = st_read('output/GFS_IndicatorsTool/get_pop_poly/9b39fc6dfd1badbee9e004a0aeffc008/population_polygons.geojson')
-# habitat = stack('output/GFS_IndicatorsTool/get_LCY/4d75a04ceef2cb0acbdf4564ee1f22da/lcyy.tif')
-# pop_habitat_area = read.table('output/GFS_IndicatorsTool/pop_area_by_habitat/1b0d13bac38e3c6a8381352186ebc447/pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
-# ne_nc = c(0.1)
-# PDen = c(1000)
+# # # # # #
+# pop_poly = st_read('userdata/population_polygons.geojson')
+# output_maps = 'userdata//lcyy/'
+# pop_habitat_area = read.table('userdata//pop_habitat_area.tsv', row.names=1, header=T, sep='\t')
+# ne_nc = c(0.1, 0.2)
+# PDen = c(1000, 2000)
+# HabitatNC=rast(paste0("userdata/cover maps//HabitatNC.tif"))
+# HabitatLOSS=rast(paste0("userdata/cover maps//HabitatLOSS.tif"))
+# HabitatGAIN=rast(paste0("userdata/cover maps//HabitatGAIN.tif"))
+# lc_classes = '140,150'
+# # # # # # # 
 
 ##Input control:
 if (!all(st_bbox(HabitatGAIN)==st_bbox(HabitatLOSS)) | !all(st_bbox(HabitatGAIN)==st_bbox(HabitatNC)) | !all(st_bbox(HabitatLOSS)== st_bbox(HabitatNC))){
@@ -71,13 +76,13 @@ for (pden in PDen) {
   for (nenc_single_sp in ne_nc) {
     
     NEs = round(Pop_HA_T*pden*nenc_single_sp)
-    ne_table = rbind(ne_table, c(pden, nenc_single_sp, NEs[,1]))
+    ne_table = rbind(ne_table, c(pden, nenc_single_sp, round(mean(NEs[,1]>500),2), NEs[,1]))
     
     
   }
 }
 
-ne_table = data.frame(rbind(c('Pden', 'Ne:Nc', rownames(Pop_HA_T)), ne_table))
+ne_table = data.frame(rbind(c('Pden', 'Ne:Nc', 'Ne>500',rownames(Pop_HA_T)), ne_table))
 ne_table_path = file.path(outputFolder, 'NE.tsv')
 
 write.table(ne_table, ne_table_path,
@@ -225,7 +230,7 @@ popMap = plot_ly()  %>%
         source = HabitatGAIN_poly,
         below = "traces",
         type = "fill",
-        color = "rgba(  136, 200, 254 , 0.6)",
+        color = "rgba(  136, 200, 254 , 0.2)",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         line = list(width=0)),
       list( # habitat loss
@@ -234,7 +239,7 @@ popMap = plot_ly()  %>%
         type = "fill",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         below = "traces",
-        color = "rgba(  254, 174, 174 , 0.6)",
+        color = "rgba(  254, 174, 174 , 0.2)",
         line = list(width=0)),
       list( # habitat no change
         sourcetype = "geojson",
@@ -242,7 +247,7 @@ popMap = plot_ly()  %>%
         type = "fill",
         fill = list(outlinecolor =  "rgba(0,0,0,0)"),
         below = "traces",
-        color = "rgba(   174, 251, 137,  0.6)",
+        color = "rgba(   174, 251, 137,  0.2)",
         line = list(width=0))
     ),
     domain = list(x = c(0, 1), y = c(0, 1))
@@ -394,8 +399,56 @@ pm_plots = plotly::subplot(HA_plot, HAR_plot, nrows=2, titleX = T, titleY = T) %
 ### Get plot title
 Title = input$runtitle
 
+### Get landcover classes
+lc_classes = strsplit(input$lc_classes,',')[[1]]
+# Load dictionary of lc classes
+LC_names = c(
+  "Cropland, rainfed",
+  "Herbaceous cover",
+  "Tree or shrub cover",
+  "Cropland, irrigated or post-flooding",
+  "Mosaic cropland (>50%) / natural vegetation (<50%)",
+  "Mosaic natural vegetation (>50%) / cropland (<50%)",
+  "Tree cover, broadleaved, evergreen, closed to open (>15%)",
+  "Tree cover, broadleaved, deciduous, closed to open (>15%)",
+  "Tree cover, broadleaved, deciduous, closed (>40%)",
+  "Tree cover, broadleaved, deciduous, open (15-40%)",
+  "Tree cover, needleleaved, evergreen, closed to open (>15%)",
+  "Tree cover, needleleaved, evergreen, closed (>40%)",
+  "Tree cover, needleleaved, evergreen, open (15-40%)",
+  "Tree cover, needleleaved, deciduous, closed to open (>15%)",
+  "Tree cover, needleleaved, deciduous, closed (>40%)",
+  "Tree cover, needleleaved, deciduous, open (15-40%)",
+  "Tree cover, mixed leaf type (broadleaved and needleleaved)",
+  "Mosaic tree and shrub (>50%) / herbaceous cover (<50%)",
+  "Mosaic herbaceous cover (>50%) / tree and shrub (<50%)",
+  "Shrubland",
+  "Grassland",
+  "Lichens and mosses",
+  "Sparse vegetation (tree, shrub, herbaceous cover) (<15%)",
+  "Tree cover, flooded, fresh or brackish water",
+  "Tree cover, flooded, saline water",
+  "Shrub or herbaceous cover, flooded, fresh/saline/brackish water",
+  "Urban areas",
+  "Bare areas",
+  "Water bodies",
+  "Permanent snow and ice"
+)
+names(LC_names) = c(
+  10, 11, 12, 20, 30, 40, 50, 60, 61, 62, 70, 71, 72, 80, 81, 82,
+  90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200, 210, 220
+)
+
+if (lc_classes[1]!='0') {
+
+  Title = paste0(Title,'\n Landcover classes: ', paste(LC_names[lc_classes], collapse = '; '),'.')
+  
+}
+
+
+
 ### Get rounded NE>500 indicator
-ne500r = round(mean(as.numeric(ne_table[2,-c(1:2)])>500, na.rm=T),2)
+ne500r = round(mean(as.numeric(ne_table[2,-c(1:3)])>500, na.rm=T),2)
 
 ### Get rounded PM indicator
 PMr = round(PM, 2)

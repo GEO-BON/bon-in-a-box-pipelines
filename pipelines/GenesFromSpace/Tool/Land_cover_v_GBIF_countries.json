@@ -599,6 +599,13 @@
       "target": "183",
       "targetHandle": "useremail",
       "id": "reactflow__edge-200-183useremail"
+    },
+    {
+      "source": "178",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|lc_classes",
+      "target": "176",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes",
+      "id": "reactflow__edge-178GFS_IndicatorsTool>get_LCY.yml@115|lc_classes-176GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes"
     }
   ],
   "inputs": {

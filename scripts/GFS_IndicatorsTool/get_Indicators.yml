@@ -43,6 +43,12 @@ inputs:
     type: text
     example: Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023
 
+  lc_classes:
+    label: Land cover classes ID
+    description: ID of LC classes used to evaluate habitat change
+    type: text
+    example: 120,140
+
 outputs:
 
   ne_table:

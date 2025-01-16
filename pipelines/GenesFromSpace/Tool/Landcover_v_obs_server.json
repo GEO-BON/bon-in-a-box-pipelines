@@ -588,6 +588,13 @@
       "target": "60",
       "targetHandle": null,
       "id": "reactflow__edge-59list-60"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|lc_classes",
+      "target": "32",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes",
+      "id": "reactflow__edge-39GFS_IndicatorsTool>get_LCY.yml@115|lc_classes-32GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes"
     }
   ],
   "inputs": {

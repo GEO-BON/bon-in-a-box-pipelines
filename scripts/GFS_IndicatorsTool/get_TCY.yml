@@ -30,5 +30,10 @@ outputs:
     description: resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot
     type: text
 
+  lc_classes:
+    label: Land cover classes ID
+    description: ID of LC classes used to evaluate habitat change (empty in this script)
+    type: text
+
 
 

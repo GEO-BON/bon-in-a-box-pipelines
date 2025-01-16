@@ -134,6 +134,13 @@
       "target": "32",
       "targetHandle": "pipeline@161",
       "id": "reactflow__edge-40GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-32pipeline@161"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "GFS_IndicatorsTool>get_LCY.yml@115|lc_classes",
+      "target": "32",
+      "targetHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes",
+      "id": "reactflow__edge-39GFS_IndicatorsTool>get_LCY.yml@115|lc_classes-32GFS_IndicatorsTool>get_Indicators.yml@162|lc_classes"
     }
   ],
   "inputs": {

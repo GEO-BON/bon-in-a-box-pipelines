@@ -64,6 +64,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "41",
+      "type": "output",
+      "position": {
+        "x": 1375.7752680161739,
+        "y": 577.3436409922106
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -94,6 +105,13 @@
       "target": "40",
       "targetHandle": null,
       "id": "reactflow__edge-36output_maps-40"
+    },
+    {
+      "source": "36",
+      "sourceHandle": "lc_classes",
+      "target": "41",
+      "targetHandle": null,
+      "id": "reactflow__edge-36lc_classes-41"
     }
   ],
   "inputs": {
@@ -130,6 +148,12 @@
       "label": "Cover, cover gain and cover loss map",
       "type": "text",
       "weight": 1
+    },
+    "GFS_IndicatorsTool>get_TCY.yml@36|lc_classes": {
+      "description": "ID of LC classes used to evaluate habitat change (empty in this script)",
+      "label": "Land cover classes ID",
+      "type": "text",
+      "weight": 2
     }
   },
   "metadata": {
