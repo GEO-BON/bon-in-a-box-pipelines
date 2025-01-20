@@ -25,6 +25,7 @@ RUN chmod 777 /.condarc
 # Permissions cannot be defined at mount time, hence we create empty folder with the appropriate permissions.
 RUN mkdir /.cache && mkdir /.cache/conda && chmod a+w /.cache/conda
 RUN mkdir /.conda && chmod a+w /.conda
+RUN mkdir /.config && chmod a+w /.config
 RUN mkdir /r-libs-user && chmod a+w /r-libs-user
 RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml
 
