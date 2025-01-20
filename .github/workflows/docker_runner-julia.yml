@@ -1,4 +1,4 @@
-name: Julia Runner, main branch
+name: Julia Runner
 
 on:
   workflow_dispatch:
@@ -50,6 +50,7 @@ jobs:
         context: runners
         file: runners/julia-dockerfile
         push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+        tags: ${{ steps.metadata-main.outputs.tags || steps.metadata-staging.outputs.tags }}
+        labels: ${{ steps.metadata-main.outputs.labels || steps.metadata-staging.outputs.labels }}
+
 
