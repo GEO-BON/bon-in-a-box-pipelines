@@ -100,17 +100,6 @@
       }
     },
     {
-      "id": "185",
-      "type": "output",
-      "position": {
-        "x": 3260,
-        "y": 554.3333333333334
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "186",
       "type": "userInput",
       "position": {
@@ -189,17 +178,6 @@
       "data": {
         "type": "int",
         "value": 1980
-      }
-    },
-    {
-      "id": "192",
-      "type": "output",
-      "position": {
-        "x": 1293,
-        "y": 101.33333333333333
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -412,13 +390,6 @@
       "id": "reactflow__edge-178GFS_IndicatorsTool>get_LCY.yml@115|output_maps-184coverchange"
     },
     {
-      "source": "184",
-      "sourceHandle": "list",
-      "target": "185",
-      "targetHandle": null,
-      "id": "reactflow__edge-184list-185"
-    },
-    {
       "source": "186",
       "sourceHandle": null,
       "target": "177",
@@ -501,13 +472,6 @@
       "target": "183",
       "targetHandle": "startyear",
       "id": "reactflow__edge-191-183startyear"
-    },
-    {
-      "source": "183",
-      "sourceHandle": "list",
-      "target": "192",
-      "targetHandle": null,
-      "id": "reactflow__edge-183list-192"
     },
     {
       "source": "193",
@@ -745,18 +709,6 @@
       "label": "Interactive plot",
       "weight": 3,
       "type": "text/html"
-    },
-    "GFS_IndicatorsTool>output_save.yml@184|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "list",
-      "type": "text/plain",
-      "weight": 4
-    },
-    "GFS_IndicatorsTool>input_save.yml@183|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "Input List",
-      "type": "text/plain",
-      "weight": 5
     }
   },
   "metadata": {

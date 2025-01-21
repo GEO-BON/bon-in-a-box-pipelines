@@ -48,8 +48,8 @@
       "id": "37",
       "type": "output",
       "position": {
-        "x": 3075,
-        "y": 559
+        "x": 3111.7828790449867,
+        "y": 450.1839828252473
       },
       "data": {
         "label": "Output"
@@ -303,17 +303,6 @@
       }
     },
     {
-      "id": "58",
-      "type": "output",
-      "position": {
-        "x": 2273,
-        "y": 114
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "59",
       "type": "io",
       "position": {
@@ -322,17 +311,6 @@
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>output_save.yml"
-      }
-    },
-    {
-      "id": "60",
-      "type": "output",
-      "position": {
-        "x": 3471.1969899329433,
-        "y": 604.6277661495661
-      },
-      "data": {
-        "label": "Output"
       }
     }
   ],
@@ -548,13 +526,6 @@
       "id": "reactflow__edge-57-50country"
     },
     {
-      "source": "50",
-      "sourceHandle": "list",
-      "target": "58",
-      "targetHandle": null,
-      "id": "reactflow__edge-50list-58"
-    },
-    {
       "source": "40",
       "sourceHandle": "GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons",
       "target": "59",
@@ -581,13 +552,6 @@
       "target": "59",
       "targetHandle": "popsize",
       "id": "reactflow__edge-32GFS_IndicatorsTool>get_Indicators.yml@162|ne_table-59popsize"
-    },
-    {
-      "source": "59",
-      "sourceHandle": "list",
-      "target": "60",
-      "targetHandle": null,
-      "id": "reactflow__edge-59list-60"
     },
     {
       "source": "39",
@@ -710,18 +674,6 @@
       "label": "Interactive plot",
       "weight": 3,
       "type": "text/html"
-    },
-    "GFS_IndicatorsTool>input_save.yml@50|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "Input List",
-      "type": "text/plain",
-      "weight": 4
-    },
-    "GFS_IndicatorsTool>output_save.yml@59|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "list",
-      "type": "text/plain",
-      "weight": 5
     }
   },
   "metadata": {

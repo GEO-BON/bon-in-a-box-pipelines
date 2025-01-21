@@ -273,17 +273,6 @@
       }
     },
     {
-      "id": "56",
-      "type": "output",
-      "position": {
-        "x": 2237,
-        "y": 620
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "57",
       "type": "io",
       "position": {
@@ -501,13 +490,6 @@
       "id": "reactflow__edge-54-40country"
     },
     {
-      "source": "40",
-      "sourceHandle": "list",
-      "target": "56",
-      "targetHandle": null,
-      "id": "reactflow__edge-40list-56"
-    },
-    {
       "source": "33",
       "sourceHandle": "GFS_IndicatorsTool>get_TCY.yml@36|output_maps",
       "target": "57",
@@ -652,12 +634,6 @@
       "label": "Interactive plot",
       "weight": 3,
       "type": "text/html"
-    },
-    "GFS_IndicatorsTool>input_save.yml@40|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "Input List",
-      "type": "text/plain",
-      "weight": 4
     }
   },
   "metadata": {

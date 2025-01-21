@@ -287,28 +287,6 @@
       }
     },
     {
-      "id": "221",
-      "type": "output",
-      "position": {
-        "x": 1273,
-        "y": 524
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "222",
-      "type": "output",
-      "position": {
-        "x": 3224,
-        "y": 280
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "223",
       "type": "constant",
       "position": {
@@ -571,20 +549,6 @@
       "id": "reactflow__edge-198GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-205geojson"
     },
     {
-      "source": "206",
-      "sourceHandle": "list",
-      "target": "221",
-      "targetHandle": null,
-      "id": "reactflow__edge-206list-221"
-    },
-    {
-      "source": "205",
-      "sourceHandle": "list",
-      "target": "222",
-      "targetHandle": null,
-      "id": "reactflow__edge-205list-222"
-    },
-    {
       "source": "223",
       "sourceHandle": null,
       "target": "206",
@@ -725,18 +689,6 @@
       "label": "Interactive plot",
       "weight": 3,
       "type": "text/html"
-    },
-    "GFS_IndicatorsTool>input_save.yml@206|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "Input List",
-      "type": "text/plain",
-      "weight": 4
-    },
-    "GFS_IndicatorsTool>output_save.yml@205|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "list",
-      "type": "text/plain",
-      "weight": 5
     }
   },
   "metadata": {

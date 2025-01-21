@@ -15,9 +15,10 @@ print(input)
 
 print(read.csv(input$poparea, sep="\t"))
 
-write(as.character(read.csv(input$poparea, sep="\t")), file=file.path(outputFolder, "population_area.tsv"))
-write(as.character(read.csv(input$popsize, sep="\t")), file=file.path(outputFolder, "population_size.tsv"))
-write(as.character(st_read(input$geojson)), file=file.path(outputFolder, "pop_poly.geojson"))
+write.table(read.csv(input$poparea, sep="\t"), file=file.path(outputFolder, "population_area.tsv"), sep="\t", row.names=FALSE)
+write.table(read.csv(input$popsize, sep="\t"), file=file.path(outputFolder, "population_size.tsv"), sep="\t", row.names=FALSE)
+
+st_write(st_read(input$geojson), dsn = file.path(outputFolder, "pop_poly.geojson"))
 current_folder <- input$coverchange
 new_folder <- file.path(outputFolder, "coverchange")
 list_of_files <- list.files(current_folder) 

@@ -258,17 +258,6 @@
       }
     },
     {
-      "id": "197",
-      "type": "output",
-      "position": {
-        "x": 1375,
-        "y": 598.9999999999999
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "198",
       "type": "userInput",
       "position": {
@@ -312,17 +301,6 @@
           100,
           1000
         ]
-      }
-    },
-    {
-      "id": "202",
-      "type": "output",
-      "position": {
-        "x": 3377.852225134496,
-        "y": 543.3066577670264
-      },
-      "data": {
-        "label": "Output"
       }
     }
   ],
@@ -517,13 +495,6 @@
       "id": "reactflow__edge-196-183country"
     },
     {
-      "source": "183",
-      "sourceHandle": "list",
-      "target": "197",
-      "targetHandle": null,
-      "id": "reactflow__edge-183list-197"
-    },
-    {
       "source": "198",
       "sourceHandle": null,
       "target": "177",
@@ -592,13 +563,6 @@
       "target": "184",
       "targetHandle": "poparea",
       "id": "reactflow__edge-177GFS_IndicatorsTool>pop_area_by_habitat.yml@99|pop_area-184poparea"
-    },
-    {
-      "source": "184",
-      "sourceHandle": "list",
-      "target": "202",
-      "targetHandle": null,
-      "id": "reactflow__edge-184list-202"
     },
     {
       "source": "176",
@@ -747,18 +711,6 @@
       "label": "Interactive plot",
       "weight": 3,
       "type": "text/html"
-    },
-    "GFS_IndicatorsTool>input_save.yml@183|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "Input List",
-      "type": "text/plain",
-      "weight": 4
-    },
-    "GFS_IndicatorsTool>output_save.yml@184|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "list",
-      "type": "text/plain",
-      "weight": 5
     }
   },
   "metadata": {

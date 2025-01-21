@@ -287,28 +287,6 @@
       }
     },
     {
-      "id": "225",
-      "type": "output",
-      "position": {
-        "x": 1375,
-        "y": 475.00000000000006
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "226",
-      "type": "output",
-      "position": {
-        "x": 3326,
-        "y": 396.00000000000006
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "227",
       "type": "constant",
       "position": {
@@ -557,13 +535,6 @@
       "id": "reactflow__edge-199GFS_IndicatorsTool>get_pop_poly.yml@5|population_polygons-210geojson"
     },
     {
-      "source": "209",
-      "sourceHandle": "list",
-      "target": "225",
-      "targetHandle": null,
-      "id": "reactflow__edge-209list-225"
-    },
-    {
       "source": "204",
       "sourceHandle": "GFS_IndicatorsTool>get_Indicators.yml@162|ne_table",
       "target": "210",
@@ -576,13 +547,6 @@
       "target": "210",
       "targetHandle": "poparea",
       "id": "reactflow__edge-204GFS_IndicatorsTool>pop_area_by_habitat.yml@99|pop_area-210poparea"
-    },
-    {
-      "source": "210",
-      "sourceHandle": "list",
-      "target": "226",
-      "targetHandle": null,
-      "id": "reactflow__edge-210list-226"
     },
     {
       "source": "227",
@@ -727,18 +691,6 @@
       "label": "Interactive plot",
       "weight": 3,
       "type": "text/html"
-    },
-    "GFS_IndicatorsTool>input_save.yml@209|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "Input List",
-      "type": "text/plain",
-      "weight": 4
-    },
-    "GFS_IndicatorsTool>output_save.yml@210|list": {
-      "description": "List of all the Inputs given to the script",
-      "label": "list",
-      "type": "text/plain",
-      "weight": 5
     }
   },
   "metadata": {
