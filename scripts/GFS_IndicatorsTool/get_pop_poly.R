@@ -63,7 +63,7 @@ PopPoly = sf_dissolve(circles_sf, 'pop')
 
 
 ## remove overlap between features
-PopPoly=sf_dissolve(st_intersection(st_cast(PopPoly,'MULTIPOLYGON')),'pop')
+PopPoly=sf_dissolve(st_cast(st_intersection(st_cast(PopPoly,'MULTIPOLYGON'))),'pop')
 
 ## correct geometries --> if geometry collections--> extract only polygons
 for (i in which(st_geometry_type(PopPoly)=='GEOMETRYCOLLECTION')) {
