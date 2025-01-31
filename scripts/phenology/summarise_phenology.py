@@ -47,7 +47,7 @@ else:
 datacube_resampled.save_result("GTiff")
 # start job to fetch rasters
 print("Starting job to fetch raster layers")
-job1 = datacube.create_job()
+job1 = datacube_resampled.create_job()
 #job1 = connection.job("j-25013118104147e2938eba6a753de42f")
 
 job1.start_and_wait()
