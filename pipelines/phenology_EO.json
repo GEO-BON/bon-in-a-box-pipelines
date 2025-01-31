@@ -1,0 +1,173 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 11.58746337890625,
+        "y": 105.79999542236328
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "io",
+      "position": {
+        "x": 531.5249938964844,
+        "y": 224
+      },
+      "data": {
+        "descriptionFile": "phenology>summarise_phenology.yml"
+      }
+    },
+    {
+      "id": "4",
+      "type": "output",
+      "position": {
+        "x": 1020.5249938964844,
+        "y": 220
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "5",
+      "type": "output",
+      "position": {
+        "x": 1028.5249938964844,
+        "y": 237
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "bbox",
+      "target": "3",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-1bbox-3bbox"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "study_area_polygon",
+      "target": "3",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-1study_area_polygon-3study_area_polygon"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "rasters",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-3rasters-4"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "timeseries",
+      "target": "5",
+      "targetHandle": null,
+      "id": "reactflow__edge-3timeseries-5"
+    }
+  ],
+  "inputs": {
+    "phenology>summarise_phenology.yml@3|start_date": {
+      "description": "Start date for phenology time series",
+      "label": "Start date",
+      "type": "text",
+      "example": "2017",
+      "weight": 0
+    },
+    "phenology>summarise_phenology.yml@3|end_date": {
+      "description": "End date for phenology time series",
+      "label": "End date",
+      "type": "text",
+      "example": "2023",
+      "weight": 1
+    },
+    "phenology>summarise_phenology.yml@3|bands": {
+      "description": "Bands of interest for the calculations",
+      "label": "Bands",
+      "type": "options[]",
+      "options": [
+        "SOSD",
+        "EOSD",
+        "SOSV",
+        "EOSV",
+        "MAXD",
+        "MAXV",
+        "MINV",
+        "AMPL",
+        "LENGTH",
+        "LSLOPE",
+        "RSLOPE",
+        "SPROD",
+        "TPROD"
+      ],
+      "example": [
+        "LENGTH",
+        "AMPL"
+      ],
+      "weight": 2
+    },
+    "phenology>summarise_phenology.yml@3|aggregate_function": {
+      "description": "Function to spatially aggregate by",
+      "label": "Aggregate function",
+      "type": "options",
+      "options": [
+        "mean",
+        "min",
+        "max"
+      ],
+      "example": "mean",
+      "weight": 3
+    },
+    "phenology>summarise_phenology.yml@3|spatial_resolution": {
+      "description": "Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer.",
+      "label": "Spatial resolution",
+      "type": "int",
+      "weight": 4,
+      "example": null
+    },
+    "data>getBoundingBox.yml@1|country": {
+      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 5
+    },
+    "data>getBoundingBox.yml@1|state": {
+      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
+      "label": "State/Province",
+      "type": "text",
+      "example": "Putumayo",
+      "weight": 6
+    },
+    "data>getBoundingBox.yml@1|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 7,
+      "example": null
+    }
+  },
+  "outputs": {
+    "phenology>summarise_phenology.yml@3|rasters": {
+      "description": "Rasters of phenology layers over time",
+      "label": "Phenology rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "phenology>summarise_phenology.yml@3|timeseries": {
+      "description": "Summarised values over the polygon of interest for each year for each band of interest",
+      "label": "Zonal statistics",
+      "type": "text/csv[]",
+      "weight": 1
+    }
+  }
+}

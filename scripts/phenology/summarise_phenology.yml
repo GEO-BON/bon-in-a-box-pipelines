@@ -1,0 +1,77 @@
+script: summarise_phenology.py
+name: Summarise phenology
+timeout: 1440
+author: 
+  - name: Jory Griffith
+license: CC-BY
+description: "Summarise yearly phenology data for a country (Europe only) using the copernicus data space ecosystem phenology layer. The script uses the openEO python client to send a job to openEO. The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing eason. It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers at https://land.copernicus.eu/en/dataset-catalog."
+inputs:
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: null
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area of interest
+    type: application/geo+json
+    example: null
+  start_date:
+    label: Start date
+    description: Start date for phenology time series
+    type: text
+    example: "2017"
+  end_date:
+    label: End date
+    description: End date for phenology time series
+    type: text
+    example: "2023"
+  bands:
+    label: Bands
+    description: Bands of interest for the calculations. 
+    type: options[]
+    options: 
+      - "SOSD"
+      - "EOSD"
+      - "SOSV"
+      - "EOSV"
+      - "MAXD"
+      - "MAXV"
+      - "MINV"
+      - "AMPL"
+      - "LENGTH"
+      - "LSLOPE"
+      - "RSLOPE"
+      - "SPROD"
+      - "TPROD"
+      - "QFLAG"
+    example: ["LENGTH", "AMPL"]
+  aggregate_function:
+    label: Aggregate function
+    description: Function to spatially aggregate by
+    type: options
+    options:
+      - mean
+      - min
+      - max
+    example: mean
+  spatial_resolution:
+    label: Spatial resolution
+    description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer.
+    type: int
+    example: null
+outputs:
+  rasters:
+    label: Phenology rasters
+    description: Rasters of phenology layers over time
+    type: image/tiff;application=geotiff[]
+  timeseries:
+    label: Zonal statistics
+    description: Summarised values over the polygon of interest for each year for each band of interest
+    type: text/csv[]
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - openeo
+    - pandas
