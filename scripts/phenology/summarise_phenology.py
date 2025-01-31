@@ -25,10 +25,9 @@ connection = openeo.connect("https://openeo.dataspace.copernicus.eu/")
 
 # put authentication here
 connection.authenticate_oidc_client_credentials(
-    client_id=###,
-    client_secret=###,
+client_id=os.getenv("CDSE_CLIENT_ID"),
+client_secret=os.getenv("CDSE_CLIENT_SECRET"),
 )
-
 
 datacube = connection.load_collection(
   "COPERNICUS_VEGETATION_PHENOLOGY_PRODUCTIVITY_10M_SEASON1",
@@ -37,23 +36,33 @@ datacube = connection.load_collection(
   bands=bands
 )
 
-if spatial_resolution is None:
-    datacube_resampled = datacube
-else:
-    datacube_resampled = datacube.resample_spatial(resolution=spatial_resolution, method="bilinear")
+datacube_cropped = datacube.filter_spatial(polygon)
 
+if spatial_resolution is None:
+    datacube_resampled_cropped = datacube_cropped
+else:
+    datacube_resampled_cropped = datacube_cropped.resample_spatial(resolution=spatial_resolution, method="bilinear")
+
+# crop by polygon
 
 # output rasters
-datacube_resampled.save_result("GTiff")
+datacube_resampled_cropped.save_result("GTiff")
 # start job to fetch rasters
 print("Starting job to fetch raster layers")
-job1 = datacube_resampled.create_job()
-#job1 = connection.job("j-25013118104147e2938eba6a753de42f")
+#job1 = datacube_resampled_cropped.create_job()
+job1 = connection.job("j-2501311932454b79ac51874683ca8c24")
 
-job1.start_and_wait()
+#job1.start_and_wait()
 rasters = job1.get_results().download_files(outputFolder)
 #print(rasters)
+print(rasters)
 
+print(str(rasters[0]))
+raster_outs = []
+for t in range(len(rasters)- 1):
+    raster_outs.append(str(rasters[t]))
+
+print(raster_outs)
 #res = datacube.aggregate_spatial(
  #   geometries=polygon,
 #    reducer=aggregate_function
