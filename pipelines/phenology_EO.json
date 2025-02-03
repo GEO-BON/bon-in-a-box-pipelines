@@ -16,7 +16,7 @@
       "type": "io",
       "position": {
         "x": 531.5249938964844,
-        "y": 224
+        "y": 223
       },
       "data": {
         "descriptionFile": "phenology>summarise_phenology.yml"
@@ -27,7 +27,7 @@
       "type": "output",
       "position": {
         "x": 1020.5249938964844,
-        "y": 220
+        "y": 101
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,56 @@
       "id": "5",
       "type": "output",
       "position": {
-        "x": 1028.5249938964844,
-        "y": 237
+        "x": 1051.5249938964844,
+        "y": 109
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "6",
+      "type": "io",
+      "position": {
+        "x": 1091.1999816894531,
+        "y": 222
+      },
+      "data": {
+        "descriptionFile": "phenology>phenology_difference.yml"
+      }
+    },
+    {
+      "id": "7",
+      "type": "userInput",
+      "position": {
+        "x": 93.19998168945312,
+        "y": 224
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2017"
+      }
+    },
+    {
+      "id": "8",
+      "type": "userInput",
+      "position": {
+        "x": 147.19998168945312,
+        "y": 344
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2023"
+      }
+    },
+    {
+      "id": "9",
+      "type": "output",
+      "position": {
+        "x": 1667.1999816894531,
+        "y": 186
       },
       "data": {
         "label": "Output"
@@ -73,23 +121,51 @@
       "target": "5",
       "targetHandle": null,
       "id": "reactflow__edge-3timeseries-5"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "rasters",
+      "target": "6",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-3rasters-6rasters"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "start_date",
+      "id": "reactflow__edge-7-3start_date"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "end_date",
+      "id": "reactflow__edge-8-3end_date"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "end_date",
+      "id": "reactflow__edge-8-6end_date"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "start_date",
+      "id": "reactflow__edge-7-6start_date"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "phenology_change",
+      "target": "9",
+      "targetHandle": null,
+      "id": "reactflow__edge-6phenology_change-9"
     }
   ],
   "inputs": {
-    "phenology>summarise_phenology.yml@3|start_date": {
-      "description": "Start date for phenology time series",
-      "label": "Start date",
-      "type": "text",
-      "example": "2017",
-      "weight": 0
-    },
-    "phenology>summarise_phenology.yml@3|end_date": {
-      "description": "End date for phenology time series",
-      "label": "End date",
-      "type": "text",
-      "example": "2023",
-      "weight": 1
-    },
     "phenology>summarise_phenology.yml@3|bands": {
       "description": "Bands of interest for the calculations",
       "label": "Bands",
@@ -113,7 +189,7 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 2
+      "weight": 0
     },
     "phenology>summarise_phenology.yml@3|aggregate_function": {
       "description": "Function to spatially aggregate by",
@@ -125,13 +201,13 @@
         "max"
       ],
       "example": "mean",
-      "weight": 3
+      "weight": 1
     },
     "phenology>summarise_phenology.yml@3|spatial_resolution": {
       "description": "Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer.",
       "label": "Spatial resolution",
       "type": "int",
-      "weight": 4,
+      "weight": 2,
       "example": null
     },
     "data>getBoundingBox.yml@1|country": {
@@ -139,21 +215,35 @@
       "label": "Country",
       "type": "text",
       "example": "Colombia",
-      "weight": 5
+      "weight": 3
     },
     "data>getBoundingBox.yml@1|state": {
       "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
       "label": "State/Province",
       "type": "text",
       "example": "Putumayo",
-      "weight": 6
+      "weight": 4
     },
     "data>getBoundingBox.yml@1|study_area_file": {
       "description": "Upload a file of a custom study area",
       "label": "File for study area",
       "type": "text",
-      "weight": 7,
+      "weight": 5,
       "example": null
+    },
+    "pipeline@7": {
+      "label": "Start date",
+      "description": "Start date for phenology time series",
+      "type": "text",
+      "example": "2017",
+      "weight": 6
+    },
+    "pipeline@8": {
+      "label": "End date",
+      "description": "End date for phenology time series",
+      "type": "text",
+      "example": "2023",
+      "weight": 7
     }
   },
   "outputs": {
@@ -168,6 +258,12 @@
       "label": "Zonal statistics",
       "type": "text/csv[]",
       "weight": 1
+    },
+    "phenology>phenology_difference.yml@6|phenology_change": {
+      "description": "Raster plot of change in phenology from the start year to the end year.",
+      "label": "Change in phenology metrics",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
     }
   }
 }

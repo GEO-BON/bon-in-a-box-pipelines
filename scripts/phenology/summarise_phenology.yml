@@ -81,7 +81,7 @@ outputs:
   timeseries:
     label: Zonal statistics
     description: Summarised values over the polygon of interest for each year for each band of interest
-    type: text/csv[]
+    type: text/csv
 conda:
   channels:
     - conda-forge

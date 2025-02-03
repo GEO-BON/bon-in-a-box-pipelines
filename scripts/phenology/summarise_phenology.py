@@ -49,10 +49,9 @@ else:
 datacube_resampled_cropped.save_result("GTiff")
 # start job to fetch rasters
 print("Starting job to fetch raster layers")
-#job1 = datacube_resampled_cropped.create_job()
-job1 = connection.job("j-2501311932454b79ac51874683ca8c24")
+job1 = datacube_resampled_cropped.create_job()
 
-#job1.start_and_wait()
+job1.start_and_wait()
 rasters = job1.get_results().download_files(outputFolder)
 #print(rasters)
 print(rasters)
@@ -63,35 +62,28 @@ for t in range(len(rasters)- 1):
     raster_outs.append(str(rasters[t]))
 
 print(raster_outs)
-#res = datacube.aggregate_spatial(
- #   geometries=polygon,
-#    reducer=aggregate_function
-#)
+
+# Start job to calculate summary of phenology values over the polygon
+res = datacube.aggregate_spatial(
+    geometries=polygon,
+    reducer=aggregate_function
+)
 
 
-#result = res.save_result("CSV")
+result = res.save_result("CSV")
 
-#job2=result.create_job()
+print("Starting job to calculate phenology values for summary values over the polygon of interest")
 
-#print("Starting job to do zonal statistics")
-#job2.start_and_wait()
+job2 = result.create_job()
+job2.start_and_wait()
 
 
-#timeseries = job2.get_results().download_files(outputFolder)
-
-#print(len(timeseries))
-
-#outs = []
-#if(len(timeseries)>1):
-#    for t in range(len(timeseries)):
-#        outs += str(timeseries[t])
-#else:
-#    outs = str(timeseries[0])
-print(rasters)
+timeseries = job2.get_results().download_files(outputFolder)
+print(timeseries)
 
 output = {
- #    "timeseries": str(timeseries[0]),
-     "rasters": str(rasters[0]) # also need to figure out how to put this in an array
+     "timeseries": str(timeseries[0]),
+     "rasters": raster_outs # also need to figure out how to put this in an array
     }
 
 json_object = json.dumps(output, indent = 2)

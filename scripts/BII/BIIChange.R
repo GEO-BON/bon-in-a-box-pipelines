@@ -19,7 +19,7 @@ end_raster <- rasters[[names(rasters)==end_yr]]
 
 print(names(first_raster))
 # Summarise
-bii_change <- first_raster-end_raster
+bii_change <- end_raster-first_raster
 
 # Output
 bii_change_path <- file.path(outputFolder, "BII_change.tif")
