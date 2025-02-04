@@ -40,6 +40,7 @@ inputs:
     options:
       - "SEASON1"
       - "SEASON2"
+    example: "SEASON1"
   bands:
     label: Bands
     description: |
@@ -88,7 +89,7 @@ inputs:
     label: Spatial resolution
     description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
     type: int
-    example: null
+    example: 1000
 outputs:
   rasters:
     label: Phenology rasters
