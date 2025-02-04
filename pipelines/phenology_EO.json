@@ -170,14 +170,14 @@
       "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
       "label": "Country",
       "type": "text",
-      "example": "Colombia",
+      "example": "Belgium",
       "weight": 0
     },
     "data>getBoundingBox.yml@1|state": {
       "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
       "label": "State/Province",
       "type": "text",
-      "example": "Putumayo",
+      "example": null,
       "weight": 1
     },
     "data>getBoundingBox.yml@1|study_area_file": {
@@ -237,7 +237,7 @@
       "label": "Spatial resolution",
       "type": "int",
       "weight": 6,
-      "example": null
+      "example": 1000
     },
     "pipeline@8": {
       "label": "End date",
