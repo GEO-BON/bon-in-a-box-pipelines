@@ -194,6 +194,13 @@
       "example": "2017",
       "weight": 3
     },
+    "pipeline@8": {
+      "label": "End date",
+      "description": "End date for phenology time series",
+      "type": "text",
+      "example": "2023",
+      "weight": 4
+    },
     "phenology>summarise_phenology.yml@10|bands": {
       "description": "Bands of interest for the calculations. Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period. End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period. Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached Season minimum value (MINV) - average PPI of minima of left adn right sides of each season Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level. Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset",
       "label": "Bands",
@@ -218,7 +225,7 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 4
+      "weight": 5
     },
     "phenology>summarise_phenology.yml@10|aggregate_function": {
       "description": "Function to spatially aggregate by",
@@ -230,21 +237,14 @@
         "max"
       ],
       "example": "mean",
-      "weight": 5
+      "weight": 6
     },
     "phenology>summarise_phenology.yml@10|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer.",
       "label": "Spatial resolution",
       "type": "int",
-      "weight": 6,
+      "weight": 7,
       "example": 1000
-    },
-    "pipeline@8": {
-      "label": "End date",
-      "description": "End date for phenology time series",
-      "type": "text",
-      "example": "2023",
-      "weight": 7
     },
     "phenology>summarise_phenology.yml@10|season": {
       "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) \nand season 2 is the second growing season (late summer and fall).\n",
