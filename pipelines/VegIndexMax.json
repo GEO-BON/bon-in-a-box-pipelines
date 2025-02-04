@@ -1,0 +1,151 @@
+{
+  "nodes": [
+    {
+      "id": "164",
+      "type": "io",
+      "position": {
+        "x": 572.2000122070312,
+        "y": 359.8000030517578
+      },
+      "data": {
+        "descriptionFile": "VegIndexMax>VegIndexMax.yml"
+      }
+    },
+    {
+      "id": "165",
+      "type": "io",
+      "position": {
+        "x": 30.20001220703125,
+        "y": 371.8000030517578
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "166",
+      "type": "output",
+      "position": {
+        "x": 1151.2000122070312,
+        "y": 359.8000030517578
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "165",
+      "sourceHandle": "study_area_polygon",
+      "target": "164",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-165study_area_polygon-164study_area_polygon"
+    },
+    {
+      "source": "165",
+      "sourceHandle": "bbox",
+      "target": "164",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-165bbox-164bbox"
+    },
+    {
+      "source": "164",
+      "sourceHandle": "rasters",
+      "target": "166",
+      "targetHandle": null,
+      "id": "reactflow__edge-164rasters-166"
+    }
+  ],
+  "inputs": {
+    "VegIndexMax>VegIndexMax.yml@164|start_date": {
+      "description": "Start date for summarizing",
+      "label": "Start date",
+      "type": "text",
+      "example": "2019-05-01",
+      "weight": 0
+    },
+    "VegIndexMax>VegIndexMax.yml@164|end_date": {
+      "description": "End date for which summarizing NDVI.",
+      "label": "End date",
+      "type": "text",
+      "example": "2019-09-30",
+      "weight": 1
+    },
+    "VegIndexMax>VegIndexMax.yml@164|vegetation_index": {
+      "description": "Vegetation Indices that should be extracted. \n",
+      "label": "Vegetation indices",
+      "type": "options[]",
+      "options": [
+        "NDVI",
+        "PPI",
+        "LAI",
+        "FAPAR",
+        "QFLAG2"
+      ],
+      "example": [
+        "NDVI"
+      ],
+      "weight": 2
+    },
+    "VegIndexMax>VegIndexMax.yml@164|spatial_resolution": {
+      "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
+      "label": "Spatial resolution",
+      "type": "int",
+      "example": 100,
+      "weight": 3
+    },
+    "data>getBoundingBox.yml@165|country": {
+      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 4
+    },
+    "data>getBoundingBox.yml@165|state": {
+      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
+      "label": "State/Province",
+      "type": "text",
+      "example": "Putumayo",
+      "weight": 5
+    },
+    "data>getBoundingBox.yml@165|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 6,
+      "example": null
+    }
+  },
+  "outputs": {
+    "VegIndexMax>VegIndexMax.yml@164|rasters": {
+      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
+      "label": "NDVIMax raster",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    }
+  },
+  "metadata": {
+    "name": "Maximum Vegetation Index",
+    "description": "This script outputs the maximum vegetation index value for every pixel within a given region and for a selected time period over all Copernicus Vegetation Index layers available using OpenEO on the Copernicus Dataspace Ecosystem. The resulting raster image can thus be used to obtain a meaningful and cloud-free vegetation index layer. You can read more about the NDVI layers (here)[https://land.copernicus.eu/en/dataset-catalog].\"",
+    "author": [
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156"
+      }
+    ],
+    "license": null,
+    "external_link": null,
+    "references": [
+      {
+        "text": null,
+        "doi": null
+      },
+      {
+        "text": null,
+        "doi": null
+      }
+    ]
+  }
+}
