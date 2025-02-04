@@ -12,39 +12,6 @@
       }
     },
     {
-      "id": "3",
-      "type": "io",
-      "position": {
-        "x": 531.5249938964844,
-        "y": 223
-      },
-      "data": {
-        "descriptionFile": "phenology>summarise_phenology.yml"
-      }
-    },
-    {
-      "id": "4",
-      "type": "output",
-      "position": {
-        "x": 1020.5249938964844,
-        "y": 101
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "5",
-      "type": "output",
-      "position": {
-        "x": 1051.5249938964844,
-        "y": 109
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "6",
       "type": "io",
       "position": {
@@ -91,58 +58,42 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "10",
+      "type": "io",
+      "position": {
+        "x": 440.36248779296875,
+        "y": 181
+      },
+      "data": {
+        "descriptionFile": "phenology>summarise_phenology.yml"
+      }
+    },
+    {
+      "id": "11",
+      "type": "output",
+      "position": {
+        "x": 932.3624877929688,
+        "y": 133
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "12",
+      "type": "output",
+      "position": {
+        "x": 925.3624877929688,
+        "y": 197
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "1",
-      "sourceHandle": "bbox",
-      "target": "3",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-1bbox-3bbox"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "study_area_polygon",
-      "target": "3",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-1study_area_polygon-3study_area_polygon"
-    },
-    {
-      "source": "3",
-      "sourceHandle": "rasters",
-      "target": "4",
-      "targetHandle": null,
-      "id": "reactflow__edge-3rasters-4"
-    },
-    {
-      "source": "3",
-      "sourceHandle": "timeseries",
-      "target": "5",
-      "targetHandle": null,
-      "id": "reactflow__edge-3timeseries-5"
-    },
-    {
-      "source": "3",
-      "sourceHandle": "rasters",
-      "target": "6",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-3rasters-6rasters"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "3",
-      "targetHandle": "start_date",
-      "id": "reactflow__edge-7-3start_date"
-    },
-    {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "3",
-      "targetHandle": "end_date",
-      "id": "reactflow__edge-8-3end_date"
-    },
     {
       "source": "8",
       "sourceHandle": null,
@@ -163,11 +114,88 @@
       "target": "9",
       "targetHandle": null,
       "id": "reactflow__edge-6phenology_change-9"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "start_date",
+      "id": "reactflow__edge-7-10start_date"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "10",
+      "targetHandle": "end_date",
+      "id": "reactflow__edge-8-10end_date"
+    },
+    {
+      "source": "10",
+      "sourceHandle": "rasters",
+      "target": "11",
+      "targetHandle": null,
+      "id": "reactflow__edge-10rasters-11"
+    },
+    {
+      "source": "10",
+      "sourceHandle": "timeseries",
+      "target": "12",
+      "targetHandle": null,
+      "id": "reactflow__edge-10timeseries-12"
+    },
+    {
+      "source": "10",
+      "sourceHandle": "rasters",
+      "target": "6",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-10rasters-6rasters"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "bbox",
+      "target": "10",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-1bbox-10bbox"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "study_area_polygon",
+      "target": "10",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-1study_area_polygon-10study_area_polygon"
     }
   ],
   "inputs": {
-    "phenology>summarise_phenology.yml@3|bands": {
-      "description": "Bands of interest for the calculations",
+    "data>getBoundingBox.yml@1|country": {
+      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 0
+    },
+    "data>getBoundingBox.yml@1|state": {
+      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
+      "label": "State/Province",
+      "type": "text",
+      "example": "Putumayo",
+      "weight": 1
+    },
+    "data>getBoundingBox.yml@1|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 2,
+      "example": null
+    },
+    "pipeline@7": {
+      "label": "Start date",
+      "description": "Start date for phenology time series",
+      "type": "text",
+      "example": "2017",
+      "weight": 3
+    },
+    "phenology>summarise_phenology.yml@10|bands": {
+      "description": "Bands of interest for the calculations. Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period. End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period. Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached Season minimum value (MINV) - average PPI of minima of left adn right sides of each season Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level. Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset",
       "label": "Bands",
       "type": "options[]",
       "options": [
@@ -183,15 +211,16 @@
         "LSLOPE",
         "RSLOPE",
         "SPROD",
-        "TPROD"
+        "TPROD",
+        "QFLAG"
       ],
       "example": [
         "LENGTH",
         "AMPL"
       ],
-      "weight": 0
+      "weight": 4
     },
-    "phenology>summarise_phenology.yml@3|aggregate_function": {
+    "phenology>summarise_phenology.yml@10|aggregate_function": {
       "description": "Function to spatially aggregate by",
       "label": "Aggregate function",
       "type": "options",
@@ -201,42 +230,14 @@
         "max"
       ],
       "example": "mean",
-      "weight": 1
+      "weight": 5
     },
-    "phenology>summarise_phenology.yml@3|spatial_resolution": {
-      "description": "Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer.",
+    "phenology>summarise_phenology.yml@10|spatial_resolution": {
+      "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer.",
       "label": "Spatial resolution",
       "type": "int",
-      "weight": 2,
+      "weight": 6,
       "example": null
-    },
-    "data>getBoundingBox.yml@1|country": {
-      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
-      "label": "Country",
-      "type": "text",
-      "example": "Colombia",
-      "weight": 3
-    },
-    "data>getBoundingBox.yml@1|state": {
-      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
-      "label": "State/Province",
-      "type": "text",
-      "example": "Putumayo",
-      "weight": 4
-    },
-    "data>getBoundingBox.yml@1|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "weight": 5,
-      "example": null
-    },
-    "pipeline@7": {
-      "label": "Start date",
-      "description": "Start date for phenology time series",
-      "type": "text",
-      "example": "2017",
-      "weight": 6
     },
     "pipeline@8": {
       "label": "End date",
@@ -244,26 +245,55 @@
       "type": "text",
       "example": "2023",
       "weight": 7
+    },
+    "phenology>summarise_phenology.yml@10|season": {
+      "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) \nand season 2 is the second growing season (late summer and fall).\n",
+      "label": "Season of interest",
+      "type": "options",
+      "options": [
+        "SEASON1",
+        "SEASON2"
+      ],
+      "weight": 8,
+      "example": null
     }
   },
   "outputs": {
-    "phenology>summarise_phenology.yml@3|rasters": {
+    "phenology>summarise_phenology.yml@10|rasters": {
       "description": "Rasters of phenology layers over time",
       "label": "Phenology rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "phenology>summarise_phenology.yml@3|timeseries": {
-      "description": "Summarised values over the polygon of interest for each year for each band of interest",
-      "label": "Zonal statistics",
-      "type": "text/csv[]",
-      "weight": 1
-    },
     "phenology>phenology_difference.yml@6|phenology_change": {
       "description": "Raster plot of change in phenology from the start year to the end year.",
       "label": "Change in phenology metrics",
       "type": "image/tiff;application=geotiff[]",
+      "weight": 1
+    },
+    "phenology>summarise_phenology.yml@10|timeseries": {
+      "description": "Summarised values over the polygon of interest for each year for each band of interest",
+      "label": "Zonal statistics",
+      "type": "text/csv",
       "weight": 2
     }
+  },
+  "metadata": {
+    "name": "Phenology pipeline",
+    "description": "This pipelines uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. \nThe raster has values for the Plant Phenology Index (PPI), which is a vegetation index that\n helps estimate vegetation health and photosyntehtic activity throughout the growing season. \nIt is more directly related to plant phenology compared to other vegetation indices like NDVI, \nand does not saturate in high biomass conditions. \nIt is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. \nYou can read more about the phenology layers (here)[https://land.copernicus.eu/en/dataset-catalog].\nThe script pulls the yearly phenology layers and resamples them to the spatial resolution of choice, \ncalculates summary statistics over a country or region of interest, and subtracts the rasters \nto look at change over time.\n",
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@gmail.com",
+        "identifier": "https://orcid.org/0000-0001-6020-6690"
+      }
+    ],
+    "license": "CC-BY",
+    "external_link": "https://land.copernicus.eu/en/products/vegetation",
+    "references": [
+      {
+        "text": null
+      }
+    ]
   }
 }

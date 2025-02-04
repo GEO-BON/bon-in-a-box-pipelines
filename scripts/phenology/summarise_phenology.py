@@ -20,6 +20,7 @@ bands = data['bands']
 polygon = data['study_area_polygon']
 aggregate_function = data['aggregate_function']
 spatial_resolution = data['spatial_resolution']
+season = data['season']
 
 connection = openeo.connect("https://openeo.dataspace.copernicus.eu/")
 
@@ -30,20 +31,20 @@ client_secret=os.getenv("CDSE_CLIENT_SECRET"),
 )
 
 datacube = connection.load_collection(
-  "COPERNICUS_VEGETATION_PHENOLOGY_PRODUCTIVITY_10M_SEASON1",
+  "COPERNICUS_VEGETATION_PHENOLOGY_PRODUCTIVITY_10M_" + season,
   spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3]},
   temporal_extent=[start_date, end_date],
   bands=bands
 )
 
-datacube_cropped = datacube.filter_spatial(polygon)
+datacube_cropped = datacube.filter_spatial(polygon) # cropping to polygon
 
 if spatial_resolution is None:
     datacube_resampled_cropped = datacube_cropped
 else:
-    datacube_resampled_cropped = datacube_cropped.resample_spatial(resolution=spatial_resolution, method="bilinear")
+    datacube_resampled_cropped = datacube_cropped.resample_spatial(resolution=spatial_resolution, method="bilinear") # resampling to spatial resolution
 
-# crop by polygon
+
 
 # output rasters
 datacube_resampled_cropped.save_result("GTiff")
@@ -53,7 +54,8 @@ job1 = datacube_resampled_cropped.create_job()
 
 job1.start_and_wait()
 rasters = job1.get_results().download_files(outputFolder)
-#print(rasters)
+
+print("Job finished, printing job output")
 print(rasters)
 
 print(str(rasters[0]))
@@ -79,6 +81,8 @@ job2.start_and_wait()
 
 
 timeseries = job2.get_results().download_files(outputFolder)
+
+print("Job finished, printing job output")
 print(timeseries)
 
 output = {
