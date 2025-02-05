@@ -13,12 +13,12 @@ description: |
 inputs:
   bbox:
     label: bbox
-    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    description: Coordinates of the extent in the order xmin, ymin, xmax, ymax (lat long)
     type: float[]
     example: null
   study_area_polygon:
     label: Polygon of study area
-    description: Polygon of the study area of interest
+    description: Polygon of the study area of interest. Leave blank if you do not want to crop by a polygon and want to use the bounding box instead.
     type: application/geo+json
     example: null
   start_date:

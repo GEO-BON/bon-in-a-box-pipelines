@@ -37,7 +37,11 @@ datacube = connection.load_collection(
   bands=bands
 )
 
-datacube_cropped = datacube.filter_spatial(polygon) # cropping to polygon
+if bbox is None:
+    datacube_cropped = datacube
+else:
+    datacube_cropped = datacube.filter_spatial(polygon) # cropping to polygon
+
 
 if spatial_resolution is None:
     datacube_resampled_cropped = datacube_cropped

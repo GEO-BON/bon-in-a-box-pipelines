@@ -265,11 +265,6 @@
       }
     ],
     "license": "CC-BY",
-    "external_link": "https://land.copernicus.eu/en/products/vegetation",
-    "references": [
-      {
-        "text": null
-      }
-    ]
+    "external_link": "https://land.copernicus.eu/en/products/vegetation"
   }
 }
