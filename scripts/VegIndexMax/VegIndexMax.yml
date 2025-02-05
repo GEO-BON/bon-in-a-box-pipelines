@@ -25,12 +25,12 @@ inputs:
     example: 'EPSG:4326'
   start_date:
     label: Start date
-    description: Start date for summarizing
+    description: Start date for summarizing vegetation index
     type: text
     example: "2019-05-01"
   end_date:
     label: End date
-    description: End date for which summarizing NDVI.
+    description: End date for summarizing vegetation index
     type: text
     example: "2019-09-30"
   vegetation_index:
