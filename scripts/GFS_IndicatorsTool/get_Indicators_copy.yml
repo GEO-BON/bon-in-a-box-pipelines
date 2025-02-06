@@ -1,0 +1,102 @@
+script: get_Indicators.R
+name: Get genetic diversity indicators
+description: This script takes the population habitat size information, and use it to compute genetic diversity indicators.
+author:
+  - name: Simon Pahls
+  - name: Oliver Selmoni
+
+inputs:
+
+  cover_maps:
+    label: Cover, cover gain and cover loss map
+    description: resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot
+    type: text
+    example: '/userdata/cover_maps'
+
+  population_polygons:
+    label: Polygons of populations
+    description: Path to geojson file storing polygons of populations.
+    type: application/geo+json
+    example: '/userdata/population_polygons.geojson'
+
+  pop_area:
+    label: Table of habitat area by population
+    description: Table of estimated habitat area by population (rows). If provided, time points are displayed as columns.
+    type: text/tab-separated-values
+    example: '/userdata/pop_habitat_area.tsv'
+
+  ne_nc:
+    label: Ne:Nc ratio estimate
+    description: Estimated Ne:Nc ratio for the studied species. Multiple values can be provided, separated by a comma.
+    type: float[]
+    example: [0.1, 0.2]
+
+  pop_density:
+    label: Population density
+    description: Estimated density of the population [number of individuals per km2]. Multiple values can be provided, separated by a comma.
+    type: float[]
+    example: [50, 100, 1000]
+
+  runtitle:
+    label: Title of the run
+    description: Set a name for the pipeline run.
+    type: text
+    example: Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023
+
+  lc_classes:
+    label: Land cover classes ID
+    description: ID of LC classes used to evaluate habitat change
+    type: text
+    example: 120,140
+
+outputs:
+
+  ne_table:
+    label: Effective population size
+    description: Estimated effective size of every population, based on the latest time point of the habitat cover map.
+    type: text/tab-separated-values
+
+  # ne_plot:
+  #   label: Effective population size over time
+  #   description: Plot displaying change of effective population size over time.
+  #   type: image/png
+
+  pm:
+    label: Population maintained indicator
+    description: Estimated proportion of mantained populations, comparing earliest and latest time point. A value of 1 means that no populations went extinct over the time frame.
+    type: float
+
+  # pm_plot:
+  #   label: Populations mantained over time
+  #   description: Plot showing the change in population area (absolute change and relative change) over time.
+  #   type: image/png
+
+  # pop_plot:
+  #   label: Map of populations
+  #   description: Geographic distribution of the studied populations.
+  #   type: image/png
+
+  interactive_plot:
+    label: Interactive plot
+    description: An interactive interface to explore indicators trends across geographical space and time.
+    type: text/html
+
+  ne500:
+    label: Ne>500 indicator
+    description: Estimated proportion of populations with Ne>500 at latest time point.
+    type: float
+conda: 
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson 
+    - r-terra
+    - r-sf
+    - r-rnaturalearth
+    - r-teachingdemos
+    - r-dplyr
+    - r-plotly
+    - r-geojsonsf
+    - r-colorspace
+    - r-lwgeom
