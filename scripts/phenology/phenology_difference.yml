@@ -25,6 +25,11 @@ inputs:
     description: End year for phenology time series (not inclusive).
     type: text
     example: "2024"
+  timeseries:
+    label: Zonal statistics
+    description: Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest
+    type: text/csv
+    example: null
 outputs:
   phenology_change:
     label: Change in phenology metrics
@@ -32,3 +37,8 @@ outputs:
       Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger 
       values indicate a greater decrease in the given value over time.
     type: image/tiff;application=geotiff[]
+  phenology_change_plot:
+    label: Plot of phenology change
+    description: Plot of the summarised phenology values over time for the bands of interest
+    type: image/png
+

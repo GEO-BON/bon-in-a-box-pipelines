@@ -45,17 +45,6 @@
       }
     },
     {
-      "id": "43",
-      "type": "io",
-      "position": {
-        "x": 936,
-        "y": 216
-      },
-      "data": {
-        "descriptionFile": "phenology>phenology_difference.yml"
-      }
-    },
-    {
       "id": "44",
       "type": "userInput",
       "position": {
@@ -79,6 +68,39 @@
       "data": {
         "type": "text",
         "value": "2024"
+      }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": 842,
+        "y": 182
+      },
+      "data": {
+        "descriptionFile": "phenology>phenology_difference.yml"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 1403,
+        "y": 178
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 1406,
+        "y": 194
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -112,13 +134,6 @@
       "id": "reactflow__edge-23study_area_polygon-37study_area_polygon"
     },
     {
-      "source": "37",
-      "sourceHandle": "rasters",
-      "target": "43",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-37rasters-43rasters"
-    },
-    {
       "source": "44",
       "sourceHandle": null,
       "target": "37",
@@ -133,18 +148,46 @@
       "id": "reactflow__edge-45-37end_year"
     },
     {
+      "source": "37",
+      "sourceHandle": "rasters",
+      "target": "48",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-37rasters-48rasters"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "timeseries",
+      "target": "48",
+      "targetHandle": "timeseries",
+      "id": "reactflow__edge-37timeseries-48timeseries"
+    },
+    {
       "source": "44",
       "sourceHandle": null,
-      "target": "43",
+      "target": "48",
       "targetHandle": "start_year",
-      "id": "reactflow__edge-44-43start_year"
+      "id": "reactflow__edge-44-48start_year"
     },
     {
       "source": "45",
       "sourceHandle": null,
-      "target": "43",
-      "targetHandle": "end_date",
-      "id": "reactflow__edge-45-43end_date"
+      "target": "48",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-45-48end_year"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "phenology_change",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-48phenology_change-49"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "phenology_change_plot",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-48phenology_change_plot-50"
     }
   ],
   "inputs": {
@@ -252,6 +295,18 @@
       "label": "Phenology rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 1
+    },
+    "phenology>phenology_difference.yml@48|phenology_change": {
+      "description": "Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger \nvalues indicate a greater decrease in the given value over time.\n",
+      "label": "Change in phenology metrics",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
+    },
+    "phenology>phenology_difference.yml@48|phenology_change_plot": {
+      "description": "Plot of the summarised phenology values over time for the bands of interest",
+      "label": "Plot of phenology change",
+      "type": "image/png",
+      "weight": 3
     }
   },
   "metadata": {
