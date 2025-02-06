@@ -1,0 +1,132 @@
+{
+  "nodes": [
+    {
+      "id": "132",
+      "type": "io",
+      "position": {
+        "x": 585.9500122070312,
+        "y": 359
+      },
+      "data": {
+        "descriptionFile": "data>getObservationsBiodiversiteQuebecAtlas.yml"
+      }
+    },
+    {
+      "id": "133",
+      "type": "output",
+      "position": {
+        "x": 1537.9500122070312,
+        "y": 233
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "134",
+      "type": "output",
+      "position": {
+        "x": 1522.9500122070312,
+        "y": 329
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "135",
+      "type": "output",
+      "position": {
+        "x": 1480.9500122070312,
+        "y": 422
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "132",
+      "sourceHandle": "observations_file",
+      "target": "133",
+      "targetHandle": null,
+      "id": "reactflow__edge-132observations_file-133"
+    },
+    {
+      "source": "132",
+      "sourceHandle": "total_records",
+      "target": "134",
+      "targetHandle": null,
+      "id": "reactflow__edge-132total_records-134"
+    },
+    {
+      "source": "132",
+      "sourceHandle": "database_date",
+      "target": "135",
+      "targetHandle": null,
+      "id": "reactflow__edge-132database_date-135"
+    }
+  ],
+  "inputs": {
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@132|taxa": {
+      "description": "Array of taxa values",
+      "label": "Taxa list",
+      "type": "text[]",
+      "example": [
+        "Acer saccharum",
+        "Bubo scandiacus"
+      ],
+      "weight": 0
+    },
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@132|bbox": {
+      "description": "Vector of float, bbox coordinates of the bbox in the order long min, lat ymin, long xmax, lat ymax",
+      "label": "bbox",
+      "type": "float[]",
+      "example": [
+        -80,
+        44.8,
+        -50.7,
+        63
+      ],
+      "weight": 1
+    },
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@132|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 2
+    },
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@132|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2020,
+      "weight": 3
+    }
+  },
+  "outputs": {
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@132|observations_file": {
+      "description": "Output file with observations",
+      "label": "Presences",
+      "type": "text/tab-separated-values",
+      "example": "hfn7s62sq.csv",
+      "weight": 0
+    },
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@132|total_records": {
+      "description": "Total number of occurrences in csv file",
+      "label": "Total number of occurrences",
+      "type": "int",
+      "example": 1234,
+      "weight": 1
+    },
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@132|database_date": {
+      "description": "Date at which the database was last updated",
+      "label": "Date of database update",
+      "type": "text",
+      "example": "2024-01-01",
+      "weight": 2
+    }
+  }
+}
