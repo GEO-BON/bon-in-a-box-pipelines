@@ -15,11 +15,11 @@ end_raster <- rasters[grepl(end_date, rasters)]
 
 print("Loading phenology data")
 print("printing first raster")
-print(lfirst_raster)
 lfirst_raster <- terra::rast(first_raster)
+print(lfirst_raster)
 print("printing end raster")
-print(lend_raster)
 lend_raster <- terra::rast(end_raster)
+print(lend_raster)
 
 num_bands <- nlyr(lend_raster)
 layer_paths <- c()

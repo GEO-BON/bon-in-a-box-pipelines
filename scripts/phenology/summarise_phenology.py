@@ -53,16 +53,16 @@ else:
 # output rasters
 datacube_resampled_cropped.save_result("GTiff")
 # start job to fetch rasters
-print("Starting job to fetch raster layers")
+print("Starting job to fetch raster layers", flush=True)
 job1 = datacube_resampled_cropped.create_job()
 
 job1.start_and_wait()
 rasters = job1.get_results().download_files(outputFolder)
 
-print("Job finished, printing job output")
+print("Job finished, printing job output", flush=True)
 print(rasters)
 
-print(str(rasters[0]))
+print(str(rasters[0]), flush=True)
 raster_outs = []
 for t in range(len(rasters)- 1):
     raster_outs.append(str(rasters[t]))
@@ -78,7 +78,7 @@ res = datacube.aggregate_spatial(
 
 result = res.save_result("CSV")
 
-print("Starting job to calculate phenology values for summary values over the polygon of interest")
+print("Starting job to calculate phenology values for summary values over the polygon of interest", flush=True)
 
 job2 = result.create_job()
 job2.start_and_wait()
@@ -86,7 +86,7 @@ job2.start_and_wait()
 
 timeseries = job2.get_results().download_files(outputFolder)
 
-print("Job finished, printing job output")
+print("Job finished, printing job output", flush=True)
 print(timeseries)
 
 output = {
