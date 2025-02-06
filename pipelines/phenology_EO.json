@@ -74,19 +74,8 @@
       "id": "18",
       "type": "output",
       "position": {
-        "x": 972,
-        "y": 188
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "19",
-      "type": "output",
-      "position": {
-        "x": 971,
-        "y": 115
+        "x": 1092.3624877929688,
+        "y": 190
       },
       "data": {
         "label": "Output"
@@ -141,28 +130,7 @@
       "sourceHandle": null,
       "target": "17",
       "targetHandle": "end_date",
-      "id": "reactflow__edge-7-17end_date"
-    },
-    {
-      "source": "17",
-      "sourceHandle": "rasters",
-      "target": "6",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-17rasters-6rasters"
-    },
-    {
-      "source": "17",
-      "sourceHandle": "timeseries",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-17timeseries-18"
-    },
-    {
-      "source": "17",
-      "sourceHandle": "rasters",
-      "target": "19",
-      "targetHandle": null,
-      "id": "reactflow__edge-17rasters-19"
+      "id": "reactflow__edge-8-13end_date"
     }
   ],
   "inputs": {
@@ -259,9 +227,9 @@
     }
   },
   "outputs": {
-    "phenology>summarise_phenology.yml@13|rasters": {
-      "description": "Rasters of phenology layers, with one raster per year in the input time range. \nWill either be the raw raster layers or resampled to the spatial resolution input by the user.\n",
-      "label": "Phenology rasters",
+    "phenology>phenology_difference.yml@6|phenology_change": {
+      "description": "Raster plot of change in phenology from the start year to the end year.",
+      "label": "Change in phenology metrics",
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
