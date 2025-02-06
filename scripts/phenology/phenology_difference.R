@@ -1,6 +1,8 @@
 library(terra)
 library(rjson)
 library(dplyr)
+library(tidyr)
+library(ggplot2)
 
 input <- biab_inputs()
 
@@ -9,7 +11,7 @@ rasters <- input$rasters
 start_year <- toString(input$start_year)
 print("printing start year")
 print(start_year)
-end_year <- toString(input$end_year-1)
+end_year <- toString(as.integer(input$end_year)-1)
 print("printing end year")
 print(end_year)
 
@@ -45,14 +47,16 @@ biab_output("phenology_change", layer_paths)
 summary.dat <- read.csv(input$timeseries)
 num.col <- ncol(summary.dat)
 
-# Pivot
-summary.dat.long <- summary.dat %>% pivot_longer(cols=summary.dat[,c(3:num.col)], names_to = band, values_to = summary)
+summary.dat$date = format(as.POSIXct(summary.dat$date,format='%Y-%m-%dT00:00:00.000Z'),format='%Y-%m-%d')
 
+# Pivot
+summary.dat.long <- summary.dat %>% pivot_longer(cols=names(summary.dat[,c(3:num.col)]), names_to = "band", values_to = "summary")
+print("summary.dat.long:")
+print(summary.dat.long)
 # Plot
-phenology_change_plot <- ggplot(summary.dat.long, aes(x=date, y=summary))+
-    geom_point()+
-    geom_line()+
-    facet_wrap(~bands)
+phenology_change_plot <- ggplot(summary.dat.long, aes(x = date, y = summary)) +
+    geom_col(fill='#1d7368') +
+    facet_wrap(~band, ncol = 1, scales = "free_y")
 
 phenology_change_plot_path <- file.path(outputFolder, "phenology_change_plot.png")
 ggsave(phenology_change_plot_path, phenology_change_plot)
