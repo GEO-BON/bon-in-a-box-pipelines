@@ -1,22 +1,66 @@
 {
   "nodes": [
     {
-      "id": "6",
+      "id": "23",
       "type": "io",
       "position": {
-        "x": 1091.1999816894531,
-        "y": 222
+        "x": -132,
+        "y": 92
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "37",
+      "type": "io",
+      "position": {
+        "x": 241,
+        "y": 214
+      },
+      "data": {
+        "descriptionFile": "phenology>summarise_phenology.yml"
+      }
+    },
+    {
+      "id": "38",
+      "type": "output",
+      "position": {
+        "x": 798.2514650641665,
+        "y": 286.6600957934367
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "39",
+      "type": "output",
+      "position": {
+        "x": 766.547149699531,
+        "y": 325.1944590547903
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "43",
+      "type": "io",
+      "position": {
+        "x": 936,
+        "y": 216
       },
       "data": {
         "descriptionFile": "phenology>phenology_difference.yml"
       }
     },
     {
-      "id": "7",
+      "id": "44",
       "type": "userInput",
       "position": {
-        "x": 93.19998168945312,
-        "y": 224
+        "x": -88,
+        "y": 241
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -25,144 +69,107 @@
       }
     },
     {
-      "id": "8",
+      "id": "45",
       "type": "userInput",
       "position": {
-        "x": 147.19998168945312,
-        "y": 344
+        "x": -65,
+        "y": 327
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "2023"
-      }
-    },
-    {
-      "id": "9",
-      "type": "output",
-      "position": {
-        "x": 1667.1999816894531,
-        "y": 186
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "15",
-      "type": "io",
-      "position": {
-        "x": 66.36248779296875,
-        "y": 71
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
-      "id": "17",
-      "type": "io",
-      "position": {
-        "x": 487,
-        "y": 171
-      },
-      "data": {
-        "descriptionFile": "phenology>summarise_phenology.yml"
-      }
-    },
-    {
-      "id": "18",
-      "type": "output",
-      "position": {
-        "x": 1092.3624877929688,
-        "y": 190
-      },
-      "data": {
-        "label": "Output"
+        "value": "2024"
       }
     }
   ],
   "edges": [
     {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "6",
-      "targetHandle": "end_date",
-      "id": "reactflow__edge-8-6end_date"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "6",
-      "targetHandle": "start_date",
-      "id": "reactflow__edge-7-6start_date"
-    },
-    {
-      "source": "6",
-      "sourceHandle": "phenology_change",
-      "target": "9",
+      "source": "37",
+      "sourceHandle": "timeseries",
+      "target": "38",
       "targetHandle": null,
-      "id": "reactflow__edge-6phenology_change-9"
+      "id": "reactflow__edge-37timeseries-38"
     },
     {
-      "source": "15",
+      "source": "37",
+      "sourceHandle": "rasters",
+      "target": "39",
+      "targetHandle": null,
+      "id": "reactflow__edge-37rasters-39"
+    },
+    {
+      "source": "23",
       "sourceHandle": "bbox",
-      "target": "17",
+      "target": "37",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-15bbox-17bbox"
+      "id": "reactflow__edge-23bbox-37bbox"
     },
     {
-      "source": "15",
+      "source": "23",
       "sourceHandle": "study_area_polygon",
-      "target": "17",
+      "target": "37",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-15study_area_polygon-17study_area_polygon"
+      "id": "reactflow__edge-23study_area_polygon-37study_area_polygon"
     },
     {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "start_date",
-      "id": "reactflow__edge-7-17start_date"
+      "source": "37",
+      "sourceHandle": "rasters",
+      "target": "43",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-37rasters-43rasters"
     },
     {
-      "source": "7",
+      "source": "44",
       "sourceHandle": null,
-      "target": "17",
+      "target": "37",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-44-37start_year"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-45-37end_year"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "43",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-44-43start_year"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "43",
       "targetHandle": "end_date",
-      "id": "reactflow__edge-8-13end_date"
+      "id": "reactflow__edge-45-43end_date"
     }
   ],
   "inputs": {
-    "data>getBoundingBox.yml@15|country": {
+    "data>getBoundingBox.yml@23|country": {
       "description": "Country of interest. For list of countries look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get).",
       "label": "Country",
       "type": "text",
-      "example": "Italy",
+      "example": "Belgium",
       "weight": 0
     },
-    "data>getBoundingBox.yml@15|state": {
+    "data>getBoundingBox.yml@23|state": {
       "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get).",
       "label": "State/Province",
       "type": "text",
       "example": null,
       "weight": 1
     },
-    "pipeline@7": {
-      "label": "Start date",
-      "description": "Start date for phenology time series",
+    "data>getBoundingBox.yml@23|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
       "type": "text",
-      "example": "2017-01-01",
-      "weight": 2
+      "weight": 2,
+      "example": null
     },
-    "pipeline@8": {
-      "label": "End date",
-      "description": "End date for phenology time series",
-      "type": "text",
-      "example": "2023-01-01",
-      "weight": 3
-    },
-    "phenology>summarise_phenology.yml@17|season": {
+    "phenology>summarise_phenology.yml@37|season": {
       "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) \nand season 2 is the second growing season (late summer and fall).\n",
       "label": "Season of interest",
       "type": "options",
@@ -171,9 +178,9 @@
         "SEASON2"
       ],
       "example": "SEASON1",
-      "weight": 4
+      "weight": 3
     },
-    "phenology>summarise_phenology.yml@17|bands": {
+    "phenology>summarise_phenology.yml@37|bands": {
       "description": "Bands of interest for the calculations. \n- Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.\n- End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period.\n- Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season\n- End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season\n- Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season\n- Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached\n- Season minimum value (MINV) - average PPI of minima of left adn right sides of each season\n- Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season\n- Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season\n- Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts\n- Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends\n- Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.\n- Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end\n- Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset\n",
       "label": "Bands",
       "type": "options[]",
@@ -197,9 +204,9 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 5
+      "weight": 4
     },
-    "phenology>summarise_phenology.yml@17|aggregate_function": {
+    "phenology>summarise_phenology.yml@37|aggregate_function": {
       "description": "Function to spatially aggregate the phenology data",
       "label": "Aggregate function",
       "type": "options",
@@ -209,34 +216,41 @@
         "max"
       ],
       "example": "mean",
-      "weight": 6
+      "weight": 5
     },
-    "phenology>summarise_phenology.yml@17|spatial_resolution": {
+    "phenology>summarise_phenology.yml@37|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "int",
       "example": 1000,
+      "weight": 6
+    },
+    "pipeline@44": {
+      "label": "Start year",
+      "description": "Start date for phenology time series.",
+      "type": "text",
+      "example": "2017",
       "weight": 7
     },
-    "data>getBoundingBox.yml@15|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
+    "pipeline@45": {
+      "label": "End year",
+      "description": "End date for phenology time series.",
       "type": "text",
-      "weight": 8,
-      "example": null
+      "example": "2024",
+      "weight": 8
     }
   },
   "outputs": {
-    "phenology>phenology_difference.yml@6|phenology_change": {
-      "description": "Raster plot of change in phenology from the start year to the end year.",
-      "label": "Change in phenology metrics",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 0
-    },
-    "phenology>summarise_phenology.yml@17|timeseries": {
+    "phenology>summarise_phenology.yml@37|timeseries": {
       "description": "Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest",
       "label": "Zonal statistics",
       "type": "text/csv",
+      "weight": 0
+    },
+    "phenology>summarise_phenology.yml@37|rasters": {
+      "description": "Rasters of phenology layers, with one raster per year in the input time range. \nWill either be the raw raster layers or resampled to the spatial resolution input by the user.\n",
+      "label": "Phenology rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 1
     }
   },

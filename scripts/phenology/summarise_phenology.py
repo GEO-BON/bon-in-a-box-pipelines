@@ -14,8 +14,8 @@ inputFile = open(outputFolder + '/input.json')
 data = json.load(inputFile)
 
 bbox = data['bbox']
-start_date = data['start_date']
-end_date = data['end_date']
+start_year = data['start_year']
+end_year = data['end_year']
 bands = data['bands']
 polygon = data['study_area_polygon']
 aggregate_function = data['aggregate_function']
@@ -33,7 +33,7 @@ client_secret=os.getenv("CDSE_CLIENT_SECRET"),
 datacube = connection.load_collection(
   "COPERNICUS_VEGETATION_PHENOLOGY_PRODUCTIVITY_10M_" + season,
   spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3]},
-  temporal_extent=[start_date, end_date],
+  temporal_extent=[start_year, end_year],
   bands=bands
 )
 

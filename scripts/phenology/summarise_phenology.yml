@@ -21,16 +21,16 @@ inputs:
     description: Polygon of the study area of interest. Leave blank if you do not want to crop by a polygon and want to use the bounding box instead.
     type: application/geo+json
     example: null
-  start_date:
-    label: Start date
+  start_year:
+    label: Start year
     description: Start date for phenology time series.
     type: text
-    example: "2017-01-01"
-  end_date:
-    label: End date
+    example: "2017"
+  end_year:
+    label: End year
     description: End date for phenology time series.
     type: text
-    example: "2024-01-01"
+    example: "2024"
   season:
     label: Season of interest
     description: |

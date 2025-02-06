@@ -15,16 +15,16 @@ inputs:
     description: Rasters for phenology
     type: image/tiff;application=geotiff[]
     example: null
-  start_date:
-    label: Start date
+  start_year:
+    label: Start year
     description: Start date for phenology time series
     type: text
     example: "2017"
-  end_date:
-    label: End date
-    description: End date for phenology time series
+  end_year:
+    label: End year
+    description: End year for phenology time series (not inclusive).
     type: text
-    example: "2023"
+    example: "2024"
 outputs:
   phenology_change:
     label: Change in phenology metrics
