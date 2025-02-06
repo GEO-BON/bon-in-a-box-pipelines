@@ -23,14 +23,14 @@ inputs:
     example: null
   start_date:
     label: Start date
-    description: Start date for phenology time series
+    description: Start date for phenology time series.
     type: text
-    example: "2017"
+    example: "2017-01-01"
   end_date:
     label: End date
-    description: End date for phenology time series (will end at first day of that year).
+    description: End date for phenology time series.
     type: text
-    example: "2024"
+    example: "2024-01-01"
   season:
     label: Season of interest
     description: |
