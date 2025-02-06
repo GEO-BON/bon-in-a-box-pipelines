@@ -145,12 +145,6 @@
     }
   },
   "outputs": {
-    "VegIndexMax>VegIndexMax.yml@170|rasters": {
-      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
-      "label": "Vegetation index rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 0
-    },
     "pipeline@172|default_output": {
       "description": "Vegetation Indices that should be extracted. \n",
       "label": "Vegetation indices",
@@ -165,6 +159,12 @@
         "FAPAR",
         "QFLAG2"
       ],
+      "weight": 0
+    },
+    "VegIndexMax>VegIndexMax.yml@170|rasters": {
+      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
+      "label": "Vegetation index rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 1
     }
   },
@@ -177,8 +177,6 @@
         "email": "guillaume.larocque@mcgill.ca",
         "identifier": "https://orcid.org/0000-0002-5967-9156"
       }
-    ],
-    "license": null,
-    "external_link": null
+    ]
   }
 }
