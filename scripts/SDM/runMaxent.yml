@@ -100,7 +100,7 @@ conda:
     - r-base
     - r-curl
     - r-devtools
-    - r-dismo==1.3-14
+    - r-dismo
     - r-downloader
     - r-dplyr
     - r-enmeval==2.0.4
@@ -121,7 +121,7 @@ conda:
     - r-sf
     - r-stars
     - r-stringr
-    - r-terra
+    - r-terra==1.8.15
     - r-this.path
     - r-tidyselect
     - r-tidyverse
