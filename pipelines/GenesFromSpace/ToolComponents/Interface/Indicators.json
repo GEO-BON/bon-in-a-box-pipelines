@@ -1,0 +1,263 @@
+{
+  "nodes": [
+    {
+      "id": "183",
+      "type": "io",
+      "position": {
+        "x": 628,
+        "y": 91.5
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_Indicators_copy.yml"
+      }
+    },
+    {
+      "id": "184",
+      "type": "constant",
+      "position": {
+        "x": 186,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/userdata/cover_maps"
+      }
+    },
+    {
+      "id": "185",
+      "type": "constant",
+      "position": {
+        "x": 49,
+        "y": 53
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geo+json",
+        "value": "/userdata/population_polygons.geojson"
+      }
+    },
+    {
+      "id": "186",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 94
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/tab-separated-values",
+        "value": "/userdata/pop_habitat_area.tsv"
+      }
+    },
+    {
+      "id": "187",
+      "type": "constant",
+      "position": {
+        "x": 170,
+        "y": 135
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1,
+          0.2
+        ]
+      }
+    },
+    {
+      "id": "188",
+      "type": "constant",
+      "position": {
+        "x": 170,
+        "y": 176
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          50,
+          100,
+          1000
+        ]
+      }
+    },
+    {
+      "id": "189",
+      "type": "constant",
+      "position": {
+        "x": 186,
+        "y": 217
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023"
+      }
+    },
+    {
+      "id": "190",
+      "type": "constant",
+      "position": {
+        "x": 186,
+        "y": 258
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "120,140"
+      }
+    },
+    {
+      "id": "191",
+      "type": "output",
+      "position": {
+        "x": 1377,
+        "y": 62
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "192",
+      "type": "output",
+      "position": {
+        "x": 1377,
+        "y": 15
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "193",
+      "type": "output",
+      "position": {
+        "x": 1377,
+        "y": 249
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "194",
+      "type": "output",
+      "position": {
+        "x": 1377,
+        "y": 202
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "184",
+      "sourceHandle": null,
+      "target": "183",
+      "targetHandle": "cover_maps",
+      "id": "reactflow__edge-184-183cover_maps"
+    },
+    {
+      "source": "185",
+      "sourceHandle": null,
+      "target": "183",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-185-183population_polygons"
+    },
+    {
+      "source": "186",
+      "sourceHandle": null,
+      "target": "183",
+      "targetHandle": "pop_area",
+      "id": "reactflow__edge-186-183pop_area"
+    },
+    {
+      "source": "187",
+      "sourceHandle": null,
+      "target": "183",
+      "targetHandle": "ne_nc",
+      "id": "reactflow__edge-187-183ne_nc"
+    },
+    {
+      "source": "188",
+      "sourceHandle": null,
+      "target": "183",
+      "targetHandle": "pop_density",
+      "id": "reactflow__edge-188-183pop_density"
+    },
+    {
+      "source": "189",
+      "sourceHandle": null,
+      "target": "183",
+      "targetHandle": "runtitle",
+      "id": "reactflow__edge-189-183runtitle"
+    },
+    {
+      "source": "190",
+      "sourceHandle": null,
+      "target": "183",
+      "targetHandle": "lc_classes",
+      "id": "reactflow__edge-190-183lc_classes"
+    },
+    {
+      "source": "183",
+      "sourceHandle": "ne_table",
+      "target": "191",
+      "targetHandle": null,
+      "id": "reactflow__edge-183ne_table-191"
+    },
+    {
+      "source": "183",
+      "sourceHandle": "pm",
+      "target": "192",
+      "targetHandle": null,
+      "id": "reactflow__edge-183pm-192"
+    },
+    {
+      "source": "183",
+      "sourceHandle": "interactive_plot",
+      "target": "193",
+      "targetHandle": null,
+      "id": "reactflow__edge-183interactive_plot-193"
+    },
+    {
+      "source": "183",
+      "sourceHandle": "ne500",
+      "target": "194",
+      "targetHandle": null,
+      "id": "reactflow__edge-183ne500-194"
+    }
+  ],
+  "inputs": {},
+  "outputs": {
+    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|ne_table": {
+      "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
+      "label": "Effective population size",
+      "type": "text/tab-separated-values",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|pm": {
+      "description": "Estimated proportion of mantained populations, comparing earliest and latest time point. A value of 1 means that no populations went extinct over the time frame.",
+      "label": "Population maintained indicator",
+      "type": "float",
+      "weight": 1
+    },
+    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|interactive_plot": {
+      "description": "An interactive interface to explore indicators trends across geographical space and time.",
+      "label": "Interactive plot",
+      "type": "text/html",
+      "weight": 2
+    },
+    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|ne500": {
+      "description": "Estimated proportion of populations with Ne>500 at latest time point.",
+      "label": "Ne>500 indicator",
+      "type": "float",
+      "weight": 3
+    }
+  }
+}

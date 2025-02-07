@@ -1,5 +1,5 @@
-script: get_Indicators.R
-name: Get genetic diversity indicators
+script: get_Indicators_copy.R
+name: Get genetic diversity indicators copy
 description: This script takes the population habitat size information, and use it to compute genetic diversity indicators.
 author:
   - name: Simon Pahls

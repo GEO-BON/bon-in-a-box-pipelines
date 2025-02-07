@@ -1,0 +1,329 @@
+{
+  "nodes": [
+    {
+      "id": "169",
+      "type": "io",
+      "position": {
+        "x": 503,
+        "y": 134.5
+      },
+      "data": {
+        "descriptionFile": "data>getObservations.yml"
+      }
+    },
+    {
+      "id": "170",
+      "type": "userInput",
+      "position": {
+        "x": 42,
+        "y": 13.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Glyptemys insculpta"
+      }
+    },
+    {
+      "id": "171",
+      "type": "userInput",
+      "position": {
+        "x": 42,
+        "y": 54.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "172",
+      "type": "userInput",
+      "position": {
+        "x": 51,
+        "y": 95.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 1990
+      }
+    },
+    {
+      "id": "173",
+      "type": "userInput",
+      "position": {
+        "x": 51,
+        "y": 136.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2020
+      }
+    },
+    {
+      "id": "174",
+      "type": "userInput",
+      "position": {
+        "x": 26,
+        "y": 177.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
+      }
+    },
+    {
+      "id": "175",
+      "type": "constant",
+      "position": {
+        "x": 42,
+        "y": 241.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "176",
+      "type": "constant",
+      "position": {
+        "x": 12,
+        "y": 282.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "present",
+        "options": [
+          "present",
+          "absent",
+          "present absent"
+        ]
+      }
+    },
+    {
+      "id": "177",
+      "type": "constant",
+      "position": {
+        "x": 51,
+        "y": 328.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2000
+      }
+    },
+    {
+      "id": "178",
+      "type": "constant",
+      "position": {
+        "x": 51,
+        "y": 369.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 0
+      }
+    },
+    {
+      "id": "179",
+      "type": "output",
+      "position": {
+        "x": 1050,
+        "y": 106
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "180",
+      "type": "output",
+      "position": {
+        "x": 1050,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "181",
+      "type": "output",
+      "position": {
+        "x": 1050,
+        "y": 59
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "170",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "species",
+      "id": "reactflow__edge-170-169species"
+    },
+    {
+      "source": "171",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "country",
+      "id": "reactflow__edge-171-169country"
+    },
+    {
+      "source": "172",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "year_start",
+      "id": "reactflow__edge-172-169year_start"
+    },
+    {
+      "source": "173",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "year_end",
+      "id": "reactflow__edge-173-169year_end"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-174-169bbox"
+    },
+    {
+      "source": "175",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-175-169proj"
+    },
+    {
+      "source": "176",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "occurrence_status",
+      "id": "reactflow__edge-176-169occurrence_status"
+    },
+    {
+      "source": "177",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "limit",
+      "id": "reactflow__edge-177-169limit"
+    },
+    {
+      "source": "178",
+      "sourceHandle": null,
+      "target": "169",
+      "targetHandle": "bbox_buffer",
+      "id": "reactflow__edge-178-169bbox_buffer"
+    },
+    {
+      "source": "169",
+      "sourceHandle": "n_presence",
+      "target": "179",
+      "targetHandle": null,
+      "id": "reactflow__edge-169n_presence-179"
+    },
+    {
+      "source": "169",
+      "sourceHandle": "presence",
+      "target": "180",
+      "targetHandle": null,
+      "id": "reactflow__edge-169presence-180"
+    },
+    {
+      "source": "169",
+      "sourceHandle": "bbox",
+      "target": "181",
+      "targetHandle": null,
+      "id": "reactflow__edge-169bbox-181"
+    }
+  ],
+  "inputs": {
+    "pipeline@170": {
+      "label": "species names",
+      "description": "Scientific name of the species",
+      "type": "text",
+      "example": "Glyptemys insculpta",
+      "weight": 0
+    },
+    "pipeline@171": {
+      "label": "country",
+      "description": "Optional string, country to retrieve the occurrences from. Leave blank to ignore administrative boundaries.",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
+    "pipeline@172": {
+      "label": "start year",
+      "description": "Integer, 4 digit year, start date to retrieve occurrences",
+      "type": "int",
+      "example": 1990,
+      "weight": 2
+    },
+    "pipeline@173": {
+      "label": "end year",
+      "description": "Integer, 4 digit year, end date to retrieve occurrences",
+      "type": "int",
+      "example": 2020,
+      "weight": 3
+    },
+    "pipeline@174": {
+      "label": "bbox",
+      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
+      "weight": 4
+    }
+  },
+  "outputs": {
+    "data>getObservations.yml@169|n_presence": {
+      "description": "Integer, number of presence points retrieved",
+      "label": "number of presence points",
+      "type": "int",
+      "example": 8,
+      "weight": 0
+    },
+    "data>getObservations.yml@169|presence": {
+      "description": "Table, observations retrieved from GBIF database",
+      "label": "presence",
+      "type": "text/tab-separated-values",
+      "weight": 1
+    },
+    "data>getObservations.yml@169|bbox": {
+      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+      "label": "bbox",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
+      "weight": 2
+    }
+  }
+}
