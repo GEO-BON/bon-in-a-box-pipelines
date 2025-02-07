@@ -121,7 +121,7 @@ conda:
     - r-sf
     - r-stars
     - r-stringr
-    - r-terra==1.8.15
+    - r-terra
     - r-this.path
     - r-tidyselect
     - r-tidyverse
