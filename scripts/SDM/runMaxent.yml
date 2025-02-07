@@ -90,3 +90,40 @@ outputs:
     description: model predictions among the several runs (if boostrapping or kfolds performed)
     type: image/tiff;application=geotiff[]
     range: [0, 1]
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - conda-build
+    - libgdal
+    - r-abind
+    - r-base
+    - r-curl
+    - r-devtools
+    - r-dismo==1.3-14
+    - r-downloader
+    - r-dplyr
+    - r-enmeval==2.0.0
+    - r-essentials
+    - r-geojsonsf
+    - r-ggsci
+    - r-jpeg
+    - r-landscapemetrics
+    - r-magrittr
+    - r-png
+    - r-purrr
+    - r-rcurl
+    - r-rgbif
+    - r-remotes
+    - r-rjava
+    - r-rjson
+    - r-sf
+    # - r-spatialeco # installation from conda for this package currently does not work properly
+    - r-stars
+    - r-stringr
+    - r-terra
+    - r-this.path
+    - r-tidyselect
+    - r-tidyverse
+    - r-stringr
