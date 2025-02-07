@@ -103,7 +103,7 @@ conda:
     - r-dismo
     - r-downloader
     - r-dplyr
-    - r-enmeval==2.0.4
+    - r-enmeval==2.0.3
     - r-ecospat
     - r-essentials
     - r-geojsonsf
