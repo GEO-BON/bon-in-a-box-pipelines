@@ -95,7 +95,6 @@ conda:
     - conda-forge
     - r
   dependencies:
-    - conda-build
     - libgdal
     - r-abind
     - r-base
@@ -119,7 +118,6 @@ conda:
     - r-rjava
     - r-rjson
     - r-sf
-    # - r-spatialeco # installation from conda for this package currently does not work properly
     - r-stars
     - r-stringr
     - r-terra
