@@ -15,8 +15,6 @@ library("raster")
 library("dplyr")
 library("ENMeval")
 library("devtools")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-library("stacatalogue")
 
 
 ## Load functions
