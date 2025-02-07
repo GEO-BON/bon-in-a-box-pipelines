@@ -104,6 +104,7 @@ conda:
     - r-downloader
     - r-dplyr
     - r-enmeval==2.0.0
+    - r-ecospat
     - r-essentials
     - r-geojsonsf
     - r-ggsci
