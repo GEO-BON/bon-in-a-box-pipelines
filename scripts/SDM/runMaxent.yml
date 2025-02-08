@@ -99,7 +99,6 @@ conda:
     - r-abind
     - r-base
     - r-curl
-    - r-devtools
     - r-dismo
     - r-downloader
     - r-dplyr
