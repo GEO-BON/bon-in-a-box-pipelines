@@ -14,7 +14,7 @@ library("rjson")
 library("raster")
 library("dplyr")
 library("ENMeval")
-library("devtools")
+
 
 
 ## Load functions
