@@ -10,17 +10,26 @@ input <- biab_inputs()
 # get environmental layers from BiaB form
 # assumed chelsa layers in WGS84
 # warning if layers are not WGS84
-print("Getting environmental variables")
+print("Calling environmental variable rasters")
 variables <- terra:: rast(c(input$rasters))
+print(variables)
+
+print("Calling country shape polygon")
 map_shape <-terra::vect(input$country_polygon)
+print(map_shape)
 
 #agregate for testing... make the call later about this with BiaB team
 print("Aggregating to 10km pixel")
 
 variables <- terra::aggregate(variables, 10,  fun="mean")
-variables<-terra::mask(variables, terra::project(map_shape, variables))
+
+print("Masking aggregated raster stack of env variables")
+
+variables <- terra::mask(variables, terra::project(map_shape, terra::crs(variables)))
 print(variables)
-crs_working <-terra::crs(variables)
+
+crs_working <- terra::crs(variables)
+
 type_analysis <-"PCA" #as.character(input$analysis_type)
 
 print("Performing PCA on environmental variables")
@@ -172,19 +181,20 @@ summary(merged_df[,c("x", "y", "Block")])
 
 print("Plotting blocks in geographic space")
 q<-ggplot2::ggplot()+
-  tidyterra::geom_spatvector(data= map_shape)+
+  #tidyterra::geom_spatvector(data= map_shape)+
   ggplot2::geom_raster(data = merged_df[,c("x", "y", "Block")], 
                        ggplot2::aes(x=x, 
                                     y = y, 
                                     fill =as.factor(Block)) )+ #make factor if using manual scale
   ggplot2::scale_fill_manual(values =colors_vect,na.value = "transparent")+
   # ggplot2::scale_fill_viridis_c(option = "turbo")+
-  ggplot2::xlim(range(merged_df[,c("x")]))+
-  ggplot2::ylim(range(merged_df[,c("y")]))+
+  #ggplot2::xlim(range(merged_df[,c("x")]))+
+  #ggplot2::ylim(range(merged_df[,c("y")]))+
   ggplot2::theme_bw()+
-  ggplot2::theme(legend.position = "none",
-                 axis.text.y = ggplot2::element_blank(),
-                 axis.text.x = ggplot2::element_blank())
+  ggplot2::theme(legend.position = "none"#,
+                 #axis.text.y = ggplot2::element_blank(),
+                 #axis.text.x = ggplot2::element_blank()
+                 )
   
 
 blocks_plot <- cowplot::plot_grid(q, p, nrow=1)
