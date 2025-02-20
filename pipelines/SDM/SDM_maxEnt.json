@@ -990,7 +990,11 @@
       "type": "text[]",
       "example": [
         "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
+        "chelsa-clim|bio2",
+        "cec_land_cover_percentage|cec_land_cover_percent_class_5",
+        "cec_land_cover_percentage|cec_land_cover_percent_class_6",
+        "cec_land_cover_percentage|cec_land_cover_percent_class_15",
+        "earthenv_topography_derived|geomflat_perc"
       ],
       "weight": 11
     },
@@ -1008,7 +1012,7 @@
       "example": [
         "L",
         "LQ",
-        "LQHP"
+        "LQH"
       ],
       "weight": 13
     },
