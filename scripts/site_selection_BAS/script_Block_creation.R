@@ -181,7 +181,7 @@ summary(merged_df[,c("x", "y", "Block")])
 
 print("Plotting blocks in geographic space") #NEED TO IMPROVE FOR PROJECTED CRS
 q<-ggplot2::ggplot()+
-  #tidyterra::geom_spatvector(data= map_shape)+
+  tidyterra::geom_spatvector(data= terra::project(map_shape, rast_blocks))+
   ggplot2::geom_raster(data = merged_df[,c("x", "y", "Block")], 
                        ggplot2::aes(x=x, 
                                     y = y, 
