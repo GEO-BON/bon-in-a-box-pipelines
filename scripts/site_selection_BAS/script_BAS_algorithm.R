@@ -1,14 +1,27 @@
+library(rjson)
+library(remotes)
+if (!'spbal' %in% installed.packages()) {
+  remotes::install_github("https://github.com/docgovtnz/spbal.git", force = TRUE)
+}else{
+  print("spbal package installed locally, not in CONDA")
+}
+
 library(spbal)
 library(terra)
 library(sf)
 library(tidyterra)
 library(ggplot2)
 
+
+#read inputs
+input <- biab_inputs()  
+
 #Sampling site selection using BAS
 print("Calling raster of blocks and map shape polygon")
 country_rast <- terra::rast(input$rast_blocks)
+
 country_poly <- sf::st_read(input$country_polygon)
-country_poly <- sf::st_transform(country_poly, country_rast) ##check if it run on BiaB!!!!!!!!
+country_poly <- sf::st_transform(country_poly,  terra::crs(country_rast)) ##check if it run on BiaB!!!!!!!!
 
 #plot(country_poly)
 print("Getting bounding box for BAS")
@@ -62,22 +75,31 @@ keep <- merge(grps, Ngrps, by.x = "Block", by.y = "value")$pincl_scaled > h3$pts
 
 pts <- result$sample[keep == TRUE,][1:ndesign,] ## Keep the ndesign points.
 
+
+##Two plots for mapping points
+country_vect<- terra::vect(input$country_polygon)
+
+print("Creating blank map and points")
+pts_df <- terra::as.data.frame(terra::vect(pts), geom = "XY")
+pts_df<-pts_df[,c("x","y")]
+print(head(pts_df))
+
 blnk_map <-ggplot2::ggplot()+
   tidyterra::geom_spatvector(data = country_poly, alpha = 0.5)+
-  ggplot2::geom_point(data = pts, ggplot2::aes(x=))
+  tidyterra::geom_spatvector(data = terra::vect(pts))
 
-
-
-
-
-
+print("Cleaning empty values of raster for df plotting")
 merged_df<-terra::as.data.frame(country_rast, xy=TRUE, na.rm = TRUE)
+merged_df<-merged_df[complete.cases(merged_df[, 3]),]
+print(head(merged_df))
 
 set.seed(1)
 colors_vect<-(sample( grDevices::colors()[grep('gr(a|e)y', grDevices::colors(), invert = T)], length(unique(merged_df$Block)) )  )
 
+print("Creating raster map and points")
+
 block_map<-ggplot2::ggplot()+
-  tidyterra::geom_spatvector(data= country_poly)+
+  #tidyterra::geom_spatvector(data=country_vect )+
   ggplot2::geom_raster(data = merged_df[,c("x", "y", "Block")], 
                        ggplot2::aes(x=x, 
                                     y = y, 
@@ -98,3 +120,13 @@ maps_output <- cowplot::plot_grid(blnk_map, block_map, nrow=1)
 pts_df <- terra::as.data.frame(terra::vect(pts), geom = "XY")
 pts_df<-pts_df[,c("x","y")]
 
+#save plot
+maps_path <- file.path(outputFolder, "maps_output.png") 
+ggplot2::ggsave(maps_output, filename= maps_path,
+                height = 5, width = 10, units = "in" , dpi = 300, bg ="white")
+biab_output("maps_output", maps_path)
+
+#save output ofselected points
+pts_df_path<-file.path(outputFolder, "pts_selected_df.csv") 
+write.csv(pts_df, pts_df_path )
+biab_output("pts_df", pts_df_path)

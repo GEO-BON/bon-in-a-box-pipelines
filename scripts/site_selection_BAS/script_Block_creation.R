@@ -209,6 +209,7 @@ biab_output("blocks_plot", plot_blocks_map_path)
 raster_blocks_path<-file.path(outputFolder, "raster_blocks.tif") 
 terra::writeRaster(rast_blocks,raster_blocks_path )
 biab_output("rast_blocks",raster_blocks_path)
+
 #save output of PCA to check
 pca_summary_path<-file.path(outputFolder, "pca_Summary.csv") 
 write.csv(pca_summary_df, pca_summary_path )

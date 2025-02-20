@@ -12,17 +12,18 @@ inputs:
     type: application/geo+json
     example: Peru
   rast_blocks:
-    label: Blocks raster
-    description: Rasters layers of environmental variables of interest
+    label: environmental blocks raster
+    description: environmental blocks raster
     type: image/tiff;application=geotiff[]
+    example: rast_blocks.tif
   ndesign:
     label: Target total sites
     description: A number of target sites to obtain
-    type: int, int[]
+    type: int
     example: 100
 outputs:
-  blocks_plot:
-    label: maps_output
+  maps_output:
+    label: Maps output
     description: maps of selected points 
     type: image/png
   pts_df:
@@ -39,8 +40,8 @@ conda:
     - r-ggplot2
     - r-tidyterra
     - r-cowplot
-    - r-spbal
     - r-sf
+    - r-remotes
 references:
-   - text: spbal: Spatially Balanced Sampling Algorithms
-     doi: https://doi.org/	10.32614/CRAN.package.spbal
+   - text: "spbal: Spatially Balanced Sampling Algorithms"
+     doi: "https://doi.org/10.32614/CRAN.package.spbal"
