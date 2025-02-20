@@ -18,6 +18,7 @@ map_shape <-terra::vect(input$country_polygon)
 print("Aggregating to 10km pixel")
 
 variables <- terra::aggregate(variables, 10,  fun="mean")
+variables<-terra::mask(variables, terra::project(map_shape, variables))
 print(variables)
 crs_working <-terra::crs(variables)
 type_analysis <-"PCA" #as.character(input$analysis_type)
@@ -35,8 +36,8 @@ if (type_analysis == "PCA") {
   PCA_rast <- terra::predict(variables, pca_vars, index = 1:2)
   var1<-terra::values(PCA_rast$Comp.1)
   var2<-terra::values(PCA_rast$Comp.2)
-  PCA_summary<-summary(pca_vars)
-  print(PCA_summary)
+  pca_summary<-summary(pca_vars)
+  print(pca_summary)
   pca_importance <- function(x) {
     vars <- x$sdev^2
     vars <- vars/sum(vars)
@@ -44,7 +45,7 @@ if (type_analysis == "PCA") {
           `Cumulative Proportion` = cumsum(vars))
   }
   
-  PCA_summary_df<-as.data.frame(pca_importance(PCA_summary))
+  pca_summary_df<-as.data.frame(pca_importance(pca_summary))
   
 }else{
   var1<-terra::values(variables[[1]])
@@ -181,21 +182,24 @@ q<-ggplot2::ggplot()+
   ggplot2::xlim(range(merged_df[,c("x")]))+
   ggplot2::ylim(range(merged_df[,c("y")]))+
   ggplot2::theme_bw()+
-  ggplot2::theme(legend.position = "none")
+  ggplot2::theme(legend.position = "none",
+                 axis.text.y = ggplot2::element_blank(),
+                 axis.text.x = ggplot2::element_blank())
+  
 
 blocks_plot <- cowplot::plot_grid(q, p, nrow=1)
 
 #save plot
-plot_blocks_map_path<-file.path(outputFolder, "block_map_plot.png") 
-ggplot2::ggsave(blocks_plot, filename=plot_blocks_map_path,
+plot_blocks_map_path <- file.path(outputFolder, "blocks_plot.png") 
+ggplot2::ggsave(blocks_plot, filename= plot_blocks_map_path,
                 height = 5, width = 10, units = "in" , dpi = 300, bg ="white")
-biab_output("blocks_plot",plot_blocks_map_path)
+biab_output("blocks_plot", plot_blocks_map_path)
 
 #save terra raster as well for BAS spbal
 raster_blocks_path<-file.path(outputFolder, "raster_blocks.tif") 
 terra::writeRaster(rast_blocks,raster_blocks_path )
 biab_output("rast_blocks",raster_blocks_path)
 #save output of PCA to check
-PCA_summary_path<-file.path(outputFolder, "PCA_Summary.csv") 
-write.csv(PCA_summary_df,PCA_summary_path )
-biab_output("PCA_summary_df",PCA_summary_path)
+pca_summary_path<-file.path(outputFolder, "pca_Summary.csv") 
+write.csv(pca_summary_df, pca_summary_path )
+biab_output("pca_summary_df", pca_summary_path)
