@@ -179,7 +179,7 @@ print(
 summary(merged_df[,c("x", "y", "Block")])
 )
 
-print("Plotting blocks in geographic space")
+print("Plotting blocks in geographic space") #NEED TO IMPROVE FOR PROJECTED CRS
 q<-ggplot2::ggplot()+
   #tidyterra::geom_spatvector(data= map_shape)+
   ggplot2::geom_raster(data = merged_df[,c("x", "y", "Block")], 
@@ -191,9 +191,9 @@ q<-ggplot2::ggplot()+
   #ggplot2::xlim(range(merged_df[,c("x")]))+
   #ggplot2::ylim(range(merged_df[,c("y")]))+
   ggplot2::theme_bw()+
-  ggplot2::theme(legend.position = "none"#,
-                 #axis.text.y = ggplot2::element_blank(),
-                 #axis.text.x = ggplot2::element_blank()
+  ggplot2::theme(legend.position = "none",
+                 axis.text.y = ggplot2::element_blank(),
+                 axis.text.x = ggplot2::element_blank()
                  )
   
 
