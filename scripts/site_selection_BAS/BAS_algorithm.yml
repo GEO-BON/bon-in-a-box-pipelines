@@ -3,7 +3,7 @@ name: BAS selection
 description: Performs point selection based on BAS algorithm, and unequal inclusion probabilities
 author:
   - name: Francis van Oordt
-    identifier: "https://orcid.org/0000-0002-8471-235X"
+    identifier: https://orcid.org/0000-0002-8471-235X
 license: CC-BY
 inputs:
   country_polygon:
@@ -42,5 +42,5 @@ conda:
     - r-spbal
     - r-sf
 references:
-   - text: "spbal: Spatially Balanced Sampling Algorithms"
-     doi: "https://doi.org/	10.32614/CRAN.package.spbal"
+   - text: spbal: Spatially Balanced Sampling Algorithms
+     doi: https://doi.org/	10.32614/CRAN.package.spbal
