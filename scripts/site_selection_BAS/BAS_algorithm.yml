@@ -1,0 +1,47 @@
+script: script_BAS_algorithm.R
+name: BAS selection 
+description: Performs point selection based on BAS algorithm, and unequal inclusion probabilities 
+  - name: Francis van Oordt
+    identifier: "https://orcid.org/0000-0002-8471-235X"
+  - name: Paul van Dame-Bates
+license: CC-BY
+inputs:
+  country_polygon:
+    label: Country polygon
+    description: polygon of the country of interest
+    type: application/geo+json
+    example: Peru
+  rast_blocks:
+    label: Blocks raster
+    description: Rasters layers of environmental variables of interest
+    type: image/tiff;application=geotiff[]
+  ndesign:
+   label: Target total sites
+    description: A number of target sites to obtain
+    type: int, int[]
+    example: 100
+    
+outputs:
+  blocks_plot:
+    label: maps_output
+    description: maps of selected points 
+    type: image/png
+  pts_df:
+    label: selected points
+    description: dataframe of selected points
+    type: csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-ggplot2
+    - r-tidyterra
+    - r-cowplot
+    - r-spbal
+    - r-sf
+references:
+   - text: "spbal: Spatially Balanced Sampling Algorithms"
+     doi: "https://doi.org/	10.32614/CRAN.package.spbal"
