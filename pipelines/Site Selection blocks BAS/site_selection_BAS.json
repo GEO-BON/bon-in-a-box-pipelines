@@ -84,28 +84,6 @@
       }
     },
     {
-      "id": "7",
-      "type": "output",
-      "position": {
-        "x": 1721,
-        "y": 383.8125
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "8",
-      "type": "output",
-      "position": {
-        "x": 1699,
-        "y": 484.8125
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "10",
       "type": "userInput",
       "position": {
@@ -116,6 +94,66 @@
       "data": {
         "type": "text",
         "value": "EPSG:6622"
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 1758,
+        "y": 466.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "14",
+      "type": "output",
+      "position": {
+        "x": 1772,
+        "y": 399.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "15",
+      "type": "constant",
+      "position": {
+        "x": -97,
+        "y": 399.8125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "16",
+      "type": "constant",
+      "position": {
+        "x": -91,
+        "y": 450.8125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "18",
+      "type": "constant",
+      "position": {
+        "x": 306,
+        "y": 186.8125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
       }
     }
   ],
@@ -156,20 +194,6 @@
       "id": "reactflow__edge-0rast_blocks-6"
     },
     {
-      "source": "0",
-      "sourceHandle": "PandQ",
-      "target": "7",
-      "targetHandle": null,
-      "id": "reactflow__edge-0PandQ-7"
-    },
-    {
-      "source": "0",
-      "sourceHandle": "PCA_summary_df",
-      "target": "8",
-      "targetHandle": null,
-      "id": "reactflow__edge-0PCA_summary_df-8"
-    },
-    {
       "source": "1",
       "sourceHandle": "study_area_polygon",
       "target": "0",
@@ -182,29 +206,50 @@
       "target": "2",
       "targetHandle": "proj",
       "id": "reactflow__edge-10-2proj"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "pca_summary_df",
+      "target": "13",
+      "targetHandle": null,
+      "id": "reactflow__edge-0pca_summary_df-13"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "blocks_plot",
+      "target": "14",
+      "targetHandle": null,
+      "id": "reactflow__edge-0blocks_plot-14"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "state",
+      "id": "reactflow__edge-15-1state"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-16-1study_area_file"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-18-2weight_matrix_with_ids"
     }
   ],
   "inputs": {
-    "data>getBoundingBox.yml@1|state": {
-      "description": "State or province of interest (leave blank if you want the full country)",
-      "label": "State/Province",
-      "type": "text",
-      "example": "Putumayo",
-      "weight": 0
-    },
-    "data>getBoundingBox.yml@1|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "weight": 1,
-      "example": null
-    },
     "data>loadFromStac.yml@2|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "stac_url",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 2
+      "weight": 0
     },
     "data>loadFromStac.yml@2|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -214,14 +259,14 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 3
+      "weight": 1
     },
     "data>loadFromStac.yml@2|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
       "type": "float",
       "example": 1000,
-      "weight": 4
+      "weight": 2
     },
     "data>loadFromStac.yml@2|resampling": {
       "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
@@ -244,7 +289,35 @@
         "q3"
       ],
       "example": "near",
+      "weight": 3
+    },
+    "data>loadFromStac.yml@2|mask": {
+      "description": "Shapefile, used to mask the output rasters",
+      "label": "mask",
+      "type": "application/dbf",
+      "weight": 4,
+      "example": null
+    },
+    "pipeline@3": {
+      "label": "Country",
+      "description": "Country of interest",
+      "type": "text",
+      "example": "Colombia",
       "weight": 5
+    },
+    "pipeline@4": {
+      "label": "number of rows",
+      "description": "Number of rows for the block grid",
+      "type": "int",
+      "example": 10,
+      "weight": 6
+    },
+    "pipeline@5": {
+      "label": "number of columns",
+      "description": "Number of columns for the block grid",
+      "type": "int",
+      "example": 10,
+      "weight": 7
     },
     "data>loadFromStac.yml@2|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
@@ -258,42 +331,14 @@
         "median"
       ],
       "example": "first",
-      "weight": 6
-    },
-    "data>loadFromStac.yml@2|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf",
-      "weight": 7,
-      "example": null
-    },
-    "pipeline@3": {
-      "label": "Country",
-      "description": "Country of interest",
-      "type": "text",
-      "example": "Colombia",
       "weight": 8
-    },
-    "pipeline@4": {
-      "label": "number of rows",
-      "description": "Number of rows for the block grid",
-      "type": "int",
-      "example": 10,
-      "weight": 9
-    },
-    "pipeline@5": {
-      "label": "number of columns",
-      "description": "Number of columns for the block grid",
-      "type": "int",
-      "example": 10,
-      "weight": 10
     },
     "pipeline@10": {
       "label": "projection system",
       "description": "String, projection of the rasters",
       "type": "text",
       "example": "EPSG:6622",
-      "weight": 11
+      "weight": 9
     },
     "data>loadFromStac.yml@2|bbox": {
       "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
@@ -305,14 +350,7 @@
         1015207,
         1511916
       ],
-      "weight": 12
-    },
-    "data>loadFromStac.yml@2|weight_matrix_with_ids": {
-      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
-      "label": "Weight matrix with ids",
-      "type": "text",
-      "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n",
-      "weight": 13
+      "weight": 10
     }
   },
   "outputs": {
@@ -322,16 +360,16 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "site_selection_BAS>Block_creation.yml@0|PandQ": {
-      "description": "env space and map of blocks",
-      "label": "blocks and map plots",
-      "type": "image/png",
-      "weight": 1
-    },
-    "site_selection_BAS>Block_creation.yml@0|PCA_summary_df": {
+    "site_selection_BAS>Block_creation.yml@0|pca_summary_df": {
       "description": "summary of PCA",
       "label": "summary of PCA",
       "type": "csv",
+      "weight": 1
+    },
+    "site_selection_BAS>Block_creation.yml@0|blocks_plot": {
+      "description": "env space and map of blocks",
+      "label": "blocks and map plots",
+      "type": "image/png",
       "weight": 2
     }
   }
