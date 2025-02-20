@@ -1,9 +1,9 @@
 script: script_BAS_algorithm.R
 name: BAS selection 
-description: Performs point selection based on BAS algorithm, and unequal inclusion probabilities 
+description: Performs point selection based on BAS algorithm, and unequal inclusion probabilities
+author:
   - name: Francis van Oordt
     identifier: "https://orcid.org/0000-0002-8471-235X"
-  - name: Paul van Dame-Bates
 license: CC-BY
 inputs:
   country_polygon:
@@ -16,11 +16,10 @@ inputs:
     description: Rasters layers of environmental variables of interest
     type: image/tiff;application=geotiff[]
   ndesign:
-   label: Target total sites
+    label: Target total sites
     description: A number of target sites to obtain
     type: int, int[]
     example: 100
-    
 outputs:
   blocks_plot:
     label: maps_output
