@@ -1,6 +1,6 @@
 script: script_Block_creation.R
 name: Environmental Blocks
-description: Will perform PCA variables and create a grid of environmental space based code from biosurvey package
+description: Performs PCA variables and create a grid of environmental block in two dimensional space based code from biosurvey package
 author: 
   - name: Francis van Oordt
     identifier: "https://orcid.org/0000-0002-8471-235X"
@@ -34,11 +34,11 @@ outputs:
     label: environmental blocks raster
     description: environmental blocks raster
     type: image/tiff;application=geotiff[]
-  PandQ:
+  blocks_plot:
     label: blocks and map plots
     description: env space and map of blocks
     type: image/png
-  PCA_summary_df:
+  pca_summary_df:
     label: summary of PCA
     description: summary of PCA
     type: csv
