@@ -139,7 +139,7 @@ for(i in 1:length(sp)){
   }
   if(range_map_type=="Raster"){
     r_range_map <- rast(r_range_map_path[i])
-    sf_range_map <<- as.polygons(r_range_map)
+    sf_range_map <<- as.polygons(ifel(r_range_map==1,1,NA)) |> st_as_sf()
   }
   if(range_map_type=="Both"){
     sf_range_map <<- st_read(sf_range_map_path[i])
