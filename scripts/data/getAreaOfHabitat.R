@@ -164,7 +164,7 @@ for(i in 1:length(sp)){
   
   print(sf_area_lim_srs)
   if(nrow(sf_area_lim_srs)==0){
-    stop("Species range does not fall within chosen study area")
+    stop(paste0(sp[i]," range does not fall within chosen study area"))
   }
   # define buffer size 
   if(is.na(buff_size)){
@@ -210,7 +210,7 @@ for(i in 1:length(sp)){
     print(dim(df_IUCN_sheet))
     
     if(is.null(dim(df_IUCN_sheet))){
-      stop("Species not found in IUCN database. Check name and spelling.")
+      stop(paste0(sp[i]," not found in IUCN database. Check name and spelling."))
     }
 
     df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(
