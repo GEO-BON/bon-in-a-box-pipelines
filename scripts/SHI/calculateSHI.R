@@ -53,13 +53,13 @@ write_tsv(df_SHI,file= path_SHI)
 
 #Plot
 img_SHI_timeseries <- ggplot(df_SHI , aes(x=Year,y=SHI))+geom_line(size=1)+
-  theme_bw()+ylab("Species Habitat Index (%)")+ coord_cartesian(ylim=c(0,110))
+  theme_bw()+ylab("Species Habitat Index (%)")+scale_y_continuous(breaks=seq(0,110,20))+ coord_cartesian(ylim=c(0,110))
 
 path_img_SHI_timeseries <- file.path(outputFolder,"SHI_timeseries.png")
 ggsave(path_img_SHI_timeseries, img_SHI_timeseries ,dpi = 300,width=6,height = 4)
 
 img_W_SHI_timeseries <- ggplot(df_SHI , aes(x=Year,y=Steward_SHI))+geom_line(size=1)+
-  theme_bw()+ylab("Steward's Species Habitat Index (%)")+ coord_cartesian(ylim=c(0,110))
+  theme_bw()+ylab("Steward's Species Habitat Index (%)")+scale_y_continuous(breaks=seq(0,110,20))+ coord_cartesian(ylim=c(0,110))
 
 path_img_W_SHI_timeseries <- file.path(outputFolder,"Steward_SHI_timeseries.png")
 ggsave(path_img_W_SHI_timeseries , img_W_SHI_timeseries ,dpi = 300,width=6,height = 4)
