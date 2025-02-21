@@ -125,7 +125,7 @@ conda:
     - r-readr
     - r-geodata
     - r-gdalcubes
-    - r-rredlist
+    - r-rredlist=0.7.1
     - r-stringr
     - r-httr2
     - r-geojsonsf
