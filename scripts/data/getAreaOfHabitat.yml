@@ -76,11 +76,11 @@ inputs:
       ]
   r_range_map:
     label: range map (raster)
-    description: Raster with expected area for the species.
+    description: Binary raster with expected area for the species or raster with values equal to 1 where the species is distributed and the rest is empty.
     type: image/tiff;application=geotiff[]
     example:
       [
-        null
+        "/scripts/SHI/myrmecophaga_tridactyla.tif"
       ]
   elevation_filter:
     label: filter by elevation
