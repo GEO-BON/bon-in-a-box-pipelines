@@ -145,7 +145,7 @@ for(i in 1:length(sp)){
     sf_range_map <<- st_read(sf_range_map_path[i])
     r_range_map <- rast(r_range_map_path[i])
     r_range_map2 <- project(r_range_map, crs(sf_range_map), method="near")
-    r_range_map2 <- terra::mask(crop(r_range_map2, sf_range_map), sf_range_map)
+    r_range_map2 <- terra::mask(terra::crop(r_range_map2, sf_range_map), sf_range_map)
     sf_range_map <<- as.polygons(ifel(r_range_map2==1,1,NA)) |> st_as_sf()
   }
   
