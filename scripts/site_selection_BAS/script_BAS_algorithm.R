@@ -130,3 +130,10 @@ biab_output("maps_output", maps_path)
 pts_df_path<-file.path(outputFolder, "pts_selected_df.csv") 
 write.csv(pts_df, pts_df_path )
 biab_output("pts_df", pts_df_path)
+
+
+#save shapefile of points
+points_shape<-terra::project(terra::vect(pts), "EPSG:4326")
+points_shape_path <- file.path(outputFolder, "points_shape.GeoJSON") 
+writeVector(points_shape, points_shape_path, overwrite=TRUE)
+biab_output("points_shape", points_shape_path)
