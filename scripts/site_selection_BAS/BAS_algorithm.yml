@@ -27,9 +27,14 @@ outputs:
     description: maps of selected points 
     type: image/png
   pts_df:
-    label: selected points
+    label: Selected points
     description: dataframe of selected points
     type: csv
+  points_shape:
+    label: selected points shapefile
+    description: Vector shapefile of selected points
+    type: application/geo+json
+  
 conda:
   channels:
     - conda-forge
