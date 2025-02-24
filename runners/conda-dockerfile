@@ -42,6 +42,7 @@ RUN mamba env create -f /data/r-environment.yml
 ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
 RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \
         \"geodata\", \
+         \"spbal\", \
         \"OpenStreetMap\"\
     ), repos=\"https://cloud.r-project.org/\")'"
 
