@@ -1,17 +1,6 @@
 {
   "nodes": [
     {
-      "id": "9",
-      "type": "io",
-      "position": {
-        "x": 294,
-        "y": 80.5
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
       "id": "15",
       "type": "io",
       "position": {
@@ -93,8 +82,8 @@
       "id": "23",
       "type": "userInput",
       "position": {
-        "x": 22,
-        "y": 88
+        "x": -194,
+        "y": 91
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -105,29 +94,39 @@
       "id": "24",
       "type": "output",
       "position": {
-        "x": 294,
-        "y": 1.5
+        "x": 293,
+        "y": 0.5
       },
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "27",
+      "type": "io",
+      "position": {
+        "x": 170,
+        "y": 78
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "28",
+      "type": "constant",
+      "position": {
+        "x": -208,
+        "y": 135
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "9",
-      "sourceHandle": "bbox",
-      "target": "15",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-9bbox-15bbox"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "study_area_polygon",
-      "target": "15",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-9study_area_polygon-15study_area_polygon"
-    },
     {
       "source": "15",
       "sourceHandle": "ts_plot",
@@ -166,33 +165,47 @@
     {
       "source": "22",
       "sourceHandle": null,
-      "target": "9",
-      "targetHandle": "country",
-      "id": "reactflow__edge-22-9country"
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-22-24"
+    },
+    {
+      "source": "27",
+      "sourceHandle": "study_area_polygon_unprojected",
+      "target": "15",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-27study_area_polygon_unprojected-15study_area_polygon"
+    },
+    {
+      "source": "27",
+      "sourceHandle": "bbox",
+      "target": "15",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-27bbox-15bbox"
     },
     {
       "source": "23",
       "sourceHandle": null,
-      "target": "9",
+      "target": "27",
       "targetHandle": "state",
-      "id": "reactflow__edge-23-9state"
+      "id": "reactflow__edge-23-27state"
     },
     {
       "source": "22",
       "sourceHandle": null,
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-22-24"
+      "target": "27",
+      "targetHandle": "country",
+      "id": "reactflow__edge-22-27country"
+    },
+    {
+      "source": "28",
+      "sourceHandle": null,
+      "target": "27",
+      "targetHandle": "studyarea_epsg",
+      "id": "reactflow__edge-28-27studyarea_epsg"
     }
   ],
   "inputs": {
-    "data>getBoundingBox.yml@9|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "weight": 0,
-      "example": null
-    },
     "BII>BIIZonalStats.yml@15|summary_statistic": {
       "description": "Summary statistic for layers",
       "label": "Summary statistic",
@@ -203,7 +216,7 @@
         "Mode"
       ],
       "example": "Mean",
-      "weight": 1
+      "weight": 0
     },
     "BII>BIIChange.yml@19|start_year": {
       "description": "Reference BII year for raster plotting",
@@ -216,7 +229,7 @@
         "2015"
       ],
       "example": "2000",
-      "weight": 2
+      "weight": 1
     },
     "BII>BIIChange.yml@19|end_year": {
       "description": "BII layer to compare to the start year",
@@ -229,21 +242,28 @@
         "2020"
       ],
       "example": "2020",
-      "weight": 3
+      "weight": 2
     },
     "pipeline@22": {
       "label": "Country",
       "description": "Country of interest",
       "type": "text",
-      "example": null,
-      "weight": 4
+      "example": "Canada",
+      "weight": 3
     },
     "pipeline@23": {
       "label": "State/Province",
       "description": "State or province of interest (leave blank if you want the full country)",
       "type": "text",
       "example": null,
-      "weight": 5
+      "weight": 4
+    },
+    "data>getBoundingBox.yml@27|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 5,
+      "example": null
     }
   },
   "outputs": {

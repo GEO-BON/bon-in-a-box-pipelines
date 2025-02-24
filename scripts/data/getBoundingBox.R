@@ -35,7 +35,7 @@ biab_output("study_area_polygon_unprojected", study_area_polygon_path)
 if (is.null(input$studyarea_epsg)){
   bbox <- sf::st_bbox(study_area_polygon)
 } else {
-study_area_polygon_projected <- st_transform(study_area_polygon, st_crs(input$studyarea_epsg))
+study_area_polygon_projected <- st_transform(study_area_polygon, input$studyarea_epsg)
 bbox <- sf::st_bbox(study_area_polygon_projected) }
 
 bbox <- unname(bbox)
