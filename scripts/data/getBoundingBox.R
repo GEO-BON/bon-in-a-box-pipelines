@@ -21,7 +21,7 @@ study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
 print(st_crs(study_area_polygon))
 
 if(nrow(study_area_polygon)==0){
-  biab_error_stop("Study area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas.")
+  biab_error_stop("Study area polygon does not exist. Check spelling of country and state names.")
 
 }  # stop if object is empty
 
@@ -35,7 +35,7 @@ biab_output("study_area_polygon_unprojected", study_area_polygon_path)
 if (is.null(input$studyarea_epsg)){
   bbox <- sf::st_bbox(study_area_polygon)
 } else {
-study_area_polygon_projected <- st_transform(study_area_polygon, st_crs(input$studyarea_epsg))
+study_area_polygon_projected <- st_transform(study_area_polygon, input$studyarea_epsg)
 bbox <- sf::st_bbox(study_area_polygon_projected) }
 
 bbox <- unname(bbox)

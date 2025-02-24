@@ -31,8 +31,8 @@ inputs:
       The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
       
       *Leave blank if you want the bounding box to be in EPSG:4326.*
-    type: int
-    example: null
+    type: text
+    example: "EPSG:6622"
 outputs:
   study_area_polygon_unprojected:
     label: Polygon of study area in EPSG 4326
