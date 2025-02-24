@@ -12,17 +12,6 @@
       }
     },
     {
-      "id": "1",
-      "type": "io",
-      "position": {
-        "x": 256,
-        "y": 422.8125
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
       "id": "2",
       "type": "io",
       "position": {
@@ -31,19 +20,6 @@
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "3",
-      "type": "userInput",
-      "position": {
-        "x": 21,
-        "y": 360.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Colombia"
       }
     },
     {
@@ -90,31 +66,6 @@
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "15",
-      "type": "constant",
-      "position": {
-        "x": -97,
-        "y": 399.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": null
-      }
-    },
-    {
-      "id": "16",
-      "type": "constant",
-      "position": {
-        "x": -91,
-        "y": 450.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
       }
     },
     {
@@ -173,16 +124,59 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "33",
+      "type": "io",
+      "position": {
+        "x": 260.4024604461355,
+        "y": 484.1968205133986
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "34",
+      "type": "constant",
+      "position": {
+        "x": -92.23655537541032,
+        "y": 499.54550246117526
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "35",
+      "type": "constant",
+      "position": {
+        "x": -110.70966612623079,
+        "y": 553.6453268028639
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "36",
+      "type": "userInput",
+      "position": {
+        "x": -50.01230223067785,
+        "y": 437.52863065484934
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Colombia"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "country",
-      "id": "reactflow__edge-3-1country"
-    },
     {
       "source": "2",
       "sourceHandle": "rasters",
@@ -196,13 +190,6 @@
       "target": "6",
       "targetHandle": null,
       "id": "reactflow__edge-0rast_blocks-6"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "study_area_polygon",
-      "target": "0",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-1study_area_polygon-0country_polygon"
     },
     {
       "source": "10",
@@ -226,20 +213,6 @@
       "id": "reactflow__edge-0blocks_plot-14"
     },
     {
-      "source": "15",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "state",
-      "id": "reactflow__edge-15-1state"
-    },
-    {
-      "source": "16",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-16-1study_area_file"
-    },
-    {
       "source": "18",
       "sourceHandle": null,
       "target": "2",
@@ -252,13 +225,6 @@
       "target": "29",
       "targetHandle": null,
       "id": "reactflow__edge-26pts_df-29"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "study_area_polygon",
-      "target": "26",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-1study_area_polygon-26country_polygon"
     },
     {
       "source": "0",
@@ -280,6 +246,41 @@
       "target": "32",
       "targetHandle": null,
       "id": "reactflow__edge-26points_shape-32"
+    },
+    {
+      "source": "33",
+      "sourceHandle": "study_area_polygon",
+      "target": "26",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-33study_area_polygon-26country_polygon"
+    },
+    {
+      "source": "33",
+      "sourceHandle": "study_area_polygon",
+      "target": "0",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-33study_area_polygon-0country_polygon"
+    },
+    {
+      "source": "34",
+      "sourceHandle": null,
+      "target": "33",
+      "targetHandle": "state",
+      "id": "reactflow__edge-34-33state"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "33",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-35-33study_area_file"
+    },
+    {
+      "source": "36",
+      "sourceHandle": null,
+      "target": "33",
+      "targetHandle": "country",
+      "id": "reactflow__edge-36-33country"
     }
   ],
   "inputs": {
@@ -337,13 +338,6 @@
       "weight": 4,
       "example": null
     },
-    "pipeline@3": {
-      "label": "Country",
-      "description": "Country of interest",
-      "type": "text",
-      "example": "Colombia",
-      "weight": 5
-    },
     "data>loadFromStac.yml@2|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
       "label": "aggregation",
@@ -356,14 +350,42 @@
         "median"
       ],
       "example": "first",
-      "weight": 6
+      "weight": 5
     },
     "pipeline@10": {
       "label": "projection system",
       "description": "String, projection of the rasters",
       "type": "text",
       "example": "EPSG:6622",
+      "weight": 6
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_rows": {
+      "description": "Number of rows for the block grid",
+      "label": "number of rows",
+      "type": "int",
+      "example": 10,
       "weight": 7
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_cols": {
+      "description": "Number of columns for the block grid",
+      "label": "number of columns",
+      "type": "int",
+      "example": 10,
+      "weight": 8
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
+      "description": "A number of target sites to obtain",
+      "label": "Target total sites",
+      "type": "int",
+      "example": 100,
+      "weight": 9
+    },
+    "pipeline@36": {
+      "label": "Country",
+      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 10
     },
     "data>loadFromStac.yml@2|bbox": {
       "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
@@ -375,27 +397,6 @@
         1015207,
         1511916
       ],
-      "weight": 8
-    },
-    "site_selection_BAS>Block_creation.yml@0|n_rows": {
-      "description": "Number of rows for the block grid",
-      "label": "number of rows",
-      "type": "int",
-      "example": 10,
-      "weight": 9
-    },
-    "site_selection_BAS>Block_creation.yml@0|n_cols": {
-      "description": "Number of columns for the block grid",
-      "label": "number of columns",
-      "type": "int",
-      "example": 10,
-      "weight": 10
-    },
-    "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
-      "description": "A number of target sites to obtain",
-      "label": "Target total sites",
-      "type": "int",
-      "example": 100,
       "weight": 11
     }
   },
