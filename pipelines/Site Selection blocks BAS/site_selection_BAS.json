@@ -454,16 +454,14 @@
     "references": [
       {
         "text": "spbal: Spatially Balanced Sampling Algorithms",
-        "doi": "https://doi.org/\t10.32614/CRAN.package.spbal"
+        "doi": "10.32614/CRAN.package.spbal"
       },
       {
         "text": "Survey-gap analysis in expeditionary research: where do we go from here?",
         "doi": "https://doi.org/10.1111/j.1095-8312.2005.00520.x"
       },
       {
-        "text": {
-          "Selection of sampling sites for biodiversity inventory": "Effects of environmental and geographical considerations"
-        },
+        "text": "Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations",
         "doi": "https://doi.org/10.1111/2041-210X.13869"
       }
     ]
