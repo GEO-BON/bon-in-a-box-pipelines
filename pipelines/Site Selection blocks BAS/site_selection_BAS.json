@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 821.1289983786924,
-        "y": 419.5052943199048
+        "x": 1293.5128304353887,
+        "y": 287.55450324261545
       },
       "data": {
         "descriptionFile": "site_selection_BAS>Block_creation.yml"
@@ -15,8 +15,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 709,
-        "y": 237.81249999999994
+        "x": 799.5372585827968,
+        "y": 227.36589324044638
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 1684,
-        "y": 264.8125
+        "x": 1844.979965114293,
+        "y": 200.15661237212822
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "10",
       "type": "userInput",
       "position": {
-        "x": 264,
-        "y": 313.8125
+        "x": -156.2632695811667,
+        "y": 155.47155070725273
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 1758,
-        "y": 466.8125
+        "x": 1864.8801407726046,
+        "y": 415.3516914798572
       },
       "data": {
         "label": "Output"
@@ -61,8 +61,8 @@
       "id": "14",
       "type": "output",
       "position": {
-        "x": 1768,
-        "y": 327.8125
+        "x": 1863.004569575648,
+        "y": 318.57594462458974
       },
       "data": {
         "label": "Output"
@@ -72,8 +72,8 @@
       "id": "18",
       "type": "constant",
       "position": {
-        "x": 306,
-        "y": 186.8125
+        "x": 217.59296997821605,
+        "y": 281.81706957564836
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -85,8 +85,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 1374.4108632503633,
-        "y": 541.6126100633284
+        "x": 1871.8653456117443,
+        "y": 257.9184092471562
       },
       "data": {
         "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
@@ -96,8 +96,8 @@
       "id": "29",
       "type": "output",
       "position": {
-        "x": 1987.2631605816787,
-        "y": 612.7352085814957
+        "x": 2420.061755315188,
+        "y": 257.78758058358727
       },
       "data": {
         "label": "Output"
@@ -107,8 +107,8 @@
       "id": "31",
       "type": "output",
       "position": {
-        "x": 1953,
-        "y": 512
+        "x": 2373.9230235365535,
+        "y": 204.55465678991578
       },
       "data": {
         "label": "Output"
@@ -118,30 +118,43 @@
       "id": "32",
       "type": "output",
       "position": {
-        "x": 1922,
-        "y": 689
+        "x": 2459.039719684568,
+        "y": 324.8158166266813
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "33",
+      "id": "36",
+      "type": "userInput",
+      "position": {
+        "x": -267.7311075082053,
+        "y": 227.72687284195922
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Colombia"
+      }
+    },
+    {
+      "id": "37",
       "type": "io",
       "position": {
-        "x": 260.4024604461355,
-        "y": 484.1968205133986
+        "x": 192.0796866875653,
+        "y": 169.2646367083717
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
       }
     },
     {
-      "id": "34",
+      "id": "38",
       "type": "constant",
       "position": {
-        "x": -92.23655537541032,
-        "y": 499.54550246117526
+        "x": -364.46991316635774,
+        "y": 269.21580643607547
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -150,29 +163,16 @@
       }
     },
     {
-      "id": "35",
+      "id": "39",
       "type": "constant",
       "position": {
-        "x": -110.70966612623079,
-        "y": 553.6453268028639
+        "x": -347.0153048780783,
+        "y": 337.36502755808993
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": null
-      }
-    },
-    {
-      "id": "36",
-      "type": "userInput",
-      "position": {
-        "x": -50.01230223067785,
-        "y": 437.52863065484934
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Colombia"
       }
     }
   ],
@@ -248,39 +248,53 @@
       "id": "reactflow__edge-26points_shape-32"
     },
     {
-      "source": "33",
-      "sourceHandle": "study_area_polygon",
-      "target": "26",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-33study_area_polygon-26country_polygon"
-    },
-    {
-      "source": "33",
-      "sourceHandle": "study_area_polygon",
+      "source": "37",
+      "sourceHandle": "study_area_polygon_unprojected",
       "target": "0",
       "targetHandle": "country_polygon",
-      "id": "reactflow__edge-33study_area_polygon-0country_polygon"
+      "id": "reactflow__edge-37study_area_polygon_unprojected-0country_polygon"
     },
     {
-      "source": "34",
-      "sourceHandle": null,
-      "target": "33",
-      "targetHandle": "state",
-      "id": "reactflow__edge-34-33state"
-    },
-    {
-      "source": "35",
-      "sourceHandle": null,
-      "target": "33",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-35-33study_area_file"
+      "source": "37",
+      "sourceHandle": "bbox",
+      "target": "2",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-37bbox-2bbox"
     },
     {
       "source": "36",
       "sourceHandle": null,
-      "target": "33",
+      "target": "37",
       "targetHandle": "country",
-      "id": "reactflow__edge-36-33country"
+      "id": "reactflow__edge-36-37country"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "studyarea_epsg",
+      "id": "reactflow__edge-10-37studyarea_epsg"
+    },
+    {
+      "source": "38",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "state",
+      "id": "reactflow__edge-38-37state"
+    },
+    {
+      "source": "39",
+      "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-39-37study_area_file"
+    },
+    {
+      "source": "37",
+      "sourceHandle": "study_area_polygon_unprojected",
+      "target": "26",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-37study_area_polygon_unprojected-26country_polygon"
     }
   ],
   "inputs": {
@@ -386,18 +400,6 @@
       "type": "text",
       "example": "Colombia",
       "weight": 10
-    },
-    "data>loadFromStac.yml@2|bbox": {
-      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
-      "label": "bbox",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 11
     }
   },
   "outputs": {
