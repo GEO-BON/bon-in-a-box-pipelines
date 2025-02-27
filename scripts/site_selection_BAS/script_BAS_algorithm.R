@@ -61,6 +61,7 @@ ngrps <- max(terra::values(country_rast), na.rm = TRUE)
 
 ####Ngrps<-terra::freq(country_rast)
 
+#count pixels, could use the terra function instead
 Ngrps <- unlist(lapply(1:ngrps, FUN = function(x){sum(terra::values(country_rast) == x,na.rm = TRUE)}))
 
 # Ngrps[Ngrps < 1000 & Ngrps > 0] <- 100 ## Set these to all be the same for these really small types.
@@ -84,6 +85,7 @@ bas_points <- terra::vect(result$sample)
 print("Extracting points from block classes")
 grps <- terra::extract(country_rast, terra::project(bas_points, country_rast))
 
+#need to see if this merging is correct with the terra approach
 ###keep <- merge(grps, Ngrps, by.x = "Block", by.y = "value")$pincl_scaled > h3$pts ## Check against random uniform halton points in 3rd dimension.
 
 keep <- pincl_scaled[grps$Block] > h3$pts ## Check against random uniform halton points in 3rd dimension.
