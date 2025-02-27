@@ -28,7 +28,7 @@ print("Getting bounding box for BAS")
 
 bb <- spbal::BoundingBox(shapefile = country_poly)
 
-## Draw a bunch of seeds for speed.
+## Draw a seed for speed
 print("Generating seeds for BAS")
 
 system.time({
