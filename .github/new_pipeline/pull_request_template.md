@@ -29,9 +29,9 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 **LICENSE:** <!-- LICENSE NAME HERE -->
 
 > [!NOTE]
-> The pipeline license **must** be FOSS, **should** not require the same license for derived
-> products, and **must** be in either `LICENSE` or `LICENSE.md` in the folder of the
-> package. You can delete this note when done.
+> The pipeline license **must** be FOSS (free and open source software), **should** not require the same license for
+> derived products, and **must** be inclided as either `LICENSE` or `LICENSE.md` in the folder of the
+> pipeline. You can delete this note when this is completed.
 
 **Languages used:**
 
@@ -44,21 +44,30 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 > For each *other* language, copy this quote block and list the language, version, and other
 > relevant information
 
-**Dependencies manager:** <!-- LIST HERE -->
+**Dependencies manager:** <!-- List all packages and their versions here (note: list versions even if the versions are not specified in the Conda dependencies for future versioning) -->
 
 > [!INFO]
-> Pipelines **must** ship with a list of their dependencies, including information about
+> Pipelines **must** be accompanied a list of their dependencies, including information about
 > which versions are usable. You can delete this note when done.
 
 ## Additional information
 
 **Testing:** <!-- free-form text to explain the testing/CI of the pipeline -->
 
+[!INFO]
+> Please include an explanation of how the pipeline should be tested. 
+> This should include guidelines on how to parameterize the pipeline.
+
 ## Optional (recommended)
 
 - [ ] [Mermaid][mermaid] diagram
 
 [mermaid]: https://github.blog/developer-skills/github/include-diagrams-markdown-files-mermaid/
+
+## Suggested reviewers <!-- 2-3 -->
+- Name 1 (email)
+- Name 2 (email)
+- Name 3 (email)
 
 ## Review information
 
