@@ -1,17 +1,6 @@
 {
   "nodes": [
     {
-      "id": "23",
-      "type": "io",
-      "position": {
-        "x": -132,
-        "y": 92
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
       "id": "37",
       "type": "io",
       "position": {
@@ -102,6 +91,54 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "51",
+      "type": "io",
+      "position": {
+        "x": -328.4750061035156,
+        "y": 56
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": -682.4750061035156,
+        "y": 109
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "53",
+      "type": "userInput",
+      "position": {
+        "x": -669.4750061035156,
+        "y": -69
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Canada"
+      }
+    },
+    {
+      "id": "54",
+      "type": "output",
+      "position": {
+        "x": -218.47500610351562,
+        "y": -53
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -118,20 +155,6 @@
       "target": "39",
       "targetHandle": null,
       "id": "reactflow__edge-37rasters-39"
-    },
-    {
-      "source": "23",
-      "sourceHandle": "bbox",
-      "target": "37",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-23bbox-37bbox"
-    },
-    {
-      "source": "23",
-      "sourceHandle": "study_area_polygon",
-      "target": "37",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-23study_area_polygon-37study_area_polygon"
     },
     {
       "source": "44",
@@ -188,30 +211,44 @@
       "target": "50",
       "targetHandle": null,
       "id": "reactflow__edge-48phenology_change_plot-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": "study_area_polygon_unprojected",
+      "target": "37",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-51study_area_polygon_unprojected-37study_area_polygon"
+    },
+    {
+      "source": "51",
+      "sourceHandle": "bbox",
+      "target": "37",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-51bbox-37bbox"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "studyarea_epsg",
+      "id": "reactflow__edge-52-51studyarea_epsg"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "country",
+      "id": "reactflow__edge-53-51country"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "54",
+      "targetHandle": null,
+      "id": "reactflow__edge-53-54"
     }
   ],
   "inputs": {
-    "data>getBoundingBox.yml@23|country": {
-      "description": "Country of interest. For list of countries look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get).",
-      "label": "Country",
-      "type": "text",
-      "example": "Belgium",
-      "weight": 0
-    },
-    "data>getBoundingBox.yml@23|state": {
-      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get).",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
-      "weight": 1
-    },
-    "data>getBoundingBox.yml@23|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "weight": 2,
-      "example": null
-    },
     "phenology>summarise_phenology.yml@37|season": {
       "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) \nand season 2 is the second growing season (late summer and fall).\n",
       "label": "Season of interest",
@@ -221,7 +258,7 @@
         "SEASON2"
       ],
       "example": "SEASON1",
-      "weight": 3
+      "weight": 0
     },
     "phenology>summarise_phenology.yml@37|bands": {
       "description": "Bands of interest for the calculations. \n- Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.\n- End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period.\n- Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season\n- End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season\n- Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season\n- Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached\n- Season minimum value (MINV) - average PPI of minima of left adn right sides of each season\n- Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season\n- Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season\n- Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts\n- Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends\n- Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.\n- Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end\n- Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset\n",
@@ -247,7 +284,7 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 4
+      "weight": 1
     },
     "phenology>summarise_phenology.yml@37|aggregate_function": {
       "description": "Function to spatially aggregate the phenology data",
@@ -259,27 +296,48 @@
         "max"
       ],
       "example": "mean",
-      "weight": 5
+      "weight": 2
     },
     "phenology>summarise_phenology.yml@37|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "int",
       "example": 1000,
-      "weight": 6
+      "weight": 3
     },
     "pipeline@44": {
       "label": "Start year",
       "description": "Start date for phenology time series.",
       "type": "text",
       "example": "2017",
-      "weight": 7
+      "weight": 4
     },
     "pipeline@45": {
       "label": "End year",
       "description": "End date for phenology time series.",
       "type": "text",
       "example": "2024",
+      "weight": 5
+    },
+    "data>getBoundingBox.yml@51|state": {
+      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get).",
+      "label": "State/Province",
+      "type": "text",
+      "example": "Quebec",
+      "weight": 6
+    },
+    "data>getBoundingBox.yml@51|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
+      "type": "text",
+      "weight": 7,
+      "example": null
+    },
+    "pipeline@53": {
+      "label": "Country",
+      "description": "Country of interest. For list of countries look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get).",
+      "type": "text",
+      "example": "Canada",
       "weight": 8
     }
   },
@@ -307,6 +365,13 @@
       "label": "Plot of phenology change",
       "type": "image/png",
       "weight": 3
+    },
+    "pipeline@53|default_output": {
+      "description": "Country of interest. For list of countries look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get).",
+      "label": "Country",
+      "example": "Canada",
+      "type": "text",
+      "weight": 4
     }
   },
   "metadata": {

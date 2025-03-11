@@ -1,17 +1,13 @@
-print("Starting script")
-
 import sys;
 import json;
 import openeo;
-import csv;
+import shapely;
 import os
 
 os.chdir(sys.argv[1])
 
-# Reading input.json
-outputFolder = sys.argv[1]
-inputFile = open(outputFolder + '/input.json')
-data = json.load(inputFile)
+# Reading inputs
+data = biab_inputs()
 
 bbox = data['bbox']
 start_year = data['start_year']
@@ -37,7 +33,7 @@ datacube = connection.load_collection(
   bands=bands
 )
 
-if bbox is None:
+if polygon is None:
     datacube_cropped = datacube
 else:
     datacube_cropped = datacube.filter_spatial(polygon) # cropping to polygon
@@ -49,52 +45,52 @@ else:
     datacube_resampled_cropped = datacube_cropped.resample_spatial(resolution=spatial_resolution, method="bilinear") # resampling to spatial resolution
 
 
-
 # output rasters
 datacube_resampled_cropped.save_result("GTiff")
+
 # start job to fetch rasters
 print("Starting job to fetch raster layers", flush=True)
 job1 = datacube_resampled_cropped.create_job()
 
 job1.start_and_wait()
-rasters = job1.get_results().download_files(outputFolder)
+rasters = job1.get_results().download_files(output_folder) # these are in file path format
 
 print("Job finished, printing job output", flush=True)
 print(rasters)
 
 print(str(rasters[0]), flush=True)
-raster_outs = []
+raster_outs = [] # make an empty list
 for t in range(len(rasters)- 1):
-    raster_outs.append(str(rasters[t]))
+    raster_outs.append(str(rasters[t])) # get all file paths except json file (last one)
 
-print(raster_outs)
+print(raster_outs) # output raster file paths
+
+# Output rasters
+biab_output("rasters", raster_outs)
 
 # Start job to calculate summary of phenology values over the polygon
+
+if polygon is None:
+    polygon = shapely.geometry.box(*bbox)
+
 res = datacube.aggregate_spatial(
     geometries=polygon,
     reducer=aggregate_function
 )
 
-
 result = res.save_result("CSV")
 
-print("Starting job to calculate phenology values for summary values over the polygon of interest", flush=True)
+print("Starting job to calculate phenology values over the polygon of interest", flush=True)
 
 job2 = result.create_job()
 job2.start_and_wait()
 
 
-timeseries = job2.get_results().download_files(outputFolder)
+timeseries = job2.get_results().download_files(output_folder)
 
 print("Job finished, printing job output", flush=True)
 print(timeseries)
 
-output = {
-     "timeseries": str(timeseries[0]),
-     "rasters": raster_outs # also need to figure out how to put this in an array
-    }
-
-json_object = json.dumps(output, indent = 2)
-
-with open(outputFolder + '/output.json', "w") as outfile:
-    outfile.write(json_object)
+# output timeseries
+timeseries_out = str(timeseries[0])
+biab_output("timeseries", timeseries_out)
