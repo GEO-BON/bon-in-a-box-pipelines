@@ -16,7 +16,6 @@ library("dplyr")
 library("ENMeval")
 
 
-
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/runMaxentFunc.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
