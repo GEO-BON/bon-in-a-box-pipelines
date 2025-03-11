@@ -15,7 +15,7 @@ print("Go!", flush=True)
 
 if intIn == 13 :
   biab_error_stop("intIn == 13, you're not lucky! This causes failure.")
-  sys.exit(1)
+  print("You will never see this message")
 
 intIn += 1
 
