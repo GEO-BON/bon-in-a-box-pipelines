@@ -14,6 +14,9 @@ inputs:
       Some raster file, with some description here.
 
       _Input descriptions can use MarkDown too._
+
+      That means we can put images using markdown, like this one:
+      ![Image](https://boninabox.geobon.org/backend/images/icon/logoBIAB.png)
     type: image/tiff;application=geotiff
     example: http://something-compatible.tiff
   intensity:
