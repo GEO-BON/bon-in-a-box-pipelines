@@ -16,9 +16,9 @@ output<- tryCatch({
 units::units_options(set_units_mode = "standard")
 # Load study area shapefile
 print("Loading polygons")
-study_area<- st_read(input$study_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
+study_area<- st_read(input$study_area_polygon, crs=input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 
-protected_area<- st_read(input$protected_area_polygon) %>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
+protected_area<- st_read(input$protected_area_polygon, input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
 
 str(protected_area)
 
