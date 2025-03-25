@@ -16,11 +16,29 @@ output<- tryCatch({
 units::units_options(set_units_mode = "standard")
 # Load study area shapefile
 print("Loading polygons")
-study_area<- st_read(input$study_area_polygon, crs=input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
+study_area<- st_read(input$study_area_polygon)#, crs=input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
+protected_area<- st_read(input$protected_area_polygon)#, input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
+print(str(protected_area))
 
-protected_area<- st_read(input$protected_area_polygon, input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
+# make geometry valid
+protected_area <- st_make_valid(protected_area)
+# check if it is valid, and if not, apply buffer function
+if(!all(st_is_valid(protected_area))){
+protected_area <- st_buffer(protected_area, 0)
+}
+# if it still isn't valid, try some other things
+if(!all(st_is_valid(protected_area))){
+protected_area <- st_simplify(protected_area, dTolerance = 0.001)
+protected_area <- st_set_precision(protected_area, 1e6)
+}
+# if still not valid, output an error
+if(!all(st_is_valid(protected_area))){
+biab_error_stop("Protected area geometry is not valid, check input file.")
 
-str(protected_area)
+
+if(!input$date_column %in% colnames(protected_area)){
+  biab_error_stop("The column name for the date of establishment of the protected area was not correct.")
+}
 
 protected_area <- protected_area %>% rename(date_column = input$date_column_name)
 
