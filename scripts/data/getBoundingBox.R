@@ -17,7 +17,7 @@ if (is.null(input$studyarea_file)){ # if there is no study area file input
     study_area<- paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?country_name=", input$country, "&state_name=", input$state)
   } } else {study_area <- input$studyarea_file}
 
-study_area_polygon<- sf::st_read(study_area)  # load study area as sf object
+study_area_polygon<- sf::st_read(study_area) %>% st_set_crs("EPSG:4326") # load study area as sf object
 print(st_crs(study_area_polygon))
 
 if(nrow(study_area_polygon)==0){
