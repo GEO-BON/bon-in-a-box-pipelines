@@ -20,7 +20,7 @@ inputs:
     description: Upload a file of a custom study area
     type: text
     example: null
-  studyarea_epsg:
+  study_area_epsg:
     label: Study area EPSG
     description: >-
       Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.
@@ -34,11 +34,11 @@ inputs:
     type: text
     example: "EPSG:6622"
 outputs:
-  study_area_polygon_unprojected:
-    label: Polygon of study area in EPSG 4326
-    description: Represents the map of the study area
-    type: application/geo+json
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area in a geopackage with the chosen coordinate reference system
+    type: application/geopackage+sqlite3	
   bbox:
-    label: bbox
-    description: boundary box around area of interest
+    label: Bounding box
+    description: boundary box around area of interest in the order of min, ymin, xmax, ymax
     type: float[]
