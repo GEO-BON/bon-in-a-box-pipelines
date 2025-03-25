@@ -2,8 +2,6 @@
 
 library("rjson")
 library("sf")
-library("rnaturalearth")
-library("rnaturalearthdata")
 
 input <- biab_inputs()
 
@@ -33,7 +31,7 @@ if (!is.null(input$study_area_epsg)){ # if crs is specified, transform data
   }
   
 # Save study area and protected area data
-study_area_polygon<- file.path(outputFolder, "study_area_polygon.gpkg") # Define the file path for the protected area polygon output
+study_area_polygon_path<- file.path(outputFolder, "study_area_polygon.gpkg") # Define the file path for the protected area polygon output
 sf::st_write(study_area_polygon, study_area_polygon_path, delete_dsn = T)
 biab_output("study_area_polygon", study_area_polygon_path)
 
