@@ -1,5 +1,5 @@
 script: getObservations.R
-name: GBIF Observations < 100 000
+name: GBIF Observations < 100 000 (DEPRECATED - Please use script getGBIFObservations instead)
 description: "This script gets observations from GBIF database, using the package RGIF."
 external_link: https://github.com/ropensci/rgbif
 author:
