@@ -6,6 +6,10 @@ author:
     identifier: https://orcid.org/0000-0002-8471-235X
 license: CC-BY
 inputs:
+  colors_vect:
+    label: Color vector
+    description: vector of random colors for plotting
+    type: csv
   country_polygon:
     label: Country polygon
     description: polygon of the country of interest
@@ -21,6 +25,14 @@ inputs:
     description: A number of target sites to obtain
     type: int
     example: 100
+  options_BAS:
+    label: Sampling type
+    description: Select and option beween equal BAS or unequal prob BAS
+    type: options
+    options:
+    - equal
+    - unequal
+    example: equal
 outputs:
   maps_output:
     label: Maps output

@@ -3,6 +3,7 @@ library(terra)
 library(ggplot2)
 library(tidyterra)
 library(cowplot)
+library(factoextra)
 
 #read inputs
 input <- biab_inputs()  
@@ -16,6 +17,10 @@ print(variables)
 
 print("Calling country shape polygon")
 map_shape <-terra::vect(input$country_polygon)
+print("Reprojecting map to rasters specific CRS")
+
+map_shape <- terra::project(map_shape, terra::crs(variables))
+map_shape <- terra::crop(map_shape, variables)
 print(map_shape)
 
 #agregate for testing... make the call later about this with BiaB team
@@ -25,11 +30,12 @@ variables <- terra::aggregate(variables, 10,  fun="mean")
 
 print("Masking aggregated raster stack of env variables")
 
-variables <- terra::mask(variables, terra::project(map_shape, terra::crs(variables)))
+variables <- terra::mask(variables, map_shape)
 print(variables)
 
 crs_working <- terra::crs(variables)
 
+## try making this an option on BiaB so it wont do PCA but choose the first 2 env vars only
 type_analysis <-"PCA" #as.character(input$analysis_type)
 
 print("Performing PCA on environmental variables")
@@ -50,16 +56,19 @@ if (type_analysis == "PCA") {
   pca_importance <- function(x) {
     vars <- x$sdev^2
     vars <- vars/sum(vars)
-    rbind(`Standard deviation` = x$sdev, `Proportion of Variance` = vars, 
-          `Cumulative Proportion` = cumsum(vars))
+    rbind(`Standard deviation` = round(x$sdev, 2), `Proportion of Variance` = 100*round(vars, 2), 
+          `Cumulative Proportion` = 100*round(cumsum(vars),2))
   }
   
   pca_summary_df<-as.data.frame(pca_importance(pca_summary))
   
-}else{
+}else{ ## if want to skip this
   var1<-terra::values(variables[[1]])
   var2<-terra::values(variables[[2]])
 }
+
+res.var <- factoextra::get_pca_var(pca_vars)
+print(res.var$contrib)
 
 ############################################################
 #MAKE BLOCKS, from biosurvey's code     
@@ -162,6 +171,8 @@ colors_vect<-(sample( grDevices::colors()[grep('gr(a|e)y',
                                                invert = T)], 
                       length(unique(merged_df[,c("x", "y", "Block")]$Block)) )  )
 
+print(colors_vect)
+
 print("Plotting blocks in environmental space")
 #produce env space blocks plot
 p<-ggplot2::ggplot()+
@@ -171,7 +182,9 @@ p<-ggplot2::ggplot()+
                                    colour =as.factor(Block)) )+
   ggplot2::scale_color_manual(values =colors_vect)+
   ggplot2::theme_bw()+
-  ggplot2::theme(legend.position = "none")
+  ggplot2::theme(legend.position = "none")+
+  ggplot2::xlab("PC1")+
+  ggplot2::ylab("PC2")
 
 #produce map of env block in geographical space
 # its easier to define the colours with the df and geom_raster than with a terra rast
@@ -194,10 +207,17 @@ q<-ggplot2::ggplot()+
   ggplot2::theme(legend.position = "none",
                  axis.text.y = ggplot2::element_blank(),
                  axis.text.x = ggplot2::element_blank()
-                 )
+                 )+
+  ggplot2::xlab("Longitude")+
+  ggplot2::ylab("Latitude")
   
 
-blocks_plot <- cowplot::plot_grid(q, p, nrow=1)
+blocks_plot <- cowplot::plot_grid(p,q, nrow=1)
+
+#save color palette
+colors_vect_path <- file.path(outputFolder, "colors_vect.csv") 
+write.csv(colors_vect, colors_vect_path )
+biab_output("colors_vect", colors_vect_path)
 
 #save plot
 plot_blocks_map_path <- file.path(outputFolder, "blocks_plot.png") 

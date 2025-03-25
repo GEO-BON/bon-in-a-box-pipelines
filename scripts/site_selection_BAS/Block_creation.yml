@@ -42,6 +42,10 @@ outputs:
     label: summary of PCA
     description: summary of PCA
     type: csv
+  colors_vect:
+    label: Color vector
+    description: vector of random colors for plotting
+    type: csv
 conda:
   channels:
     - conda-forge
@@ -52,6 +56,7 @@ conda:
     - r-ggplot2
     - r-tidyterra
     - r-cowplot
+    - r-factoextra
 references:
    - text: "Survey-gap analysis in expeditionary research: where do we go from here?"
      doi: "https://doi.org/10.1111/j.1095-8312.2005.00520.x"
