@@ -1,7 +1,6 @@
 script: protconn_analysis.R
 name: Protconn Analysis
 description: This script calculates ProtConn from protected area polygons using the MK_ProtConn function in the Makurhini package. This creates a distance matrix from protected area polygons and calculates ProtConn using dispersal probabilities between protected areas.
-timeout: 1440 # 1440 minutes = 24h
 author:
   - name: Jory Griffith (jory.griffith@mcgill.ca)
 license: CC BY
@@ -40,16 +39,11 @@ inputs:
       - "centroid"
       - "edge"
     example: "centroid"
-  date_column_name:
-    label: Date column name
-    description: Name of the column in the protected area file that specifies when the PA was created (STATUS_YR for WDPA data)
-    type: text
-    example: STATUS_YR
   years:
     label: Year for cutoff
     description: Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)
     type: int
-    example: 2024
+    example: 2025
   start_year:
     label: Start year
     description: Year for the time series plot to start
@@ -61,7 +55,7 @@ inputs:
     type: int
     example: 20
 outputs:
-  protcon_result:
+  protconn_result:
     label: ProtConn results
     description: Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities
     type: text/csv
@@ -81,22 +75,6 @@ outputs:
     label: ProtConn plot with dispersal presets
     description: Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km
     type: image/png
-# conda:
-#   channels:
-#     - conda-forge
-#     - r
-#   dependencies:
-#     - r-base=4.4.1
-#     - r-terra
-#     - r-dplyr
-#     - r-ggplot2
-#     - r-ggrepel
-#     - r-remotes
-#     # - r-Makurhini - not yet in anaconda
-#     - r-rjson
-#     - r-sf
-#     - r-rmapshaper
-#     - r-spatialeco
 references:
   - text: Saura et al. 2017
     doi: 10.1016/j.ecolind.2016.12.047
