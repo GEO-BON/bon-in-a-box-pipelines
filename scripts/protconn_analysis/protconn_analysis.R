@@ -39,13 +39,13 @@ protconn_result <- Makurhini::MK_ProtConn(
   distance_thresholds=c(input$distance_threshold)
 )
 
-protconn_result.df <- as.data.frame(protconn_result)[c(2,3,4),c(3,4)]
-protconn_result.df[is.na(protconn_result.df)] <- 0
-print(protconn_result.df)
+protconn_result <- as.data.frame(protconn_result)[c(2,3,4),c(3,4)]
+protconn_result[is.na(protconn_result)] <- 0
+print(protconn_result)
 
 # Output protconn result
 protconn_result_path<- file.path(outputFolder, "protconn_result.csv") # Define the file path for the 'val_wkt_path' output
-write.csv(protconn_result.df, protconn_result_path, row.names = F ) # Write the 'val_wkt_path' output
+write.csv(protconn_result, protconn_result_path, row.names = F ) # Write the 'val_wkt_path' output
 biab_output("protconn_result", protconn_result_path)
 
 result_plot <- ggplot2::ggplot(protconn_result.df) +
@@ -155,7 +155,7 @@ result_preset_plot <- ggplot2::ggplot(results_preset) +
 
 # output
 result_plot_preset_path <- file.path(outputFolder, "result_preset_plot.png")
-ggsave(result_plot_preset_path, result_preset_plot, dpi=300, height=8, width=12)
+ggsave(filename=result_plot_preset_path, plot=result_preset_plot, dpi=300, height=8, width=12)
 biab_output("result_preset_plot", result_plot_preset_path)
 
 
