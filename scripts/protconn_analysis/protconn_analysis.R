@@ -17,6 +17,7 @@ print("Loading polygons")
 study_area <- st_read(input$study_area_polygon)#, crs=input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 protected_area <- st_read(input$protected_area_polygon)#, input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
 print(str(protected_area))
+protected_area <- protected_area[st_geometry_type(protected_area) %in% c("POLYGON", "MULTIPOLYGON"), ]
 
 # make geometry valid
 protected_area <- st_make_valid(protected_area)
@@ -44,7 +45,7 @@ protconn_result[is.na(protconn_result)] <- 0
 print(protconn_result)
 
 # Output protconn result
-protconn_result_path<- file.path(outputFolder, "protconn_result.csv") # Define the file path for the 'val_wkt_path' output
+protconn_result_path <- file.path(outputFolder, "protconn_result.csv") # Define the file path for the 'val_wkt_path' output
 write.csv(protconn_result, protconn_result_path, row.names = F ) # Write the 'val_wkt_path' output
 biab_output("protconn_result", protconn_result_path)
 

@@ -26,8 +26,8 @@
       "id": "90",
       "type": "output",
       "position": {
-        "x": 2019.9624938964844,
-        "y": 374
+        "x": 2002.9624938964844,
+        "y": 273
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "91",
       "type": "output",
       "position": {
-        "x": 2017.9624938964844,
-        "y": 395
+        "x": 2015.9624938964844,
+        "y": 351
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "92",
       "type": "output",
       "position": {
-        "x": 2014.9624938964844,
-        "y": 411
+        "x": 2024.9624938964844,
+        "y": 383
       },
       "data": {
         "label": "Output"
@@ -130,52 +130,52 @@
       "id": "103",
       "type": "output",
       "position": {
-        "x": 2017.119702868727,
-        "y": 456.5100174428533
+        "x": 2045.119702868727,
+        "y": 506.5100174428533
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "104",
+      "id": "108",
       "type": "io",
       "position": {
-        "x": 759.9624938964844,
-        "y": 290
+        "x": 873.8786018815399,
+        "y": 215.18573051868296
       },
       "data": {
         "descriptionFile": "data>getProtectedAreasWDPAapi.yml"
       }
     },
     {
-      "id": "105",
+      "id": "109",
       "type": "output",
       "position": {
-        "x": 1446.9624938964844,
-        "y": 323
+        "x": 1539.1146198676158,
+        "y": 245.67201241275444
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "106",
+      "id": "110",
       "type": "output",
       "position": {
-        "x": 1440.9624938964844,
-        "y": 281
+        "x": 1534.5327978274565,
+        "y": 217.03562466175893
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "107",
+      "id": "111",
       "type": "output",
       "position": {
-        "x": 1432.9624938964844,
-        "y": 303
+        "x": 1524.223698237098,
+        "y": 225.05381323203767
       },
       "data": {
         "label": "Output"
@@ -263,65 +263,65 @@
     {
       "source": "85",
       "sourceHandle": "country_polygon",
-      "target": "104",
+      "target": "108",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-85country_polygon-104study_area_polygon"
-    },
-    {
-      "source": "95",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "country",
-      "id": "reactflow__edge-95-104country"
-    },
-    {
-      "source": "96",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "region",
-      "id": "reactflow__edge-96-104region"
+      "id": "reactflow__edge-85country_polygon-108study_area_polygon"
     },
     {
       "source": "97",
       "sourceHandle": null,
-      "target": "104",
+      "target": "108",
       "targetHandle": "crs",
-      "id": "reactflow__edge-97-104crs"
+      "id": "reactflow__edge-97-108crs"
     },
     {
-      "source": "104",
+      "source": "95",
+      "sourceHandle": null,
+      "target": "108",
+      "targetHandle": "country",
+      "id": "reactflow__edge-95-108country"
+    },
+    {
+      "source": "96",
+      "sourceHandle": null,
+      "target": "108",
+      "targetHandle": "region",
+      "id": "reactflow__edge-96-108region"
+    },
+    {
+      "source": "108",
       "sourceHandle": "study_area",
       "target": "87",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-104study_area-87study_area_polygon"
+      "id": "reactflow__edge-108study_area-87study_area_polygon"
     },
     {
-      "source": "104",
+      "source": "108",
       "sourceHandle": "protected_areas",
       "target": "87",
       "targetHandle": "protected_area_polygon",
-      "id": "reactflow__edge-104protected_areas-87protected_area_polygon"
+      "id": "reactflow__edge-108protected_areas-87protected_area_polygon"
     },
     {
-      "source": "104",
+      "source": "108",
       "sourceHandle": "number_pas",
-      "target": "105",
+      "target": "109",
       "targetHandle": null,
-      "id": "reactflow__edge-104number_pas-105"
+      "id": "reactflow__edge-108number_pas-109"
     },
     {
-      "source": "104",
+      "source": "108",
       "sourceHandle": "study_area",
-      "target": "106",
+      "target": "110",
       "targetHandle": null,
-      "id": "reactflow__edge-104study_area-106"
+      "id": "reactflow__edge-108study_area-110"
     },
     {
-      "source": "104",
+      "source": "108",
       "sourceHandle": "protected_areas",
-      "target": "107",
+      "target": "111",
       "targetHandle": null,
-      "id": "reactflow__edge-104protected_areas-107"
+      "id": "reactflow__edge-108protected_areas-111"
     }
   ],
   "inputs": {
@@ -392,7 +392,7 @@
       "example": 20,
       "weight": 8
     },
-    "data>getProtectedAreasWDPAapi.yml@104|pa_input_type": {
+    "data>getProtectedAreasWDPAapi.yml@108|pa_input_type": {
       "description": "Type of input for protected areas. Option \"WDPA\" uses protected areas from the World Database of Protected Areas. Option \"User input\" uses polygons input by the user. \"Both\" combines the WDPA protected areas and user input polygons.",
       "label": "Protected area input",
       "type": "options",
@@ -404,14 +404,14 @@
       "example": "WDPA",
       "weight": 9
     },
-    "data>getProtectedAreasWDPAapi.yml@104|protected_area_file": {
+    "data>getProtectedAreasWDPAapi.yml@108|protected_area_file": {
       "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA only). Must be in geopackage format.",
       "label": "Protected areas file",
       "type": "application/geopackage+sqlite3",
       "weight": 10,
       "example": null
     },
-    "data>getProtectedAreasWDPAapi.yml@104|date_column_name": {
+    "data>getProtectedAreasWDPAapi.yml@108|date_column_name": {
       "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
       "label": "Date column name",
       "type": "text",
@@ -451,31 +451,31 @@
       "description": "State of interest",
       "type": "text"
     },
-    "data>getProtectedAreasWDPAapi.yml@104|number_pas": {
-      "description": "Number of protected areas in the country of interest",
-      "label": "Number of protected areas",
-      "type": "text",
-      "weight": 5
-    },
     "protconn_analysis>protconn_analysis.yml@87|result_yrs": {
       "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
       "label": "ProtConn time series results",
       "type": "text/csv",
-      "weight": 6
+      "weight": 5
     },
-    "data>getProtectedAreasWDPAapi.yml@104|study_area": {
-      "description": "Represents the map of the study area",
-      "label": "Polygon of study area",
-      "type": "application/geopackage+sqlite3",
-      "weight": 7
+    "data>getProtectedAreasWDPAapi.yml@108|number_pas": {
+      "description": "Number of protected areas in the country of interest",
+      "label": "Number of protected areas",
+      "type": "text",
+      "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@87|result_preset_plot": {
       "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
       "label": "ProtConn plot with dispersal presets",
       "type": "image/png",
+      "weight": 7
+    },
+    "data>getProtectedAreasWDPAapi.yml@108|study_area": {
+      "description": "Represents the map of the study area",
+      "label": "Polygon of study area",
+      "type": "application/geopackage+sqlite3",
       "weight": 8
     },
-    "data>getProtectedAreasWDPAapi.yml@104|protected_areas": {
+    "data>getProtectedAreasWDPAapi.yml@108|protected_areas": {
       "description": "Represents the map of the protected areas within the study area",
       "label": "Polygon of protected areas",
       "type": "application/geopackage+sqlite3",

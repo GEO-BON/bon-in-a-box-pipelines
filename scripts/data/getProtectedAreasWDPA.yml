@@ -37,7 +37,7 @@ inputs:
   protected_area_file: 
     label: Protected areas file
     description: File path of the shapefile of protected areas (Leave blank if using data from WDPA). Must be in geopackage format.
-    type: application/geopackage+sqlite3
+    type: text
     example: null
   date_column_name:
     label: Date column name
