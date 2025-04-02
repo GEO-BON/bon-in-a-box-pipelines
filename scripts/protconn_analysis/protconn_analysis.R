@@ -49,7 +49,7 @@ protconn_result_path <- file.path(outputFolder, "protconn_result.csv") # Define 
 write.csv(protconn_result, protconn_result_path, row.names = F ) # Write the 'val_wkt_path' output
 biab_output("protconn_result", protconn_result_path)
 
-result_plot <- ggplot2::ggplot(protconn_result.df) +
+result_plot <- ggplot2::ggplot(protconn_result) +
   geom_col(aes(y=Percentage, x=1, fill=`ProtConn indicator`)) +
   coord_polar(theta="y") +
   xlim(c(0, 1.5)) +
