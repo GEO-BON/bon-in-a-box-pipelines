@@ -17,18 +17,19 @@ print("Loading polygons")
 study_area <- st_read(input$study_area_polygon)#, crs=input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 protected_area <- st_read(input$protected_area_polygon)#, input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
 print(str(protected_area))
-protected_area <- protected_area[st_geometry_type(protected_area) %in% c("POLYGON", "MULTIPOLYGON"), ]
 
 # make geometry valid
 protected_area <- st_make_valid(protected_area)
+
+protected_area <- st_buffer(protected_area, dist = 0)
 # check if it is valid, and if not, apply buffer function
-protected_area <- st_buffer(protected_area, 0)
+
 # if it still isn't valid, try some other things
 protected_area <- st_simplify(protected_area, dTolerance = 0.001)
 protected_area <- st_set_precision(protected_area, 1e6)
 
-print("Calculating ProtConn")
-protected_area_filt <- protected_area %>% dplyr::filter(STATUS_YR <= input$years)
+# print("Calculating ProtConn")
+ protected_area_filt <- protected_area %>% dplyr::filter(STATUS_YR <= input$years)
 
 protconn_result <- Makurhini::MK_ProtConn(
   nodes=protected_area_filt,
@@ -125,19 +126,19 @@ biab_output("result_yrs_plot", result_yrs_plot_path)
 
 print("Calculating ProtConn for three most common dispersal distances")
 protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-transboundary=input$transboundary_distance, distance_thresholds=1000)
+transboundary=input$transboundary_distance, distance_thresholds=c(1000))
 protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2,3,4),c(3,4)]
 protconn_result_1km[is.na(protconn_result_1km)] <- 0
 protconn_result_1km$distance <- "1 km"
 
 protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-transboundary=input$transboundary_distance, distance_thresholds=10000)
+transboundary=input$transboundary_distance, distance_thresholds=c(10000))
 protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
 protconn_result_10km[is.na(protconn_result_10km)] <- 0
 protconn_result_10km$distance <- "10 km"
 
 protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-transboundary=input$transboundary_distance, distance_thresholds=100000)
+transboundary=input$transboundary_distance, distance_thresholds=c(100000))
 protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
 protconn_result_100km[is.na(protconn_result_100km)] <- 0
 protconn_result_100km$distance <- "100 km"

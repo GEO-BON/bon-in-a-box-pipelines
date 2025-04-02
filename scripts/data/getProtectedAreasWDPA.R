@@ -49,7 +49,10 @@ if(input$pa_input_type == "WDPA" | input$pa_input_type =="Both"){
       protected_areas_wdpa <- paste0("https://geoio.biodiversite-quebec.ca/wdpa_state_geojson/?country_name=", input$country, "&state_name=", input$region,"&distance=", distance)
     } 
   # read in WDPA data and reproject
-  protected_areas_wdpa <- sf::st_read(protected_areas_wdpa) %>% st_set_crs(4326) %>% st_transform(input$crs)
+  protected_areas_wdpa <- sf::st_read(protected_areas_wdpa)
+  print(st_crs(protected_areas_wdpa))
+  #st_crs(protected_areas_wdpa) <- "ESPG:4326"
+  protected_areas_wdpa <- sf::st_transform(protected_areas_wdpa, input$crs)
 }
 
 
@@ -85,6 +88,8 @@ if(input$pa_input_type == "Both"){
   protected_areas <- protected_areas_wdpa
 }
 
+protected_areas <- st_make_valid(protected_areas)
+protected_areas <- st_buffer(protected_areas, dist = 0)
 print(str(protected_areas))
 
 if(!st_crs(study_area)==st_crs(protected_areas)){
