@@ -35,9 +35,9 @@ for(i in 1:length(collections_items)){
   dat_cube <- load_cube(stac_path="https://stac.geobon.org/", collections=ci[1], ids=ci[2], bbox=bbox,
                            srs.cube = "EPSG:4326", layers=NULL, variable=NULL, spatial.res=0.08,
                             t0 = NULL, t1 = NULL, temporal.res = "P1D", aggregation = "mean",  resampling = "near") # load cube from loacFromStacFun
+  print("cube loaded")
 
-  summary(dat_cube)
-  dat_cube <-  filter_geom(cube=dat_cube, geom=study_area$geometry, srs="EPSG:4326")
+  dat_cube <-  filter_geom(cube=dat_cube, geom=study_area$geom, srs="EPSG:4326")
 
 raster_layers[[i]] <- dat_cube # add to a list of raster layers
 names(raster_layers)[i] <- ci[2]
