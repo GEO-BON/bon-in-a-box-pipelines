@@ -1,0 +1,53 @@
+script: getOBISObservations.R
+name: OBIS Observations
+description: Load OBIS data using the robis package.
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  species_name:
+    label: Species name
+    description: Scientific name(s) of species
+    type: text[]
+    example: ["Stenella coeruleoalba", "Astronesthes cyaneus"]
+  study_area: 
+    label: Polygon of study area
+    description: Polygon of study area for which you want to pull OBIS points
+    type: application/geo+json
+    example: null
+  start_date: 
+    label: Start date
+    description: Start date for the occurences in YYYY-MM-DD format (leave blank for all dates)
+    type: text
+    example: null
+  end_date:
+    label: End date
+    description: End date for the occurences in YYYY-MM-DD format (leave blank for present date)
+    type: text
+    example: null
+  min_depth:
+    label: Minimum depth
+    description: Mininum depth in meters for occurences (leave blank for no minimum depth)
+    type: int
+    example: null
+  max_depth: 
+    label: Maximum depth
+    description: Maximum depth in meters for occurences (leave blank for no maximum depth)
+    type: int
+    example: null
+outputs:
+  occurrences: 
+    label: OBIS Occurrences
+    description: CSV of OBIS occurrences
+    type: text/csv
+conda:
+  channels: 
+    - conda-forge
+    - r
+  dependencies: 
+    - r-robis
+    - r-sf
+    - r-dplyr
+    - r-rjson
+  
