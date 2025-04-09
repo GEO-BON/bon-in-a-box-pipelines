@@ -92,7 +92,7 @@ conda:
     - libgdal
     - proj
     - r-proj
-    - r-gdalcubes=0.7.0
+    - r-gdalcubes=0.7.1
     - r-rstac
     - r-dplyr
     - r-rcurl
