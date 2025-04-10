@@ -128,17 +128,6 @@
         "type": "text",
         "value": "Canada"
       }
-    },
-    {
-      "id": "54",
-      "type": "output",
-      "position": {
-        "x": -218.47500610351562,
-        "y": -53
-      },
-      "data": {
-        "label": "Output"
-      }
     }
   ],
   "edges": [
@@ -239,13 +228,6 @@
       "target": "51",
       "targetHandle": "country",
       "id": "reactflow__edge-53-51country"
-    },
-    {
-      "source": "53",
-      "sourceHandle": null,
-      "target": "54",
-      "targetHandle": null,
-      "id": "reactflow__edge-53-54"
     }
   ],
   "inputs": {
@@ -365,13 +347,6 @@
       "label": "Plot of phenology change",
       "type": "image/png",
       "weight": 3
-    },
-    "pipeline@53|default_output": {
-      "description": "Country of interest. For list of countries look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get).",
-      "label": "Country",
-      "example": "Canada",
-      "type": "text",
-      "weight": 4
     }
   },
   "metadata": {
