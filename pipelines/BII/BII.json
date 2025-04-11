@@ -1,33 +1,87 @@
 {
   "nodes": [
     {
-      "id": "15",
+      "id": "8",
       "type": "io",
       "position": {
-        "x": 756,
-        "y": 84.5
+        "x": 658.9624938964844,
+        "y": 176
       },
       "data": {
-        "descriptionFile": "BII>BIIZonalStats.yml"
+        "descriptionFile": "zonal_statistics>zonal_stats.yml"
       }
     },
     {
-      "id": "16",
+      "id": "9",
       "type": "output",
       "position": {
-        "x": 1308,
-        "y": 200
+        "x": 1125.240525539576,
+        "y": 73.67592251357871
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "17",
+      "id": "10",
+      "type": "constant",
+      "position": {
+        "x": -665.0375061035156,
+        "y": 315
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "bii_nhm|bii_nhm_10km_2000",
+          "bii_nhm|bii_nhm_10km_2005",
+          "bii_nhm|bii_nhm_10km_2010",
+          "bii_nhm|bii_nhm_10km_2015",
+          "bii_nhm|bii_nhm_10km_2020"
+        ]
+      }
+    },
+    {
+      "id": "12",
+      "type": "io",
+      "position": {
+        "x": -396.0375061035156,
+        "y": 123
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "13",
+      "type": "userInput",
+      "position": {
+        "x": -717.0375061035156,
+        "y": 153
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6622"
+      }
+    },
+    {
+      "id": "14",
+      "type": "io",
+      "position": {
+        "x": 1199.5132874333274,
+        "y": 188.4783501452733
+      },
+      "data": {
+        "descriptionFile": "BII>BIIChange.yml"
+      }
+    },
+    {
+      "id": "15",
       "type": "output",
       "position": {
-        "x": 1308,
-        "y": 151
+        "x": 1886.6943077272656,
+        "y": 187.99293716377517
       },
       "data": {
         "label": "Output"
@@ -35,190 +89,174 @@
     },
     {
       "id": "18",
-      "type": "output",
+      "type": "io",
       "position": {
-        "x": 1308,
-        "y": 102
+        "x": -63.399993896484375,
+        "y": 229
       },
       "data": {
-        "label": "Output"
+        "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
       "id": "19",
-      "type": "io",
+      "type": "output",
       "position": {
-        "x": 1308,
-        "y": 12
+        "x": 480.13199840180465,
+        "y": 230.7819042816862
       },
       "data": {
-        "descriptionFile": "BII>BIIChange.yml"
+        "label": "Output"
       }
     },
     {
       "id": "20",
-      "type": "output",
-      "position": {
-        "x": 1907,
-        "y": 6.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "22",
-      "type": "userInput",
-      "position": {
-        "x": 22,
-        "y": 12.666666666666686
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "23",
-      "type": "userInput",
-      "position": {
-        "x": -83,
-        "y": 88
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "24",
-      "type": "output",
-      "position": {
-        "x": 294,
-        "y": 1.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "26",
-      "type": "io",
-      "position": {
-        "x": 194,
-        "y": 134
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
-      "id": "27",
       "type": "constant",
       "position": {
-        "x": -126,
-        "y": 174
+        "x": -386.14475964299476,
+        "y": 225.9787109196308
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "EPSG:4326"
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "21",
+      "type": "constant",
+      "position": {
+        "x": -366.93198619477323,
+        "y": 267.60638672411073
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "\n"
       }
     }
   ],
   "edges": [
     {
-      "source": "15",
-      "sourceHandle": "ts_plot",
-      "target": "16",
+      "source": "8",
+      "sourceHandle": "zonal_stats",
+      "target": "9",
       "targetHandle": null,
-      "id": "reactflow__edge-15ts_plot-16"
+      "id": "reactflow__edge-8zonal_stats-9"
     },
     {
-      "source": "15",
-      "sourceHandle": "stats",
-      "target": "17",
-      "targetHandle": null,
-      "id": "reactflow__edge-15stats-17"
+      "source": "12",
+      "sourceHandle": "study_area_polygon",
+      "target": "8",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-12study_area_polygon-8study_area_polygon"
     },
     {
-      "source": "15",
+      "source": "12",
+      "sourceHandle": "bbox",
+      "target": "8",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-12bbox-8bbox"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "12",
+      "targetHandle": "study_area_epsg",
+      "id": "reactflow__edge-13-12study_area_epsg"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-13-8crs"
+    },
+    {
+      "source": "14",
+      "sourceHandle": "bii_change",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-14bii_change-15"
+    },
+    {
+      "source": "18",
       "sourceHandle": "rasters",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-15rasters-18"
+      "target": "8",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-18rasters-8rasters"
     },
     {
-      "source": "15",
+      "source": "18",
       "sourceHandle": "rasters",
       "target": "19",
+      "targetHandle": null,
+      "id": "reactflow__edge-18rasters-19"
+    },
+    {
+      "source": "18",
+      "sourceHandle": "rasters",
+      "target": "14",
       "targetHandle": "rasters",
-      "id": "reactflow__edge-15rasters-19rasters"
+      "id": "reactflow__edge-18rasters-14rasters"
     },
     {
-      "source": "19",
-      "sourceHandle": "bii_change",
-      "target": "20",
-      "targetHandle": null,
-      "id": "reactflow__edge-19bii_change-20"
+      "source": "12",
+      "sourceHandle": "study_area_polygon",
+      "target": "18",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-12study_area_polygon-18study_area"
     },
     {
-      "source": "22",
+      "source": "10",
       "sourceHandle": null,
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-22-24"
+      "target": "18",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-10-18collections_items"
     },
     {
-      "source": "26",
-      "sourceHandle": "study_area_polygon_unprojected",
-      "target": "15",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-26study_area_polygon_unprojected-15study_area_polygon"
+      "source": "20",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-20-18stac_url"
     },
     {
-      "source": "26",
+      "source": "21",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-21-18weight_matrix_with_ids"
+    },
+    {
+      "source": "12",
       "sourceHandle": "bbox",
-      "target": "15",
+      "target": "18",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-26bbox-15bbox"
+      "id": "reactflow__edge-12bbox-18bbox"
     },
     {
-      "source": "23",
+      "source": "13",
       "sourceHandle": null,
-      "target": "26",
-      "targetHandle": "state",
-      "id": "reactflow__edge-23-26state"
-    },
-    {
-      "source": "22",
-      "sourceHandle": null,
-      "target": "26",
-      "targetHandle": "country",
-      "id": "reactflow__edge-22-26country"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "26",
-      "targetHandle": "studyarea_epsg",
-      "id": "reactflow__edge-27-26studyarea_epsg"
+      "target": "18",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-13-18crs"
     }
   ],
   "inputs": {
-    "BII>BIIZonalStats.yml@15|summary_statistic": {
+    "zonal_statistics>zonal_stats.yml@8|summary_statistic": {
       "description": "Summary statistic for layers",
       "label": "Summary statistic",
       "type": "options",
       "options": [
-        "Mean",
-        "Median",
-        "Mode"
+        "mean",
+        "median",
+        "proportion"
       ],
-      "example": "Mean",
+      "example": "mean",
       "weight": 0
     },
-    "BII>BIIChange.yml@19|start_year": {
+    "BII>BIIChange.yml@14|start_year": {
       "description": "Reference BII year for raster plotting",
       "label": "Start year for BII raster comparison",
       "type": "options",
@@ -231,7 +269,7 @@
       "example": "2000",
       "weight": 1
     },
-    "BII>BIIChange.yml@19|end_year": {
+    "BII>BIIChange.yml@14|end_year": {
       "description": "BII layer to compare to the start year",
       "label": "End year for BII comparison",
       "type": "options",
@@ -244,59 +282,97 @@
       "example": "2020",
       "weight": 2
     },
-    "pipeline@22": {
-      "label": "Country",
-      "description": "Country of interest",
+    "data>getBoundingBox.yml@12|state": {
+      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
+      "label": "State/Province",
       "type": "text",
-      "example": "Canada",
+      "example": "Quebec",
       "weight": 3
     },
-    "pipeline@23": {
-      "label": "State/Province",
-      "description": "State or province of interest (leave blank if you want the full country)",
+    "data>getBoundingBox.yml@12|study_area_file": {
+      "description": "Upload a file of a custom study area",
+      "label": "File for study area",
       "type": "text",
       "example": null,
       "weight": 4
     },
-    "data>getBoundingBox.yml@26|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
+    "pipeline@13": {
+      "label": "Study area EPSG",
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This MUST be in a projected reference system (not lat long).\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html). The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n*Leave blank if you want the bounding box to be in EPSG:4326.*",
       "type": "text",
-      "weight": 5,
-      "example": null
+      "example": "EPSG:6622",
+      "weight": 5
+    },
+    "data>loadFromStac.yml@18|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 1000,
+      "weight": 6
+    },
+    "data>loadFromStac.yml@18|resampling": {
+      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "label": "Resampling method",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
+      "weight": 7
+    },
+    "data>loadFromStac.yml@18|aggregation": {
+      "description": "Method used to aggregate items that overlay each other",
+      "label": "Aggregation method",
+      "type": "options",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "example": "first",
+      "weight": 8
+    },
+    "data>getBoundingBox.yml@12|country": {
+      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
+      "label": "Country",
+      "type": "text",
+      "example": "Canada",
+      "weight": 9
     }
   },
   "outputs": {
-    "pipeline@22|default_output": {
-      "description": "Country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0,
-      "example": null
-    },
-    "BII>BIIZonalStats.yml@15|stats": {
-      "description": "Summary statistic",
-      "label": "Statistical measure",
+    "zonal_statistics>zonal_stats.yml@8|zonal_stats": {
+      "description": "Summary statistic over the polygon",
+      "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 1
+      "weight": 0
     },
-    "BII>BIIZonalStats.yml@15|rasters": {
-      "description": "Array of output raster paths",
-      "label": "BII layers for each year",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 2
-    },
-    "BII>BIIZonalStats.yml@15|ts_plot": {
-      "description": "Time series plot of BII values in zone of interest",
-      "label": "Time series plot",
-      "type": "image/png",
-      "weight": 3
-    },
-    "BII>BIIChange.yml@19|bii_change": {
-      "description": "Raster plot of change in BII",
+    "BII>BIIChange.yml@14|bii_change": {
+      "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 4
+      "weight": 1
+    },
+    "data>loadFromStac.yml@18|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
     }
   },
   "metadata": {
@@ -317,6 +393,10 @@
       {
         "text": "Newbold et al. 2016",
         "doi": "https://doi.org/10.1126/science.aaf2201"
+      },
+      {
+        "text": "Bastion 2023",
+        "doi": "https://doi.org/10.32614/CRAN.package.exactextractr"
       }
     ]
   }
