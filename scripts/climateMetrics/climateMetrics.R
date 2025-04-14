@@ -50,6 +50,8 @@ bbox <- st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
 n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)) + 1 
 temporal_res <- paste0("P", n_year, "Y")
 
+#### LOAD THESE USING LOAD FROM STAC
+
 print("Loading current climate...")
 cube_current <- stacatalogue::load_cube(collections = 'chelsa-monthly', 
                           bbox = bbox,
@@ -81,6 +83,8 @@ cube_future <- stacatalogue::load_cube_projection(collections = 'chelsa-clim-pro
 )
 
 print("Future climate loaded.")
+cube_current <-rast(input$cube_current)
+cube_future <- rast(input$cube_future)
 
 metric <- input$metric
 if (is.null(metric)) metric <- "rarity"

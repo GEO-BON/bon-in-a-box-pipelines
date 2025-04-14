@@ -1,0 +1,47 @@
+script: climate_metrics.R
+name: Climate Metrics
+description: 
+  This script calculates climate velocity and rarity.
+  Climate rarity shows the difference in mean temperature between a point and its surroundings, using moving window and a temperature threshold.
+  Climate-change velocity can be defined as the rate and direction of displacement of climatic conditions over Earth’s surface.
+author:
+  - name: Juan Zuloaga
+inputs:
+  climate_current:
+    label: Current climate
+    description: Raster file of current climate
+    type: image/tiff;application=geotiff[]
+    example: null
+  climate_future: 
+    label: Future climate
+    description: Raster file of future climate
+    type: image/tiff;application=geotiff[]
+    example: null
+  metric:
+    label: Climate metric
+    description: "Choice of local velocity (meters/year; see Loarie et. al. (2009) and Sandel et. al. (2011).),
+      forward or backward velocity (meters/year; see Carroll et. al. (2015) and Hamann et. al. (2015).) Or climate rarity." 
+    type: options
+    options: 
+      - local
+      - forward
+      - backward
+      - rarity
+    example: local
+  t_match: 
+    label: threshold climate match
+    description: Acceptable difference of climate (e.g., mean temperature in °C) to consider that the climate is similar (rarity only).
+    type: float
+    example: null
+  moving_window:
+    label: search moving window
+    description: number of cells (must be an odd number)
+    type: int
+    example: 11
+outputs:
+  output_tif:
+    label: output
+    description: Raster file, values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
+    type: image/tiff;application=geotiff[]
+    example: climate_current_rarity.tif
+    range: [0,1]

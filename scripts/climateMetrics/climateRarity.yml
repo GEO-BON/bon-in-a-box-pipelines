@@ -2,7 +2,8 @@ script: climateMetrics.R
 name: Climate Rarity
 description: 
   This script calculates climate rarity.
-  It shows how different the mean temperature is from its surroundings, using moving window and a temperature threshold.
+  Climate rarity shows the difference in mean temperature between a point and its surroundings, using moving window and a temperature threshold.
+  Climate-change velocity can be defined as the rate and direction of displacement of climatic conditions over Earth’s surface.
 author:
   - name: Juan Zuloaga
 
@@ -69,9 +70,11 @@ inputs:
 outputs:
   output_tif:
     label: output
-    description: Raster file, values close to zero indicate that mean temperature is rare compare with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding region.
+    description: |
+      Raster file, of climate metrics. For rarity, values close to zero indicate that mean temperature is rare compare 
+      with its surrounding region. Values close to 1 indicate that mean temperature is common compare with its surrounding 
+      region. For velocity, values are in km/year.
     type: image/tiff;application=geotiff[]
-    example: climate_current_rarity.tif
     range: [0,1]
   metric:
     label: metric name

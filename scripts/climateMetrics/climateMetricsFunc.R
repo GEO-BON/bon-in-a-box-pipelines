@@ -11,33 +11,33 @@
 
 
 # Local climate-change velocity
-  climate_metrics <- function(cube_current,
-                              cube_future,
+  climate_metrics <- function(climate_current,
+                              climate_future,
                               t_match = 0.25,
                               metric = "local",
                               moving_window = 11
                               ){
   
   # Calculate mean current temperature
-    sum_bands <-  paste(names(cube_current), collapse="+")
+    sum_bands <-  paste(names(climate_current), collapse="+")
     
-    mean_bands <- sprintf("(%s)/%i", sum_bands, length(names(cube_current)))
+    mean_bands <- sprintf("(%s)/%i", sum_bands, length(names(climate_current)))
    
-    cube_bands <-  gdalcubes::select_bands(cube_current, bands =  names(cube_current)) # select bands
+    cube_bands <-  terra::subset(climate_current, bands =  names(climate_current)) # select bands
     
-    tmean_cube <- gdalcubes::apply_pixel(cube_bands, mean_bands, names = "mean_tmean") # apply to each pixel the next function
+    tmean_cube <- terra::app(cube_bands, mean_bands, names = "mean_tmean") # apply to each pixel the next function
     
-    tmean_cube_r <- stacatalogue::cube_to_raster(tmean_cube, format = "raster")
+    #tmean_cube_r <- stacatalogue::cube_to_raster(tmean_cube, format = "raster")
     
-    tmean_current_C <- (tmean_cube_r/10) - 273.15
+    tmean_current_C <- (tmean_cube/10) - 273.15
   
   # Calculate mean future temperature
-    raster_future <- stacatalogue::cube_to_raster(cube_future, format = "raster")
-    tmean_future_C <- (raster::calc(raster_future, mean)/10) - 273.15
+   # raster_future <- stacatalogue::cube_to_raster(cube_future, format = "raster")
+    tmean_future_C <- (terra::app(climate_future, mean)/10) - 273.15
     
     
   # Time span
-    years_dif <- as.numeric(substr(gdalcubes::dimensions(cube_future)[[1]][2], 1,4)) - 
+    years_dif <- as.numeric(substr(gdalcubes::dimensions(climate_future)[[1]][2], 1,4)) - 
       as.numeric(substr(gdalcubes::dimensions(tmean_cube)[[1]][2], 1,4))
     
    srs_cube <- raster::crs(raster_future) 
@@ -73,12 +73,12 @@
     # t_match                                                         # plus/minus threshold to define climate match
     t_match <- 1/(t_match*2)                                          # inverse for rounding, double for plus/minus
     
-    x <-  raster::coordinates(tmean_current_C)[,1]                    # vector of grid cell x coordinates
-    y <-  raster::coordinates(tmean_current_C)[,2]                    # vector of grid cell y coordinates
+    x <-  terra::coords(tmean_current_C)[,1]                    # vector of grid cell x coordinates
+    y <-  terra::coords(tmean_current_C)[,2]                    # vector of grid cell y coordinates
     
-    p <- round(raster::getValues(tmean_current_C)*t_match)/t_match    # vector of present climate values for xy coordinates
+    p <- round(terra::values(tmean_current_C)*t_match)/t_match    # vector of present climate values for xy coordinates
     
-    f <- round(raster::getValues(tmean_future_C)*t_match)/t_match     # vector of future climate values for xy coordinates 
+    f <- round(terra::values(tmean_future_C)*t_match)/t_match     # vector of future climate values for xy coordinates 
     d <- vector(length=length(p))                                     # empty vector to write distance to climate match
     
     u     <- unique(p)[order(unique(p))]                              # list of unique climate values in p
@@ -100,11 +100,34 @@
       out=cbind(x,y, distance=d) 
     
     # forward_velocity
-      forward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
-        raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
-        raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
-      names(forward_velocity) <- "forward_climate_velocity"
+      # forward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
+      #   raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
+      #   raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
+      #   raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
+      # names(forward_velocity) <- "forward_climate_velocity"
+
+    forward_velocity <- rast(out, type="xyz", crs=srs_cube)
+
+    # Match resolution and extent
+    res(forward_velocity) <- res(tmean_current_C)[1]
+    ext(forward_velocity) <- ext(tmean_current_C)
+
+# Divide by 1000 (e.g., convert m to km)
+    forward_velocity <- forward_velocity / 1000
+
+# Reclassify: remove values equal to resolution
+    rcl1 <- matrix(c(res(tmean_current_C)[1], res(tmean_current_C)[1], NA), ncol=3, byrow=TRUE)
+    forward_velocity <- classify(forward_velocity, rcl1, right=NA)
+
+# Divide by time difference
+    forward_velocity <- forward_velocity / years_dif
+
+    # Reclassify again: if value is NA, assign it the resolution
+  rcl2 <- matrix(c(NA, NA, res(tmean_current_C)[1]), ncol=3, byrow=TRUE)
+  forward_velocity <- classify(forward_velocity, rcl2, right=res(tmean_current_C)[1])
+
+# Name the raster layer
+names(forward_velocity) <- "forward_climate_velocity"
       
     return(forward_velocity)
   
@@ -118,12 +141,12 @@
     # t_match                                                         # plus/minus threshold to define climate match
     t_match <- 1/(t_match*2)                                          # inverse for rounding, double for plus/minus
     
-    x <-  raster::coordinates(tmean_current_C)[,1]                    # vector of grid cell x coordinates
-    y <-  raster::coordinates(tmean_current_C)[,2]                    # vector of grid cell y coordinates
+    x <-  terra::coords(tmean_current_C)[,1]                    # vector of grid cell x coordinates
+    y <-  terra::coords(tmean_current_C)[,2]                    # vector of grid cell y coordinates
     
-    p <- round(raster::getValues(tmean_future_C)*t_match)/t_match     # vector of present climate values for xy coordinates
+    p <- round(terra::values(tmean_future_C)*t_match)/t_match     # vector of present climate values for xy coordinates
     
-    f <- round(raster::getValues(tmean_current_C)*t_match)/t_match    # vector of future climate values for xy coordinates 
+    f <- round(terra::values(tmean_current_C)*t_match)/t_match    # vector of future climate values for xy coordinates 
     d <- vector(length=length(p))                                     # empty vector to write distance to climate match
     
     u     <- unique(p)[order(unique(p))]                              # list of unique climate values in p
@@ -145,13 +168,35 @@
       out=cbind(x,y, distance=d) 
       
       # forward_velocity
-      backward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
-        raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
-        raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
-        raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
-      names(backward_velocity) <- "backward_climate_velocity"
+      # backward_velocity <- raster::rasterFromXYZ(out, res=raster::res(tmean_current_C)[1], crs = srs_cube)%>%
+      #   raster::setExtent(tmean_current_C)%>%`/`(1000)%>%
+      #   raster::reclassify(c(raster::res(tmean_current_C)[1], raster::res(tmean_current_C)[1], NA), right=NA)%>%`/`(years_dif)%>%
+      #   raster::reclassify(c(NA, NA, raster::res(tmean_current_C)[1]), right=raster::res(tmean_current_C)[1])
+# Convert XYZ data frame to SpatRaster for backward_velocity
+backward_velocity <- rast(out, type="xyz", crs=srs_cube)
+
+# Match resolution and extent
+res(backward_velocity) <- res(tmean_current_C)[1]
+ext(backward_velocity) <- ext(tmean_current_C)
+
+# Divide by 1000 (e.g., convert m to km)
+backward_velocity <- backward_velocity / 1000
+
+# Reclassify: remove values equal to resolution
+rcl1 <- matrix(c(res(tmean_current_C)[1], res(tmean_current_C)[1], NA), ncol=3, byrow=TRUE)
+backward_velocity <- classify(backward_velocity, rcl1, right=NA)
+
+# Divide by time difference
+backward_velocity <- backward_velocity / years_dif
+
+# Reclassify again: if value is NA, assign it the resolution
+rcl2 <- matrix(c(NA, NA, res(tmean_current_C)[1]), ncol=3, byrow=TRUE)
+backward_velocity <- classify(backward_velocity, rcl2, right=res(tmean_current_C)[1])
+
+# You can rename the layer if needed
+names(backward_velocity) <- "backward_climate_velocity"
       
-      return(backward_velocity)
+    return(backward_velocity)
       
     }
     
@@ -159,7 +204,7 @@
     
   if(metric == "rarity"){
     
-    tmean_current_rarity <- raster::focal(tmean_current_C$mean_tmean,
+    tmean_current_rarity <- terra::focal(tmean_current_C$mean_tmean,
                                     w=matrix(1, moving_window, moving_window),
                                     na.rm=TRUE,
                                     fun=function(x, focalW = moving_window, tol=t_match, ...) {
@@ -169,7 +214,7 @@
     )
     names(tmean_current_rarity) <- "climate_current_rarity"
                                     
-    tmean_future_rarity <- raster::focal(tmean_future_C,
+    tmean_future_rarity <- terra::focal(tmean_future_C,
                                           w=matrix(1, moving_window, moving_window),
                                           na.rm=TRUE,
                                           fun=function(x, focalW = moving_window, tol=t_match, ...) {
