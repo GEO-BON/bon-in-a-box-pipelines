@@ -1,8 +1,6 @@
 # Script for analyzing ProtConn with the function
-#packagesPrev<- installed.packages()[,"Package"] # Check and get a list of installed packages in this machine and R version # nolint
-packagesList<-list("terra", "dplyr", "ggrepel", "rjson", "Makurhini")
-#lapply(packagesList, function(x) {   if ( ! x %in% packagesPrev ) { install.packages(x, force=T)}    }) # Check and install required packages that are not previously installed # nolint
-library(sf)
+
+packagesList<-list("sf","terra", "dplyr", "ggrepel", "rjson", "Makurhini")
 library(rmapshaper)
 # Load libraries
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
@@ -16,7 +14,7 @@ units::units_options(set_units_mode = "standard")
 print("Loading polygons")
 study_area <- st_read(input$study_area_polygon)#, crs=input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load study area and transform using specified epsg
 protected_area <- st_read(input$protected_area_polygon)#, input$crs) #%>% sf::st_transform(input$studyarea_epsg) # load protected areas and transform using specified epsg
-print(str(protected_area))
+
 
 # make geometry valid
 protected_area <- st_make_valid(protected_area)

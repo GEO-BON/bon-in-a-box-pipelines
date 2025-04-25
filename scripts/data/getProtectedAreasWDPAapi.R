@@ -2,6 +2,7 @@ library(sf)
 library(rjson)
 #library(wdpar)
 library(dplyr)
+
 if (!requireNamespace("worldpa", quietly = TRUE)) {
 remotes::install_github("FRBCesab/worldpa")
 }
@@ -28,6 +29,11 @@ study_area <- sf::st_read(study_area)
 
 
 # Pull data from wdpa
+if (!exists("WDPA_KEY")){ # error if API key not found
+  biab_error_stop("WDPA key not found. Plase make sure you have an API access key in your 'runner.env' file. 
+  To register for one, go to https://api.protectedplanet.net/request")
+}
+
 countries <- get_countries(key="WDPA_KEY")
 
 country_code <- countries %>% filter(country_name==input$country)

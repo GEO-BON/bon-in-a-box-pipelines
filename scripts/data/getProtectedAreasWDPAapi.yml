@@ -2,7 +2,7 @@ script: getProtectedAreasWDPAapi.R
 name: Get protected areas WDPA API
 description: |
   This script finds and saves a polygon of the country and state that is specified in the input and the polygon of 
-  protected areas in that region from the world database of protected areas (WDPA). It uses the wdpar package and the 
+  protected areas in that region from the world database of protected areas (WDPA). It uses the worldpa package and the WDPA API to directly pull the latest data.
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
