@@ -1,8 +1,10 @@
 library(sf)
 library(rjson)
-library(wdpar)
+#library(wdpar)
 library(dplyr)
+if (!requireNamespace("worldpa", quietly = TRUE)) {
 remotes::install_github("FRBCesab/worldpa")
+}
 library(worldpa)
 
 # Add inputs
@@ -13,10 +15,17 @@ sf::sf_use_s2(FALSE)
 # Download the country or state boundary from rnaturalearth
 
 # Read in polygon of study area
+if(!is.null(input$region)){
+  if(is.null(input$study_area_polygon)){
+    biab_error_stop("No study area polygon found. Please provide a geopackage of the study area. To pull country or region 
+    shapefiles, connect this script to the 'Get country polygon' script")
+  }
 study_area <- input$study_area_polygon
-
-# if input is a geojson, make sure it is in EPSG:4326, otherwise if it is a geopackage, just read in the file 
 study_area <- sf::st_read(study_area) 
+}
+
+# Read in the study area
+
 
 # Pull data from wdpa
 countries <- get_countries(key="WDPA_KEY")
@@ -93,11 +102,6 @@ number_pas <- nrow(protected_areas)
 biab_output("number_pas", number_pas)
 
 print("done")
-
-# output study area
-study_area_path <- file.path(outputFolder, "study_area.gpkg")
-sf::st_write(study_area, study_area_path, delete_dsn = T)
-biab_output("study_area", study_area_path)
 
 # output protected areas
 protected_areas_path <- file.path(outputFolder, "protected_areas.gpkg")
