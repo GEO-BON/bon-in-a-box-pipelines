@@ -1,0 +1,57 @@
+script: climateMetrics.R
+name: Climate Metrics
+description: 
+  This script calculates climate velocity and rarity.
+  Climate rarity shows the difference in mean temperature between a point and its surroundings, using moving window and a temperature threshold.
+  Climate-change velocity can be defined as the rate and direction of displacement of climatic conditions over Earth’s surface.
+author:
+  - name: Juan Zuloaga
+inputs:
+  current_climate:
+    label: Current chelsa climate
+    description: chelsa
+    type: image/tiff;application=geotiff[]
+    example: null
+  future_climate: 
+    label: Future climate chelsa
+    description: ppp
+    type: image/tiff;application=geotiff[]
+    example: null
+  metric:
+    label: Climate metric
+    description: "Choice of local velocity (meters/year; see Loarie et. al. (2009) and Sandel et. al. (2011).),
+      forward or backward velocity (meters/year; see Carroll et. al. (2015) and Hamann et. al. (2015).) Or climate rarity"
+    type: options
+    options: 
+      - local
+      - forward
+      - backward
+      - rarity
+    example: local
+  moving_window:
+    label: Search moving window
+    description: |
+      Number of cells (must be an odd number) for which do include in moving window. 
+      Only appicable to climate rarity.
+    type: int
+    example: 11
+  t_match: 
+    label: Threshold climate match
+    description: Acceptable difference of climate (e.g., mean temperature in °C) to consider that the climate is similar. Only applicable for climate rarity.
+    type: float
+    example: 1
+  bbox:
+    label: Bounding box
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297,-1971146,1015207,1511916]
+outputs:
+  climate_metric_tif:
+    label: Climate metric
+    description: |
+      For climate rarity, values close to zero indicate that mean temperature is rare compare with its surrounding region. 
+      Values close to 1 indicate that mean temperature is common compare with its surrounding region.
+      Climate change velocity is measured in km/year.
+    type: image/tiff;application=geotiff[]
+    example: climate_current_rarity.tif
+    range: [0,1]

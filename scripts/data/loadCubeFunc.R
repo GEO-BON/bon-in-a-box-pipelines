@@ -4,7 +4,7 @@ setwd(outputFolder)
 
 ### Load cube func
 load_cube <-
-  function(stac_path = "https://io.biodiversite-quebec.ca/stac/",
+  function(stac_path = "https://stac.geobon.org/",
            limit = NULL,
            collections = c("chelsa-clim"),
            bbox = NULL,
@@ -19,7 +19,7 @@ load_cube <-
            temporal.res = "P1Y",
            aggregation = "mean",
            resampling = "near") {
-    s <- rstac::stac(stac_path)
+    s <- rstac::stac(stac_path, force_version=TRUE)
     if (!inherits(bbox, "bbox"))
       stop("The bbox is not a bbox object.")
     left <- bbox$xmin
@@ -37,6 +37,7 @@ load_cube <-
       sf::st_transform(crs = "EPSG:4326") %>% sf::st_bbox()
     if (!is.null(t0)) {
       datetime <- format(lubridate::as_datetime(t0), "%Y-%m-%dT%H:%M:%SZ")
+      print(t0)
     } else {
       it_obj_tmp <- s %>% rstac::stac_search(bbox = bbox.wgs84,
                                              collections = collections,
@@ -50,6 +51,7 @@ load_cube <-
                         format(lubridate::as_datetime(t1),
                                "%Y-%m-%dT%H:%M:%SZ"),
                         sep = "/")
+                        print(datetime)
     } else {
       t1 <- t0
     }
@@ -84,10 +86,13 @@ load_cube <-
       print(feats[ids])
     }else{
       feats<-it_obj$features
+      print(feats)
     }
     print(ids)
     if (!is.null(variable)) {
-      print("Variable is null")
+      print(feats)
+      print(layers)
+      print(variable)
       st <- gdalcubes::stac_image_collection(
         feats,
         asset_names = layers,

@@ -1,0 +1,56 @@
+script: loadChelsaMonthly.R
+name: Load CHELSA monthly climate
+description: 
+  This script loads the CHELSA monthly climate measurements
+author:
+  - name: Juan Zuloaga
+inputs:
+  spatial_res:
+    label: Spatial resolution output
+    description: Pixel size (in meters) of the output raster
+    type: int
+    example: 1000 
+  srs_cube: 
+    label: Spatial reference output
+    description: Target spatial reference system of the output raster
+    type: text
+    example: EPSG:6624
+  aggregation:
+    label: Aggregation method
+    description: Method of aggregation for the temperature data
+    type: options
+    options: [min, max, mean, median, first]
+    example: mean
+  t0:
+    label: Current climate start
+    description: Current climate start time, in format aaaa-mm-dd
+    type: text
+    example: "1981-01-01"
+  t1:
+    label: Current climate end
+    description: Current climate end time, in format aaaa-mm-dd 
+    type: text
+    example: "1981-12-31"
+  bbox:
+    label: Bounding box
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: [-2316297,-1971146,1015207,1511916]
+outputs:
+  current_climate:
+    label: Current climate 
+    description: CHELSA current climate data
+    type: image/tiff;application=geotiff[]
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-base
+    - r-rjson
+    - r-gdalcubes=0.7.1
+    - r-terra
+    - r-sf
+    - r-lubridate
+    - r-rstac
+    - r-rcurl
