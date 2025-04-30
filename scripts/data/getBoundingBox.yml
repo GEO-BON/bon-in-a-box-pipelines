@@ -45,7 +45,7 @@ outputs:
   conda:
     channels:
      - conda-forge
-      - r
+     - r
     dependencies: 
      - r-sf
-      - r-rjson
+     - r-rjson

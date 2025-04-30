@@ -329,30 +329,6 @@
       }
     },
     {
-      "id": "119",
-      "type": "io",
-      "position": {
-        "x": 399.71778069244533,
-        "y": 309.83554287387864
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "120",
-      "type": "constant",
-      "position": {
-        "x": -100,
-        "y": 345.16666666666663
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": ""
-      }
-    },
-    {
       "id": "121",
       "type": "userInput",
       "position": {
@@ -491,16 +467,27 @@
       }
     },
     {
-      "id": "137",
+      "id": "139",
+      "type": "io",
+      "position": {
+        "x": 395.266170638208,
+        "y": 280.34576446322865
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "140",
       "type": "constant",
       "position": {
-        "x": -43.483832836704266,
-        "y": 385.46995103189107
+        "x": -6.268192623145524,
+        "y": 413.8859879812477
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
-        "value": "average",
+        "value": "near",
         "options": [
           "near",
           "bilinear",
@@ -520,11 +507,24 @@
       }
     },
     {
-      "id": "138",
+      "id": "141",
       "type": "constant",
       "position": {
-        "x": -20.238154907929072,
-        "y": 422.66303571793134
+        "x": -38.09824051986391,
+        "y": 283.53436326135346
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "\n"
+      }
+    },
+    {
+      "id": "142",
+      "type": "constant",
+      "position": {
+        "x": -22.941074854759904,
+        "y": 463.90463467609084
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -724,34 +724,6 @@
       "id": "reactflow__edge-48-44cv_partitions"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-119proj"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-119bbox"
-    },
-    {
-      "source": "119",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-119rasters-97rasters"
-    },
-    {
-      "source": "120",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-120-119weight_matrix_with_ids"
-    },
-    {
       "source": "121",
       "sourceHandle": null,
       "target": "96",
@@ -778,13 +750,6 @@
       "target": "126",
       "targetHandle": null,
       "id": "reactflow__edge-96gbif_doi-126"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-119spatial_res"
     },
     {
       "source": "58",
@@ -892,18 +857,46 @@
       "id": "reactflow__edge-131sdm_obs-136"
     },
     {
-      "source": "137",
+      "source": "58",
       "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-137-119resampling"
+      "target": "139",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-139bbox"
     },
     {
-      "source": "138",
+      "source": "140",
       "sourceHandle": null,
-      "target": "119",
+      "target": "139",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-140-139resampling"
+    },
+    {
+      "source": "141",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-141-139weight_matrix_with_ids"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-139spatial_res"
+    },
+    {
+      "source": "142",
+      "sourceHandle": null,
+      "target": "139",
       "targetHandle": "aggregation",
-      "id": "reactflow__edge-138-119aggregation"
+      "id": "reactflow__edge-142-139aggregation"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-139rasters-97rasters"
     }
   ],
   "inputs": {
@@ -987,38 +980,12 @@
       "example": 2022,
       "weight": 8
     },
-    "data>loadFromStac.yml@119|stac_url": {
-      "description": "URL of the Stac catalog",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org",
-      "weight": 9
-    },
-    "data>loadFromStac.yml@119|collections_items": {
-      "description": "Predictors must be continuous layers for this pipeline.\nVector of strings, collection name from STAC followed by '|' and by item id.",
-      "label": "Predictors",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio5",
-        "earthenv_landcover|class_1",
-        "earthenv_landcover|class_7",
-        "earthenv_landcover|class_3"
-      ],
-      "weight": 10
-    },
-    "data>loadFromStac.yml@119|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "Mask",
-      "type": "application/dbf",
-      "example": null,
-      "weight": 11
-    },
     "pipeline@128": {
       "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 12
+      "weight": 9
     },
     "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
       "description": "Taxonomic group for which to retrieve GBIF heatmap and create a target-group background",
@@ -1033,8 +1000,39 @@
         "amphibians",
         "all"
       ],
-      "weight": 13,
-      "example": "plants"
+      "example": "plants",
+      "weight": 10
+    },
+    "data>loadFromStac.yml@139|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "STAC URL",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 11
+    },
+    "data>loadFromStac.yml@139|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 12
+    },
+    "data>loadFromStac.yml@139|crs": {
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
+      "label": "Coordinate reference system",
+      "type": "text",
+      "example": "EPSG:6622",
+      "weight": 13
+    },
+    "data>loadFromStac.yml@139|study_area": {
+      "description": "Polygon of study area used to crop output layers",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 14
     }
   },
   "outputs": {
