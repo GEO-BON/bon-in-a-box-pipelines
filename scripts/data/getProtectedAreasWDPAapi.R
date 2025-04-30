@@ -11,9 +11,7 @@ library(worldpa)
 # Add inputs
 input <- biab_inputs()
 
-sf::sf_use_s2(FALSE)
 # Get polygon for study area
-# Download the country or state boundary from rnaturalearth
 
 # Read in polygon of study area
 if(!is.null(input$region)){
@@ -27,9 +25,11 @@ study_area <- sf::st_read(study_area)
 
 # Read in the study area
 
-
-# Pull data from wdpa
-if (!exists("WDPA_KEY")){ # error if API key not found
+# key <- Sys.getenv("WDPA_KEY")
+# print(key)
+# print(exists(key))
+# # Pull data from wdpaS
+if (Sys.getenv("WDPA_KEY") ==''){ # error if API key not found
   biab_error_stop("WDPA key not found. Plase make sure you have an API access key in your 'runner.env' file. 
   To register for one, go to https://api.protectedplanet.net/request")
 }

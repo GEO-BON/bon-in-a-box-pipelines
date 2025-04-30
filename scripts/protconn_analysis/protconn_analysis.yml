@@ -18,7 +18,7 @@ inputs:
     example: null
   crs:
     label: Coordinate reference system 
-    description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This MUST be in a projected reference system (not lat long). For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
+    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [here](https://epsg.io/).
     type: text
     example: "EPSG:4326"
   distance_threshold:
@@ -82,3 +82,11 @@ references:
     doi: 10.1016/j.biocon.2017.12.020
   - text: Godínez-Gómez and Correa Ayram 2020
     doi: 10.5281/zenodo.3771605
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-dplyr
+    - r-sf

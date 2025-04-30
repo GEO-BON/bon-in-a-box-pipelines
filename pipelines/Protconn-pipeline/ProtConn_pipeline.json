@@ -72,28 +72,6 @@
       }
     },
     {
-      "id": "91",
-      "type": "output",
-      "position": {
-        "x": 557.9624938964844,
-        "y": 197
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "92",
-      "type": "output",
-      "position": {
-        "x": 515.9624938964844,
-        "y": 333
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "93",
       "type": "io",
       "position": {
@@ -216,20 +194,6 @@
       "target": "75",
       "targetHandle": "region",
       "id": "reactflow__edge-90-75region"
-    },
-    {
-      "source": "90",
-      "sourceHandle": null,
-      "target": "91",
-      "targetHandle": null,
-      "id": "reactflow__edge-90-91"
-    },
-    {
-      "source": "89",
-      "sourceHandle": null,
-      "target": "92",
-      "targetHandle": null,
-      "id": "reactflow__edge-89-92"
     },
     {
       "source": "89",
@@ -382,21 +346,21 @@
       "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA only).",
       "label": "Protected areas file",
       "type": "text",
-      "weight": 3,
-      "example": null
+      "example": null,
+      "weight": 3
     },
     "data>getProtectedAreasWDPA.yml@93|date_column_name": {
       "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
       "label": "Date column name",
       "type": "text",
-      "weight": 4,
-      "example": null
+      "example": null,
+      "weight": 4
     },
     "pipeline@76": {
       "label": "Coordinate reference system",
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "description": "Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [here](https://epsg.io/).\n",
       "type": "text",
-      "example": "EPSG:4326",
+      "example": "EPSG:3116",
       "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@95|distance_threshold": {
@@ -447,66 +411,53 @@
     }
   },
   "outputs": {
-    "pipeline@89|default_output": {
-      "weight": 0,
-      "label": "Country",
-      "description": "Country of interest",
-      "example": "Colombia",
-      "type": "text"
-    },
-    "pipeline@90|default_output": {
-      "weight": 1,
-      "label": "State/Province",
-      "description": "State of interest",
-      "type": "text"
-    },
     "data>getProtectedAreasWDPA.yml@93|study_area": {
       "description": "The map of the study area",
       "label": "Polygon of study area",
       "type": "application/geopackage+sqlite3",
-      "weight": 2
+      "weight": 0
     },
     "data>getProtectedAreasWDPA.yml@93|protected_areas": {
       "description": "The map of the protected areas within the study area",
       "label": "Polygon of protected areas",
       "type": "application/geopackage+sqlite3",
-      "weight": 3
+      "weight": 1
     },
     "data>getProtectedAreasWDPA.yml@93|number_pas": {
       "description": "Number of protected areas in the country of interest",
       "label": "Number of protected areas",
       "type": "text",
-      "weight": 4
+      "weight": 2
     },
     "protconn_analysis>protconn_analysis.yml@95|protconn_result": {
       "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
       "label": "ProtConn results",
       "type": "text/csv",
-      "weight": 5
+      "weight": 3
     },
     "protconn_analysis>protconn_analysis.yml@95|result_plot": {
       "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
       "label": "ProtConn result plot",
       "type": "image/png",
-      "weight": 6
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@95|result_yrs_plot": {
       "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
       "label": "ProtConn time series plot",
       "type": "image/png",
-      "weight": 7
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@95|result_yrs": {
       "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
       "label": "ProtConn time series results",
       "type": "text/csv",
-      "weight": 8
+      "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@95|result_preset_plot": {
       "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
       "label": "ProtConn plot with dispersal presets",
       "type": "image/png",
-      "weight": 9
+      "weight": 7
     }
   },
   "metadata": {

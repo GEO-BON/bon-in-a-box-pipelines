@@ -43,7 +43,7 @@ inputs:
     example: null
   crs:
     label: Coordinate reference system
-    description: Coordinate reference system for the study area and protected areas
+    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system. To find the reference system for your region visit [here](https://epsg.io/).
     type: text
     example: "EPSG:4326"
 outputs:

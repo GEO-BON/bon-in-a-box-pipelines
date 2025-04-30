@@ -323,9 +323,9 @@
     },
     "pipeline@97": {
       "label": "Coordinate reference system",
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "description": "Coordinate reference system for the study area and protected areas. Must be in a projected reference system. To find the reference system for your region visit (https://epsg.io/).",
       "type": "text",
-      "example": "EPSG:4326",
+      "example": "EPSG:3116",
       "weight": 2
     },
     "protconn_analysis>protconn_analysis.yml@87|distance_threshold": {
@@ -390,15 +390,15 @@
       "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA only). Must be in geopackage format.",
       "label": "Protected areas file",
       "type": "application/geopackage+sqlite3",
-      "weight": 10,
-      "example": null
+      "example": null,
+      "weight": 10
     },
     "data>getProtectedAreasWDPAapi.yml@112|date_column_name": {
       "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
       "label": "Date column name",
       "type": "text",
-      "weight": 11,
-      "example": null
+      "example": null,
+      "weight": 11
     }
   },
   "outputs": {
