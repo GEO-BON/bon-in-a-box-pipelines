@@ -1,4 +1,4 @@
-FROM  condaforge/mambaforge
+FROM  condaforge/miniforge3:latest
 WORKDIR /data
 
 # Setting Time zone (necessary to install cmake, + will persist at runtime)
@@ -11,8 +11,8 @@ RUN set -ex; \
     apt-get install -y --no-install-recommends cmake; \
     apt-get clean all;
 
-## MAMBA ISTALLATION
-RUN mamba init
+## MAMBA INSTALLATION
+RUN mamba shell init -s bash
 
 # Since we are using the user from the client computer to run the scripts,
 # we need to create and open the permissions of a few files/directories.
@@ -30,7 +30,7 @@ RUN mkdir /r-libs-user && chmod a+w /r-libs-user
 RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml
 
 # Initialize mamba when logging in with bash
-RUN echo 'eval "$(conda shell.bash hook)"; source /opt/conda/etc/profile.d/mamba.sh' > /.bashrc && chmod a+x /.bashrc
+RUN echo 'eval "$(mamba shell hook --shell bash)"' > /.bashrc && chmod a+x /.bashrc
 
 # Allow to read bashrc to execute mamba init when using docker exec
 # See https://stackoverflow.com/a/74017557/3519951
@@ -40,14 +40,14 @@ ADD ./r-environment.yml /data/r-environment.yml
 RUN mamba env create -f /data/r-environment.yml
 
 ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
-RUN bash --login -c "mamba activate rbase; R -e 'install.packages(c(\"CoordinateCleaner\", \
+RUN bash --login -c "mamba activate rbase && R -e 'install.packages(c(\"CoordinateCleaner\", \
         \"geodata\", \
         \"OpenStreetMap\"\
     ), repos=\"https://cloud.r-project.org/\")'"
 
 ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN)
-RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
-RUN bash --login -c "mamba activate rbase; R -e 'devtools::install_github(\"connectscape/Makurhini\")'"
+RUN bash --login -c "mamba activate rbase && R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
+RUN bash --login -c "mamba activate rbase && R -e 'devtools::install_github(\"connectscape/Makurhini\")'"
 
 ADD ./python-environment.yml /data/python-environment.yml
 RUN mamba env create -f /data/python-environment.yml
