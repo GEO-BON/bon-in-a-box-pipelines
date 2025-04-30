@@ -42,3 +42,10 @@ outputs:
     label: Bounding box
     description: boundary box around area of interest in the order of min, ymin, xmax, ymax
     type: float[]
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies: 
+    - r-sf
+    - r-rjson
