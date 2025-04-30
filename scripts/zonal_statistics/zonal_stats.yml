@@ -15,7 +15,7 @@ inputs:
     example: null
   bbox:
     label: Bounding box
-    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax. Leave blank if uploading a study area.
     type: float[]
     example: null
   study_area_polygon:
