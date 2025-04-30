@@ -478,35 +478,6 @@
       }
     },
     {
-      "id": "140",
-      "type": "constant",
-      "position": {
-        "x": -6.268192623145524,
-        "y": 413.8859879812477
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "near",
-        "options": [
-          "near",
-          "bilinear",
-          "average",
-          "mode",
-          "cubic",
-          "cubicspline",
-          "lanczos",
-          "rms",
-          "min",
-          "max",
-          "sum",
-          "med",
-          "q1",
-          "q3"
-        ]
-      }
-    },
-    {
       "id": "141",
       "type": "constant",
       "position": {
@@ -864,13 +835,6 @@
       "id": "reactflow__edge-58-139bbox"
     },
     {
-      "source": "140",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-140-139resampling"
-    },
-    {
       "source": "141",
       "sourceHandle": null,
       "target": "139",
@@ -1033,6 +997,29 @@
       "type": "application/geopackage+sqlite3",
       "example": null,
       "weight": 14
+    },
+    "data>loadFromStac.yml@139|resampling": {
+      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "label": "Resampling method",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
+      "weight": 15
     }
   },
   "outputs": {
