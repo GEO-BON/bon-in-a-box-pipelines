@@ -12,7 +12,7 @@ inputs:
     example: Canada
   state:
     label: State/Province
-    description: State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get. 
+    description: State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.
     type: text
     example: Quebec
   study_area_file:
@@ -26,10 +26,10 @@ inputs:
       Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.
       This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.
       This MUST be in a projected reference system (not lat long).
-      
+
       For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).
       The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
-      
+
       *Leave blank if you want the bounding box to be in EPSG:4326.*
     type: text
     example: "EPSG:6622"
@@ -37,7 +37,7 @@ outputs:
   study_area_polygon:
     label: Polygon of study area
     description: Polygon of the study area in a geopackage with the chosen coordinate reference system
-    type: application/geopackage+sqlite3	
+    type: application/geopackage+sqlite3
   bbox:
     label: Bounding box
     description: boundary box around area of interest in the order of min, ymin, xmax, ymax
