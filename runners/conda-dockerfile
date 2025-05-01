@@ -30,12 +30,14 @@ RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
 # Permissions cannot be defined at mount time, hence we create empty folder with the appropriate permissions.
 RUN set -ex; \
     mkdir /.conda && chmod a+w /.conda; \
-    mkdir /.mamba && chmod a+w /.mamba;
+    mkdir /.mamba && chmod a+w /.mamba; \
+    mkdir /.cache && chmod a+w /.cache; \
+    mkdir /.config && chmod a+w /.config
 
 # These will be mounted as volumes. We need to create them and set the permissions.
 RUN mkdir /r-libs-user && chmod a+w /r-libs-user; \
     mkdir /conda-env-yml && chmod a+w /conda-env-yml;
-    
+
 # Load R base environment
 ADD ./r-environment.yml /data/r-environment.yml
 RUN mamba env create -f /data/r-environment.yml
@@ -64,8 +66,11 @@ RUN mkdir -p /opt/conda/pkgs; \
     chmod 777 /opt/conda/; \
     chmod 777 /opt/conda/envs;
 
-# Hide "error libmamba Could not open lockfile '/opt/conda/pkgs/cache/cache.lock'" when installing manually with non-root user
-# That error would not prevent the correct installation, but it looked like it to the user.
-RUN chmod -R 777 /opt/conda/pkgs/cache
+# Remove documentation files from /opt/conda/envs/rbase/lib/R/library
+# || true at the end just makes sure that this step doesn't fail the build if none were found
+RUN set -ex; \
+    find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d -exec rm -r "{}" \; ; \
+    find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d -exec rm -r "{}" \; ; \
+    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d -exec rm -r "{}" \; ;
 
 RUN date +"%Y-%m-%d %R" > /version.txt
