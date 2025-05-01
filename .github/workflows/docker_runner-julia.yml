@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-      - '**staging'
+      - '*staging'
     paths:
       - 'runners/julia-dockerfile'
 
