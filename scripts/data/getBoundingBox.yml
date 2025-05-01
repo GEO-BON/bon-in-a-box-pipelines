@@ -1,6 +1,7 @@
 script: getBoundingBox.R
 name: Get bounding box
 description: Extract the bounding box from a polygon of interest (to choose a country, connect to theGet Country Polygon script).
+license: CC-BY
 author:
   - name: Jory Griffith
     identifier: https://orcid.org/0000-0001-6020-6690
@@ -26,3 +27,6 @@ outputs:
     label: Bounding box
     description: boundary box around area of interest in the order of min, ymin, xmax, ymax
     type: float[]
+references:
+  - text: "Hijmans R (2025). _terra: Spatial Data Analysis_. R package version 1.8-42, <https://CRAN.R-project.org/package=terra>"
+  - doi: 10.1007/s11707-018-0725-9

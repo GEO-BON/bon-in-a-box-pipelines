@@ -82,11 +82,12 @@ references:
     doi: 10.1016/j.biocon.2017.12.020
   - text: Godínez-Gómez and Correa Ayram 2020
     doi: 10.5281/zenodo.3771605
-conda:
-  channels:
-    - conda-forge
-    - r
-  dependencies:
-    - r-rjson
-    - r-dplyr
-    - r-sf
+# conda:
+#   channels:
+#     - conda-forge
+#     - r
+#   dependencies:
+#     - r-rjson
+#     - r-dplyr
+#     - r-sf
+#     - r-remotes

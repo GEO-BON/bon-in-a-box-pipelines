@@ -23,14 +23,10 @@ study_area <- input$study_area_polygon
 study_area <- sf::st_read(study_area) 
 }
 
-# Read in the study area
 
-# key <- Sys.getenv("WDPA_KEY")
-# print(key)
-# print(exists(key))
-# # Pull data from wdpaS
+# # Pull data from wdpa
 if (Sys.getenv("WDPA_KEY") ==''){ # error if API key not found
-  biab_error_stop("WDPA key not found. Plase make sure you have an API access key in your 'runner.env' file. 
+  biab_error_stop("WDPA key not found. Please make sure you have an API access key in your 'runner.env' file. 
   To register for one, go to https://api.protectedplanet.net/request")
 }
 

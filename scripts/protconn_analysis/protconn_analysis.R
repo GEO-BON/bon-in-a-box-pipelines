@@ -1,11 +1,12 @@
 # Script for analyzing ProtConn with the function
+#if (!"Makurhini" %in% installed.packages()[,"Package"]) remotes::install_github("connectscape/Makurhini")
 
-#packagesList<-list("sf","terra", "dplyr", "ggrepel", "rjson", "Makurhini")
-library(sf)
+packagesList<-list("sf","terra", "dplyr", "ggrepel", "rjson", "Makurhini", "PROJ")
+
 #library(rmapshaper)
 # Load libraries
-#lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
-Sys.getenv("SCRIPT_LOCATION")
+lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
+
 sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
