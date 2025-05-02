@@ -66,8 +66,7 @@ RUN mkdir -p /opt/conda/pkgs; \
     chmod 777 /opt/conda/; \
     chmod 777 /opt/conda/envs;
 
-RUN find /opt/conda/envs/rbase/lib/R/library -type f -print0 | xargs -0 -P 16 chmod 777; \
-    find /opt/conda/envs/rbase/lib/R/library -type d -print0 | xargs -0 -P 16 chmod 777;
+RUN chmod -R 777 /opt/conda/envs/rbase/lib/R/library
 
 # Remove documentation files from /opt/conda/envs/rbase/lib/R/library
 # || true at the end just makes sure that this step doesn't fail the build if none were found
