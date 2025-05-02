@@ -46,7 +46,7 @@ RUN mamba env create -f /data/r-environment.yml
 RUN bash --login -c "mamba activate rbase && R -e 'install.packages(c(\"CoordinateCleaner\", \
         \"geodata\", \
         \"OpenStreetMap\"\
-    ), repos=\"https://cloud.r-project.org/\", INSTALL_opts = c(\"--libs-only\"))'"
+    ), repos=\"https://cloud.r-project.org/\")'"
 
 ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN)
 RUN bash --login -c "mamba activate rbase && R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
