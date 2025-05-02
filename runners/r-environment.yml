@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - r
 dependencies:
-  - conda-build
+  - proj
   - libgdal
   - r-abind
   - r-base

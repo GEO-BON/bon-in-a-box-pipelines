@@ -11,7 +11,7 @@ ENV TZ=Etc/UTC
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends cmake psmisc; \
+    apt-get install -y --no-install-recommends cmake psmisc chromium-browser; \
     apt-get clean all;
 
 ## Mamba installation
@@ -66,11 +66,14 @@ RUN mkdir -p /opt/conda/pkgs; \
     chmod 777 /opt/conda/; \
     chmod 777 /opt/conda/envs;
 
+RUN find /opt/conda/envs/rbase/lib/R/library -type f -print0 | xargs -0 -P 16 chmod 777; \
+    find /opt/conda/envs/rbase/lib/R/library -type d -print0 | xargs -0 -P 16 chmod 777;
+
 # Remove documentation files from /opt/conda/envs/rbase/lib/R/library
 # || true at the end just makes sure that this step doesn't fail the build if none were found
 RUN set -ex; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d -exec rm -r "{}" \; ; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d -exec rm -r "{}" \; ; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d -exec rm -r "{}" \; ;
+    find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm "{}" ; \
+    find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm "{}" ; \
+    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm "{}" ; ;
 
 RUN date +"%Y-%m-%d %R" > /version.txt
