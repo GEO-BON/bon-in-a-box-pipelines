@@ -1,28 +1,6 @@
 {
   "nodes": [
     {
-      "id": "8",
-      "type": "io",
-      "position": {
-        "x": 658.9624938964844,
-        "y": 176
-      },
-      "data": {
-        "descriptionFile": "zonal_statistics>zonal_stats.yml"
-      }
-    },
-    {
-      "id": "9",
-      "type": "output",
-      "position": {
-        "x": 1125.240525539576,
-        "y": 73.67592251357871
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "10",
       "type": "constant",
       "position": {
@@ -69,8 +47,8 @@
       "id": "14",
       "type": "io",
       "position": {
-        "x": 1199.5132874333274,
-        "y": 188.4783501452733
+        "x": 1123.5132874333274,
+        "y": 292.47835014527334
       },
       "data": {
         "descriptionFile": "BII>BIIChange.yml"
@@ -102,8 +80,8 @@
       "id": "19",
       "type": "output",
       "position": {
-        "x": 480.13199840180465,
-        "y": 230.7819042816862
+        "x": 495.13199840180465,
+        "y": 253.7819042816862
       },
       "data": {
         "label": "Output"
@@ -134,30 +112,31 @@
         "type": "text",
         "value": "\n"
       }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 501.6270726880764,
+        "y": 124.33990420656329
+      },
+      "data": {
+        "descriptionFile": "zonal_statistics>zonal_stats.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 1103.329256203018,
+        "y": 116.91848703911529
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "8",
-      "sourceHandle": "zonal_stats",
-      "target": "9",
-      "targetHandle": null,
-      "id": "reactflow__edge-8zonal_stats-9"
-    },
-    {
-      "source": "12",
-      "sourceHandle": "study_area_polygon",
-      "target": "8",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-12study_area_polygon-8study_area_polygon"
-    },
-    {
-      "source": "12",
-      "sourceHandle": "bbox",
-      "target": "8",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-12bbox-8bbox"
-    },
     {
       "source": "13",
       "sourceHandle": null,
@@ -166,25 +145,11 @@
       "id": "reactflow__edge-13-12study_area_epsg"
     },
     {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-13-8crs"
-    },
-    {
       "source": "14",
       "sourceHandle": "bii_change",
       "target": "15",
       "targetHandle": null,
       "id": "reactflow__edge-14bii_change-15"
-    },
-    {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "8",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-18rasters-8rasters"
     },
     {
       "source": "18",
@@ -241,21 +206,44 @@
       "target": "18",
       "targetHandle": "crs",
       "id": "reactflow__edge-13-18crs"
+    },
+    {
+      "source": "18",
+      "sourceHandle": "rasters",
+      "target": "25",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-18rasters-25rasters"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-13-25crs"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "bbox",
+      "target": "25",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-12bbox-25bbox"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "study_area_polygon",
+      "target": "25",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-12study_area_polygon-25study_area_polygon"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "zonal_stats",
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-25zonal_stats-26"
     }
   ],
   "inputs": {
-    "zonal_statistics>zonal_stats.yml@8|summary_statistic": {
-      "description": "Summary statistic for layers",
-      "label": "Summary statistic",
-      "type": "options",
-      "options": [
-        "mean",
-        "median",
-        "proportion"
-      ],
-      "example": "mean",
-      "weight": 0
-    },
     "BII>BIIChange.yml@14|start_year": {
       "description": "Reference BII year for raster plotting",
       "label": "Start year for BII raster comparison",
@@ -267,7 +255,7 @@
         "2015"
       ],
       "example": "2000",
-      "weight": 1
+      "weight": 0
     },
     "BII>BIIChange.yml@14|end_year": {
       "description": "BII layer to compare to the start year",
@@ -280,35 +268,35 @@
         "2020"
       ],
       "example": "2020",
-      "weight": 2
+      "weight": 1
     },
     "data>getBoundingBox.yml@12|state": {
       "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
       "label": "State/Province",
       "type": "text",
       "example": "Quebec",
-      "weight": 3
+      "weight": 2
     },
     "data>getBoundingBox.yml@12|study_area_file": {
       "description": "Upload a file of a custom study area",
       "label": "File for study area",
       "type": "text",
       "example": null,
-      "weight": 4
+      "weight": 3
     },
     "pipeline@13": {
       "label": "Study area EPSG",
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This MUST be in a projected reference system (not lat long).\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html). The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n*Leave blank if you want the bounding box to be in EPSG:4326.*",
       "type": "text",
       "example": "EPSG:6622",
-      "weight": 5
+      "weight": 4
     },
     "data>loadFromStac.yml@18|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "Spatial resolution",
       "type": "float",
       "example": 1000,
-      "weight": 6
+      "weight": 5
     },
     "data>loadFromStac.yml@18|resampling": {
       "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
@@ -331,7 +319,7 @@
         "q3"
       ],
       "example": "near",
-      "weight": 7
+      "weight": 6
     },
     "data>loadFromStac.yml@18|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
@@ -345,33 +333,52 @@
         "median"
       ],
       "example": "first",
-      "weight": 8
+      "weight": 7
     },
     "data>getBoundingBox.yml@12|country": {
       "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
       "label": "Country",
       "type": "text",
       "example": "Canada",
+      "weight": 8
+    },
+    "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
+      "description": "Summary statistic for layers",
+      "label": "Summary statistic",
+      "type": "options[]",
+      "options": [
+        "mean",
+        "median",
+        "sum",
+        "min",
+        "max",
+        "stdev",
+        "variance",
+        "mode"
+      ],
+      "example": [
+        "mean"
+      ],
       "weight": 9
     }
   },
   "outputs": {
-    "zonal_statistics>zonal_stats.yml@8|zonal_stats": {
-      "description": "Summary statistic over the polygon",
-      "label": "Summary statistic",
-      "type": "text/csv",
-      "weight": 0
-    },
     "BII>BIIChange.yml@14|bii_change": {
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 1
+      "weight": 0
     },
     "data>loadFromStac.yml@18|rasters": {
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
+      "weight": 1
+    },
+    "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
+      "description": "Summary statistic over the polygon",
+      "label": "Summary statistic",
+      "type": "text/csv",
       "weight": 2
     }
   },
