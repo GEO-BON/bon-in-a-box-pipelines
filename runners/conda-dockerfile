@@ -73,6 +73,6 @@ RUN chmod -R 777 /opt/conda/envs/rbase/lib/R/library
 RUN set -ex; \
     find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm "{}" ; \
     find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm "{}" ; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm "{}" ; ;
+    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm "{}" ;
 
 RUN date +"%Y-%m-%d %R" > /version.txt
