@@ -45,14 +45,22 @@ RUN mamba env create -f /data/r-environment.yml \
 
 
 ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
-RUN bash --login -c "mamba activate rbase && R -e 'install.packages(c(\"CoordinateCleaner\", \
-        \"geodata\", \
-        \"OpenStreetMap\" \
-    ), repos=\"https://cloud.r-project.org/\")' "
-
-## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN)
-RUN bash --login -c "mamba activate rbase && R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
-RUN bash --login -c "mamba activate rbase && R -e 'devtools::install_github(\"connectscape/Makurhini\")'"
+RUN bash --login -c "mamba activate rbase \
+    && R -e ' \
+        install.packages(c(\"CoordinateCleaner\", \
+            \"geodata\", \
+            \"OpenStreetMap\" \
+        ), repos=\"https://cloud.r-project.org/\"); \
+        \
+## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
+        devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\") \
+        devtools::install_github(\"connectscape/Makurhini\") \
+    ' \
+    # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
+    # || true at the end just makes sure that this step doesn't fail the build if none were found \
+    && (find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+    && (find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+    && (find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true)"
 
 # Load python base environment
 ADD ./python-environment.yml /data/python-environment.yml
@@ -67,12 +75,5 @@ RUN mkdir -p /opt/conda/pkgs; \
     chmod 777 /opt/conda/envs;
 
 RUN chmod -R 777 /opt/conda/envs/rbase/lib/R/library
-
-# Remove documentation files from /opt/conda/envs/rbase/lib/R/library
-# || true at the end just makes sure that this step doesn't fail the build if none were found
-RUN set -ex; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r "{}" ; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r "{}" ; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r "{}" || true;
 
 RUN date +"%Y-%m-%d %R" > /version.txt
