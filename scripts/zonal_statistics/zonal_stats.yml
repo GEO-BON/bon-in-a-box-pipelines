@@ -17,7 +17,7 @@ inputs:
     label: Bounding box
     description: |
       Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax.
-      Must be in latitude and longitude (EPSG:4326). Leave bank if uploading a study area.
+      Bounding box must be in the specified coordinate reference system. Leave bank if uploading a study area.
     type: float[]
     example: null
   study_area_polygon:

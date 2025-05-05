@@ -21,15 +21,15 @@ study_area_polygon <- sf::st_read(study_area)
 if(nrow(study_area_polygon)==0){
   biab_error_stop("Study area polygon does not exist. Check spelling of country and state names.")
 }  # stop if object is empty
-
+print(st_crs(study_area_polygon))
 # Set crs and transform to the input crs
-study_area_polygon <- st_set_crs(x=study_area_polygon, value="EPSG:4326") # load study area as sf object
+#study_area_polygon <- st_set_crs(x=study_area_polygon, value="EPSG:4326") # load study area as sf object
 
 if (!is.null(input$study_area_epsg)){ # if crs is specified, transform data
   print("projecting polygon")
   study_area_polygon <- st_transform(study_area_polygon, input$study_area_epsg) # transform into input crs
   }
-  
+  print(st_crs(study_area_polygon))
 # Save study area and protected area data
 study_area_polygon_path<- file.path(outputFolder, "study_area_polygon.gpkg") # Define the file path for the protected area polygon output
 sf::st_write(study_area_polygon, study_area_polygon_path, delete_dsn = T)
