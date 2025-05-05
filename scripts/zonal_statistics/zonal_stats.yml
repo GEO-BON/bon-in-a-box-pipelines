@@ -26,7 +26,7 @@ inputs:
     type: application/geopackage+sqlite3
     example: null
   crs:
-    label: Coordinate reference system to transform the country polygon or bounding box
+    label: Coordinate reference system
     description: | 
       Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.
       This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.
@@ -49,7 +49,7 @@ inputs:
       - stdev
       - variance
       - mode
-    example: mean
+    example: [mean, variance]
 outputs:
   zonal_stats:
     label: Summary statistic
@@ -68,7 +68,7 @@ conda:
     - r-exactextractr
     - r-tidyr
 references: 
-  - text: Bastion 2023
+  - text: Daniel Baston (2023)
     doi: https://doi.org/10.32614/CRAN.package.exactextractr 
 
 
