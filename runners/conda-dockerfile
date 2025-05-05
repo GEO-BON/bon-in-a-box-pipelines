@@ -71,8 +71,8 @@ RUN chmod -R 777 /opt/conda/envs/rbase/lib/R/library
 # Remove documentation files from /opt/conda/envs/rbase/lib/R/library
 # || true at the end just makes sure that this step doesn't fail the build if none were found
 RUN set -ex; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm "{}" ; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm "{}" ; \
-    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm "{}" ;
+    find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r "{}" ; \
+    find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r "{}" ; \
+    find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r "{}" || true;
 
 RUN date +"%Y-%m-%d %R" > /version.txt
