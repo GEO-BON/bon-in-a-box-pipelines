@@ -40,13 +40,15 @@ RUN mkdir /r-libs-user && chmod a+w /r-libs-user; \
 
 # Load R base environment
 ADD ./r-environment.yml /data/r-environment.yml
-RUN mamba env create -f /data/r-environment.yml
+RUN mamba env create -f /data/r-environment.yml \
+    && mamba clean --all --force-pkgs-dirs -y
+
 
 ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
 RUN bash --login -c "mamba activate rbase && R -e 'install.packages(c(\"CoordinateCleaner\", \
         \"geodata\", \
-        \"OpenStreetMap\"\
-    ), repos=\"https://cloud.r-project.org/\")'"
+        \"OpenStreetMap\" \
+    ), repos=\"https://cloud.r-project.org/\")' "
 
 ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN)
 RUN bash --login -c "mamba activate rbase && R -e 'devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\")'"
@@ -54,10 +56,8 @@ RUN bash --login -c "mamba activate rbase && R -e 'devtools::install_github(\"co
 
 # Load python base environment
 ADD ./python-environment.yml /data/python-environment.yml
-RUN mamba env create -f /data/python-environment.yml
-
-## Save some space: Remove temp files from /opt/conda/
-RUN mamba clean --all --force-pkgs-dirs -y
+RUN mamba env create -f /data/python-environment.yml \
+    && mamba clean --all --force-pkgs-dirs -y
 
 # Since we are using the user from the client computer to run the scripts,
 # we need to create and open the permissions of a few files/directories.
