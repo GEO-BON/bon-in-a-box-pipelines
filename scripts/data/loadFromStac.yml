@@ -44,7 +44,7 @@ inputs:
     example: "EPSG:6622"
   spatial_res:
     label: Spatial resolution
-    description: Integer, spatial resolution of the rasters (in meters)
+    description: Integer, spatial resolution of the rasters in meters
     type: float
     example: 1000.0
   resampling:
