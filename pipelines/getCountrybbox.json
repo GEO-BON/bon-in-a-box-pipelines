@@ -107,8 +107,8 @@
       "description": "State of interest",
       "label": "State/Province",
       "type": "text",
-      "weight": 1,
-      "example": null
+      "example": null,
+      "weight": 1
     },
     "pipeline@2": {
       "label": "Coordinate reference system",
@@ -142,16 +142,11 @@
         "identifier": "0000-0001-6020-6690"
       }
     ],
-    "license": null,
-    "external_link": null,
+    "license": "CC-BY",
     "references": [
       {
-        "text": null,
-        "doi": null
-      },
-      {
-        "text": null,
-        "doi": null
+        "text": "Massicotte P, South A (2023). _rnaturalearth: World Map Data from Natural Earth_. R package version 1.0.1, <https://CRAN.R-project.org/package=rnaturalearth>.",
+        "doi": "10.32614/CRAN.package.rnaturalearth"
       }
     ]
   }
