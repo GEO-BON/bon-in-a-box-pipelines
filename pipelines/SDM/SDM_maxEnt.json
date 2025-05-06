@@ -6,6 +6,8 @@
       "position": {
         "x": 1932,
         "y": 174.5000000000001
+        "x": 1932,
+        "y": 174.5000000000001
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,6 +17,8 @@
       "id": "35",
       "type": "constant",
       "position": {
+        "x": 1498,
+        "y": 163.5000000000001
         "x": 1498,
         "y": 163.5000000000001
       },
@@ -39,6 +43,8 @@
       "position": {
         "x": 2882,
         "y": 528.5000000000001
+        "x": 2882,
+        "y": 528.5000000000001
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -50,6 +56,8 @@
       "position": {
         "x": 3479,
         "y": 644.5000000000001
+        "x": 3479,
+        "y": 644.5000000000001
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -59,6 +67,8 @@
       "id": "45",
       "type": "constant",
       "position": {
+        "x": 3006,
+        "y": 665.5000000000001
         "x": 3006,
         "y": 665.5000000000001
       },
@@ -79,6 +89,8 @@
       "position": {
         "x": 3141,
         "y": 799.5000000000001
+        "x": 3141,
+        "y": 799.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,6 +102,8 @@
       "id": "47",
       "type": "constant",
       "position": {
+        "x": 3030,
+        "y": 713.5000000000001
         "x": 3030,
         "y": 713.5000000000001
       },
@@ -105,6 +119,8 @@
       "position": {
         "x": 3044,
         "y": 756.5000000000001
+        "x": 3044,
+        "y": 756.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -118,6 +134,8 @@
       "position": {
         "x": 120,
         "y": 958.8333333333335
+        "x": 120,
+        "y": 958.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -129,6 +147,8 @@
       "id": "58",
       "type": "userInput",
       "position": {
+        "x": 207,
+        "y": 410.10000000000014
         "x": 207,
         "y": 410.10000000000014
       },
@@ -149,6 +169,8 @@
       "position": {
         "x": 1503,
         "y": 275.5000000000001
+        "x": 1503,
+        "y": 275.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -162,6 +184,8 @@
       "position": {
         "x": 4570,
         "y": 871.5000000000001
+        "x": 4570,
+        "y": 871.5000000000001
       },
       "data": {
         "descriptionFile": "SDM>rangePredictions.yml"
@@ -171,6 +195,8 @@
       "id": "69",
       "type": "output",
       "position": {
+        "x": 4946,
+        "y": 842.0000000000001
         "x": 4946,
         "y": 842.0000000000001
       },
@@ -184,6 +210,8 @@
       "position": {
         "x": 1290,
         "y": 672.0000000000001
+        "x": 1290,
+        "y": 672.0000000000001
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -193,6 +221,8 @@
       "id": "98",
       "type": "constant",
       "position": {
+        "x": 827,
+        "y": 599.5000000000001
         "x": 827,
         "y": 599.5000000000001
       },
@@ -215,6 +245,8 @@
       "position": {
         "x": 827,
         "y": 647.5000000000001
+        "x": 827,
+        "y": 647.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -233,6 +265,8 @@
       "position": {
         "x": 865,
         "y": 695.5000000000001
+        "x": 865,
+        "y": 695.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -244,6 +278,8 @@
       "id": "101",
       "type": "constant",
       "position": {
+        "x": 851,
+        "y": 738.5000000000001
         "x": 851,
         "y": 738.5000000000001
       },
@@ -259,6 +295,8 @@
       "position": {
         "x": 865,
         "y": 781.5000000000001
+        "x": 865,
+        "y": 781.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -272,6 +310,8 @@
       "position": {
         "x": 2408,
         "y": 308.5000000000001
+        "x": 2408,
+        "y": 308.5000000000001
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -281,6 +321,8 @@
       "id": "105",
       "type": "constant",
       "position": {
+        "x": 1965,
+        "y": 329.5000000000001
         "x": 1965,
         "y": 329.5000000000001
       },
@@ -302,6 +344,8 @@
       "position": {
         "x": 2003,
         "y": 377.5000000000001
+        "x": 2003,
+        "y": 377.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -315,6 +359,8 @@
       "position": {
         "x": 4131,
         "y": 881.5000000000001
+        "x": 4131,
+        "y": 881.5000000000001
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -326,6 +372,8 @@
       "position": {
         "x": 4570,
         "y": 1020.0000000000001
+        "x": 4570,
+        "y": 1020.0000000000001
       },
       "data": {
         "label": "Output"
@@ -335,6 +383,8 @@
       "id": "110",
       "type": "constant",
       "position": {
+        "x": 3667,
+        "y": 846.5000000000001
         "x": 3667,
         "y": 846.5000000000001
       },
@@ -354,6 +404,8 @@
       "position": {
         "x": 3662,
         "y": 889.5000000000001
+        "x": 3662,
+        "y": 889.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -369,6 +421,8 @@
       "id": "115",
       "type": "constant",
       "position": {
+        "x": 3648,
+        "y": 1002.5000000000001
         "x": 3648,
         "y": 1002.5000000000001
       },
@@ -387,6 +441,8 @@
       "id": "116",
       "type": "constant",
       "position": {
+        "x": 3648,
+        "y": 932.5000000000001
         "x": 3648,
         "y": 932.5000000000001
       },
@@ -408,6 +464,8 @@
       "position": {
         "x": 189,
         "y": 271.66666666666674
+        "x": 189,
+        "y": 271.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -423,6 +481,8 @@
       "position": {
         "x": 535,
         "y": 269.5000000000001
+        "x": 535,
+        "y": 269.5000000000001
       },
       "data": {
         "label": "Output"
@@ -432,6 +492,8 @@
       "id": "123",
       "type": "output",
       "position": {
+        "x": 2408,
+        "y": 145.0000000000001
         "x": 2408,
         "y": 145.0000000000001
       },
@@ -445,6 +507,8 @@
       "position": {
         "x": 1932,
         "y": 775.5000000000001
+        "x": 1932,
+        "y": 775.5000000000001
       },
       "data": {
         "label": "Output"
@@ -454,6 +518,8 @@
       "id": "126",
       "type": "output",
       "position": {
+        "x": 1290,
+        "y": 104.50000000000011
         "x": 1290,
         "y": 104.50000000000011
       },
@@ -478,6 +544,8 @@
       "id": "130",
       "type": "io",
       "position": {
+        "x": 823,
+        "y": 892.5000000000001
         "x": 823,
         "y": 892.5000000000001
       },
@@ -1108,11 +1176,13 @@
       "label": "Presences",
       "type": "text/tab-separated-values",
       "weight": 1
+      "weight": 1
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "Environmental layers used as predictors in species distribution modeling",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
+      "weight": 2
       "weight": 2
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
@@ -1124,11 +1194,19 @@
         1
       ],
       "weight": 3
+      "weight": 3
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
       "description": "Variability of predictions based on range method",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
+      "weight": 4
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@133|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
       "weight": 4
     },
     "data>getGBIFObservations>getGBIFObservations.yml@133|gbif_doi": {
