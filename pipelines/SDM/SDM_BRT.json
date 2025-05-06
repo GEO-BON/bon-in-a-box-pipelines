@@ -37,8 +37,8 @@
       "id": "57",
       "type": "userInput",
       "position": {
-        "x": 49.539191479857095,
-        "y": 396.056063286183
+        "x": 101,
+        "y": 385.49999999999994
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -78,17 +78,6 @@
       }
     },
     {
-      "id": "119",
-      "type": "io",
-      "position": {
-        "x": 539,
-        "y": 502.83333333333326
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
       "id": "121",
       "type": "userInput",
       "position": {
@@ -107,8 +96,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 1535,
-        "y": 381.33333333333326
+        "x": 1696.922404773079,
+        "y": 377.85113108014866
       },
       "data": {
         "label": "Output"
@@ -123,6 +112,19 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "128",
+      "type": "userInput",
+      "position": {
+        "x": 96,
+        "y": 559.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1000
       }
     },
     {
@@ -296,19 +298,19 @@
       "id": "159",
       "type": "io",
       "position": {
-        "x": 546.5171506864,
-        "y": 737.6495614691102
+        "x": 542.6786444321133,
+        "y": 110.27536266231323
       },
       "data": {
-        "descriptionFile": "data>loadFromStac.yml"
+        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
       }
     },
     {
       "id": "160",
       "type": "io",
       "position": {
-        "x": 509.57092918475905,
-        "y": 512.0137087269452
+        "x": 519.4992217541126,
+        "y": 523.8072192492954
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -316,10 +318,21 @@
     },
     {
       "id": "161",
+      "type": "io",
+      "position": {
+        "x": 510.3096349141365,
+        "y": 746.65470011872
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "162",
       "type": "constant",
       "position": {
-        "x": 18.579791387796718,
-        "y": 442.91388438525655
+        "x": 40.84500599444482,
+        "y": 454.8183965644347
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -328,11 +341,38 @@
       }
     },
     {
-      "id": "162",
+      "id": "163",
+      "type": "userInput",
+      "position": {
+        "x": -95.85009825020245,
+        "y": 627.1231498139899
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "164",
       "type": "constant",
       "position": {
-        "x": 22.538315120115385,
-        "y": 338.6727594341979
+        "x": 69.56246486937061,
+        "y": 781.2195389393685
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "esacci-lc|esacci-lc-2020"
+        ]
+      }
+    },
+    {
+      "id": "165",
+      "type": "constant",
+      "position": {
+        "x": 121.25389084423728,
+        "y": 877.5393912033435
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -348,51 +388,11 @@
       }
     },
     {
-      "id": "163",
-      "type": "userInput",
-      "position": {
-        "x": -122.60755506490295,
-        "y": 617.0889286072786
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/geopackage+sqlite3"
-      }
-    },
-    {
-      "id": "164",
+      "id": "166",
       "type": "constant",
       "position": {
-        "x": 66.08207617562095,
-        "y": 733.2056247552931
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "esacci-lc|esacci-lc-2020"
-        ]
-      }
-    },
-    {
-      "id": "167",
-      "type": "userInput",
-      "position": {
-        "x": -1.0146928636759185,
-        "y": 527.21096746965
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 1000
-      }
-    },
-    {
-      "id": "168",
-      "type": "constant",
-      "position": {
-        "x": -65.43543454758901,
-        "y": 786.6350353318949
+        "x": 75.30595664435589,
+        "y": 822.4018701634859
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -417,12 +417,42 @@
       }
     },
     {
-      "id": "170",
-      "type": "output",
+      "id": "167",
+      "type": "constant",
       "position": {
-        "x": 1054.8884991904265,
-        "y": 508.05885507713526
+        "x": -133.29208759036607,
+        "y": 417.2865335364853
       },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "168",
+      "type": "constant",
+      "position": {
+        "x": -81.83127907022316,
+        "y": 583.5445302938697
+      },
+      "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
         "value": "first",
@@ -436,14 +466,14 @@
       }
     },
     {
-      "id": "159",
-      "type": "io",
+      "id": "169",
+      "type": "output",
       "position": {
-        "x": 542.6786444321133,
-        "y": 110.27536266231323
+        "x": 1092.8972384768324,
+        "y": 478.7883341168093
       },
       "data": {
-        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
+        "label": "Output"
       }
     }
   ],
@@ -463,32 +493,11 @@
       "id": "reactflow__edge-64-34env_threshold"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-119proj"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-119bbox"
-    },
-    {
       "source": "34",
       "sourceHandle": "clean_presence",
       "target": "123",
       "targetHandle": null,
       "id": "reactflow__edge-34clean_presence-123"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "119",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-119spatial_res"
     },
     {
       "source": "34",
@@ -589,125 +598,6 @@
       "id": "reactflow__edge-154-132pa_proportion"
     },
     {
-      "source": "146",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-146-160stac_url"
-    },
-    {
-      "source": "146",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-146-159stac_url"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-160crs"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-159crs"
-    },
-    {
-      "source": "161",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-161-160weight_matrix_with_ids"
-    },
-    {
-      "source": "161",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-161-159weight_matrix_with_ids"
-    },
-    {
-      "source": "162",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-162-160aggregation"
-    },
-    {
-      "source": "163",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-163-159study_area"
-    },
-    {
-      "source": "163",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-163-160study_area"
-    },
-    {
-      "source": "164",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-164-159collections_items"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-160bbox"
-    },
-    {
-      "source": "137",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-137-160collections_items"
-    },
-    {
-      "source": "167",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-167-160spatial_res"
-    },
-    {
-      "source": "167",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-167-159spatial_res"
-    },
-    {
-      "source": "162",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-162-159aggregation"
-    },
-    {
-      "source": "168",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-168-159resampling"
-    },
-    {
-      "source": "168",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-158-139aggregation"
-    },
-    {
       "source": "121",
       "sourceHandle": null,
       "target": "159",
@@ -734,6 +624,160 @@
       "target": "34",
       "targetHandle": "presence",
       "id": "reactflow__edge-159observations_file-34presence"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-160spatial_res"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-161spatial_res"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-57-160crs"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-57-161crs"
+    },
+    {
+      "source": "162",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-162-160weight_matrix_with_ids"
+    },
+    {
+      "source": "162",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-162-161weight_matrix_with_ids"
+    },
+    {
+      "source": "163",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-163-160study_area"
+    },
+    {
+      "source": "163",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-163-161study_area"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-164-161collections_items"
+    },
+    {
+      "source": "165",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-165-161aggregation"
+    },
+    {
+      "source": "166",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-166-161resampling"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-160bbox"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-161bbox"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-161stac_url"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-160stac_url"
+    },
+    {
+      "source": "137",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-137-160collections_items"
+    },
+    {
+      "source": "167",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-167-160resampling"
+    },
+    {
+      "source": "168",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-168-160aggregation"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "169",
+      "targetHandle": null,
+      "id": "reactflow__edge-160rasters-169"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-160rasters-34predictors"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-160rasters-132predictors"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-161rasters-132water_mask"
     }
   ],
   "inputs": {
@@ -785,65 +829,33 @@
       "example": 1000,
       "weight": 4
     },
-    "pipeline@144": {
-      "label": "Mask",
-      "description": "Shapefile, used to mask the output rasters",
-      "type": "application/dbf",
-      "weight": 5,
-      "example": null
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
-      "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
-      "label": "Data source",
-      "type": "options",
-      "options": [
-        "gbif_pc",
-        "gbif_api"
-      ],
-      "example": "gbif_api",
-      "weight": 4
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
-      "description": "Earliest year of occurrence records",
-      "label": "Start Year",
-      "type": "int",
-      "example": 2010,
-      "weight": 5
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
-      "description": "Latest year of occurrence records ",
-      "label": "End Year",
-      "type": "int",
-      "example": 2023,
-      "weight": 6
-    },
     "pipeline@146": {
       "label": "STAC URL",
       "description": "URL of the Stac Catalog to pull environmental predictors and water mask from.",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 6
+      "weight": 5
     },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
       "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
       "type": "float",
       "example": 10,
-      "weight": 7
+      "weight": 6
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
       "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
       "type": "int",
       "example": 100000,
-      "weight": 8
+      "weight": 7
     },
     "pipeline@154": {
       "label": "Pseudoabsence proportion",
       "description": "The number of PAs, given by the proportion of the total occurrences to use.",
       "type": "float",
       "example": 2.4,
-      "weight": 9
+      "weight": 8
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|bbox": {
       "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
@@ -855,28 +867,28 @@
         1015207,
         1511916
       ],
-      "weight": 10
+      "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 11
+      "weight": 10
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 12
+      "weight": 11
     },
-    "pipeline@167": {
-      "label": "Spatial resolution",
-      "description": "Integer, spatial resolution of the rasters",
-      "type": "float",
-      "example": 1000,
-      "weight": 13
+    "pipeline@163": {
+      "label": "Study area",
+      "description": "Polygon of study area used to crop output layers",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 12
     }
   },
   "outputs": {
@@ -895,67 +907,60 @@
       "type": "text/tab-separated-values",
       "weight": 1
     },
-    "data>loadFromStac.yml@119|rasters": {
-      "description": "Environmental layers used as predictors",
-      "label": "Environmental predictors",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 2
-    },
     "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
       "description": "pseudoabsence coordinates",
       "label": "Pseudoabsences",
       "type": "text/tab-separated-values",
-      "weight": 3
+      "weight": 2
     },
     "SDM>BRT>fitBRT.yml@132|env_corners": {
       "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (red) in environment space for up to the first 5 predictors.",
       "label": "Environment Space",
       "type": "image/jpg",
-      "weight": 4
+      "weight": 3
     },
     "SDM>BRT>fitBRT.yml@132|tuning": {
       "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1.",
       "label": "Tuning Curve",
       "type": "image/jpg",
-      "weight": 5
+      "weight": 4
     },
     "SDM>BRT>fitBRT.yml@132|fit_stats": {
       "description": "JSON of BRT fit statistics and optimal threshold value.",
       "label": "Fit Statistics",
       "type": "text/json",
-      "weight": 6
+      "weight": 5
     },
     "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
       "description": "Map of occurrence score between 0 and 1.",
       "label": "Predicted SDM",
       "type": "image/tiff;application=geotiff",
-      "weight": 7
+      "weight": 6
     },
     "SDM>BRT>fitBRT.yml@132|range": {
       "description": "Range map thresholded at the optimal value.",
       "label": "Range",
       "type": "image/tiff;application=geotiff",
-      "weight": 8
-      "weight": 8
+      "weight": 7
     },
     "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
       "description": "Map of the BRT's relative uncertainty for each location.",
       "label": "SDM Uncertainty",
       "type": "image/tiff;application=geotiff",
-      "weight": 9
+      "weight": 8
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 10
+      "weight": 9
     },
-    "data>loadFromStac.yml@159|rasters": {
+    "data>loadFromStac.yml@160|rasters": {
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 11
+      "weight": 10
     }
   },
   "metadata": {
