@@ -459,7 +459,7 @@
     }
   },
   "metadata": {
-    "name": "ProtConn Analysis with WDPA API",
+    "name": "ProtConn Analysis",
     "description": "This pipeline calculates ProtConn (Protected Connected Index) from protected area polygons using data pulled from the World Database of Protected Areas or user-input polygons. The pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.\nThis pipeline connects directly to the WDPA API. Therefore, it is slower but more up to  date than the other ProtConn pipeline that uses a custom GEO BON API.",
     "author": [
       {
