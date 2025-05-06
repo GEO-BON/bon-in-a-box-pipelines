@@ -33,11 +33,11 @@ outputs:
   country:
     label: Country
     description: Name of country of interest
-    type: text/csv
+    type: text
   region:
     label: Region
     description: Name of state/province of interest
-    type: text/csv
+    type: text
   country_polygon:
     label: Polygon of country or region
     description: Polygon of the chosen country or region in the crs of choice in geopackage format

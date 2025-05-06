@@ -6,8 +6,6 @@
       "position": {
         "x": 1182.9361440176413,
         "y": 321.9620685253946
-        "x": 1182.9361440176413,
-        "y": 321.9620685253946
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -39,8 +37,8 @@
       "id": "57",
       "type": "userInput",
       "position": {
-        "x": 101,
-        "y": 385.49999999999994
+        "x": -16,
+        "y": 294.49999999999994
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -98,8 +96,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 1696.922404773079,
-        "y": 377.85113108014866
+        "x": 1535,
+        "y": 381.33333333333326
       },
       "data": {
         "label": "Output"
@@ -111,8 +109,6 @@
       "position": {
         "x": 1323.3001942482933,
         "y": 83.45159639955898
-        "x": 1323.3001942482933,
-        "y": 83.45159639955898
       },
       "data": {
         "label": "Output"
@@ -122,8 +118,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 96,
-        "y": 559.5
+        "x": 28.09705606290231,
+        "y": 557.7588988734078
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -179,8 +175,8 @@
       "id": "137",
       "type": "userInput",
       "position": {
-        "x": 93,
-        "y": 231.5
+        "x": 21.61485380971783,
+        "y": 447.3965396974388
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -226,10 +222,10 @@
     },
     {
       "id": "146",
-      "type": "userInput",
+      "type": "constant",
       "position": {
-        "x": 101,
-        "y": 308.5
+        "x": -59.99999999999994,
+        "y": 481.26025544916456
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -313,8 +309,8 @@
       "id": "160",
       "type": "io",
       "position": {
-        "x": 519.4992217541126,
-        "y": 523.8072192492954
+        "x": 446.6785804438384,
+        "y": 526.8732015430701
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -324,8 +320,8 @@
       "id": "161",
       "type": "io",
       "position": {
-        "x": 510.3096349141365,
-        "y": 746.65470011872
+        "x": 475.4997120637047,
+        "y": 737.1070351678517
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -333,10 +329,70 @@
     },
     {
       "id": "162",
+      "type": "output",
+      "position": {
+        "x": 996.3956315772633,
+        "y": 528.5460837746845
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "163",
       "type": "constant",
       "position": {
-        "x": 40.84500599444482,
-        "y": 454.8183965644347
+        "x": -62.877394447579945,
+        "y": 636.5226616924128
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "164",
+      "type": "constant",
+      "position": {
+        "x": -104.66382148579396,
+        "y": 697.4612011231416
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "165",
+      "type": "constant",
+      "position": {
+        "x": -73.162158396628,
+        "y": 326.3413580459261
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -345,23 +401,11 @@
       }
     },
     {
-      "id": "163",
-      "type": "userInput",
-      "position": {
-        "x": -95.85009825020245,
-        "y": 627.1231498139899
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/geopackage+sqlite3"
-      }
-    },
-    {
-      "id": "164",
+      "id": "166",
       "type": "constant",
       "position": {
-        "x": 69.56246486937061,
-        "y": 781.2195389393685
+        "x": -15.867664029589264,
+        "y": 770.587448440016
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -372,112 +416,15 @@
       }
     },
     {
-      "id": "165",
-      "type": "constant",
-      "position": {
-        "x": 121.25389084423728,
-        "y": 877.5393912033435
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first",
-        "options": [
-          "first",
-          "min",
-          "max",
-          "mean",
-          "median"
-        ]
-      }
-    },
-    {
-      "id": "166",
-      "type": "constant",
-      "position": {
-        "x": 75.30595664435589,
-        "y": 822.4018701634859
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "near",
-        "options": [
-          "near",
-          "bilinear",
-          "average",
-          "mode",
-          "cubic",
-          "cubicspline",
-          "lanczos",
-          "rms",
-          "min",
-          "max",
-          "sum",
-          "med",
-          "q1",
-          "q3"
-        ]
-      }
-    },
-    {
       "id": "167",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": -133.29208759036607,
-        "y": 417.2865335364853
+        "x": -261.0375061035156,
+        "y": 588
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "options",
-        "value": "near",
-        "options": [
-          "near",
-          "bilinear",
-          "average",
-          "mode",
-          "cubic",
-          "cubicspline",
-          "lanczos",
-          "rms",
-          "min",
-          "max",
-          "sum",
-          "med",
-          "q1",
-          "q3"
-        ]
-      }
-    },
-    {
-      "id": "168",
-      "type": "constant",
-      "position": {
-        "x": -81.83127907022316,
-        "y": 583.5445302938697
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first",
-        "options": [
-          "first",
-          "min",
-          "max",
-          "mean",
-          "median"
-        ]
-      }
-    },
-    {
-      "id": "169",
-      "type": "output",
-      "position": {
-        "x": 1092.8972384768324,
-        "y": 478.7883341168093
-      },
-      "data": {
-        "label": "Output"
+        "type": "application/geopackage+sqlite3"
       }
     }
   ],
@@ -630,81 +577,46 @@
       "id": "reactflow__edge-159observations_file-34presence"
     },
     {
-      "source": "128",
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-160rasters-34predictors"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "162",
+      "targetHandle": null,
+      "id": "reactflow__edge-160rasters-162"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-160rasters-132predictors"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-161rasters-132water_mask"
+    },
+    {
+      "source": "146",
       "sourceHandle": null,
       "target": "160",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-160spatial_res"
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-160stac_url"
     },
     {
-      "source": "128",
+      "source": "146",
       "sourceHandle": null,
       "target": "161",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-161spatial_res"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-160crs"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-161crs"
-    },
-    {
-      "source": "162",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-162-160weight_matrix_with_ids"
-    },
-    {
-      "source": "162",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-162-161weight_matrix_with_ids"
-    },
-    {
-      "source": "163",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-163-160study_area"
-    },
-    {
-      "source": "163",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-163-161study_area"
-    },
-    {
-      "source": "164",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-164-161collections_items"
-    },
-    {
-      "source": "165",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-165-161aggregation"
-    },
-    {
-      "source": "166",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-166-161resampling"
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-161stac_url"
     },
     {
       "source": "58",
@@ -721,20 +633,6 @@
       "id": "reactflow__edge-58-161bbox"
     },
     {
-      "source": "146",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-146-161stac_url"
-    },
-    {
-      "source": "146",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-146-160stac_url"
-    },
-    {
       "source": "137",
       "sourceHandle": null,
       "target": "160",
@@ -742,46 +640,95 @@
       "id": "reactflow__edge-137-160collections_items"
     },
     {
-      "source": "167",
+      "source": "163",
       "sourceHandle": null,
       "target": "160",
       "targetHandle": "resampling",
-      "id": "reactflow__edge-167-160resampling"
+      "id": "reactflow__edge-163-160resampling"
     },
     {
-      "source": "168",
+      "source": "164",
       "sourceHandle": null,
       "target": "160",
       "targetHandle": "aggregation",
-      "id": "reactflow__edge-168-160aggregation"
+      "id": "reactflow__edge-164-160aggregation"
     },
     {
-      "source": "160",
-      "sourceHandle": "rasters",
-      "target": "169",
-      "targetHandle": null,
-      "id": "reactflow__edge-160rasters-169"
+      "source": "128",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-160spatial_res"
     },
     {
-      "source": "160",
-      "sourceHandle": "rasters",
-      "target": "34",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-160rasters-34predictors"
+      "source": "128",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-161spatial_res"
     },
     {
-      "source": "160",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-160rasters-132predictors"
+      "source": "165",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-165-160weight_matrix_with_ids"
     },
     {
-      "source": "161",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "water_mask",
-      "id": "reactflow__edge-161rasters-132water_mask"
+      "source": "57",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-57-160crs"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-57-161crs"
+    },
+    {
+      "source": "166",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-166-161collections_items"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-164-161aggregation"
+    },
+    {
+      "source": "163",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-163-161resampling"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "159",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-159bbox"
+    },
+    {
+      "source": "167",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-167-160study_area"
+    },
+    {
+      "source": "167",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-167-161study_area"
     }
   ],
   "inputs": {
@@ -823,7 +770,7 @@
       "label": "Coordinate Reference System",
       "description": "String, Projection System as an EPSG code.",
       "type": "text",
-      "example": "EPSG:6622",
+      "example": "EPSG:6624",
       "weight": 3
     },
     "pipeline@128": {
@@ -833,66 +780,54 @@
       "example": 1000,
       "weight": 4
     },
-    "pipeline@146": {
-      "label": "STAC URL",
-      "description": "URL of the Stac Catalog to pull environmental predictors and water mask from.",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 5
-    },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
       "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
       "type": "float",
       "example": 10,
-      "weight": 6
+      "weight": 5
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
       "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
       "type": "int",
       "example": 100000,
-      "weight": 7
+      "weight": 6
     },
     "pipeline@154": {
       "label": "Pseudoabsence proportion",
       "description": "The number of PAs, given by the proportion of the total occurrences to use.",
       "type": "float",
       "example": 2.4,
-      "weight": 8
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@159|bbox": {
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "label": "bbox",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 9
+      "weight": 7
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 10
+      "weight": 8
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 11
+      "weight": 9
     },
-    "pipeline@163": {
+    "data>loadFromStac.yml@161|weight_matrix_with_ids": {
+      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
+      "label": "Weight matrix with ids",
+      "type": "text",
+      "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n",
+      "weight": 10
+    },
+    "pipeline@167": {
       "label": "Study area",
       "description": "Polygon of study area used to crop output layers",
       "type": "application/geopackage+sqlite3",
       "example": null,
-      "weight": 12
+      "weight": 11
     }
   },
   "outputs": {
