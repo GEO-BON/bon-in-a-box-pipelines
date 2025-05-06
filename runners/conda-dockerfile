@@ -1,4 +1,6 @@
 FROM condaforge/miniforge3:latest
+# Since we are using the host's user id, we don't know in advance which UID it will be.
+# It's simpler if all are anonymous, than if some land by chance on this pre-existing ubuntu user.
 RUN userdel ubuntu; rm -r /home/ubuntu
 
 WORKDIR /data
