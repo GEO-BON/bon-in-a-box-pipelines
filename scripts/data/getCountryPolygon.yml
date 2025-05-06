@@ -14,7 +14,7 @@ inputs:
     example: Colombia
   region:
     label: State/Province
-    description: State of interest
+    description: Region of interest
     type: text
     example: null
   crs:
@@ -31,11 +31,11 @@ inputs:
 outputs:
   country:
     label: Country
-    description: Country of interest
+    description: Name of country of interest
     type: text/csv
   region:
     label: Region
-    description: State/province of interest
+    description: Name of state/province of interest
     type: text/csv
   country_polygon:
     label: Polygon of country or region
