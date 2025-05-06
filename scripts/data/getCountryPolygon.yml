@@ -29,6 +29,14 @@ inputs:
     type: text
     example: "EPSG:4326"
 outputs:
+  country:
+    label: Country
+    description: Country of interest
+    type: text/csv
+  region:
+    label: Region
+    description: State/province of interest
+    type: text/csv
   country_polygon:
     label: Polygon of country or region
     description: Polygon of the chosen country or region in the crs of choice in geopackage format

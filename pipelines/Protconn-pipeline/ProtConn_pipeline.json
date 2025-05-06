@@ -1,57 +1,66 @@
 {
   "nodes": [
     {
-      "id": "75",
+      "id": "85",
       "type": "io",
       "position": {
-        "x": 337.9266502858487,
-        "y": 104.53393240446516
+        "x": 268.7428103274001,
+        "y": 152.6882247442564
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
       }
     },
     {
-      "id": "76",
-      "type": "userInput",
+      "id": "87",
+      "type": "io",
       "position": {
-        "x": -79.03750610351562,
-        "y": 138
+        "x": 1414.9624938964844,
+        "y": 380
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "EPSG:4326"
+        "descriptionFile": "protconn_analysis>protconn_analysis.yml"
       }
     },
     {
-      "id": "80",
+      "id": "90",
       "type": "output",
       "position": {
-        "x": 1304.9624938964844,
-        "y": 129
+        "x": 2002.9624938964844,
+        "y": 273
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "81",
+      "id": "91",
       "type": "output",
       "position": {
-        "x": 1325.9624938964844,
-        "y": 181
+        "x": 2015.9624938964844,
+        "y": 351
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "89",
+      "id": "92",
+      "type": "output",
+      "position": {
+        "x": 2024.9624938964844,
+        "y": 383
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "95",
       "type": "userInput",
       "position": {
-        "x": 40.962493896484375,
-        "y": 258
+        "x": -254.47638020803976,
+        "y": 417.41659840761196
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -60,11 +69,11 @@
       }
     },
     {
-      "id": "90",
+      "id": "96",
       "type": "userInput",
       "position": {
-        "x": 20.962493896484375,
-        "y": 197
+        "x": -286.1939582384308,
+        "y": 533.7252945352402
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -72,101 +81,90 @@
       }
     },
     {
-      "id": "93",
-      "type": "io",
-      "position": {
-        "x": 828.9624938964844,
-        "y": 236
-      },
-      "data": {
-        "descriptionFile": "data>getProtectedAreasWDPA.yml"
-      }
-    },
-    {
-      "id": "95",
-      "type": "io",
-      "position": {
-        "x": 1588.9624938964844,
-        "y": 265
-      },
-      "data": {
-        "descriptionFile": "protconn_analysis>protconn_analysis.yml"
-      }
-    },
-    {
-      "id": "96",
-      "type": "output",
-      "position": {
-        "x": 2194.9624938964844,
-        "y": 262
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "97",
-      "type": "output",
-      "position": {
-        "x": 2201.9624938964844,
-        "y": 282
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "98",
-      "type": "output",
-      "position": {
-        "x": 2200.9624938964844,
-        "y": 292
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "99",
-      "type": "output",
-      "position": {
-        "x": 2204.9624938964844,
-        "y": 310
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "100",
-      "type": "output",
-      "position": {
-        "x": 2196.9624938964844,
-        "y": 322
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "101",
       "type": "userInput",
       "position": {
-        "x": 484.9624938964844,
-        "y": 275
+        "x": -356.9048545469822,
+        "y": 304.5987191520682
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "int",
-        "value": 0
+        "type": "text",
+        "value": "EPSG:4326"
       }
     },
     {
       "id": "102",
       "type": "output",
       "position": {
-        "x": 1392.9624938964844,
-        "y": 277
+        "x": 2003.119702868727,
+        "y": 426.5100174428533
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "103",
+      "type": "output",
+      "position": {
+        "x": 2045.119702868727,
+        "y": 506.5100174428533
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "112",
+      "type": "io",
+      "position": {
+        "x": 945.4235383044559,
+        "y": 224.46080852014282
+      },
+      "data": {
+        "descriptionFile": "data>getProtectedAreasWDPAapi.yml"
+      }
+    },
+    {
+      "id": "113",
+      "type": "output",
+      "position": {
+        "x": 1738.1651914602253,
+        "y": 173.83409492927478
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "114",
+      "type": "output",
+      "position": {
+        "x": 1735.5261756386794,
+        "y": 192.30720568009528
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "115",
+      "type": "output",
+      "position": {
+        "x": 866.9624938964844,
+        "y": 151
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "116",
+      "type": "output",
+      "position": {
+        "x": 865.9624938964844,
+        "y": 169
       },
       "data": {
         "label": "Output"
@@ -175,162 +173,155 @@
   ],
   "edges": [
     {
-      "source": "76",
-      "sourceHandle": null,
-      "target": "75",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-76-75crs"
-    },
-    {
-      "source": "89",
-      "sourceHandle": null,
-      "target": "75",
-      "targetHandle": "country",
-      "id": "reactflow__edge-89-75country"
-    },
-    {
-      "source": "90",
-      "sourceHandle": null,
-      "target": "75",
-      "targetHandle": "region",
-      "id": "reactflow__edge-90-75region"
-    },
-    {
-      "source": "89",
-      "sourceHandle": null,
-      "target": "93",
-      "targetHandle": "country",
-      "id": "reactflow__edge-89-93country"
-    },
-    {
-      "source": "90",
-      "sourceHandle": null,
-      "target": "93",
-      "targetHandle": "region",
-      "id": "reactflow__edge-90-93region"
-    },
-    {
-      "source": "75",
-      "sourceHandle": "country_polygon",
-      "target": "93",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-75country_polygon-93study_area_polygon"
-    },
-    {
-      "source": "93",
-      "sourceHandle": "study_area",
-      "target": "80",
-      "targetHandle": null,
-      "id": "reactflow__edge-93study_area-80"
-    },
-    {
-      "source": "93",
-      "sourceHandle": "protected_areas",
-      "target": "81",
-      "targetHandle": null,
-      "id": "reactflow__edge-93protected_areas-81"
-    },
-    {
-      "source": "76",
-      "sourceHandle": null,
-      "target": "93",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-76-93crs"
-    },
-    {
-      "source": "93",
-      "sourceHandle": "study_area",
-      "target": "95",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-93study_area-95study_area_polygon"
-    },
-    {
-      "source": "93",
-      "sourceHandle": "protected_areas",
-      "target": "95",
-      "targetHandle": "protected_area_polygon",
-      "id": "reactflow__edge-93protected_areas-95protected_area_polygon"
-    },
-    {
-      "source": "95",
+      "source": "87",
       "sourceHandle": "protconn_result",
-      "target": "96",
+      "target": "90",
       "targetHandle": null,
-      "id": "reactflow__edge-95protconn_result-96"
+      "id": "reactflow__edge-87protconn_result-90"
     },
     {
-      "source": "95",
+      "source": "87",
       "sourceHandle": "result_plot",
-      "target": "97",
+      "target": "91",
       "targetHandle": null,
-      "id": "reactflow__edge-95result_plot-97"
+      "id": "reactflow__edge-87result_plot-91"
     },
     {
-      "source": "95",
+      "source": "87",
       "sourceHandle": "result_yrs_plot",
-      "target": "98",
+      "target": "92",
       "targetHandle": null,
-      "id": "reactflow__edge-95result_yrs_plot-98"
+      "id": "reactflow__edge-87result_yrs_plot-92"
     },
     {
       "source": "95",
-      "sourceHandle": "result_yrs",
-      "target": "99",
-      "targetHandle": null,
-      "id": "reactflow__edge-95result_yrs-99"
-    },
-    {
-      "source": "95",
-      "sourceHandle": "result_preset_plot",
-      "target": "100",
-      "targetHandle": null,
-      "id": "reactflow__edge-95result_preset_plot-100"
-    },
-    {
-      "source": "76",
       "sourceHandle": null,
-      "target": "95",
+      "target": "85",
+      "targetHandle": "country",
+      "id": "reactflow__edge-95-85country"
+    },
+    {
+      "source": "96",
+      "sourceHandle": null,
+      "target": "85",
+      "targetHandle": "region",
+      "id": "reactflow__edge-96-85region"
+    },
+    {
+      "source": "97",
+      "sourceHandle": null,
+      "target": "85",
       "targetHandle": "crs",
-      "id": "reactflow__edge-76-95crs"
+      "id": "reactflow__edge-97-85crs"
     },
     {
-      "source": "101",
+      "source": "97",
       "sourceHandle": null,
-      "target": "93",
-      "targetHandle": "transboundary_distance",
-      "id": "reactflow__edge-101-93transboundary_distance"
+      "target": "87",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-97-87crs"
     },
     {
-      "source": "101",
-      "sourceHandle": null,
-      "target": "95",
-      "targetHandle": "transboundary_distance",
-      "id": "reactflow__edge-101-95transboundary_distance"
-    },
-    {
-      "source": "93",
-      "sourceHandle": "number_pas",
+      "source": "87",
+      "sourceHandle": "result_yrs",
       "target": "102",
       "targetHandle": null,
-      "id": "reactflow__edge-93number_pas-102"
+      "id": "reactflow__edge-87result_yrs-102"
+    },
+    {
+      "source": "87",
+      "sourceHandle": "result_preset_plot",
+      "target": "103",
+      "targetHandle": null,
+      "id": "reactflow__edge-87result_preset_plot-103"
+    },
+    {
+      "source": "112",
+      "sourceHandle": "protected_areas",
+      "target": "113",
+      "targetHandle": null,
+      "id": "reactflow__edge-112protected_areas-113"
+    },
+    {
+      "source": "112",
+      "sourceHandle": "number_pas",
+      "target": "114",
+      "targetHandle": null,
+      "id": "reactflow__edge-112number_pas-114"
+    },
+    {
+      "source": "112",
+      "sourceHandle": "protected_areas",
+      "target": "87",
+      "targetHandle": "protected_area_polygon",
+      "id": "reactflow__edge-112protected_areas-87protected_area_polygon"
+    },
+    {
+      "source": "85",
+      "sourceHandle": "country_polygon",
+      "target": "87",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-85country_polygon-87study_area_polygon"
+    },
+    {
+      "source": "85",
+      "sourceHandle": "country_polygon",
+      "target": "112",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-85country_polygon-112study_area_polygon"
+    },
+    {
+      "source": "96",
+      "sourceHandle": null,
+      "target": "112",
+      "targetHandle": "region",
+      "id": "reactflow__edge-96-112region"
+    },
+    {
+      "source": "95",
+      "sourceHandle": null,
+      "target": "112",
+      "targetHandle": "country",
+      "id": "reactflow__edge-95-112country"
+    },
+    {
+      "source": "97",
+      "sourceHandle": null,
+      "target": "112",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-97-112crs"
+    },
+    {
+      "source": "85",
+      "sourceHandle": "country",
+      "target": "115",
+      "targetHandle": null,
+      "id": "reactflow__edge-85country-115"
+    },
+    {
+      "source": "85",
+      "sourceHandle": "region",
+      "target": "116",
+      "targetHandle": null,
+      "id": "reactflow__edge-85region-116"
     }
   ],
   "inputs": {
-    "pipeline@89": {
+    "pipeline@95": {
       "label": "Country",
       "description": "Country of interest",
       "type": "text",
       "example": "Colombia",
       "weight": 0
     },
-    "pipeline@90": {
+    "pipeline@96": {
       "label": "State/Province",
       "description": "State of interest",
       "type": "text",
       "example": null,
       "weight": 1
     },
-    "data>getProtectedAreasWDPA.yml@93|pa_input_type": {
+    "data>getProtectedAreasWDPAapi.yml@112|pa_input_type": {
       "description": "Type of input for protected areas. Option \"WDPA\" uses protected areas from the World Database of Protected Areas. Option \"User input\" uses polygons input by the user. \"Both\" combines the WDPA protected areas and user input polygons.",
       "label": "Protected area input",
       "type": "options",
@@ -342,35 +333,42 @@
       "example": "WDPA",
       "weight": 2
     },
-    "data>getProtectedAreasWDPA.yml@93|protected_area_file": {
-      "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA only).",
+    "data>getProtectedAreasWDPAapi.yml@112|protected_area_file": {
+      "description": "File path of the shapefile of protected areas (Leave blank if using data from WDPA only). Must be in geopackage format.",
       "label": "Protected areas file",
-      "type": "text",
+      "type": "application/geopackage+sqlite3",
       "example": null,
       "weight": 3
     },
-    "data>getProtectedAreasWDPA.yml@93|date_column_name": {
+    "data>getProtectedAreasWDPAapi.yml@112|date_column_name": {
       "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
       "label": "Date column name",
       "type": "text",
       "example": null,
       "weight": 4
     },
-    "pipeline@76": {
+    "pipeline@97": {
       "label": "Coordinate reference system",
-      "description": "Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [here](https://epsg.io/).\n",
+      "description": "Coordinate reference system for the study area and protected areas. Must be in a projected reference system. To find the reference system for your region visit (https://epsg.io/).",
       "type": "text",
       "example": "EPSG:3116",
       "weight": 5
     },
-    "protconn_analysis>protconn_analysis.yml@95|distance_threshold": {
+    "protconn_analysis>protconn_analysis.yml@87|distance_threshold": {
       "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
       "label": "Distance analysis threshold",
       "type": "int",
       "example": 10000,
       "weight": 6
     },
-    "protconn_analysis>protconn_analysis.yml@95|distance_matrix_type": {
+    "protconn_analysis>protconn_analysis.yml@87|transboundary_distance": {
+      "description": "Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
+      "label": "Transboundary distance",
+      "type": "int",
+      "example": 0,
+      "weight": 7
+    },
+    "protconn_analysis>protconn_analysis.yml@87|distance_matrix_type": {
       "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
       "label": "Type of distance matrix",
       "type": "options",
@@ -379,90 +377,89 @@
         "edge"
       ],
       "example": "centroid",
-      "weight": 7
-    },
-    "protconn_analysis>protconn_analysis.yml@95|years": {
-      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
-      "label": "Year for cutoff",
-      "type": "int",
-      "example": 2024,
       "weight": 8
     },
-    "protconn_analysis>protconn_analysis.yml@95|start_year": {
+    "protconn_analysis>protconn_analysis.yml@87|start_year": {
       "description": "Year for the time series plot to start",
       "label": "Start year",
       "type": "int",
       "example": 1950,
       "weight": 9
     },
-    "protconn_analysis>protconn_analysis.yml@95|year_int": {
+    "protconn_analysis>protconn_analysis.yml@87|years": {
+      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
+      "label": "Year for cutoff",
+      "type": "int",
+      "example": 2025,
+      "weight": 10
+    },
+    "protconn_analysis>protconn_analysis.yml@87|year_int": {
       "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
       "label": "Year interval",
       "type": "int",
       "example": 20,
-      "weight": 10
-    },
-    "pipeline@101": {
-      "label": "Transboundary distance",
-      "description": "Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
-      "type": "int",
-      "example": 0,
       "weight": 11
     }
   },
   "outputs": {
-    "data>getProtectedAreasWDPA.yml@93|study_area": {
-      "description": "The map of the study area",
-      "label": "Polygon of study area",
-      "type": "application/geopackage+sqlite3",
+    "data>getCountryPolygon.yml@85|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text/csv",
       "weight": 0
     },
-    "data>getProtectedAreasWDPA.yml@93|protected_areas": {
-      "description": "The map of the protected areas within the study area",
-      "label": "Polygon of protected areas",
-      "type": "application/geopackage+sqlite3",
+    "data>getCountryPolygon.yml@85|region": {
+      "description": "State/province of interest",
+      "label": "Region",
+      "type": "text/csv",
       "weight": 1
     },
-    "data>getProtectedAreasWDPA.yml@93|number_pas": {
+    "data>getProtectedAreasWDPAapi.yml@112|protected_areas": {
+      "description": "Represents the map of the protected areas within the study area",
+      "label": "Polygon of protected areas",
+      "type": "application/geopackage+sqlite3",
+      "weight": 2
+    },
+    "data>getProtectedAreasWDPAapi.yml@112|number_pas": {
       "description": "Number of protected areas in the country of interest",
       "label": "Number of protected areas",
       "type": "text",
-      "weight": 2
+      "weight": 3
     },
-    "protconn_analysis>protconn_analysis.yml@95|protconn_result": {
+    "protconn_analysis>protconn_analysis.yml@87|protconn_result": {
       "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
       "label": "ProtConn results",
       "type": "text/csv",
-      "weight": 3
+      "weight": 4
     },
-    "protconn_analysis>protconn_analysis.yml@95|result_plot": {
+    "protconn_analysis>protconn_analysis.yml@87|result_plot": {
       "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
       "label": "ProtConn result plot",
       "type": "image/png",
-      "weight": 4
-    },
-    "protconn_analysis>protconn_analysis.yml@95|result_yrs_plot": {
-      "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
-      "label": "ProtConn time series plot",
-      "type": "image/png",
       "weight": 5
     },
-    "protconn_analysis>protconn_analysis.yml@95|result_yrs": {
+    "protconn_analysis>protconn_analysis.yml@87|result_yrs": {
       "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
       "label": "ProtConn time series results",
       "type": "text/csv",
       "weight": 6
     },
-    "protconn_analysis>protconn_analysis.yml@95|result_preset_plot": {
+    "protconn_analysis>protconn_analysis.yml@87|result_yrs_plot": {
+      "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
+      "label": "ProtConn time series plot",
+      "type": "image/png",
+      "weight": 7
+    },
+    "protconn_analysis>protconn_analysis.yml@87|result_preset_plot": {
       "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
       "label": "ProtConn plot with dispersal presets",
       "type": "image/png",
-      "weight": 7
+      "weight": 8
     }
   },
   "metadata": {
-    "name": "ProtConn analysis pipeline",
-    "description": "This pipeline calculates ProtConn (Protected Connected Index) from protected area polygons using data pulled from the World Database of Protected Areas or user-input polygons. The pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
+    "name": "ProtConn Analysis",
+    "description": "This pipeline calculates ProtConn (Protected Connected Index) from protected area polygons using data pulled from the World Database of Protected Areas using the WDPA API or user-input protected area polygons. The pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
     "author": [
       {
         "name": "Jory Griffith",

@@ -7,6 +7,19 @@ remotes::install_github("ropensci/rnaturalearthhires")
 
 input <- biab_inputs()
 
+# Output country and region
+if(is.null(input$country)){
+  country <- "No country chosen"
+} else {country <- input$country}
+
+biab_output("country", country)
+
+if(is.null(input$region)){
+  region <- "No region chosen"
+} else {region <- input$region}
+
+biab_output("region", region)
+
 if(is.null(input$region)){ # pull study area polygon from rnaturalearth
    # pull whole country
    print("pulling country polygon")
