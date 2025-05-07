@@ -1,7 +1,3 @@
-
-
-## Install required packages
-
 ## Load required packages
 
 library("rjson")

@@ -1029,8 +1029,10 @@
       "label": "STAC collection items",
       "type": "text[]",
       "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
+        "chelsa-clim|bio5",
+        "earthenv_landcover|class_1",
+        "earthenv_landcover|class_7",
+        "earthenv_landcover|class_3"
       ],
       "weight": 11
     },
@@ -1038,8 +1040,8 @@
       "description": "Polygon of study area used to crop output layers",
       "label": "Study area",
       "type": "application/geopackage+sqlite3",
-      "weight": 12,
-      "example": null
+      "example": null,
+      "weight": 12
     }
   },
   "outputs": {
