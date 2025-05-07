@@ -1,9 +1,7 @@
 # Script for analyzing ProtConn with the function
-#if (!"Makurhini" %in% installed.packages()[,"Package"]) remotes::install_github("connectscape/Makurhini")
 
 packagesList<-list("sf","terra", "dplyr", "ggrepel", "rjson", "Makurhini", "PROJ")
 
-#library(rmapshaper)
 # Load libraries
 lapply(packagesList, library, character.only = TRUE)  # Load libraries - packages
 
@@ -23,7 +21,7 @@ study_area <- st_transform(study_area, st_crs(input$crs))
 protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
 protected_area <- st_transform(protected_area, st_crs(protected_area))
 # remove linestrings and points
-protected_area <- protected_area[!st_geometry_type(protected_area)%in%c("LINESTRING", "POINT"),]
+protected_area <- protected_area[!st_geometry_type(protected_area)%in%c("LINESTRING", "POINT", "MULTILINESTRING"),]
 
 print(unique(st_geometry_type(protected_area)))
 
