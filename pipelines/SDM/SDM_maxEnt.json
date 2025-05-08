@@ -475,17 +475,6 @@
       }
     },
     {
-      "id": "130",
-      "type": "io",
-      "position": {
-        "x": 823,
-        "y": 892.5000000000001
-      },
-      "data": {
-        "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
-      }
-    },
-    {
       "id": "133",
       "type": "io",
       "position": {
@@ -567,6 +556,17 @@
           "q1",
           "q3"
         ]
+      }
+    },
+    {
+      "id": "139",
+      "type": "io",
+      "position": {
+        "x": 867.6026720992652,
+        "y": 968.5899435677942
+      },
+      "data": {
+        "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
       }
     }
   ],
@@ -831,34 +831,6 @@
       "id": "reactflow__edge-97rasters_selected-124"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-130bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-130proj"
-    },
-    {
-      "source": "130",
-      "sourceHandle": "rasters",
-      "target": "40",
-      "targetHandle": "raster",
-      "id": "reactflow__edge-130rasters-40raster"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-130spatial_res"
-    },
-    {
       "source": "121",
       "sourceHandle": null,
       "target": "133",
@@ -941,6 +913,34 @@
       "target": "134",
       "targetHandle": "resampling",
       "id": "reactflow__edge-138-134resampling"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-139bbox"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-57-139crs"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-139spatial_res"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "rasters",
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-139rasters-40raster"
     }
   ],
   "inputs": {
@@ -1020,9 +1020,47 @@
       "example": 1000,
       "weight": 7
     },
-    "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
+    "data>getGBIFObservations>getGBIFObservations.yml@133|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 8
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@133|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2024,
+      "weight": 9
+    },
+    "data>loadFromStac.yml@134|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "STAC URL",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 10
+    },
+    "data>loadFromStac.yml@134|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 11
+    },
+    "data>loadFromStac.yml@134|study_area": {
+      "description": "Polygon of study area used to crop output layers",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 12
+    },
+    "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
       "description": "taxonomic group for which to retrieve GBIF heatmap",
-      "label": "taxa",
+      "label": "Taxa",
       "type": "options",
       "options": [
         "reptiles",
@@ -1034,44 +1072,6 @@
         "all"
       ],
       "example": "plants",
-      "weight": 8
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@133|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
-      "type": "int",
-      "example": 2010,
-      "weight": 9
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@133|max_year": {
-      "description": "Max year observations wanted",
-      "label": "maximum year",
-      "type": "int",
-      "example": 2024,
-      "weight": 10
-    },
-    "data>loadFromStac.yml@134|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 11
-    },
-    "data>loadFromStac.yml@134|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 12
-    },
-    "data>loadFromStac.yml@134|study_area": {
-      "description": "Polygon of study area used to crop output layers",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
       "weight": 13
     }
   },
