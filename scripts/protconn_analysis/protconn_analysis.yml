@@ -9,7 +9,7 @@ inputs:
   study_area_polygon:
     label: Polygon of study area
     description: Represents the map of the study area
-    type: application/geopackage+sqlite3	
+    type: application/geopackage+sqlite3
     example: null
   protected_area_polygon:
     label: Polygon of protected areas
