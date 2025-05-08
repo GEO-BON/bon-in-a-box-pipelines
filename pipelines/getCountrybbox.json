@@ -56,6 +56,28 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "7",
+      "type": "output",
+      "position": {
+        "x": 601.9624938964844,
+        "y": 117
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "8",
+      "type": "output",
+      "position": {
+        "x": 609.9624938964844,
+        "y": 132
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -93,6 +115,20 @@
       "target": "4",
       "targetHandle": null,
       "id": "reactflow__edge-0bbox-4"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "country",
+      "target": "7",
+      "targetHandle": null,
+      "id": "reactflow__edge-1country-7"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "region",
+      "target": "8",
+      "targetHandle": null,
+      "id": "reactflow__edge-1region-8"
     }
   ],
   "inputs": {
@@ -119,17 +155,29 @@
     }
   },
   "outputs": {
+    "data>getCountryPolygon.yml@1|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@1|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 1
+    },
     "data>getCountryPolygon.yml@1|country_polygon": {
       "description": "Polygon of the chosen country or region in the crs of choice in geopackage format",
       "label": "Polygon of country or region",
       "type": "application/geopackage+sqlite3",
-      "weight": 0
+      "weight": 2
     },
     "data>getBoundingBox.yml@0|bbox": {
       "description": "boundary box around area of interest in the order of min, ymin, xmax, ymax",
       "label": "Bounding box",
       "type": "float[]",
-      "weight": 1
+      "weight": 3
     }
   },
   "metadata": {

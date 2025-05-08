@@ -9,7 +9,7 @@ author:
 
 inputs:
   taxa:
-    label: taxa
+    label: Taxa
     description: taxonomic group for which to retrieve GBIF heatmap
     type: options
     options:
@@ -22,22 +22,22 @@ inputs:
       - all
     example: plants
   bbox:
-    label: bbox
+    label: Bounding box
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297, -1971146, 1015207, 1511916]
-  proj:
-    label: projection system
+  crs:
+    label: Coordinate reference system
     description: String, projection of the rasters
     type: text
     example: "EPSG:6623"
   spatial_res:
-    label: spatial resolution
+    label: Spatial resolution
     description: Integer, spatial resolution of the rasters
     type: float
     example: 1000.0
 outputs:
   rasters:
-    label: density raster
+    label: Density raster
     description: Array with output raster path
     type: image/tiff;application=geotiff

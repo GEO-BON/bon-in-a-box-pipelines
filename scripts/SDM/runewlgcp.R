@@ -118,7 +118,7 @@ sdms <- ewlgcpSDM::map(model = m,
                     dims = c(1500, 1500),
                     region = region
 )
-
+print("made it here")
 sdms <- mask(sdms, vect(region))
 crs(sdms) <- crs(region)
 

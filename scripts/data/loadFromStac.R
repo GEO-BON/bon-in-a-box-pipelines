@@ -1,7 +1,3 @@
-
-
-## Install required packages
-
 ## Load required packages
 
 library("rjson")
@@ -30,7 +26,7 @@ gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1)
 gdalcubes::gdalcubes_options(parallel = 1)
 
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj))
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$crs))
 weight_matrix <- NULL
 
 if("resampling" %in% names(input)){
@@ -78,16 +74,15 @@ cube_args <- list(stac_path = input$stac_url,
   aggregation = aggregation,
   resampling = resampling)
 
-proj <- input$proj
+crs <- input$crs
 as_list <- FALSE
 
-mask <- input$mask
 raster_layers <- list()
 nc_names <- c()
 for (coll_it in collections_items){
     ci <- strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
     cube_args_c <- append(cube_args, list(collections=ci[1],
-                                          srs.cube = proj,
+                                          srs.cube = crs,
                                           bbox = bbox,
                                           layers=NULL,
                                           variable = NULL,
@@ -95,8 +90,9 @@ for (coll_it in collections_items){
     print(cube_args_c)
     pred <- do.call(load_cube, cube_args_c)
 
-     if(!is.null(mask)) {
-        pred <- gdalcubes::filter_geom(pred, sf::st_geometry(mask))
+     if(!is.null(input$study_area)) {
+        study_area <- st_read(input$study_area) # load study area
+        pred <- gdalcubes::filter_geom(pred, sf::st_geometry(study_area)) # crop by study area
       }
       nc_names <- cbind(nc_names,names(pred))
       if(names(pred)=='data'){
