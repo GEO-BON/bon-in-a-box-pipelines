@@ -30,7 +30,6 @@ else:
 
 print('Starting download of protected areas data for %s' % country_iso)
 
-
 all_results = gpd.GeoDataFrame()
 valid_results = True
 page = 1
