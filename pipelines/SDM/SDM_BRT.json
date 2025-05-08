@@ -743,7 +743,7 @@
     },
     "pipeline@137": {
       "label": "Environmental Predictors",
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "description": "Vector of strings, collection name followed by '|' followed by item id. View GEO BON STAC catalog items [here](https://stac.geobon.org/viewer/). The collection name and item name can be found in the URL (e.g. for \"https://stac.geobon.org/viewer/chelsa-clim/bio1\" the collection name is chelsa-clim and the item id is bio1). ",
       "type": "text[]",
       "example": [
         "chelsa-clim|bio1",

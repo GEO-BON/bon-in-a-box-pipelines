@@ -379,17 +379,6 @@
       }
     },
     {
-      "id": "130",
-      "type": "io",
-      "position": {
-        "x": 813,
-        "y": 704
-      },
-      "data": {
-        "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
-      }
-    },
-    {
       "id": "131",
       "type": "io",
       "position": {
@@ -459,8 +448,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 525,
-        "y": 86
+        "x": 468,
+        "y": 81
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -548,6 +537,17 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "145",
+      "type": "io",
+      "position": {
+        "x": 947.992570049511,
+        "y": 783.3457010527109
+      },
+      "data": {
+        "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
       }
     }
   ],
@@ -728,34 +728,6 @@
       "id": "reactflow__edge-97rasters_selected-124"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-130bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-130proj"
-    },
-    {
-      "source": "130",
-      "sourceHandle": "rasters",
-      "target": "40",
-      "targetHandle": "raster",
-      "id": "reactflow__edge-130rasters-40raster"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "130",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-130spatial_res"
-    },
-    {
       "source": "44",
       "sourceHandle": "presence_background",
       "target": "131",
@@ -922,6 +894,34 @@
       "target": "144",
       "targetHandle": null,
       "id": "reactflow__edge-140rasters-144"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "145",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-57-145crs"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "145",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-145spatial_res"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "145",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-145bbox"
+    },
+    {
+      "source": "145",
+      "sourceHandle": "rasters",
+      "target": "40",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-145rasters-40raster"
     }
   ],
   "inputs": {
@@ -987,42 +987,26 @@
       "example": 1000,
       "weight": 6
     },
-    "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
-      "description": "Taxonomic group for which to retrieve GBIF heatmap and create a target-group background",
-      "label": "Target-group taxa",
-      "type": "options",
-      "options": [
-        "reptiles",
-        "plants",
-        "mammals",
-        "birds",
-        "arthropods",
-        "amphibians",
-        "all"
-      ],
-      "example": "plants",
-      "weight": 7
-    },
     "data>getGBIFObservations>getGBIFObservations.yml@139|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 8
+      "weight": 7
     },
     "data>getGBIFObservations>getGBIFObservations.yml@139|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 9
+      "weight": 8
     },
     "data>loadFromStac.yml@140|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 10
+      "weight": 9
     },
     "data>loadFromStac.yml@140|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -1034,13 +1018,29 @@
         "earthenv_landcover|class_7",
         "earthenv_landcover|class_3"
       ],
-      "weight": 11
+      "weight": 10
     },
     "data>loadFromStac.yml@140|study_area": {
       "description": "Polygon of study area used to crop output layers",
       "label": "Study area",
       "type": "application/geopackage+sqlite3",
       "example": null,
+      "weight": 11
+    },
+    "data>GBIFHeatmapFromSTAC.yml@145|taxa": {
+      "description": "taxonomic group for which to retrieve GBIF heatmap",
+      "label": "Taxa",
+      "type": "options",
+      "options": [
+        "reptiles",
+        "plants",
+        "mammals",
+        "birds",
+        "arthropods",
+        "amphibians",
+        "all"
+      ],
+      "example": "plants",
       "weight": 12
     }
   },
