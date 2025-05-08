@@ -1,45 +1,20 @@
-script: getProtectedAreasWDPAapi.R
-name: Get protected areas WDPA API
+script: cleanWDPA.R
+name: Clean protected areas from WDPA API
 description: |
-  This script finds and saves a polygon of the country and state that is specified in the input and the polygon of 
-  protected areas in that region from the world database of protected areas (WDPA). It uses the worldpa package and the WDPA API to directly pull the latest data.
+  This script cleans WDPA data, doing THESE THINGS, and cropping the protected areas by the study area of interest.
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
 inputs:
-  country:
-    label: Country
-    description: Country of interest
-    type: text
-    example: Colombia
-  region:
-    label: State/Province
-    description: State or province of interest.Leave blank for national level calculations.
-    type: text
-    example: null
   study_area_polygon: 
     label: Study area polygon
     description: Study area of interest in a geopackage file
     type: application/geopackage+sqlite3
     example: null
-  pa_input_type:
-    label: Protected area input
-    description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons. 
-    type: options
-    options:
-      - "WDPA"
-      - "User input"
-      - "Both"
-    example: "WDPA"
   protected_area_file: 
     label: Protected areas file
     description: File path of the shapefile of protected areas (Leave blank if using data from WDPA only). Must be in geopackage format.
     type: application/geopackage+sqlite3
-    example: null
-  date_column_name:
-    label: Date column name
-    description: Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).
-    type: text
     example: null
   crs:
     label: Coordinate reference system

@@ -11,10 +11,24 @@ inputs:
     description: Represents the map of the study area
     type: application/geopackage+sqlite3
     example: null
+  pa_input_type:
+    label: Protected area input
+    description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons. 
+    type: options
+    options:
+      - "WDPA"
+      - "User input"
+      - "Both"
+    example: "WDPA"
   protected_area_polygon:
     label: Polygon of protected areas
-    description: Represents the map of the protected areas within the study area
-    type: application/geopackage+sqlite3
+    description: The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. 
+    type: application/geopackage+sqlite3[]
+    example: null
+  date_column_name:
+    label: Date column name
+    description: Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).
+    type: text
     example: null
   crs:
     label: Coordinate reference system 

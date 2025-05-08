@@ -1,12 +1,6 @@
 library(sf)
 library(rjson)
-#library(wdpar)
 library(dplyr)
-
-if (!requireNamespace("worldpa", quietly = TRUE)) {
-remotes::install_github("FRBCesab/worldpa")
-}
-library(worldpa)
 
 # Add inputs
 input <- biab_inputs()
@@ -14,26 +8,34 @@ input <- biab_inputs()
 # Get polygon for study area
 
 # Read in polygon of study area
-if(!is.null(input$region)){
-  if(is.null(input$study_area_polygon)){
-    biab_error_stop("No study area polygon found. Please provide a geopackage of the study area. To pull country or region 
-    shapefiles, connect this script to the 'Get country polygon' script")
+if(is.null(input$study_area_polygon)){
+  biab_error_stop("No study area polygon found. Please provide a geopackage of the study area. To pull country or region 
+  shapefiles, connect this script to the 'Get country polygon' script")
   }
+
 study_area <- input$study_area_polygon
 study_area <- sf::st_read(study_area) 
-}
+study_area <- st_transform(study_area, crs=input$crs)
 
+# Read in wdpa data
+protected_area <- sf::st_read(input$protected_areas)
+
+# transform
+protected_area <- st_transform(protected_areas, crs=input$crs)
 
 # # Pull data from wdpa
-if (Sys.getenv("WDPA_KEY") ==''){ # error if API key not found
-  biab_error_stop("WDPA key not found. Please make sure you have an API access key in your 'runner.env' file. 
-  To register for one, go to https://api.protectedplanet.net/request")
-}
+# if (Sys.getenv("WDPA_KEY") ==''){ # error if API key not found
+#   biab_error_stop("WDPA key not found. Please make sure you have an API access key in your 'runner.env' file. 
+#   To register for one, go to https://api.protectedplanet.net/request")
+# }
 
-countries <- get_countries(key="WDPA_KEY")
+# countries <- get_countries(key="WDPA_KEY")
 
-country_code <- countries %>% filter(country_name==input$country)
-print(country_code)
+# country_code <- countries %>% filter(country_name==input$country)
+# print(country_code)
+
+### REMOVE INVALID GEOMETRIES
+protected_area <- protected_area[!st_geometry_type(protected_area)%in%c("LINESTRING", "POINT", "MULTILINESTRING"),]
 
 print("Pulling data from WDPA")
 # get protected areas

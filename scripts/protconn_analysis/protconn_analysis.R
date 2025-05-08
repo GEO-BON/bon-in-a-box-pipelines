@@ -17,28 +17,44 @@ print("CRS:")
 print(st_crs(study_area))
 study_area <- st_transform(study_area, st_crs(input$crs))
 
-# Load protected area shapefile
+### Load protected area shapefile
+if(input$pa_input_type == "WDPA" | input$pa_input_type =="User input"){ # if only using WDPA data or user data, load that
 protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
 protected_area <- st_transform(protected_area, st_crs(protected_area))
-# remove linestrings and points
-protected_area <- protected_area[!st_geometry_type(protected_area)%in%c("LINESTRING", "POINT", "MULTILINESTRING"),]
+protected_area <- st_make_valid(protected_area)
+}
 
-print(unique(st_geometry_type(protected_area)))
+if(input$pa_input_type == "WDPA"){ # parse date column
+protected_areas_wdpa$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_wdpa$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+protected_areas_wdpa$legal_status_updated_at <- lubridate::year(protected_areas_wdpa$legal_status_updated_at)
+}
+
+if(input$pa_input_type == "User input"){ # rename and parse date column
+protected_area <- protected_area %>% rename(legal_status_updated_at = input$date_column)
+protected_areas_wdpa$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_wdpa$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+protected_areas_wdpa$legal_status_updated_at <- lubridate::year(protected_areas_wdpa$legal_status_updated_at)
+}
+
+PAs <- list()
+if(input$pa_input_type == "Both"){ # if loading both, load with array
+ for(i in 1:length(input$protected_area_polygon)){
+  protected_area <- st_read(input$protected_area_polygon[i], type=3, promote_to_multi=FALSE)
+
+  # rename column name
+  if(input$date_column %in% colnames(protected_area)){
+  protected_area <- protected_area %>% rename(legal_status_updated_at = input$date_column)
+  }
+   PAs[i] <- protected_area[,c("legal_status_updated_at", "geom")] # put into list
+ }
+
+ protected_areas <- dplyr::bind_rows(PAs) # combine
+}
 
 
-# make geometry valid
-#protected_area <- st_make_valid(protected_area)
+############## CALCULATE PROTCONN ##################
 
-#protected_area <- st_buffer(protected_area, dist = 0)
-# check if it is valid, and if not, apply buffer function
-
-# if it still isn't valid, try some other things
-#protected_area <- st_simplify(protected_area, dTolerance = 0.001)
-#protected_area <- st_set_precision(protected_area, 1e6)
-
-# print("Calculating ProtConn")
-protected_area_filt <- protected_area %>% dplyr::filter(STATUS_YR <= input$years)
-protected_area_filt <- protected_area_filt[st_geometry_type(protected_area_filt)=="POLYGON",]
+print("Calculating ProtConn")
+protected_area_filt <- protected_area %>% dplyr::filter(legal_status_updated_at <= input$years)
 
 protconn_result <- Makurhini::MK_ProtConn(
   nodes=protected_area_filt,
@@ -79,8 +95,8 @@ years <- seq(from=input$start_year, to=input$years, by=input$year_int)
 years <- c(years, input$years)
 # assign all PAs with no date to the start date for plotting
 for(i in 1:nrow(protected_area)) {
-  if(is.na(protected_area$STATUS_YR[i])){
-    protected_area$STATUS_YR[i] <- input$start_year
+  if(is.na(protected_area$legal_status_updated_at[i])){
+    protected_area$legal_status_updated_at[i] <- input$start_year
   }
 }
 # Calculate ProtConn for each specified year
@@ -90,7 +106,7 @@ protconn_ts_result <- list()
 
 for (i in 1:length(years)) {
   print(years[i])
-  protected_area_filt_yr <- protected_area %>% dplyr::filter(STATUS_YR <= years[i])
+  protected_area_filt_yr <- protected_area %>% dplyr::filter(legal_status_updated_at <= years[i])
   if(nrow(protected_area_filt_yr)==0) {
     print(paste("No protected area data from", years, "beginning calculations at first year with data"))
     next

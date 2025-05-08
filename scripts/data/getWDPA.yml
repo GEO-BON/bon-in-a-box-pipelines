@@ -9,7 +9,7 @@ external_link:
 inputs:
   country_iso:
     label: Country
-    description: ISO-3 code Country. To find the ISO-3 code of a country, you can refer to the [list provided here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
+    description: ISO-3 country code. To find the ISO-3 code of a country, you can refer to the [list provided here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
     type: text
     example: COL
 outputs:
