@@ -353,8 +353,8 @@
     }
   },
   "metadata": {
-    "name": "Zonal statistics",
-    "description": "This pipeline extracts zonal statistics for any STAC catalog item in a country or region of interest.",
+    "name": "Zonal statistics for STAC items in a region",
+    "description": "This pipeline extracts zonal statistics for STAC catalog items in a country or subnational region of interest.",
     "author": [
       {
         "name": "Jory Griffith",
