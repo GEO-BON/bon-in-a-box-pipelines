@@ -26,32 +26,39 @@ function assertSuccess {
     fi
 }
 
-echo "Updating server init script..."
-if cd .server; then
-    # Check for a branch change
-    remoteFetch="+refs/heads/$branch:refs/remotes/origin/$branch"
-    if [[ "$(git config remote.origin.fetch)" != $remoteFetch ]]; then
-        echo "Switching to branch $branch..."
+if [ -L .server ]; then
+    echo "Warning: .server is a symlink.";
+    echo "Will not attempt branch change nor checkout.";
+    cd .server;
+else
+    echo "Updating server init script..."
+    if cd .server; then
+        # Check for a branch change
+        remoteFetch="+refs/heads/$branch:refs/remotes/origin/$branch"
+        if [[ "$(git config remote.origin.fetch)" != $remoteFetch ]]; then
+            echo "Switching to branch $branch..."
 
-        # Change branch restriction of shallow repo.
-        # We are not really changing branch but just allowing to checkout individual files from that other branch.
-        git config remote.origin.fetch "$remoteFetch"
-        # Delete all except .git, . and ..
-        ls -a | grep -Ev "^(\.git|\.|\.\.)$" | xargs rm -r
+            # Change branch restriction of shallow repo.
+            # We are not really changing branch but just allowing to checkout individual files from that other branch.
+            git config remote.origin.fetch "$remoteFetch"
+            # Delete all except .git, . and ..
+            ls -a | grep -Ev "^(\.git|\.|\.\.)$" | xargs rm -r
+        fi
+
+        git fetch --no-tag --depth 1 origin $branch
+        assertSuccess
+    else
+        git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git --branch $branch --single-branch .server --depth 1
+        assertSuccess
+        cd .server
+        assertSuccess
     fi
 
-    git fetch --no-tag --depth 1 origin $branch
+    echo "Using branch $branch."
+    git checkout origin/$branch -- prod-server.sh
     assertSuccess
-else
-    git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git --branch $branch --single-branch .server --depth 1
-    assertSuccess
-    cd .server
-    assertSuccess
+
+    ./prod-server.sh checkout $branch
+
 fi
-
-echo "Using branch $branch."
-git checkout origin/$branch -- prod-server.sh
-assertSuccess
-
-./prod-server.sh checkout $branch
 ./prod-server.sh up $options
