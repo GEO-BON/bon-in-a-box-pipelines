@@ -14,7 +14,7 @@ inputs:
   protected_area_polygon:
     label: Polygon of protected areas
     description: Represents the map of the protected areas within the study area
-    type: application/geopackage+sqlite3	
+    type: application/geopackage+sqlite3
     example: null
   crs:
     label: Coordinate reference system 
