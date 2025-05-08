@@ -29,4 +29,4 @@ outputs:
     type: float[]
 references:
   - text: "Hijmans R (2025). _terra: Spatial Data Analysis_. R package version 1.8-42, <https://CRAN.R-project.org/package=terra>"
-  - doi: 10.1007/s11707-018-0725-9
+    doi: 10.1007/s11707-018-0725-9
