@@ -20,23 +20,23 @@ study_area <- st_transform(study_area, st_crs(input$crs))
 ### Load protected area shapefile
 if(input$pa_input_type == "WDPA" | input$pa_input_type =="User input"){ # if only using WDPA data or user data, load that
 protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
-protected_area <- st_transform(protected_area, st_crs(protected_area))
+protected_area <- st_transform(protected_area, st_crs(input$crs))
 protected_area <- st_make_valid(protected_area)
 }
 
 if(input$pa_input_type == "WDPA"){ # parse date column
-protected_areas_wdpa$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_wdpa$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
-protected_areas_wdpa$legal_status_updated_at <- lubridate::year(protected_areas_wdpa$legal_status_updated_at)
+protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
 }
 
 if(input$pa_input_type == "User input"){ # rename and parse date column
 protected_area <- protected_area %>% rename(legal_status_updated_at = input$date_column)
-protected_areas_wdpa$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_wdpa$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
-protected_areas_wdpa$legal_status_updated_at <- lubridate::year(protected_areas_wdpa$legal_status_updated_at)
+protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
 }
 
 PAs <- list()
-if(input$pa_input_type == "Both"){ # if loading both, load with array
+if(input$pa_input_type == "Both"){ # if using both, load with array
  for(i in 1:length(input$protected_area_polygon)){
   protected_area <- st_read(input$protected_area_polygon[i], type=3, promote_to_multi=FALSE)
 

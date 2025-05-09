@@ -41,3 +41,4 @@ conda:
     - r-remotes
     - r-dplyr
     - r-lubridate
+    - r-wdpar
