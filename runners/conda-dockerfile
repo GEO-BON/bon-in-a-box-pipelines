@@ -19,10 +19,8 @@ RUN set -ex; \
 ## Mamba installation
 RUN mamba shell init -s bash
 COPY .condarc /.condarc
-RUN chmod 777 /.condarc
-
-# Source runner.env and initialize mamba when logging in with bash
-RUN echo 'source /runner.env; eval "$(mamba shell hook --shell bash)"' > /.bashrc && chmod a+x /.bashrc
+COPY .bashrc /.bashrc
+RUN chmod 777 /.condarc && chmod 777 /.bashrc
 
 # Allow to read bashrc to execute mamba init when using docker exec as root
 # See https://stackoverflow.com/a/74017557/3519951
