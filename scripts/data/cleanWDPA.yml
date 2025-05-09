@@ -21,6 +21,20 @@ inputs:
     description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system. To find the reference system for your region visit [here](https://epsg.io/).
     type: text
     example: "EPSG:4326"
+  status_type:
+    label: PA legal status types to include
+    description: Legal status types of protected areas to include
+    type: options
+    options:
+      - Designated
+      - Inscribed
+      - Established
+    example: ["Designated", "Inscribed", "Established"]
+  exclude_unesco:
+    label: Exclude UNESCO Biosphere reserves
+    description: Check to exclude UNESCO Biosphere reserves
+    type: boolean
+    example: TRUE
 outputs:
   protected_areas:
     label: Polygon of protected areas

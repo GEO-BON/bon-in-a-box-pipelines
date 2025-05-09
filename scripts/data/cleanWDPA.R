@@ -15,25 +15,33 @@ if(is.null(input$study_area_polygon)){
   }
 
 study_area <- input$study_area_polygon
-study_area <- sf::st_read(study_area) 
+study_area <- sf::st_read(study_area, type=3, promote_to_multi=FALSE) 
 study_area <- st_transform(study_area, crs=input$crs)
 
 # Read in wdpa data
-protected_area <- sf::st_read(input$protected_area_file)
+protected_areas <- sf::st_read(input$protected_area_file)
 
 # transform
-protected_area <- st_transform(protected_area, crs=input$crs)
-
+protected_areas <- st_transform(protected_areas, crs=input$crs)
 
 ## Clean data
 print("cleaning data")
 
-print("Excluding areas based on status")
+print("Including areas based on status")
 
+protected_areas <- protected_areas %>%
+  filter(sapply(legal_status, function(x) any(grepl(input$exclude_status, x, ignore.case = TRUE))))
+
+if (input$exclude_unesco==TRUE){
+print("Removing UNESCO biosphere reserves")
+  protected_areas <- protected_areas %>% filter(grepl("UNESCO-MAB Biosphere Reserve", designation))
+}
+
+# Fixing geometries
 
 ## Crop data by study area
 print("Cropping data by study area")
-protected_area <- st_intersection(protected_area, study_area)
+protected_areas <- st_intersection(protected_areas, study_area)
 
 
 
@@ -66,74 +74,74 @@ protected_area <- st_intersection(protected_area, study_area)
 # print(country_code)
 
 ### REMOVE INVALID GEOMETRIES
-protected_area <- protected_area[!st_geometry_type(protected_area)%in%c("LINESTRING", "POINT", "MULTILINESTRING"),]
+protected_areas <- protected_areas[!st_geometry_type(protected_areas)%in%c("LINESTRING", "POINT", "MULTILINESTRING"),]
 
 #print("Pulling data from WDPA")
 # get protected areas
 # If user selects WDPA or both, load WDPA data
 # if(input$pa_input_type == "WDPA" | input$pa_input_type =="Both"){
-#   protected_areas_wdpa <- get_wdpa(country_code$country_iso3, path=outputFolder, key="WDPA_KEY")
-#   print(class(protected_areas_wdpa))
+#   protected_areass_wdpa <- get_wdpa(country_code$country_iso3, path=outputFolder, key="WDPA_KEY")
+#   print(class(protected_areass_wdpa))
 #   # Crop by region if user specifies one
 #   # transform to crs of interest
-#   protected_areas_wdpa <- st_transform(protected_areas_wdpa, crs=input$crs)
-#   protected_areas_wdpa <- st_make_valid(protected_areas_wdpa)
+#   protected_areass_wdpa <- st_transform(protected_areass_wdpa, crs=input$crs)
+#   protected_areass_wdpa <- st_make_valid(protected_areass_wdpa)
 #   if(!is.null(input$region)){
 #    print("Cropping by region")
-#     protected_areas_wdpa <- st_intersection(protected_areas_wdpa, study_area)
+#     protected_areass_wdpa <- st_intersection(protected_areass_wdpa, study_area)
 #   }
 #   # project
-#   protected_areas_wdpa <- protected_areas_wdpa %>% st_transform(input$crs)
-#   protected_areas_wdpa <- protected_areas_wdpa %>% rename(STATUS_YR = legal_status_updated)
-#   protected_areas_wdpa$STATUS_YR <- lubridate::parse_date_time(protected_areas_wdpa$STATUS_YR, orders=c("ymd", "mdy", "dmy", "y"))
-#   protected_areas_wdpa$STATUS_YR <- lubridate::year(protected_areas_wdpa$STATUS_YR)
+#   protected_areass_wdpa <- protected_areass_wdpa %>% st_transform(input$crs)
+#   protected_areass_wdpa <- protected_areass_wdpa %>% rename(STATUS_YR = legal_status_updated)
+#   protected_areass_wdpa$STATUS_YR <- lubridate::parse_date_time(protected_areass_wdpa$STATUS_YR, orders=c("ymd", "mdy", "dmy", "y"))
+#   protected_areass_wdpa$STATUS_YR <- lubridate::year(protected_areass_wdpa$STATUS_YR)
 # } 
 
 # # if user selects user input or both, load user data
 # if (input$pa_input_type == "User input" | input$pa_input_type =="Both"){
 #   # read in file
-#   protected_areas_user <- st_read(input$protected_area_file)
+#   protected_areass_user <- st_read(input$protected_areas_file)
 #   # reproject
-#   protected_areas_user <- protected_areas_user %>% st_transform(input$crs)
+#   protected_areass_user <- protected_areass_user %>% st_transform(input$crs)
 #   # error if date column name is not correct
-#   if(!input$date_column %in% colnames(protected_areas_user)){
+#   if(!input$date_column %in% colnames(protected_areass_user)){
 #   biab_error_stop("The column name for the date of establishment of the protected area was not correct.")
 #   }
 # # make sure date is in right format and extract year
-#   protected_areas_user <- protected_areas_user %>% rename(STATUS_YR = input$date_column_name)
+#   protected_areass_user <- protected_areass_user %>% rename(STATUS_YR = input$date_column_name)
 #   # extract year
-#   protected_areas_user$STATUS_YR <- lubridate::parse_date_time(protected_areas_user$STATUS_YR, orders=c("ymd", "mdy", "dmy", "y"))
-#   protected_areas_user$STATUS_YR <- lubridate::year(protected_areas_user$STATUS_YR)
+#   protected_areass_user$STATUS_YR <- lubridate::parse_date_time(protected_areass_user$STATUS_YR, orders=c("ymd", "mdy", "dmy", "y"))
+#   protected_areass_user$STATUS_YR <- lubridate::year(protected_areass_user$STATUS_YR)
 # }
 
 # # if user selects user input, use only that data
 # if(input$pa_input_type == "User input"){
-#   protected_areas <- protected_areas_user
+#   protected_areass <- protected_areass_user
 # }
 
 # # if user selects both, combine the data
 # if(input$pa_input_type == "Both"){
 #   # combine if both
-#   protected_areas <- dplyr::bind_rows(protected_areas_wdpa[,c("STATUS_YR", "geom")], protected_areas_user[,c("STATUS_YR", "geom")])
+#   protected_areass <- dplyr::bind_rows(protected_areass_wdpa[,c("STATUS_YR", "geom")], protected_areass_user[,c("STATUS_YR", "geom")])
 # } else if (input$pa_input_type == "User input") {
-#   protected_areas <- protected_areas_user
+#   protected_areass <- protected_areass_user
 # } else {
-#   protected_areas <- protected_areas_wdpa
+#   protected_areass <- protected_areass_wdpa
 # }
 
-# print(str(protected_areas))
+# print(str(protected_areass))
 
 # print("Protected areas downloaded")
 # # validte geometery
-# protected_areas <- st_make_valid(protected_areas)
+# protected_areass <- st_make_valid(protected_areass)
 
-# if(nrow(protected_areas)==0){
+# if(nrow(protected_areass)==0){
 #   stop("Protected area polygon does not exist. Check spelling of country and state names. Check if region contains protected areas")
 # }  # stop if object is empty
 # print("Protected areas downloaded")
 
 # # output number protected areas
-# number_pas <- nrow(protected_areas)
+# number_pas <- nrow(protected_areass)
 # biab_output("number_pas", number_pas)
 
 # print("done")
