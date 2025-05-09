@@ -42,3 +42,4 @@ dependencies:
   - r-tidyselect
   - r-tidyverse
   - r-stringr
+  - r-proj

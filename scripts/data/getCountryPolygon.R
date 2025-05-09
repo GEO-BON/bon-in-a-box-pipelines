@@ -3,7 +3,11 @@ library(rjson)
 library(rnaturalearth)
 library(rnaturalearthdata)
 library(dplyr)
-remotes::install_github("ropensci/rnaturalearthhires")
+library(countrycode)
+
+if (!requireNamespace("packageName", quietly = TRUE)) {
+  remotes::install_github("ropensci/rnaturalearthhires")
+}
 
 input <- biab_inputs()
 
@@ -12,18 +16,25 @@ if(is.null(input$country)){
   country <- "No country chosen"
 } else {country <- input$country}
 
-biab_output("country", country)
-
 if(is.null(input$region)){
   region <- "No region chosen"
 } else {region <- input$region}
 
 biab_output("region", region)
 
+# Change from ISO code to country namelibrary(countrycode)
+country_name <- countrycode(
+  input$country,
+  origin="iso3c",
+  destination="country.name.en")
+
+biab_output("country", country_name)
+
+
 if(is.null(input$region)){ # pull study area polygon from rnaturalearth
    # pull whole country
    print("pulling country polygon")
-    country_polygon <- ne_countries(country=input$country, type = "countries", scale = "medium")
+    country_polygon <- ne_countries(country=country_name, type = "countries", scale = "medium")
   } else {
   print("pulling region polygon")
   country_polygon <- ne_states(country=input$country)

@@ -14,7 +14,7 @@ inputs:
   study_area_polygon:
     label: Polygon of study area
     description: Polygon of the study area of interest
-    type: application/geo+json
+    type: application/geopackage+sqlite3
     example: null
   summary_statistic:
     label: Summary statistic
