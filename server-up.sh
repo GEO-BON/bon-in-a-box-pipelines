@@ -27,8 +27,7 @@ function assertSuccess {
 }
 
 if [ -L .server ]; then
-    echo "Warning: .server is a symlink.";
-    echo "Will not attempt branch change nor checkout.";
+    echo "Warning: .server is a symlink, will not attempt branch change nor checkout.";
     cd .server;
 else
     echo "Updating server init script..."
