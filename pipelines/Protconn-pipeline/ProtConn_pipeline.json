@@ -26,7 +26,7 @@
       "id": "8",
       "type": "io",
       "position": {
-        "x": 1244.2174677077523,
+        "x": 1243.0687693527552,
         "y": 127.10489117771604
       },
       "data": {
@@ -113,6 +113,28 @@
         "type": "text",
         "value": "COL"
       }
+    },
+    {
+      "id": "22",
+      "type": "output",
+      "position": {
+        "x": 855.4242793274498,
+        "y": 129.83788940737782
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "23",
+      "type": "output",
+      "position": {
+        "x": 846.4242793274498,
+        "y": 142.8378894073778
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -192,75 +214,36 @@
       "target": "8",
       "targetHandle": "protected_area_polygon",
       "id": "reactflow__edge-6protected_area_polygon-8protected_area_polygon"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "country",
+      "target": "22",
+      "targetHandle": null,
+      "id": "reactflow__edge-5country-22"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "region",
+      "target": "23",
+      "targetHandle": null,
+      "id": "reactflow__edge-5region-23"
     }
   ],
   "inputs": {
+    "pipeline@18": {
+      "label": "ISO3 country code",
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/ISO_3166-2:CA#:~:text=ISO%203166%2D2%3ACA%20is,coded%20in%20ISO%203166%2D1).",
+      "type": "text",
+      "example": "COL",
+      "weight": 0
+    },
     "data>getCountryPolygon.yml@5|region": {
       "description": "Region of interest",
       "label": "State/Province",
       "type": "text",
       "example": null,
-      "weight": 0
-    },
-    "protconn_analysis>protconn_analysis.yml@8|date_column_name": {
-      "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
-      "label": "Date column name",
-      "type": "text",
-      "example": null,
       "weight": 1
-    },
-    "protconn_analysis>protconn_analysis.yml@8|distance_threshold": {
-      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
-      "label": "Distance analysis threshold",
-      "type": "int",
-      "example": 10000,
-      "weight": 2
-    },
-    "protconn_analysis>protconn_analysis.yml@8|transboundary_distance": {
-      "description": "Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
-      "label": "Transboundary distance",
-      "type": "int",
-      "example": 0,
-      "weight": 3
-    },
-    "protconn_analysis>protconn_analysis.yml@8|distance_matrix_type": {
-      "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
-      "label": "Type of distance matrix",
-      "type": "options",
-      "options": [
-        "centroid",
-        "edge"
-      ],
-      "example": "centroid",
-      "weight": 4
-    },
-    "protconn_analysis>protconn_analysis.yml@8|years": {
-      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
-      "label": "Year for cutoff",
-      "type": "int",
-      "example": 2025,
-      "weight": 5
-    },
-    "protconn_analysis>protconn_analysis.yml@8|start_year": {
-      "description": "Year for the time series plot to start",
-      "label": "Start year",
-      "type": "int",
-      "example": 1950,
-      "weight": 6
-    },
-    "protconn_analysis>protconn_analysis.yml@8|year_int": {
-      "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
-      "label": "Year interval",
-      "type": "int",
-      "example": 20,
-      "weight": 7
-    },
-    "pipeline@9": {
-      "label": "Coordinate reference system",
-      "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
-      "type": "text",
-      "example": "EPSG:4326",
-      "weight": 8
     },
     "protconn_analysis>protconn_analysis.yml@8|pa_input_type": {
       "description": "Type of input for protected areas. Option \"WDPA\" uses protected areas from the World Database of Protected Areas. Option \"User input\" uses polygons input by the user. \"Both\" combines the WDPA protected areas and user input polygons.",
@@ -272,46 +255,111 @@
         "Both"
       ],
       "example": "WDPA",
+      "weight": 2
+    },
+    "pipeline@9": {
+      "label": "Coordinate reference system",
+      "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "type": "text",
+      "example": "EPSG:3116",
+      "weight": 3
+    },
+    "protconn_analysis>protconn_analysis.yml@8|date_column_name": {
+      "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
+      "label": "Date column name",
+      "type": "text",
+      "example": null,
+      "weight": 4
+    },
+    "protconn_analysis>protconn_analysis.yml@8|distance_threshold": {
+      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
+      "label": "Distance analysis threshold",
+      "type": "int",
+      "example": 10000,
+      "weight": 5
+    },
+    "protconn_analysis>protconn_analysis.yml@8|transboundary_distance": {
+      "description": "Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
+      "label": "Transboundary distance",
+      "type": "int",
+      "example": 0,
+      "weight": 6
+    },
+    "protconn_analysis>protconn_analysis.yml@8|distance_matrix_type": {
+      "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
+      "label": "Type of distance matrix",
+      "type": "options",
+      "options": [
+        "centroid",
+        "edge"
+      ],
+      "example": "centroid",
+      "weight": 7
+    },
+    "protconn_analysis>protconn_analysis.yml@8|years": {
+      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
+      "label": "Year for cutoff",
+      "type": "int",
+      "example": 2025,
+      "weight": 8
+    },
+    "protconn_analysis>protconn_analysis.yml@8|start_year": {
+      "description": "Year for the time series plot to start",
+      "label": "Start year",
+      "type": "int",
+      "example": 1950,
       "weight": 9
     },
-    "pipeline@18": {
-      "label": "ISO3 country code",
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/ISO_3166-2:CA#:~:text=ISO%203166%2D2%3ACA%20is,coded%20in%20ISO%203166%2D1).",
-      "type": "text",
-      "example": "COL",
+    "protconn_analysis>protconn_analysis.yml@8|year_int": {
+      "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
+      "label": "Year interval",
+      "type": "int",
+      "example": 20,
       "weight": 10
     }
   },
   "outputs": {
+    "data>getCountryPolygon.yml@5|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@5|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 1
+    },
     "protconn_analysis>protconn_analysis.yml@8|protconn_result": {
       "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
       "label": "ProtConn results",
       "type": "text/csv",
-      "weight": 0
+      "weight": 2
     },
     "protconn_analysis>protconn_analysis.yml@8|result_plot": {
       "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
       "label": "ProtConn result plot",
       "type": "image/png",
-      "weight": 1
+      "weight": 3
     },
     "protconn_analysis>protconn_analysis.yml@8|result_yrs_plot": {
       "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
       "label": "ProtConn time series plot",
       "type": "image/png",
-      "weight": 2
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@8|result_yrs": {
       "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
       "label": "ProtConn time series results",
       "type": "text/csv",
-      "weight": 3
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@8|result_preset_plot": {
       "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
       "label": "ProtConn plot with dispersal presets",
       "type": "image/png",
-      "weight": 4
+      "weight": 6
     }
   },
   "metadata": {
