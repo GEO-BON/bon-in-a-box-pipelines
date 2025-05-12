@@ -24,15 +24,35 @@ inputs:
   status_type:
     label: PA legal status types to include
     description: Legal status types of protected areas to include
-    type: options
+    type: options[]
     options:
-      - Designated
-      - Inscribed
-      - Established
+      - "Designated"
+      - "Inscribed"
+      - "Established"
     example: ["Designated", "Inscribed", "Established"]
   exclude_unesco:
     label: Exclude UNESCO Biosphere reserves
     description: Check to exclude UNESCO Biosphere reserves
+    type: boolean
+    example: TRUE
+  buffer_points:
+    label: Buffer protected area points
+    description: |
+      Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.
+      If checked, this will create a circular protected area around the reported point that is equal to the reported area. 
+      If there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.
+    type: boolean
+    example: FALSE
+  include_marine:
+    label: Include marine protected areas
+    description: Whether to include marine protected areas or filter them out
+    type: boolean
+    example: TRUE
+  include_oecm:
+    label: Include OECMs
+    description: |
+      Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated  
+      protected areas but are still achieving conservation outcomes. 
     type: boolean
     example: TRUE
 outputs:
@@ -40,10 +60,6 @@ outputs:
     label: Polygon of protected areas
     description: Represents the map of the protected areas within the study area
     type: application/geopackage+sqlite3
-  number_pas: 
-    label: Number of protected areas
-    description: Number of protected areas in the country of interest
-    type: text
 conda:
   channels:
     - conda-forge
