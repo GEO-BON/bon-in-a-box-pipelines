@@ -6,7 +6,7 @@
 
 # Param --offline to start the server without attempting to pull the new server.
 if [[ "--offline" == "$1" ]] ; then
-    ./.server/prod-server.sh command up $options
+    ./.server/prod-server.sh command up --no-recreate
     exit
 fi
 
