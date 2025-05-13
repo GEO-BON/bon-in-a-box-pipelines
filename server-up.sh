@@ -14,10 +14,6 @@ fi
 branch=${1:-"main"}
 shift
 
-# Additionnal optional args will be appended to the docker compose up command.
-# Typical use is to give a specific service name to (re)start only that one.
-options=$@
-
 RED="\033[31m"
 ENDCOLOR="\033[0m"
 function assertSuccess {
@@ -60,4 +56,5 @@ else
     ./prod-server.sh checkout $branch
 
 fi
-./prod-server.sh up $options
+
+./prod-server.sh up
