@@ -17,7 +17,7 @@ if(is.null(input$study_area_polygon)){
 study_area <- input$study_area_polygon
 study_area <- sf::st_read(study_area, type=3, promote_to_multi=FALSE) 
 study_area <- st_transform(study_area, crs=input$crs)
-stidy_area <- st_make_valid(study_area)
+study_area <- st_make_valid(study_area)
 
 # Read in wdpa data
 protected_areas <- sf::st_read(input$protected_area_file, type=3, promote_to_multi=FALSE)

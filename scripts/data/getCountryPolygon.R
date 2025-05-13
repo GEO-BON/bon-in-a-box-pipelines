@@ -34,10 +34,10 @@ biab_output("country", country_name)
 if(is.null(input$region)){ # pull study area polygon from rnaturalearth
    # pull whole country
    print("pulling country polygon")
-    country_polygon <- ne_countries(country=country_name, type = "countries", scale = "medium")
+    country_polygon <- ne_countries(country=country_name, type = "countries", scale = 10)
   } else {
   print("pulling region polygon")
-  country_polygon <- ne_states(country=input$country)
+  country_polygon <- ne_states(country=input$country, scale = 10)
   country_polygon <- country_polygon %>% filter(name==input$region)
   }
 
