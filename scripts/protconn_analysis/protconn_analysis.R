@@ -22,7 +22,11 @@ if(input$pa_input_type == "WDPA"){ # if only using WDPA data, load that
 protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
 protected_area <- st_transform(protected_area, st_crs(input$crs))
 protected_area <- st_make_valid(protected_area)
+protected_area$geometry_type <- st_geometry_type(protected_area)
+protected_area <- protected_area[st_geometry_type(protected_area) == "POLYGON",]
+print(unique(st_geometry_type(protected_area)))
 }
+
 
 if(input$pa_input_type == "WDPA"){ # parse date column
 protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
@@ -56,6 +60,11 @@ if(input$pa_input_type == "Both"){ # if using both, load with array
 ############## CALCULATE PROTCONN ##################
 
 print("Calculating ProtConn")
+
+if(nrow(protected_area)<2){
+biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
+}
+
 protected_area_filt <- protected_area %>% dplyr::filter(legal_status_updated_at <= input$years)
 
 protconn_result <- Makurhini::MK_ProtConn(
@@ -93,14 +102,17 @@ biab_output("result_plot", result_plot_path)
 
 # Change in protection over time
 # Sequence with start year by interval
+
 years <- seq(from=input$start_year, to=input$years, by=input$year_int)
 years <- c(years, input$years)
 # assign all PAs with no date to the start date for plotting
 for(i in 1:nrow(protected_area)) {
   if(is.na(protected_area$legal_status_updated_at[i])){
+    print("fixing date")
     protected_area$legal_status_updated_at[i] <- input$start_year
   }
 }
+
 # Calculate ProtConn for each specified year
 print("Calculating ProtConn time series")
 
@@ -109,8 +121,8 @@ protconn_ts_result <- list()
 for (i in 1:length(years)) {
   print(years[i])
   protected_area_filt_yr <- protected_area %>% dplyr::filter(legal_status_updated_at <= years[i])
-  if(nrow(protected_area_filt_yr)==0) {
-    print(paste("No protected area data from", years, "beginning calculations at first year with data"))
+  if((nrow(protected_area_filt_yr))<2) {
+    print(paste("Not enough protected area data from", years, "beginning calculations at first year with data"))
     next
   } else {
     protconn_result <- Makurhini::MK_ProtConn(
