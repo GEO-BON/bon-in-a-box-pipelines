@@ -10,6 +10,12 @@ if [[ "--offline" == "$1" ]] ; then
     exit
 fi
 
+# Param --clean to remove all containers and volumes
+if [[ "clean" == "$1" ]] ; then
+    ./.server/prod-server.sh clean
+    exit
+fi
+
 # Optional arg: branch name of server repo, default "main"
 branch=${1:-"main"}
 shift
