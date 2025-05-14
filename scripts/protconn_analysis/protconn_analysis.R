@@ -22,9 +22,9 @@ if(input$pa_input_type == "WDPA"){ # if only using WDPA data, load that
 protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
 protected_area <- st_transform(protected_area, st_crs(input$crs))
 protected_area <- st_make_valid(protected_area)
-protected_area$geometry_type <- st_geometry_type(protected_area)
-protected_area <- protected_area[st_geometry_type(protected_area) == "POLYGON",]
-print(unique(st_geometry_type(protected_area)))
+#protected_area$geometry_type <- st_geometry_type(protected_area)
+#protected_area <- protected_area[st_geometry_type(protected_area) == "POLYGON",]
+#print(unique(st_geometry_type(protected_area)))
 }
 
 

@@ -4,8 +4,8 @@
       "id": "5",
       "type": "io",
       "position": {
-        "x": 239.36248779296875,
-        "y": 124.94869377736029
+        "x": 102.13366507258775,
+        "y": 101.19755138344817
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -26,8 +26,8 @@
       "id": "8",
       "type": "io",
       "position": {
-        "x": 1243.0687693527552,
-        "y": 127.10489117771604
+        "x": 1376.3390683408174,
+        "y": 135.0219386423534
       },
       "data": {
         "descriptionFile": "protconn_analysis>protconn_analysis.yml"
@@ -135,6 +135,39 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "24",
+      "type": "io",
+      "position": {
+        "x": 710.8841787378551,
+        "y": 403.68986661295844
+      },
+      "data": {
+        "descriptionFile": "data>cleanWDPA.yml"
+      }
+    },
+    {
+      "id": "25",
+      "type": "output",
+      "position": {
+        "x": 1507.9279216948844,
+        "y": 425.81804436292236
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 697.7500644803273,
+        "y": 175.11154131607248
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -209,13 +242,6 @@
       "id": "reactflow__edge-18-6country_iso"
     },
     {
-      "source": "6",
-      "sourceHandle": "protected_area_polygon",
-      "target": "8",
-      "targetHandle": "protected_area_polygon",
-      "id": "reactflow__edge-6protected_area_polygon-8protected_area_polygon"
-    },
-    {
       "source": "5",
       "sourceHandle": "country",
       "target": "22",
@@ -228,6 +254,41 @@
       "target": "23",
       "targetHandle": null,
       "id": "reactflow__edge-5region-23"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "protected_area_polygon",
+      "target": "24",
+      "targetHandle": "protected_area_file",
+      "id": "reactflow__edge-6protected_area_polygon-24protected_area_file"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "country_polygon",
+      "target": "24",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-5country_polygon-24study_area_polygon"
+    },
+    {
+      "source": "24",
+      "sourceHandle": "protected_areas",
+      "target": "25",
+      "targetHandle": null,
+      "id": "reactflow__edge-24protected_areas-25"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "country_polygon",
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-5country_polygon-26"
+    },
+    {
+      "source": "24",
+      "sourceHandle": "protected_areas",
+      "target": "8",
+      "targetHandle": "protected_area_polygon",
+      "id": "reactflow__edge-24protected_areas-8protected_area_polygon"
     }
   ],
   "inputs": {
@@ -316,6 +377,57 @@
       "type": "int",
       "example": 20,
       "weight": 10
+    },
+    "data>cleanWDPA.yml@24|crs": {
+      "description": "Coordinate reference system for the study area and protected areas. Must be in a projected reference system. To find the reference system for your region visit [here](https://epsg.io/).",
+      "label": "Coordinate reference system",
+      "type": "text",
+      "example": "EPSG:4326",
+      "weight": 11
+    },
+    "data>cleanWDPA.yml@24|status_type": {
+      "description": "Legal status types of protected areas to include",
+      "label": "PA legal status types to include",
+      "type": "options[]",
+      "options": [
+        "Designated",
+        "Inscribed",
+        "Established"
+      ],
+      "example": [
+        "Designated",
+        "Inscribed",
+        "Established"
+      ],
+      "weight": 12
+    },
+    "data>cleanWDPA.yml@24|exclude_unesco": {
+      "description": "Check to exclude UNESCO Biosphere reserves",
+      "label": "Exclude UNESCO Biosphere reserves",
+      "type": "boolean",
+      "example": true,
+      "weight": 13
+    },
+    "data>cleanWDPA.yml@24|buffer_points": {
+      "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area. \nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
+      "label": "Buffer protected area points",
+      "type": "boolean",
+      "example": false,
+      "weight": 14
+    },
+    "data>cleanWDPA.yml@24|include_marine": {
+      "description": "Whether to include marine protected areas or filter them out",
+      "label": "Include marine protected areas",
+      "type": "boolean",
+      "example": true,
+      "weight": 15
+    },
+    "data>cleanWDPA.yml@24|include_oecm": {
+      "description": "Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated  \nprotected areas but are still achieving conservation outcomes. \n",
+      "label": "Include OECMs",
+      "type": "boolean",
+      "example": true,
+      "weight": 16
     }
   },
   "outputs": {
@@ -360,6 +472,18 @@
       "label": "ProtConn plot with dispersal presets",
       "type": "image/png",
       "weight": 6
+    },
+    "data>cleanWDPA.yml@24|protected_areas": {
+      "description": "Represents the map of the protected areas within the study area",
+      "label": "Polygon of protected areas",
+      "type": "application/geopackage+sqlite3",
+      "weight": 7
+    },
+    "data>getCountryPolygon.yml@5|country_polygon": {
+      "description": "Polygon of the chosen country or region in the crs of choice in geopackage format",
+      "label": "Polygon of country or region",
+      "type": "application/geopackage+sqlite3",
+      "weight": 8
     }
   },
   "metadata": {
