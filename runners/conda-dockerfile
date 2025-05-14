@@ -34,9 +34,9 @@ RUN set -ex; \
     mkdir /.cache && chmod a+w /.cache; \
     mkdir /.config && chmod a+w /.config
 
-# These will be mounted as volumes. We need to create them and set the permissions.
-RUN mkdir /r-libs-user && chmod a+w /r-libs-user; \
-    mkdir /conda-env-yml && chmod a+w /conda-env-yml;
+# conda-env-yml will be mounted as volume to store known conda environments.
+# We need to create it and set the permissions.
+RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml;
 
 # Load R base environment
 ADD ./r-environment.yml /data/r-environment.yml
