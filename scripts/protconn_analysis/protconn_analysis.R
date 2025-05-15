@@ -22,7 +22,6 @@ if(input$pa_input_type == "WDPA"){ # if only using WDPA data, load that
 protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
 protected_area <- st_transform(protected_area, st_crs(input$crs))
 protected_area <- st_make_valid(protected_area)
-protected_area <- st_cast(protected_area, "POLYGON", group_or_split=TRUE)
 # fix date
 protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
 protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
