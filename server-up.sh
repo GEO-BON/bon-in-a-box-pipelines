@@ -3,23 +3,6 @@
 # Start the BON in a Box microservices locally.
 # The UI can then be accessed throught the localhost of this machine.
 
-
-# Param --offline to start the server without attempting to pull the new server.
-if [[ "--offline" == "$1" ]] ; then
-    ./.server/prod-server.sh command up --no-recreate
-    exit
-fi
-
-# Param --clean to remove all containers and volumes
-if [[ "clean" == "$1" ]] ; then
-    ./.server/prod-server.sh clean
-    exit
-fi
-
-# Optional arg: branch name of server repo, default "main"
-branch=${1:-"main"}
-shift
-
 RED="\033[31m"
 ENDCOLOR="\033[0m"
 function assertSuccess {
@@ -27,6 +10,45 @@ function assertSuccess {
         echo -e "${RED}FAILED${ENDCOLOR}" ; exit 1
     fi
 }
+
+offline=false
+while (( $# > 0 )) ; do
+  case $1 in
+    -c|--clean) ./.server/prod-server.sh clean ;;
+    --offline) offline=true ;;
+    -h|--help)
+        echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH]"
+        echo
+        echo "Starts the BON in a Box server locally."
+        echo "The server will be available at http://localhost."
+        echo
+        echo "OPTIONS:"
+        echo "  -h, --help          Display this help"
+        echo "  -c, --clean         Discards the docker containers before starting the server."
+        echo "                      Warning: any dependency or conda environment installed at runtime will be lost."
+        echo "      --offline       Run the existing version of the server. "
+        echo "                      Will not attempt to pull the latest version or the containers nor server configuration."
+        echo
+        echo "GIT BRANCH:           Refers to the git branch of the server, on https://github.com/GEO-BON/bon-in-a-box-pipeline-engine."
+        echo "                      The branch must be available on the docker hub. It is the case for main, edge, and *staging branches."
+        echo "                      Default: main"
+        echo
+        exit 0 ;;
+    *) break ;;
+  esac
+
+  shift
+done
+
+if [ "$offline" = true ]; then
+    echo "Running server in offline mode."
+    ./.server/prod-server.sh command up --no-recreate
+    exit 0
+fi
+
+# Optional arg: branch name of server repo, default "main"
+branch=${1:-"main"}
+
 
 if [ -L .server ]; then
     echo "Warning: .server is a symlink, will not attempt branch change nor checkout.";
