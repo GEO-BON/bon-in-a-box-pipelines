@@ -73,20 +73,6 @@ if(input$pa_input_type == "Both"){
 
 print(nrow(protected_area))
 
-# if(input$pa_input_type == "Both"){ # if using both, load with array
-# PAs <- list()
-#  for(i in 1:length(input$protected_area_polygon)){
-#   protected_area <- st_read(input$protected_area_polygon[i], type=3, promote_to_multi=FALSE)
-
-#   # rename column name
-#   if(input$date_column %in% colnames(protected_area)){
-#   protected_area <- protected_area %>% rename(legal_status_updated_at = input$date_column)
-#   }
-#    PAs[i] <- protected_area[,c("legal_status_updated_at", "geom")] # put into list
-#  }
-
-#  protected_areas <- dplyr::bind_rows(PAs) # combine
-# }
 
 
 ############## CALCULATE PROTCONN ##################
