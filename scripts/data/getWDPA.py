@@ -17,9 +17,8 @@ if token == '' or token is None or len(token) == 0:
     biab_error_stop('API Key is null')
 
 country_iso = inputs['country_iso']
-error=[]
 if country_iso == '' or country_iso is None or len(country_iso) == 0:
-    error.append('Please specify a valid country ISO code')
+    biab_error_stop('Please specify a ISO country code')
 
 request_url = "https://api.protectedplanet.net/v3/"
 
@@ -34,10 +33,11 @@ try:
     httpResults = session.get("%s/countries/%s" % (request_url, country_iso), params=params)
     results = httpResults.json()
 except:
-    biab_error_stop('Error: Could not retrieve country bounding box')
+    print('WDPA API /countries returned error code %s' % httpResults)
+    biab_error_stop('Error: Could not retrieve country bounding box from WDPA.')
 
 if 'error' in results:
-    error.append('ISO Code not found: %s' % results['error'])
+    biab_error_stop('ISO Code not found: %s' % country_iso)
 else:
     country_gpd = gpd.GeoDataFrame.from_features([results['country']['geojson']], crs='EPSG:4326')
     outfile = ("%s/%s_bounding_box.gpkg") % (output_folder, country_iso)
@@ -54,7 +54,13 @@ per_page = 50
 total = 0
 while valid_results: 
     params={'country': country_iso, 'page': page, "per_page": per_page, "with_geometry": "true", "token": token }
-    results = session.get("%s/protected_areas/search" % request_url, params=params).json()
+    try:
+        httpResults = session.get("%s/protected_areas/search" % request_url, params=params)
+        results = httpResults.json()
+    except:
+        print('WDPA API /protected_areas returned error code %s' % httpResults)
+        biab_error_stop('Error: Could not retrieve protected areas from WDPA.')
+
     if 'protected_areas' in results and len(results['protected_areas']) > 0:
         pas = results['protected_areas']
         if len(pas) > 0:
@@ -74,14 +80,8 @@ out={}
 print(all_results.geometry.geom_type.unique())
 print(len(all_results))
 print(all_results)
-if (len(error)==0):
-    outfile = ("%s/wdpa.gpkg") % (output_folder)
-    all_results.to_file(outfile, driver='GPKG', layer='protected_areas')
-else:
-    out['error']="; ".join(error)
 
-if 'error' in out and out['error']:
-	print(out['error'])
-	biab_output("error",out['error'] )
-else:
-    biab_output("protected_area_polygon",outfile)
+outfile = ("%s/wdpa.gpkg") % (output_folder)
+all_results.to_file(outfile, driver='GPKG', layer='protected_areas')
+
+biab_output("protected_area_polygon",outfile)
