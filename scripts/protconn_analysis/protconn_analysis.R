@@ -22,16 +22,17 @@ if(input$pa_input_type == "WDPA"){ # if only using WDPA data, load that
 protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
 protected_area <- st_transform(protected_area, st_crs(input$crs))
 protected_area <- st_make_valid(protected_area)
-#protected_area$geometry_type <- st_geometry_type(protected_area)
-#protected_area <- protected_area[st_geometry_type(protected_area) == "POLYGON",]
-#print(unique(st_geometry_type(protected_area)))
-}
-
-
-if(input$pa_input_type == "WDPA"){ # parse date column
+protected_area <- st_cast(protected_area, "POLYGON", group_or_split=TRUE)
+# fix date
 protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
 protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
+
+print("Protected area geometry:")
+print(unique(st_geometry_type(protected_area)))
 }
+
+print(nrow(protected_area))
+print(protected_area)
 
 if(input$pa_input_type == "User input"){ # rename and parse date column
 protected_area_user <- input$protected_area_polygon %>% filter(grepl("userdata", input$protected_area_polygon)) # make sure it reads the userdata file path
@@ -41,8 +42,9 @@ protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_a
 protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
 }
 
-PAs <- list()
+
 if(input$pa_input_type == "Both"){ # if using both, load with array
+PAs <- list()
  for(i in 1:length(input$protected_area_polygon)){
   protected_area <- st_read(input$protected_area_polygon[i], type=3, promote_to_multi=FALSE)
 
@@ -63,12 +65,10 @@ print("Calculating ProtConn")
 
 if(nrow(protected_area)<2){
 biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
-}
-
-protected_area_filt <- protected_area %>% dplyr::filter(legal_status_updated_at <= input$years)
+} 
 
 protconn_result <- Makurhini::MK_ProtConn(
-  nodes=protected_area_filt,
+  nodes=protected_area,
   region=study_area,
   area_unit="m2",
   distance=list(type=input$distance_matrix_type),
@@ -164,19 +164,19 @@ ggsave(result_yrs_plot_path, result_yrs_plot)
 biab_output("result_yrs_plot", result_yrs_plot_path)
 
 print("Calculating ProtConn for three most common dispersal distances")
-protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
 transboundary=input$transboundary_distance, distance_thresholds=c(1000))
 protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2,3,4),c(3,4)]
 protconn_result_1km[is.na(protconn_result_1km)] <- 0
 protconn_result_1km$distance <- "1 km"
 
-protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
 transboundary=input$transboundary_distance, distance_thresholds=c(10000))
 protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
 protconn_result_10km[is.na(protconn_result_10km)] <- 0
 protconn_result_10km$distance <- "10 km"
 
-protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area_filt, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
 transboundary=input$transboundary_distance, distance_thresholds=c(100000))
 protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
 protconn_result_100km[is.na(protconn_result_100km)] <- 0
