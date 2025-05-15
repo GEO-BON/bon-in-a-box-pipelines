@@ -102,19 +102,6 @@
       }
     },
     {
-      "id": "18",
-      "type": "userInput",
-      "position": {
-        "x": -526.3999938964844,
-        "y": 105.79999542236328
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "COL"
-      }
-    },
-    {
       "id": "22",
       "type": "output",
       "position": {
@@ -167,6 +154,19 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "27",
+      "type": "userInput",
+      "position": {
+        "x": -795.0375061035156,
+        "y": 68.79999542236328
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "COL"
       }
     }
   ],
@@ -228,20 +228,6 @@
       "id": "reactflow__edge-8result_preset_plot-14"
     },
     {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "country",
-      "id": "reactflow__edge-18-5country"
-    },
-    {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "6",
-      "targetHandle": "country_iso",
-      "id": "reactflow__edge-18-6country_iso"
-    },
-    {
       "source": "5",
       "sourceHandle": "country",
       "target": "22",
@@ -289,12 +275,26 @@
       "target": "8",
       "targetHandle": "protected_area_polygon",
       "id": "reactflow__edge-24protected_areas-8protected_area_polygon"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "5",
+      "targetHandle": "country",
+      "id": "reactflow__edge-27-5country"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "country_iso",
+      "id": "reactflow__edge-27-6country_iso"
     }
   ],
   "inputs": {
-    "pipeline@18": {
+    "pipeline@27": {
       "label": "ISO3 country code",
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/ISO_3166-2:CA#:~:text=ISO%203166%2D2%3ACA%20is,coded%20in%20ISO%203166%2D1).",
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
       "type": "text",
       "example": "COL",
       "weight": 0
