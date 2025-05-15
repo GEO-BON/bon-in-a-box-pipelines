@@ -3,10 +3,19 @@ import pandas as pd
 import geopandas as gpd
 import os
 from copy import deepcopy
+import requests
+from requests.adapters import HTTPAdapter
 
 inputs = biab_inputs()
 
-token = os.environ['WDPA_API_KEY']
+try:
+    token = os.environ['WDPA_API_KEY']
+except:
+    biab_error_stop('API Key not found. Make sure WDPA_API_KEY is properly defined in runner.env')
+
+if token == '' or token is None or len(token) == 0:
+    biab_error_stop('API Key is null')
+
 country_iso = inputs['country_iso']
 error=[]
 if country_iso == '' or country_iso is None or len(country_iso) == 0:
@@ -14,11 +23,19 @@ if country_iso == '' or country_iso is None or len(country_iso) == 0:
 
 request_url = "https://api.protectedplanet.net/v3/"
 
+adapter = HTTPAdapter(max_retries=5)
 session = requests.Session()
+session.mount("http://", adapter)
+session.mount("https://", adapter)
 
-print('Starting download of country bounding box data for %s' % country_iso)
+print('Starting download of country bounding box data for %s' % country_iso, flush=True)
 params={"token": token }
-results = requests.get("%s/countries/%s" % (request_url, country_iso), params=params).json()
+try:
+    httpResults = session.get("%s/countries/%s" % (request_url, country_iso), params=params)
+    results = httpResults.json()
+except:
+    biab_error_stop('Error: Could not retrieve country bounding box')
+
 if 'error' in results:
     error.append('ISO Code not found: %s' % results['error'])
 else:
@@ -37,7 +54,7 @@ per_page = 50
 total = 0
 while valid_results: 
     params={'country': country_iso, 'page': page, "per_page": per_page, "with_geometry": "true", "token": token }
-    results = requests.get("%s/protected_areas/search" % request_url, params=params).json()
+    results = session.get("%s/protected_areas/search" % request_url, params=params).json()
     if 'protected_areas' in results and len(results['protected_areas']) > 0:
         pas = results['protected_areas']
         if len(pas) > 0:
@@ -45,7 +62,7 @@ while valid_results:
                 props = deepcopy(pas[i])
                 del(props['geojson'])
                 pas[i]['geojson']['properties'] = props
-                df = gpd.GeoDataFrame.from_features([pas[i]['geojson']], crs='EPSG:4326')
+                df = gpd.GeoDataFrame.from_features([pas[i]['geojson']], crs='EPSG:4326').explode()
                 all_results = pd.concat([all_results, df])
     else:
         valid_results = False
@@ -54,6 +71,8 @@ while valid_results:
     page += 1
 
 out={}
+print(all_results.geometry.geom_type.unique())
+print(len(all_results))
 print(all_results)
 if (len(error)==0):
     outfile = ("%s/wdpa.gpkg") % (output_folder)
