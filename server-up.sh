@@ -42,7 +42,7 @@ done
 
 if [ "$offline" = true ]; then
     echo "Running server in offline mode."
-    ./.server/prod-server.sh command up --no-recreate
+    ./.server/prod-server.sh command up -d --no-recreate
     exit 0
 fi
 
