@@ -82,11 +82,11 @@ if(isFALSE(input$include_oecm)){
 
 ## Crop data by study area
 print("Cropping data by study area")
-protected_areas <- st_intersection(protected_areas, study_area)
+protected_areas_clean <- st_intersection(protected_areas, study_area)
 
-protected_areas_path <- file.path(outputFolder, "protected_areas.gpkg")
-sf::st_write(protected_areas, protected_areas_path, delete_dsn = T)
-biab_output("protected_areas", protected_areas_path)
+protected_areas_clean_path <- file.path(outputFolder, "protected_areas_clean.gpkg")
+sf::st_write(protected_areas_clean, protected_areas_clean_path, delete_dsn = T)
+biab_output("protected_areas_clean", protected_areas_clean_path)
 
 
 

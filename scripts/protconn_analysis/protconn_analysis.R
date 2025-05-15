@@ -18,10 +18,13 @@ print(st_crs(study_area))
 study_area <- st_transform(study_area, st_crs(input$crs))
 
 ### Load protected area shapefile
-if(input$pa_input_type == "WDPA"){ # if only using WDPA data, load that
-protected_area <- st_read(input$protected_area_polygon, type=3, promote_to_multi=FALSE) # input as polygons
+
+if(input$pa_input_type == "WDPA"|input$pa_input_type == "Both"){ # if using WDPA data, load that
+
+protected_area <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
+print(protected_area)
+protected_area <- st_read(protected_area, type=3, promote_to_multi=FALSE) # input as polygons
 protected_area <- st_transform(protected_area, st_crs(input$crs))
-protected_area <- st_make_valid(protected_area)
 # fix date
 protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
 protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
@@ -30,32 +33,60 @@ print("Protected area geometry:")
 print(unique(st_geometry_type(protected_area)))
 }
 
+
+if(input$pa_input_type == "User input"|input$pa_input_type =="Both"){ # rename and parse date column
+protected_area_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)] # make sure it reads the userdata file path
+protected_area_user <- st_read(protected_area_user, type=3, promote_to_multi=FALSE) # load
+print(protected_area_user)
+
+# fix geometry
+# remove points
+protected_area_user <- protected_area_user[!st_geometry_type(protected_area_user)%in% c("POINT","MULTIPOINT"),]
+# turning multipolygons to polygons
+if (any(st_geometry_type(protected_area_user) %in% "MULTIPOLYGON")){
+  print("Turning multipolygons into polygons")
+  multi <- protected_area_user[st_geometry_type(protected_area_user)=="MULTIPOLYGON",]
+  multi <- st_cast(multi, to="POLYGON", group_or_split=TRUE)
+  poly <- protected_area_user[st_geometry_type(protected_area_user)=="POLYGON",]
+  protected_area_user <- rbind(poly, multi)
+}
+
+if(is.null(input$date_column)){
+  biab_error_stop("Please specify a date column name for the protected areas file.")
+}
+protected_area_user <- protected_area_user %>% rename(legal_status_updated_at = input$date_column)
+protected_area_user$legal_status_updated_at <- lubridate::parse_date_time(protected_area_user$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+protected_area_user$legal_status_updated_at <- lubridate::year(protected_area_user$legal_status_updated_at)
+}
+
+if(input$pa_input_type == "User input"){
+  protected_area <- protected_area_user
+}
+
+if(input$pa_input_type == "Both"){
+  print("Combining user defined protected areas with WDPA data")
+  protected_area <- protected_area[,c("legal_status_updated_at", "geom")]
+  protected_area_user <- protected_area_user[,c("legal_status_updated_at", "geom")]
+
+  protected_area <- rbind(protected_area, protected_area_user)
+}
+
 print(nrow(protected_area))
-print(protected_area)
 
-if(input$pa_input_type == "User input"){ # rename and parse date column
-protected_area_user <- input$protected_area_polygon %>% filter(grepl("userdata", input$protected_area_polygon)) # make sure it reads the userdata file path
-protected_area <- st_read(protected_area_user, type=3, promote_to_multi=FALSE) # load
-protected_area <- protected_area %>% rename(legal_status_updated_at = input$date_column)
-protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
-protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
-}
+# if(input$pa_input_type == "Both"){ # if using both, load with array
+# PAs <- list()
+#  for(i in 1:length(input$protected_area_polygon)){
+#   protected_area <- st_read(input$protected_area_polygon[i], type=3, promote_to_multi=FALSE)
 
+#   # rename column name
+#   if(input$date_column %in% colnames(protected_area)){
+#   protected_area <- protected_area %>% rename(legal_status_updated_at = input$date_column)
+#   }
+#    PAs[i] <- protected_area[,c("legal_status_updated_at", "geom")] # put into list
+#  }
 
-if(input$pa_input_type == "Both"){ # if using both, load with array
-PAs <- list()
- for(i in 1:length(input$protected_area_polygon)){
-  protected_area <- st_read(input$protected_area_polygon[i], type=3, promote_to_multi=FALSE)
-
-  # rename column name
-  if(input$date_column %in% colnames(protected_area)){
-  protected_area <- protected_area %>% rename(legal_status_updated_at = input$date_column)
-  }
-   PAs[i] <- protected_area[,c("legal_status_updated_at", "geom")] # put into list
- }
-
- protected_areas <- dplyr::bind_rows(PAs) # combine
-}
+#  protected_areas <- dplyr::bind_rows(PAs) # combine
+# }
 
 
 ############## CALCULATE PROTCONN ##################
