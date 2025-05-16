@@ -381,9 +381,7 @@
       "label": "Polygon of protected areas",
       "description": "The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script.",
       "type": "application/geopackage+sqlite3[]",
-      "example": [
-        "/userdata/fake_protected_areas_colombia.gpkg"
-      ],
+      "example": [],
       "weight": 10
     },
     "data>cleanWDPA.yml@30|status_type": {

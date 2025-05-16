@@ -21,57 +21,61 @@ study_area <- st_transform(study_area, st_crs(input$crs))
 
 if(input$pa_input_type == "WDPA"|input$pa_input_type == "Both"){ # if using WDPA data, load that
 
-protected_area <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
-print(protected_area)
-protected_area <- st_read(protected_area, type=3, promote_to_multi=FALSE) # input as polygons
-protected_area <- st_transform(protected_area, st_crs(input$crs))
+protected_areas <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
+print(protected_areas)
+protected_areas <- st_read(protected_areas, type=3, promote_to_multi=FALSE) # input as polygons
+protected_areas <- st_transform(protected_areas, st_crs(input$crs))
 # fix date
-protected_area$legal_status_updated_at <- lubridate::parse_date_time(protected_area$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
-protected_area$legal_status_updated_at <- lubridate::year(protected_area$legal_status_updated_at)
+protected_areas$legal_status_updated_at <- lubridate::parse_date_time(protected_areas$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+protected_areas$legal_status_updated_at <- lubridate::year(protected_areas$legal_status_updated_at)
 
 print("Protected area geometry:")
-print(unique(st_geometry_type(protected_area)))
+print(unique(st_geometry_type(protected_areas)))
 }
 
 
 if(input$pa_input_type == "User input"|input$pa_input_type =="Both"){ # rename and parse date column
-protected_area_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)] # make sure it reads the userdata file path
-protected_area_user <- st_read(protected_area_user, type=3, promote_to_multi=FALSE) # load
-print(protected_area_user)
+protected_areas_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)] # make sure it reads the userdata file path
+protected_areas_user <- st_read(protected_areas_user, type=3, promote_to_multi=FALSE) # load
+print(protected_areas_user)
 
 # fix geometry
 # remove points
-protected_area_user <- protected_area_user[!st_geometry_type(protected_area_user)%in% c("POINT","MULTIPOINT"),]
+protected_areas_user <- protected_areas_user[!st_geometry_type(protected_areas_user)%in% c("POINT","MULTIPOINT"),]
 # turning multipolygons to polygons
-if (any(st_geometry_type(protected_area_user) %in% "MULTIPOLYGON")){
+if (any(st_geometry_type(protected_areas_user) %in% "MULTIPOLYGON")){
   print("Turning multipolygons into polygons")
-  multi <- protected_area_user[st_geometry_type(protected_area_user)=="MULTIPOLYGON",]
+  multi <- protected_areas_user[st_geometry_type(protected_areas_user)=="MULTIPOLYGON",]
   multi <- st_cast(multi, to="POLYGON", group_or_split=TRUE)
-  poly <- protected_area_user[st_geometry_type(protected_area_user)=="POLYGON",]
-  protected_area_user <- rbind(poly, multi)
+  poly <- protected_areas_user[st_geometry_type(protected_areas_user)=="POLYGON",]
+  protected_areas_user <- rbind(poly, multi)
 }
 
 if(is.null(input$date_column)){
   biab_error_stop("Please specify a date column name for the protected areas file.")
 }
-protected_area_user <- protected_area_user %>% rename(legal_status_updated_at = input$date_column)
-protected_area_user$legal_status_updated_at <- lubridate::parse_date_time(protected_area_user$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
-protected_area_user$legal_status_updated_at <- lubridate::year(protected_area_user$legal_status_updated_at)
+protected_areas_user <- protected_areas_user %>% rename(legal_status_updated_at = input$date_column)
+protected_areas_user$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_user$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+protected_areas_user$legal_status_updated_at <- lubridate::year(protected_areas_user$legal_status_updated_at)
 }
 
 if(input$pa_input_type == "User input"){
-  protected_area <- protected_area_user
+  protected_areas <- protected_areas_user
 }
 
 if(input$pa_input_type == "Both"){
-  print("Combining user defined protected areas with WDPA data")
-  protected_area <- protected_area[,c("legal_status_updated_at", "geom")]
-  protected_area_user <- protected_area_user[,c("legal_status_updated_at", "geom")]
 
-  protected_area <- rbind(protected_area, protected_area_user)
+  if (!"geom" %in% names(protected_areas)) { # check that geom column exists
+  biab_error_stop("Geometry column must be called 'geom'")
+  }
+  print("Combining user defined protected areas with WDPA data")
+  protected_areas <- protected_areas[,c("legal_status_updated_at", "geom")]
+  protected_areas_user <- protected_areas_user[,c("legal_status_updated_at", "geom")]
+
+  protected_areas <- rbind(protected_areas, protected_areas_user)
 }
 
-print(nrow(protected_area))
+print(nrow(protected_areas))
 
 
 
@@ -79,12 +83,12 @@ print(nrow(protected_area))
 
 print("Calculating ProtConn")
 
-if(nrow(protected_area)<2){
+if(nrow(protected_areas)<2){
 biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 } 
 
 protconn_result <- Makurhini::MK_ProtConn(
-  nodes=protected_area,
+  nodes=protected_areas,
   region=study_area,
   area_unit="m2",
   distance=list(type=input$distance_matrix_type),
@@ -122,10 +126,10 @@ biab_output("result_plot", result_plot_path)
 years <- seq(from=input$start_year, to=input$years, by=input$year_int)
 years <- c(years, input$years)
 # assign all PAs with no date to the start date for plotting
-for(i in 1:nrow(protected_area)) {
-  if(is.na(protected_area$legal_status_updated_at[i])){
+for(i in 1:nrow(protected_areas)) {
+  if(is.na(protected_areas$legal_status_updated_at[i])){
     print("fixing date")
-    protected_area$legal_status_updated_at[i] <- input$start_year
+    protected_areas$legal_status_updated_at[i] <- input$start_year
   }
 }
 
@@ -136,7 +140,7 @@ protconn_ts_result <- list()
 
 for (i in 1:length(years)) {
   print(years[i])
-  protected_area_filt_yr <- protected_area %>% dplyr::filter(legal_status_updated_at <= years[i])
+  protected_area_filt_yr <- protected_areas %>% dplyr::filter(legal_status_updated_at <= years[i])
   if((nrow(protected_area_filt_yr))<2) {
     print(paste("Not enough protected area data from", years, "beginning calculations at first year with data"))
     next
@@ -180,23 +184,45 @@ ggsave(result_yrs_plot_path, result_yrs_plot)
 biab_output("result_yrs_plot", result_yrs_plot_path)
 
 print("Calculating ProtConn for three most common dispersal distances")
-protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_area, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+if(input$distance_threshold == 1000){ # skip if already ran in the original analysis
+  protconn_result_1km <- protconn_result
+  protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2,3,4),c(3,4)]
+  protconn_result_1km[is.na(protconn_result_1km)] <- 0
+  protconn_result_1km$distance <- "1 km"
+} else {
+protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
 transboundary=input$transboundary_distance, distance_thresholds=c(1000))
 protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2,3,4),c(3,4)]
 protconn_result_1km[is.na(protconn_result_1km)] <- 0
 protconn_result_1km$distance <- "1 km"
+}
 
-protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_area, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+if(input$distance_threshold == 10000){ # skip if already ran in the original analysis
+  protconn_result_10km <- protconn_result
+  protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
+  protconn_result_10km[is.na(protconn_result_1km)] <- 0
+  protconn_result_10km$distance <- "10 km"
+} else {
+protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
 transboundary=input$transboundary_distance, distance_thresholds=c(10000))
 protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
 protconn_result_10km[is.na(protconn_result_10km)] <- 0
 protconn_result_10km$distance <- "10 km"
+}
 
-protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_area, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+if(input$distance_threshold == 100000){ 
+  protconn_result_100km <- protconn_result
+  protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
+  protconn_result_100km[is.na(protconn_result_100km)] <- 0
+  protconn_result_100km$distance <- "100 km"
+} else {
+protconn_result_10km <- Makurhini::MK_ProtCon
+protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
 transboundary=input$transboundary_distance, distance_thresholds=c(100000))
 protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
 protconn_result_100km[is.na(protconn_result_100km)] <- 0
 protconn_result_100km$distance <- "100 km"
+}
 
 results_preset <- rbind.data.frame(protconn_result_1km, protconn_result_10km, protconn_result_100km)
 
