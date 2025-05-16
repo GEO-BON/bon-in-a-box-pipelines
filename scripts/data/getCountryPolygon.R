@@ -37,7 +37,7 @@ if(is.null(input$region)){ # pull study area polygon from rnaturalearth
     country_polygon <- ne_countries(country=country_name, type = "countries", scale = 10)
   } else {
   print("pulling region polygon")
-  country_polygon <- ne_states(country=input$country, scale = 10)
+  country_polygon <- ne_states(country=country_name)
   country_polygon <- country_polygon %>% filter(name==input$region)
   }
 

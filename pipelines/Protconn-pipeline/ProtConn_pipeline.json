@@ -314,7 +314,7 @@
       "description": "Region of interest",
       "label": "State/Province",
       "type": "text",
-      "example": null,
+      "example": "Putumayo",
       "weight": 1
     },
     "pipeline@9": {
