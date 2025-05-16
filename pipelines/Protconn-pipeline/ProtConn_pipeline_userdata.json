@@ -137,6 +137,24 @@
           "/userdata/fake_protected_areas_colombia.gpkg"
         ]
       }
+    },
+    {
+      "id": "30",
+      "type": "constant",
+      "position": {
+        "x": 753.9624938964844,
+        "y": 251.79999542236328
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "User input",
+        "options": [
+          "WDPA",
+          "User input",
+          "Both"
+        ]
+      }
     }
   ],
   "edges": [
@@ -223,6 +241,13 @@
       "target": "8",
       "targetHandle": "protected_area_polygon",
       "id": "reactflow__edge-29-8protected_area_polygon"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "pa_input_type",
+      "id": "reactflow__edge-30-8pa_input_type"
     }
   ],
   "inputs": {
@@ -240,18 +265,6 @@
       "example": null,
       "weight": 1
     },
-    "protconn_analysis>protconn_analysis.yml@8|pa_input_type": {
-      "description": "Type of input for protected areas. Option \"WDPA\" uses protected areas from the World Database of Protected Areas. Option \"User input\" uses polygons input by the user. \"Both\" combines the WDPA protected areas and user input polygons.",
-      "label": "Protected area input",
-      "type": "options",
-      "options": [
-        "WDPA",
-        "User input",
-        "Both"
-      ],
-      "example": "WDPA",
-      "weight": 2
-    },
     "pipeline@29": {
       "label": "Polygon of protected areas",
       "description": "The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script.",
@@ -259,35 +272,35 @@
       "example": [
         "/userdata/fake_protected_areas_colombia.gpkg"
       ],
-      "weight": 3
+      "weight": 2
     },
     "pipeline@9": {
       "label": "Coordinate reference system",
       "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
       "type": "text",
       "example": "EPSG:3116",
-      "weight": 4
+      "weight": 3
     },
     "protconn_analysis>protconn_analysis.yml@8|date_column_name": {
       "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
       "label": "Date column name",
       "type": "text",
       "example": null,
-      "weight": 5
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@8|distance_threshold": {
       "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
       "label": "Distance analysis threshold",
       "type": "int",
       "example": 10000,
-      "weight": 6
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@8|transboundary_distance": {
       "description": "Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
       "label": "Transboundary distance",
       "type": "int",
       "example": 0,
-      "weight": 7
+      "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@8|distance_matrix_type": {
       "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
@@ -298,28 +311,28 @@
         "edge"
       ],
       "example": "centroid",
-      "weight": 8
+      "weight": 7
     },
     "protconn_analysis>protconn_analysis.yml@8|years": {
       "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
       "label": "Year for cutoff",
       "type": "int",
       "example": 2025,
-      "weight": 9
+      "weight": 8
     },
     "protconn_analysis>protconn_analysis.yml@8|start_year": {
       "description": "Year for the time series plot to start",
       "label": "Start year",
       "type": "int",
       "example": 1950,
-      "weight": 10
+      "weight": 9
     },
     "protconn_analysis>protconn_analysis.yml@8|year_int": {
       "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
       "label": "Year interval",
       "type": "int",
       "example": 20,
-      "weight": 11
+      "weight": 10
     }
   },
   "outputs": {
