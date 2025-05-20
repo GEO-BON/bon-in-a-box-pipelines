@@ -97,6 +97,7 @@ protconn_result <- Makurhini::MK_ProtConn(
   transboundary=input$transboundary_distance,
   distance_thresholds=c(input$distance_threshold)
 )
+gc()
 
 protconn_result <- as.data.frame(protconn_result)[c(2,3,4),c(3,4)]
 protconn_result[is.na(protconn_result)] <- 0
@@ -137,19 +138,22 @@ protconn_result_1km$distance <- "1 km"
 }
 print("1km done")
 print(protconn_result_1km)
+gc()
 
-# if(input$distance_threshold == 10000){ # skip if already ran in the original analysis
-#   protconn_result_10km <- protconn_result
-#   protconn_result_10km$distance <- "10 km"
-# } else {
-# protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-# transboundary=input$transboundary_distance, distance_thresholds=10000)
-# protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
-# protconn_result_10km[is.na(protconn_result_10km)] <- 0
-# protconn_result_10km$distance <- "10 km"
-# }
-# print("10km done")
-# print(protconn_result_10km)
+
+if(input$distance_threshold == 10000){ # skip if already ran in the original analysis
+  protconn_result_10km <- protconn_result
+  protconn_result_10km$distance <- "10 km"
+} else {
+protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+transboundary=input$transboundary_distance, distance_thresholds=10000)
+protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
+protconn_result_10km[is.na(protconn_result_10km)] <- 0
+protconn_result_10km$distance <- "10 km"
+}
+print("10km done")
+print(protconn_result_10km)
+gc()
 
 if(input$distance_threshold == 100000){ 
   protconn_result_100km <- protconn_result
@@ -163,7 +167,8 @@ protconn_result_100km$distance <- "100 km"
 }
 print("100km done")
 print(protconn_result_100km)
-results_preset <- rbind.data.frame(protconn_result_1km, protconn_result_100km)
+results_preset <- rbind.data.frame(protconn_result_1km, protconn_result_10km, protconn_result_100km)
+gc()
 
 result_preset_plot <- ggplot2::ggplot(results_preset) +
   geom_col(aes(y=Percentage, x=1, fill=`ProtConn indicator`)) +
@@ -207,7 +212,10 @@ for (i in 1:length(years)) {
     print(paste("Not enough protected area data from", years, "beginning calculations at first year with data"))
     next
   } else {
-    protconn_result <- Makurhini::MK_ProtConn(
+    if (years[i]==input$years){
+      protconn_result_yrs <- protconn_result
+    } else {
+    protconn_result_yrs <- Makurhini::MK_ProtConn(
       nodes=protected_area_filt_yr,
       region=study_area, area_unit="m2",
       distance=list(type=input$distance_matrix_type),
@@ -215,8 +223,10 @@ for (i in 1:length(years)) {
       transboundary=input$transboundary_distance,
       distance_thresholds=c(input$distance_threshold)
     )
-    print(protconn_result)
-    protconn_result.df <- as.data.frame(protconn_result)[c(1,3,4),c(3,4)] %>% mutate(Year=years[i])
+    protconn_result.df <- as.data.frame(protconn_result_yrs)[c(1,3,4),c(3,4)] %>% mutate(Year=years[i])
+    gc()
+    }
+    print(protconn_result_yrs)
     protconn_ts_result[[i]] <- protconn_result.df
   }
 }
