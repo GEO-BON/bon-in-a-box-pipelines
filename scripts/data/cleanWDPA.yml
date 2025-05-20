@@ -1,0 +1,74 @@
+script: cleanWDPA.R
+name: Clean protected areas from WDPA API
+description: |
+  This script cleans WDPA data, doing THESE THINGS, and cropping the protected areas by the study area of interest.
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+inputs:
+  study_area_polygon: 
+    label: Study area polygon
+    description: Study area of interest in a geopackage file
+    type: application/geopackage+sqlite3
+    example: null
+  protected_area_file: 
+    label: Protected areas file
+    description: File path of the shapefile of protected areas (Leave blank if using data from WDPA only). Must be in geopackage format.
+    type: application/geopackage+sqlite3
+    example: null
+  crs:
+    label: Coordinate reference system
+    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system. To find the reference system for your region visit [here](https://epsg.io/).
+    type: text
+    example: "EPSG:4326"
+  status_type:
+    label: PA legal status types to include
+    description: Legal status types of protected areas to include
+    type: options[]
+    options:
+      - "Designated"
+      - "Inscribed"
+      - "Established"
+    example: ["Designated", "Inscribed", "Established"]
+  exclude_unesco:
+    label: Exclude UNESCO Biosphere reserves
+    description: Check to exclude UNESCO Biosphere reserves
+    type: boolean
+    example: TRUE
+  buffer_points:
+    label: Buffer protected area points
+    description: |
+      Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.
+      If checked, this will create a circular protected area around the reported point that is equal to the reported area. 
+      If there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.
+    type: boolean
+    example: FALSE
+  include_marine:
+    label: Include marine protected areas
+    description: Whether to include marine protected areas or filter them out
+    type: boolean
+    example: TRUE
+  include_oecm:
+    label: Include OECMs
+    description: |
+      Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated  
+      protected areas but are still achieving conservation outcomes. 
+    type: boolean
+    example: TRUE
+outputs:
+  protected_areas_clean:
+    label: Polygon of cleaned protected areas
+    description: Represents the map of the protected areas that have been cleaned
+    type: application/geopackage+sqlite3
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-wdpar
+    - r-sf
+    - r-remotes
+    - r-dplyr
+    - r-lubridate
+    - r-wdpar

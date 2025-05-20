@@ -59,43 +59,8 @@
       "id": "20",
       "type": "output",
       "position": {
-        "x": 1907,
-        "y": 6.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "22",
-      "type": "userInput",
-      "position": {
-        "x": 22,
-        "y": 12.666666666666686
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "23",
-      "type": "userInput",
-      "position": {
-        "x": -83,
-        "y": 88
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "24",
-      "type": "output",
-      "position": {
-        "x": 294,
-        "y": 1.5
+        "x": 2006,
+        "y": 16.5
       },
       "data": {
         "label": "Output"
@@ -105,19 +70,30 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 194,
-        "y": 134
+        "x": 217,
+        "y": 155
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
       }
     },
     {
-      "id": "27",
+      "id": "28",
+      "type": "io",
+      "position": {
+        "x": -286.3999938964844,
+        "y": 17
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "29",
       "type": "constant",
       "position": {
-        "x": -126,
-        "y": 174
+        "x": -812.3999938964844,
+        "y": 131
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -163,20 +139,6 @@
       "id": "reactflow__edge-19bii_change-20"
     },
     {
-      "source": "22",
-      "sourceHandle": null,
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-22-24"
-    },
-    {
-      "source": "26",
-      "sourceHandle": "study_area_polygon_unprojected",
-      "target": "15",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-26study_area_polygon_unprojected-15study_area_polygon"
-    },
-    {
       "source": "26",
       "sourceHandle": "bbox",
       "target": "15",
@@ -184,28 +146,49 @@
       "id": "reactflow__edge-26bbox-15bbox"
     },
     {
-      "source": "23",
-      "sourceHandle": null,
+      "source": "28",
+      "sourceHandle": "country_polygon",
       "target": "26",
-      "targetHandle": "state",
-      "id": "reactflow__edge-23-26state"
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-28country_polygon-26study_area_file"
     },
     {
-      "source": "22",
+      "source": "29",
       "sourceHandle": null,
       "target": "26",
-      "targetHandle": "country",
-      "id": "reactflow__edge-22-26country"
+      "targetHandle": "crs",
+      "id": "reactflow__edge-29-26crs"
     },
     {
-      "source": "27",
+      "source": "28",
+      "sourceHandle": "country_polygon",
+      "target": "15",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-28country_polygon-15study_area_polygon"
+    },
+    {
+      "source": "29",
       "sourceHandle": null,
-      "target": "26",
-      "targetHandle": "studyarea_epsg",
-      "id": "reactflow__edge-27-26studyarea_epsg"
+      "target": "28",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-29-28crs"
     }
   ],
   "inputs": {
+    "data>getCountryPolygon.yml@28|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@28|region": {
+      "description": "State of interest",
+      "label": "State/Province",
+      "type": "text",
+      "weight": 1,
+      "example": null
+    },
     "BII>BIIZonalStats.yml@15|summary_statistic": {
       "description": "Summary statistic for layers",
       "label": "Summary statistic",
@@ -216,7 +199,7 @@
         "Mode"
       ],
       "example": "Mean",
-      "weight": 0
+      "weight": 2
     },
     "BII>BIIChange.yml@19|start_year": {
       "description": "Reference BII year for raster plotting",
@@ -229,7 +212,7 @@
         "2015"
       ],
       "example": "2000",
-      "weight": 1
+      "weight": 3
     },
     "BII>BIIChange.yml@19|end_year": {
       "description": "BII layer to compare to the start year",
@@ -242,61 +225,33 @@
         "2020"
       ],
       "example": "2020",
-      "weight": 2
-    },
-    "pipeline@22": {
-      "label": "Country",
-      "description": "Country of interest",
-      "type": "text",
-      "example": "Canada",
-      "weight": 3
-    },
-    "pipeline@23": {
-      "label": "State/Province",
-      "description": "State or province of interest (leave blank if you want the full country)",
-      "type": "text",
-      "example": null,
       "weight": 4
-    },
-    "data>getBoundingBox.yml@26|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "weight": 5,
-      "example": null
     }
   },
   "outputs": {
-    "pipeline@22|default_output": {
-      "description": "Country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0,
-      "example": null
-    },
     "BII>BIIZonalStats.yml@15|stats": {
       "description": "Summary statistic",
       "label": "Statistical measure",
       "type": "text/csv",
-      "weight": 1
+      "weight": 0
     },
     "BII>BIIZonalStats.yml@15|rasters": {
       "description": "Array of output raster paths",
       "label": "BII layers for each year",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 1
     },
     "BII>BIIZonalStats.yml@15|ts_plot": {
       "description": "Time series plot of BII values in zone of interest",
       "label": "Time series plot",
       "type": "image/png",
-      "weight": 3
+      "weight": 2
     },
     "BII>BIIChange.yml@19|bii_change": {
       "description": "Raster plot of change in BII",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 4
+      "weight": 3
     }
   },
   "metadata": {

@@ -33,5 +33,5 @@ inputs:
 outputs:
   bii_change:
     label: Change in BII
-    description: Raster plot of change in BII. Higher numbers indicate greater BII loss.
+    description: Raster plot of change in BII. Higher numbers indicate greater percentage BII loss.
     type: image/tiff;application=geotiff[]
