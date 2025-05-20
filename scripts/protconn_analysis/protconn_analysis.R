@@ -82,7 +82,7 @@ print(nrow(protected_areas))
 ############## CALCULATE PROTCONN ##################
 
 print("Calculating ProtConn")
-
+protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years)
 if(nrow(protected_areas)<2){
 biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 } 
@@ -255,72 +255,5 @@ result_yrs_plot_path <- file.path(outputFolder, "result_plot_yrs.png") # save pr
 ggsave(result_yrs_plot_path, result_yrs_plot)
 biab_output("result_yrs_plot", result_yrs_plot_path)
 
-# print("Calculating ProtConn for three most common dispersal distances")
-# if(input$distance_threshold == 1000){ # skip if already ran in the original analysis
-#   protconn_result_1km <- protconn_result
-#   protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2,3,4),c(3,4)]
-#   protconn_result_1km[is.na(protconn_result_1km)] <- 0
-#   protconn_result_1km$distance <- "1 km"
-# } else {
-# protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-# transboundary=input$transboundary_distance, distance_thresholds=1000)
-# protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2,3,4),c(3,4)]
-# protconn_result_1km[is.na(protconn_result_1km)] <- 0
-# protconn_result_1km$distance <- "1 km"
-# }
-# print("1km done")
-
-# if(input$distance_threshold == 10000){ # skip if already ran in the original analysis
-#   protconn_result_10km <- protconn_result
-#   protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
-#   protconn_result_10km[is.na(protconn_result_1km)] <- 0
-#   protconn_result_10km$distance <- "10 km"
-# } else {
-# protconn_result_10km <- Makurhini::MK_ProtConn(
-#   nodes=protected_areas,
-#   region=study_area,
-#   area_unit="m2",
-#   distance=list(type=input$distance_matrix_type),
-#   probability=0.5,
-#   transboundary=input$transboundary_distance,
-#   distance_thresholds=10000)
-
-# #protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-# #transboundary=input$transboundary_distance, distance_thresholds=c(10000))
-# protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
-# protconn_result_10km[is.na(protconn_result_10km)] <- 0
-# protconn_result_10km$distance <- "10 km"
-# }
-# print("10km done")
-
-# if(input$distance_threshold == 100000){ 
-#   protconn_result_100km <- protconn_result
-#   protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
-#   protconn_result_100km[is.na(protconn_result_100km)] <- 0
-#   protconn_result_100km$distance <- "100 km"
-# } else {
-# protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-# transboundary=input$transboundary_distance, distance_thresholds=c(100000))
-# protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
-# protconn_result_100km[is.na(protconn_result_100km)] <- 0
-# protconn_result_100km$distance <- "100 km"
-# }
-# print("100km done")
-# results_preset <- rbind.data.frame(protconn_result_1km, protconn_result_10km, protconn_result_100km)
-
-# result_preset_plot <- ggplot2::ggplot(results_preset) +
-#   geom_col(aes(y=Percentage, x=1, fill=`ProtConn indicator`)) +
-#   coord_polar(theta="y") +
-#   xlim(c(0, 1.5)) +
-#   geom_text(aes(y=Percentage, x=1, group=`ProtConn indicator`, label=paste0(round(Percentage, 2), "%")), position=position_stack(vjust=0.5)) +
-#   scale_fill_manual(values=c("seagreen4", "seagreen1", "orchid4")) +
-#   facet_wrap(~distance) +
-#   theme_void() +
-#   theme(text=element_text(color="White"))
-
-# # output
-# result_plot_preset_path <- file.path(outputFolder, "result_preset_plot.png")
-# ggsave(filename=result_plot_preset_path, plot=result_preset_plot, dpi=300, height=8, width=12)
-# biab_output("result_preset_plot", result_plot_preset_path)
 
 
