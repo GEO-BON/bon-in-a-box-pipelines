@@ -100,7 +100,7 @@
       "description": "Country of interest",
       "label": "Country",
       "type": "text",
-      "example": "Colombia",
+      "example": "COL",
       "weight": 0
     },
     "data>getCountryPolygon.yml@1|region": {
