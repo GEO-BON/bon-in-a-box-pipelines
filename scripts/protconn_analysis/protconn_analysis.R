@@ -17,53 +17,72 @@ print("CRS:")
 print(st_crs(study_area))
 study_area <- st_transform(study_area, st_crs(input$crs))
 
-### Load protected area shapefile
-
-if(input$pa_input_type == "WDPA"|input$pa_input_type == "Both"){ # if using WDPA data, load that
-
+#check if there is WDPA data
 protected_areas <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
-print(protected_areas)
-protected_areas <- st_read(protected_areas, type=3, promote_to_multi=FALSE) # input as polygons
-protected_areas <- st_transform(protected_areas, st_crs(input$crs))
-# fix date
-protected_areas$legal_status_updated_at <- lubridate::parse_date_time(protected_areas$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
-protected_areas$legal_status_updated_at <- lubridate::year(protected_areas$legal_status_updated_at)
 
-print("Protected area geometry:")
-print(unique(st_geometry_type(protected_areas)))
+#check if there is user data
+protected_areas_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)]
+
+if (length(protected_areas_user) > 0 && length(protected_areas) > 0){
+  print("Using both WDPA and User input")
+  pa_input_type <- "Both"
+
+} else if (length(protected_areas_user) > 0) {
+  print("Only using user input data")
+  pa_input_type <- "User input"
+
+} else if (length(protected_areas) > 0){
+  print("Using WDPA data")
+  pa_input_type <- "WDPA"
+} else {
+  biab_error_stop("No files found: Please input or choose a study area")
+}
+
+### Load protected area shapefile
+if(pa_input_type == "WDPA"| pa_input_type == "Both"){ # if using WDPA data, load that
+
+  #protected_areas <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
+  print(protected_areas)
+  protected_areas <- st_read(protected_areas, type=3, promote_to_multi=FALSE) # input as polygons
+  protected_areas <- st_transform(protected_areas, st_crs(input$crs))
+  # fix date
+  protected_areas$legal_status_updated_at <- lubridate::parse_date_time(protected_areas$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+  protected_areas$legal_status_updated_at <- lubridate::year(protected_areas$legal_status_updated_at)
+
+  print("Protected area geometry:")
+  print(unique(st_geometry_type(protected_areas)))
 }
 
 
-if(input$pa_input_type == "User input"|input$pa_input_type =="Both"){ # rename and parse date column
-protected_areas_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)] # make sure it reads the userdata file path
-protected_areas_user <- st_read(protected_areas_user, type=3, promote_to_multi=FALSE) # load
-print(protected_areas_user)
+if(pa_input_type == "User input"| pa_input_type =="Both"){ # rename and parse date column
+  #protected_areas_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)] # make sure it reads the userdata file path
+  protected_areas_user <- st_read(protected_areas_user, type=3, promote_to_multi=FALSE) # load
+  print(protected_areas_user)
 
-# fix geometry
-# remove points
-protected_areas_user <- protected_areas_user[!st_geometry_type(protected_areas_user)%in% c("POINT","MULTIPOINT"),]
-# turning multipolygons to polygons
-if (any(st_geometry_type(protected_areas_user) %in% "MULTIPOLYGON")){
-  print("Turning multipolygons into polygons")
-  multi <- protected_areas_user[st_geometry_type(protected_areas_user)=="MULTIPOLYGON",]
-  multi <- st_cast(multi, to="POLYGON", group_or_split=TRUE)
-  poly <- protected_areas_user[st_geometry_type(protected_areas_user)=="POLYGON",]
-  protected_areas_user <- rbind(poly, multi)
+  # fix geometry and remove points
+  protected_areas_user <- protected_areas_user[!st_geometry_type(protected_areas_user)%in% c("POINT","MULTIPOINT"),]
+  # turning multipolygons to polygons
+  if (any(st_geometry_type(protected_areas_user) %in% "MULTIPOLYGON")){
+    print("Turning multipolygons into polygons")
+    multi <- protected_areas_user[st_geometry_type(protected_areas_user)=="MULTIPOLYGON",]
+    multi <- st_cast(multi, to="POLYGON", group_or_split=TRUE)
+    poly <- protected_areas_user[st_geometry_type(protected_areas_user)=="POLYGON",]
+    protected_areas_user <- rbind(poly, multi)
+  }
+
+  if(is.null(input$date_column)){
+    biab_error_stop("Please specify a date column name for the protected areas file.")
+  }
+  protected_areas_user <- protected_areas_user %>% rename(legal_status_updated_at = input$date_column)
+  protected_areas_user$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_user$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
+  protected_areas_user$legal_status_updated_at <- lubridate::year(protected_areas_user$legal_status_updated_at)
 }
 
-if(is.null(input$date_column)){
-  biab_error_stop("Please specify a date column name for the protected areas file.")
-}
-protected_areas_user <- protected_areas_user %>% rename(legal_status_updated_at = input$date_column)
-protected_areas_user$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_user$legal_status_updated_at, orders=c("ymd", "mdy", "dmy", "y"))
-protected_areas_user$legal_status_updated_at <- lubridate::year(protected_areas_user$legal_status_updated_at)
-}
-
-if(input$pa_input_type == "User input"){
+if(pa_input_type == "User input"){
   protected_areas <- protected_areas_user
 }
 
-if(input$pa_input_type == "Both"){
+if(pa_input_type == "Both"){
 
   if (!"geom" %in% names(protected_areas)) { # check that geom column exists
   biab_error_stop("Geometry column must be called 'geom'")
@@ -84,7 +103,7 @@ print(nrow(protected_areas))
 print("Calculating ProtConn")
 protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years)
 if(nrow(protected_areas)<2){
-biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
+  biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 } 
 print("Printing threshold")
 print(input$distance_threshold)
@@ -145,11 +164,11 @@ if(input$distance_threshold == 10000){ # skip if already ran in the original ana
   protconn_result_10km <- protconn_result
   protconn_result_10km$distance <- "10 km"
 } else {
-protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-transboundary=input$transboundary_distance, distance_thresholds=10000)
-protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
-protconn_result_10km[is.na(protconn_result_10km)] <- 0
-protconn_result_10km$distance <- "10 km"
+  protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+  transboundary=input$transboundary_distance, distance_thresholds=10000)
+  protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
+  protconn_result_10km[is.na(protconn_result_10km)] <- 0
+  protconn_result_10km$distance <- "10 km"
 }
 print("10km done")
 print(protconn_result_10km)
@@ -159,11 +178,11 @@ if(input$distance_threshold == 100000){
   protconn_result_100km <- protconn_result
   protconn_result_100km$distance <- "100 km"
 } else {
-protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-transboundary=input$transboundary_distance, distance_thresholds=100000)
-protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
-protconn_result_100km[is.na(protconn_result_100km)] <- 0
-protconn_result_100km$distance <- "100 km"
+  protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+  transboundary=input$transboundary_distance, distance_thresholds=100000)
+  protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
+  protconn_result_100km[is.na(protconn_result_100km)] <- 0
+  protconn_result_100km$distance <- "100 km"
 }
 print("100km done")
 print(protconn_result_100km)
