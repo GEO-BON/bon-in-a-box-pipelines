@@ -7,7 +7,7 @@ on:
       - main
       - '*staging'
     paths:
-      - 'runners/julia-dockerfile'
+      - 'runners/julia/dockerfile'
 
 jobs:
   runner-julia:
@@ -48,7 +48,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: runners
-        file: runners/julia-dockerfile
+        file: runners/julia/dockerfile
         push: true
         tags: ${{ steps.metadata-main.outputs.tags || steps.metadata-staging.outputs.tags }}
         labels: ${{ steps.metadata-main.outputs.labels || steps.metadata-staging.outputs.labels }}

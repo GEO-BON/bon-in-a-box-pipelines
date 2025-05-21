@@ -1,3 +1,5 @@
+#!/bin/bash
+
 ## Bash initialisation
 # Load runner.env
 while IFS== read -r key value; do
