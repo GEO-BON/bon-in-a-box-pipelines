@@ -72,3 +72,4 @@ conda:
     - r-dplyr
     - r-lubridate
     - r-wdpar
+    - r-igraph

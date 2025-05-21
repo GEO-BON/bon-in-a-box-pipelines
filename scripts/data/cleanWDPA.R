@@ -84,6 +84,17 @@ if(isFALSE(input$include_oecm)){
 print("Cropping data by study area")
 protected_areas_clean <- st_intersection(protected_areas, study_area)
 
+# Combine protected areas that are within 10m of each other
+print("Combining overlapping geometries")
+protected_areas_clean <- st_buffer(protected_areas_clean, dist=10) # buffering polygons by 10 meters
+intersections <- st_intersects(protected_areas_clean) # Identifying intersecting polygons
+
+groups <- as.integer(components(graph = igraph::graph_from_adj_list(intersections))$membership) # Grouping intersecting polygons
+
+protected_areas_clean <- study_area %>%
+  group_by(group_id) %>%
+  summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
+
 protected_areas_clean_path <- file.path(outputFolder, "protected_areas_clean.gpkg")
 sf::st_write(protected_areas_clean, protected_areas_clean_path, delete_dsn = T)
 biab_output("protected_areas_clean", protected_areas_clean_path)
