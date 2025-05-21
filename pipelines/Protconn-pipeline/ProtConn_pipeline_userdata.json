@@ -242,11 +242,9 @@
     },
     "pipeline@29": {
       "label": "Polygon of protected areas",
-      "description": "The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script.",
+      "description": "The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. If you want to use word database of protected areas (WDPA) data or a combination of WDPA data with custom data, use the \"ProtConn analysis with WDPA\" pipeline.",
       "type": "application/geopackage+sqlite3[]",
-      "example": [
-        "/userdata/fake_protected_areas_colombia.gpkg"
-      ],
+      "example": [],
       "weight": 2
     },
     "pipeline@9": {
