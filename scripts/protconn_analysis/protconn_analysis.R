@@ -41,7 +41,6 @@ if (length(protected_areas_user) > 0 && length(protected_areas) > 0){
 ### Load protected area shapefile
 if(pa_input_type == "WDPA"| pa_input_type == "Both"){ # if using WDPA data, load that
 
-  #protected_areas <- input$protected_area_polygon[grepl("protected_areas_clean", input$protected_area_polygon)]
   print(protected_areas)
   protected_areas <- st_read(protected_areas, type=3, promote_to_multi=FALSE) # input as polygons
   protected_areas <- st_transform(protected_areas, st_crs(input$crs))
@@ -55,7 +54,6 @@ if(pa_input_type == "WDPA"| pa_input_type == "Both"){ # if using WDPA data, load
 
 
 if(pa_input_type == "User input"| pa_input_type =="Both"){ # rename and parse date column
-  #protected_areas_user <- input$protected_area_polygon[grepl("/userdata", input$protected_area_polygon)] # make sure it reads the userdata file path
   protected_areas_user <- st_read(protected_areas_user, type=3, promote_to_multi=FALSE) # load
   print(protected_areas_user)
 
@@ -96,19 +94,39 @@ if(pa_input_type == "Both"){
 
 print(nrow(protected_areas))
 
+## Make function to get rid of overlapping geometries
+dissolve_overlaps <- function (x) {
 
+print("Combining overlapping geometries")
+protected_areas_clean <- st_buffer(x, dist=10) # buffering polygons by 10 meters
+intersections <- st_intersects(protected_areas_clean) # Identifying intersecting polygons
+
+groups <- as.integer(igraph::components(graph = igraph::graph_from_adj_list(intersections))$membership) # Grouping intersecting polygons
+
+x$group_id <- groups
+print(x[x$group_id==1])
+
+protected_areas_clean <- x %>%
+  group_by(group_id) %>% filter(!group_id==1) %>%
+  summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
+
+return(protected_areas_clean)
+}
 
 ############## CALCULATE PROTCONN ##################
 
 print("Calculating ProtConn")
 protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years)
-if(nrow(protected_areas)<2){
-  biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
+# Get rid of overlaps
+protected_areas_simp <- dissolve_overlaps(protected_areas)
+
+if(nrow(protected_areas_simp)<2){
+biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 } 
 print("Printing threshold")
 print(input$distance_threshold)
 protconn_result <- Makurhini::MK_ProtConn(
-  nodes=protected_areas,
+  nodes=protected_areas_simp,
   region=study_area,
   area_unit="m2",
   distance=list(type=input$distance_matrix_type),
@@ -149,7 +167,7 @@ if(input$distance_threshold == 1000){ # skip if already ran in the original anal
   protconn_result_1km <- protconn_result
   protconn_result_1km$distance <- "1 km"
 } else {
-protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+protconn_result_1km <- Makurhini::MK_ProtConn(nodes=protected_areas_simp, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
 transboundary=input$transboundary_distance, distance_thresholds=1000)
 protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2,3,4),c(3,4)]
 protconn_result_1km[is.na(protconn_result_1km)] <- 0
@@ -164,11 +182,11 @@ if(input$distance_threshold == 10000){ # skip if already ran in the original ana
   protconn_result_10km <- protconn_result
   protconn_result_10km$distance <- "10 km"
 } else {
-  protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-  transboundary=input$transboundary_distance, distance_thresholds=10000)
-  protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
-  protconn_result_10km[is.na(protconn_result_10km)] <- 0
-  protconn_result_10km$distance <- "10 km"
+protconn_result_10km <- Makurhini::MK_ProtConn(nodes=protected_areas_simp, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+transboundary=input$transboundary_distance, distance_thresholds=10000)
+protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2,3,4),c(3,4)]
+protconn_result_10km[is.na(protconn_result_10km)] <- 0
+protconn_result_10km$distance <- "10 km"
 }
 print("10km done")
 print(protconn_result_10km)
@@ -178,11 +196,11 @@ if(input$distance_threshold == 100000){
   protconn_result_100km <- protconn_result
   protconn_result_100km$distance <- "100 km"
 } else {
-  protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_areas, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
-  transboundary=input$transboundary_distance, distance_thresholds=100000)
-  protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
-  protconn_result_100km[is.na(protconn_result_100km)] <- 0
-  protconn_result_100km$distance <- "100 km"
+protconn_result_100km <- Makurhini::MK_ProtConn(nodes=protected_areas_simp, region=study_area, area_unit="m2", distance=list(type=input$distance_matrix_type), probability=0.5,
+transboundary=input$transboundary_distance, distance_thresholds=100000)
+protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2,3,4),c(3,4)]
+protconn_result_100km[is.na(protconn_result_100km)] <- 0
+protconn_result_100km$distance <- "100 km"
 }
 print("100km done")
 print(protconn_result_100km)
@@ -234,6 +252,7 @@ for (i in 1:length(years)) {
     if (years[i]==input$years){
       protconn_result_yrs <- protconn_result
     } else {
+    protected_area_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
     protconn_result_yrs <- Makurhini::MK_ProtConn(
       nodes=protected_area_filt_yr,
       region=study_area, area_unit="m2",

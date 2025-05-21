@@ -11,15 +11,6 @@ inputs:
     description: Represents the map of the study area
     type: application/geopackage+sqlite3
     example: null
-  pa_input_type:
-    label: Protected area input
-    description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons. 
-    type: options
-    options:
-      - "WDPA"
-      - "User input"
-      - "Both"
-    example: "WDPA"
   protected_area_polygon:
     label: Polygon of protected areas
     description: The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. 
@@ -96,12 +87,3 @@ references:
     doi: 10.1016/j.biocon.2017.12.020
   - text: Godínez-Gómez and Correa Ayram 2020
     doi: 10.5281/zenodo.3771605
-# conda:
-#   channels:
-#     - conda-forge
-#     - r
-#   dependencies:
-#     - r-rjson
-#     - r-dplyr
-#     - r-sf
-#     - r-remotes

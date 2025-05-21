@@ -137,24 +137,6 @@
           "/userdata/fake_protected_areas_colombia.gpkg"
         ]
       }
-    },
-    {
-      "id": "30",
-      "type": "constant",
-      "position": {
-        "x": 753.9624938964844,
-        "y": 251.79999542236328
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "User input",
-        "options": [
-          "WDPA",
-          "User input",
-          "Both"
-        ]
-      }
     }
   ],
   "edges": [
@@ -241,13 +223,6 @@
       "target": "8",
       "targetHandle": "protected_area_polygon",
       "id": "reactflow__edge-29-8protected_area_polygon"
-    },
-    {
-      "source": "30",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "pa_input_type",
-      "id": "reactflow__edge-30-8pa_input_type"
     }
   ],
   "inputs": {

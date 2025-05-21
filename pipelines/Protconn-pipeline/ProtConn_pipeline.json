@@ -427,18 +427,6 @@
       "type": "boolean",
       "example": true,
       "weight": 15
-    },
-    "protconn_analysis>protconn_analysis.yml@8|pa_input_type": {
-      "description": "Type of input for protected areas. Option \"WDPA\" uses protected areas from the World Database of Protected Areas. Option \"User input\" uses polygons input by the user. \"Both\" combines the WDPA protected areas and user input polygons.",
-      "label": "Protected area input",
-      "type": "options",
-      "options": [
-        "WDPA",
-        "User input",
-        "Both"
-      ],
-      "example": "WDPA",
-      "weight": 16
     }
   },
   "outputs": {
