@@ -16,14 +16,9 @@ println("Input number: ", number)
 
 # Sanitize the inputs
 if number == 13
-    error("Number cannot be 13.")
+    biab_error_stop("Number cannot be 13.")
 end
 
-# Do the processing...
+# Do the processing... (save the outputs along the way)
 number += 1
-
-# Write the outputs to output.json
-data = Dict("increment" => number)
-open("output.json","w") do f
-    JSON.print(f, data)
-end
+biab_output("increment", number)
