@@ -57,17 +57,6 @@ if(pa_input_type == "User input"| pa_input_type =="Both"){ # rename and parse da
   protected_areas_user <- st_read(protected_areas_user, type=3, promote_to_multi=FALSE) # load
   print(protected_areas_user)
 
-  # fix geometry and remove points
-  protected_areas_user <- protected_areas_user[!st_geometry_type(protected_areas_user)%in% c("POINT","MULTIPOINT"),]
-  # turning multipolygons to polygons
-  if (any(st_geometry_type(protected_areas_user) %in% "MULTIPOLYGON")){
-    print("Turning multipolygons into polygons")
-    multi <- protected_areas_user[st_geometry_type(protected_areas_user)=="MULTIPOLYGON",]
-    multi <- st_cast(multi, to="POLYGON", group_or_split=TRUE)
-    poly <- protected_areas_user[st_geometry_type(protected_areas_user)=="POLYGON",]
-    protected_areas_user <- rbind(poly, multi)
-  }
-
   if(is.null(input$date_column)){
     biab_error_stop("Please specify a date column name for the protected areas file.")
   }
@@ -94,20 +83,21 @@ if(pa_input_type == "Both"){
 
 print(nrow(protected_areas))
 
+protected_areas <- st_make_valid(protected_areas)
+
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function (x) {
 
 print("Combining overlapping geometries")
-protected_areas_clean <- st_buffer(x, dist=10) # buffering polygons by 10 meters
-intersections <- st_intersects(protected_areas_clean) # Identifying intersecting polygons
+protected_areas_buffer <- st_buffer(x, dist=10) # buffering polygons by 10 meters
+intersections <- st_intersects(protected_areas_buffer) # Identifying intersecting polygons
 
 groups <- as.integer(igraph::components(graph = igraph::graph_from_adj_list(intersections))$membership) # Grouping intersecting polygons
 
 x$group_id <- groups
-print(x[x$group_id==1])
 
 protected_areas_clean <- x %>%
-  group_by(group_id) %>% filter(!group_id==1) %>%
+  group_by(group_id) %>% 
   summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
 
 return(protected_areas_clean)
@@ -117,14 +107,18 @@ return(protected_areas_clean)
 
 print("Calculating ProtConn")
 protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years)
+print("Num prot areas:")
+print(nrow(protected_areas))
 # Get rid of overlaps
 protected_areas_simp <- dissolve_overlaps(protected_areas)
+print("Num prot areas with overlaps dissolved:")
+print(nrow(protected_areas_simp))
+print(unique(st_geometry_type(protected_areas)))
 
 if(nrow(protected_areas_simp)<2){
 biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 } 
-print("Printing threshold")
-print(input$distance_threshold)
+
 protconn_result <- Makurhini::MK_ProtConn(
   nodes=protected_areas_simp,
   region=study_area,
@@ -236,7 +230,7 @@ for(i in 1:nrow(protected_areas)) {
     protected_areas$legal_status_updated_at[i] <- input$start_year
   }
 }
-print(protected_areas)
+
 # Calculate ProtConn for each specified year
 print("Calculating ProtConn time series")
 
@@ -244,17 +238,17 @@ protconn_ts_result <- list()
 
 for (i in 1:length(years)) {
   print(years[i])
-  protected_area_filt_yr <- protected_areas %>% dplyr::filter(legal_status_updated_at <= years[i])
-  if((nrow(protected_area_filt_yr))<2) {
+  protected_areas_filt_yr <- protected_areas %>% dplyr::filter(legal_status_updated_at <= years[i])
+  if((nrow(protected_areas_filt_yr))<2) {
     print(paste("Not enough protected area data from", years, "beginning calculations at first year with data"))
     next
   } else {
     if (years[i]==input$years){
       protconn_result_yrs <- protconn_result
     } else {
-    protected_area_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
+    protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
     protconn_result_yrs <- Makurhini::MK_ProtConn(
-      nodes=protected_area_filt_yr,
+      nodes=protected_areas_filt_yr,
       region=study_area, area_unit="m2",
       distance=list(type=input$distance_matrix_type),
       probability=0.5,
