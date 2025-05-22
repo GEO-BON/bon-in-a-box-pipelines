@@ -1,4 +1,4 @@
-FROM julia:1.11-alpine
+FROM julia:1.11
 
 COPY importEnvVars.sh /importEnvVars.sh
 RUN chmod a+x /importEnvVars.sh
@@ -8,7 +8,7 @@ RUN chmod a+x /importEnvVars.sh
 ENV JULIA_DEPOT_PATH="/julia_depot/"
 
 # Pre-compiling Julia dependencies
-RUN julia --project=${JULIA_DEPOT_PATH} -e 'pwd(); using Pkg; \
+RUN julia --project=${JULIA_DEPOT_PATH} -e 'using Pkg; \
     Pkg.add.(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees" ]);'
 
     # TODO: Precompilation and cleanup of temp files
