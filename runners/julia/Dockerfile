@@ -8,9 +8,13 @@ RUN chmod a+x /importEnvVars.sh
 ENV JULIA_DEPOT_PATH="/julia_depot/"
 
 # Pre-compiling Julia dependencies
-RUN julia --project=${JULIA_DEPOT_PATH} -e 'using Pkg; \
-    Pkg.add.(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees" ]);'
+RUN julia --project=$JULIA_DEPOT_PATH -e 'using Pkg; \
+    Pkg.add.(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees" ])' \
+    # Remove some unnecessary files in our containerized runtime context, to make the image lighter \
+    && rm -r $JULIA_DEPOT_PATH/scratchspaces \
+    && (find $JULIA_DEPOT_PATH -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r "{}" || true) \
+    && (find $JULIA_DEPOT_PATH -name 'man' -prune -type d | xargs -r -i -P 16 rm -r "{}" || true)
 
-RUN chmod -R 777 /julia_depot
+RUN chmod -R 777 $JULIA_DEPOT_PATH
 
 RUN date +"%Y-%m-%d %R" > /version.txt
