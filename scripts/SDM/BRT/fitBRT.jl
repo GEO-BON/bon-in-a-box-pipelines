@@ -78,7 +78,7 @@ function main()
 
     @info "Fitting BRT..."
     brt_config = EvoTreeMLE(max_depth=6, nbins=16, eta=0.05, nrounds=120, loss=:gaussian_mle)
-    model = fit_evotree(brt_config; x_train=features[train_idx, :], y_train=labels[train_idx])
+    model = EvoTrees.fit(brt_config; x_train=features[train_idx, :], y_train=labels[train_idx])
     fit_stats, confusion_matrices = compute_fit_stats(model, features, labels, test_idx)
 
     @info "Predicting SDM..."
