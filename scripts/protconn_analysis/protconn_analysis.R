@@ -99,6 +99,7 @@ x$group_id <- groups
 protected_areas_clean <- x %>%
   group_by(group_id) %>% 
   summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
+protected_areas_clean <- st_cast(protected_areas_clean, "POLYGON")
 
 return(protected_areas_clean)
 }
@@ -113,7 +114,9 @@ print(nrow(protected_areas))
 protected_areas_simp <- dissolve_overlaps(protected_areas)
 print("Num prot areas with overlaps dissolved:")
 print(nrow(protected_areas_simp))
-print(unique(st_geometry_type(protected_areas)))
+print("Geometry with overlaps dissolved (should be polygon):")
+print(unique(st_geometry_type(protected_areas_simp)))
+
 
 if(nrow(protected_areas_simp)<2){
 biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
