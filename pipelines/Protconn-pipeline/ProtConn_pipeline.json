@@ -319,7 +319,7 @@
     },
     "pipeline@29": {
       "label": "Polygon of protected areas",
-      "description": "The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. If you want to use only custom polygons, please use the \"ProtConn analysis with custom PAs\" pipeline.",
+      "description": "The protected areas (PAs) of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. If you want to use only custom polygons, please use the \"ProtConn analysis with custom PAs\" pipeline.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
       "weight": 2
@@ -339,7 +339,7 @@
       "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@8|distance_threshold": {
-      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
+      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
       "label": "Distance analysis threshold",
       "type": "int",
       "example": 10000,
@@ -415,14 +415,14 @@
       "weight": 13
     },
     "data>cleanWDPA.yml@30|include_marine": {
-      "description": "Whether to include marine protected areas or filter them out",
+      "description": "Check to include marine protected areas",
       "label": "Include marine protected areas",
       "type": "boolean",
       "example": true,
       "weight": 14
     },
     "data>cleanWDPA.yml@30|include_oecm": {
-      "description": "Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated  \nprotected areas but are still achieving conservation outcomes. \n",
+      "description": "Check to include areas with other effective area-based conservation measures (OECMs). These are not officially designated protected areas but are still achieving conservation outcomes. \n",
       "label": "Include OECMs",
       "type": "boolean",
       "example": true,

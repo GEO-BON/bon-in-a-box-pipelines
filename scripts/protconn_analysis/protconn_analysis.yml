@@ -13,7 +13,7 @@ inputs:
     example: null
   protected_area_polygon:
     label: Polygon of protected areas
-    description: The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. 
+    description: The protected areas (PAs) of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script.
     type: application/geopackage+sqlite3[]
     example: null
   date_column_name:
@@ -22,13 +22,13 @@ inputs:
     type: text
     example: null
   crs:
-    label: Coordinate reference system 
+    label: Coordinate reference system
     description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [here](https://epsg.io/).
     type: text
     example: "EPSG:4326"
   distance_threshold:
     label: Distance analysis threshold
-    description: Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.
+    description: Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.
     type: int
     example: 10000
   transboundary_distance:
