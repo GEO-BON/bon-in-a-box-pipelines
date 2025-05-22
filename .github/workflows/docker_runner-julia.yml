@@ -7,7 +7,7 @@ on:
       - main
       - '*staging'
     paths:
-      - 'runners/julia/dockerfile'
+      - 'runners/julia/**'
 
 jobs:
   runner-julia:
