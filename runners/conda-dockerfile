@@ -26,8 +26,7 @@ RUN chmod 777 /.condarc && chmod 777 /.bashrc
 # See https://stackoverflow.com/a/74017557/3519951
 RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
 
-# Conda cache and environments folder will be replaced by a virtual volume, but we want them to be writable by the runtime user.
-# Permissions cannot be defined at mount time, hence we create empty folder with the appropriate permissions.
+# Conda cache and environments folder need to be writable by the runtime user.
 RUN set -ex; \
     mkdir /.conda && chmod a+w /.conda; \
     mkdir /.mamba && chmod a+w /.mamba; \
