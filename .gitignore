@@ -9,6 +9,9 @@ rosm.cache
 *.Rproj
 lib/
 
+# Version file of the last run BON in a Box server
+serverVersion.txt
+
 # R temporary files
 .Rproj.user
 .Rhistory
