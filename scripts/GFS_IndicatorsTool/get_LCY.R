@@ -103,12 +103,12 @@ dir.create(file.path(outputFolder, "/lcyy/"))
 
 
 #### Create local raster output for every population
-for (pop in pop_poly$pop) {
+for (name in pop_poly$name) {
   
-  print(pop)
+  print(name)
   
   # crop rasters to pop extent
-  LC_pop = crop(LC, pop_poly[pop_poly$pop==pop,], mask=T)
+  LC_pop = crop(LC, pop_poly[pop_poly$name==name,], mask=T)
   
   LC_pop_cl = (LC_pop%in%user_classes)+0
   
@@ -119,7 +119,7 @@ for (pop in pop_poly$pop) {
   names(lcy)=paste0('y',yoi)
   plot(lcy)
   # write output
-  terra::writeRaster(lcy, filename = paste0(outputFolder, "/lcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
+  terra::writeRaster(lcy, filename = paste0(outputFolder, "/lcyy/",name,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
   
 }
 lcy = LC

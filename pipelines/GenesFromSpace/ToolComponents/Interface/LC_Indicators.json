@@ -1,22 +1,35 @@
 {
   "nodes": [
     {
-      "id": "183",
+      "id": "205",
       "type": "io",
       "position": {
-        "x": 1264,
-        "y": 160
+        "x": 684,
+        "y": 87.5
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_Indicators_copy.yml"
       }
     },
     {
-      "id": "185",
-      "type": "constant",
+      "id": "206",
+      "type": "userInput",
       "position": {
-        "x": 686,
-        "y": 50.5
+        "x": 170,
+        "y": 30
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "/userdata/cover_maps"
+      }
+    },
+    {
+      "id": "207",
+      "type": "userInput",
+      "position": {
+        "x": 134,
+        "y": 64
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -25,11 +38,11 @@
       }
     },
     {
-      "id": "186",
-      "type": "constant",
+      "id": "208",
+      "type": "userInput",
       "position": {
-        "x": 649,
-        "y": 163.5
+        "x": 12,
+        "y": 98
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -38,11 +51,11 @@
       }
     },
     {
-      "id": "187",
+      "id": "209",
       "type": "constant",
       "position": {
-        "x": 807,
-        "y": 204.5
+        "x": 227,
+        "y": 132
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -54,11 +67,11 @@
       }
     },
     {
-      "id": "188",
+      "id": "210",
       "type": "constant",
       "position": {
-        "x": 807,
-        "y": 245.5
+        "x": 227,
+        "y": 173
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -71,11 +84,11 @@
       }
     },
     {
-      "id": "189",
-      "type": "constant",
+      "id": "211",
+      "type": "userInput",
       "position": {
-        "x": 823,
-        "y": 286.5
+        "x": 347,
+        "y": 214
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -84,291 +97,179 @@
       }
     },
     {
-      "id": "191",
-      "type": "output",
-      "position": {
-        "x": 2014,
-        "y": 87.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "192",
-      "type": "output",
-      "position": {
-        "x": 2014,
-        "y": 40.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "193",
-      "type": "output",
-      "position": {
-        "x": 2014,
-        "y": 318.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "194",
-      "type": "output",
-      "position": {
-        "x": 2014,
-        "y": 271.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "195",
-      "type": "io",
-      "position": {
-        "x": 542,
-        "y": 91.5
-      },
-      "data": {
-        "descriptionFile": "GFS_IndicatorsTool>get_LCY.yml"
-      }
-    },
-    {
-      "id": "196",
-      "type": "output",
-      "position": {
-        "x": 1264,
-        "y": 12
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "197",
+      "id": "212",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 65.5
+        "x": 294,
+        "y": 248
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "application/geo+json",
-        "value": "/userdata/population_polygons.geojson"
+        "type": "text",
+        "value": "120,140"
       }
     },
     {
-      "id": "198",
-      "type": "userInput",
+      "id": "213",
+      "type": "output",
       "position": {
-        "x": 213,
-        "y": 99.5
+        "x": 1442,
+        "y": 94
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "int[]",
-        "value": [
-          1995,
-          2000,
-          2005,
-          2010,
-          2015,
-          2020
-        ]
+        "label": "Output"
       }
     },
     {
-      "id": "199",
-      "type": "userInput",
+      "id": "214",
+      "type": "output",
       "position": {
-        "x": 197,
-        "y": 133.5
+        "x": 1444,
+        "y": 138
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "int[]",
-        "value": [
-          130,
-          140
-        ]
+        "label": "Output"
+      }
+    },
+    {
+      "id": "215",
+      "type": "output",
+      "position": {
+        "x": 1434,
+        "y": 199
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
   "edges": [
     {
-      "source": "185",
+      "source": "206",
       "sourceHandle": null,
-      "target": "183",
-      "targetHandle": "population_polygons",
-      "id": "reactflow__edge-185-183population_polygons"
-    },
-    {
-      "source": "186",
-      "sourceHandle": null,
-      "target": "183",
-      "targetHandle": "pop_area",
-      "id": "reactflow__edge-186-183pop_area"
-    },
-    {
-      "source": "187",
-      "sourceHandle": null,
-      "target": "183",
-      "targetHandle": "ne_nc",
-      "id": "reactflow__edge-187-183ne_nc"
-    },
-    {
-      "source": "188",
-      "sourceHandle": null,
-      "target": "183",
-      "targetHandle": "pop_density",
-      "id": "reactflow__edge-188-183pop_density"
-    },
-    {
-      "source": "189",
-      "sourceHandle": null,
-      "target": "183",
-      "targetHandle": "runtitle",
-      "id": "reactflow__edge-189-183runtitle"
-    },
-    {
-      "source": "183",
-      "sourceHandle": "ne_table",
-      "target": "191",
-      "targetHandle": null,
-      "id": "reactflow__edge-183ne_table-191"
-    },
-    {
-      "source": "183",
-      "sourceHandle": "pm",
-      "target": "192",
-      "targetHandle": null,
-      "id": "reactflow__edge-183pm-192"
-    },
-    {
-      "source": "183",
-      "sourceHandle": "interactive_plot",
-      "target": "193",
-      "targetHandle": null,
-      "id": "reactflow__edge-183interactive_plot-193"
-    },
-    {
-      "source": "183",
-      "sourceHandle": "ne500",
-      "target": "194",
-      "targetHandle": null,
-      "id": "reactflow__edge-183ne500-194"
-    },
-    {
-      "source": "195",
-      "sourceHandle": "lc_classes",
-      "target": "183",
-      "targetHandle": "lc_classes",
-      "id": "reactflow__edge-195lc_classes-183lc_classes"
-    },
-    {
-      "source": "195",
-      "sourceHandle": "output_maps",
-      "target": "183",
+      "target": "205",
       "targetHandle": "cover_maps",
-      "id": "reactflow__edge-195output_maps-183cover_maps"
+      "id": "reactflow__edge-206-205cover_maps"
     },
     {
-      "source": "195",
-      "sourceHandle": "lcyy",
-      "target": "196",
-      "targetHandle": null,
-      "id": "reactflow__edge-195lcyy-196"
-    },
-    {
-      "source": "197",
+      "source": "207",
       "sourceHandle": null,
-      "target": "195",
+      "target": "205",
       "targetHandle": "population_polygons",
-      "id": "reactflow__edge-197-195population_polygons"
+      "id": "reactflow__edge-207-205population_polygons"
     },
     {
-      "source": "198",
+      "source": "208",
       "sourceHandle": null,
-      "target": "195",
-      "targetHandle": "yoi",
-      "id": "reactflow__edge-198-195yoi"
+      "target": "205",
+      "targetHandle": "pop_area",
+      "id": "reactflow__edge-208-205pop_area"
     },
     {
-      "source": "199",
+      "source": "209",
       "sourceHandle": null,
-      "target": "195",
+      "target": "205",
+      "targetHandle": "ne_nc",
+      "id": "reactflow__edge-209-205ne_nc"
+    },
+    {
+      "source": "210",
+      "sourceHandle": null,
+      "target": "205",
+      "targetHandle": "pop_density",
+      "id": "reactflow__edge-210-205pop_density"
+    },
+    {
+      "source": "211",
+      "sourceHandle": null,
+      "target": "205",
+      "targetHandle": "runtitle",
+      "id": "reactflow__edge-211-205runtitle"
+    },
+    {
+      "source": "212",
+      "sourceHandle": null,
+      "target": "205",
       "targetHandle": "lc_classes",
-      "id": "reactflow__edge-199-195lc_classes"
+      "id": "reactflow__edge-212-205lc_classes"
+    },
+    {
+      "source": "205",
+      "sourceHandle": "ne_table",
+      "target": "213",
+      "targetHandle": null,
+      "id": "reactflow__edge-205ne_table-213"
+    },
+    {
+      "source": "205",
+      "sourceHandle": "pm",
+      "target": "214",
+      "targetHandle": null,
+      "id": "reactflow__edge-205pm-214"
+    },
+    {
+      "source": "205",
+      "sourceHandle": "ne500",
+      "target": "215",
+      "targetHandle": null,
+      "id": "reactflow__edge-205ne500-215"
     }
   ],
   "inputs": {
-    "pipeline@197": {
+    "pipeline@206": {
+      "label": "Cover, cover gain and cover loss map",
+      "description": "resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot",
+      "type": "text",
+      "example": "/userdata/cover_maps",
+      "weight": 0
+    },
+    "pipeline@207": {
       "label": "Polygons of populations",
       "description": "Path to geojson file storing polygons of populations.",
       "type": "application/geo+json",
       "example": "/userdata/population_polygons.geojson",
-      "weight": 0
-    },
-    "pipeline@198": {
-      "label": "Years of interest",
-      "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
-      "type": "int[]",
-      "example": [
-        1995,
-        2000,
-        2005,
-        2010,
-        2015,
-        2020
-      ],
       "weight": 1
     },
-    "pipeline@199": {
-      "label": "Landcover classes",
-      "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
-      "type": "int[]",
-      "example": [
-        130,
-        140
-      ],
+    "pipeline@208": {
+      "label": "Table of habitat area by population",
+      "description": "Table of estimated habitat area by population (rows). If provided, time points are displayed as columns.",
+      "type": "text/tab-separated-values",
+      "example": "/userdata/pop_habitat_area.tsv",
       "weight": 2
+    },
+    "pipeline@211": {
+      "label": "Title of the run",
+      "description": "Set a name for the pipeline run.",
+      "type": "text",
+      "example": "Quercus sartorii, Mexico, Habitat decline by tree cover loss, 2000-2023",
+      "weight": 3
+    },
+    "pipeline@212": {
+      "label": "Land cover classes ID",
+      "description": "ID of LC classes used to evaluate habitat change",
+      "type": "text",
+      "example": "120,140",
+      "weight": 4
     }
   },
   "outputs": {
-    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|ne_table": {
+    "GFS_IndicatorsTool>get_Indicators_copy.yml@205|ne_table": {
       "description": "Estimated effective size of every population, based on the latest time point of the habitat cover map.",
       "label": "Effective population size",
       "type": "text/tab-separated-values",
       "weight": 0
     },
-    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|pm": {
+    "GFS_IndicatorsTool>get_Indicators_copy.yml@205|pm": {
       "description": "Estimated proportion of mantained populations, comparing earliest and latest time point. A value of 1 means that no populations went extinct over the time frame.",
       "label": "Population maintained indicator",
       "type": "float",
       "weight": 1
     },
-    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|interactive_plot": {
-      "description": "An interactive interface to explore indicators trends across geographical space and time.",
-      "label": "Interactive plot",
-      "type": "text/html",
-      "weight": 2
-    },
-    "GFS_IndicatorsTool>get_Indicators_copy.yml@183|ne500": {
+    "GFS_IndicatorsTool>get_Indicators_copy.yml@205|ne500": {
       "description": "Estimated proportion of populations with Ne>500 at latest time point.",
       "label": "Ne>500 indicator",
       "type": "float",
-      "weight": 3
-    },
-    "GFS_IndicatorsTool>get_LCY.yml@195|lcyy": {
-      "description": "Path to folder with tif files showing the year-by-year disrtribution of land cover classes of interest across populations.",
-      "label": "Land cover year-by-year",
-      "type": "text",
-      "weight": 4
+      "weight": 2
     }
   }
 }

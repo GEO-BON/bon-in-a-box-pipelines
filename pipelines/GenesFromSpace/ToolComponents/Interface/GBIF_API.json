@@ -1,0 +1,266 @@
+{
+  "nodes": [
+    {
+      "id": "51",
+      "type": "io",
+      "position": {
+        "x": 802.3333129882812,
+        "y": 237.7361068725586
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>GBIF_obs.yml"
+      }
+    },
+    {
+      "id": "52",
+      "type": "userInput",
+      "position": {
+        "x": 280.33331298828125,
+        "y": -9.263893127441406
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "Panthera onca"
+      }
+    },
+    {
+      "id": "54",
+      "type": "userInput",
+      "position": {
+        "x": 231.33331298828125,
+        "y": 167.7361068725586
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          2010
+        ]
+      }
+    },
+    {
+      "id": "55",
+      "type": "userInput",
+      "position": {
+        "x": 240.33331298828125,
+        "y": 213.7361068725586
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          2015
+        ]
+      }
+    },
+    {
+      "id": "56",
+      "type": "userInput",
+      "position": {
+        "x": 245.33331298828125,
+        "y": 269.7361068725586
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1
+        ]
+      }
+    },
+    {
+      "id": "57",
+      "type": "userInput",
+      "position": {
+        "x": 196.33331298828125,
+        "y": 313.7361068725586
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          0.1
+        ]
+      }
+    },
+    {
+      "id": "58",
+      "type": "userInput",
+      "position": {
+        "x": 399.33331298828125,
+        "y": 362.7361068725586
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          -90,
+          -80,
+          14,
+          22
+        ]
+      }
+    },
+    {
+      "id": "59",
+      "type": "output",
+      "position": {
+        "x": 1280.3333129882812,
+        "y": 202.7361068725586
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "60",
+      "type": "userInput",
+      "position": {
+        "x": 207.33331298828125,
+        "y": 117.7361068725586
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Brazil",
+          "Colombia"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "species",
+      "id": "reactflow__edge-52-51species"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-54-51start_year"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-55-51end_year"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "coordinate_precision",
+      "id": "reactflow__edge-56-51coordinate_precision"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "coordinate_uncertainty",
+      "id": "reactflow__edge-57-51coordinate_uncertainty"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-58-51bbox"
+    },
+    {
+      "source": "51",
+      "sourceHandle": "observation_data",
+      "target": "59",
+      "targetHandle": null,
+      "id": "reactflow__edge-51observation_data-59"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "51",
+      "targetHandle": "countries",
+      "id": "reactflow__edge-60-51countries"
+    }
+  ],
+  "inputs": {
+    "pipeline@52": {
+      "label": "Species",
+      "description": "species of interest, will be used to look for GBIF observations.",
+      "type": "text",
+      "example": "Panthera onca",
+      "weight": 0
+    },
+    "pipeline@54": {
+      "label": "Start year",
+      "description": "start year of interest",
+      "type": "float[]",
+      "example": [
+        2010
+      ],
+      "weight": 1
+    },
+    "pipeline@55": {
+      "label": "End year",
+      "description": "end year of interest",
+      "type": "float[]",
+      "example": [
+        2015
+      ],
+      "weight": 2
+    },
+    "pipeline@56": {
+      "label": "Coordinate precision",
+      "description": "coordinate precision",
+      "type": "float[]",
+      "example": [
+        0.1
+      ],
+      "weight": 3
+    },
+    "pipeline@57": {
+      "label": "Coordinate uncertainty",
+      "description": "coordinate uncertainty",
+      "type": "float[]",
+      "example": [
+        0.1
+      ],
+      "weight": 4
+    },
+    "pipeline@58": {
+      "label": "Bounding box",
+      "description": "bounding box around area of interest",
+      "type": "float[]",
+      "example": [
+        -90,
+        -80,
+        14,
+        22
+      ],
+      "weight": 5
+    },
+    "pipeline@60": {
+      "label": "Countries list",
+      "description": "countries of interest, will be used to look for GBIF observations.",
+      "type": "text[]",
+      "example": [
+        "Brazil",
+        "Colombia"
+      ],
+      "weight": 6
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>GBIF_obs.yml@51|observation_data": {
+      "description": "GBIF observation data",
+      "label": "Observation data",
+      "type": "text[]",
+      "weight": 0
+    }
+  }
+}

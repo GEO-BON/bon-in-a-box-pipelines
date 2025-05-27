@@ -1,0 +1,243 @@
+{
+  "nodes": [
+    {
+      "id": "195",
+      "type": "io",
+      "position": {
+        "x": 542,
+        "y": 188
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>get_LCY.yml"
+      }
+    },
+    {
+      "id": "196",
+      "type": "output",
+      "position": {
+        "x": 1234,
+        "y": 41
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "197",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 24
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geo+json",
+        "value": "/userdata/population_polygons.geojson"
+      }
+    },
+    {
+      "id": "198",
+      "type": "userInput",
+      "position": {
+        "x": 213,
+        "y": 196
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          1995,
+          2000,
+          2005,
+          2010,
+          2015,
+          2020
+        ]
+      }
+    },
+    {
+      "id": "199",
+      "type": "userInput",
+      "position": {
+        "x": 197,
+        "y": 230
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          130,
+          140
+        ]
+      }
+    },
+    {
+      "id": "200",
+      "type": "io",
+      "position": {
+        "x": 1234,
+        "y": 88
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>pop_area_by_habitat.yml"
+      }
+    },
+    {
+      "id": "201",
+      "type": "output",
+      "position": {
+        "x": 1223.1342204236164,
+        "y": 198.68057913479308
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "202",
+      "type": "output",
+      "position": {
+        "x": 1223.1342204236164,
+        "y": 214.21298504222162
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "203",
+      "type": "output",
+      "position": {
+        "x": 1944.6850766687055,
+        "y": 85.71762708076737
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "195",
+      "sourceHandle": "lcyy",
+      "target": "196",
+      "targetHandle": null,
+      "id": "reactflow__edge-195lcyy-196"
+    },
+    {
+      "source": "197",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-197-195population_polygons"
+    },
+    {
+      "source": "198",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "yoi",
+      "id": "reactflow__edge-198-195yoi"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "lc_classes",
+      "id": "reactflow__edge-199-195lc_classes"
+    },
+    {
+      "source": "197",
+      "sourceHandle": null,
+      "target": "200",
+      "targetHandle": "population_polygons",
+      "id": "reactflow__edge-197-200population_polygons"
+    },
+    {
+      "source": "195",
+      "sourceHandle": "lcyy",
+      "target": "200",
+      "targetHandle": "habitat_map",
+      "id": "reactflow__edge-195lcyy-200habitat_map"
+    },
+    {
+      "source": "195",
+      "sourceHandle": "output_maps",
+      "target": "201",
+      "targetHandle": null,
+      "id": "reactflow__edge-195output_maps-201"
+    },
+    {
+      "source": "195",
+      "sourceHandle": "lc_classes",
+      "target": "202",
+      "targetHandle": null,
+      "id": "reactflow__edge-195lc_classes-202"
+    },
+    {
+      "source": "200",
+      "sourceHandle": "pop_area",
+      "target": "203",
+      "targetHandle": null,
+      "id": "reactflow__edge-200pop_area-203"
+    }
+  ],
+  "inputs": {
+    "pipeline@197": {
+      "label": "Polygons of populations",
+      "description": "Path to geojson file storing polygons of populations.",
+      "type": "application/geo+json",
+      "example": "/userdata/population_polygons.geojson",
+      "weight": 0
+    },
+    "pipeline@198": {
+      "label": "Years of interest",
+      "description": "List of years for which landcover should be extracted (maximum range 1992 - 2020).",
+      "type": "int[]",
+      "example": [
+        1995,
+        2000,
+        2005,
+        2010,
+        2015,
+        2020
+      ],
+      "weight": 1
+    },
+    "pipeline@199": {
+      "label": "Landcover classes",
+      "description": "List of landcover class identifiers to be extract (for identifiers see https://savs.eumetsat.int/html/images/landcover_legend.png)",
+      "type": "int[]",
+      "example": [
+        130,
+        140
+      ],
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>get_LCY.yml@195|output_maps": {
+      "description": "resampled maps of cover, cover gain and cover loss map used to visualize cover dynamics in final plot",
+      "label": "Cover, cover gain and cover loss map",
+      "type": "text",
+      "weight": 0
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@195|lc_classes": {
+      "description": "ID of LC classes used to evaluate habitat change",
+      "label": "Land cover classes ID",
+      "type": "text",
+      "weight": 1
+    },
+    "GFS_IndicatorsTool>pop_area_by_habitat.yml@200|pop_area": {
+      "description": "Table of estimated habitat area by population (rows). If available, time points are displayed as columns.",
+      "label": "Table of habitat area by population",
+      "type": "text/tab-separated-values",
+      "weight": 2
+    },
+    "GFS_IndicatorsTool>get_LCY.yml@195|lcyy": {
+      "description": "Path to folder with tif files showing the year-by-year disrtribution of land cover classes of interest across populations.",
+      "label": "Land cover year-by-year",
+      "type": "text",
+      "weight": 3
+    }
+  }
+}

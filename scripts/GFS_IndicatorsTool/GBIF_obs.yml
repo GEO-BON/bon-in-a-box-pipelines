@@ -1,0 +1,67 @@
+script: GBIF_obs.R
+name: GBIF observations
+description: This script returns GBIF point data with filters chosen by the user.
+author:
+  - name: Simon Pahls
+
+
+
+
+inputs:
+  species:
+    label: Species
+    description: species of interest, will be used to look for GBIF observations. 
+    type: text
+    example: "Panthera onca"
+  countries:
+    label: Countries list
+    description: countries of interest, will be used to look for GBIF observations. 
+    type: text[]
+    example: ["Brazil", "Colombia"]
+  start_year:
+    label: Start year
+    description: start year of interest
+    type: float[]
+    example: [2010]
+  end_year:
+    label: End year
+    description: end year of interest
+    type: float[]
+    example: [2015]
+  coordinate_precision:
+    label: Coordinate precision
+    description: coordinate precision
+    type: float[]
+    example: [0.1]
+  coordinate_uncertainty:
+    label: Coordinate uncertainty
+    description: coordinate uncertainty
+    type: float[]
+    example: [0.1]
+  bbox:
+    label: Bounding box
+    description: bounding box around area of interest
+    type: float[]
+    example: [-90, -80, 14, 22]
+
+outputs:
+  observation_data:
+    label: Observation data
+    description: GBIF observation data
+    type: text[] 
+
+
+
+conda: 
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-base
+    - r-rgbif
+    - r-dplyr
+    - r-coordinatecleaner
+    - r-countrycode
+    - r-rjson
+    
+
