@@ -77,7 +77,7 @@ else
         assertSuccess
     fi
 
-    echo "Using branch $branch."
+    echo "Using git branch $branch."
     git checkout origin/$branch -- prod-server.sh
     assertSuccess
 
