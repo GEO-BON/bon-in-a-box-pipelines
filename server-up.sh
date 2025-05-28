@@ -12,9 +12,11 @@ function assertSuccess {
 }
 
 offline=false
+skipPrompts=""
 while (( $# > 0 )) ; do
   case $1 in
     -c|--clean) ./.server/prod-server.sh clean ;;
+    -y|--yes) skipPrompts="-y" ;;
     --offline) offline=true ;;
     -h|--help)
         echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH]"
@@ -26,6 +28,7 @@ while (( $# > 0 )) ; do
         echo "  -h, --help          Display this help"
         echo "  -c, --clean         Discards the docker containers before starting the server."
         echo "                      Warning: any dependency or conda environment installed at runtime will be lost."
+        echo "  -y, --yes           Skip update confirmation prompt (for automation)"
         echo "      --offline       Run the existing version of the server. "
         echo "                      Will not attempt to pull the latest version or the containers nor server configuration."
         echo
@@ -85,4 +88,4 @@ else
 
 fi
 
-./prod-server.sh up
+./prod-server.sh up $skipPrompts
