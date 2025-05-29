@@ -6,12 +6,12 @@ author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
 inputs:
-  study_area_polygon: 
+  study_area_polygon:
     label: Study area polygon
     description: Study area of interest in a geopackage file
     type: application/geopackage+sqlite3
     example: null
-  protected_area_file: 
+  protected_area_file:
     label: Protected areas file
     description: File path of the shapefile of protected areas (Leave blank if using data from WDPA only). Must be in geopackage format.
     type: application/geopackage+sqlite3
@@ -39,7 +39,7 @@ inputs:
     label: Buffer protected area points
     description: |
       Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.
-      If checked, this will create a circular protected area around the reported point that is equal to the reported area. 
+      If checked, this will create a circular protected area around the reported point that is equal to the reported area.
       If there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.
     type: boolean
     example: FALSE
@@ -51,8 +51,8 @@ inputs:
   include_oecm:
     label: Include OECMs
     description: |
-      Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated  
-      protected areas but are still achieving conservation outcomes. 
+      Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated
+      protected areas but are still achieving conservation outcomes.
     type: boolean
     example: TRUE
 outputs:
@@ -66,6 +66,7 @@ conda:
     - r
   dependencies:
     - r-rjson
+    - r-igraph
     - r-wdpar
     - r-sf
     - r-remotes
