@@ -1,3 +1,5 @@
+using Random
+
 function _get_wgs84_bbox(transformer, xmin, ymin, xmax, ymax)
     tr, tl, bl, br = (xmax, ymax), (xmin, ymax), (xmin, ymin), (xmax, ymin)
     _new_coords = [transformer(x...) for x in [tr, tl, bl, br]]
@@ -29,7 +31,7 @@ function get_features_and_labels(predictors, presences, absences)
     features = Float32.([predictors[i][k] for k in locations, i in eachindex(predictors)])
     labels = [ones(Bool, sum(presences))..., zeros(Bool, sum(absences))...]
     return features, labels
-end 
+end
 
 function crossvalidation_split(
     labels;
@@ -39,4 +41,4 @@ function crossvalidation_split(
     test_idx = Random.shuffle(eachindex(labels))[1:nt]
     train_idx = setdiff(eachindex(labels), test_idx)
     return train_idx, test_idx
-end 
+end
