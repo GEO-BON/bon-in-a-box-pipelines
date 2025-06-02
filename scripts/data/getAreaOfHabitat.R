@@ -73,6 +73,11 @@ elev_buffer <- ifelse(is.null(input$elev_buffer), NA,input$elev_buffer)
 
 #credentials
 token <- Sys.getenv("IUCN_TOKEN")
+if (token == "") {
+    biab_error_stop("Error: IUCN_TOKEN environment variable is not set.
+    Please check your runner.env file
+    and ensure that the line 'IUCN_TOKEN=' has a valid token value")
+}
 
 #-------------------------------------------------------------------------------
 # Step 1 - Get study area

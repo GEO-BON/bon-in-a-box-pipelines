@@ -29,6 +29,11 @@ input<- lapply(input, function(x) { if (!is.null(x) && length(x) > 0 && grepl("/
 #### Species list by country ####
 #Load IUCN token----
 token<- Sys.getenv("IUCN_TOKEN")
+if (token == "") {
+    biab_error_stop("Error: IUCN_TOKEN environment variable is not set.
+    Please check your runner.env file
+    and ensure that the line 'IUCN_TOKEN=' has a valid token value")
+}
 print(token)
 
 iucn_splist<- data.table::fread(input$species_data) %>% as.data.frame()
