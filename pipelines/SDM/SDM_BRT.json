@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1101,
-        "y": 358.83333333333326
+        "x": 1182.9361440176413,
+        "y": 321.9620685253946
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -78,17 +78,6 @@
       }
     },
     {
-      "id": "96",
-      "type": "io",
-      "position": {
-        "x": 513,
-        "y": 61
-      },
-      "data": {
-        "descriptionFile": "data>pyLoadObservations>pyLoadObservations.yml"
-      }
-    },
-    {
       "id": "119",
       "type": "io",
       "position": {
@@ -129,8 +118,8 @@
       "id": "126",
       "type": "output",
       "position": {
-        "x": 1099,
-        "y": 85.5
+        "x": 1323.3001942482933,
+        "y": 83.45159639955898
       },
       "data": {
         "label": "Output"
@@ -475,16 +464,20 @@
           "median"
         ]
       }
+    },
+    {
+      "id": "159",
+      "type": "io",
+      "position": {
+        "x": 542.6786444321133,
+        "y": 110.27536266231323
+      },
+      "data": {
+        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "96",
-      "sourceHandle": "observations_file",
-      "target": "34",
-      "targetHandle": "presence",
-      "id": "reactflow__edge-96observations_file-34presence"
-    },
     {
       "source": "35",
       "sourceHandle": null,
@@ -493,25 +486,11 @@
       "id": "reactflow__edge-35-34tests"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "96",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-96bbox"
-    },
-    {
       "source": "64",
       "sourceHandle": null,
       "target": "34",
       "targetHandle": "env_threshold",
       "id": "reactflow__edge-64-34env_threshold"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "96",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-96proj"
     },
     {
       "source": "57",
@@ -528,25 +507,11 @@
       "id": "reactflow__edge-58-119bbox"
     },
     {
-      "source": "121",
-      "sourceHandle": null,
-      "target": "96",
-      "targetHandle": "taxa",
-      "id": "reactflow__edge-121-96taxa"
-    },
-    {
       "source": "34",
       "sourceHandle": "clean_presence",
       "target": "123",
       "targetHandle": null,
       "id": "reactflow__edge-34clean_presence-123"
-    },
-    {
-      "source": "96",
-      "sourceHandle": "gbif_doi",
-      "target": "126",
-      "targetHandle": null,
-      "id": "reactflow__edge-96gbif_doi-126"
     },
     {
       "source": "128",
@@ -785,6 +750,34 @@
       "target": "139",
       "targetHandle": "aggregation",
       "id": "reactflow__edge-158-139aggregation"
+    },
+    {
+      "source": "121",
+      "sourceHandle": null,
+      "target": "159",
+      "targetHandle": "taxa",
+      "id": "reactflow__edge-121-159taxa"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "159",
+      "targetHandle": "proj",
+      "id": "reactflow__edge-57-159proj"
+    },
+    {
+      "source": "159",
+      "sourceHandle": "gbif_doi",
+      "target": "126",
+      "targetHandle": null,
+      "id": "reactflow__edge-159gbif_doi-126"
+    },
+    {
+      "source": "159",
+      "sourceHandle": "observations_file",
+      "target": "34",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-159observations_file-34presence"
     }
   ],
   "inputs": {
@@ -829,43 +822,18 @@
       "example": "EPSG:6622",
       "weight": 3
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
-      "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
-      "label": "Data source",
-      "type": "options",
-      "options": [
-        "gbif_pc",
-        "gbif_api"
-      ],
-      "example": "gbif_api",
-      "weight": 4
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
-      "description": "Earliest year of occurrence records",
-      "label": "Start Year",
-      "type": "int",
-      "example": 2010,
-      "weight": 5
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
-      "description": "Latest year of occurrence records ",
-      "label": "End Year",
-      "type": "int",
-      "example": 2023,
-      "weight": 6
-    },
     "pipeline@128": {
       "label": "Spatial Resolution",
       "description": "Integer, spatial resolution of the rasters in meters",
       "type": "float",
       "example": 1000,
-      "weight": 7
+      "weight": 4
     },
     "pipeline@144": {
       "label": "Mask",
       "description": "Shapefile, used to mask the output rasters",
       "type": "application/dbf",
-      "weight": 8,
+      "weight": 5,
       "example": null
     },
     "pipeline@146": {
@@ -873,27 +841,53 @@
       "description": "URL of the Stac Catalog to pull environmental predictors and water mask from.",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 9
+      "weight": 6
     },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
       "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
       "type": "float",
       "example": 10,
-      "weight": 10
+      "weight": 7
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
       "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
       "type": "int",
       "example": 100000,
-      "weight": 11
+      "weight": 8
     },
     "pipeline@154": {
       "label": "Pseudoabsence proportion",
       "description": "The number of PAs, given by the proportion of the total occurrences to use.",
       "type": "float",
       "example": 2.4,
+      "weight": 9
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|bbox": {
+      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "label": "bbox",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
+      "weight": 10
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 11
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2024,
       "weight": 12
     }
   },
@@ -907,65 +901,65 @@
       "type": "text[]",
       "weight": 0
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
-      "description": "DOI of GBIF download. Used for citing downloaded data.",
-      "label": "DOI of GBIF download",
-      "type": "text",
-      "example": "10.15468/dl.j644h5",
-      "weight": 1
-    },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
       "label": "Presences",
       "type": "text/tab-separated-values",
-      "weight": 2
+      "weight": 1
     },
     "data>loadFromStac.yml@119|rasters": {
       "description": "Environmental layers used as predictors",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 2
     },
     "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
       "description": "pseudoabsence coordinates",
       "label": "Pseudoabsences",
       "type": "text/tab-separated-values",
-      "weight": 4
+      "weight": 3
     },
     "SDM>BRT>fitBRT.yml@132|env_corners": {
       "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (red) in environment space for up to the first 5 predictors.",
       "label": "Environment Space",
       "type": "image/jpg",
-      "weight": 5
+      "weight": 4
     },
     "SDM>BRT>fitBRT.yml@132|tuning": {
       "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1.",
       "label": "Tuning Curve",
       "type": "image/jpg",
-      "weight": 6
+      "weight": 5
     },
     "SDM>BRT>fitBRT.yml@132|fit_stats": {
       "description": "JSON of BRT fit statistics and optimal threshold value.",
       "label": "Fit Statistics",
       "type": "text/json",
-      "weight": 7
+      "weight": 6
     },
     "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
       "description": "Map of occurrence score between 0 and 1.",
       "label": "Predicted SDM",
       "type": "image/tiff;application=geotiff",
-      "weight": 8
+      "weight": 7
     },
     "SDM>BRT>fitBRT.yml@132|range": {
       "description": "Range map thresholded at the optimal value.",
       "label": "Range",
       "type": "image/tiff;application=geotiff",
-      "weight": 9
+      "weight": 8
     },
     "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
       "description": "Map of the BRT's relative uncertainty for each location.",
       "label": "SDM Uncertainty",
       "type": "image/tiff;application=geotiff",
+      "weight": 9
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
       "weight": 10
     }
   },

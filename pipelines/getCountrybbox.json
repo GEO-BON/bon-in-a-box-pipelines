@@ -1,0 +1,153 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 464.9624938964844,
+        "y": 240
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 18.962493896484375,
+        "y": 120
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "userInput",
+      "position": {
+        "x": -230.03750610351562,
+        "y": 230
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "3",
+      "type": "output",
+      "position": {
+        "x": 594.9624938964844,
+        "y": 117
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "4",
+      "type": "output",
+      "position": {
+        "x": 1042.9624938964844,
+        "y": 237
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "country_polygon",
+      "target": "0",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-1country_polygon-0study_area_file"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-2-1crs"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-2-0crs"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "country_polygon",
+      "target": "3",
+      "targetHandle": null,
+      "id": "reactflow__edge-1country_polygon-3"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "bbox",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-0bbox-4"
+    }
+  ],
+  "inputs": {
+    "data>getCountryPolygon.yml@1|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@1|region": {
+      "description": "State of interest",
+      "label": "State/Province",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
+    "pipeline@2": {
+      "label": "Coordinate reference system",
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "type": "text",
+      "example": "EPSG:4326",
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "data>getCountryPolygon.yml@1|country_polygon": {
+      "description": "Polygon of the chosen country or region in the crs of choice in geopackage format",
+      "label": "Polygon of country or region",
+      "type": "application/geopackage+sqlite3",
+      "weight": 0
+    },
+    "data>getBoundingBox.yml@0|bbox": {
+      "description": "boundary box around area of interest in the order of min, ymin, xmax, ymax",
+      "label": "Bounding box",
+      "type": "float[]",
+      "weight": 1
+    }
+  },
+  "metadata": {
+    "name": "Get country bounding box",
+    "description": "Get the bounding box of a country or state/province of interest (country polygons pulled from rnaturalearth).",
+    "author": [
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "0000-0001-6020-6690"
+      }
+    ],
+    "license": "CC-BY",
+    "references": [
+      {
+        "text": "Massicotte P, South A (2023). _rnaturalearth: World Map Data from Natural Earth_. R package version 1.0.1, <https://CRAN.R-project.org/package=rnaturalearth>.",
+        "doi": "10.32614/CRAN.package.rnaturalearth"
+      }
+    ]
+  }
+}
