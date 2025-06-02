@@ -1,0 +1,51 @@
+script: invasiveSpeciesAnalysis.R
+name: Invasive species analysis
+description: Creates a model based on IAS data
+author:
+  - name: Laetitia Tremblay (laetitia.tremblay@mcgill.ca)
+external_link:
+inputs:
+  observations_file:
+    label: Observations
+    description: Output file with observations
+    type: text/tab-separated-values
+    example: /userdata/mongolia_GRIIS.tsv
+  min_year:
+    description: Year for the time series plot to start
+    label: Start year
+    type: int
+    example: 1950
+  max_year:
+    description: Year for the time series plot to end
+    label: End year
+    type: int
+    example: 2024
+  plot_type:
+    label: Plot type
+    description: Plot can either be cumulative or annual
+    type: options
+    options:
+    - cumulative
+    - annual
+    example: annual
+outputs:
+  result_plot:
+    label: Time series using a simple model
+    description: Plot of the introduction record of IAS along with fitted model values
+    type: image/png
+    example:
+  # detection_plot:
+  #   label: Time series using a constant detection model
+  #   description: Plot of the introduction record of IAS along with fitted model values
+  #   type: image/png
+  #   example:
+references:
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-readr
+    - r-dplyr
+    - r-lubridate

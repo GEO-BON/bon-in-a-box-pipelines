@@ -1,0 +1,115 @@
+[
+    {
+        "Id": "sha256:a34c8aef0935bff6801a4cd9415f0751b6848bf3bcbee6c20e8e8d9319cbaa25",
+        "RepoTags": [
+            "ghcr.io/developmentseed/titiler:0.18.9"
+        ],
+        "RepoDigests": [
+            "ghcr.io/developmentseed/titiler@sha256:a34c8aef0935bff6801a4cd9415f0751b6848bf3bcbee6c20e8e8d9319cbaa25"
+        ],
+        "Parent": "",
+        "Comment": "buildkit.dockerfile.v0",
+        "Created": "2024-09-23T16:19:46.950221929Z",
+        "DockerVersion": "",
+        "Author": "",
+        "Config": {
+            "Hostname": "",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": false,
+            "AttachStderr": false,
+            "ExposedPorts": {
+                "80/tcp": {},
+                "8000/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "PATH=/opt/bitnami/python/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "OS_ARCH=amd64",
+                "OS_FLAVOUR=debian-12",
+                "OS_NAME=linux",
+                "APP_VERSION=3.11.8",
+                "BITNAMI_APP_NAME=python",
+                "PYTHONPATH=/app",
+                "CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt",
+                "MODULE_NAME=titiler.application.main",
+                "VARIABLE_NAME=app"
+            ],
+            "Cmd": [
+                "/start.sh"
+            ],
+            "ArgsEscaped": true,
+            "Image": "",
+            "Volumes": null,
+            "WorkingDir": "/app/",
+            "Entrypoint": null,
+            "OnBuild": null,
+            "Labels": {
+                "com.vmware.cp.artifact.flavor": "sha256:c50c90cfd9d12b445b011e6ad529f1ad3daea45c26d20b00732fae3cd71f6a83",
+                "org.opencontainers.image.base.name": "docker.io/bitnami/minideb:bookworm",
+                "org.opencontainers.image.created": "2024-09-23T16:18:11.066Z",
+                "org.opencontainers.image.description": "Build your own Raster dynamic map tile services",
+                "org.opencontainers.image.licenses": "MIT",
+                "org.opencontainers.image.ref.name": "3.11.8-debian-12-r5",
+                "org.opencontainers.image.revision": "e40cfe029125acc5c79eccdac4e61ac83bff6132",
+                "org.opencontainers.image.source": "https://github.com/developmentseed/titiler",
+                "org.opencontainers.image.title": "titiler",
+                "org.opencontainers.image.url": "https://github.com/developmentseed/titiler",
+                "org.opencontainers.image.vendor": "VMware, Inc.",
+                "org.opencontainers.image.version": "0.18.9"
+            },
+            "Shell": [
+                "/bin/bash",
+                "-o",
+                "errexit",
+                "-o",
+                "nounset",
+                "-o",
+                "pipefail",
+                "-c"
+            ]
+        },
+        "Architecture": "amd64",
+        "Os": "linux",
+        "Size": 376724977,
+        "GraphDriver": {
+            "Data": null,
+            "Name": "overlayfs"
+        },
+        "RootFS": {
+            "Type": "layers",
+            "Layers": [
+                "sha256:4660d895bbdb0eeda2162c13c83880a9237d652c3cd34590dbf9ea97acc6d2d6",
+                "sha256:3b58202bb9e8d3afea80f2398624d20942188b4da01e7171661f951d0cc3750d",
+                "sha256:119e95f7c8f1989655193629e47cc981436030b29d928d84152721ace2a2b377",
+                "sha256:c13257d9cc2ddbb8bd62fb05ff0b20fe117f14b6482490cf17e36cccd1ebabe5",
+                "sha256:b504f53e869d07e78737ea7936d948c9dff4f75bcb1267df918516f209e250bc",
+                "sha256:c2b6f53d9fe17e30b1c786436a6816d8a6bd519052549f7c002a60b88dbe1202",
+                "sha256:d469f545f19f41a17c7a87625fba80bbd14355de067b95e3309e0ea725a85c27",
+                "sha256:8226ecdb8734bcdb71019b54aadd981292eed8b6eb2be7cb37a133227800c49e",
+                "sha256:4952cc6ef050f5154bf66d3d604ccae9729b7b3cf5743cce4af8fe75403e1226",
+                "sha256:f759fb4418899f7ce8e24c14eb1658e70021683b97a942318dd4f35a39b8a931",
+                "sha256:5f70bf18a086007016e948b04aed3b82103a36bea41755b6cddfaf10ace3c6ef",
+                "sha256:240f4ff49cc6a49cbdbd7c6754fe88fe13f4c5e6b3265d6663519584e3a11209",
+                "sha256:11d4ab649dc8109f4a2cbf4dfcca943a9b32c7962082478e7ebddf850351d83f",
+                "sha256:e637cdfbd6ef9f60e00f6f2d3f6738c34f0d9a6182ba45051edc4b0709637082",
+                "sha256:8513b120f5ca2c6ca36dddb61a2fe476df2e30b5a2cdef4cc9ff461b4dbf8d83",
+                "sha256:372694e4c0749f842bc836b043cce8297fdaef5a2f2750b80e50a2d0f065b01a",
+                "sha256:65ecd7bcd937446af1100a5a9d4210e1c6d897d459057785e10801891f48f8b1",
+                "sha256:4a653c957a959c8250b9c37f026ef2f03fc0ddd31a2573fdd35a31881b2c2a3b",
+                "sha256:42762ab063f79e5a0efd8e73ce2cfa790ef646db7343d2ad36b112a2fa4e0f12"
+            ]
+        },
+        "Metadata": {
+            "LastTagTime": "2025-05-28T20:26:14.674018841Z"
+        },
+        "Descriptor": {
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "digest": "sha256:a34c8aef0935bff6801a4cd9415f0751b6848bf3bcbee6c20e8e8d9319cbaa25",
+            "size": 856
+        }
+    }
+]

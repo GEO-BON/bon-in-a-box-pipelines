@@ -1,0 +1,38 @@
+script: filterCSV.py
+name: Filter CSV file
+description: Extracts data from CSV file under specified conditions
+author:
+  - name: Laetitia Tremblay (laetitia.tremblay@mcgill.ca)
+external_link:
+inputs:
+  input_file:
+    label: Input file
+    description: File that contains data to be extracted
+    type: text/csv
+    example: /scripts/data/filterCSVExample.csv
+  column:
+    label: Column
+    description: Column to be extracted from file
+    type: text
+    example: name_scientificName
+  filters:
+    label: Filters
+    description: Provides instructions to only extract data from the column with specific conditions. Please write a list of column names and the condition you want, in the form column_name:condition, each separated by a comma. For example, if you only want invasive species with the status "accepted", which is specified under the column name "status", you would write status:accepted in your list. You may have multiple conditions.
+    type: text[]
+    example: [status:accepted, name_rank:species, status:provisionally accepted]
+outputs:
+  output_file:
+    label: Data in a text file
+    description: Text file containing extracted data
+    type: text/plain
+    example:
+  text_array:
+    label: Data in a text array
+    description: Text array containing extracted data
+    type: text[]
+references:
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pandas
