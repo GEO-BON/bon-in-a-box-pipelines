@@ -6,8 +6,8 @@
 # if(length(new.packages)) {install.packages(new.packages, binary=T, force=T, dependencies = F, repos= "https://packagemanager.posit.co/cran/__linux__/jammy/latest")} # Check and install the required packages that are not already installed
 
 ## Load libraries ###
-packagesList<-list("magrittr") # Explicitly list packages needed that must be fully loaded in the environment. Functions from other libraries will be accessible via '::'.
-lapply(packagesList, library, character.only = TRUE)  # Load explicitly listed libraries
+packagesList <- list("magrittr") # Explicitly list packages needed that must be fully loaded in the environment. Functions from other libraries will be accessible via '::'.
+lapply(packagesList, library, character.only = TRUE) # Load explicitly listed libraries
 
 
 # Set up the working environment ####
@@ -21,7 +21,7 @@ if ( (!exists("outputFolder"))  ) {outputFolder<- {x<- this.path::this.path();  
 
 ## Set input folder ####
 # Load input file from `outputFolder`
-input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Load input file
+input <- rjson::fromJSON(file = file.path(outputFolder, "input.json")) # Load input file
 
 # Adjust input values to correct and prevent errors in input paths
 input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && length(x) > 0 && grepl("/", x) && !grepl("http://", x)  ) { sub("/output/.*", "/output", outputFolder) %>% dirname() %>%  file.path(x) %>% {gsub("//+", "/", .)}  } else{x} }) %>% unlist())
@@ -30,6 +30,12 @@ input<- lapply(input, function(y) lapply(y, function(x)  { if (!is.null(x) && le
 
 # Script body ####
 token <- Sys.getenv("IUCN_TOKEN")
+
+if (token == "") {
+    biab_error_stop("Error: IUCN_TOKEN environment variable is not set.
+    Please check your runner.env file
+    and ensure that the line 'IUCN_TOKEN=' has a valid token value")
+}
 print(token)
 
 ## Load sp country ####
@@ -41,12 +47,12 @@ UICN_taxon <- rredlist::rl_comp_groups(group = input$taxonomic_group, key = toke
 
 
 ## Filter country list by taxonomic group ####
-iucn_splist<- UICN_taxon %>% dplyr::filter(taxonid %in% UICN_country$taxonid)
+iucn_splist <- UICN_taxon %>% dplyr::filter(taxonid %in% UICN_country$taxonid)
 
 
 
 # Write results ####
-iucn_splist_path<- file.path(outputFolder, paste0("iucn_splist", ".csv")) # Define the file path
+iucn_splist_path <- file.path(outputFolder, paste0("iucn_splist", ".csv")) # Define the file path
 write.csv(iucn_splist, iucn_splist_path, row.names = F) # write result
 
 
@@ -55,8 +61,8 @@ write.csv(iucn_splist, iucn_splist_path, row.names = F) # write result
 
 # Outputing result to JSON ####
 
-#Define final output list
-output<- list(iucn_splist= iucn_splist_path)
+# Define final output list
+output <- list(iucn_splist = iucn_splist_path)
 
 # Write the output list to the 'output.json' file in JSON format
 setwd(outputFolder)
