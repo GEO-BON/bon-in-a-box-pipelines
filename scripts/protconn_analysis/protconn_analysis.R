@@ -41,7 +41,7 @@ if (length(protected_areas_user) > 0 && length(protected_areas) > 0) {
 }
 
 ### Load protected area shapefile
-if (pa_input_type == "WDPA" | pa_input_type == "Both") { # if using WDPA data, load that
+if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, load that
 
   print(protected_areas)
   protected_areas <- st_read(protected_areas, type = 3, promote_to_multi = FALSE) # input as polygons
@@ -55,7 +55,7 @@ if (pa_input_type == "WDPA" | pa_input_type == "Both") { # if using WDPA data, l
 }
 
 
-if (pa_input_type == "User input" | pa_input_type == "Both") { # rename and parse date column
+if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
   protected_areas_user <- st_read(protected_areas_user, type = 3, promote_to_multi = FALSE) # load
   print(protected_areas_user)
 
