@@ -6,8 +6,13 @@ import os
 
 input = biab_inputs()
 
-url = "https://api.checklistbank.org/dataset?offset=0&limit=100&q=griis"
+country = input['country']
 
+if len(country.split()) == 2:
+    word1, word2 = country.split()
+    country = f"{word1}%20{word2}"
+
+url = f"https://api.checklistbank.org/dataset?offset=0&q=Global%20Introduced%20and%20Invasive%20Species%20-%20{country}"
 print("Accessing Checklist bank to retrieve GRIIS data")
 response = requests.get(url)
 
