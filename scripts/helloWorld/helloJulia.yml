@@ -18,5 +18,5 @@ outputs:
     type: int
     example: 9
 references:
-  - text: John Doe, The ins and outs of copy-pasting, BioScience, Volume 71, Issue 5, May 2021, Pages 448–451
-    doi: 10.1093/biosci/biab041
+  - text: John Doe, The ins and outs of copy-pasting, CopyScience, Volume 71, Issue 5, May 2021, Pages 448–451
+    doi: 10.1093/copysci/biab041
