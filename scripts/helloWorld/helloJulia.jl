@@ -7,9 +7,7 @@ cd(outputFolder)
 println("Example accessing runner.env vars: GBIF_USER = ", get(ENV, "GBIF_USER", "not set"))
 
 # Read the inputs from input.json
-input_data = open("input.json", "r") do f
-    JSON.parse(f)
-end
+input_data = biab_inputs()
 
 number = input_data["number"]
 println("Input number: ", number)
