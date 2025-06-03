@@ -8,10 +8,7 @@ on:
       - '*staging'
     paths:
       - '.github/workflows/docker_runner-conda.yml'
-      - 'runners/conda-dockerfile'
-      - 'runners/r-environment.yml'
-      - 'runners/python-environment.yml'
-      - 'runners/.condarc'
+      - 'runners/conda/**'
 
 env:
   REGISTRY: ghcr.io
@@ -65,7 +62,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: runners
-          file: runners/conda-dockerfile
+          file: runners/conda/conda-dockerfile
           push: true
           tags: ${{ steps.metadata-main.outputs.tags || steps.metadata-staging.outputs.tags }}
           labels: ${{ steps.metadata-main.outputs.labels || steps.metadata-staging.outputs.labels }}
