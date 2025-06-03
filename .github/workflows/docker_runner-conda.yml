@@ -61,7 +61,7 @@ jobs:
         id: push
         uses: docker/build-push-action@v6
         with:
-          context: runners
+          context: runners/conda
           file: runners/conda/conda-dockerfile
           push: true
           tags: ${{ steps.metadata-main.outputs.tags || steps.metadata-staging.outputs.tags }}
