@@ -9,7 +9,8 @@ ENV JULIA_DEPOT_PATH="/julia_depot/"
 
 # Pre-compiling Julia dependencies
 RUN julia --project=$JULIA_DEPOT_PATH -e 'using Pkg; \
-    Pkg.add.(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees" ])' \
+    Pkg.add.(["SpeciesDistributionToolkit", "CairoMakie", "ArchGDAL", "JSON", "CSV", "DataFrames", "EvoTrees" ]); \
+    Pkg.instantiate(); Pkg.precompile()' \
     # Remove some unnecessary files in our containerized runtime context, to make the image lighter \
     && rm -r $JULIA_DEPOT_PATH/scratchspaces \
     && (find $JULIA_DEPOT_PATH -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r "{}" || true) \
