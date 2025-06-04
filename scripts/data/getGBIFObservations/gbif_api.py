@@ -10,6 +10,7 @@ from zipfile import ZipFile
 import os
 import csv
 from pathlib import Path
+from time import sleep
 
 
 
@@ -20,9 +21,26 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 
 	if GBIF_USER=='' or GBIF_PWD=='' or GBIF_EMAIL=='':
 		return {'error':'GBIF_USER, GBIF_PWD and GBIF_EMAIL environment variable must be defined'}
+	keys=[]
+	for x in splist:
+		print(x)
+		try:
+			keys.append(species.name_backbone(x)['usageKey'])
+		except:
+			print(f"Couldn't find {x}")
+			continue
+		sleep(0.1)
+		
+	counts = []
+	for x in keys:
+		print(x)
+		try:
+			counts.append(occ.search(taxonKey = x, limit=0)['count'])
+		except:
+			print(f"Couldn't find {x}")
+			continue
+		sleep(0.1)
 
-	keys = [ species.name_backbone(x)['usageKey'] for x in splist ]
-	counts = [ occ.search(taxonKey = x, limit=0)['count'] for x in keys ]
 	spcount = dict(zip(splist, counts))
 	print(spcount)
 	gbif_query = GbifDownload(GBIF_USER, GBIF_EMAIL)
