@@ -4,6 +4,8 @@ author:
   - name: Jean-Michel Lord
     identifier: https://orcid.org/0009-0007-3826-1125
 description: "Sample shell script that outputs a number."
+lifecycle:
+  status: example
 outputs:
   a_number:
     label: A number
