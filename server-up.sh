@@ -22,18 +22,18 @@ while (( $# > 0 )) ; do
         echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH]"
         echo
         echo "Starts the BON in a Box server locally."
-        echo "The server will be available at http://localhost."
+        echo "The server will be available at http://localhost"
         echo
         echo "OPTIONS:"
         echo "  -h, --help          Display this help"
-        echo "  -c, --clean         Discards the docker containers before starting the server."
+        echo "  -c, --clean         Discard the docker containers before starting the server."
         echo "                      Warning: any dependency or conda environment installed at runtime will be lost."
         echo "  -y, --yes           Skip update confirmation prompt (for automation)"
-        echo "      --offline       Run the existing version of the server. "
+        echo "      --offline       Run the currently installed version of the server. "
         echo "                      Will not attempt to pull the latest version or the containers nor server configuration."
         echo
-        echo "GIT BRANCH:           Refers to the git branch of the server, on https://github.com/GEO-BON/bon-in-a-box-pipeline-engine."
-        echo "                      The branch must be available on the docker hub. It is the case for main, edge, and *staging branches."
+        echo "GIT BRANCH:           Refers to the git branch of the server, on https://github.com/GEO-BON/bon-in-a-box-pipeline-engine"
+        echo "                      The branch must be available on the GitHub package registry, such as main, edge, and *staging branches."
         echo "                      Default: main"
         echo
         exit 0 ;;
