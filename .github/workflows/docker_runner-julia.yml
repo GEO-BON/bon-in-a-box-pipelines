@@ -35,7 +35,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker
-        if: github.ref == 'refs/heads/main'
         id: metadata-main
         uses: docker/metadata-action@v5
         with:
