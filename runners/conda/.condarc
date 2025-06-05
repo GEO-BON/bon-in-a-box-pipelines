@@ -1,0 +1,4 @@
+
+create_default_packages:
+  # This library should be loaded by default all the time, since we need to read inputs and write outputs in R.
+  - r-rjson
