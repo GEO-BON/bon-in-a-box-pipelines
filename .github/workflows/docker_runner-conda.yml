@@ -34,28 +34,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker, main branch
-        if: github.ref == 'refs/heads/main'
-        id: metadata-main
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
-          tags: |
-            # Image used in compose file
-            type=raw,value=latest
-            # In case we want to replicate a specific legacy setup
-            type=sha,value=${{ github.sha }}
-
-      - name: Extract metadata (tags, labels) for Docker, staging branch
-        if: github.ref != 'refs/heads/main'
+      - name: Extract metadata (tags, labels) for Docker
         id: metadata-staging
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
           tags: |
             # Image used in compose file
-            type=raw,value=${{github.ref_name}}
+            type=raw,value=${{ (github.ref_name == 'main' && 'latest') || github.ref_name }}
             type=sha,value=${{ github.sha }}
+          labels: |
+            org.opencontainers.image.licenses=GPL-v3
+            org.opencontainers.image.title=BON in a Box Conda Runner
 
       - name: Build and push Docker image
         id: push
