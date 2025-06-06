@@ -86,22 +86,34 @@ print(nrow(protected_areas))
 
 protected_areas <- st_make_valid(protected_areas)
 
+print(paste("class:", class(protected_areas)))
+print(st_geometry_type(protected_areas)=="MULTIPOLYGON")
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")
   protected_areas_buffer <- st_buffer(x, dist = 10) # buffering polygons by 10 meters
   intersections <- st_intersects(protected_areas_buffer) # Identifying intersecting polygons
-
+  
   # Grouping intersecting polygons
   groups <- as.integer(igraph::components(graph = igraph::graph_from_adj_list(intersections))$membership)
-
+  
   x$group_id <- groups
-
+  
   protected_areas_clean <- x %>%
     group_by(group_id) %>%
     summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
-  protected_areas_clean <- st_cast(protected_areas_clean, "POLYGON")
-
+  print("num protected areas after simplify before exploding")
+  print(nrow(protected_areas_clean))
+  
+  # Exploding multipolygons into polygons for faster calculation
+  protected_areas_multi <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean)=="MULTIPOLYGON") %>% 
+  st_cast("POLYGON",group_or_split=TRUE)
+  protected_areas_poly <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean)=="POLYGON")
+  
+  protected_areas_clean <- rbind(protected_areas_multi, protected_areas_poly)
+  
+  print("num protected areas after simplify after exploding")
+  print(nrow(protected_areas_clean))
   return(protected_areas_clean)
 }
 
@@ -294,14 +306,13 @@ for (i in 1:length(years)) {
 print("Compiling time series")
 result_yrs <- bind_rows(protconn_ts_result)
 result_yrs[is.na(result_yrs)] <- 0
-print(class(result_yrs))
 
 result_yrs_path <- file.path(outputFolder, "result_yrs.csv") # save protconn result
 write.csv(result_yrs, result_yrs_path)
 biab_output("result_yrs", result_yrs_path)
 
 xint <- min(result_yrs$Year) + 25
-print(result_yrs)
+
 result_yrs_plot <-
   ggplot(
     result_yrs,
@@ -314,6 +325,7 @@ result_yrs_plot <-
   annotate("text", x = xint, y = 31, label = "Kunming-Montreal target") +
   geom_line() +
   theme_classic()
+
 
 result_yrs_plot_path <- file.path(outputFolder, "result_plot_yrs.png") # save protconn result with dispersal presets
 ggsave(result_yrs_plot_path, result_yrs_plot)
