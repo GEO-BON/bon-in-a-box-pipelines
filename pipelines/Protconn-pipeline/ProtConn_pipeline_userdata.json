@@ -137,6 +137,17 @@
           "/userdata/fake_protected_areas_colombia.gpkg"
         ]
       }
+    },
+    {
+      "id": "30",
+      "type": "output",
+      "position": {
+        "x": 1710.6000061035156,
+        "y": 304.7999954223633
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -223,6 +234,13 @@
       "target": "8",
       "targetHandle": "protected_area_polygon",
       "id": "reactflow__edge-29-8protected_area_polygon"
+    },
+    {
+      "source": "8",
+      "sourceHandle": "protected_areas",
+      "target": "30",
+      "targetHandle": null,
+      "id": "reactflow__edge-8protected_areas-30"
     }
   ],
   "inputs": {
@@ -321,41 +339,47 @@
       "type": "text",
       "weight": 1
     },
+    "protconn_analysis>protconn_analysis.yml@8|protected_areas": {
+      "description": "Protected areas on which ProtConn is being calculated (with overlaps dissovled)",
+      "label": "Protected areas",
+      "type": "application/geopackage+sqlite3[]",
+      "weight": 2
+    },
     "protconn_analysis>protconn_analysis.yml@8|protconn_result": {
       "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
       "label": "ProtConn results",
       "type": "text/csv",
-      "weight": 2
+      "weight": 3
     },
     "protconn_analysis>protconn_analysis.yml@8|result_plot": {
       "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
       "label": "ProtConn result plot",
       "type": "image/png",
-      "weight": 3
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@8|result_yrs_plot": {
       "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
       "label": "ProtConn time series plot",
       "type": "image/png",
-      "weight": 4
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@8|result_yrs": {
       "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
       "label": "ProtConn time series results",
       "type": "text/csv",
-      "weight": 5
+      "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@8|result_preset_plot": {
       "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
       "label": "ProtConn plot with dispersal presets",
       "type": "image/png",
-      "weight": 6
+      "weight": 7
     },
     "data>getCountryPolygon.yml@5|country_polygon": {
       "description": "Polygon of the chosen country or region in the crs of choice in geopackage format",
       "label": "Polygon of country or region",
       "type": "application/geopackage+sqlite3",
-      "weight": 7
+      "weight": 8
     }
   },
   "metadata": {

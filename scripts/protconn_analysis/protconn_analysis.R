@@ -130,6 +130,12 @@ print(nrow(protected_areas_simp))
 print("Geometry with overlaps dissolved (should be polygon):")
 print(unique(st_geometry_type(protected_areas_simp)))
 
+# output simplified protected areas
+protected_areas_simp_path <- file.path(outputFolder, "protected_areas.gpkg")
+sf::st_write(protected_areas, protected_areas_simp_path, delete_dsn = T)
+biab_output("protected_areas", protected_areas_simp_path)
+
+biab_output(protected_areas_simp_path, "protected_areas")
 
 if (nrow(protected_areas_simp) < 2) {
   biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")

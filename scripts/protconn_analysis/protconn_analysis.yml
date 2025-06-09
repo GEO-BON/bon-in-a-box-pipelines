@@ -60,6 +60,10 @@ inputs:
     type: int
     example: 20
 outputs:
+  protected_areas:
+    label: Protected areas
+    description: Protected areas on which ProtConn is being calculated (with overlaps dissovled)
+    type: application/geopackage+sqlite3[]
   protconn_result:
     label: ProtConn results
     description: Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities
