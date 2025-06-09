@@ -13,19 +13,21 @@ import errorImg from "../img/error.svg";
 import warningImg from "../img/warning.svg";
 import infoImg from "../img/info.svg";
 import { LogViewer } from "./LogViewer";
-import { getFolderAndNameFromMetadata, GeneralDescription } from "./StepDescription";
-import { PipelineForm } from "./form/PipelineForm";
 import {
-  getScript,
-  getScriptOutput,
-  getBreadcrumbs,
-} from "../utils/IOId";
+  getFolderAndNameFromMetadata,
+  GeneralDescription,
+} from "./StepDescription";
+import { PipelineForm } from "./form/PipelineForm";
+import { getScript, getScriptOutput, getBreadcrumbs } from "../utils/IOId";
 import { useParams } from "react-router-dom";
 import { isEmptyObject } from "../utils/isEmptyObject";
 import { InlineSpinner } from "./Spinner";
 
-const pipelineConfig = {extension: ".json", defaultFile: "helloWorld.json", };
-const scriptConfig = {extension: ".yml", defaultFile: "helloWorld>helloR.yml"};
+const pipelineConfig = { extension: ".json", defaultFile: "helloWorld.json" };
+const scriptConfig = {
+  extension: ".yml",
+  defaultFile: "helloWorld>helloR.yml",
+};
 
 const BonInABoxScriptService = require("bon_in_a_box_script_service");
 export const api = new BonInABoxScriptService.DefaultApi();
@@ -39,7 +41,10 @@ function pipReducer(state, action) {
       };
     }
     case "url": {
-      let selectionUrl = action.newDescriptionFile.substring(0, action.newDescriptionFile.lastIndexOf("."));
+      let selectionUrl = action.newDescriptionFile.substring(
+        0,
+        action.newDescriptionFile.lastIndexOf(".")
+      );
       return {
         lastAction: "url",
         runHash: action.newHash,
@@ -49,7 +54,7 @@ function pipReducer(state, action) {
       };
     }
     case "reset": {
-      return pipInitialState({ runType: action.runType })
+      return pipInitialState({ runType: action.runType });
     }
     default:
       throw Error("Unknown action: " + action.type);
@@ -57,20 +62,20 @@ function pipReducer(state, action) {
 }
 
 function pipInitialState(init) {
-  let config = init.runType === "pipeline" ? pipelineConfig : scriptConfig
-  let descriptionFile = config.defaultFile
+  let config = init.runType === "pipeline" ? pipelineConfig : scriptConfig;
+  let descriptionFile = config.defaultFile;
   let runHash = null;
-  let runId = null
+  let runId = null;
   let action = "reset";
-  
+
   if (init.selectionUrl) {
     action = "url";
-    descriptionFile = init.selectionUrl + config.extension
+    descriptionFile = init.selectionUrl + config.extension;
 
     if (init.runHash) {
       runHash = init.runHash;
 
-      runId = init.selectionUrl + ">" + runHash
+      runId = init.selectionUrl + ">" + runHash;
     }
   }
 
@@ -83,7 +88,7 @@ function pipInitialState(init) {
   };
 }
 
-export function PipelinePage({runType}) {
+export function PipelinePage({ runType }) {
   const [stoppable, setStoppable] = useState(null);
   const [runningScripts, setRunningScripts] = useState(new Set());
   const [resultsData, setResultsData] = useState(null);
@@ -98,7 +103,7 @@ export function PipelinePage({runType}) {
   const { pipeline, runHash } = useParams();
   const [pipStates, setPipStates] = useReducer(
     pipReducer,
-    {runType, selectionUrl: pipeline, runHash},
+    { runType, selectionUrl: pipeline, runHash },
     pipInitialState
   );
 
@@ -111,27 +116,31 @@ export function PipelinePage({runType}) {
   let timeout;
   function loadPipelineOutputs() {
     if (pipStates.runHash) {
-      api.getOutputFolders(runType, pipStates.runId, (error, data, response) => {
-        if (error) {
-          showHttpError(error, response);
-        } else {
-          let allOutputFoldersKnown = Object.values(data).every(
-            (val) => val !== ""
-          );
-          if (!allOutputFoldersKnown) {
-            // try again later
-            timeout = setTimeout(loadPipelineOutputs, 1000);
+      api.getOutputFolders(
+        runType,
+        pipStates.runId,
+        (error, data, response) => {
+          if (error) {
+            showHttpError(error, response);
+          } else {
+            let allOutputFoldersKnown = Object.values(data).every(
+              (val) => val !== ""
+            );
+            if (!allOutputFoldersKnown) {
+              // try again later
+              timeout = setTimeout(loadPipelineOutputs, 1000);
+            }
+            setResultsData(data);
           }
-          setResultsData(data);
         }
-      });
+      );
     } else {
       setResultsData(null);
     }
   }
 
   function loadPipelineMetadata(choice, setExamples = true) {
-    setHttpError(null)
+    setHttpError(null);
     var callback = function (error, data, response) {
       if (error) {
         showHttpError(error, response);
@@ -156,7 +165,8 @@ export function PipelinePage({runType}) {
   }
 
   function loadPipelineInputs(pip, hash) {
-    var inputJson = "/output/" + pip.replaceAll('>','/') + "/" + hash + "/input.json";
+    var inputJson =
+      "/output/" + pip.replaceAll(">", "/") + "/" + hash + "/input.json";
     fetch(inputJson)
       .then((response) => {
         if (response.ok) {
@@ -164,7 +174,7 @@ export function PipelinePage({runType}) {
         }
 
         // This has never ran. No inputs to load.
-          return false;
+        return false;
       })
       .then((json) => {
         if (json) {
@@ -181,7 +191,7 @@ export function PipelinePage({runType}) {
   useEffect(() => {
     setResultsData(null);
 
-    switch(pipStates.lastAction) {
+    switch (pipStates.lastAction) {
       case "reset":
         loadPipelineMetadata(pipStates.descriptionFile, true);
         break;
@@ -200,7 +210,8 @@ export function PipelinePage({runType}) {
   useEffect(() => {
     // set by the route
     if (pipeline) {
-      let descriptionFile = pipeline + (runType === "pipeline" ? ".json" : ".yml")
+      let descriptionFile =
+        pipeline + (runType === "pipeline" ? ".json" : ".yml");
       setPipStates({
         type: "url",
         newDescriptionFile: descriptionFile,
@@ -264,6 +275,7 @@ export function PipelinePage({runType}) {
           resultsData={resultsData}
           runningScripts={runningScripts}
           setRunningScripts={setRunningScripts}
+          pipeline={pipeline}
           runHash={runHash}
           isPipeline={runType === "pipeline"}
         />
@@ -277,17 +289,23 @@ function PipelineResults({
   resultsData,
   runningScripts,
   setRunningScripts,
+  pipeline,
   runHash,
   isPipeline,
 }) {
   const [activeRenderer, setActiveRenderer] = useState({});
   const [pipelineOutputResults, setPipelineOutputResults] = useState({});
 
+  let viewerHost = null;
+  if (process.env.REACT_APP_VIEWER_HOST) {
+    viewerHost = process.env.REACT_APP_VIEWER_HOST;
+  }
+
   useEffect(() => {
-    if(!isPipeline && !isEmptyObject(resultsData)) {
-      setActiveRenderer(Object.keys(resultsData)[0])
+    if (!isPipeline && !isEmptyObject(resultsData)) {
+      setActiveRenderer(Object.keys(resultsData)[0]);
     }
-  }, [resultsData, isPipeline, setActiveRenderer])
+  }, [resultsData, isPipeline, setActiveRenderer]);
 
   useEffect(() => {
     // Put outputResults at initial value
@@ -306,49 +324,62 @@ function PipelineResults({
         value={createContext(activeRenderer, setActiveRenderer)}
       >
         <h2>Results</h2>
-        {isPipeline && <>
-          {pipelineOutputResults && pipelineMetadata.outputs &&
-            Object.entries(pipelineMetadata.outputs).map((entry) => {
-              const [ioId, outputDescription] = entry;
-              const breadcrumbs = getBreadcrumbs(ioId);
-              const outputId = getScriptOutput(ioId);
-              const value =
-                pipelineOutputResults[breadcrumbs] &&
-                pipelineOutputResults[breadcrumbs][outputId];
-              if (!value) {
+        {isPipeline && viewerHost && runHash && (
+          <button>
+            <a
+              href={`${viewerHost}/${pipeline}>${runHash}`}
+              target="_blank"
+              style={{ textDecoration: "none", color: "#333" }}
+            >
+              See in viewer
+            </a>
+          </button>
+        )}
+        {isPipeline && (
+          <>
+            {pipelineOutputResults &&
+              pipelineMetadata.outputs &&
+              Object.entries(pipelineMetadata.outputs).map((entry) => {
+                const [ioId, outputDescription] = entry;
+                const breadcrumbs = getBreadcrumbs(ioId);
+                const outputId = getScriptOutput(ioId);
+                const value =
+                  pipelineOutputResults[breadcrumbs] &&
+                  pipelineOutputResults[breadcrumbs][outputId];
+                if (!value) {
+                  return (
+                    <div key={ioId} className="outputTitle">
+                      <h3>{outputDescription.label}</h3>
+                      {runningScripts.size > 0 ? (
+                        <InlineSpinner />
+                      ) : (
+                        <>
+                          <img
+                            src={warningImg}
+                            alt="Warning"
+                            className="error-inline"
+                          />
+                          See detailed results
+                        </>
+                      )}
+                    </div>
+                  );
+                }
+
                 return (
-                  <div key={ioId} className="outputTitle">
-                    <h3>{outputDescription.label}</h3>
-                    {runningScripts.size > 0 ? (
-                      <InlineSpinner />
-                    ) : (
-                      <>
-                        <img
-                          src={warningImg}
-                          alt="Warning"
-                          className="error-inline"
-                        />
-                        See detailed results
-                      </>
-                    )}
-                  </div>
+                  <SingleOutputResult
+                    key={ioId}
+                    outputId={outputId}
+                    componentId={ioId}
+                    outputValue={value}
+                    outputMetadata={outputDescription}
+                  />
                 );
-              }
+              })}
 
-              return (
-                <SingleOutputResult
-                  key={ioId}
-                  outputId={outputId}
-                  componentId={ioId}
-                  outputValue={value}
-                  outputMetadata={outputDescription}
-                />
-              );
-            })}
-
-          <h2>Detailed results</h2>
-        </>
-        }
+            <h2>Detailed results</h2>
+          </>
+        )}
         {Object.entries(resultsData).map((entry) => {
           const [key, value] = entry;
 
@@ -481,9 +512,7 @@ function DelayedResult({
       );
     } else {
       content = <p>Running...</p>;
-      inline = (
-        <InlineSpinner />
-      );
+      inline = <InlineSpinner />;
     }
   } else {
     content = <p>Waiting for previous steps to complete.</p>;

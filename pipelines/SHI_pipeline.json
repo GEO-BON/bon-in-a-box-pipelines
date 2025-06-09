@@ -279,14 +279,37 @@
       }
     },
     {
-      "id": "52",
+      "id": "53",
       "type": "output",
       "position": {
-        "x": 1854.0468157987307,
-        "y": 790.2891861564518
+        "x": 1595.2005756078672,
+        "y": 744.2365923492181
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "54",
+      "type": "output",
+      "position": {
+        "x": 1656.8095723505767,
+        "y": 954.6322364465813
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "55",
+      "type": "userInput",
+      "position": {
+        "x": 871.1193849371791,
+        "y": 492.22994722099565
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
       }
     }
   ],
@@ -490,9 +513,23 @@
     {
       "source": "51",
       "sourceHandle": null,
-      "target": "52",
+      "target": "53",
       "targetHandle": null,
-      "id": "reactflow__edge-51-52"
+      "id": "reactflow__edge-51-53"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "28",
+      "targetHandle": "region",
+      "id": "reactflow__edge-55-28region"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "54",
+      "targetHandle": null,
+      "id": "reactflow__edge-55-54"
     }
   ],
   "inputs": {
@@ -502,11 +539,6 @@
       "type": "options",
       "options": ["MOL", "IUCN", "QC"],
       "example": "IUCN"
-    },
-    "SHI>scp_SHI_02_GetAOH.yml@28|region": {
-      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. This name should be aligned with the codification from the GADM data [https://gadm.org/metadata.html] for the variable NAME_1 (check gadm function in R from the geodata package [https://rdrr.io/github/rspatial/geodata/man/gadm.html])",
-      "label": "region",
-      "type": "text"
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|min_forest": {
       "description": "Minimum tree cover percentage required, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
@@ -564,69 +596,79 @@
       "options": ["Country", "Region in Country", "User defined"]
     },
     "pipeline@51": {
-      "label": "country code",
-      "description": "Three letter code for the country where the SHI is calculated.",
+      "label": "Country name",
+      "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
       "type": "text",
-      "example": "COL"
+      "example": "Colombia"
+    },
+    "pipeline@55": {
+      "label": "region",
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
+      "type": "text"
     }
   },
   "outputs": {
-    "pipeline@30": {
-      "label": "Species",
-      "description": "Species for which the SHI is generated",
-      "weight": 1
-    },
-    "pipeline@51": {
-      "label": "Country name",
-      "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
-      "weight": 2
+    "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|img_shs_map": {
+      "description": "Figure showing a map with changes in the habitat for the time range.",
+      "label": "SHS map",
+      "type": "image/png[]",
+      "weight": 5
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|r_habitat_by_tstep": {
       "description": "Raster of habitat by time step.",
       "label": "Habitat by time step",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
-    },
-    "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|img_shs_map": {
-      "description": "Figure showing a map with changes in the habitat for the time range.",
-      "label": "SHS map",
-      "type": "image/png[]",
       "weight": 4
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|img_shs_timeseries": {
       "description": "Figure showing a time series of SHS values for each time step.",
       "label": "SHS time series",
       "type": "image/png[]",
-      "weight": 5
+      "weight": 6
     },
     "SHI>scp_SHI_03_HabitatChange_GFW.yml@29|df_shs": {
       "description": "A TSV (Tab Separated Values) file containing Habitat Score, Connectivity Score, and SHI by time step.",
       "label": "SHS table",
       "type": "text/tab-separated-values[]",
-      "weight": 6
+      "weight": 7
     },
     "SHI>scp_SHI_04_CalcSHI.yml@46|df_shi": {
       "description": "Table with SHI and Steward's SHI values for the complete area of study.",
       "label": "SHI table",
       "type": "text/tab-separated-values",
-      "weight": 7
+      "weight": 8
     },
     "SHI>scp_SHI_04_CalcSHI.yml@46|img_shi_timeseries": {
       "description": "Figure showing a time series of SHI values for each time step.",
       "label": "SHI time series",
       "type": "image/png",
-      "weight": 8
+      "weight": 9
     },
     "SHI>scp_SHI_04_CalcSHI.yml@46|img_w_shi_timeseries": {
       "description": "Figure showing a time series of Steward's SHI values for each time step.",
       "label": "Steward's SHI time series",
       "type": "image/png",
-      "weight": 9
+      "weight": 10
+    },
+    "pipeline@30": {
+      "label": "Species name",
+      "description": "Species for which the index is calculated",
+      "weight": 3
+    },
+    "pipeline@51": {
+      "label": "Country name",
+      "description": "Country where the analysis region is located",
+      "weight": 1
+    },
+    "pipeline@55": {
+      "label": "Region",
+      "description": "State/province within the country where the analysis is performed",
+      "weight": 2
     }
   },
   "metadata": {
     "name": "Species Habitat Index",
-    "description": "This pipeline takes the outputs from the Species Habitat Score (SHS) pipeline and measures the Species Habitat Index for the species used as inputs, following the methodology proposed for Jetz et al. 2022 (https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf). The index has two componentes an Area Score and a Connectivity score that are measured for the habitat of the required species (Species Habitat Score), and the average between those scores for the study area is the Species Habitat Index. It can also have weight values assigned according to the proportion of the area of the habitat of the species that is located in the study area.",
+    "description": "This pipeline takes the outputs from the Species Habitat Score (SHS) pipeline and measures the Species Habitat Index for the species used as inputs, following the methodology proposed for [Jetz et al. 2022](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf). The index has two componentes an Area Score and a Connectivity score that are measured for the habitat of the required species (Species Habitat Score), and the average between those scores for the study area is the Species Habitat Index. It can also have weight values assigned according to the proportion of the area of the habitat of the species that is located in the study area.",
     "references": [
       {
         "text": "Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]"
@@ -635,7 +677,7 @@
         "text": "Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)"
       },
       {
-        "text": "Jetz, W., McGowan, J., Rinnan, D. S., Possingham, H. P., Visconti, P., O’Donnell, B., & Londoño-Murcia, M. C. (2022). Include biodiversity representation indicators in area-based conservation targets. Nature Ecology & Evolution, 6(2), 123–126. https://doi.org/10.1038/s41559-021-01620-y [https://www.nature.com/articles/s41559-021-01620-y]"
+        "text": "Jetz, W., McGowan, J., Rinnan, D. S., Possingham, H. P., Visconti, P., O'Donnell, B., & Londoño-Murcia, M. C. (2022). Include biodiversity representation indicators in area-based conservation targets. Nature Ecology & Evolution, 6(2), 123–126. https://doi.org/10.1038/s41559-021-01620-y [https://www.nature.com/articles/s41559-021-01620-y]"
       }
     ],
     "author": [

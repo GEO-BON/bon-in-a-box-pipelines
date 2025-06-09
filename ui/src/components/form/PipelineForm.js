@@ -100,7 +100,7 @@ export function PipelineForm({
         setInputFileContent={setInputFileContent}
       />
       <br />
-      <input type="submit" disabled={false} value="Run pipeline" />
+      <input type="submit" disabled={false} value={runType === "pipeline" ? "Run pipeline" : "Run script"} />
     </form>
   );
 }

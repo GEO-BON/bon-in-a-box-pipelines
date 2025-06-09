@@ -12,6 +12,11 @@ author: # 1 to many
     identifier: # Optional, full URL of a unique digital identifier such as an ORCID
 license: # Optional. If unspecified, the project's MIT license will apply.
 external_link: # Optional, link to a separate project, github repo, etc.
+references: # 0 to many
+  - text: # plain text reference
+    doi: # link
+  - text: # plain text reference
+    doi: # link
 `
 
 /**

@@ -1,0 +1,28 @@
+script: climateUniqueness.jl
+name: Climate Uniqueness
+description: "This script takes in multiple climate layers and computes a single layer where high values indicate a more rare combination of layers. Uniqueness is computed as distance to the nearest k-means center, where k is a user input."
+author:
+  - name: Michael D. Catchen 
+    identifier: https://orcid.org/0000-0002-6506-6487
+inputs:
+  k:
+    label: k
+    description: the value of k for the k-means algorithm
+    type: int
+    example: 5
+  layers:
+    label: layers
+    description: a list of climate layers to use to compute uniqueness
+    type: image/tiff;application=geotiff[]
+    example: ["foo"]
+  water_mask:
+    label: water_mask
+    description: a raster with landcover values 
+    type: image/tiff;application=geotiff[]
+    example: "/output/foobar/lc.tif"
+outputs:
+  climate_uniqueness:
+    label: climate uniqueness
+    description: map
+    type: image/tiff;application=geotiff
+

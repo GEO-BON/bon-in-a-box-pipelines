@@ -1,0 +1,30 @@
+script: reclassify.R
+name: Reclassifies rasters in collection 
+description: This code reclassifies the pixels of the rasters in a collection into the specified categories.
+author: 
+ - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
+ - name: Victor Julio Rincon (vrincon@humboldt.org.co)
+ - name: Luis Fernando Urbina (lurbina@humboldt.org.co)
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  dir_stack:
+    label: stack path in
+    description: Path to the input directory where the raster results of the metric analysis are saved
+    type: text
+    example: '/scripts/reclassify/input/dir_stack'
+  table_data:
+    label: data table path in
+    description: Compiled information about the layers including in the collection.
+    type: text/csv
+    example: 'scripts/reclassify/input/data_layer.csv'
+  table_reclassify:
+    label: reclassify table
+    description: Table with the reclassification values used to classify the collection.
+    type: text
+    example: 'scripts/reclassify/input/reclass_data.csv'
+outputs:
+  compare_data:
+    label: compare table reclass data
+    description: Comparative table summarizing the pixel count results in each of the reclassification categories for each period contained in the collection and the user-selected analysis interval
+    type: text/csv
+

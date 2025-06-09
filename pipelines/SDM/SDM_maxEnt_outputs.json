@@ -246,19 +246,6 @@
       }
     },
     {
-      "id": "101",
-      "type": "constant",
-      "position": {
-        "x": 525,
-        "y": 564
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 0.75
-      }
-    },
-    {
       "id": "102",
       "type": "constant",
       "position": {
@@ -672,13 +659,6 @@
       "id": "reactflow__edge-97rasters_selected-40predictors"
     },
     {
-      "source": "101",
-      "sourceHandle": null,
-      "target": "97",
-      "targetHandle": "cutoff_cor",
-      "id": "reactflow__edge-101-97cutoff_cor"
-    },
-    {
       "source": "58",
       "sourceHandle": null,
       "target": "104",
@@ -876,6 +856,12 @@
       "type": "int",
       "example": 2020
     },
+    "SDM>removeCollinearity.yml@97|cutoff_cor": {
+      "description": "Float, correlation cutoff (used with vif.cor, pearson spearman and kendall method)",
+      "label": "cutoff correlation",
+      "type": "float",
+      "example": 0.75
+    },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
       "label": "partition type",
@@ -904,7 +890,7 @@
     "data>loadFromStac.yml@119|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
-      "type": "int",
+      "type": "float",
       "example": 1000
     },
     "data>loadFromStac.yml@119|mask": {
@@ -920,28 +906,11 @@
     }
   },
   "outputs": {
-    "pipeline@121": {
-      "label": "Species name",
-      "description": "Species for which the distribution model is generated",
-      "weight": 1
-    },
-    "filtering>cleanCoordinates.yml@34|clean_presence": {
-      "description": "Occurrences from GBIF after cleaning",
-      "label": "Presences",
-      "type": "text/tab-separated-values",
-      "weight": 2
-    },
-    "data>heatmapFromSTAC.yml@67|raster": {
-      "description": "Heatmap of GBIF occurences for plants used for bias correction",
-      "label": "Density of GBIF occurrences",
+    "SDM>rangePredictions.yml@68|range_predictions": {
+      "description": "Variability of predictions based on range method",
+      "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
-      "weight": 4
-    },
-    "SDM>removeCollinearity.yml@97|rasters_selected": {
-      "description": "Environmental layers used as predictors in species distribution modeling",
-      "label": "Environmental predictors",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 6
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "Model predictions from Maxent algorithm",
@@ -950,16 +919,33 @@
       "range": [0, 1],
       "weight": 5
     },
-    "SDM>rangePredictions.yml@68|range_predictions": {
-      "description": "Variability of predictions based on range method",
-      "label": "Variability of predictions",
+    "pipeline@121": {
+      "description": "Species for which the distribution model is generated",
+      "label": "Species name",
+      "weight": 1
+    },
+    "filtering>cleanCoordinates.yml@34|clean_presence": {
+      "description": "Occurrences from GBIF after cleaning",
+      "label": "Presences",
+      "type": "text/tab-separated-values",
+      "weight": 2
+    },
+    "SDM>removeCollinearity.yml@97|rasters_selected": {
+      "description": "Environmental layers used as predictors in species distribution modeling",
+      "label": "Environmental predictors",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
+    },
+    "data>heatmapFromSTAC.yml@67|raster": {
+      "description": "Heatmap of GBIF occurences for plants used for bias correction",
+      "label": "Density of GBIF occurrences",
       "type": "image/tiff;application=geotiff",
-      "weight": 6
+      "weight": 4
     }
   },
   "metadata": {
     "name": "Species distribution modeling with Maxent",
-    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Bias correction is achieved using random pseudo-absences throught the region of interest. A variance map to represent the prediction uncertainty is generated through bootstraping.",
+    "description": "This pipeline generates predictions for a species distribution model using the Maxent algorithm. Several background methods are possible, including randomly  distributed pseudo-absences throughout the region, background thickening  ([Vollering et al. 2019](https://doi.org/10.1111/ecog.04503)) and  target-group background selection ([Phillips et al. 2009](https://doi.org/10.1890/07-2153.1)).  Bias correction is achieved using the target-group background selection method.  A variance map to represent the prediction  uncertainty is generated through bootstraping.",
     "author": [
       {
         "name": "Sarah Valentin",
@@ -970,7 +956,8 @@
         "identifier": "https://orcid.org/0000-0002-5967-9156"
       },
       {
-        "name": "François Rousseu"
+        "name": "François Rousseu",
+        "identifier": "https://orcid.org/0000-0002-2400-2479"
       }
     ],
     "license": "MIT",

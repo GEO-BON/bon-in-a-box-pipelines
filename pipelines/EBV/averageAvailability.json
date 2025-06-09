@@ -1,0 +1,79 @@
+{
+    "nodes": [
+      {
+        "id": "0",
+        "type": "io",
+        "position": {
+          "x": 367.23333740234375,
+          "y": 350
+        },
+        "data": {
+          "descriptionFile": "EBV>averageAvailability.yml"
+        }
+      },
+      {
+        "id": "1",
+        "type": "output",
+        "position": {
+          "x": 790.2333374023438,
+          "y": 347
+        },
+        "data": {
+          "label": "Output"
+        }
+      }
+    ],
+    "edges": [
+      {
+        "source": "0",
+        "sourceHandle": "average",
+        "target": "1",
+        "targetHandle": null,
+        "id": "reactflow__edge-0average-1"
+      }
+    ],
+    "inputs": {
+      "EBV>averageAvailability.yml@0|prefix": {
+        "description": "Prefix, will match all species starting with these characters.",
+        "label": "Prefix",
+        "type": "text",
+        "example": "Vulpes"
+      },
+      "EBV>averageAvailability.yml@0|scenario": {
+        "description": "Prefix, will match all species starting with these characters.",
+        "label": "Scenario",
+        "type": "options",
+        "options": [
+          "SSP2-RCP4.5",
+          "SSP3-RCP6.0",
+          "SSP4-RCP6.0",
+          "SSP5-RCP8.5"
+        ],
+        "example": "SSP4-RCP6.0"
+      },
+      "EBV>averageAvailability.yml@0|year": {
+        "description": "The year of the projected scenario that we should average on",
+        "label": "Year",
+        "type": "options",
+        "options": [
+          "2015",
+          "2020",
+          "2025",
+          "2030",
+          "2035",
+          "2040",
+          "2045",
+          "2050",
+          "2055"
+        ],
+        "example": "2040"
+      }
+    },
+    "outputs": {
+      "EBV>averageAvailability.yml@0|average": {
+        "description": "The average availability for the mammals matching the given prefix for the given scenario and time.",
+        "label": "Average availability",
+        "type": "image/tiff;application=geotiff"
+      }
+    }
+  }
