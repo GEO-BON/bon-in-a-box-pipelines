@@ -1,6 +1,6 @@
 # Title of your pipeline
 ### Author: Author name
-#### Reviewed by: Reviewer name
+#### Reviewed by: Reviewer names
 
 *This is a template for creating a tutorial for a pipeline, which will be included in the online documentation. These are the suggested sections, but the contributor can include additional sections or change titles if desired.* 
 
