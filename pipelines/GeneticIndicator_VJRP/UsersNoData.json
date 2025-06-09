@@ -1,0 +1,105 @@
+{
+  "nodes": [
+    {
+      "id": "16",
+      "type": "io",
+      "position": {
+        "x": 1100.1309386300816,
+        "y": 8.12555073849029
+      },
+      "data": {
+        "descriptionFile": "Pops_from_distance>Pops_from_distance.yml"
+      }
+    },
+    {
+      "id": "17",
+      "type": "output",
+      "position": {
+        "x": 1600.987838167659,
+        "y": 50.719932855958234
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "24",
+      "type": "io",
+      "position": {
+        "x": 389.5333251953125,
+        "y": 279
+      },
+      "data": {
+        "descriptionFile": "Pops_from_DispDist2>Pops_from_DispDist.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": 356.5333251953125,
+        "y": 247
+      },
+      "data": {
+        "descriptionFile": "Pops_from_DispDist>Pops_from_DispDist.yml"
+      }
+    },
+    {
+      "id": "27",
+      "type": "output",
+      "position": {
+        "x": 897.5333251953125,
+        "y": 274
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "16",
+      "sourceHandle": "plot_hypothesis",
+      "target": "17",
+      "targetHandle": null,
+      "id": "reactflow__edge-16plot_hypothesis-17"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "plot_hypothesis",
+      "target": "27",
+      "targetHandle": null,
+      "id": "reactflow__edge-26plot_hypothesis-27"
+    }
+  ],
+  "inputs": {
+    "Pops_from_DispDist>Pops_from_DispDist.yml@26|grid_map": {
+      "description": "Map used as the study area for estimating population polygon hypotheses (e.g., study area, species distribution model).",
+      "label": "grid_map",
+      "type": "image/tiff;application=geotiff",
+      "example": "/scripts/Pops_from_DispDist/input/raster_study_area_path.tif",
+      "weight": 0
+    },
+    "Pops_from_DispDist>Pops_from_DispDist.yml@26|occ_points": {
+      "description": "Occurrence points of the species within the study area, used to calculate the distance map.",
+      "label": "occ_points",
+      "type": "application/geo+json,application/geopackage+sqlite3",
+      "example": "/scripts/Pops_from_DispDist/input/vector_presence_path.GeoJSON",
+      "weight": 1
+    },
+    "Pops_from_DispDist>Pops_from_DispDist.yml@26|DispersalDistance_m": {
+      "description": "Maximum known dispersal distance of the species in meters. If available, it is added as an additional hypothesis for defining population polygons; otherwise, hypotheses are estimated based on quantiles from the distance map values.",
+      "label": "DispersalDistance_m",
+      "type": "int",
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "Pops_from_DispDist>Pops_from_DispDist.yml@26|plot_hypothesis": {
+      "description": "Figure summarizing discrete population polygon hypotheses for each distance threshold",
+      "label": "plot_hypothesis",
+      "type": "image/jpg",
+      "weight": 0
+    }
+  }
+}

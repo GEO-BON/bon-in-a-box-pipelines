@@ -33,7 +33,7 @@ outputs:
   sf_range_map:
     label: expert range map
     description: Polygon with expected area for the species.
-    type: application/geopackage+sqlite3[]
+    type: application/geo+json[]
 references:
   - text: Mammal Diversity Database. (2020). Mammal Diversity Database (Version 1.2) [Data set]. Zenodo.
     doi: http://doi.org/10.5281/zenodo.4139818

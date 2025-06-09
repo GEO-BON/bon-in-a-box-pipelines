@@ -1,0 +1,50 @@
+script: Pops_from_DispDist.R
+author:
+  - name: Victor J Rincon-Parra
+    email: rincon-v@javeriana.edu.co
+    identifier: https://orcid.org/0000-0001-8910-0072
+description: "Estimate discrete population polygons using distance dispersal thresholds on distance maps from occurrence points within a defined grid map (e.g., study area, species distribution model) to establish spatial boundaries. Hypotheses are based on distance map quantiles. If the species' maximum dispersal distance is known, it can be added as an additional hypothesis; otherwise, only quantile-based hypotheses are generated."
+external_link: "https://github.com/GEO-BON/bon-in-a-box-pipelines/tree/genetic_indicator_Col/scripts/Pops_from_DispDist"
+inputs:
+  grid_map:
+    label: grid_map
+    description: "Map used as the study area for estimating population polygon hypotheses (e.g., study area, species distribution model)."
+    type: image/tiff;application=geotiff
+    example:  "/scripts/Pops_from_DispDist/input/raster_study_area_path.tif"
+  occ_points:
+    label: occ_points
+    description: "Occurrence points of the species within the study area, used to calculate the distance map."
+    type:
+    - application/geo+json
+    - application/geopackage+sqlite3
+    example:  "/scripts/Pops_from_DispDist/input/vector_presence_path.GeoJSON"
+  DispersalDistance_m:
+    label: DispersalDistance_m
+    description: "Maximum known dispersal distance of the species in meters. If available, it is added as an additional hypothesis for defining population polygons; otherwise, hypotheses are estimated based on quantiles from the distance map values."
+    type: int
+    example: null
+outputs:
+  distance_map:
+    label: distance_map
+    description: "Map showing the calculated distances from occurrence points within the study area."
+    type: image/tiff;application=geotiff
+  data_hypothesis:
+     label: data_hypothesis
+     description: "Data compiling information for each distance threshold, including the distance value in meters and the estimated number of populations."
+     type: text/csv
+  plot_hypothesis:
+    label: plot_hypothesis
+    description:  "Figure summarizing discrete population polygon hypotheses for each distance threshold"
+    type: image/jpg
+  map_hypothesis:
+    label: map_hypothesis
+    description: "Maps displaying the spatial distribution of discrete population polygon hypotheses for each distance threshold."
+    type: image/tiff;application=geotiff[]
+  folder_raster_hypothesis:
+    label: folder_raster_hypothesis
+    description: "Folder containing the collection of raster layer hypotheses of discrete population polygons for each distance threshold."
+    type: text
+  folder_polygon_hypothesis:
+    label: folder_polygon_hypothesis
+    description: "Folder containing the collection of vector layer hypotheses of discrete population polygons for each distance threshold."
+    type: text

@@ -1,0 +1,24 @@
+script: test_pols.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  grid_polygon:
+    label: grid_polygon
+    description: Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).
+    type: image/tiff;application=geotiff
+    example:  "/scripts/Pops_from_distance/input/raster_study_area_path.tif"
+  vector_points:
+    label: vector_points
+    description: Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).
+    type: application/geo+json
+    example:  "/scripts/Pops_from_distance/input/vector_presence_path.GeoJSON"
+  disperssion_distance_m:
+    label: disperssion_distance
+    description: Numerical value for the distance.
+    type: int
+    example: null
+outputs:
+  rasters:
+    label: rasters
+    description: array of output raster paths
+    type: application=geo+json[]

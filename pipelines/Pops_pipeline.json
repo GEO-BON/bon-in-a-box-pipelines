@@ -1,0 +1,65 @@
+{
+  "nodes": [
+    {
+      "id": "105",
+      "type": "io",
+      "position": {
+        "x": 354.5333251953125,
+        "y": 250.3333282470703
+      },
+      "data": {
+        "descriptionFile": "Pops_from_DispDist>Pops_from_DispDist.yml"
+      }
+    },
+    {
+      "id": "106",
+      "type": "output",
+      "position": {
+        "x": 894.5333251953125,
+        "y": 253.3333282470703
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "105",
+      "sourceHandle": "distance_map",
+      "target": "106",
+      "targetHandle": null,
+      "id": "reactflow__edge-105distance_map-106"
+    }
+  ],
+  "inputs": {
+    "Pops_from_DispDist>Pops_from_DispDist.yml@105|grid_map": {
+      "description": "Map used as the study area for estimating population polygon hypotheses (e.g., study area, species distribution model).",
+      "label": "grid_map",
+      "type": "image/tiff;application=geotiff",
+      "example": "/scripts/Pops_from_DispDist/input/raster_study_area_path.tif",
+      "weight": 0
+    },
+    "Pops_from_DispDist>Pops_from_DispDist.yml@105|occ_points": {
+      "description": "Occurrence points of the species within the study area, used to calculate the distance map.",
+      "label": "occ_points",
+      "type": "application/geo+json,application/geopackage+sqlite3",
+      "example": "/scripts/Pops_from_DispDist/input/vector_presence_path.GeoJSON",
+      "weight": 1
+    },
+    "Pops_from_DispDist>Pops_from_DispDist.yml@105|DispersalDistance_m": {
+      "description": "Maximum known dispersal distance of the species in meters. If available, it is added as an additional hypothesis for defining population polygons; otherwise, hypotheses are estimated based on quantiles from the distance map values.",
+      "label": "DispersalDistance_m",
+      "type": "int",
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "Pops_from_DispDist>Pops_from_DispDist.yml@105|distance_map": {
+      "description": "Map showing the calculated distances from occurrence points within the study area.",
+      "label": "distance_map",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    }
+  }
+}

@@ -1,0 +1,43 @@
+script: StudyArea_GFW.R
+description: "This script converts the study area layer (shapefile or bounding box) into a spatial grid (well-known text (WKT) representation)."
+external_link: https://github.com/GEO-BON/biab-2.0
+inputs:
+  StudyArea_grid:
+    label: StudyArea_grid
+    description: "studyarea_grid"
+    type: image/tiff;application=geotiff
+    example: "scripts/StudyArea_GFW/input/raster_study_area_path.tif"
+  year:
+    label: "year"
+    description: "year"
+    type: options
+    example: "2000"
+    options:
+      - "2000"
+      - "2001"
+      - "2002"
+      - "2003"
+      - "2004"
+      - "2005"
+      - "2006"
+      - "2007"
+      - "2008"
+      - "2009"
+      - "2010"
+      - "2011"
+      - "2012"
+      - "2013"
+      - "2014"
+      - "2015"
+      - "2016"
+      - "2017"
+      - "2018"
+      - "2019"
+      - "2020"
+      - "2021"
+      - "2022"
+outputs:
+  GFW_persistence:
+    label: GFW_persistence
+    description: "GFW_persistence"
+    type: image/tiff;application=geotiff

@@ -1,0 +1,70 @@
+{
+  "nodes": [
+    {
+      "id": "10",
+      "type": "io",
+      "position": {
+        "x": 783.344236075552,
+        "y": 250.3439145829991
+      },
+      "data": {
+        "descriptionFile": "GBIF_from_polygon>GBIF_from_polygon.yml"
+      }
+    },
+    {
+      "id": "11",
+      "type": "output",
+      "position": {
+        "x": 1248.2503367380948,
+        "y": 267.88959383127997
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "10",
+      "sourceHandle": "vector_presence",
+      "target": "11",
+      "targetHandle": null,
+      "id": "reactflow__edge-10vector_presence-11"
+    }
+  ],
+  "inputs": {
+    "GBIF_from_polygon>GBIF_from_polygon.yml@10|species": {
+      "description": "Scientific name of the species",
+      "label": "species names",
+      "type": "text[]",
+      "example": [
+        "Myrmecophaga tridactyla"
+      ],
+      "weight": 0
+    },
+    "GBIF_from_polygon>GBIF_from_polygon.yml@10|vector_polygon": {
+      "description": "Text string with the complete path location for the spatial file containing the study area boundaries. Accepted file types include shapefile (.shp), raster (.tif/GeoTIFF), GeoJSON (.json) or  GeoPackage (.gpkg).",
+      "label": "vector_polygon",
+      "type": "application/geo+json",
+      "example": [
+        "/scripts/GBIF_from_polygon/input/sp_map.GeoJSON"
+      ],
+      "weight": 1
+    },
+    "GBIF_from_polygon>GBIF_from_polygon.yml@10|country": {
+      "description": "Optional string, country to retrieve the occurrences from. Leave blank to ignore administrative boundaries.",
+      "label": "country",
+      "type": "text",
+      "example": "Colombia",
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "GBIF_from_polygon>GBIF_from_polygon.yml@10|vector_presence": {
+      "description": "Text string with the complete path location for the spatial file to the study area's raster image (TIFF format) with the chosen projected coordinate system. Use this file for spatial operations and when biological data coordinates are projected to a particular coordinate system.",
+      "label": "vector_presence",
+      "type": "application/geo+json",
+      "weight": 0
+    }
+  }
+}
