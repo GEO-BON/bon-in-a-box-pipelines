@@ -41,15 +41,17 @@ print("Inputs: ")
 print(input)
 
 presence <- read.table(file = input$presence, sep = '\t', header = TRUE) 
-background <- read.table(file = input$background, sep = '\t', header = TRUE) 
-predictors <- terra::rast(unlist(input$predictors))
+absence <- read.table(file = input$absence, sep = '\t', header = TRUE) 
+predictors <- terra::rast(input$predictors)
+
 # names(predictors) <- input$layers
 
-presence_bg_vals <- setup_presence_background(
+presence_bg_vals <- setup_sdm_data(
   presence = presence,
-  background = background,
+  absence = absence,
   predictors = predictors,
   partition_type = input$partition_type,
+  orientation = input$orientation_block,
   runs_n = input$runs_n,
   boot_proportion = input$boot_proportion,
   cv_partitions = input$cv_partitions,

@@ -6,16 +6,26 @@ references:
     doi: 10.1111/2041-210X.13389
 
 inputs:
-  presence_background:
+  presence_absence:
     label: presence background
     description: Path to the background point
     type: text/tab-separated-values
-    example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/presence_background.tsv"
+    example: "/scripts/SDM/runModel_presence_background.tsv"
   predictors: 
     label: predictors
     description: layer names (predictors) as a list, or path to a list
-    type: image/tiff;application=geotiff
-    example: "/output/setupDataSdm/setupDataSdm_R/595d3ffe701bddcc27bd732ed5a9a6fa/predictors.tif"
+    type: image/tiff;application=geotiff[]
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+  aggregation_factor: 
+    label: aggregation_factor
+    description: integer, aggregation factor for predictors
+    type: int
+    example: 5
+  select_variables:
+    label: select variables
+    description: Boolean, select or not contributing variables with BART custom build function
+    type: boolean
+    example: True
   quantile_min:
     label: quantile min
     description: lower bound for credible interval calculation

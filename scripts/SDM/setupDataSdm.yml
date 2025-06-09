@@ -7,9 +7,9 @@ inputs:
     description: Dataframe, presence data.
     type: text/tab-separated-values
     example: "/scripts/SDM/selectBackground_presence.tsv"
-  background:
-    label: background
-    description: Dataframe, background data.
+  absence:
+    label: absence
+    description: Dataframe, background, absence or pseudo-absences data.
     type: text/tab-separated-values
     example: "/scripts/SDM/setupDataSdm_background.tsv"
   predictors: 
@@ -22,10 +22,21 @@ inputs:
     description: method to partition into test and training sets to perform model fitting and validation.
     type: options
     options: 
+      - spatial_block
       - bootstrap
       - crossvalidation
       - none
     example: none
+  orientation_block:
+    label: orientation block
+    description: String, order of spatial partitioning for block technique..
+    type: options
+    options:
+      - lat_lon
+      - lon_lat
+      - lon_lon
+      - lat_lat
+    example: lat_lon
   runs_n:
     label: number of runs
     description: number of runs (in bootstrap or crossvalidation method)

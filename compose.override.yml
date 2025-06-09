@@ -25,5 +25,5 @@ services:
   script-server:
     image: geobon/bon-in-a-box:script-server
     # build:
-    #   context: ./script-server/
-    #   dockerfile: Dockerfile.prod
+    #    context: ./script-server/
+    #    dockerfile: Dockerfile.prod

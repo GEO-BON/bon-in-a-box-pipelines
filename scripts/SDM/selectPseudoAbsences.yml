@@ -1,0 +1,47 @@
+script: selectPseudoAbsences.R
+description: "This script creates a set of pseudo-absences points."
+
+inputs:
+  presence:
+    label: presence
+    description: Dataframe, presence data.
+    type: text/tab-separated-values
+    example: "/scripts/SDM/selectBackground_presence.tsv"
+  extent:
+    label: extent
+    description: shapefile, representing a study extent
+    type: application/dbf
+    example: "/scripts/SDM/extentToBbox_extent.shp"
+  method_pseudoabsences: 
+    label: method pseudoabsences
+    description: method used to sample pseudoabsences points
+    type: options
+    options: 
+      - random
+      - env_const
+      - geo_const
+      - geo_env_const
+      - geo_env_km_const
+    example: env_const
+  n_pseudoabsences: 
+    label: number of pseudoabsences points
+    description: number of pseudoabsences points
+    type: int
+    example: 10000
+  width: 
+    label: width
+    description: buffer width in m if predictors have a longitude/latitude CRS, or map units in other cases
+    type: int
+    example: 10000
+  predictors: 
+    label: predictors
+    description: raster, predictors variables 
+    type: image/tiff;application=geotiff[]
+    example: "/scripts/filtering/cleanCoordinates_predictors.tif"
+outputs:
+  pseudoabsences:
+    label: pseudoabsences
+    description: TSV file containing a table with pseudoabsences points.
+    type: text/tab-separated-values
+    example:
+

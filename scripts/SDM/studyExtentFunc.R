@@ -8,17 +8,18 @@
 create_study_extent <- function(obs, 
                               lon = "lon",
                               lat = "lat",
-                              proj = proj,
+                              proj = NULL,
                               method = "box",
                               dist_buffer = NULL,
                               shapefile_path = NULL,
+                              mask = NULL,
                               export = NULL,
                               path = NULL,
                               species = NULL) {
   
   # projecting observations coordinates
   obs_points <- project_coords(obs, lon, lat, proj)
-  
+
   
   if (method == "box") {
     message(sprintf("Calculating study extent based on box around observations
@@ -38,7 +39,7 @@ create_study_extent <- function(obs,
     
   } else if (method ==  "mcp") {
     study_extent <- mcp(obs_points)
-    
+ 
     if (!is.null(dist_buffer)) {
       study_extent <-  sf::st_buffer(study_extent, dist =  dist_buffer)
     }
@@ -60,8 +61,20 @@ create_study_extent <- function(obs,
     
     study_extent <- sf::st_read(shapefile_path) 
   }
+
   study_extent <- study_extent |> sf::st_set_crs(proj)
  
+ if(!inherits(study_extent, "SpatVector")) {
+    study_extent <-terra::vect(study_extent)
+  }
+
+ if(!is.null(mask)) {
+
+    mask <- terra::project(mask, y = proj)
+    study_extent <- terra::intersect(mask, study_extent)
+
+  }
+
   return(study_extent)
   
 }
