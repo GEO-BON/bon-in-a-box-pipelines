@@ -52,7 +52,7 @@ valid_results = True
 page = 1
 per_page = 50
 total = 0
-while valid_results: 
+while valid_results:
     params={'country': country_iso, 'page': page, "per_page": per_page, "with_geometry": "true", "token": token }
     try:
         httpResults = session.get("%s/protected_areas/search" % request_url, params=params)
@@ -68,7 +68,7 @@ while valid_results:
                 props = deepcopy(pas[i])
                 del(props['geojson'])
                 pas[i]['geojson']['properties'] = props
-                df = gpd.GeoDataFrame.from_features([pas[i]['geojson']], crs='EPSG:4326').explode()
+                df = gpd.GeoDataFrame.from_features([pas[i]['geojson']], crs='EPSG:4326')
                 all_results = pd.concat([all_results, df])
     else:
         valid_results = False
