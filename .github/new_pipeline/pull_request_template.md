@@ -13,7 +13,7 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 > Before submitting for review, please make sure that you meet these requirements:
 - [ ] The pipeline meets the standards specified in the pipeline standards document
 - [ ] The GitHub validations pass
-- [ ] The license for the pipeline is specified and is open source
+- [ ] The license for the pipeline is specified and is free and open source
 - [ ] The pipeline runs with the default values and has been tested with a range of other parameters
 - [ ] The pipeline is accompanied by a tutorial 
 
