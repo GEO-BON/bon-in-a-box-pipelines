@@ -32,7 +32,7 @@ Etc.
 These are the outputs of the pipeline.
 
 ## Example
-*Include an example here. If possible, this should be the same as the example that autofills in the pipeline so the user can easily run it and see the results. Include images of the outputs here so that the user can get an idea of what it they should look like*
+*Include an example of a pipeline run here. If possible, this should be the same as the example that autofills in the pipeline so the user can easily run it and see the results. Include images of the outputs here so that the user can get an idea of what it they should look like*
 
 ## Pipeline parameterization
 *Write guidance on how to parameterize the pipeline, what types of data to use, and if there are any limitations that should be communicated*
