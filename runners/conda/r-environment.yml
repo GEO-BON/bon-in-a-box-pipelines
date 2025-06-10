@@ -4,6 +4,7 @@ channels:
   - r
 dependencies:
   - conda-build
+  - proj
   - libgdal
   - r-abind
   - r-base
@@ -23,10 +24,11 @@ dependencies:
   - r-landscapemetrics
   - r-magrittr
   - r-png
+  - r-proj
   - r-purrr
   - r-rcurl
-  - r-rgbif
   - r-remotes
+  - r-rgbif
   - r-rjava
   - r-rjson
   - r-rnaturalearth
@@ -36,6 +38,7 @@ dependencies:
   - r-sf
   # - r-spatialeco # installation from conda for this package currently does not work properly
   - r-stars
+  - r-stringr
   - r-stringr
   - r-terra
   - r-this.path

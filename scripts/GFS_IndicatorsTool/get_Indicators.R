@@ -2,6 +2,9 @@
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
 
+library(devtools)
+if (!"rnaturalearthhires" %in% installed.packages()[,"Package"]) devtools::install_github("ropensci/rnaturalearthhires")
+
 library(rjson)
 library(terra)
 library(sf)
@@ -97,6 +100,48 @@ print('calculating PM indicator')
 PM = 1-mean(pop_habitat_area[,ncol(pop_habitat_area)][pop_habitat_area[,1]!=0]==0, na.rm=T)
 
 
+##########  Plot changes in population area
+
+pm_plot = file.path(outputFolder, 'PM.png')
+
+{
+  png(filename = pm_plot, width = 2000, height = 1000, res = 300)
+  par(mfrow=c(1,2));par(mar=c(3,3,3,2))
+
+  ### Plot population habitat area over time
+  plot(NA, ylim=c(0,max(pop_habitat_area, na.rm=T)), xlim=c(0,ncol(pop_habitat_area)+1), main='Pop. Area [km2]', axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
+
+  for (pop in rownames(pop_habitat_area)) {
+        lines(1:ncol(pop_habitat_area), pop_habitat_area[pop,], col=adjustcolor(PopCol[pop], 0.7))
+        shadowtext(ncol(pop_habitat_area), pop_habitat_area[pop,ncol(pop_habitat_area)], pos=2, pop, cex=0.75, col=adjustcolor(PopCol[pop],0.7))
+      }
+      axis(1, at=1:ncol(pop_habitat_area), labels = colnames(pop_habitat_area), las=2)
+      axis(2)
+      title(ylab='area [km2]', line=2)
+
+
+  ### Plot relative change in population habitat area over time
+
+  rel_pop_habitat_area = as.matrix(pop_habitat_area)/as.numeric(pop_habitat_area[,1])
+  rel_pop_habitat_area[is.na(rel_pop_habitat_area)] = 0
+  rel_pop_habitat_area[is.finite(rel_pop_habitat_area)==F] = 0
+
+  plot(NA, ylim=c(0,max(rel_pop_habitat_area,na.rm=T)), xlim=c(0,ncol(rel_pop_habitat_area)+1), main='Rel. Pop. Area', axes=F, xlab='', ylab='', xaxs='i', yaxs='i')
+
+  for (pop in rownames(rel_pop_habitat_area)) {
+    lines(1:ncol(rel_pop_habitat_area), rel_pop_habitat_area[pop,], col=adjustcolor(PopCol[pop], 0.7))
+    shadowtext(ncol(rel_pop_habitat_area), rel_pop_habitat_area[pop,ncol(pop_habitat_area)], pos=2, pop, cex=0.75, col=adjustcolor(PopCol[pop],0.7))
+  }
+  axis(1, at=1:ncol(rel_pop_habitat_area), labels = colnames(rel_pop_habitat_area), las=2)
+  axis(2)
+  title(ylab='% area change', line=2)
+
+  dev.off()
+}
+
+
+##########  Display populations maps
+sf_use_s2(F)
 
 # get land polygons for plotting
 sf_use_s2(F)
@@ -155,9 +200,9 @@ empty_mp = st_sfc(st_multipolygon(mp), crs = crs(pop_poly))
 
 # add estimates of habitat area and NE for different time point, add to merged DF
 for (pop in rownames(int_pop_habitat_area)) {
-  
-  HA_min_past = int_pop_habitat_area[pop,1] # set minimal habitat area observed in past (set first year to start) 
-  
+
+  HA_min_past = int_pop_habitat_area[pop,1] # set minimal habitat area observed in past (set first year to start)
+
   for (y in colnames(int_pop_habitat_area)) {
     
     HA = int_pop_habitat_area[pop,y] # total area

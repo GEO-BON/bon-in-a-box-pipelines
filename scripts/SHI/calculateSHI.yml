@@ -19,7 +19,7 @@ inputs:
     type: text/tab-separated-values[]
     example:
       [
-        "/scripts/SHI/Saguinus oedipus_SHS_table_tidy.tsv",
+        "/scripts/SHI/Myrmecophaga tridactyla_SHS_table_tidy.tsv",
         "/scripts/SHI/Ateles fusciceps_SHS_table_tidy.tsv"
       ]
   df_aoh_areas:

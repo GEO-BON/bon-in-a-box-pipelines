@@ -270,6 +270,10 @@
       {
         "text": "Newbold et al. 2016",
         "doi": "https://doi.org/10.1126/science.aaf2201"
+      },
+      {
+        "text": "Bastion 2023",
+        "doi": "https://doi.org/10.32614/CRAN.package.exactextractr"
       }
     ]
   }

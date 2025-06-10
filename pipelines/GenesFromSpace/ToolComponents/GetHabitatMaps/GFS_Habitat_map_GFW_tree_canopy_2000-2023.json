@@ -4,8 +4,8 @@
       "id": "36",
       "type": "io",
       "position": {
-        "x": 684,
-        "y": 463.22916412353516
+        "x": -16,
+        "y": 49.5
       },
       "data": {
         "descriptionFile": "GFS_IndicatorsTool>get_TCY.yml"

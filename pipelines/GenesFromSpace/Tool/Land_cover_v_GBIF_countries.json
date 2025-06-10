@@ -4,19 +4,74 @@
       "id": "176",
       "type": "io",
       "position": {
-        "x": 2130,
-        "y": 613.3333333333334
+        "x": 1168,
+        "y": -88
+      },
+      "data": {
+        "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json"
+      }
+    },
+    {
+      "id": "120",
+      "type": "io",
+      "position": {
+        "x": 2069,
+        "y": 110
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetIndicators>GFS_Indicators.json"
       }
     },
     {
-      "id": "177",
+      "id": "141",
+      "type": "output",
+      "position": {
+        "x": 2852,
+        "y": 84.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "142",
+      "type": "output",
+      "position": {
+        "x": 2854,
+        "y": 161.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "143",
+      "type": "output",
+      "position": {
+        "x": 2852,
+        "y": 218.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "144",
+      "type": "output",
+      "position": {
+        "x": 2852,
+        "y": 35.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "146",
       "type": "io",
       "position": {
-        "x": 546,
-        "y": 497.33333333333337
+        "x": 372,
+        "y": 22
       },
       "data": {
         "descriptionFile": "GenesFromSpace>ToolComponents>GetPopulationPolygons>GFS_Population_polygons_from_GBIF_occurences_country.json"
@@ -26,85 +81,8 @@
       "id": "178",
       "type": "io",
       "position": {
-        "x": 1293,
-        "y": 447.33333333333337
-      },
-      "data": {
-        "descriptionFile": "GenesFromSpace>ToolComponents>GetHabitatMaps>GFS_Habitat_map_Landcover_1992_2020.json"
-      }
-    },
-    {
-      "id": "179",
-      "type": "output",
-      "position": {
-        "x": 2942,
-        "y": 525.3333333333334
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "180",
-      "type": "output",
-      "position": {
-        "x": 2942,
-        "y": 429.33333333333337
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "181",
-      "type": "output",
-      "position": {
-        "x": 2942,
-        "y": 477.33333333333337
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "182",
-      "type": "output",
-      "position": {
-        "x": 2942,
-        "y": 718.3333333333334
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "183",
-      "type": "io",
-      "position": {
-        "x": 827,
-        "y": 205.33333333333334
-      },
-      "data": {
-        "descriptionFile": "GFS_IndicatorsTool>input_save.yml"
-      }
-    },
-    {
-      "id": "184",
-      "type": "io",
-      "position": {
-        "x": 2942,
-        "y": 583.3333333333334
-      },
-      "data": {
-        "descriptionFile": "GFS_IndicatorsTool>output_save.yml"
-      }
-    },
-    {
-      "id": "186",
-      "type": "userInput",
-      "position": {
-        "x": 126,
-        "y": 272
+        "x": -6,
+        "y": 78
       },
       "dragHandle": ".dragHandle",
       "data": {

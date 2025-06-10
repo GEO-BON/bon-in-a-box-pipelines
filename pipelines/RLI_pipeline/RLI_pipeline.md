@@ -17,8 +17,6 @@ The pipeline creates the following outputs:
 
 [See an example output here](https://pipelines-results.geobon.org/viewer/RLI_pipeline%3EIUCN_RLI_pipeline%3E46192f03723b43152495c84ac15175cf)
 
-See an example RLI output here (coming soon):
-
 **Contributors:**
 The function for calculate the RLI, was made by Maria Camila Diaz (mdiaz@humboldt.org.co) and Victor Julio Rincón (vrincon@humboldt.org.co), researchers of Instituto de Investigación de Recursos Biológicos Alexander von Humboldt. The documentation of the script to generate the RLI was built by Maria Camila Diaz in July 2024.
 
@@ -31,5 +29,5 @@ Butchart SH, Resit Akçakaya H, Chanson J, Baillie JE, Collen B, et al. 2007. Im
 Cardoso, P., Branco, V. 2023. IUCN Redlisting Tools (Package red).
 
 CBD 2022. Proposed monitoring framework for the post-2020 global biodiversity framework. CBD: Convention on Biological Diversity.
-Global Biodiversity Outlook. 2010. Global biodiversity outlook 3. In Montréal, Canada: Secretariat of the Convention on Biological Diversity.(http://gbo3. cbd. int/) Phil. Trans. R. Soc. B (Vol. 9).
+Global Biodiversity Outlook. 2010. Global biodiversity outlook 3. In Montréal, Canada: Secretariat of the Convention on Biological Diversity.(http://gbo3.cbd.int/) Phil. Trans. R. Soc. B (Vol. 9).
 Rodrigues ASL, Pilgrim JD, Lamoreux JF, Hoffmann M, Brooks TM.2006. The value of the IUCN Red List for Conservation. Trends in Ecology & Evolution 21: 71–76.
