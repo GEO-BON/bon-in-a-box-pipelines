@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1279,
-        "y": 68
+        "x": 694,
+        "y": 279.83333333333326
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "58",
       "type": "userInput",
       "position": {
-        "x": 595,
-        "y": 260.57142857142856
+        "x": 88,
+        "y": 196.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,8 +68,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1284,
-        "y": 180
+        "x": 666,
+        "y": 400.83333333333326
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -81,8 +81,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 654,
-        "y": 224.57142857142856
+        "x": 93,
+        "y": 64.33333333333337
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -96,8 +96,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2219,
-        "y": 147.5
+        "x": 1535,
+        "y": 381.33333333333326
       },
       "data": {
         "label": "Output"
@@ -131,8 +131,8 @@
       "id": "132",
       "type": "io",
       "position": {
-        "x": 2219,
-        "y": 353.5
+        "x": 1565,
+        "y": 631.3333333333333
       },
       "data": {
         "descriptionFile": "SDM>BRT>fitBRT.yml"
@@ -142,8 +142,8 @@
       "id": "133",
       "type": "output",
       "position": {
-        "x": 2595,
-        "y": 275
+        "x": 2028,
+        "y": 662.8333333333333
       },
       "data": {
         "label": "Output"
@@ -153,8 +153,8 @@
       "id": "134",
       "type": "output",
       "position": {
-        "x": 2595,
-        "y": 177
+        "x": 2028,
+        "y": 600.8333333333333
       },
       "data": {
         "label": "Output"
@@ -164,8 +164,8 @@
       "id": "135",
       "type": "output",
       "position": {
-        "x": 2595,
-        "y": 226
+        "x": 2030,
+        "y": 527.8333333333333
       },
       "data": {
         "label": "Output"
@@ -191,8 +191,8 @@
       "id": "141",
       "type": "output",
       "position": {
-        "x": 2595,
-        "y": 324
+        "x": 2028,
+        "y": 472.83333333333326
       },
       "data": {
         "label": "Output"
@@ -202,8 +202,8 @@
       "id": "142",
       "type": "output",
       "position": {
-        "x": 2595,
-        "y": 527
+        "x": 2030,
+        "y": 831.8333333333333
       },
       "data": {
         "label": "Output"
@@ -213,8 +213,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 2595,
-        "y": 576
+        "x": 2028,
+        "y": 779.8333333333333
       },
       "data": {
         "label": "Output"
@@ -237,8 +237,8 @@
       "id": "148",
       "type": "output",
       "position": {
-        "x": 2595,
-        "y": 478
+        "x": 2028,
+        "y": 723.8333333333333
       },
       "data": {
         "label": "Output"
@@ -259,8 +259,8 @@
       "id": "152",
       "type": "userInput",
       "position": {
-        "x": 1800,
-        "y": 477.07142857142856
+        "x": 1206,
+        "y": 775.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -272,8 +272,8 @@
       "id": "153",
       "type": "userInput",
       "position": {
-        "x": 1736,
-        "y": 441.07142857142856
+        "x": 1220,
+        "y": 740.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -285,8 +285,8 @@
       "id": "154",
       "type": "userInput",
       "position": {
-        "x": 1763,
-        "y": 513.0714285714286
+        "x": 1206,
+        "y": 810.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -425,59 +425,6 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "application/geopackage+sqlite3"
-      }
-    },
-    {
-      "id": "159",
-      "type": "io",
-      "position": {
-        "x": 968,
-        "y": 247.07142857142856
-      },
-      "data": {
-        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
-      }
-    },
-    {
-      "id": "161",
-      "type": "io",
-      "position": {
-        "x": 1167.6196714329965,
-        "y": 742.4575050041799
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "162",
-      "type": "constant",
-      "position": {
-        "x": 530.2142440353659,
-        "y": 476.390694863721
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "esacci-lc|esacci-lc-2020"
-        ]
-      }
-    },
-    {
-      "id": "163",
-      "type": "userInput",
-      "position": {
-        "x": 482.3133394690942,
-        "y": 767.0996329210944
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "chelsa-clim|bio1",
-          "chelsa-clim|bio2"
-        ]
       }
     }
   ],
@@ -817,7 +764,7 @@
         1015207,
         1511916
       ],
-      "weight": 1
+      "weight": 2
     },
     "pipeline@57": {
       "label": "Coordinate Reference System",

@@ -3,6 +3,7 @@ import json;
 import openeo;
 import shapely;
 import os
+import geopandas as gpd
 
 os.chdir(sys.argv[1])
 
@@ -33,10 +34,15 @@ datacube = connection.load_collection(
   bands=bands
 )
 
+gdf = gpd.read_file(polygon)
+
+# Extract the geometry (assuming only one feature)
+geometry = gdf.geometry.iloc[0]
+
 if polygon is None:
     datacube_cropped = datacube
 else:
-    datacube_cropped = datacube.filter_spatial(polygon) # cropping to polygon
+    datacube_cropped = datacube.filter_spatial(geometry) # cropping to polygon
 
 
 if spatial_resolution is None:
@@ -74,7 +80,7 @@ if polygon is None:
     polygon = shapely.geometry.box(*bbox)
 
 res = datacube.aggregate_spatial(
-    geometries=polygon,
+    geometries=geometry,
     reducer=aggregate_function
 )
 
