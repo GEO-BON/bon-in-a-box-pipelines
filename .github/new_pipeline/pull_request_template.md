@@ -26,13 +26,7 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 
 ## Code information
 
-**GitHub repo:** <!-- REPO URL -->
 
-**LICENSE:** <!-- LICENSE NAME HERE -->
-
-> [!NOTE]
-> The pipeline license **must** be FOSS (free and open source software) and **should** not require the same license for
-> derived products.
 
 **Languages used:**
 
