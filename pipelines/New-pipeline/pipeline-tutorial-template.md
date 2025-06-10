@@ -2,7 +2,7 @@
 ### Author(s): Author name
 #### Reviewed by: Reviewer names
 
-*This is a template for creating a tutorial for a pipeline, which will be included in the online documentation. These are the suggested sections, but the contributor can include additional sections or change titles if desired.* 
+*This is a template for creating a tutorial for a pipeline, which will be included in the online documentation. These are the suggested sections, but the contributor can include additional sections or change titles if desired. Should you need to add any images, please add them in the images folder of the bon-in-a-box-pipelines repository and link them to this file.* 
 
 ## Introduction
 *Write an introduction here that is a brief description of what the pipeline does, and the context in which it should be used. This should include any relevant citations to the original paper.*
