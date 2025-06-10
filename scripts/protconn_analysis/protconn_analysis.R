@@ -93,25 +93,25 @@ dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")
   protected_areas_buffer <- st_buffer(x, dist = 10) # buffering polygons by 10 meters
   intersections <- st_intersects(protected_areas_buffer) # Identifying intersecting polygons
-  
+
   # Grouping intersecting polygons
   groups <- as.integer(igraph::components(graph = igraph::graph_from_adj_list(intersections))$membership)
-  
+
   x$group_id <- groups
-  
+
   protected_areas_clean <- x %>%
     group_by(group_id) %>%
     summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
   print("num protected areas after simplify before exploding")
   print(nrow(protected_areas_clean))
-  
+
   # Exploding multipolygons into polygons for faster calculation
-  protected_areas_multi <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean)=="MULTIPOLYGON") %>% 
+  protected_areas_multi <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean)=="MULTIPOLYGON") %>%
   st_cast("POLYGON",group_or_split=TRUE)
   protected_areas_poly <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean)=="POLYGON")
-  
+
   protected_areas_clean <- rbind(protected_areas_multi, protected_areas_poly)
-  
+
   print("num protected areas after simplify after exploding")
   print(nrow(protected_areas_clean))
   return(protected_areas_clean)
@@ -147,7 +147,7 @@ protconn_result <- Makurhini::MK_ProtConn(
   area_unit = "m2",
   distance = list(type = input$distance_matrix_type),
   probability = 0.5,
-  transboundary = input$transboundary_distance,
+  transboundary = 0,
   distance_thresholds = c(input$distance_threshold)
 )
 gc()
@@ -191,7 +191,7 @@ if (input$distance_threshold == 1000) { # skip if already ran in the original an
     area_unit = "m2",
     distance = list(type = input$distance_matrix_type),
     probability = 0.5,
-    transboundary = input$transboundary_distance,
+    transboundary = 0,
     distance_thresholds = 1000
   )
   protconn_result_1km <- as.data.frame(protconn_result_1km)[c(2, 3, 4), c(3, 4)]
@@ -212,7 +212,7 @@ if (input$distance_threshold == 10000) { # skip if already ran in the original a
     area_unit = "m2",
     distance = list(type = input$distance_matrix_type),
     probability = 0.5,
-    transboundary = input$transboundary_distance,
+    transboundary = 0,
     distance_thresholds = 10000
   )
   protconn_result_10km <- as.data.frame(protconn_result_10km)[c(2, 3, 4), c(3, 4)]
@@ -232,7 +232,7 @@ if (input$distance_threshold == 100000) {
     region = study_area, area_unit = "m2",
     distance = list(type = input$distance_matrix_type),
     probability = 0.5,
-    transboundary = input$transboundary_distance,
+    transboundary = 0,
     distance_thresholds = 100000
   )
   protconn_result_100km <- as.data.frame(protconn_result_100km)[c(2, 3, 4), c(3, 4)]
@@ -298,7 +298,7 @@ for (i in 1:length(years)) {
         region = study_area, area_unit = "m2",
         distance = list(type = input$distance_matrix_type),
         probability = 0.5,
-        transboundary = input$transboundary_distance,
+        transboundary = 0,
         distance_thresholds = c(input$distance_threshold)
       )
       protconn_result_df <- as.data.frame(protconn_result_yrs)[c(1, 3, 4), c(3, 4)] %>% mutate(Year = years[i])
