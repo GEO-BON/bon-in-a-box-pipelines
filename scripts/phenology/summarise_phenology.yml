@@ -19,7 +19,7 @@ inputs:
   study_area_polygon:
     label: Polygon of study area
     description: Polygon of the study area of interest. Leave blank if you do not want to crop by a polygon and want to use the bounding box instead.
-    type: application/geo+json
+    type: application/geopackage+sqlite3
     example: null
   start_year:
     label: Start year

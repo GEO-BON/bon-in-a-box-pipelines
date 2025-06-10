@@ -93,40 +93,36 @@
       }
     },
     {
-      "id": "51",
+      "id": "56",
       "type": "io",
       "position": {
-        "x": -328.4750061035156,
-        "y": 56
+        "x": -489.0585973986442,
+        "y": 74.68646235372944
       },
       "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
+        "descriptionFile": "getCountrybbox.json"
       }
     },
     {
-      "id": "52",
-      "type": "constant",
+      "id": "57",
+      "type": "output",
       "position": {
-        "x": -682.4750061035156,
-        "y": 109
+        "x": 156.99096815393273,
+        "y": 67.22434263518468
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "EPSG:4326"
+        "label": "Output"
       }
     },
     {
-      "id": "53",
-      "type": "userInput",
+      "id": "58",
+      "type": "output",
       "position": {
-        "x": -669.4750061035156,
-        "y": -69
+        "x": 160.9494918862513,
+        "y": 127.92170653073782
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "Canada"
+        "label": "Output"
       }
     }
   ],
@@ -202,49 +198,35 @@
       "id": "reactflow__edge-48phenology_change_plot-50"
     },
     {
-      "source": "51",
-      "sourceHandle": "study_area_polygon_unprojected",
+      "source": "56",
+      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
       "target": "37",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-51study_area_polygon_unprojected-37study_area_polygon"
+      "id": "reactflow__edge-56data>getCountryPolygon.yml@1|country_polygon-37study_area_polygon"
     },
     {
-      "source": "51",
-      "sourceHandle": "bbox",
+      "source": "56",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
       "target": "37",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-51bbox-37bbox"
+      "id": "reactflow__edge-56data>getBoundingBox.yml@0|bbox-37bbox"
     },
     {
-      "source": "52",
-      "sourceHandle": null,
-      "target": "51",
-      "targetHandle": "studyarea_epsg",
-      "id": "reactflow__edge-52-51studyarea_epsg"
+      "source": "56",
+      "sourceHandle": "data>getCountryPolygon.yml@1|country",
+      "target": "57",
+      "targetHandle": null,
+      "id": "reactflow__edge-56data>getCountryPolygon.yml@1|country-57"
     },
     {
-      "source": "53",
-      "sourceHandle": null,
-      "target": "51",
-      "targetHandle": "country",
-      "id": "reactflow__edge-53-51country"
+      "source": "56",
+      "sourceHandle": "data>getCountryPolygon.yml@1|region",
+      "target": "58",
+      "targetHandle": null,
+      "id": "reactflow__edge-56data>getCountryPolygon.yml@1|region-58"
     }
   ],
   "inputs": {
-    "pipeline@53": {
-      "label": "Country",
-      "description": "Country of interest. For list of countries look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get).",
-      "type": "text",
-      "example": "Belgium",
-      "weight": 0
-    },
-    "data>getBoundingBox.yml@51|state": {
-      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look [here](https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get).",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
-      "weight": 1
-    },
     "phenology>summarise_phenology.yml@37|season": {
       "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) \nand season 2 is the second growing season (late summer and fall).\n",
       "label": "Season of interest",
@@ -254,7 +236,7 @@
         "SEASON2"
       ],
       "example": "SEASON1",
-      "weight": 2
+      "weight": 0
     },
     "phenology>summarise_phenology.yml@37|bands": {
       "description": "Bands of interest for the calculations. \n- Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.\n- End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period.\n- Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season\n- End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season\n- Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season\n- Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached\n- Season minimum value (MINV) - average PPI of minima of left adn right sides of each season\n- Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season\n- Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season\n- Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts\n- Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends\n- Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.\n- Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end\n- Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset\n",
@@ -280,28 +262,28 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 3
+      "weight": 1
     },
     "phenology>summarise_phenology.yml@37|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "int",
       "example": 1000,
-      "weight": 4
+      "weight": 2
     },
     "pipeline@44": {
       "label": "Start year",
       "description": "Start date for phenology time series.",
       "type": "text",
       "example": "2017",
-      "weight": 5
+      "weight": 3
     },
     "pipeline@45": {
       "label": "End year",
       "description": "End date for phenology time series.",
       "type": "text",
       "example": "2024",
-      "weight": 6
+      "weight": 4
     },
     "phenology>summarise_phenology.yml@37|aggregate_function": {
       "description": "Function to spatially aggregate the phenology data",
@@ -313,14 +295,28 @@
         "max"
       ],
       "example": "mean",
+      "weight": 5
+    },
+    "getCountrybbox.json@56|pipeline@2": {
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "label": "Coordinate reference system",
+      "type": "text",
+      "example": "EPSG:4326",
+      "weight": 6
+    },
+    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
       "weight": 7
     },
-    "data>getBoundingBox.yml@51|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
+    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|region": {
+      "description": "State of interest",
+      "label": "State/Province",
       "type": "text",
-      "weight": 8,
-      "example": null
+      "example": null,
+      "weight": 8
     }
   },
   "outputs": {
@@ -347,6 +343,18 @@
       "label": "Plot of phenology change",
       "type": "image/png",
       "weight": 3
+    },
+    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 4
+    },
+    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 5
     }
   },
   "metadata": {
