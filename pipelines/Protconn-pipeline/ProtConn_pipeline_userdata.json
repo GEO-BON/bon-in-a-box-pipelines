@@ -4,30 +4,19 @@
       "id": "5",
       "type": "io",
       "position": {
-        "x": 799,
-        "y": 216
+        "x": 434,
+        "y": 89
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
       }
     },
     {
-      "id": "6",
-      "type": "io",
-      "position": {
-        "x": 444,
-        "y": 51
-      },
-      "data": {
-        "descriptionFile": "data>getWDPA.yml"
-      }
-    },
-    {
       "id": "8",
       "type": "io",
       "position": {
-        "x": 2457.938488846612,
-        "y": 224.05377849835895
+        "x": 1104,
+        "y": 298
       },
       "data": {
         "descriptionFile": "protconn_analysis>protconn_analysis.yml"
@@ -38,7 +27,7 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 248
+        "y": 121
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +39,8 @@
       "id": "10",
       "type": "output",
       "position": {
-        "x": 2865,
-        "y": 89
+        "x": 1676,
+        "y": 269
       },
       "data": {
         "label": "Output"
@@ -61,8 +50,8 @@
       "id": "11",
       "type": "output",
       "position": {
-        "x": 2865,
-        "y": 137
+        "x": 1676,
+        "y": 173
       },
       "data": {
         "label": "Output"
@@ -72,8 +61,8 @@
       "id": "12",
       "type": "output",
       "position": {
-        "x": 2865,
-        "y": 479
+        "x": 1676,
+        "y": 516
       },
       "data": {
         "label": "Output"
@@ -83,8 +72,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 2865,
-        "y": 431
+        "x": 1676,
+        "y": 221
       },
       "data": {
         "label": "Output"
@@ -94,8 +83,8 @@
       "id": "14",
       "type": "output",
       "position": {
-        "x": 2865,
-        "y": 41
+        "x": 1676,
+        "y": 468
       },
       "data": {
         "label": "Output"
@@ -105,8 +94,8 @@
       "id": "22",
       "type": "output",
       "position": {
-        "x": 1439,
-        "y": 187
+        "x": 1104,
+        "y": 60
       },
       "data": {
         "label": "Output"
@@ -116,8 +105,8 @@
       "id": "23",
       "type": "output",
       "position": {
-        "x": 1439,
-        "y": 311
+        "x": 1104,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -127,32 +116,19 @@
       "id": "26",
       "type": "output",
       "position": {
-        "x": 1439,
-        "y": 359
+        "x": 1104,
+        "y": 144
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "27",
-      "type": "userInput",
-      "position": {
-        "x": 96,
-        "y": 43
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "COL"
-      }
-    },
-    {
       "id": "29",
       "type": "userInput",
       "position": {
-        "x": 1623,
-        "y": 407
+        "x": 434,
+        "y": 326
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -164,21 +140,10 @@
     },
     {
       "id": "30",
-      "type": "io",
-      "position": {
-        "x": 1732.1322835466099,
-        "y": 53.1423663888217
-      },
-      "data": {
-        "descriptionFile": "data>cleanWDPA.yml"
-      }
-    },
-    {
-      "id": "31",
       "type": "output",
       "position": {
-        "x": 3074.6000061035156,
-        "y": 226.79999542236328
+        "x": 1710.6000061035156,
+        "y": 304.7999954223633
       },
       "data": {
         "label": "Output"
@@ -264,20 +229,6 @@
       "id": "reactflow__edge-5country_polygon-26"
     },
     {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "country",
-      "id": "reactflow__edge-27-5country"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "6",
-      "targetHandle": "country_iso",
-      "id": "reactflow__edge-27-6country_iso"
-    },
-    {
       "source": "29",
       "sourceHandle": null,
       "target": "8",
@@ -285,45 +236,17 @@
       "id": "reactflow__edge-29-8protected_area_polygon"
     },
     {
-      "source": "6",
-      "sourceHandle": "protected_area_polygon",
-      "target": "30",
-      "targetHandle": "protected_area_file",
-      "id": "reactflow__edge-6protected_area_polygon-30protected_area_file"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "country_polygon",
-      "target": "30",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-5country_polygon-30study_area_polygon"
-    },
-    {
-      "source": "30",
-      "sourceHandle": "protected_areas_clean",
-      "target": "8",
-      "targetHandle": "protected_area_polygon",
-      "id": "reactflow__edge-30protected_areas_clean-8protected_area_polygon"
-    },
-    {
-      "source": "9",
-      "sourceHandle": null,
-      "target": "30",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-9-30crs"
-    },
-    {
       "source": "8",
       "sourceHandle": "protected_areas",
-      "target": "31",
+      "target": "30",
       "targetHandle": null,
-      "id": "reactflow__edge-8protected_areas-31"
+      "id": "reactflow__edge-8protected_areas-30"
     }
   ],
   "inputs": {
-    "pipeline@27": {
-      "label": "ISO3 country code",
+    "data>getCountryPolygon.yml@5|country": {
       "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+      "label": "ISO3 country code",
       "type": "text",
       "example": "COL",
       "weight": 0
@@ -332,12 +255,12 @@
       "description": "Region of interest",
       "label": "State/Province",
       "type": "text",
-      "example": "Putumayo",
+      "example": null,
       "weight": 1
     },
     "pipeline@29": {
       "label": "Polygon of protected areas",
-      "description": "The protected areas (PAs) of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. If you want to use only custom polygons, please use the \"ProtConn analysis with custom PAs\" pipeline.",
+      "description": "The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. If you want to use word database of protected areas (WDPA) data or a combination of WDPA data with custom data, use the \"ProtConn analysis with WDPA\" pipeline.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
       "weight": 2
@@ -357,7 +280,7 @@
       "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@8|distance_threshold": {
-      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
+      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
       "label": "Distance analysis threshold",
       "type": "int",
       "example": 10000,
@@ -401,50 +324,6 @@
       "type": "int",
       "example": 20,
       "weight": 10
-    },
-    "data>cleanWDPA.yml@30|status_type": {
-      "description": "Legal status types of protected areas to include",
-      "label": "PA legal status types to include",
-      "type": "options[]",
-      "options": [
-        "Designated",
-        "Inscribed",
-        "Established"
-      ],
-      "example": [
-        "Designated",
-        "Inscribed",
-        "Established"
-      ],
-      "weight": 11
-    },
-    "data>cleanWDPA.yml@30|exclude_unesco": {
-      "description": "Check to exclude UNESCO Biosphere reserves",
-      "label": "Exclude UNESCO Biosphere reserves",
-      "type": "boolean",
-      "example": true,
-      "weight": 12
-    },
-    "data>cleanWDPA.yml@30|buffer_points": {
-      "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area. \nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
-      "label": "Buffer protected area points",
-      "type": "boolean",
-      "example": false,
-      "weight": 13
-    },
-    "data>cleanWDPA.yml@30|include_marine": {
-      "description": "Check to include marine protected areas",
-      "label": "Include marine protected areas",
-      "type": "boolean",
-      "example": true,
-      "weight": 14
-    },
-    "data>cleanWDPA.yml@30|include_oecm": {
-      "description": "Check to include areas with other effective area-based conservation measures (OECMs). These are not officially designated protected areas but are still achieving conservation outcomes. \n",
-      "label": "Include OECMs",
-      "type": "boolean",
-      "example": true,
-      "weight": 15
     }
   },
   "outputs": {
@@ -504,8 +383,8 @@
     }
   },
   "metadata": {
-    "name": "ProtConn Analysis with WDPA",
-    "description": "This pipeline calculates ProtConn (Protected Connected Index) from protected area polygons using data pulled from the World Database of Protected Areas through their API. The user can also combine WDPA data with user-input data. To run the analysis on user-input data only,  see the \"ProtConn analysis with custom PAs\" pipeline. The pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
+    "name": "ProtConn Analysis with custom PAs",
+    "description": "This pipeline calculates ProtConn (Protected Connected Index) with user-input data. This pipeline accepts a geopackage file of protected areas within a study area.  To run with World Database of Protected Areas (WDPA) data or combine WDPA with user data,\n see the \"ProtConn analysis with WDPA\" pipeline. \n \nThe pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
     "author": [
       {
         "name": "Jory Griffith",

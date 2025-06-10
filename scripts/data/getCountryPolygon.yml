@@ -8,10 +8,10 @@ author:
     identifier: https://orcid.org/0000-0001-6020-6690
 inputs:
   country:
-    label: Country
-    description: Country of interest
+    label: ISO3 country code
+    description: ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
     type: text
-    example: Colombia
+    example: COL
   region:
     label: State/Province
     description: Region of interest
@@ -53,3 +53,4 @@ conda:
     - r-rnaturalearth
     - r-rnaturalearthdata
     - r-dplyr
+    - r-countrycode
