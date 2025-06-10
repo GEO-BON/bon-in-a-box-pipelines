@@ -7,7 +7,7 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 
 > [!IMPORTANT]
 > To facilitate the peer review of the new pipeline, do not change the structure of this
-> document. Only the parts in comments should be replaced.
+> document. Only the parts in comments should be replaced. The info sections can be removed when addressed. 
 
 ## Contribution checklist
 > Before submitting for review, please make sure that you meet these requirements:
@@ -41,7 +41,7 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 
 > [!INFO]
 > Pipelines **must** be accompanied a list of their dependencies, including information about
-> which versions are usable. You can delete this note when done.
+> which versions are usable. 
 
 ## Additional information
 
