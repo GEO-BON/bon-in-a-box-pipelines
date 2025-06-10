@@ -26,8 +26,6 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 
 ## Code information
 
-
-
 **Languages used:**
 
 - [ ] R (version)
