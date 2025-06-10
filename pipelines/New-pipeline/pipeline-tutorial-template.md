@@ -14,13 +14,22 @@
 *Explain the pipeline steps (i.e. scripts) here so the user understands what each step is doing. This can include diagrams or screenshots if it will help the user. This should include information about how to understand the results.*
 
 For example:
+### Pipeline inputs
+Thiese are the inputs of the pipeline.
 
 ### 1. Retrieving the data
-This step retrieves data from this place using this API.
+This step retrieves data from this place using this API. 
+
 ### 2. Cleaning the data
 This step uses this package to clean the data for this reason. 
 
+### 3. Analyzing the data
+This step analyzes this data to produce this indicator. This is how it works. 
+
 Etc.
+
+### Pipeline outputs
+These are the outputs of the pipeline.
 
 ## Example
 *Include an example here. If possible, this should be the same as the example that autofills in the pipeline so the user can easily run it and see the results. Include images of the outputs here so that the user can get an idea of what it they should look like*
