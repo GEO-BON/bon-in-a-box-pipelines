@@ -47,7 +47,7 @@ srs_cube <- suppressWarnings(if(check_srs){
   auth_srid_test <- map_lgl(auth_srid, ~ !"try-error" %in% class(suppressWarnings(try(st_crs(.x),silent=TRUE))))
   if(sum(auth_srid_test)!=1) print("--- Please specify authority name or provide description of the SRS ---") else auth_srid[auth_srid_test] 
 }else srs )# paste Authority in case SRID is used 
-print("made it here")
+
 # Define area of interest, country or region
 study_area_opt <- input$study_area_opt
 study_area_path <- ifelse(is.null(input$study_area), NA,input$study_area)
@@ -139,18 +139,18 @@ for(i in 1:length(sp)){
   }
   if(range_map_type=="Raster"){
     r_range_map <- rast(r_range_map_path[i])
-    sf_range_map <<- as.polygons(r_range_map)
+    sf_range_map <<- as.polygons(ifel(r_range_map==1,1,NA)) |> st_as_sf()
   }
   if(range_map_type=="Both"){
     sf_range_map <<- st_read(sf_range_map_path[i])
     r_range_map <- rast(r_range_map_path[i])
     r_range_map2 <- project(r_range_map, crs(sf_range_map), method="near")
-    r_range_map2 <- terra::mask(crop(r_range_map2, sf_range_map), sf_range_map)
+    r_range_map2 <- terra::mask(terra::crop(r_range_map2, sf_range_map), sf_range_map)
     sf_range_map <<- as.polygons(ifel(r_range_map2==1,1,NA)) |> st_as_sf()
   }
   
-  sf_area_lim2 <- sf_range_map |> st_make_valid() |> st_transform(st_crs(sf_area_lim1))
-  sf_area_lim2_srs <- sf_area_lim2 |> st_transform(sf_srs)
+  sf_area_lim2 <- sf_range_map |> st_make_valid() |> st_transform(st_crs(sf_area_lim1)) 
+  sf_area_lim2_srs <- sf_area_lim2 |> st_transform(sf_srs) |> st_buffer(0)
   
   area_range_map <- sf_area_lim2_srs |> st_combine() |> st_combine() |> st_area()
   
@@ -159,12 +159,15 @@ for(i in 1:length(sp)){
   # Intersect range map to study area-------------------------------------------
   # sf_area_lim <- st_intersection(sf_area_lim2,sf_area_lim1) |> 
   #   st_make_valid()
+print("printing")
+  print(st_crs(sf_area_lim2_srs)==st_crs(sf_area_lim1_srs))
   sf_area_lim_srs <- st_intersection(sf_area_lim2_srs,sf_area_lim1_srs) |> 
     st_make_valid()
-  
+
   print(sf_area_lim_srs)
+  print("here")
   if(nrow(sf_area_lim_srs)==0){
-    stop("Species range does not fall within chosen study area")
+    stop(paste0(sp[i]," range does not fall within chosen study area"))
   }
   # define buffer size 
   if(is.na(buff_size)){
@@ -210,7 +213,7 @@ for(i in 1:length(sp)){
     print(dim(df_IUCN_sheet))
     
     if(is.null(dim(df_IUCN_sheet))){
-      stop("Species not found in IUCN database. Check name and spelling.")
+      stop(paste0(sp[i]," not found in IUCN database. Check name and spelling."))
     }
 
     df_IUCN_sheet_condition <- df_IUCN_sheet |> dplyr::mutate(

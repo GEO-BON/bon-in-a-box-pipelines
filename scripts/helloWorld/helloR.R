@@ -25,6 +25,12 @@ if(!file.exists(example_tiff)) {
 }
 biab_output("heat_map", example_tiff)
 
+example_gpkg = file.path(outputFolder, "example.gpkg")
+if(!file.exists(example_gpkg)) {
+    download.file("https://github.com/ngageoint/GeoPackage/raw/refs/heads/master/docs/examples/java/example.gpkg", example_gpkg, "auto")
+}
+biab_output("geopackage_example", example_gpkg)
+
 # Uncomment this to stop the script here with an error message
 #biab_error_stop("Some error")
 

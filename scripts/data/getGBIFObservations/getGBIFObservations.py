@@ -1,15 +1,14 @@
 import sys
 import gbif_api
-import json
 import tempfile
 from pyproj import Proj
 import datetime
 
 from pathlib import Path
 
-# Reading input.json
-inputFile = open(sys.argv[1] + '/input.json')
-data = json.load(inputFile)
+
+data = biab_inputs()
+
 
 error=[]
 taxa = data['taxa']
@@ -56,15 +55,8 @@ print(sys.argv[1])
 
 if 'error' in out and out['error']:
 	print(out['error'])
-	output = { "error": out['error'] }
+	biab_output("error",out['error'] )
 else:
-	output = {
-    "observations_file": str(out['outfile']),
-    "gbif_doi": str(out['doi']),
-    "total_records": str(out['total_records'])
-  }
-
-json_object = json.dumps(output, indent = 2)
-
-with open(sys.argv[1] + '/output.json', "w") as outfile:
-  outfile.write(json_object)
+	biab_output("observations_file",str(out['outfile']))
+	biab_output("gbif_doi", str(out['doi']))
+	biab_output("total_records",str(out['total_records']))

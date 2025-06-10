@@ -13,12 +13,7 @@ library("terra")
 library("rjson")
 library("raster")
 library("dplyr")
-library("gdalcubes")
 library("ENMeval")
-library("devtools")
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
-library("stacatalogue")
 
 
 ## Load functions

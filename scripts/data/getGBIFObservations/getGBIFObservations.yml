@@ -7,7 +7,7 @@ author:
 
 inputs:
   taxa:
-    description: Array of taxa values
+    description: Array of taxa values. Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match. 
     label: Taxa list
     type: text[]
     example: [Acer saccharum, Acer nigrum]

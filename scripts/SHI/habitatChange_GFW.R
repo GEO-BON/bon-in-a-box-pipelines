@@ -3,7 +3,7 @@
 #-------------------------------------------------------------------------------
 options(timeout = max(60000000, getOption("timeout")))
 
-packages <- c("rjson", "dplyr","tidyr","purrr","terra","stars","sf","readr","tmap",
+packages <- c("rjson", "dplyr","tidyr","purrr","terra","stars","sf","readr",#"tmap",
               "geodata","gdalcubes","rredlist","stringr","tmaptools","ggplot2", "rstac")
 
 #if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
@@ -194,18 +194,38 @@ for(i in 1:length(sp)){
 
   #load world limits
   sf_world_lim <- st_read(file.path(path_script,"SHI/world-administrative-boundaries.gpkg"))
+  sf_world_lim <- sf_world_lim |> st_transform(sf_srs)
 
-  img_map_habitat_changes <- tm_shape(sf_world_lim,bbox=st_bbox(r_GFW_TC_threshold_mask))+tm_polygons(col="white",fill="#c2bbac")+
-    tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("#E8E9EB"),legend.show=FALSE)+
-    tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
-    tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
-    tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
-    tm_compass(position=c("right","bottom"))+tm_scale_bar(position=c("left","top"))+
-    tm_layout(bg.color="lightblue",legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
-    tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Area of Habitat")
+  # img_map_habitat_changes <- tm_shape(sf_world_lim,bbox=)+tm_polygons(col="white",fill="#c2bbac")+
+  #   tm_shape(r_aoh)+tm_raster(alpha=0.4,palette = c("#E8E9EB"),legend.show=FALSE)+
+  #   tm_shape(r_GFW_TC_threshold_mask)+tm_raster(style="cat",alpha=0.5,palette = c("#0000FF00","blue"), legend.show = FALSE)+
+  #   tm_shape(r_year_loss_mask_plot)+tm_raster(style="cat",palette = c("red"), legend.show = FALSE)+
+  #   tm_shape(r_GFW_gain_mask)+tm_raster(style="cat",alpha=0.8,palette = c("yellow"), legend.show = FALSE)+
+  #   tm_compass(position=c("right","bottom"))+tm_scale_bar(position=c("left","top"))+
+  #   tm_layout(bg.color="lightblue",legend.bg.color = "white",legend.bg.alpha = 0.5,legend.outside = F)+
+  #   tm_add_legend(labels=c("No change","Loss","Gain"),col=c("blue","red","yellow"),title="Area of Habitat")
 
+  df_r_aoh <- as.data.frame(r_aoh,xy=TRUE) |> setNames(c( "x", "y","Base"))
+  df_r_GFW_TC_threshold_mask <- as.data.frame(r_GFW_TC_threshold_mask,xy=TRUE) |> setNames(c( "x", "y","No_change"))
+  df_r_year_loss_mask_plot <- as.data.frame(r_year_loss_mask_plot,xy=TRUE) |> setNames(c( "x", "y","Loss"))
+  df_r_GFW_gain_mask <- as.data.frame(r_GFW_gain_mask,xy=TRUE) |> setNames(c( "x", "y","Gain"))
+  
+  bbox_figure <- st_bbox(r_GFW_TC_threshold_mask)
+  img_map_habitat_changes <- ggplot() +
+    geom_tile(data = df_r_aoh, aes(x = x, y = y, fill = "Base"), alpha = 0.4) +
+    geom_raster(data = df_r_GFW_TC_threshold_mask, aes(x = x, y = y, fill = "No_change"), alpha = 0.5) +
+    geom_raster(data = df_r_year_loss_mask_plot, aes(x = x, y = y, fill = "Loss")) +
+    geom_raster(data = df_r_GFW_gain_mask, aes(x = x, y = y, fill = "Gain"), alpha = 0.8) +
+    scale_fill_manual(values = c("Base" = "#E8E9EB", "No_change" = "blue", "Loss" = "red", "Gain" = "yellow")) +
+    theme_minimal() +
+    theme(legend.position = "bottom") +
+    labs(fill = "Area of Habitat")+
+    coord_map()+
+    geom_sf(data = sf_world_lim, fill = NA, color = "gray") +
+    coord_sf(xlim = c(bbox_figure["xmin"], bbox_figure["xmax"]), ylim = c(bbox_figure["ymin"], bbox_figure["ymax"]))
+  
   v_path_SHS_map[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_change.png"))
-  tmap_save(img_map_habitat_changes, v_path_SHS_map[i])
+  ggsave( v_path_SHS_map[i], img_map_habitat_changes)
 
 
   r_GFW_TC_threshold_mask[r_GFW_TC_threshold_mask>0]<-1 # turn no change to 1
@@ -299,7 +319,7 @@ for(i in 1:length(sp)){
   print("========== Species Habitat Score generated ==========")
 
   img_SHS_timeseries <- ggplot(df_SHS_gfw_tidy , aes(x=Year,y=Values,col=Score))+
-    geom_line(linewidth=1)+geom_point()+scale_y_continuous(breaks=seq(0,110,10))+
+    geom_line(linewidth=1)+geom_point()+scale_y_continuous(breaks=seq(0,110,20))+
     theme_bw()+scale_colour_brewer(palette="Dark2")+ coord_cartesian(ylim=c(0,110))+
     ylab("Connectivity Score (CS), Habitat Score (HS), \n Species Habitat Score (SHS)")
 
