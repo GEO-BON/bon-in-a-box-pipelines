@@ -66,6 +66,8 @@ protected_areas <- st_buffer(protected_areas, 0)
 ## Repair geometries
 protected_areas <- st_make_valid(protected_areas)
 
+# Remove slivers (protected areas that are less than 1 square meters
+protected_areas <- protected_areas[as.numeric(sf::st_area(protected_areas)) > 1, ]
 
 # Include marine
 if(isFALSE(input$include_marine)){

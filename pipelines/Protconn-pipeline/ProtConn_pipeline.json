@@ -363,13 +363,6 @@
       "example": 10000,
       "weight": 5
     },
-    "protconn_analysis>protconn_analysis.yml@8|transboundary_distance": {
-      "description": "Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
-      "label": "Transboundary distance",
-      "type": "int",
-      "example": 0,
-      "weight": 6
-    },
     "protconn_analysis>protconn_analysis.yml@8|distance_matrix_type": {
       "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
       "label": "Type of distance matrix",
@@ -379,28 +372,28 @@
         "edge"
       ],
       "example": "centroid",
-      "weight": 7
+      "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@8|years": {
       "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
       "label": "Year for cutoff",
       "type": "int",
       "example": 2025,
-      "weight": 8
+      "weight": 7
     },
     "protconn_analysis>protconn_analysis.yml@8|start_year": {
       "description": "Year for the time series plot to start",
       "label": "Start year",
       "type": "int",
       "example": 1950,
-      "weight": 9
+      "weight": 8
     },
     "protconn_analysis>protconn_analysis.yml@8|year_int": {
       "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
       "label": "Year interval",
       "type": "int",
       "example": 20,
-      "weight": 10
+      "weight": 9
     },
     "data>cleanWDPA.yml@30|status_type": {
       "description": "Legal status types of protected areas to include",
@@ -416,35 +409,35 @@
         "Inscribed",
         "Established"
       ],
-      "weight": 11
+      "weight": 10
     },
     "data>cleanWDPA.yml@30|exclude_unesco": {
       "description": "Check to exclude UNESCO Biosphere reserves",
       "label": "Exclude UNESCO Biosphere reserves",
       "type": "boolean",
       "example": true,
-      "weight": 12
+      "weight": 11
     },
     "data>cleanWDPA.yml@30|buffer_points": {
       "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area. \nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
       "label": "Buffer protected area points",
       "type": "boolean",
       "example": false,
-      "weight": 13
+      "weight": 12
     },
     "data>cleanWDPA.yml@30|include_marine": {
       "description": "Check to include marine protected areas",
       "label": "Include marine protected areas",
       "type": "boolean",
       "example": true,
-      "weight": 14
+      "weight": 13
     },
     "data>cleanWDPA.yml@30|include_oecm": {
       "description": "Check to include areas with other effective area-based conservation measures (OECMs). These are not officially designated protected areas but are still achieving conservation outcomes. \n",
       "label": "Include OECMs",
       "type": "boolean",
       "example": true,
-      "weight": 15
+      "weight": 14
     }
   },
   "outputs": {

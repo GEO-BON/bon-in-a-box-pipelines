@@ -86,8 +86,6 @@ print(nrow(protected_areas))
 
 protected_areas <- st_make_valid(protected_areas)
 
-print(paste("class:", class(protected_areas)))
-print(st_geometry_type(protected_areas)=="MULTIPOLYGON")
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")
