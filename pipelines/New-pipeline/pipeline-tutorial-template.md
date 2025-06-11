@@ -1,11 +1,14 @@
 # Title of your pipeline
-### Author(s): Author name
+### Author(s): Author name(s)
 #### Reviewed by: Reviewer names
 
 *This is a template for creating a tutorial for a pipeline, which will be included in the online documentation. These are the suggested sections, but the contributor can include additional sections or change titles if desired. Should you need to add any images, please add them in the images folder of the bon-in-a-box-pipelines repository and link them to this file.* 
 
 ## Introduction
-*Write an introduction here that is a brief description of what the pipeline does, and the context in which it should be used. This should include any relevant citations to the original paper.*
+*Write an introduction here that is a brief description of what the pipeline does.*
+
+## 'Use Case'/Context
+*The context in which it should be used.*
 
 ## Pipeline limitations
 *Describe any limitations to the pipeline that should be communicated.*
@@ -14,7 +17,7 @@
 *Write any necessary data, API keys, or anything else that the user may need before they run the pipeline.*
 
 ## Running the pipeline
-*Explain the pipeline steps (i.e. scripts) here so the user understands what each step is doing. This can include diagrams or screenshots if it will help the user. This should include information about how to understand the results.*
+*Explain the pipeline inputs, steps (i.e. scripts), and outputs here so the user understands what each step is doing. This can include diagrams or screenshots if it will help the user. This should include information about how to understand the results.*
 
 ### *For example:*
 ### Pipeline inputs
@@ -45,11 +48,7 @@ Etc.
 - **Output 3:** *description of output 3 and what it means.*
 
 ## Example
-*Include an example of a pipeline run here by inserting a link for the sample run and expected outputs. If possible, the inputs should be the same as the example that autofills in the pipeline so the user can easily run it and see the results.*
-
-**Sample run:** *Insert a link to the results of the pipeline run using the default parameters.*
-
-**Expected outputs:** *Insert a link to the results viewer yielded by the sample run.*
+*Leave blank,a link to an example run and its outputs will added here*
 
 ## Troubleshooting
 *Write any common errors or issues that came out in the testing phase and how to fix them.*
