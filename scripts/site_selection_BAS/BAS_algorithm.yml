@@ -13,7 +13,7 @@ inputs:
   country_polygon:
     label: Country polygon
     description: polygon of the country of interest
-    type: application/geo+json
+    type: application/geopackage+sqlite3
     example: Peru
   rast_blocks:
     label: environmental blocks raster

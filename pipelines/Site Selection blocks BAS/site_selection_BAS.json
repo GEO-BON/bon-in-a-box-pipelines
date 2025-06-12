@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 1293.5128304353887,
-        "y": 287.55450324261545
+        "x": 2229,
+        "y": 120
       },
       "data": {
         "descriptionFile": "site_selection_BAS>Block_creation.yml"
@@ -15,8 +15,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 800.5372585827968,
-        "y": 226.36589324044638
+        "x": 1624,
+        "y": 258.3333333333333
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,32 +26,19 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 1844.979965114293,
-        "y": 200.15661237212822
+        "x": 2827,
+        "y": 278
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "10",
-      "type": "userInput",
-      "position": {
-        "x": -156.2632695811667,
-        "y": 155.47155070725273
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6622"
-      }
-    },
-    {
       "id": "13",
       "type": "output",
       "position": {
-        "x": 1864.8801407726046,
-        "y": 415.3516914798572
+        "x": 2827,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -61,8 +48,8 @@
       "id": "14",
       "type": "output",
       "position": {
-        "x": 1875.1922774617938,
-        "y": 341.21025927028893
+        "x": 2827,
+        "y": 230
       },
       "data": {
         "label": "Output"
@@ -72,8 +59,8 @@
       "id": "18",
       "type": "constant",
       "position": {
-        "x": 217.59296997821605,
-        "y": 281.81706957564836
+        "x": 1221,
+        "y": 292.3333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -85,8 +72,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 1892.758559130851,
-        "y": 237.0251957280492
+        "x": 2827,
+        "y": 70
       },
       "data": {
         "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
@@ -96,8 +83,8 @@
       "id": "29",
       "type": "output",
       "position": {
-        "x": 2420.061755315188,
-        "y": 257.78758058358727
+        "x": 3294,
+        "y": 201
       },
       "data": {
         "label": "Output"
@@ -107,8 +94,8 @@
       "id": "31",
       "type": "output",
       "position": {
-        "x": 2373.9230235365535,
-        "y": 204.55465678991578
+        "x": 3294,
+        "y": 41
       },
       "data": {
         "label": "Output"
@@ -118,135 +105,80 @@
       "id": "32",
       "type": "output",
       "position": {
-        "x": 2459.039719684568,
-        "y": 324.8158166266813
+        "x": 3294,
+        "y": 153
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "36",
+      "id": "45",
+      "type": "io",
+      "position": {
+        "x": 455,
+        "y": 136.33333333333331
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "46",
+      "type": "output",
+      "position": {
+        "x": 1095,
+        "y": 101
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "48",
       "type": "userInput",
       "position": {
-        "x": -267.7311075082053,
-        "y": 227.72687284195922
+        "x": 12,
+        "y": 168.33333333333331
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
-        "value": "Colombia"
+        "value": "EPSG:4326"
       }
     },
     {
-      "id": "37",
+      "id": "49",
       "type": "io",
       "position": {
-        "x": 192.0796866875653,
-        "y": 169.2646367083717
+        "x": 1095,
+        "y": 210.33333333333331
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
       }
     },
     {
-      "id": "38",
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 2174.0784636685935,
+        "y": 263.63724807968634
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
       "type": "constant",
       "position": {
-        "x": -364.46991316635774,
-        "y": 269.21580643607547
+        "x": 897.7004700169571,
+        "y": 396.8832204578773
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": null
-      }
-    },
-    {
-      "id": "39",
-      "type": "constant",
-      "position": {
-        "x": -347.0153048780783,
-        "y": 337.36502755808993
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": null
-      }
-    },
-    {
-      "id": "40",
-      "type": "userInput",
-      "position": {
-        "x": 1529,
-        "y": 398.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 100
-      }
-    },
-    {
-      "id": "41",
-      "type": "userInput",
-      "position": {
-        "x": 1501,
-        "y": 500.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "first option",
-        "options": [
-          "equal",
-          "unequal"
-        ]
-      }
-    },
-    {
-      "id": "42",
-      "type": "userInput",
-      "position": {
-        "x": 900,
-        "y": 382.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 10
-      }
-    },
-    {
-      "id": "43",
-      "type": "userInput",
-      "position": {
-        "x": 921,
-        "y": 416.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 10
-      }
-    },
-    {
-      "id": "44",
-      "type": "userInput",
-      "position": {
-        "x": 405,
-        "y": 347.8125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
+        "type": "application/geopackage+sqlite3"
       }
     }
   ],
@@ -264,13 +196,6 @@
       "target": "6",
       "targetHandle": null,
       "id": "reactflow__edge-0rast_blocks-6"
-    },
-    {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-10-2proj"
     },
     {
       "source": "0",
@@ -322,55 +247,6 @@
       "id": "reactflow__edge-26points_shape-32"
     },
     {
-      "source": "37",
-      "sourceHandle": "study_area_polygon_unprojected",
-      "target": "0",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-37study_area_polygon_unprojected-0country_polygon"
-    },
-    {
-      "source": "37",
-      "sourceHandle": "bbox",
-      "target": "2",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-37bbox-2bbox"
-    },
-    {
-      "source": "36",
-      "sourceHandle": null,
-      "target": "37",
-      "targetHandle": "country",
-      "id": "reactflow__edge-36-37country"
-    },
-    {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "37",
-      "targetHandle": "studyarea_epsg",
-      "id": "reactflow__edge-10-37studyarea_epsg"
-    },
-    {
-      "source": "38",
-      "sourceHandle": null,
-      "target": "37",
-      "targetHandle": "state",
-      "id": "reactflow__edge-38-37state"
-    },
-    {
-      "source": "39",
-      "sourceHandle": null,
-      "target": "37",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-39-37study_area_file"
-    },
-    {
-      "source": "37",
-      "sourceHandle": "study_area_polygon_unprojected",
-      "target": "26",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-37study_area_polygon_unprojected-26country_polygon"
-    },
-    {
       "source": "0",
       "sourceHandle": "colors_vect",
       "target": "26",
@@ -378,39 +254,81 @@
       "id": "reactflow__edge-0colors_vect-26colors_vect"
     },
     {
-      "source": "40",
-      "sourceHandle": null,
-      "target": "26",
-      "targetHandle": "ndesign",
-      "id": "reactflow__edge-40-26ndesign"
+      "source": "45",
+      "sourceHandle": "country",
+      "target": "46",
+      "targetHandle": null,
+      "id": "reactflow__edge-45country-46"
     },
     {
-      "source": "41",
-      "sourceHandle": null,
-      "target": "26",
-      "targetHandle": "options_BAS",
-      "id": "reactflow__edge-41-26options_BAS"
+      "source": "45",
+      "sourceHandle": "region",
+      "target": "46",
+      "targetHandle": null,
+      "id": "reactflow__edge-45region-46"
     },
     {
-      "source": "42",
+      "source": "48",
       "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "n_rows",
-      "id": "reactflow__edge-42-0n_rows"
+      "target": "45",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-48-45crs"
     },
     {
-      "source": "43",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "n_cols",
-      "id": "reactflow__edge-43-0n_cols"
-    },
-    {
-      "source": "44",
+      "source": "48",
       "sourceHandle": null,
       "target": "2",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-48-2crs"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_polygon",
+      "target": "49",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-45country_polygon-49study_area_file"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-48-49crs"
+    },
+    {
+      "source": "49",
+      "sourceHandle": "bbox",
+      "target": "2",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-44-2bbox"
+      "id": "reactflow__edge-49bbox-2bbox"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_polygon",
+      "target": "0",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-45country_polygon-0country_polygon"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_polygon",
+      "target": "26",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-45country_polygon-26country_polygon"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-2rasters-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-51-2study_area"
     }
   ],
   "inputs": {
@@ -461,13 +379,6 @@
       "example": "near",
       "weight": 3
     },
-    "data>loadFromStac.yml@2|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf",
-      "weight": 4,
-      "example": null
-    },
     "data>loadFromStac.yml@2|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
       "label": "aggregation",
@@ -480,65 +391,60 @@
         "median"
       ],
       "example": "first",
+      "weight": 4
+    },
+    "data>getCountryPolygon.yml@45|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
+      "example": "Colombia",
       "weight": 5
     },
-    "pipeline@10": {
-      "label": "projection system",
-      "description": "String, projection of the rasters",
+    "data>getCountryPolygon.yml@45|region": {
+      "description": "Region of interest",
+      "label": "State/Province",
       "type": "text",
-      "example": "EPSG:5387",
+      "example": null,
       "weight": 6
     },
-    "pipeline@36": {
-      "label": "Country",
-      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
-      "type": "text",
-      "example": "Peru",
-      "weight": 7
-    },
-    "pipeline@40": {
-      "label": "Target total sites",
-      "description": "A number of target sites to obtain",
-      "type": "int",
-      "example": 100,
-      "weight": 8
-    },
-    "pipeline@41": {
-      "label": "Sampling type",
+    "site_selection_BAS>BAS_algorithm.yml@26|options_BAS": {
       "description": "Select and option beween equal BAS or unequal prob BAS",
+      "label": "Sampling type",
       "type": "options",
-      "example": "equal",
       "options": [
         "equal",
         "unequal"
       ],
+      "example": "equal",
+      "weight": 7
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
+      "description": "A number of target sites to obtain",
+      "label": "Target total sites",
+      "type": "int",
+      "example": 100,
+      "weight": 8
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_cols": {
+      "description": "Number of columns for the block grid",
+      "label": "number of columns",
+      "type": "int",
+      "example": 10,
       "weight": 9
     },
-    "pipeline@42": {
-      "label": "number of rows",
+    "site_selection_BAS>Block_creation.yml@0|n_rows": {
       "description": "Number of rows for the block grid",
+      "label": "number of rows",
       "type": "int",
       "example": 10,
       "weight": 10
     },
-    "pipeline@43": {
-      "label": "number of columns",
-      "description": "Number of columns for the block grid",
-      "type": "int",
-      "example": 10,
+    "pipeline@48": {
+      "label": "Coordinate reference system",
+      "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "type": "text",
+      "example": "EPSG:4326",
       "weight": 11
-    },
-    "pipeline@44": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 12
     }
   },
   "outputs": {
@@ -577,6 +483,24 @@
       "label": "selected points shapefile",
       "type": "application/geo+json",
       "weight": 5
+    },
+    "data>getCountryPolygon.yml@45|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 6
+    },
+    "data>getCountryPolygon.yml@45|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 7
+    },
+    "data>loadFromStac.yml@2|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 8
     }
   },
   "metadata": {
