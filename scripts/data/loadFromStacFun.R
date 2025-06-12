@@ -14,7 +14,7 @@ load_cube <-
            temporal.res = "P1Y",
            aggregation = "mean",
            resampling = "near") {
-    s <- rstac::stac(stac_path)
+    s <- rstac::stac(stac_path, force_version=TRUE)
     if (!inherits(bbox, "bbox"))
       stop("The bbox is not a bbox object.")
     left <- bbox$xmin
