@@ -124,17 +124,6 @@
       }
     },
     {
-      "id": "46",
-      "type": "output",
-      "position": {
-        "x": 1095,
-        "y": 101
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "48",
       "type": "userInput",
       "position": {
@@ -252,20 +241,6 @@
       "target": "26",
       "targetHandle": "colors_vect",
       "id": "reactflow__edge-0colors_vect-26colors_vect"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "country",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-45country-46"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "region",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-45region-46"
     },
     {
       "source": "48",
@@ -484,23 +459,11 @@
       "type": "application/geo+json",
       "weight": 5
     },
-    "data>getCountryPolygon.yml@45|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 6
-    },
-    "data>getCountryPolygon.yml@45|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 7
-    },
     "data>loadFromStac.yml@2|rasters": {
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 8
+      "weight": 6
     }
   },
   "metadata": {
