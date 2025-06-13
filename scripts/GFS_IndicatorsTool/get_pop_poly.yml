@@ -1,0 +1,47 @@
+script: get_pop_poly.R
+name: Get population polygons
+description: Given the coordinates of species occurrence, the scripts returns polygons describing spatial distribution of species popualtions.  
+author:
+  - name: Simon Pahls
+  - name: Oliver Selmoni
+
+inputs:
+
+  species_obs:
+    label: Coordinates of species occurrence
+    description: Path to the table storing the species observation coordinates. The table must incude header with "decimal_longitude" and "decimal_latitude" columns, indicating the coordinates of every observation. 
+    type: text/tab-separated-values
+    example: '/userdata/obs_data.tsv'
+
+  buffer_size:
+    label: Size of buffer
+    description: Radius size [in km] to determine population presence around the coordinates of species observations. 
+    type: float
+    example: 10
+
+  pop_distance:
+    label: Distance between populations
+    description: Distance [in km] to separate species observations in different populations. 
+    type: float
+    example: 50
+
+  countries:
+    label: Countries of interest
+    description: Optional list of countries to restrict the population polygons calculations. 
+    type: text[]
+    example: ["Mexico", "Guatemala"]
+
+outputs:
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: application/geo+json
+    example: ''
+#conda: 
+#  channels:
+#    - r
+#  dependencies:
+#    - r-rjson
+#    - r-sf
+#    - r-spatialEco
+#    - r-rnaturalearth

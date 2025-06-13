@@ -1,0 +1,52 @@
+script: getProtectedAreasWDPA.R
+name: Get protected areas
+description: This script finds and saves a polygon of the country and state that is specified in the input and the polygon of protected areas in that region from the world database of protected areas (WDPA).
+author:
+  - name: Jory Griffith (jory.griffith@mcgill.ca)
+external_link: https://github.com/GEO-BON/biab-2.0/getProtectedAreasWDPA.R
+inputs:
+  pa_input_type:
+    label: Protected area input
+    description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons. 
+    type: options
+    options:
+      - "WDPA"
+      - "User input"
+      - "Both"
+    example: "WDPA"
+  studyarea_country:
+    label: Country
+    description: Country in which to calculate ProtConn. Must be capitalized. List of available countries here https://geoio.biodiversite-quebec.ca/docs#/default/country_list_country_list_get. 
+    type: text
+    example: Colombia
+  studyarea_state:
+    label: State/Province
+    description: State or province in which to calculate ProtConn. List of available states/provinces here https://geoio.biodiversite-quebec.ca/docs#/default/state_list_state_list_get. If left blank, will calculate ProtConn for the whole country.
+    type: text
+    example: null
+  transboundary_distance:
+    label: Transboundary distance
+    description: Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area. 
+    type: int
+    example: 0
+  studyarea_file: 
+    label: Study area file
+    description: File path of the study area of interest (leave blank if using data from WDPA)
+    type: text
+    example: null
+  protectedarea_file: 
+    label: Protected areas file
+    description: File path of the shapefile of protected areas (Leave blank if using data from WDPA)
+    type: text
+    example: null
+outputs:
+  study_area_polygon:
+    label: Polygon of study area
+    description: Represents the map of the study area
+    type: application/geo+json
+  protected_area_polygon:
+    label: Polygon of protected areas
+    description: Represents the map of the protected areas within the study area
+    type: application/geo+json
+references:
+- text: UNEP-WCMC and IUCN (2024), Protected Planet. The World Database on Protected Areas (WDPA)[On-line], [October 2024], Cambridge, UK. UNEP-WCMC and IUCN. Available at. https://doi.org/10.34892/6fwd-af11

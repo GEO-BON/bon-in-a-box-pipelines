@@ -1,3 +1,15 @@
+The exact license of each script and pipeline is chosen by the contributors.
+Refer to the associated metadata, visible through the UI, to read the licence
+and ensure correct attribution when applicable.
+When not specified by the contributor, the MIT license applies. 
+See a copy of the MIT license below.
+
+The license of the modelling tool and pipeline engine is different,
+and can be found in the corresponding GitHub Repository:
+https://github.com/GEO-BON/bon-in-a-box-pipeline-engine
+
+----------------------------------------------------------------------------
+
 MIT License
 
 Copyright (c) 2023 GEO-BON

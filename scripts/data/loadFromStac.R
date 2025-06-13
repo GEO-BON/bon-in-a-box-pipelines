@@ -1,7 +1,3 @@
-
-
-## Install required packages
-
 ## Load required packages
 
 library("rjson")
@@ -29,12 +25,25 @@ gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1)
 
 gdalcubes::gdalcubes_options(parallel = 1)
 
-# Case 1: we create an extent from a set of observations
 bbox <- sf::st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2],
-            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$proj)) 
+            xmax = input$bbox[3], ymax = input$bbox[4]), crs = sf::st_crs(input$crs))
 weight_matrix <- NULL
+
+if("resampling" %in% names(input)){
+  resampling=input$resampling
+}else{
+  resampling="near"
+}
+
+if("aggregation" %in% names(input)){
+  aggregation=input$aggregation
+}else{
+  aggregation="first"
+}
+
 if("taxa" %in% names(input)){ #EXTRACT GBIF HEATMAPS
   collections_items <- paste0("gbif_heatmaps|", input$taxa, "-heatmap")
+  resampling="sum" #Sum number of occurences when upscaling
 }else{ #EXTRACT OTHER LAYERS
   if (length(input$collections_items) == 0) {
     if (length(input$weight_matrix_with_ids) == 0) {
@@ -49,30 +58,31 @@ if("taxa" %in% names(input)){ #EXTRACT GBIF HEATMAPS
     collections_items <- input$collections_items
   }
 }
+
 if(!("stac_url" %in% names(input))){
   input$stac_url <- "https://stac.geobon.org"
 }
+
+
 
 cube_args <- list(stac_path = input$stac_url,
   limit = 5000,
   t0 = NULL,
   t1 = NULL,
-  spatial.res = input$spatial_res, # in meters
+  spatial.res = input$spatial_res, #in meters
   temporal.res = "P1D",
-  aggregation = "mean",
-  resampling = "near")
+  aggregation = aggregation,
+  resampling = resampling)
 
-proj <- input$proj
+crs <- input$crs
 as_list <- FALSE
 
-mask <- input$mask
 raster_layers <- list()
 nc_names <- c()
 for (coll_it in collections_items){
     ci <- strsplit(coll_it, split = "|", fixed=TRUE)[[1]]
-
     cube_args_c <- append(cube_args, list(collections=ci[1],
-                                          srs.cube = proj, 
+                                          srs.cube = crs,
                                           bbox = bbox,
                                           layers=NULL,
                                           variable = NULL,
@@ -80,8 +90,9 @@ for (coll_it in collections_items){
     print(cube_args_c)
     pred <- do.call(load_cube, cube_args_c)
 
-     if(!is.null(mask)) {
-        pred <- gdalcubes::filter_geom(pred, sf::st_geometry(mask))
+     if(!is.null(input$study_area)) {
+        study_area <- st_read(input$study_area) # load study area
+        pred <- gdalcubes::filter_geom(pred, sf::st_geometry(study_area)) # crop by study area
       }
       nc_names <- cbind(nc_names,names(pred))
       if(names(pred)=='data'){
@@ -91,8 +102,6 @@ for (coll_it in collections_items){
 
      raster_layers[[ci[2]]]=pred
 }
-  print(names(raster_layers))
-
 output_raster_layers <- file.path(outputFolder)
 
 layer_paths<-c()

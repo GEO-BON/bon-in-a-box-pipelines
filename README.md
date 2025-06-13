@@ -2,7 +2,7 @@
 
 **Mapping Kunming-Montreal Global Biodiversity Framework indicators and their uncertainty.**
 
-[User documentation](https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/blob/main/README-user.md) to run pipelines, edit pipelines, or add scripts to this repo;
+[User documentation](https://geo-bon.github.io/bon-in-a-box-pipeline-engine/) to run pipelines, edit pipelines, or add scripts to this repo;
 
 [Developer documentation](https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/blob/main/README-dev.md) to develop server infrastructure or UI features.
 

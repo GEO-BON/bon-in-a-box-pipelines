@@ -1,0 +1,5 @@
+name: pythonbase
+channels:
+  - conda-forge
+dependencies:
+  - pystac
