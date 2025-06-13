@@ -1,7 +1,7 @@
 script: reclassify.R
-name: Reclassifies rasters in collection 
+name: Reclassifies rasters in collection
 description: This code reclassifies the pixels of the rasters in a collection into the specified categories.
-author: 
+author:
  - name: Maria Alejandra Molina Berbeo (mmolina@humboldt.org.co)
  - name: Victor Julio Rincon (vrincon@humboldt.org.co)
  - name: Luis Fernando Urbina (lurbina@humboldt.org.co)
@@ -21,7 +21,7 @@ inputs:
     label: reclassify table
     description: Table with the reclassification values used to classify the collection.
     type: text
-    example: 'scripts/reclassify/input/reclass_data.csv'
+    example: '/scripts/reclassify/input/reclass_data.csv'
 outputs:
   compare_data:
     label: compare table reclass data

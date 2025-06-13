@@ -99,7 +99,7 @@
       "description": "Path where the collection is hosted. The path can be hosted on the BIAB server (subject to approval from administrators) or in a cloud container",
       "label": "collection path",
       "type": "text",
-      "example": "scripts/load_collection/Collections/Colombia_human_footprint_collection"
+      "example": "/scripts/load_collection/Collections/Colombia_human_footprint_collection"
     },
     "load_collection>load_collection.yml@13|resolution": {
       "description": "Numerical value referring to the spatial resolution (pixel size) in square meters to create a grid of the study area. This value indicates the level of detail or granularity at which the study area will be analyzed. Each pixel will be considered as a study site for occupancy analyses.A value of 100 represents an hectare and a value of 1000 represents a square kilometer.",
@@ -129,7 +129,7 @@
       "description": "Table with the reclassification values used to classify the collection.",
       "label": "reclassify table",
       "type": "text",
-      "example": "scripts/reclassify/input/reclass_data.csv"
+      "example": "/scripts/reclassify/input/reclass_data.csv"
     }
   },
   "outputs": {

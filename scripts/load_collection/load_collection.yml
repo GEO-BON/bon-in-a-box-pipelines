@@ -12,7 +12,7 @@ inputs:
     label: collection path
     description: Path where the collection is hosted. The path can be hosted on the BIAB server (subject to approval from administrators) or in a cloud container
     type: text
-    example: 'scripts/load_collection/Collections/Colombia_human_footprint_collection'
+    example: '/scripts/load_collection/Collections/Colombia_human_footprint_collection'
   wkt_area:
     label: study area wkt
     description: Text string referring to file path of the generated WKT file (.txt) that represents the boundaries of the study area. The WKT (Well-Known Text) file is a text-based format that describes the geometry of the boundaries of the study area. The structure of the WKT file includes a geometry type label (MULTIPOLYGON) associated with the coordinate values of the vertices that define the boundaries of the study area mask.

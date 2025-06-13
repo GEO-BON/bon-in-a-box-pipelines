@@ -12,7 +12,7 @@ lapply(packagesList, library, character.only = TRUE)
  Sys.setenv(outputFolder = "/path/to/output/folder")
 
 # Definir input
-input <- rjson::fromJSON(file=file.path(outputFolder, "input.json")) # Cargar input
+input <- biab_inputs()
 
 input<- lapply(input, function(x) if( grepl("/output/", x) ){
   sub(".*/output/", "/output/", x) %>%  {gsub("/output.*", ., outputFolder)}}else{x} ) # Ajuste input 1
@@ -33,16 +33,16 @@ input<- lapply(input, function(x) if( grepl("/output/", x) ){
 # Definir area de estudio
 dir_wkt<- readLines(input$wkt_area)
 crs_polygon<- terra::crs( paste0("+init=epsg:", input$epsg) ) %>% as.character()
-vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon) 
+vector_polygon<- terra::vect(dir_wkt, crs=  crs_polygon)
 box_polygon<-  sf::st_bbox(vector_polygon)
 
 # Ajustar resolucion
-resolution_crs<- raster::raster(raster::extent(seq(4)),crs= paste0("+init=epsg:", 3395), res= input$resolution) %>% 
+resolution_crs<- raster::raster(raster::extent(seq(4)),crs= paste0("+init=epsg:", 3395), res= input$resolution) %>%
   raster::projectRaster( crs = crs_polygon) %>% raster::res()
 
 # Cargar coleccion
   if( startsWith(input$collection_path, "http://") ){ # Cuando proviene de una coleccion en linea
-    
+
     RSTACQuery<- rstac::stac(input$collection_path)
     box_4326 <-  sf::st_as_sfc(box_polygon) %>% sf::st_transform(4326) %>% sf::st_bbox()
     STACItemCollection <- rstac::stac_search(q= RSTACQuery, collections = "chelsa-clim" , bbox = box_4326) %>% rstac::get_request()
@@ -50,14 +50,14 @@ resolution_crs<- raster::raster(raster::extent(seq(4)),crs= paste0("+init=epsg:"
     image_collection <- gdalcubes::stac_image_collection(STACItemCollection$features, asset_names = assets )
 
   } else { # Cuando proviene de una coleccion local
-    
+
     layers_collection <- list.files(input$collection_path, "\\.tif$", recursive = TRUE, full.names = TRUE)
-    json_colleciton_file <- list.files(input$collection_path, "\\.json$", recursive = TRUE, full.names = TRUE)
-    STACItemCollection <-   rjson::fromJSON(file= json_colleciton_file)
-    image_collection <- gdalcubes::create_image_collection(files= layers_collection, format= json_colleciton_file)
-    
+    json_collection_file <- list.files(input$collection_path, "\\.json$", recursive = TRUE, full.names = TRUE)
+    STACItemCollection <-   rjson::fromJSON(file= json_collection_file)
+    image_collection <- gdalcubes::create_image_collection(files= layers_collection, format= json_collection_file)
+
   }
-  
+
 # Cargar assests metadata
 assets_metadata<- STACItemCollection$features %>% purrr::map("assets") %>% {setNames(unlist(., recursive = F), sapply(., function(y) names(y)))}
 
@@ -65,7 +65,7 @@ assets_metadata<- STACItemCollection$features %>% purrr::map("assets") %>% {setN
 # Redondear temporaldiad del cubo
 type_period<- tryCatch({ sub(".*P", "", input$time_period) %>% {period= as.numeric(gsub("([0-9]+).*$", "\\1", .)); type= gsub(period,"", .); list(type=type, period=period) }
 }, error= function(e){ list(type=type, period=period) })
-  
+
 t0<- gdalcubes::extent(image_collection)$t0
 t1<- gdalcubes::extent(image_collection)$t1
 
@@ -94,7 +94,7 @@ cube_collection<- gdalcubes::cube_view(srs = crs_polygon,  extent = list(t0 = t0
 # Crear cubo
 cube <- gdalcubes::raster_cube(image_collection, cube_collection)
 cube_mask<- gdalcubes::filter_geom(cube, geom= dir_wkt, srs = crs_polygon ) # cubo enmascarado
-  
+
 # Descargar cubo
 fn = tempfile(fileext = ".nc"); gdalcubes::write_ncdf(cube_mask, fn)
 nc <-  ncdf4::nc_open(fn); vars <- names(nc$var)
@@ -109,21 +109,21 @@ time_collection<- as.data.frame(gdalcubes::dimension_bounds(cube_mask)[["t"]]) %
 
 # Organizar cubo como raster
 terra_mask<- pbapply::pblapply(vars[5:length(vars)], function(x){ print(x)
-  
+
   # Dimensiones de la capa
   dims_var <- ncdf4::ncvar_get(nc, x)
-  
+
   # Validar si la capa esta vacia
   key<-  as.data.frame(which(!is.na(dims_var),  arr.ind = TRUE))
 
-  if(nrow(key)>0){ 
-    
+  if(nrow(key)>0){
+
     # Cargar capa raster
     key2<- {if(nrow(cube_times)<2){ dplyr::mutate(key, time_id= "X0") }else{ key }} %>% {list(., time_collection)} %>% plyr::join_all()
     brick  <- raster::brick(fn, var= x) %>% terra::rast()
-    times<- unique(key2$time_id) 
+    times<- unique(key2$time_id)
     layer <- brick[[ times ]];
-    
+
     # Organizar metadatos de la capa
     metadata_band<- assets_metadata[[x]]
     metadata_assest<- metadata_band %>% { .[!c(names(.) %in% c("type", "raster:bands"))]  } %>%
@@ -131,43 +131,43 @@ terra_mask<- pbapply::pblapply(vars[5:length(vars)], function(x){ print(x)
       }else{z}   )  %>% {Filter(function(x) !is.null(x), .)}
     check_data<- names(metadata_assest)[!sapply(metadata_assest, function(x) class(x) %in% "data.frame")]
     for(j in check_data){ metadata_assest[[j]]<- data.frame(metadata_assest[j])}
-    
-    
+
+
     # Organizar cuando hay "value" en metadata
     which_values<- unlist(sapply(metadata_assest, function(x) "value" %in% names(x)))
     metadata_assest2<- metadata_assest[which(!which_values)]
     suppressMessages({metadata_assest2<- dplyr::bind_cols(metadata_assest2) %>% dplyr::mutate(layer= x)})
-    
-   
-    
-    
+
+
+
+
     # Organizar informacion de la capa
-    info_layer<- dplyr::distinct(key2[, c("start", "end")]) %>% dplyr::distinct() %>% 
-      dplyr::mutate(period= paste(start, end, sep="_"), layer= x) %>% 
-      list(metadata_assest2)  %>% plyr::join_all() %>% 
-      dplyr::mutate(layer= gsub( "[[:punct:]]", "_", paste(x, period, sep = "_") ) ) %>% 
-      dplyr::mutate(file= paste0(layer, ".tif") ) %>% 
+    info_layer<- dplyr::distinct(key2[, c("start", "end")]) %>% dplyr::distinct() %>%
+      dplyr::mutate(period= paste(start, end, sep="_"), layer= x) %>%
+      list(metadata_assest2)  %>% plyr::join_all() %>%
+      dplyr::mutate(layer= gsub( "[[:punct:]]", "_", paste(x, period, sep = "_") ) ) %>%
+      dplyr::mutate(file= paste0(layer, ".tif") ) %>%
       dplyr::relocate("layer", .before = 1)
 
     # Organizar nombre de la capa
     names(layer)<- info_layer$layer
-    
+
     # Organizar datos de la capa
-    data_layer<-  setNames(as.data.frame(layer), "value") %>% dplyr::mutate(layer= names(layer)) %>% dplyr::relocate("layer", .before = 1) %>% 
+    data_layer<-  setNames(as.data.frame(layer), "value") %>% dplyr::mutate(layer= names(layer)) %>% dplyr::relocate("layer", .before = 1) %>%
       dplyr::distinct() %>% list(info_layer)  %>% plyr::join_all()
-    
+
     # Asignar "value" a los datos
     if(sum(which_values)>0){
       metadata_values<- metadata_assest[which(which_values)][[1]]; class_names<- names(metadata_values) %>% {.[!. %in% "value"]}
       data_layer2<- list(data_layer, metadata_values ) %>% plyr::join_all()
       if(length(class_names)>0){data_layer<- dplyr::relocate(data_layer2, class_names, .after = "value")}
     }
-    
+
     list(layer=layer, info_layer= info_layer, data_layer= data_layer)
-    
+
   } else {NULL}
-  
-})  %>% {Filter(function(x) !is.null(x), .)} 
+
+})  %>% {Filter(function(x) !is.null(x), .)}
 
 
 # Tabla de informacion
@@ -201,6 +201,6 @@ terra::writeRaster(area_4326, dir_area_4326, gdal=c("COMPRESS=DEFLATE", "TFW=YES
 
 # Exportar output final
 output<- list( area_stack= dir_area_4326, dir_stack= dir_stack,dir_info_layer= dir_info_layer, dir_data_layer=dir_data_layer)
-  
+
 setwd(outputFolder)
 jsonlite::write_json(output, "output.json", auto_unbox = TRUE, pretty = TRUE)
