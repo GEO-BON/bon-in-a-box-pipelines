@@ -32,7 +32,7 @@ POP_HABITAT_AREA = c() # initialize container
 for (name in pop_poly$name) {
   print(name)
   ## get habitat map
-  habitat = rast(paste0(habitat_p,'/',name,'.tif'))
+  habitat = rast(paste0(habitat_p,name,'.tif'))
 
   ## Extract habitat cover %
   pop_habitat = unlist(lapply(habitat, function(x) {mean(x[], na.rm=T)}))
