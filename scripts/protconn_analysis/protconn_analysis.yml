@@ -14,7 +14,7 @@ inputs:
     example: null
   protected_area_polygon:
     label: Polygon of protected areas
-    description: The protected areas (PAs) of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script.
+    description: The protected areas (PAs) of interest. To combine WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script.
     type: application/geopackage+sqlite3[]
     example: null
   date_column_name:
