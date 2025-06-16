@@ -339,13 +339,14 @@
   },
   "metadata": {
     "name": "ProtConn Analysis with custom PAs",
-    "description": "This pipeline calculates ProtConn (Protected Connected Index) with user-input data. This pipeline accepts a geopackage file of protected areas within a study area.  To run with World Database of Protected Areas (WDPA) data or combine WDPA with user data,\n see the \"ProtConn analysis with WDPA\" pipeline. \n \nThe pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
+    "description": "This pipeline calculates ProtConn (Protected Connected Index) with user-input data. This pipeline accepts a geopackage file of protected areas within a study area.  To run with World Database of Protected Areas (WDPA) data or combine WDPA with user data, see the \"ProtConn analysis with WDPA\" pipeline. \n\nThe pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
     "author": [
       {
         "name": "Jory Griffith",
         "email": "jory.griffith@mcgill.ca"
       }
     ],
+    "external_link": "https://github.com/GEO-BON/bon-in-a-box-pipelines/blob/main/pipelines/Protconn-pipeline/ProtConn.md",
     "references": [
       {
         "text": "Saura et al. 2017",
