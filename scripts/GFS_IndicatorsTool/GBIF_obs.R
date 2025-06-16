@@ -22,26 +22,29 @@ print(countries)
 
 
 
-
+countries <- countrycode(countries, "country.name", "iso2c")
 taxonkey <- name_backbone(species)$usageKey
 
 
+country_predicates <- lapply(countries, function(c) pred("country", c))
 
-
-if (!is.null(countries) && length(countries) > 0) {
-  country <- countrycode(countries, origin = 'country.name', destination = 'iso2c')
+if (!is.null(countries) && length(countries) > 0) {# Check if country_predicates has more than one element
+  if (length(country_predicates) > 1) {
+    combined_country_predicates <- do.call(pred_or, country_predicates)
+  } else if (length(country_predicates) == 1) {
+    combined_country_predicates <- country_predicates[[1]]
+  } else {
+    stop("No valid country predicates provided.")
+  }
   
-  # Create a list of country predicates
-  country_predicates <- lapply(country, function(c) pred("country", c))
-  
-  # Combine country predicates with pred_or
+  # Use the combined_country_predicates in the occ_download call
   gbif_download <- occ_download(
     pred("taxonKey", taxonkey),
     pred("hasCoordinate", TRUE),
     pred("hasGeospatialIssue", FALSE),
-    do.call(pred_or, country_predicates),  # Combine country predicates
-    pred_gte("year", year_start),          # Year >= start_year
-    pred_lte("year", year_end),            # Year <= end_year
+    combined_country_predicates,  # Use the combined predicates
+    pred_gte("year", year_start), # Year >= start_year
+    pred_lte("year", year_end),   # Year <= end_year
     format = "SIMPLE_CSV"
   )
 } else {
