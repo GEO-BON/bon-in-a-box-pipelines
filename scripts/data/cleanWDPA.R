@@ -33,7 +33,7 @@ protected_areas <- protected_areas %>%
   filter(sapply(legal_status, function(x) any(grepl(paste(input$status_type, collapse = "|"), x, ignore.case = TRUE))))
 
 
-if (isTRUE(input$exclude_unesco)){
+if (isFALSE(input$include_unesco)){
 print("Removing UNESCO biosphere reserves")
   protected_areas <- protected_areas %>% filter(!grepl("UNESCO-MAB Biosphere Reserve", designation))
 }

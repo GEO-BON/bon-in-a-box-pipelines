@@ -6,9 +6,10 @@ author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
 inputs:
-  study_area_polygon:
+  study_area_polygon[]:
     label: Study area polygon
-    description: Study area of interest in a geopackage file
+    description: |
+      Study area of interest in a geopackage file. 
     type: application/geopackage+sqlite3
     example: null
   protected_area_file:
@@ -23,16 +24,27 @@ inputs:
     example: "EPSG:4326"
   status_type:
     label: PA legal status types to include
-    description: Legal status types of protected areas to include
+    description: |
+      Legal status types of protected areas to include.  
+      
+      Designated means that it is officially established under national or international law/policy. 
+      
+      Inscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated. 
+ 
+      Established means that it is protected and managed, but possibly lacks formal legal desgination.
     type: options[]
     options:
       - "Designated"
       - "Inscribed"
       - "Established"
     example: ["Designated", "Inscribed", "Established"]
-  exclude_unesco:
+  include_unesco:
     label: Exclude UNESCO Biosphere reserves
-    description: Check to exclude UNESCO Biosphere reserves
+    description: |
+      Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development 
+      and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. 
+      They may not be legally protected and may not be fully conserved, because they are often used for development or
+      human settlement. Excluding these will limit the dataset to meeting stricter conservation standards.
     type: boolean
     example: TRUE
   buffer_points:
@@ -45,9 +57,11 @@ inputs:
     example: FALSE
   include_marine:
     label: Include marine protected areas
-    description: Whether to include marine protected areas or filter them out
+    description: |
+      Include marine protected areas or filter them out. Note that the analysis is still limited to the bounds of the study 
+      area polygon.
     type: boolean
-    example: TRUE
+    example: FALSE
   include_oecm:
     label: Include OECMs
     description: |
@@ -66,8 +80,6 @@ conda:
     - r
   dependencies:
     - r-rjson
-    - r-igraph
-    - r-wdpar
     - r-sf
     - r-remotes
     - r-dplyr

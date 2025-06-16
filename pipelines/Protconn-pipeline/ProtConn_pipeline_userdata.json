@@ -80,17 +80,6 @@
       }
     },
     {
-      "id": "14",
-      "type": "output",
-      "position": {
-        "x": 1676,
-        "y": 468
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "22",
       "type": "output",
       "position": {
@@ -116,8 +105,8 @@
       "id": "26",
       "type": "output",
       "position": {
-        "x": 1104,
-        "y": 144
+        "x": 1133.5987191520683,
+        "y": 114.40128084793179
       },
       "data": {
         "label": "Output"
@@ -147,6 +136,34 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "31",
+      "type": "userInput",
+      "position": {
+        "x": 540.573289495969,
+        "y": 259.8495565341529
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3[]"
+      }
+    },
+    {
+      "id": "32",
+      "type": "userInput",
+      "position": {
+        "x": 717.6373588245121,
+        "y": 356.4802440820905
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": [
+          1000,
+          10000
+        ]
       }
     }
   ],
@@ -201,13 +218,6 @@
       "id": "reactflow__edge-8result_yrs-13"
     },
     {
-      "source": "8",
-      "sourceHandle": "result_preset_plot",
-      "target": "14",
-      "targetHandle": null,
-      "id": "reactflow__edge-8result_preset_plot-14"
-    },
-    {
       "source": "5",
       "sourceHandle": "country",
       "target": "22",
@@ -241,6 +251,20 @@
       "target": "30",
       "targetHandle": null,
       "id": "reactflow__edge-8protected_areas-30"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-31-8study_area_polygon"
+    },
+    {
+      "source": "32",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "distance_threshold",
+      "id": "reactflow__edge-32-8distance_threshold"
     }
   ],
   "inputs": {
@@ -258,43 +282,46 @@
       "example": null,
       "weight": 1
     },
-    "pipeline@29": {
-      "label": "Polygon of protected areas",
-      "description": "The protected areas of interest. To combine multiple WDPA data and custom data, add the path to the custom geopkg here. They will be combined within the script. If you want to use word database of protected areas (WDPA) data or a combination of WDPA data with custom data, use the \"ProtConn analysis with WDPA\" pipeline.",
+    "pipeline@31": {
+      "label": "Polygon of study area",
+      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
       "weight": 2
     },
-    "pipeline@9": {
-      "label": "Coordinate reference system",
-      "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
-      "type": "text",
-      "example": "EPSG:3116",
+    "pipeline@29": {
+      "label": "Polygon of protected areas",
+      "description": "The protected areas of interest, in geopackage format. If you want to use word database of protected areas (WDPA) data or a combination of WDPA data with custom data, use the \"ProtConn analysis with WDPA\" pipeline.",
+      "type": "application/geopackage+sqlite3[]",
+      "example": [],
       "weight": 3
     },
+    "pipeline@9": {
+      "label": "Coordinate reference system",
+      "description": "This input specifies the coordinate reference system of the study area polygon and the protected area polygons for the ProtConn calculation. This must be a projected CRS, otherwise the distance calculations will not be accurate.\n\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "type": "text",
+      "example": "EPSG:3116",
+      "weight": 4
+    },
     "protconn_analysis>protconn_analysis.yml@8|date_column_name": {
-      "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
+      "description": "Name of the column in the user provided protected area file that specifies when the PA was created.",
       "label": "Date column name",
       "type": "text",
       "example": null,
-      "weight": 4
-    },
-    "protconn_analysis>protconn_analysis.yml@8|distance_threshold": {
-      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represent the median dispersal probability (i.e. where the dispersal probabilty between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.",
-      "label": "Distance analysis threshold",
-      "type": "int",
-      "example": 10000,
       "weight": 5
     },
-    "protconn_analysis>protconn_analysis.yml@8|transboundary_distance": {
-      "description": "Distance (in chosen distance unit) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.",
-      "label": "Transboundary distance",
-      "type": "int",
-      "example": 0,
+    "pipeline@32": {
+      "label": "Distance analysis threshold",
+      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probability between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.\n\nCommon dispersal distances that encompass many different taxa are 1000 meters, 10,000 meters, and 100,000 meters. \n\nNote that the more distances you include, the longer the pipeline will take to complete and the more memory it will require. Additionally, larger dispersal distances will be more computationally intensive. ",
+      "type": "int[]",
+      "example": [
+        1000,
+        10000
+      ],
       "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@8|distance_matrix_type": {
-      "description": "String value that defines whether the user wants to use a distance matrix of centroids or the nearest edge for the ProtConn calculation",
+      "description": "Type of distance matrix to use in the ProtConn calculation. The \"centroid\" option will measure the distances between protected areas from from the geometric center of each protected area, while the \"edge\" option will measure the distance as the nearest edge between two protected areas. ",
       "label": "Type of distance matrix",
       "type": "options",
       "options": [
@@ -315,7 +342,7 @@
       "description": "Year for the time series plot to start",
       "label": "Start year",
       "type": "int",
-      "example": 1950,
+      "example": 1980,
       "weight": 9
     },
     "protconn_analysis>protconn_analysis.yml@8|year_int": {
@@ -339,47 +366,41 @@
       "type": "text",
       "weight": 1
     },
-    "protconn_analysis>protconn_analysis.yml@8|protected_areas": {
-      "description": "Protected areas on which ProtConn is being calculated (with overlaps dissovled)",
-      "label": "Protected areas",
-      "type": "application/geopackage+sqlite3[]",
+    "data>getCountryPolygon.yml@5|country_polygon": {
+      "description": "Polygon of the chosen country or region in the crs of choice in geopackage format.",
+      "label": "Polygon of country or region",
+      "type": "application/geopackage+sqlite3",
       "weight": 2
     },
-    "protconn_analysis>protconn_analysis.yml@8|protconn_result": {
-      "description": "Contains the results of the connectivity analysis between the spatial units within the study area. This table provides valuable information about the spatial relationships and connectivity patterns among different spatial entities",
-      "label": "ProtConn results",
-      "type": "text/csv",
+    "protconn_analysis>protconn_analysis.yml@8|protected_areas": {
+      "description": "Protected areas on which ProtConn is being calculated. Overlapping protected areas have been merged into one to speed up calculation.",
+      "label": "Protected areas",
+      "type": "application/geopackage+sqlite3[]",
       "weight": 3
     },
-    "protconn_analysis>protconn_analysis.yml@8|result_plot": {
-      "description": "Donut plot of the percentage of total area that is protected and percentage of the total area that is protected and connected",
-      "label": "ProtConn result plot",
-      "type": "image/png",
+    "protconn_analysis>protconn_analysis.yml@8|protconn_result": {
+      "description": "The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected, and the percentage that is protected and connected (ProtConn) and protected and unconnected (ProtUnconn).",
+      "label": "ProtConn results",
+      "type": "text/csv",
       "weight": 4
     },
-    "protconn_analysis>protconn_analysis.yml@8|result_yrs_plot": {
-      "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time",
-      "label": "ProtConn time series plot",
+    "protconn_analysis>protconn_analysis.yml@8|result_plot": {
+      "description": "Donut plot of the percentage of total area that is unprotected, protected and connected, and protected and unconnected for each input dispersal distance (in meters).",
+      "label": "ProtConn result plot",
       "type": "image/png",
       "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@8|result_yrs": {
-      "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified",
+      "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.",
       "label": "ProtConn time series results",
       "type": "text/csv",
       "weight": 6
     },
-    "protconn_analysis>protconn_analysis.yml@8|result_preset_plot": {
-      "description": "Plot of ProtConn calcuated with three common dispersal values, 1km, 10km, and 100km",
-      "label": "ProtConn plot with dispersal presets",
+    "protconn_analysis>protconn_analysis.yml@8|result_yrs_plot": {
+      "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.",
+      "label": "ProtConn time series plot",
       "type": "image/png",
       "weight": 7
-    },
-    "data>getCountryPolygon.yml@5|country_polygon": {
-      "description": "Polygon of the chosen country or region in the crs of choice in geopackage format",
-      "label": "Polygon of country or region",
-      "type": "application/geopackage+sqlite3",
-      "weight": 8
     }
   },
   "metadata": {
