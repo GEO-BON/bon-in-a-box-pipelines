@@ -437,7 +437,8 @@
   },
   "metadata": {
     "name": "ProtConn Analysis with WDPA",
-    "description": "This pipeline calculates ProtConn (Protected Connected Index) from protected area polygons using data pulled from the World Database of Protected Areas through their API. The user can also combine WDPA data with user-input data. To run the analysis on user-input data only,  see the \"ProtConn analysis with custom PAs\" pipeline. The pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
+    "description": "This pipeline calculates ProtConn (Protected Connected Index) from protected area polygons using data pulled from the World Database of Protected Areas through their API. The user can also combine WDPA data with user-input data. To run the analysis on user-input data only,  see the \"ProtConn analysis with custom PAs\" pipeline.\n\nThe pipeline uses the MK_Protconn function in the Makurhini package to calculate the percentage of the study area that is protected and connected, based on median dispersal distances and the distance between protected areas.",
+    "external_link": "https://github.com/GEO-BON/bon-in-a-box-pipelines/blob/main/pipelines/Protconn-pipeline/ProtConn.md",
     "author": [
       {
         "name": "Jory Griffith",
