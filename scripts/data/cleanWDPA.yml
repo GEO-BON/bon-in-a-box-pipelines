@@ -6,7 +6,7 @@ author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
 inputs:
-  study_area_polygon[]:
+  study_area_polygon:
     label: Study area polygon
     description: |
       Study area of interest in a geopackage file. 
