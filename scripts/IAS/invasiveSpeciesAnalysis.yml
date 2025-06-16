@@ -8,8 +8,8 @@ inputs:
   observations_file:
     label: Observations
     description: Output file with observations
-    type: text/tab-separated-values
-    example: /userdata/mongolia_GRIIS.tsv
+    type: text/csv
+    example: /userdata/cleaned_data.csv
   min_year:
     description: Year for the time series plot to start
     label: Start year

@@ -4,8 +4,8 @@
       "id": "27",
       "type": "io",
       "position": {
-        "x": 637,
-        "y": 12
+        "x": 629,
+        "y": 18.5
       },
       "data": {
         "descriptionFile": "data>getGRIISChecklist.yml"
@@ -15,8 +15,8 @@
       "id": "29",
       "type": "io",
       "position": {
-        "x": 434,
-        "y": 298
+        "x": 426,
+        "y": 304.5
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -26,30 +26,19 @@
       "id": "30",
       "type": "io",
       "position": {
-        "x": 1212,
-        "y": 84
+        "x": 1204,
+        "y": 90.5
       },
       "data": {
         "descriptionFile": "data>filterCSV.yml"
       }
     },
     {
-      "id": "31",
-      "type": "io",
-      "position": {
-        "x": 1649,
-        "y": 246.5
-      },
-      "data": {
-        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
-      }
-    },
-    {
       "id": "32",
       "type": "io",
       "position": {
-        "x": 2384,
-        "y": 451.6666666666667
+        "x": 2229,
+        "y": 292
       },
       "data": {
         "descriptionFile": "IAS>invasiveSpeciesAnalysis.yml"
@@ -59,8 +48,8 @@
       "id": "33",
       "type": "output",
       "position": {
-        "x": 2911,
-        "y": 422.1666666666667
+        "x": 2756,
+        "y": 262.5
       },
       "data": {
         "label": "Output"
@@ -70,8 +59,8 @@
       "id": "35",
       "type": "userInput",
       "position": {
-        "x": 178,
-        "y": 144
+        "x": 170,
+        "y": 262.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -83,8 +72,8 @@
       "id": "36",
       "type": "constant",
       "position": {
-        "x": 663,
-        "y": 94
+        "x": 655,
+        "y": 100.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -96,8 +85,8 @@
       "id": "37",
       "type": "constant",
       "position": {
-        "x": 653,
-        "y": 186
+        "x": 645,
+        "y": 143.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -111,10 +100,10 @@
     },
     {
       "id": "38",
-      "type": "userInput",
+      "type": "constant",
       "position": {
         "x": 12,
-        "y": 379.5
+        "y": 333.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -126,8 +115,8 @@
       "id": "39",
       "type": "userInput",
       "position": {
-        "x": 1327,
-        "y": 455
+        "x": 1319,
+        "y": 450.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -139,8 +128,8 @@
       "id": "40",
       "type": "userInput",
       "position": {
-        "x": 1324,
-        "y": 490
+        "x": 1316,
+        "y": 485.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -152,19 +141,8 @@
       "id": "41",
       "type": "output",
       "position": {
-        "x": 434,
-        "y": 137
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "43",
-      "type": "output",
-      "position": {
-        "x": 2384,
-        "y": 217
+        "x": 426,
+        "y": 255.5
       },
       "data": {
         "label": "Output"
@@ -174,8 +152,8 @@
       "id": "44",
       "type": "output",
       "position": {
-        "x": 2384,
-        "y": 539.6666666666667
+        "x": 2229,
+        "y": 233
       },
       "data": {
         "label": "Output"
@@ -185,8 +163,8 @@
       "id": "45",
       "type": "output",
       "position": {
-        "x": 1649,
-        "y": 138.5
+        "x": 1641,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -196,8 +174,8 @@
       "id": "46",
       "type": "output",
       "position": {
-        "x": 1649,
-        "y": 187.5
+        "x": 1641,
+        "y": 61
       },
       "data": {
         "label": "Output"
@@ -207,11 +185,33 @@
       "id": "47",
       "type": "io",
       "position": {
-        "x": 1087,
-        "y": 372
+        "x": 1079,
+        "y": 378.5
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": 1641,
+        "y": 164.5
+      },
+      "data": {
+        "descriptionFile": "data>firstRecordGBIF.yml"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 2229,
+        "y": 90.5
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -222,13 +222,6 @@
       "target": "33",
       "targetHandle": null,
       "id": "reactflow__edge-32result_plot-33"
-    },
-    {
-      "source": "31",
-      "sourceHandle": "observations_file",
-      "target": "32",
-      "targetHandle": "observations_file",
-      "id": "reactflow__edge-31observations_file-32observations_file"
     },
     {
       "source": "35",
@@ -273,27 +266,6 @@
       "id": "reactflow__edge-38-29crs"
     },
     {
-      "source": "38",
-      "sourceHandle": null,
-      "target": "31",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-38-31proj"
-    },
-    {
-      "source": "39",
-      "sourceHandle": null,
-      "target": "31",
-      "targetHandle": "min_year",
-      "id": "reactflow__edge-39-31min_year"
-    },
-    {
-      "source": "40",
-      "sourceHandle": null,
-      "target": "31",
-      "targetHandle": "max_year",
-      "id": "reactflow__edge-40-31max_year"
-    },
-    {
       "source": "39",
       "sourceHandle": null,
       "target": "32",
@@ -315,27 +287,6 @@
       "id": "reactflow__edge-35-41"
     },
     {
-      "source": "31",
-      "sourceHandle": "observations_file",
-      "target": "43",
-      "targetHandle": null,
-      "id": "reactflow__edge-31observations_file-43"
-    },
-    {
-      "source": "31",
-      "sourceHandle": "gbif_doi",
-      "target": "44",
-      "targetHandle": null,
-      "id": "reactflow__edge-31gbif_doi-44"
-    },
-    {
-      "source": "30",
-      "sourceHandle": "text_array",
-      "target": "31",
-      "targetHandle": "taxa",
-      "id": "reactflow__edge-30text_array-31taxa"
-    },
-    {
       "source": "30",
       "sourceHandle": "text_array",
       "target": "45",
@@ -350,13 +301,6 @@
       "id": "reactflow__edge-30output_file-46"
     },
     {
-      "source": "47",
-      "sourceHandle": "bbox",
-      "target": "31",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-47bbox-31bbox"
-    },
-    {
       "source": "29",
       "sourceHandle": "country_polygon",
       "target": "47",
@@ -369,6 +313,55 @@
       "target": "47",
       "targetHandle": "crs",
       "id": "reactflow__edge-38-47crs"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "gbif_doi",
+      "target": "44",
+      "targetHandle": null,
+      "id": "reactflow__edge-48gbif_doi-44"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "first_record_file",
+      "target": "32",
+      "targetHandle": "observations_file",
+      "id": "reactflow__edge-48first_record_file-32observations_file"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "first_record_file",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-48first_record_file-49"
+    },
+    {
+      "source": "30",
+      "sourceHandle": "text_array",
+      "target": "48",
+      "targetHandle": "taxa",
+      "id": "reactflow__edge-30text_array-48taxa"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "bbox",
+      "target": "48",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-47bbox-48bbox"
+    },
+    {
+      "source": "39",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "min_year",
+      "id": "reactflow__edge-39-48min_year"
+    },
+    {
+      "source": "40",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "max_year",
+      "id": "reactflow__edge-40-48max_year"
     }
   ],
   "inputs": {
@@ -386,26 +379,19 @@
       "example": "Mongolia",
       "weight": 1
     },
-    "pipeline@38": {
-      "label": "Coordinate reference system",
-      "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
-      "type": "text",
-      "example": "EPSG:32645",
-      "weight": 2
-    },
     "pipeline@39": {
       "label": "minimum year",
       "description": "Min year observations wanted",
       "type": "int",
       "example": 1950,
-      "weight": 3
+      "weight": 2
     },
     "pipeline@40": {
       "label": "maximum year",
       "description": "Max year observations wanted",
       "type": "int",
       "example": 2024,
-      "weight": 4
+      "weight": 3
     },
     "IAS>invasiveSpeciesAnalysis.yml@32|plot_type": {
       "description": "Plot can either be cumulative or annual",
@@ -416,7 +402,7 @@
         "annual"
       ],
       "example": "annual",
-      "weight": 5
+      "weight": 4
     }
   },
   "outputs": {
@@ -433,30 +419,29 @@
       "type": "text",
       "weight": 1
     },
-    "data>getGBIFObservations>getGBIFObservations.yml@31|observations_file": {
-      "description": "Output file with observations",
-      "label": "Observations",
-      "type": "text/tab-separated-values",
-      "example": "hfn7s62sq.csv",
-      "weight": 2
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@31|gbif_doi": {
-      "description": "DOI of GBIF download. Used for citing downloaded data.",
-      "label": "DOI of GBIF download",
-      "type": "text",
-      "example": "10.15468/dl.j644h5",
-      "weight": 3
-    },
     "data>filterCSV.yml@30|text_array": {
       "description": "Text array containing extracted data",
       "label": "Data in a text array",
       "type": "text[]",
-      "weight": 4
+      "weight": 2
     },
     "data>filterCSV.yml@30|output_file": {
       "description": "Text file containing extracted data",
       "label": "Data in a text file",
       "type": "text/plain",
+      "weight": 3
+    },
+    "data>firstRecordGBIF.yml@48|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
+      "weight": 4
+    },
+    "data>firstRecordGBIF.yml@48|first_record_file": {
+      "description": "Output file with first record date and species key",
+      "label": "First record data",
+      "type": "text/csv",
       "weight": 5
     }
   },

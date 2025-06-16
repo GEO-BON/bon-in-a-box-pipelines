@@ -1,0 +1,43 @@
+script: firstRecordGBIF.py
+name: First record data from GBIF
+description: Load GBIF first record data using SQL query
+author:
+  - name: Laetitia Tremblay
+
+inputs:
+  taxa:
+    description: Array of taxa values. Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match.
+    label: Taxa list
+    type: text[]
+    example: [Acer negundo, Branta canadensis]
+  bbox:
+    label: bbox
+    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax, must be in EPSG 4326
+    type: float[]
+    example: [5.72500000000002, 49.445458984375, 6.49375000000001, 50.1671875]
+  min_year:
+    description: Min year observations wanted
+    label: minimum year
+    type: int
+    example: 2010
+  max_year:
+    description: Max year observations wanted
+    label: maximum year
+    type: int
+    example: 2024
+outputs:
+  first_record_file:
+    label: First record data
+    description: Output file with first record date and species key
+    type: text/csv
+  gbif_doi:
+    label: DOI of GBIF download
+    description: DOI of GBIF download. Used for citing downloaded data.
+    type: text
+    example: 10.15468/dl.j644h5
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pygbif
+    - pandas

@@ -59,6 +59,9 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 	print(meta)
 	while (meta['status']!='SUCCEEDED'):
 		meta=occ.download_meta(down)
+		if meta['status'] in ['FAILED', 'CANCELLED']:
+			print(f"Download failed or was cancelled. Status: {meta['status']}")
+			return {'error': 'GBIF download failed', 'status': meta['status'], 'meta': meta}
 		time.sleep(10)
 	process_gbif_download(meta['downloadLink'], meta['key'],outfile)
 	return({'outfile':outfile, 'doi': meta['doi'], 'total_records':meta['totalRecords']})

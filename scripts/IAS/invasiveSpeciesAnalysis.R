@@ -9,32 +9,33 @@ library(ggplot2)
 
 input <- biab_inputs()
 
-# Load your GBIF invasive species data
-# this is the result of running getGBIFObservations in BON in a Box:
-# inputs: the result of GRIIS_alien_extraction.py, bbox for mongolia, espg of MNG, years # nolint: line_length_linter.
-gbif <- read_tsv(input$observations_file, show_col_types = FALSE)
+# Load your GBIF invasive species first records
+gbif <- read_delim(input$observations_file, show_col_types = FALSE)
 
+glimpse(gbif)
 # Ensure 'year' column is integer and drop rows with NA years
-gbif <- gbif %>%
-  mutate(year = as.integer(year)) %>%
-  filter(!is.na(year))
+# gbif <- gbif %>%
+#   mutate(year = as.integer(year)) %>%
+#   filter(!is.na(year))
 
-# Get first recorded year per species
-first_records <- gbif %>%
-  group_by(scientific_name) %>%
-  summarise(first_year = min(year, na.rm = TRUE), .groups = "drop")
+print(head(gbif))
+
+# # Get first recorded year per species
+# first_records <- gbif %>%
+#   group_by(scientific_name) %>%
+#   summarise(first_year = min(year, na.rm = TRUE), .groups = "drop")
 
 # Count how many species were first recorded in each year
-yearly_counts <- first_records %>%
-  count(first_year, name = "new_species") %>%
-  arrange(first_year)
+yearly_counts <- gbif %>%
+  count(gimme, name = "new_species") %>%
+  arrange(gimme)
 
 # Define full year range
 year_range <- input$min_year:input$max_year
 
 # Fill missing years with zero counts
 complete_yearly_counts <- tibble(year = year_range) %>%
-  left_join(yearly_counts, by = c("year" = "first_year")) %>%
+  left_join(yearly_counts, by = c("year" = "gimme")) %>%
   mutate(new_species = ifelse(is.na(new_species), 0, new_species))
 
 # Prepare inputs for snc
@@ -63,9 +64,17 @@ if (input$plot_type == "annual") {
   bool <- TRUE
 }
 
+# Find positions of years divisible by 20
+year_break_indices <- which(years %% 20 == 0)
+year_break_labels <- years[year_break_indices]
+
 final_plot <- plot_snc(model_simple, cumulative = bool) +
   xlab("Year of first record in data") +
   labs(title = "Number of introduced invasive alien species over time") +
+  scale_x_continuous(
+    breaks = year_break_indices,  # index positions on x-axis
+    labels = year_break_labels    # actual year values
+  ) +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
 result_plot_path <- file.path(outputFolder, "final_plot.png")
