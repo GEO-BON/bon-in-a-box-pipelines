@@ -97,17 +97,6 @@
       }
     },
     {
-      "id": "40",
-      "type": "io",
-      "position": {
-        "x": 1714.1617055144009,
-        "y": 8.75982875237375
-      },
-      "data": {
-        "descriptionFile": "data>cleanWDPA.yml"
-      }
-    },
-    {
       "id": "41",
       "type": "userInput",
       "position": {
@@ -184,6 +173,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": 1612.4990722778184,
+        "y": 12.161285994457074
+      },
+      "data": {
+        "descriptionFile": "data>cleanWDPA.yml"
+      }
     }
   ],
   "edges": [
@@ -230,39 +230,11 @@
       "id": "reactflow__edge-27-6country_iso"
     },
     {
-      "source": "6",
-      "sourceHandle": "protected_area_polygon",
-      "target": "40",
-      "targetHandle": "protected_area_file",
-      "id": "reactflow__edge-6protected_area_polygon-40protected_area_file"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "country_polygon",
-      "target": "40",
-      "targetHandle": "study_area_polygon[]",
-      "id": "reactflow__edge-5country_polygon-40study_area_polygon[]"
-    },
-    {
-      "source": "9",
-      "sourceHandle": null,
-      "target": "40",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-9-40crs"
-    },
-    {
       "source": "41",
       "sourceHandle": null,
       "target": "42",
       "targetHandle": "study_area_polygon",
       "id": "reactflow__edge-41-42study_area_polygon"
-    },
-    {
-      "source": "40",
-      "sourceHandle": "protected_areas_clean",
-      "target": "42",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-40protected_areas_clean-42study_area_polygon"
     },
     {
       "source": "29",
@@ -312,6 +284,41 @@
       "target": "47",
       "targetHandle": null,
       "id": "reactflow__edge-42result_yrs-47"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "country_polygon",
+      "target": "42",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-5country_polygon-42study_area_polygon"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "protected_areas_clean",
+      "target": "42",
+      "targetHandle": "protected_area_polygon",
+      "id": "reactflow__edge-48protected_areas_clean-42protected_area_polygon"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "protected_area_polygon",
+      "target": "48",
+      "targetHandle": "protected_area_file",
+      "id": "reactflow__edge-6protected_area_polygon-48protected_area_file"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "country_polygon",
+      "target": "48",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-5country_polygon-48study_area_polygon"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-9-48crs"
     }
   ],
   "inputs": {
@@ -350,7 +357,56 @@
       "example": "EPSG:3116",
       "weight": 4
     },
-    "data>cleanWDPA.yml@40|status_type": {
+    "protconn_analysis>protconn_analysis.yml@42|date_column_name": {
+      "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
+      "label": "Date column name",
+      "type": "text",
+      "example": null,
+      "weight": 5
+    },
+    "protconn_analysis>protconn_analysis.yml@42|distance_threshold": {
+      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probability between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.\n\nCommon dispersal distances that encompass many different taxa are 1000 meters, 10,000 meters, and 100,000 meters. \n\nNote that the more distances you include, the longer the pipeline will take to complete and the more memory it will require. Additionally, larger dispersal distances will be more computationally intensive. ",
+      "label": "Distance analysis threshold",
+      "type": "int[]",
+      "example": [
+        1000,
+        10000
+      ],
+      "weight": 6
+    },
+    "protconn_analysis>protconn_analysis.yml@42|distance_matrix_type": {
+      "description": "Type of distance matrix to use in the ProtConn calculation. The \"centroid\" option will measure the distances between protected areas from from the geometric center of each protected area, while the \"edge\" option will measure the distance as the nearest edge between two protected areas. ",
+      "label": "Type of distance matrix",
+      "type": "options",
+      "options": [
+        "centroid",
+        "edge"
+      ],
+      "example": "centroid",
+      "weight": 7
+    },
+    "protconn_analysis>protconn_analysis.yml@42|years": {
+      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
+      "label": "Year for cutoff",
+      "type": "int",
+      "example": 2025,
+      "weight": 8
+    },
+    "protconn_analysis>protconn_analysis.yml@42|start_year": {
+      "description": "Year for the time series plot to start",
+      "label": "Start year",
+      "type": "int",
+      "example": 1980,
+      "weight": 9
+    },
+    "protconn_analysis>protconn_analysis.yml@42|year_int": {
+      "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year)",
+      "label": "Year interval",
+      "type": "int",
+      "example": 20,
+      "weight": 10
+    },
+    "data>cleanWDPA.yml@48|status_type": {
       "description": "Legal status types of protected areas to include.  \n\nDesignated means that it is officially established under national or international law/policy. \n\nInscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated. \n\nEstablished means that it is protected and managed, but possibly lacks formal legal desgination.\n",
       "label": "PA legal status types to include",
       "type": "options[]",
@@ -364,83 +420,34 @@
         "Inscribed",
         "Established"
       ],
-      "weight": 5
+      "weight": 11
     },
-    "data>cleanWDPA.yml@40|include_unesco": {
-      "description": "Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \n\nThey may not be legally protected and may not be fully conserved, because they are often used for development or human settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
+    "data>cleanWDPA.yml@48|include_unesco": {
+      "description": "Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
       "label": "Exclude UNESCO Biosphere reserves",
       "type": "boolean",
       "example": true,
-      "weight": 6
+      "weight": 12
     },
-    "data>cleanWDPA.yml@40|buffer_points": {
-      "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\n\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area. Checking this box will not affect the distance calculations if using the protected area centroid because the centroid will be the point, but if using  the distance to edge, it will cause inaccuracies in the protected area connectivity calculations. \n\nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
+    "data>cleanWDPA.yml@48|buffer_points": {
+      "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area.\nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
       "label": "Buffer protected area points",
       "type": "boolean",
       "example": false,
-      "weight": 7
+      "weight": 13
     },
-    "data>cleanWDPA.yml@40|include_marine": {
+    "data>cleanWDPA.yml@48|include_marine": {
       "description": "Include marine protected areas or filter them out. Note that the analysis is still limited to the bounds of the study \narea polygon.\n",
       "label": "Include marine protected areas",
       "type": "boolean",
       "example": false,
-      "weight": 8
+      "weight": 14
     },
-    "data>cleanWDPA.yml@40|include_oecm": {
+    "data>cleanWDPA.yml@48|include_oecm": {
       "description": "Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated\nprotected areas but are still achieving conservation outcomes.\n",
       "label": "Include OECMs",
       "type": "boolean",
       "example": true,
-      "weight": 9
-    },
-    "protconn_analysis>protconn_analysis.yml@42|date_column_name": {
-      "description": "Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).",
-      "label": "Date column name",
-      "type": "text",
-      "example": null,
-      "weight": 10
-    },
-    "protconn_analysis>protconn_analysis.yml@42|distance_threshold": {
-      "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probability between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.\n\nCommon dispersal distances that encompass many different taxa are 1000 meters, 10,000 meters, and 100,000 meters. \n\nNote that the more distances you include, the longer the pipeline will take to complete and the more memory it will require. Additionally, larger dispersal distances will be more computationally intensive. ",
-      "label": "Distance analysis threshold",
-      "type": "int[]",
-      "example": [
-        1000,
-        10000
-      ],
-      "weight": 11
-    },
-    "protconn_analysis>protconn_analysis.yml@42|distance_matrix_type": {
-      "description": "Type of distance matrix to use in the ProtConn calculation. The \"centroid\" option will measure the distances between protected areas from from the geometric center of each protected area, while the \"edge\" option will measure the distance as the nearest edge between two protected areas. ",
-      "label": "Type of distance matrix",
-      "type": "options",
-      "options": [
-        "centroid",
-        "edge"
-      ],
-      "example": "centroid",
-      "weight": 12
-    },
-    "protconn_analysis>protconn_analysis.yml@42|years": {
-      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
-      "label": "Year for cutoff",
-      "type": "int",
-      "example": 2025,
-      "weight": 13
-    },
-    "protconn_analysis>protconn_analysis.yml@42|start_year": {
-      "description": "Year for the time series plot to start",
-      "label": "Start year",
-      "type": "int",
-      "example": 1980,
-      "weight": 14
-    },
-    "protconn_analysis>protconn_analysis.yml@42|year_int": {
-      "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year)",
-      "label": "Year interval",
-      "type": "int",
-      "example": 20,
       "weight": 15
     }
   },
