@@ -4,8 +4,8 @@
       "id": "5",
       "type": "io",
       "position": {
-        "x": 799,
-        "y": 216
+        "x": 871,
+        "y": 184
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -15,8 +15,8 @@
       "id": "6",
       "type": "io",
       "position": {
-        "x": 444,
-        "y": 51
+        "x": 516,
+        "y": 19
       },
       "data": {
         "descriptionFile": "data>getWDPA.yml"
@@ -26,8 +26,8 @@
       "id": "9",
       "type": "userInput",
       "position": {
-        "x": 374.14903433118764,
-        "y": 352.4660675955349
+        "x": 446.1490343311875,
+        "y": 320.4660675955349
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,30 +39,8 @@
       "id": "22",
       "type": "output",
       "position": {
-        "x": 1439,
-        "y": 187
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "23",
-      "type": "output",
-      "position": {
-        "x": 1439,
-        "y": 311
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "26",
-      "type": "output",
-      "position": {
-        "x": 1439,
-        "y": 359
+        "x": 1517,
+        "y": 265
       },
       "data": {
         "label": "Output"
@@ -72,8 +50,8 @@
       "id": "27",
       "type": "userInput",
       "position": {
-        "x": 96,
-        "y": 43
+        "x": 145,
+        "y": 129
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -85,8 +63,8 @@
       "id": "29",
       "type": "userInput",
       "position": {
-        "x": 1623,
-        "y": 407
+        "x": 1719,
+        "y": 385
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -112,8 +90,8 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": 2364.6000061035156,
-        "y": 285.7999954223633
+        "x": 2442.6000061035156,
+        "y": 289.7999954223633
       },
       "data": {
         "descriptionFile": "protconn_analysis>protconn_analysis.yml"
@@ -123,52 +101,8 @@
       "id": "43",
       "type": "output",
       "position": {
-        "x": 2939.571219334474,
-        "y": 290.6088834748906
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "44",
-      "type": "output",
-      "position": {
-        "x": 2925.642410321736,
-        "y": 302.79659136103635
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "45",
-      "type": "output",
-      "position": {
-        "x": 2923.9013091951433,
-        "y": 318.4665015003666
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "46",
-      "type": "output",
-      "position": {
-        "x": 2920.419106941959,
-        "y": 332.39531051310456
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "47",
-      "type": "output",
-      "position": {
-        "x": 2918.6780058153668,
-        "y": 344.5830183992503
+        "x": 3043.2740650008755,
+        "y": 315.17116000801195
       },
       "data": {
         "label": "Output"
@@ -200,20 +134,6 @@
       "target": "22",
       "targetHandle": null,
       "id": "reactflow__edge-5country-22"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "region",
-      "target": "23",
-      "targetHandle": null,
-      "id": "reactflow__edge-5region-23"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "country_polygon",
-      "target": "26",
-      "targetHandle": null,
-      "id": "reactflow__edge-5country_polygon-26"
     },
     {
       "source": "27",
@@ -258,34 +178,6 @@
       "id": "reactflow__edge-42protected_areas-43"
     },
     {
-      "source": "42",
-      "sourceHandle": "protconn_result",
-      "target": "44",
-      "targetHandle": null,
-      "id": "reactflow__edge-42protconn_result-44"
-    },
-    {
-      "source": "42",
-      "sourceHandle": "result_plot",
-      "target": "45",
-      "targetHandle": null,
-      "id": "reactflow__edge-42result_plot-45"
-    },
-    {
-      "source": "42",
-      "sourceHandle": "result_yrs_plot",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-42result_yrs_plot-46"
-    },
-    {
-      "source": "42",
-      "sourceHandle": "result_yrs",
-      "target": "47",
-      "targetHandle": null,
-      "id": "reactflow__edge-42result_yrs-47"
-    },
-    {
       "source": "5",
       "sourceHandle": "country_polygon",
       "target": "42",
@@ -319,6 +211,48 @@
       "target": "48",
       "targetHandle": "crs",
       "id": "reactflow__edge-9-48crs"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "region",
+      "target": "22",
+      "targetHandle": null,
+      "id": "reactflow__edge-5region-22"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "country_polygon",
+      "target": "22",
+      "targetHandle": null,
+      "id": "reactflow__edge-5country_polygon-22"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "protconn_result",
+      "target": "43",
+      "targetHandle": null,
+      "id": "reactflow__edge-42protconn_result-43"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "result_plot",
+      "target": "43",
+      "targetHandle": null,
+      "id": "reactflow__edge-42result_plot-43"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "result_yrs_plot",
+      "target": "43",
+      "targetHandle": null,
+      "id": "reactflow__edge-42result_yrs_plot-43"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "result_yrs",
+      "target": "43",
+      "targetHandle": null,
+      "id": "reactflow__edge-42result_yrs-43"
     }
   ],
   "inputs": {
