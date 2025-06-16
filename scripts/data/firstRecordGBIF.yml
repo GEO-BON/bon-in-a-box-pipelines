@@ -15,16 +15,6 @@ inputs:
     description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax, must be in EPSG 4326
     type: float[]
     example: [5.72500000000002, 49.445458984375, 6.49375000000001, 50.1671875]
-  min_year:
-    description: Min year observations wanted
-    label: minimum year
-    type: int
-    example: 2010
-  max_year:
-    description: Max year observations wanted
-    label: maximum year
-    type: int
-    example: 2024
 outputs:
   first_record_file:
     label: First record data

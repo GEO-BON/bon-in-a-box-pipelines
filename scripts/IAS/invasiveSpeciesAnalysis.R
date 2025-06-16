@@ -10,7 +10,7 @@ library(ggplot2)
 input <- biab_inputs()
 
 # Load your GBIF invasive species first records
-gbif <- read_delim(input$observations_file, show_col_types = FALSE)
+gbif <- read_tsv(input$observations_file, show_col_types = FALSE)
 
 glimpse(gbif)
 # Ensure 'year' column is integer and drop rows with NA years

@@ -67,8 +67,21 @@ def clean_entry(entry):
     words = entry.strip().split()
     return ' '.join(word for word in words if is_valid_word(word))
 
-# Step 4: Apply cleaning, deduplicate, and sort alphabetically
-cleaned_names = sorted({clean_entry(name) for name in scientific_names if clean_entry(name)}, key=str.lower)
+
+# Step 4: Track cleaning collisions
+cleaned_map = defaultdict(list)
+for name in scientific_names:
+    cleaned = clean_entry(name)
+    if cleaned:
+        cleaned_map[cleaned].append(name)
+
+# Find cases where multiple original names map to the same cleaned name
+duplicates_due_to_cleaning = {k: v for k, v in cleaned_map.items() if len(v) > 1}
+
+print(f"There were {len(duplicates_due_to_cleaning)} duplicate species in the data")
+
+# Now get the unique cleaned names (keys of cleaned_map)
+cleaned_names = sorted(cleaned_map.keys(), key=str.lower)
 
 # Step 5: Join with proper commas
 final_text = ', '.join(cleaned_names)

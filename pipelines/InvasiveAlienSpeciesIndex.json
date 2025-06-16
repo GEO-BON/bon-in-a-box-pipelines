@@ -348,20 +348,6 @@
       "target": "48",
       "targetHandle": "bbox",
       "id": "reactflow__edge-47bbox-48bbox"
-    },
-    {
-      "source": "39",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "min_year",
-      "id": "reactflow__edge-39-48min_year"
-    },
-    {
-      "source": "40",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "max_year",
-      "id": "reactflow__edge-40-48max_year"
     }
   ],
   "inputs": {
