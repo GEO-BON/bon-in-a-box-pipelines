@@ -1,7 +1,6 @@
 library(sf)
 library(rjson)
 library(dplyr)
-library(igraph)
 
 # Add inputs
 input <- biab_inputs()
