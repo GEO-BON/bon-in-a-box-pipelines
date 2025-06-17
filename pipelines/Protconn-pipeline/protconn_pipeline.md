@@ -1,6 +1,6 @@
 # Protected Connected Index
 ### Author(s): Jory Griffith
-#### Reviewed by:
+#### Reviewed by: In review
 
 ## Introduction
 
@@ -20,7 +20,6 @@ ProtConn can be used to assess current progress towards Goal A and Target 3 of t
 To use this pipeline, you’ll need a [Protected Planet API key](https://api.protectedplanet.net/request) to access data on the World Database of Protected Areas. If you would like to run the pipeline with custom protected area data, ensure your data is in GeoPackage format and use the `ProtConn Analysis with custom PAs` pipeline.
 
 ## Running the pipeline
-
 
 
 ### Pipeline inputs

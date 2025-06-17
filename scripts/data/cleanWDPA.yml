@@ -1,7 +1,9 @@
 script: cleanWDPA.R
 name: Clean protected areas from WDPA API
 description: |
-  This script cleans WDPA data, doing THESE THINGS, and cropping the protected areas by the study area of interest.
+  This script cleans WDPA data by allowing the user to select specific 
+  protected area designations, buffer protected areas represented as points, fixing geometry issues, filter out marine 
+  protected areas and other effective conservation measures (OECMs), and cropping the protected areas by the study area of interest.
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
