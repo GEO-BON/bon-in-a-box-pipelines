@@ -22,13 +22,14 @@ print(countries)
 
 
 
-countries <- countrycode(countries, "country.name", "iso2c")
 taxonkey <- name_backbone(species)$usageKey
 
 
-country_predicates <- lapply(countries, function(c) pred("country", c))
+
 
 if (!is.null(countries) && length(countries) > 0) {# Check if country_predicates has more than one element
+  countries <- countrycode(countries, "country.name", "iso2c")
+  country_predicates <- lapply(countries, function(c) pred("country", c))
   if (length(country_predicates) > 1) {
     combined_country_predicates <- do.call(pred_or, country_predicates)
   } else if (length(country_predicates) == 1) {
