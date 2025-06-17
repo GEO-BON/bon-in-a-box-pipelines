@@ -1,0 +1,34 @@
+---
+title: "Getting Started"
+format: html
+---
+
+# Is your analysis pipeline a good fit?
+
+We are looking for pipelines that calculate biodiversity metrics that are relevant to policy and biodiversity reporting, such as Essential Biodiversity Variables (EBVs) and Indicators. These pipelines should be
+
+-   open source, written in the coding languages R, Julia, or Python
+
+-   relevant to many contexts (different species, countries, and regions)
+
+# Steps for contributing
+
+We strongly encourage those who have created or are developing code to calculate Essential Biodiversity Variables or indicators to share it through BON in a Box. The purpose of the modeling tool is to have state of the art processing pipelines shared across the community, for the benefit of all. We recommend following these steps: 
+
+1.  Identify a workflow with a good potential for reuse by other organisations, and that can be mostly automated.
+
+2.  Draw a high-level view of the pipeline that identifies each step, the inputs and outputs, how the scripts are put together, and the format of the final results.
+
+3.  Meet the BON in a Box team. We will help design the pipeline, ensuring that each step is modular, identifying scripts that are already in the modeling tool to avoid rewriting code, and finding places where the existing code would need to be modified. For example, using cloud-optimized approaches such as STAC and Parquet files instead of downloading large files during the pipeline’s execution.
+
+4.  Secure the resources. This could be the time of a graduate student or work study student. If applying for funding, include BON in a Box in your proposal as a tool.
+
+5.  Create the pipeline following the steps below. We recommend starting with the simplest version and then adding complexity or features when needed.
+
+6.  When you feel that the pipeline is complete and you have verified that it meets the \[quality requirement standards\](pipeline_standards.qmd), you can submit the pipeline for peer review. While you are waiting, why not contribute by reviewing someone else’s contribution?
+
+7.  Once the reviews are complete, implement any necessary changes.
+
+8.  If accepted, the pipeline will be published in BON in a Box and will receive a DOI for identification. Now, the pipeline can be used by others.
+
+**If you wish to contribute a pipeline, please email us at boninabox\@geobon.org.**

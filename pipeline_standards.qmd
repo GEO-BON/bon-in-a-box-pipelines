@@ -1,0 +1,203 @@
+---
+title: "Quality requirements for BON in a Box analysis pipelines"
+format: html
+---
+
+## Key Takeaways
+
+-   BON in a Box is community-driven and open tool for biodiversity modeling and indicator calculation developed by GEO BON
+
+-   BON in a Box connects individual analysis into pipelines that are contributed by experts
+
+-   Contributed pipelines should be generalizable, user-friendly, scientifically robust, and well documented
+
+-   This document outlines a set of standards for analysis pipelines to meet these requirements
+
+## Glossary
+
+|  |  |
+|------------------------------------|------------------------------------|
+| Script | A sequence of code written in a programming language that accomplishes a single task, such as data cleaning, analysis, visualization, or modeling. |
+| Pipeline | A sequence of scripts connected to automate an entire analysis workflow, from the input parameters to the analysis result. |
+| Biodiversity Observation Network (BON) | A network of observation sites or stations and/or a network of experts and groups who collect and analyze biodiversity data for different needs. A BON coordinates monitoring efforts to support conservation policy and/or management action from national biodiversity strategies and action plans. A BON can be regional (e.g. Europe, Asia-Pacific), national (e.g. Japan), or thematic (e.g. Marine, Freshwater). |
+| Essential Biodiversity Variable (EBV) | “A biological variable that critically contributes to the characterization of Earth's biodiversity; they are a minimum set of common and complementary sets of observable variables across the dimensions of biodiversity that can be used to create indicators of system-level biodiversity trends” (after [Brummitt et al. 2017](https://doi.org/10.1016/j.biocon.2016.09.006). EBVs provide scalable, comparable metrics that can be aggregated into time-series or spatial maps, enabling the detection of patterns and drivers of biodiversity change. |
+| Indicator | A derived metric informed by biodiversity datasets (e.g. EBVs) that summarizes biodiversity information into a single value that can help track changes in biodiversity status or the pressures affecting it, thereby providing measurable data that informs policy decisions and conservation actions. In the context of the Kunming-Montreal Global Biodiversity Framework, an indicator is used to assess progress toward the framework's goals and targets. |
+| Kunming-Montreal Global Biodiversity Framework (GBF) | The latest agreement of the United Nations Convention on Biological Diversity (CBD) adopted by 196 Parties at its 15th Conference of the Parties in December 2022. The GBF sets an ambitious pathway to reach a global vision of living in harmony with nature and halting biodiversity loss by 2050 and supports the achievement of the Sustainable Development Goals (CBD, 2022a). \| |
+| GBF Monitoring Framework | The Monitoring framework is designed to track progress toward the goals and targets of the GBF through a set of indicators. It emphasizes the need for consistent data collection, reporting, and evaluation at national and global levels to ensure accountability and transparency. It calls upon the development of national and regional monitoring systems, including the technologies, tools, networks and communities needed to sustain monitoring. |
+| FAIR principles | Four foundational principles of data - findability, accessibility, interoperability, and reusability - which aim to increase the openness, equity, and integrity of the scientific process. See <https://www.go-fair.org/fair-principles/> |
+
+## Guidelines and Requirements
+
+### Analysis types
+
+BON in a Box is a platform to share expertise and knowledge and promote collaboration by allowing scientists to share analysis workflows in an organized and open way. BON in a Box has three main groups of pipelines:
+
+1.  **Pipelines for reporting:** Pipelines to calculate Essential Biodiversity Variables and indicators that are in the Convention on Biological Diversity’s Global Biodiversity Framework. These pipelines have undergone a more rigorous peer review process and must adhere to the EBV guidelines and/or the official methodology in the GBF’s Monitoring Framework outlined in the [UNEP-WCMC documentation](https://www.gbf-indicators.org/), if it exists. Pipelines will be created or reviewed by members of the EBV working group or the custodial institution to assure that they follow standards for reporting. These pipelines will be accompanied by a tag that specifies them as reporting ready.
+
+2.  **General biodiversity monitoring:** Pipelines that are relevant to biodiversity monitoring at any scale but don’t have direct relevance to national reporting through the CBD. These pipelines can be more directed at specific biomes, habitats, or ecosystems but still useful to share between national or thematic biodiversity observation networks. 
+
+3.  **Pipelines for sampling prioritization:** Pipelines to help build national BONs by prioritizing sampling areas based on different criteria such as environmental distance, presence of threatened species, or accessibility. These sampling pipelines will help national and regional BONs expand their sampling programs in a systematic way. 
+
+Additionally, all analyses must be:
+
+-   **Generalizable:** BON in a Box is a platform for sharing analyses between BONs, so contributed pipelines must be generalizable between different areas, taxa, spatial scales, etc. Analyses should not be specific to one region, species, or context. 
+
+-   **Scalable:** Pipelines should be able to be calculated at different scales.
+
+-   **Scientifically robust:** Pipelines should follow a method that has been published in the literature or verified in some way. Sometimes, pipeline and method development will happen concurrently but pipelines will keep the “experimental pipeline” tag until the science has been verified by independent experts. Ideally, models will be ground-truthed with independent data sources.
+
+-   **FAIR:** Findable, accessible, interoperable, and reproducible\*
+
+-   **Transparent:** All pipelines must be open access and all code must be publicly available; intermediate steps should display outputs relevant for auditing purposes; any calculations run outside of BON in a Box and imported using APIs must be run on open access platforms so all results can be audited and reproduced. Analyses should, whenever possible, have some estimates of uncertainty, predictive power and goodness of fit measures. 
+
+### Data standards
+
+BON in a Box is a data processing platform, not a data repository. However, to ensure that pipelines follow FAIR principles, the data that is analyzed must meet a set of standards.
+
+BON in a Box is designed to run analyses with both publicly available data and data input by the user. This allows the user to customize the analysis with data that is more accurate to their region, taking ownership of the process without having to share their own data. 
+
+#### **Naming standards:**
+
+-   Input and output file names should be machine readable, with no spaces, symbols, capital letters, or special characters. Spaces should be replaced with an underscore (\_).
+
+-   File names should be descriptive (e.g. “population_polygons.gpkg”).
+
+#### **Standards for publicly available input data:**
+
+-   When using publicly available data, BON in a Box should use APIs when they are available so pipelines can be run with the most up to date data available.
+
+    -   When processing GBIF data in a pipeline, the **GBIF download API** should be used to ensure reproducibility and citability, as it provides a download DOI for each run, and this doi script output must be included in the pipeline outputs. The “GBIF observations with download API” script should be used for basic GBIF data retrieval. 
+
+-   Raster data should be in cloud optimized GeoTIFF (e.g. [STAC catalog](https://stacspec.org/en)) formats whenever possible. 
+
+    -   The [GEO BON STAC catalog](stac.geobon.org/viewer) and other STAC catalogs such as the [planetary computer](https://planetarycomputer.microsoft.com/) can be accessed through the [load from STAC script](https://github.com/GEO-BON/bon-in-a-box-pipelines/blob/main/scripts/data/loadFromStac.R). For more information about how to use STAC catalogs, see these [tutorials](https://stacspec.org/en/tutorials/).
+
+#### **Standards for user-defined input data:**
+
+-   **Point, line, and polygon data** should be in the form of a geopackage.
+
+    -   The geometry column must be called “geom”.
+
+    -   Data should be in the coordinate reference system (CRS) appropriate for the region of interest (to find a CRS, search [here](https://epsg.io/)).
+
+-   **Raster data** should be a GeoTiff file
+
+    -   Raster data should be projected into a coordinate reference system appropriate for the region of interest.
+
+    -   Multi-band rasters are allowed when the band names can be easily interpreted (e.g. year, species, model). 
+
+-   Tabular data can be uploaded as CSV (comma separated values) or TSV (tab separated values). Column names should be in snake_case and should avoid special characters and capital letters. When geographical coordinates are included, use the CRS EPSG:4326 (latitude, longitude WGS 84) and column names “latitude” and “longitude”, whenever possible. 
+
+    -   Specific file formats and column formatting guidelines will depend on the pipeline and should be specified in the pipeline documentation.
+
+#### **Standards for output data**
+
+Each BON in a Box script creates outputs that can be downloaded. They should be in standard file formats and follow these guidelines:
+
+-   Outputs should be in interoperable data formats (e.g. not a language specific format such as RData).
+
+-   Point, line, and polygon data should be output as geopackages. Include just one layer per geopackage whenever possible. 
+
+-   Raster data should be output as a GeoTIFF, compressed (ex. Deflate or LZW).
+
+-   Tabular data can be output as a comma separated values (CSV) or tab separated value (TSV) format.
+
+### Code standards
+
+BON in a Box is designed to be a fully open and transparent platform where all code is open and reproducible. This allows the user to audit the process and edit the code if necessary to customize the process. Therefore, code must be well formatted, readable, and well documented. 
+
+Code should adhere to the following requirements:
+
+-   File names should be machine readable, with no spaces, symbols, or special characters. Spaces should be delimited with an underscore (\_).
+
+-   Code must be divided into modular scripts that perform one task and can be reused in other pipelines.
+
+-   Code should be well formatted with indents
+
+    -   For R code, follow the [tidyverse style guide](https://style.tidyverse.org/files.html) (with 120 character lines)
+
+    -   For Python code, follow the [PEP-8 style guide](https://peps.python.org/pep-0008/)
+
+    -   For Julia code, follow the custom [formatting file](https://github.com/PoisotLab/SpeciesDistributionToolkit.jl/blob/main/.JuliaFormatter.toml), which can be applied to scripts using the JuliaFormatter package
+
+-   Scripts should be well annotated with descriptions of each step commented within the code
+
+-   Scripts should check and validate that user inputs are properly entered and are in the expected format. Scripts should output informative messages and stop the execution with the biab_error_stop() function when invalid inputs are detected. 
+
+    -   For example, if someone misspells a country name and the country polygon is not found, write if(is.null(country_polygon)) { biab_error_stop(“Country polygon not found. Check the spelling of the country name”)
+
+-   Each main step of the script prints a log (console output) message so the user can know at what stage the analysis is. The contributor is encouraged to add additional information messages that will be added to the log:
+
+    -   Messages can be added with the biab_info() function. For example biab_info(“Study area downloaded”)
+
+    -   Warning messages can be added with the biab_warning() function.
+
+-   The script should provide informative error messages whenever mistakes are encountered using the biab_error_stop() function.
+
+### YAML description files
+
+Each script will be accompanied by a YAML description file (.yml format) that has a description of the script, specifies the inputs and outputs, defines the Conda dependencies, and provides references (see [our documentation](https://geo-bon.github.io/bon-in-a-box-pipeline-engine/how_to_contribute.html#step-1-creating-a-yaml-file) for guidelines on how to format your YAML file).
+
+#### **YAML file standards**
+
+-   YAML files must have the same name as the script that they accompany with a .yml file extension
+
+-   YAML files should have a thorough description section that includes the purpose of the script
+
+-   YAML files should have the name, email, and ORCID (if available) of all script authors
+
+-   Names of inputs and output **IDs** should be in [snake case](https://en.wikipedia.org/wiki/Snake_case), all lowercase with underscores for spaces
+
+-   Input and output **labels** should be short, human readable and descriptive
+
+-   Input and output **descriptions** should describe the format of the input and guide the user on parameterization using photos or links in the YAML description when necessary (see [CommonMark reference](https://commonmark.org/help/) for formatting)
+
+-   Users should be able to successfully run the pipeline with the example inputs
+
+-   For **file outputs, type** should be written as a MIME type
+
+-   For **primitive outputs**, such as text and numbers, use a primitive type (int, float, text). Refer to [the inputs section of the user documentation](https://geo-bon.github.io/bon-in-a-box-pipeline-engine/how_to_contribute.html#inputs).
+
+-   The example will autofill in the document. If the example is a file, make sure the file is in the appropriate folder (note the ‘userdata’ folder is local only and will not be pushed to GitHub) and the file path starts at that folder (e.g. /scripts/data/protected_area_file_example.gpkg). Note BON in a Box cannot access the whole computer so the root must be in the BON in a Box pipelines folder. Make sure the whole script runs with the chosen examples.
+
+##### **Conda dependencies**
+
+Conda is a package, dependency, and environment management system that prevents scripts from encountering breaking changes when packages are updated. Conda environments should list all of the necessary packages and package versions should be specified when necessary. Conda sub-environments should only be specified when the required packages or package versions are not in the main environment.
+
+### **Documentation**
+
+#### **Pipeline metadata**
+
+Each pipeline contains metadata, which can be edited in the right sliding pane of the pipeline editor canvas. Pipeline metadata must contain:
+
+-   The name of the pipeline in human readable form
+
+-   The description of the pipeline, including a short description of the methods, any data it is using, the limitations of the pipeline, and if it is an indicator in the GBF, what kind of indicator it is and which targets/goals it is related to
+
+-   The license of the pipeline (this is chosen by the user, see section on licensing below)
+
+-   The author(s) of the pipeline and their emails and ORCIDs
+
+-   Any relevant references or links
+
+#### **Pipeline markdown tutorial**
+
+Each pipeline should be accompanied by a tutorial in markdown format. This document should have the same name as the pipeline JSON file but with a .md extension and be contained in the same folder as the pipeline it describes. This tutorial should contain a more thorough description of the methods (around 2-3 paragraphs). The tutorial should provide guidance on how to parameterize the pipeline, and walk through a full example analysis. This document should also more thoroughly communicate the limitations of the pipeline in terms of the species, regions, and scales at which it is relevant. You can create the tutorial using [this template](https://github.com/GEO-BON/bon-in-a-box-pipelines/blob/main/pipelines/New-pipeline/pipeline-tutorial-template.md).
+
+### **Versioning**
+
+Creating pipelines to calculate Essential Biodiversity Variables and indicators is an iterative process, and pipelines will deprecate over time as methods are updated. Therefore, we will have a structured versioning system as pipelines are released. 
+
+Versioning will follow a semantic versioning style in the form of major.minor.patch.
+
+-   Non peer-reviewed or stable pipelines should have versions starting with 0.\*
+
+-   The first peer-reviewed stable version of the pipeline will be released as 1.0.0.
+
+-   Minor bug fixes will be released continuously (e.g. 1.0.1).
+
+-   Any major changes to methods or packages will be a scheduled major release (e.g. 2.0.0). The old pipeline will be labeled as deprecated but will still be available for backwards compatibility.
+
+### **Licensing**
+
+The BON in a Box software is under the [GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html) license, but each pipeline is licensed individually, with the specific license chosen by the contributor. Our recommended license is MIT. You can explore licenses [here](https://choosealicense.com/).

@@ -1,0 +1,54 @@
+---
+title: "Peer review"
+format: html
+---
+
+Each pipeline will be reviewed by 2-5 people for scientific rigor, usability, and generalizability. The contributor will suggest potential reviewers, and they will be contacted by the BON in a Box team. Additional reviewers will be chosen by the BON in a Box team. It is encouraged to have reviewers from both the academic and policy sphere (e.g. a government scientist). The contributor will specify whether the pipeline is a pipeline for reporting, a pipeline for BONs, or a sampling prioritization pipeline.
+
+The pipelines will be reviewed based on the following criteria:
+
+-   **Scientific rigor:** are the models scientifically robust and accurate? Is it supported by peer reviewed literature?
+
+-   **Generalizability:** does the pipeline work for different regions, species, scales, etc.? If not, are these limitations communicated clearly?
+
+-   **Code readability:** Is the code easy to read, understandable, and well documented?
+
+-   **Modularity:** Is the code divided into logical, modular steps where each script performs one task?
+
+-   **Data use:** Does the pipeline support both user data and publicly available data? Is this data loaded with an API or will it require updating? Are users able to easily access this data?
+
+-   **Functionality:** Does the pipeline run? Or are there bugs? 
+
+-   **Documentation:** Is there metadata for both the individual scripts and the pipeline? Is there a markdown tutorial?
+
+-   **Usability:** Is the pipeline easy to use and understand for a non expert? Is there adequate guidance on how to parameterize it?
+
+The reviewers will test the pipeline with a number of data sets, species, and scales based on their expertise, and provide feedback. The reviewer will decide if the pipeline should be accepted with minor revisions, needs to be revised and resubmitted, or is not suitable for BON in a Box.
+
+### **When is a pipeline ready for peer review?**
+
+Pipelines are ready for peer review when:
+
+-   The pipeline meets all of the [quality requirements](pipeline_standards.qmd)
+
+-   The pipeline runs without errors with the default parameters (examples passed into the YAML file), and with different inputs and outputs, including publicly available data or user data
+
+-   The pipeline has been tested with different parameters (geographical areas, ecosystems, scales, and species) and the results make sense
+
+## **Pipeline publication**
+
+When pipelines have been peer reviewed and are accepted, they will be published on [Zenodo](https://zenodo.org/) and given a DOI, which will be cited whenever the pipeline is used.
+
+## Instructions for reviewers
+
+Reviewers will need to install BON in a Box to test the pipeline. See the installation instructions [here](how_to_install.qmd).
+
+Download the pipeline review form to fill out while testing and reviewing the pipeline.
+
+1.  Run the pipeline with the default parameters and make sure that it works, that the pipeline, input, and output descriptions are clear, and that the outputs are useful. Users should be able to understand how to parameterize and run the pipeline using these descriptions.
+2.  Review the code in the GitHub pull request to make sure there are no errors and it is doing what it is supposed to (note: not all reviewers will be reviewing code, only reviewers that are familiar with the coding methods). If there are specific code issues, comment those directly in the pull request.
+3.  Read the markdown tutorial and evaluate it for clarity.
+4.  Test the pipeline several times with different parameters. If you have your own data on hand, test the pipeline with that data. It is preferential to test the data in areas or with parameters that you are familiar with so you can evaluate the accuracy of the results. If the pipeline crashes or there are incorrect results, make note of this in the pipeline review form.
+5.  Make a decision about whether the pipeline is ready to publish.
+
+#### [Download pipeline review form here](https://github.com/GEO-BON/bon-in-a-box-pipeline-engine/raw/refs/heads/documentation_peer_review/main/peer_review_form.docx)
