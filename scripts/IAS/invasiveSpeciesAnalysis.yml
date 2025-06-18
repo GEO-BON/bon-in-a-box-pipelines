@@ -21,7 +21,7 @@ inputs:
     type: int
     example: 2024
   plot_type:
-    label: Plot type
+    label: Plot type for the plot_snc function
     description: Plot can either be cumulative or annual
     type: options
     options:
@@ -29,9 +29,14 @@ inputs:
     - annual
     example: annual
 outputs:
-  result_plot:
-    label: Time series using a simple model
+  result_snc_plot:
+    label: Time series using the plot_snc function
     description: Plot of the introduction record of IAS along with fitted model values
+    type: image/png
+    example:
+  result_mu_plot:
+    label: Plot of fitted values
+    description: This plot illustrates the fitted values of the SNC model
     type: image/png
     example:
   fitted_values:

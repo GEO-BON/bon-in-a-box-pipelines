@@ -48,25 +48,25 @@ if (input$plot_type == "annual") {
 }
 print(summary_snc(model_simple))
 
-fitted_values <- model_simple$fitted.values
+fitted_values <- round(model_simple$fitted.values, digits = 3)
 fitted_values_plot <- cbind.data.frame(years, fitted_values)
 colnames(fitted_values_plot) <- c("Year", "Fitted value")
 result_table_path <- file.path(outputFolder, "fitted_values_plot.csv")
 write.csv(fitted_values_plot, result_table_path, row.names = FALSE)
 biab_output("fitted_values", result_table_path)
 
-mu_statistics <- model_simple$predict
-mu_statistics_plot <- cbind.data.frame(years, mu_statistics)
-colnames(mu_statistics_plot) <- c("Year", "Mean", "Lower CI", "Upper CI")
-result_table_path <- file.path(outputFolder, "statistics_plot.csv")
-write.csv(mu_statistics_plot, result_table_path, row.names = FALSE)
+mu_statistics <- round(model_simple$predict, digits = 3)
+mu_statistics_table <- cbind.data.frame(years, mu_statistics)
+colnames(mu_statistics_table) <- c("Year", "Mean", "Lower CI", "Upper CI")
+result_table_path <- file.path(outputFolder, "statistics_table.csv")
+write.csv(mu_statistics_table, result_table_path, row.names = FALSE)
 biab_output("statistics", result_table_path)
 
 # Find positions of years divisible by 20
 year_break_indices <- which(years %% 20 == 0)
 year_break_labels <- years[year_break_indices]
 
-final_plot <- plot_snc(model_simple, cumulative = bool) +
+snc_plot <- plot_snc(model_simple, cumulative = bool) +
   xlab("Year of first record in data") +
   labs(title = "Number of introduced invasive alien species over time") +
   scale_x_continuous(
@@ -75,9 +75,26 @@ final_plot <- plot_snc(model_simple, cumulative = bool) +
   ) +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"))
 
-result_plot_path <- file.path(outputFolder, "final_plot.png")
-ggsave(result_plot_path, final_plot)
-biab_output("result_plot", result_plot_path)
+result_plot_path <- file.path(outputFolder, "snc_plot.png")
+ggsave(result_plot_path, snc_plot)
+biab_output("result_snc_plot", result_plot_path)
+
+mu_plot <- ggplot(mu_statistics_table, aes(x = Year)) +
+  geom_line(aes(y = Mean), color = "blue") +
+  geom_ribbon(aes(ymin = `Lower CI`, ymax = `Upper CI`),
+  fill = "lightblue", alpha = 0.3) +
+  labs(
+    title = "Model Predictions with Confidence Intervals",
+    x = "Year",
+    y = "Predicted Number of IAS"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+result_plot_path <- file.path(outputFolder, "mu_plot.png")
+ggsave(result_plot_path, mu_plot)
+biab_output("result_mu_plot", result_plot_path)
+
 
 #Run constant detection model
 # model_constant_detection <- snc(y = data, pi = ~1, control = list(maxit = 1e4))
