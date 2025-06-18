@@ -12,19 +12,6 @@ input <- biab_inputs()
 # Load your GBIF invasive species first records
 gbif <- read_tsv(input$observations_file, show_col_types = FALSE)
 
-glimpse(gbif)
-# Ensure 'year' column is integer and drop rows with NA years
-# gbif <- gbif %>%
-#   mutate(year = as.integer(year)) %>%
-#   filter(!is.na(year))
-
-print(head(gbif))
-
-# # Get first recorded year per species
-# first_records <- gbif %>%
-#   group_by(scientific_name) %>%
-#   summarise(first_year = min(year, na.rm = TRUE), .groups = "drop")
-
 # Count how many species were first recorded in each year
 yearly_counts <- gbif %>%
   count(gimme, name = "new_species") %>%
@@ -40,17 +27,13 @@ complete_yearly_counts <- tibble(year = year_range) %>%
 
 # Prepare inputs for snc
 data <- complete_yearly_counts$new_species
-print(data)
 years <- complete_yearly_counts$year
-print(years)
 
 #Run simple model
 model_simple <- snc(y = data, control = list(maxit = 1e4))
 #alternate inputs:
 #pi = ~1 (constant detection model)
 #mu = ~1 (constant introduction model)
-
-print(summary(model_simple))
 
 if (model_simple$convergence != 0) {
   cat("Warning: Optimation algorithm failed to converge and returned a convergence of", model_simple$convergence, "\n")
@@ -63,6 +46,21 @@ if (input$plot_type == "annual") {
 } else if (input$plot_type == "cumulative") {
   bool <- TRUE
 }
+print(summary_snc(model_simple))
+
+fitted_values <- model_simple$fitted.values
+fitted_values_plot <- cbind.data.frame(years, fitted_values)
+colnames(fitted_values_plot) <- c("Year", "Fitted value")
+result_table_path <- file.path(outputFolder, "fitted_values_plot.csv")
+write.csv(fitted_values_plot, result_table_path, row.names = FALSE)
+biab_output("fitted_values", result_table_path)
+
+mu_statistics <- model_simple$predict
+mu_statistics_plot <- cbind.data.frame(years, mu_statistics)
+colnames(mu_statistics_plot) <- c("Year", "Mean", "Lower CI", "Upper CI")
+result_table_path <- file.path(outputFolder, "statistics_plot.csv")
+write.csv(mu_statistics_plot, result_table_path, row.names = FALSE)
+biab_output("statistics", result_table_path)
 
 # Find positions of years divisible by 20
 year_break_indices <- which(years %% 20 == 0)

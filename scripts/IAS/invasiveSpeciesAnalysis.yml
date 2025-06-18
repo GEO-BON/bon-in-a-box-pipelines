@@ -34,6 +34,16 @@ outputs:
     description: Plot of the introduction record of IAS along with fitted model values
     type: image/png
     example:
+  fitted_values:
+    label: Fitted values per year
+    description: Table of the fitted mean λ values of first records per year
+    type: text/csv
+    example:
+  statistics:
+    label: Estimated mean and standard error
+    description: Table of the estimated mean and standard error µ values
+    type: text/csv
+    example:
   # detection_plot:
   #   label: Time series using a constant detection model
   #   description: Plot of the introduction record of IAS along with fitted model values
