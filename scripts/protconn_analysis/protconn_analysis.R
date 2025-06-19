@@ -155,12 +155,24 @@ print(length(protconn_result))
 
 # extract columns of interest and put in a dataframe, add a distance column
 protconn_result_list <- list()
-protconn_result <- if (is.list(protconn_result)) protconn_result else list(protconn_result)
 
-for (i in 1:length(protconn_result)) {
+# make sure the result is a list
+
+# need to coerce into a list if it is only one 
+if (length(input$distance_threshold) == 1) {
+    name <- paste0("d", input$distance_threshold)
+    tmp <- protconn_result
+    protconn_result <- list()
+    protconn_result[[name]] <- tmp
+  }
+
+print(names(protconn_result))
+for (i in seq_along(protconn_result)) {
   protconn <- as.data.frame(protconn_result[[i]])
   print(protconn)
-  df <- protconn[1:4, 3:4]
+  df <- protconn %>%
+      dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
+      dplyr::select(Percentage, `ProtConn indicator`)
   df$Distance <- names(protconn_result)[i]
   df <- mutate(df, Distance = as.numeric(gsub("^d", "", Distance)))
   protconn_result_list[[i]] <- df
@@ -177,7 +189,7 @@ write.csv(protconn_result, protconn_result_path, row.names = F)
 biab_output("protconn_result", protconn_result_path)
 
 protconn_result_long <- protconn_result_long %>% filter(!`ProtConn indicator`=="Prot") # filter out protected for plotting
-result_plot <- ggplot2::ggplot(protconn_result_long) +
+result_plot <- ggplot2::ggplot(protconn_result_long) + 
   geom_col(aes(y = Percentage, x = 1, fill = `ProtConn indicator`)) +
   coord_polar(theta = "y") +
   xlim(c(0, 1.5)) +
@@ -185,10 +197,10 @@ result_plot <- ggplot2::ggplot(protconn_result_long) +
     aes(y = Percentage, x = 1, group = `ProtConn indicator`, label = paste0(round(Percentage, 2), "%")),
     position = position_stack(vjust = 0.5)
   ) +
-  scale_fill_manual(values = c("#39568CFF", "#1F968BFF", "#73D055FF")) +
+  scale_fill_manual(values = c("#1F968BFF", "#73D055FF", "grey60")) +
   theme_void() +
-  facet_wrap(~Distance)+
-  theme(text = element_text(color = "Black"))
+  facet_wrap(~Distance) +
+  theme(text = element_text(color = "black"))
 
 # output result plot
 result_plot_path <- file.path(outputFolder, "result_plot.png") # save protconn result
@@ -200,7 +212,10 @@ biab_output("result_plot", result_plot_path)
 # Sequence with start year by interval
 
 years <- seq(from = input$start_year, to = input$years, by = input$year_int)
-years <- c(years, input$years)
+if (!(input$years %in% years)) { # check if the end year is there
+  # 3. If not, append it to the sequence and ensure uniqueness and order
+  years <- sort(unique(c(years, input$years)))
+}
 # assign all PAs with no date to the start date for plotting
 for (i in 1:nrow(protected_areas)) {
   if (is.na(protected_areas$legal_status_updated_at[i])) {
@@ -222,7 +237,7 @@ for (i in seq_along(years)) {
     dplyr::filter(legal_status_updated_at <= yr)
 
   if (nrow(protected_areas_filt_yr) < 2) {
-    message(paste("Not enough protected area data from", yr, "- skipping")) # skipping if less than 2 protected areas before a given year
+    message(paste("Not enough protected area data from", yr, "- skipping"))
     next
   }
 
@@ -238,29 +253,48 @@ for (i in seq_along(years)) {
     distance_thresholds = input$distance_threshold
   )
 
+
+  if (length(input$distance_threshold) == 1) {
+    name <- paste0("d", input$distance_threshold)
+    tmp <- protconn_result_yrs
+    protconn_result_yrs <- list()
+    protconn_result_yrs[[name]] <- tmp
+  }
+
+  # Reset for this iteration to avoid duplicates
   protconn_result_list <- list()
-  protconn_result_yrs <- if (is.list(protconn_result_yrs)) protconn_result_yrs else list(protconn_result_yrs)
-# combine two distances into one dataframe
+
   for (j in seq_along(protconn_result_yrs)) {
     protconn <- as.data.frame(protconn_result_yrs[[j]])
-    df <- protconn[1:4, 3:4]
+    df <- protconn %>%
+      dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
+      dplyr::select(Percentage, `ProtConn indicator`)
     df$Distance <- as.numeric(gsub("^d", "", names(protconn_result_yrs)[j]))
     protconn_result_list[[j]] <- df
   }
 
-  # Combine all distance levels into one dataframe
   protconn_result_combined <- do.call(rbind, protconn_result_list)
   protconn_result_combined$Year <- yr
+print(protconn_result_combined)
+  protconn_ts_result[[i]] <- protconn_result_combined
 
-  protconn_ts_result[[length(protconn_ts_result) + 1]] <- protconn_result_combined
   gc()
 }
 
 # Final time series dataframe
 protconn_result_yrs <- do.call(rbind, protconn_ts_result)
+print("Printing result years")
+print(protconn_result_yrs)
+print(class(protconn_result_yrs))
 
-result_yrs <- pivot_wider(protconn_result_yrs, id_cols=c("Distance", "Year"), id_expand=TRUE, names_from="ProtConn indicator", values_from="Percentage")
-print(protconn_result)
+result_yrs <- tidyr::pivot_wider(
+  data = protconn_result_yrs,
+  id_cols = c("Distance", "Year"),
+  names_from = "ProtConn indicator",
+  values_from = "Percentage",
+  id_expand = TRUE
+)
+print(result_yrs)
 
 result_yrs_path <- file.path(outputFolder, "result_yrs.csv") # save protconn result
 write.csv(result_yrs, result_yrs_path)
@@ -271,8 +305,9 @@ protconn_result_yrs <- protconn_result_yrs %>% filter(!`ProtConn indicator`=="Un
 
 # make separate plot for each distance threshold
 plot_paths <- c()
-for (i in 1:length(input$distance_threshold)){
+for (i in seq_along(input$distance_threshold)){
 result_dist <- protconn_result_yrs %>% filter(Distance==input$distance_threshold[i])
+
 name=paste("Median dispersal distance", input$distance_threshold[i], "meters")
 result_yrs_plot <-
   ggplot(
@@ -282,6 +317,7 @@ result_yrs_plot <-
   geom_point() +
   geom_line() +
   labs(y = "Percent area", x = "Year", title=name) +
+  scale_color_manual(values=c("#39568CFF", "#1F968BFF", "#73D055FF"))+
   geom_hline(yintercept = 30, lty = 2) +
   annotate("text", x = xint, y = 31, label = "Kunming-Montreal target") +
   facet_wrap(~Distance)+
