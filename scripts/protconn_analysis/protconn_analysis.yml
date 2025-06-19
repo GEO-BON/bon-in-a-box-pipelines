@@ -10,8 +10,7 @@ external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/protconn_an
 inputs:
   study_area_polygon:
     label: Polygon of study area
-    description: Polygon of the study area, in GeoPackage format. To use a custom study area, input the path to the file in the userdata folder (e.g. /userdata/study_area_polygon.gpkg) and it
-      will override the country polygon from the "Get country polygon" script.
+    description: Polygon of the study area, in GeoPackage format. To use a custom study area, input the path to the file in the userdata folder (e.g. /userdata/study_area_polygon.gpkg).
     type: application/geopackage+sqlite3[]
     example: null
   protected_area_polygon:
@@ -37,7 +36,7 @@ inputs:
       Dispersal probability is calculated with an exponential decay function with increasing distance.
 
 
-      Common dispersal distances that encompass many different taxa are 1000 meters, 10,000 meters, and 100,000 meters.
+      Common dispersal distances that encompass a large majority of terrestrial species are 1000 meters, 3000 meters, 10,000 meters, and 100,000 meters (Saura et al. 2017).
 
 
       Note that the more distances you include, the longer the pipeline will take to complete and the more memory it will require.
@@ -68,7 +67,7 @@ inputs:
     example: 1980
   year_int:
     label: Year interval
-    description: Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year).
+    description: Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year). The last year will always be the input year.
     type: int
     example: 20
 outputs:
@@ -80,8 +79,8 @@ outputs:
   protconn_result:
     label: ProtConn results
     description: >
-      The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected,
-      and the percentage that is protected and connected (ProtConn) and protected and unconnected (ProtUnconn).
+      The results of the ProtConn calculations, including the percentage of the study area that is unprotected, protected,
+      protected and connected (ProtConn) and protected and unconnected (ProtUnconn).
     type: text/csv
   result_plot:
     label: ProtConn result plot
