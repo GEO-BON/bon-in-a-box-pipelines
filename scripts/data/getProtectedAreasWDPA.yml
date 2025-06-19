@@ -2,7 +2,9 @@ script: getProtectedAreasWDPA.R
 name: Get protected areas (DEPRECATED - please use getWDPA.py instead)
 description: This script finds and saves a polygon of the country and state that is specified in the input and the polygon of protected areas in that region from the world database of protected areas (WDPA).
 author:
-  - name: Jory Griffith (jory.griffith@mcgill.ca)
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
 external_link: https://github.com/GEO-BON/biab-2.0/getProtectedAreasWDPA.R
 inputs:
   country:
@@ -15,14 +17,14 @@ inputs:
     description: State of interest
     type: text
     example: null
-  study_area_polygon: 
+  study_area_polygon:
     label: Study area polygon
     description: Study area of interest in a geopackage file
     type: application/geopackage+sqlite3
     example: null
   pa_input_type:
     label: Protected area input
-    description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons. 
+    description: Type of input for protected areas. Option "WDPA" uses protected areas from the World Database of Protected Areas. Option "User input" uses polygons input by the user. "Both" combines the WDPA protected areas and user input polygons.
     type: options
     options:
       - "WDPA"
@@ -31,10 +33,10 @@ inputs:
     example: "WDPA"
   transboundary_distance:
     label: Transboundary distance
-    description: Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area. 
+    description: Distance (in meters) beyond the boundary of the study area to be included in the ProtConn index. Protected areas within this distance of the edge of the study area will be included in the calculation of ProtConn. A transboundary distance of 0 will only include protected areas in the study area.
     type: int
     example: 0
-  protected_area_file: 
+  protected_area_file:
     label: Protected areas file
     description: File path of the shapefile of protected areas (Leave blank if using data from WDPA). Must be in geopackage format.
     type: text
@@ -45,7 +47,7 @@ inputs:
     type: text
     example: null
   crs:
-    label: Coordinate reference system 
+    label: Coordinate reference system
     description: Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This MUST be in a projected reference system (not lat long). For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at https://epsg.org/home.html. The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
     type: text
     example: "EPSG:4326"
@@ -58,7 +60,7 @@ outputs:
     label: Polygon of protected areas
     description: The map of the protected areas within the study area
     type: application/geopackage+sqlite3
-  number_pas: 
+  number_pas:
     label: Number of protected areas
     description: Number of protected areas in the country of interest
     type: text

@@ -1,17 +1,18 @@
 script: cleanWDPA.R
 name: Clean protected areas from WDPA API
 description: |
-  This script cleans WDPA data by allowing the user to select specific 
-  protected area designations, buffer protected areas represented as points, fixing geometry issues, filter out marine 
+  This script cleans WDPA data by allowing the user to select specific
+  protected area designations, buffer protected areas represented as points, fixing geometry issues, filter out marine
   protected areas and other effective conservation measures (OECMs), and cropping the protected areas by the study area of interest.
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
 inputs:
   study_area_polygon:
     label: Study area polygon
     description: |
-      Study area of interest in a geopackage file. 
+      Study area of interest in a geopackage file.
     type: application/geopackage+sqlite3
     example: null
   protected_area_file:
@@ -27,12 +28,12 @@ inputs:
   status_type:
     label: PA legal status types to include
     description: |
-      Legal status types of protected areas to include.  
-      
-      Designated means that it is officially established under national or international law/policy. 
-      
-      Inscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated. 
- 
+      Legal status types of protected areas to include.
+
+      Designated means that it is officially established under national or international law/policy.
+
+      Inscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated.
+
       Established means that it is protected and managed, but possibly lacks formal legal desgination.
     type: options[]
     options:
@@ -43,8 +44,8 @@ inputs:
   include_unesco:
     label: Include UNESCO Biosphere reserves
     description: |
-      Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development 
-      and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. 
+      Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development
+      and combine biodiversity conservation with the sustainable use of natural resources and sustainable development.
       They may not be legally protected and may not be fully conserved, because they are often used for development or
       human settlement. Excluding these will limit the dataset to meeting stricter conservation standards.
     type: boolean
@@ -60,7 +61,7 @@ inputs:
   include_marine:
     label: Include marine protected areas
     description: |
-      Include marine protected areas or filter them out. Note that the analysis is still limited to the bounds of the study 
+      Include marine protected areas or filter them out. Note that the analysis is still limited to the bounds of the study
       area polygon.
     type: boolean
     example: FALSE

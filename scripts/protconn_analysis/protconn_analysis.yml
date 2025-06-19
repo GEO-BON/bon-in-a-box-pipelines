@@ -2,13 +2,15 @@ script: protconn_analysis.R
 name: Protconn Analysis
 description: This script calculates ProtConn from protected area polygons using the MK_ProtConn function in the Makurhini package. This creates a distance matrix from protected area polygons and calculates ProtConn using dispersal probabilities between protected areas.
 author:
-  - name: Jory Griffith (jory.griffith@mcgill.ca)
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
 license: CC BY
 external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/protconn_analysis
 inputs:
   study_area_polygon:
     label: Polygon of study area
-    description: Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it 
+    description: Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it
       will override the country polygon from the "Get country polygon" script.
     type: application/geopackage+sqlite3[]
     example: null
@@ -29,12 +31,12 @@ inputs:
     example: "EPSG:4326"
   distance_threshold:
     label: Distance analysis threshold
-    description: | 
+    description: |
       Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probability between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.
 
-      Common dispersal distances that encompass many different taxa are 1000 meters, 10,000 meters, and 100,000 meters. 
+      Common dispersal distances that encompass many different taxa are 1000 meters, 10,000 meters, and 100,000 meters.
 
-      Note that the more distances you include, the longer the pipeline will take to complete and the more memory it will require. Additionally, larger dispersal distances will be more computationally intensive. 
+      Note that the more distances you include, the longer the pipeline will take to complete and the more memory it will require. Additionally, larger dispersal distances will be more computationally intensive.
     type: int[]
     example: [1000, 10000]
   distance_matrix_type:
@@ -42,7 +44,7 @@ inputs:
     description: |
       Type of distance matrix to use in the ProtConn calculation. The "centroid" option will measure the
        distances between protected areas from from the geometric center of each protected area,
-       while the "edge" option will measure the distance as the nearest edge between two protected areas. 
+       while the "edge" option will measure the distance as the nearest edge between two protected areas.
     type: options
     options:
       - "centroid"
@@ -72,7 +74,7 @@ outputs:
   protconn_result:
     label: ProtConn results
     description: |
-      The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected, and the percentage that is 
+      The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected, and the percentage that is
       protected and connected (ProtConn) and protected and unconnected (ProtUnconn).
     type: text/csv
   result_plot:
@@ -82,7 +84,7 @@ outputs:
     type: image/png
   result_yrs_plot:
     label: ProtConn time series plot
-    description: Change in the percentage area that is protected and the percentage that is protected and connected over time, 
+    description: Change in the percentage area that is protected and the percentage that is protected and connected over time,
       at the chosen time interval, compared to the Kunming-Montreal GBF goals.
     type: image/png[]
   result_yrs:

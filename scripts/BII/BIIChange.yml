@@ -3,6 +3,7 @@ name: Biodiversity Intactness Index Change
 description: "This script generates a raster of the change in the Biodiversity Intactness Index betwen two chosen time points"
 author:
   - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 inputs:
   rasters:
