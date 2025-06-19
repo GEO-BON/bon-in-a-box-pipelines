@@ -9,12 +9,12 @@ sf_use_s2(FALSE)
 
 # Read in polygon of study area
 if(is.null(input$study_area_polygon)){
-  biab_error_stop("No study area polygon found. Please provide a geopackage of the study area. To pull country or region 
+  biab_error_stop("No study area polygon found. Please provide a geopackage of the study area. To pull country or region
   shapefiles, connect this script to the 'Get country polygon' script")
-  }
+}
 
 study_area <- input$study_area_polygon
-study_area <- sf::st_read(study_area, type=3, promote_to_multi=FALSE) 
+study_area <- sf::st_read(study_area, type=3, promote_to_multi=FALSE)
 study_area <- st_transform(study_area, crs=input$crs)
 study_area <- st_make_valid(study_area)
 
@@ -25,7 +25,7 @@ protected_areas <- sf::st_read(input$protected_area_file, type=3, promote_to_mul
 protected_areas <- st_transform(protected_areas, crs=input$crs)
 
 ## Clean data
-print("cleaning data")
+print("Cleaning data")
 
 print("Including areas based on status")
 protected_areas <- protected_areas %>%
@@ -33,7 +33,7 @@ protected_areas <- protected_areas %>%
 
 
 if (isFALSE(input$include_unesco)){
-print("Removing UNESCO biosphere reserves")
+  print("Removing UNESCO biosphere reserves")
   protected_areas <- protected_areas %>% filter(!grepl("UNESCO-MAB Biosphere Reserve", designation))
 }
 
@@ -50,11 +50,11 @@ protected_areas$geometry_type[is_point] <- "POINT" # label points as a point
 
 #deal with points
 if(isTRUE(input$buffer_points)){
- print("removing points with no reported area")
-protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT" & !is.finite(protected_areas$reported_area)), ]
-print("creating buffer for points with reported area")
+  print("Removing points with no reported area")
+  protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT" & !is.finite(protected_areas$reported_area)), ]
+  print("Creating buffer for points with reported area")
 } else {
-  print("removing points")
+  print("Removing points")
   protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT"),]
 }
 
@@ -71,7 +71,7 @@ protected_areas <- protected_areas[as.numeric(sf::st_area(protected_areas)) > 1,
 # Include marine
 if(isFALSE(input$include_marine)){
   print("Removing marine protected areas")
-protected_areas <- protected_areas %>% filter(marine==FALSE)
+  protected_areas <- protected_areas %>% filter(marine==FALSE)
 }
 
 # Include OECMs

@@ -10,7 +10,7 @@ external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/protconn_an
 inputs:
   study_area_polygon:
     label: Polygon of study area
-    description: Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it
+    description: Polygon of the study area, in GeoPackage format. To use a custom study area, input the path to the file in the userdata folder (e.g. /userdata/study_area_polygon.gpkg) and it
       will override the country polygon from the "Get country polygon" script.
     type: application/geopackage+sqlite3[]
     example: null
@@ -26,34 +26,39 @@ inputs:
     example: null
   crs:
     label: Coordinate reference system
-    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [here](https://epsg.io/).
+    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [epsg.io](https://epsg.io/).
     type: text
     example: "EPSG:4326"
   distance_threshold:
     label: Distance analysis threshold
-    description: |
-      Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probability between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.
+    description: >
+      Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis.
+      This threshold represents the median dispersal probability (i.e. where the dispersal probability between patches is 0.5).
+      Dispersal probability is calculated with an exponential decay function with increasing distance.
+
 
       Common dispersal distances that encompass many different taxa are 1000 meters, 10,000 meters, and 100,000 meters.
 
-      Note that the more distances you include, the longer the pipeline will take to complete and the more memory it will require. Additionally, larger dispersal distances will be more computationally intensive.
+
+      Note that the more distances you include, the longer the pipeline will take to complete and the more memory it will require.
+      Additionally, larger dispersal distances will be more computationally intensive.
     type: int[]
     example: [1000, 10000]
   distance_matrix_type:
     label: Type of distance matrix
-    description: |
+    description: >
       Type of distance matrix to use in the ProtConn calculation. The "centroid" option will measure the
-       distances between protected areas from from the geometric center of each protected area,
-       while the "edge" option will measure the distance as the nearest edge between two protected areas.
+      distances between protected areas from the geometric center of each protected area,
+      while the "edge" option will measure the distance as the nearest edge between two protected areas.
     type: options
     options:
-      - "centroid"
-      - "edge"
-    example: "centroid"
+      - centroid
+      - edge
+    example: centroid
   years:
     label: Year for cutoff
     description: Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs
-     that were designated before the year 2000)
+      that were designated before the year 2000)
     type: int
     example: 2025
   start_year:
@@ -69,18 +74,20 @@ inputs:
 outputs:
   protected_areas:
     label: Protected areas
-    description: Protected areas on which ProtConn is being calculated. Overlapping protected areas have been merged into one to speed up calculation.
+    description: Protected areas on which ProtConn has been calculated. Overlapping protected areas have been merged
+      into one to speed up calculation.
     type: application/geopackage+sqlite3[]
   protconn_result:
     label: ProtConn results
-    description: |
-      The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected, and the percentage that is
-      protected and connected (ProtConn) and protected and unconnected (ProtUnconn).
+    description: >
+      The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected,
+      and the percentage that is protected and connected (ProtConn) and protected and unconnected (ProtUnconn).
     type: text/csv
   result_plot:
     label: ProtConn result plot
-    description: |
-      Donut plot of the percentage of total area that is unprotected, protected and connected, and protected and unconnected for each input dispersal distance (in meters).
+    description: >
+      Donut plot of the percentage of total area that is unprotected, protected-connected, and protected-unconnected
+      for each input dispersal distance (in meters).
     type: image/png
   result_yrs_plot:
     label: ProtConn time series plot

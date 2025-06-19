@@ -1,5 +1,10 @@
 script: getProtectedAreasWDPA.R
-name: Get protected areas (DEPRECATED - please use getWDPA.py instead)
+name: Get protected areas (DEPRECATED)
+lifecycle:
+  status: deprecated
+  message: |
+    This script is deprecated and will be removed in a future release.
+    Please use the new Python script `getWDPA.py` instead.
 description: This script finds and saves a polygon of the country and state that is specified in the input and the polygon of protected areas in that region from the world database of protected areas (WDPA).
 author:
   - name: Jory Griffith

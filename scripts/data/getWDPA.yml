@@ -17,14 +17,17 @@ inputs:
 outputs:
   protected_area_polygon:
     label: Polygon of protected areas
-    description: Vector file containing the protected areas within the selected country
+    description: GeoPackage file containing the protected areas vectors within the selected country.
     type: application/geopackage+sqlite3
   country_bounding_box:
     label: Polygon of the country's bounding box
-    description: Vector file with bounding box of the selected country
+    description: GeoPackage file containing the bounding box of the selected country.
     type: application/geopackage+sqlite3
 references:
-- text: UNEP-WCMC and IUCN (2024), Protected Planet. The World Database on Protected Areas (WDPA)[On-line], [October 2024], Cambridge, UK. UNEP-WCMC and IUCN. Available at. https://doi.org/10.34892/6fwd-af11
+- text:
+    UNEP-WCMC and IUCN (2024), Protected Planet. The World Database on Protected Areas (WDPA)[On-line],
+    [October 2024], Cambridge, UK. UNEP-WCMC and IUCN. Available at
+  doi: 10.34892/6fwd-af11
 conda:
   channels:
     - conda-forge
