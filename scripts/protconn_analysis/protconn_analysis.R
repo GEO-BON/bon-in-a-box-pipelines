@@ -9,20 +9,20 @@ sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
 
-#if (input$distance_threshold < 1000) { #FI
+# if (input$distance_threshold < 1000) { #FI
 #  biab_error_stop("Distance threshold is too small, please enter a value greater or equal to 1000")
-#}
+# }
 
 units::units_options(set_units_mode = "standard")
 # Load study area shapefile
 print("Loading study area")
 
-if(length(input$study_area_polygon)>1){ # if there is userdata study area input then use that
-study_area_path <- input$study_area_polygon[grepl("/userdata", input$study_area_polygon)]
-print(study_area_path)
-study_area <- st_read(study_area_path)
+if (length(input$study_area_polygon) > 1) { # if there is userdata study area input then use that
+  study_area_path <- input$study_area_polygon[grepl("/userdata", input$study_area_polygon)]
+  print(study_area_path)
+  study_area <- st_read(study_area_path)
 } else {
-study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
+  study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
 }
 
 study_area <- st_transform(study_area, st_crs(input$crs))
@@ -110,9 +110,10 @@ dissolve_overlaps <- function(x) {
     summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
 
   # Exploding multipolygons into polygons for faster calculation
-  protected_areas_multi <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean)=="MULTIPOLYGON") %>%
-  st_cast("POLYGON",group_or_split=TRUE)
-  protected_areas_poly <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean)=="POLYGON")
+  protected_areas_multi <- protected_areas_clean %>%
+    filter(st_geometry_type(protected_areas_clean) == "MULTIPOLYGON") %>%
+    st_cast("POLYGON", group_or_split = TRUE)
+  protected_areas_poly <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean) == "POLYGON")
 
   protected_areas_clean <- rbind(protected_areas_multi, protected_areas_poly)
 
@@ -158,38 +159,38 @@ protconn_result_list <- list()
 
 # make sure the result is a list
 
-# need to coerce into a list if it is only one 
+# need to coerce into a list if it is only one
 if (length(input$distance_threshold) == 1) {
-    name <- paste0("d", input$distance_threshold)
-    tmp <- protconn_result
-    protconn_result <- list()
-    protconn_result[[name]] <- tmp
-  }
+  name <- paste0("d", input$distance_threshold)
+  tmp <- protconn_result
+  protconn_result <- list()
+  protconn_result[[name]] <- tmp
+}
 
 print(names(protconn_result))
 for (i in seq_along(protconn_result)) {
   protconn <- as.data.frame(protconn_result[[i]])
   print(protconn)
   df <- protconn %>%
-      dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
-      dplyr::select(Percentage, `ProtConn indicator`)
+    dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
+    dplyr::select(Percentage, `ProtConn indicator`)
   df$Distance <- names(protconn_result)[i]
   df <- mutate(df, Distance = as.numeric(gsub("^d", "", Distance)))
   protconn_result_list[[i]] <- df
 }
 
 # bind list
-protconn_result_long <- do.call(rbind, protconn_result_list) 
+protconn_result_long <- do.call(rbind, protconn_result_list)
 # turn to wide format for output
-protconn_result <- pivot_wider(protconn_result_long, id_cols="Distance", names_from="ProtConn indicator", values_from="Percentage")
+protconn_result <- pivot_wider(protconn_result_long, id_cols = "Distance", names_from = "ProtConn indicator", values_from = "Percentage")
 
 # output
 protconn_result_path <- file.path(outputFolder, "protconn_result.csv")
 write.csv(protconn_result, protconn_result_path, row.names = F)
 biab_output("protconn_result", protconn_result_path)
 
-protconn_result_long <- protconn_result_long %>% filter(!`ProtConn indicator`=="Prot") # filter out protected for plotting
-result_plot <- ggplot2::ggplot(protconn_result_long) + 
+protconn_result_long <- protconn_result_long %>% filter(!`ProtConn indicator` == "Prot") # filter out protected for plotting
+result_plot <- ggplot2::ggplot(protconn_result_long) +
   geom_col(aes(y = Percentage, x = 1, fill = `ProtConn indicator`)) +
   coord_polar(theta = "y") +
   xlim(c(0, 1.5)) +
@@ -275,7 +276,7 @@ for (i in seq_along(years)) {
 
   protconn_result_combined <- do.call(rbind, protconn_result_list)
   protconn_result_combined$Year <- yr
-print(protconn_result_combined)
+  print(protconn_result_combined)
   protconn_ts_result[[i]] <- protconn_result_combined
 
   gc()
@@ -301,33 +302,33 @@ write.csv(result_yrs, result_yrs_path)
 biab_output("result_yrs", result_yrs_path)
 
 xint <- min(result_yrs$Year) + 20
-protconn_result_yrs <- protconn_result_yrs %>% filter(!`ProtConn indicator`=="Unprotected") # filter out unprotected for plotting
+protconn_result_yrs <- protconn_result_yrs %>% filter(!`ProtConn indicator` == "Unprotected") # filter out unprotected for plotting
 
 # make separate plot for each distance threshold
 plot_paths <- c()
-for (i in seq_along(input$distance_threshold)){
-result_dist <- protconn_result_yrs %>% filter(Distance==input$distance_threshold[i])
+for (i in seq_along(input$distance_threshold)) {
+  result_dist <- protconn_result_yrs %>% filter(Distance == input$distance_threshold[i])
 
-name=paste("Median dispersal distance", input$distance_threshold[i], "meters")
-result_yrs_plot <-
-  ggplot(
-    result_dist,
-    aes(x = Year, y = Percentage, group = `ProtConn indicator`, shape = `ProtConn indicator`, color = `ProtConn indicator`)
-  ) +
-  geom_point() +
-  geom_line() +
-  labs(y = "Percent area", x = "Year", title=name) +
-  scale_color_manual(values=c("#39568CFF", "#1F968BFF", "#73D055FF"))+
-  geom_hline(yintercept = 30, lty = 2) +
-  annotate("text", x = xint, y = 31, label = "Kunming-Montreal target") +
-  facet_wrap(~Distance)+
-  geom_line() +
-  theme_classic()+
-  theme(strip.text.y = element_blank())
+  name <- paste("Median dispersal distance", input$distance_threshold[i], "meters")
+  result_yrs_plot <-
+    ggplot(
+      result_dist,
+      aes(x = Year, y = Percentage, group = `ProtConn indicator`, shape = `ProtConn indicator`, color = `ProtConn indicator`)
+    ) +
+    geom_point() +
+    geom_line() +
+    labs(y = "Percent area", x = "Year", title = name) +
+    scale_color_manual(values = c("#39568CFF", "#1F968BFF", "#73D055FF")) +
+    geom_hline(yintercept = 30, lty = 2) +
+    annotate("text", x = xint, y = 31, label = "Kunming-Montreal target") +
+    facet_wrap(~Distance) +
+    geom_line() +
+    theme_classic() +
+    theme(strip.text.y = element_blank())
 
-file_path <- file.path(outputFolder, paste0("result_plot_yrs_", input$distance_threshold[i], "m.png"))
-plot_paths <- cbind(plot_paths, file_path) # put file paths in list
-ggsave(file_path, result_yrs_plot)
+  file_path <- file.path(outputFolder, paste0("result_plot_yrs_", input$distance_threshold[i], "m.png"))
+  plot_paths <- cbind(plot_paths, file_path) # put file paths in list
+  ggsave(file_path, result_yrs_plot)
 }
 
 biab_output("result_yrs_plot", plot_paths)
