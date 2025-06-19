@@ -41,7 +41,7 @@ inputs:
       - "Established"
     example: ["Designated", "Inscribed", "Established"]
   include_unesco:
-    label: Exclude UNESCO Biosphere reserves
+    label: Include UNESCO Biosphere reserves
     description: |
       Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development 
       and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. 
