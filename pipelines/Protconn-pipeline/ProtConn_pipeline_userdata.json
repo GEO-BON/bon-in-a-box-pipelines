@@ -343,10 +343,22 @@
     "author": [
       {
         "name": "Jory Griffith",
-        "email": "jory.griffith@mcgill.ca"
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "role": "Pipeline testing and debugging"
       }
     ],
-    "external_link": "https://github.com/GEO-BON/bon-in-a-box-pipelines/blob/main/pipelines/Protconn-pipeline/ProtConn.md",
     "references": [
       {
         "text": "Saura et al. 2017",

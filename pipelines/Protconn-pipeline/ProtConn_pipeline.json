@@ -90,8 +90,8 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": 2442.6000061035156,
-        "y": 289.7999954223633
+        "x": 2334.4003574201383,
+        "y": 210.6295207759896
       },
       "data": {
         "descriptionFile": "protconn_analysis>protconn_analysis.yml"
@@ -101,8 +101,8 @@
       "id": "43",
       "type": "output",
       "position": {
-        "x": 3043.2740650008755,
-        "y": 315.17116000801195
+        "x": 2908.68425810204,
+        "y": 237.3201932724112
       },
       "data": {
         "label": "Output"
@@ -112,8 +112,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 1612.4990722778184,
-        "y": 12.161285994457074
+        "x": 1604.5820248131813,
+        "y": 9.522270172911277
       },
       "data": {
         "descriptionFile": "data>cleanWDPA.yml"
@@ -358,7 +358,7 @@
     },
     "data>cleanWDPA.yml@48|include_unesco": {
       "description": "Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
-      "label": "Exclude UNESCO Biosphere reserves",
+      "label": "Include UNESCO Biosphere reserves",
       "type": "boolean",
       "example": true,
       "weight": 12
@@ -441,7 +441,20 @@
     "author": [
       {
         "name": "Jory Griffith",
-        "email": "jory.griffith@mcgill.ca"
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "role": "Pipeline testing and debugging"
       }
     ],
     "references": [
