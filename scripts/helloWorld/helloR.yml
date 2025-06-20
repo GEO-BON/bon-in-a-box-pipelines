@@ -71,30 +71,6 @@ inputs:
     example: |
       This is a multiline example.
       Once there is a line break in the example, it becomes a textarea in the UI.
-  country:
-    label: Country
-    description: Use dialog to choose country
-    type: country
-  country_region:
-    label: Country and Region
-    description: Use dialog to choose country and region
-    type: countryRegion
-    example:
-  country_region_crs:
-    label: Country, region and CRS
-    description: Use dialog to choose country, region and an appropriate coordinate reference system for that region
-    type: countryRegionCRS
-    example:
-  crs:
-    label: CRS
-    description: Use dialog to choose coordinate reference system
-    type: CRS
-    example:
-  bbox_crs:
-    label: Bounding box
-    description: Use bounding box chooser to select bounding box with associated coordinate reference system.
-    type: bboxCRS
-    example:
 
 outputs:
   text:
