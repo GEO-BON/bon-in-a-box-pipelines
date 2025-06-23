@@ -83,7 +83,9 @@
         "value": [
           "status:accepted",
           "name_rank:species",
-          "status:provisionally accepted"
+          "status:provisionally accepted",
+          "name_rank:variety",
+          "name_type:scientific"
         ]
       }
     },
@@ -514,15 +516,6 @@
       }
     ],
     "external_link": null,
-    "references": [
-      {
-        "text": null,
-        "doi": null
-      },
-      {
-        "text": null,
-        "doi": null
-      }
-    ]
+    "references": null
   }
 }
