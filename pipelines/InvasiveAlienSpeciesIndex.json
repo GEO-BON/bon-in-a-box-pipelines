@@ -45,17 +45,6 @@
       }
     },
     {
-      "id": "33",
-      "type": "output",
-      "position": {
-        "x": 2756,
-        "y": 262.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "35",
       "type": "userInput",
       "position": {
@@ -213,16 +202,53 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 3009.777777211044,
+        "y": 201.44256114348076
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "output",
+      "position": {
+        "x": 3050.9558051069753,
+        "y": 254.63084717572536
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "52",
+      "type": "output",
+      "position": {
+        "x": 3058.6766853374625,
+        "y": 309.5348843703004
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "53",
+      "type": "output",
+      "position": {
+        "x": 3047.5243027823144,
+        "y": 373.8755529576931
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "32",
-      "sourceHandle": "result_plot",
-      "target": "33",
-      "targetHandle": null,
-      "id": "reactflow__edge-32result_plot-33"
-    },
     {
       "source": "35",
       "sourceHandle": null,
@@ -348,6 +374,34 @@
       "target": "48",
       "targetHandle": "bbox",
       "id": "reactflow__edge-47bbox-48bbox"
+    },
+    {
+      "source": "32",
+      "sourceHandle": "result_snc_plot",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-32result_snc_plot-50"
+    },
+    {
+      "source": "32",
+      "sourceHandle": "result_mu_plot",
+      "target": "51",
+      "targetHandle": null,
+      "id": "reactflow__edge-32result_mu_plot-51"
+    },
+    {
+      "source": "32",
+      "sourceHandle": "fitted_values",
+      "target": "52",
+      "targetHandle": null,
+      "id": "reactflow__edge-32fitted_values-52"
+    },
+    {
+      "source": "32",
+      "sourceHandle": "statistics",
+      "target": "53",
+      "targetHandle": null,
+      "id": "reactflow__edge-32statistics-53"
     }
   ],
   "inputs": {
@@ -392,43 +446,61 @@
     }
   },
   "outputs": {
-    "IAS>invasiveSpeciesAnalysis.yml@32|result_plot": {
-      "description": "Plot of the introduction record of IAS along with fitted model values",
-      "label": "Time series using a simple model",
-      "type": "image/png",
-      "weight": 0
-    },
     "pipeline@35|default_output": {
       "label": "Country",
       "description": "Country of interest",
       "example": "Mongolia",
       "type": "text",
-      "weight": 1
+      "weight": 0
     },
     "data>filterCSV.yml@30|text_array": {
       "description": "Text array containing extracted data",
       "label": "Data in a text array",
       "type": "text[]",
-      "weight": 2
+      "weight": 1
     },
     "data>filterCSV.yml@30|output_file": {
       "description": "Text file containing extracted data",
       "label": "Data in a text file",
       "type": "text/plain",
-      "weight": 3
+      "weight": 2
     },
     "data>firstRecordGBIF.yml@48|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 4
+      "weight": 3
     },
     "data>firstRecordGBIF.yml@48|first_record_file": {
       "description": "Output file with first record date and species key",
       "label": "First record data",
       "type": "text/csv",
+      "weight": 4
+    },
+    "IAS>invasiveSpeciesAnalysis.yml@32|result_snc_plot": {
+      "description": "Plot of the introduction record of IAS along with fitted model values",
+      "label": "Time series using the plot_snc function",
+      "type": "image/png",
       "weight": 5
+    },
+    "IAS>invasiveSpeciesAnalysis.yml@32|result_mu_plot": {
+      "description": "This plot illustrates the fitted values of the SNC model",
+      "label": "Plot of fitted values",
+      "type": "image/png",
+      "weight": 6
+    },
+    "IAS>invasiveSpeciesAnalysis.yml@32|fitted_values": {
+      "description": "Table of the fitted mean λ values of first records per year",
+      "label": "Fitted values per year",
+      "type": "text/csv",
+      "weight": 7
+    },
+    "IAS>invasiveSpeciesAnalysis.yml@32|statistics": {
+      "description": "Table of the estimated mean and standard error µ values",
+      "label": "Estimated mean and standard error",
+      "type": "text/csv",
+      "weight": 8
     }
   },
   "metadata": {
