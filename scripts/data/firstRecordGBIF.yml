@@ -3,7 +3,8 @@ name: First record data from GBIF
 description: Load GBIF first record data using SQL query
 author:
   - name: Laetitia Tremblay
-
+    email: laetitia.tremblay@mcgill.ca
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273
 inputs:
   taxa:
     description: Array of taxa values. Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match.

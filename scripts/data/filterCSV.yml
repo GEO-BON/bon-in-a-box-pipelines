@@ -2,7 +2,9 @@ script: filterCSV.py
 name: Filter CSV file
 description: Extracts data from CSV file under specified conditions
 author:
-  - name: Laetitia Tremblay (laetitia.tremblay@mcgill.ca)
+  - name: Laetitia Tremblay
+    email: laetitia.tremblay@mcgill.ca
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273
 external_link:
 inputs:
   input_file:

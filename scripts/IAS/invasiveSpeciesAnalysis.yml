@@ -2,7 +2,9 @@ script: invasiveSpeciesAnalysis.R
 name: Invasive species analysis
 description: Creates a model based on IAS data
 author:
-  - name: Laetitia Tremblay (laetitia.tremblay@mcgill.ca)
+  - name: Laetitia Tremblay
+    email: laetitia.tremblay@mcgill.ca
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273
 external_link:
 inputs:
   observations_file:
