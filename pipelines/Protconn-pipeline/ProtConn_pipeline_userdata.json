@@ -339,7 +339,7 @@
   },
   "metadata": {
     "name": "ProtConn Analysis with custom PAs",
-    "description": "## Introduction\nThe Protected Connected Index (ProtConn) is a component indicator in the Global Biodiversity  Framework (GBF). ProtConn measures the percent of a given country or region that is conserved and  managed through well-connected protected areas. This is an important indicator for assessing progress  towards Goal A and Target 3 of the Kunming-Montreal Global Biodiversity Framework, which aim to have  30% of land area protected by a network of well-connected protected areas by 2030. The pipeline uses the MK_ProtConn function in the 'Makurhini' package to calculate protconn for different dispersal distances.\n## Uses\nProtConn can be used to assess current progress towards Goal A and Target 3 of the the GBF.  The pipeline can also be used to compare the connectedness of different proposed protected areas,  assisting with planning and design.\n## Pipeline limitations \n* On larger datasets, the pipeline is slow and uses a lot of memory, especially with larger input dispersal distances. \n* Currently, the pipeline does not take into account landscape resistance (ie. whether areas between  protected areas are easily traversed by species) \n## Before you start \nTo use this pipeline, you’ll need a file of protected area polygons in geopackage format, with the  geometry column named \"geom\" and a column for the date/year of establishment.  If you would like to run the pipeline with protected area data from the World Database of Protected Areas (WDPA)  or a combination of WDPA data and your own, use the `ProtConn  Analysis with WDPA` pipeline.\n\n\n Click [here](https://boninabox.geobon.org/indicator?i=ProtConn) for more information about parameterizing and running the pipeline",
+    "description": "## Introduction\nThe Protected Connected Index (ProtConn) is a component indicator in the Global Biodiversity  Framework (GBF). ProtConn measures the percent of a given country or region that is conserved and  managed through well-connected protected areas. This is an important indicator for assessing progress  towards Goal A and Target 3 of the Kunming-Montreal Global Biodiversity Framework, which aim to have 30% of land area protected by a network of well-connected protected areas by 2030. The pipeline uses the MK_ProtConn function in the 'Makurhini' package to calculate protconn for different dispersal distances.\n## Uses\nProtConn can be used to assess current progress towards Goal A and Target 3 of the the GBF.  The pipeline can also be used to compare the connectedness of different proposed protected areas,  assisting with planning and design.\n## Pipeline limitations \n* On larger datasets, the pipeline is slow and uses a lot of memory, especially with larger input dispersal distances. \n* Currently, the pipeline does not take into account landscape resistance (ie. whether areas between  protected areas are easily traversed by species) \n## Before you start \nTo use this pipeline, you’ll need a file of protected area polygons in geopackage format, with the  geometry column named \"geom\" and a column for the date/year of establishment.  If you would like to run the pipeline with protected area data from the World Database of Protected Areas (WDPA)  or a combination of WDPA data and your own, use the `ProtConn  Analysis with WDPA` pipeline.\n\n\n Click [here](https://boninabox.geobon.org/indicator?i=ProtConn) for more information about parameterizing and running the pipeline",
     "author": [
       {
         "name": "Jory Griffith",
@@ -357,20 +357,26 @@
         "name": "Laetitia Tremblay",
         "email": "laetita.tremblay@mcgill.ca",
         "role": "Pipeline testing and debugging"
+      },
+      {
+        "name": "Jean-Michel Lord",
+        "email": "jean-michel.lord@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0007-3826-1125",
+        "role": "Environment setup, technical support, standards review"
       }
     ],
     "references": [
       {
         "text": "Saura et al. 2017",
-        "doi": "10.1016/j.ecolind.2016.12.047"
+        "doi": "https://doi.org/10.1016/j.ecolind.2016.12.047"
       },
       {
         "text": "Saura et al. 2018",
-        "doi": "10.1016/j.biocon.2017.12.020"
+        "doi": "https://doi.org/10.1016/j.biocon.2017.12.020"
       },
       {
         "text": "Godínez-Gómez and Correa Ayram 2020",
-        "doi": "10.5281/zenodo.3771605"
+        "doi": "https://doi.org/10.5281/zenodo.3771605"
       },
       {
         "text": "UNEP-WCMC and IUCN",

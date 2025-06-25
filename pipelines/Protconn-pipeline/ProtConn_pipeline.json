@@ -455,6 +455,12 @@
         "name": "Laetitia Tremblay",
         "email": "laetita.tremblay@mcgill.ca",
         "role": "Pipeline testing and debugging"
+      },
+      {
+        "name": "Jean-Michel Lord",
+        "email": "jean-michel.lord@mcgill.ca",
+        "identifier": "https://orcid.org/0009-0007-3826-1125",
+        "role": "Environment setup, technical support, standards review"
       }
     ],
     "references": [
