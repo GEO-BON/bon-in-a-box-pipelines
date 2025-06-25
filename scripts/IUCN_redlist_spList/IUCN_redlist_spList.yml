@@ -16,7 +16,7 @@ conda:
   dependencies:
     - r-magrittr
     - r-dplyr
-    - r-rredlist
+    - r-rredlist=1.0.0
     - r-this.path
     - r-rjson
 inputs:

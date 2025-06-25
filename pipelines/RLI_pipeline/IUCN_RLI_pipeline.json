@@ -87,8 +87,8 @@
       "id": "21",
       "type": "output",
       "position": {
-        "x": 1811,
-        "y": 257.8333333333333
+        "x": 1869,
+        "y": 206.83333333333331
       },
       "data": {
         "label": "Output"
@@ -425,6 +425,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "27",
+      "type": "output",
+      "position": {
+        "x": 1862.3043212890625,
+        "y": 263.02173614501953
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -511,6 +522,13 @@
       "target": "26",
       "targetHandle": null,
       "id": "reactflow__edge-24-26"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "redlist_matrix",
+      "target": "27",
+      "targetHandle": null,
+      "id": "reactflow__edge-15redlist_matrix-27"
     }
   ],
   "inputs": {
@@ -1123,6 +1141,12 @@
       "label": "redlist trend plot",
       "type": "image/jpg",
       "weight": 3
+    },
+    "RedListIndex>RedListIndex.yml@15|redlist_matrix": {
+      "description": "Matrix showing the distribution of threat categories over time for the group of species.",
+      "label": "RedList matrix",
+      "type": "text/csv",
+      "weight": 4
     }
   },
   "metadata": {
