@@ -1,6 +1,6 @@
 # Script for analyzing ProtConn with the function
 
-packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ")
+packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ", "ggrepel")
 
 # Load libraries
 lapply(packages_list, library, character.only = TRUE) # Load libraries - packages
@@ -199,7 +199,7 @@ result_plot <- ggplot2::ggplot(protconn_result_long) +
   geom_col(aes(y = Percentage, x = 1, fill = `ProtConn indicator`)) +
   coord_polar(theta = "y") +
   xlim(c(0, 1.5)) +
-  geom_text(
+  geom_text_repel(
     aes(y = Percentage, x = 1, group = `ProtConn indicator`, label = paste0(round(Percentage, 2), "%")),
     position = position_stack(vjust = 0.5)
   ) +
@@ -239,7 +239,7 @@ for (i in seq_along(years)) {
   yr <- years[i]
   print(paste("Processing year:", yr))
 
-  if(years[i] == input$year){ # skip end year because already calculated above
+  if(yr == input$years){ # skip end year because already calculated above
     protconn_result_combined <- protconn_result_long
     protconn_result_combined$Year <- yr
   } else {protected_areas_filt_yr <- protected_areas %>%
