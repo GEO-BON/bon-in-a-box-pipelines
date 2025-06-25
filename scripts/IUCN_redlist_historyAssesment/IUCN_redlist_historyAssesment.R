@@ -25,7 +25,7 @@ iucn_history_assessment_data <- pbapply::pblapply(iucn_splist[, input$sp_col], f
   if (length(parts) >= 4 && parts[3] %in% c("ssp.", "subsp.", "var.")) {
     subvar <- parts[4]
   }
-  Sys.sleep(0.5)
+  Sys.sleep(0.01)
 
   tryCatch(
     {

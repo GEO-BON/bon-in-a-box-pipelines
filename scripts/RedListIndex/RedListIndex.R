@@ -21,8 +21,6 @@ input <- biab_inputs()
 history_assessment_data <- data.table::fread(input$history_assessment_data) %>% as.data.frame()
 form_matrix <- as.formula(paste0(input$sp_col, "~", input$time_col))
 
-print(history_assessment_data)
-
 historyAssesment_matrix <- reshape2::dcast(history_assessment_data, form_matrix,
   value.var = "code",
   fun.aggregate = function(x) {
