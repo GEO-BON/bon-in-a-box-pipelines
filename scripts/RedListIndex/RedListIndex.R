@@ -1,17 +1,5 @@
-#### Load required packages - libraries to run the script ####
-
-# Install necessary libraries - packages
-packagesPrev <- installed.packages()[, "Package"] # Check and get a list of installed packages in this machine and R version
-# Install necessary libraries - packages
-packagesPrev <- installed.packages()[, "Package"] # Check and get a list of installed packages in this machine and R version
-packagesNeed <- c("magrittr", "data.table", "reshape2", "dplyr", "plyr", "ggplot2", "tibble", "pbapply", "rredlist", "plyr", "red", "gdistance", "BAT", "ape", "geometry", "magic", "hypervolume", "ks", "mclust", "mvtnorm", "pracma", "fastcluster", "pdist", "palmerpenguins", "caret", "recipes", "timeDate", "gower", "hardhat", "ipred", "prodlim", "lava", "future.apply", "future", "globals", "listenv", "parallelly", "ModelMetrics", "pROC", "nls2", "proto", "vegan", "permute", "phytools", "combinat", "clusterGeneration", "DEoptim", "expm", "optimParallel", "phangorn", "fastmatch", "scatterplot3d", "predicts", "coda", "mnormt", "numDeriv", "quadprog") # Define the list of required packages to run the script
-new.packages <- packagesNeed[!(packagesNeed %in% packagesPrev)]
-if (length(new.packages)) {
-  install.packages(new.packages, binary = T, force = T, dependencies = F, repos = "https://packagemanager.posit.co/cran/__linux__/jammy/latest")
-} # Check and install required packages that are not previously installed
-
 # Load libraries
-packagesList <- list("magrittr", "ggplot2") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects
+packagesList <- list("magrittr", "ggplot2", "rredlist") # Explicitly list the required packages throughout the entire routine. Explicitly listing the required packages throughout the routine ensures that only the necessary packages are listed. Unlike 'packagesNeed', this list includes packages with functions that cannot be directly called using the '::' syntax. By using '::', specific functions or objects from a package can be accessed directly without loading the entire package. Loading an entire package involves loading all the functions and objects
 lapply(packagesList, library, character.only = TRUE) # Load libraries - packages
 
 input <- biab_inputs()
