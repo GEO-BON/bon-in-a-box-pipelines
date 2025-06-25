@@ -15,6 +15,7 @@ print(sprintf("Token: %s", token))
 iucn_splist <- data.table::fread(input$species_data) %>% as.data.frame()
 
 print("Loading historical assessment data...")
+pbapply::pboptions(type = "timer")
 iucn_history_assessment_data <- pbapply::pblapply(iucn_splist[, input$sp_col], function(x) {
   parts <- strsplit(x, " ")[[1]]
   gn <- parts[1]
@@ -24,15 +25,20 @@ iucn_history_assessment_data <- pbapply::pblapply(iucn_splist[, input$sp_col], f
   if (length(parts) >= 4 && parts[3] %in% c("ssp.", "subsp.", "var.")) {
     subvar <- parts[4]
   }
-  Sys.sleep(1)
-  rredlist::rl_species(genus = gn, species = sp, infra = subvar, key = token)$assessments # add try catch?
+  Sys.sleep(0.5)
+
+  tryCatch(
+    {
+      rredlist::rl_species(genus = gn, species = sp, infra = subvar, key = token)$assessments
+    },
+    error = function(e) {
+      NULL
+    }
+  )
 })
 print("Done!")
 iucn_history_assessment_data <- dplyr::bind_rows(iucn_history_assessment_data)
 iucn_history_assessment_data <- iucn_history_assessment_data[, c("taxon_scientific_name", "year_published", "red_list_category_code")]
-
-print("History assessment data:")
-print(iucn_history_assessment_data)
 
 iucn_history_assessment_data <- iucn_history_assessment_data %>%
   dplyr::rename(scientific_name = taxon_scientific_name, code = red_list_category_code, assess_year = year_published)
