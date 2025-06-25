@@ -115,13 +115,13 @@ tcytot = rast(tcy)
 ###create cover maps for each population
 # create output directory for population maps
 dir.create(file.path(outputFolder, "/tcyy/"))
-for (pop in pop_poly$pop) {
+for (pop in pop_poly$name) {
 
   print(pop)
-  
+
   # crop rasters to pop extent
-  TC_pop = crop(TC, pop_poly[pop_poly$pop==pop,], mask=T)
-  tree_cover_loss_pop = crop(tree_cover_loss, pop_poly[pop_poly$pop==pop,], mask=T)
+  TC_pop = crop(TC, pop_poly[pop_poly$name==pop,], mask=T)
+  tree_cover_loss_pop = crop(tree_cover_loss, pop_poly[pop_poly$name==pop,], mask=T)
   
   # container of rasters
   tcy=c()
@@ -163,7 +163,7 @@ No_habitat = (tcy[[nlyr(tcy)]]==0 & tcy[[1]]==0) | is.na(tcy[[1]])
 # resample information on habitat absence
 no_habitat_canvas = No_habitat
 res(no_habitat_canvas) = c(0.01,0.01)
-No_habitat = resample(No_habitat, no_habitat_canvas, method='med') # find which resampled pixels are covered by at least 50% habitat
+No_habitat = resample(No_habitat, no_habitat_canvas, method='q1') # find which resampled pixels are covered by at least 50% habitat
 
 # remove missing habitat from delta 
 D_tcy[No_habitat] = NA
