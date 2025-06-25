@@ -141,6 +141,10 @@ if (nrow(protected_areas_simp) < 2) {
   biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 }
 
+if (isTRUE(st_is_longlat(protected_areas_simp))){
+  biab_error_stop("Protected areas are in latitude longitude degrees, please choose a projected coordinate reference system.")
+}
+
 protconn_result <- Makurhini::MK_ProtConn(
   nodes = protected_areas_simp,
   region = study_area,
@@ -181,6 +185,7 @@ for (i in seq_along(protconn_result)) {
 
 # bind list
 protconn_result_long <- do.call(rbind, protconn_result_list)
+print(protconn_result_long)
 # turn to wide format for output
 protconn_result <- pivot_wider(protconn_result_long, id_cols = "Distance", names_from = "ProtConn indicator", values_from = "Percentage")
 
@@ -234,7 +239,10 @@ for (i in seq_along(years)) {
   yr <- years[i]
   print(paste("Processing year:", yr))
 
-  protected_areas_filt_yr <- protected_areas %>%
+  if(years[i] == input$year){ # skip end year because already calculated above
+    protconn_result_combined <- protconn_result_long
+    protconn_result_combined$Year <- yr
+  } else {protected_areas_filt_yr <- protected_areas %>%
     dplyr::filter(legal_status_updated_at <= yr)
 
   if (nrow(protected_areas_filt_yr) < 2) {
@@ -251,7 +259,7 @@ for (i in seq_along(years)) {
     distance = list(type = input$distance_matrix_type),
     probability = 0.5,
     transboundary = 0,
-    distance_thresholds = input$distance_threshold
+    distance_thresholds = c(input$distance_threshold)
   )
 
 
@@ -278,7 +286,7 @@ for (i in seq_along(years)) {
   protconn_result_combined$Year <- yr
   print(protconn_result_combined)
   protconn_ts_result[[i]] <- protconn_result_combined
-
+}
   gc()
 }
 

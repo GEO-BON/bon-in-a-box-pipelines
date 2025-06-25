@@ -286,7 +286,7 @@
     },
     "pipeline@9": {
       "label": "Coordinate reference system",
-      "description": "This input specifies the coordinate reference system of the study area polygon and the protected area polygons for the ProtConn calculation. This must be a projected CRS, otherwise the distance calculations will not be accurate.\n\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "description": "The coordinate reference system of the study area polygon and the protected area polygons for the ProtConn calculation. This must be a projected CRS (in meters), otherwise the distance calculations will not be accurate.\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n",
       "type": "text",
       "example": "EPSG:3116",
       "weight": 4
@@ -454,6 +454,7 @@
       {
         "name": "Laetitia Tremblay",
         "email": "laetita.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
         "role": "Pipeline testing and debugging"
       },
       {
