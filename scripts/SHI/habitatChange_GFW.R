@@ -14,13 +14,12 @@ packages <- c("rjson", "dplyr","tidyr","purrr","terra","stars","sf","readr",#"tm
 
 lapply(packages,require,character.only=T)
 
-path_script <- Sys.getenv("SCRIPT_LOCATION")
 
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
+input <- biab_inputs()
 print("Inputs: ")
 print(input)
 
-source(file.path(path_script,"data/filterCubeRangeFunc.R"), echo=TRUE) 
+source(file.path(path_script,"data/filterCubeRangeFunc.R"), echo=TRUE)
 source(file.path(path_script,"data/loadCubeFunc.R"), echo=TRUE)
 
 output<- tryCatch({
@@ -209,7 +208,7 @@ for(i in 1:length(sp)){
   df_r_GFW_TC_threshold_mask <- as.data.frame(r_GFW_TC_threshold_mask,xy=TRUE) |> setNames(c( "x", "y","No_change"))
   df_r_year_loss_mask_plot <- as.data.frame(r_year_loss_mask_plot,xy=TRUE) |> setNames(c( "x", "y","Loss"))
   df_r_GFW_gain_mask <- as.data.frame(r_GFW_gain_mask,xy=TRUE) |> setNames(c( "x", "y","Gain"))
-  
+
   bbox_figure <- st_bbox(r_GFW_TC_threshold_mask)
   img_map_habitat_changes <- ggplot() +
     geom_tile(data = df_r_aoh, aes(x = x, y = y, fill = "Base"), alpha = 0.4) +
@@ -223,7 +222,7 @@ for(i in 1:length(sp)){
     coord_map()+
     geom_sf(data = sf_world_lim, fill = NA, color = "gray") +
     coord_sf(xlim = c(bbox_figure["xmin"], bbox_figure["xmax"]), ylim = c(bbox_figure["ymin"], bbox_figure["ymax"]))
-  
+
   v_path_SHS_map[i] <- file.path(outputFolder,sp[i],paste0(sp[i],"_GFW_change.png"))
   ggsave( v_path_SHS_map[i], img_map_habitat_changes)
 
