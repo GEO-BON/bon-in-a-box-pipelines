@@ -81,6 +81,9 @@ print(all_results.geometry.geom_type.unique())
 print(len(all_results))
 print(all_results)
 
+if len(all_results) == 0:
+    biab_error_stop("WDPA returned no protected areas.")
+
 outfile = ("%s/wdpa.gpkg") % (output_folder)
 all_results.to_file(outfile, driver='GPKG', layer='protected_areas')
 

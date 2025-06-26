@@ -55,6 +55,21 @@ if (isTRUE(input$buffer_points)) {
   print("Removing points with no reported area")
   protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT" & !is.finite(protected_areas$reported_area)), ]
   print("Creating buffer for points with reported area")
+  points_data <- protected_areas[(protected_areas$geometry_type == "POINT"),]
+
+  if(nrow(points_data > 0)){
+    points_data <- points_data %>%
+    mutate(buffer_radius = sqrt((as.numeric(reported_area) * 1e6) / pi)) %>%
+    st_buffer(dist = buffer_radius)
+
+      if (any(protected_areas$geometry_type == "POLYGON")) {
+      protected_areas <- rbind(protected_areas[which(protected_areas$geometry_type == "POLYGON"), ], points_data)
+      } else {
+      protected_areas <- points_data
+      }
+  } else {
+    protected_areas <- protected_areas
+    }
 } else {
   print("Removing points")
   protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT"), ]
@@ -87,6 +102,9 @@ if (isFALSE(input$include_oecm)) {
 print("Cropping data by study area")
 protected_areas_clean <- st_intersection(protected_areas, study_area)
 
+if(nrow(protected_areas_clean)==0){
+  biab_error_stop("There are no protected areas.")
+}
 
 protected_areas_clean_path <- file.path(outputFolder, "protected_areas_clean.gpkg")
 sf::st_write(protected_areas_clean, protected_areas_clean_path, delete_dsn = T)

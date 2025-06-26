@@ -9,10 +9,6 @@ sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
 
-# if (input$distance_threshold < 1000) { #FI
-#  biab_error_stop("Distance threshold is too small, please enter a value greater or equal to 1000")
-# }
-
 units::units_options(set_units_mode = "standard")
 # Load study area shapefile
 print("Loading study area")
