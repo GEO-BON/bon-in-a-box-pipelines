@@ -1,5 +1,5 @@
 # Protected Connected Index
-### Author(s): Jory Griffith
+### Author(s): Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord
 #### Reviewed by: In review
 
 ## Introduction
