@@ -1091,7 +1091,7 @@
     },
     "pipeline@24|default_output": {
       "label": "Taxonomic group",
-      "description": "Taxonomic group to obtain the list of species of that group. ",
+      "description": "Taxonomic group of the species that were assessed.",
       "example": "mammals",
       "type": "options",
       "options": [
