@@ -212,8 +212,8 @@
       "id": "41",
       "type": "output",
       "position": {
-        "x": -442.0375061035156,
-        "y": 94
+        "x": -440.4813357504048,
+        "y": -151.87491579151205
       },
       "data": {
         "label": "Output"
@@ -223,11 +223,36 @@
       "id": "42",
       "type": "output",
       "position": {
-        "x": -438.0375061035156,
-        "y": 114
+        "x": -347.77962562308716,
+        "y": -105.42001978862788
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "43",
+      "type": "userInput",
+      "position": {
+        "x": -1376.160111205028,
+        "y": 98.45841854378386
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "COL"
+      }
+    },
+    {
+      "id": "44",
+      "type": "userInput",
+      "position": {
+        "x": -1440.6231517664496,
+        "y": 164.79490327337479
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
       }
     }
   ],
@@ -385,19 +410,33 @@
       "target": "42",
       "targetHandle": null,
       "id": "reactflow__edge-38region-42"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "38",
+      "targetHandle": "country",
+      "id": "reactflow__edge-43-38country"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "38",
+      "targetHandle": "region",
+      "id": "reactflow__edge-44-38region"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@38|country": {
-      "description": "Country of interest",
-      "label": "Country",
+    "pipeline@43": {
+      "label": "ISO3 country code",
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "type": "text",
-      "example": "Colombia",
+      "example": "COL",
       "weight": 0
     },
-    "data>getCountryPolygon.yml@38|region": {
-      "description": "Region of interest",
+    "pipeline@44": {
       "label": "State/Province",
+      "description": "Region of interest",
       "type": "text",
       "example": null,
       "weight": 1
@@ -479,7 +518,7 @@
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 1
+      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
@@ -491,7 +530,7 @@
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 4
     }
   },
   "metadata": {
