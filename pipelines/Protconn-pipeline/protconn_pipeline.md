@@ -2,6 +2,7 @@
 ### Author(s): Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord
 #### Reviewed by: In review
 
+
 ## Introduction
 
 The Protected Connected Index (ProtConn) is a component indicator in the Global Biodiversity Framework (GBF). ProtConn measures the percent of a given country or region that is conserved and managed through well-connected protected areas. This is an important indicator for assessing progress towards Goal A and Target 3 of the Kunming-Montreal Global Biodiversity Framework, which aim to have 30% of land area protected by a network of well-connected protected areas by 2030.
@@ -30,7 +31,7 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 
 - **State/Province:** the user can specify a state/province within the country of interest and the pipeline will pull the polygon and protected areas for this region. This is input as the full name of the state.
 
-**Polygon of study area:** there is also an option to add a custom study area file, which will override the polygon from the specified country or region of interest.
+- **Polygon of study area:** there is also an option to add a custom study area file, which will override the polygon from the specified country or region of interest.
 
 - **Polygon of protected areas:** this input should only be used if the user wants to use custom protected area data, for example if they want to calculate ProtConn for proposed protected areas or protected areas that are not yet in WDPA. If you use the `ProtConn Analysis with WDPA` pipeline, this input is optional and any file added will be combined with WDPA data of the country of interest. If you use the `ProtConn Analysis with custom PAs` pipeline, this input is mandatory and the pipeline will analyze only user-input protected area polygons.
 
@@ -39,12 +40,12 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 - **Date Column Name:** the user must indicate the name of the column in the custom protected area data file that specifies when the protected area was created (leave blank if only using WDPA data).
 
 - **Distance analysis threshold:** the user can specify one or more dispersal distances depending on which species they are interested in. Common dispersal distances are 1,000 meters (1km), 10,000 m (10km) and 100,000 m (100 km) The dispersal distance is the median of the negative exponential dispersal kernel, meaning that at that distance there is a dispersal probability of 0.5. Note that larger dispersal distances will be more computationally intensive.
-  ![Image 17](https://private-user-images.githubusercontent.com/195579379/456196941-51e304f3-7534-4d66-acd7-7f64f070ca5b.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTAxOTIyMDQsIm5iZiI6MTc1MDE5MTkwNCwicGF0aCI6Ii8xOTU1NzkzNzkvNDU2MTk2OTQxLTUxZTMwNGYzLTc1MzQtNGQ2Ni1hY2Q3LTdmNjRmMDcwY2E1Yi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxN1QyMDI1MDRaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0xODFiNGE1MGNkYjA0NzhjZDczZjIyOGEwNGI2ZWMwNzk5NjY3N2MwODRiODA5OTkxYzRhMmFjMjU2ZDQxNWNjJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.BPGzZwVHy7d3KnBEvuUU0UQnejd_cpkwc9EnB8x_LW4)
+  ![Image 17](https://github-production-user-asset-6210df.s3.amazonaws.com/195579379/460134254-f055ee25-ce62-479c-aa58-b736ff713dd5.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250627%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250627T203450Z&X-Amz-Expires=300&X-Amz-Signature=fbd06ff9d6b56914176c313dbb0858b3f19042979015ad1bd1b4bc2898a11586&X-Amz-SignedHeaders=host)
 
 - **Type of distance matrix:** the user can specify whether the distances between protected areas should be measured using the centroid (geometric center) of the protected area or the closest edge.
 
-  ![Image 18](https://private-user-images.githubusercontent.com/195579379/456197501-2390c5bd-2ba8-4900-841e-d8e14d656611.PNG?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTAxOTIyOTMsIm5iZiI6MTc1MDE5MTk5MywicGF0aCI6Ii8xOTU1NzkzNzkvNDU2MTk3NTAxLTIzOTBjNWJkLTJiYTgtNDkwMC04NDFlLWQ4ZTE0ZDY1NjYxMS5QTkc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxN1QyMDI2MzNaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT0zMGI3N2ViNzI5Y2YwODczOGVkYzBhY2JmN2RiMzI3OTE1MTJhMjM1ZDQyYmM4YjZmODEwNDFjNDE2MDZlNmMxJlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.An9XrnajjY6rrKIM8bg9UkFb7AiAFV3iMtysbVEfLB8)
-  ![Image 19](https://private-user-images.githubusercontent.com/195579379/456197721-ad9c01f1-e62e-4f43-a4e3-122419bacf5c.PNG?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTAxOTIzMzEsIm5iZiI6MTc1MDE5MjAzMSwicGF0aCI6Ii8xOTU1NzkzNzkvNDU2MTk3NzIxLWFkOWMwMWYxLWU2MmUtNGY0My1hNGUzLTEyMjQxOWJhY2Y1Yy5QTkc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1BS0lBVkNPRFlMU0E1M1BRSzRaQSUyRjIwMjUwNjE3JTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MDYxN1QyMDI3MTFaJlgtQW16LUV4cGlyZXM9MzAwJlgtQW16LVNpZ25hdHVyZT04Nzk0OGViYzE2YThmNmQ0OTU0OGZmMjBkODVhYzVkMTZhZjE2MTMwMzdiMjc2ZThmNWQxNzc3YjkxZDM3N2Q3JlgtQW16LVNpZ25lZEhlYWRlcnM9aG9zdCJ9.n2ca947JX8gRvwJHrUmef0wq1InSRRmfJPPijHlIemg)
+  ![Image 18](https://github-production-user-asset-6210df.s3.amazonaws.com/195579379/460135091-86cd67c6-f8b6-4f19-a6b0-2b045ecd592a.PNG?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250627%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250627T203558Z&X-Amz-Expires=300&X-Amz-Signature=2e94cd99366ce5d516345c9698c34381e3a7155867e81eee91284aeb9fdb6ed0&X-Amz-SignedHeaders=host)
+  ![Image 19](https://github-production-user-asset-6210df.s3.amazonaws.com/195579379/460135330-ed06c548-2b40-484c-a23a-ec5188b126e5.PNG?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250627%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250627T203652Z&X-Amz-Expires=300&X-Amz-Signature=20d922653bd68c1e9acd6c540ba757c9a9a4b87d7541b759fff16ee2822bb126&X-Amz-SignedHeaders=host)
 
 - **Year for cutoff:** the user can specify a year for the analysis. The analysis will only calculate values for protected areas that were established before this cutoff year.
 
