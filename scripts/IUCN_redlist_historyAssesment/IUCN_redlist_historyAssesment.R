@@ -47,4 +47,16 @@ iucn_history_assessment_data <- iucn_history_assessment_data %>%
 iucn_history_assessment_data_path <- file.path(outputFolder, paste0("iucn_history_assessment_data", ".csv")) # Define the file path
 write.csv(iucn_history_assessment_data, iucn_history_assessment_data_path, row.names = F) # write result
 
+citation <- rredlist::rl_citation(key = token)
+
+# Extract citation
+citation <- capture.output(print(citation))
+lines <- trimws(unlist(strsplit(citation, "\n")))
+start <- grep("^IUCN \\([0-9]{4}\\)", lines)
+end <- grep("Accessed on", lines)
+end <- end[end >= start][1]
+
+citation <- paste(lines[start:end], collapse = " ")
+
+biab_output("api_citation", citation)
 biab_output("iucn_history_assessment_data", iucn_history_assessment_data_path)

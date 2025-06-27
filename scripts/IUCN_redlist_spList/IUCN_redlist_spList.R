@@ -28,9 +28,22 @@ iucn_splist <- UICN_taxon %>% dplyr::filter(sis_taxon_id %in% UICN_country$sis_t
 
 # Write results ####
 iucn_splist <- iucn_splist %>%
-    dplyr::rename(scientific_name = taxon_scientific_name)
+  dplyr::rename(scientific_name = taxon_scientific_name)
 iucn_splist$scopes <- sapply(iucn_splist$scopes, function(x) paste(unlist(x), collapse = ", "))
 iucn_splist_path <- file.path(outputFolder, paste0("iucn_splist", ".csv")) # Define the file path
 write.csv(iucn_splist, iucn_splist_path, row.names = F) # write result
 
 biab_output("iucn_splist", iucn_splist_path)
+
+citation <- rredlist::rl_citation(key = token)
+
+# Extract citation
+citation <- capture.output(print(citation))
+lines <- trimws(unlist(strsplit(citation, "\n")))
+start <- grep("^IUCN \\([0-9]{4}\\)", lines)
+end <- grep("Accessed on", lines)
+end <- end[end >= start][1]
+
+citation <- paste(lines[start:end], collapse = " ")
+
+biab_output("api_citation", citation)

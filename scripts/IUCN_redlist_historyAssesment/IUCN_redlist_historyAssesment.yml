@@ -1,6 +1,6 @@
 script: IUCN_redlist_historyAssesment.R
 name: IUCN Red List history assesment
-description: Gets the entire history IUCN Red List assessments for a given species list.
+description: Gets the entire history IUCN Red List assessments for a given species list using the ICUN Red List API.
 author:
  - name: Maria Camila diaz
    email: maria.camila.diaz.corzo@usherbrooke.ca
@@ -40,4 +40,8 @@ outputs:
     label: History assessment data
     description:  Dataset that contains the historical IUCN threat category assessments, organized by year, for the listed species.
     type: text/csv
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquire using IUCN Red List API
+    type: text
 
