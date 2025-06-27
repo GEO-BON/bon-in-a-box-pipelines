@@ -87,8 +87,8 @@
       "id": "21",
       "type": "output",
       "position": {
-        "x": 1811,
-        "y": 257.8333333333333
+        "x": 1869,
+        "y": 206.83333333333331
       },
       "data": {
         "label": "Output"
@@ -425,6 +425,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "27",
+      "type": "output",
+      "position": {
+        "x": 1862.3043212890625,
+        "y": 263.02173614501953
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -511,12 +522,19 @@
       "target": "26",
       "targetHandle": null,
       "id": "reactflow__edge-24-26"
+    },
+    {
+      "source": "15",
+      "sourceHandle": "redlist_matrix",
+      "target": "27",
+      "targetHandle": null,
+      "id": "reactflow__edge-15redlist_matrix-27"
     }
   ],
   "inputs": {
     "pipeline@23": {
       "label": "Country",
-      "description": "Select the country to obtain the list of species.",
+      "description": "Select a country to obtain the list of its species.",
       "type": "options",
       "example": "Colombia",
       "options": [
@@ -773,7 +791,7 @@
     },
     "pipeline@24": {
       "label": "Taxonomic group",
-      "description": "Select the taxonomic group to obtain the list of species. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
+      "description": "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
       "type": "options",
       "example": "mammals",
       "options": [
@@ -1073,7 +1091,7 @@
     },
     "pipeline@24|default_output": {
       "label": "Taxonomic group",
-      "description": "Taxonomic group to obtain the list of species. ",
+      "description": "Taxonomic group of the species that were assessed.",
       "example": "mammals",
       "type": "options",
       "options": [
@@ -1114,15 +1132,21 @@
     },
     "RedListIndex>RedListIndex.yml@15|redlist_data": {
       "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
-      "label": "redList data",
+      "label": "Red List data",
       "type": "text/csv",
       "weight": 2
     },
     "RedListIndex>RedListIndex.yml@15|redlist_trend_plot": {
-      "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species. For more information about the workflow and the interpretation of the results consult the documentation [RLI documentation](https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html) ",
-      "label": "redlist trend plot",
+      "description": "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss. For more information about the workflow and the interpretation of the results consult the documentation [RLI documentation](https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html) ",
+      "label": "Red List trend plot",
       "type": "image/jpg",
       "weight": 3
+    },
+    "RedListIndex>RedListIndex.yml@15|redlist_matrix": {
+      "description": "Matrix showing the distribution of threat categories over time for the group of species of interest.",
+      "label": "Red List matrix",
+      "type": "text/csv",
+      "weight": 4
     }
   },
   "metadata": {
@@ -1131,11 +1155,19 @@
     "author": [
       {
         "name": "Victor Julio Rincon",
-        "identifier": "rincon-v@javeriana.edu.co"
+        "email": "rincon-v@javeriana.edu.co",
+        "role": "Pipeline development"
       },
       {
         "name": "Maria Camila Diaz",
-        "identifier": "maria.camila.diaz.corzo@usherbrooke.ca"
+        "email": "maria.camila.diaz.corzo@usherbrooke.ca",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetitia.tremblay@mcgill.ca",
+        "identifier": "http://www.linkedin.com/in/laetitia-tremblay-b0619b273",
+        "role": "Pipeline testing and debugging"
       }
     ],
     "license": "MIT",
