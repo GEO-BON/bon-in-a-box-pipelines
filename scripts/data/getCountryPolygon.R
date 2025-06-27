@@ -4,6 +4,7 @@ library(rnaturalearth)
 library(rnaturalearthdata)
 library(dplyr)
 library(countrycode)
+# For review PR
 
 if (!requireNamespace("packageName", quietly = TRUE)) {
   remotes::install_github("ropensci/rnaturalearthhires")
