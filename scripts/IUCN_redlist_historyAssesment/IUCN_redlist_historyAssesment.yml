@@ -42,6 +42,6 @@ outputs:
     type: text/csv
   api_citation:
     label: IUCN API citation
-    description: Citation for the data acquire using IUCN Red List API
+    description: Citation for the data acquired using the IUCN Red List API
     type: text
 
