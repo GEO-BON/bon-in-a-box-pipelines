@@ -57,10 +57,11 @@ if (isTRUE(input$buffer_points)) {
   print("Creating buffer for points with reported area")
   points_data <- protected_areas[(protected_areas$geometry_type == "POINT"),]
 
-  if(nrow(points_data > 0)){
+  if(nrow(points_data) > 0){
     points_data <- points_data %>%
     mutate(buffer_radius = sqrt((as.numeric(reported_area) * 1e6) / pi)) %>%
     st_buffer(dist = buffer_radius)
+   print(points_data)
 
       if (any(protected_areas$geometry_type == "POLYGON")) {
       protected_areas <- rbind(protected_areas[which(protected_areas$geometry_type == "POLYGON"), ], points_data)
@@ -68,6 +69,7 @@ if (isTRUE(input$buffer_points)) {
       protected_areas <- points_data
       }
   } else {
+    print("There are no protected areas represented as points")
     protected_areas <- protected_areas
     }
 } else {
