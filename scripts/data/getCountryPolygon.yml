@@ -1,5 +1,6 @@
 script: getCountryPolygon.R
 name: Get country polygon
+# For review PR
 description: |
   This script pulls country (or state/province/region) polygons using the rnaturalearth package,
   and outputs as a geopackage, projected in the crs of interest.

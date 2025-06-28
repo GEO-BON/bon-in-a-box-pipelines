@@ -1,3 +1,4 @@
+# For review PR
 script: getWDPA.py
 name: Get protected areas from World Database on Protected Areas (WDPA)
 description: This script finds and saves the polygons of protected areas of a given country from the world database of protected areas (WDPA).
