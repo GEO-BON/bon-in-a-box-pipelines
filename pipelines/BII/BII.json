@@ -479,7 +479,7 @@
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 1
     },
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
@@ -491,7 +491,7 @@
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 4
+      "weight": 3
     }
   },
   "metadata": {

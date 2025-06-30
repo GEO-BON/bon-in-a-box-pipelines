@@ -1,6 +1,9 @@
 script: getObservations.R
-name: GBIF Observations < 100 000 (DEPRECATED - Please use script getGBIFObservations instead)
+name: GBIF Observations < 100 000 (DEPRECATED)
 description: "This script gets observations from GBIF database, using the package RGIF."
+lifecycle:
+  status: "deprecated"
+  message: Please use script "GBIF Observations from Download API" (getGBIFObservations) instead
 external_link: https://github.com/ropensci/rgbif
 author:
   - name: Sarah Valentin

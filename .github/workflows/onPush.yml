@@ -1,13 +1,22 @@
-name: On push, any branch
+name: Pipeline structure & metadata validation
 
-on: [push]
+on:
+  push:
+    paths:
+      - '.github/workflows/onPush.yml'
+      - 'scripts/**'
+      - 'pipelines/**'
+
 # TODO change pipeline-repo-actions to main
 jobs:
   run-yml-validation:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+      name: Checkout pipelines and scripts repository
+
     - uses: actions/checkout@v4
+      name: Checkout server repository
       with:
         # Repository name with owner. For example, actions/checkout
         # Default: ${{ github.repository }}
@@ -25,6 +34,7 @@ jobs:
       working-directory: .
       run: touch runner.env
       shell: bash
+
     - name: Script and pipelines basic validation
       working-directory: .
       run: .server/prod-server.sh validate
