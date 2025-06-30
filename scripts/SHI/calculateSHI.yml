@@ -1,5 +1,5 @@
 script: calculateSHI.R
-name: Caculate SHI
+name: Calculate SHI
 description:
   This script produces 1) the Species Habitat Index time series, by averaging the Species Habitat Scores;
   2) the Steward’s Species Habitat Index, by averaging the Species Habitat Scores weighted by the proportion
