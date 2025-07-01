@@ -44,6 +44,16 @@ outputs:
       in the study area. For example, if half of the species habitat is covered by the study area,
       the reference year’s value will be 50%.
     type: image/png
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-dplyr
+    - r-purrr
+    - r-readr
+    - r-ggplot2
+    - r-rjson
 references:
 - text: Jetz et al., Species Habitat Index, accessed on 24/8/2022.
   doi: https://mol.org/indicators/habitat/background)
