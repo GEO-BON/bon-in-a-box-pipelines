@@ -3,16 +3,13 @@
 #-------------------------------------------------------------------------------
 options(timeout = max(60000000, getOption("timeout")))
 
-packages <- c(
+packages <- list(
   "rjson", "dplyr", "tidyr", "purrr", "terra", "stars", "sf", "readr",
-  "geodata", "gdalcubes", "rredlist", "stringr", "httr2", "geojsonsf", "rstac"
+  "geodata", "gdalcubes", "rredlist", "stringr", "httr2", "geojsonsf", "rstac",
+  "sp"
 )
 
-# if (!"gdalcubes" %in% installed.packages()[,"Package"]) remotes::install_git("https://github.com/appelmar/gdalcubes_R.git")
-# new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-# if(length(new.packages)) install.packages(new.packages)
-
-lapply(packages, require, character.only = T)
+lapply(packages, library, character.only = TRUE)
 
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 
@@ -130,10 +127,8 @@ output <- tryCatch(
       print("A study area is required, please choose one of the options")
     }
 
-
     sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
     area_study_a <<- sf_area_lim1_srs |> st_area()
-
 
     print("==================== Step 1 - Study area loaded =====================")
 
@@ -334,17 +329,12 @@ output <- tryCatch(
     write_tsv(df_aoh_areas, file = path_aoh_areas)
 
 
-    # Outputing result to JSON -----------------------------------------------------
-    output <- list(
-      "r_area_of_habitat" = v_path_to_area_of_habitat,
-      "sf_bbox" = v_path_bbox_analysis,
-      "df_aoh_areas" = path_aoh_areas
-    )
+    # Outputing result -----------------------------------------------------
+    biab_output("r_area_of_habitat", v_path_to_area_of_habitat)
+    biab_output("sf_bbox", v_path_bbox_analysis)
+    biab_output("df_aoh_areas", path_aoh_areas)
   },
   error = function(e) {
     list(error = conditionMessage(e))
   }
 )
-
-jsonData <- toJSON(output, indent = 2)
-write(jsonData, file.path(outputFolder, "output.json"))
