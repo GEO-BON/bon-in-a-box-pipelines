@@ -54,6 +54,8 @@ BON in a Box has a pipeline to calculate SHS and SHI for species, countries, and
 
 - **Elevation buffer:** Elevation buffer (in meters) to be added or subtracted to the reported species elevation range. Default is zero. Positive values will increase the range by that number in meters, while negative values will decrease the range by that number.
 
+### Pipeline steps
+
 #### **1. Getting the species range map**
 This step downloads the range map for the species of interest from the expert source chosen (ICUN, MOL, or QC).
 
