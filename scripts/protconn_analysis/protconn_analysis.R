@@ -119,7 +119,8 @@ dissolve_overlaps <- function(x) {
 ############## CALCULATE PROTCONN ##################
 
 print("Calculating ProtConn")
-protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years)
+
+protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years | is.na(legal_status_updated_at))
 print("Num prot areas:")
 print(nrow(protected_areas))
 # Get rid of overlaps

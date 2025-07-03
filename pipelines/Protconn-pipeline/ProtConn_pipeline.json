@@ -464,6 +464,9 @@
         "role": "Environment setup, technical support, standards review"
       }
     ],
+    "lifecycle": {
+      "status": "in_review"
+    },
     "references": [
       {
         "text": "Saura et al. 2017",
