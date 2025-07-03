@@ -1,3 +1,4 @@
+# For review PR
 script: protconn_analysis.R
 name: Protconn Analysis
 description: This script calculates the Protected Connected Index (ProtConn) from protected area polygons using the MK_ProtConn function in the Makurhini package. This creates a distance matrix from protected area polygons and calculates ProtConn using dispersal probabilities between protected areas.
