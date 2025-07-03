@@ -7,6 +7,8 @@ author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
+lifecycle:
+  status: in_review
 inputs:
   country:
     label: ISO3 country code

@@ -7,6 +7,8 @@ author:
     identifier: https://orcid.org/0000-0001-6020-6690
 license: CC BY
 external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/protconn_analysis
+lifecycle:
+  status: in_review
 inputs:
   study_area_polygon:
     label: Polygon of study area
