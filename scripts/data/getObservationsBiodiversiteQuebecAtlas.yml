@@ -42,9 +42,10 @@ outputs:
     description: Date at which the database was last updated
     type: text
     example: "2024-01-01"
-conda: # Optional, only needed if your script has specific package dependencies
+conda:
   channels:
     - conda-forge
+    - r
   dependencies:
     - r-duckdb=1.0.0 #package=version
     - r-dplyr

@@ -51,3 +51,20 @@ outputs:
     label: rasters_selected
     description: array of output raster paths
     type: image/tiff;application=geotiff[]
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-raster
+    - r-stars
+    - r-dplyr
+    - r-CoordinateCleaner
+    - r-lubridate
+    - r-rgdal
+    - r-remotes
+    - r-RCurl
+    - r-gdalcubes
+    - r-devtools

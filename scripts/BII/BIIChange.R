@@ -14,15 +14,14 @@ end_yr <- paste0("bii_nhm_10km_", input$end_year)
 rasters <- terra::rast(c(input$rasters))
 print(names(rasters))
 
-first_raster <- rasters[[names(rasters)==start_yr]]
-end_raster <- rasters[[names(rasters)==end_yr]]
+first_raster <- rasters[[names(rasters) == start_yr]]
+end_raster <- rasters[[names(rasters) == end_yr]]
 
 print(names(first_raster))
 # Summarise
-bii_change <- first_raster-end_raster
+bii_change <- first_raster - end_raster
 
 # Output
 bii_change_path <- file.path(outputFolder, "BII_change.tif")
 writeRaster(bii_change, bii_change_path)
 biab_output("bii_change", bii_change_path)
-

@@ -17,25 +17,25 @@ inputs:
     description: shapefile, representing a study extent
     type: application/dbf
     example: "/scripts/SDM/extentToBbox_extent.shp"
-  method_background: 
+  method_background:
     label: method background
     description: method used to sample background points
     type: options
-    options: 
+    options:
       - random
       - inclusion_buffer
       - weighted_raster
       - unweighted_raster
       - thickening
     example: random
-  n_background: 
+  n_background:
     label: number of background points
     description: number of background points
     type: int
     example: 10000
-  predictors: 
+  predictors:
     label: predictors
-    description: raster, predictors variables 
+    description: raster, predictors variables
     type: image/tiff;application=geotiff[]
     example: "/scripts/filtering/cleanCoordinates_predictors.tif"
   raster:
@@ -54,4 +54,17 @@ outputs:
     description: TSV file containing a table with background points.
     type: text/tab-separated-values
     example:
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-dplyr
+    - r-raster
+    - r-CoordinateCleaner
+    - r-stars
+    - r-rstac
+    - r-gdalcubes
 
