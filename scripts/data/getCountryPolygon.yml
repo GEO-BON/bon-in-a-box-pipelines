@@ -1,17 +1,22 @@
 script: getCountryPolygon.R
 name: Get country polygon
 description: |
-  This script pulls country (or state/province/region) polygons using the rnaturalearth package, and outputs as a geopackage, projected in the crs of interest.
+  This script pulls country (or state/province/region) polygons using the rnaturalearth package,
+  and outputs as a geopackage, projected in the crs of interest.
 author:
-  - name: Jory Griffith 
+  - name: Jory Griffith
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
+lifecycle:
+  status: in_review
 inputs:
   country:
-    label: Country
-    description: Country of interest
+    label: ISO3 country code
+    description: |
+      ISO3 country code for the country of interest. For a list of ISO3 country codes,
+      look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
     type: text
-    example: Colombia
+    example: COL
   region:
     label: State/Province
     description: Region of interest
@@ -22,11 +27,15 @@ inputs:
     description: |
       This input specifies the coordinate reference system of the country polygon output.
 
-      The numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.
-      This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.
-      
-      For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).
-      The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
+      The numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial
+      reference system that will be used as a reference for the study area.
+      This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial
+      representation of the data in the study area.
+
+      For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG
+      website at [https://epsg.org/home.html](https://epsg.org/home.html).
+      The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in
+      various geospatial contexts.
     type: text
     example: "EPSG:4326"
 outputs:
@@ -40,7 +49,7 @@ outputs:
     type: text
   country_polygon:
     label: Polygon of country or region
-    description: Polygon of the chosen country or region in the crs of choice in geopackage format
+    description: A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.
     type: application/geopackage+sqlite3
 conda:
   channels:
@@ -53,3 +62,4 @@ conda:
     - r-rnaturalearth
     - r-rnaturalearthdata
     - r-dplyr
+    - r-countrycode
