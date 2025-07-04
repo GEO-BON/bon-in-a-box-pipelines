@@ -1128,15 +1128,18 @@
     "author": [
       {
         "name": "François Rousseu",
-        "identifier": "https://orcid.org/0000-0002-2400-2479"
+        "identifier": "https://orcid.org/0000-0002-2400-2479",
+        "role": "Pipeline development"
       },
       {
         "name": "Guillaume Blanchet",
-        "identifier": "https://orcid.org/0000-0001-5149-2488"
+        "identifier": "https://orcid.org/0000-0001-5149-2488",
+        "role": "Pipeline development"
       },
       {
         "name": "Dominique Gravel",
-        "identifier": "https://orcid.org/0000-0002-4498-7076"
+        "identifier": "https://orcid.org/0000-0002-4498-7076",
+        "role": "Pipeline development"
       }
     ],
     "license": "MIT",

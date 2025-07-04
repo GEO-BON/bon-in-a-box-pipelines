@@ -479,7 +479,7 @@
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 1
+      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
@@ -491,7 +491,7 @@
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 4
     }
   },
   "metadata": {
@@ -500,7 +500,9 @@
     "author": [
       {
         "name": "Jory Griffith",
-        "email": "jory.griffith@mcgill.ca"
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
       }
     ],
     "license": "CC-BY-NC-SA",

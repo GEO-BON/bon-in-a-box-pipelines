@@ -908,7 +908,8 @@
     "author": [
       {
         "name": "Michael D. Catchen",
-        "identifier": "https://orcid.org/0000-0002-6506-6487"
+        "identifier": "https://orcid.org/0000-0002-6506-6487",
+        "role": "Pipeline development"
       }
     ],
     "license": "MIT",
