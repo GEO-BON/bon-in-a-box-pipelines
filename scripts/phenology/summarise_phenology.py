@@ -18,13 +18,19 @@ polygon = data['study_area_polygon']
 aggregate_function = data['aggregate_function']
 spatial_resolution = data['spatial_resolution']
 season = data['season']
+id = os.getenv("CDSE_CLIENT_ID")
+secret = os.getenv("CDSE_CLIENT_SECRET")
+
+# input checks
+if (id is None or secret == None):
+    biab_error_stop("Please specify CDSE credentials in runner.env")
 
 connection = openeo.connect("https://openeo.dataspace.copernicus.eu/")
 
 # put authentication here
 connection.authenticate_oidc_client_credentials(
-client_id=os.getenv("CDSE_CLIENT_ID"),
-client_secret=os.getenv("CDSE_CLIENT_SECRET"),
+client_id = id,
+client_secret = secret,
 )
 
 datacube = connection.load_collection(
