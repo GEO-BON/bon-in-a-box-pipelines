@@ -96,14 +96,14 @@ inputs:
     example: 'code'
 outputs:
   redlist_trend_plot:
-    label: RedList trend
-    description: "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species."
+    label: Red List trend
+    description: "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss."
     type: image/jpg
   redlist_data:
-    label: RedList data
+    label: Red List data
     description: "Dataset containing the results of the Red List Index (RLI) calculation."
     type: text/csv
   redlist_matrix:
-    label: RedList matrix
+    label: Red List matrix
     description: "Matrix showing the distribution of threat categories over time for the group of species."
     type: text/csv
