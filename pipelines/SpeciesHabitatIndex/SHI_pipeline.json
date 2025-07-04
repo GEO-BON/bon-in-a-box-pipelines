@@ -389,15 +389,15 @@
       "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
       "label": "region",
       "type": "text",
-      "weight": 3,
-      "example": null
+      "example": null,
+      "weight": 3
     },
     "data>getAreaOfHabitat.yml@80|study_area": {
       "description": "Path to the study area file if you choosing option \"User defined\" for study area option. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder). ",
       "label": "study area",
       "type": "application/geopackage+sqlite3",
-      "weight": 4,
-      "example": null
+      "example": null,
+      "weight": 4
     },
     "data>getAreaOfHabitat.yml@80|buff_size": {
       "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
@@ -507,20 +507,20 @@
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "elevation buffer",
       "type": "int",
-      "weight": 17,
-      "example": null
+      "example": null,
+      "weight": 17
     }
   },
   "outputs": {
     "pipeline@76|default_output": {
-      "weight": 0,
       "label": "species",
       "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
       "example": [
         "Myrmecophaga tridactyla",
         "Ateles fusciceps"
       ],
-      "type": "text[]"
+      "type": "text[]",
+      "weight": 0
     },
     "data>getRangeMap.yml@65|sf_range_map": {
       "description": "Polygon with expected area for the species.",
@@ -594,22 +594,27 @@
     "author": [
       {
         "name": "Maria Isabel Arce-Plata",
-        "identifier": "https://orcid.org/0000-0003-4024-9268"
+        "identifier": "https://orcid.org/0000-0003-4024-9268",
+        "role": "Pipeline development"
       },
       {
         "name": "Guillaume Larocque",
-        "identifier": "https://orcid.org/0000-0002-5967-9156"
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
       },
       {
         "name": "Jaime Burbano-Girón",
-        "identifier": "https://orcid.org/0000-0001-6570-439X"
+        "identifier": "https://orcid.org/0000-0001-6570-439X",
+        "role": "Pipeline development"
       },
       {
-        "name": "Maria Camila Díaz"
+        "name": "Maria Camila Díaz",
+        "role": "Pipeline development"
       },
       {
         "name": "Timothée Poisot",
-        "identifier": "https://orcid.org/0000-0002-0735-5184"
+        "identifier": "https://orcid.org/0000-0002-0735-5184",
+        "role": "Pipeline development"
       }
     ],
     "license": "CC BY",
