@@ -1131,12 +1131,12 @@
     "author": [
       {
         "name": "Victor Julio Rincon",
-        "identifier": "rincon-v@javeriana.edu.co",
+        "email": "rincon-v@javeriana.edu.co",
         "role": "Pipeline development"
       },
       {
         "name": "Maria Camila Diaz",
-        "identifier": "maria.camila.diaz.corzo@usherbrooke.ca",
+        "email": "maria.camila.diaz.corzo@usherbrooke.ca",
         "role": "Pipeline development"
       },
       {
