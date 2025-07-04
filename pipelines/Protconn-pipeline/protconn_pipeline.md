@@ -40,12 +40,13 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 - **Date Column Name:** the user must indicate the name of the column in the custom protected area data file that specifies when the protected area was created (leave blank if only using WDPA data).
 
 - **Distance analysis threshold:** the user can specify one or more dispersal distances depending on which species they are interested in. Common dispersal distances are 1,000 meters (1km), 10,000 m (10km) and 100,000 m (100 km) The dispersal distance is the median of the negative exponential dispersal kernel, meaning that at that distance there is a dispersal probability of 0.5. Note that larger dispersal distances will be more computationally intensive.
-  ![Image 17](https://github-production-user-asset-6210df.s3.amazonaws.com/195579379/460134254-f055ee25-ce62-479c-aa58-b736ff713dd5.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250627%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250627T203450Z&X-Amz-Expires=300&X-Amz-Signature=fbd06ff9d6b56914176c313dbb0858b3f19042979015ad1bd1b4bc2898a11586&X-Amz-SignedHeaders=host)
+  ![](Image17.png)
 
 - **Type of distance matrix:** the user can specify whether the distances between protected areas should be measured using the centroid (geometric center) of the protected area or the closest edge.
 
-  ![Image 18](https://github-production-user-asset-6210df.s3.amazonaws.com/195579379/460135091-86cd67c6-f8b6-4f19-a6b0-2b045ecd592a.PNG?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250627%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250627T203558Z&X-Amz-Expires=300&X-Amz-Signature=2e94cd99366ce5d516345c9698c34381e3a7155867e81eee91284aeb9fdb6ed0&X-Amz-SignedHeaders=host)
-  ![Image 19](https://github-production-user-asset-6210df.s3.amazonaws.com/195579379/460135330-ed06c548-2b40-484c-a23a-ec5188b126e5.PNG?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20250627%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20250627T203652Z&X-Amz-Expires=300&X-Amz-Signature=20d922653bd68c1e9acd6c540ba757c9a9a4b87d7541b759fff16ee2822bb126&X-Amz-SignedHeaders=host)
+  ![](Image18.PNG)
+
+  ![](Image19.PNG)
 
 - **Year for cutoff:** the user can specify a year for the analysis. The analysis will only calculate values for protected areas that were established before this cutoff year.
 
@@ -86,7 +87,7 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 ### Pipeline outputs
 
-- **ProtConn results:** The pipeline gives a table with several measures
+- **ProtConn results:** the pipeline gives a table with several measures:
   - Unprotected - percentage of study area that is protected
   - ProtConn - percentage of the study area that is protected and connected
   - ProtUnconn - percentage of the study area that is protected and unconnected
