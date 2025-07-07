@@ -379,14 +379,14 @@
       "weight": 1
     },
     "data>getAreaOfHabitat.yml@80|country_code": {
-      "description": "Name of the country for the analysis. Check the available countries and regions [here](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).",
+      "description": "Name of the country for the analysis. Refer to the [list of available countries and regions on Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).",
       "label": "Country",
       "type": "text",
       "example": "Colombia",
       "weight": 2
     },
     "data>getAreaOfHabitat.yml@80|region": {
-      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions [here](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).",
+      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Refer to the [list of available countries and regions on Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).",
       "label": "Region",
       "type": "text",
       "example": null,
@@ -465,14 +465,14 @@
       "weight": 11
     },
     "SHI>habitatChange_GFW.yml@96|t_0": {
-      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data [here](https://stac.geobon.org/collections/gfw-lossyear).",
+      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the [Global Forest Watch data](https://stac.geobon.org/collections/gfw-lossyear).",
       "label": "Initial time",
       "type": "int",
       "example": 2000,
       "weight": 12
     },
     "SHI>habitatChange_GFW.yml@96|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data [here](https://stac.geobon.org/collections/gfw-lossyear).",
+      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the [Global Forest Watch data](https://stac.geobon.org/collections/gfw-lossyear).",
       "label": "Final time",
       "type": "int",
       "example": 2020,

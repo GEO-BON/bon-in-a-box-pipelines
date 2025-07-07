@@ -65,6 +65,7 @@ sdm_runs <- sdms[["pred_runs"]]
 pred.output <- file.path(outputFolder, "sdm_pred.tif")
 runs.output <- paste0(outputFolder, "/sdm_runs_", 1:nlyr(sdm_runs), ".tif")
 # runs.output <- file.path(outputFolder, "sdm_runs.tif")
+biab_output("sdm_pred", pred.output)
 
 sdm_pred <- project(sdm_pred, crs(input$proj)) ## Temporary fix while maxent transitions to terra
 terra::writeRaster(
@@ -85,5 +86,4 @@ for (i in 1:nlyr(sdm_runs)) {
   )
 }
 
-biab_output("sdm_pred", pred.output)
 biab_output("sdm_runs", runs.output)

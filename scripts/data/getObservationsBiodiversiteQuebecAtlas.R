@@ -13,6 +13,7 @@ atlas_dates <- read.csv(paste0(base_url, "atlas_export_dates.csv"), header = FAL
 dbdate <- tail(atlas_dates$dates, n = 1)
 file_name <- paste0(base_url, "atlas_public_", dbdate, ".parquet")
 dbExecute(atlas_con, paste0("CREATE VIEW atlas AS SELECT * FROM read_parquet('", file_name, "');"))
+biab_output("database_date", dbdate)
 
 # Load inputs
 input <- biab_inputs()
@@ -66,6 +67,7 @@ print(q)
 data <- dbGetQuery(atlas_con, q)
 data <- data[, !(names(data) %in% c("lat", "lng", "yr", "geom", "geom_bbox"))]
 print(data)
+biab_output("total_records", nrow(data))
 
 outF <- file.path(outputFolder)
 outFile <- paste0(outF, "/Observations.csv")
@@ -73,5 +75,3 @@ outFile <- paste0(outF, "/Observations.csv")
 write.csv(data, outFile)
 
 biab_output("observations_file", outFile)
-biab_output("total_records", nrow(data))
-biab_output("database_date", dbdate)

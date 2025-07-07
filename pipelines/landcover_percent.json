@@ -217,7 +217,7 @@
   ],
   "inputs": {
     "getCountrybbox.json@30|data>getCountryPolygon.yml@1|country": {
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+      "description": "ISO3 country code for country of interest. Refer to the [list of ISO3 country codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
       "label": "ISO3 country code",
       "type": "text",
       "example": "COL",
