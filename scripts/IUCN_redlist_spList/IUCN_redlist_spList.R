@@ -26,6 +26,10 @@ UICN_taxon <- rredlist::rl_comp_groups(name = input$taxonomic_group, key = token
 ## Filter country list by taxonomic group ####
 iucn_splist <- UICN_taxon %>% dplyr::filter(sis_taxon_id %in% UICN_country$sis_taxon_id)
 
+if (nrow(iucn_splist) == 0) {
+  biab_error_stop("Could not find any species of the specified taxon group in the country of interest")
+}
+
 # Write results ####
 iucn_splist <- iucn_splist %>%
   dplyr::rename(scientific_name = taxon_scientific_name)
