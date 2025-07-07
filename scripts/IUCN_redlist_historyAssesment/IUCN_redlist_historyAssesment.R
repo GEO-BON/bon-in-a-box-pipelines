@@ -8,7 +8,7 @@ input <- biab_inputs()
 # Load IUCN token----
 token <- Sys.getenv("IUCN_TOKEN")
 if (token == "") {
-  biab_error_stop("Please specify an IUCN token in your environment file")
+  biab_error_stop("Please specify an IUCN token in your environment file (runner.env)")
 }
 print(sprintf("Token: %s", token))
 
