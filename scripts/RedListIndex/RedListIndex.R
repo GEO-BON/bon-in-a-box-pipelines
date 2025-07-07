@@ -54,15 +54,20 @@ replace_na_with_previous <- function(df, target_col) {
 }
 
 df <- RedList_matrix_2 %>% as.data.frame.matrix()
-for (k in 2:ncol(RedList_matrix_2)) {
-  df <- replace_na_with_previous(df, k)
+print("df")
+print(colnames(df))
+print(df)
+if (ncol(df) > 1) {
+  for (k in 2:ncol(RedList_matrix_2)) {
+    df <- replace_na_with_previous(df, k)
+  }
 }
-
 matrix_output <- RedList_matrix_2
-for (k in 2:ncol(matrix_output)) {
-  matrix_output <- replace_na_with_previous(matrix_output, k)
+if (ncol(matrix_output) > 1) {
+  for (k in 2:ncol(matrix_output)) {
+    matrix_output <- replace_na_with_previous(matrix_output, k)
+  }
 }
-
 
 # Redlist data ####
 print("red")
