@@ -40,13 +40,14 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 - **Date Column Name:** the user must indicate the name of the column in the custom protected area data file that specifies when the protected area was created (leave blank if only using WDPA data).
 
 - **Distance analysis threshold:** the user can specify one or more dispersal distances depending on which species they are interested in. Common dispersal distances are 1,000 meters (1km), 10,000 m (10km) and 100,000 m (100 km) The dispersal distance is the median of the negative exponential dispersal kernel, meaning that at that distance there is a dispersal probability of 0.5. Note that larger dispersal distances will be more computationally intensive.
-  ![](Image17.png)
+
+  ![Dispersal probability](https://github.com/user-attachments/assets/5a867368-12a3-4402-aa1d-a034b9dc7962)
 
 - **Type of distance matrix:** the user can specify whether the distances between protected areas should be measured using the centroid (geometric center) of the protected area or the closest edge.
 
-  ![](Image18.PNG)
+  ![Centroid](https://github.com/user-attachments/assets/273e25a8-74ae-4453-a0a1-ccddf7df7138)
 
-  ![](Image19.PNG)
+  ![Nearest edge](https://github.com/user-attachments/assets/ba3b3b66-735a-4ea0-8db9-5398e8dc01a9)
 
 - **Year for cutoff:** the user can specify a year for the analysis. The analysis will only calculate values for protected areas that were established before this cutoff year.
 
