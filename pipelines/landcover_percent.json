@@ -102,6 +102,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "33",
+      "type": "output",
+      "position": {
+        "x": -225.12715242534352,
+        "y": 1.8187663154122689
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -195,15 +206,36 @@
       "target": "22",
       "targetHandle": "bbox",
       "id": "reactflow__edge-30data>getBoundingBox.yml@0|bbox-22bbox"
+    },
+    {
+      "source": "30",
+      "sourceHandle": "data>getCountryPolygon.yml@1|region",
+      "target": "33",
+      "targetHandle": null,
+      "id": "reactflow__edge-30data>getCountryPolygon.yml@1|region-33"
     }
   ],
   "inputs": {
+    "getCountrybbox.json@30|data>getCountryPolygon.yml@1|country": {
+      "description": "ISO3 country code for country of interest. Refer to the [list of ISO3 country codes](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "COL",
+      "weight": 0
+    },
+    "getCountrybbox.json@30|data>getCountryPolygon.yml@1|region": {
+      "description": "State of interest",
+      "label": "State/Province",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
     "data>loadFromStac.yml@23|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 0
+      "weight": 2
     },
     "data>loadFromStac.yml@23|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -213,14 +245,14 @@
         "esacci-lc|esacci-lc-2019",
         "esacci-lc|esacci-lc-2020"
       ],
-      "weight": 1
+      "weight": 3
     },
     "data>loadFromStac.yml@23|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "Spatial resolution",
       "type": "float",
       "example": 1000,
-      "weight": 2
+      "weight": 4
     },
     "data>loadFromStac.yml@23|resampling": {
       "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
@@ -243,7 +275,7 @@
         "q3"
       ],
       "example": "near",
-      "weight": 3
+      "weight": 5
     },
     "data>loadFromStac.yml@23|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
@@ -257,27 +289,13 @@
         "median"
       ],
       "example": "first",
-      "weight": 4
+      "weight": 6
     },
     "pipeline@27": {
       "label": "Study area EPSG",
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This MUST be in a projected reference system (not lat long).\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html). The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n*Leave blank if you want the bounding box to be in EPSG:4326.*",
       "type": "text",
       "example": "EPSG:6622",
-      "weight": 5
-    },
-    "getCountrybbox.json@30|data>getCountryPolygon.yml@1|country": {
-      "description": "Country of interest",
-      "label": "Country",
-      "type": "text",
-      "example": "Colombia",
-      "weight": 6
-    },
-    "getCountrybbox.json@30|data>getCountryPolygon.yml@1|region": {
-      "description": "State of interest",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
       "weight": 7
     }
   },
@@ -292,19 +310,19 @@
       "description": "Name of state/province of interest",
       "label": "Region",
       "type": "text",
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@23|rasters": {
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 3
     },
     "zonal_statistics>percentage_cover_classes.yml@22|class_percentage": {
       "description": "Percentage of each categorical class in a raster layer over a polygon or bounding box of interest",
       "label": "Percentage of classes",
       "type": "text/csv",
-      "weight": 3
+      "weight": 4
     }
   },
   "metadata": {
