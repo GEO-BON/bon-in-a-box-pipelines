@@ -34,6 +34,17 @@ outputs:
     label: expert range map
     description: Polygon with expected area for the species.
     type: application/geopackage+sqlite3[]
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-dplyr
+    - r-tidyr
+    - r-purrr
+    - r-sf
+    - r-stringr
 references:
   - text: Mammal Diversity Database. (2020). Mammal Diversity Database (Version 1.2) [Data set]. Zenodo.
     doi: http://doi.org/10.5281/zenodo.4139818

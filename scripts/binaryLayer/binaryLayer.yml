@@ -4,7 +4,7 @@ author:
   - name: Juan Zuloaga
 description: This script creates a binary layer from another layer using a threshold value (e.g.land cover class proportion above 0.8).
 inputs:
-  lc_classes: 
+  lc_classes:
     label: input list of layers
     description: layer names (land cover classes) as a list, or path to a list
     type: image/tiff;application=geotiff[]
@@ -20,8 +20,16 @@ inputs:
     type: float
     example: 0.8
 outputs:
-  output_binary: 
+  output_binary:
     label: binary layer output
     description: land cover raster classes, where 1 is above threshold and 0 below threshold.
     type: image/tiff;application=geotiff[]
     example: y2000_class210_binary.tif
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-dplyr
+    - r-raster
