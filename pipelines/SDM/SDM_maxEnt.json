@@ -116,31 +116,13 @@
       "id": "57",
       "type": "userInput",
       "position": {
-        "x": 120,
-        "y": 958.8333333333335
+        "x": -651.9999999999999,
+        "y": 330.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "EPSG:6623"
-      }
-    },
-    {
-      "id": "58",
-      "type": "userInput",
-      "position": {
-        "x": 163.04421957119848,
-        "y": 449.5086307292705
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
       }
     },
     {
@@ -568,6 +550,17 @@
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
       }
+    },
+    {
+      "id": "140",
+      "type": "io",
+      "position": {
+        "x": -214.66420451694,
+        "y": 148.83723702379834
+      },
+      "data": {
+        "descriptionFile": "getCountrybbox.json"
+      }
     }
   ],
   "edges": [
@@ -754,13 +747,6 @@
       "id": "reactflow__edge-101-97cutoff_cor"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-104bbox"
-    },
-    {
       "source": "47",
       "sourceHandle": null,
       "target": "44",
@@ -838,13 +824,6 @@
       "id": "reactflow__edge-121-133taxa"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "133",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-133bbox"
-    },
-    {
       "source": "57",
       "sourceHandle": null,
       "target": "133",
@@ -887,13 +866,6 @@
       "id": "reactflow__edge-57-134crs"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-134bbox"
-    },
-    {
       "source": "128",
       "sourceHandle": null,
       "target": "134",
@@ -915,13 +887,6 @@
       "id": "reactflow__edge-138-134resampling"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-139bbox"
-    },
-    {
       "source": "57",
       "sourceHandle": null,
       "target": "139",
@@ -941,6 +906,48 @@
       "target": "40",
       "targetHandle": "raster",
       "id": "reactflow__edge-139rasters-40raster"
+    },
+    {
+      "source": "140",
+      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "target": "134",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-140data>getCountryPolygon.yml@1|country_polygon-134study_area"
+    },
+    {
+      "source": "140",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "133",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-140data>getBoundingBox.yml@0|bbox-133bbox"
+    },
+    {
+      "source": "140",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "134",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-140data>getBoundingBox.yml@0|bbox-134bbox"
+    },
+    {
+      "source": "140",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "139",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-140data>getBoundingBox.yml@0|bbox-139bbox"
+    },
+    {
+      "source": "140",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "104",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-140data>getBoundingBox.yml@0|bbox-104bbox"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "140",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-57-140pipeline@2"
     }
   ],
   "inputs": {
@@ -953,6 +960,20 @@
       ],
       "weight": 0
     },
+    "getCountrybbox.json@140|data>getCountryPolygon.yml@1|country": {
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "CAN",
+      "weight": 1
+    },
+    "getCountrybbox.json@140|data>getCountryPolygon.yml@1|region": {
+      "description": "State of interest",
+      "label": "State/Province",
+      "type": "text",
+      "example": "Ontario",
+      "weight": 2
+    },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
       "label": "method background",
@@ -964,40 +985,28 @@
         "unweighted_raster"
       ],
       "example": "random",
-      "weight": 1
+      "weight": 3
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 2
+      "weight": 4
     },
     "pipeline@46": {
       "label": "number of runs",
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "type": "int",
       "example": 2,
-      "weight": 3
+      "weight": 5
     },
     "pipeline@57": {
       "label": "projection system",
       "description": "String, projection system",
       "type": "text",
-      "example": "EPSG:6624",
-      "weight": 4
-    },
-    "pipeline@58": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 5
+      "example": "EPSG:3348",
+      "weight": 6
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
@@ -1011,35 +1020,35 @@
         "checkerboard2"
       ],
       "example": "block",
-      "weight": 6
+      "weight": 7
     },
     "pipeline@128": {
       "label": "spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 7
+      "weight": 8
     },
     "data>getGBIFObservations>getGBIFObservations.yml@133|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 8
+      "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@133|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 9
+      "weight": 10
     },
     "data>loadFromStac.yml@134|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 10
+      "weight": 11
     },
     "data>loadFromStac.yml@134|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -1049,13 +1058,6 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 11
-    },
-    "data>loadFromStac.yml@134|study_area": {
-      "description": "Polygon of study area used to crop output layers",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
       "weight": 12
     },
     "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
