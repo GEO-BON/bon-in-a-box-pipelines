@@ -1,0 +1,38 @@
+script: BIIChange.R
+name: Biodiversity Intactness Index Change
+description: "This script generates a raster of the change in the Biodiversity Intactness Index betwen two chosen time points"
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  rasters:
+    label: Rasters of BII
+    type: image/tiff;application=geotiff[]
+    description: Rasters for BII
+    example: null
+  start_year:
+    label: Start year for BII raster comparison
+    type: options
+    description: Reference BII year for raster plotting
+    options:
+      - "2000"
+      - "2005"
+      - "2010"
+      - "2015"
+    example: "2000"
+  end_year:
+    label: End year for BII comparison
+    description: BII layer to compare to the start year
+    type: options
+    options:
+      - "2005"
+      - "2010"
+      - "2015"
+      - "2020"
+    example: "2020"
+outputs:
+  bii_change:
+    label: Change in BII
+    description: Raster plot of change in BII. Higher numbers indicate greater percentage BII loss.
+    type: image/tiff;application=geotiff[]

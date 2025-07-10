@@ -1,11 +1,3 @@
-
-
-## Install required packages
-packages <- c("terra", "rjson", "raster", "dplyr", "rstac",
-              "CoordinateCleaner", "stars", "gdalcubes")
-new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
-if(length(new.packages)) install.packages(new.packages)
-
 ## Load required packages
 library("terra")
 library("rjson")
@@ -20,52 +12,45 @@ library("gdalcubes")
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/selectBackgroundFunc.R", sep = "/"))
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
-
-setwd(outputFolder)
-
-input <- fromJSON(file=file.path(outputFolder, "input.json"))
+input <- biab_inputs()
 print("Inputs: ")
 print(input)
 
 study_extent <- sf::st_read(input$extent)
 predictors <- terra::rast(input$predictors)
-presence <- read.table(file = input$presence, sep = '\t', header = TRUE)
+presence <- read.table(file = input$presence, sep = "\t", header = TRUE)
 
 # Sometimes it is an empty character instead
-if(input$raster == ""){
-  input$raster = NULL
+if (input$raster == "") {
+  input$raster <- NULL
 }
 
 # Optional.. so without input it should be NULL
-if(grepl("raster", input$method_background) & !is.null(input$raster)){
+if (grepl("raster", input$method_background) & !is.null(input$raster)) {
   # Read in path to file
   heatmap <- terra::rast(input$raster)
   # This step is *slow*; an alternative would be better
   # The same is applied to 'loadPredictorsFunc.R' as well
   heatmap <- terra::project(heatmap, predictors)
-}else{
+} else {
   heatmap <- NULL
 }
 
-
 background <- create_background(
-  predictors = predictors, 
+  predictors = predictors,
   obs = presence,
   mask = study_extent,
   method = input$method_background,
   n = input$n_background,
   width_buffer = input$width_buffer,
   density_bias = input$density,
-  raster = heatmap)
-
-background.output <- file.path(outputFolder, "background.tsv")
-write.table(background, background.output,
-            append = F, row.names = F, col.names = T, sep = "\t")
-output <- list(
-  "n_background" =  nrow(background),
-  "background"= background.output
+  raster = heatmap
 )
 
-jsonData <- toJSON(output, indent=2)
-write(jsonData, file.path(outputFolder,"output.json"))
+background_output <- file.path(outputFolder, "background.tsv")
+write.table(background, background_output,
+  append = F, row.names = F, col.names = T, sep = "\t"
+)
 
+biab_output("n_background", nrow(background))
+biab_output("background", background_output)

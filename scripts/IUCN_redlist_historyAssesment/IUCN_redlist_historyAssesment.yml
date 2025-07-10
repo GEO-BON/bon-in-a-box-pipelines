@@ -1,0 +1,51 @@
+script: IUCN_redlist_historyAssesment.R
+name: IUCN Red List history assesment
+description: Gets the entire history IUCN Red List assessments for a given species list using the ICUN Red List API.
+author:
+ - name: Maria Camila diaz
+   email: maria.camila.diaz.corzo@usherbrooke.ca
+ - name: Victor Julio Rincon
+   email: rincon-v@javeriana.edu.co
+ - name: Laetitia Tremblay
+   role: Maintenance
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+external_link: https://github.com/GEO-BON/biab-2.0
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-data.table
+    - r-dplyr
+    - r-plyr
+    - r-ggplot2
+    - r-tibble
+    - r-pbapply
+    - r-rredlist=1.0.0
+    - r-plyr
+    - r-reshape2
+    - r-rjson
+
+inputs:
+  species_data:
+    label: Species data
+    description: Dataset that includes the list of species for which historical assessments from the IUCN Red List are to be obtained.
+    type: text/csv
+    example: '/scripts/IUCN_redlist_historyAssesment/input/data_sp.csv'
+  sp_col:
+    label: Species name column
+    description: Name of the column in the species_data dataset that contains the scientific names of the species to be detailed.
+    type: text
+    example: 'scientific_name'
+outputs:
+  iucn_history_assessment_data:
+    label: History assessment data
+    description:  Dataset that contains the historical IUCN threat category assessments, organized by year, for the listed species.
+    type: text/csv
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquired using the IUCN Red List API
+    type: text/plain
+

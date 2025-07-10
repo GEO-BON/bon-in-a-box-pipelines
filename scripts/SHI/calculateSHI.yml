@@ -1,5 +1,5 @@
 script: calculateSHI.R
-name: Caculate SHI
+name: Calculate SHI
 description:
   This script produces 1) the Species Habitat Index time series, by averaging the Species Habitat Scores;
   2) the Steward’s Species Habitat Index, by averaging the Species Habitat Scores weighted by the proportion
@@ -19,7 +19,7 @@ inputs:
     type: text/tab-separated-values[]
     example:
       [
-        "/scripts/SHI/Saguinus oedipus_SHS_table_tidy.tsv",
+        "/scripts/SHI/Myrmecophaga tridactyla_SHS_table_tidy.tsv",
         "/scripts/SHI/Ateles fusciceps_SHS_table_tidy.tsv"
       ]
   df_aoh_areas:
@@ -44,6 +44,16 @@ outputs:
       in the study area. For example, if half of the species habitat is covered by the study area,
       the reference year’s value will be 50%.
     type: image/png
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-dplyr
+    - r-purrr
+    - r-readr
+    - r-ggplot2
+    - r-rjson
 references:
 - text: Jetz et al., Species Habitat Index, accessed on 24/8/2022.
   doi: https://mol.org/indicators/habitat/background)

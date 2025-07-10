@@ -1,45 +1,65 @@
-name: Conda Runner, main branch
+name: Conda Runner
 
 on:
   workflow_dispatch:
   push:
     branches:
       - main
+      - '*staging'
     paths:
-      - 'runners/conda-dockerfile'
-      - 'runners/r-environment.yml'
-      - 'runners/.condarc'
+      - '.github/workflows/docker_runner-conda.yml'
+      - 'runners/conda/**'
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}/runner-conda
 
 jobs:
   runner-conda:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
     steps:
-    - name: Check out the repo
-      uses: actions/checkout@v3
+      - name: Check out the repo
+        uses: actions/checkout@v4
 
-    - name: Log in to Docker Hub
-      uses: docker/login-action@v2
-      with:
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+      - name: Log in to GitHub Packages
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Extract metadata (tags, labels) for Docker
-      id: meta
-      uses: docker/metadata-action@v4
-      with:
-        images: geobon/bon-in-a-box
-        tags: |
-          # Image used in compose file
-          type=raw,value=runner-conda
-          # In case we want to replicate a specific legacy setup
-          type=sha,prefix=runner-conda-
+      - name: Extract metadata (tags, labels) for Docker
+        id: metadata-staging
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          tags: |
+            # Image used in compose file
+            type=raw,value=${{ (github.ref_name == 'main' && 'latest') || github.ref_name }}
+            type=sha,value=${{ github.sha }}
+          labels: |
+            org.opencontainers.image.licenses=GPL-v3
+            org.opencontainers.image.title=BON in a Box Conda Runner
 
-    - name: Build and push Docker image
-      uses: docker/build-push-action@v3
-      with:
-        context: runners
-        file: runners/conda-dockerfile
-        push: true
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@v6
+        with:
+          context: runners/conda
+          file: runners/conda/conda-dockerfile
+          push: true
+          tags: ${{ steps.metadata-main.outputs.tags || steps.metadata-staging.outputs.tags }}
+          labels: ${{ steps.metadata-main.outputs.labels || steps.metadata-staging.outputs.labels }}
 
+      - name: Generate artifact attestation
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-name: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME}}
+          subject-digest: ${{ steps.push.outputs.digest }}
+          push-to-registry: true

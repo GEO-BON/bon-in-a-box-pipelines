@@ -1,0 +1,48 @@
+name: rbase
+channels:
+  - conda-forge
+  - r
+dependencies:
+  - conda-build
+  - proj
+  - libgdal
+  - r-abind
+  - r-base
+  - r-curl
+  - r-devtools
+  - r-dismo
+  - r-downloader
+  - r-dplyr
+  - r-enmeval
+  - r-essentials
+  - r-gdalcubes
+  - r-gdalutilities
+  - r-gdalutils
+  - r-geojsonsf
+  - r-ggsci
+  - r-jpeg
+  - r-landscapemetrics
+  - r-magrittr
+  - r-png
+  - r-proj
+  - r-purrr
+  - r-rcurl
+  - r-remotes
+  - r-rgbif
+  - r-rjava
+  - r-rjson
+  - r-rnaturalearth
+  - r-rnaturalearthdata
+  - r-rredlist
+  - r-rstac
+  - r-sf
+  # - r-spatialeco # installation from conda for this package currently does not work properly
+  - r-stars
+  - r-stringr
+  - r-stringr
+  - r-terra
+  - r-this.path
+  - r-tidyselect
+  - r-tidyverse
+  - r-stringr
+  - r-proj

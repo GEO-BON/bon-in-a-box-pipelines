@@ -40,7 +40,7 @@ inputs:
     type: image/tiff;application=geotiff[]
     example:
       [
-        "/scripts/SHI/Saguinus oedipus_r_aoh.tif"
+        "/scripts/SHI/myrmecophaga_tridactyla.tif"
       ]
   sf_bbox:
     label: bounding box
@@ -48,7 +48,7 @@ inputs:
     type: application/geopackage+sqlite3[]
     example:
       [
-        "/scripts/SHI/Saguinus oedipus_st_bbox.gpkg"
+       "/scripts/SHI/Myrmecophaga tridactyla_range.gpkg"
       ]
   min_forest:
     label: min forest
@@ -115,8 +115,9 @@ outputs:
     label: SHS Map (raster)
     description: Figure showing a map with changes in the habitat for the time range for each species (raster).
     type: image/tiff;application=geotiff[]
-conda: 
+conda:
   channels:
+    - conda-forge
     - r
   dependencies:
     - r-rjson
@@ -127,7 +128,6 @@ conda:
     - r-stars
     - r-sf
     - r-readr
-    - r-tmap
     - r-geodata
     - r-gdalcubes
     - r-rredlist

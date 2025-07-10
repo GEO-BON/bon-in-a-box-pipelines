@@ -1,0 +1,24 @@
+script: get_bbox.R
+name: Get bbox
+description: This script returns the bounding box of the study area.
+author:
+  - name: Simon Pahls
+  - name: Oliver Selmoni
+
+inputs:
+  countries:
+    label: Countries list
+    description: countries of interest, will be used to look for GBIF observations. 
+    type: text[]
+    example: ["Mexico","Guatemala"]
+  proj:
+    label: projection system
+    description: Integer, projection system
+    type: text
+    example: 4326
+
+outputs:
+  bbox: 
+    label: bbox
+    description: boundary box around area of interest
+    type: float[]

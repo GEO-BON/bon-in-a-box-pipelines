@@ -1,0 +1,78 @@
+FROM condaforge/miniforge3:latest
+# Since we are using the host's user id, we don't know in advance which UID it will be.
+# It's simpler if all are anonymous, than if some land by chance on this pre-existing ubuntu user.
+RUN userdel ubuntu; rm -r /home/ubuntu
+
+WORKDIR /data
+RUN chmod a+w /data
+
+# Setting Time zone (necessary to install cmake, + will persist at runtime)
+ENV TZ=Etc/UTC
+
+# CMake needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
+ARG DEBIAN_FRONTEND=noninteractive
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends cmake psmisc; \
+    apt-get clean all;
+
+## Mamba installation
+RUN mamba shell init -s bash
+COPY .condarc /.condarc
+COPY .bashrc /.bashrc
+RUN chmod 777 /.condarc && chmod 777 /.bashrc
+
+# Allow to read bashrc to execute mamba init when using docker exec as root
+# See https://stackoverflow.com/a/74017557/3519951
+RUN sed -e '/[ -z "$PS1" ] && return/s/^/#/g' -i /root/.bashrc
+
+# Conda cache and environments folder need to be writable by the runtime user.
+RUN set -ex; \
+    mkdir /.conda && chmod a+w /.conda; \
+    mkdir /.mamba && chmod a+w /.mamba; \
+    mkdir /.cache && chmod a+w /.cache; \
+    mkdir /.config && chmod a+w /.config
+
+# conda-env-yml will be mounted as volume to store known conda environments.
+# We need to create it and set the permissions.
+RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml;
+
+# Load R base environment
+ADD ./r-environment.yml /data/r-environment.yml
+RUN mamba env create -f /data/r-environment.yml \
+    && mamba clean --all --force-pkgs-dirs -y
+
+
+## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
+RUN bash --login -c "mamba activate rbase \
+    && R -e ' \
+        install.packages(c(\"CoordinateCleaner\", \
+            \"geodata\", \
+            \"OpenStreetMap\" \
+        ), repos=\"https://cloud.r-project.org/\"); \
+        \
+## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
+        devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\"); \
+        devtools::install_github(\"connectscape/Makurhini\"); \
+    ' \
+    # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
+    # || true at the end just makes sure that this step doesn't fail the build if none were found \
+    && (find /opt/conda/envs/rbase/lib/R/library -name 'help' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+    && (find /opt/conda/envs/rbase/lib/R/library -name 'html' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true) \
+    && (find /opt/conda/envs/rbase/lib/R/library -name 'doc' -prune -type d | xargs -r -i -P 16 rm -r \"{}\" || true)"
+
+# Load python base environment
+ADD ./python-environment.yml /data/python-environment.yml
+RUN mamba env create -f /data/python-environment.yml \
+    && mamba clean --all --force-pkgs-dirs -y
+
+# Since we are using the user from the client computer to run the scripts,
+# we need to create and open the permissions of a few files/directories.
+RUN mkdir -p /opt/conda/pkgs; \
+    chmod 777 /opt/conda/pkgs; \
+    chmod 777 /opt/conda/; \
+    chmod 777 /opt/conda/envs;
+
+RUN chmod -R 777 /opt/conda/envs/rbase/lib/R/library
+
+RUN date +"%Y-%m-%d %R" > /version.txt

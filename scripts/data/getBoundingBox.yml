@@ -1,0 +1,34 @@
+script: getBoundingBox.R
+name: Get bounding box
+description: Extract the bounding box from a polygon of interest (to choose a country, connect to theGet Country Polygon script).
+license: CC-BY
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  study_area_file:
+    label: Polygon of study area
+    description: Local path or url linking to file of custom study area, preferably in geopackage format containing only one layer.
+    type: application/geopackage+sqlite3
+    example: null
+  crs:
+    label: Coordinate reference system
+    description: >-
+      This input specifies the coordinate reference system desired for the bounding box output. This can be different to the CRS of the input polygon.
+
+      Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.
+      This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.
+
+      For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).
+      The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
+    type: text
+    example: "EPSG:6622"
+outputs:
+  bbox:
+    label: Bounding box
+    description: boundary box around area of interest in the order of xmin, ymin, xmax, ymax
+    type: float[]
+references:
+  - text: "Hijmans R (2025). _terra: Spatial Data Analysis_. R package version 1.8-42, <https://CRAN.R-project.org/package=terra>"
+    doi: 10.1007/s11707-018-0725-9
