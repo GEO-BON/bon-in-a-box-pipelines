@@ -85,8 +85,8 @@
       "id": "50",
       "type": "output",
       "position": {
-        "x": 1406,
-        "y": 194
+        "x": 1422.2744436350265,
+        "y": 260.26023479975066
       },
       "data": {
         "label": "Output"
@@ -123,6 +123,19 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "60",
+      "type": "constant",
+      "position": {
+        "x": -876.6956787109375,
+        "y": 73.02173614501953
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
       }
     }
   ],
@@ -177,13 +190,6 @@
       "id": "reactflow__edge-44-48start_year"
     },
     {
-      "source": "45",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "end_year",
-      "id": "reactflow__edge-45-48end_year"
-    },
-    {
       "source": "48",
       "sourceHandle": "phenology_change",
       "target": "49",
@@ -224,6 +230,20 @@
       "target": "58",
       "targetHandle": null,
       "id": "reactflow__edge-56data>getCountryPolygon.yml@1|region-58"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-60-56pipeline@2"
+    },
+    {
+      "source": "45",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-45-48end_year"
     }
   ],
   "inputs": {
@@ -297,26 +317,19 @@
       "example": "mean",
       "weight": 5
     },
-    "getCountrybbox.json@56|pipeline@2": {
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
-      "label": "Coordinate reference system",
-      "type": "text",
-      "example": "EPSG:4326",
-      "weight": 6
-    },
     "getCountrybbox.json@56|data>getCountryPolygon.yml@1|country": {
-      "description": "Country of interest",
-      "label": "Country",
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). *MUST BE A COUNTRY IN EUROPE",
+      "label": "ISO3 country code",
       "type": "text",
-      "example": "Colombia",
-      "weight": 7
+      "example": "BEL",
+      "weight": 6
     },
     "getCountrybbox.json@56|data>getCountryPolygon.yml@1|region": {
       "description": "State of interest",
       "label": "State/Province",
       "type": "text",
       "example": null,
-      "weight": 8
+      "weight": 7
     }
   },
   "outputs": {
@@ -359,7 +372,7 @@
   },
   "metadata": {
     "name": "Phenology pipeline",
-    "description": "This pipelines uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. \nThe raster has values for the Plant Phenology Index (PPI), which is a vegetation index that\n helps estimate vegetation health and photosyntehtic activity throughout the growing season. \nIt is more directly related to plant phenology compared to other vegetation indices like NDVI, \nand does not saturate in high biomass conditions. \nIt is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. \nYou can read more about the phenology layers (here)[https://land.copernicus.eu/en/dataset-catalog].\nThe script pulls the yearly phenology layers and resamples them to the spatial resolution of choice, \ncalculates summary statistics over a country or region of interest, and subtracts the rasters \nto look at change over time.\n",
+    "description": "This pipeline uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. \nThe raster has values for the Plant Phenology Index (PPI), which is a vegetation index that\n helps estimate vegetation health and photosyntehtic activity throughout the growing season. \nIt is more directly related to plant phenology compared to other vegetation indices like NDVI, \nand does not saturate in high biomass conditions. \nIt is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. \nYou can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog).\nThe script pulls the yearly phenology layers and resamples them to the spatial resolution of choice, \ncalculates summary statistics over a country or region of interest, and subtracts the rasters \nto look at change over time.\n",
     "author": [
       {
         "name": "Jory Griffith",

@@ -1,14 +1,14 @@
 script: summarise_phenology.py
 name: Summarise phenology
-author: 
+author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 license: CC-BY
 description: |
-  Summarise yearly phenology data for a country (Europe only) using the copernicus data space ecosystem phenology layer. The script uses the openEO python client to send a job to openEO. 
-  The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season. 
-  It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. 
+  Summarises the yearly phenology data for a country (Europe only) using the copernicus data space ecosystem phenology layer. The script uses the openEO python client to send a job to openEO.
+  The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season.
+  It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions.
   It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog)."
 inputs:
   bbox:
@@ -34,7 +34,7 @@ inputs:
   season:
     label: Season of interest
     description: |
-      Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) 
+      Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer)
       and season 2 is the second growing season (late summer and fall).
     type: options
     options:
@@ -44,7 +44,7 @@ inputs:
   bands:
     label: Bands
     description: |
-      Bands of interest for the calculations. 
+      Bands of interest for the calculations.
       - Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.
       - End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period.
       - Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season
@@ -60,7 +60,7 @@ inputs:
       - Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end
       - Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset
     type: options[]
-    options: 
+    options:
       - "SOSD"
       - "EOSD"
       - "SOSV"
@@ -94,7 +94,7 @@ outputs:
   rasters:
     label: Phenology rasters
     description: |
-      Rasters of phenology layers, with one raster per year in the input time range. 
+      Rasters of phenology layers, with one raster per year in the input time range.
       Will either be the raw raster layers or resampled to the spatial resolution input by the user.
     type: image/tiff;application=geotiff[]
   timeseries:
