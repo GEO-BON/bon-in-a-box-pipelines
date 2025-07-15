@@ -22,6 +22,9 @@ id = os.getenv("CDSE_CLIENT_ID")
 secret = os.getenv("CDSE_CLIENT_SECRET")
 
 # input checks
+if (int(start_year) < 2017 or int(end_year) > 2024):
+    biab_error_stop("Year range must be between 2017 and 2024 inclusively.")
+
 if (id is None or secret == None):
     biab_error_stop("Please specify CDSE credentials in runner.env")
 
