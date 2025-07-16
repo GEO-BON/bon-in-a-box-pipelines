@@ -1,0 +1,92 @@
+script: IUCN_redlist_spGroup.R
+name: IUCN list of species of a taxonomic group
+description: Obtains a list of species assessed by the IUCN Red List of Species for a specific taxonomic group, including their most recent threat categorization.
+author:
+ - name: Maria Camila diaz
+   email: maria.camila.diaz.corzo@usherbrooke.ca
+ - name: Victor Julio Rincon
+   email: rincon-v@javeriana.edu.co
+ - name: Laetitia Tremblay
+   role: Maintenance
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+external_link: https://github.com/GEO-BON/biab-2.0
+# TEMP just to run it more easily. To be removed from the PR before merge
+# Missing ones were added to the central conda environment.
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist=1.0.0
+    - r-this.path
+    - r-rjson
+inputs:
+  taxonomic_group:
+    label: Taxonomic group
+    description: "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained."
+    type: options
+    example: "mammals"
+    options:
+      - "all"
+      - "amphibians"
+      - "birds"
+      - "mammals"
+      - "reptiles"
+      - "fishes"
+      - "insects"
+      - "angelfishes"
+      - "arachnids"
+      - "blennies"
+      - "brown_algae"
+      - "butterfly_fishes"
+      - "cacti"
+      - "chameleons"
+      - "cone_snails"
+      - "conifers"
+      - "corals"
+      - "crocodiles_and_alligators"
+      - "crustaceans"
+      - "cycads"
+      - "fernes_and_allies"
+      - "flowering_plants"
+      - "fw_caridean_shrimps"
+      - "fw_crabs"
+      - "fw_crayfish"
+      - "green_algae"
+      - "groupers"
+      - "gymnosperms"
+      - "hagfishes"
+      - "horseshoe_crabs"
+      - "lichens"
+      - "lobsters"
+      - "magnolias"
+      - "mangrove_plants"
+      - "molluscs"
+      - "mosses"
+      - "mushrooms"
+      - "others"
+      - "pufferfishes"
+      - "red_algae"
+      - "reef_building_corals"
+      - "seabreams_porgies_picarels"
+      - "seagrasses"
+      - "seasnakes"
+      - "sharks_and_rays"
+      - "sturgeons"
+      - "surgeonfishes"
+      - "tarpons_and_ladyfishes"
+      - "tunas_and_billfishes"
+      - "velvet_worms"
+      - "wrasses_and_parrotfishes"
+outputs:
+  iucn_taxon_splist:
+    label: IUCN species list
+    description: "Dataset with the list of species for the specified taxonomic group. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
+    type: text/csv
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquired using the IUCN Red List API
+    type: text/plain

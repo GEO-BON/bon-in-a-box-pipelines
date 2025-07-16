@@ -91,6 +91,7 @@ redlist_trend_plot <- ggplot(redlist_data, aes(x = as.numeric(Year), y = RLI)) +
   theme(panel.grid.major = element_line(color = "gray")) +
   theme(text = element_text(size = 4)) +
   ggtitle("RLI for selected taxonomy group and country") +
+  theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 2))
 
 
