@@ -976,7 +976,7 @@
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
-      "label": "method background",
+      "label": "Method background",
       "type": "options",
       "options": [
         "random",
@@ -989,28 +989,28 @@
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
-      "label": "number of background points",
+      "label": "Number of background points",
       "type": "int",
       "example": 10000,
       "weight": 4
     },
     "pipeline@46": {
-      "label": "number of runs",
+      "label": "Number of runs",
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "type": "int",
       "example": 2,
       "weight": 5
     },
     "pipeline@57": {
-      "label": "projection system",
-      "description": "String, projection system",
+      "label": "Coordinate Reference System",
+      "description": "The coordinate reference system of the study area. You can search for EPSG codes by country [here](https://epsg.io/).",
       "type": "text",
       "example": "EPSG:3348",
       "weight": 6
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
-      "label": "partition type",
+      "label": "Partition type",
       "type": "options",
       "options": [
         "randomkfold",
@@ -1023,7 +1023,7 @@
       "weight": 7
     },
     "pipeline@128": {
-      "label": "spatial resolution",
+      "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
@@ -1031,14 +1031,14 @@
     },
     "data>getGBIFObservations>getGBIFObservations.yml@133|min_year": {
       "description": "Min year observations wanted",
-      "label": "minimum year",
+      "label": "Minimum year",
       "type": "int",
       "example": 2010,
       "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@133|max_year": {
       "description": "Max year observations wanted",
-      "label": "maximum year",
+      "label": "Maximum year",
       "type": "int",
       "example": 2024,
       "weight": 10
