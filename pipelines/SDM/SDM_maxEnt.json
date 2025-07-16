@@ -977,31 +977,6 @@
       ],
       "weight": 0
     },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
-      "type": "int",
-      "example": 2010,
-      "weight": 1
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|max_year": {
-      "description": "Max year observations wanted",
-      "label": "maximum year",
-      "type": "int",
-      "example": 2020,
-      "weight": 2
-    },
-    "data>pyLoadObservations>pyLoadObservations.yml@96|data_source": {
-      "description": "Source of the data (One of gbif_pc - Planetary computer or gbif_api - GBIF Download API)",
-      "label": "Data source",
-      "type": "options",
-      "options": [
-        "gbif_pc",
-        "gbif_api"
-      ],
-      "example": "gbif_api",
-      "weight": 3
-    },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
       "label": "method background",
@@ -1013,37 +988,21 @@
         "unweighted_raster"
       ],
       "example": "random",
-      "weight": 4
+      "weight": 1
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 5
-    },
-    "data>GBIFHeatmapFromSTAC.yml@130|taxa": {
-      "description": "taxonomic group for which to retrieve GBIF heatmap",
-      "label": "taxa",
-      "type": "options",
-      "options": [
-        "reptiles",
-        "plants",
-        "mammals",
-        "birds",
-        "arthropods",
-        "amphibians",
-        "all"
-      ],
-      "weight": 6,
-      "example": "plants"
+      "weight": 2
     },
     "pipeline@57": {
       "label": "projection system",
       "description": "String, projection system",
       "type": "text",
       "example": "EPSG:6622",
-      "weight": 7
+      "weight": 3
     },
     "pipeline@58": {
       "label": "bbox",
@@ -1055,21 +1014,14 @@
         1015207,
         1511916
       ],
-      "weight": 8
-    },
-    "data>loadFromStac.yml@119|mask": {
-      "description": "Shapefile, used to mask the output rasters",
-      "label": "mask",
-      "type": "application/dbf",
-      "example": null,
-      "weight": 9
+      "weight": 4
     },
     "data>loadFromStac.yml@134|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 10
+      "weight": 5
     },
     "data>loadFromStac.yml@134|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -1083,14 +1035,14 @@
         "cec_land_cover_percentage|cec_land_cover_percent_class_15",
         "earthenv_topography_derived|geomflat_perc"
       ],
-      "weight": 11
+      "weight": 6
     },
     "pipeline@128": {
       "label": "spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 12
+      "weight": 7
     },
     "pipeline@110": {
       "label": "feature classes",
@@ -1101,7 +1053,7 @@
         "LQ",
         "LQH"
       ],
-      "weight": 13
+      "weight": 8
     },
     "pipeline@111": {
       "label": "regularization multiplier",
@@ -1112,7 +1064,7 @@
         1,
         2
       ],
-      "weight": 14
+      "weight": 9
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
@@ -1126,35 +1078,159 @@
         "checkerboard2"
       ],
       "example": "block",
-      "weight": 15
+      "weight": 10
     },
     "pipeline@46": {
       "label": "number of runs",
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "type": "int",
       "example": 2,
+      "weight": 11
+    },
+    "data>loadFromStac.yml@119|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "STAC URL",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 12
+    },
+    "data>loadFromStac.yml@119|bbox": {
+      "description": "Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax",
+      "label": "Bounding box",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
+      "weight": 13
+    },
+    "data>loadFromStac.yml@119|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 14
+    },
+    "data>loadFromStac.yml@119|weight_matrix_with_ids": {
+      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
+      "label": "Weight matrix with ids",
+      "type": "text",
+      "weight": 15,
+      "example": null
+    },
+    "data>loadFromStac.yml@119|crs": {
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
+      "label": "Coordinate reference system",
+      "type": "text",
+      "example": "EPSG:6622",
       "weight": 16
+    },
+    "data>loadFromStac.yml@119|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in meters",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 1000,
+      "weight": 17
+    },
+    "data>loadFromStac.yml@119|resampling": {
+      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "label": "Resampling method",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
+      "weight": 18
+    },
+    "data>loadFromStac.yml@119|aggregation": {
+      "description": "Method used to aggregate items that overlay each other",
+      "label": "Aggregation method",
+      "type": "options",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "example": "first",
+      "weight": 19
+    },
+    "data>loadFromStac.yml@119|study_area": {
+      "description": "Polygon of study area used to crop output layers",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 20,
+      "example": null
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@133|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 21
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@133|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2024,
+      "weight": 22
+    },
+    "data>loadFromStac.yml@134|study_area": {
+      "description": "Polygon of study area used to crop output layers",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 23,
+      "example": null
+    },
+    "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
+      "description": "taxonomic group for which to retrieve GBIF heatmap",
+      "label": "Taxa",
+      "type": "options",
+      "options": [
+        "reptiles",
+        "plants",
+        "mammals",
+        "birds",
+        "arthropods",
+        "amphibians",
+        "all"
+      ],
+      "example": "plants",
+      "weight": 24
     }
   },
   "outputs": {
-    "data>pyLoadObservations>pyLoadObservations.yml@96|gbif_doi": {
-      "description": "DOI of GBIF download. Used for citing downloaded data.",
-      "label": "DOI of GBIF download",
-      "type": "text",
-      "example": "10.15468/dl.j644h5",
-      "weight": 0
-    },
     "filtering>cleanCoordinates.yml@34|clean_presence": {
       "description": "Occurrences from GBIF after cleaning",
       "label": "Presences",
       "type": "text/tab-separated-values",
-      "weight": 1
+      "weight": 0
     },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "Environmental layers used as predictors in species distribution modeling",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 1
     },
     "SDM>runMaxent.yml@108|sdm_pred": {
       "description": "Model predictions from Maxent algorithm",
@@ -1164,13 +1240,13 @@
         0,
         1
       ],
-      "weight": 3
+      "weight": 2
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
       "description": "Variability of predictions based on range method",
       "label": "Variability of predictions",
       "type": "image/tiff;application=geotiff",
-      "weight": 4
+      "weight": 3
     },
     "pipeline@121|default_output": {
       "label": "Taxa list",
@@ -1179,6 +1255,13 @@
         "Acer saccharum"
       ],
       "type": "text[]",
+      "weight": 4
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@133|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
       "weight": 5
     }
   },
