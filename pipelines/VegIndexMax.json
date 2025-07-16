@@ -4,8 +4,8 @@
       "id": "170",
       "type": "io",
       "position": {
-        "x": 701.2000122070312,
-        "y": 313.8000030517578
+        "x": 1146,
+        "y": 216
       },
       "data": {
         "descriptionFile": "VegIndexMax>VegIndexMax.yml"
@@ -15,8 +15,8 @@
       "id": "171",
       "type": "output",
       "position": {
-        "x": 1361.9446386120728,
-        "y": 305.48205127257955
+        "x": 1734,
+        "y": 187.5
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "172",
       "type": "userInput",
       "position": {
-        "x": 281.20001220703125,
-        "y": 324.8000030517578
+        "x": 766,
+        "y": 340.8333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -48,8 +48,54 @@
       "id": "173",
       "type": "output",
       "position": {
-        "x": 1066.2000122070312,
-        "y": 259.8000030517578
+        "x": 1146,
+        "y": 339
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "174",
+      "type": "io",
+      "position": {
+        "x": 453,
+        "y": 87.5
+      },
+      "data": {
+        "descriptionFile": "getCountrybbox.json"
+      }
+    },
+    {
+      "id": "175",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 79.16666666666667
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "176",
+      "type": "output",
+      "position": {
+        "x": 1146,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "178",
+      "type": "output",
+      "position": {
+        "x": 1146,
+        "y": 59
       },
       "data": {
         "label": "Output"
@@ -77,33 +123,63 @@
       "target": "173",
       "targetHandle": null,
       "id": "reactflow__edge-172-173"
+    },
+    {
+      "source": "174",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "170",
+      "targetHandle": "bounding_box",
+      "id": "reactflow__edge-174data>getBoundingBox.yml@0|bbox-170bounding_box"
+    },
+    {
+      "source": "175",
+      "sourceHandle": null,
+      "target": "174",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-175-174pipeline@2"
+    },
+    {
+      "source": "175",
+      "sourceHandle": null,
+      "target": "170",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-175-170crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": "data>getCountryPolygon.yml@1|region",
+      "target": "176",
+      "targetHandle": null,
+      "id": "reactflow__edge-174data>getCountryPolygon.yml@1|region-176"
+    },
+    {
+      "source": "174",
+      "sourceHandle": "data>getCountryPolygon.yml@1|country",
+      "target": "178",
+      "targetHandle": null,
+      "id": "reactflow__edge-174data>getCountryPolygon.yml@1|country-178"
     }
   ],
   "inputs": {
-    "VegIndexMax>VegIndexMax.yml@170|bounding_box": {
-      "description": "Vector of float, bbox of latitude, longitude coordinates of the extent in the order xmin, ymin, xmax, ymax",
-      "label": "Bounding box",
-      "type": "float[]",
-      "weight": 0,
-      "example": [
-        "2319283",
-        "4621689",
-        "2339533",
-        "4641035"
-      ]
+    "getCountrybbox.json@174|data>getCountryPolygon.yml@1|country": {
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). This will be used as the study area. *MUST BE IN EUROPE",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "FRA",
+      "weight": 0
+    },
+    "getCountrybbox.json@174|data>getCountryPolygon.yml@1|region": {
+      "description": "State of interest",
+      "label": "State/Province",
+      "type": "text",
+      "example": "Nord",
+      "weight": 1
     },
     "VegIndexMax>VegIndexMax.yml@170|study_area_polygon": {
-      "description": "Polygon of the study area of interest",
+      "description": "Custom polygon of the study area of interest. To be used if you have not selected a country/region.",
       "label": "Polygon of study area",
       "type": "application/geo+json",
-      "weight": 1,
-      "example": null
-    },
-    "VegIndexMax>VegIndexMax.yml@170|crs": {
-      "description": "Coordinate reference system (EPSG string or WKT2 string) in which the output file must be generated",
-      "label": "Coordinate reference system",
-      "type": "text",
-      "example": "EPSG:3004",
+      "example": null,
       "weight": 2
     },
     "VegIndexMax>VegIndexMax.yml@170|start_date": {
@@ -113,19 +189,26 @@
       "example": "2019-05-01",
       "weight": 3
     },
+    "pipeline@175": {
+      "label": "Coordinate reference system",
+      "description": "The coordinate reference system of the study area. This must be a projected CRS (in meters). You can search for EPSG codes by country [here](https://epsg.io/).",
+      "type": "text",
+      "example": "EPSG:2154",
+      "weight": 4
+    },
     "VegIndexMax>VegIndexMax.yml@170|end_date": {
       "description": "End date for which summarizing NDVI.",
       "label": "End date",
       "type": "text",
       "example": "2019-09-30",
-      "weight": 4
+      "weight": 5
     },
     "VegIndexMax>VegIndexMax.yml@170|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "int",
       "example": 100,
-      "weight": 5
+      "weight": 6
     },
     "pipeline@172": {
       "label": "Vegetation indices",
@@ -141,7 +224,7 @@
         "FAPAR",
         "QFLAG2"
       ],
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {
@@ -166,6 +249,18 @@
       "label": "Vegetation index rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 1
+    },
+    "getCountrybbox.json@174|data>getCountryPolygon.yml@1|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 2
+    },
+    "getCountrybbox.json@174|data>getCountryPolygon.yml@1|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 3
     }
   },
   "metadata": {
