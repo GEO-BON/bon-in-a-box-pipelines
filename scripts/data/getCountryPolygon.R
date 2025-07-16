@@ -42,11 +42,12 @@ if (is.null(input$region)) { # pull study area polygon from rnaturalearth
 } else {
   print("pulling region polygon")
   country_polygon <- ne_states(country = country_name)
+  print(country_polygon$name)
   country_polygon <- country_polygon %>% filter(name == input$region)
 }
 
 if (nrow(country_polygon) == 0) {
-  biab_error_stop("Could not find polygon. Check spelling of country and state names.")
+  biab_error_stop("Could not find polygon. Check spelling of country and state names. Check script log for available regions.")
 } # stop if object is empty
 
 # transform to crs of interest
