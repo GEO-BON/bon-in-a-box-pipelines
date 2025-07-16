@@ -1,9 +1,9 @@
-# Species Habitat Index
+# Species Habitat Index and Species Habitat Score
 ### Author(s): Maria Isabel Arce-Plata, Guillaume Larocque, Jaime Burbano-Girón, Maria Camila Díaz, Timothée Poisot, Jory Griffith, Jean-Michel Lord
 #### Reviewed by: In review
 
 ## Introduction
-The [Species Habitat Index](https://geobon.org/ebvs/indicators/species-habitat-index-shi/) (SHI) is a component indicator for the Global Biodiversity Framework (GBF). SHI measures changes in ecological integrity by measuring the change in the quality and connectivity of habitats for species of interest.
+The [Species Habitat Index](https://geobon.org/ebvs/indicators/species-habitat-index-shi/) (SHI) is a component indicator for the Global Biodiversity Framework (GBF). SHI measures changes in ecological integrity by measuring the change in the quality and connectivity of habitats for species of interest. The Species Habitat Score is score for each species.
 
 ## 'Use Case'/Context
 SHI is an important indicator for assessing progress towards Goal A of the GBF, which calls for the enhanced integrity of natural ecosystems. Read more about how SHI can be used to assess progress toward goal A here ([https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf)).
@@ -94,7 +94,6 @@ This steps calculate the Species Habitat Index (SHI) for the species of interest
 **Sample run:** See an example SHI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/SHI_pipeline/fb4b651c9c810117b3e8338085a009e2) and [viewer](https://pipelines-results.geobon.org/viewer/SHI_pipeline%3Efb4b651c9c810117b3e8338085a009e2).
 
 ## Troubleshooting
-
 
 ## References
 Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. [https://doi.org/10.1016/j.tree.2019.06.009](https://doi.org/10.1016/j.tree.2019.06.009)
