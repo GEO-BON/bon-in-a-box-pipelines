@@ -302,8 +302,8 @@
       "id": "161",
       "type": "io",
       "position": {
-        "x": 475.4997120637047,
-        "y": 737.1070351678517
+        "x": 489.95405996234774,
+        "y": 710.8264026248643
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -406,6 +406,18 @@
       },
       "data": {
         "descriptionFile": "getCountrybbox.json"
+      }
+    },
+    {
+      "id": "169",
+      "type": "userInput",
+      "position": {
+        "x": 15.699175212926775,
+        "y": 867.472651232569
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
       }
     }
   ],
@@ -703,6 +715,20 @@
       "target": "168",
       "targetHandle": "pipeline@2",
       "id": "reactflow__edge-57-168pipeline@2"
+    },
+    {
+      "source": "169",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-169-161study_area"
+    },
+    {
+      "source": "169",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-169-160study_area"
     }
   ],
   "inputs": {
@@ -744,7 +770,7 @@
     },
     "pipeline@57": {
       "label": "Coordinate Reference System",
-      "description": "String, Projection System as an EPSG code.",
+      "description": "The coordinate reference system of the study area. You can search for EPSG codes by country [here](https://epsg.io/).",
       "type": "text",
       "example": "EPSG:3348",
       "weight": 4
@@ -798,19 +824,12 @@
       "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n",
       "weight": 11
     },
-    "data>loadFromStac.yml@161|study_area": {
-      "description": "Polygon of study area used to crop output layers",
+    "pipeline@169": {
       "label": "Study area",
+      "description": "Polygon of study area used to crop output layers",
       "type": "application/geopackage+sqlite3",
       "example": null,
       "weight": 12
-    },
-    "data>loadFromStac.yml@160|study_area": {
-      "description": "Polygon of study area used to crop output layers",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 13
     }
   },
   "outputs": {
