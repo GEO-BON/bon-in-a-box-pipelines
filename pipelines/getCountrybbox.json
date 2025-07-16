@@ -133,10 +133,10 @@
   ],
   "inputs": {
     "data>getCountryPolygon.yml@1|country": {
-      "description": "Country of interest",
-      "label": "Country",
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+      "label": "ISO3 country code",
       "type": "text",
-      "example": "Colombia",
+      "example": "COL",
       "weight": 0
     },
     "data>getCountryPolygon.yml@1|region": {
@@ -174,7 +174,7 @@
       "weight": 2
     },
     "data>getBoundingBox.yml@0|bbox": {
-      "description": "boundary box around area of interest in the order of min, ymin, xmax, ymax",
+      "description": "boundary box around area of interest in the order of xmin, ymin, xmax, ymax",
       "label": "Bounding box",
       "type": "float[]",
       "weight": 3
@@ -187,7 +187,8 @@
       {
         "name": "Jory Griffith",
         "email": "jory.griffith@mcgill.ca",
-        "identifier": "0000-0001-6020-6690"
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
       }
     ],
     "license": "CC-BY",
