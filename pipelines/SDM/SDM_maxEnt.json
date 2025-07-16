@@ -1165,11 +1165,6 @@
         1
       ],
       "weight": 3
-      "range": [
-        0,
-        1
-      ],
-      "weight": 3
     },
     "SDM>rangePredictions.yml@68|range_predictions": {
       "description": "Variability of predictions based on range method",
