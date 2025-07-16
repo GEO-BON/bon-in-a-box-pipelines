@@ -27,10 +27,12 @@ inputs:
   splist_taxon:
     label: IUCN species list for a taxon group
     description: Dataset with the list of species for a taxonomic group.
+    example: null
     type: text/csv
   splist_country:
     label: IUCN species list for a country
     description: Dataset with the list of species for a country.
+    example: null
     type: text/csv
 outputs:
   iucn_splist:
