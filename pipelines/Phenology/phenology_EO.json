@@ -247,6 +247,20 @@
     }
   ],
   "inputs": {
+    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|country": {
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). *MUST BE A COUNTRY IN EUROPE",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "BEL",
+      "weight": 0
+    },
+    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|region": {
+      "description": "State of interest",
+      "label": "State/Province",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
     "phenology>summarise_phenology.yml@37|season": {
       "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) \nand season 2 is the second growing season (late summer and fall).\n",
       "label": "Season of interest",
@@ -256,7 +270,7 @@
         "SEASON2"
       ],
       "example": "SEASON1",
-      "weight": 0
+      "weight": 2
     },
     "phenology>summarise_phenology.yml@37|bands": {
       "description": "Bands of interest for the calculations. \n- Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.\n- End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period.\n- Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season\n- End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season\n- Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season\n- Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached\n- Season minimum value (MINV) - average PPI of minima of left adn right sides of each season\n- Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season\n- Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season\n- Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts\n- Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends\n- Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.\n- Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end\n- Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset\n",
@@ -282,28 +296,28 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 1
+      "weight": 3
     },
     "phenology>summarise_phenology.yml@37|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "int",
       "example": 1000,
-      "weight": 2
+      "weight": 4
     },
     "pipeline@44": {
       "label": "Start year",
       "description": "Start date for phenology time series.",
       "type": "text",
       "example": "2017",
-      "weight": 3
+      "weight": 5
     },
     "pipeline@45": {
       "label": "End year",
       "description": "End date for phenology time series.",
       "type": "text",
       "example": "2024",
-      "weight": 4
+      "weight": 6
     },
     "phenology>summarise_phenology.yml@37|aggregate_function": {
       "description": "Function to spatially aggregate the phenology data",
@@ -315,20 +329,6 @@
         "max"
       ],
       "example": "mean",
-      "weight": 5
-    },
-    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|country": {
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). *MUST BE A COUNTRY IN EUROPE",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "BEL",
-      "weight": 6
-    },
-    "getCountrybbox.json@56|data>getCountryPolygon.yml@1|region": {
-      "description": "State of interest",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
       "weight": 7
     }
   },

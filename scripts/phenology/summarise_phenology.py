@@ -67,7 +67,11 @@ datacube_resampled_cropped.save_result("GTiff")
 print("Starting job to fetch raster layers", flush=True)
 job1 = datacube_resampled_cropped.create_job()
 
-job1.start_and_wait()
+try:
+    job1.start_and_wait()
+except Exception as e:
+    biab_error_stop("The retrieval of the raster layers failed in openEO, check the log for details.")
+
 rasters = job1.get_results().download_files(output_folder) # these are in file path format
 
 print("Job finished, printing job output", flush=True)
