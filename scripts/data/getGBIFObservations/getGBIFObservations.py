@@ -49,3 +49,6 @@ print(sys.argv[1])
 biab_output("observations_file",str(out['outfile']))
 biab_output("gbif_doi", str(out['doi']))
 biab_output("total_records",str(out['total_records']))
+
+if out['total_records'] == 0:
+	biab_error_stop("There are no observations for the species selected in the provided study area")

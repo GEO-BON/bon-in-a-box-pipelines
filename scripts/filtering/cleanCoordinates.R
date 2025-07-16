@@ -48,5 +48,9 @@ write.table(clean_presence, clean_presence.output,
   append = F, row.names = F, col.names = T, sep = "\t"
 )
 
+if (nrow(clean_presence) == 0) {
+  biab_error_stop("There are no occurences of the species of interest in this country/region")
+}
+
 biab_output("n_clean", nrow(clean_presence))
 biab_output("clean_presence", clean_presence.output)
