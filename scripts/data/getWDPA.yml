@@ -6,6 +6,8 @@ author:
     email: guillaume.larocque@mcgill.ca
     identifier: https://orcid.org/0000-0002-5967-9156
 external_link:
+lifecycle:
+  status: in_review
 inputs:
   country_iso:
     label: Country
