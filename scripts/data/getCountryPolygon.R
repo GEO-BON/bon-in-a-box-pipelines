@@ -26,7 +26,6 @@ if (is.null(input$region)) {
 
 biab_output("region", region)
 
-
 # Change from ISO code to country namelibrary(countrycode)
 country_name <- countrycode(
   input$country,
@@ -36,9 +35,8 @@ country_name <- countrycode(
 
 biab_output("country", country_name)
 
-
 if (is.null(input$region)) { # pull study area polygon from rnaturalearth
-  # pull whole couxntry
+  # pull whole country
   print("pulling country polygon")
   country_polygon <- ne_countries(country = country_name, type = "countries", scale = 10)
 } else {
@@ -48,7 +46,7 @@ if (is.null(input$region)) { # pull study area polygon from rnaturalearth
 }
 
 if (nrow(country_polygon) == 0) {
-  stop("Could not find polygon. Check spelling of country and state names.")
+  biab_error_stop("Could not find polygon. Check spelling of country and state names.")
 } # stop if object is empty
 
 # transform to crs of interest

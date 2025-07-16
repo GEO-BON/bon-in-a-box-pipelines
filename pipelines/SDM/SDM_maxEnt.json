@@ -1127,15 +1127,19 @@
     "author": [
       {
         "name": "Sarah Valentin",
-        "identifier": "https://orcid.org/0000-0002-9028-681X"
+        "identifier": "https://orcid.org/0000-0002-9028-681X",
+        "role": "Pipeline development"
       },
       {
         "name": "Guillaume Larocque",
-        "identifier": "https://orcid.org/0000-0002-5967-9156"
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
       },
       {
         "name": "François Rousseu",
-        "identifier": "https://orcid.org/0000-0002-2400-2479"
+        "identifier": "https://orcid.org/0000-0002-2400-2479",
+        "role": "Pipeline development"
       }
     ],
     "license": "MIT",
