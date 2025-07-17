@@ -1,68 +1,121 @@
 {
   "nodes": [
     {
-      "id": "10",
+      "id": "55",
       "type": "io",
       "position": {
-        "x": 162.63511660986114,
-        "y": 60.3308828434844
+        "x": 1612.9438655070448,
+        "y": 200.31458244086514
       },
       "data": {
-        "descriptionFile": "IUCN_redlist_spList>IUCN_redlist_spList.yml"
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml"
       }
     },
     {
-      "id": "13",
+      "id": "56",
       "type": "io",
       "position": {
-        "x": 760,
-        "y": 61
+        "x": 567.4803260304694,
+        "y": 119.28117373761529
       },
       "data": {
-        "descriptionFile": "IUCN_redlist_historyAssesment>IUCN_redlist_historyAssesment.yml"
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
       }
     },
     {
-      "id": "14",
-      "type": "constant",
-      "position": {
-        "x": 390,
-        "y": 199.99999999999997
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "scientific_name"
-      }
-    },
-    {
-      "id": "15",
+      "id": "57",
       "type": "io",
       "position": {
-        "x": 1387,
-        "y": 201.33333333333331
+        "x": 446.085598239363,
+        "y": 327.7634236397326
       },
       "data": {
-        "descriptionFile": "RedListIndex>RedListIndex.yml"
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spGroup.yml"
       }
     },
     {
-      "id": "18",
+      "id": "58",
+      "type": "io",
+      "position": {
+        "x": 991.0423653885689,
+        "y": 219.56377495635525
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spList.yml"
+      }
+    },
+    {
+      "id": "59",
+      "type": "io",
+      "position": {
+        "x": 2331.66240273383,
+        "y": 219.56377495635525
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>RedListIndex.yml"
+      }
+    },
+    {
+      "id": "60",
       "type": "output",
       "position": {
-        "x": 1811,
-        "y": 159.83333333333331
+        "x": 2190.19245506239,
+        "y": 283.73424960272894
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "19",
+      "id": "61",
+      "type": "output",
+      "position": {
+        "x": 2797.166094017921,
+        "y": 221.7173777964029
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "62",
+      "type": "output",
+      "position": {
+        "x": 2782.6515069994193,
+        "y": 246.7880281010879
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "63",
+      "type": "output",
+      "position": {
+        "x": 2778.6929832671003,
+        "y": 237.55147272567763
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "64",
+      "type": "output",
+      "position": {
+        "x": 1089.7228574777957,
+        "y": 351.02915305214657
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "65",
       "type": "constant",
       "position": {
-        "x": 1007,
-        "y": 232.33333333333331
+        "x": 1823.3214534410822,
+        "y": 327.27801065823445
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -71,11 +124,11 @@
       }
     },
     {
-      "id": "20",
+      "id": "66",
       "type": "constant",
       "position": {
-        "x": 1007,
-        "y": 274.3333333333333
+        "x": 1865.545706585815,
+        "y": 384.01685082146895
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -84,209 +137,114 @@
       }
     },
     {
-      "id": "21",
-      "type": "output",
+      "id": "67",
+      "type": "constant",
       "position": {
-        "x": 1869,
-        "y": 206.83333333333331
+        "x": 1250.655020165646,
+        "y": 329.91702647978025
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "27",
-      "type": "output",
-      "position": {
-        "x": 1862.3043212890625,
-        "y": 263.02173614501953
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "28",
-      "type": "io",
-      "position": {
-        "x": -366.3324944945982,
-        "y": 234.01157208686155
-      },
-      "data": {
-        "descriptionFile": "IUCN_redlist_spList>IUCN_redlist_spCountry.yml"
-      }
-    },
-    {
-      "id": "29",
-      "type": "io",
-      "position": {
-        "x": -428.80813980296915,
-        "y": -10.337618452545485
-      },
-      "data": {
-        "descriptionFile": "IUCN_redlist_spList>IUCN_redlist_spGroup.yml"
-      }
-    },
-    {
-      "id": "30",
-      "type": "output",
-      "position": {
-        "x": 178.81807503858585,
-        "y": 253.9257167498655
-      },
-      "data": {
-        "label": "Output"
+        "type": "text",
+        "value": "scientific_name"
       }
     }
   ],
   "edges": [
     {
-      "source": "10",
-      "sourceHandle": "iucn_splist",
-      "target": "13",
-      "targetHandle": "species_data",
-      "id": "reactflow__edge-10iucn_splist-13species_data"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "sp_col",
-      "id": "reactflow__edge-14-13sp_col"
-    },
-    {
-      "source": "13",
+      "source": "55",
       "sourceHandle": "iucn_history_assessment_data",
-      "target": "15",
+      "target": "59",
       "targetHandle": "history_assessment_data",
-      "id": "reactflow__edge-13iucn_history_assessment_data-15history_assessment_data"
+      "id": "reactflow__edge-55iucn_history_assessment_data-59history_assessment_data"
     },
     {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "sp_col",
-      "id": "reactflow__edge-14-15sp_col"
-    },
-    {
-      "source": "15",
-      "sourceHandle": "redlist_trend_plot",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-15redlist_trend_plot-18"
-    },
-    {
-      "source": "19",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "time_col",
-      "id": "reactflow__edge-19-15time_col"
-    },
-    {
-      "source": "20",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "threat_category_code_column",
-      "id": "reactflow__edge-20-15threat_category_code_column"
-    },
-    {
-      "source": "15",
-      "sourceHandle": "redlist_data",
-      "target": "21",
-      "targetHandle": null,
-      "id": "reactflow__edge-15redlist_data-21"
-    },
-    {
-      "source": "15",
-      "sourceHandle": "redlist_matrix",
-      "target": "27",
-      "targetHandle": null,
-      "id": "reactflow__edge-15redlist_matrix-27"
-    },
-    {
-      "source": "28",
-      "sourceHandle": "iucn_country_splist",
-      "target": "10",
-      "targetHandle": "splist_country",
-      "id": "reactflow__edge-28iucn_country_splist-10splist_country"
-    },
-    {
-      "source": "29",
-      "sourceHandle": "iucn_taxon_splist",
-      "target": "10",
-      "targetHandle": "splist_taxon",
-      "id": "reactflow__edge-29iucn_taxon_splist-10splist_taxon"
-    },
-    {
-      "source": "28",
+      "source": "55",
       "sourceHandle": "api_citation",
-      "target": "30",
+      "target": "60",
       "targetHandle": null,
-      "id": "reactflow__edge-28api_citation-30"
+      "id": "reactflow__edge-55api_citation-60"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "redlist_trend_plot",
+      "target": "61",
+      "targetHandle": null,
+      "id": "reactflow__edge-59redlist_trend_plot-61"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "redlist_matrix",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-59redlist_matrix-62"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "redlist_data",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-59redlist_data-63"
+    },
+    {
+      "source": "58",
+      "sourceHandle": "iucn_splist",
+      "target": "55",
+      "targetHandle": "species_data",
+      "id": "reactflow__edge-58iucn_splist-55species_data"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "iucn_country_splist",
+      "target": "58",
+      "targetHandle": "splist_country",
+      "id": "reactflow__edge-56iucn_country_splist-58splist_country"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "iucn_taxon_splist",
+      "target": "58",
+      "targetHandle": "splist_taxon",
+      "id": "reactflow__edge-57iucn_taxon_splist-58splist_taxon"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "api_citation",
+      "target": "64",
+      "targetHandle": null,
+      "id": "reactflow__edge-57api_citation-64"
+    },
+    {
+      "source": "65",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "time_col",
+      "id": "reactflow__edge-65-59time_col"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "threat_category_code_column",
+      "id": "reactflow__edge-66-59threat_category_code_column"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "55",
+      "targetHandle": "sp_col",
+      "id": "reactflow__edge-67-55sp_col"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "sp_col",
+      "id": "reactflow__edge-67-59sp_col"
     }
   ],
   "inputs": {
-    "IUCN_redlist_spList>IUCN_redlist_spGroup.yml@29|taxonomic_group": {
-      "description": "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
-      "label": "Taxonomic group",
-      "type": "options",
-      "options": [
-        "all",
-        "amphibians",
-        "birds",
-        "mammals",
-        "reptiles",
-        "fishes",
-        "insects",
-        "angelfishes",
-        "arachnids",
-        "blennies",
-        "brown_algae",
-        "butterfly_fishes",
-        "cacti",
-        "chameleons",
-        "cone_snails",
-        "conifers",
-        "corals",
-        "crocodiles_and_alligators",
-        "crustaceans",
-        "cycads",
-        "fernes_and_allies",
-        "flowering_plants",
-        "fw_caridean_shrimps",
-        "fw_crabs",
-        "fw_crayfish",
-        "green_algae",
-        "groupers",
-        "gymnosperms",
-        "hagfishes",
-        "horseshoe_crabs",
-        "lichens",
-        "lobsters",
-        "magnolias",
-        "mangrove_plants",
-        "molluscs",
-        "mosses",
-        "mushrooms",
-        "others",
-        "pufferfishes",
-        "red_algae",
-        "reef_building_corals",
-        "seabreams_porgies_picarels",
-        "seagrasses",
-        "seasnakes",
-        "sharks_and_rays",
-        "sturgeons",
-        "surgeonfishes",
-        "tarpons_and_ladyfishes",
-        "tunas_and_billfishes",
-        "velvet_worms",
-        "wrasses_and_parrotfishes"
-      ],
-      "example": "mammals",
-      "weight": 0
-    },
-    "IUCN_redlist_spList>IUCN_redlist_spCountry.yml@28|country": {
+    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
       "description": "Select a country to obtain the list of its species.",
       "label": "Country",
       "type": "options",
@@ -541,33 +499,99 @@
         "Zimbabwe"
       ],
       "example": "Colombia",
+      "weight": 0
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|taxonomic_group": {
+      "description": "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
+      "label": "Taxonomic group",
+      "type": "options",
+      "options": [
+        "all",
+        "amphibians",
+        "birds",
+        "mammals",
+        "reptiles",
+        "fishes",
+        "insects",
+        "angelfishes",
+        "arachnids",
+        "blennies",
+        "brown_algae",
+        "butterfly_fishes",
+        "cacti",
+        "chameleons",
+        "cone_snails",
+        "conifers",
+        "corals",
+        "crocodiles_and_alligators",
+        "crustaceans",
+        "cycads",
+        "fernes_and_allies",
+        "flowering_plants",
+        "fw_caridean_shrimps",
+        "fw_crabs",
+        "fw_crayfish",
+        "green_algae",
+        "groupers",
+        "gymnosperms",
+        "hagfishes",
+        "horseshoe_crabs",
+        "lichens",
+        "lobsters",
+        "magnolias",
+        "mangrove_plants",
+        "molluscs",
+        "mosses",
+        "mushrooms",
+        "others",
+        "pufferfishes",
+        "red_algae",
+        "reef_building_corals",
+        "seabreams_porgies_picarels",
+        "seagrasses",
+        "seasnakes",
+        "sharks_and_rays",
+        "sturgeons",
+        "surgeonfishes",
+        "tarpons_and_ladyfishes",
+        "tunas_and_billfishes",
+        "velvet_worms",
+        "wrasses_and_parrotfishes"
+      ],
+      "example": "mammals",
       "weight": 1
     }
   },
   "outputs": {
-    "RedListIndex>RedListIndex.yml@15|redlist_data": {
-      "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
-      "label": "Red List data",
-      "type": "text/csv",
+    "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml@55|api_citation": {
+      "description": "Citation for the data acquired using the IUCN Red List API",
+      "label": "IUCN API citation",
+      "type": "text/plain",
       "weight": 0
     },
-    "RedListIndex>RedListIndex.yml@15|redlist_trend_plot": {
-      "description": "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss. For more information about the workflow and the interpretation of the results consult the documentation [RLI documentation](https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html) ",
-      "label": "Red List trend plot",
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_trend_plot": {
+      "description": "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss.",
+      "label": "Red List trend",
       "type": "image/jpg",
       "weight": 1
     },
-    "RedListIndex>RedListIndex.yml@15|redlist_matrix": {
-      "description": "Matrix showing the distribution of threat categories over time for the group of species of interest.",
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_matrix": {
+      "description": "Matrix showing the distribution of threat categories over time for the group of species.",
       "label": "Red List matrix",
       "type": "text/csv",
       "weight": 2
     },
-    "IUCN_redlist_spList>IUCN_redlist_spCountry.yml@28|api_citation": {
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_data": {
+      "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
+      "label": "Red List data",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|api_citation": {
       "description": "Citation for the data acquired using the IUCN Red List API",
       "label": "IUCN API citation",
       "type": "text/plain",
-      "weight": 3
+      "weight": 4
     }
   },
   "metadata": {

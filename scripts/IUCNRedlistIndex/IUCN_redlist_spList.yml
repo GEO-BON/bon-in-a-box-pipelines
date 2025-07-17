@@ -1,6 +1,7 @@
 script: IUCN_redlist_spList.R
-name: IUCN list of species
-description: This script returns a list of species assessed by the IUCN Red List of Species for a specific country and taxonomic group.
+name: IUCN combine species lists
+description: This script combines the IUCN redlist species list for a country and the species list for a taxonomic group to be able to 
+  calculate the country and taxon-specific redlist index.
 author:
  - name: Maria Camila diaz
    email: maria.camila.diaz.corzo@usherbrooke.ca
