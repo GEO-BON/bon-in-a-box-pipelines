@@ -20,7 +20,7 @@ conda:
   dependencies:
     - r-magrittr
     - r-dplyr
-    - r-rredlist=1.0.0
+    - r-rredlist
     - r-this.path
     - r-rjson
 inputs:
@@ -89,7 +89,7 @@ outputs:
   taxonomic_group:
     label: Taxonomic group
     description: Taxonomic group of interest
-    type: text/csv
+    type: text/plain
   api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API

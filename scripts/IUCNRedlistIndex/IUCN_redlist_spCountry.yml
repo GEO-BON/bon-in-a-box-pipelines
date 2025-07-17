@@ -286,7 +286,7 @@ outputs:
   country: 
     label: Country
     description: Country for IUCN red list assessment
-    type: text/csv
+    type: text/plain
   api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API
