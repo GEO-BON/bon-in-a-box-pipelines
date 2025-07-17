@@ -283,6 +283,10 @@ outputs:
     label: IUCN species list
     description: "Dataset with the list of species for the specified country. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv
+  country: 
+    label: Country
+    description: Country for IUCN red list assessment
+    type: text/csv
   api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API

@@ -11,6 +11,10 @@ if (token == "") {
 }
 print(token)
 
+country <- input$country
+
+biab_output("country", country)
+
 ## Load sp country ####
 
 IUCN_countries <- rredlist::rl_countries(key = token)

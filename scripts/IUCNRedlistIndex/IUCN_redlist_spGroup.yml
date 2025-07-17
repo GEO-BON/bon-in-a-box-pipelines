@@ -86,6 +86,10 @@ outputs:
     label: IUCN species list
     description: "Dataset with the list of species for the specified taxonomic group. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv
+  taxonomic_group:
+    label: Taxonomic group
+    description: Taxonomic group of interest
+    type: text/csv
   api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API

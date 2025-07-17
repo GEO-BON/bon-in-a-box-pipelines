@@ -4,36 +4,56 @@ lapply(packagesList, library, character.only = TRUE) # Load explicitly listed li
 
 input <- biab_inputs()
 
-# Script body ####
-token <- Sys.getenv("IUCN_TOKEN")
-if (token == "") {
-  biab_error_stop("Please specify an IUCN token in your environment file")
+group <- input$taxonomic_group
+biab_output("taxonomic_group", group)
+
+all <- FALSE
+
+# If all is selected, skip this script
+if (input$taxonomic_group == "all") {
+  all <- TRUE
+
+  IUCN_taxon <- data.frame()
+  iucn_taxon_splist_path <- file.path(outputFolder, paste0("iucn_taxon_splist", ".csv")) # Define the file path
+  write.csv(IUCN_taxon, iucn_taxon_splist_path, row.names = F) # write result
+  biab_output("iucn_taxon_splist", iucn_taxon_splist_path)
+
+  citation <- "No data retrieved for specific taxon group because user selected `all`"
+  biab_output("api_citation", citation)
 }
-print(token)
 
-## Load sp taxonomic group ####
-print(sprintf("Loading species for '%s' taxon group...", input$taxonomic_group))
-IUCN_taxon <- rredlist::rl_comp_groups(name = input$taxonomic_group, key = token)$assessments
+if (all == FALSE) {
+  # Script body ####
+  token <- Sys.getenv("IUCN_TOKEN")
+  if (token == "") {
+    biab_error_stop("Please specify an IUCN token in your environment file")
+  }
+  print(token)
 
-if (nrow(IUCN_taxon) == 0) {
-  biab_error_stop("Could not find any species of the specified taxon group")
+  ## Load sp taxonomic group ####
+  print(sprintf("Loading species for '%s' taxon group...", input$taxonomic_group))
+  IUCN_taxon <- rredlist::rl_comp_groups(name = input$taxonomic_group, key = token)$assessments
+
+  if (nrow(IUCN_taxon) == 0) {
+    biab_error_stop("Could not find any species of the specified taxon group")
+  }
+
+  IUCN_taxon$scopes <- sapply(IUCN_taxon$scopes, function(x) paste(unlist(x), collapse = ", "))
+  iucn_taxon_splist_path <- file.path(outputFolder, paste0("iucn_taxon_splist", ".csv")) # Define the file path
+  write.csv(IUCN_taxon, iucn_taxon_splist_path, row.names = F) # write result
+
+  biab_output("iucn_taxon_splist", iucn_taxon_splist_path)
+
+  citation <- rredlist::rl_citation(key = token)
+
+  # Extract citation
+  citation <- capture.output(print(citation))
+  lines <- trimws(unlist(strsplit(citation, "\n")))
+  start <- grep("^IUCN \\([0-9]{4}\\)", lines)
+  end <- grep("Accessed on", lines)
+  end <- end[end >= start][1]
+
+  citation <- paste(lines[start:end], collapse = " ")
+
+  biab_output("api_citation", citation)
 }
-
-IUCN_taxon$scopes <- sapply(IUCN_taxon$scopes, function(x) paste(unlist(x), collapse = ", "))
-iucn_taxon_splist_path <- file.path(outputFolder, paste0("iucn_taxon_splist", ".csv")) # Define the file path
-write.csv(IUCN_taxon, iucn_taxon_splist_path, row.names = F) # write result
-
-biab_output("iucn_taxon_splist", iucn_taxon_splist_path)
-
-citation <- rredlist::rl_citation(key = token)
-
-# Extract citation
-citation <- capture.output(print(citation))
-lines <- trimws(unlist(strsplit(citation, "\n")))
-start <- grep("^IUCN \\([0-9]{4}\\)", lines)
-end <- grep("Accessed on", lines)
-end <- end[end >= start][1]
-
-citation <- paste(lines[start:end], collapse = " ")
-
-biab_output("api_citation", citation)

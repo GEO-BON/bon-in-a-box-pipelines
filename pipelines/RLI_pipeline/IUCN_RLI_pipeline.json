@@ -100,17 +100,6 @@
       }
     },
     {
-      "id": "64",
-      "type": "output",
-      "position": {
-        "x": 1089.7228574777957,
-        "y": 351.02915305214657
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "65",
       "type": "constant",
       "position": {
@@ -147,6 +136,94 @@
       "data": {
         "type": "text",
         "value": "scientific_name"
+      }
+    },
+    {
+      "id": "68",
+      "type": "userInput",
+      "position": {
+        "x": 50.53085941334518,
+        "y": 310.0073767607698
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mammals",
+        "options": [
+          "all",
+          "amphibians",
+          "birds",
+          "mammals",
+          "reptiles",
+          "fishes",
+          "insects",
+          "angelfishes",
+          "arachnids",
+          "blennies",
+          "brown_algae",
+          "butterfly_fishes",
+          "cacti",
+          "chameleons",
+          "cone_snails",
+          "conifers",
+          "corals",
+          "crocodiles_and_alligators",
+          "crustaceans",
+          "cycads",
+          "fernes_and_allies",
+          "flowering_plants",
+          "fw_caridean_shrimps",
+          "fw_crabs",
+          "fw_crayfish",
+          "green_algae",
+          "groupers",
+          "gymnosperms",
+          "hagfishes",
+          "horseshoe_crabs",
+          "lichens",
+          "lobsters",
+          "magnolias",
+          "mangrove_plants",
+          "molluscs",
+          "mosses",
+          "mushrooms",
+          "others",
+          "pufferfishes",
+          "red_algae",
+          "reef_building_corals",
+          "seabreams_porgies_picarels",
+          "seagrasses",
+          "seasnakes",
+          "sharks_and_rays",
+          "sturgeons",
+          "surgeonfishes",
+          "tarpons_and_ladyfishes",
+          "tunas_and_billfishes",
+          "velvet_worms",
+          "wrasses_and_parrotfishes"
+        ]
+      }
+    },
+    {
+      "id": "69",
+      "type": "output",
+      "position": {
+        "x": 1079.9624938964844,
+        "y": 93.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "70",
+      "type": "output",
+      "position": {
+        "x": 1080.9624938964844,
+        "y": 387.7999954223633
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -208,13 +285,6 @@
       "id": "reactflow__edge-57iucn_taxon_splist-58splist_taxon"
     },
     {
-      "source": "57",
-      "sourceHandle": "api_citation",
-      "target": "64",
-      "targetHandle": null,
-      "id": "reactflow__edge-57api_citation-64"
-    },
-    {
       "source": "65",
       "sourceHandle": null,
       "target": "59",
@@ -241,6 +311,48 @@
       "target": "59",
       "targetHandle": "sp_col",
       "id": "reactflow__edge-67-59sp_col"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-68-57taxonomic_group"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "58",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-68-58taxonomic_group"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "country",
+      "target": "59",
+      "targetHandle": "country",
+      "id": "reactflow__edge-56country-59country"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "taxonomic_group",
+      "target": "59",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-57taxonomic_group-59taxonomic_group"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "country",
+      "target": "69",
+      "targetHandle": null,
+      "id": "reactflow__edge-56country-69"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "taxonomic_group",
+      "target": "70",
+      "targetHandle": null,
+      "id": "reactflow__edge-57taxonomic_group-70"
     }
   ],
   "inputs": {
@@ -501,10 +613,11 @@
       "example": "Colombia",
       "weight": 0
     },
-    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|taxonomic_group": {
-      "description": "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
+    "pipeline@68": {
       "label": "Taxonomic group",
+      "description": "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
       "type": "options",
+      "example": "mammals",
       "options": [
         "all",
         "amphibians",
@@ -558,7 +671,6 @@
         "velvet_worms",
         "wrasses_and_parrotfishes"
       ],
-      "example": "mammals",
       "weight": 1
     }
   },
@@ -587,11 +699,17 @@
       "type": "text/csv",
       "weight": 3
     },
-    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|api_citation": {
-      "description": "Citation for the data acquired using the IUCN Red List API",
-      "label": "IUCN API citation",
-      "type": "text/plain",
+    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
+      "description": "Country for IUCN red list assessment",
+      "label": "Country",
+      "type": "text/csv",
       "weight": 4
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|taxonomic_group": {
+      "description": "Taxonomic group of interest",
+      "label": "Taxonomic group",
+      "type": "text/csv",
+      "weight": 5
     }
   },
   "metadata": {

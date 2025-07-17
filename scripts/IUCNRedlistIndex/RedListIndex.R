@@ -79,18 +79,24 @@ redlist_data <- red::rli(matrix_output, boot = F) %>%
   dplyr::filter(!Year %in% "Change/year")
 print("redlist_data")
 
+if (input$taxonomic_group=="all"){
+title <- paste0("RLI for all species in ", input$country)
+} else {
+title <- paste0("RLI for ", input$taxonomic_group, " in ", input$country)
+}
 
-# Redlist figura ####
-redlist_trend_plot <- ggplot(redlist_data, aes(x = as.numeric(Year), y = RLI)) +
-  scale_x_continuous(breaks = seq(1960, as.numeric(format(Sys.Date(), "%Y")), by = 2)) +
-  labs(x = "year", y = "Red List Index") +
+filtered_data <- redlist_data[!is.na(redlist_data$RLI), ]
+# Redlist figures ####
+redlist_trend_plot <- ggplot(filtered_data, aes(x = as.numeric(Year), y = RLI)) +
+  scale_x_continuous(breaks = seq(min(filtered_data$Year), as.numeric(format(Sys.Date(), "%Y")), by = 5)) +
+  labs(x = "Year", y = "Red List Index") +
   geom_line(group = 1, col = "red") +
-  geom_point() +
-  coord_cartesian(xlim = c(1960, as.numeric(format(Sys.Date(), "%Y"))), ylim = c(0, 1)) +
-  theme_classic() +
-  theme(panel.grid.major = element_line(color = "gray")) +
+  geom_point(size=0.5) +
+  coord_cartesian(xlim = c(min(filtered_data$Year), as.numeric(format(Sys.Date(), "%Y"))), ylim = c(0, 1)) +
+  theme_bw() +
+  #theme(panel.grid.major = element_line(color = "gray")) +
   theme(text = element_text(size = 4)) +
-  ggtitle("RLI for selected taxonomy group and country") +
+  ggtitle(title) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 2))
 
