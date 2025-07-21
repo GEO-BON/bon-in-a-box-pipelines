@@ -1,6 +1,6 @@
 script: IUCN_redlist_spList.R
 name: IUCN combine species lists
-description: This script combines the IUCN redlist species list for a country and the species list for a taxonomic group to be able to 
+description: This script combines the IUCN redlist species list for a country and the species list for a taxonomic group to be able to
   calculate the country and taxon-specific redlist index.
 author:
  - name: Maria Camila diaz
@@ -35,63 +35,31 @@ inputs:
     description: Dataset with the list of species for a country.
     example: null
     type: text/csv
+  splist_use:
+    label: IUCN species list for uses or trades
+    description: Dataset with the list of species for uses or trades
+    example: null
+    type: text/csv
+  splist_threat:
+    label: IUCN species list for a threat category
+    description: Dataset with the list of species for a threat category
+    example: null
+    type: text/csv
   taxonomic_group:
     label: Taxonomic group
-    description: "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained."
-    type: options
-    example: "mammals"
-    options:
-      - "all"
-      - "amphibians"
-      - "birds"
-      - "mammals"
-      - "reptiles"
-      - "fishes"
-      - "insects"
-      - "angelfishes"
-      - "arachnids"
-      - "blennies"
-      - "brown_algae"
-      - "butterfly_fishes"
-      - "cacti"
-      - "chameleons"
-      - "cone_snails"
-      - "conifers"
-      - "corals"
-      - "crocodiles_and_alligators"
-      - "crustaceans"
-      - "cycads"
-      - "fernes_and_allies"
-      - "flowering_plants"
-      - "fw_caridean_shrimps"
-      - "fw_crabs"
-      - "fw_crayfish"
-      - "green_algae"
-      - "groupers"
-      - "gymnosperms"
-      - "hagfishes"
-      - "horseshoe_crabs"
-      - "lichens"
-      - "lobsters"
-      - "magnolias"
-      - "mangrove_plants"
-      - "molluscs"
-      - "mosses"
-      - "mushrooms"
-      - "others"
-      - "pufferfishes"
-      - "red_algae"
-      - "reef_building_corals"
-      - "seabreams_porgies_picarels"
-      - "seagrasses"
-      - "seasnakes"
-      - "sharks_and_rays"
-      - "sturgeons"
-      - "surgeonfishes"
-      - "tarpons_and_ladyfishes"
-      - "tunas_and_billfishes"
-      - "velvet_worms"
-      - "wrasses_and_parrotfishes"
+    description: The taxonomic group selected
+    type: text/plain
+    example:
+  species_use:
+    label: Species use or trade
+    description: The species use or trade selected
+    type: text[]
+    example:
+  threat:
+    label: Threat category
+    description: The threat category selected
+    type: text[]
+    example:
 outputs:
   iucn_splist:
     label: IUCN species list

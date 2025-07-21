@@ -20,8 +20,6 @@ historyAssesment_matrix <- reshape2::dcast(history_assessment_data, form_matrix,
   tibble::column_to_rownames(input$sp_col) %>%
   as.data.frame.matrix()
 
-
-
 # Ajustar matriz de codigos de amenaza ####
 
 ########## Codigo redlist
@@ -69,6 +67,10 @@ if (ncol(matrix_output) > 1) {
   }
 }
 
+redlist_matrix_path <- file.path(outputFolder, paste0("redlist_matrix", ".csv")) # Define the file path
+write.csv(matrix_output, redlist_matrix_path, row.names = T)
+biab_output("redlist_matrix", redlist_matrix_path)
+
 # Redlist data ####
 print("red")
 redlist_data <- red::rli(matrix_output, boot = F) %>%
@@ -80,19 +82,20 @@ redlist_data <- red::rli(matrix_output, boot = F) %>%
 print("redlist_data")
 
 if (input$taxonomic_group=="all"){
-title <- paste0("RLI for all species in ", input$country)
+  title <- paste0("RLI for all species in ", input$country)
 } else {
-title <- paste0("RLI for ", input$taxonomic_group, " in ", input$country)
+  title <- paste0("RLI for ", input$taxonomic_group, " in ", input$country)
 }
 
 filtered_data <- redlist_data[!is.na(redlist_data$RLI), ]
+
 # Redlist figures ####
 redlist_trend_plot <- ggplot(filtered_data, aes(x = as.numeric(Year), y = RLI)) +
-  scale_x_continuous(breaks = seq(min(filtered_data$Year), as.numeric(format(Sys.Date(), "%Y")), by = 5)) +
+  scale_x_continuous(breaks = seq(min(as.numeric(filtered_data$Year)), as.numeric(format(Sys.Date(), "%Y")), by = 5)) +
   labs(x = "Year", y = "Red List Index") +
   geom_line(group = 1, col = "red") +
   geom_point(size=0.5) +
-  coord_cartesian(xlim = c(min(filtered_data$Year), as.numeric(format(Sys.Date(), "%Y"))), ylim = c(0, 1)) +
+  coord_cartesian(xlim = c(min(as.numeric(filtered_data$Year)), as.numeric(format(Sys.Date(), "%Y"))), ylim = c(0, 1)) +
   theme_bw() +
   #theme(panel.grid.major = element_line(color = "gray")) +
   theme(text = element_text(size = 4)) +
@@ -100,17 +103,12 @@ redlist_trend_plot <- ggplot(filtered_data, aes(x = as.numeric(Year), y = RLI)) 
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 2))
 
-
 ## Write results ####
 redlist_data_path <- file.path(outputFolder, paste0("redlist_data", ".csv")) # Define the file path
 write.csv(redlist_data, redlist_data_path, row.names = F)
-
-redlist_matrix_path <- file.path(outputFolder, paste0("redlist_matrix", ".csv")) # Define the file path
-write.csv(matrix_output, redlist_matrix_path, row.names = T)
 
 redlist_trend_plot_path <- file.path(outputFolder, paste0("redlist_trend_plot", ".jpg")) # Define the file path
 ggsave(redlist_trend_plot_path, redlist_trend_plot, height = 2, width = 4)
 
 biab_output("redlist_trend_plot", redlist_trend_plot_path)
 biab_output("redlist_data", redlist_data_path)
-biab_output("redlist_matrix", redlist_matrix_path)

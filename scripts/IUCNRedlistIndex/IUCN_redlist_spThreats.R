@@ -4,7 +4,7 @@ lapply(packagesList, library, character.only = TRUE)
 
 input <- biab_inputs()
 
-threats <- input$threat_category
+threats <- input$threat_category_input
 biab_output("threat_category", threats)
 
 
@@ -15,7 +15,7 @@ if ("Do not filter by threat category" %in% threats) {
     IUCN_threats <- data.frame()
     iucn_threats_splist_path <- file.path(outputFolder, paste0("iucn_threats_splist", ".csv")) # Define the file path
     write.csv(IUCN_threats, iucn_threats_splist_path, row.names = F) # write result
-    biab_output("iucn_threats_splist", iucn_taxon_splist_path)
+    biab_output("iucn_threats_splist", iucn_threats_splist_path)
 
     citation <- "No threat data retrieved because user selected `don't filter by threat category'"
     biab_output("api_citation", citation)
@@ -50,9 +50,15 @@ if ("Do not filter by threat category" %in% threats) {
             print(head(IUCN_threatcode_results))
             if (length(IUCN_threatcode_results_all) == 0) {
                 IUCN_threatcode_results_all <- IUCN_threatcode_results
-              } else {
-            IUCN_threatcode_results_all <- rbind(IUCN_threatcode_results_all, IUCN_threatcode_results)
-             }
+            } else {
+                if (is.data.frame(IUCN_threatcode_results)) {
+                    IUCN_threatcode_results_all <- rbind(IUCN_threatcode_results_all, IUCN_threatcode_results)
+                }
+                else {
+                    print("SKIPPING*************")
+                    print(sprintf("Code is %s", code))
+                }
+            }
         }
         if (nrow(species_threats) == 0) {
             species_threats <- IUCN_threatcode_results_all

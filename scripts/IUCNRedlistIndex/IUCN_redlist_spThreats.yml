@@ -6,7 +6,7 @@ author:
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 inputs:
-  threat_category:
+  threat_category_input:
     label: Threat category
     description: IUCN threat category to filter for
     type: options[]

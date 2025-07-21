@@ -7,14 +7,33 @@ input <- biab_inputs()
 IUCN_country <- read.csv(input$splist_country)
 iucn_splist <- IUCN_country
 
-if (input$taxonomic_group != "all") {
+taxonomic_group <- input$taxonomic_group
+use <- input$species_use
+threat <- input$threat
+
+if (taxonomic_group[1] != "all") {
+  print("Filtered by taxonomic group.")
   IUCN_taxon <- read.csv(input$splist_taxon)
   ## Filter country list by taxonomic group ####
   iucn_splist <- IUCN_taxon %>% dplyr::filter(sis_taxon_id %in% IUCN_country$sis_taxon_id)
+}
 
-  if (nrow(iucn_splist) == 0) {
-    biab_error_stop("Could not find any species of the taxon group in the country of interest")
-  }
+if (use[1] != "Don't filter by species use") {
+  print("Filtered by species use.")
+  IUCN_use <- read.csv(input$splist_use)
+  ## Filter country list by use and trade list ####
+  iucn_splist <- IUCN_use %>% dplyr::filter(sis_taxon_id %in% IUCN_country$sis_taxon_id)
+}
+
+if (threat[1] != "Do not filter by threat category") {
+  print("Filtered by threat category.")
+  IUCN_threat <- read.csv(input$splist_threat)
+  ## Filter country list by threat list ####
+  iucn_splist <- IUCN_threat %>% dplyr::filter(sis_taxon_id %in% IUCN_country$sis_taxon_id)
+}
+
+if (nrow(iucn_splist) == 0) {
+  biab_error_stop("Could not find any species in the country of interest based on the applied filters")
 }
 
 # Write results ####

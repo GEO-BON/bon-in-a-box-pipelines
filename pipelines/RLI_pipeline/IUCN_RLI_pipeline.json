@@ -15,8 +15,8 @@
       "id": "56",
       "type": "io",
       "position": {
-        "x": 567.4803260304694,
-        "y": 119.28117373761529
+        "x": 266.0061000904176,
+        "y": -22.05844132193468
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
@@ -26,8 +26,8 @@
       "id": "57",
       "type": "io",
       "position": {
-        "x": 446.085598239363,
-        "y": 327.7634236397326
+        "x": 272.5819162307989,
+        "y": 597.6455993656837
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spGroup.yml"
@@ -139,72 +139,6 @@
       }
     },
     {
-      "id": "68",
-      "type": "userInput",
-      "position": {
-        "x": 50.53085941334518,
-        "y": 310.0073767607698
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "mammals",
-        "options": [
-          "all",
-          "amphibians",
-          "birds",
-          "mammals",
-          "reptiles",
-          "fishes",
-          "insects",
-          "angelfishes",
-          "arachnids",
-          "blennies",
-          "brown_algae",
-          "butterfly_fishes",
-          "cacti",
-          "chameleons",
-          "cone_snails",
-          "conifers",
-          "corals",
-          "crocodiles_and_alligators",
-          "crustaceans",
-          "cycads",
-          "fernes_and_allies",
-          "flowering_plants",
-          "fw_caridean_shrimps",
-          "fw_crabs",
-          "fw_crayfish",
-          "green_algae",
-          "groupers",
-          "gymnosperms",
-          "hagfishes",
-          "horseshoe_crabs",
-          "lichens",
-          "lobsters",
-          "magnolias",
-          "mangrove_plants",
-          "molluscs",
-          "mosses",
-          "mushrooms",
-          "others",
-          "pufferfishes",
-          "red_algae",
-          "reef_building_corals",
-          "seabreams_porgies_picarels",
-          "seagrasses",
-          "seasnakes",
-          "sharks_and_rays",
-          "sturgeons",
-          "surgeonfishes",
-          "tarpons_and_ladyfishes",
-          "tunas_and_billfishes",
-          "velvet_worms",
-          "wrasses_and_parrotfishes"
-        ]
-      }
-    },
-    {
       "id": "69",
       "type": "output",
       "position": {
@@ -224,6 +158,28 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "71",
+      "type": "io",
+      "position": {
+        "x": 262.12034676033113,
+        "y": 109.64459017188031
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spUse.yml"
+      }
+    },
+    {
+      "id": "76",
+      "type": "io",
+      "position": {
+        "x": 138.31720165463025,
+        "y": 309.81837383261364
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spThreats.yml"
       }
     }
   ],
@@ -313,20 +269,6 @@
       "id": "reactflow__edge-67-59sp_col"
     },
     {
-      "source": "68",
-      "sourceHandle": null,
-      "target": "57",
-      "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-68-57taxonomic_group"
-    },
-    {
-      "source": "68",
-      "sourceHandle": null,
-      "target": "58",
-      "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-68-58taxonomic_group"
-    },
-    {
       "source": "56",
       "sourceHandle": "country",
       "target": "59",
@@ -353,6 +295,41 @@
       "target": "70",
       "targetHandle": null,
       "id": "reactflow__edge-57taxonomic_group-70"
+    },
+    {
+      "source": "71",
+      "sourceHandle": "iucn_use_splist",
+      "target": "58",
+      "targetHandle": "splist_use",
+      "id": "reactflow__edge-71iucn_use_splist-58splist_use"
+    },
+    {
+      "source": "71",
+      "sourceHandle": "species_use",
+      "target": "58",
+      "targetHandle": "species_use",
+      "id": "reactflow__edge-71species_use-58species_use"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "taxonomic_group",
+      "target": "58",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-57taxonomic_group-58taxonomic_group"
+    },
+    {
+      "source": "76",
+      "sourceHandle": "threat_category",
+      "target": "58",
+      "targetHandle": "threat",
+      "id": "reactflow__edge-76threat_category-58threat"
+    },
+    {
+      "source": "76",
+      "sourceHandle": "iucn_threats_splist",
+      "target": "58",
+      "targetHandle": "splist_threat",
+      "id": "reactflow__edge-76iucn_threats_splist-58splist_threat"
     }
   ],
   "inputs": {
@@ -613,11 +590,10 @@
       "example": "Colombia",
       "weight": 0
     },
-    "pipeline@68": {
-      "label": "Taxonomic group",
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|taxonomic_group": {
       "description": "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
+      "label": "Taxonomic group",
       "type": "options",
-      "example": "mammals",
       "options": [
         "all",
         "amphibians",
@@ -671,7 +647,63 @@
         "velvet_worms",
         "wrasses_and_parrotfishes"
       ],
+      "example": "mammals",
       "weight": 1
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@71|species_use": {
+      "description": "Select the species use or trade. If 'All' is selected, the script will return the list of all utilized species.",
+      "label": "Species use",
+      "type": "options[]",
+      "options": [
+        "All",
+        "Don't filter by species use",
+        "Food - human",
+        "Food - animal",
+        "Medicine - human & veterinary",
+        "Poisons",
+        "Manufacturing chemicals",
+        "Other chemicals",
+        "Fuels",
+        "Fibre",
+        "Construction or structural materials",
+        "Wearing apparel, accessories",
+        "Other household goods",
+        "Handicrafts, jewellery, etc.",
+        "Pets/display animals, horticulture",
+        "Research",
+        "Sport hunting/specimen collecting",
+        "Establishing ex-situ production",
+        "Other",
+        "Unknown"
+      ],
+      "example": [
+        "Don't filter by species use"
+      ],
+      "weight": 2
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@76|threat_category_input": {
+      "description": "IUCN threat category to filter for",
+      "label": "Threat category",
+      "type": "options[]",
+      "options": [
+        "Do not filter by threat category",
+        "Residential & commercial development",
+        "Agriculture & aquaculture",
+        "Energy production & mining",
+        "Transportation & service corridors",
+        "Biological resource use",
+        "Human intrusions & disturbance",
+        "Natural system modifications",
+        "Invasive and other problematic species, genes & diseases",
+        "Pollution",
+        "Geological events",
+        "Climate change & severe weather",
+        "Other options"
+      ],
+      "example": [
+        "Do not filter by threat category"
+      ],
+      "weight": 3
     }
   },
   "outputs": {
@@ -730,7 +762,13 @@
         "name": "Laetitia Tremblay",
         "email": "laetitia.tremblay@mcgill.ca",
         "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
-        "role": "Pipeline testing and debugging"
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
       }
     ],
     "license": "MIT",

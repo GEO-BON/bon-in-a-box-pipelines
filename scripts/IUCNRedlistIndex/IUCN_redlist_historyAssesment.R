@@ -14,6 +14,8 @@ print(sprintf("Token: %s", token))
 
 iucn_splist <- data.table::fread(input$species_data) %>% as.data.frame()
 
+#biab_error_stop("")
+
 print("Loading historical assessment data...")
 pbapply::pboptions(type = "timer")
 iucn_history_assessment_data <- pbapply::pblapply(iucn_splist[, input$sp_col], function(x) {
