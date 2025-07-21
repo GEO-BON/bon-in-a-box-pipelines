@@ -10,6 +10,7 @@ inputs:
     label: Threat category
     description: IUCN threat category to filter for
     type: options[]
+    example: [Pollution]
     options:
     - Do not filter by threat category
     - Residential & commercial development
@@ -28,7 +29,7 @@ outputs:
   threat_category:
     label: Threat category
     description: IUCN threat category
-    type: text/plain[]
+    type: text[]
   threats_list:
     label: List of IUCN threats
     description: IUCN list of threats
@@ -37,7 +38,7 @@ outputs:
     label: Species list filtered by threat
     description: List of species that are threatened by a chosen threat
     type: text/csv
-  api_citation: 
+  api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API
     type: text/plain
