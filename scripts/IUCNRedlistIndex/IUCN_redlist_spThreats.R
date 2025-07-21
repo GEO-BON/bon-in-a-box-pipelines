@@ -4,12 +4,12 @@ lapply(packagesList, library, character.only = TRUE)
 
 input <- biab_inputs()
 
-threat <- input$threat_category
-biab_output("threat_category", threat)
+threats <- input$threat_category
+biab_output("threat_category", threats)
 
 
-if ("Do not filter by threat category" %in% threat) {
-    if (length(threat)>1){
+if ("Do not filter by threat category" %in% threats) {
+    if (length(threats) > 1) {
         biab_error_stop("Cannot select more than one option when selecting 'Do not filter by threat category'")
     }
     IUCN_threats <- data.frame()
@@ -20,7 +20,6 @@ if ("Do not filter by threat category" %in% threat) {
     citation <- "No threat data retrieved because user selected `don't filter by threat category'"
     biab_output("api_citation", citation)
 } else {
-
     token <- Sys.getenv("IUCN_TOKEN")
     if (token == "") {
         biab_error_stop("Please specify an IUCN token in your environment file")
@@ -31,32 +30,43 @@ if ("Do not filter by threat category" %in% threat) {
 
     ## Select threat groups for each threat input
     IUCN_threats <- rredlist::rl_threats(key = token)
-    IUCN_threatcode <- IUCN_threats$threats$code[IUCN_threats$threats$description$en == threat]
- 
-    species_threats <- c()
-    for (i in seq_along(threat)) {
+    threats_list_path <- file.path(outputFolder, paste0("threats_list", ".csv")) # Define the file path
+    write.csv(IUCN_threats, threats_list_path, row.names = F) # write result
+
+    biab_output("threats_list", threats_list_path)
+
+    species_threats <- data.frame()
+    for (threat in threats) { # loop through each threat category
         print(sprintf("Loading species for '%s' threat category...", threat))
-        IUCN_threatcode <- IUCN_threatcode[i]
+        IUCN_threatcode_group <- IUCN_threats$threats$code[IUCN_threats$threats$description$en == threat]
+        print(IUCN_threatcode_group)
+        IUCN_threatcode <- IUCN_threats$threats$code[grepl(paste0("^", IUCN_threatcode_group, "(_|$)"), IUCN_threats$threats$code)]
         print(IUCN_threatcode)
-        IUCN_threatcode_results <- rredlist::rl_threats(code = IUCN_threatcode, key = token)$assessments
-        
-        if (is.null(IUCN_threatcode_results) | nrow(IUCN_threatcode_results) == 0) {
-            print(paste0("Could not find any species in the threat category ", threat, ", skipping"))
-            if(length(threat) == 1){
-               biab_error_stop("Could not find any species in the threat category")
-            }
-            next
+
+        IUCN_threatcode_results_all <- data.frame()
+        for (code in IUCN_threatcode) { # loop through each threatcode in the larger category
+            IUCN_threatcode_results <- rredlist::rl_threats(code = code, key = token)$assessments
+            IUCN_threatcode_results$threatcode <- code
+            print(head(IUCN_threatcode_results))
+            if (length(IUCN_threatcode_results_all) == 0) {
+                IUCN_threatcode_results_all <- IUCN_threatcode_results
+              } else {
+            IUCN_threatcode_results_all <- rbind(IUCN_threatcode_results_all, IUCN_threatcode_results)
+             }
         }
-        print(IUCN_threatcode_results)
-        IUCN_threatcode_results$scopes <- sapply(IUCN_threatcode_results$scopes, function(x) paste(unlist(x), collapse = ", "))
-        species_threats[[i]] <- IUCN_threatcode_results
+        if (nrow(species_threats) == 0) {
+            species_threats <- IUCN_threatcode_results_all
+        } else {
+            species_threats <- rbind(species_threats, IUCN_threatcode_results_all)
+        }
     }
 
+
+    if (nrow(species_threats) == 0) {
+        biab_error_stop("Could not find any species in the threat category")
+    }
     # Output list of species with that threat
-    if(length(input$threat_category > 1)){
-    species_threats <- do.call(rbind, species_threats)
-    }
-
+    species_threats$scopes <- sapply(species_threats$scopes, function(x) paste(unlist(x), collapse = ", "))
     IUCN_threats_path <- file.path(outputFolder, paste0("IUCN_threats_splist", ".csv")) # Define the file path
     write.csv(species_threats, IUCN_threats_path, row.names = F) # write result
 

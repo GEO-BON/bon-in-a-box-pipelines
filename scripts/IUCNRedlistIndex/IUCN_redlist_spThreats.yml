@@ -29,6 +29,10 @@ outputs:
     label: Threat category
     description: IUCN threat category
     type: text/plain[]
+  threats_list:
+    label: List of IUCN threats
+    description: IUCN list of threats
+    type: text/csv
   iucn_threats_splist:
     label: Species list filtered by threat
     description: List of species that are threatened by a chosen threat
