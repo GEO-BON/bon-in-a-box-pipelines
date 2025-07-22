@@ -18,12 +18,12 @@ conda:
 inputs:
   species_use:
     label: Species use
-    description: Select the species use or trade. If 'All' is selected, the script will return the list of all utilized species.
+    description: Select the species use or trade. This returns a list of IUCN Red List species that are used/involved in the categories selected. If 'All' is selected, the script will return the list of all species involved in the uses and trades listed.
     type: options[]
     example: [Research]
     options:
       - All
-      - Don't filter by species use
+      - Do not filter by species use or trade
       - Food - human
       - Food - animal
       - Medicine - human & veterinary

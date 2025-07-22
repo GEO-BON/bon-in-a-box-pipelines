@@ -8,9 +8,9 @@ author:
 inputs:
   threat_category_input:
     label: Threat category
-    description: IUCN threat category to filter for
+    description: Select the species threat(s) to filter for. This returns a list of IUCN Red List species that are threatened by the categories selected.
     type: options[]
-    example: [Pollution]
+    example: [Geological events]
     options:
     - Do not filter by threat category
     - Residential & commercial development

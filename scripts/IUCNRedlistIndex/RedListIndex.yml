@@ -11,7 +11,6 @@ author:
    role: Maintenance
    email: laetitia.tremblay@mcgill.ca
    identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
-
 conda:
   channels:
     - conda-forge
@@ -94,6 +93,16 @@ inputs:
     description: Name of taxonomic group of interest
     type: text/plain
     example: "mammals"
+  species_use:
+    label: Species use(s) or trade(s)
+    description: The species use or trade selected
+    type: text[]
+    example:
+  threat:
+    label: Species threat(s)
+    description: The threat category selected
+    type: text[]
+    example:
   sp_col:
     label: Species name column
     description: "Name of the column in 'history_assessment_data' that contains the scientific names of the species."

@@ -21,7 +21,7 @@ conda:
   dependencies:
     - r-magrittr
     - r-dplyr
-    - r-rredlist=1.0.0
+    - r-rredlist
     - r-this.path
     - r-rjson
 inputs:
@@ -36,12 +36,12 @@ inputs:
     example: null
     type: text/csv
   splist_use:
-    label: IUCN species list for uses or trades
+    label: IUCN species list for use(s) or trade(s)
     description: Dataset with the list of species for uses or trades
     example: null
     type: text/csv
   splist_threat:
-    label: IUCN species list for a threat category
+    label: IUCN species list for a threat(s)
     description: Dataset with the list of species for a threat category
     example: null
     type: text/csv
@@ -51,12 +51,12 @@ inputs:
     type: text/plain
     example:
   species_use:
-    label: Species use or trade
+    label: Species use(s) or trade(s)
     description: The species use or trade selected
     type: text[]
     example:
   threat:
-    label: Threat category
+    label: Species threat(s)
     description: The threat category selected
     type: text[]
     example:

@@ -5,6 +5,9 @@ packagesList <- list("magrittr", "ggplot2", "rredlist", "red") # Explicitly list
 lapply(packagesList, library, character.only = TRUE) # Load libraries - packages
 
 input <- biab_inputs()
+taxonomic_group <- input$taxonomic_group
+uses <- input$species_use
+threats <- input$threat
 
 #### Species list by country ####
 # Load IUCN token----
@@ -81,10 +84,38 @@ redlist_data <- red::rli(matrix_output, boot = F) %>%
   dplyr::filter(!Year %in% "Change/year")
 print("redlist_data")
 
-if (input$taxonomic_group=="all"){
-  title <- paste0("RLI for all species in ", input$country)
+#Add country name in plot title
+title <- paste0("RLI for species in ", input$country)
+
+#Write subtitle in plot based on inputs
+subtitle_parts <- c()
+
+if ("All" %in% taxonomic_group){
+  subtitle_parts <- c(subtitle_parts, "Taxon groups: All")
 } else {
-  title <- paste0("RLI for ", input$taxonomic_group, " in ", input$country)
+  subtitle_parts <- c(subtitle_parts, paste0("Taxon groups: ", paste(taxonomic_group, collapse = ", ")))
+}
+
+if (!"Do not filter by species use or trade" %in% uses) {
+  if ("All" %in% uses) {
+    subtitle_parts <- c(subtitle_parts, "Uses and trades: All")
+  } else {
+    subtitle_parts <- c(subtitle_parts, paste0("Uses and trades: ", paste(uses, collapse = ", ")))
+  }
+}
+
+if (!"Do not filter by threat category" %in% threats) {
+  if ("All" %in% threats) {
+    subtitle_parts <- c(subtitle_parts, "Threats: All")
+  } else {
+    subtitle_parts <- c(subtitle_parts, paste0("Threats: ", paste(threats, collapse = ", ")))
+  }
+}
+
+subtitle_text <- if (length(subtitle_parts) > 0) {
+  paste(subtitle_parts, collapse = "\n")
+} else {
+  NULL  # no subtitle if empty
 }
 
 filtered_data <- redlist_data[!is.na(redlist_data$RLI), ]
@@ -99,7 +130,7 @@ redlist_trend_plot <- ggplot(filtered_data, aes(x = as.numeric(Year), y = RLI)) 
   theme_bw() +
   #theme(panel.grid.major = element_line(color = "gray")) +
   theme(text = element_text(size = 4)) +
-  ggtitle(title) +
+  ggtitle(title, subtitle = subtitle_text) +
   theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 2))
 

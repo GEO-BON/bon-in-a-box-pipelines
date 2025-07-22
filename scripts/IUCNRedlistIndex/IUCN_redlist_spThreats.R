@@ -48,16 +48,15 @@ if ("Do not filter by threat category" %in% threats) {
             IUCN_threatcode_results <- rredlist::rl_threats(code = code, key = token)$assessments
             IUCN_threatcode_results$threatcode <- code
             print(head(IUCN_threatcode_results))
-            if (length(IUCN_threatcode_results_all) == 0) {
-                IUCN_threatcode_results_all <- IUCN_threatcode_results
-            } else {
-                if (is.data.frame(IUCN_threatcode_results)) {
+            if (is.data.frame(IUCN_threatcode_results)) {
+                if (length(IUCN_threatcode_results_all) == 0) {
+                    IUCN_threatcode_results_all <- IUCN_threatcode_results
+                } else {
                     IUCN_threatcode_results_all <- rbind(IUCN_threatcode_results_all, IUCN_threatcode_results)
                 }
-                else {
-                    print("SKIPPING*************")
-                    print(sprintf("Code is %s", code))
-                }
+            } else {
+                print("This is a code, not a list of species. Continuing...")
+                print(sprintf("Code is %s", code))
             }
         }
         if (nrow(species_threats) == 0) {

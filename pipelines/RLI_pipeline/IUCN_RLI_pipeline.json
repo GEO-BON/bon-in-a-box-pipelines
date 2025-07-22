@@ -23,17 +23,6 @@
       }
     },
     {
-      "id": "57",
-      "type": "io",
-      "position": {
-        "x": 272.5819162307989,
-        "y": 597.6455993656837
-      },
-      "data": {
-        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spGroup.yml"
-      }
-    },
-    {
       "id": "58",
       "type": "io",
       "position": {
@@ -59,8 +48,8 @@
       "id": "60",
       "type": "output",
       "position": {
-        "x": 2190.19245506239,
-        "y": 283.73424960272894
+        "x": 2277.496760738488,
+        "y": 357.75311745855095
       },
       "data": {
         "label": "Output"
@@ -150,36 +139,58 @@
       }
     },
     {
-      "id": "70",
-      "type": "output",
+      "id": "76",
+      "type": "io",
       "position": {
-        "x": 1080.9624938964844,
-        "y": 387.7999954223633
+        "x": 118.31720165463025,
+        "y": 227.81837383261364
       },
       "data": {
-        "label": "Output"
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spThreats.yml"
       }
     },
     {
-      "id": "71",
+      "id": "77",
       "type": "io",
       "position": {
-        "x": 262.12034676033113,
-        "y": 109.64459017188031
+        "x": 226.3706122869927,
+        "y": 127.42904249085876
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spUse.yml"
       }
     },
     {
-      "id": "76",
-      "type": "io",
+      "id": "78",
+      "type": "output",
       "position": {
-        "x": 138.31720165463025,
-        "y": 309.81837383261364
+        "x": 816.6572326433825,
+        "y": 145.0240217275138
       },
       "data": {
-        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spThreats.yml"
+        "label": "Output"
+      }
+    },
+    {
+      "id": "79",
+      "type": "output",
+      "position": {
+        "x": 787.0946195409529,
+        "y": 312.9396641493143
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "82",
+      "type": "io",
+      "position": {
+        "x": 208.61557861082133,
+        "y": 457.5595565119029
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spGroup.yml"
       }
     }
   ],
@@ -234,13 +245,6 @@
       "id": "reactflow__edge-56iucn_country_splist-58splist_country"
     },
     {
-      "source": "57",
-      "sourceHandle": "iucn_taxon_splist",
-      "target": "58",
-      "targetHandle": "splist_taxon",
-      "id": "reactflow__edge-57iucn_taxon_splist-58splist_taxon"
-    },
-    {
       "source": "65",
       "sourceHandle": null,
       "target": "59",
@@ -276,46 +280,11 @@
       "id": "reactflow__edge-56country-59country"
     },
     {
-      "source": "57",
-      "sourceHandle": "taxonomic_group",
-      "target": "59",
-      "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-57taxonomic_group-59taxonomic_group"
-    },
-    {
       "source": "56",
       "sourceHandle": "country",
       "target": "69",
       "targetHandle": null,
       "id": "reactflow__edge-56country-69"
-    },
-    {
-      "source": "57",
-      "sourceHandle": "taxonomic_group",
-      "target": "70",
-      "targetHandle": null,
-      "id": "reactflow__edge-57taxonomic_group-70"
-    },
-    {
-      "source": "71",
-      "sourceHandle": "iucn_use_splist",
-      "target": "58",
-      "targetHandle": "splist_use",
-      "id": "reactflow__edge-71iucn_use_splist-58splist_use"
-    },
-    {
-      "source": "71",
-      "sourceHandle": "species_use",
-      "target": "58",
-      "targetHandle": "species_use",
-      "id": "reactflow__edge-71species_use-58species_use"
-    },
-    {
-      "source": "57",
-      "sourceHandle": "taxonomic_group",
-      "target": "58",
-      "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-57taxonomic_group-58taxonomic_group"
     },
     {
       "source": "76",
@@ -330,11 +299,74 @@
       "target": "58",
       "targetHandle": "splist_threat",
       "id": "reactflow__edge-76iucn_threats_splist-58splist_threat"
+    },
+    {
+      "source": "77",
+      "sourceHandle": "iucn_use_splist",
+      "target": "58",
+      "targetHandle": "splist_use",
+      "id": "reactflow__edge-77iucn_use_splist-58splist_use"
+    },
+    {
+      "source": "77",
+      "sourceHandle": "species_use",
+      "target": "58",
+      "targetHandle": "species_use",
+      "id": "reactflow__edge-77species_use-58species_use"
+    },
+    {
+      "source": "77",
+      "sourceHandle": "species_use",
+      "target": "78",
+      "targetHandle": null,
+      "id": "reactflow__edge-77species_use-78"
+    },
+    {
+      "source": "76",
+      "sourceHandle": "threat_category",
+      "target": "79",
+      "targetHandle": null,
+      "id": "reactflow__edge-76threat_category-79"
+    },
+    {
+      "source": "82",
+      "sourceHandle": "iucn_taxon_splist",
+      "target": "58",
+      "targetHandle": "splist_taxon",
+      "id": "reactflow__edge-82iucn_taxon_splist-58splist_taxon"
+    },
+    {
+      "source": "82",
+      "sourceHandle": "taxonomic_group",
+      "target": "58",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-82taxonomic_group-58taxonomic_group"
+    },
+    {
+      "source": "82",
+      "sourceHandle": "taxonomic_group",
+      "target": "59",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-82taxonomic_group-59taxonomic_group"
+    },
+    {
+      "source": "77",
+      "sourceHandle": "species_use",
+      "target": "59",
+      "targetHandle": "species_use",
+      "id": "reactflow__edge-77species_use-59species_use"
+    },
+    {
+      "source": "76",
+      "sourceHandle": "threat_category",
+      "target": "59",
+      "targetHandle": "threat",
+      "id": "reactflow__edge-76threat_category-59threat"
     }
   ],
   "inputs": {
     "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
-      "description": "Select a country to obtain the list of its species.",
+      "description": "Select a country to obtain the list of its species in the IUCN Red List database.",
       "label": "Country",
       "type": "options",
       "options": [
@@ -587,102 +619,73 @@
         "Zambia",
         "Zimbabwe"
       ],
-      "example": "Colombia",
+      "example": "Haiti",
       "weight": 0
     },
-    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|taxonomic_group": {
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
       "description": "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
       "label": "Taxonomic group",
-      "type": "options",
-      "options": [
-        "all",
-        "amphibians",
-        "birds",
-        "mammals",
-        "reptiles",
-        "fishes",
-        "insects",
-        "angelfishes",
-        "arachnids",
-        "blennies",
-        "brown_algae",
-        "butterfly_fishes",
-        "cacti",
-        "chameleons",
-        "cone_snails",
-        "conifers",
-        "corals",
-        "crocodiles_and_alligators",
-        "crustaceans",
-        "cycads",
-        "fernes_and_allies",
-        "flowering_plants",
-        "fw_caridean_shrimps",
-        "fw_crabs",
-        "fw_crayfish",
-        "green_algae",
-        "groupers",
-        "gymnosperms",
-        "hagfishes",
-        "horseshoe_crabs",
-        "lichens",
-        "lobsters",
-        "magnolias",
-        "mangrove_plants",
-        "molluscs",
-        "mosses",
-        "mushrooms",
-        "others",
-        "pufferfishes",
-        "red_algae",
-        "reef_building_corals",
-        "seabreams_porgies_picarels",
-        "seagrasses",
-        "seasnakes",
-        "sharks_and_rays",
-        "sturgeons",
-        "surgeonfishes",
-        "tarpons_and_ladyfishes",
-        "tunas_and_billfishes",
-        "velvet_worms",
-        "wrasses_and_parrotfishes"
-      ],
-      "example": "mammals",
-      "weight": 1
-    },
-    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@71|species_use": {
-      "description": "Select the species use or trade. If 'All' is selected, the script will return the list of all utilized species.",
-      "label": "Species use",
       "type": "options[]",
       "options": [
         "All",
-        "Don't filter by species use",
-        "Food - human",
-        "Food - animal",
-        "Medicine - human & veterinary",
-        "Poisons",
-        "Manufacturing chemicals",
-        "Other chemicals",
-        "Fuels",
-        "Fibre",
-        "Construction or structural materials",
-        "Wearing apparel, accessories",
-        "Other household goods",
-        "Handicrafts, jewellery, etc.",
-        "Pets/display animals, horticulture",
-        "Research",
-        "Sport hunting/specimen collecting",
-        "Establishing ex-situ production",
-        "Other",
-        "Unknown"
+        "Amphibians",
+        "Birds",
+        "Mammals",
+        "Reptiles",
+        "Fishes",
+        "Insects",
+        "Angelfishes",
+        "Arachnids",
+        "Blennies",
+        "Brown algae",
+        "Butterfly fishes",
+        "Cacti",
+        "Chameleons",
+        "Cone snails",
+        "Conifers",
+        "Corals",
+        "Crocodiles and alligators",
+        "Crustaceans",
+        "Cycads",
+        "Fernes and allies",
+        "Flowering plants",
+        "Fw caridean shrimps",
+        "Fw crabs",
+        "Fw crayfish",
+        "Green algae",
+        "Groupers",
+        "Gymnosperms",
+        "Hagfishes",
+        "Horseshoe crabs",
+        "Lichens",
+        "Lobsters",
+        "Magnolias",
+        "Mangrove plants",
+        "Molluscs",
+        "Mosses",
+        "Mushrooms",
+        "Others",
+        "Pufferfishes",
+        "Red algae",
+        "Reef building corals",
+        "Seabreams porgies picarels",
+        "Seagrasses",
+        "Seasnakes",
+        "Sharks and rays",
+        "Sturgeons",
+        "Surgeonfishes",
+        "Tarpons and ladyfishes",
+        "Tunas and billfishes",
+        "Velvet worms",
+        "Wrasses and parrotfishes"
       ],
       "example": [
-        "Don't filter by species use"
+        "Crustaceans"
       ],
-      "weight": 2
+      "weight": 1
     },
     "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@76|threat_category_input": {
-      "description": "IUCN threat category to filter for",
+      "description": "Select the species threat(s) to filter for. This returns a list of IUCN Red List species that are threatened by the categories selected.",
       "label": "Threat category",
       "type": "options[]",
       "options": [
@@ -703,12 +706,43 @@
       "example": [
         "Do not filter by threat category"
       ],
+      "weight": 2
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
+      "description": "Select the species use or trade. This returns a list of IUCN Red List species that are used/involved in the categories selected. If 'All' is selected, the script will return the list of all species involved in the uses and trades listed.",
+      "label": "Species use",
+      "type": "options[]",
+      "options": [
+        "All",
+        "Do not filter by species use or trade",
+        "Food - human",
+        "Food - animal",
+        "Medicine - human & veterinary",
+        "Poisons",
+        "Manufacturing chemicals",
+        "Other chemicals",
+        "Fuels",
+        "Fibre",
+        "Construction or structural materials",
+        "Wearing apparel, accessories",
+        "Other household goods",
+        "Handicrafts, jewellery, etc.",
+        "Pets/display animals, horticulture",
+        "Research",
+        "Sport hunting/specimen collecting",
+        "Establishing ex-situ production",
+        "Other",
+        "Unknown"
+      ],
+      "example": [
+        "Do not filter by species use or trade"
+      ],
       "weight": 3
     }
   },
   "outputs": {
     "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml@55|api_citation": {
-      "description": "Citation for the data acquired using the IUCN Red List API",
+      "description": "Citation for the data acquired using the IUCN Red List API.",
       "label": "IUCN API citation",
       "type": "text/plain",
       "weight": 0
@@ -732,16 +766,22 @@
       "weight": 3
     },
     "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
-      "description": "Country for IUCN red list assessment",
+      "description": "Country for IUCN red list assessment.",
       "label": "Country",
       "type": "text/csv",
       "weight": 4
     },
-    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@57|taxonomic_group": {
-      "description": "Taxonomic group of interest",
-      "label": "Taxonomic group",
-      "type": "text/csv",
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
+      "description": "The species use or trade selected.",
+      "label": "Species use(s)",
+      "type": "text[]",
       "weight": 5
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@76|threat_category": {
+      "description": "The threat category selected.",
+      "label": "Species threat(s)",
+      "type": "text[]",
+      "weight": 6
     }
   },
   "metadata": {

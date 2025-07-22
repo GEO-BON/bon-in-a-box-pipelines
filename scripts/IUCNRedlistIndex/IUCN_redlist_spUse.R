@@ -20,7 +20,7 @@ if (length(uses) == 0) {
 biab_output("species_use", uses)
 
 skip <- FALSE
-if (uses[1] == "Don't filter by species use") {
+if ("Do not filter by species use or trade" %in% uses) {
   if (length(uses) > 1) {
     biab_error_stop("Cannot select more than one option when selecting 'Don't filter by species use'")
   }
@@ -36,7 +36,7 @@ if (uses[1] == "Don't filter by species use") {
 }
 
 if (skip == FALSE) {
-  if (uses[1] == "All") {
+  if ("All" %in% uses) {
     if (length(uses) > 1) {
       biab_error_stop("Cannot select more than one option when selecting 'All'")
     }
