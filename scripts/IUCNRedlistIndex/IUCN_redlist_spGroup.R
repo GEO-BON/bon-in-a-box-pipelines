@@ -13,7 +13,7 @@ groups <- tolower(gsub(" ", "_", groups))
 all <- FALSE
 
 # If all is selected, skip this script
-if ("All" %in% groups) {
+if ("all" %in% groups) {
   if (length(groups) > 1) {
     biab_error_stop("Cannot select more than one option when selecting 'All'")
   }

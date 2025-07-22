@@ -13,7 +13,7 @@ taxonomic_group <- input$taxonomic_group
 use <- input$species_use
 threat <- input$threat
 
-if (taxonomic_group[1] != "all") {
+if (!"All" %in% taxonomic_group) {
   print("Filtering by taxonomic group.")
   IUCN_taxon <- read.csv(input$splist_taxon)
   ## Filter country list by taxonomic group ####
@@ -21,7 +21,7 @@ if (taxonomic_group[1] != "all") {
   print(sprintf("Species left: %s", nrow(iucn_splist)))
 }
 
-if (use[1] != "Do not filter by species use or trade") {
+if (!"Do not filter by species use or trade" %in% use) {
   print("Filtering by species use.")
   IUCN_use <- read.csv(input$splist_use)
   ## Filter country list by use and trade list ####
@@ -29,7 +29,7 @@ if (use[1] != "Do not filter by species use or trade") {
   print(sprintf("Species left: %s", nrow(iucn_splist)))
 }
 
-if (threat[1] != "Do not filter by threat category") {
+if (!"Do not filter by threat category" %in% threat) {
   print("Filtering by threat category.")
   IUCN_threat <- read.csv(input$splist_threat)
   ## Filter country list by threat list ####
