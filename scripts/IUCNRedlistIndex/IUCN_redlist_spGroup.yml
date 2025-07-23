@@ -26,7 +26,7 @@ conda:
 inputs:
   taxonomic_group:
     label: Taxonomic group
-    description: "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained."
+    description: "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected taxonomic group will be obtained."
     type: options[]
     example: [Mammals]
     options:
