@@ -619,7 +619,7 @@
         "Zambia",
         "Zimbabwe"
       ],
-      "example": "Haiti",
+      "example": "Colombia",
       "weight": 0
     },
     "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
@@ -680,7 +680,7 @@
         "Wrasses and parrotfishes"
       ],
       "example": [
-        "Crustaceans"
+        "Mammals"
       ],
       "weight": 1
     },
