@@ -12,7 +12,7 @@ The RLI is a key indicator for the UN Sustainable Development Goals, particularl
 
 ### Pipeline limitations
 
-- On larger datasets, the pipeline takes a significant amount of time to load the data.
+- On large or species-rich countries, this pipeline takes a significant amount of time to retrieve the data.
 
 ## Before you start
 
@@ -33,11 +33,11 @@ The BON in a Box RLI pipeline allows you to calculate RLI for specific taxon gro
 
 #### **1. Getting a list of species for the specified taxonomic group and country**
 
-This step retrieves a list of species assessed by the IUCN Red List of Threatened Species for a country and taxonomic group, including their most recent threat categorization.
+This step simultaneously retrieves a list of species assessed by the IUCN Red List of Threatened Species for the country of interest and the taxonomic group of interest, including their most recent threat categorization. This step will retrieve the full IUCN species list for the country and taxonomic group of interest, so it will take time even for a small country.
 
 #### **2. Getting the history assessment for the species**
 
-This step returns the history of assessments for every species in the list.
+This step returns the history of assessments (year and assessment status) for every species in the list.
 
 #### **3. Calculating the Red List Index**
 
@@ -53,7 +53,7 @@ This step calculates the Red List Index for the species in the list. Most specie
 
 - **Red List trend plot:** The Red List Index of species for the chosen taxonomy group over time. An RLI of 1 indicates that all species have a status of Least Concerned, while 0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss.
 
-- **Red List matrix:** A matrix of the threat categories of all the species over time.
+- **Red List matrix:** A matrix of the threat categories of all the species of interest over time.
 
 ## Example
 
