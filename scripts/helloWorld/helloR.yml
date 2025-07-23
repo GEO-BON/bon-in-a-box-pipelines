@@ -71,6 +71,30 @@ inputs:
     example: |
       This is a multiline example.
       Once there is a line break in the example, it becomes a textarea in the UI.
+  country:
+    label: Country
+    description: Using the country chooser to select a country
+    type: country
+    example: 
+  country_region:
+    label: Country and region
+    description: Using the country and region chooser to select a region
+    type: countryRegion
+    example: 
+  country_region_crs:
+    label: Country, region and CRS
+    description: Using the country, region and CRS chooser to select a Coordinate Reference System appropriate for a region
+    type: countryRegionCRS
+    example: 
+  crs:
+    label: Coordinate Reference System
+    description: Using the CRS chooser to select a Coordinate Reference System
+    type: CRS
+  bbox:
+    label: Bounding box and CRS
+    description: Using the bounding box chooser to select a bbox and the CRS associated with this bounding box.
+    type: bboxCRS
+    example: 
 
 outputs:
   text:
