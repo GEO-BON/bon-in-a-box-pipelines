@@ -1,7 +1,5 @@
 library(sf)
 library(rjson)
-library(rnaturalearth)
-library(rnaturalearthdata)
 library(dplyr)
 library(countrycode)
 
@@ -35,14 +33,18 @@ country_name <- countrycode(
 
 biab_output("country", country_name)
 
+
 if (is.null(input$region)) { # pull study area polygon from rnaturalearth
   # pull whole country
-  print("pulling country polygon")
-  country_polygon <- ne_countries(country = country_name, type = "countries", scale = 10)
+  url <- paste0("https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/", input$country, "/ADM0/geoBoundaries-", input$country,"-ADM0.geojson")
+  country_polygon <- st_read(url)
+
 } else {
   print("pulling region polygon")
-  country_polygon <- ne_states(country = country_name)
-  country_polygon <- country_polygon %>% filter(name == input$region)
+  url <- paste0("https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/", input$country, "/ADM1/geoBoundaries-", input$country,"-ADM1.geojson")
+  country_polygon <- st_read(url)
+  print(country_polygon$shapeISO)
+  country_polygon <- country_polygon[country_polygon$shapeISO == input$region, ]
 }
 
 if (nrow(country_polygon) == 0) {
