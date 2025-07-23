@@ -33,6 +33,7 @@ connection.authenticate_oidc_client_credentials(
     client_secret=os.getenv("CDSE_CLIENT_SECRET"),
 )
 print(veg_index, flush=True)
+
 datacube = connection.load_collection(
 "COPERNICUS_VEGETATION_INDICES",
 spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
@@ -43,7 +44,7 @@ bands=veg_index,
 if polygon is None:
     datacube_cropped = datacube
 else:
-    if(crs=='4326'):
+    if(crs=='EPSG:4326'):
         datacube_cropped = datacube.filter_spatial(polygon) # cropping to polygon
     else:
         print('Reprojecting polygon file', flush=True)
