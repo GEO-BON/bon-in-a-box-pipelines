@@ -2,6 +2,7 @@ library(sf)
 library(rjson)
 library(dplyr)
 library(countrycode)
+library(httr2)
 
 if (!requireNamespace("packageName", quietly = TRUE)) {
   remotes::install_github("ropensci/rnaturalearthhires")
@@ -36,15 +37,28 @@ biab_output("country", country_name)
 
 if (is.null(input$region)) { # pull study area polygon from rnaturalearth
   # pull whole country
-  url <- paste0("https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/", input$country, "/ADM0/geoBoundaries-", input$country,"-ADM0.geojson")
-  country_polygon <- st_read(url)
+  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |> 
+  req_perform()
 
+  meta <- res |> resp_body_json() # parse JSON
+
+  geojson_url <- meta$gjDownloadURL # Extract the GeoJSON download URL
+
+  country_polygon <- st_read(geojson_url) # Load geojson
+  
 } else {
   print("pulling region polygon")
-  url <- paste0("https://github.com/wmgeolab/geoBoundaries/raw/9469f09/releaseData/gbOpen/", input$country, "/ADM1/geoBoundaries-", input$country,"-ADM1.geojson")
-  country_polygon <- st_read(url)
+  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |> 
+  req_perform() # ADM1 gives regions/provinces
+
+  meta <- res |> resp_body_json() 
+
+  geojson_url <- meta$gjDownloadURL 
+
+  country_polygon <- st_read(geojson_url)
+
   print(country_polygon$shapeISO)
-  country_polygon <- country_polygon[country_polygon$shapeISO == input$region, ]
+  country_polygon <- country_polygon[country_polygon$shapeISO == input$region, ] # filter shape by region of interest
 }
 
 if (nrow(country_polygon) == 0) {
