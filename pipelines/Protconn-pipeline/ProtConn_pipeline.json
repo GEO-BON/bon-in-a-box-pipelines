@@ -357,7 +357,7 @@
       "weight": 11
     },
     "data>cleanWDPA.yml@48|include_unesco": {
-      "description": "Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
+      "description": "Check to include UNESCO Biosphere reserves.  These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
       "label": "Include UNESCO Biosphere reserves",
       "type": "boolean",
       "example": true,
