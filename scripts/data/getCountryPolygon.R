@@ -62,7 +62,7 @@ if (is.null(input$region)) { # pull study area polygon from rnaturalearth
 }
 
 if (nrow(country_polygon) == 0) {
-  biab_error_stop("Could not find polygon. Check spelling of country and state names.")
+  biab_error_stop("Could not find polygon. Check that you have correct country and region codes. If inputing region codes, check logs for a list of valid codes.")
 } # stop if object is empty
 
 # transform to crs of interest
