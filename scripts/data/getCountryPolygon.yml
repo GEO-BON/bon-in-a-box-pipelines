@@ -59,8 +59,6 @@ conda:
     - r-rjson
     - r-sf
     - r-remotes
-    - r-rnaturalearth
-    - r-rnaturalearthdata
     - r-dplyr
     - r-countrycode
     - r-httr2
