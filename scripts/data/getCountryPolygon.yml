@@ -1,7 +1,7 @@
 script: getCountryPolygon.R
 name: Get country polygon
 description: |
-  This script pulls country (or state/province/region) polygons using the rnaturalearth package,
+  This script pulls country (or state/province/region) polygons using the [GeoBoundaries API](https://www.geoboundaries.org/),
   and outputs as a geopackage, projected in the crs of interest.
 author:
   - name: Jory Griffith
@@ -47,7 +47,7 @@ outputs:
     label: Region
     description: Name of state/province of interest
     type: text
-  country_polygon:
+  country_region_polygon:
     label: Polygon of country or region
     description: A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.
     type: application/geopackage+sqlite3
