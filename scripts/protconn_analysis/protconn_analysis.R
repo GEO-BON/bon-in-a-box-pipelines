@@ -9,6 +9,10 @@ sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
 
+if ((input$year_int) >= (input$years - input$start_year)) {
+  biab_error_stop("Please make sure the year interval is smaller than the difference between start year and year for cutoff.")
+}
+
 units::units_options(set_units_mode = "standard")
 # Load study area shapefile
 print("Loading study area")
@@ -138,7 +142,7 @@ if (nrow(protected_areas_simp) < 2) {
   biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 }
 
-if (isTRUE(st_is_longlat(protected_areas_simp))){
+if (isTRUE(st_is_longlat(protected_areas_simp))) {
   biab_error_stop("Protected areas are in latitude longitude degrees, please choose a projected coordinate reference system.")
 }
 
@@ -191,8 +195,8 @@ protconn_result_path <- file.path(outputFolder, "protconn_result.csv")
 write.csv(protconn_result, protconn_result_path, row.names = F)
 biab_output("protconn_result", protconn_result_path)
 
-protconn_result_long <- protconn_result_long %>% filter(!`ProtConn indicator` == "Prot") # filter out protected for plotting
-result_plot <- ggplot2::ggplot(protconn_result_long) +
+protconn_result_long_noprot <- protconn_result_long %>% filter(!`ProtConn indicator` == "Prot") # filter out protected for plotting
+result_plot <- ggplot2::ggplot(protconn_result_long_noprot) +
   geom_col(aes(y = Percentage, x = 1, fill = `ProtConn indicator`)) +
   coord_polar(theta = "y") +
   xlim(c(0, 1.5)) +
@@ -236,54 +240,55 @@ for (i in seq_along(years)) {
   yr <- years[i]
   print(paste("Processing year:", yr))
 
-  if(yr == input$years){ # skip end year because already calculated above
+  if (yr == input$years) { # skip end year because already calculated above
     protconn_result_combined <- protconn_result_long
     protconn_result_combined$Year <- yr
-  } else {protected_areas_filt_yr <- protected_areas %>%
-    dplyr::filter(legal_status_updated_at <= yr)
+  } else {
+    protected_areas_filt_yr <- protected_areas %>%
+      dplyr::filter(legal_status_updated_at <= yr)
 
-  if (nrow(protected_areas_filt_yr) < 2) {
-    message(paste("Not enough protected area data from", yr, "- skipping"))
-    next
+    if (nrow(protected_areas_filt_yr) < 2) {
+      message(paste("Not enough protected area data from", yr, "- skipping"))
+      next
+    }
+
+    protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
+
+    protconn_result_yrs <- Makurhini::MK_ProtConn(
+      nodes = protected_areas_filt_yr,
+      region = study_area,
+      area_unit = "m2",
+      distance = list(type = input$distance_matrix_type),
+      probability = 0.5,
+      transboundary = 0,
+      distance_thresholds = c(input$distance_threshold)
+    )
+
+
+    if (length(input$distance_threshold) == 1) {
+      name <- paste0("d", input$distance_threshold)
+      tmp <- protconn_result_yrs
+      protconn_result_yrs <- list()
+      protconn_result_yrs[[name]] <- tmp
+    }
+
+    # Reset for this iteration to avoid duplicates
+    protconn_result_list <- list()
+
+    for (j in seq_along(protconn_result_yrs)) {
+      protconn <- as.data.frame(protconn_result_yrs[[j]])
+      df <- protconn %>%
+        dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
+        dplyr::select(Percentage, `ProtConn indicator`)
+      df$Distance <- as.numeric(gsub("^d", "", names(protconn_result_yrs)[j]))
+      protconn_result_list[[j]] <- df
+    }
+
+    protconn_result_combined <- do.call(rbind, protconn_result_list)
+    protconn_result_combined$Year <- yr
   }
-
-  protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
-
-  protconn_result_yrs <- Makurhini::MK_ProtConn(
-    nodes = protected_areas_filt_yr,
-    region = study_area,
-    area_unit = "m2",
-    distance = list(type = input$distance_matrix_type),
-    probability = 0.5,
-    transboundary = 0,
-    distance_thresholds = c(input$distance_threshold)
-  )
-
-
-  if (length(input$distance_threshold) == 1) {
-    name <- paste0("d", input$distance_threshold)
-    tmp <- protconn_result_yrs
-    protconn_result_yrs <- list()
-    protconn_result_yrs[[name]] <- tmp
-  }
-
-  # Reset for this iteration to avoid duplicates
-  protconn_result_list <- list()
-
-  for (j in seq_along(protconn_result_yrs)) {
-    protconn <- as.data.frame(protconn_result_yrs[[j]])
-    df <- protconn %>%
-      dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
-      dplyr::select(Percentage, `ProtConn indicator`)
-    df$Distance <- as.numeric(gsub("^d", "", names(protconn_result_yrs)[j]))
-    protconn_result_list[[j]] <- df
-  }
-
-  protconn_result_combined <- do.call(rbind, protconn_result_list)
-  protconn_result_combined$Year <- yr
   print(protconn_result_combined)
   protconn_ts_result[[i]] <- protconn_result_combined
-}
   gc()
 }
 
@@ -306,7 +311,8 @@ result_yrs_path <- file.path(outputFolder, "result_yrs.csv") # save protconn res
 write.csv(result_yrs, result_yrs_path)
 biab_output("result_yrs", result_yrs_path)
 
-xint <- min(result_yrs$Year) + 20
+xint <- (input$start_year) + round(((input$years - input$start_year) / 2))
+
 protconn_result_yrs <- protconn_result_yrs %>% filter(!`ProtConn indicator` == "Unprotected") # filter out unprotected for plotting
 
 # make separate plot for each distance threshold
