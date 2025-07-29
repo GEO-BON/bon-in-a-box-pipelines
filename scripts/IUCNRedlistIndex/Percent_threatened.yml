@@ -1,0 +1,27 @@
+script: Percent_threatened.R
+name: Percentage of species improving in status
+description: This script calculates the proportion of threatened species improving in threat category over the total number of threatened species.
+author:
+ - name: Laetitia Tremblay
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rredlist
+    - r-rjson
+    - r-dplyr
+    - r-magrittr
+inputs:
+  splist:
+    label: Species list
+    description: Dataset with the list of species from which to calculate the percentage of improvement.
+    type: text/csv
+    example:
+outputs:
+  percent_improving:
+    label: Percent species improving
+    description: Percentage of threatened species that are improving in threat category according to the IUCN Red List.
+    type: float

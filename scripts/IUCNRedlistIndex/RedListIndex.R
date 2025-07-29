@@ -5,6 +5,7 @@ packagesList <- list("magrittr", "ggplot2", "rredlist", "red") # Explicitly list
 lapply(packagesList, library, character.only = TRUE) # Load libraries - packages
 
 input <- biab_inputs()
+
 taxonomic_group <- input$taxonomic_group
 uses <- input$species_use
 threats <- input$threat

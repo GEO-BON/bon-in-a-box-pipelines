@@ -10,9 +10,6 @@ author:
    role: Maintenance
    email: laetitia.tremblay@mcgill.ca
    identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
-external_link: https://github.com/GEO-BON/biab-2.0
-# TEMP just to run it more easily. To be removed from the PR before merge
-# Missing ones were added to the central conda environment.
 conda:
   channels:
     - conda-forge
@@ -20,7 +17,7 @@ conda:
   dependencies:
     - r-magrittr
     - r-dplyr
-    - r-rredlist=1.0.0
+    - r-rredlist
     - r-this.path
     - r-rjson
 inputs:
@@ -281,13 +278,13 @@ inputs:
 outputs:
   iucn_country_splist:
     label: IUCN species list
-    description: "Dataset with the list of species for the specified country. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
+    description: Dataset with the list of species for the specified country. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List.
     type: text/csv
-  country: 
+  country:
     label: Country
     description: Country for IUCN red list assessment
-    type: text/plain
+    type: text
   api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API
-    type: text/plain
+    type: text

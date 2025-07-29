@@ -21,11 +21,12 @@ IUCN_countries <- rredlist::rl_countries(key = token)
 IUCN_isocode <- IUCN_countries$countries$code[IUCN_countries$countries$description$en == input$country]
 
 print(sprintf("Loading species for %s...", input$country))
-IUCN_country <- rredlist::rl_countries(code = IUCN_isocode, key = token)$assessments
+IUCN_country <- rredlist::rl_countries(code = IUCN_isocode, key = token, latest = TRUE, scope_code = 1)$assessments
 
 if (nrow(IUCN_country) == 0) {
   biab_error_stop("Could not find any species in the country of interest")
 }
+print(sprintf("Number of species found: %s", nrow(IUCN_country)))
 
 IUCN_country$scopes <- sapply(IUCN_country$scopes, function(x) paste(unlist(x), collapse = ", "))
 IUCN_country_path <- file.path(outputFolder, paste0("IUCN_country_splist", ".csv")) # Define the file path

@@ -6,6 +6,10 @@ input <- biab_inputs()
 
 groups <- input$taxonomic_group
 
+if (length(groups) == 0) {
+  biab_error_stop("Please select a taxonomic group")
+}
+
 biab_output("taxonomic_group", groups)
 
 groups <- tolower(gsub(" ", "_", groups))
@@ -42,12 +46,14 @@ if (all == FALSE) {
   for (group in groups) {
     ## Load sp taxonomic group ####
     print(sprintf("Loading species for '%s' taxon group...", group))
-    IUCN_taxon <- rredlist::rl_comp_groups(name = group, key = token)$assessments
+    IUCN_taxon <- rredlist::rl_comp_groups(name = group, key = token, latest = TRUE, scope_code = 1)$assessments
 
     if (nrow(IUCN_taxon) > 0) {
       IUCN_taxon_all <- rbind(IUCN_taxon_all, IUCN_taxon)
     }
   }
+
+  print(sprintf("Number of species found: %s", nrow(IUCN_taxon_all)))
 
   IUCN_taxon_all$scopes <- sapply(IUCN_taxon_all$scopes, function(x) paste(unlist(x), collapse = ", "))
   iucn_taxon_splist_path <- file.path(outputFolder, paste0("iucn_taxon_splist", ".csv")) # Define the file path

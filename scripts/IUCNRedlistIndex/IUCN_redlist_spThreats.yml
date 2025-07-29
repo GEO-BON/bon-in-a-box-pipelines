@@ -1,6 +1,6 @@
 script: IUCN_redlist_spThreats.R
 name: IUCN list of species of a threat category
-description: Obtains a list of species assessed by the IUCN Red List of Species for a specific threat category
+description: Obtains a list of species assessed by the IUCN Red List of Species that are threatened by a threat type
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -21,6 +21,7 @@ inputs:
     - Human intrusions & disturbance
     - Natural system modifications
     - Invasive and other problematic species, genes & diseases
+    - Invasive alien species or diseases
     - Pollution
     - Geological events
     - Climate change & severe weather
@@ -41,7 +42,7 @@ outputs:
   api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API
-    type: text/plain
+    type: text
 conda:
   channels:
     - conda-forge

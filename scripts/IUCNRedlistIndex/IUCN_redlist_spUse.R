@@ -14,7 +14,7 @@ print(token)
 uses <- input$species_use
 
 if (length(uses) == 0) {
-  biab_error_stop("Please select an option from the drop down menu")
+  biab_error_stop("Please select a species use")
 }
 
 biab_output("species_use", uses)
@@ -44,9 +44,9 @@ if (skip == FALSE) {
     uses <- c("Food - human", "Food - animal", "Medicine - human & veterinary",
     "Poisons", "Manufacturing chemicals", "Other chemicals", "Fuels", "Fibre",
     "Construction or structural materials", "Wearing apparel, accessories",
-    "Other household goods", "Handicrafts, jewellery, etc.", "Pets/display animals,
-    horticulture", "Research", "Sport hunting/specimen collecting", "Establishing
-    ex-situ production *", "Other (free text)", "Unknown")
+    "Other household goods", "Handicrafts, jewellery, etc.", "Pets/display animals, horticulture",
+    "Research", "Sport hunting/specimen collecting", "Establishing ex-situ production *",
+    "Other (free text)", "Unknown")
   }
 
   IUCN_uses <- rredlist::rl_use_and_trade(key = token)
@@ -63,13 +63,15 @@ if (skip == FALSE) {
 
     IUCN_code <- IUCN_uses$use_and_trade$code[IUCN_uses$use_and_trade$description$en == use]
     print(sprintf("Loading species for %s...", use))
-    IUCN_use <- rredlist::rl_use_and_trade(code = IUCN_code, key = token)$assessments
+    IUCN_use <- rredlist::rl_use_and_trade(code = IUCN_code, key = token, latest = TRUE, scope_code = 1)$assessments
 
     if (nrow(IUCN_use) > 0) {
       IUCN_use$use <- use
       IUCN_use_splist <- rbind(IUCN_use_splist, IUCN_use)
     }
   }
+
+  print(sprintf("Number of species found: %s", nrow(IUCN_use_splist)))
 
   IUCN_use_splist$scopes <- sapply(IUCN_use_splist$scopes, function(x) paste(unlist(x), collapse = ", "))
   IUCN_use_path <- file.path(outputFolder, paste0("IUCN_use_splist", ".csv")) # Define the file path

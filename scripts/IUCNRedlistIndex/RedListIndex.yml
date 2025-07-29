@@ -86,13 +86,13 @@ inputs:
   country:
     label: Country
     description: Country of interest
-    type: text/plain
+    type: text
     example: "Colombia"
   taxonomic_group:
     label: Taxonomic group
     description: Name of taxonomic group of interest
-    type: text/plain
-    example: "mammals"
+    type: text[]
+    example:
   species_use:
     label: Species use(s) or trade(s)
     description: The species use or trade selected
