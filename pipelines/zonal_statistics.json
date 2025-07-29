@@ -71,33 +71,44 @@
       }
     },
     {
-      "id": "17",
+      "id": "20",
       "type": "io",
       "position": {
-        "x": 463,
-        "y": 150.5
+        "x": 625.1283867276617,
+        "y": 103.32090950529789
       },
       "data": {
-        "descriptionFile": "getCountrybbox.json"
+        "descriptionFile": "data>getBoundingBox.yml"
       }
     },
     {
-      "id": "18",
+      "id": "21",
+      "type": "io",
+      "position": {
+        "x": 115.84762038016811,
+        "y": 204.8739194614945
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "22",
       "type": "output",
       "position": {
-        "x": 1146,
-        "y": 222
+        "x": 731.1912529937034,
+        "y": 208.06251825961928
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "19",
+      "id": "24",
       "type": "output",
       "position": {
-        "x": 1146,
-        "y": 280
+        "x": 735.7384026932345,
+        "y": 235.34541645680645
       },
       "data": {
         "label": "Output"
@@ -148,68 +159,82 @@
       "id": "reactflow__edge-2rasters-7"
     },
     {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "17",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-3-17pipeline@2"
+      "source": "20",
+      "sourceHandle": "bbox",
+      "target": "2",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-20bbox-2bbox"
     },
     {
-      "source": "17",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country",
-      "target": "18",
+      "source": "20",
+      "sourceHandle": "bbox",
+      "target": "4",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-20bbox-4bbox"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "country",
+      "target": "22",
       "targetHandle": null,
-      "id": "reactflow__edge-17data>getCountryPolygon.yml@1|country-18"
+      "id": "reactflow__edge-21country-22"
     },
     {
-      "source": "17",
-      "sourceHandle": "data>getCountryPolygon.yml@1|region",
-      "target": "19",
-      "targetHandle": null,
-      "id": "reactflow__edge-17data>getCountryPolygon.yml@1|region-19"
-    },
-    {
-      "source": "17",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
       "target": "2",
       "targetHandle": "study_area",
-      "id": "reactflow__edge-17data>getCountryPolygon.yml@1|country_polygon-2study_area"
+      "id": "reactflow__edge-21country_region_polygon-2study_area"
     },
     {
-      "source": "17",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-21country_region_polygon-24"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
+      "target": "20",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-21country_region_polygon-20study_area_file"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-3-21crs"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-3-20crs"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
       "target": "4",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-17data>getCountryPolygon.yml@1|country_polygon-4study_area_polygon"
-    },
-    {
-      "source": "17",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "2",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-17data>getBoundingBox.yml@0|bbox-2bbox"
-    },
-    {
-      "source": "17",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "4",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-17data>getBoundingBox.yml@0|bbox-4bbox"
+      "id": "reactflow__edge-21country_region_polygon-4study_area_polygon"
     }
   ],
   "inputs": {
-    "getCountrybbox.json@17|data>getCountryPolygon.yml@1|country": {
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+    "data>getCountryPolygon.yml@21|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": null,
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@21|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "label": "ISO3 country code",
       "type": "text",
       "example": "COL",
-      "weight": 0
-    },
-    "getCountrybbox.json@17|data>getCountryPolygon.yml@1|region": {
-      "description": "State of interest",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
       "weight": 1
     },
     "data>loadFromStac.yml@2|stac_url": {
@@ -302,28 +327,28 @@
     }
   },
   "outputs": {
+    "data>getCountryPolygon.yml@21|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@21|country_region_polygon": {
+      "description": "A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.",
+      "label": "Polygon of country or region",
+      "type": "application/geopackage+sqlite3",
+      "weight": 1
+    },
     "data>loadFromStac.yml@2|rasters": {
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 0
+      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@4|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 1
-    },
-    "getCountrybbox.json@17|data>getCountryPolygon.yml@1|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 2
-    },
-    "getCountrybbox.json@17|data>getCountryPolygon.yml@1|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
       "weight": 3
     }
   },
