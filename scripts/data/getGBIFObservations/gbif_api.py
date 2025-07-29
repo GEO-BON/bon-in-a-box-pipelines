@@ -20,7 +20,7 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 	GBIF_EMAIL=os.environ['GBIF_EMAIL']
 
 	if GBIF_USER=='' or GBIF_PWD=='' or GBIF_EMAIL=='':
-		return {'error':'GBIF_USER, GBIF_PWD and GBIF_EMAIL environment variable must be defined'}
+		biab_error_stop("GBIF_USER, GBIF_PWD and GBIF_EMAIL environment variable must be defined")
 	keys=[]
 	for x in splist:
 		print(x)
@@ -29,8 +29,8 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 		except:
 			print(f"Couldn't find {x}")
 			continue
-		sleep(0.1)
-		
+		time.sleep(0.1)
+
 	counts = []
 	for x in keys:
 		print(x)
@@ -39,7 +39,7 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 		except:
 			print(f"Couldn't find {x}")
 			continue
-		sleep(0.1)
+		time.sleep(0.1)
 
 	spcount = dict(zip(splist, counts))
 	print(spcount)
