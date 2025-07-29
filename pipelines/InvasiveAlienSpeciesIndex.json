@@ -12,17 +12,6 @@
       }
     },
     {
-      "id": "29",
-      "type": "io",
-      "position": {
-        "x": 426,
-        "y": 304.5
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "30",
       "type": "io",
       "position": {
@@ -173,17 +162,6 @@
       }
     },
     {
-      "id": "47",
-      "type": "io",
-      "position": {
-        "x": 1079,
-        "y": 378.5
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
       "id": "48",
       "type": "io",
       "position": {
@@ -248,6 +226,30 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "54",
+      "type": "io",
+      "position": {
+        "x": 738.727860396536,
+        "y": 507.0064919626461
+      },
+      "data": {
+        "descriptionFile": "getCountrybbox.json"
+      }
+    },
+    {
+      "id": "55",
+      "type": "userInput",
+      "position": {
+        "x": 300.178614892797,
+        "y": 516.9127337985827
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "COL"
+      }
     }
   ],
   "edges": [
@@ -257,13 +259,6 @@
       "target": "27",
       "targetHandle": "country",
       "id": "reactflow__edge-35-27country"
-    },
-    {
-      "source": "35",
-      "sourceHandle": null,
-      "target": "29",
-      "targetHandle": "country",
-      "id": "reactflow__edge-35-29country"
     },
     {
       "source": "27",
@@ -285,13 +280,6 @@
       "target": "30",
       "targetHandle": "filters",
       "id": "reactflow__edge-37-30filters"
-    },
-    {
-      "source": "38",
-      "sourceHandle": null,
-      "target": "29",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-38-29crs"
     },
     {
       "source": "39",
@@ -329,20 +317,6 @@
       "id": "reactflow__edge-30output_file-46"
     },
     {
-      "source": "29",
-      "sourceHandle": "country_polygon",
-      "target": "47",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-29country_polygon-47study_area_file"
-    },
-    {
-      "source": "38",
-      "sourceHandle": null,
-      "target": "47",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-38-47crs"
-    },
-    {
       "source": "48",
       "sourceHandle": "gbif_doi",
       "target": "44",
@@ -371,13 +345,6 @@
       "id": "reactflow__edge-30text_array-48taxa"
     },
     {
-      "source": "47",
-      "sourceHandle": "bbox",
-      "target": "48",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-47bbox-48bbox"
-    },
-    {
       "source": "32",
       "sourceHandle": "result_snc_plot",
       "target": "50",
@@ -404,36 +371,64 @@
       "target": "53",
       "targetHandle": null,
       "id": "reactflow__edge-32statistics-53"
+    },
+    {
+      "source": "54",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "48",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-54data>getBoundingBox.yml@0|bbox-48bbox"
+    },
+    {
+      "source": "38",
+      "sourceHandle": null,
+      "target": "54",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-38-54pipeline@2"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "54",
+      "targetHandle": "data>getCountryPolygon.yml@12|country",
+      "id": "reactflow__edge-55-54data>getCountryPolygon.yml@12|country"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@29|region": {
-      "description": "Region of interest",
-      "label": "State/Region",
-      "type": "text",
-      "example": null,
-      "weight": 0
-    },
     "pipeline@35": {
       "label": "Country",
       "description": "Country of interest",
       "type": "text",
       "example": "Mongolia",
+      "weight": 0
+    },
+    "pipeline@55": {
+      "label": "ISO3 country code",
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "type": "text",
+      "example": "MNG",
       "weight": 1
     },
-    "pipeline@39": {
-      "label": "minimum year",
-      "description": "Min year observations wanted",
-      "type": "int",
-      "example": 1950,
+    "getCountrybbox.json@54|data>getCountryPolygon.yml@12|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": null,
       "weight": 2
     },
+    "pipeline@39": {
+      "label": "Minimum year",
+      "description": "Min year observations wanted",
+      "type": "int",
+      "example": 1970,
+      "weight": 3
+    },
     "pipeline@40": {
-      "label": "maximum year",
+      "label": "Maximum year",
       "description": "Max year observations wanted",
       "type": "int",
       "example": 2024,
-      "weight": 3
+      "weight": 4
     },
     "IAS>invasiveSpeciesAnalysis.yml@32|plot_type": {
       "description": "Plot can either be cumulative or annual",
@@ -444,7 +439,7 @@
         "annual"
       ],
       "example": "annual",
-      "weight": 4
+      "weight": 5
     }
   },
   "outputs": {
