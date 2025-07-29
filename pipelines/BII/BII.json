@@ -1,33 +1,11 @@
 {
   "nodes": [
     {
-      "id": "8",
-      "type": "io",
-      "position": {
-        "x": 658.9624938964844,
-        "y": 176
-      },
-      "data": {
-        "descriptionFile": "zonal_statistics>zonal_stats.yml"
-      }
-    },
-    {
-      "id": "9",
-      "type": "output",
-      "position": {
-        "x": 1125.240525539576,
-        "y": 73.67592251357871
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "10",
       "type": "constant",
       "position": {
-        "x": -665.0375061035156,
-        "y": 315
+        "x": 743,
+        "y": 64
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -42,35 +20,11 @@
       }
     },
     {
-      "id": "12",
-      "type": "io",
-      "position": {
-        "x": -396.0375061035156,
-        "y": 123
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
-      "id": "13",
-      "type": "userInput",
-      "position": {
-        "x": -717.0375061035156,
-        "y": 153
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6622"
-      }
-    },
-    {
       "id": "14",
       "type": "io",
       "position": {
-        "x": 1199.5132874333274,
-        "y": 188.4783501452733
+        "x": 1783,
+        "y": 328.5
       },
       "data": {
         "descriptionFile": "BII>BIIChange.yml"
@@ -80,8 +34,8 @@
       "id": "15",
       "type": "output",
       "position": {
-        "x": 1886.6943077272656,
-        "y": 187.99293716377517
+        "x": 2424,
+        "y": 383
       },
       "data": {
         "label": "Output"
@@ -91,8 +45,8 @@
       "id": "18",
       "type": "io",
       "position": {
-        "x": -63.399993896484375,
-        "y": 229
+        "x": 1196,
+        "y": 310
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -102,8 +56,8 @@
       "id": "19",
       "type": "output",
       "position": {
-        "x": 480.13199840180465,
-        "y": 230.7819042816862
+        "x": 1783,
+        "y": 281.5
       },
       "data": {
         "label": "Output"
@@ -113,8 +67,8 @@
       "id": "20",
       "type": "constant",
       "position": {
-        "x": -386.14475964299476,
-        "y": 225.9787109196308
+        "x": 753,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -126,65 +80,176 @@
       "id": "21",
       "type": "constant",
       "position": {
-        "x": -366.93198619477323,
-        "y": 267.60638672411073
+        "x": 824,
+        "y": 310
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "\n"
       }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 1976,
+        "y": 665.5
+      },
+      "data": {
+        "descriptionFile": "zonal_statistics>zonal_stats.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 2424,
+        "y": 430
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 724,
+        "y": 416
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "29",
+      "type": "constant",
+      "position": {
+        "x": 724,
+        "y": 463
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "31",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 363.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6622"
+      }
+    },
+    {
+      "id": "32",
+      "type": "userInput",
+      "position": {
+        "x": 830,
+        "y": 381
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 10000
+      }
+    },
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 845.8170487447111,
+        "y": 597.471811729131
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": 156.1660109824801,
+        "y": 645.9747418574636
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "54",
+      "type": "output",
+      "position": {
+        "x": 769.8699763213801,
+        "y": 645.3318031341971
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "55",
+      "type": "output",
+      "position": {
+        "x": 762.9055718150112,
+        "y": 667.9661177798963
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "56",
+      "type": "constant",
+      "position": {
+        "x": 722.6612642883047,
+        "y": 515.6263576966087
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "8",
-      "sourceHandle": "zonal_stats",
-      "target": "9",
-      "targetHandle": null,
-      "id": "reactflow__edge-8zonal_stats-9"
-    },
-    {
-      "source": "12",
-      "sourceHandle": "study_area_polygon",
-      "target": "8",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-12study_area_polygon-8study_area_polygon"
-    },
-    {
-      "source": "12",
-      "sourceHandle": "bbox",
-      "target": "8",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-12bbox-8bbox"
-    },
-    {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "12",
-      "targetHandle": "study_area_epsg",
-      "id": "reactflow__edge-13-12study_area_epsg"
-    },
-    {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "8",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-13-8crs"
-    },
     {
       "source": "14",
       "sourceHandle": "bii_change",
       "target": "15",
       "targetHandle": null,
       "id": "reactflow__edge-14bii_change-15"
-    },
-    {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "8",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-18rasters-8rasters"
     },
     {
       "source": "18",
@@ -199,13 +264,6 @@
       "target": "14",
       "targetHandle": "rasters",
       "id": "reactflow__edge-18rasters-14rasters"
-    },
-    {
-      "source": "12",
-      "sourceHandle": "study_area_polygon",
-      "target": "18",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-12study_area_polygon-18study_area"
     },
     {
       "source": "10",
@@ -229,32 +287,158 @@
       "id": "reactflow__edge-21-18weight_matrix_with_ids"
     },
     {
-      "source": "12",
-      "sourceHandle": "bbox",
-      "target": "18",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-12bbox-18bbox"
+      "source": "18",
+      "sourceHandle": "rasters",
+      "target": "25",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-18rasters-25rasters"
     },
     {
-      "source": "13",
+      "source": "25",
+      "sourceHandle": "zonal_stats",
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-25zonal_stats-26"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-27-18resampling"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-29-18aggregation"
+    },
+    {
+      "source": "31",
       "sourceHandle": null,
       "target": "18",
       "targetHandle": "crs",
-      "id": "reactflow__edge-13-18crs"
+      "id": "reactflow__edge-31-18crs"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-25crs"
+    },
+    {
+      "source": "32",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-32-18spatial_res"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "25",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-53country_region_polygon-25study_area_polygon"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "52",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-53country_region_polygon-52study_area_file"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country",
+      "target": "54",
+      "targetHandle": null,
+      "id": "reactflow__edge-53country-54"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "region",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-53region-55"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-53crs"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-52crs"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "bbox",
+      "target": "18",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-52bbox-18bbox"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "bbox",
+      "target": "25",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-52bbox-25bbox"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-56-18study_area"
     }
   ],
   "inputs": {
-    "zonal_statistics>zonal_stats.yml@8|summary_statistic": {
+    "data>getCountryPolygon.yml@53|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "COL",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@53|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
+    "pipeline@31": {
+      "label": "Coordinate reference system",
+      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
+      "type": "text",
+      "example": "EPSG:6624",
+      "weight": 2
+    },
+    "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
       "description": "Summary statistic for layers",
       "label": "Summary statistic",
-      "type": "options",
+      "type": "options[]",
       "options": [
         "mean",
         "median",
-        "proportion"
+        "sum",
+        "min",
+        "max",
+        "stdev",
+        "variance",
+        "mode"
       ],
-      "example": "mean",
-      "weight": 0
+      "example": [
+        "mean"
+      ],
+      "weight": 3
     },
     "BII>BIIChange.yml@14|start_year": {
       "description": "Reference BII year for raster plotting",
@@ -267,7 +451,7 @@
         "2015"
       ],
       "example": "2000",
-      "weight": 1
+      "weight": 4
     },
     "BII>BIIChange.yml@14|end_year": {
       "description": "BII layer to compare to the start year",
@@ -280,87 +464,40 @@
         "2020"
       ],
       "example": "2020",
-      "weight": 2
-    },
-    "data>getBoundingBox.yml@12|state": {
-      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
-      "label": "State/Province",
-      "type": "text",
-      "example": "Quebec",
-      "weight": 3
-    },
-    "data>getBoundingBox.yml@12|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "example": null,
-      "weight": 4
-    },
-    "pipeline@13": {
-      "label": "Study area EPSG",
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This MUST be in a projected reference system (not lat long).\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html). The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n*Leave blank if you want the bounding box to be in EPSG:4326.*",
-      "type": "text",
-      "example": "EPSG:6622",
       "weight": 5
     },
-    "data>loadFromStac.yml@18|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters",
+    "pipeline@32": {
       "label": "Spatial resolution",
+      "description": "Integer, spatial resolution of the rasters (in meters)",
       "type": "float",
-      "example": 1000,
+      "example": 10000,
       "weight": 6
-    },
-    "data>loadFromStac.yml@18|resampling": {
-      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
-      "label": "Resampling method",
-      "type": "options",
-      "options": [
-        "near",
-        "bilinear",
-        "average",
-        "mode",
-        "cubic",
-        "cubicspline",
-        "lanczos",
-        "rms",
-        "min",
-        "max",
-        "sum",
-        "med",
-        "q1",
-        "q3"
-      ],
-      "example": "near",
-      "weight": 7
-    },
-    "data>loadFromStac.yml@18|aggregation": {
-      "description": "Method used to aggregate items that overlay each other",
-      "label": "Aggregation method",
-      "type": "options",
-      "options": [
-        "first",
-        "min",
-        "max",
-        "mean",
-        "median"
-      ],
-      "example": "first",
-      "weight": 8
-    },
-    "data>getBoundingBox.yml@12|country": {
-      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
-      "label": "Country",
-      "type": "text",
-      "example": "Canada",
-      "weight": 9
     }
   },
   "outputs": {
-    "zonal_statistics>zonal_stats.yml@8|zonal_stats": {
+    "data>getCountryPolygon.yml@53|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@53|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 1
+    },
+    "data>loadFromStac.yml@18|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
+    },
+    "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 0
+      "weight": 3
     },
     "BII>BIIChange.yml@14|bii_change": {
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
@@ -381,7 +518,9 @@
     "author": [
       {
         "name": "Jory Griffith",
-        "email": "jory.griffith@mcgill.ca"
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
       }
     ],
     "license": "CC-BY-NC-SA",

@@ -60,4 +60,14 @@ outputs:
      label: clean presences
      description: Dataframe, table with clean presence points.
      type: text/tab-separated-values
-
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-raster
+    - r-dplyr
+    - r-CoordinateCleaner
+    - r-gdalcubes

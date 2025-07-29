@@ -1,0 +1,112 @@
+script: cleanWDPA.R
+name: Clean protected areas from WDPA API
+description: |
+  This script cleans geometry issues in WDPA data and allows the user to filter based on the following criteria:
+  - protected area legal status types (designated, inscribed, established)
+  - inclusion of UNESCO Biosphere reserves
+  - inclusion of marine protected areas
+  - inclusion of areas with other effective area-based conservation measures (OECMs)
+  - inclusion of protected areas represented as points
+  - study area of interest
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+lifecycle:
+  status: in_review
+inputs:
+  study_area_polygon:
+    label: Study area polygon
+    description: |
+      Study area of interest in a GeoPackage file.
+    type: application/geopackage+sqlite3
+    example: null
+  protected_area_file:
+    label: Protected areas file
+    description: >
+      Optional, additionnal user-provided protected areas in GeoPackage format.
+
+
+      When left blank, the script will only use the protected areas from WDPA.
+    type: application/geopackage+sqlite3
+    example: null
+  crs:
+    label: Coordinate reference system
+    description: |
+      Coordinate reference system for the study area and protected areas. Must be in a projected reference system.
+
+
+      To find the reference system for your region, visit [epsg.io](https://epsg.io/).
+    type: text
+    example: EPSG:4326
+  status_type:
+    label: PA legal status types to include
+    description: |
+      Legal status types of protected areas to include.
+
+      Designated means that it is officially established under national or international law/policy.
+
+      Inscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated.
+
+      Established means that it is protected and managed, but possibly lacks formal legal desgination.
+    type: options[]
+    options:
+      - Designated
+      - Inscribed
+      - Established
+    example: ["Designated", "Inscribed", "Established"]
+  include_unesco:
+    label: Include UNESCO Biosphere reserves
+    description: >
+      Check to include UNESCO Biosphere reserves. These serve as learning sites for sustainable development
+      and combine biodiversity conservation with the sustainable use of natural resources and sustainable development.
+      They may not be legally protected and may not be fully conserved, because they are often used for development or
+      human settlement.
+
+
+      Excluding these will limit the dataset to meeting stricter conservation standards.
+    type: boolean
+    example: TRUE
+  buffer_points:
+    label: Include protected area points
+    description: >
+      Check to include protected area represented by points. These protected areas are reported as a single point rather than a polygon.
+      If checked, this will create a circular protected area around the reported point that is equal to the reported area.
+      If left unchecked, all protected areas represented as points will be removed.
+
+
+      Protected area points with no reported area will be removed in all cases.
+    type: boolean
+    example: FALSE
+  include_marine:
+    label: Include marine protected areas
+    description: >
+      Check to include marine protected areas.
+
+
+      Note that the analysis is still limited to the bounds of the studyarea polygon.
+      The chosen polygon needs to exceed the country land boundaries in order to really include marine protected areas.
+    type: boolean
+    example: FALSE
+  include_oecm:
+    label: Include OECMs
+    description: >
+      Check to include areas with other effective area-based conservation measures (OECMs). These are not officially designated
+      protected areas but are still achieving conservation outcomes.
+    type: boolean
+    example: TRUE
+outputs:
+  protected_areas_clean:
+    label: Polygon of protected areas
+    description: Map of the protected areas in GeoPackage format, cleaned and filtered according to the input criteria.
+    type: application/geopackage+sqlite3
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-sf
+    - r-remotes
+    - r-dplyr
+    - r-lubridate
