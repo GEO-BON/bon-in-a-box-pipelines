@@ -3,15 +3,16 @@
 #### Reviewed by: In review
 
 ## Introduction
-The [Species Habitat Index](https://geobon.org/ebvs/indicators/species-habitat-index-shi/) (SHI) is a component indicator for the Global Biodiversity Framework (GBF). SHI measures changes in ecological integrity by measuring the change in the quality and connectivity of habitats for species of interest. The Species Habitat Score is score for each species.
+The [Species Habitat Index](https://geobon.org/ebvs/indicators/species-habitat-index-shi/) (SHI) is a component indicator for the Global Biodiversity Framework (GBF). SHI measures changes in ecological integrity by measuring the change in the quality and connectivity of habitats of species. It is a composite of Species Habitat Scores (SHS), which measure the change in suitable area for a single species of interest. It is calculated in the BON in a Box pipeline by taking species range maps, information about elevational ranges and IUCN habitat categories to determine the suitable area for the species. Then, the pipeline uses the Global Forest Watch (GFW) data (other land cover layers and options for inputting user data will soon be added) to calculate the area and connectivity scores by species. Forest loss is detected by year and subtracted from the initial 2000 forest layer distributed within the range map of the species and filtered by elevation ranges. This layer is then used to create a raster with the distances to habitat edges and the mean value for the area is used as the connectivity score. The habitat and connectivity score are combined to form the SHS. To calculate SHI, the SHS for each species is averaged and to calculate Steward’s SHI, this is also weighted by the proportion of the species’ range that is in the study area.
 
 ## 'Use Case'/Context
 SHI is an important indicator for assessing progress towards Goal A of the GBF, which calls for the enhanced integrity of natural ecosystems. Read more about how SHI can be used to assess progress toward goal A here ([https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf](https://cdn.mol.org/static/files/indicators/habitat/WCMC-species_habitat_index-15Feb2022.pdf)).
 
 ## Pipeline limitations
+Currently, the pipeline uses only Global Forest Watch data to measure change in habitat, so the pipeline is limited to calcualting SHS and SHI for forest species.
 
 ## Before you start
-To use this pipeline, you’ll need an [IUCN token](https://api.iucnredlist.org/users/sign_up) to access data on the International Union for Conservation of Nature (IUCN) Red List of Threatened Species.
+To use this pipeline, you’ll need an [IUCN token](https://api.iucnredlist.org/users/sign_up) to access data on the International Union for Conservation of Nature (IUCN) species range polygons.
 
 ## Running the pipeline
 
