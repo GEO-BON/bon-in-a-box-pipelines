@@ -113,14 +113,14 @@
       }
     },
     {
-      "id": "42",
+      "id": "43",
       "type": "io",
       "position": {
-        "x": -815.2107937424242,
-        "y": 221.16133549507688
+        "x": -608.5628869951006,
+        "y": 516.1120609990181
       },
       "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
+        "descriptionFile": "getCountrybbox.json"
       }
     }
   ],
@@ -203,32 +203,32 @@
       "id": "reactflow__edge-31current_climate-41"
     },
     {
-      "source": "42",
-      "sourceHandle": "bbox",
-      "target": "31",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-42bbox-31bbox"
-    },
-    {
-      "source": "42",
-      "sourceHandle": "bbox",
-      "target": "30",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-42bbox-30bbox"
-    },
-    {
-      "source": "42",
-      "sourceHandle": "bbox",
-      "target": "34",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-42bbox-34bbox"
-    },
-    {
       "source": "37",
       "sourceHandle": null,
-      "target": "42",
-      "targetHandle": "study_area_epsg",
-      "id": "reactflow__edge-37-42study_area_epsg"
+      "target": "43",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-37-43pipeline@2"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "30",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-43data>getBoundingBox.yml@0|bbox-30bbox"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "31",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-43data>getBoundingBox.yml@0|bbox-31bbox"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "34",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-43data>getBoundingBox.yml@0|bbox-34bbox"
     }
   ],
   "inputs": {
@@ -332,26 +332,19 @@
       ],
       "weight": 10
     },
-    "data>getBoundingBox.yml@42|country": {
-      "description": "Country of interest. For list of countries look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_country_name_validate_country_name_get.",
-      "label": "Country",
+    "getCountrybbox.json@43|data>getCountryPolygon.yml@12|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
       "type": "text",
-      "example": "Canada",
+      "example": "COL",
       "weight": 11
     },
-    "data>getBoundingBox.yml@42|state": {
-      "description": "State or province of interest (leave blank if you want the full country). For list of accepted region names look here https://geoio.biodiversite-quebec.ca/docs#/default/validate_state_name_validate_state_name_get.",
-      "label": "State/Province",
+    "getCountrybbox.json@43|data>getCountryPolygon.yml@12|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
       "type": "text",
-      "example": "Quebec",
+      "example": null,
       "weight": 12
-    },
-    "data>getBoundingBox.yml@42|study_area_file": {
-      "description": "Upload a file of a custom study area",
-      "label": "File for study area",
-      "type": "text",
-      "weight": 13,
-      "example": null
     }
   },
   "outputs": {
