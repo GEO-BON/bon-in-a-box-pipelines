@@ -1,0 +1,59 @@
+script: script_site_optz_stepwise.R
+name: Stepwise SURDES optimization with pmedians
+description: Runs a stepwise optimization with pmedians using the SURDES package/project on a given set of points. Selection is based on the environmental variability of a universe of given points, selecting only point within a subset of demand point of the universe. The algortihm allows for criteria and conditions to be met when selection each point (to be defined by user)
+author: 
+  - name: Francis van Oordt
+    identifier: "https://orcid.org/0000-0002-8471-235X"
+license: CC-BY
+inputs:
+  res_fact:
+    label: Aggregation factor (resolution)
+    description: Factor reduction for raster pixel resolution (usually from 1km raw)
+    type: int
+    example: 10
+  iters:
+    label: Algorithm Iterations
+    description: number of iterations to run (equivalent to sites to be selected)
+    type: int
+    example: 100
+  rasters:
+    label: Rasters
+    description: Rasters layers of environmental variables of interest
+    type: image/tiff;application=geotiff[]
+    example: |
+      GBSTAC|chelsa-clim|bio1,GBSTAC|chelsa-clim|bio2, GBSTAC|chelsa-clim|bio12, 
+  locations_csv:
+    label: Sampling sites
+    description: sampling sites with classification of well-known (1) and demand (0) sites
+    type: text/csv
+    example: null
+  mdist:
+    label: joint distance matrix
+    description: joint distance matrix
+    type: text/csv
+outputs:
+  uncov:
+    label: uncovered variances
+    description: uncovered variances values
+    type: text/csv
+  point_Sel:
+    label: selection of demand points
+    description: selection of demand points
+    type: text/csv
+  surdes_uncov:
+    label: plot for uncovered variance
+    description: plot for uncovered variance
+    type: image/png
+
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-ggplot2
+
+references:
+   - text: "Designing bryophyte surveys for an optimal coverage of diversity gradients. 2013. Nagore G. Medina, Francisco Lara, Vicente Mazimpaka & Joaquín Hortal . Biodiversity and Conservation. 22, 3121–3139"
+     doi: "10.1007/s10531-013-0574-5"
