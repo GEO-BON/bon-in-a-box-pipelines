@@ -1,28 +1,6 @@
 {
   "nodes": [
     {
-      "id": "170",
-      "type": "io",
-      "position": {
-        "x": 1146,
-        "y": 216
-      },
-      "data": {
-        "descriptionFile": "VegIndexMax>VegIndexMax.yml"
-      }
-    },
-    {
-      "id": "171",
-      "type": "output",
-      "position": {
-        "x": 1734,
-        "y": 187.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "172",
       "type": "userInput",
       "position": {
@@ -100,23 +78,31 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "179",
+      "type": "io",
+      "position": {
+        "x": 1266.9624938964844,
+        "y": 145.79999542236328
+      },
+      "data": {
+        "descriptionFile": "VegIndexMax>VegIndexMax.yml"
+      }
+    },
+    {
+      "id": "180",
+      "type": "output",
+      "position": {
+        "x": 1898.9624938964844,
+        "y": 99.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "170",
-      "sourceHandle": "rasters",
-      "target": "171",
-      "targetHandle": null,
-      "id": "reactflow__edge-170rasters-171"
-    },
-    {
-      "source": "172",
-      "sourceHandle": null,
-      "target": "170",
-      "targetHandle": "vegetation_index",
-      "id": "reactflow__edge-172-170vegetation_index"
-    },
     {
       "source": "172",
       "sourceHandle": null,
@@ -125,25 +111,11 @@
       "id": "reactflow__edge-172-173"
     },
     {
-      "source": "174",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "170",
-      "targetHandle": "bounding_box",
-      "id": "reactflow__edge-174data>getBoundingBox.yml@0|bbox-170bounding_box"
-    },
-    {
       "source": "175",
       "sourceHandle": null,
       "target": "174",
       "targetHandle": "pipeline@2",
       "id": "reactflow__edge-175-174pipeline@2"
-    },
-    {
-      "source": "175",
-      "sourceHandle": null,
-      "target": "170",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-175-170crs"
     },
     {
       "source": "174",
@@ -158,6 +130,41 @@
       "target": "178",
       "targetHandle": null,
       "id": "reactflow__edge-174data>getCountryPolygon.yml@1|country-178"
+    },
+    {
+      "source": "179",
+      "sourceHandle": "rasters",
+      "target": "180",
+      "targetHandle": null,
+      "id": "reactflow__edge-179rasters-180"
+    },
+    {
+      "source": "174",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "179",
+      "targetHandle": "bounding_box",
+      "id": "reactflow__edge-174data>getBoundingBox.yml@0|bbox-179bounding_box"
+    },
+    {
+      "source": "174",
+      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "target": "179",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-174data>getCountryPolygon.yml@1|country_polygon-179study_area_polygon"
+    },
+    {
+      "source": "172",
+      "sourceHandle": null,
+      "target": "179",
+      "targetHandle": "vegetation_index",
+      "id": "reactflow__edge-172-179vegetation_index"
+    },
+    {
+      "source": "175",
+      "sourceHandle": null,
+      "target": "179",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-175-179crs"
     }
   ],
   "inputs": {
@@ -175,40 +182,12 @@
       "example": "Nord",
       "weight": 1
     },
-    "VegIndexMax>VegIndexMax.yml@170|study_area_polygon": {
-      "description": "Custom polygon of the study area of interest. To be used if you have not selected a country/region.",
-      "label": "Polygon of study area",
-      "type": "application/geo+json",
-      "example": null,
-      "weight": 2
-    },
-    "VegIndexMax>VegIndexMax.yml@170|start_date": {
-      "description": "Start date for summarizing",
-      "label": "Start date",
-      "type": "text",
-      "example": "2019-05-01",
-      "weight": 3
-    },
     "pipeline@175": {
       "label": "Coordinate reference system",
       "description": "The coordinate reference system of the study area. This must be a projected CRS (in meters). You can search for EPSG codes by country [here](https://epsg.io/).",
       "type": "text",
       "example": "EPSG:2154",
-      "weight": 4
-    },
-    "VegIndexMax>VegIndexMax.yml@170|end_date": {
-      "description": "End date for which summarizing NDVI.",
-      "label": "End date",
-      "type": "text",
-      "example": "2019-09-30",
-      "weight": 5
-    },
-    "VegIndexMax>VegIndexMax.yml@170|spatial_resolution": {
-      "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
-      "label": "Spatial resolution",
-      "type": "int",
-      "example": 100,
-      "weight": 6
+      "weight": 2
     },
     "pipeline@172": {
       "label": "Vegetation indices",
@@ -224,7 +203,28 @@
         "FAPAR",
         "QFLAG2"
       ],
-      "weight": 7
+      "weight": 3
+    },
+    "VegIndexMax>VegIndexMax.yml@179|start_date": {
+      "description": "Start date for summarizing vegetation index",
+      "label": "Start date",
+      "type": "text",
+      "example": "2019-05-01",
+      "weight": 4
+    },
+    "VegIndexMax>VegIndexMax.yml@179|end_date": {
+      "description": "End date for summarizing vegetation index",
+      "label": "End date",
+      "type": "text",
+      "example": "2019-09-30",
+      "weight": 5
+    },
+    "VegIndexMax>VegIndexMax.yml@179|spatial_resolution": {
+      "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 100,
+      "weight": 6
     }
   },
   "outputs": {
@@ -244,22 +244,22 @@
       ],
       "weight": 0
     },
-    "VegIndexMax>VegIndexMax.yml@170|rasters": {
-      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
-      "label": "Vegetation index rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 1
-    },
     "getCountrybbox.json@174|data>getCountryPolygon.yml@1|region": {
       "description": "Name of state/province of interest",
       "label": "Region",
       "type": "text",
-      "weight": 2
+      "weight": 1
     },
     "getCountrybbox.json@174|data>getCountryPolygon.yml@1|country": {
       "description": "Name of country of interest",
       "label": "Country",
       "type": "text",
+      "weight": 2
+    },
+    "VegIndexMax>VegIndexMax.yml@179|rasters": {
+      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
+      "label": "Vegetation index rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 3
     }
   },

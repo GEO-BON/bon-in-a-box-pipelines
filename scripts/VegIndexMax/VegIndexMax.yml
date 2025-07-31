@@ -16,8 +16,19 @@ inputs:
   study_area_polygon:
     label: Polygon of study area
     description: Polygon of the study area of interest
-    type: application/geo+json
+    type: application/geopackage+sqlite3
     example: null
+  ndvi_layer:
+    label: NDVI layer
+    description: |
+      NDVI layer to use. You can choose the pre-calcuated NDVI layer from the Copernicus Land Monitoring Service (CLMS), 
+      which covers Europe only ([link here](https://land.copernicus.eu/en/products/vegetation)) or calculate it manually 
+      from raw Copernicus satellite data using the red and near-infrared (NIR) bands. NDVI is calculated as (NIR - Red) / (NIR + Red).
+      This layer can be used globally.
+    type: options
+    options:
+      - CLMS pre-calcuated (Europe only)
+      - Calculated from raw data (Global)
   crs:
     label: Coordinate reference system
     description: Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated
@@ -33,18 +44,18 @@ inputs:
     description: End date for summarizing vegetation index
     type: text
     example: "2019-09-30"
-  vegetation_index:
-    label: Vegetation indices
-    description: |
-      Vegetation Indices that should be extracted. 
-    type: options[]
-    options:
-      - "NDVI"
-      - "PPI"
-      - "LAI"
-      - "FAPAR"
-      - "QFLAG2"
-    example: ["NDVI"]
+  # vegetation_index:
+  #   label: Vegetation indices
+  #   description: |
+  #     Vegetation Indices that should be extracted. 
+  #   type: options[]
+  #   options:
+  #     - "NDVI"
+  #     - "PPI"
+  #     - "LAI"
+  #     - "FAPAR"
+  #     - "QFLAG2"
+  #   example: ["NDVI"]
   spatial_resolution:
     label: Spatial resolution
     description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).

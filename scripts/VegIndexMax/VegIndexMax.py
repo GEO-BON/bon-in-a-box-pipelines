@@ -13,6 +13,7 @@ polygon = data['study_area_polygon']
 spatial_resolution = data['spatial_resolution']
 veg_index = data['vegetation_index']
 crs = data['crs']
+ndvi_layer = data['ndvi_layer']
 
 if (int(start_date[:4]) < 2017):
     biab_error_stop("The start date must be 2017 or later.")
@@ -34,43 +35,67 @@ connection.authenticate_oidc_client_credentials(
 )
 print(veg_index, flush=True)
 
-datacube = connection.load_collection(
-"COPERNICUS_VEGETATION_INDICES",
-spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
-temporal_extent=[start_date, end_date],
-bands=veg_index,
-)
+# Load study area polygon
+polygon = gpd.read_file(polygon)
+
+if ndvi_layer is "CLMS pre-calcuated (Europe only)": 
+
+    datacube = connection.load_collection(
+    "COPERNICUS_VEGETATION_INDICES",
+    spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
+    temporal_extent=[start_date, end_date],
+    bands=["NDVI"],
+    )
+
+    ndvi = datacube
+
+# If not in Europe, pull sentinel data and calculate NDVI
+
+else: 
+    datacube = connection.load_collection(
+    "SENTINEL2_L2A",
+    spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
+    temporal_extent=[start_date, end_date],
+    bands=["B04", "B08"],
+    ) # load red and infrared bands
+
+
+    ndvi = datacube.ndvi(nir="B08", red="B04", target_band="NDVI")
+    ndvi = ndvi.filter_bands(bands = ["NDVI"])
+
+
+ndvi_max = ndvi.reduce_dimension(dimension = "t", reducer = "max")
+
+
+ndvi_resampled = ndvi_max.resample_spatial(resolution=spatial_resolution, projection=crs)
+
 
 if polygon is None:
-    datacube_cropped = datacube
+    datacube_cropped = ndvi
 else:
     if(crs=='EPSG:4326'):
-        datacube_cropped = datacube.filter_spatial(polygon) # cropping to polygon
+        polygon = json.loads(polygon.to_json())
+        print(polygon)
+        datacube_cropped = ndvi.filter_spatial(polygon) # cropping to polygon
     else:
         print('Reprojecting polygon file', flush=True)
-        gdf = gpd.read_file(polygon, driver='GeoJSON')
-        repro = gdf.to_crs(crs=None, epsg=crs, inplace=False).toJSON()
-        datacube_cropped = datacube.filter_spatial(repro)
+        repro = json.loads(polygon.to_crs(crs=None, epsg=crs, inplace=False).to_json())
+        datacube_cropped = ndvi.filter_spatial(repro)
 
+datacube_cropped = ndvi
 
-if spatial_resolution is None:
-    datacube_resampled_cropped = datacube_cropped
-else:
-    datacube_resampled_cropped = datacube_cropped.resample_spatial(resolution=spatial_resolution, projection=crs, method="max" ) # resampling to spatial resolution
-
-veg_indices = datacube_resampled_cropped.reduce_dimension( dimension = "t", reducer = "max" )
 
 # output rasters
-veg_indices.save_result("GTiff")
+ndvi.save_result("GTiff")
 # start job to fetch rasters
 print("Starting job to fetch raster layers", flush=True)
-job1 = veg_indices.create_job()
+job1 = ndvi.create_job()
 try:
     job1.start_and_wait()
 except Exception as e:
     biab_error_stop("The retrieval of the raster layers failed in OpenEO, check the log for details.")
 
-rasters = job1.get_results().download_files(outputFolder)
+rasters = job1.get_results().download_files(output_folder)
 
 print("Job finished, printing job output", flush=True)
 print(rasters, flush=True)
@@ -88,5 +113,5 @@ output = {
 
 json_object = json.dumps(output, indent = 2)
 
-with open(outputFolder + '/output.json', "w") as outfile:
+with open(output_folder + '/output.json', "w") as outfile:
     outfile.write(json_object)
