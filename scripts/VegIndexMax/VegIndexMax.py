@@ -11,7 +11,6 @@ start_date = data['start_date']
 end_date = data['end_date']
 polygon = data['study_area_polygon']
 spatial_resolution = data['spatial_resolution']
-veg_index = data['vegetation_index']
 crs = data['crs']
 ndvi_layer = data['ndvi_layer']
 
@@ -33,12 +32,11 @@ connection.authenticate_oidc_client_credentials(
     client_id=os.getenv("CDSE_CLIENT_ID"),
     client_secret=os.getenv("CDSE_CLIENT_SECRET"),
 )
-print(veg_index, flush=True)
 
 # Load study area polygon
 polygon = gpd.read_file(polygon)
 
-if ndvi_layer is "CLMS pre-calcuated (Europe only)": 
+if ndvi_layer == "CLMS pre-calcuated (Europe only)":
 
     datacube = connection.load_collection(
     "COPERNICUS_VEGETATION_INDICES",
@@ -51,7 +49,7 @@ if ndvi_layer is "CLMS pre-calcuated (Europe only)":
 
 # If not in Europe, pull sentinel data and calculate NDVI
 
-else: 
+else:
     datacube = connection.load_collection(
     "SENTINEL2_L2A",
     spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
@@ -79,7 +77,8 @@ else:
         datacube_cropped = ndvi.filter_spatial(polygon) # cropping to polygon
     else:
         print('Reprojecting polygon file', flush=True)
-        repro = json.loads(polygon.to_crs(crs=None, epsg=crs, inplace=False).to_json())
+        EPSG = crs.split(':')[1]
+        repro = json.loads(polygon.to_crs(crs=None, epsg=EPSG, inplace=False).to_json())
         datacube_cropped = ndvi.filter_spatial(repro)
 
 datacube_cropped = ndvi

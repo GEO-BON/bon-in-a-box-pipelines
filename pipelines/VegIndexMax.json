@@ -1,44 +1,11 @@
 {
   "nodes": [
     {
-      "id": "172",
-      "type": "userInput",
-      "position": {
-        "x": 766,
-        "y": 340.8333333333333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options[]",
-        "value": [
-          "NDVI"
-        ],
-        "options": [
-          "NDVI",
-          "PPI",
-          "LAI",
-          "FAPAR",
-          "QFLAG2"
-        ]
-      }
-    },
-    {
-      "id": "173",
-      "type": "output",
-      "position": {
-        "x": 1146,
-        "y": 339
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "174",
       "type": "io",
       "position": {
-        "x": 453,
-        "y": 87.5
+        "x": 397.20747266962803,
+        "y": 14.272307878886863
       },
       "data": {
         "descriptionFile": "getCountrybbox.json"
@@ -104,13 +71,6 @@
   ],
   "edges": [
     {
-      "source": "172",
-      "sourceHandle": null,
-      "target": "173",
-      "targetHandle": null,
-      "id": "reactflow__edge-172-173"
-    },
-    {
       "source": "175",
       "sourceHandle": null,
       "target": "174",
@@ -153,13 +113,6 @@
       "id": "reactflow__edge-174data>getCountryPolygon.yml@1|country_polygon-179study_area_polygon"
     },
     {
-      "source": "172",
-      "sourceHandle": null,
-      "target": "179",
-      "targetHandle": "vegetation_index",
-      "id": "reactflow__edge-172-179vegetation_index"
-    },
-    {
       "source": "175",
       "sourceHandle": null,
       "target": "179",
@@ -189,78 +142,57 @@
       "example": "EPSG:2154",
       "weight": 2
     },
-    "pipeline@172": {
-      "label": "Vegetation indices",
-      "description": "Vegetation Indices that should be extracted. \n",
-      "type": "options[]",
-      "example": [
-        "NDVI"
-      ],
-      "options": [
-        "NDVI",
-        "PPI",
-        "LAI",
-        "FAPAR",
-        "QFLAG2"
-      ],
-      "weight": 3
-    },
     "VegIndexMax>VegIndexMax.yml@179|start_date": {
       "description": "Start date for summarizing vegetation index",
       "label": "Start date",
       "type": "text",
       "example": "2019-05-01",
-      "weight": 4
+      "weight": 3
     },
     "VegIndexMax>VegIndexMax.yml@179|end_date": {
       "description": "End date for summarizing vegetation index",
       "label": "End date",
       "type": "text",
       "example": "2019-09-30",
-      "weight": 5
+      "weight": 4
     },
     "VegIndexMax>VegIndexMax.yml@179|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "float",
       "example": 100,
+      "weight": 5
+    },
+    "VegIndexMax>VegIndexMax.yml@179|ndvi_layer": {
+      "description": "NDVI layer to use. You can choose the pre-calcuated NDVI layer from the Copernicus Land Monitoring Service (CLMS), \nwhich covers Europe only ([link here](https://land.copernicus.eu/en/products/vegetation)) or calculate it manually \nfrom raw Copernicus satellite data using the red and near-infrared (NIR) bands. NDVI is calculated as (NIR - Red) / (NIR + Red).\nThis layer can be used globally.\n",
+      "label": "NDVI layer",
+      "type": "options",
+      "options": [
+        "CLMS pre-calcuated (Europe only)",
+        "Calculated from raw data (Global)"
+      ],
+      "example": null,
       "weight": 6
     }
   },
   "outputs": {
-    "pipeline@172|default_output": {
-      "description": "Vegetation Indices that should be extracted. \n",
-      "label": "Vegetation indices",
-      "example": [
-        "NDVI"
-      ],
-      "type": "options[]",
-      "options": [
-        "NDVI",
-        "PPI",
-        "LAI",
-        "FAPAR",
-        "QFLAG2"
-      ],
-      "weight": 0
-    },
     "getCountrybbox.json@174|data>getCountryPolygon.yml@1|region": {
       "description": "Name of state/province of interest",
       "label": "Region",
       "type": "text",
-      "weight": 1
+      "weight": 0
     },
     "getCountrybbox.json@174|data>getCountryPolygon.yml@1|country": {
       "description": "Name of country of interest",
       "label": "Country",
       "type": "text",
-      "weight": 2
+      "weight": 1
     },
     "VegIndexMax>VegIndexMax.yml@179|rasters": {
       "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
       "label": "Vegetation index rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 2
     }
   },
   "metadata": {
