@@ -8,7 +8,7 @@ token <- Sys.getenv("IUCN_TOKEN")
 if (token == "") {
   biab_error_stop("Please specify an IUCN token in your environment file")
 }
-print(token)
+
 
 # Find the species in the Red List that are improving in threat category
 sp_improving <- rredlist::rl_pop_trends(key = token, code = "0", latest = TRUE, scope_code = 1)$assessments

@@ -39,7 +39,7 @@ if (all == FALSE) {
   if (token == "") {
     biab_error_stop("Please specify an IUCN token in your environment file")
   }
-  print(token)
+
 
   IUCN_taxon_all <- data.frame()
 

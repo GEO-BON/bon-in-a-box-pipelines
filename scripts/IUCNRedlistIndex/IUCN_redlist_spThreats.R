@@ -29,7 +29,7 @@ if ("Do not filter by threat category" %in% threats) {
     if (token == "") {
         biab_error_stop("Please specify an IUCN token in your environment file")
     }
-    print(token)
+
 
     ## Select threat groups for each threat input
     IUCN_threats <- rredlist::rl_threats(key = token)

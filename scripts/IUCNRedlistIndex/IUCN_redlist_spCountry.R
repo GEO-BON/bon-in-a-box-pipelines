@@ -9,7 +9,7 @@ token <- Sys.getenv("IUCN_TOKEN")
 if (token == "") {
   biab_error_stop("Please specify an IUCN token in your environment file")
 }
-print(token)
+
 
 country <- input$country
 
