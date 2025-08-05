@@ -1,10 +1,10 @@
 # Red List Index
-### Author(s): Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griffith
+Author(s): Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griffith
 #### Reviewed by: In review
 
 ## Introduction
 
-The Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. RLI has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services, the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).
+The Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. RLI has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).
 
 ### Uses
 
@@ -52,7 +52,7 @@ The following are suggested inputs that are goal-specific:
 
 To use this pipeline, you’ll need an [IUCN token](https://api.iucnredlist.org/users/sign_up) to access data on the International Union for Conservation of Nature (IUCN) Red List of Threatened Species.
 
-The IUCN Red List of threatened species has the following threat categorizations:
+To interpret the results of this pipeline, it's important to understand the IUCN threat categorizations, which are present throughout the outputs. Some results present these categorizations directly, while others, such as the Red List Index (RLI) calculations,use them to measure changes in extinction risk over time. The IUCN Red List of Threatened Species defines the following threat categories:
 
 - EX: Exinct
 - EW: Extinct in the wild
@@ -136,7 +136,7 @@ This step calculates the Red List Index for the species using their history of a
 
 ## Example
 
-**Sample run:** See an example ProtConn run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/RLI_pipeline%3EIUCN_RLI_pipeline/46192f03723b43152495c84ac15175cf) and [viewer](https://pipelines-results.geobon.org/viewer/RLI_pipeline%3EIUCN_RLI_pipeline%3E46192f03723b43152495c84ac15175cf).
+**Sample run:** See an example RLI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/RLI_pipeline%3EIUCN_RLI_pipeline/46192f03723b43152495c84ac15175cf) and [viewer](https://pipelines-results.geobon.org/viewer/RLI_pipeline%3EIUCN_RLI_pipeline%3E46192f03723b43152495c84ac15175cf).
 
 ## Troubleshooting
 
