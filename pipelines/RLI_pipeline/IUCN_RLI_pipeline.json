@@ -823,7 +823,7 @@
     "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
       "description": "Country chosen for IUCN red list assessment.",
       "label": "Country",
-      "type": "text/csv",
+      "type": "text",
       "example": null,
       "weight": 4
     },
