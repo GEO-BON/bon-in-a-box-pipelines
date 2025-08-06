@@ -6,6 +6,8 @@ author:
     identifier: https://orcid.org/0000-0003-4024-9268
   - name: "Guillaume Larocque"
     identifier: "https://orcid.org/0000-0002-5967-9156"
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
 license: CC BY
 inputs:
   spat_res:
@@ -18,30 +20,15 @@ inputs:
     description: Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.
     type: text
     example: EPSG:3116
-  study_area_opt:
-    label: study area option
-    description: Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.
-    type: options
-    options:
-      - "Country"
-      - "Region in Country"
-      - "User defined"
-    example:
-        Country
   study_area:
     label: study area
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
     type: application/geopackage+sqlite3
     example: null
-  country_code:
-    label: country
-    description: 'Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
-    type: text
-    example: Colombia
-  region:
-    label: region
-    description: 'For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
-    type: text
+  country_region_polygon:
+    label: Polygon of country or region
+    description: A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.
+    type: application/geopackage+sqlite3
     example: null
   buff_size:
     label: buffer for study area

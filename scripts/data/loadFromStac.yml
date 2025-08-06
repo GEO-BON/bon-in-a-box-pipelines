@@ -13,7 +13,7 @@ inputs:
     example: https://stac.geobon.org/
   bbox:
     label: Bounding box
-    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax. This input should be null when using a custom study area.
     type: float[]
     example: [-2316297, -1971146, 1015207, 1511916]
   collections_items:
@@ -32,10 +32,10 @@ inputs:
       Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.
       This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.
       This MUST be in a projected reference system (not lat long).
-      
+
       For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).
       The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
-      
+
       *Leave blank if you want the bounding box to be in EPSG:4326.*
     type: text
     example: "EPSG:6622"
@@ -77,7 +77,7 @@ inputs:
     example: first
   study_area:
     label: Study area
-    description: Polygon of study area used to crop output layers
+    description: Polygon of study area used to crop output layers. *Specifying a custom study area will override the bounding box input.*
     type: application/geopackage+sqlite3
     example: null
 outputs:

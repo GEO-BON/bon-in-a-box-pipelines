@@ -1,0 +1,27 @@
+script: habitatChange_ESA.R
+name: Measure habitat change with ESA
+description: This script measures habitat change using ESA landcover data.
+author:
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
+inputs:
+  layers:
+    label: Raster layers
+    description: Raster layers from ESA landcover data in the STAC Catalogue
+    type: image/tiff;application=geotiff[]
+    example:
+  habitats:
+    label: Habitats
+    description: Habitat types of the species of interest
+    type: text[]
+    example:
+  aoh:
+    label: Area of habitat
+    description: Area of habitat of the species of interest
+    type: image/tiff;application=geotiff[]
+    example:
+outputs:
+  raster:
+    label: Raster
+    description: Map showing habitat change over the range of time specified
+    type: image/tiff;application=geotiff

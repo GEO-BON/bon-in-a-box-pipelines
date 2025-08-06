@@ -17,17 +17,6 @@ print("Inputs: ")
 print(input)
 
 source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo = TRUE)
-source(file.path(path_script, "data/loadCubeFunc.R"), echo = TRUE)
-
-get_country <- function(country) {
-  resp <- req_perform(request(paste0("https://geoio.biodiversite-quebec.ca/country_geojson/?country_name=", country)))
-  geojson_sf(resp_body_string(resp))
-}
-
-get_state <- function(country, region) {
-  resp <- req_perform(request(paste0("https://geoio.biodiversite-quebec.ca/state_geojson/?state_name=", region, "&country_name=", country)))
-  geojson_sf(resp_body_string(resp))
-}
 
 # Parameters -------------------------------------------------------------------
 # spatial resolution
@@ -47,19 +36,15 @@ srs_cube <- suppressWarnings(if (check_srs) {
 }) # paste Authority in case SRID is used
 
 # Define area of interest, country or region
-study_area_opt <- input$study_area_opt
 study_area_path <- ifelse(is.null(input$study_area), NA, input$study_area)
-country_code <- ifelse(is.null(input$country_code), NA, input$country_code)
-region <- ifelse(is.null(input$region), NA, input$region)
+country <- ifelse(is.null(input$country_region_polygon), NA, input$country_region_polygon)
 
 # Size of buffer around study area
 buff_size <- ifelse(is.null(input$buff_size), NA, input$buff_size)
 
 # Define species
 sp <- input$species
-print("class:")
-print(class(sp))
-print(str(sp))
+
 # Range map option
 range_map_type <- ifelse(is.null(input$range_map_type), NA, input$range_map_type)
 # Define expert range maps
@@ -82,48 +67,22 @@ elev_buffer <- ifelse(is.null(input$elev_buffer), 0, input$elev_buffer)
 # credentials
 token <- Sys.getenv("IUCN_TOKEN")
 if (token == "") {
-  biab_error_stop("Please specify an IUCN token in your environment file")
+  biab_error_stop("Please specify an IUCN token in your environment file runner.env")
 }
 
 #-------------------------------------------------------------------------------
 # Step 1 - Get study area
 #-------------------------------------------------------------------------------
-study_area <- data.frame(
-  study_area_path = study_area_path,
-  country_code = country_code,
-  region = region
-) |>
-  dplyr::mutate(option = case_when(
-    !is.na(study_area_path) ~ 1,
-    !is.na(country_code) & is.na(region) ~ 2,
-    !is.na(country_code) & !is.na(region) ~ 3,
-    is.na(study_area_path) & is.na(country_code) ~ 4,
-  ))
 
-study_area <- data.frame(
-  text = study_area_opt,
-  study_area_path = study_area_path,
-  country_code = country_code,
-  region = region
-) |>
-  dplyr::mutate(option = case_when(
-    study_area_opt == "Country" ~ 1,
-    study_area_opt == "Region in Country" ~ 2,
-    study_area_opt == "User defined" ~ 3,
-    is.null(study_area_opt) ~ 4,
-  ))
-
-if (study_area$option == 1) {
-  sf_area_lim1 <- get_country(country_code) |> st_make_valid() # country
-}
-if (study_area$option == 2) {
-  sf_area_lim1 <- get_state(country_code, region) |> st_make_valid() # region in a country
-}
-if (study_area$option == 3) {
+if (!is.na(study_area_path)) {
+  print("Using a custom study area file...")
   sf_area_lim1 <- st_read(study_area_path) # user defined area
+} else if (!is.na(country)) {
+  print("Using a country polygon as the study area...")
+  sf_area_lim1 <- st_read(country) |> st_make_valid()
 }
-if (study_area$option == 4) {
-  print("A study area is required, please choose one of the options")
+if (is.na(study_area_path) && is.na(country)) {
+  biab_error_stop("A study area is required, please either enter a country/region or a custom study area")
 }
 
 sf_area_lim1_srs <- sf_area_lim1 |> st_transform(sf_srs)
@@ -139,8 +98,6 @@ v_path_bbox_analysis <- c()
 df_aoh_areas <- tibble()
 
 for (i in seq_along(sp)) {
-  print(sp)
-  print(sprintf("i is: %s", i))
   print(sprintf("Finding the area of habitat for %s", sp[i]))
   if (!dir.exists(file.path(outputFolder, sp[i]))) {
     dir.create(file.path(outputFolder, sp[i]))
@@ -183,7 +140,6 @@ for (i in seq_along(sp)) {
   # Intersect range map to study area-------------------------------------------
   # sf_area_lim <- st_intersection(sf_area_lim2,sf_area_lim1) |>
   #   st_make_valid()
-  print("printing")
   print(st_crs(sf_area_lim2_srs) == st_crs(sf_area_lim1_srs))
   sf_area_lim_srs <- st_intersection(sf_area_lim2_srs, sf_area_lim1_srs) |>
     st_make_valid()
@@ -242,9 +198,6 @@ for (i in seq_along(sp)) {
       subvar <- parts[4]
     }
     # Load elevation preferences
-    print("species:")
-    print(gn)
-    print(spe)
     df_IUCN_sheet <- rredlist::rl_species_latest(
       genus = gn,
       species = spe,
@@ -263,7 +216,6 @@ for (i in seq_along(sp)) {
       lower_elevation_limit = as.numeric(df_IUCN_sheet$lower_elevation_limit),
       upper_elevation_limit = as.numeric(df_IUCN_sheet$upper_elevation_limit)
     )
-    # print(dim(df_IUCN_sheet))
 
     if (is.null(dim(df_IUCN_sheet))) {
       stop(paste0(sp[i], " not found in IUCN database. Check name and spelling."))
@@ -288,8 +240,6 @@ for (i in seq_along(sp)) {
     } else { # at least one elevation range exists then create cube_STRM to filter according to elevation ranges
       # STRM from Copernicus
       cube_STRM <- terra::rast(c(input$rasters))
-      print("Loaded cube_STRM:")
-      print(cube_STRM)
 
       # Extract layers
       elev_min <- cube_STRM[[1]]
@@ -297,11 +247,9 @@ for (i in seq_along(sp)) {
 
       # Create a logical mask: TRUE (1) where both conditions are satisfied, NA elsewhere
       mask <- elev_min >= min_elev & elev_max <= max_elev
-      print("Mask created")
 
       # Resample mask to match r_aoh resolution (if needed)
       r_STRM_range_res <- terra::resample(mask, r_aoh) # or "bilinear" if needed
-      print("Mask resampled to r_aoh resolution")
 
       # Apply mask: crop + mask + wrap to finalize filtered area
       r_aoh <<- terra::wrap(

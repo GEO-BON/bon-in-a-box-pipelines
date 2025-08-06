@@ -23,10 +23,24 @@ gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1)
 
 gdalcubes::gdalcubes_options(parallel = 1)
 
+# Script defaults to bounding box input
+bounding_box <- input$bbox
+
+# If user inputs a study area, find its bounding box
+if (!is.null(input$study_area)) {
+  study_area <- st_read(input$study_area) # load study area
+  study_area <- sf::st_transform(study_area, input$crs)
+  bounding_box <- sf::st_bbox(study_area)
+  bounding_box <- unname(bounding_box)
+} else if (length(bounding_box) == 0) {
+  biab_error_stop("Please specify a bounding box or input a custom study area.")
+}
+
 bbox <- sf::st_bbox(c(
-  xmin = input$bbox[1], ymin = input$bbox[2],
-  xmax = input$bbox[3], ymax = input$bbox[4]
+  xmin = bounding_box[1], ymin = bounding_box[2],
+  xmax = bounding_box[3], ymax = bounding_box[4]
 ), crs = sf::st_crs(input$crs))
+
 weight_matrix <- NULL
 
 if ("resampling" %in% names(input)) {
@@ -47,7 +61,7 @@ if ("taxa" %in% names(input)) { # EXTRACT GBIF HEATMAPS
 } else { # EXTRACT OTHER LAYERS
   if (length(input$collections_items) == 0) {
     if (length(input$weight_matrix_with_ids) == 0) {
-      stop("Please specify collections_items")
+      biab_error_stop("Please specify collections_items")
     } else {
       weight_matrix <- input$weight_matrix_with_ids
       stac_collections_items <- unlist(lapply((str_split(weight_matrix, "\n", simplify = T) |> str_split(","))[-1], function(l) {
@@ -64,8 +78,6 @@ if ("taxa" %in% names(input)) { # EXTRACT GBIF HEATMAPS
 if (!("stac_url" %in% names(input))) {
   input$stac_url <- "https://stac.geobon.org"
 }
-
-
 
 cube_args <- list(
   stac_path = input$stac_url,
@@ -97,9 +109,9 @@ for (coll_it in collections_items) {
   pred <- do.call(load_cube, cube_args_c)
 
   if (!is.null(input$study_area)) {
-    study_area <- st_read(input$study_area) # load study area
     pred <- gdalcubes::filter_geom(pred, sf::st_geometry(study_area)) # crop by study area
   }
+
   nc_names <- cbind(nc_names, names(pred))
   if (names(pred) == "data") {
     pred <- rename_bands(pred, data = ci[2])
@@ -125,5 +137,6 @@ if (is.null(weight_matrix)) { # Temporary fix
   weight_matrix <- ""
 }
 
+# Outputs
 biab_output("rasters", layer_paths)
 biab_output("weight_matrix_with_layers", weight_matrix)
