@@ -4,11 +4,13 @@ Author(s): Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griff
 
 ## Introduction
 
-The Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. RLI has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).
+The Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. Many species that move categories in the Red List do so because of revised taxonomy or improved knowledge. Therefore, looking at raw trends in Red List status can be misleading. RLI models these trends to show overall changes the status of species groups that are based only on genuine improvement or deterioriation. 
+
+RLI has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).
 
 ### Uses
 
-The RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity Framework (CBD, 2022). Furthermore, by tracking the proportion of threatened species showing status improvement, the RLI plays a central role in evaluating progress toward Goal A. Beyond global trends, the RLI can be used to track changes in extinction risk across biogeographic realms, political units, ecosystems, habitats, taxonomic groups, threat types, use or trades, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). The RLI supports progress towards several other goals and targets within the framework, such as Goal Bb, Target 2, and Target 5, highlighting changes in extinction risk, including for utilized species. By calculating the RLI in more specific contexts, such as for species impacted by pollution (Target 7), species affected by invasive alien species (Target 6b), or those used for food and medicine (Target 9b), the indicator provides targeted insights that directly inform efforts to meet these goals.
+The RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity Framework (CBD, 2022). Furthermore, by tracking the proportion of threatened species showing status improvement, the RLI plays a central role in evaluating progress toward Goal A. Beyond global trends, the RLI can be used to track changes in extinction risk across biogeographic realms, political units, ecosystems, habitats, taxonomic groups, threat types, use or trades, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). The RLI supports progress towards several other goals and targets within the framework, such as Goal B, Target 2, and Target 5, highlighting changes in extinction risk, including for utilized species. By calculating the RLI in more specific contexts, such as for species impacted by pollution (Target 7), species affected by invasive alien species (Target 6b), or those used for food and medicine (Target 9b), the indicator provides targeted insights that directly inform efforts to meet these goals.
 
 The following are suggested inputs that are goal-specific:
 
@@ -42,7 +44,7 @@ The following are suggested inputs that are goal-specific:
 
 ### Pipeline limitations
 
-- On large or species-rich countries, as well as in categories that have a substantial number of species, this pipeline takes a significant amount of time to retrieve the data.
+- On large or species-rich countries, as well as in threat or use categories that have a substantial number of species, this pipeline takes a significant amount of time to retrieve the data.
 
 - This pipeline calculates the RLI for species only. Subspecies, subpopulations, and varieties are excluded from the analysis.
 
@@ -52,7 +54,7 @@ The following are suggested inputs that are goal-specific:
 
 To use this pipeline, you’ll need an [IUCN token](https://api.iucnredlist.org/users/sign_up) to access data on the International Union for Conservation of Nature (IUCN) Red List of Threatened Species.
 
-To interpret the results of this pipeline, it's important to understand the IUCN threat categorizations, which are present throughout the outputs. Some results present these categorizations directly, while others, such as the Red List Index (RLI) calculations,use them to measure changes in extinction risk over time. The IUCN Red List of Threatened Species defines the following threat categories:
+To interpret the results of this pipeline, it's important to understand the IUCN threat categorizations, which are present throughout the outputs. Some results present these categorizations directly, while others such as the Red List Index (RLI) calculations, use them to model changes in extinction risk over time. The IUCN Red List of Threatened Species defines the following threat categories:
 
 - EX: Exinct
 - EW: Extinct in the wild
