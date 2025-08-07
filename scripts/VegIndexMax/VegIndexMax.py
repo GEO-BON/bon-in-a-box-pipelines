@@ -50,11 +50,19 @@ datacube = connection.load_collection(
 spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
 temporal_extent=[start_date, end_date],
 bands=["B04", "B08", "SCL"],
-max_cloud_cover=20 # select only bands with less than 20% cloud cover
 ) # load red and infrared bands
 
+# load SCL
+scl = connection.load_collection(
+"SENTINEL2_L2A",
+spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
+temporal_extent=[start_date, end_date],
+bands=["SCL"],
+max_cloud_cover=20 # select only bands with less than 20% cloud cover
+)
+
 # cloud mask
-cloud_mask = datacube.process(
+cloud_mask = scl.process(
     "to_scl_dilation_mask",
     data=datacube,
     kernel1_size=17, kernel2_size=77,
@@ -63,7 +71,7 @@ cloud_mask = datacube.process(
     erosion_kernel_size=3)
 
 # # claculate NDVI
-datacube_masked = datacube.mask(cloud_mask)
+datacube_masked = scl.mask(cloud_mask)
 # datacube_masked = datacube
 
 ndvi = datacube_masked.ndvi(nir="B08", red="B04", target_band="NDVI")
