@@ -18,17 +18,6 @@ inputs:
     description: Polygon of the study area of interest
     type: application/geopackage+sqlite3
     example: null
-  ndvi_layer:
-    label: NDVI layer
-    description: |
-      NDVI layer to use. You can choose the pre-calcuated NDVI layer from the Copernicus Land Monitoring Service (CLMS), 
-      which covers Europe only ([link here](https://land.copernicus.eu/en/products/vegetation)) or calculate it manually 
-      from raw Copernicus satellite data using the red and near-infrared (NIR) bands. NDVI is calculated as (NIR - Red) / (NIR + Red).
-      This layer can be used globally.
-    type: options
-    options:
-      - CLMS pre-calcuated (Europe only)
-      - Calculated from raw data (Global)
   crs:
     label: Coordinate reference system
     description: Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated
@@ -44,28 +33,27 @@ inputs:
     description: End date for summarizing vegetation index
     type: text
     example: "2019-09-30"
-  # vegetation_index:
-  #   label: Vegetation indices
-  #   description: |
-  #     Vegetation Indices that should be extracted. 
-  #   type: options[]
-  #   options:
-  #     - "NDVI"
-  #     - "PPI"
-  #     - "LAI"
-  #     - "FAPAR"
-  #     - "QFLAG2"
-  #   example: ["NDVI"]
   spatial_resolution:
     label: Spatial resolution
-    description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
+    description: Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m). 
+      If using a projected CRS, the resolution should be in meters. If using an unprojected CRS (e.g. EPSG:4326), this must be in degrees (0.008 degrees is ~1km at the equator).
     type: float
     example: 100
+  summary_statistic:
+    label: Summary statistic
+    description: Statistic to summarize layers over time
+    type: options
+    options:
+      - mean
+      - median
+      - max
+      - min
+    example: "mean"
 outputs:
   rasters:
     label: Vegetation index rasters
     description: |
-      Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index
+      Raster of the NDVI values summarised by the input statistic (mean, max, min, median) for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index
     type: image/tiff;application=geotiff[]
 conda:
   channels:
@@ -74,3 +62,4 @@ conda:
     - openeo
     - pandas
     - geopandas
+    - pyproj

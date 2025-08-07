@@ -12,19 +12,6 @@
       }
     },
     {
-      "id": "175",
-      "type": "userInput",
-      "position": {
-        "x": 12,
-        "y": 79.16666666666667
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:4326"
-      }
-    },
-    {
       "id": "176",
       "type": "output",
       "position": {
@@ -67,16 +54,22 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "181",
+      "type": "constant",
+      "position": {
+        "x": 18.96108740021691,
+        "y": 14.508255052326518
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "175",
-      "sourceHandle": null,
-      "target": "174",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-175-174pipeline@2"
-    },
     {
       "source": "174",
       "sourceHandle": "data>getCountryPolygon.yml@1|region",
@@ -113,11 +106,11 @@
       "id": "reactflow__edge-174data>getCountryPolygon.yml@1|country_polygon-179study_area_polygon"
     },
     {
-      "source": "175",
+      "source": "181",
       "sourceHandle": null,
-      "target": "179",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-175-179crs"
+      "target": "174",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-181-174pipeline@2"
     }
   ],
   "inputs": {
@@ -135,43 +128,45 @@
       "example": "Nord",
       "weight": 1
     },
-    "pipeline@175": {
-      "label": "Coordinate reference system",
-      "description": "The coordinate reference system of the study area. This must be a projected CRS (in meters). You can search for EPSG codes by country [here](https://epsg.io/).",
-      "type": "text",
-      "example": "EPSG:2154",
-      "weight": 2
-    },
     "VegIndexMax>VegIndexMax.yml@179|start_date": {
       "description": "Start date for summarizing vegetation index",
       "label": "Start date",
       "type": "text",
       "example": "2019-05-01",
-      "weight": 3
+      "weight": 2
     },
     "VegIndexMax>VegIndexMax.yml@179|end_date": {
       "description": "End date for summarizing vegetation index",
       "label": "End date",
       "type": "text",
       "example": "2019-09-30",
-      "weight": 4
+      "weight": 3
     },
     "VegIndexMax>VegIndexMax.yml@179|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "float",
       "example": 100,
-      "weight": 5
+      "weight": 4
     },
-    "VegIndexMax>VegIndexMax.yml@179|ndvi_layer": {
-      "description": "NDVI layer to use. You can choose the pre-calcuated NDVI layer from the Copernicus Land Monitoring Service (CLMS), \nwhich covers Europe only ([link here](https://land.copernicus.eu/en/products/vegetation)) or calculate it manually \nfrom raw Copernicus satellite data using the red and near-infrared (NIR) bands. NDVI is calculated as (NIR - Red) / (NIR + Red).\nThis layer can be used globally.\n",
-      "label": "NDVI layer",
+    "VegIndexMax>VegIndexMax.yml@179|summary_statistic": {
+      "description": "Statistic to summarize layers over time",
+      "label": "Summary statistic",
       "type": "options",
       "options": [
-        "CLMS pre-calcuated (Europe only)",
-        "Calculated from raw data (Global)"
+        "mean",
+        "median",
+        "max",
+        "min"
       ],
       "example": null,
+      "weight": 5
+    },
+    "VegIndexMax>VegIndexMax.yml@179|crs": {
+      "description": "Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated",
+      "label": "Coordinate reference system",
+      "type": "text",
+      "example": "EPSG:4326",
       "weight": 6
     }
   },

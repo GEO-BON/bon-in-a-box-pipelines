@@ -2,6 +2,7 @@ import sys;
 import json;
 import openeo;
 import os;
+from pyproj import CRS;
 import geopandas as gpd
 
 data = biab_inputs()
@@ -12,14 +13,19 @@ end_date = data['end_date']
 polygon = data['study_area_polygon']
 spatial_resolution = data['spatial_resolution']
 crs = data['crs']
-ndvi_layer = data['ndvi_layer']
+summary_statistic = data['summary_statistic']
 
 if (int(start_date[:4]) < 2017):
     biab_error_stop("The start date must be 2017 or later.")
 
 if crs is None or crs=='':
     crs='EPSG:4326'
-    print('No CRS specified, using Latitude, Longitude WGS84 (EPSG:4326) as the CRS')
+    print('No CRS specified, using Latitude, Longitude WGS84 (EPSG:4326) as the CRS.')
+
+EPSG = crs.split(':')[1]
+coord = CRS.from_epsg(EPSG)
+if coord.is_geographic and spatial_resolution > 1:
+    biab_error_stop("CRS is in degrees and resolution is in meters.")
 
 print(crs, flush=True)
 connection = openeo.connect("https://openeo.dataspace.copernicus.eu/")
@@ -36,59 +42,57 @@ connection.authenticate_oidc_client_credentials(
 # Load study area polygon
 polygon = gpd.read_file(polygon)
 
-if ndvi_layer == "CLMS pre-calcuated (Europe only)":
+# Pull sentinel data and calculate NDVI
 
-    datacube = connection.load_collection(
-    "COPERNICUS_VEGETATION_INDICES",
-    spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
-    temporal_extent=[start_date, end_date],
-    bands=["NDVI"],
-    )
+# else:
+datacube = connection.load_collection(
+"SENTINEL2_L2A",
+spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
+temporal_extent=[start_date, end_date],
+bands=["B04", "B08"]
+#max_cloud_cover=10 # select only bands with less than 10% cloud cover
+) # load red and infrared bands
 
-    ndvi = datacube
+# cloud mask
+cloud_mask = datacube.process(
+    "to_scl_dilation_mask",
+    data=datacube,
+    kernel1_size=17, kernel2_size=77,
+    mask1_values=[2, 4, 5, 6, 7],
+    mask2_values=[3, 8, 9, 10, 11],
+    erosion_kernel_size=3)
 
-# If not in Europe, pull sentinel data and calculate NDVI
+# # claculate NDVI
+datacube_masked = datacube.mask(cloud_mask)
+# datacube_masked = datacube
 
-else:
-    datacube = connection.load_collection(
-    "SENTINEL2_L2A",
-    spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
-    temporal_extent=[start_date, end_date],
-    bands=["B04", "B08"],
-    ) # load red and infrared bands
-
-
-    ndvi = datacube.ndvi(nir="B08", red="B04", target_band="NDVI")
-    ndvi = ndvi.filter_bands(bands = ["NDVI"])
-
-
-ndvi_max = ndvi.reduce_dimension(dimension = "t", reducer = "max")
-
-
-ndvi_resampled = ndvi_max.resample_spatial(resolution=spatial_resolution, projection=crs)
+ndvi = datacube_masked.ndvi(nir="B08", red="B04", target_band="NDVI")
+ndvi = ndvi.filter_bands(bands = ["NDVI"])
 
 
+ndvi_reduced = ndvi.reduce_dimension(dimension = "t", reducer = summary_statistic)
+
+print(polygon.crs)
 if polygon is None:
-    datacube_cropped = ndvi
+    ndvi_cropped = ndvi_reduced
 else:
-    if(crs=='EPSG:4326'):
+    if polygon.crs and polygon.crs.to_epsg() == 4326:
         polygon = json.loads(polygon.to_json())
-        print(polygon)
-        datacube_cropped = ndvi.filter_spatial(polygon) # cropping to polygon
+        
+        ndvi_cropped = ndvi_reduced.filter_spatial(polygon) # cropping to polygon
     else:
-        print('Reprojecting polygon file', flush=True)
-        EPSG = crs.split(':')[1]
-        repro = json.loads(polygon.to_crs(crs=None, epsg=EPSG, inplace=False).to_json())
-        datacube_cropped = ndvi.filter_spatial(repro)
+        print('Reprojecting polygon file to 4326', flush=True)
+        repro = json.loads(polygon.to_crs(epsg=4326).to_json())
+        crs(repro)
+        ndvi_cropped = ndvi_reduced.filter_spatial(repro)
 
-datacube_cropped = ndvi
-
+ndvi_resampled = ndvi_cropped.resample_spatial(resolution=spatial_resolution, projection=EPSG)
 
 # output rasters
-ndvi.save_result("GTiff")
+ndvi_resampled.save_result("GTiff")
 # start job to fetch rasters
 print("Starting job to fetch raster layers", flush=True)
-job1 = ndvi.create_job()
+job1 = ndvi_resampled.create_job()
 try:
     job1.start_and_wait()
 except Exception as e:
@@ -106,11 +110,4 @@ for t in range(len(rasters)- 1):
 
 print(raster_outs)
 
-output = {
-    "rasters": raster_outs
-}
-
-json_object = json.dumps(output, indent = 2)
-
-with open(output_folder + '/output.json', "w") as outfile:
-    outfile.write(json_object)
+biab_output("rasters", raster_outs)
