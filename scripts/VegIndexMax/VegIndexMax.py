@@ -44,37 +44,33 @@ polygon = gpd.read_file(polygon)
 
 # Pull sentinel data and calculate NDVI
 
-# else:
-datacube = connection.load_collection(
+s2 = (
+connection.load_collection(
 "SENTINEL2_L2A",
-spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
 temporal_extent=[start_date, end_date],
-bands=["B04", "B08", "SCL"],
-) # load red and infrared bands
+spatial_extent= {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
+bands=["B04","B08"],
+max_cloud_cover=20
+)
+.resample_spatial(resolution=spatial_resolution, projection=EPSG, method="average")
+)
 
-# load SCL
-# scl = connection.load_collection(
-# "SENTINEL2_L2A",
-# spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
-# temporal_extent=[start_date, end_date],
-# bands=["SCL"],
-# max_cloud_cover=20 # select only bands with less than 20% cloud cover
-# )
 
-# cloud mask
-cloud_mask = datacube.process(
-    "to_scl_dilation_mask",
-    data=datacube,
-    kernel1_size=17, kernel2_size=77,
-    mask1_values=[2, 4, 5, 6, 7],
-    mask2_values=[3, 8, 9, 10, 11],
-    erosion_kernel_size=3)
+scl = (
+    connection.load_collection(
+    'SENTINEL2_L2A',
+    temporal_extent=[start_date, end_date],
+    spatial_extent= {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
+    bands=["SCL"],
+    max_cloud_cover=20
+    )
+)
 
-# # claculate NDVI
-datacube_masked = datacube.mask(cloud_mask)
-# datacube_masked = datacube
+mask = scl.process('to_scl_dilation_mask', data=scl)
+s2 = s2.mask(mask)
 
-ndvi = datacube_masked.ndvi(nir="B08", red="B04", target_band="NDVI")
+
+ndvi = s2.ndvi(nir="B08", red="B04", target_band="NDVI")
 ndvi = ndvi.filter_bands(bands = ["NDVI"])
 
 
