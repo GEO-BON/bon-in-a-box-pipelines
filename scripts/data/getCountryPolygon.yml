@@ -2,7 +2,8 @@ script: getCountryPolygon.R
 name: Get country polygon
 description: |
   This script pulls country (or state/province/region) polygons using the [GeoBoundaries API](https://www.geoboundaries.org/),
-  and outputs as a geopackage, projected in the crs of interest.
+  and outputs as a geopackage, projected in the crs of interest. You can choose just a country boundary (ADM0), a region boundary (ADM1) 
+  or a sub-regional boundary (ADM2).
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -18,10 +19,14 @@ inputs:
     type: text
     example: COL
   region:
-    label: State/Province code
-    description: ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)
+    label: State/Province
+    description: Name of province or region, in the native language of that region (leave blank to pull whole country or subregion).
     type: text
     example: null
+  subregion:
+    label: Sub-region
+    description: Name of sub-region of interest, in the native lanugage of that region (leave blank to pull whole country or whole region)
+    type: text
   crs:
     label: Coordinate reference system
     description: |
@@ -46,6 +51,10 @@ outputs:
   region:
     label: Region
     description: Name of state/province of interest
+    type: text
+  sub-region:
+    label: Sub-region
+    description: Name of sub-region of interest
     type: text
   country_region_polygon:
     label: Polygon of country or region
