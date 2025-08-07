@@ -49,8 +49,8 @@ datacube = connection.load_collection(
 "SENTINEL2_L2A",
 spatial_extent={"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs":crs},
 temporal_extent=[start_date, end_date],
-bands=["B04", "B08"]
-#max_cloud_cover=10 # select only bands with less than 10% cloud cover
+bands=["B04", "B08", "SCL"],
+max_cloud_cover=20 # select only bands with less than 20% cloud cover
 ) # load red and infrared bands
 
 # cloud mask
