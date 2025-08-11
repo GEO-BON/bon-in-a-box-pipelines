@@ -1,6 +1,6 @@
 script: VegIndexMax.py
 name: Maximum Vegetation Index
-author: 
+author:
   - name: Guillaume Larocque
     email: guillaume.larocque@mcgill.ca
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -35,7 +35,7 @@ inputs:
     example: "2019-09-30"
   spatial_resolution:
     label: Spatial resolution
-    description: Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m). 
+    description: Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
       If using a projected CRS, the resolution should be in meters. If using an unprojected CRS (e.g. EPSG:4326), this must be in degrees (0.008 degrees is ~1km at the equator).
     type: float
     example: 100
@@ -48,7 +48,7 @@ inputs:
       - median
       - max
       - min
-    example: "mean"
+    example: mean
 outputs:
   rasters:
     label: Vegetation index rasters
