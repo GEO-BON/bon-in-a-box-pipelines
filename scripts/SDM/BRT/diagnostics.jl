@@ -58,20 +58,12 @@ function _env_correlation_plot(
     )
 
     if p1 == p2 - 1
-        pred_ind=[predictors[p1][i] for i in findall(presences)]
-        clean_v = collect(skipmissing(pred_ind))
-        density!(top, clean_v , color=(presence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=presence_color)
-        absence_ind=[predictors[p1][i] for i in findall(absences)]
-        clean_v = collect(skipmissing(absence_ind))
-        density!(top, clean_v , color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color)
+        density!(top, [predictors[p1][i] for i in findall(presences)] , color=(presence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=presence_color)
+        density!(top, [predictors[p1][i] for i in findall(absences)] , color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color)
 
-        pred2_ind=[predictors[p2][i] for i in findall(presences)]
-        clean_v = collect(skipmissing(pred2_ind))
-        density!(right, clean_v, color=(presence_color,density_alpha),
+        density!(right, [predictors[p2][i] for i in findall(presences)], color=(presence_color,density_alpha),
         strokewidth = denisty_line_width, strokecolor=presence_color, direction=:y)
-        absence2_ind = [predictors[p2][i] for i in findall(absences)]
-        clean_v = collect(skipmissing(absence2_ind))
-        density!(right, clean_v, color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color, direction=:y)
+        density!(right, [predictors[p2][i] for i in findall(absences)], color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color, direction=:y)
 
         colsize!(g, 1, Relative(0.99))
         rowsize!(g, 2, Relative(0.99))

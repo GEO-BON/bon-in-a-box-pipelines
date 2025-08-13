@@ -86,11 +86,13 @@ function main()
     predicted_sdm, sdm_uncertainty = predict_sdm(model, predictors)
     rangemap = get_rangemap(predicted_sdm, fit_stats[:threshold])
 
-    #@info "Creating diagnostic plots..."
+    @info "Creating diagnostic plots..."
     #tuning, corners = create_diagnostics(model, predictors, presence_layer, pseudoabsences, confusion_matrices)
+    tuning = Figure()
+    corners = Figure()
 
     @info "Writing outputs...."
-    write_outputs(RUNTIME_DIR, fit_stats, sdm_uncertainty, rangemap, predicted_sdm, pseudoabsence_df, "", "")
+    write_outputs(RUNTIME_DIR, fit_stats, sdm_uncertainty, rangemap, predicted_sdm, pseudoabsence_df, tuning, corners)
 end
 
 main()

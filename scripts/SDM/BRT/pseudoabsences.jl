@@ -6,9 +6,7 @@ function generate_pseudoabsences(
 )
 
     num_pas = Int(floor(pa_proportion*sum(presence_layer)))
-    print("Number of pseudo-absences: $num_pas")
     num_possible_pas = sum(presence_layer.indices)
-    print("Number of possible pseudo-absences: $num_possible_pas")
     candidate_pa = copy(presence_layer)
     if num_possible_pas > max_candidate_pas
         candidate_pa = backgroundpoints(pseudoabsencemask(RandomSelection, presence_layer), max_candidate_pas)

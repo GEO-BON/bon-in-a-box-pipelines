@@ -34,6 +34,7 @@ function get_features_and_labels(predictors, presences, absences)
     valid_rows = [all(!isnan, row) for row in eachrow(features)]
     features = features[valid_rows, :]
     labels = labels[valid_rows, :]
+    @info "Features and labels prepared: $(size(features)) rows, $(size(features, 2)) columns"
     return features, labels
 end
 

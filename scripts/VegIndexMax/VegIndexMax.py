@@ -104,7 +104,7 @@ ndvi_resampled.save_result("GTiff")
 print("Starting job to fetch raster layers", flush=True)
 
 job1 = ndvi_resampled.create_job()
-# job1 = connection.job("j-2508131722594c6598b072c7269eba61")
+#job1 = connection.job("j-2508131722594c6598b072c7269eba61") // Putomayo
 
 try:
     job1.start_and_wait()
@@ -136,7 +136,7 @@ res = ndvi.aggregate_spatial(
 
 result = res.save_result("CSV")
 
-# job2 = connection.job("j-250813173653427784212f4bb15496a8")
+#job2 = connection.job("j-250813173653427784212f4bb15496a8") // Putomayo
 job2 = result.create_job()
 job2.start_and_wait()
 
