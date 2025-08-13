@@ -26,12 +26,12 @@ inputs:
       - q3
     example: near
   raster_1:
-    label: Resampling raster
+    label: Raster to use as reference
     description: Raster to be used for resampling
     type: image/tiff;application=geotiff[]
     example: null
   raster_2:
-    label: Resampled raster
+    label: Raster to resample
     description: Raster to be resampled
     type: image/tiff;application=geotiff[]
     example: null

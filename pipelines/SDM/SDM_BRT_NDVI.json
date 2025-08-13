@@ -324,8 +324,8 @@
       "id": "161",
       "type": "io",
       "position": {
-        "x": 1186,
-        "y": 326.2857142857143
+        "x": 1195.0909312952758,
+        "y": 331.74027306287957
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -399,8 +399,8 @@
       "id": "172",
       "type": "io",
       "position": {
-        "x": 97.80531878756028,
-        "y": 585.1631960652461
+        "x": 62.44347175970688,
+        "y": 583.4309369752231
       },
       "data": {
         "descriptionFile": "getCountrybbox.json"
@@ -803,20 +803,6 @@
       "id": "reactflow__edge-173-139crs"
     },
     {
-      "source": "172",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "161",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-161study_area"
-    },
-    {
-      "source": "172",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "139",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-139study_area"
-    },
-    {
       "source": "174",
       "sourceHandle": null,
       "target": "172",
@@ -829,13 +815,6 @@
       "target": "172",
       "targetHandle": "data>getCountryPolygon.yml@1|region",
       "id": "reactflow__edge-175-172data>getCountryPolygon.yml@1|region"
-    },
-    {
-      "source": "172",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "164",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-164study_area_polygon"
     },
     {
       "source": "173",
@@ -989,6 +968,27 @@
       ],
       "example": "max",
       "weight": 14
+    },
+    "data>loadFromStac.yml@139|study_area": {
+      "description": "Polygon of study area used to crop output layers",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 15,
+      "example": null
+    },
+    "VegIndexMax>VegIndexMax.yml@164|study_area_polygon": {
+      "description": "Polygon of the study area of interest",
+      "label": "Polygon of study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 16,
+      "example": null
+    },
+    "data>loadFromStac.yml@161|study_area": {
+      "description": "Polygon of study area used to crop output layers",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 17,
+      "example": null
     }
   },
   "outputs": {
