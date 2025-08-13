@@ -92,9 +92,9 @@ else:
         ndvi_cropped = ndvi_reduced.filter_spatial(polygon) # cropping to polygon
     else:
         print('Reprojecting polygon file to 4326', flush=True)
-        repro = json.loads(polygon.to_crs(epsg=4326).to_json())
-        crs(repro)
-        ndvi_cropped = ndvi_reduced.filter_spatial(repro)
+        polygon = json.loads(polygon.to_crs(epsg=4326).to_json())
+        #crs(repro)
+        ndvi_cropped = ndvi_reduced.filter_spatial(polygon)
 
 ndvi_resampled = ndvi_cropped.resample_spatial(resolution=spatial_resolution, projection=EPSG, method="average")
 
@@ -143,7 +143,7 @@ print("Job finished, printing job output", flush=True)
 print(timeseries)
 
 # output timeseries
-timeseries_out = str(timeseries[0])
+timeseries_out = timeseries[0]
 biab_output("timeseries", timeseries_out)
 
 # Plot time series
@@ -160,4 +160,4 @@ plt.tight_layout()
 
 
 plt.savefig("ndvi_timeseries.png", dpi=300, bbox_inches='tight')
-biab_output("timeseries_plot", timeseries_out)
+biab_output("timeseries_plot", output_folder + "/ndvi_timeseries.png")

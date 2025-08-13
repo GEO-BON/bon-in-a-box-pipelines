@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 2005,
-        "y": 801.2857142857142
+        "x": 1409,
+        "y": 911.2857142857142
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -89,8 +89,8 @@
       "id": "132",
       "type": "io",
       "position": {
-        "x": 2511,
-        "y": 504
+        "x": 2485,
+        "y": 498
       },
       "data": {
         "descriptionFile": "SDM>BRT>fitBRT.yml"
@@ -130,6 +130,17 @@
       }
     },
     {
+      "id": "139",
+      "type": "io",
+      "position": {
+        "x": 1279,
+        "y": 753.2857142857142
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
       "id": "141",
       "type": "output",
       "position": {
@@ -166,8 +177,8 @@
       "id": "146",
       "type": "userInput",
       "position": {
-        "x": 621.143784365554,
-        "y": 718.0519239746875
+        "x": 647,
+        "y": 735.9523809523808
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -253,8 +264,8 @@
       "id": "157",
       "type": "constant",
       "position": {
-        "x": 417.16590503717794,
-        "y": 860.8970792733215
+        "x": 475,
+        "y": 862.9523809523808
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -310,6 +321,17 @@
       }
     },
     {
+      "id": "161",
+      "type": "io",
+      "position": {
+        "x": 1186,
+        "y": 326.2857142857143
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
       "id": "162",
       "type": "constant",
       "position": {
@@ -328,8 +350,8 @@
       "id": "163",
       "type": "userInput",
       "position": {
-        "x": -80.9115173135051,
-        "y": -246.84700974402784
+        "x": 511,
+        "y": 373.2857142857143
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -338,6 +360,17 @@
           "chelsa-clim|bio1",
           "chelsa-clim|bio2"
         ]
+      }
+    },
+    {
+      "id": "164",
+      "type": "io",
+      "position": {
+        "x": 1159,
+        "y": 155.28571428571428
+      },
+      "data": {
+        "descriptionFile": "VegIndexMax>VegIndexMax.yml"
       }
     },
     {
@@ -366,8 +399,8 @@
       "id": "172",
       "type": "io",
       "position": {
-        "x": -48.51543095098327,
-        "y": 642.9309290131972
+        "x": 105.8053187875604,
+        "y": 545.1631960652461
       },
       "data": {
         "descriptionFile": "getCountrybbox.json"
@@ -377,8 +410,8 @@
       "id": "173",
       "type": "userInput",
       "position": {
-        "x": -354.32725665485714,
-        "y": 417.2208187430905
+        "x": -350.3272566548571,
+        "y": 447.2208187430905
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -410,39 +443,6 @@
       "data": {
         "type": "text",
         "value": null
-      }
-    },
-    {
-      "id": "176",
-      "type": "io",
-      "position": {
-        "x": 1186.3101203169176,
-        "y": 698.9920141832185
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "177",
-      "type": "io",
-      "position": {
-        "x": 1141.271410724391,
-        "y": 329.01509665986225
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "178",
-      "type": "io",
-      "position": {
-        "x": 1054.807835428451,
-        "y": 177.55609130962284
-      },
-      "data": {
-        "descriptionFile": "VegIndexMax>VegIndexMax.yml"
       }
     }
   ],
@@ -497,6 +497,20 @@
       "id": "reactflow__edge-132sdm_uncertainty-135"
     },
     {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-139spatial_res"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-139rasters-132water_mask"
+    },
+    {
       "source": "132",
       "sourceHandle": "predicted_sdm",
       "target": "141",
@@ -516,6 +530,20 @@
       "target": "143",
       "targetHandle": null,
       "id": "reactflow__edge-132env_corners-143"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-139stac_url"
+    },
+    {
+      "source": "147",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-147-139weight_matrix_with_ids"
     },
     {
       "source": "132",
@@ -553,6 +581,20 @@
       "id": "reactflow__edge-154-132pa_proportion"
     },
     {
+      "source": "157",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-157-139resampling"
+    },
+    {
+      "source": "158",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-158-139aggregation"
+    },
+    {
       "source": "121",
       "sourceHandle": null,
       "target": "159",
@@ -565,6 +607,83 @@
       "target": "34",
       "targetHandle": "presence",
       "id": "reactflow__edge-159observations_file-34presence"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-161rasters-34predictors"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-161rasters-132predictors"
+    },
+    {
+      "source": "158",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-158-161aggregation"
+    },
+    {
+      "source": "157",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-157-161resampling"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-161spatial_res"
+    },
+    {
+      "source": "147",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-147-161weight_matrix_with_ids"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-161stac_url"
+    },
+    {
+      "source": "162",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-162-139collections_items"
+    },
+    {
+      "source": "163",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-163-161collections_items"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "164",
+      "targetHandle": "spatial_resolution",
+      "id": "reactflow__edge-128-164spatial_resolution"
+    },
+    {
+      "source": "164",
+      "sourceHandle": "rasters",
+      "target": "132",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-164rasters-132predictors"
     },
     {
       "source": "159",
@@ -604,6 +723,13 @@
     {
       "source": "172",
       "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "164",
+      "targetHandle": "bounding_box",
+      "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-164bounding_box"
+    },
+    {
+      "source": "172",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
       "target": "132",
       "targetHandle": "bbox",
       "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-132bbox"
@@ -611,9 +737,51 @@
     {
       "source": "172",
       "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "161",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-161bbox"
+    },
+    {
+      "source": "172",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "139",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-139bbox"
+    },
+    {
+      "source": "172",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
       "target": "159",
       "targetHandle": "bbox",
       "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-159bbox"
+    },
+    {
+      "source": "173",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-173-161crs"
+    },
+    {
+      "source": "173",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-173-139crs"
+    },
+    {
+      "source": "172",
+      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "target": "161",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-161study_area"
+    },
+    {
+      "source": "172",
+      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "target": "139",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-139study_area"
     },
     {
       "source": "174",
@@ -630,186 +798,18 @@
       "id": "reactflow__edge-175-172data>getCountryPolygon.yml@1|region"
     },
     {
-      "source": "176",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "water_mask",
-      "id": "reactflow__edge-176rasters-132water_mask"
-    },
-    {
-      "source": "146",
-      "sourceHandle": null,
-      "target": "176",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-146-176stac_url"
-    },
-    {
-      "source": "172",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "176",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-176bbox"
-    },
-    {
-      "source": "162",
-      "sourceHandle": null,
-      "target": "176",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-162-176collections_items"
-    },
-    {
-      "source": "147",
-      "sourceHandle": null,
-      "target": "176",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-147-176weight_matrix_with_ids"
-    },
-    {
-      "source": "173",
-      "sourceHandle": null,
-      "target": "176",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-173-176crs"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "176",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-176spatial_res"
-    },
-    {
-      "source": "157",
-      "sourceHandle": null,
-      "target": "176",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-157-176resampling"
-    },
-    {
-      "source": "158",
-      "sourceHandle": null,
-      "target": "176",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-158-176aggregation"
-    },
-    {
-      "source": "146",
-      "sourceHandle": null,
-      "target": "177",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-146-177stac_url"
-    },
-    {
-      "source": "172",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "177",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-177bbox"
-    },
-    {
-      "source": "163",
-      "sourceHandle": null,
-      "target": "177",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-163-177collections_items"
-    },
-    {
-      "source": "147",
-      "sourceHandle": null,
-      "target": "177",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-147-177weight_matrix_with_ids"
-    },
-    {
-      "source": "173",
-      "sourceHandle": null,
-      "target": "177",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-173-177crs"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "177",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-177spatial_res"
-    },
-    {
-      "source": "157",
-      "sourceHandle": null,
-      "target": "177",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-157-177resampling"
-    },
-    {
-      "source": "158",
-      "sourceHandle": null,
-      "target": "177",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-158-177aggregation"
-    },
-    {
-      "source": "177",
-      "sourceHandle": "rasters",
-      "target": "34",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-177rasters-34predictors"
-    },
-    {
-      "source": "177",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-177rasters-132predictors"
-    },
-    {
-      "source": "178",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-178rasters-132predictors"
-    },
-    {
-      "source": "172",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "178",
-      "targetHandle": "bounding_box",
-      "id": "reactflow__edge-172data>getBoundingBox.yml@0|bbox-178bounding_box"
-    },
-    {
-      "source": "173",
-      "sourceHandle": null,
-      "target": "178",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-173-178crs"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "178",
-      "targetHandle": "spatial_resolution",
-      "id": "reactflow__edge-128-178spatial_resolution"
-    },
-    {
       "source": "172",
       "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "178",
+      "target": "164",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-178study_area_polygon"
+      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-164study_area_polygon"
     },
     {
-      "source": "172",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "177",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-177study_area"
-    },
-    {
-      "source": "172",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "176",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-172data>getCountryPolygon.yml@1|country_polygon-176study_area"
+      "source": "173",
+      "sourceHandle": null,
+      "target": "164",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-173-164crs"
     }
   ],
   "inputs": {
@@ -847,7 +847,7 @@
       "label": "Spatial Resolution",
       "description": "Integer, spatial resolution of the rasters in meters",
       "type": "float",
-      "example": 0.008,
+      "example": 1000,
       "weight": 4
     },
     "pipeline@146": {
@@ -878,6 +878,20 @@
       "example": 2.4,
       "weight": 8
     },
+    "VegIndexMax>VegIndexMax.yml@164|start_date": {
+      "description": "Start date for summarizing",
+      "label": "Start date",
+      "type": "text",
+      "example": "2019-05-01",
+      "weight": 9
+    },
+    "VegIndexMax>VegIndexMax.yml@164|end_date": {
+      "description": "End date for which summarizing NDVI.",
+      "label": "End date",
+      "type": "text",
+      "example": "2019-09-30",
+      "weight": 10
+    },
     "pipeline@163": {
       "label": "Environmental predictors",
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -886,38 +900,24 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 9
+      "weight": 11
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
-      "label": "Minimum year",
+      "label": "minimum year",
       "type": "int",
-      "example": 2018,
-      "weight": 10
+      "example": 2010,
+      "weight": 12
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
-      "label": "Maximum year",
+      "label": "maximum year",
       "type": "int",
-      "example": 2019,
-      "weight": 11
-    },
-    "VegIndexMax>VegIndexMax.yml@178|start_date": {
-      "description": "Start date for summarizing vegetation index",
-      "label": "Start date",
-      "type": "text",
-      "example": "2019-09-01",
-      "weight": 12
-    },
-    "VegIndexMax>VegIndexMax.yml@178|end_date": {
-      "description": "End date for summarizing vegetation index",
-      "label": "End date",
-      "type": "text",
-      "example": "2019-09-30",
+      "example": 2024,
       "weight": 13
     },
-    "VegIndexMax>VegIndexMax.yml@178|summary_statistic": {
-      "description": "Statistic to summarize layers over time",
+    "VegIndexMax>VegIndexMax.yml@164|summary_statistic": {
+      "description": "Statistic to summarize layers over time for summarised raster layer and space for plot of ndvi means over time",
       "label": "Summary statistic",
       "type": "options",
       "options": [
