@@ -1,0 +1,42 @@
+script: resample_raster.R
+name: Resample rasters
+description: Resample a set of rasters using another raster
+author:
+  - name: Laetitia Tremblay
+    email: laetitia.tremblay@mcgill.ca
+inputs:
+  resampling:
+    label: Resampling method
+    description: Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.
+    type: options
+    options:
+      - near
+      - bilinear
+      - average
+      - mode
+      - cubic
+      - cubicspline
+      - lanczos
+      - rms
+      - min
+      - max
+      - sum
+      - med
+      - q1
+      - q3
+    example: near
+  raster_1:
+    label: Resampling raster
+    description: Raster to be used for resampling
+    type: image/tiff;application=geotiff[]
+    example: null
+  raster_2:
+    label: Resampled raster
+    description: Raster to be resampled
+    type: image/tiff;application=geotiff[]
+    example: null
+outputs:
+  resampled_raster:
+    label: Resampled raster
+    description: Raster that has been resampled
+    type: image/tiff;application=geotiff[]

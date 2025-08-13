@@ -399,8 +399,8 @@
       "id": "172",
       "type": "io",
       "position": {
-        "x": 105.8053187875604,
-        "y": 545.1631960652461
+        "x": 97.80531878756028,
+        "y": 585.1631960652461
       },
       "data": {
         "descriptionFile": "getCountrybbox.json"
@@ -443,6 +443,46 @@
       "data": {
         "type": "text",
         "value": null
+      }
+    },
+    {
+      "id": "176",
+      "type": "io",
+      "position": {
+        "x": 1895.2608337402344,
+        "y": 76.04347229003906
+      },
+      "data": {
+        "descriptionFile": "SDM>BRT>resample_raster.yml"
+      }
+    },
+    {
+      "id": "177",
+      "type": "constant",
+      "position": {
+        "x": 1529.2608337402344,
+        "y": 5.0434722900390625
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
       }
     }
   ],
@@ -679,13 +719,6 @@
       "id": "reactflow__edge-128-164spatial_resolution"
     },
     {
-      "source": "164",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-164rasters-132predictors"
-    },
-    {
       "source": "159",
       "sourceHandle": "total_records",
       "target": "170",
@@ -810,6 +843,34 @@
       "target": "164",
       "targetHandle": "crs",
       "id": "reactflow__edge-173-164crs"
+    },
+    {
+      "source": "177",
+      "sourceHandle": null,
+      "target": "176",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-177-176resampling"
+    },
+    {
+      "source": "139",
+      "sourceHandle": "rasters",
+      "target": "176",
+      "targetHandle": "raster_1",
+      "id": "reactflow__edge-139rasters-176raster_1"
+    },
+    {
+      "source": "164",
+      "sourceHandle": "rasters",
+      "target": "176",
+      "targetHandle": "raster_2",
+      "id": "reactflow__edge-164rasters-176raster_2"
+    },
+    {
+      "source": "176",
+      "sourceHandle": "resampled_raster",
+      "target": "132",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-176resampled_raster-132predictors"
     }
   ],
   "inputs": {
@@ -818,7 +879,7 @@
       "description": "Name of species",
       "type": "text[]",
       "example": [
-        "Acer saccharum"
+        "Saimiri cassiquiarensis"
       ],
       "weight": 0
     },
@@ -833,21 +894,21 @@
       "label": "State/Province",
       "description": "State of interest",
       "type": "text",
-      "example": null,
+      "example": "Putumayo",
       "weight": 2
     },
     "pipeline@173": {
       "label": "Coordinate reference system",
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
       "type": "text",
-      "example": "EPSG:4326",
+      "example": "EPSG:3116",
       "weight": 3
     },
     "pipeline@128": {
       "label": "Spatial Resolution",
       "description": "Integer, spatial resolution of the rasters in meters",
       "type": "float",
-      "example": 1000,
+      "example": 2500,
       "weight": 4
     },
     "pipeline@146": {
@@ -904,16 +965,16 @@
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
-      "label": "minimum year",
+      "label": "Minimum year",
       "type": "int",
       "example": 2010,
       "weight": 12
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
-      "label": "maximum year",
+      "label": "Maximum year",
       "type": "int",
-      "example": 2024,
+      "example": 2019,
       "weight": 13
     },
     "VegIndexMax>VegIndexMax.yml@164|summary_statistic": {
@@ -926,7 +987,7 @@
         "max",
         "min"
       ],
-      "example": "mean",
+      "example": "max",
       "weight": 14
     }
   },
