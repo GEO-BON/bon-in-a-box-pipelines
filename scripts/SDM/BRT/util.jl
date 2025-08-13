@@ -30,6 +30,10 @@ function get_features_and_labels(predictors, presences, absences)
     locations = [findall(presences)..., findall(absences)...]
     features = Float32.([predictors[i][k] for k in locations, i in eachindex(predictors)])
     labels = [ones(Bool, sum(presences))..., zeros(Bool, sum(absences))...]
+    # temporary hack
+    valid_rows = [all(!isnan, row) for row in eachrow(features)]
+    features = features[valid_rows, :]
+    labels = labels[valid_rows, :]
     return features, labels
 end
 

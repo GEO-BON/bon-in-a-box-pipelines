@@ -11,9 +11,6 @@ for (i in 1:terra::nlyr(raster_2)) {
 }
 resampled_layers <- terra::rast(resampled_layers)
 
-print(terra::ext(resampled_layers))
-print(terra::ext(raster_for_resampling))
-
 path <- file.path(outputFolder, "rasters.tif")
 terra::writeRaster(resampled_layers, path, overwrite = TRUE)
 

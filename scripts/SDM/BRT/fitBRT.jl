@@ -74,6 +74,7 @@ function main()
     pseudoabsences, pseudoabsence_df = generate_pseudoabsences(presence_layer, min_distance=pa_buffer_distance, max_candidate_pas=max_candidate_pseudoabsences, pa_proportion=pa_prop)
 
     features, labels = get_features_and_labels(predictors, presence_layer, pseudoabsences)
+
     train_idx, test_idx = crossvalidation_split(labels)
 
     @info "Fitting BRT..."
@@ -85,11 +86,11 @@ function main()
     predicted_sdm, sdm_uncertainty = predict_sdm(model, predictors)
     rangemap = get_rangemap(predicted_sdm, fit_stats[:threshold])
 
-    @info "Creating diagnostic plots..."
-    tuning, corners = create_diagnostics(model, predictors, presence_layer, pseudoabsences, confusion_matrices)
+    #@info "Creating diagnostic plots..."
+    #tuning, corners = create_diagnostics(model, predictors, presence_layer, pseudoabsences, confusion_matrices)
 
     @info "Writing outputs...."
-    write_outputs(RUNTIME_DIR, fit_stats, sdm_uncertainty, rangemap, predicted_sdm, pseudoabsence_df, tuning, corners)
+    write_outputs(RUNTIME_DIR, fit_stats, sdm_uncertainty, rangemap, predicted_sdm, pseudoabsence_df, "", "")
 end
 
 main()

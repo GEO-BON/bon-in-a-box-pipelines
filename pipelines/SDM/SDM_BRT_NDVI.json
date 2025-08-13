@@ -24,9 +24,9 @@
         "value": [
           "equal",
           "zeros",
-          "duplicates",
-          "same_pixel",
           "capitals",
+          "same_pixel",
+          "duplicates",
           "centroids",
           "gbif",
           "institutions"

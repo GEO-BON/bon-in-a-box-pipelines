@@ -2,7 +2,7 @@ function create_diagnostics(model, predictors, presence_layer, pseudoabsences, c
     t = tuning_curve(confusion_matrices)
     c = corners(predictors, presence_layer, pseudoabsences)
     t, c
-end 
+end
 
 function tuning_curve(M)
     f = Figure()
@@ -14,11 +14,11 @@ end
 
 
 function _env_correlation_plot(
-    g, 
-    predictors, 
-    p1, 
-    p2, 
-    presences, 
+    g,
+    predictors,
+    p1,
+    p2,
+    presences,
     absences;
     presence_color = :dodgerblue,
     absence_color = :seagreen4,
@@ -30,13 +30,13 @@ function _env_correlation_plot(
         xticklabelsvisible = p2 == 5,
         yticklabelsvisible = p1 == 1,
         xticksvisible = p2 == 5,
-        yticksvisible = p1 == 1, 
+        yticksvisible = p1 == 1,
         xlabel = p2 == 5 ? "Predictor $p1" : "",
         ylabel = p1 == 1 ? "Predictor $p2" : "",
     )
 
     top = Axis(
-        g[1,1], 
+        g[1,1],
     )
     hidedecorations!(top)
     hidespines!(top)
@@ -45,25 +45,33 @@ function _env_correlation_plot(
     hidespines!(right)
 
     scatter!(
-        main, 
+        main,
         [predictors[p1][i] for i in findall(absences)],
         [predictors[p2][i] for i in findall(absences)],
         color = (absence_color, 0.02),
     )
     scatter!(
-        main, 
+        main,
         [predictors[p1][i] for i in findall(presences)],
         [predictors[p2][i] for i in findall(presences)],
         color = (presence_color, 0.05),
     )
 
     if p1 == p2 - 1
-        density!(top, [predictors[p1][i] for i in findall(presences)], color=(presence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=presence_color)
-        density!(top, [predictors[p1][i] for i in findall(absences)], color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color)
+        pred_ind=[predictors[p1][i] for i in findall(presences)]
+        clean_v = collect(skipmissing(pred_ind))
+        density!(top, clean_v , color=(presence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=presence_color)
+        absence_ind=[predictors[p1][i] for i in findall(absences)]
+        clean_v = collect(skipmissing(absence_ind))
+        density!(top, clean_v , color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color)
 
-        density!(right, [predictors[p2][i] for i in findall(presences)], color=(presence_color,density_alpha), 
+        pred2_ind=[predictors[p2][i] for i in findall(presences)]
+        clean_v = collect(skipmissing(pred2_ind))
+        density!(right, clean_v, color=(presence_color,density_alpha),
         strokewidth = denisty_line_width, strokecolor=presence_color, direction=:y)
-        density!(right, [predictors[p2][i] for i in findall(absences)], color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color, direction=:y)
+        absence2_ind = [predictors[p2][i] for i in findall(absences)]
+        clean_v = collect(skipmissing(absence2_ind))
+        density!(right, clean_v, color=(absence_color, density_alpha), strokewidth = denisty_line_width, strokecolor=absence_color, direction=:y)
 
         colsize!(g, 1, Relative(0.99))
         rowsize!(g, 2, Relative(0.99))
@@ -72,7 +80,7 @@ function _env_correlation_plot(
     else
         colsize!(g, 1, Relative(0.8))
         rowsize!(g, 2, Relative(0.8))
-    end 
+    end
     linkxaxes!(main, top)
     linkyaxes!(main, right)
 
@@ -84,7 +92,7 @@ function _env_correlation_plot(
 
 
     main
-end 
+end
 
 function corners(predictors, presence_layer, bgpoints)
     N = min(length(predictors), 5)
@@ -123,5 +131,5 @@ function corners(predictors, presence_layer, bgpoints)
     end
 
     fig
-end 
+end
 
