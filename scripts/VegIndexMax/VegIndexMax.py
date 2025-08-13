@@ -52,7 +52,6 @@ spatial_extent= {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bb
 bands=["B04","B08"],
 max_cloud_cover=20
 )
-.resample_spatial(resolution=spatial_resolution, projection=EPSG, method="average")
 )
 
 
@@ -82,7 +81,7 @@ if polygon is None:
 else:
     if polygon.crs and polygon.crs.to_epsg() == 4326:
         polygon = json.loads(polygon.to_json())
-        
+
         ndvi_cropped = ndvi_reduced.filter_spatial(polygon) # cropping to polygon
     else:
         print('Reprojecting polygon file to 4326', flush=True)
