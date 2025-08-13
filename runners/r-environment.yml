@@ -7,6 +7,7 @@ dependencies:
   - libgdal
   - r-abind
   - r-base
+  - r-unmarked=1.2.5
   - r-curl
   - r-devtools
   - r-dismo
