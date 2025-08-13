@@ -102,7 +102,10 @@ ndvi_resampled = ndvi_cropped.resample_spatial(resolution=spatial_resolution, pr
 ndvi_resampled.save_result("GTiff")
 # start job to fetch rasters
 print("Starting job to fetch raster layers", flush=True)
-job1 = ndvi_resampled.create_job()
+
+#job1 = ndvi_resampled.create_job()
+job1 = connection.job("j-2508131722594c6598b072c7269eba61")
+
 try:
     job1.start_and_wait()
 except Exception as e:
@@ -133,8 +136,9 @@ res = ndvi.aggregate_spatial(
 
 result = res.save_result("CSV")
 
-job2 = result.create_job()
-job2.start_and_wait()
+job2 = connection.job("j-250813173653427784212f4bb15496a8")
+#job2 = result.create_job()
+#job2.start_and_wait()
 
 
 timeseries = job2.get_results().download_files(output_folder)
@@ -143,12 +147,13 @@ print("Job finished, printing job output", flush=True)
 print(timeseries)
 
 # output timeseries
-timeseries_out = timeseries[0]
+timeseries_out = str(timeseries[0])
+timeseries_df = pd.read_csv(timeseries_out)
 biab_output("timeseries", timeseries_out)
-
+print(timeseries_df, flush=True)
 # Plot time series
 plt.figure(figsize=(8, 5))
-plt.plot(timeseries_out["date"], timeseries_out["NDVI"], marker="o", linestyle="-", color="green")
+plt.plot(timeseries_df["date"], timeseries_df["NDVI"], marker="o", linestyle="-", color="green")
 
 # Formatting
 plt.title("NDVI Time Series", fontsize=14)
@@ -159,5 +164,5 @@ plt.ylim(0, 1)  # NDVI values typically range from -1 to 1, but here we set 0–
 plt.tight_layout()
 
 
-plt.savefig("ndvi_timeseries.png", dpi=300, bbox_inches='tight')
+plt.savefig(output_folder + "/ndvi_timeseries.png", dpi=300, bbox_inches='tight')
 biab_output("timeseries_plot", output_folder + "/ndvi_timeseries.png")
