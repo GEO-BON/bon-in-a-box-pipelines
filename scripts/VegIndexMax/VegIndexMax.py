@@ -3,7 +3,11 @@ import json;
 import openeo;
 import os;
 from pyproj import CRS;
-import geopandas as gpd
+import geopandas as gpd;
+import shapely;
+import pandas as pd;
+import matplotlib.pyplot as plt
+
 
 data = biab_inputs()
 
@@ -26,6 +30,9 @@ EPSG = crs.split(':')[1]
 coord = CRS.from_epsg(EPSG)
 if coord.is_geographic and spatial_resolution > 1:
     biab_error_stop("CRS is in degrees and resolution is in meters.")
+
+if coord.is_projected and spatial_resolution < 1:
+    biab_error_stop("CRS is in meters and resolution is in degrees.")
 
 print(crs, flush=True)
 connection = openeo.connect("https://openeo.dataspace.copernicus.eu/")
@@ -115,3 +122,43 @@ for t in range(len(rasters)- 1):
 print(raster_outs)
 
 biab_output("rasters", raster_outs)
+
+# Get means for each date of ndvi
+if polygon is None:
+    polygon = shapely.geometry.box(*bbox)
+
+res = ndvi.aggregate_spatial(
+    geometries=polygon,
+    reducer=summary_statistic
+)
+
+result = res.save_result("CSV")
+
+job2 = result.create_job()
+job2.start_and_wait()
+
+
+timeseries = job2.get_results().download_files(output_folder)
+
+print("Job finished, printing job output", flush=True)
+print(timeseries)
+
+# output timeseries
+timeseries_out = str(timeseries[0])
+biab_output("timeseries", timeseries_out)
+
+# Plot time series
+plt.figure(figsize=(8, 5))
+plt.plot(timeseries_out["date"], timeseries_out["NDVI"], marker="o", linestyle="-", color="green")
+
+# Formatting
+plt.title("NDVI Time Series", fontsize=14)
+plt.xlabel("Date", fontsize=12)
+plt.ylabel("NDVI", fontsize=12)
+plt.grid(True, linestyle="--", alpha=0.5)
+plt.ylim(0, 1)  # NDVI values typically range from -1 to 1, but here we set 0–1
+plt.tight_layout()
+
+
+plt.savefig("ndvi_timeseries.png", dpi=300, bbox_inches='tight')
+biab_output("timeseries_plot", timeseries_out)

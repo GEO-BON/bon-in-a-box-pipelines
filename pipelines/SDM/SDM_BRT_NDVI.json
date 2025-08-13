@@ -386,28 +386,6 @@
       }
     },
     {
-      "id": "165",
-      "type": "constant",
-      "position": {
-        "x": 464,
-        "y": 220.28571428571428
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options[]",
-        "value": [
-          "NDVI"
-        ],
-        "options": [
-          "NDVI",
-          "PPI",
-          "LAI",
-          "FAPAR",
-          "QFLAG2"
-        ]
-      }
-    },
-    {
       "id": "170",
       "type": "output",
       "position": {
@@ -734,13 +712,6 @@
       "id": "reactflow__edge-164rasters-132predictors"
     },
     {
-      "source": "165",
-      "sourceHandle": null,
-      "target": "164",
-      "targetHandle": "vegetation_index",
-      "id": "reactflow__edge-165-164vegetation_index"
-    },
-    {
       "source": "159",
       "sourceHandle": "total_records",
       "target": "170",
@@ -977,6 +948,19 @@
       "type": "int",
       "example": 2024,
       "weight": 15
+    },
+    "VegIndexMax>VegIndexMax.yml@164|summary_statistic": {
+      "description": "Statistic to summarize layers over time for summarised raster layer and space for plot of ndvi means over time",
+      "label": "Summary statistic",
+      "type": "options",
+      "options": [
+        "mean",
+        "median",
+        "max",
+        "min"
+      ],
+      "example": "mean",
+      "weight": 16
     }
   },
   "outputs": {

@@ -1,16 +1,22 @@
 script: VegIndexMax.py
-name: Maximum Vegetation Index
+name: Vegetation Index
 author:
   - name: Guillaume Larocque
     email: guillaume.larocque@mcgill.ca
     identifier: https://orcid.org/0000-0002-5967-9156
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
 license: CC-BY
 description: |
-  This script outputs the maximum vegetation index value for every pixel within a given region and for a selected time period over all Copernicus Vegetation Index layers available using OpenEO on the Copernicus Dataspace Ecosystem. This data is currently only available for Europe. The resulting raster image can thus be used to obtain a meaningful and cloud-free vegetation index layer. You can read more about the NDVI layers [here](https://land.copernicus.eu/en/dataset-catalog)
+  This script calculates and summarizes the NDVI for every pixel within a given region and for a selected 
+  time period using the red and near-infrared bands from the [Sentinel-2 data](https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-2),
+   with a cloud mask. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting 
+   raster will give you a meaningful and cloud-free vegetation index.
 inputs:
   bounding_box:
     label: Bounding box
-    description: Vector of float, bbox of latitude, longitude coordinates of the extent in the order xmin, ymin, xmax, ymax
+    description: Bounding box in the order xmin, ymin, xmax, ymax. Coordinates must be in latitude longitude degrees.
     type: float[]
     example: null
   study_area_polygon:
@@ -41,7 +47,7 @@ inputs:
     example: 100
   summary_statistic:
     label: Summary statistic
-    description: Statistic to summarize layers over time
+    description: Statistic to summarize layers over time for summarised raster layer and space for plot of ndvi means over time
     type: options
     options:
       - mean
@@ -55,6 +61,14 @@ outputs:
     description: |
       Raster of the NDVI values summarised by the input statistic (mean, max, min, median) for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index
     type: image/tiff;application=geotiff[]
+  timeseries:
+    label: Time series of NDVI
+    description: Time series of NDVI values for every date where there is data in the specified time period.
+    type: text/csv
+  timeseries_plot:
+    label: NDVI time series plot
+    description: Plot of NDVI values over time
+    type: image/png
 conda:
   channels:
     - conda-forge
@@ -63,3 +77,6 @@ conda:
     - pandas
     - geopandas
     - pyproj
+    - shapely
+    - pandas
+    - matplotlib
