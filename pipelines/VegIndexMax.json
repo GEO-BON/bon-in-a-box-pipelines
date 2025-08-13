@@ -38,7 +38,7 @@
       "type": "io",
       "position": {
         "x": 1266.9624938964844,
-        "y": 145.79999542236328
+        "y": 149.75851915468195
       },
       "data": {
         "descriptionFile": "VegIndexMax>VegIndexMax.yml"
@@ -66,6 +66,28 @@
       "data": {
         "type": "text",
         "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "182",
+      "type": "output",
+      "position": {
+        "x": 1879.0358600754575,
+        "y": 162.3437564778688
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "183",
+      "type": "output",
+      "position": {
+        "x": 1881.6000061035156,
+        "y": 179.79999542236328
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -111,6 +133,20 @@
       "target": "174",
       "targetHandle": "pipeline@2",
       "id": "reactflow__edge-181-174pipeline@2"
+    },
+    {
+      "source": "179",
+      "sourceHandle": "timeseries",
+      "target": "182",
+      "targetHandle": null,
+      "id": "reactflow__edge-179timeseries-182"
+    },
+    {
+      "source": "179",
+      "sourceHandle": "timeseries_plot",
+      "target": "183",
+      "targetHandle": null,
+      "id": "reactflow__edge-179timeseries_plot-183"
     }
   ],
   "inputs": {
@@ -132,14 +168,14 @@
       "description": "Start date for summarizing vegetation index",
       "label": "Start date",
       "type": "text",
-      "example": "2019-05-01",
+      "example": "2024-01-01",
       "weight": 2
     },
     "VegIndexMax>VegIndexMax.yml@179|end_date": {
       "description": "End date for summarizing vegetation index",
       "label": "End date",
       "type": "text",
-      "example": "2019-09-30",
+      "example": "2024-01-31",
       "weight": 3
     },
     "VegIndexMax>VegIndexMax.yml@179|spatial_resolution": {
@@ -171,23 +207,35 @@
     }
   },
   "outputs": {
+    "VegIndexMax>VegIndexMax.yml@179|rasters": {
+      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
+      "label": "Vegetation index rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
     "getCountrybbox.json@174|data>getCountryPolygon.yml@1|region": {
       "description": "Name of state/province of interest",
       "label": "Region",
       "type": "text",
-      "weight": 0
+      "weight": 1
     },
     "getCountrybbox.json@174|data>getCountryPolygon.yml@1|country": {
       "description": "Name of country of interest",
       "label": "Country",
       "type": "text",
-      "weight": 1
-    },
-    "VegIndexMax>VegIndexMax.yml@179|rasters": {
-      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
-      "label": "Vegetation index rasters",
-      "type": "image/tiff;application=geotiff[]",
       "weight": 2
+    },
+    "VegIndexMax>VegIndexMax.yml@179|timeseries": {
+      "description": "Time series of NDVI values for every date where there is data in the specified time period.",
+      "label": "Time series of NDVI",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "VegIndexMax>VegIndexMax.yml@179|timeseries_plot": {
+      "description": "Plot of NDVI values over time",
+      "label": "NDVI time series plot",
+      "type": "image/png",
+      "weight": 4
     }
   },
   "metadata": {
