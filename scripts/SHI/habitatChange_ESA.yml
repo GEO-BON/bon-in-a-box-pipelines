@@ -12,16 +12,34 @@ inputs:
     example:
   habitats:
     label: Habitats
-    description: Habitat types of the species of interest
-    type: text[]
+    description: Codes for the habitat types of the species of interest. For habitat types and their associated codes, refer to the [list of global CCI-LC codes](http://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf).
+    type: int[]
     example:
   aoh:
     label: Area of habitat
     description: Area of habitat of the species of interest
     type: image/tiff;application=geotiff[]
     example:
+  start_year:
+    label: Start year
+    description: First time point
+    type: int
+    example:
+  end_year:
+    label: End year
+    description: Second time point
+    type: int
+    example:
 outputs:
   raster:
     label: Raster
-    description: Map showing habitat change over the range of time specified
+    description: Rasters of land cover for each time point and species
     type: image/tiff;application=geotiff
+  habitat_change_map:
+    label: Habitat change map
+    description: Map showing habitat change between the start and end year time points. A value of 1, 2, and 3 represents habitat loss, habitat gain, and no change in habitat, respectively.
+    type: image/tiff;application=geotiff
+  shs_table:
+    label: SHS Table
+    description: Table of SHS values
+    type: text/tab-separated-values
