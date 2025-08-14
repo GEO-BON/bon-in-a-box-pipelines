@@ -263,6 +263,68 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "33",
+      "type": "userInput",
+      "position": {
+        "x": 1127.2608337402344,
+        "y": 377.39129638671875
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "35",
+      "type": "userInput",
+      "position": {
+        "x": 1161.2608337402344,
+        "y": 635.3912963867188
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1000
+      }
+    },
+    {
+      "id": "36",
+      "type": "userInput",
+      "position": {
+        "x": 1147.2608337402344,
+        "y": 675.3912963867188
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
     }
   ],
   "edges": [
@@ -503,6 +565,48 @@
       "target": "31",
       "targetHandle": null,
       "id": "reactflow__edge-9shs_table-31"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-33-16aggregation"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-33-3aggregation"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-35-16spatial_res"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-35-3spatial_res"
+    },
+    {
+      "source": "36",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-36-16resampling"
+    },
+    {
+      "source": "36",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-36-3resampling"
     }
   ],
   "inputs": {
@@ -587,56 +691,12 @@
       ],
       "weight": 8
     },
-    "data>loadFromStac.yml@3|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in meters",
-      "label": "Spatial resolution",
-      "type": "float",
-      "example": 1000,
-      "weight": 9
-    },
-    "data>loadFromStac.yml@3|resampling": {
-      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
-      "label": "Resampling method",
-      "type": "options",
-      "options": [
-        "near",
-        "bilinear",
-        "average",
-        "mode",
-        "cubic",
-        "cubicspline",
-        "lanczos",
-        "rms",
-        "min",
-        "max",
-        "sum",
-        "med",
-        "q1",
-        "q3"
-      ],
-      "example": "near",
-      "weight": 10
-    },
-    "data>loadFromStac.yml@3|aggregation": {
-      "description": "Method used to aggregate items that overlay each other",
-      "label": "Aggregation method",
-      "type": "options",
-      "options": [
-        "first",
-        "min",
-        "max",
-        "mean",
-        "median"
-      ],
-      "example": "first",
-      "weight": 11
-    },
     "data>getAreaOfHabitat.yml@11|spat_res": {
       "description": "Spatial resolution (in meters) for the output of the analysis.",
       "label": "Output spatial resolution",
       "type": "int",
       "example": 1000,
-      "weight": 12
+      "weight": 9
     },
     "data>getAreaOfHabitat.yml@11|range_map_type": {
       "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
@@ -648,14 +708,14 @@
         "Both"
       ],
       "example": "Polygon",
-      "weight": 13
+      "weight": 10
     },
     "data>getAreaOfHabitat.yml@11|r_range_map": {
       "description": "Binary raster with expected area for the species or raster with values equal to 1 where the species is distributed and the rest is empty.",
       "label": "Range map (raster)",
       "type": "image/tiff;application=geotiff[]",
       "example": [],
-      "weight": 14
+      "weight": 11
     },
     "data>getAreaOfHabitat.yml@11|elevation_filter": {
       "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
@@ -666,14 +726,14 @@
         "No"
       ],
       "example": "Yes",
-      "weight": 15
+      "weight": 12
     },
     "data>getAreaOfHabitat.yml@11|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "Elevation buffer",
       "type": "int",
       "example": null,
-      "weight": 16
+      "weight": 13
     },
     "data>getRangeMap.yml@14|expert_source": {
       "description": "Source of the expert range map for the species. The options are:\nMap of Life (MOL), International union for conservation of nature (IUCN) and range maps from the Ministère de l’Environnement du Québec (QC).\n",
@@ -685,19 +745,41 @@
         "QC"
       ],
       "example": "IUCN",
-      "weight": 17
+      "weight": 14
     },
-    "data>loadFromStac.yml@16|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in meters",
+    "pipeline@28": {
+      "label": "Weight matrix with ids",
+      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
+      "type": "text",
+      "example": null,
+      "weight": 15
+    },
+    "pipeline@33": {
+      "label": "Aggregation method",
+      "description": "Method used to aggregate items that overlay each other",
+      "type": "options",
+      "example": "first",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "weight": 16
+    },
+    "pipeline@35": {
       "label": "Spatial resolution",
+      "description": "Integer, spatial resolution of the rasters in meters",
       "type": "float",
       "example": 1000,
-      "weight": 18
+      "weight": 17
     },
-    "data>loadFromStac.yml@16|resampling": {
-      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+    "pipeline@36": {
       "label": "Resampling method",
+      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
       "type": "options",
+      "example": "near",
       "options": [
         "near",
         "bilinear",
@@ -714,29 +796,7 @@
         "q1",
         "q3"
       ],
-      "example": "near",
-      "weight": 19
-    },
-    "data>loadFromStac.yml@16|aggregation": {
-      "description": "Method used to aggregate items that overlay each other",
-      "label": "Aggregation method",
-      "type": "options",
-      "options": [
-        "first",
-        "min",
-        "max",
-        "mean",
-        "median"
-      ],
-      "example": "first",
-      "weight": 20
-    },
-    "pipeline@28": {
-      "label": "Weight matrix with ids",
-      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
-      "type": "text",
-      "example": null,
-      "weight": 21
+      "weight": 18
     }
   },
   "outputs": {
@@ -773,5 +833,17 @@
       "type": "text/tab-separated-values",
       "weight": 4
     }
+  },
+  "metadata": {
+    "name": "SHI with ESA",
+    "description": "This pipelines calculates the Species Habitat Index (SHI) using the European Space Agency (ESA) landcover data.",
+    "author": [
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetitia.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline development"
+      }
+    ]
   }
 }
