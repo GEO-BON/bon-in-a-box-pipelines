@@ -1,7 +1,7 @@
 script: IUCN_redlist_spList.R
 name: IUCN combine species lists
 description: This script returns the IUCN redlist species list for a country, filtered by taxonomic group, threat category, and species use, to be able to
-  calculate the country and taxon-specific redlist index.
+  calculate the redlist index.
 author:
  - name: Maria Camila diaz
    email: maria.camila.diaz.corzo@usherbrooke.ca
@@ -61,3 +61,7 @@ outputs:
     label: IUCN species list
     description: "Dataset with the list of species for the specified country for the specified filters. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv
+  number_species:
+    label: Number of species
+    description: Number of species in that country, filtered by taxon, threat, and use categories.
+    type: int

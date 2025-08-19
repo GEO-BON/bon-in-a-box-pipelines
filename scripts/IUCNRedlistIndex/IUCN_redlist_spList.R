@@ -56,3 +56,7 @@ iucn_splist_path <- file.path(outputFolder, paste0("iucn_splist", ".csv")) # Def
 write.csv(iucn_splist, iucn_splist_path, row.names = F) # write result
 
 biab_output("iucn_splist", iucn_splist_path)
+
+number_species <- nrow(iucn_splist)
+
+biab_output("number_species", number_species)
