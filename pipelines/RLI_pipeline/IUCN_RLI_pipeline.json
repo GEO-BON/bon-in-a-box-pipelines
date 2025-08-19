@@ -183,55 +183,66 @@
       }
     },
     {
-      "id": "84",
+      "id": "91",
+      "type": "output",
+      "position": {
+        "x": 1584.6000061035156,
+        "y": 241.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "92",
       "type": "io",
       "position": {
-        "x": 19.936065448121553,
-        "y": 290.5377788797691
+        "x": 173.60000610351562,
+        "y": 298.7999954223633
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spThreats.yml"
       }
     },
     {
-      "id": "86",
+      "id": "93",
       "type": "output",
       "position": {
-        "x": 699.9360654481216,
-        "y": 565.5377788797691
+        "x": 1057.0728378584495,
+        "y": 492.28675206509917
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "89",
+      "id": "94",
+      "type": "output",
+      "position": {
+        "x": 753.3222699163338,
+        "y": 11.211528243262357
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "95",
       "type": "io",
       "position": {
-        "x": 1744.019048269284,
-        "y": 14.935401469470776
+        "x": 2156.4820337346596,
+        "y": -26.54747790676876
       },
       "data": {
-        "descriptionFile": "IUCNRedlistIndex>Percent_threatened.yml"
+        "descriptionFile": "IUCNRedlistIndex>Pop_trends.yml"
       }
     },
     {
-      "id": "90",
+      "id": "96",
       "type": "output",
       "position": {
-        "x": 2430.019048269284,
-        "y": 21.935401469470776
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "91",
-      "type": "output",
-      "position": {
-        "x": 1584.6000061035156,
-        "y": 241.79999542236328
+        "x": 2708.480364082132,
+        "y": -19.644475114600485
       },
       "data": {
         "label": "Output"
@@ -387,53 +398,60 @@
       "id": "reactflow__edge-82taxonomic_group-83"
     },
     {
-      "source": "84",
-      "sourceHandle": "threat_category",
-      "target": "86",
-      "targetHandle": null,
-      "id": "reactflow__edge-84threat_category-86"
-    },
-    {
-      "source": "84",
-      "sourceHandle": "iucn_threats_splist",
-      "target": "58",
-      "targetHandle": "splist_threat",
-      "id": "reactflow__edge-84iucn_threats_splist-58splist_threat"
-    },
-    {
-      "source": "84",
-      "sourceHandle": "threat_category",
-      "target": "58",
-      "targetHandle": "threat",
-      "id": "reactflow__edge-84threat_category-58threat"
-    },
-    {
-      "source": "84",
-      "sourceHandle": "threat_category",
-      "target": "59",
-      "targetHandle": "threat",
-      "id": "reactflow__edge-84threat_category-59threat"
-    },
-    {
-      "source": "58",
-      "sourceHandle": "iucn_splist",
-      "target": "89",
-      "targetHandle": "splist",
-      "id": "reactflow__edge-58iucn_splist-89splist"
-    },
-    {
-      "source": "89",
-      "sourceHandle": "percent_improving",
-      "target": "90",
-      "targetHandle": null,
-      "id": "reactflow__edge-89percent_improving-90"
-    },
-    {
       "source": "58",
       "sourceHandle": "number_species",
       "target": "91",
       "targetHandle": null,
       "id": "reactflow__edge-58number_species-91"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "threat_category",
+      "target": "58",
+      "targetHandle": "threat",
+      "id": "reactflow__edge-92threat_category-58threat"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "threat_category",
+      "target": "59",
+      "targetHandle": "threat",
+      "id": "reactflow__edge-92threat_category-59threat"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "threat_category",
+      "target": "93",
+      "targetHandle": null,
+      "id": "reactflow__edge-92threat_category-93"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "iucn_threats_splist",
+      "target": "58",
+      "targetHandle": "splist_threat",
+      "id": "reactflow__edge-92iucn_threats_splist-58splist_threat"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "api_citation",
+      "target": "94",
+      "targetHandle": null,
+      "id": "reactflow__edge-56api_citation-94"
+    },
+    {
+      "source": "58",
+      "sourceHandle": "iucn_splist",
+      "target": "95",
+      "targetHandle": "splist",
+      "id": "reactflow__edge-58iucn_splist-95splist"
+    },
+    {
+      "source": "95",
+      "sourceHandle": "population_trend_percent",
+      "target": "96",
+      "targetHandle": null,
+      "id": "reactflow__edge-95population_trend_percent-96"
     }
   ],
   "inputs": {
@@ -756,31 +774,6 @@
       ],
       "weight": 1
     },
-    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@84|threat_category_input": {
-      "description": "Select the species threat(s). This will filter the species list to only include species threatened by the categories selected. You may omit this filter by selecting 'Do not filter by threat category'.",
-      "label": "Species threat",
-      "type": "options[]",
-      "options": [
-        "Do not filter by threat category",
-        "Residential & commercial development",
-        "Agriculture & aquaculture",
-        "Energy production & mining",
-        "Transportation & service corridors",
-        "Biological resource use",
-        "Human intrusions & disturbance",
-        "Natural system modifications",
-        "Invasive and other problematic species, genes & diseases",
-        "Invasive alien species or diseases",
-        "Pollution",
-        "Geological events",
-        "Climate change & severe weather",
-        "Other options"
-      ],
-      "example": [
-        "Do not filter by threat category"
-      ],
-      "weight": 2
-    },
     "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
       "description": "Select the species use(s) or trade(s). This will filter the species list to only include species with the selected uses. If 'All' is selected, the pipeline will include all species that have a use recorded in the Red List database. You may omit this filter by selecting 'Do not filter by species use or trade'.",
       "label": "Species use",
@@ -810,6 +803,32 @@
       "example": [
         "Do not filter by species use or trade"
       ],
+      "weight": 2
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category_input": {
+      "description": "Select the species threat(s) to filter for. This returns a list of IUCN Red List species that are threatened by the categories selected.",
+      "label": "Threat category",
+      "type": "options[]",
+      "options": [
+        "Do not filter by threat category",
+        "Residential & commercial development",
+        "Agriculture & aquaculture",
+        "Energy production & mining",
+        "Transportation & service corridors",
+        "Biological resource use",
+        "Human intrusions & disturbance",
+        "Natural system modifications",
+        "Invasive and other problematic species, genes & diseases",
+        "Invasive alien species or diseases",
+        "Pollution",
+        "Geological events",
+        "Climate change & severe weather",
+        "Fisheries",
+        "Other options"
+      ],
+      "example": [
+        "Geological events"
+      ],
       "weight": 3
     }
   },
@@ -828,53 +847,59 @@
       "example": null,
       "weight": 1
     },
-    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@84|threat_category": {
-      "description": "The species threat(s) selected.",
-      "label": "Species threat(s)",
-      "type": "text[]",
-      "weight": 2
-    },
     "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
       "description": "The species use(s) or trade(s) selected.",
       "label": "Species use(s)",
       "type": "text[]",
-      "weight": 3
+      "weight": 2
     },
     "IUCNRedlistIndex>IUCN_redlist_spList.yml@58|number_species": {
       "description": "Number of species in that country, filtered by taxon, threat, and use categories.",
       "label": "Number of species",
       "type": "int",
-      "weight": 4
+      "weight": 3
     },
     "IUCNRedlistIndex>RedListIndex.yml@59|redlist_trend_plot": {
       "description": "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss.",
       "label": "Red List trend",
       "type": "image/jpg",
-      "weight": 5
+      "weight": 4
     },
     "IUCNRedlistIndex>RedListIndex.yml@59|redlist_matrix": {
       "description": "Matrix showing the distribution of threat categories over time for the group of species.",
       "label": "Red List matrix",
       "type": "text/csv",
-      "weight": 6
+      "weight": 5
     },
     "IUCNRedlistIndex>RedListIndex.yml@59|redlist_data": {
       "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
       "label": "Red List data",
       "type": "text/csv",
-      "weight": 7
-    },
-    "IUCNRedlistIndex>Percent_threatened.yml@89|percent_improving": {
-      "description": "Percentage of threatened species in the filtered list that are improving in threat category according to the IUCN Red List.",
-      "label": "Percent species improving",
-      "type": "float",
-      "weight": 8
+      "weight": 6
     },
     "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml@55|api_citation": {
       "description": "Citation for the data acquired using the IUCN Red List API.",
       "label": "IUCN API citation",
       "type": "text/plain",
+      "weight": 7
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category": {
+      "description": "IUCN threat category",
+      "label": "Threat category",
+      "type": "text[]",
+      "weight": 8
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|api_citation": {
+      "description": "Citation for the data acquired using the IUCN Red List API",
+      "label": "IUCN API citation",
+      "type": "text",
       "weight": 9
+    },
+    "IUCNRedlistIndex>Pop_trends.yml@95|population_trend_percent": {
+      "description": "Percentage of RLI listed species that have population trends that are improving, stable, declining, or unknown according to the IUCN red list.",
+      "label": "Data on population trends",
+      "type": "text/csv",
+      "weight": 10
     }
   },
   "metadata": {

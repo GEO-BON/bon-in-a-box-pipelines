@@ -397,6 +397,13 @@
       "target": "18",
       "targetHandle": "study_area",
       "id": "reactflow__edge-56-18study_area"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "18",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-53country_region_polygon-18study_area"
     }
   ],
   "inputs": {

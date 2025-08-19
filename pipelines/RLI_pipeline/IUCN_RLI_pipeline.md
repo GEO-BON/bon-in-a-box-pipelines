@@ -10,7 +10,7 @@ RLI has been widely integrated into various policy frameworks. Initially used to
 
 ### Uses
 
-The RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity Framework (CBD, 2022). Furthermore, by tracking the proportion of threatened species showing status improvement, the RLI plays a central role in evaluating progress toward Goal A. Beyond global trends, the RLI can be used to track changes in extinction risk across biogeographic realms, political units, ecosystems, habitats, taxonomic groups, threat types, use or trades, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). The RLI supports progress towards several other goals and targets within the framework, such as Goal B, Target 2, and Target 5, highlighting changes in extinction risk, including for utilized species. By calculating the RLI in more specific contexts, such as for species impacted by pollution (Target 7), species affected by invasive alien species (Target 6b), or those used for food and medicine (Target 9b), the indicator provides targeted insights that directly inform efforts to meet these goals.
+The RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity Framework (CBD, 2022). Furthermore, by tracking the proportion of threatened species showing status improvement, the RLI plays a central role in evaluating progress toward Goal A. Beyond global trends, the RLI can be used to track changes in extinction risk across biogeographic realms, political units, ecosystems, habitats, taxonomic groups, threat types, use or trades, and those relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005). The RLI supports progress towards several other goals and targets within the framework, such as Goal B, Target 2, and Target 5, highlighting changes in extinction risk, including for utilized species. By calculating the RLI in more specific contexts, such as for species impacted by pollution (Target 7), species affected by invasive alien species (Target 6b), or those used for food and medicine (Target 9b), the indicator provides targeted insights that directly inform efforts to meet these goals. To read more about the RLI indicator in the Global Biodiversity Framework, see the metadata [here](https://www.gbf-indicators.org/metadata/headline/A-3).
 
 The following are suggested inputs that are goal-specific:
 
@@ -35,12 +35,18 @@ The following are suggested inputs that are goal-specific:
 - Threat category: Do not filter by threat category
 - Species use: Food - human, Food - animal, Medicine - human & veterinary
 
-**4. RLI for all utilized species (Targer Bb and Goal 5)**
+**4. RLI for all utilized species (Goal B and Target 5)**
 
 - Country: User's choice
 - Taxonomic group: All
 - Threat category: Do not filter by threat category
 - Species use: All
+
+**5. RLI for species threatened by fisheries (Target 9)**
+- Country: User's choice
+- Taxonomic group: All
+- Threat category: Fisheries
+- Species use: Do not filter by species use or trade
 
 ### Pipeline limitations
 

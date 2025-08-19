@@ -45,7 +45,10 @@ if ("Do not filter by threat category" %in% threats) {
         if (threat == "Invasive alien species or diseases") {
             IUCN_threatcode <- c("8_1", "8_1_1", "8_1_2")
             print(IUCN_threatcode)
-        } else {
+        } else if (threat == "Fisheries") {
+            IUCN_threatcode <- c("5_4", "5_4_1", "5_4_2", "5_4_3", "5_4_4", "5_4_5", "5_4_6")
+            print(IUCN_threatcode)
+           } else {
             IUCN_threatcode_group <- IUCN_threats$threats$code[IUCN_threats$threats$description$en == threat]
             print(IUCN_threatcode_group)
             IUCN_threatcode <- IUCN_threats$threats$code[grepl(paste0("^", IUCN_threatcode_group, "(_|$)"), IUCN_threats$threats$code)]

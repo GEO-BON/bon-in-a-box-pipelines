@@ -25,6 +25,7 @@ inputs:
     - Pollution
     - Geological events
     - Climate change & severe weather
+    - Fisheries
     - Other options
 outputs:
   threat_category:
