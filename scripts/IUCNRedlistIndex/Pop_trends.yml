@@ -1,0 +1,28 @@
+script: Pop_trends.R
+name: Population trends of species
+description: This script calculates the proportion of species with populations that are improving, stable, declining, or unknown.
+author:
+ - name: Laetitia Tremblay
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rredlist
+    - r-rjson
+    - r-dplyr
+    - r-magrittr
+inputs:
+  splist:
+    label: Species list
+    description: Dataset with the list of species from which to calculate the percentage of different population trends.
+    type: text/csv
+    example:
+outputs:
+  population_trend_percent:
+    label: Data on population trends
+    description: Percentage of RLI listed species that have population trends that are improving, stable, declining, or unknown
+     according to the IUCN red list.
+    type: text/csv

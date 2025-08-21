@@ -6,6 +6,10 @@ lapply(packagesList, library, character.only = TRUE) # Load libraries - packages
 
 input <- biab_inputs()
 
+taxonomic_group <- input$taxonomic_group
+uses <- input$species_use
+threats <- input$threat
+
 #### Species list by country ####
 # Load IUCN token----
 history_assessment_data <- data.table::fread(input$history_assessment_data) %>% as.data.frame()
@@ -19,8 +23,6 @@ historyAssesment_matrix <- reshape2::dcast(history_assessment_data, form_matrix,
 ) %>%
   tibble::column_to_rownames(input$sp_col) %>%
   as.data.frame.matrix()
-
-
 
 # Ajustar matriz de codigos de amenaza ####
 
@@ -69,6 +71,10 @@ if (ncol(matrix_output) > 1) {
   }
 }
 
+redlist_matrix_path <- file.path(outputFolder, paste0("redlist_matrix", ".csv")) # Define the file path
+write.csv(matrix_output, redlist_matrix_path, row.names = T)
+biab_output("redlist_matrix", redlist_matrix_path)
+
 # Redlist data ####
 print("red")
 redlist_data <- red::rli(matrix_output, boot = F) %>%
@@ -79,31 +85,62 @@ redlist_data <- red::rli(matrix_output, boot = F) %>%
   dplyr::filter(!Year %in% "Change/year")
 print("redlist_data")
 
+#Add country name in plot title
+title <- paste0("RLI for species in ", input$country)
 
-# Redlist figura ####
-redlist_trend_plot <- ggplot(redlist_data, aes(x = as.numeric(Year), y = RLI)) +
-  scale_x_continuous(breaks = seq(1960, as.numeric(format(Sys.Date(), "%Y")), by = 2)) +
-  labs(x = "year", y = "Red List Index") +
+#Write subtitle in plot based on inputs
+subtitle_parts <- c()
+
+if ("All" %in% taxonomic_group){
+  subtitle_parts <- c(subtitle_parts, "Taxon groups: All")
+} else {
+  subtitle_parts <- c(subtitle_parts, paste0("Taxon groups: ", paste(taxonomic_group, collapse = ", ")))
+}
+
+if (!"Do not filter by species use or trade" %in% uses) {
+  if ("All" %in% uses) {
+    subtitle_parts <- c(subtitle_parts, "Uses and trades: All")
+  } else {
+    subtitle_parts <- c(subtitle_parts, paste0("Uses and trades: ", paste(uses, collapse = ", ")))
+  }
+}
+
+if (!"Do not filter by threat category" %in% threats) {
+  if ("All" %in% threats) {
+    subtitle_parts <- c(subtitle_parts, "Threats: All")
+  } else {
+    subtitle_parts <- c(subtitle_parts, paste0("Threats: ", paste(threats, collapse = ", ")))
+  }
+}
+
+subtitle_text <- if (length(subtitle_parts) > 0) {
+  paste(subtitle_parts, collapse = "\n")
+} else {
+  NULL  # no subtitle if empty
+}
+
+filtered_data <- redlist_data[!is.na(redlist_data$RLI), ]
+
+# Redlist figures ####
+redlist_trend_plot <- ggplot(filtered_data, aes(x = as.numeric(Year), y = RLI)) +
+  scale_x_continuous(breaks = seq(min(as.numeric(filtered_data$Year)), as.numeric(format(Sys.Date(), "%Y")), by = 5)) +
+  labs(x = "Year", y = "Red List Index") +
   geom_line(group = 1, col = "red") +
-  geom_point() +
-  coord_cartesian(xlim = c(1960, as.numeric(format(Sys.Date(), "%Y"))), ylim = c(0, 1)) +
-  theme_classic() +
-  theme(panel.grid.major = element_line(color = "gray")) +
+  geom_point(size=0.5) +
+  coord_cartesian(xlim = c(min(as.numeric(filtered_data$Year)), as.numeric(format(Sys.Date(), "%Y"))), ylim = c(0, 1)) +
+  theme_bw() +
+  #theme(panel.grid.major = element_line(color = "gray")) +
   theme(text = element_text(size = 4)) +
-  ggtitle("RLI for selected taxonomy group and country") +
+  ggtitle(title, subtitle = subtitle_text) +
+  theme(plot.title = element_text(hjust = 0.5)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 2))
-
 
 ## Write results ####
 redlist_data_path <- file.path(outputFolder, paste0("redlist_data", ".csv")) # Define the file path
 write.csv(redlist_data, redlist_data_path, row.names = F)
-
-redlist_matrix_path <- file.path(outputFolder, paste0("redlist_matrix", ".csv")) # Define the file path
-write.csv(matrix_output, redlist_matrix_path, row.names = T)
 
 redlist_trend_plot_path <- file.path(outputFolder, paste0("redlist_trend_plot", ".jpg")) # Define the file path
 ggsave(redlist_trend_plot_path, redlist_trend_plot, height = 2, width = 4)
 
 biab_output("redlist_trend_plot", redlist_trend_plot_path)
 biab_output("redlist_data", redlist_data_path)
-biab_output("redlist_matrix", redlist_matrix_path)

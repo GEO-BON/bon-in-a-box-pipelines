@@ -37,7 +37,7 @@ biab_output("country", country_name)
 
 if (is.null(input$region)) { # pull study area polygon from rnaturalearth
   # pull whole country
-  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |> 
+  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |>
   req_perform()
 
   meta <- res |> resp_body_json() # parse JSON
@@ -45,15 +45,15 @@ if (is.null(input$region)) { # pull study area polygon from rnaturalearth
   geojson_url <- meta$gjDownloadURL # Extract the GeoJSON download URL
 
   country_region_polygon <- st_read(geojson_url) # Load geojson
-  
+
 } else {
   print("pulling region polygon")
-  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |> 
+  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |>
   req_perform() # ADM1 gives regions/provinces
 
-  meta <- res |> resp_body_json() 
+  meta <- res |> resp_body_json()
 
-  geojson_url <- meta$gjDownloadURL 
+  geojson_url <- meta$gjDownloadURL
 
   country_region_polygon <- st_read(geojson_url)
 

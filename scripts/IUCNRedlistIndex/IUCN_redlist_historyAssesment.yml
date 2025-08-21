@@ -10,7 +10,6 @@ author:
    role: Maintenance
    email: laetitia.tremblay@mcgill.ca
    identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
-external_link: https://github.com/GEO-BON/biab-2.0
 conda:
   channels:
     - conda-forge
@@ -23,7 +22,7 @@ conda:
     - r-ggplot2
     - r-tibble
     - r-pbapply
-    - r-rredlist=1.0.0
+    - r-rredlist
     - r-plyr
     - r-reshape2
     - r-rjson
@@ -47,5 +46,5 @@ outputs:
   api_citation:
     label: IUCN API citation
     description: Citation for the data acquired using the IUCN Red List API
-    type: text/plain
+    type: text
 
