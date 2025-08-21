@@ -827,7 +827,7 @@
         "Other options"
       ],
       "example": [
-        "Geological events"
+        "Do not filter by threat category"
       ],
       "weight": 3
     }
