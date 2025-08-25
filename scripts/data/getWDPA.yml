@@ -8,7 +8,7 @@ author:
     identifier: https://orcid.org/0000-0002-5967-9156
 external_link:
 lifecycle:
-  status: in_review
+  status: reviewed
 inputs:
   country_iso:
     label: Country

@@ -463,7 +463,7 @@
       }
     ],
     "lifecycle": {
-      "status": "in_review"
+      "status": "reviewed"
     },
     "references": [
       {

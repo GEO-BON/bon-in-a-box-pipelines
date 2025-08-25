@@ -9,7 +9,7 @@ author:
 license: CC BY
 external_link: https://github.com/GEO-BON/biab-2.0/tree/main/scripts/protconn_analysis
 lifecycle:
-  status: in_review
+  status: reviewed
 inputs:
   study_area_polygon:
     label: Polygon of study area
