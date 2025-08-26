@@ -12,17 +12,18 @@ if (token == "") {
 
 
 # Extract the red list population trends
-sp_increasing <- rredlist::rl_pop_trends(key = token, code = "0", latest = TRUE, scope_code = 1)$assessments 
+print("Getting list of species increasing in population size...")
+sp_increasing <- rredlist::rl_pop_trends(key = token, code = "0", latest = TRUE, scope_code = 1)$assessments
 sp_increasing <- sp_increasing %>% dplyr::distinct(sis_taxon_id, .keep_all = TRUE)
-
-sp_decreasing <- rredlist::rl_pop_trends(key = token, code = "1", latest = TRUE, scope_code = 1)$assessments 
+print("Getting list of species decreasing in population size...")
+sp_decreasing <- rredlist::rl_pop_trends(key = token, code = "1", latest = TRUE, scope_code = 1)$assessments
 sp_decreasing <- sp_decreasing %>% dplyr::distinct(sis_taxon_id, .keep_all = TRUE)
-
-sp_stable <- rredlist::rl_pop_trends(key = token, code = "2", latest = TRUE, scope_code = 1)$assessments 
+print("Getting list of species with a stable population size...")
+sp_stable <- rredlist::rl_pop_trends(key = token, code = "2", latest = TRUE, scope_code = 1)$assessments
 sp_stable <- sp_stable %>% dplyr::distinct(sis_taxon_id, .keep_all = TRUE)
 
-#sp_unknown <- rredlist::rl_pop_trends(key = token, code = "3", latest = TRUE, scope_code = 1)$assessments 
-#sp_unknown <- sp_unknown %>% dplyr::distinct(sis_taxon_id, .keep_all = TRUE)
+# sp_unknown <- rredlist::rl_pop_trends(key = token, code = "3", latest = TRUE, scope_code = 1)$assessments
+# sp_unknown <- sp_unknown %>% dplyr::distinct(sis_taxon_id, .keep_all = TRUE)
 
 
 print(sprintf("Number of species impcreasing in total: %s", nrow(sp_increasing)))
@@ -31,7 +32,7 @@ print(sprintf("Number of species impcreasing in total: %s", nrow(sp_increasing))
 sp_increasing_country <- splist %>% dplyr::filter(sis_taxon_id %in% sp_increasing$sis_taxon_id)
 sp_decreasing_country <- splist %>% dplyr::filter(sis_taxon_id %in% sp_decreasing$sis_taxon_id)
 sp_stable_country <- splist %>% dplyr::filter(sis_taxon_id %in% sp_stable$sis_taxon_id)
-#sp_unknown_country <- splist %>% dplyr::filter(sis_taxon_id %in% sp_unknown$sis_taxon_id)
+# sp_unknown_country <- splist %>% dplyr::filter(sis_taxon_id %in% sp_unknown$sis_taxon_id)
 
 print(sp_increasing_country)
 total_sp <- nrow(splist)
@@ -58,9 +59,7 @@ number <- c(num_increasing, num_decreasing, num_stable, num_unknown)
 
 pop_trends <- data.frame(Trend = trend, Number = number, Percentage = percentage)
 pop_trends_path <- file.path(outputFolder, "population_trend_percent.csv")
-pop_trends <- write.csv(pop_trends, pop_trends_path, row.names=FALSE)
+pop_trends <- write.csv(pop_trends, pop_trends_path, row.names = FALSE)
 
 print(pop_trends)
 biab_output("population_trend_percent", pop_trends_path)
-
-
