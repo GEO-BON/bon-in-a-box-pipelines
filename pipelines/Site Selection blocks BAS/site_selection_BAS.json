@@ -382,7 +382,7 @@
       "example": null,
       "weight": 6
     },
-    "site_selection_BAS>BAS_algorithm.yml@26|options_BAS": {
+    "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
       "description": "Select and option beween equal BAS or unequal prob BAS",
       "label": "Sampling type",
       "type": "options",

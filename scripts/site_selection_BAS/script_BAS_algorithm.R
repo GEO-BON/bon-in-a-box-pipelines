@@ -12,9 +12,9 @@ library(sf)
 library(tidyterra)
 library(ggplot2)
 
-set.seed(1) 
+set.seed(1)
 #read inputs
-input <- biab_inputs()  
+input <- biab_inputs()
 
 #Sampling site selection using BAS
 print("Calling raster of blocks and map shape polygon")
@@ -39,14 +39,14 @@ seeds <- spbal::findBASSeed(country_poly, bb, n = 1)
 
 
 
-options_BAS <- input$options_BAS
-options_BAS <- as.character(options_BAS)
-print(options_BAS)
+options_bas <- input$options_bas
+options_bas <- as.character(options_bas)
+print(options_bas)
 
-if (options_BAS != "equal") {
-  
+if (options_bas != "equal") {
+
   print("Based on 1000 samples drawing BAS points from polygon")
-  
+
   n_samples <- 10000 ## Big oversample
   system.time({
     result <- spbal::BAS(shapefile = country_poly,
@@ -56,7 +56,7 @@ if (options_BAS != "equal") {
   })
   print("Writing function to define incl probs")
   ## Function to select unequal probabiltiy samples via BAS:
-  ## bas_sample: Output from call to spbal::BAS, must be an oversample. 
+  ## bas_sample: Output from call to spbal::BAS, must be an oversample.
   ## incl_rast: terra object with inclusion probabilities added.
   sample_unequal <- function(bas_sample, incl_raster, n_sample = 10){
     if(n_sample > nrow(bas_sample$sample))
@@ -71,7 +71,7 @@ if (options_BAS != "equal") {
     bas_sample$sample <- bas_sample$sample[bas_sample$sample$pincl_scaled > bas_sample$sample$pSelect,][1:n_sample,]
     return(bas_sample)
   }
-  
+
   print("Defining parameters")
   ## Okay now assign some inclusion probabilities and make them into a raster:
   ndesign <- input$ndesign
@@ -81,19 +81,19 @@ if (options_BAS != "equal") {
   pincl <- log(Ngrps) ## Instead just scale it as inverse log of the number of points (scaling less sever by /100)
   pincl[Ngrps == 0] <- 0
   pincl[abs(pincl) == Inf] <- 0 ## Remove those 1/log(0) points. as 0.
-  
+
   print(paste("ndesign = ", ndesign, "and ngrps ", ngrps))
-  
+
   ## Now take an unequal prob sample:
   vals <- pincl[values(country_rast)]
   vals[is.na(vals)] <- 0
   country_rast2 <- country_rast
   values(country_rast2) <- vals
-  
+
   print ("Running incl prob function on BAS sample")
   bas_sample <- sample_unequal(bas_sample = result, incl_raster = country_rast2, n_sample = ndesign)
   print(bas_sample$sample)
-  
+
 }else{
   print("Performing a BAS equal probability selection")
   system.time({
@@ -132,9 +132,9 @@ print("Creating raster map and points")
 
 block_map<-ggplot2::ggplot()+
   #tidyterra::geom_spatvector(data=country_vect )+
-  ggplot2::geom_raster(data = merged_df[,c("x", "y", "Block")], 
-                       ggplot2::aes(x=x, 
-                                    y = y, 
+  ggplot2::geom_raster(data = merged_df[,c("x", "y", "Block")],
+                       ggplot2::aes(x=x,
+                                    y = y,
                                     fill =as.factor(Block)) )+ #make factor if using manual scale
   ggplot2::scale_fill_manual(values =colors_vect,na.value = "transparent")+
   # ggplot2::scale_fill_viridis_c(option = "turbo")+
@@ -155,19 +155,19 @@ pts_df<-pts_df[,c("x","y")]
 names(pts_df) <-  c( "lon", "lat")
 
 #save plot
-maps_path <- file.path(outputFolder, "maps_output.png") 
+maps_path <- file.path(outputFolder, "maps_output.png")
 ggplot2::ggsave(maps_output, filename= maps_path,
                 height = 5, width = 10, units = "in" , dpi = 300, bg ="white")
 biab_output("maps_output", maps_path)
 
 #save output of selected points
-pts_df_path<-file.path(outputFolder, "pts_selected_df.csv") 
+pts_df_path<-file.path(outputFolder, "pts_selected_df.csv")
 write.csv(pts_df, pts_df_path, row.names = FALSE )
 biab_output("pts_df", pts_df_path)
 
 
 #save shapefile of points
 points_shape<-terra::project(terra::vect(bas_sample$sample), "EPSG:4326")
-points_shape_path <- file.path(outputFolder, "points_shape.GeoJSON") 
+points_shape_path <- file.path(outputFolder, "points_shape.GeoJSON")
 writeVector(points_shape, points_shape_path, overwrite=TRUE)
 biab_output("points_shape", points_shape_path)
