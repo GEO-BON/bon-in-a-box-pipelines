@@ -479,8 +479,7 @@
       "description": "Name of country of interest",
       "label": "Country",
       "type": "text",
-      "weight": 0,
-      "example": null
+      "weight": 0
     },
     "data>getCountryPolygon.yml@53|region": {
       "description": "Name of state/province of interest",
