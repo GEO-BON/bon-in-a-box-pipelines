@@ -44,3 +44,5 @@ dependencies:
   - r-this.path
   - r-tidyselect
   - r-tidyverse
+  - r-stringr
+  - r-proj

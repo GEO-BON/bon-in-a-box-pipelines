@@ -1,0 +1,38 @@
+script: getWDPA.py
+name: Get protected areas from World Database on Protected Areas (WDPA)
+description: This script finds and saves the polygons of protected areas of a given country from the world database of protected areas (WDPA).
+author:
+  - name: Guillaume Larocque
+    email: guillaume.larocque@mcgill.ca
+    identifier: https://orcid.org/0000-0002-5967-9156
+external_link:
+lifecycle:
+  status: in_review
+inputs:
+  country_iso:
+    label: Country
+    description: ISO-3 country code. To find the ISO-3 code of a country, you can refer to the [list provided here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
+    type: text
+    example: COL
+outputs:
+  protected_area_polygon:
+    label: Polygon of protected areas
+    description: GeoPackage file containing the protected areas vectors within the selected country.
+    type: application/geopackage+sqlite3
+  country_bounding_box:
+    label: Polygon of the country's bounding box
+    description: GeoPackage file containing the bounding box of the selected country.
+    type: application/geopackage+sqlite3
+references:
+- text:
+    UNEP-WCMC and IUCN (2024), Protected Planet. The World Database on Protected Areas (WDPA)[On-line],
+    [October 2024], Cambridge, UK. UNEP-WCMC and IUCN. Available at
+  doi: 10.34892/6fwd-af11
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pandas
+    - geopandas
+    - pyproj
+    - requests
