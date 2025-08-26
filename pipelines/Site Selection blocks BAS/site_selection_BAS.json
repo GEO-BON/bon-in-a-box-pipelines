@@ -258,10 +258,10 @@
     },
     {
       "source": "45",
-      "sourceHandle": "country_polygon",
+      "sourceHandle": "country_region_polygon",
       "target": "49",
       "targetHandle": "study_area_file",
-      "id": "reactflow__edge-45country_polygon-49study_area_file"
+      "id": "reactflow__edge-45country_region_polygon-49study_area_file"
     },
     {
       "source": "48",
@@ -279,17 +279,17 @@
     },
     {
       "source": "45",
-      "sourceHandle": "country_polygon",
+      "sourceHandle": "country_region_polygon",
       "target": "0",
       "targetHandle": "country_polygon",
-      "id": "reactflow__edge-45country_polygon-0country_polygon"
+      "id": "reactflow__edge-45country_region_polygon-0country_polygon"
     },
     {
       "source": "45",
-      "sourceHandle": "country_polygon",
+      "sourceHandle": "country_region_polygon",
       "target": "26",
       "targetHandle": "country_polygon",
-      "id": "reactflow__edge-45country_polygon-26country_polygon"
+      "id": "reactflow__edge-45country_region_polygon-26country_polygon"
     },
     {
       "source": "2",
