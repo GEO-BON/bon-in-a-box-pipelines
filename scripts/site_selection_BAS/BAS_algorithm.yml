@@ -10,6 +10,7 @@ inputs:
     label: Color vector
     description: vector of random colors for plotting
     type: csv
+    example: null
   country_polygon:
     label: Country polygon
     description: polygon of the country of interest
