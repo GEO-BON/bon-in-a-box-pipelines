@@ -4,7 +4,7 @@ Author(s): Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griff
 
 ## Introduction
 
-The Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. Many species that move categories in the Red List do so because of revised taxonomy or improved knowledge. Therefore, looking at raw trends in Red List status can be misleading. RLI models these trends to show overall changes the status of species groups that are based only on genuine improvement or deterioriation. 
+The Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. Many species that move categories in the Red List do so because of revised taxonomy or improved knowledge. Therefore, looking at raw trends in Red List status can be misleading. RLI models these trends to show overall changes the status of species groups that are based only on genuine improvement or deterioriation.
 
 RLI has been widely integrated into various policy frameworks. Initially used to assess progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006), it has since been employed in regional, thematic, and global assessments by bodies such as the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).
 
@@ -86,9 +86,9 @@ The BON in a Box RLI pipeline allows you to calculate RLI for species from a cou
 
 - **Taxonomic group:** The user can specify the taxonomic group(s) for which they want to calculate RLI using the drop-down menu. This is a multi-select menu. If 'All' is selected, the pipeline will include all taxon groups.
 
-- **Threat category:** The user can specify which species threat(s) to filter the species by. This is a multi-select menu. For example, if the user chooses 'Pollution', the RLI will be calculated only for species threatened by pollution. The user can choose to omit this filter by selecting 'Do not filter by threat category'.
-
 - **Species use:** The user can specify which species use(s) or trade(s) to filter the species by. This is a multi-select menu. For example, if the user chooses 'Medicine - human & veterinary', the RLI will be calculated only for species that are used in the medical industry. The user can choose to omit this filter by selecting 'Do not filter by species use or trade'. If 'All' is selected, the pipeline will include all species that are utilized.
+
+- **Threat category:** The user can specify which species threat(s) to filter the species by. This is a multi-select menu. For example, if the user chooses 'Pollution', the RLI will be calculated only for species threatened by pollution. The user can choose to omit this filter by selecting 'Do not filter by threat category'.
 
 ### Pipeline steps
 
@@ -112,15 +112,11 @@ This step retrieves the full list(s) of species assessed by the IUCN Red List of
 
 This step takes the list of species for the country of interest and filters out species that are not found in any of the lists from step 2, 3, and 4.
 
-#### **6. Calculating the percentage of improving species**
-
-This step retrieves the IUCN Red List of species improving in assessment status and finds how many of those species are in the list from the previous step. This number is then divided by the total number of species in the list from the previous step and then multiplied by 100 to find the percentage of species improving in assessment status.
-
-#### **7. Getting the history assessment for the species**
+#### **6. Getting the history assessment for the species**
 
 This step returns the history of assessments (year and assessment status) for every species in the list from step 5.
 
-#### **8. Calculating the Red List Index**
+#### **7. Calculating the Red List Index**
 
 This step calculates the Red List Index for the species using their history of assessments. Most species move between categories on the IUCN Red List due to improvements in knowledge or revised taxonomy, so merely looking at the number of species in each category over time is not a meaningful measure of overall changes in extinction risk. RLI was developed to reflect genuine improvement or deterioration in the status of individual species (Butchart et al., 2004; Butchart et al., 2005), and is calculated based on the proportion of species in each category on the Red List (Least Concern, Vulnerable, Endangered, etc.) and weighted by the proportion of the area that is in the country or region of interest. RLI can be calculated for all of the species in a given area, or separately for specific taxa (e.g. birds), or other specified groups (e.g. endemic species). The RLI values range between 0 (indicating all species are extinct) to 1 (indicating all species are Least Concern). For more detailed information on the RLI, visit the [IUCN website](https://www.iucnredlist.org/).
 
@@ -131,6 +127,8 @@ This step calculates the Red List Index for the species using their history of a
 - **Red List trend plot:** The Red List Index of species for the chosen taxonomy group over time. An RLI of 1 indicates that all species have a status of Least Concerned, while 0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss.
 
 - **Red List matrix:** A matrix of the threat categories of all the species of interest over time.
+
+- **Number of species:** The number of species for the country of interest, filtered by taxon, threat, and use categories.
 
 - **Country:** The country from which the species list was taken.
 

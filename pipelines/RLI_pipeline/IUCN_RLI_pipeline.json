@@ -214,39 +214,6 @@
       "data": {
         "label": "Output"
       }
-    },
-    {
-      "id": "94",
-      "type": "output",
-      "position": {
-        "x": 753.3222699163338,
-        "y": 11.211528243262357
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "95",
-      "type": "io",
-      "position": {
-        "x": 2156.4820337346596,
-        "y": -26.54747790676876
-      },
-      "data": {
-        "descriptionFile": "IUCNRedlistIndex>Pop_trends.yml"
-      }
-    },
-    {
-      "id": "96",
-      "type": "output",
-      "position": {
-        "x": 2708.480364082132,
-        "y": -19.644475114600485
-      },
-      "data": {
-        "label": "Output"
-      }
     }
   ],
   "edges": [
@@ -431,27 +398,6 @@
       "target": "58",
       "targetHandle": "splist_threat",
       "id": "reactflow__edge-92iucn_threats_splist-58splist_threat"
-    },
-    {
-      "source": "56",
-      "sourceHandle": "api_citation",
-      "target": "94",
-      "targetHandle": null,
-      "id": "reactflow__edge-56api_citation-94"
-    },
-    {
-      "source": "58",
-      "sourceHandle": "iucn_splist",
-      "target": "95",
-      "targetHandle": "splist",
-      "id": "reactflow__edge-58iucn_splist-95splist"
-    },
-    {
-      "source": "95",
-      "sourceHandle": "population_trend_percent",
-      "target": "96",
-      "targetHandle": null,
-      "id": "reactflow__edge-95population_trend_percent-96"
     }
   ],
   "inputs": {
@@ -833,24 +779,22 @@
     }
   },
   "outputs": {
-    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
-      "description": "Country chosen for IUCN red list assessment.",
-      "label": "Country",
-      "type": "text",
-      "example": null,
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_data": {
+      "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
+      "label": "Red List data",
+      "type": "text/csv",
       "weight": 0
     },
-    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
-      "description": "The taxonomic group(s) of interest.",
-      "label": "Taxonomic group(s)",
-      "type": "text/plain",
-      "example": null,
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_trend_plot": {
+      "description": "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss.",
+      "label": "Red List trend",
+      "type": "image/jpg",
       "weight": 1
     },
-    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
-      "description": "The species use(s) or trade(s) selected.",
-      "label": "Species use(s)",
-      "type": "text[]",
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_matrix": {
+      "description": "Matrix showing the distribution of threat categories over time for the group of species.",
+      "label": "Red List matrix",
+      "type": "text/csv",
       "weight": 2
     },
     "IUCNRedlistIndex>IUCN_redlist_spList.yml@58|number_species": {
@@ -859,52 +803,42 @@
       "type": "int",
       "weight": 3
     },
-    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_trend_plot": {
-      "description": "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss.",
-      "label": "Red List trend",
-      "type": "image/jpg",
+    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
+      "description": "Country chosen for IUCN red list assessment.",
+      "label": "Country",
+      "type": "text",
+      "example": null,
       "weight": 4
     },
-    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_matrix": {
-      "description": "Matrix showing the distribution of threat categories over time for the group of species.",
-      "label": "Red List matrix",
-      "type": "text/csv",
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
+      "description": "The taxonomic group(s) of interest.",
+      "label": "Taxonomic group(s)",
+      "type": "text/plain",
+      "example": null,
       "weight": 5
     },
-    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_data": {
-      "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
-      "label": "Red List data",
-      "type": "text/csv",
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category": {
+      "description": "IUCN threat category",
+      "label": "Species threat(s)",
+      "type": "text[]",
       "weight": 6
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
+      "description": "The species use(s) or trade(s) selected.",
+      "label": "Species use(s)",
+      "type": "text[]",
+      "weight": 7
     },
     "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml@55|api_citation": {
       "description": "Citation for the data acquired using the IUCN Red List API.",
       "label": "IUCN API citation",
       "type": "text/plain",
-      "weight": 7
-    },
-    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category": {
-      "description": "IUCN threat category",
-      "label": "Threat category",
-      "type": "text[]",
       "weight": 8
-    },
-    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|api_citation": {
-      "description": "Citation for the data acquired using the IUCN Red List API",
-      "label": "IUCN API citation",
-      "type": "text",
-      "weight": 9
-    },
-    "IUCNRedlistIndex>Pop_trends.yml@95|population_trend_percent": {
-      "description": "Percentage of RLI listed species that have population trends that are improving, stable, declining, or unknown according to the IUCN red list.",
-      "label": "Data on population trends",
-      "type": "text/csv",
-      "weight": 10
     }
   },
   "metadata": {
     "name": "Red List Index (RLI) pipeline",
-    "description": "## Introduction\nThe Red List Index (RLI) shows trends in overall extinction risk for species,  and is used to track progress towards reducing extinctions and biodiversity loss.  Many species that move categories in the Red List do so because of revised taxonomy or improved  knowledge. Therefore, looking at raw trends in Red List status can be misleading. RLI models these  trends to show overall changes the status of species groups that are based only on genuine improvement  or deterioriation. \nRLI has been widely integrated into various policy frameworks. Initially used to assess progress  towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006), it has since been  employed in regional, thematic, and global assessments by bodies such as the Intergovernmental  Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES), the Global Environment  Outlook, and others (Global Biodiversity Outlook, 2010).\n## Uses\nThe RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15, and  is adopted by the Convention on Migratory Species and its agreements. It also serves as a headline  indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity Framework (CBD, 2022).  Furthermore, by tracking the proportion of threatened species showing status improvement, the RLI plays a  central role in evaluating progress toward Goal A. Beyond global trends, the RLI can be used to track changes\n in extinction risk across biogeographic realms, political units, ecosystems, habitats, taxonomic groups, \n threat types, use or trades, and those relevant to various international agreements and treaties \n (Butchart et al., 2004; Butchart et al., 2005). The RLI supports progress towards several other goals \n and targets within the framework, such as Goal Bb, Target 2, and Target 5, highlighting changes in \n extinction risk, including for utilized species. By calculating the RLI in more specific contexts, \n such as for species impacted by pollution (Target 7), species affected by invasive alien species (Target 6b),\n  or those used for food and medicine (Target 9b), the indicator provides targeted insights that directly \n  inform efforts to meet these goals.\n  \nThe following are suggested inputs that are goal-specific:\n1. RLI of species impacted by pollution (Target 7)\n  - Country: User's choice \n  - Taxonomic group: All \n  - Threat category: Pollution \n  - Species use: Do not filter by species use or trade\n\n2. RLI of species impacted by invasive alien species (Target 6b)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Invasive alien species or diseases\n  - Species use: Do not filter by species use or trade\n\n3. RLI of species used in food and medicine (Target 9b)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Do not filter by threat category\n  - Species use: Food - human, Food - animal, Medicine human & veterinary\n\n4. RLI for all utilized species (Targer Bb and Goal 5)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Do not filter by threat category\n  - Species use: All\n\n## Pipeline Limitations\n* On larger datasets, the pipeline takes a significant amount of time to load the data.\n* This pipeline calculates the RLI for species only. Subspecies, subpopulations, and  varieties are excluded from the analysis.\n* The list of IUCN assessments extracted for this pipeline are only the ones done on a  Global scale. Regional scale assessments are excluded from the analysis to maintain consistency.\n## Before you start\nTo use this pipeline, you’ll need an [IUCN token](https://api.iucnredlist.org/users/sign_up) to access data on the International Union for Conservation of Nature (IUCN) Red List of Threatened Species. Once you have the token, you must add it  to the 'runner.env' file in your local repository.\nThe IUCN Red List of threatened species has the following threat categorizations:\n\n  - EX: Exinct \n  - EW: Extinct in the wild \n  - RE: Regionally extinct \n  - CR: Critically endangered \n  - EN: Endangered \n  - VU: Vulnerable \n  - LR/cd: Lower risk \n  - Conservation dependent \n  - NT or LR/nt: Near threatened \n  - LC or LR/lc: Least concern \n  - DD: Data deficient\n\n(IUCN, 2025)",
+    "description": "## Introduction\nThe Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. Many species that move categories in the Red List do so because of revised taxonomy or improved knowledge. Therefore, looking at raw trends in Red List status can be misleading.  RLI models these trends to show overall changes the status of species groups that are  based only on genuine improvement or deterioriation.\nRLI has been widely integrated into various policy frameworks. Initially used to assess  progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006),  it has since been employed in regional, thematic, and global assessments by bodies such as  the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES),  the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).\n## Uses\nThe RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15,  and is adopted by the Convention on Migratory Species and its agreements. It also serves as  a headline indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity  Framework (CBD, 2022). Furthermore, by tracking the proportion of threatened species showing  status improvement, the RLI plays a central role in evaluating progress toward Goal A. Beyond  global trends, the RLI can be used to track changes in extinction risk across biogeographic realms,  political units, ecosystems, habitats, taxonomic groups, threat types, use or trades, and those  relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005).  The RLI supports progress towards several other goals and targets within the framework, such as Goal B,  Target 2, and Target 5, highlighting changes in extinction risk, including for utilized species.  By calculating the RLI in more specific contexts, such as for species impacted by pollution  (Target 7), species affected by invasive alien species (Target 6b), or those used for food and medicine  (Target 9b), the indicator provides targeted insights that directly inform efforts to meet these goals.  To read more about the RLI indicator in the Global Biodiversity Framework, see the metadata  [here](https://www.gbf-indicators.org/metadata/headline/A-3).\n  \nThe following are suggested inputs that are goal-specific:\n1. RLI of species impacted by pollution (Target 7)\n  - Country: User's choice \n  - Taxonomic group: All \n  - Threat category: Pollution \n  - Species use: Do not filter by species use or trade\n\n2. RLI of species impacted by invasive alien species (Target 6b)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Invasive alien species or diseases\n  - Species use: Do not filter by species use or trade\n\n3. RLI of species used in food and medicine (Target 9b)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Do not filter by threat category\n  - Species use: Food - human, Food - animal, Medicine human & veterinary\n\n4. RLI for all utilized species (Goal B and Target 5)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Do not filter by threat category\n  - Species use: All\n\n5. RLI for species threatened by fisheries (Target 9)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Fisheries\n  - Species use: Do not filter by species use or trade\n\n## Pipeline Limitations\n* On large or species-rich countries, as well as in threat or use categories that have a substantial  number of species, this pipeline takes a significant amount of time to retrieve the data.\n* This pipeline calculates the RLI for species only. Subspecies, subpopulations, and varieties are  excluded from the analysis.\n* The list of IUCN assessments extracted for this pipeline are only the ones done on a Global scale.  Regional scale assessments are excluded from the analysis.\n## Before you start\nTo use this pipeline, you’ll need an [IUCN token](https://api.iucnredlist.org/users/sign_up) to access  data on the International Union for Conservation of Nature (IUCN) Red List of Threatened Species.\nTo interpret the results of this pipeline, it's important to understand the IUCN threat categorizations,  which are present throughout the outputs. Some results present these categorizations directly,  while others such as the Red List Index (RLI) calculations, use them to model changes in extinction  risk over time. \nThe IUCN Red List of Threatened Species defines the following threat categories:\n  - EX: Exinct \n  - EW: Extinct in the wild \n  - RE: Regionally extinct \n  - CR: Critically endangered \n  - EN: Endangered \n  - VU: Vulnerable \n  - LR/cd: Lower risk \n  - Conservation dependent \n  - NT or LR/nt: Near threatened \n  - LC or LR/lc: Least concern \n  - DD: Data deficient\n\n(IUCN, 2025)",
     "author": [
       {
         "name": "Victor Julio Rincon",
