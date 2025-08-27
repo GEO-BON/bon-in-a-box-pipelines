@@ -32,14 +32,23 @@ inputs:
     example:
 outputs:
   raster:
-    label: Raster
-    description: Rasters of land cover for each time point and species
-    type: image/tiff;application=geotiff
+    label: Habitat per time point
+    description: Rasters of land cover data for each time point.
+    type: image/tiff;application=geotiff[]
   habitat_change_map:
     label: Habitat change map
     description: Map showing habitat change between the start and end year time points. A value of 1, 2, and 3 represents habitat loss, habitat gain, and no change in habitat, respectively.
     type: image/tiff;application=geotiff
-  shs_table:
-    label: SHS Table
-    description: Table of SHS values
-    type: text/tab-separated-values
+  shs_timeseries:
+    label: SHS time series
+    description: Figure showing a time series of SHS values for each species.
+    type: image/png[]
+  df_shs:
+    label: SHS table
+    description: A TSV file containing Area Score, Connectivity Score, and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.
+    type: text/tab-separated-values[]
+  df_shs_tidy:
+    label: SHS table (long format)
+    description: A TSV file in long format containing Area Score, Connectivity Score, and SHS by time step for each species. The SHS is the mean value between the AS and CS.  Percentage of change, 100% being equal to the reference year.
+    type: text/tab-separated-values[]
+

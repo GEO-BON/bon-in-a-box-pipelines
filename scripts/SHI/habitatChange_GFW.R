@@ -266,12 +266,6 @@ for (i in 1:length(sp)) {
 
   print("========== Map of changes in suitable area generated ==========")
 
-  print("HI THERE*******")
-  print(table(terra::values(s_year_loss_resampled)))
-  print(table(terra::values(r_GFW_TC_threshold)))
-  print(terra::nlyr(s_year_loss_resampled))
-  print(terra::nlyr(r_GFW_TC_threshold))
-
   # create non masked layers for distance metrics
   s_habitat0_nomask <- terra::classify(r_GFW_TC_threshold - s_year_loss_resampled, rcl = cbind(-1, 0))
 
@@ -364,7 +358,7 @@ print(path_habitat_by_tstep)
 print(v_path_SHS_map)
 print(v_path_img_SHS_timeseries)
 
-# Outputing result
+# Outputting result
 biab_output("img_shs_map", v_path_SHS_map)
 biab_output("r_habitat_by_tstep", path_habitat_by_tstep)
 biab_output("img_shs_timeseries", v_path_img_SHS_timeseries)

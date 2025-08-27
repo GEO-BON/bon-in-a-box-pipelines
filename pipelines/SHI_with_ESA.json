@@ -146,17 +146,6 @@
       }
     },
     {
-      "id": "19",
-      "type": "output",
-      "position": {
-        "x": 3418.62564292562,
-        "y": -11.360140259987077
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "23",
       "type": "userInput",
       "position": {
@@ -170,33 +159,11 @@
       }
     },
     {
-      "id": "24",
-      "type": "output",
-      "position": {
-        "x": 3417.876275112467,
-        "y": 33.64852965707274
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "25",
-      "type": "output",
-      "position": {
-        "x": 1712.677773557039,
-        "y": 241.7867097598567
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "26",
       "type": "output",
       "position": {
-        "x": 2248.04345703125,
-        "y": 416.47825622558594
+        "x": 1736.04345703125,
+        "y": 244.47825622558594
       },
       "data": {
         "label": "Output"
@@ -251,17 +218,6 @@
       "data": {
         "type": "int",
         "value": 2011
-      }
-    },
-    {
-      "id": "31",
-      "type": "output",
-      "position": {
-        "x": 3420.2173461914062,
-        "y": 73.39129638671875
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -324,6 +280,105 @@
           "q1",
           "q3"
         ]
+      }
+    },
+    {
+      "id": "37",
+      "type": "output",
+      "position": {
+        "x": 3476.496814378117,
+        "y": 88.53444695083184
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "38",
+      "type": "output",
+      "position": {
+        "x": 3440.6579413767313,
+        "y": 154.4004838182425
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "40",
+      "type": "output",
+      "position": {
+        "x": 2164.5413273373333,
+        "y": 368.53734937788386
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "41",
+      "type": "output",
+      "position": {
+        "x": 3382.099232498667,
+        "y": 31.938700462749367
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "42",
+      "type": "output",
+      "position": {
+        "x": 3524.771601455598,
+        "y": -43.59373016150843
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "43",
+      "type": "io",
+      "position": {
+        "x": 3330.4640589533933,
+        "y": 284.78620219936715
+      },
+      "data": {
+        "descriptionFile": "SHI>calculateSHI.yml"
+      }
+    },
+    {
+      "id": "44",
+      "type": "output",
+      "position": {
+        "x": 3886.9012033644876,
+        "y": 285.72166360025324
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "45",
+      "type": "output",
+      "position": {
+        "x": 3884.6247088786467,
+        "y": 298.24238327237805
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "46",
+      "type": "output",
+      "position": {
+        "x": 3880.071719906965,
+        "y": 313.03959743034363
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -462,39 +517,11 @@
       "id": "reactflow__edge-8-16crs"
     },
     {
-      "source": "9",
-      "sourceHandle": "raster",
-      "target": "19",
-      "targetHandle": null,
-      "id": "reactflow__edge-9raster-19"
-    },
-    {
       "source": "23",
       "sourceHandle": null,
       "target": "9",
       "targetHandle": "habitats",
       "id": "reactflow__edge-23-9habitats"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "habitat_change_map",
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-9habitat_change_map-24"
-    },
-    {
-      "source": "15",
-      "sourceHandle": null,
-      "target": "25",
-      "targetHandle": null,
-      "id": "reactflow__edge-15-25"
-    },
-    {
-      "source": "14",
-      "sourceHandle": "sf_range_map",
-      "target": "26",
-      "targetHandle": null,
-      "id": "reactflow__edge-14sf_range_map-26"
     },
     {
       "source": "27",
@@ -560,13 +587,6 @@
       "id": "reactflow__edge-30-9end_year"
     },
     {
-      "source": "9",
-      "sourceHandle": "shs_table",
-      "target": "31",
-      "targetHandle": null,
-      "id": "reactflow__edge-9shs_table-31"
-    },
-    {
       "source": "33",
       "sourceHandle": null,
       "target": "16",
@@ -607,6 +627,83 @@
       "target": "3",
       "targetHandle": "resampling",
       "id": "reactflow__edge-36-3resampling"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "shs_timeseries",
+      "target": "37",
+      "targetHandle": null,
+      "id": "reactflow__edge-9shs_timeseries-37"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "df_shs",
+      "target": "38",
+      "targetHandle": null,
+      "id": "reactflow__edge-9df_shs-38"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-15-26"
+    },
+    {
+      "source": "14",
+      "sourceHandle": "sf_range_map",
+      "target": "40",
+      "targetHandle": null,
+      "id": "reactflow__edge-14sf_range_map-40"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "habitat_change_map",
+      "target": "41",
+      "targetHandle": null,
+      "id": "reactflow__edge-9habitat_change_map-41"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "raster",
+      "target": "42",
+      "targetHandle": null,
+      "id": "reactflow__edge-9raster-42"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "df_shs_tidy",
+      "target": "43",
+      "targetHandle": "df_shs_tidy",
+      "id": "reactflow__edge-9df_shs_tidy-43df_shs_tidy"
+    },
+    {
+      "source": "11",
+      "sourceHandle": "df_aoh_areas",
+      "target": "43",
+      "targetHandle": "df_aoh_areas",
+      "id": "reactflow__edge-11df_aoh_areas-43df_aoh_areas"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "df_shi",
+      "target": "44",
+      "targetHandle": null,
+      "id": "reactflow__edge-43df_shi-44"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "img_shi_timeseries",
+      "target": "45",
+      "targetHandle": null,
+      "id": "reactflow__edge-43img_shi_timeseries-45"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "img_w_shi_timeseries",
+      "target": "46",
+      "targetHandle": null,
+      "id": "reactflow__edge-43img_w_shi_timeseries-46"
     }
   ],
   "inputs": {
@@ -800,38 +897,63 @@
     }
   },
   "outputs": {
-    "SHI>habitatChange_ESA.yml@9|raster": {
-      "description": "Map showing habitat change over the range of time specified",
-      "label": "Raster",
-      "type": "image/tiff;application=geotiff",
-      "weight": 0
-    },
-    "SHI>habitatChange_ESA.yml@9|habitat_change_map": {
-      "description": "Map showing habitat change over the range of time specified",
-      "label": "Habitat change map",
-      "type": "image/tiff;application=geotiff",
-      "weight": 1
-    },
     "pipeline@15|default_output": {
-      "label": "species",
+      "label": "Species",
       "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
       "example": [
-        "Myrmecophaga tridactyla"
+        "Alces alces",
+        "Ambystoma laterale"
       ],
       "type": "text[]",
+      "weight": 0
+    },
+    "SHI>habitatChange_ESA.yml@9|shs_timeseries": {
+      "description": "Figure showing a time series of SHS values for each species.",
+      "label": "SHS time series",
+      "type": "image/png[]",
+      "weight": 1
+    },
+    "SHI>habitatChange_ESA.yml@9|df_shs": {
+      "description": "A TSV file containing Area Score, Connectivity Score, and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
+      "label": "SHS table",
+      "type": "text/tab-separated-values[]",
       "weight": 2
+    },
+    "SHI>habitatChange_ESA.yml@9|habitat_change_map": {
+      "description": "Map showing habitat change between the start and end year time points. A value of 1, 2, and 3 represents habitat loss, habitat gain, and no change in habitat, respectively.",
+      "label": "Habitat change map",
+      "type": "image/tiff;application=geotiff",
+      "weight": 3
+    },
+    "SHI>habitatChange_ESA.yml@9|raster": {
+      "description": "Rasters of land cover data for each time point.",
+      "label": "Habitat per time point",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 4
     },
     "data>getRangeMap.yml@14|sf_range_map": {
       "description": "Polygon with expected area for the species.",
-      "label": "expert range map",
+      "label": "Expert range map",
       "type": "application/geopackage+sqlite3[]",
-      "weight": 3
+      "weight": 5
     },
-    "SHI>habitatChange_ESA.yml@9|shs_table": {
-      "description": "Table of SHS values",
-      "label": "SHS Table",
+    "SHI>calculateSHI.yml@43|df_shi": {
+      "description": "Table with SHI and Steward’s SHI values for the complete area of study.",
+      "label": "SHI table",
       "type": "text/tab-separated-values",
-      "weight": 4
+      "weight": 6
+    },
+    "SHI>calculateSHI.yml@43|img_shi_timeseries": {
+      "description": "Figure showing a time series of SHI values for each time step, 100% being equal to the reference year.",
+      "label": "SHI time series",
+      "type": "image/png",
+      "weight": 7
+    },
+    "SHI>calculateSHI.yml@43|img_w_shi_timeseries": {
+      "description": "Figure showing a time series of Steward’s SHI values for each time step. This is weighted by the proportion between the area of habitat for the study area and the total range map of the species. The reference year will start at the proportion of area of habitat in the study area. For example, if half of the species habitat is covered by the study area, the reference year’s value will be 50%.",
+      "label": "Steward’s SHI time series",
+      "type": "image/png",
+      "weight": 8
     }
   },
   "metadata": {
