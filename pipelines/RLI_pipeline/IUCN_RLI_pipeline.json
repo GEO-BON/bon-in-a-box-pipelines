@@ -4,8 +4,8 @@
       "id": "55",
       "type": "io",
       "position": {
-        "x": 1687.7277574521509,
-        "y": 184.4513326343275
+        "x": 1579,
+        "y": 249.5
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml"
@@ -15,8 +15,8 @@
       "id": "56",
       "type": "io",
       "position": {
-        "x": 266.0061000904176,
-        "y": -22.05844132193468
+        "x": 281,
+        "y": 106
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
@@ -26,8 +26,8 @@
       "id": "58",
       "type": "io",
       "position": {
-        "x": 991.0423653885689,
-        "y": 219.56377495635525
+        "x": 880,
+        "y": -66
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spList.yml"
@@ -37,8 +37,8 @@
       "id": "59",
       "type": "io",
       "position": {
-        "x": 2331.66240273383,
-        "y": 219.56377495635525
+        "x": 2348,
+        "y": 493.5
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>RedListIndex.yml"
@@ -48,30 +48,8 @@
       "id": "60",
       "type": "output",
       "position": {
-        "x": 2277.496760738488,
-        "y": 357.75311745855095
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "61",
-      "type": "output",
-      "position": {
-        "x": 2797.166094017921,
-        "y": 221.7173777964029
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "62",
-      "type": "output",
-      "position": {
-        "x": 2866.6515069994193,
-        "y": 382.7880281010879
+        "x": 2231.9814661452997,
+        "y": 259.5782412059755
       },
       "data": {
         "label": "Output"
@@ -81,8 +59,8 @@
       "id": "63",
       "type": "output",
       "position": {
-        "x": 2844.6929832671003,
-        "y": 295.5514727256776
+        "x": 2811.763464985768,
+        "y": 502.355450824636
       },
       "data": {
         "label": "Output"
@@ -92,8 +70,8 @@
       "id": "65",
       "type": "constant",
       "position": {
-        "x": 1823.3214534410822,
-        "y": 327.27801065823445
+        "x": 1859.241415622526,
+        "y": 592.4023593708758
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -105,8 +83,8 @@
       "id": "66",
       "type": "constant",
       "position": {
-        "x": 1865.545706585815,
-        "y": 384.01685082146895
+        "x": 1860.159576687689,
+        "y": 637.4074172640236
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -118,8 +96,8 @@
       "id": "67",
       "type": "constant",
       "position": {
-        "x": 1250.655020165646,
-        "y": 329.91702647978025
+        "x": 1161,
+        "y": 534
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -131,8 +109,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 1079.9624938964844,
-        "y": 93.79999542236328
+        "x": 878,
+        "y": 163
       },
       "data": {
         "label": "Output"
@@ -142,8 +120,8 @@
       "id": "77",
       "type": "io",
       "position": {
-        "x": 226.3706122869927,
-        "y": 127.42904249085876
+        "x": 202,
+        "y": 270
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spUse.yml"
@@ -153,8 +131,8 @@
       "id": "78",
       "type": "output",
       "position": {
-        "x": 816.6572326433825,
-        "y": 145.0240217275138
+        "x": 874,
+        "y": 320
       },
       "data": {
         "label": "Output"
@@ -164,8 +142,8 @@
       "id": "82",
       "type": "io",
       "position": {
-        "x": 208.61557861082133,
-        "y": 457.5595565119029
+        "x": 147,
+        "y": 186
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spGroup.yml"
@@ -175,8 +153,8 @@
       "id": "83",
       "type": "output",
       "position": {
-        "x": 824.1919664820688,
-        "y": 477.17991938714397
+        "x": 876,
+        "y": 242.5
       },
       "data": {
         "label": "Output"
@@ -186,8 +164,8 @@
       "id": "91",
       "type": "output",
       "position": {
-        "x": 1584.6000061035156,
-        "y": 241.79999542236328
+        "x": 1527.5822625076985,
+        "y": -55.646618680163954
       },
       "data": {
         "label": "Output"
@@ -197,8 +175,8 @@
       "id": "92",
       "type": "io",
       "position": {
-        "x": 173.60000610351562,
-        "y": 298.7999954223633
+        "x": 112,
+        "y": 356
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spThreats.yml"
@@ -208,8 +186,8 @@
       "id": "93",
       "type": "output",
       "position": {
-        "x": 1057.0728378584495,
-        "y": 492.28675206509917
+        "x": 870,
+        "y": 398
       },
       "data": {
         "label": "Output"
@@ -219,8 +197,8 @@
       "id": "94",
       "type": "io",
       "position": {
-        "x": 1960.686222245447,
-        "y": -39.70198192065257
+        "x": 1585,
+        "y": 91.5
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>Pop_trends.yml"
@@ -230,8 +208,8 @@
       "id": "95",
       "type": "output",
       "position": {
-        "x": 2515.180295020715,
-        "y": -37.16010542757205
+        "x": 2152.61301875055,
+        "y": 86.61301875054988
       },
       "data": {
         "label": "Output"
@@ -252,20 +230,6 @@
       "target": "60",
       "targetHandle": null,
       "id": "reactflow__edge-55api_citation-60"
-    },
-    {
-      "source": "59",
-      "sourceHandle": "redlist_trend_plot",
-      "target": "61",
-      "targetHandle": null,
-      "id": "reactflow__edge-59redlist_trend_plot-61"
-    },
-    {
-      "source": "59",
-      "sourceHandle": "redlist_matrix",
-      "target": "62",
-      "targetHandle": null,
-      "id": "reactflow__edge-59redlist_matrix-62"
     },
     {
       "source": "59",
@@ -434,6 +398,20 @@
       "target": "94",
       "targetHandle": "splist",
       "id": "reactflow__edge-58iucn_splist-94splist"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "redlist_trend_plot",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-59redlist_trend_plot-63"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "redlist_matrix",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-59redlist_matrix-63"
     }
   ],
   "inputs": {
