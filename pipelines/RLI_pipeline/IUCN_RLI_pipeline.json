@@ -192,28 +192,6 @@
       "data": {
         "label": "Output"
       }
-    },
-    {
-      "id": "94",
-      "type": "io",
-      "position": {
-        "x": 1585,
-        "y": 91.5
-      },
-      "data": {
-        "descriptionFile": "IUCNRedlistIndex>Pop_trends.yml"
-      }
-    },
-    {
-      "id": "95",
-      "type": "output",
-      "position": {
-        "x": 2152.61301875055,
-        "y": 86.61301875054988
-      },
-      "data": {
-        "label": "Output"
-      }
     }
   ],
   "edges": [
@@ -384,20 +362,6 @@
       "target": "58",
       "targetHandle": "splist_threat",
       "id": "reactflow__edge-92iucn_threats_splist-58splist_threat"
-    },
-    {
-      "source": "94",
-      "sourceHandle": "population_trend_percent",
-      "target": "95",
-      "targetHandle": null,
-      "id": "reactflow__edge-94population_trend_percent-95"
-    },
-    {
-      "source": "58",
-      "sourceHandle": "iucn_splist",
-      "target": "94",
-      "targetHandle": "splist",
-      "id": "reactflow__edge-58iucn_splist-94splist"
     },
     {
       "source": "59",
@@ -848,12 +812,6 @@
       "label": "IUCN API citation",
       "type": "text/plain",
       "weight": 8
-    },
-    "IUCNRedlistIndex>Pop_trends.yml@94|population_trend_percent": {
-      "description": "Percentage of RLI listed species that have population trends that are improving, stable, declining, or unknown according to the IUCN red list.",
-      "label": "Data on population trends",
-      "type": "text/csv",
-      "weight": 9
     }
   },
   "metadata": {
