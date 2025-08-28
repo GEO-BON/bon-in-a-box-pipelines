@@ -43,6 +43,7 @@ for (s in 1:n_species) {
 
     # Resample land cover raster to match area of habitat
     layer <- resample(layer, species_aoh, method = "near")
+    layer <- resample(layer, species_aoh, method = "mode")
 
     # Need raster without mask for later analysis
     layers_nomask[[i]] <- layer
@@ -142,8 +143,11 @@ for (s in 1:n_species) {
   # Need unmasked land cover as reference point
   r1_nomask <- ifel(!is.na(raster_nomask[[1]]), 1, 0)
   r2_nomask <- ifel(!is.na(raster_nomask[[2]]), 1, 0)
+  print(r1_nomask)
+  print(r2_nomask)
 
   full_raster_nomask <- c(r1_nomask, r2_nomask)
+  print(full_raster_nomask)
 
   # Calculate distance to edge
   l_habitat_dist <- map(as.list(full_raster_nomask), ~ gridDist(.x, target = 0))
@@ -158,8 +162,9 @@ for (s in 1:n_species) {
   df_conn_score <- tibble(sci_name = species_name, Year = c(start_year, end_year), value = df_habitat_dist$mean) |>
     mutate(ref_value = first(value)) |>
     dplyr::group_by(Year) |>
-    mutate(diff = ref_value - value, percentage = (value * 100) / ref_value, score = "CS")
-  df_conn_score
+    mutate(diff = ref_value - value, percentage = (value * 100) / ref_value, score = "CS") |>
+    mutate(percentage = ifelse(abs(percentage - 100) < 1e-8 & Year == start_year, 100, percentage))
+
 
   # Save table as TSV
   df_conn_score_path[s] <- file.path(outputFolder, paste0(species_name, "_df_conn_score.tsv"))
