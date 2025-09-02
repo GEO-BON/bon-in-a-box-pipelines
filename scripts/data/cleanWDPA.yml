@@ -107,6 +107,7 @@ conda:
   dependencies:
     - r-rjson
     - r-sf
+    - r-lwgeom
     - r-remotes
     - r-dplyr
     - r-lubridate
