@@ -7,7 +7,7 @@
 ## Introduction
 *Write an introduction here that is a brief description of what the pipeline does.*
 
-## 'Use Case'/Context
+## Uses
 *The context in which it should be used.*
 
 ## Pipeline limitations
