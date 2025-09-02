@@ -20,7 +20,7 @@ inputs:
     example: COL
   region:
     label: State/Province code
-    description: ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)
+    description: Name of region of interest, in the native language of the location.
     type: text
     example: null
   crs:
