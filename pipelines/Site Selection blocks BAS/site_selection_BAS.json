@@ -1,0 +1,495 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 2229,
+        "y": 120
+      },
+      "data": {
+        "descriptionFile": "site_selection_BAS>Block_creation.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 1624,
+        "y": 258.3333333333333
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 2827,
+        "y": 278
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 2827,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "14",
+      "type": "output",
+      "position": {
+        "x": 2827,
+        "y": 230
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "18",
+      "type": "constant",
+      "position": {
+        "x": 1221,
+        "y": 292.3333333333333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": 2827,
+        "y": 70
+      },
+      "data": {
+        "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
+      }
+    },
+    {
+      "id": "29",
+      "type": "output",
+      "position": {
+        "x": 3294,
+        "y": 201
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "31",
+      "type": "output",
+      "position": {
+        "x": 3294,
+        "y": 41
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "32",
+      "type": "output",
+      "position": {
+        "x": 3294,
+        "y": 153
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "45",
+      "type": "io",
+      "position": {
+        "x": 455,
+        "y": 136.33333333333331
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "48",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 168.33333333333331
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "49",
+      "type": "io",
+      "position": {
+        "x": 1095,
+        "y": 210.33333333333331
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 2174.0784636685935,
+        "y": 263.63724807968634
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "constant",
+      "position": {
+        "x": 897.7004700169571,
+        "y": 396.8832204578773
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "0",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-2rasters-0rasters"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "rast_blocks",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-0rast_blocks-6"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "pca_summary_df",
+      "target": "13",
+      "targetHandle": null,
+      "id": "reactflow__edge-0pca_summary_df-13"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "blocks_plot",
+      "target": "14",
+      "targetHandle": null,
+      "id": "reactflow__edge-0blocks_plot-14"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-18-2weight_matrix_with_ids"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "pts_df",
+      "target": "29",
+      "targetHandle": null,
+      "id": "reactflow__edge-26pts_df-29"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "rast_blocks",
+      "target": "26",
+      "targetHandle": "rast_blocks",
+      "id": "reactflow__edge-0rast_blocks-26rast_blocks"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "maps_output",
+      "target": "31",
+      "targetHandle": null,
+      "id": "reactflow__edge-26maps_output-31"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "points_shape",
+      "target": "32",
+      "targetHandle": null,
+      "id": "reactflow__edge-26points_shape-32"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "colors_vect",
+      "target": "26",
+      "targetHandle": "colors_vect",
+      "id": "reactflow__edge-0colors_vect-26colors_vect"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-48-45crs"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-48-2crs"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_region_polygon",
+      "target": "49",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-45country_region_polygon-49study_area_file"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "49",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-48-49crs"
+    },
+    {
+      "source": "49",
+      "sourceHandle": "bbox",
+      "target": "2",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-49bbox-2bbox"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_region_polygon",
+      "target": "0",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-45country_region_polygon-0country_polygon"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_region_polygon",
+      "target": "26",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-45country_region_polygon-26country_polygon"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-2rasters-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-51-2study_area"
+    }
+  ],
+  "inputs": {
+    "data>loadFromStac.yml@2|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "stac_url",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 0
+    },
+    "data>loadFromStac.yml@2|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "collections_items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio12"
+      ],
+      "weight": 1
+    },
+    "data>loadFromStac.yml@2|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters",
+      "label": "spatial resolution",
+      "type": "float",
+      "example": 1000,
+      "weight": 2
+    },
+    "data>loadFromStac.yml@2|resampling": {
+      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "label": "resampling",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
+      "weight": 3
+    },
+    "data>loadFromStac.yml@2|aggregation": {
+      "description": "Method used to aggregate items that overlay each other",
+      "label": "aggregation",
+      "type": "options",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "example": "first",
+      "weight": 4
+    },
+    "data>getCountryPolygon.yml@45|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "text",
+      "example": "Peru",
+      "weight": 5
+    },
+    "data>getCountryPolygon.yml@45|region": {
+      "description": "Region of interest",
+      "label": "State/Province",
+      "type": "text",
+      "example": null,
+      "weight": 6
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
+      "description": "Select and option beween equal BAS or unequal prob BAS",
+      "label": "Sampling type",
+      "type": "options",
+      "options": [
+        "equal",
+        "unequal"
+      ],
+      "example": "equal",
+      "weight": 7
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
+      "description": "A number of target sites to obtain",
+      "label": "Target total sites",
+      "type": "int",
+      "example": 100,
+      "weight": 8
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_cols": {
+      "description": "Number of columns for the block grid",
+      "label": "number of columns",
+      "type": "int",
+      "example": 10,
+      "weight": 9
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_rows": {
+      "description": "Number of rows for the block grid",
+      "label": "number of rows",
+      "type": "int",
+      "example": 10,
+      "weight": 10
+    },
+    "pipeline@48": {
+      "label": "Coordinate reference system",
+      "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "type": "text",
+      "example": "EPSG:5387",
+      "weight": 11
+    }
+  },
+  "outputs": {
+    "site_selection_BAS>Block_creation.yml@0|rast_blocks": {
+      "description": "environmental blocks raster",
+      "label": "environmental blocks raster",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "site_selection_BAS>Block_creation.yml@0|pca_summary_df": {
+      "description": "summary of PCA",
+      "label": "summary of PCA",
+      "type": "csv",
+      "weight": 1
+    },
+    "site_selection_BAS>Block_creation.yml@0|blocks_plot": {
+      "description": "env space and map of blocks",
+      "label": "blocks and map plots",
+      "type": "image/png",
+      "weight": 2
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|pts_df": {
+      "description": "dataframe of selected points",
+      "label": "selected points",
+      "type": "csv",
+      "weight": 3
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|maps_output": {
+      "description": "maps of selected points",
+      "label": "Maps output",
+      "type": "image/png",
+      "weight": 4
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|points_shape": {
+      "description": "Vector shapefile of selected points",
+      "label": "selected points shapefile",
+      "type": "application/geo+json",
+      "weight": 5
+    },
+    "data>loadFromStac.yml@2|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 6
+    }
+  },
+  "metadata": {
+    "name": "Environmental Sampling Site Selection",
+    "description": "Selection of sampling sites using a BAS algorithm. The pipeline also produces environmental blocks and can use those to generate an unequal sampling distribution.  Blocks are based on PCA performed on the selected environmental variables or can use only 2 raw environmental variables. The user should define the grid size  for the block generation and a target sample size that will be assigned using a randomly balanced design, taking into account the inclusion probability of each block  which is  proportional to their area, if the option \"unequeal\" is selected.     ",
+    "author": [
+      {
+        "name": "Francis van Oordt",
+        "email": "francis.vanoordtlahoz@mail.mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-8471-235X"
+      }
+    ],
+    "license": "CC-BY",
+    "references": [
+      {
+        "text": "spbal: Spatially Balanced Sampling Algorithms",
+        "doi": "10.32614/CRAN.package.spbal"
+      },
+      {
+        "text": "Survey-gap analysis in expeditionary research: where do we go from here?",
+        "doi": "https://doi.org/10.1111/j.1095-8312.2005.00520.x"
+      },
+      {
+        "text": "Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations",
+        "doi": "https://doi.org/10.1111/2041-210X.13869"
+      }
+    ]
+  }
+}
