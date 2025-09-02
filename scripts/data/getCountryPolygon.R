@@ -34,36 +34,62 @@ country_name <- countrycode(
 
 biab_output("country", country_name)
 
-
-if (is.null(input$region)) { # pull study area polygon from rnaturalearth
+if (is.null(input$region)) { # pull study area polygon
   # pull whole country
-  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |> 
-  req_perform()
+  tryCatch(
+    {
+      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |>
+        req_perform()
+    },
+    error = function(e) {
+      if (grepl("404", e$message)) {
+        biab_error_stop("Could not find polygon. Check that you have correct country code.")
+      } else {
+        stop(e) # re-throw any other error
+      }
+    }
+  )
 
   meta <- res |> resp_body_json() # parse JSON
 
   geojson_url <- meta$gjDownloadURL # Extract the GeoJSON download URL
 
   country_region_polygon <- st_read(geojson_url) # Load geojson
-  
+
+  if (nrow(country_region_polygon) == 0) {
+    biab_error_stop("Could not find polygon. Check that you have correct country code.")
+  }
 } else {
   print("pulling region polygon")
-  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |> 
-  req_perform() # ADM1 gives regions/provinces
+  tryCatch(
+    {
+      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |> # ADM1 gives states and provinces
+        req_perform()
+    },
+    error = function(e) {
+      if (grepl("404", e$message)) {
+        biab_error_stop("Could not find polygon. Check that you have correct country code.")
+      } else {
+        stop(e) # re-throw any other error
+      }
+    }
+  )
 
-  meta <- res |> resp_body_json() 
+  meta <- res |> resp_body_json()
 
-  geojson_url <- meta$gjDownloadURL 
+  geojson_url <- meta$gjDownloadURL
 
   country_region_polygon <- st_read(geojson_url)
 
-  print(country_region_polygon$shapeISO)
-  country_region_polygon <- country_region_polygon[country_region_polygon$shapeISO == input$region, ] # filter shape by region of interest
+  print(country_region_polygon$shapeName)
+  shapeName <- paste(country_region_polygon$shapeName, collapse = ", ")
+  country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == input$region, ] # filter shape by region of interest
+
+  if (nrow(country_region_polygon) == 0) {
+    biab_error_stop(paste0("Could not find polygon. Check that you have correct region name. Valid region names are:", shapeName))
+  } # stop if object is empty
 }
 
-if (nrow(country_region_polygon) == 0) {
-  biab_error_stop("Could not find polygon. Check that you have correct country and region codes. If inputing region codes, check logs for a list of valid codes.")
-} # stop if object is empty
 
 # transform to crs of interest
 country_region_polygon <- st_transform(country_region_polygon, crs = input$crs)
