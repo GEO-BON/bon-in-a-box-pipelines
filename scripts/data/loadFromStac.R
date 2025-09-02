@@ -4,22 +4,23 @@ library("rjson")
 library("dplyr")
 library("gdalcubes")
 library("sf")
+library("lubridate")
 sf_use_s2(FALSE)
 
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "/data/loadFromStacFun.R", sep = "/"))
 
 input <- biab_inputs()
 
-gdalcubes_set_gdal_config("VSI_CACHE", "TRUE")
-gdalcubes_set_gdal_config("GDAL_CACHEMAX", "30%")
-gdalcubes_set_gdal_config("VSI_CACHE_SIZE", "10000000")
-gdalcubes_set_gdal_config("GDAL_HTTP_MULTIPLEX", "YES")
-gdalcubes_set_gdal_config("GDAL_INGESTED_BYTES_AT_OPEN", "32000")
-gdalcubes_set_gdal_config("GDAL_DISABLE_READDIR_ON_OPEN", "EMPTY_DIR")
-gdalcubes_set_gdal_config("GDAL_HTTP_VERSION", "2")
-gdalcubes_set_gdal_config("GDAL_HTTP_MERGE_CONSECUTIVE_RANGES", "YES")
-gdalcubes_set_gdal_config("CHECK_WITH_INVERT_PROJ", "FALSE")
-gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1)
+gdalcubes_set_gdal_config("VSI_CACHE", "TRUE") # enable caching to speed up access to remote files
+gdalcubes_set_gdal_config("GDAL_CACHEMAX", "30%") # set maximum cache to 30% of system RAM
+gdalcubes_set_gdal_config("VSI_CACHE_SIZE", "10000000") # sets size of cache size to 10MB
+gdalcubes_set_gdal_config("GDAL_HTTP_MULTIPLEX", "YES") # allows multiple requests at once
+gdalcubes_set_gdal_config("GDAL_INGESTED_BYTES_AT_OPEN", "32000") # prefetch first 32 KB of a file
+gdalcubes_set_gdal_config("GDAL_DISABLE_READDIR_ON_OPEN", "EMPTY_DIR") # disables directory listing when opening remote files, which avoids unnecessary costly HTTP requests.
+gdalcubes_set_gdal_config("GDAL_HTTP_VERSION", "2") # force use of HTTP/2 for fetching remote data
+gdalcubes_set_gdal_config("GDAL_HTTP_MERGE_CONSECUTIVE_RANGES", "YES") # if multiple consecutive byte ranges are requested, merge them into a single HTTP request
+gdalcubes_set_gdal_config("CHECK_WITH_INVERT_PROJ", "FALSE") # disable checks on coordinate transformations to speed up projectsins
+gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1) # restrict GDAL threads to 1
 
 gdalcubes::gdalcubes_options(parallel = 1)
 
@@ -70,8 +71,6 @@ if (!("stac_url" %in% names(input))) {
 cube_args <- list(
   stac_path = input$stac_url,
   limit = 5000,
-  t0 = NULL,
-  t1 = NULL,
   spatial.res = input$spatial_res, # in meters
   temporal.res = "P1D",
   aggregation = aggregation,
@@ -83,18 +82,44 @@ as_list <- FALSE
 
 raster_layers <- list()
 nc_names <- c()
+
 for (coll_it in collections_items) {
-  ci <- strsplit(coll_it, split = "|", fixed = TRUE)[[1]]
-  cube_args_c <- append(cube_args, list(
-    collections = ci[1],
-    srs.cube = crs,
-    bbox = bbox,
-    layers = NULL,
-    variable = NULL,
-    ids = ci[2]
-  ))
+  print(coll_it)
+  if (grepl("\\|", coll_it)) { # if there are collection items
+    ci <- strsplit(coll_it, split = "|", fixed = TRUE)[[1]]
+    cube_args_c <- append(cube_args, list(
+      collections = ci[1],
+      srs.cube = crs,
+      bbox = bbox,
+      layers = NULL,
+      variable = NULL,
+      ids = ci[2]
+    ))
+  } else if (is.null(input$t1) & is.null(input$t0)) { # if there are not collection items, pull entire collection
+    cube_args_c <- append(cube_args, list(
+      collections = coll_it,
+      srs.cube = crs,
+      bbox = bbox,
+      t0 = NULL,
+      t1 = NULL,
+      layers = NULL,
+      variable = NULL,
+      ids = NULL
+    )) } else { # pull by datetime
+    cube_args_c <- append(cube_args, list(
+      collections = coll_it,
+      srs.cube = crs,
+      bbox = bbox,
+      t0 = input$t0,
+      t1 = input$t1,
+      layers = NULL,
+      variable = NULL,
+      ids = NULL
+    ))
+  }
+
   print(cube_args_c)
-  pred <- do.call(load_cube, cube_args_c)
+  pred <- do.call(load_cube, cube_args_c) # call load_cube function from loadFromStacFun
 
   if (!is.null(input$study_area)) {
     study_area <- st_read(input$study_area) # load study area
