@@ -187,61 +187,59 @@
       }
     },
     {
-      "id": "43",
-      "type": "userInput",
-      "position": {
-        "x": 95,
-        "y": 527.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "COL"
-      }
-    },
-    {
-      "id": "44",
-      "type": "userInput",
-      "position": {
-        "x": 126,
-        "y": 562.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "45",
+      "id": "52",
       "type": "io",
       "position": {
-        "x": 473,
-        "y": 520
+        "x": 845.8170487447111,
+        "y": 597.471811729131
       },
       "data": {
-        "descriptionFile": "getCountrybbox.json"
+        "descriptionFile": "data>getBoundingBox.yml"
       }
     },
     {
-      "id": "46",
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": 156.1660109824801,
+        "y": 645.9747418574636
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "54",
       "type": "output",
       "position": {
-        "x": 1196,
-        "y": 591.5
+        "x": 769.8699763213801,
+        "y": 645.3318031341971
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "47",
+      "id": "55",
       "type": "output",
       "position": {
-        "x": 1196,
-        "y": 638.5
+        "x": 762.9055718150112,
+        "y": 667.9661177798963
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "56",
+      "type": "constant",
+      "position": {
+        "x": 722.6612642883047,
+        "y": 515.6263576966087
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
       }
     }
   ],
@@ -338,83 +336,97 @@
       "id": "reactflow__edge-32-18spatial_res"
     },
     {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-31-45pipeline@2"
-    },
-    {
-      "source": "44",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "data>getCountryPolygon.yml@1|region",
-      "id": "reactflow__edge-44-45data>getCountryPolygon.yml@1|region"
-    },
-    {
-      "source": "43",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "data>getCountryPolygon.yml@1|country",
-      "id": "reactflow__edge-43-45data>getCountryPolygon.yml@1|country"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country-46"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|region",
-      "target": "47",
-      "targetHandle": null,
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|region-47"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "18",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country_polygon-18study_area"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
       "target": "25",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country_polygon-25study_area_polygon"
+      "id": "reactflow__edge-53country_region_polygon-25study_area_polygon"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "52",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-53country_region_polygon-52study_area_file"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country",
+      "target": "54",
+      "targetHandle": null,
+      "id": "reactflow__edge-53country-54"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "region",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-53region-55"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-53crs"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "52",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-52crs"
+    },
+    {
+      "source": "52",
+      "sourceHandle": "bbox",
       "target": "18",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-45data>getBoundingBox.yml@0|bbox-18bbox"
+      "id": "reactflow__edge-52bbox-18bbox"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "source": "52",
+      "sourceHandle": "bbox",
       "target": "25",
       "targetHandle": "bbox",
-      "id": "reactflow__edge-45data>getBoundingBox.yml@0|bbox-25bbox"
+      "id": "reactflow__edge-52bbox-25bbox"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-56-18study_area"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "18",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-53country_region_polygon-18study_area"
     }
   ],
   "inputs": {
-    "pipeline@43": {
+    "data>getCountryPolygon.yml@53|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "label": "ISO3 country code",
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "type": "text",
       "example": "COL",
       "weight": 0
     },
-    "pipeline@44": {
-      "label": "State/Province",
-      "description": "Region of interest",
+    "data>getCountryPolygon.yml@53|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
       "type": "text",
       "example": null,
       "weight": 1
+    },
+    "pipeline@31": {
+      "label": "Coordinate reference system",
+      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
+      "type": "text",
+      "example": "EPSG:6624",
+      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -433,7 +445,7 @@
       "example": [
         "mean"
       ],
-      "weight": 2
+      "weight": 3
     },
     "BII>BIIChange.yml@14|start_year": {
       "description": "Reference BII year for raster plotting",
@@ -446,7 +458,7 @@
         "2015"
       ],
       "example": "2000",
-      "weight": 3
+      "weight": 4
     },
     "BII>BIIChange.yml@14|end_year": {
       "description": "BII layer to compare to the start year",
@@ -459,13 +471,6 @@
         "2020"
       ],
       "example": "2020",
-      "weight": 4
-    },
-    "pipeline@31": {
-      "label": "Coordinate reference system",
-      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
-      "type": "text",
-      "example": "EPSG:6624",
       "weight": 5
     },
     "pipeline@32": {
@@ -477,34 +482,34 @@
     }
   },
   "outputs": {
+    "data>getCountryPolygon.yml@53|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@53|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 1
+    },
     "data>loadFromStac.yml@18|rasters": {
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 0
+      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 1
+      "weight": 3
     },
     "BII>BIIChange.yml@14|bii_change": {
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
-    },
-    "getCountrybbox.json@45|data>getCountryPolygon.yml@1|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 3
-    },
-    "getCountrybbox.json@45|data>getCountryPolygon.yml@1|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
       "weight": 4
     }
   },
@@ -514,7 +519,9 @@
     "author": [
       {
         "name": "Jory Griffith",
-        "email": "jory.griffith@mcgill.ca"
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
       }
     ],
     "license": "CC-BY-NC-SA",

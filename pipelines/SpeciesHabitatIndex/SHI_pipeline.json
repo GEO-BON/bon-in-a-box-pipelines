@@ -594,22 +594,28 @@
     "author": [
       {
         "name": "Maria Isabel Arce-Plata",
-        "identifier": "https://orcid.org/0000-0003-4024-9268"
+        "identifier": "https://orcid.org/0000-0003-4024-9268",
+        "role": "Pipeline development"
       },
       {
         "name": "Guillaume Larocque",
-        "identifier": "https://orcid.org/0000-0002-5967-9156"
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
       },
       {
         "name": "Jaime Burbano-Girón",
-        "identifier": "https://orcid.org/0000-0001-6570-439X"
+        "identifier": "https://orcid.org/0000-0001-6570-439X",
+        "role": "Pipeline development"
       },
       {
-        "name": "Maria Camila Díaz"
+        "name": "Maria Camila Díaz",
+        "role": "Pipeline development"
       },
       {
         "name": "Timothée Poisot",
-        "identifier": "https://orcid.org/0000-0002-0735-5184"
+        "identifier": "https://orcid.org/0000-0002-0735-5184",
+        "role": "Pipeline development"
       }
     ],
     "license": "CC BY",

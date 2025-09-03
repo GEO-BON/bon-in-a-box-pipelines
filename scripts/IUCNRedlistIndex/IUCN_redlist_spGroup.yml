@@ -1,0 +1,93 @@
+script: IUCN_redlist_spGroup.R
+name: IUCN list of species of a taxonomic group
+description: Obtains a list of species assessed by the IUCN Red List of Species for a specific taxonomic group, including their most recent threat categorization.
+author:
+ - name: Maria Camila diaz
+   email: maria.camila.diaz.corzo@usherbrooke.ca
+ - name: Victor Julio Rincon
+   email: rincon-v@javeriana.edu.co
+ - name: Laetitia Tremblay
+   role: Maintenance
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist
+    - r-this.path
+    - r-rjson
+inputs:
+  taxonomic_group:
+    label: Taxonomic group
+    description: "Select the taxonomic group to obtain the list of species of that group. If 'all' is selected, a list of all species listed by the IUCN for the selected taxonomic group(s) will be obtained."
+    type: options[]
+    example: [Mammals]
+    options:
+      - "All"
+      - "Amphibians"
+      - "Birds"
+      - "Mammals"
+      - "Reptiles"
+      - "Fishes"
+      - "Insects"
+      - "Angelfishes"
+      - "Arachnids"
+      - "Blennies"
+      - "Brown algae"
+      - "Butterfly fishes"
+      - "Cacti"
+      - "Chameleons"
+      - "Cone snails"
+      - "Conifers"
+      - "Corals"
+      - "Crocodiles and alligators"
+      - "Crustaceans"
+      - "Cycads"
+      - "Fernes and allies"
+      - "Flowering plants"
+      - "Fw caridean shrimps"
+      - "Fw crabs"
+      - "Fw crayfish"
+      - "Green algae"
+      - "Groupers"
+      - "Gymnosperms"
+      - "Hagfishes"
+      - "Horseshoe crabs"
+      - "Lichens"
+      - "Lobsters"
+      - "Magnolias"
+      - "Mangrove plants"
+      - "Molluscs"
+      - "Mosses"
+      - "Mushrooms"
+      - "Others"
+      - "Pufferfishes"
+      - "Red algae"
+      - "Reef building corals"
+      - "Seabreams porgies picarels"
+      - "Seagrasses"
+      - "Seasnakes"
+      - "Sharks and rays"
+      - "Sturgeons"
+      - "Surgeonfishes"
+      - "Tarpons and ladyfishes"
+      - "Tunas and billfishes"
+      - "Velvet worms"
+      - "Wrasses and parrotfishes"
+outputs:
+  iucn_taxon_splist:
+    label: IUCN species list
+    description: "Dataset with the list of species for the specified taxonomic group. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
+    type: text/csv
+  taxonomic_group:
+    label: Taxonomic group
+    description: Taxonomic group of interest
+    type: text[]
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquired using the IUCN Red List API
+    type: text

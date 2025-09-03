@@ -1,9 +1,8 @@
 library(sf)
 library(rjson)
-library(rnaturalearth)
-library(rnaturalearthdata)
 library(dplyr)
 library(countrycode)
+library(httr2)
 
 if (!requireNamespace("packageName", quietly = TRUE)) {
   remotes::install_github("ropensci/rnaturalearthhires")
@@ -35,28 +34,45 @@ country_name <- countrycode(
 
 biab_output("country", country_name)
 
+
 if (is.null(input$region)) { # pull study area polygon from rnaturalearth
   # pull whole country
-  print("pulling country polygon")
-  country_polygon <- ne_countries(country = country_name, type = "countries", scale = 10)
+  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |>
+  req_perform()
+
+  meta <- res |> resp_body_json() # parse JSON
+
+  geojson_url <- meta$gjDownloadURL # Extract the GeoJSON download URL
+
+  country_region_polygon <- st_read(geojson_url) # Load geojson
+
 } else {
   print("pulling region polygon")
-  country_polygon <- ne_states(country = country_name)
-  country_polygon <- country_polygon %>% filter(name == input$region)
+  res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |>
+  req_perform() # ADM1 gives regions/provinces
+
+  meta <- res |> resp_body_json()
+
+  geojson_url <- meta$gjDownloadURL
+
+  country_region_polygon <- st_read(geojson_url)
+
+  print(country_region_polygon$shapeISO)
+  country_region_polygon <- country_region_polygon[country_region_polygon$shapeISO == input$region, ] # filter shape by region of interest
 }
 
-if (nrow(country_polygon) == 0) {
-  biab_error_stop("Could not find polygon. Check spelling of country and state names.")
+if (nrow(country_region_polygon) == 0) {
+  biab_error_stop("Could not find polygon. Check that you have correct country and region codes. If inputing region codes, check logs for a list of valid codes.")
 } # stop if object is empty
 
 # transform to crs of interest
-country_polygon <- st_transform(country_polygon, crs = input$crs)
-print(st_crs(country_polygon))
+country_region_polygon <- st_transform(country_region_polygon, crs = input$crs)
+print(st_crs(country_region_polygon))
 
 print("Study area downloaded")
-print(class(country_polygon))
+print(class(country_region_polygon))
 
 # output country polygon
-country_polygon_path <- file.path(outputFolder, "country_polygon.gpkg")
-sf::st_write(country_polygon, country_polygon_path, delete_dsn = T)
-biab_output("country_polygon", country_polygon_path)
+country_region_polygon_path <- file.path(outputFolder, "country_region_polygon.gpkg")
+sf::st_write(country_region_polygon, country_region_polygon_path, delete_dsn = T)
+biab_output("country_region_polygon", country_region_polygon_path)
