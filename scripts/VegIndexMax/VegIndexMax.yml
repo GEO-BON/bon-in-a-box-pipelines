@@ -1,0 +1,65 @@
+script: VegIndexMax.py
+name: Maximum Vegetation Index
+author: 
+  - name: Guillaume Larocque
+    email: guillaume.larocque@mcgill.ca
+    identifier: https://orcid.org/0000-0002-5967-9156
+license: CC-BY
+description: |
+  This script outputs the maximum vegetation index value for every pixel within a given region and for a selected time period over all Copernicus Vegetation Index layers available using OpenEO on the Copernicus Dataspace Ecosystem. This data is currently only available for Europe. The resulting raster image can thus be used to obtain a meaningful and cloud-free vegetation index layer. You can read more about the NDVI layers [here](https://land.copernicus.eu/en/dataset-catalog)
+inputs:
+  bounding_box:
+    label: Bounding box
+    description: Vector of float, bbox of latitude, longitude coordinates of the extent in the order xmin, ymin, xmax, ymax
+    type: float[]
+    example: null
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area of interest
+    type: application/geo+json
+    example: null
+  crs:
+    label: Coordinate reference system
+    description: Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated
+    type: text
+    example: 'EPSG:4326'
+  start_date:
+    label: Start date
+    description: Start date for summarizing vegetation index
+    type: text
+    example: "2019-05-01"
+  end_date:
+    label: End date
+    description: End date for summarizing vegetation index
+    type: text
+    example: "2019-09-30"
+  vegetation_index:
+    label: Vegetation indices
+    description: |
+      Vegetation Indices that should be extracted. 
+    type: options[]
+    options:
+      - "NDVI"
+      - "PPI"
+      - "LAI"
+      - "FAPAR"
+      - "QFLAG2"
+    example: ["NDVI"]
+  spatial_resolution:
+    label: Spatial resolution
+    description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
+    type: float
+    example: 100
+outputs:
+  rasters:
+    label: Vegetation index rasters
+    description: |
+      Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index
+    type: image/tiff;application=geotiff[]
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - openeo
+    - pandas
+    - geopandas
