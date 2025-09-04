@@ -1,0 +1,24 @@
+script: helloHPC.py
+name: HPC Example
+author:
+  - name: Jean-Michel Lord
+    identifier: https://orcid.org/0009-0007-3826-1125
+license: CC0
+description: Python script that runs on a HPC
+lifecycle:
+  status: example
+timeout: 1
+inputs:
+  some_int:
+    label: Some int
+    description: A number that we will increment
+    type: int
+    example: 3
+outputs:
+  increment:
+    label: A number (input++)
+    description: bla bla
+    type: int
+    example: 4
+hpc:
+  memory: 1G
