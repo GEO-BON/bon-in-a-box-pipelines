@@ -47,8 +47,9 @@ load_cube <-
         it_obj <- s |>
           rstac::collections(collections) |>
           rstac::items(ids) |>
-          rstac::get_request() #|>
-      #    rstac::items_fetch()
+          rstac::get_request() 
+
+        # Download items
       }
       # Case 2: Pull all items in a collection
       else if (is.null(ids) && is.null(t0) && is.null(t1)) {
@@ -68,41 +69,45 @@ load_cube <-
           ) |>
         #  rstac::get_request() |>
           rstac::items_fetch()
-      },
-      error = function(cond) {
-        message("ITEM NOT FOUND. Please check STAC url or collection and item names.")
-        message(cond)
-        # Choose a return value in case of error
-        print(exiting)
-      },
-      finally = {
-        message("Exiting.")
-      }
-    )
-
+    #   },
+    #   error = function(cond) {
+    #     message("ITEM NOT FOUND. Please check STAC url or collection and item names.")
+    #     message(cond)
+    #     # Choose a return value in case of error
+    #     print(exiting)
+    #   },
+    #   finally = {
+    #     message("Exiting.")
+    #   }
+    # )
 
     RCurl::url.exists(stac_path)
     name1 <- names(it_obj$assets)[1]
 
-    if (is.null(spatial.res)) { # obtain spatial resolution from metadata
+    if (is.null(spatial.res)) { # Obtain spatial resolution from metadata
       spatial.res <-
         it_obj$assets[[name1]]$`raster:bands`[[1]]$spatial_resolution
     }
-    if (is.null(srs.cube)) { # obtain spatial resolution from metadata
+
+    if (is.null(srs.cube)) { # Obtain CRS from metadata
       if ("proj:epsg" %in% names(it_obj$properties)) {
         srs.cube <- paste0("EPSG:", it_obj$properties$`proj:epsg`)
       } else if (`proj:wkt2` %in% names(it_obj$properties)) {
         srs.cube <- it_obj$properties$`proj:wkt2`
       }
     }
+    
     if (is.null(layers)) {
       layers <- names(it_obj$assets)
     }
+    # Pull ids from layers if they are not provided
     if (!is.null(ids)) {
       feats <- it_obj
     } else {
       feats <- it_obj$features
     }
+
+
     if (!is.null(variable)) {
       print("Variable is null")
       st <- gdalcubes::stac_image_collection(

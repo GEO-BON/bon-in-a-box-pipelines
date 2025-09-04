@@ -31,6 +31,11 @@ inputs:
     description: End date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.
     type: text
     example: NULL
+  temporal_res:
+    label: Temporal resolution
+    description: Temporal resolution to use when querying STAC items by date. Leave blank if not querying by date.
+    type: text
+    example: NULL
   weight_matrix_with_ids:
     label: Weight matrix with ids
     description: Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.
@@ -114,3 +119,5 @@ conda:
     - r-rcurl
     - r-rjson
     - r-sf
+    - r-stars
+    - r-terra
