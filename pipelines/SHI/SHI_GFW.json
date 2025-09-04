@@ -4,8 +4,8 @@
       "id": "65",
       "type": "io",
       "position": {
-        "x": 465,
-        "y": 363.16666666666663
+        "x": 1621,
+        "y": 192
       },
       "data": {
         "descriptionFile": "data>getRangeMap.yml"
@@ -15,8 +15,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 2397,
-        "y": 400
+        "x": 3562,
+        "y": 457
       },
       "data": {
         "descriptionFile": "SHI>calculateSHI.yml"
@@ -26,8 +26,8 @@
       "id": "73",
       "type": "output",
       "position": {
-        "x": 2992,
-        "y": 380.25
+        "x": 4151,
+        "y": 428.5
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "76",
       "type": "userInput",
       "position": {
-        "x": 193,
-        "y": 287.26666666666665
+        "x": 1338,
+        "y": 164.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +52,8 @@
       "id": "77",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 370.16666666666663
+        "x": 1156,
+        "y": 199.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -70,8 +70,8 @@
       "id": "78",
       "type": "userInput",
       "position": {
-        "x": 676,
-        "y": 327.16666666666663
+        "x": 12,
+        "y": 610.1666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -83,8 +83,8 @@
       "id": "79",
       "type": "userInput",
       "position": {
-        "x": 682,
-        "y": 242.16666666666666
+        "x": 1834,
+        "y": 139.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -96,8 +96,8 @@
       "id": "80",
       "type": "io",
       "position": {
-        "x": 1092,
-        "y": 259.5
+        "x": 2237,
+        "y": 289
       },
       "data": {
         "descriptionFile": "data>getAreaOfHabitat.yml"
@@ -107,8 +107,8 @@
       "id": "96",
       "type": "io",
       "position": {
-        "x": 1765,
-        "y": 139.5
+        "x": 2941,
+        "y": 134.5
       },
       "data": {
         "descriptionFile": "SHI>habitatChange_GFW.yml"
@@ -118,8 +118,8 @@
       "id": "100",
       "type": "output",
       "position": {
-        "x": 2397,
-        "y": 292
+        "x": 3562,
+        "y": 59
       },
       "data": {
         "label": "Output"
@@ -129,8 +129,8 @@
       "id": "101",
       "type": "output",
       "position": {
-        "x": 2397,
-        "y": 110
+        "x": 3562,
+        "y": 390
       },
       "data": {
         "label": "Output"
@@ -140,7 +140,7 @@
       "id": "102",
       "type": "output",
       "position": {
-        "x": 2397,
+        "x": 3562,
         "y": 12
       },
       "data": {
@@ -151,8 +151,8 @@
       "id": "103",
       "type": "output",
       "position": {
-        "x": 2397,
-        "y": 61
+        "x": 3562,
+        "y": 106
       },
       "data": {
         "label": "Output"
@@ -162,8 +162,8 @@
       "id": "104",
       "type": "output",
       "position": {
-        "x": 2397,
-        "y": 341
+        "x": 3562,
+        "y": 540
       },
       "data": {
         "label": "Output"
@@ -173,8 +173,8 @@
       "id": "105",
       "type": "output",
       "position": {
-        "x": 465,
-        "y": 278.16666666666663
+        "x": 1621,
+        "y": 92.5
       },
       "data": {
         "label": "Output"
@@ -184,11 +184,85 @@
       "id": "106",
       "type": "output",
       "position": {
-        "x": 1092,
-        "y": 190.5
+        "x": 2237,
+        "y": 23.5
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "107",
+      "type": "io",
+      "position": {
+        "x": 1630,
+        "y": 417
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "108",
+      "type": "constant",
+      "position": {
+        "x": 1188,
+        "y": 395
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "111",
+      "type": "constant",
+      "position": {
+        "x": 1178,
+        "y": 520
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "earthenv_topography|elevation_min",
+          "earthenv_topography|elevation_max"
+        ]
+      }
+    },
+    {
+      "id": "112",
+      "type": "userInput",
+      "position": {
+        "x": 1102,
+        "y": 360
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "113",
+      "type": "io",
+      "position": {
+        "x": 1061,
+        "y": 447
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "114",
+      "type": "io",
+      "position": {
+        "x": 419,
+        "y": 276
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
       }
     }
   ],
@@ -353,6 +427,83 @@
       "target": "106",
       "targetHandle": null,
       "id": "reactflow__edge-65sf_range_map-106"
+    },
+    {
+      "source": "108",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-108-107stac_url"
+    },
+    {
+      "source": "107",
+      "sourceHandle": "rasters",
+      "target": "80",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-107rasters-80rasters"
+    },
+    {
+      "source": "111",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-111-107collections_items"
+    },
+    {
+      "source": "78",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-78-107crs"
+    },
+    {
+      "source": "112",
+      "sourceHandle": null,
+      "target": "80",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-112-80study_area"
+    },
+    {
+      "source": "112",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-112-107study_area"
+    },
+    {
+      "source": "78",
+      "sourceHandle": null,
+      "target": "113",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-78-113crs"
+    },
+    {
+      "source": "78",
+      "sourceHandle": null,
+      "target": "114",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-78-114crs"
+    },
+    {
+      "source": "114",
+      "sourceHandle": "country_region_polygon",
+      "target": "113",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-114country_region_polygon-113study_area_file"
+    },
+    {
+      "source": "114",
+      "sourceHandle": "country_region_polygon",
+      "target": "80",
+      "targetHandle": "country_region_polygon",
+      "id": "reactflow__edge-114country_region_polygon-80country_region_polygon"
+    },
+    {
+      "source": "113",
+      "sourceHandle": "bbox",
+      "target": "107",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-113bbox-107bbox"
     }
   ],
   "inputs": {
@@ -366,35 +517,30 @@
       ],
       "weight": 0
     },
-    "data>getAreaOfHabitat.yml@80|study_area_opt": {
-      "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.",
-      "label": "Study area option",
-      "type": "options",
-      "options": [
-        "Country",
-        "Region in Country",
-        "User defined"
-      ],
-      "example": "Country",
+    "data>getCountryPolygon.yml@114|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\nLeave blank if using a custom study area.",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "COL",
       "weight": 1
     },
-    "data>getAreaOfHabitat.yml@80|country_code": {
-      "description": "Name of the country for the analysis. Refer to the [list of available countries and regions on Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).",
-      "label": "Country",
-      "type": "text",
-      "example": "Colombia",
-      "weight": 2
-    },
-    "data>getAreaOfHabitat.yml@80|region": {
-      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Refer to the [list of available countries and regions on Natural Earth](https://www.naturalearthdata.com/downloads/10m-cultural-vectors/).",
-      "label": "Region",
+    "data>getCountryPolygon.yml@114|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
       "type": "text",
       "example": null,
+      "weight": 2
+    },
+    "pipeline@78": {
+      "label": "Spatial reference system",
+      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
+      "type": "text",
+      "example": "EPSG:3116",
       "weight": 3
     },
-    "data>getAreaOfHabitat.yml@80|study_area": {
-      "description": "Path to the study area file if you choosing option \"User defined\" for study area option. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder). ",
+    "pipeline@112": {
       "label": "Study area",
+      "description": "Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder). This input is optional and can be used if the user wants to provide a custom study area.",
       "type": "application/geopackage+sqlite3",
       "example": null,
       "weight": 4
@@ -439,13 +585,6 @@
       ],
       "weight": 8
     },
-    "pipeline@78": {
-      "label": "Spatial reference system",
-      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
-      "type": "text",
-      "example": "EPSG:3116",
-      "weight": 9
-    },
     "SHI>habitatChange_GFW.yml@96|min_forest": {
       "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as input in species and separate with a comma.",
       "label": "Min forest",
@@ -453,7 +592,7 @@
       "example": [
         0
       ],
-      "weight": 10
+      "weight": 9
     },
     "SHI>habitatChange_GFW.yml@96|max_forest": {
       "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Myrmecophaga-tridactyla]). For multiple species, input in the same order as input in species and separate with a comma.",
@@ -462,35 +601,35 @@
       "example": [
         100
       ],
-      "weight": 11
+      "weight": 10
     },
     "SHI>habitatChange_GFW.yml@96|t_0": {
       "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the [Global Forest Watch data](https://stac.geobon.org/collections/gfw-lossyear).",
       "label": "Initial time",
       "type": "int",
       "example": 2000,
-      "weight": 12
+      "weight": 11
     },
     "SHI>habitatChange_GFW.yml@96|t_n": {
       "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the [Global Forest Watch data](https://stac.geobon.org/collections/gfw-lossyear).",
       "label": "Final time",
       "type": "int",
       "example": 2020,
-      "weight": 13
+      "weight": 12
     },
     "SHI>habitatChange_GFW.yml@96|time_step": {
       "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
       "label": "Time step",
       "type": "int",
       "example": 10,
-      "weight": 14
+      "weight": 13
     },
     "pipeline@79": {
       "label": "Output spatial resolution",
       "description": "Spatial resolution (in meters) for the output of the analysis.",
       "type": "int",
       "example": 1000,
-      "weight": 15
+      "weight": 14
     },
     "data>getAreaOfHabitat.yml@80|elevation_filter": {
       "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
@@ -501,14 +640,65 @@
         "No"
       ],
       "example": "Yes",
-      "weight": 16
+      "weight": 15
     },
     "data>getAreaOfHabitat.yml@80|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "Elevation buffer",
       "type": "int",
       "example": 0,
+      "weight": 16
+    },
+    "data>loadFromStac.yml@107|weight_matrix_with_ids": {
+      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
+      "label": "Weight matrix with ids",
+      "type": "text",
+      "example": null,
       "weight": 17
+    },
+    "data>loadFromStac.yml@107|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in meters",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 1000,
+      "weight": 18
+    },
+    "data>loadFromStac.yml@107|resampling": {
+      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "label": "Resampling method",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
+      "weight": 19
+    },
+    "data>loadFromStac.yml@107|aggregation": {
+      "description": "Method used to aggregate items that overlay each other",
+      "label": "Aggregation method",
+      "type": "options",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "example": "first",
+      "weight": 20
     }
   },
   "outputs": {
@@ -616,6 +806,11 @@
         "name": "Timothée Poisot",
         "identifier": "https://orcid.org/0000-0002-0735-5184",
         "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Maintenance"
       }
     ],
     "license": "CC BY",
