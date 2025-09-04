@@ -62,3 +62,4 @@ conda:
     - r-dplyr
     - r-countrycode
     - r-httr2
+    - r-jsonlite
