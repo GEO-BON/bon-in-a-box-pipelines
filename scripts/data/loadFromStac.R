@@ -208,8 +208,11 @@ for (coll_it in collections_items) { # Loop through input array
     } else {
       srs.cube <- input$crs
     }
-
-    st <- gdalcubes::stac_image_collection(feats, asset_names = item_ids) # make stac image collection
+    feats<-lapply(feats, function(x) {
+      names(x$assets) <- 'data'
+      return(x)
+    })
+    st <- gdalcubes::stac_image_collection(feats, asset_names = 'data') # make stac image collection
     if (is.null(input$t1) & is.null(input$t0)) { # pull whole collection
       # Extract unique datetime
       dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
@@ -274,13 +277,6 @@ for (coll_it in collections_items) { # Loop through input array
     print(v)
     # Make raster cube
     raster_layers <- gdalcubes::raster_cube(st, v)
-    name <- names(raster_layers)
-    ll<-list()
-    for (n in names(raster_layers)){
-      ll[[n]]='data'
-    }
-  raster_layers <- do.call(rename_bands, c(list(raster_layers), ll)) 
-    print(names(raster_layers))
     
 
     if (!is.null(input$study_area)) {
