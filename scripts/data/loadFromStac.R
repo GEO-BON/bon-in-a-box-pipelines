@@ -231,7 +231,7 @@ for (coll_it in collections_items) { # Loop through input array
           resampling = input$resampling
         )
       )
-    } else { # Filter collection by datetime 
+    } else { 
       dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
       if (min(dates) == max(dates)) {
         print("Ignoring date")
@@ -274,8 +274,14 @@ for (coll_it in collections_items) { # Loop through input array
     print(v)
     # Make raster cube
     raster_layers <- gdalcubes::raster_cube(st, v)
-    print(raster_layers)
-    print("here")
+    name <- names(raster_layers)
+    ll<-list()
+    for (n in names(raster_layers)){
+      ll[[n]]='data'
+    }
+  raster_layers <- do.call(rename_bands, c(list(raster_layers), ll)) 
+    print(names(raster_layers))
+    
 
     if (!is.null(input$study_area)) {
       poly <- st_read(input$study_area)
@@ -303,30 +309,3 @@ for (coll_it in collections_items) { # Loop through input array
 
 
 biab_output("rasters", raster_paths)
-
-
-
-# nc_names <- cbind(nc_names, names(pred))
-# if (names(pred) == "data") {
-#   pred <- rename_bands(pred, data = ci[2])
-# }
-# print(pred)
-
-# raster_layers[[ci[2]]] <- pred
-
-# for (coll_it in collection_items) {
-#   if (grepl("\\|", coll_it)) { # If specific collection items are input then the paths are already saved
-#     biab_output("rasters", raster_paths)
-#   } else {
-#     out <- gdalcubes::write_tif(raster_layers, dir = file.path(outputFolder), prefix = coll_it, creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE)
-#     biab_output("rasters", raster_paths)
-#   }
-# }
-
-
-# if (is.null(weight_matrix)) { # Temporary fix
-#   weight_matrix <- ""
-# }
-
-# biab_output("rasters", layer_paths)
-# biab_output("weight_matrix_with_layers", weight_matrix)
