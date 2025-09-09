@@ -14,7 +14,7 @@ inputs:
   spat_res:
     label: output spatial resolution
     description: Spatial resolution (in meters) for the output of the analysis.
-    type: int
+    type: float
     example: 1000
   srs:
     label: spatial reference system

@@ -704,6 +704,13 @@
       "target": "46",
       "targetHandle": null,
       "id": "reactflow__edge-43img_w_shi_timeseries-46"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-35-11spat_res"
     }
   ],
   "inputs": {
@@ -773,27 +780,14 @@
       "example": [
         "50",
         "60",
-        "61",
-        "62",
         "70",
-        "71",
-        "72",
         "80",
-        "81",
-        "82",
         "90",
         "151",
         "160",
         "170"
       ],
       "weight": 8
-    },
-    "data>getAreaOfHabitat.yml@11|spat_res": {
-      "description": "Spatial resolution (in meters) for the output of the analysis.",
-      "label": "Output spatial resolution",
-      "type": "int",
-      "example": 1000,
-      "weight": 9
     },
     "data>getAreaOfHabitat.yml@11|range_map_type": {
       "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
@@ -805,14 +799,14 @@
         "Both"
       ],
       "example": "Polygon",
-      "weight": 10
+      "weight": 9
     },
     "data>getAreaOfHabitat.yml@11|r_range_map": {
       "description": "Binary raster with expected area for the species or raster with values equal to 1 where the species is distributed and the rest is empty.",
       "label": "Range map (raster)",
       "type": "image/tiff;application=geotiff[]",
       "example": [],
-      "weight": 11
+      "weight": 10
     },
     "data>getAreaOfHabitat.yml@11|elevation_filter": {
       "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
@@ -823,14 +817,14 @@
         "No"
       ],
       "example": "Yes",
-      "weight": 12
+      "weight": 11
     },
     "data>getAreaOfHabitat.yml@11|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "Elevation buffer",
       "type": "int",
       "example": null,
-      "weight": 13
+      "weight": 12
     },
     "data>getRangeMap.yml@14|expert_source": {
       "description": "Source of the expert range map for the species. The options are:\nMap of Life (MOL), International union for conservation of nature (IUCN) and range maps from the Ministère de l’Environnement du Québec (QC).\n",
@@ -842,14 +836,14 @@
         "QC"
       ],
       "example": "IUCN",
-      "weight": 14
+      "weight": 13
     },
     "pipeline@28": {
       "label": "Weight matrix with ids",
       "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
       "type": "text",
       "example": null,
-      "weight": 15
+      "weight": 14
     },
     "pipeline@33": {
       "label": "Aggregation method",
@@ -863,18 +857,18 @@
         "mean",
         "median"
       ],
-      "weight": 16
+      "weight": 15
     },
     "pipeline@35": {
       "label": "Spatial resolution",
-      "description": "Integer, spatial resolution of the rasters in meters",
+      "description": "Integer, spatial resolution of the rasters in meters.",
       "type": "float",
       "example": 1000,
-      "weight": 17
+      "weight": 16
     },
     "pipeline@36": {
       "label": "Resampling method",
-      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "description": "Resampling method used when rescaling the raster layers from the STAC catalogue. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
       "type": "options",
       "example": "near",
       "options": [
@@ -893,7 +887,7 @@
         "q1",
         "q3"
       ],
-      "weight": 18
+      "weight": 17
     }
   },
   "outputs": {
