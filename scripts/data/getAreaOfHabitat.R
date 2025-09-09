@@ -106,7 +106,7 @@ for (i in seq_along(sp)) {
   }
 
   # Get range map---------------------------------------------------------------
-  sf_range_map <<- st_read(sf_range_map_path[i])
+  #sf_range_map <<- st_read(sf_range_map_path[i])
   if (range_map_type == "Polygon") {
     sf_range_map <<- st_read(sf_range_map_path[i])
   }

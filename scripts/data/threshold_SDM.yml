@@ -1,0 +1,22 @@
+script: threshold_SDM.R
+name: Range map from SDM
+description: This script takes an SDM prediction raster and only retains values above the specified threshold. It then converts all the retained values to 1s to create a species range map.
+author:
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
+inputs:
+  raster:
+    label: SDM raster
+    description: Raster layer containing species distribution model (SDM) predictions.
+    type: image/tiff;application=geotiff[]
+    example:
+  threshold:
+    label: Threshold value
+    description: Minimum threshold value. Raster cells with values above this number will be set 1 and the rest to NA. Ranges from 0 to 1.
+    type: float
+    example: 0.95
+outputs:
+  range_map:
+    label: Range map
+    description: Species range map based of SDM predictions
+    type: image/tiff;application=geotiff[]

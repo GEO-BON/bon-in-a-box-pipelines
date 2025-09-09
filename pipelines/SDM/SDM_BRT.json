@@ -37,31 +37,13 @@
       "id": "57",
       "type": "userInput",
       "position": {
-        "x": -16,
-        "y": 294.49999999999994
+        "x": -890.4901981006784,
+        "y": 210.8658703158747
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "EPSG:6623"
-      }
-    },
-    {
-      "id": "58",
-      "type": "userInput",
-      "position": {
-        "x": 88,
-        "y": 196.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
       }
     },
     {
@@ -426,6 +408,17 @@
       "data": {
         "type": "application/geopackage+sqlite3"
       }
+    },
+    {
+      "id": "168",
+      "type": "io",
+      "position": {
+        "x": -359.6885687199286,
+        "y": 118.71550020839982
+      },
+      "data": {
+        "descriptionFile": "getCountrybbox.json"
+      }
     }
   ],
   "edges": [
@@ -477,13 +470,6 @@
       "target": "135",
       "targetHandle": null,
       "id": "reactflow__edge-132sdm_uncertainty-135"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "132",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-132bbox"
     },
     {
       "source": "57",
@@ -619,20 +605,6 @@
       "id": "reactflow__edge-146-161stac_url"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-160bbox"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-161bbox"
-    },
-    {
       "source": "137",
       "sourceHandle": null,
       "target": "160",
@@ -710,13 +682,6 @@
       "id": "reactflow__edge-163-161resampling"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-159bbox"
-    },
-    {
       "source": "167",
       "sourceHandle": null,
       "target": "160",
@@ -729,9 +694,58 @@
       "target": "161",
       "targetHandle": "study_area",
       "id": "reactflow__edge-167-161study_area"
+    },
+    {
+      "source": "168",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "159",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-168data>getBoundingBox.yml@0|bbox-159bbox"
+    },
+    {
+      "source": "168",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "160",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-168data>getBoundingBox.yml@0|bbox-160bbox"
+    },
+    {
+      "source": "168",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "161",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-168data>getBoundingBox.yml@0|bbox-161bbox"
+    },
+    {
+      "source": "168",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "132",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-168data>getBoundingBox.yml@0|bbox-132bbox"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "168",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-57-168pipeline@2"
     }
   ],
   "inputs": {
+    "getCountrybbox.json@168|data>getCountryPolygon.yml@12|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "CAN",
+      "weight": 0
+    },
+    "getCountrybbox.json@168|data>getCountryPolygon.yml@12|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": "CA-QB",
+      "weight": 1
+    },
     "pipeline@121": {
       "label": "Species",
       "description": "Name of species",
@@ -739,7 +753,7 @@
       "example": [
         "Acer saccharum"
       ],
-      "weight": 0
+      "weight": 2
     },
     "pipeline@137": {
       "label": "Environmental Predictors",
@@ -752,82 +766,70 @@
         "chelsa-clim|bio12",
         "chelsa-clim|bio15"
       ],
-      "weight": 1
-    },
-    "pipeline@58": {
-      "label": "Bounding Box",
-      "description": "Vector of floating point numbers. Represent the bounding box in the order xmin, ymin, xmax, ymax. Must be in the same CRS as the CRS input.",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 2
+      "weight": 3
     },
     "pipeline@57": {
       "label": "Coordinate Reference System",
       "description": "String, Projection System as an EPSG code.",
       "type": "text",
-      "example": "EPSG:6624",
-      "weight": 3
+      "example": "EPSG:3348",
+      "weight": 4
     },
     "pipeline@128": {
       "label": "Spatial Resolution",
       "description": "Integer, spatial resolution of the rasters in meters",
       "type": "float",
       "example": 1000,
-      "weight": 4
+      "weight": 5
     },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
       "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
       "type": "float",
       "example": 10,
-      "weight": 5
+      "weight": 6
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
       "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
       "type": "int",
       "example": 100000,
-      "weight": 6
+      "weight": 7
     },
     "pipeline@154": {
       "label": "Pseudoabsence proportion",
       "description": "The number of PAs, given by the proportion of the total occurrences to use.",
       "type": "float",
       "example": 2.4,
-      "weight": 7
+      "weight": 8
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 8
+      "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 9
+      "weight": 10
     },
     "data>loadFromStac.yml@161|weight_matrix_with_ids": {
       "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
       "label": "Weight matrix with ids",
       "type": "text",
       "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n",
-      "weight": 10
+      "weight": 11
     },
     "pipeline@167": {
       "label": "Study area",
-      "description": "Polygon of study area used to crop output layers",
+      "description": "Custom polygon of a study area used to crop output layers. This input can be used instead of the country input.",
       "type": "application/geopackage+sqlite3",
       "example": null,
-      "weight": 11
+      "weight": 12
     }
   },
   "outputs": {
@@ -888,17 +890,17 @@
       "type": "image/tiff;application=geotiff",
       "weight": 8
     },
+    "data>loadFromStac.yml@160|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 9
+    },
     "data>getGBIFObservations>getGBIFObservations.yml@159|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 9
-    },
-    "data>loadFromStac.yml@160|rasters": {
-      "description": "array of output raster paths",
-      "label": "Rasters",
-      "type": "image/tiff;application=geotiff[]",
       "weight": 10
     }
   },

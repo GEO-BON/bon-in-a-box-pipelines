@@ -22,7 +22,7 @@ inputs:
     example: [-2316297, -1971146, 1015207, 1511916]
   crs:
     label: coordinate reference system
-    description: cooridnate reference system for input layers and occurrences
+    description: coordinate reference system for input layers and occurrences
     type: text
     example: EPSG:4326
   water_mask:
