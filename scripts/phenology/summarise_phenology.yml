@@ -1,0 +1,111 @@
+script: summarise_phenology.py
+name: Summarise phenology
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+license: CC-BY
+description: |
+  Summarises the yearly phenology data for a country (Europe only) using the copernicus data space ecosystem phenology layer. The script uses the openEO python client to send a job to openEO.
+  The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season.
+  It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions.
+  It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog)."
+inputs:
+  bbox:
+    label: bbox
+    description: Coordinates of the extent in the order xmin, ymin, xmax, ymax (lat long)
+    type: float[]
+    example: null
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area of interest. Leave blank if you do not want to crop by a polygon and want to use the bounding box instead.
+    type: application/geopackage+sqlite3
+    example: null
+  start_year:
+    label: Start year
+    description: Start date for phenology time series.
+    type: text
+    example: "2017"
+  end_year:
+    label: End year
+    description: End date for phenology time series.
+    type: text
+    example: "2024"
+  season:
+    label: Season of interest
+    description: |
+      Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer)
+      and season 2 is the second growing season (late summer and fall).
+    type: options
+    options:
+      - "SEASON1"
+      - "SEASON2"
+    example: "SEASON1"
+  bands:
+    label: Bands
+    description: |
+      Bands of interest for the calculations.
+      - Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.
+      - End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period.
+      - Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season
+      - End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season
+      - Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season
+      - Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached
+      - Season minimum value (MINV) - average PPI of minima of left adn right sides of each season
+      - Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season
+      - Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season
+      - Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts
+      - Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends
+      - Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.
+      - Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end
+      - Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset
+    type: options[]
+    options:
+      - "SOSD"
+      - "EOSD"
+      - "SOSV"
+      - "EOSV"
+      - "MAXD"
+      - "MAXV"
+      - "MINV"
+      - "AMPL"
+      - "LENGTH"
+      - "LSLOPE"
+      - "RSLOPE"
+      - "SPROD"
+      - "TPROD"
+      - "QFLAG"
+    example: ["LENGTH", "AMPL"]
+  aggregate_function:
+    label: Aggregate function
+    description: Function to spatially aggregate the phenology data
+    type: options
+    options:
+      - mean
+      - min
+      - max
+    example: mean
+  spatial_resolution:
+    label: Spatial resolution
+    description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
+    type: int
+    example: 1000
+outputs:
+  rasters:
+    label: Phenology rasters
+    description: |
+      Rasters of phenology layers, with one raster per year in the input time range.
+      Will either be the raw raster layers or resampled to the spatial resolution input by the user.
+    type: image/tiff;application=geotiff[]
+  timeseries:
+    label: Zonal statistics
+    description: Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - openeo
+    - pandas
+    - geopandas
+    - shapely
