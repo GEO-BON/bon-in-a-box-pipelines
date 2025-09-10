@@ -43,16 +43,16 @@ if (ymin > ymax) {
 
 # Convert date so it is in the correct format
 if (!is.null(input$t0) | !is.null(input$t1)) {
-  if (is.null(input$t0) | is.null(input$t1)){
+  if (is.null(input$t0) | is.null(input$t1)) {
     biab_error_stop("Please provide both start and end date to filter by dates")
   }
 
-  if(is.null(input$temporal_res)){
+  if (is.null(input$temporal_res)) {
     biab_error_stop("Please provide a temporal resolution to filter by date.")
   }
   t0 <- format(as_datetime(input$t0), "%Y-%m-%dT%H:%M:%SZ")
   t1 <- format(as_datetime(input$t1), "%Y-%m-%dT%H:%M:%SZ")
-  datetime = paste0(t0, "/", t1)
+  datetime <- paste0(t0, "/", t1)
 }
 
 if ("resampling" %in% names(input)) {
@@ -93,18 +93,17 @@ if (!("stac_url" %in% names(input))) {
   input$stac_url <- "https://stac.geobon.org"
 }
 
-raster_paths <- c()
-
 # Connect to STAC
 print("url output")
 print(RCurl::url.exists(input$stac_url))
-#if (RCurl::url.exists(input$stac_url)==FALSE){
+# if (RCurl::url.exists(input$stac_url)==FALSE){
 # biab_error_stop("Could not find the URL for the STAC catalog.")
-#}
+# }
 s <- rstac::stac(input$stac_url)
 
 # initialize list for items
 
+raster_paths <- c()
 
 for (coll_it in collections_items) { # Loop through input array
   print(coll_it)
@@ -188,7 +187,6 @@ for (coll_it in collections_items) { # Loop through input array
     feats <- it_obj$features
     # get item IDs
     item_ids <- vapply(it_obj$features, function(x) x$id, character(1))
-    print(item_ids[1])
 
     # Extract spatial res if not provided
     if (is.null(input$spatial_res)) { # Obtain spatial resolution from metadata
@@ -208,36 +206,17 @@ for (coll_it in collections_items) { # Loop through input array
     } else {
       srs.cube <- input$crs
     }
-    feats<-lapply(feats, function(x) {
-      names(x$assets) <- 'data'
-      return(x)
-    })
-    st <- gdalcubes::stac_image_collection(feats, asset_names = 'data') # make stac image collection
-    if (is.null(input$t1) & is.null(input$t0)) { # pull whole collection
-      # Extract unique datetime
-      dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
-      print(dates)
-      # Make a cube
-      v <- gdalcubes::cube_view(
-        srs = input$crs,
-        extent = list(
-          left = xmin,
-          right = xmax,
-          top = ymax,
-          bottom = ymin,
-          t0 = min(dates), # will only pull layers from that date
-          t1 = max(dates),
-          dx = input$spatial_res,
-          dy = input$spatial_res,
-          dt = "P1D",
-          aggregation = input$aggregation,
-          resampling = input$resampling
-        )
-      )
-    } else { 
-      dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
-      if (min(dates) == max(dates)) {
-        print("Ignoring date")
+
+    # Extract date
+    dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
+
+    if (is.null(input$t1) & is.null(input$t0) | min(dates) == max(dates)) { # pull whole collection if dates not provided or dates don't matter
+      raster_paths <- c()
+      for (i in 1:length(item_ids)) { # loop through items in a collection
+      item <- item_ids[i]
+      print(item)
+        st <- gdalcubes::stac_image_collection(feats, asset_names = item) # make stac image collection for each item in collection
+        # Make a cube
         v <- gdalcubes::cube_view(
           srs = input$crs,
           extent = list(
@@ -254,39 +233,53 @@ for (coll_it in collections_items) { # Loop through input array
           aggregation = input$aggregation,
           resampling = input$resampling
         )
-      } else {
-        print("filtering cube by date")
-        v <- gdalcubes::cube_view(
-          srs = input$crs,
-          extent = list(
-            left = xmin,
-            right = xmax,
-            top = ymax,
-            bottom = ymin,
-            t0 = t0,
-            t1 = t1
-          ),
-          dx = input$spatial_res,
-          dy = input$spatial_res,
-          dt = input$temporal_res,
-          aggregation = input$aggregation,
-          resampling = input$resampling
+
+        raster_layers <- gdalcubes::raster_cube(st, v)
+        out <- gdalcubes::write_tif(raster_layers,
+          dir = file.path(outputFolder), prefix = paste0(coll_it, "_", item_ids[i], "_"),
+          creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
         )
+        raster_paths <- c(raster_paths, out)
       }
-    }
+    } else { # to filter by date
+      feats <- lapply(feats, function(x) {
+        names(x$assets) <- "data"
+        return(x)
+      }) # rename all bands to data so it doesn't output multiple bands
+      st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
+      print("filtering cube by date")
+
+      v <- gdalcubes::cube_view(
+        srs = input$crs,
+        extent = list(
+          left = xmin,
+          right = xmax,
+          top = ymax,
+          bottom = ymin,
+          t0 = t0,
+          t1 = t1
+        ),
+        dx = input$spatial_res,
+        dy = input$spatial_res,
+        dt = input$temporal_res,
+        aggregation = input$aggregation,
+        resampling = input$resampling
+      )
+      name <- paste0(coll_it, "_")
+
     print(v)
     # Make raster cube
     raster_layers <- gdalcubes::raster_cube(st, v)
-    
+
 
     if (!is.null(input$study_area)) {
       poly <- st_read(input$study_area)
       raster_layers <- mask(raster_layers, poly)
     }
-# temporal dimension
+    # temporal dimension
 
     out <- gdalcubes::write_tif(raster_layers,
-      dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
+      dir = file.path(outputFolder), prefix = name,
       creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
     )
     print("here")
@@ -297,11 +290,13 @@ for (coll_it in collections_items) { # Loop through input array
       pattern = "\\.tif$",
       full.names = TRUE
     )
-    
+
     print(path)
     raster_paths <- c(raster_paths, path)
   }
+  }
 }
+
 
 
 biab_output("rasters", raster_paths)
