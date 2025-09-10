@@ -146,8 +146,11 @@ for (coll_it in collections_items) { # Loop through input array
 
     # Crop if there is a study area
     if (!is.null(input$study_area)) {
-      study_area <- vect(input$study_area, crs = input$crs)
-      cropped <- crop(r, study_area)
+      study_area <- vect(input$study_area)
+      if(crs(study_area)!=crs(resampled)){
+      study_area <- project(study_area, input$crs)
+      }
+      cropped <- crop(resampled, study_area)
     }
 
     # Change band names if they are all called data
@@ -164,14 +167,14 @@ for (coll_it in collections_items) { # Loop through input array
     raster_paths <- c(raster_paths, path)
 
     #### Case 2: Pull all items in a collection ####
-  } else { # if there are not collection items, pull entire collection
+  } else { # if there are not collection items specified
     tryCatch(
       {
         it_obj <- s |>
           rstac::collections(coll_it) |>
           rstac::items() |>
           rstac::get_request() |>
-          rstac::items_fetch()
+          rstac::items_fetch() # connect to whole collection
       },
       error = function(cond) {
         message("ITEM NOT FOUND. Please check STAC url or collection and item names.")
@@ -185,8 +188,14 @@ for (coll_it in collections_items) { # Loop through input array
     )
     # Use GDALCubes in case the layers are tiled
     feats <- it_obj$features
-    # get item IDs
-    item_ids <- vapply(it_obj$features, function(x) x$id, character(1))
+    # get asset names
+    asset_names <- lapply(it_obj$features, function(item) {
+    names(item$assets)
+    })
+    asset_names <- unlist(asset_names)
+    print("Asset names:")
+    print(asset_names)
+    print(length(asset_names))
 
     # Extract spatial res if not provided
     if (is.null(input$spatial_res)) { # Obtain spatial resolution from metadata
@@ -210,12 +219,16 @@ for (coll_it in collections_items) { # Loop through input array
     # Extract date
     dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
 
-    if (is.null(input$t1) & is.null(input$t0) | min(dates) == max(dates)) { # pull whole collection if dates not provided or dates don't matter
+    if (!all(asset_names == asset_names[1])) { # pull whole collection if names of assets are different
+    print(asset_names)
       raster_paths <- c()
-      for (i in 1:length(item_ids)) { # loop through items in a collection
-      item <- item_ids[i]
-      print(item)
-        st <- gdalcubes::stac_image_collection(feats, asset_names = item) # make stac image collection for each item in collection
+      for (i in 1:length(asset_names)) { # loop through items in a collection
+      print("Pulling all items")
+      asset <- asset_names[i]
+      date_layer <- dates[i] # select asset date
+      print(date_layer)
+      print(asset)
+        st <- gdalcubes::stac_image_collection(feats, asset_names = asset) # make stac image collection for each item in collection
         # Make a cube
         v <- gdalcubes::cube_view(
           srs = input$crs,
@@ -224,8 +237,8 @@ for (coll_it in collections_items) { # Loop through input array
             right = xmax,
             top = ymax,
             bottom = ymin,
-            t0 = min(dates), # will only pull layers from that date
-            t1 = max(dates)
+            t0 = min(date_layer), # will only pull layers from that date
+            t1 = max(date_layer)
           ),
           dx = input$spatial_res,
           dy = input$spatial_res,
@@ -236,19 +249,31 @@ for (coll_it in collections_items) { # Loop through input array
 
         raster_layers <- gdalcubes::raster_cube(st, v)
         out <- gdalcubes::write_tif(raster_layers,
-          dir = file.path(outputFolder), prefix = paste0(coll_it, "_", item_ids[i], "_"),
+          dir = file.path(outputFolder), prefix = paste0(coll_it, "_", asset_names[i], "_"),
           creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
         )
         raster_paths <- c(raster_paths, out)
       }
-    } else { # to filter by date
-      feats <- lapply(feats, function(x) {
-        names(x$assets) <- "data"
-        return(x)
-      }) # rename all bands to data so it doesn't output multiple bands
+    } else { # If asset names are the same, filter by date (or tile if they are all the same date)
       st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
       print("filtering cube by date")
-
+      if ((is.null(t0) && is.null(t1)) || min(dates)==max(dates)){ # If there is no time input or the dates are all the same
+      v <- gdalcubes::cube_view(
+          srs = input$crs,
+          extent = list(
+            left = xmin,
+            right = xmax,
+            top = ymax,
+            bottom = ymin,
+            t0 = min(dates), 
+            t1 = max(dates)
+          ),
+          dx = input$spatial_res,
+          dy = input$spatial_res,
+          dt = "P1D",
+          aggregation = input$aggregation,
+          resampling = input$resampling
+        )} else {
       v <- gdalcubes::cube_view(
         srs = input$crs,
         extent = list(
@@ -264,8 +289,7 @@ for (coll_it in collections_items) { # Loop through input array
         dt = input$temporal_res,
         aggregation = input$aggregation,
         resampling = input$resampling
-      )
-      name <- paste0(coll_it, "_")
+      )}
 
     print(v)
     # Make raster cube
@@ -274,12 +298,14 @@ for (coll_it in collections_items) { # Loop through input array
 
     if (!is.null(input$study_area)) {
       poly <- st_read(input$study_area)
+      if(crs(study_area)!=input$crs){
+      study_area <- st_transform(study_area, st_crs(input$crs))
+      }
       raster_layers <- mask(raster_layers, poly)
     }
-    # temporal dimension
 
     out <- gdalcubes::write_tif(raster_layers,
-      dir = file.path(outputFolder), prefix = name,
+      dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
       creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
     )
     print("here")
