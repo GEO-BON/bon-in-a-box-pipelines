@@ -34,8 +34,8 @@
       "id": "15",
       "type": "output",
       "position": {
-        "x": 2424,
-        "y": 383
+        "x": 2502.922667485678,
+        "y": 472.85042144523356
       },
       "data": {
         "label": "Output"
@@ -80,8 +80,8 @@
       "id": "21",
       "type": "constant",
       "position": {
-        "x": 824,
-        "y": 310
+        "x": 796.0735176589139,
+        "y": 311.21419488439506
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -98,17 +98,6 @@
       },
       "data": {
         "descriptionFile": "zonal_statistics>zonal_stats.yml"
-      }
-    },
-    {
-      "id": "26",
-      "type": "output",
-      "position": {
-        "x": 2424,
-        "y": 430
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -190,8 +179,8 @@
       "id": "52",
       "type": "io",
       "position": {
-        "x": 845.8170487447111,
-        "y": 597.471811729131
+        "x": 854.3164129354765,
+        "y": 615.6847349950567
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
@@ -209,37 +198,14 @@
       }
     },
     {
-      "id": "54",
-      "type": "output",
-      "position": {
-        "x": 769.8699763213801,
-        "y": 645.3318031341971
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "55",
       "type": "output",
       "position": {
-        "x": 762.9055718150112,
-        "y": 667.9661177798963
+        "x": 782.3326899653318,
+        "y": 701.9635745429575
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "56",
-      "type": "constant",
-      "position": {
-        "x": 722.6612642883047,
-        "y": 515.6263576966087
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/geopackage+sqlite3"
       }
     }
   ],
@@ -294,13 +260,6 @@
       "id": "reactflow__edge-18rasters-25rasters"
     },
     {
-      "source": "25",
-      "sourceHandle": "zonal_stats",
-      "target": "26",
-      "targetHandle": null,
-      "id": "reactflow__edge-25zonal_stats-26"
-    },
-    {
       "source": "27",
       "sourceHandle": null,
       "target": "18",
@@ -351,13 +310,6 @@
     },
     {
       "source": "53",
-      "sourceHandle": "country",
-      "target": "54",
-      "targetHandle": null,
-      "id": "reactflow__edge-53country-54"
-    },
-    {
-      "source": "53",
       "sourceHandle": "region",
       "target": "55",
       "targetHandle": null,
@@ -392,11 +344,25 @@
       "id": "reactflow__edge-52bbox-25bbox"
     },
     {
-      "source": "56",
-      "sourceHandle": null,
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
       "target": "18",
       "targetHandle": "study_area",
-      "id": "reactflow__edge-56-18study_area"
+      "id": "reactflow__edge-53country_region_polygon-18study_area"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-53country-55"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "zonal_stats",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-25zonal_stats-15"
     }
   ],
   "inputs": {
