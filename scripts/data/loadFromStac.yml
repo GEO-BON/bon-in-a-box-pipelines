@@ -17,43 +17,43 @@ inputs:
     example: [-2316297, -1971146, 1015207, 1511916]
   collections_items:
     label: STAC collection items
-    description: Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. "chelsa-clim|bio1"). 
-      To extract a whole collection, type the collection name only (e.g. "chelsa-clim"). To pull collection items by date, write the collection name and 
-      provide a start date, end date, and temporal resolution. 
+    description: Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. "chelsa-clim|bio1").
+      To extract a whole collection, type the collection name only (e.g. "chelsa-clim"). To pull collection items by date, write the collection name and
+      provide a start date, end date, and temporal resolution.
     type: text[]
     example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
   t0:
     label: Start date
-    description: Start date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.
+    description: Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
     type: text
     example: NULL
   t1:
     label: End date
-    description: End date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.
+    description: End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
     type: text
     example: NULL
   temporal_res:
     label: Temporal resolution
-    description: Temporal resolution to use when querying STAC items by date, in the format ("P", time interval, and time unit, e.g. 
-      "P1Y" is yearly, "P1M" is montly, and "P1D" is daily). Leave blank if not querying by date. If the temporal resolution is 
+    description: Temporal resolution to use when querying STAC items by date, in the format ("P", time interval, and time unit, e.g.
+      "P1Y" is yearly, "P1M" is montly, and "P1D" is daily). Leave blank if not querying by date. If the temporal resolution is
       coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.
     type: text
     example: NULL
   crs:
     label: Coordinate reference system
     description: |
-      Numerical value referring to the coordinate reference system 
+      Numerical value referring to the coordinate reference system
     type: text
     example: "EPSG:6622"
   spatial_res:
     label: Spatial resolution
-    description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system 
-      (meters for projected reference systems and degrees for reference systems in lat long). 
+    description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system
+      (meters for projected reference systems and degrees for reference systems in lat long).
     type: float
     example: 1000.0
   resampling:
     label: Resampling method
-    description: Resampling method used when rescaling and/or reprojecting the raster layers. 
+    description: Resampling method used when rescaling and/or reprojecting the raster layers.
       See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.
     type: options
     options:
