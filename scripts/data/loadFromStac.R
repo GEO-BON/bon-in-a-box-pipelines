@@ -49,6 +49,15 @@ if (!is.null(input$t0) | !is.null(input$t1)) {
   if (is.null(input$temporal_res)) {
     biab_error_stop("Please provide a temporal resolution to filter by date.")
   }
+  # Detect if t0 and t1 are just years (4 digits)
+  if (grepl("^\\d{4}$", input$t0)) {
+    input$t0 <- paste0(input$t0, "-01-01")
+  }
+
+  if (grepl("^\\d{4}$", input$t1)) {
+    input$t1 <- paste0(input$t1, "-12-31")
+  }
+
   t0 <- format(as_datetime(input$t0), "%Y-%m-%dT%H:%M:%SZ")
   t1 <- format(as_datetime(input$t1), "%Y-%m-%dT%H:%M:%SZ")
   datetime <- paste0(t0, "/", t1)
