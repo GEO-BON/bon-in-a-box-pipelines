@@ -85,13 +85,13 @@ inputs:
     example: first
   study_area:
     label: Study area
-    description: Polygon of study area used to crop output layers, in geopackage format.
+    description: Polygon of study area used to mask output layers, in geopackage format.
     type: application/geopackage+sqlite3
     example: null
 outputs:
   rasters:
     label: Rasters
-    description: array of output raster paths
+    description: Output raster files in geotiff format.
     type: image/tiff;application=geotiff[]
 
 conda:
