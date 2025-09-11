@@ -141,6 +141,11 @@ for (coll_it in collections_items) { # Loop through input array
     # Resample
     resampled <- project(r, empty_raster)
 
+    # Change band names if they are all called data
+    if (names(resampled) == "data") {
+      names(resampled) <- ci[2]
+    }
+
     # Crop if there is a study area
     if (!is.null(input$study_area)) {
       study_area <- vect(input$study_area)
@@ -148,13 +153,9 @@ for (coll_it in collections_items) { # Loop through input array
       study_area <- project(study_area, input$crs)
       }
       masked <- mask(resampled, study_area)
+    } else {
+      masked <- resampled
     }
-
-    # Change band names if they are all called data
-    if (names(masked) == "data") {
-      names(masked) <- ci[2]
-    }
-
 
     # Name file path
     path <- file.path(outputFolder, paste0(names(masked), ".tif"))
@@ -253,7 +254,7 @@ for (coll_it in collections_items) { # Loop through input array
     } else { # If asset names are the same, filter by date (or tile if they are all the same date)
       st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
       print("filtering cube by date")
-      
+
       # calculate interval between dates (if they are not the same)
       dates_lub <- as_datetime(dates)
       print(dates_lub)
@@ -277,7 +278,7 @@ for (coll_it in collections_items) { # Loop through input array
             right = xmax,
             top = ymax,
             bottom = ymin,
-            t0 = min(dates), 
+            t0 = min(dates),
             t1 = max(dates)
           ),
           dx = input$spatial_res,
