@@ -9,7 +9,6 @@ library("stars")
 library("terra")
 # sf_use_s2(FALSE)
 print(outputFolder)
-# source(paste(Sys.getenv("SCRIPT_LOCATION"), "/data/loadFromStacFun.R", sep = "/"))
 
 input <- biab_inputs()
 
