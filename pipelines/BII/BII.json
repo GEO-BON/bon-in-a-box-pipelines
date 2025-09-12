@@ -445,14 +445,14 @@
       "label": "Start date",
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
       "type": "text",
-      "example": null,
+      "example": "2000",
       "weight": 5
     },
     "pipeline@64": {
       "label": "End date",
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
       "type": "text",
-      "example": null,
+      "example": "2020",
       "weight": 6
     }
   },
