@@ -67,6 +67,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 771.6000061035156,
+        "y": 160.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -111,6 +122,13 @@
       "target": "14",
       "targetHandle": null,
       "id": "reactflow__edge-12region-14"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "country_region_polygon",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-12country_region_polygon-15"
     }
   ],
   "inputs": {
@@ -154,6 +172,12 @@
       "label": "Region",
       "type": "text",
       "weight": 2
+    },
+    "data>getCountryPolygon.yml@12|country_region_polygon": {
+      "description": "A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.",
+      "label": "Polygon of country or region",
+      "type": "application/geopackage+sqlite3",
+      "weight": 3
     }
   },
   "metadata": {

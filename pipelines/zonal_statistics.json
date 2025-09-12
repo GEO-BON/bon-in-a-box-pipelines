@@ -1,17 +1,6 @@
 {
   "nodes": [
     {
-      "id": "2",
-      "type": "io",
-      "position": {
-        "x": 1146,
-        "y": 40.5
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
       "id": "3",
       "type": "userInput",
       "position": {
@@ -36,35 +25,11 @@
       }
     },
     {
-      "id": "5",
-      "type": "constant",
-      "position": {
-        "x": 814,
-        "y": 65.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "\n"
-      }
-    },
-    {
       "id": "6",
       "type": "output",
       "position": {
         "x": 2181,
         "y": 40.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "7",
-      "type": "output",
-      "position": {
-        "x": 1733,
-        "y": 12
       },
       "data": {
         "label": "Output"
@@ -113,30 +78,31 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 1181.4355075290582,
+        "y": -78.04464515447575
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 1619.2295326869191,
+        "y": -77.210550225201
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "3",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-3-2crs"
-    },
-    {
-      "source": "2",
-      "sourceHandle": "rasters",
-      "target": "4",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-2rasters-4rasters"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-5-2weight_matrix_with_ids"
-    },
     {
       "source": "3",
       "sourceHandle": null,
@@ -152,20 +118,6 @@
       "id": "reactflow__edge-4zonal_stats-6"
     },
     {
-      "source": "2",
-      "sourceHandle": "rasters",
-      "target": "7",
-      "targetHandle": null,
-      "id": "reactflow__edge-2rasters-7"
-    },
-    {
-      "source": "20",
-      "sourceHandle": "bbox",
-      "target": "2",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-20bbox-2bbox"
-    },
-    {
       "source": "20",
       "sourceHandle": "bbox",
       "target": "4",
@@ -178,13 +130,6 @@
       "target": "22",
       "targetHandle": null,
       "id": "reactflow__edge-21country-22"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "2",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-2study_area"
     },
     {
       "source": "21",
@@ -220,6 +165,41 @@
       "target": "4",
       "targetHandle": "study_area_polygon",
       "id": "reactflow__edge-21country_region_polygon-4study_area_polygon"
+    },
+    {
+      "source": "20",
+      "sourceHandle": "bbox",
+      "target": "25",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-20bbox-25bbox"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-3-25crs"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
+      "target": "25",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-21country_region_polygon-25study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "rasters",
+      "target": "4",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-25rasters-4rasters"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "rasters",
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-25rasters-26"
     }
   ],
   "inputs": {
@@ -236,23 +216,6 @@
       "type": "text",
       "example": "COL",
       "weight": 1
-    },
-    "data>loadFromStac.yml@2|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 2
-    },
-    "data>loadFromStac.yml@2|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 3
     },
     "zonal_statistics>zonal_stats.yml@4|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -272,24 +235,62 @@
         "mean",
         "variance"
       ],
-      "weight": 4
+      "weight": 2
     },
     "pipeline@3": {
       "label": "Coordinate reference system",
       "description": "Coordinate reference system of the country polygon, bounding box, and raster layers for the output.\n\nNumerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
       "type": "text",
       "example": "EPSG:6624",
+      "weight": 3
+    },
+    "data>loadFromStac.yml@25|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "STAC URL",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 4
+    },
+    "data>loadFromStac.yml@25|collections_items": {
+      "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
       "weight": 5
     },
-    "data>loadFromStac.yml@2|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in meters",
+    "data>loadFromStac.yml@25|t0": {
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "Start date",
+      "type": "text",
+      "weight": 6,
+      "example": null
+    },
+    "data>loadFromStac.yml@25|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "End date",
+      "type": "text",
+      "weight": 7,
+      "example": null
+    },
+    "data>loadFromStac.yml@25|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "weight": 8,
+      "example": null
+    },
+    "data>loadFromStac.yml@25|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
       "label": "Spatial resolution",
       "type": "float",
       "example": 1000,
-      "weight": 6
+      "weight": 9
     },
-    "data>loadFromStac.yml@2|resampling": {
-      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+    "data>loadFromStac.yml@25|resampling": {
+      "description": "Resampling method used when rescaling and/or reprojecting the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
       "label": "Resampling method",
       "type": "options",
       "options": [
@@ -309,10 +310,10 @@
         "q3"
       ],
       "example": "near",
-      "weight": 7
+      "weight": 10
     },
-    "data>loadFromStac.yml@2|aggregation": {
-      "description": "Method used to aggregate items that overlay each other",
+    "data>loadFromStac.yml@25|aggregation": {
+      "description": "Method used to aggregate items when layers combining over time.",
       "label": "Aggregation method",
       "type": "options",
       "options": [
@@ -323,7 +324,7 @@
         "median"
       ],
       "example": "first",
-      "weight": 8
+      "weight": 11
     }
   },
   "outputs": {
@@ -339,16 +340,16 @@
       "type": "application/geopackage+sqlite3",
       "weight": 1
     },
-    "data>loadFromStac.yml@2|rasters": {
-      "description": "array of output raster paths",
-      "label": "Rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 2
-    },
     "zonal_statistics>zonal_stats.yml@4|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
+      "weight": 2
+    },
+    "data>loadFromStac.yml@25|rasters": {
+      "description": "Output raster files in geotiff format.",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 3
     }
   },

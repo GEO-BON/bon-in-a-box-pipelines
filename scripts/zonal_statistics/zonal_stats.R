@@ -19,6 +19,11 @@ study_area <- st_read(input$study_area_polygon) %>% st_transform(input$crs)
 # Load rasters
 rasters <- rast(input$rasters) %>% project(input$crs)
 
+# Assign layer names based on the file names
+names(rasters) <- tools::file_path_sans_ext(basename(input$rasters))
+
+print(rasters)
+
 zonal_list <- list()
 # Extract summary statistics
 for (i in 1:length(input$summary_statistic)){
