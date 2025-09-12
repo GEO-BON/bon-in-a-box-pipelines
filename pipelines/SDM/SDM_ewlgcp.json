@@ -459,24 +459,11 @@
       "id": "140",
       "type": "io",
       "position": {
-        "x": 638.9624938964844,
-        "y": 306
+        "x": 628.515887136931,
+        "y": 286.8478876074853
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "141",
-      "type": "constant",
-      "position": {
-        "x": 131.04245706564075,
-        "y": 327.836446060083
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "\n"
       }
     },
     {
@@ -854,13 +841,6 @@
       "id": "reactflow__edge-57-140crs"
     },
     {
-      "source": "141",
-      "sourceHandle": null,
-      "target": "140",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-141-140weight_matrix_with_ids"
-    },
-    {
       "source": "128",
       "sourceHandle": null,
       "target": "140",
@@ -1042,6 +1022,27 @@
       ],
       "example": "plants",
       "weight": 12
+    },
+    "data>loadFromStac.yml@140|t0": {
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "Start date",
+      "type": "text",
+      "weight": 13,
+      "example": null
+    },
+    "data>loadFromStac.yml@140|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "End date",
+      "type": "text",
+      "weight": 14,
+      "example": null
+    },
+    "data>loadFromStac.yml@140|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "weight": 15,
+      "example": null
     }
   },
   "outputs": {
