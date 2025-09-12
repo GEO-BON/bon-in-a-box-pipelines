@@ -83,8 +83,8 @@
       "id": "56",
       "type": "io",
       "position": {
-        "x": 1325.3080498751228,
-        "y": 297.05732074319513
+        "x": 1357.0524670348445,
+        "y": 310.5246492351982
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -176,6 +176,43 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "63",
+      "type": "userInput",
+      "position": {
+        "x": 750.0053287271539,
+        "y": 275.5024869625019
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "64",
+      "type": "userInput",
+      "position": {
+        "x": 651.6977672355612,
+        "y": 342.47255291045855
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 895.9533005549715,
+        "y": 358.40573556140333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "P5Y"
       }
     }
   ],
@@ -319,6 +356,41 @@
       "target": "61",
       "targetHandle": null,
       "id": "reactflow__edge-56rasters-61"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-63-56t0"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-63-14start_year"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-64-56t1"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-64-14end_year"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-66-56temporal_res"
     }
   ],
   "inputs": {
@@ -326,7 +398,7 @@
       "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "label": "ISO3 country code",
       "type": "text",
-      "example": "CA",
+      "example": "CAN",
       "weight": 0
     },
     "data>getCountryPolygon.yml@53|region": {
@@ -362,59 +434,26 @@
       ],
       "weight": 3
     },
-    "BII>BIIChange.yml@14|start_year": {
-      "description": "Reference BII year for raster plotting",
-      "label": "Start year for BII raster comparison",
-      "type": "options",
-      "options": [
-        "2000",
-        "2005",
-        "2010",
-        "2015"
-      ],
-      "example": "2000",
-      "weight": 4
-    },
-    "BII>BIIChange.yml@14|end_year": {
-      "description": "BII layer to compare to the start year",
-      "label": "End year for BII comparison",
-      "type": "options",
-      "options": [
-        "2005",
-        "2010",
-        "2015",
-        "2020"
-      ],
-      "example": "2020",
-      "weight": 5
-    },
-    "data>loadFromStac.yml@56|t0": {
-      "description": "Start date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "Start date",
-      "type": "text",
-      "example": null,
-      "weight": 6
-    },
-    "data>loadFromStac.yml@56|t1": {
-      "description": "End date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "End date",
-      "type": "text",
-      "example": null,
-      "weight": 7
-    },
-    "data>loadFromStac.yml@56|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": null,
-      "weight": 8
-    },
     "data>loadFromStac.yml@56|spatial_res": {
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
       "label": "Spatial resolution",
       "type": "float",
       "example": 1000,
-      "weight": 9
+      "weight": 4
+    },
+    "pipeline@63": {
+      "label": "Start date",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "type": "text",
+      "example": null,
+      "weight": 5
+    },
+    "pipeline@64": {
+      "label": "End date",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "type": "text",
+      "example": null,
+      "weight": 6
     }
   },
   "outputs": {

@@ -4,6 +4,20 @@ library("terra")
 library("dplyr")
 
 input <- biab_inputs()
+start_years <- list("2000", "2005", "2010", "2015")
+end_years <- list("2005", "2010", "2015", "2020")
+
+if (is.null(input$start_year) || is.null(input$end_year)) {
+  biab_error_stop("Please input a start and end date.")
+}
+
+if (!(input$start_year %in% start_years) || !(input$end_year %in% end_years)) {
+  biab_error_stop("Invalid input for start or end year. The options are 2000, 2005, 2010, 2015 or 2020.")
+}
+
+if (input$start_year >= input$end_year) {
+  biab_error_stop("Input years seem reversed. Please double check your inputs.")
+}
 
 start_yr <- paste0("bii_nhm_10km_", input$start_year)
 end_yr <- paste0("bii_nhm_10km_", input$end_year)
@@ -13,8 +27,8 @@ rasters <- terra::rast(c(input$rasters))
 print(terra::time(rasters))
 print((rasters))
 
-first_raster <- rasters[[names(rasters) == start_yr]]
-end_raster <- rasters[[names(rasters) == end_yr]]
+first_raster <- rasters[[1]]
+end_raster <- rasters[[nlyr(rasters)]]
 
 print(names(first_raster))
 # Summarise

@@ -39,6 +39,9 @@ if (ymin > ymax) {
   biab_error_stop("bottom and top seem reversed")
 }
 
+if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null(input$t0) || !is.null(input$t1))) {
+  biab_info("The chelsa collection has no temporal option. Extracting all chelsa items...")
+}
 
 # Convert date so it is in the correct format
 if (!is.null(input$t0) | !is.null(input$t1)) {
@@ -158,8 +161,8 @@ for (coll_it in collections_items) { # Loop through input array
     # Crop if there is a study area
     if (!is.null(input$study_area)) {
       study_area <- vect(input$study_area)
-      if(crs(study_area)!=crs(resampled)){
-      study_area <- project(study_area, input$crs)
+      if (crs(study_area) != crs(resampled)) {
+        study_area <- project(study_area, input$crs)
       }
       masked <- mask(resampled, study_area)
     } else {
@@ -197,7 +200,7 @@ for (coll_it in collections_items) { # Loop through input array
     feats <- it_obj$features
     # get asset names
     asset_names <- lapply(it_obj$features, function(item) {
-    names(item$assets)
+      names(item$assets)
     })
     asset_names <- unlist(asset_names)
     print("Asset names:")
@@ -226,14 +229,14 @@ for (coll_it in collections_items) { # Loop through input array
     # Extract date
     dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
     if (!all(asset_names == asset_names[1])) { # pull whole collection if names of assets are different
-    print(asset_names)
+      print(asset_names)
       raster_paths <- c()
       for (i in 1:length(asset_names)) { # loop through items in a collection
-      print("Pulling all items")
-      asset <- asset_names[i]
-      date_layer <- dates[i] # select asset date
-      print(date_layer)
-      print(asset)
+        print("Pulling all items")
+        asset <- asset_names[i]
+        date_layer <- dates[i] # select asset date
+        print(date_layer)
+        print(asset)
         st <- gdalcubes::stac_image_collection(feats, asset_names = asset) # make stac image collection for each item in collection
         # Make a cube
         v <- gdalcubes::cube_view(
@@ -271,16 +274,16 @@ for (coll_it in collections_items) { # Loop through input array
       diff <- time_length(interval(dates_lub[2], dates_lub[1]), "years")
       diff <- abs(diff)
       diff_in <- paste0("P", diff, "Y")
-      if (diff < 1){
-      diff <- time_length(interval(dates_lub[1], dates_lub[2]), "days")
-      diff <- abs(diff)
-      diff_in <- paste0("P", diff, "D")
+      if (diff < 1) {
+        diff <- time_length(interval(dates_lub[1], dates_lub[2]), "days")
+        diff <- abs(diff)
+        diff_in <- paste0("P", diff, "D")
       }
       print("Time interval:")
       print(diff_in)
 
-      if ((is.null(input$t0) && is.null(input$t1)) || min(dates)==max(dates)){ # If there is no time input or the dates are all the same
-      v <- gdalcubes::cube_view(
+      if ((is.null(input$t0) && is.null(input$t1)) || min(dates) == max(dates)) { # If there is no time input or the dates are all the same
+        v <- gdalcubes::cube_view(
           srs = input$crs,
           extent = list(
             left = xmin,
@@ -295,55 +298,55 @@ for (coll_it in collections_items) { # Loop through input array
           dt = diff_in,
           aggregation = input$aggregation,
           resampling = input$resampling
-        )} else {
-      v <- gdalcubes::cube_view(
-        srs = input$crs,
-        extent = list(
-          left = xmin,
-          right = xmax,
-          top = ymax,
-          bottom = ymin,
-          t0 = t0,
-          t1 = t1
-        ),
-        dx = input$spatial_res,
-        dy = input$spatial_res,
-        dt = input$temporal_res,
-        aggregation = input$aggregation,
-        resampling = input$resampling
-      )}
-
-    print(v)
-    # Make raster cube
-    raster_layers <- gdalcubes::raster_cube(st, v)
-
-
-    if (!is.null(input$study_area)) {
-      poly <- st_read(input$study_area)
-      if(crs(poly)!=input$crs){
-      poly <- st_transform(poly, st_crs(input$crs))
+        )
+      } else {
+        v <- gdalcubes::cube_view(
+          srs = input$crs,
+          extent = list(
+            left = xmin,
+            right = xmax,
+            top = ymax,
+            bottom = ymin,
+            t0 = t0,
+            t1 = t1
+          ),
+          dx = input$spatial_res,
+          dy = input$spatial_res,
+          dt = input$temporal_res,
+          aggregation = input$aggregation,
+          resampling = input$resampling
+        )
       }
-      raster_layers <- filter_geom(raster_layers, poly$geom)
+
+      print(v)
+      # Make raster cube
+      raster_layers <- gdalcubes::raster_cube(st, v)
+
+
+      if (!is.null(input$study_area)) {
+        poly <- st_read(input$study_area)
+        if (crs(poly) != input$crs) {
+          poly <- st_transform(poly, st_crs(input$crs))
+        }
+        raster_layers <- filter_geom(raster_layers, poly$geom)
+      }
+
+      out <- gdalcubes::write_tif(raster_layers,
+        dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
+        creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
+      )
+      # add list of raster paths
+
+      path <- list.files(
+        path = outputFolder,
+        pattern = "\\.tif$",
+        full.names = TRUE
+      )
+
+      print(path)
+      raster_paths <- c(raster_paths, path)
     }
-
-    out <- gdalcubes::write_tif(raster_layers,
-      dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
-      creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
-    )
-    # add list of raster paths
-
-    path <- list.files(
-      path = outputFolder,
-      pattern = "\\.tif$",
-      full.names = TRUE
-    )
-
-    print(path)
-    raster_paths <- c(raster_paths, path)
-  }
   }
 }
-
-
 
 biab_output("rasters", raster_paths)
