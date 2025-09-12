@@ -460,7 +460,7 @@
       "type": "io",
       "position": {
         "x": 628.515887136931,
-        "y": 286.8478876074853
+        "y": 289.87932074050605
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -535,6 +535,42 @@
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
+      }
+    },
+    {
+      "id": "146",
+      "type": "constant",
+      "position": {
+        "x": 332.25024786217807,
+        "y": 331.6962819807421
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "147",
+      "type": "constant",
+      "position": {
+        "x": 307.9987827980117,
+        "y": 354.4320304783981
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "148",
+      "type": "constant",
+      "position": {
+        "x": 362.5645791923861,
+        "y": 363.5263298774605
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
       }
     }
   ],
@@ -902,6 +938,27 @@
       "target": "40",
       "targetHandle": "raster",
       "id": "reactflow__edge-145rasters-40raster"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "140",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-146-140t0"
+    },
+    {
+      "source": "147",
+      "sourceHandle": null,
+      "target": "140",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-147-140t1"
+    },
+    {
+      "source": "148",
+      "sourceHandle": null,
+      "target": "140",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-148-140temporal_res"
     }
   ],
   "inputs": {
@@ -934,19 +991,45 @@
       "example": 100000,
       "weight": 2
     },
+    "data>loadFromStac.yml@140|stac_url": {
+      "description": "URL of the STAC catalog to pull predictor layers.",
+      "label": "STAC URL",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 3
+    },
+    "data>loadFromStac.yml@140|collections_items": {
+      "description": "Collection name of STAC layers followed by '|' followed by item id",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio5",
+        "earthenv_landcover|class_1",
+        "earthenv_landcover|class_7",
+        "earthenv_landcover|class_3"
+      ],
+      "weight": 4
+    },
+    "data>loadFromStac.yml@140|study_area": {
+      "description": "Polygon of study area used to crop output layers",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 5
+    },
     "pipeline@46": {
       "label": "Number of blocks",
       "description": "Number of blocks (for crossvalidation method, currently ignored)",
       "type": "int",
       "example": 2,
-      "weight": 3
+      "weight": 6
     },
     "pipeline@57": {
       "label": "Projection system",
       "description": "String, projection system",
       "type": "text",
       "example": "EPSG:6622",
-      "weight": 4
+      "weight": 7
     },
     "pipeline@58": {
       "label": "bbox",
@@ -958,53 +1041,27 @@
         1015207,
         1511916
       ],
-      "weight": 5
+      "weight": 8
     },
     "pipeline@128": {
       "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 6
+      "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@139|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 7
+      "weight": 10
     },
     "data>getGBIFObservations>getGBIFObservations.yml@139|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 8
-    },
-    "data>loadFromStac.yml@140|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 9
-    },
-    "data>loadFromStac.yml@140|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio5",
-        "earthenv_landcover|class_1",
-        "earthenv_landcover|class_7",
-        "earthenv_landcover|class_3"
-      ],
-      "weight": 10
-    },
-    "data>loadFromStac.yml@140|study_area": {
-      "description": "Polygon of study area used to crop output layers",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
       "weight": 11
     },
     "data>GBIFHeatmapFromSTAC.yml@145|taxa": {
@@ -1022,27 +1079,6 @@
       ],
       "example": "plants",
       "weight": 12
-    },
-    "data>loadFromStac.yml@140|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "Start date",
-      "type": "text",
-      "weight": 13,
-      "example": null
-    },
-    "data>loadFromStac.yml@140|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "End date",
-      "type": "text",
-      "weight": 14,
-      "example": null
-    },
-    "data>loadFromStac.yml@140|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "weight": 15,
-      "example": null
     }
   },
   "outputs": {
