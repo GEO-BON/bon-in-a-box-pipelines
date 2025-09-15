@@ -372,7 +372,7 @@
       "description": "Country of interest",
       "label": "Country",
       "type": "text",
-      "example": "Peru",
+      "example": "PER",
       "weight": 5
     },
     "data>getCountryPolygon.yml@45|region": {
