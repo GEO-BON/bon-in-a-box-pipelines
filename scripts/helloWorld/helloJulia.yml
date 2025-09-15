@@ -13,12 +13,21 @@ inputs:
     description: Input number to increment
     type: int
     example: 8
+  study_area_bbox:
+    label: Bounding box
+    description: Bounding box and CRS of study area
+    type: bboxCRS
 outputs:
   increment:
     label: Increment
     description: Result, incremented by 1
     type: int
     example: 9
+  crs_id:
+    label: CRS ID
+    description: ID of CRS obtained from bounding box selector
+    type: text
+    example: EPSG:4326
 references:
   - text: John Doe, The ins and outs of copy-pasting, CopyScience, Volume 71, Issue 5, May 2021, Pages 448–451
     doi: 10.1093/copysci/biab041
