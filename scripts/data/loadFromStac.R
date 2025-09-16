@@ -43,6 +43,19 @@ if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null
   biab_info("The chelsa collection has no temporal option. Extracting all chelsa items...")
 }
 
+# Load the CRS object
+coord <- st_crs(input$crs)
+print(coord)
+print(st_is_longlat(coord))
+# Check for inconsistencies between CRS type and resolution
+if (st_is_longlat(coord) && input$spatial_res > 1) {
+  biab_error_stop("CRS is in degrees and resolution is in meters.")
+}
+
+if (st_is_longlat(coord) == FALSE && input$spatial_res < 1) {
+  biab_error_stop("CRS is in meters and resolution is in degrees.")
+}
+
 # Convert date so it is in the correct format
 if (!is.null(input$t0) | !is.null(input$t1)) {
   if (is.null(input$t0) | is.null(input$t1)) {
