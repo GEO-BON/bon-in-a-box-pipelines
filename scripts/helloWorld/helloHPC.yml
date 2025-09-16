@@ -4,7 +4,7 @@ author:
   - name: Jean-Michel Lord
     identifier: https://orcid.org/0009-0007-3826-1125
 license: CC0
-description: Python script that runs on a HPC
+description: Python script that runs on a HPC. If no HPC is configured, it will run locally.
 lifecycle:
   status: example
 timeout: 1
@@ -14,6 +14,11 @@ inputs:
     description: A number that we will increment
     type: int
     example: 3
+  some_csv_file:
+    label: Some file
+    description: A file, which will be sent to HPC for processing
+    type: text/csv
+    example: /scripts/helloWorld/example.csv
 outputs:
   increment:
     label: A number (input++)
