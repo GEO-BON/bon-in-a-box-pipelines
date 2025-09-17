@@ -35,9 +35,8 @@ input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs : ")
 print(input)
 
-presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE) 
+presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE)
 predictors <- terra::rast(unlist(input$predictors))
-
 
 # Create study region from the bounding box of predictors
 region <- st_bbox(predictors) |> st_as_sfc() |> st_as_sf()
@@ -50,8 +49,8 @@ domain <- inla.nonconvex.hull(st_coordinates(domain), convex = -0.015, resolutio
 pedge <- 0.01
 edge <- min(c(diff(st_bbox(region)[c(1, 3)]) * pedge, diff(st_bbox(region)[c(2, 4)]) * pedge))
 
-mesh <- inla.mesh.2d(loc.domain = NULL, 
-                     max.edge = c(edge, edge * 3), 
+mesh <- inla.mesh.2d(loc.domain = NULL,
+                     max.edge = c(edge, edge * 3),
                      min.angle = 21,
                      cutoff = edge / 1,
                      offset = c(edge, edge * 3),
@@ -59,13 +58,14 @@ mesh <- inla.mesh.2d(loc.domain = NULL,
                      crs = st_crs(region))
 
 ### Create dual mesh
-params <- dmesh_mesh(mesh)  
+params <- dmesh_mesh(mesh)
 
 ### Compute weights
 params <- dmesh_weights(params, region)
 
 ### Summarize predictors
 params <- dmesh_predictors(params, predictors)
+print(colnames(params$predictors))
 
 ### Create an exclusion buffer
 obs <- st_as_sf(presence_background[presence_background$pa == 1, ], coords = c("lon", "lat"), crs = input$proj)
@@ -80,6 +80,7 @@ cat("\n")
 print(head(params$effort))
 
 f <- as.formula(paste("y ~", paste(names(params$predictors), collapse = " + ")))
+print(f)
 
 ### Run model
 m <- ewlgcp(
@@ -157,9 +158,9 @@ terra::writeRaster(x = sdm_ci,
                           wopt= list(gdal=c("COMPRESS=DEFLATE")),
                           overwrite = TRUE)
 
-sf::st_write(st_transform(obs, 4326), obs.output, append = FALSE) 
-sf::st_write(st_transform(bg, 4326), bg.output, append = FALSE)      
-sf::st_write(st_transform(params$dmesh, 4326), dmesh.output, append = FALSE)  
+sf::st_write(st_transform(obs, 4326), obs.output, append = FALSE)
+sf::st_write(st_transform(bg, 4326), bg.output, append = FALSE)
+sf::st_write(st_transform(params$dmesh, 4326), dmesh.output, append = FALSE)
 
 output <- list("sdm_pred" = pred.output,
   "sdm_unc" = unc.output,
@@ -167,7 +168,7 @@ output <- list("sdm_pred" = pred.output,
   "sdm_obs" = obs.output,
   "sdm_bg" = bg.output,
   "sdm_dmesh" = dmesh.output
-  ) 
+  )
 
 jsonData <- toJSON(output, indent = 2)
 write(jsonData, file.path(outputFolder, "output.json"))
