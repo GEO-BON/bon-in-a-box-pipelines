@@ -98,19 +98,10 @@ if ("taxa" %in% names(input)) { # EXTRACT GBIF HEATMAPS
   resampling <- "sum" # Sum number of occurences when upscaling
 } else { # EXTRACT OTHER LAYERS
   if (length(input$collections_items) == 0) {
-    if (length(input$weight_matrix_with_ids) == 0) {
       stop("Please specify collections_items")
     } else {
-      weight_matrix <- input$weight_matrix_with_ids
-      stac_collections_items <- unlist(lapply((str_split(weight_matrix, "\n", simplify = T) |> str_split(","))[-1], function(l) {
-        l[1]
-      }))
-      stac_collections_items <- stac_collections_items[startsWith(stac_collections_items, "GBSTAC")]
-      collections_items <- gsub("GBSTAC|", "", stac_collections_items, fixed = TRUE)
-    }
-  } else {
     collections_items <- input$collections_items
-  }
+}
 }
 
 if (!("stac_url" %in% names(input))) {
