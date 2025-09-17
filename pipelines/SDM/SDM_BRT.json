@@ -828,10 +828,10 @@
       "description": "Vector of floating point numbers. Represent the bounding box in the order xmin, ymin, xmax, ymax. Must be in the same CRS as the CRS input.",
       "type": "float[]",
       "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
+        "-8185951",
+        "3491465",
+        "-4435963",
+        "6654068"
       ],
       "weight": 4
     },
@@ -839,7 +839,7 @@
       "label": "Coordinate Reference System",
       "description": "String, Projection System as an EPSG code.",
       "type": "text",
-      "example": "EPSG:6624",
+      "example": "EPSG:8857",
       "weight": 5
     },
     "pipeline@128": {
@@ -881,8 +881,8 @@
       "description": "Start date for time series layers in STAC catalog. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
       "label": "Start date",
       "type": "text",
-      "weight": 11,
-      "example": null
+      "example": null,
+      "weight": 11
     },
     "data>loadFromStac.yml@161|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
@@ -895,8 +895,8 @@
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
-      "weight": 13,
-      "example": null
+      "example": null,
+      "weight": 13
     }
   },
   "outputs": {
