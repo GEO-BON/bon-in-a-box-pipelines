@@ -252,11 +252,11 @@
       "id": "reactflow__edge-57country_region_polygon-48study_area_polygon"
     },
     {
-      "source": "57",
-      "sourceHandle": "country_region_polygon",
+      "source": "48",
+      "sourceHandle": "study_area_clean",
       "target": "42",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-57country_region_polygon-42study_area_polygon"
+      "id": "reactflow__edge-48study_area_clean-42study_area_polygon"
     }
   ],
   "inputs": {
