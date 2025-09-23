@@ -4,8 +4,8 @@
       "id": "65",
       "type": "io",
       "position": {
-        "x": 303.953125,
-        "y": 519
+        "x": 254.22690014074408,
+        "y": 473.5977946937229
       },
       "data": {
         "descriptionFile": "data>getRangeMap.yml"
@@ -67,24 +67,11 @@
       }
     },
     {
-      "id": "78",
-      "type": "userInput",
-      "position": {
-        "x": 223.07103361464442,
-        "y": 216.324633750296
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:3116"
-      }
-    },
-    {
       "id": "79",
       "type": "userInput",
       "position": {
-        "x": 233.78113595000923,
-        "y": 169.2056465651388
+        "x": -265.636227273672,
+        "y": 172.40703991913676
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -124,6 +111,118 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "83",
+      "type": "io",
+      "position": {
+        "x": 318.7346968660779,
+        "y": 271.0543692002653
+      },
+      "data": {
+        "descriptionFile": "getCountrybbox.json"
+      }
+    },
+    {
+      "id": "84",
+      "type": "io",
+      "position": {
+        "x": 454.81697944261873,
+        "y": 621.4672754445984
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "85",
+      "type": "constant",
+      "position": {
+        "x": 51.236649247438606,
+        "y": 594.7139146129008
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "86",
+      "type": "constant",
+      "position": {
+        "x": 43.887960158431554,
+        "y": 622.8838894540945
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "earthenv_topography|elevation_min",
+          "earthenv_topography|elevation_max"
+        ]
+      }
+    },
+    {
+      "id": "87",
+      "type": "constant",
+      "position": {
+        "x": 64.4163755627336,
+        "y": 637.9007740251292
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "88",
+      "type": "constant",
+      "position": {
+        "x": 63.19159404789906,
+        "y": 648.9238076586398
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "89",
+      "type": "constant",
+      "position": {
+        "x": 63.803984805316304,
+        "y": 661.7840135644021
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "90",
+      "type": "userInput",
+      "position": {
+        "x": -251.3645995282239,
+        "y": 333.7476662032601
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "91",
+      "type": "userInput",
+      "position": {
+        "x": -285.31685434062604,
+        "y": 58.654549918101566
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
     }
   ],
   "edges": [
@@ -156,13 +255,6 @@
       "id": "reactflow__edge-76-67species"
     },
     {
-      "source": "78",
-      "sourceHandle": null,
-      "target": "67",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-78-67srs"
-    },
-    {
       "source": "79",
       "sourceHandle": null,
       "target": "67",
@@ -175,13 +267,6 @@
       "target": "80",
       "targetHandle": "sf_range_map",
       "id": "reactflow__edge-65sf_range_map-80sf_range_map"
-    },
-    {
-      "source": "78",
-      "sourceHandle": null,
-      "target": "80",
-      "targetHandle": "srs",
-      "id": "reactflow__edge-78-80srs"
     },
     {
       "source": "79",
@@ -238,61 +323,182 @@
       "target": "82",
       "targetHandle": null,
       "id": "reactflow__edge-67r_habitat_by_tstep-82"
+    },
+    {
+      "source": "83",
+      "sourceHandle": "data>getCountryPolygon.yml@12|country_region_polygon",
+      "target": "80",
+      "targetHandle": "country_region_polygon",
+      "id": "reactflow__edge-83data>getCountryPolygon.yml@12|country_region_polygon-80country_region_polygon"
+    },
+    {
+      "source": "84",
+      "sourceHandle": "rasters",
+      "target": "80",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-84rasters-80rasters"
+    },
+    {
+      "source": "85",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-85-84stac_url"
+    },
+    {
+      "source": "83",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "84",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-83data>getBoundingBox.yml@0|bbox-84bbox"
+    },
+    {
+      "source": "86",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-86-84collections_items"
+    },
+    {
+      "source": "87",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-87-84t0"
+    },
+    {
+      "source": "88",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-88-84t1"
+    },
+    {
+      "source": "89",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-89-84temporal_res"
+    },
+    {
+      "source": "79",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-79-84spatial_res"
+    },
+    {
+      "source": "90",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-90-84study_area"
+    },
+    {
+      "source": "90",
+      "sourceHandle": null,
+      "target": "80",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-90-80study_area"
+    },
+    {
+      "source": "91",
+      "sourceHandle": null,
+      "target": "83",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-91-83pipeline@2"
+    },
+    {
+      "source": "91",
+      "sourceHandle": null,
+      "target": "84",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-91-84crs"
+    },
+    {
+      "source": "91",
+      "sourceHandle": null,
+      "target": "80",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-91-80srs"
+    },
+    {
+      "source": "91",
+      "sourceHandle": null,
+      "target": "67",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-91-67srs"
     }
   ],
   "inputs": {
+    "getCountrybbox.json@83|data>getCountryPolygon.yml@12|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "COL",
+      "weight": 0
+    },
+    "getCountrybbox.json@83|data>getCountryPolygon.yml@12|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
     "pipeline@76": {
-      "label": "species",
+      "label": "Species",
       "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
       "type": "text[]",
       "example": [
         "Myrmecophaga tridactyla"
       ],
-      "weight": 0
-    },
-    "data>getAreaOfHabitat.yml@80|study_area_opt": {
-      "description": "Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.",
-      "label": "study area option",
-      "type": "options",
-      "options": [
-        "Country",
-        "Region in Country",
-        "User defined"
-      ],
-      "example": "Country",
-      "weight": 1
-    },
-    "data>getAreaOfHabitat.yml@80|country_code": {
-      "description": "Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
-      "label": "country",
-      "type": "text",
-      "example": "Colombia",
       "weight": 2
     },
-    "data>getAreaOfHabitat.yml@80|region": {
-      "description": "For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/",
-      "label": "region",
-      "type": "text",
-      "example": null,
+    "data>getAreaOfHabitat.yml@80|buff_size": {
+      "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
+      "label": "Buffer for study area",
+      "type": "int",
+      "example": 0,
       "weight": 3
     },
-    "data>getAreaOfHabitat.yml@80|study_area": {
-      "description": "Path to the study area file if you choosing option \"User defined\" for study area option. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder). ",
-      "label": "study area",
+    "pipeline@90": {
+      "label": "Study area",
+      "description": "Custom polygon of study area used to mask output layers, in geopackage format. This input is for user's to input their own polygon rather than inputing a country/region.",
       "type": "application/geopackage+sqlite3",
       "example": null,
       "weight": 4
     },
-    "data>getAreaOfHabitat.yml@80|buff_size": {
-      "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
-      "label": "buffer for study area",
-      "type": "int",
-      "example": 0,
+    "pipeline@91": {
+      "label": "Coordinate reference system",
+      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
+      "type": "text",
+      "example": "EPSG:3116",
       "weight": 5
+    },
+    "SHI>habitatChange_GFW.yml@67|t_0": {
+      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://stac.geobon.org/collections/gfw-lossyear.",
+      "label": "Start year",
+      "type": "int",
+      "example": 2000,
+      "weight": 6
+    },
+    "SHI>habitatChange_GFW.yml@67|t_n": {
+      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://stac.geobon.org/collections/gfw-lossyear.",
+      "label": "End year",
+      "type": "int",
+      "example": 2020,
+      "weight": 7
+    },
+    "SHI>habitatChange_GFW.yml@67|time_step": {
+      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
+      "label": "Time step",
+      "type": "int",
+      "example": 10,
+      "weight": 8
     },
     "data>getAreaOfHabitat.yml@80|range_map_type": {
       "description": "Select type of range map according to the type of the source file: 1) polygon, 2) raster, 3) an intersection between the raster and polygon files.",
-      "label": "type of range map",
+      "label": "Type of range map",
       "type": "options",
       "options": [
         "Polygon",
@@ -300,10 +506,10 @@
         "Both"
       ],
       "example": "Polygon",
-      "weight": 6
+      "weight": 9
     },
     "pipeline@77": {
-      "label": "source of expert range map",
+      "label": "Source of expert range map",
       "description": "Source of the expert range map for the species. The options are:\nMap of Life (MOL), International union for conservation of nature (IUCN) and range maps from the Ministère de l’Environnement du Québec (QC).\n",
       "type": "options",
       "example": "IUCN",
@@ -312,87 +518,96 @@
         "IUCN",
         "QC"
       ],
-      "weight": 7
+      "weight": 10
     },
     "data>getAreaOfHabitat.yml@80|r_range_map": {
       "description": "Raster with expected area for the species if choosing option \"Raster\"",
-      "label": "range map (raster)",
+      "label": "Range map (raster)",
       "type": "image/tiff;application=geotiff[]",
       "example": [
         null
       ],
-      "weight": 8
+      "weight": 11
     },
     "SHI>habitatChange_GFW.yml@67|min_forest": {
       "description": "Minimum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "min forest",
+      "label": "Minimum forest cover percentage",
       "type": "int[]",
       "example": [
         50
       ],
-      "weight": 9
+      "weight": 12
     },
     "SHI>habitatChange_GFW.yml@67|max_forest": {
       "description": "Maximum tree cover percentage required for each species, based on suitable habitat of the species. Acts as a filter for the Global Forest Watch Data. If not available, use Map of Life Values (e.g. [https://mol.org/species/range/Saguinus_oedipus])",
-      "label": "max forest",
+      "label": "Maximum forest cover percentage",
       "type": "int[]",
       "example": [
         100
       ],
-      "weight": 10
-    },
-    "SHI>habitatChange_GFW.yml@67|t_0": {
-      "description": "Year where the analysis should start. Starts in 2000, check the time interval available for the Global Forest Watch data at https://stac.geobon.org/collections/gfw-lossyear.",
-      "label": "initial time",
-      "type": "int",
-      "example": 2000,
-      "weight": 11
-    },
-    "SHI>habitatChange_GFW.yml@67|t_n": {
-      "description": "Year where the analysis should end (it should be later than Initial time). It should be inside the time interval for the Global Forest Watch data at https://stac.geobon.org/collections/gfw-lossyear.",
-      "label": "final time",
-      "type": "int",
-      "example": 2020,
-      "weight": 12
-    },
-    "SHI>habitatChange_GFW.yml@67|time_step": {
-      "description": "Temporal resolution for analysis given in number of years. To get values for the end year, time step should fit evenly into the given analysis range.",
-      "label": "time step",
-      "type": "int",
-      "example": 10,
       "weight": 13
     },
-    "pipeline@78": {
-      "label": "spatial reference system",
-      "description": "Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.",
-      "type": "text",
-      "example": "EPSG:3116",
-      "weight": 14
-    },
     "pipeline@79": {
-      "label": "output spatial resolution",
-      "description": "Spatial resolution (in meters) for the output of the analysis.",
+      "label": "Spatial resolution",
+      "description": "Spatial resolution (in meters) for the analysis.",
       "type": "int",
       "example": 1000,
-      "weight": 15
+      "weight": 14
     },
     "data>getAreaOfHabitat.yml@80|elevation_filter": {
       "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
-      "label": "filter by elevation",
+      "label": "Filter by elevation",
       "type": "options",
       "options": [
         "Yes",
         "No"
       ],
       "example": "Yes",
-      "weight": 16
+      "weight": 15
     },
     "data>getAreaOfHabitat.yml@80|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
-      "label": "elevation buffer",
+      "label": "Elevation buffer",
       "type": "int",
       "example": null,
+      "weight": 16
+    },
+    "data>loadFromStac.yml@84|resampling": {
+      "description": "Resampling method used when rescaling and/or reprojecting the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "label": "Resampling method",
+      "type": "options",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "example": "near",
       "weight": 17
+    },
+    "data>loadFromStac.yml@84|aggregation": {
+      "description": "Method used to aggregate items when layers combining over time.",
+      "label": "Aggregation method",
+      "type": "options",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "example": "first",
+      "weight": 18
     }
   },
   "outputs": {

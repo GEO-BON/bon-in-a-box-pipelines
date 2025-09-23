@@ -16,8 +16,6 @@ input <- biab_inputs()
 print("Inputs: ")
 print(input)
 
-source(file.path(path_script, "data/filterCubeRangeFunc.R"), echo = TRUE)
-
 # Parameters -------------------------------------------------------------------
 # spatial resolution
 spat_res <- ifelse(is.null(input$spat_res), 1000, input$spat_res)
