@@ -3,12 +3,10 @@ packages_list <- list("terra", "rjson", "raster", "dplyr", "gdalcubes", "ENMeval
 lapply(packages_list, library, character.only = TRUE)
 
 # Load libraries from external sources
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-#if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 if (!"INLA" %in% installed.packages()[,"Package"]) install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 if (!"ewlgcpSDM" %in% installed.packages()[,"Package"]) devtools::install_github("BiodiversiteQuebec/ewlgcpSDM")
 
-packages_list <- list("stacatalogue", "INLA", "ewlgcpSDM")
+packages_list <- list("INLA", "ewlgcpSDM")
 lapply(packages_list, library, character.only = TRUE)
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
