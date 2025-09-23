@@ -1,35 +1,15 @@
+# Load libraries in CRAN
+packages_list <- list("terra", "rjson", "raster", "dplyr", "gdalcubes", "ENMeval", "devtools", "sf", "FNN", "stars")
+lapply(packages_list, library, character.only = TRUE)
 
-
-## Install required packages
-
-## Load required packages
-
-#memtot<-as.numeric(system("awk '/MemTotal/ {print $2}' /proc/meminfo", intern=TRUE))/1024^2
-#memallow<-floor(memtot*0.9) # 90% of total available memory
-#print(paste0(memallow,"G of RAM allowed to Java heap space"))
-#options(java.parameters = paste0("-Xmx",memallow,"g"))
-
-library("terra")
-library("rjson")
-library("raster")
-library("dplyr")
-library("gdalcubes")
-library("ENMeval")
-library("devtools")
-library("sf")
+# Load libraries from external sources
 if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
+#if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 if (!"INLA" %in% installed.packages()[,"Package"]) install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 if (!"ewlgcpSDM" %in% installed.packages()[,"Package"]) devtools::install_github("BiodiversiteQuebec/ewlgcpSDM")
-library("stacatalogue")
-library(INLA)
-library(ewlgcpSDM)
 
-
-## Load functions
-#source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/runMaxentFunc.R", sep = "/"))
-#source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
-
+packages_list <- list("stacatalogue", "INLA", "ewlgcpSDM")
+lapply(packages_list, library, character.only = TRUE)
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs : ")
@@ -78,9 +58,9 @@ params <- dmesh_effort(params, obs = obs, background = bg, buffer = buff, adjust
 print(head(params$predictors))
 cat("\n")
 print(head(params$effort))
+names(params$predictors) <- make.names(names(params$predictors))
 
 f <- as.formula(paste("y ~", paste(names(params$predictors), collapse = " + ")))
-print(f)
 
 ### Run model
 m <- ewlgcp(
@@ -119,7 +99,7 @@ sdms <- ewlgcpSDM::map(model = m,
                     dims = c(1500, 1500),
                     region = region
 )
-print("made it here")
+
 sdms <- mask(sdms, vect(region))
 crs(sdms) <- crs(region)
 
