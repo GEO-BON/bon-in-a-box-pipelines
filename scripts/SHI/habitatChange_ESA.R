@@ -10,6 +10,17 @@ aoh_paths <- input$aoh
 start_year <- as.integer(input$start_year)
 end_year <- as.integer(input$end_year)
 
+# Input checks
+
+if (is.null(layers) || nlyr(layers) != 2) {
+  biab_error_stop("Incorrect input for ESA landcover raster layers. 
+  There must be exactly two layers to compute the change in landcover.")
+}
+if (is.null(habitats) || !is.numeric(habitats)) {
+  biab_error_stop("Incorrect input for habitats. Please specify a list of integers corresponding to habitat codes.")
+}
+
+
 # Get number of species and species names
 species_names <- basename(dirname(aoh_paths))
 n_species <- length(aoh_paths)
