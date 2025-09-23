@@ -83,8 +83,8 @@
       "id": "79",
       "type": "userInput",
       "position": {
-        "x": 1834,
-        "y": 139.5
+        "x": 680.8199123953925,
+        "y": 80.73923120486074
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -263,6 +263,42 @@
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "115",
+      "type": "constant",
+      "position": {
+        "x": 1297.0743575428542,
+        "y": 462.10197192412454
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "116",
+      "type": "constant",
+      "position": {
+        "x": 1303.2563733116813,
+        "y": 470.9334230224491
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "117",
+      "type": "constant",
+      "position": {
+        "x": 1311.2046793001734,
+        "y": 484.1805996699359
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
       }
     }
   ],
@@ -504,6 +540,34 @@
       "target": "107",
       "targetHandle": "bbox",
       "id": "reactflow__edge-113bbox-107bbox"
+    },
+    {
+      "source": "115",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-115-107t0"
+    },
+    {
+      "source": "116",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-116-107t1"
+    },
+    {
+      "source": "117",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-117-107temporal_res"
+    },
+    {
+      "source": "79",
+      "sourceHandle": null,
+      "target": "107",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-79-107spatial_res"
     }
   ],
   "inputs": {
@@ -649,20 +713,6 @@
       "example": 0,
       "weight": 16
     },
-    "data>loadFromStac.yml@107|weight_matrix_with_ids": {
-      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
-      "label": "Weight matrix with ids",
-      "type": "text",
-      "example": null,
-      "weight": 17
-    },
-    "data>loadFromStac.yml@107|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in meters",
-      "label": "Spatial resolution",
-      "type": "float",
-      "example": 1000,
-      "weight": 18
-    },
     "data>loadFromStac.yml@107|resampling": {
       "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
       "label": "Resampling method",
@@ -684,7 +734,7 @@
         "q3"
       ],
       "example": "near",
-      "weight": 19
+      "weight": 17
     },
     "data>loadFromStac.yml@107|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
@@ -698,7 +748,7 @@
         "median"
       ],
       "example": "first",
-      "weight": 20
+      "weight": 18
     }
   },
   "outputs": {

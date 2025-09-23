@@ -14,7 +14,7 @@ inputs:
     label: Habitats
     description: Codes for the habitat types of the species of interest. For habitat types and their associated codes, refer to the [list of global CCI-LC codes](http://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf).
     type: int[]
-    example:
+    example: 50, 60, 70, 80, 90, 151, 160, 170
   aoh:
     label: Area of habitat
     description: Area of habitat of the species of interest
@@ -23,13 +23,13 @@ inputs:
   start_year:
     label: Start year
     description: First time point
-    type: int
-    example:
+    type: text
+    example: "2000"
   end_year:
     label: End year
     description: Second time point
-    type: int
-    example:
+    type: text
+    example: "2020"
 outputs:
   raster:
     label: Habitat per time point

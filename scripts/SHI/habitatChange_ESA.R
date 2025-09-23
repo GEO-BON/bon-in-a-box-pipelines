@@ -7,8 +7,8 @@ input <- biab_inputs()
 layers <- rast(c(input$layers))
 habitats <- input$habitats
 aoh_paths <- input$aoh
-start_year <- input$start_year
-end_year <- input$end_year
+start_year <- as.integer(input$start_year)
+end_year <- as.integer(input$end_year)
 
 # Get number of species and species names
 species_names <- basename(dirname(aoh_paths))
