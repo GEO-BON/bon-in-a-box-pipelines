@@ -4,10 +4,6 @@ library(dplyr)
 library(countrycode)
 library(httr2)
 
-if (!requireNamespace("packageName", quietly = TRUE)) {
-  remotes::install_github("ropensci/rnaturalearthhires")
-}
-
 input <- biab_inputs()
 
 # Output country and region

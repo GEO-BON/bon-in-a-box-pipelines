@@ -63,7 +63,7 @@ conda:
   dependencies:
     - r-rjson
     - r-terra
-    - r-gdalcubes=0.7.1
+  #  - r-gdalcubes=0.7.1
     - r-dplyr
     - r-sf
     - r-exactextractr
