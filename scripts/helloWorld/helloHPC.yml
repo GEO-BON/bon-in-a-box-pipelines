@@ -7,7 +7,6 @@ license: CC0
 description: Python script that runs on a HPC. If no HPC is configured, it will run locally.
 lifecycle:
   status: example
-timeout: 1
 inputs:
   some_int:
     label: Some int
