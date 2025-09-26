@@ -4,7 +4,6 @@ description: "Extract individual unprocessed items from various collections on t
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
-
 inputs:
   stac_url:
     label: STAC URL
@@ -18,35 +17,44 @@ inputs:
     example: [-2316297, -1971146, 1015207, 1511916]
   collections_items:
     label: STAC collection items
-    description: Vector of strings, collection name followed by '|' followed by item id
+    description: Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. "chelsa-clim|bio1").
+      To extract a whole collection, type the collection name only (e.g. "chelsa-clim"). To pull collection items by date, write the collection name and
+      provide a start date, end date, and temporal resolution.
     type: text[]
     example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
-  weight_matrix_with_ids:
-    label: Weight matrix with ids
-    description: Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.
+  t0:
+    label: Start date
+    description: Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
+    type: text
+    example: NULL
+  t1:
+    label: End date
+    description: End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
+    type: text
+    example: NULL
+  temporal_res:
+    label: Temporal resolution
+    description: Temporal resolution to use when querying STAC items by date, in the format ("P", time interval, and time unit, e.g.
+      "P1Y" is yearly, "P1M" is montly, and "P1D" is daily). Leave blank if not querying by date. If the temporal resolution is
+      coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.
     type: text
     example: NULL
   crs:
     label: Coordinate reference system
     description: |
-      Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.
-      This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.
-      This MUST be in a projected reference system (not lat long).
-
-      For further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).
-      The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.
-
-      *Leave blank if you want the bounding box to be in EPSG:4326.*
+      Numerical value referring to the coordinate reference system
     type: text
     example: "EPSG:6622"
   spatial_res:
     label: Spatial resolution
-    description: Integer, spatial resolution of the rasters in meters
+    description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system
+      (meters for projected reference systems and degrees for reference systems in lat long).
     type: float
     example: 1000.0
   resampling:
     label: Resampling method
-    description: Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.
+    description: Resampling method used when rescaling and/or reprojecting the raster layers.
+      See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.
     type: options
     options:
       - near
@@ -66,7 +74,7 @@ inputs:
     example: near
   aggregation:
     label: Aggregation method
-    description: Method used to aggregate items that overlay each other
+    description: Method used to aggregate items when layers combining over time.
     type: options
     options:
       - first
@@ -77,24 +85,22 @@ inputs:
     example: first
   study_area:
     label: Study area
-    description: Polygon of study area used to crop output layers
+    description: Polygon of study area used to mask output layers, in geopackage format.
     type: application/geopackage+sqlite3
     example: null
 outputs:
   rasters:
     label: Rasters
-    description: array of output raster paths
+    description: Output raster files in geotiff format.
     type: image/tiff;application=geotiff[]
-  weight_matrix_with_layers:
-    label: Weight matrix with layers
-    description: Weight matrix used for Bon optimization. Vector of layer linkes followed by weights.
-    type: text
+
 conda:
   channels:
     - conda-forge
     - r
   dependencies:
     - libgdal
+    - r-lubridate
     - proj
     - r-proj
     - r-gdalcubes=0.7.1
@@ -103,3 +109,5 @@ conda:
     - r-rcurl
     - r-rjson
     - r-sf
+    - r-stars
+    - r-terra
