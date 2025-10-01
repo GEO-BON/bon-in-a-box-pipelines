@@ -85,7 +85,7 @@ if (is.null(input$region)) { # pull study area polygon
   country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == input$region, ] # filter shape by region of interest
 
   if (nrow(country_region_polygon) == 0) {
-    biab_error_stop(paste0("Could not find polygon. Check that you have correct region name. Valid region names are:", shapeName))
+    biab_error_stop(paste0("Could not find polygon. Check that you have correct region name. Valid region names are: ", shapeName))
   } # stop if object is empty
 }
 
