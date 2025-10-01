@@ -273,7 +273,6 @@ for (coll_it in collections_items) { # Loop through input array
 
       # calculate interval between dates (if they are not the same)
       dates_lub <- as_datetime(dates)
-      print(dates_lub)
       diff <- dates_lub[2] - dates_lub[1]
       diff <- time_length(interval(dates_lub[2], dates_lub[1]), "years")
       diff <- abs(diff)
