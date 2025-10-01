@@ -51,7 +51,9 @@ n_year <- as.integer(substr(input$t1, 1, 4)) - as.integer(substr(input$t0, 1, 4)
 temporal_res <- paste0("P", n_year, "Y")
 
 print("Loading current climate...")
-cube_current <- stacatalogue::load_cube(collections = 'chelsa-monthly', 
+rast_current <- input$current_climate
+
+stacatalogue::load_cube(collections = 'chelsa-monthly', 
                           bbox = bbox,
                           t0 = input$t0,
                           t1 = input$t1,
@@ -66,7 +68,9 @@ cube_current <- stacatalogue::load_cube(collections = 'chelsa-monthly',
 print("Loading current climate loaded.")
 
 print("Loading future climate...")
-cube_future <- stacatalogue::load_cube_projection(collections = 'chelsa-clim-proj',            
+cube_future <- 
+
+stacatalogue::load_cube_projection(collections = 'chelsa-clim-proj',            
                           bbox = bbox,
                           limit = 5000,
                           srs.cube = input$srs_cube,
@@ -87,7 +91,7 @@ if (is.null(metric)) metric <- "rarity"
 
 print(paste("Calculating", metric, "metric..."))
 
-tif <- climate_metrics(cube_current,
+tif <- climate_metrics(rast_current,
                           cube_future,
                           metric,
                           t_match = input$t_match,
@@ -115,7 +119,3 @@ output <- list(
 
 jsonData <- toJSON(output, indent=2)
 write(jsonData, file.path(outputFolder,"output.json"))
-
-
-
-

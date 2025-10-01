@@ -12,30 +12,6 @@
       }
     },
     {
-      "id": "1",
-      "type": "io",
-      "position": {
-        "x": 844.9992749033238,
-        "y": 2.263521383552387
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "2",
-      "type": "constant",
-      "position": {
-        "x": 473.3818888395517,
-        "y": -40.470169993160056
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "https://stac.geobon.org/"
-      }
-    },
-    {
       "id": "3",
       "type": "io",
       "position": {
@@ -44,34 +20,6 @@
       },
       "data": {
         "descriptionFile": "getCountrybbox.json"
-      }
-    },
-    {
-      "id": "4",
-      "type": "constant",
-      "position": {
-        "x": 276.6929786918722,
-        "y": 14.180537016198912
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "chelsa_monthly"
-        ]
-      }
-    },
-    {
-      "id": "7",
-      "type": "userInput",
-      "position": {
-        "x": 327.9780292570698,
-        "y": 127.1058546790598
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "PY1"
       }
     },
     {
@@ -108,35 +56,6 @@
       }
     },
     {
-      "id": "11",
-      "type": "constant",
-      "position": {
-        "x": 428.5872392051574,
-        "y": 336.63105440318316
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "bilinear",
-        "options": [
-          "near",
-          "bilinear",
-          "average",
-          "mode",
-          "cubic",
-          "cubicspline",
-          "lanczos",
-          "rms",
-          "min",
-          "max",
-          "sum",
-          "med",
-          "q1",
-          "q3"
-        ]
-      }
-    },
-    {
       "id": "12",
       "type": "output",
       "position": {
@@ -151,7 +70,7 @@
       "id": "13",
       "type": "io",
       "position": {
-        "x": 814.5127129722009,
+        "x": 813.0404861100328,
         "y": 463.99552222532884
       },
       "data": {
@@ -193,8 +112,8 @@
       "id": "18",
       "type": "userInput",
       "position": {
-        "x": 230.633246129692,
-        "y": 65.1994948210949
+        "x": 193.4052147635075,
+        "y": 20.880409861351552
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -214,50 +133,98 @@
         "type": "text",
         "value": "1981-12-31"
       }
+    },
+    {
+      "id": "20",
+      "type": "io",
+      "position": {
+        "x": 892.4323791951333,
+        "y": -49.08657854783837
+      },
+      "data": {
+        "descriptionFile": "data>loadChelsaMonthly.yml"
+      }
+    },
+    {
+      "id": "21",
+      "type": "constant",
+      "position": {
+        "x": 399.50585412103896,
+        "y": -78.07468697470907
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Mean daily air temperature - tas",
+        "options": [
+          "Mean daily air temperature - tas",
+          "Mean daily minimul air temperature - tasmin",
+          "Mean daily maximum 2m air temperature - tasmax",
+          "Cloud area fraction - clt",
+          "Climate moisture index - cmi",
+          "Near-surface relative humidity - hurs",
+          "Potential evapotransiration - pet_penman",
+          "Precipitation amount - pr",
+          "Near-sirface wind speed - sfcWind",
+          "Vapor pressure deficit - vpd"
+        ]
+      }
+    },
+    {
+      "id": "22",
+      "type": "userInput",
+      "position": {
+        "x": 387.65822576466473,
+        "y": 536.5421615869228
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "2041-2070",
+        "options": [
+          "2011-2040",
+          "2041-2070",
+          "2071-2100"
+        ]
+      }
+    },
+    {
+      "id": "23",
+      "type": "constant",
+      "position": {
+        "x": 581.2670454110214,
+        "y": 45.495480708754414
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "bilinear",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
     }
   ],
   "edges": [
-    {
-      "source": "1",
-      "sourceHandle": "rasters",
-      "target": "0",
-      "targetHandle": "current_climate",
-      "id": "reactflow__edge-1rasters-0current_climate"
-    },
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-2-1stac_url"
-    },
-    {
-      "source": "3",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "1",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-3data>getBoundingBox.yml@0|bbox-1bbox"
-    },
     {
       "source": "3",
       "sourceHandle": "data>getBoundingBox.yml@0|bbox",
       "target": "0",
       "targetHandle": "bbox",
       "id": "reactflow__edge-3data>getBoundingBox.yml@0|bbox-0bbox"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-4-1collections_items"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "temporal_res",
-      "id": "reactflow__edge-7-1temporal_res"
     },
     {
       "source": "8",
@@ -267,32 +234,11 @@
       "id": "reactflow__edge-8-3pipeline@2"
     },
     {
-      "source": "8",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-8-1crs"
-    },
-    {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-10-1aggregation"
-    },
-    {
       "source": "10",
       "sourceHandle": null,
       "target": "0",
       "targetHandle": "aggregation",
       "id": "reactflow__edge-10-0aggregation"
-    },
-    {
-      "source": "11",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-11-1resampling"
     },
     {
       "source": "0",
@@ -346,13 +292,6 @@
     {
       "source": "16",
       "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-16-1spatial_res"
-    },
-    {
-      "source": "16",
-      "sourceHandle": null,
       "target": "13",
       "targetHandle": "spatial_res",
       "id": "reactflow__edge-16-13spatial_res"
@@ -379,13 +318,6 @@
       "id": "reactflow__edge-18-0t0"
     },
     {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "t0",
-      "id": "reactflow__edge-18-1t0"
-    },
-    {
       "source": "19",
       "sourceHandle": null,
       "target": "0",
@@ -393,11 +325,81 @@
       "id": "reactflow__edge-19-0t1"
     },
     {
+      "source": "20",
+      "sourceHandle": "rasters",
+      "target": "0",
+      "targetHandle": "current_climate",
+      "id": "reactflow__edge-20rasters-0current_climate"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "20",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-3data>getBoundingBox.yml@0|bbox-20bbox"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "variable",
+      "id": "reactflow__edge-21-20variable"
+    },
+    {
+      "source": "18",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-18-20t0"
+    },
+    {
       "source": "19",
       "sourceHandle": null,
-      "target": "1",
+      "target": "20",
       "targetHandle": "t1",
-      "id": "reactflow__edge-19-1t1"
+      "id": "reactflow__edge-19-20t1"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-8-20crs"
+    },
+    {
+      "source": "16",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-16-20spatial_res"
+    },
+    {
+      "source": "10",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-10-20aggregation"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-22-13time_span"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-22-0time_span"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-23-20resampling"
     }
   ],
   "inputs": {
@@ -405,7 +407,7 @@
       "label": "Coordinate reference system",
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
       "type": "text",
-      "example": "EPSG:4326",
+      "example": "EPSG:3116",
       "weight": 0
     },
     "climateMetrics>climateRarity.yml@0|moving_window": {
@@ -422,45 +424,19 @@
       "example": 1,
       "weight": 2
     },
-    "climateMetrics>climateRarity.yml@0|time_span": {
-      "description": "period for climate projection, start year to end year",
-      "label": "future time span",
-      "type": "options",
-      "options": [
-        "2011-2040",
-        "2041-2070",
-        "2071-2100"
-      ],
-      "example": "2041-2070",
-      "weight": 3
-    },
-    "data>loadFromStac.yml@1|study_area": {
-      "description": "Polygon of study area used to mask output layers, in geopackage format.",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 4
-    },
     "getCountrybbox.json@3|data>getCountryPolygon.yml@12|country": {
       "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "label": "ISO3 country code",
       "type": "text",
       "example": "COL",
-      "weight": 5
+      "weight": 3
     },
     "getCountrybbox.json@3|data>getCountryPolygon.yml@12|region": {
       "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
       "label": "State/Province code",
       "type": "text",
       "example": null,
-      "weight": 6
-    },
-    "pipeline@7": {
-      "label": "Temporal resolution",
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "type": "text",
-      "example": "PY1",
-      "weight": 7
+      "weight": 4
     },
     "pipeline@10": {
       "label": "Aggregation method",
@@ -474,33 +450,21 @@
         "mean",
         "median"
       ],
-      "weight": 8
+      "weight": 5
     },
     "climateMetrics>loadChelsaProjections.yml@13|variable": {
       "description": "Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.",
       "label": "Climate variable",
       "type": "text",
       "example": "bio1",
-      "weight": 9
-    },
-    "climateMetrics>loadChelsaProjections.yml@13|time_span": {
-      "description": "Period for climate projection, start year to end year",
-      "label": "Future time span",
-      "type": "options",
-      "options": [
-        "2011-2040",
-        "2041-2070",
-        "2071-2100"
-      ],
-      "example": "2041-2070",
-      "weight": 10
+      "weight": 6
     },
     "pipeline@16": {
       "label": "spatial resolution output",
       "description": "pixel size (in meters) of the output raster",
       "type": "int",
       "example": 1000,
-      "weight": 11
+      "weight": 7
     },
     "pipeline@17": {
       "label": "Shared socioeconomic pathways",
@@ -512,21 +476,47 @@
         "ssp370",
         "ssp585"
       ],
-      "weight": 12
+      "weight": 8
     },
     "pipeline@18": {
       "label": "current climate start",
       "description": "Current climate start time, in format aaaa-mm-dd",
       "type": "text",
       "example": "1981-01-01",
-      "weight": 13
+      "weight": 9
     },
     "pipeline@19": {
       "label": "current climate end",
       "description": "Current climate end time, in format aaaa-mm-dd",
       "type": "text",
       "example": "1981-12-31",
-      "weight": 14
+      "weight": 10
+    },
+    "data>loadChelsaMonthly.yml@20|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": "P1Y",
+      "weight": 11
+    },
+    "data>loadChelsaMonthly.yml@20|study_area": {
+      "description": "Polygon of study area used to mask output layers, in geopackage format.",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 12
+    },
+    "pipeline@22": {
+      "label": "Future time span",
+      "description": "Period for climate projection, start year to end year",
+      "type": "options",
+      "example": "2041-2070",
+      "options": [
+        "2011-2040",
+        "2041-2070",
+        "2071-2100"
+      ],
+      "weight": 13
     }
   },
   "outputs": {
