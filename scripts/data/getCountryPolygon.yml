@@ -58,6 +58,7 @@ conda:
     - r
   dependencies:
     - r-rjson
+    - r-jsonlite
     - r-sf
     - r-remotes
     - r-dplyr

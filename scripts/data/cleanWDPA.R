@@ -1,9 +1,7 @@
 library(sf)
 library(rjson)
 library(dplyr)
-
-# For review PR
-
+library(sf)
 # Add inputs
 input <- biab_inputs()
 sf_use_s2(FALSE)
@@ -15,18 +13,24 @@ if (is.null(input$study_area_polygon)) {
   shapefiles, connect this script to the 'Get country polygon' script")
 }
 
+# Load and fix geometry issues in study area
 study_area <- input$study_area_polygon
-study_area <- sf::st_read(study_area, type = 3, promote_to_multi = FALSE)
+study_area <- sf::st_read(study_area)
 study_area <- st_transform(study_area, crs = input$crs)
-study_area <- st_make_valid(study_area)
+study_area <- st_buffer(study_area, 0.1)
+study_area_clean <- st_make_valid(study_area)
+
+study_area_clean_path <- file.path(outputFolder, "study_area_clean.gpkg")
+sf::st_write(study_area_clean, study_area_clean_path, delete_dsn = T)
+biab_output("study_area_clean", study_area_clean_path)
 
 # Read in wdpa data
 protected_areas <- sf::st_read(input$protected_area_file, type = 3, promote_to_multi = FALSE)
 
-# transform
+# # transform
 protected_areas <- st_transform(protected_areas, crs = input$crs)
 
-## Clean data
+# ## Clean data
 print("Cleaning data")
 
 print("Including areas based on status")
@@ -81,9 +85,9 @@ if (isTRUE(input$buffer_points)) {
 
 # Geometery fixes
 print("Fixing invalid geometries")
-protected_areas <- st_make_valid(protected_areas)
+
 protected_areas <- st_buffer(protected_areas, 0)
-## Repair geometries
+
 protected_areas <- st_make_valid(protected_areas)
 
 # Remove slivers (protected areas that are less than 1 square meters
@@ -113,3 +117,5 @@ if(nrow(protected_areas_clean)==0){
 protected_areas_clean_path <- file.path(outputFolder, "protected_areas_clean.gpkg")
 sf::st_write(protected_areas_clean, protected_areas_clean_path, delete_dsn = T)
 biab_output("protected_areas_clean", protected_areas_clean_path)
+
+
