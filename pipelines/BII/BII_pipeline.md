@@ -1,5 +1,6 @@
 # Biodiversity Intactness Index
 Author(s): Jory Griffith
+
 Reviewed by: In development
 
 ## Introduction
@@ -45,7 +46,7 @@ This step extracts the global biodiversity intactness layers from various collec
 This step calculates the zonal statistics for the raster layers obtained from the GEO BON STAC catalog over the bounding box from step 1, using the R package exactextractr. The user can choose what types of zonal statistics will be extracted.
 
 #### **4. Calculating the BII change**
-This step generates a raster of the change in the BII between the two chosen time points. 
+This step generates a raster of the change in the BII between the two chosen time points.
 
 ### Pipeline outputs
 

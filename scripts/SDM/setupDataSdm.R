@@ -1,23 +1,10 @@
-library("devtools")
-if (!"stacatalogue" %in% installed.packages()[, "Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-
 ## Load required packages
+packages_list <- list("terra", "rjson", "raster", "dplyr", "gdalcubes", "ENMeval")
 
-library("terra")
-library("rjson")
-library("raster")
-library("dplyr")
-library("gdalcubes")
-library("ENMeval")
-library("stacatalogue")
-
-# devtools::install_github("ReseauBiodiversiteQuebec/ratlas")
-# devtools::install_github("ReseauBiodiversiteQuebec/sdm-pipeline")
+lapply(packages_list, library, character.only = TRUE)
 
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/setupDataSdmFunc.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/loadPredictorsFunc.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 
 input <- biab_inputs()
 print("Inputs: ")
@@ -26,7 +13,6 @@ print(input)
 presence <- read.table(file = input$presence, sep = "\t", header = TRUE)
 background <- read.table(file = input$background, sep = "\t", header = TRUE)
 predictors <- terra::rast(unlist(input$predictors))
-# names(predictors) <- input$layers
 
 presence_bg_vals <- setup_presence_background(
   presence = presence,
