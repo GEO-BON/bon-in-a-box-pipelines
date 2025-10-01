@@ -1,6 +1,6 @@
 script: loadFromStac.R
-name: Load from STAC
-description: "Extract individual unprocessed items from various collections on the GEO BON STAC catalog."
+name: Load Chelsa monthly
+description: "Extract Chelsa monthly data from the GEO BON STAC catalog by variable and date."
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
@@ -8,37 +8,40 @@ author:
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 inputs:
-  stac_url:
-    label: STAC URL
-    description: URL of the STAC catalog.
-    type: text
-    example: https://stac.geobon.org/
   bbox:
     label: Bounding box
     description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
     type: float[]
     example: [-2316297, -1971146, 1015207, 1511916]
-  collections_items:
-    label: STAC collection items
-    description: Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. "chelsa-clim|bio1").
-      To extract a whole collection, type the collection name only (e.g. "chelsa-clim"). To pull collection items by date, write the collection name and
-      provide a start date, end date, and temporal resolution.
-    type: text[]
-    example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
+  variable: 
+    label: Chelsa monthly variable
+    description: Variable to extract from Chelsa monthly data
+    type: options
+    options:
+      - Mean daily air temperature - tas
+      - Mean daily minimul air temperature - tasmin
+      - Mean daily maximum 2m air temperature - tasmax
+      - Cloud area fraction - clt
+      - Climate moisture index - cmi
+      - Near-surface relative humidity - hurs
+      - Potential evapotransiration - pet_penman
+      - Precipitation amount - pr
+      - Near-sirface wind speed - sfcWind
+      - Vapor pressure deficit - vpd
   t0:
     label: Start date
-    description: Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
+    description: Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Chelsa monthly data begins on 01-01-1980 and ends on 2019-12-31.
     type: text
     example: NULL
   t1:
     label: End date
-    description: End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
+    description: End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Chelsa monthly data begins on 01-01-1980 and ends on 2019-12-31.
     type: text
     example: NULL
   temporal_res:
     label: Temporal resolution
     description: Temporal resolution to use when querying STAC items by date, in the format ("P", time interval, and time unit, e.g.
-      "P1Y" is yearly, "P1M" is montly, and "P1D" is daily). Leave blank if not querying by date. If the temporal resolution is
+      "P1Y" is yearly, "P1M" is montly, and "P1D" is daily). If the temporal resolution is
       coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.
     type: text
     example: NULL
@@ -85,7 +88,7 @@ inputs:
       - max
       - mean
       - median
-    example: first
+    example: mean
   study_area:
     label: Study area
     description: Polygon of study area used to mask output layers, in geopackage format.

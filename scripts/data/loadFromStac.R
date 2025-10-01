@@ -12,6 +12,7 @@ print(outputFolder)
 
 input <- biab_inputs()
 
+
 gdalcubes_set_gdal_config("VSI_CACHE", "TRUE") # enable caching to speed up access to remote files
 gdalcubes_set_gdal_config("GDAL_CACHEMAX", "30%") # set maximum cache to 30% of system RAM
 gdalcubes_set_gdal_config("VSI_CACHE_SIZE", "10000000") # sets size of cache size to 10MB
@@ -30,17 +31,11 @@ ymin <- input$bbox[2]
 xmax <- input$bbox[3]
 ymax <- input$bbox[4]
 
-weight_matrix <- NULL
-
 if (xmin > xmax) {
   biab_error_stop("left and right seem reversed")
 }
 if (ymin > ymax) {
   biab_error_stop("bottom and top seem reversed")
-}
-
-if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null(input$t0) || !is.null(input$t1))) {
-  biab_info("The chelsa collection has no temporal option. Extracting all chelsa items...")
 }
 
 # Load the CRS object
@@ -96,13 +91,16 @@ if ("aggregation" %in% names(input)) {
 if ("taxa" %in% names(input)) { # EXTRACT GBIF HEATMAPS
   collections_items <- paste0("gbif_heatmaps|", input$taxa, "-heatmap")
   resampling <- "sum" # Sum number of occurences when upscaling
-} else { # EXTRACT OTHER LAYERS
+} else if ("variable" %in% names(input)){
+    collections_items <- "chelsa-monthly"
+  } else { # EXTRACT OTHER LAYERS
   if (length(input$collections_items) == 0) {
       stop("Please specify collections_items")
     } else {
     collections_items <- input$collections_items
 }
 }
+
 
 if (!("stac_url" %in% names(input))) {
   input$stac_url <- "https://stac.geobon.org"
@@ -180,7 +178,7 @@ for (coll_it in collections_items) { # Loop through input array
     file <- writeRaster(masked, path)
     raster_paths <- c(raster_paths, path)
 
-    #### Case 2: Pull all items in a collection ####
+    #### Case 2: Pull with GDAL cubes ####
   } else { # if there are not collection items specified
     tryCatch(
       {
@@ -207,9 +205,6 @@ for (coll_it in collections_items) { # Loop through input array
       names(item$assets)
     })
     asset_names <- unlist(asset_names)
-    print("Asset names:")
-    print(asset_names)
-    print(length(asset_names))
 
     # Extract spatial res if not provided
     if (is.null(input$spatial_res)) { # Obtain spatial resolution from metadata
@@ -229,11 +224,9 @@ for (coll_it in collections_items) { # Loop through input array
     } else {
       srs.cube <- input$crs
     }
-
     # Extract date
     dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
-    if (!all(asset_names == asset_names[1])) { # pull whole collection if names of assets are different
-      print(asset_names)
+    if (!all(asset_names == asset_names[1]) && !"variable" %in% names(input)) { # pull whole collection if names of assets are different
       raster_paths <- c()
       for (i in 1:length(asset_names)) { # loop through items in a collection
         print("Pulling all items")
@@ -268,7 +261,14 @@ for (coll_it in collections_items) { # Loop through input array
         raster_paths <- c(raster_paths, out)
       }
     } else { # If asset names are the same, filter by date (or tile if they are all the same date)
-      st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
+      if ("variable" %in% names(input)) {
+        print(input$variable)
+        variable <-  strsplit(input$variable, " - ")
+        variable <- unlist(variable)[2]
+        st <- gdalcubes::stac_image_collection(feats, asset_names=variable)
+      } else {
+        st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
+      }
       print("filtering cube by date")
 
       # calculate interval between dates (if they are not the same)
