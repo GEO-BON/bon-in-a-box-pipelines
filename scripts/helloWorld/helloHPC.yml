@@ -3,26 +3,42 @@ name: HPC Example
 author:
   - name: Jean-Michel Lord
     identifier: https://orcid.org/0009-0007-3826-1125
-license: CC0
-description: Python script that runs on a HPC. If no HPC is configured, it will run locally.
+license: CC-BY
+description:
+  Python script that runs on a HPC.
+  If no HPC is configured, it will run locally.
 lifecycle:
   status: example
 inputs:
-  some_int:
-    label: Some int
-    description: A number that we will increment
+  seconds:
+    label: Seconds
+    description:
+      Number of seconds that this run will take to complete.
+      An input value of 13 generates and error message.
     type: int
-    example: 3
+    example: 300
   some_csv_file:
     label: Some file
-    description: A file, which will be sent to HPC for processing
+    description: A file, which will be sent to HPC and printed to show it works.
     type: text/csv
     example: /scripts/helloWorld/example.csv
 outputs:
-  increment:
-    label: A number (input++)
-    description: bla bla
+  target:
+    label: Target seconds
+    description:
+      The number of seconds to be counted. Same as the input.
+      It is printed at the beginning of the script,
+      this allows to test fetching partial results when the job times out.
+    type: int
+    example: 300
+  length:
+    label: Content length
+    description:
+      The length of the input content, printed at the end of the script.
+      This will not be printed if job times out.
     type: int
     example: 4
 hpc:
-  memory: 1G
+  mem: 30G
+  cpus-per-task: 1
+  time: 00:10:00
