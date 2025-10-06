@@ -46,39 +46,50 @@ inputs:
       Additionally, larger dispersal distances will be more computationally intensive.
     type: int[]
     example: [1000, 10000]
-  distance_matrix_type:
-    label: Type of distance matrix
-    description: >
-      Type of distance matrix to use in the ProtConn calculation. The "centroid" option will measure the
-      distances between protected areas from the geometric center of each protected area,
-      while the "edge" option will measure the distance as the nearest edge between two protected areas.
-    type: options
-    options:
-      - centroid
-      - edge
-    example: centroid
+  pa_size_threshold:
+    label: PA size threshold
+    description: Size threshold for PAs, in meters squared. Protected areas smaller than this area will be removed. A threshold of 1km2 was used in
+     Saura et al. 2017 because at larger scales, protected areas less than 1km2 (1000 m2) do not have a large impact on ProtConn values. Removing small protected areas
+     significantly speeds up calculation and is recommended for large areas. To not PAs filter by size threshold, input a value of 0.
+    type: float
+    example: 1000
   years:
     label: Year for cutoff
     description: Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs
       that were designated before the year 2000)
     type: int
     example: 2025
+  time_series: 
+    label: Time series
+    description: Whether to calculate time series plot of ProtConn values based on date of PA establishment
+    type: boolean
+    example: TRUE
   start_year:
     label: Start year
-    description: Year for the time series plot to start
+    description: Year for the time series plot to start. Missing dates for protected area establishment will be automatically assigned to 
+      this year for the time series analysis. Leave blank if time series is not selected.
     type: int
     example: 1980
   year_int:
     label: Year interval
-    description: Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year). The last year will always be the input year.
+    description: Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year).
+     The last year will always be the input year. Leave blank if time series is not selected.
     type: int
     example: 20
 outputs:
   protected_areas:
     label: Protected areas
     description: Protected areas on which ProtConn has been calculated. Overlapping protected areas have been merged
-      into one to speed up calculation.
+      into one to speed up calculation. Protected areas less than the threshold size were also removed.
     type: application/geopackage+sqlite3[]
+  study_area_km2:
+    label: Area of study area
+    description: Area of the study area in square kilometers
+    type: text
+  protected_area_km2:
+    label: Area of protected areas
+    description: Total area of the protected areas in square kilometers
+    type: text
   protconn_result:
     label: ProtConn results
     description: >

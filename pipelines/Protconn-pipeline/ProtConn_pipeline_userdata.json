@@ -207,22 +207,22 @@
   ],
   "inputs": {
     "data>getCountryPolygon.yml@33|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes). Note that the country polygon will be not be used in the analysis if the user inputs a custom study area polygon.\n",
       "label": "ISO3 country code",
       "type": "text",
       "example": "COL",
       "weight": 0
     },
     "data>getCountryPolygon.yml@33|region": {
-      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2). Note that the region polygon will not be used in the analysis if the user inputs a custom study area polygon.",
       "label": "State/Province code",
       "type": "text",
       "example": "CO-PUT",
       "weight": 1
     },
     "pipeline@31": {
-      "label": "Polygon of study area",
-      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script.",
+      "label": "Polygon of study area (optional)",
+      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script. Leave blank to use the country polygon pulled from the \"get country polygon\" script.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
       "weight": 2
@@ -258,37 +258,40 @@
       ],
       "weight": 6
     },
-    "protconn_analysis>protconn_analysis.yml@8|distance_matrix_type": {
-      "description": "Type of distance matrix to use in the ProtConn calculation. The \"centroid\" option will measure the distances between protected areas from from the geometric center of each protected area, while the \"edge\" option will measure the distance as the nearest edge between two protected areas. ",
-      "label": "Type of distance matrix",
-      "type": "options",
-      "options": [
-        "centroid",
-        "edge"
-      ],
-      "example": "centroid",
-      "weight": 7
-    },
     "protconn_analysis>protconn_analysis.yml@8|years": {
       "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
       "label": "Year for cutoff",
       "type": "int",
       "example": 2025,
+      "weight": 7
+    },
+    "protconn_analysis>protconn_analysis.yml@8|time_series": {
+      "description": "Whether to calculate time series plot of ProtConn values based on date of PA establishment",
+      "label": "Time series",
+      "type": "boolean",
+      "example": true,
       "weight": 8
     },
     "protconn_analysis>protconn_analysis.yml@8|start_year": {
-      "description": "Year for the time series plot to start",
-      "label": "Start year",
+      "description": "Year for the time series plot to start. This input will only be used if the time series input is selected.",
+      "label": "Start year (optional)",
       "type": "int",
       "example": 1980,
       "weight": 9
     },
     "protconn_analysis>protconn_analysis.yml@8|year_int": {
-      "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
-      "label": "Year interval",
+      "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years). This input will only be used if the time series input is selected.",
+      "label": "Year interval (optional)",
       "type": "int",
       "example": 20,
       "weight": 10
+    },
+    "protconn_analysis>protconn_analysis.yml@8|pa_size_threshold": {
+      "description": "Size threshold for PAs, in meters squared. Protected areas smaller than this area will be removed. A threshold of 1km2 was used in Saura et al. 2017 because at larger scales, protected areas less than 1km2 (1000 m2) do not have a large impact on ProtConn values. Removing small protected areas significantly speeds up calculation and is recommended for large areas. To not PAs filter by a size threshold, input a value of 0.",
+      "label": "PA size threshold",
+      "type": "float",
+      "example": 1000,
+      "weight": 11
     }
   },
   "outputs": {
