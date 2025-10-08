@@ -23,6 +23,7 @@ def parse_gc_table(log_content):
         ncells_mb = float(match.group(2))
         vcells_mb = float(match.group(4))
         total_mb = ncells_mb + vcells_mb
+        print(f"\t{total_mb:.1f} mb")
         return total_mb
 
     print("\t! No stats found")
@@ -30,12 +31,14 @@ def parse_gc_table(log_content):
 
 # Function to parse elapsed time string
 def parse_elapsed_time(log_content):
-    elapsed_pattern = r"Elapsed:\s*(\d+)m\s*([\d.]+)s"
+    elapsed_pattern = r"Elapsed:\s*(\d+)?h?\s*(\d+)?m?\s+([\d.]+)s"
     match = re.search(elapsed_pattern, log_content)
     if match:
-        minutes = int(match.group(1))
-        seconds = float(match.group(2))
-        total_seconds = minutes + seconds / 60
+        hours = int(match.group(1)) if match.group(1) is not None else 0
+        minutes = int(match.group(2)) if match.group(2) is not None else 0
+        seconds = float(match.group(3))
+        print(f"\t{hours}h {minutes}m {seconds}s")
+        total_seconds = hours * 60 + minutes + seconds / 60
         return total_seconds
 
     print("\t! No time found")
@@ -55,6 +58,10 @@ def process_logs(root_dir):
                 print("\t! Skipped: finished with error")
                 continue
 
+            if "Cancelled by user: " in content:
+                print("\t! Skipped: cancelled")
+                continue
+
             memory = parse_gc_table(content)
             time = parse_elapsed_time(content)
 
@@ -63,29 +70,26 @@ def process_logs(root_dir):
             if time is not None:
                 elapsed_times.append(time)
 
-    print("\nCompiled", len(memory_usages), "memory usages")
-    print(memory_usages)
-    print("\nCompiled", len(elapsed_times), "times")
-    print(elapsed_times)
-
     # Compute statistics
     if memory_usages:
         print("\nPeak memory Usage in MB: (currently compiled for R scripts only!)")
         print(f"  Max: {max(memory_usages):.2f}")
         print(f"  Min: {min(memory_usages):.2f}")
         print(f"  Mean: {mean(memory_usages):.2f}")
+        print("Compiled", len(memory_usages), "memory usages")
     else:
         print("No valid memory usage data found.")
 
     if elapsed_times:
         print("\nElapsed Time in minutes:")
-        print(f"  Max: {max(elapsed_times):.2f}")
-        print(f"  Min: {min(elapsed_times):.2f}")
-        print(f"  Mean: {mean(elapsed_times):.2f}")
+        print(f"  Max: {max(elapsed_times):.3f}")
+        print(f"  Min: {min(elapsed_times):.3f}")
+        print(f"  Mean: {mean(elapsed_times):.3f}")
+        print("Compiled", len(elapsed_times), "times")
     else:
         print("No valid elapsed time data found.")
 
-# Example usage
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print(f"Usage: {sys.argv[0]} <target_directory>")
