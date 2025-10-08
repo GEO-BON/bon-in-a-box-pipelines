@@ -242,7 +242,7 @@
       "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@8|date_column_name": {
-      "description": "Name of the column in the user provided protected area file that specifies when the PA was created.",
+      "description": "Name of the column in the user provided protected area file that specifies when the PA was created. Leave blank if your protected area file does not have a date column.",
       "label": "Date column name",
       "type": "text",
       "example": null,
@@ -259,7 +259,7 @@
       "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@8|years": {
-      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
+      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000). Leave blank if your protected area file does not have a date column. ",
       "label": "Year for cutoff",
       "type": "int",
       "example": 2025,

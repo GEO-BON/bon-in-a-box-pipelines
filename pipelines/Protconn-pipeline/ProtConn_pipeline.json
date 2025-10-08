@@ -381,7 +381,7 @@
       "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area.\nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
       "label": "Buffer protected area points",
       "type": "boolean",
-      "example": false,
+      "example": true,
       "weight": 13
     },
     "data>cleanWDPA.yml@48|include_marine": {
