@@ -17,6 +17,33 @@ inputs:
     label: Bounding box
     description: Bounding box and CRS of study area
     type: bboxCRS
+    example:
+      CRS:
+        authority: EPSG
+        code: 4326
+        name: WGS84 - Lat/long
+        proj4Def: +proj=longlat +datum=WGS84 +no_defs
+        unit: degree
+      bbox: &ref_0
+        - -141.001858
+        - 41.676568
+        - -52.61908
+        - 83.113214
+      country:
+        ISO3: CAN
+        code: CA
+        countryBboxWGS84: *ref_0
+        englishName: Canada
+      region:
+        ISO3166_2: QC
+        countryEnglishName: Canada
+        regionBboxWGS84:
+          - -79.761059
+          - 44.991143
+          - -57.105486
+          - 62.582865
+        regionName: Quebec
+
 outputs:
   increment:
     label: Increment
