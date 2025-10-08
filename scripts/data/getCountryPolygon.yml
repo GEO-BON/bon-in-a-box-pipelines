@@ -19,7 +19,7 @@ inputs:
     type: text
     example: COL
   region:
-    label: State/Province code
+    label: State/Province name
     description: Name of region of interest, in the native language of the location.
     type: text
     example: null
