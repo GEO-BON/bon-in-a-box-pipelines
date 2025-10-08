@@ -3,6 +3,7 @@ library(rjson)
 library(dplyr)
 library(countrycode)
 library(httr2)
+# For review PR
 
 input <- biab_inputs()
 
@@ -72,7 +73,9 @@ if (is.null(input$region)) { # pull study area polygon
   )
 
   meta <- res |> resp_body_json()
+  meta <- res |> resp_body_json()
 
+  geojson_url <- meta$gjDownloadURL
   geojson_url <- meta$gjDownloadURL
 
   country_region_polygon <- st_read(geojson_url)

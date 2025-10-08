@@ -25,11 +25,11 @@ sf::st_write(study_area_clean, study_area_clean_path, delete_dsn = T)
 biab_output("study_area_clean", study_area_clean_path)
 
 # Read in wdpa data
-protected_areas <- sf::st_read(input$protected_area_file, type = 3, promote_to_multi = FALSE)
+protected_areas <- sf::st_read(input$protected_area_file)
 
 # # transform
 protected_areas <- st_transform(protected_areas, crs = input$crs)
-
+print(unique(protected_areas$legal_status))
 # ## Clean data
 print("Cleaning data")
 
@@ -48,7 +48,7 @@ if (isFALSE(input$include_unesco)) {
 
 ## Check if it is point and label as such
 protected_areas$geometry_type <- st_geometry_type(protected_areas)
-print(unique(protected_areas$geometry_type))
+
 
 is_point <- vapply(
   sf::st_geometry(protected_areas), inherits, logical(1),
@@ -58,19 +58,22 @@ protected_areas$geometry_type[is_point] <- "POINT" # label points as a point
 
 # deal with points
 if (isTRUE(input$buffer_points)) {
-  print("Removing points with no reported area")
-  protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT" & !is.finite(protected_areas$reported_area)), ]
-  print("Creating buffer for points with reported area")
+  print("Removing points with no reported area or area of 0")
+  protected_areas$reported_area <- as.numeric(protected_areas$reported_area)
+
+  protected_areas <- protected_areas %>% filter(!(geometry_type == "POINT" & (is.na(reported_area) | reported_area == 0)))
+
   points_data <- protected_areas[(protected_areas$geometry_type == "POINT"),]
+
 
   if(nrow(points_data) > 0){
     points_data <- points_data %>%
-    mutate(buffer_radius = sqrt((as.numeric(reported_area) * 1e6) / pi)) %>%
-    st_buffer(dist = buffer_radius)
-   print(points_data)
+    mutate(buffer_radius = sqrt((as.numeric(reported_area) * 1e6) / pi))
+    points_data <- st_buffer(points_data, dist = points_data$buffer_radius)
+    points_data <- points_data %>% select(!buffer_radius)
 
       if (any(protected_areas$geometry_type == "POLYGON")) {
-      protected_areas <- rbind(protected_areas[which(protected_areas$geometry_type == "POLYGON"), ], points_data)
+      protected_areas <- rbind(protected_areas[which(protected_areas$geometry_type %in% c("POLYGON", "MULTIPOLYGON")), ], points_data)
       } else {
       protected_areas <- points_data
       }
@@ -87,29 +90,32 @@ if (isTRUE(input$buffer_points)) {
 print("Fixing invalid geometries")
 
 protected_areas <- st_buffer(protected_areas, 0)
+print(nrow(protected_areas))
 
 protected_areas <- st_make_valid(protected_areas)
 
-# Remove slivers (protected areas that are less than 1 square meters
-protected_areas <- protected_areas[as.numeric(sf::st_area(protected_areas)) > 1, ]
+print("Removing slivers (protected areas less than 1 square meters)")
+sliver_threshold <- units::set_units(1, "m^2")
+protected_areas <- protected_areas[(sf::st_area(protected_areas)) > sliver_threshold, ]
+print(nrow(protected_areas))
 
 # Include marine
 if (isFALSE(input$include_marine)) {
   print("Removing marine protected areas")
   protected_areas <- protected_areas %>% filter(marine == FALSE)
 }
-
+print(nrow(protected_areas))
 # Include OECMs
 if (isFALSE(input$include_oecm)) {
   print("Removing OECMs")
   protected_areas <- protected_areas %>% filter(is_oecm == FALSE)
 }
-
+print(nrow(protected_areas))
 
 ## Crop data by study area
 print("Cropping data by study area")
 protected_areas_clean <- st_intersection(protected_areas, study_area)
-
+print(nrow(protected_areas))
 if(nrow(protected_areas_clean)==0){
   biab_error_stop("There are no protected areas.")
 }
