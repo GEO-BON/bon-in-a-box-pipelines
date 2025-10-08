@@ -78,7 +78,7 @@ inputs:
 
       Protected area points with no reported area will be removed in all cases.
     type: boolean
-    example: FALSE
+    example: TRUE
   include_marine:
     label: Include marine protected areas
     description: >

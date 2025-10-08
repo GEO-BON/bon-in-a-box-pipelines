@@ -25,6 +25,7 @@ if (length(input$study_area_polygon) > 1) { # if there is userdata study area in
   study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
 }
 
+
 study_area <- st_transform(study_area, st_crs(input$crs))
 print("CRS:")
 print(st_crs(study_area))
@@ -65,6 +66,7 @@ for (i in 1:nrow(protected_areas)) {
 
   print("Protected area geometry:")
   print(unique(st_geometry_type(protected_areas)))
+  print(protected_areas)
 }
 
 
@@ -72,10 +74,12 @@ if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and par
   protected_areas_user <- st_read(protected_areas_user) # load
   print(protected_areas_user)
   protected_areas_user <- st_transform(protected_areas_user, st_crs(input$crs))
-  if (is.null(input$date_column)) {
-    biab_error_stop("Please specify a date column name for the protected areas file.")
-  }
+  
+  if ((input$time_series==TRUE) & is.null(input$date_column)) {
+    biab_error_stop("Please specify a date column name for the protected areas file or deselect the time series option.")
+  } 
 
+if (!is.null(input$date_column)){
 # Assign all PAs without a date to the start year for the time series
 print("fixing date")
 
@@ -89,6 +93,8 @@ for (i in 1:nrow(protected_areas_user)) {
   protected_areas_user$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_user$legal_status_updated_at, orders = c("ymd", "mdy", "dmy", "y"))
   protected_areas_user$legal_status_updated_at <- lubridate::year(protected_areas_user$legal_status_updated_at)
 }
+}
+
 
 if (pa_input_type == "User input") {
   protected_areas <- protected_areas_user
@@ -99,8 +105,13 @@ if (pa_input_type == "Both") {
     biab_error_stop("Geometry column must be called 'geom'")
   }
   print("Combining user defined protected areas with WDPA data")
+if (!is.null(input$date_column)){
   protected_areas <- protected_areas[, c("legal_status_updated_at", "geom")]
   protected_areas_user <- protected_areas_user[, c("legal_status_updated_at", "geom")]
+} else {
+  protected_areas <- protected_areas[, c("geom")]
+  protected_areas_user <- protected_areas_user[, c("geom")]
+}
 
   protected_areas <- rbind(protected_areas, protected_areas_user)
 }
@@ -139,20 +150,25 @@ dissolve_overlaps <- function(x) {
 
 print("Calculating ProtConn")
 
+
+
+if (!is.null(input$date_column)){
 protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years | is.na(legal_status_updated_at))
+}
 print("Num prot areas:")
 print(nrow(protected_areas))
 # Get rid of overlaps
 protected_areas_simp <- dissolve_overlaps(protected_areas)
+
+
 print("Num prot areas with overlaps dissolved and multipolygons expanded into different rows:")
 print(nrow(protected_areas_simp))
 
 # Filter out protected areas smaller than the size threshold
 threshold <- units::set_units(input$pa_size_threshold, "m^2")
 print(threshold)
-print(st_area(protected_areas_simp))
 protected_areas_simp <- protected_areas_simp %>% filter((st_area(protected_areas_simp)) > threshold)
-print(st_area(protected_areas_simp))
+
 
 # output simplified protected areas
 protected_areas_simp_path <- file.path(outputFolder, "protected_areas.gpkg")
@@ -163,6 +179,8 @@ biab_output("protected_areas", protected_areas_simp_path)
 if (nrow(protected_areas_simp) < 2) {
   biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
 }
+
+
 
 if (isTRUE(st_is_longlat(protected_areas_simp))) {
   biab_error_stop("Protected areas are in latitude longitude degrees, please choose a projected coordinate reference system.")
@@ -351,7 +369,7 @@ for (i in seq_along(input$distance_threshold)) {
     labs(y = "Percent area", x = "Year", title = name) +
     scale_color_manual(values = c("#39568CFF", "#1F968BFF", "#73D055FF")) +
     geom_hline(yintercept = 30, lty = 2) +
-    annotate("text", x = xint, y = 31, label = "Kunming-Montreal target") +
+    annotate("text", x = xint, y = 33, label = "Kunming-Montreal target") +
     facet_wrap(~Distance) +
     geom_line() +
     theme_classic() +
