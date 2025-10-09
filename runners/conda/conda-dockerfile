@@ -13,7 +13,7 @@ ENV TZ=Etc/UTC
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends cmake psmisc; \
+    apt-get install -y --no-install-recommends cmake psmisc time; \
     apt-get clean all;
 
 ## Mamba installation

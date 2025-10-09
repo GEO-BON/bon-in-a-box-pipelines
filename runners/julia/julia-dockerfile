@@ -1,7 +1,12 @@
-FROM julia:1.11
+FROM julia:1.12
 
 COPY importEnvVars.sh /importEnvVars.sh
 RUN chmod a+x /importEnvVars.sh
+
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends time; \
+    apt-get clean all;
 
 # Setting the depot path, since we are installing the dependencies as root
 # but running with a yet unknown non-root user.
