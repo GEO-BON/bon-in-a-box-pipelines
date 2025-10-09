@@ -17,13 +17,21 @@ def find_log_files(root_dir):
 
 # Function to parse R garbage collection table
 def parse_gc_table(log_content):
-    gc_pattern = r"Ncells(\s+[\d.]+){5}\s+([\d.]+).*?Vcells(\s+[\d.]+){5}\s+([\d.]+)"
-    match = re.search(gc_pattern, log_content, re.DOTALL)
+    r_pattern = r"Ncells(\s+[\d.]+){5}\s+([\d.]+).*?Vcells(\s+[\d.]+){5}\s+([\d.]+)"
+    match = re.search(r_pattern, log_content, re.DOTALL)
     if match:
         ncells_mb = float(match.group(2))
         vcells_mb = float(match.group(4))
         total_mb = ncells_mb + vcells_mb
         print(f"\t{total_mb:.1f} mb")
+        return total_mb
+
+    py_jl_pattern = r"Memory used: (\d+) kb"
+    match = re.search(py_jl_pattern, log_content)
+    if match:
+        total_kb = int(match.group(1))
+        total_mb = total_kb / 1024
+        print(f"\t{total_mb:.3f} mb")
         return total_mb
 
     print("\t! No stats found")
@@ -72,7 +80,7 @@ def process_logs(root_dir):
 
     # Compute statistics
     if memory_usages:
-        print("\nPeak memory Usage in MB: (currently compiled for R scripts only!)")
+        print("\nPeak memory Usage in MB:")
         print(f"  Max: {max(memory_usages):.2f}")
         print(f"  Min: {min(memory_usages):.2f}")
         print(f"  Mean: {mean(memory_usages):.2f}")
