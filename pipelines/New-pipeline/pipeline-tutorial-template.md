@@ -1,13 +1,13 @@
 # Title of your pipeline
-### Author(s): Author name(s)
-#### Reviewed by: Reviewer names
+Author(s): Author name(s)
+Reviewed by: Reviewer names
 
 *This is a template for creating a tutorial for a pipeline, which will be included in the online documentation. These are the suggested sections, but the contributor can include additional sections or change titles if desired. Should you need to add any images, please add them in the images folder of the bon-in-a-box-pipelines repository and link them to this file.* 
 
 ## Introduction
 *Write an introduction here that is a brief description of what the pipeline does.*
 
-## 'Use Case'/Context
+## Uses
 *The context in which it should be used.*
 
 ## Pipeline limitations
