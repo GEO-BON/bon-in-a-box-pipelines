@@ -405,22 +405,22 @@
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "Start date",
       "type": "text",
-      "weight": 12,
-      "example": null
+      "example": null,
+      "weight": 12
     },
     "data>loadFromStac.yml@2|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "End date",
       "type": "text",
-      "weight": 13,
-      "example": null
+      "example": null,
+      "weight": 13
     },
     "data>loadFromStac.yml@2|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
-      "weight": 14,
-      "example": null
+      "example": null,
+      "weight": 14
     }
   },
   "outputs": {
