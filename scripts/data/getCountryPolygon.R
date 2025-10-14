@@ -5,36 +5,33 @@ library(countrycode)
 library(httr2)
 
 input <- biab_inputs()
+crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 
 # Output country and region
-if (is.null(input$country)) {
-  country <- "No country chosen"
-} else {
-  country <- input$country
-}
+country <- input$bbox_crs$country$ISO3
 
-if (is.null(input$region)) {
+if (is.null(input$bbox_crs$region)) {
   region <- "No region chosen"
 } else {
-  region <- input$region
+  region <- input$bbox_crs$region$regionName
 }
 
 biab_output("region", region)
 
 # Change from ISO code to country namelibrary(countrycode)
 country_name <- countrycode(
-  input$country,
+  country,
   origin = "iso3c",
   destination = "country.name.en"
 )
 
 biab_output("country", country_name)
 
-if (is.null(input$region)) { # pull study area polygon
+if (is.null(input$bbox_crs$region)) { # pull study area polygon
   # pull whole country
   tryCatch(
     {
-      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |>
+      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", country, "/ADM0")) |>
         req_perform()
     },
     error = function(e) {
@@ -59,7 +56,7 @@ if (is.null(input$region)) { # pull study area polygon
   print("pulling region polygon")
   tryCatch(
     {
-      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |> # ADM1 gives states and provinces
+      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", country, "/ADM1")) |> # ADM1 gives states and provinces
         req_perform()
     },
     error = function(e) {
@@ -76,19 +73,28 @@ if (is.null(input$region)) { # pull study area polygon
   geojson_url <- meta$gjDownloadURL
 
   country_region_polygon <- st_read(geojson_url)
+  country_region_polygon <- st_transform(country_region_polygon, crs = crs)
 
-  print(country_region_polygon$shapeName)
-  shapeName <- paste(country_region_polygon$shapeName, collapse = ", ")
-  country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == input$region, ] # filter shape by region of interest
+  bbox_values <- (input$bbox_crs$bbox)
+  names(bbox_values) <- c("xmin", "ymin", "xmax", "ymax")
+  print(bbox_values)
+  bbox_poly <- st_as_sfc(st_bbox(bbox_values, crs = crs))
+
+  # bbox_poly <- st_buffer(bbox_poly, dist = 10)
+
+  country_region_polygon <- country_region_polygon[st_within(country_region_polygon, bbox_poly, sparse = FALSE), ]
+
+  # print(country_region_polygon$shapeName)
+  # shapeName <- paste(country_region_polygon$shapeName, collapse = ", ")
+  # country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == input$region, ] # filter shape by region of interest
 
   if (nrow(country_region_polygon) == 0) {
     biab_error_stop(paste0("Could not find polygon. Check that you have correct region name. Valid region names are: ", shapeName))
   } # stop if object is empty
 }
 
-
 # transform to crs of interest
-country_region_polygon <- st_transform(country_region_polygon, crs = input$crs)
+# country_region_polygon <- st_transform(country_region_polygon, crs = crs)
 print(st_crs(country_region_polygon))
 
 print("Study area downloaded")
