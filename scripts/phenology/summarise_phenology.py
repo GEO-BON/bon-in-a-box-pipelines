@@ -4,6 +4,7 @@ import openeo;
 import shapely;
 import os
 import geopandas as gpd
+from pyproj import CRS
 
 os.chdir(sys.argv[1])
 
@@ -18,6 +19,7 @@ polygon = data['study_area_polygon']
 aggregate_function = data['aggregate_function']
 spatial_resolution = data['spatial_resolution']
 season = data['season']
+crs = data['crs']
 id = os.getenv("CDSE_CLIENT_ID")
 secret = os.getenv("CDSE_CLIENT_SECRET")
 
@@ -27,6 +29,19 @@ if (int(start_year) < 2017 or int(end_year) > 2024):
 
 if (id is None or secret == None):
     biab_error_stop("Please specify CDSE credentials in runner.env")
+
+if crs is None or crs=='':
+    crs='EPSG:4326'
+    print('No CRS specified, using Latitude, Longitude WGS84 (EPSG:4326) as the CRS.')
+
+EPSG = crs.split(':')[1]
+coord = CRS.from_epsg(EPSG)
+
+if coord.is_geographic and spatial_resolution > 1:
+    biab_error_stop("CRS is in degrees and resolution is in meters.")
+
+if coord.is_projected and spatial_resolution < 1:
+    biab_error_stop("CRS is in meters and resolution is in degrees.")
 
 connection = openeo.connect("https://openeo.dataspace.copernicus.eu/")
 
@@ -57,7 +72,7 @@ else:
 if spatial_resolution is None:
     datacube_resampled_cropped = datacube_cropped
 else:
-    datacube_resampled_cropped = datacube_cropped.resample_spatial(resolution=spatial_resolution, method="bilinear") # resampling to spatial resolution
+    datacube_resampled_cropped = datacube_cropped.resample_spatial(resolution=spatial_resolution, projection=crs, method="bilinear") # resampling to spatial resolution
 
 
 # output rasters

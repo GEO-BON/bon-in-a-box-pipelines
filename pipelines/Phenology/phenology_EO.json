@@ -50,8 +50,8 @@
       "id": "45",
       "type": "userInput",
       "position": {
-        "x": -65,
-        "y": 327
+        "x": -291.82989564701836,
+        "y": 300.50118041506795
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -105,10 +105,23 @@
     },
     {
       "id": "64",
-      "type": "constant",
+      "type": "userInput",
       "position": {
         "x": -924.9631380758377,
         "y": -55.75703138216767
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "65",
+      "type": "constant",
+      "position": {
+        "x": -920.95654296875,
+        "y": 84.47825622558594
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -205,15 +218,22 @@
     {
       "source": "64",
       "sourceHandle": null,
+      "target": "37",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-64-37crs"
+    },
+    {
+      "source": "65",
+      "sourceHandle": null,
       "target": "63",
       "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-64-63pipeline@2"
+      "id": "reactflow__edge-65-63pipeline@2"
     }
   ],
   "inputs": {
     "getCountrybbox.json@63|data>getCountryPolygon.yml@12|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code (Europe only)",
       "type": "text",
       "example": "BEL",
       "weight": 0
@@ -225,8 +245,15 @@
       "example": null,
       "weight": 1
     },
+    "pipeline@64": {
+      "label": "Coordinate reference system",
+      "description": "The coordinate reference system for the output layers. You can search for EPSG codes by country [here](https://epsg.io/).",
+      "type": "text",
+      "example": "EPSG:4326",
+      "weight": 2
+    },
     "phenology>summarise_phenology.yml@37|season": {
-      "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) \nand season 2 is the second growing season (late summer and fall).\n",
+      "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) and season 2 is the second growing season (late summer and fall).\n",
       "label": "Season of interest",
       "type": "options",
       "options": [
@@ -234,10 +261,10 @@
         "SEASON2"
       ],
       "example": "SEASON1",
-      "weight": 2
+      "weight": 3
     },
     "phenology>summarise_phenology.yml@37|bands": {
-      "description": "Bands of interest for the calculations. \n- Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.\n- End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season ampltitude during the green-down period.\n- Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season\n- End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season\n- Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season\n- Season maximum date (MAXD) - date in the vegetation growing season where the mximum PPI is reached\n- Season minimum value (MINV) - average PPI of minima of left adn right sides of each season\n- Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season\n- Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season\n- Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts\n- Slope of the green-down period (RSLOPE) - the rate of change in tha values of PPO at the dat when the vegetatio growing season ends\n- Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.\n- Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end\n- Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset\n",
+      "description": "Bands of interest for the calculations. \n- Start of season date (SOSD) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.\n- End of season date (EOSD) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season amplitude during the green-down period.\n- Start of season value (SOSV) - the value of the PPI at the start of the vegetation growing season\n- End of season value (EOSV) - the value of the PPI at the end of the vegetation growing season\n- Season maximum value (MAXV) - the maximum (peak) value that the PPI reaches during the vegetation growing season\n- Season maximum date (MAXD) - date in the vegetation growing season where the maximum PPI is reached\n- Season minimum value (MINV) - average PPI of minima of left and right sides of each season\n- Season amplitude (AMPL) - difference between the maximum and minimum PPI values reached during the season\n- Season length (LENGTH) - number of days between the start and end dates of the vegetation growing season\n- Slope of the green-up period (LSLOPE) - the rate of change in the values of PPI at the day when the vegetation growing season starts\n- Slope of the green-down period (RSLOPE) - the rate of change in the values of PPO at the date when the vegetation growing season ends\n- Seasonal productivity (SPROD) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.\n- Total productivity (TPROD) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end\n- Quality flag (QFLAG) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset\n",
       "label": "Bands",
       "type": "options[]",
       "options": [
@@ -260,28 +287,28 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 3
+      "weight": 4
     },
     "phenology>summarise_phenology.yml@37|spatial_resolution": {
       "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
-      "type": "int",
-      "example": 1000,
-      "weight": 4
+      "type": "float",
+      "example": 0.008,
+      "weight": 5
     },
     "pipeline@44": {
       "label": "Start year",
       "description": "Start date for phenology time series.",
       "type": "text",
       "example": "2017",
-      "weight": 5
+      "weight": 6
     },
     "pipeline@45": {
       "label": "End year",
       "description": "End date for phenology time series.",
       "type": "text",
       "example": "2024",
-      "weight": 6
+      "weight": 7
     },
     "phenology>summarise_phenology.yml@37|aggregate_function": {
       "description": "Function to spatially aggregate the phenology data",
@@ -293,38 +320,39 @@
         "max"
       ],
       "example": "mean",
-      "weight": 7
+      "weight": 8
     }
   },
   "outputs": {
     "phenology>summarise_phenology.yml@37|timeseries": {
-      "description": "Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest",
+      "description": "Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest.",
       "label": "Zonal statistics",
       "type": "text/csv",
       "weight": 0
     },
     "phenology>summarise_phenology.yml@37|rasters": {
-      "description": "Rasters of phenology layers, with one raster per year in the input time range. \nWill either be the raw raster layers or resampled to the spatial resolution input by the user.\n",
+      "description": "Rasters of phenology layers, with one raster per year in the input time range. Will either be the raw raster layers or resampled to the spatial resolution and CRS input by the user.\n",
       "label": "Phenology rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 1
     },
     "phenology>phenology_difference.yml@48|phenology_change": {
-      "description": "Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger \nvalues indicate a greater decrease in the given value over time.\n",
+      "description": "Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger values indicate a greater decrease in the given value over time.\n",
       "label": "Change in phenology metrics",
       "type": "image/tiff;application=geotiff[]",
       "weight": 2
     },
     "phenology>phenology_difference.yml@48|phenology_change_plot": {
-      "description": "Plot of the summarised phenology values over time for the bands of interest",
+      "description": "Plot of the summarised phenology values over time for the bands of interest.",
       "label": "Plot of phenology change",
       "type": "image/png",
+      "example": null,
       "weight": 3
     }
   },
   "metadata": {
     "name": "Plant phenology index pipeline (Europe only)",
-    "description": "## Introduction\nPhenology is one of the species trait EBVs. It describes presence, absence, abundance or duration of seasonal activities of organisms. This pipeline uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season. It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog). The script pulls the yearly phenology layers using openEO and resamples them to the spatial resolution of choice, calculates summary statistics over a country or region of interest, and subtracts the rasters to look at change over time.\n## 'Use Case'/Context\nThis pipeline can be used to look at the Phenology EBV. It can also serve as inputs for subsequent pipelines,  such as species distribution models.\n## Pipeline limitations\n- Phenology layers are only available for countries in Europe. - The pipeline uses a very fine resolution, so it takes a long time to run on for large areas. - The pipeline outputs layers only in EPSG:4346.\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).",
+    "description": "## Introduction\nPhenology is one of the species trait EBVs. It describes presence, absence, abundance or duration of seasonal activities of organisms. This pipeline uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season. It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog). The script pulls the yearly phenology layers using openEO and resamples them to the spatial resolution of choice, calculates summary statistics over a country or region of interest, and subtracts the rasters to look at change over time.\n## Context\nThis pipeline can be used to look at the Phenology EBV. It can also serve as inputs for subsequent pipelines,  such as species distribution models.\n## Pipeline limitations \n* Phenology layers are only available for countries in Europe.\n* The pipeline uses a very fine resolution, so it takes a long time to run on for large areas.  \n* The pipeline outputs layers only in EPSG:4346.\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).",
     "author": [
       {
         "name": "Jory Griffith",

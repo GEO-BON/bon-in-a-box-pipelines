@@ -7,7 +7,7 @@ author:
 license: CC-BY
 description: |
   Summarises the yearly phenology data for a country (Europe only) using the copernicus data space ecosystem phenology layer. The script uses the openEO python client to send a job to openEO.
-  The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season.
+  The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosynthetic activity throughout the growing season.
   It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions.
   It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog)."
 inputs:
@@ -88,8 +88,13 @@ inputs:
   spatial_resolution:
     label: Spatial resolution
     description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
-    type: int
+    type: float
     example: 1000
+  crs:
+    label: Coordinate reference system
+    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [epsg.io](https://epsg.io/).
+    type: text
+    example: "EPSG:4326"
 outputs:
   rasters:
     label: Phenology rasters
