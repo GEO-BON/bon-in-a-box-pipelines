@@ -1,13 +1,8 @@
 library(sf)
 library(rjson)
-library(rnaturalearth)
-library(rnaturalearthdata)
 library(dplyr)
 library(countrycode)
-
-if (!requireNamespace("packageName", quietly = TRUE)) {
-  remotes::install_github("ropensci/rnaturalearthhires")
-}
+library(httr2)
 
 input <- biab_inputs()
 
@@ -35,29 +30,71 @@ country_name <- countrycode(
 
 biab_output("country", country_name)
 
-if (is.null(input$region)) { # pull study area polygon from rnaturalearth
+if (is.null(input$region)) { # pull study area polygon
   # pull whole country
-  print("pulling country polygon")
-  country_polygon <- ne_countries(country = country_name, type = "countries", scale = 10)
+  tryCatch(
+    {
+      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM0")) |>
+        req_perform()
+    },
+    error = function(e) {
+      if (grepl("404", e$message)) {
+        biab_error_stop("Could not find polygon. Check that you have correct country code.")
+      } else {
+        stop(e) # re-throw any other error
+      }
+    }
+  )
+
+  meta <- res |> resp_body_json() # parse JSON
+
+  geojson_url <- meta$gjDownloadURL # Extract the GeoJSON download URL
+
+  country_region_polygon <- st_read(geojson_url) # Load geojson
+
+  if (nrow(country_region_polygon) == 0) {
+    biab_error_stop("Could not find polygon. Check that you have correct country code.")
+  }
 } else {
   print("pulling region polygon")
-  country_polygon <- ne_states(country = country_name)
-  print(country_polygon$name)
-  country_polygon <- country_polygon %>% filter(name == input$region)
+  tryCatch(
+    {
+      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", input$country, "/ADM1")) |> # ADM1 gives states and provinces
+        req_perform()
+    },
+    error = function(e) {
+      if (grepl("404", e$message)) {
+        biab_error_stop("Could not find polygon. Check that you have correct country code.")
+      } else {
+        stop(e) # re-throw any other error
+      }
+    }
+  )
+
+  meta <- res |> resp_body_json()
+
+  geojson_url <- meta$gjDownloadURL
+
+  country_region_polygon <- st_read(geojson_url)
+
+  print(country_region_polygon$shapeName)
+  shapeName <- paste(country_region_polygon$shapeName, collapse = ", ")
+  country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == input$region, ] # filter shape by region of interest
+
+  if (nrow(country_region_polygon) == 0) {
+    biab_error_stop(paste0("Could not find polygon. Check that you have correct region name. Valid region names are: ", shapeName))
+  } # stop if object is empty
 }
 
-if (nrow(country_polygon) == 0) {
-  biab_error_stop("Could not find polygon. Check spelling of country and state names.")
-} # stop if object is empty
 
 # transform to crs of interest
-country_polygon <- st_transform(country_polygon, crs = input$crs)
-print(st_crs(country_polygon))
+country_region_polygon <- st_transform(country_region_polygon, crs = input$crs)
+print(st_crs(country_region_polygon))
 
 print("Study area downloaded")
-print(class(country_polygon))
+print(class(country_region_polygon))
 
 # output country polygon
-country_polygon_path <- file.path(outputFolder, "country_polygon.gpkg")
-sf::st_write(country_polygon, country_polygon_path, delete_dsn = T)
-biab_output("country_polygon", country_polygon_path)
+country_region_polygon_path <- file.path(outputFolder, "country_region_polygon.gpkg")
+sf::st_write(country_region_polygon, country_region_polygon_path, delete_dsn = T)
+biab_output("country_region_polygon", country_region_polygon_path)

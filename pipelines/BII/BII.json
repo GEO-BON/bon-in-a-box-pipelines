@@ -1,25 +1,6 @@
 {
   "nodes": [
     {
-      "id": "10",
-      "type": "constant",
-      "position": {
-        "x": 743,
-        "y": 64
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "bii_nhm|bii_nhm_10km_2000",
-          "bii_nhm|bii_nhm_10km_2005",
-          "bii_nhm|bii_nhm_10km_2010",
-          "bii_nhm|bii_nhm_10km_2015",
-          "bii_nhm|bii_nhm_10km_2020"
-        ]
-      }
-    },
-    {
       "id": "14",
       "type": "io",
       "position": {
@@ -34,59 +15,11 @@
       "id": "15",
       "type": "output",
       "position": {
-        "x": 2424,
-        "y": 383
+        "x": 2502.922667485678,
+        "y": 472.85042144523356
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "18",
-      "type": "io",
-      "position": {
-        "x": 1196,
-        "y": 310
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "19",
-      "type": "output",
-      "position": {
-        "x": 1783,
-        "y": 281.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "20",
-      "type": "constant",
-      "position": {
-        "x": 753,
-        "y": 12
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "https://stac.geobon.org/"
-      }
-    },
-    {
-      "id": "21",
-      "type": "constant",
-      "position": {
-        "x": 824,
-        "y": 310
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "\n"
       }
     },
     {
@@ -101,22 +34,96 @@
       }
     },
     {
-      "id": "26",
+      "id": "31",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 363.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6622"
+      }
+    },
+    {
+      "id": "52",
+      "type": "io",
+      "position": {
+        "x": 854.3164129354765,
+        "y": 615.6847349950567
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "53",
+      "type": "io",
+      "position": {
+        "x": 156.1660109824801,
+        "y": 645.9747418574636
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "55",
       "type": "output",
       "position": {
-        "x": 2424,
-        "y": 430
+        "x": 782.3326899653318,
+        "y": 701.9635745429575
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "27",
+      "id": "56",
+      "type": "io",
+      "position": {
+        "x": 1357.0524670348445,
+        "y": 310.5246492351982
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "57",
       "type": "constant",
       "position": {
-        "x": 724,
-        "y": 416
+        "x": 859.6500859313794,
+        "y": 117.0631809998606
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 875.6500859313794,
+        "y": 227.0631809998606
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "bii_nhm"
+        ]
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 892.2622337466457,
+        "y": 401.1329734474144
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -141,11 +148,11 @@
       }
     },
     {
-      "id": "29",
+      "id": "60",
       "type": "constant",
       "position": {
-        "x": 724,
-        "y": 463
+        "x": 845.2750201848235,
+        "y": 437.51017104366395
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -161,50 +168,22 @@
       }
     },
     {
-      "id": "31",
-      "type": "userInput",
+      "id": "61",
+      "type": "output",
       "position": {
-        "x": 12,
-        "y": 363.75
+        "x": 1766.662872369557,
+        "y": 184.38550443642754
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "EPSG:6622"
+        "label": "Output"
       }
     },
     {
-      "id": "32",
+      "id": "63",
       "type": "userInput",
       "position": {
-        "x": 830,
-        "y": 381
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 10000
-      }
-    },
-    {
-      "id": "43",
-      "type": "userInput",
-      "position": {
-        "x": 95,
-        "y": 527.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "COL"
-      }
-    },
-    {
-      "id": "44",
-      "type": "userInput",
-      "position": {
-        "x": 126,
-        "y": 562.5
+        "x": 750.0053287271539,
+        "y": 275.5024869625019
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -212,36 +191,28 @@
       }
     },
     {
-      "id": "45",
-      "type": "io",
+      "id": "64",
+      "type": "userInput",
       "position": {
-        "x": 473,
-        "y": 520
+        "x": 651.6977672355612,
+        "y": 342.47255291045855
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "descriptionFile": "getCountrybbox.json"
+        "type": "text"
       }
     },
     {
-      "id": "46",
-      "type": "output",
+      "id": "66",
+      "type": "constant",
       "position": {
-        "x": 1196,
-        "y": 591.5
+        "x": 895.9533005549715,
+        "y": 358.40573556140333
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "47",
-      "type": "output",
-      "position": {
-        "x": 1196,
-        "y": 638.5
-      },
-      "data": {
-        "label": "Output"
+        "type": "text",
+        "value": "P5Y"
       }
     }
   ],
@@ -254,76 +225,6 @@
       "id": "reactflow__edge-14bii_change-15"
     },
     {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "19",
-      "targetHandle": null,
-      "id": "reactflow__edge-18rasters-19"
-    },
-    {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "14",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-18rasters-14rasters"
-    },
-    {
-      "source": "10",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-10-18collections_items"
-    },
-    {
-      "source": "20",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-20-18stac_url"
-    },
-    {
-      "source": "21",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-21-18weight_matrix_with_ids"
-    },
-    {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "25",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-18rasters-25rasters"
-    },
-    {
-      "source": "25",
-      "sourceHandle": "zonal_stats",
-      "target": "26",
-      "targetHandle": null,
-      "id": "reactflow__edge-25zonal_stats-26"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-27-18resampling"
-    },
-    {
-      "source": "29",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-29-18aggregation"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-18crs"
-    },
-    {
       "source": "31",
       "sourceHandle": null,
       "target": "25",
@@ -331,90 +232,188 @@
       "id": "reactflow__edge-31-25crs"
     },
     {
-      "source": "32",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-32-18spatial_res"
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "25",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-53country_region_polygon-25study_area_polygon"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "52",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-53country_region_polygon-52study_area_file"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "region",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-53region-55"
     },
     {
       "source": "31",
       "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-31-45pipeline@2"
+      "target": "53",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-53crs"
     },
     {
-      "source": "44",
+      "source": "31",
       "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "data>getCountryPolygon.yml@1|region",
-      "id": "reactflow__edge-44-45data>getCountryPolygon.yml@1|region"
+      "target": "52",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-52crs"
     },
     {
-      "source": "43",
+      "source": "52",
+      "sourceHandle": "bbox",
+      "target": "25",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-52bbox-25bbox"
+    },
+    {
+      "source": "53",
+      "sourceHandle": "country",
+      "target": "55",
+      "targetHandle": null,
+      "id": "reactflow__edge-53country-55"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "zonal_stats",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-25zonal_stats-15"
+    },
+    {
+      "source": "57",
       "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "data>getCountryPolygon.yml@1|country",
-      "id": "reactflow__edge-43-45data>getCountryPolygon.yml@1|country"
+      "target": "56",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-57-56stac_url"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country-46"
+      "source": "58",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-58-56collections_items"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|region",
-      "target": "47",
-      "targetHandle": null,
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|region-47"
+      "source": "52",
+      "sourceHandle": "bbox",
+      "target": "56",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-52bbox-56bbox"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "18",
+      "source": "53",
+      "sourceHandle": "country_region_polygon",
+      "target": "56",
       "targetHandle": "study_area",
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country_polygon-18study_area"
+      "id": "reactflow__edge-53country_region_polygon-56study_area"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "14",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-56rasters-14rasters"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-59-56resampling"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-60-56aggregation"
+    },
+    {
+      "source": "31",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-31-56crs"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "rasters",
       "target": "25",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country_polygon-25study_area_polygon"
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-56rasters-25rasters"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "18",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-45data>getBoundingBox.yml@0|bbox-18bbox"
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "61",
+      "targetHandle": null,
+      "id": "reactflow__edge-56rasters-61"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "25",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-45data>getBoundingBox.yml@0|bbox-25bbox"
+      "source": "63",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-63-56t0"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-63-14start_year"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-64-56t1"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-64-14end_year"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-66-56temporal_res"
     }
   ],
   "inputs": {
-    "pipeline@43": {
+    "data>getCountryPolygon.yml@53|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "label": "ISO3 country code",
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "type": "text",
-      "example": "COL",
+      "example": "CAN",
       "weight": 0
     },
-    "pipeline@44": {
-      "label": "State/Province",
-      "description": "Region of interest",
+    "data>getCountryPolygon.yml@53|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
       "type": "text",
-      "example": null,
+      "example": "CA-QB",
       "weight": 1
+    },
+    "pipeline@31": {
+      "label": "Coordinate reference system",
+      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
+      "type": "text",
+      "example": "EPSG:6624",
+      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -433,78 +432,59 @@
       "example": [
         "mean"
       ],
-      "weight": 2
-    },
-    "BII>BIIChange.yml@14|start_year": {
-      "description": "Reference BII year for raster plotting",
-      "label": "Start year for BII raster comparison",
-      "type": "options",
-      "options": [
-        "2000",
-        "2005",
-        "2010",
-        "2015"
-      ],
-      "example": "2000",
       "weight": 3
     },
-    "BII>BIIChange.yml@14|end_year": {
-      "description": "BII layer to compare to the start year",
-      "label": "End year for BII comparison",
-      "type": "options",
-      "options": [
-        "2005",
-        "2010",
-        "2015",
-        "2020"
-      ],
-      "example": "2020",
+    "data>loadFromStac.yml@56|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 1000,
       "weight": 4
     },
-    "pipeline@31": {
-      "label": "Coordinate reference system",
-      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
+    "pipeline@63": {
+      "label": "Start date",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
       "type": "text",
-      "example": "EPSG:6624",
+      "example": "2000",
       "weight": 5
     },
-    "pipeline@32": {
-      "label": "Spatial resolution",
-      "description": "Integer, spatial resolution of the rasters (in meters)",
-      "type": "float",
-      "example": 10000,
+    "pipeline@64": {
+      "label": "End date",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "type": "text",
+      "example": "2020",
       "weight": 6
     }
   },
   "outputs": {
-    "data>loadFromStac.yml@18|rasters": {
-      "description": "array of output raster paths",
-      "label": "Rasters",
-      "type": "image/tiff;application=geotiff[]",
+    "data>getCountryPolygon.yml@53|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
       "weight": 0
+    },
+    "data>getCountryPolygon.yml@53|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 1
     },
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 1
+      "weight": 2
     },
     "BII>BIIChange.yml@14|bii_change": {
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
-    },
-    "getCountrybbox.json@45|data>getCountryPolygon.yml@1|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
       "weight": 3
     },
-    "getCountrybbox.json@45|data>getCountryPolygon.yml@1|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
+    "data>loadFromStac.yml@56|rasters": {
+      "description": "Output raster files in geotiff format.",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 4
     }
   },

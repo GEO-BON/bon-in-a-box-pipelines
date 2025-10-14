@@ -1,0 +1,67 @@
+script: IUCN_redlist_spList.R
+name: IUCN combine species lists
+description: This script returns the IUCN redlist species list for a country, filtered by taxonomic group, threat category, and species use, to be able to
+  calculate the redlist index.
+author:
+ - name: Maria Camila diaz
+   email: maria.camila.diaz.corzo@usherbrooke.ca
+ - name: Victor Julio Rincon
+   email: rincon-v@javeriana.edu.co
+ - name: Laetitia Tremblay
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist
+    - r-this.path
+    - r-rjson
+inputs:
+  splist_taxon:
+    label: IUCN species list for a taxon group
+    description: Dataset with the list of species for a taxonomic group.
+    example: null
+    type: text/csv
+  splist_country:
+    label: IUCN species list for a country
+    description: Dataset with the list of species for a country.
+    example: null
+    type: text/csv
+  splist_use:
+    label: IUCN species list for use(s) or trade(s)
+    description: Dataset with the list of species for uses or trades
+    example: null
+    type: text/csv
+  splist_threat:
+    label: IUCN species list for a threat(s)
+    description: Dataset with the list of species for a threat category
+    example: null
+    type: text/csv
+  taxonomic_group:
+    label: Taxonomic group
+    description: The taxonomic group selected
+    type: text[]
+    example:
+  species_use:
+    label: Species use(s) or trade(s)
+    description: The species use or trade selected
+    type: text[]
+    example:
+  threat:
+    label: Species threat(s)
+    description: The threat category selected
+    type: text[]
+    example:
+outputs:
+  iucn_splist:
+    label: IUCN species list
+    description: "Dataset with the list of species for the specified country for the specified filters. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
+    type: text/csv
+  number_species:
+    label: Number of species
+    description: Number of species in that country, filtered by taxon, threat, and use categories.
+    type: int

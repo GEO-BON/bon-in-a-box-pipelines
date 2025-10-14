@@ -49,6 +49,13 @@ inputs:
     description: Integer, number of random k-folds for randomkfold technique.
     type: int
     example: 5
+  spatial_res:
+    label: Spatial resolution
+    description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system
+      (meters for projected reference systems and degrees for reference systems in lat long).
+    type: float
+    example: 1000.0
+
 outputs:
   sdm_pred:
     label: predictions
@@ -77,3 +84,18 @@ outputs:
     label: dmesh
     description: dual mesh used by the sdm model
     type: application/geo+json
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-terra
+    - r-rjson
+    - r-raster
+    - r-dplyr
+    - r-gdalcubes
+    - r-ENMeval
+    - r-devtools
+    - r-sf
+    - r-FNN
+    - r-stars

@@ -309,8 +309,8 @@
       "id": "160",
       "type": "io",
       "position": {
-        "x": 446.6785804438384,
-        "y": 526.8732015430701
+        "x": 445.3590725330655,
+        "y": 533.8631584084096
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -321,7 +321,7 @@
       "type": "io",
       "position": {
         "x": 475.4997120637047,
-        "y": 737.1070351678517
+        "y": 745.2202912882263
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -388,19 +388,6 @@
       }
     },
     {
-      "id": "165",
-      "type": "constant",
-      "position": {
-        "x": -73.162158396628,
-        "y": 326.3413580459261
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
-      }
-    },
-    {
       "id": "166",
       "type": "constant",
       "position": {
@@ -425,6 +412,53 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "169",
+      "type": "constant",
+      "position": {
+        "x": 32.417229226464315,
+        "y": 514.3360238228396
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "170",
+      "type": "constant",
+      "position": {
+        "x": 40.33427669110165,
+        "y": 572.3943718968469
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "171",
+      "type": "constant",
+      "position": {
+        "x": 98.39262476510896,
+        "y": 598.7845301123049
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "173",
+      "type": "output",
+      "position": {
+        "x": 925.1980098346921,
+        "y": 742.4831969284229
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -668,13 +702,6 @@
       "id": "reactflow__edge-128-161spatial_res"
     },
     {
-      "source": "165",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-165-160weight_matrix_with_ids"
-    },
-    {
       "source": "57",
       "sourceHandle": null,
       "target": "160",
@@ -729,6 +756,34 @@
       "target": "161",
       "targetHandle": "study_area",
       "id": "reactflow__edge-167-161study_area"
+    },
+    {
+      "source": "169",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-169-160t0"
+    },
+    {
+      "source": "170",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-170-160t1"
+    },
+    {
+      "source": "171",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-171-160temporal_res"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "173",
+      "targetHandle": null,
+      "id": "reactflow__edge-161rasters-173"
     }
   ],
   "inputs": {
@@ -754,80 +809,94 @@
       ],
       "weight": 1
     },
-    "pipeline@58": {
-      "label": "Bounding Box",
-      "description": "Vector of floating point numbers. Represent the bounding box in the order xmin, ymin, xmax, ymax. Must be in the same CRS as the CRS input.",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 2
-    },
-    "pipeline@57": {
-      "label": "Coordinate Reference System",
-      "description": "String, Projection System as an EPSG code.",
-      "type": "text",
-      "example": "EPSG:6624",
-      "weight": 3
-    },
-    "pipeline@128": {
-      "label": "Spatial Resolution",
-      "description": "Integer, spatial resolution of the rasters in meters",
-      "type": "float",
-      "example": 1000,
-      "weight": 4
-    },
-    "pipeline@152": {
-      "label": "Pseudoabsence Buffer",
-      "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
-      "type": "float",
-      "example": 10,
-      "weight": 5
-    },
-    "pipeline@153": {
-      "label": "Max Candidate Pseudoabsences",
-      "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
-      "type": "int",
-      "example": 100000,
-      "weight": 6
-    },
-    "pipeline@154": {
-      "label": "Pseudoabsence proportion",
-      "description": "The number of PAs, given by the proportion of the total occurrences to use.",
-      "type": "float",
-      "example": 2.4,
-      "weight": 7
-    },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 8
+      "weight": 2
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 9
+      "weight": 3
     },
-    "data>loadFromStac.yml@161|weight_matrix_with_ids": {
-      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
-      "label": "Weight matrix with ids",
+    "pipeline@58": {
+      "label": "Bounding Box",
+      "description": "Vector of floating point numbers. Represent the bounding box in the order xmin, ymin, xmax, ymax. Must be in the same CRS as the CRS input.",
+      "type": "float[]",
+      "example": [
+        "-8185951",
+        "3491465",
+        "-4435963",
+        "6654068"
+      ],
+      "weight": 4
+    },
+    "pipeline@57": {
+      "label": "Coordinate Reference System",
+      "description": "String, Projection System as an EPSG code.",
       "type": "text",
-      "example": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n",
-      "weight": 10
+      "example": "EPSG:8857",
+      "weight": 5
+    },
+    "pipeline@128": {
+      "label": "Spatial Resolution",
+      "description": "Integer, spatial resolution of the rasters in the same units as the chosen coordinate reference system (meters or degrees)",
+      "type": "float",
+      "example": 1000,
+      "weight": 6
+    },
+    "pipeline@152": {
+      "label": "Pseudoabsence Buffer",
+      "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
+      "type": "float",
+      "example": 10,
+      "weight": 7
+    },
+    "pipeline@153": {
+      "label": "Max Candidate Pseudoabsences",
+      "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
+      "type": "int",
+      "example": 100000,
+      "weight": 8
+    },
+    "pipeline@154": {
+      "label": "Pseudoabsence proportion",
+      "description": "The number of PAs, given by the proportion of the total occurrences to use.",
+      "type": "float",
+      "example": 2.4,
+      "weight": 9
     },
     "pipeline@167": {
       "label": "Study area",
       "description": "Polygon of study area used to crop output layers",
       "type": "application/geopackage+sqlite3",
       "example": null,
+      "weight": 10
+    },
+    "data>loadFromStac.yml@161|t0": {
+      "description": "Start date for time series layers in STAC catalog. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
+      "label": "Start date",
+      "type": "text",
+      "example": null,
       "weight": 11
+    },
+    "data>loadFromStac.yml@161|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
+      "label": "End date",
+      "type": "text",
+      "example": null,
+      "weight": 12
+    },
+    "data>loadFromStac.yml@161|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": null,
+      "weight": 13
     }
   },
   "outputs": {
@@ -900,6 +969,12 @@
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
       "weight": 10
+    },
+    "data>loadFromStac.yml@161|rasters": {
+      "description": "Output raster files in geotiff format.",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 11
     }
   },
   "metadata": {
