@@ -7,20 +7,15 @@ author:
 
 inputs:
   taxa:
-    description: Array of taxa values. Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match. 
+    description: Array of taxa values. Each value could be a species name, order, class, genus, kingdom or family, as long as it is an exact match.
     label: Taxa list
     type: text[]
     example: [Acer saccharum, Acer nigrum]
-  bbox:
-    label: bbox
-    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
-    type: float[]
-    example: [-2316297, -1971146, 1015207, 1511916]
-  proj:
-    label: projection system
-    description: String, projection system of the coordinates in bbox
-    type: text
-    example: "EPSG:6623"
+  bbox_crs:
+    description: Select a bounding box and CRS
+    label: Bounding and CRS
+    type: bboxCRS
+    example:
   min_year:
     description: Min year observations wanted
     label: minimum year
