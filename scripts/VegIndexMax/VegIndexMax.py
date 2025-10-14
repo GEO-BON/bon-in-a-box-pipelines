@@ -136,7 +136,6 @@ res = ndvi.aggregate_spatial(
 
 result = res.save_result("CSV")
 
-#job2 = connection.job("j-250813173653427784212f4bb15496a8") 
 job2 = result.create_job()
 job2.start_and_wait()
 
