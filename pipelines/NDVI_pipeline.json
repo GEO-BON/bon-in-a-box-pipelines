@@ -1,0 +1,259 @@
+{
+  "nodes": [
+    {
+      "id": "176",
+      "type": "output",
+      "position": {
+        "x": 1146,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "178",
+      "type": "output",
+      "position": {
+        "x": 1146,
+        "y": 59
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "179",
+      "type": "io",
+      "position": {
+        "x": 1266.9624938964844,
+        "y": 149.75851915468195
+      },
+      "data": {
+        "descriptionFile": "VegIndexMax>VegIndexMax.yml"
+      }
+    },
+    {
+      "id": "180",
+      "type": "output",
+      "position": {
+        "x": 1898.9624938964844,
+        "y": 99.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "182",
+      "type": "output",
+      "position": {
+        "x": 1879.0358600754575,
+        "y": 162.3437564778688
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "183",
+      "type": "output",
+      "position": {
+        "x": 1881.6000061035156,
+        "y": 179.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "184",
+      "type": "io",
+      "position": {
+        "x": 268.9624938964844,
+        "y": 58.79999542236328
+      },
+      "data": {
+        "descriptionFile": "getCountrybbox.json"
+      }
+    },
+    {
+      "id": "185",
+      "type": "constant",
+      "position": {
+        "x": -48.037506103515625,
+        "y": -3.2000045776367188
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "179",
+      "sourceHandle": "rasters",
+      "target": "180",
+      "targetHandle": null,
+      "id": "reactflow__edge-179rasters-180"
+    },
+    {
+      "source": "179",
+      "sourceHandle": "timeseries",
+      "target": "182",
+      "targetHandle": null,
+      "id": "reactflow__edge-179timeseries-182"
+    },
+    {
+      "source": "179",
+      "sourceHandle": "timeseries_plot",
+      "target": "183",
+      "targetHandle": null,
+      "id": "reactflow__edge-179timeseries_plot-183"
+    },
+    {
+      "source": "184",
+      "sourceHandle": "data>getCountryPolygon.yml@12|country",
+      "target": "176",
+      "targetHandle": null,
+      "id": "reactflow__edge-184data>getCountryPolygon.yml@12|country-176"
+    },
+    {
+      "source": "184",
+      "sourceHandle": "data>getCountryPolygon.yml@12|region",
+      "target": "178",
+      "targetHandle": null,
+      "id": "reactflow__edge-184data>getCountryPolygon.yml@12|region-178"
+    },
+    {
+      "source": "184",
+      "sourceHandle": "data>getCountryPolygon.yml@12|country_region_polygon",
+      "target": "179",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-184data>getCountryPolygon.yml@12|country_region_polygon-179study_area_polygon"
+    },
+    {
+      "source": "184",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "179",
+      "targetHandle": "bounding_box",
+      "id": "reactflow__edge-184data>getBoundingBox.yml@0|bbox-179bounding_box"
+    },
+    {
+      "source": "185",
+      "sourceHandle": null,
+      "target": "184",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-185-184pipeline@2"
+    }
+  ],
+  "inputs": {
+    "getCountrybbox.json@184|data>getCountryPolygon.yml@12|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "COL",
+      "weight": 0
+    },
+    "getCountrybbox.json@184|data>getCountryPolygon.yml@12|region": {
+      "description": "Name of the region of interest, in the native language of that region. For a list of valid names, input a random character string and run.",
+      "label": "State/Province name",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
+    "VegIndexMax>VegIndexMax.yml@179|start_date": {
+      "description": "Start date for summarizing vegetation index",
+      "label": "Start date",
+      "type": "text",
+      "example": "2024-01-01",
+      "weight": 2
+    },
+    "VegIndexMax>VegIndexMax.yml@179|end_date": {
+      "description": "End date for summarizing vegetation index",
+      "label": "End date",
+      "type": "text",
+      "example": "2024-01-31",
+      "weight": 3
+    },
+    "VegIndexMax>VegIndexMax.yml@179|spatial_resolution": {
+      "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 0.008,
+      "weight": 4
+    },
+    "VegIndexMax>VegIndexMax.yml@179|summary_statistic": {
+      "description": "Statistic to summarize layers over time",
+      "label": "Summary statistic",
+      "type": "options",
+      "options": [
+        "mean",
+        "median",
+        "max",
+        "min"
+      ],
+      "example": "mean",
+      "weight": 5
+    },
+    "VegIndexMax>VegIndexMax.yml@179|crs": {
+      "description": "Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated",
+      "label": "Coordinate reference system",
+      "type": "text",
+      "example": "EPSG:4326",
+      "weight": 6
+    }
+  },
+  "outputs": {
+    "getCountrybbox.json@184|data>getCountryPolygon.yml@12|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "getCountrybbox.json@184|data>getCountryPolygon.yml@12|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 1
+    },
+    "VegIndexMax>VegIndexMax.yml@179|rasters": {
+      "description": "Raster the maximum Vegetation index value for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
+      "label": "Vegetation index rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
+    },
+    "VegIndexMax>VegIndexMax.yml@179|timeseries": {
+      "description": "Time series of NDVI values for every date where there is data in the specified time period.",
+      "label": "Time series of NDVI",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "VegIndexMax>VegIndexMax.yml@179|timeseries_plot": {
+      "description": "Plot of NDVI values over time",
+      "label": "NDVI time series plot",
+      "type": "image/png",
+      "weight": 4
+    }
+  },
+  "metadata": {
+    "name": "Normalized Difference Vegetation Index",
+    "description": "## Introduction\nThis pipeline calculates the Normalized Difference Vegetation Index (NDVI) using OpenEO  Copernicus Data Space Ecosystem. NDVI measures the \"greenness\" of vegetation, with higher  values indicating dense vegatation and low values indicating barren areas with rock, snow, sand, or exposed soils.\n\nThe red and infrared bands from Sentinel 2 L2A are used to calcuate NDVI. The pipeline  summarises these values over the time period of interest with the specified summary statistic. The NDVi layers are masked with the SCL dilation mask avoid erroneous values by taking out pixels covered by clouds.\n- Learn more about Sentinel 2 [here](https://dataspace.copernicus.eu/data-collections/copernicus-sentinel-data/sentinel-2)\n- Learn more about calculating NDVI with openEO [here](https://openeo.org/documentation/1.0/cookbook/#example-1-ndvi)\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).\n\nThe pipeline may take significant time to pull and summarise data,  especially at fine spatial resolutions for large areas.",
+    "author": [
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      }
+    ]
+  }
+}
