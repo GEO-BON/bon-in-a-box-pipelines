@@ -403,8 +403,8 @@
       "id": "122",
       "type": "output",
       "position": {
-        "x": 535,
-        "y": 269.5000000000001
+        "x": 503.33181014145043,
+        "y": 237.83181014145066
       },
       "data": {
         "label": "Output"
@@ -476,19 +476,6 @@
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "135",
-      "type": "constant",
-      "position": {
-        "x": 186.03825626726825,
-        "y": 370.59360803475454
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "\n"
       }
     },
     {
@@ -566,8 +553,8 @@
       "id": "141",
       "type": "constant",
       "position": {
-        "x": 1108.515573568598,
-        "y": -75.06096968575162
+        "x": 994.515573568598,
+        "y": -121.06096968575162
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -622,11 +609,11 @@
       }
     },
     {
-      "id": "144",
+      "id": "145",
       "type": "io",
       "position": {
-        "x": -492.97122359764603,
-        "y": 27.844474878260257
+        "x": -473.95117733962593,
+        "y": 27.764399928732246
       },
       "data": {
         "descriptionFile": "getCountrybbox.json"
@@ -915,13 +902,6 @@
       "id": "reactflow__edge-133observations_file-34presence"
     },
     {
-      "source": "135",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-135-134weight_matrix_with_ids"
-    },
-    {
       "source": "134",
       "sourceHandle": "rasters",
       "target": "97",
@@ -1013,55 +993,6 @@
       "id": "reactflow__edge-142resampled_raster-34predictors"
     },
     {
-      "source": "144",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "140",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-144data>getCountryPolygon.yml@1|country_polygon-140study_area_polygon"
-    },
-    {
-      "source": "144",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "134",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-144data>getBoundingBox.yml@0|bbox-134bbox"
-    },
-    {
-      "source": "144",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "133",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-144data>getBoundingBox.yml@0|bbox-133bbox"
-    },
-    {
-      "source": "144",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "139",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-144data>getBoundingBox.yml@0|bbox-139bbox"
-    },
-    {
-      "source": "144",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "104",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-144data>getBoundingBox.yml@0|bbox-104bbox"
-    },
-    {
-      "source": "144",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "140",
-      "targetHandle": "bounding_box",
-      "id": "reactflow__edge-144data>getBoundingBox.yml@0|bbox-140bounding_box"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "144",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-57-144pipeline@2"
-    },
-    {
       "source": "140",
       "sourceHandle": "rasters",
       "target": "142",
@@ -1074,6 +1005,41 @@
       "target": "142",
       "targetHandle": "raster_1",
       "id": "reactflow__edge-97rasters_selected-142raster_1"
+    },
+    {
+      "source": "145",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "133",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-145data>getBoundingBox.yml@0|bbox-133bbox"
+    },
+    {
+      "source": "145",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "140",
+      "targetHandle": "bounding_box",
+      "id": "reactflow__edge-145data>getBoundingBox.yml@0|bbox-140bounding_box"
+    },
+    {
+      "source": "145",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "134",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-145data>getBoundingBox.yml@0|bbox-134bbox"
+    },
+    {
+      "source": "145",
+      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
+      "target": "139",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-145data>getBoundingBox.yml@0|bbox-139bbox"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "145",
+      "targetHandle": "pipeline@2",
+      "id": "reactflow__edge-57-145pipeline@2"
     }
   ],
   "inputs": {
@@ -1082,23 +1048,9 @@
       "description": "Array of taxa values",
       "type": "text[]",
       "example": [
-        "Acer saccharum"
+        "Nasua nasua"
       ],
       "weight": 0
-    },
-    "getCountrybbox.json@144|data>getCountryPolygon.yml@1|country": {
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "COL",
-      "weight": 1
-    },
-    "getCountrybbox.json@144|data>getCountryPolygon.yml@1|region": {
-      "description": "State of interest",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
-      "weight": 2
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
@@ -1111,28 +1063,28 @@
         "unweighted_raster"
       ],
       "example": "random",
-      "weight": 3
+      "weight": 1
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 4
+      "weight": 2
     },
     "pipeline@46": {
       "label": "number of runs",
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "type": "int",
       "example": 2,
-      "weight": 5
+      "weight": 3
     },
     "pipeline@57": {
       "label": "projection system",
       "description": "String, projection system",
       "type": "text",
       "example": "EPSG:6624",
-      "weight": 6
+      "weight": 4
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
@@ -1146,35 +1098,35 @@
         "checkerboard2"
       ],
       "example": "block",
-      "weight": 7
+      "weight": 5
     },
     "pipeline@128": {
       "label": "spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 8
+      "weight": 6
     },
     "data>getGBIFObservations>getGBIFObservations.yml@133|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 9
+      "weight": 7
     },
     "data>getGBIFObservations>getGBIFObservations.yml@133|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 10
+      "weight": 8
     },
     "data>loadFromStac.yml@134|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 11
+      "weight": 9
     },
     "data>loadFromStac.yml@134|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -1184,14 +1136,14 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 12
+      "weight": 10
     },
     "data>loadFromStac.yml@134|study_area": {
       "description": "Polygon of study area used to crop output layers",
       "label": "Study area",
       "type": "application/geopackage+sqlite3",
       "example": null,
-      "weight": 13
+      "weight": 11
     },
     "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
       "description": "taxonomic group for which to retrieve GBIF heatmap",
@@ -1207,21 +1159,75 @@
         "all"
       ],
       "example": "plants",
-      "weight": 14
+      "weight": 12
     },
     "VegIndexMax>VegIndexMax.yml@140|start_date": {
       "description": "Start date for summarizing vegetation index",
       "label": "Start date",
       "type": "text",
       "example": "2019-05-01",
-      "weight": 15
+      "weight": 13
     },
     "VegIndexMax>VegIndexMax.yml@140|end_date": {
       "description": "End date for summarizing vegetation index",
       "label": "End date",
       "type": "text",
       "example": "2019-09-30",
+      "weight": 14
+    },
+    "data>loadFromStac.yml@134|t0": {
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "Start date",
+      "type": "text",
+      "example": null,
+      "weight": 15
+    },
+    "data>loadFromStac.yml@134|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "End date",
+      "type": "text",
+      "example": null,
       "weight": 16
+    },
+    "data>loadFromStac.yml@134|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": null,
+      "weight": 17
+    },
+    "SDM>studyExtent.yml@104|bbox": {
+      "description": "If method = bbox, vector of float, bbox coordinates of the extent of interest in the order xmin, ymin, xmax, ymax",
+      "label": "bbox",
+      "type": "float[]",
+      "example": [
+        -2316297,
+        -1971146,
+        1015207,
+        1511916
+      ],
+      "weight": 18
+    },
+    "VegIndexMax>VegIndexMax.yml@140|study_area_polygon": {
+      "description": "Polygon of the study area of interest",
+      "label": "Polygon of study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 19,
+      "example": null
+    },
+    "getCountrybbox.json@145|data>getCountryPolygon.yml@12|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "COL",
+      "weight": 20
+    },
+    "getCountrybbox.json@145|data>getCountryPolygon.yml@12|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": null,
+      "weight": 21
     }
   },
   "outputs": {
