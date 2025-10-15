@@ -6,8 +6,9 @@ from pyproj import CRS;
 import geopandas as gpd;
 import shapely;
 import pandas as pd;
-import matplotlib.pyplot as plt
-
+import matplotlib.pyplot as plt;
+from matplotlib.dates import DateFormatter;
+import datetime as dt
 
 data = biab_inputs()
 
@@ -104,7 +105,6 @@ ndvi_resampled.save_result("GTiff")
 print("Starting job to fetch raster layers", flush=True)
 
 job1 = ndvi_resampled.create_job()
-job1 = connection.job("j-2508131722594c6598b072c7269eba61") 
 
 try:
     job1.start_and_wait()
@@ -125,7 +125,7 @@ print(raster_outs)
 
 biab_output("rasters", raster_outs)
 
-# Get means for each date of ndvi
+#Get means for each date of ndvi
 if polygon is None:
     polygon = shapely.geometry.box(*bbox)
 
@@ -145,22 +145,37 @@ timeseries = job2.get_results().download_files(output_folder)
 print("Job finished, printing job output", flush=True)
 print(timeseries)
 
-# output timeseries
+# # output timeseries
 timeseries_out = str(timeseries[0])
 timeseries_df = pd.read_csv(timeseries_out)
-biab_output("timeseries", timeseries_out)
-print(timeseries_df, flush=True)
-# Plot time series
-plt.figure(figsize=(8, 5))
-plt.plot(timeseries_df["date"], timeseries_df["NDVI"], marker="o", linestyle="-", color="green")
 
-# Formatting
-plt.title("NDVI Time Series", fontsize=14)
-plt.xlabel("Date", fontsize=12)
-plt.ylabel("NDVI", fontsize=12)
-plt.grid(True, linestyle="--", alpha=0.5)
-plt.ylim(0, 1)  # NDVI values typically range from -1 to 1, but here we set 0–1
+print(timeseries_df)
+biab_output("timeseries", timeseries_out)
+
+
+fig, ax = plt.subplots(figsize=(8, 5))
+ax.plot(timeseries_df["date"], timeseries_df["NDVI"], marker="o", linestyle="-", color="green")
+
+# Format x-axis to show dd/mm/yy but keep datetime objects internally
+date_format = DateFormatter("%d/%m/%y")
+ax.xaxis.set_major_formatter(date_format)
+
+# Style and labels
+ax.set_title("NDVI Time Series", fontsize=14)
+ax.set_xlabel("Date", fontsize=12)
+ax.set_ylabel("NDVI", fontsize=12)
+ax.grid(True, linestyle="--", alpha=0.5)
+ax.set_ylim(0, 1)
+plt.xticks(rotation=45)
 plt.tight_layout()
+
+# --- Save plot ---
+os.makedirs(output_folder, exist_ok=True)
+plot_path = os.path.join(output_folder, "ndvi_timeseries.png")
+plt.savefig(plot_path, dpi=300, bbox_inches="tight")
+
+# Output for pipeline
+biab_output("timeseries_plot", plot_path)
 
 
 plt.savefig(output_folder + "/ndvi_timeseries.png", dpi=300, bbox_inches='tight')
