@@ -15,7 +15,9 @@ if (nrow(study_area) == 0) {
 } # stop if object is empty
 
 # make sure data is in the correct crs
+if (!is.null(input$crs)){
 study_area <- st_transform(study_area, input$crs) # transform into input crs
+}
 
 # extract bounding box and create output
 bbox <- sf::st_bbox(study_area)

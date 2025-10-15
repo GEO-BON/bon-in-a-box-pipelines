@@ -16,7 +16,7 @@ inputs:
   bilbi_denominator: 
     label: BILBI denominator tif file
     description: Tiff file to calculate the weighted geometric mean
-    type: image/tiff;application=geotiff
+    type: image/tiff;application=geotiff[]
   study_area:
     label: Study area
     description: Study area over which to calculate the weighted geometric mean value for the indicator
@@ -38,13 +38,12 @@ conda:
     - r-rjson
     - r-terra
     - r-tidyverse
-    - r-tools
 references:
-  - text: Harwood et al. 2025
+  - text: Harwood et al. 2022
     doi: 10.25919/edwj-4b67
-  - text: Harwood et al. 2025
+  - text: Harwood et al. 2022
     doi: 10.25919/tt2t-h452
-  - text: Harwood et al. 2025
+  - text: Harwood et al. 2022
     doi: 10.25919/4vvz-4j96
 
   
