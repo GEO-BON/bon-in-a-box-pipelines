@@ -1,4 +1,4 @@
-script: VegIndexMax.py
+script: calculateNDVI.py
 name: Vegetation Index
 author:
   - name: Guillaume Larocque
