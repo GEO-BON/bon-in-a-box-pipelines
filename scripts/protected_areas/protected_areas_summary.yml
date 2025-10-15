@@ -1,0 +1,59 @@
+script: protected_areas_summary.R
+name: Summary of Protected Areas for a Region
+description: This script calculates a summary of protected areas coverage and proportion of area for a give region.
+author:
+  - name: Guillaume Larocque
+    email: guillaume.larocque@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+license: CC BY
+external_link: 
+lifecycle:
+  status: in_development
+inputs:
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area, in GeoPackage format. To use a custom study area, input the path to the file in the userdata folder (e.g. /userdata/study_area_polygon.gpkg).
+    type: application/geopackage+sqlite3[]
+    example: null
+  protected_area_polygon:
+    label: Polygon of protected areas
+    description: The protected areas (PAs) of interest.
+    type: application/geopackage+sqlite3[]
+    example: null
+  date_column_name:
+    label: Date column name
+    description: Name of the column in the user provided protected area file that specifies when the PA was created (leave blank if only using WDPA data).
+    type: text
+    example: null
+  crs:
+    label: Coordinate reference system
+    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [epsg.io](https://epsg.io/).
+    type: text
+    example: "EPSG:4326"
+  start_year:
+    label: Start year
+    description: Year for the time series plot to start
+    type: int
+    example: 1980
+outputs:
+  protected_areas:
+    label: Protected areas
+    description: Protected areas on which the analysis has been performed.
+    type: application/geopackage+sqlite3[]
+  type_yrs_plot:
+    label: Protected areas time series plot by type
+    description: Change in the total area that is protected over time, by type (Marine or Terrestrial).
+    type: image/png[]
+  type_yrs_table:
+    label: Protected areas time series by type
+    description: Table of total area that is protected over time, by type (Marine or Terrestrial).
+    type: text/csv
+  iucn_yrs_plot:
+    label: Protected areas time series plot by IUCN calculated
+    description: Change in the total area that is protected over time, by IUCN category.
+    type: image/png[]
+  iucn_yrs_table:
+    label: Protected areas time series by IUCN calculated
+    description: Table of total area that is protected over time, by IUCN category.
+    type: text/csv
+
