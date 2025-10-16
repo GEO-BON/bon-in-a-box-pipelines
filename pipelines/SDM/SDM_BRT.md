@@ -1,6 +1,8 @@
-# Species Distribution Modeling with Boosted Regression Trees
+_Author: Michael D. Catchen_
 
-This document describes the methodology behind the BON-in-a-Box (BiaB) pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
+Review status: Under development
+
+This document describes the methodology behind the BON in a Box pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
 
 # Summary
 

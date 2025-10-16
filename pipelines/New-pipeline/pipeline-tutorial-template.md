@@ -1,4 +1,3 @@
-# Title of your pipeline
 _Author(s): Author name(s)_
 
 Reviewed by: Reviewer names
