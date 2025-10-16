@@ -1,0 +1,82 @@
+script: calculateNDVI.py
+name: Vegetation Index
+author:
+  - name: Guillaume Larocque
+    email: guillaume.larocque@mcgill.ca
+    identifier: https://orcid.org/0000-0002-5967-9156
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+license: CC-BY
+description: |
+  This script calculates and summarizes the NDVI for every pixel within a given region and for a selected 
+  time period using the red and near-infrared bands from the [Sentinel-2 data](https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-2),
+   with a cloud mask. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting 
+   raster will give you a meaningful and cloud-free vegetation index.
+inputs:
+  bounding_box:
+    label: Bounding box
+    description: Bounding box in the order xmin, ymin, xmax, ymax. Coordinates must be in latitude longitude degrees.
+    type: float[]
+    example: null
+  study_area_polygon:
+    label: Polygon of study area
+    description: Polygon of the study area of interest
+    type: application/geopackage+sqlite3
+    example: null
+  crs:
+    label: Coordinate reference system
+    description: Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated
+    type: text
+    example: 'EPSG:4326'
+  start_date:
+    label: Start date
+    description: Start date for summarizing vegetation index
+    type: text
+    example: "2019-05-01"
+  end_date:
+    label: End date
+    description: End date for summarizing vegetation index
+    type: text
+    example: "2019-09-30"
+  spatial_resolution:
+    label: Spatial resolution
+    description: Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
+      If using a projected CRS, the resolution should be in meters. If using an unprojected CRS (e.g. EPSG:4326), this must be in degrees (0.008 degrees is ~1km at the equator).
+    type: float
+    example: 100
+  summary_statistic:
+    label: Summary statistic
+    description: Statistic to summarize layers over time for summarised raster layer and space for plot of ndvi means over time
+    type: options
+    options:
+      - mean
+      - median
+      - max
+      - min
+    example: mean
+outputs:
+  rasters:
+    label: Vegetation index rasters
+    description: |
+      Raster of the NDVI values summarised by the input statistic (mean, max, min, median) for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index
+    type: image/tiff;application=geotiff[]
+  timeseries:
+    label: Time series of NDVI
+    description: Time series of NDVI values for every date where there is data in the specified time period.
+    type: text/csv
+  timeseries_plot:
+    label: NDVI time series plot
+    description: Plot of NDVI values over time
+    type: image/png
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - openeo
+    - pandas
+    - geopandas
+    - pyproj
+    - shapely
+    - pandas
+    - matplotlib
