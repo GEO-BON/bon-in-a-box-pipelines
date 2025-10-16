@@ -67,18 +67,7 @@ if (is.null(input$bbox_crs$region)) { # pull study area polygon
       }
     }
   )
-  # # Find all regions that intersect the bbox
-  # intersections <- st_intersection(country_region_polygon, bbox_poly)
 
-  # # Compute area of each intersection
-  # intersections$overlap_area <- st_area(intersections)
-
-  # # Pick the one with the largest overlap
-  # best_idx <- which.max(intersections$overlap_area)
-  # best_region_name <- intersections$shapeName[best_idx]
-
-  # # Filter to that region
-  # country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == best_region_name, ]
   meta <- res |> resp_body_json()
   geojson_url <- meta$gjDownloadURL
 
