@@ -13,14 +13,17 @@ inputs:
       Tiff file of the BILBI CSIRO indicator of choice. Can be Protected Area Representativeness and Connectedness (PARC), Bioclimatic 
       Ecosystem Resilience Index (BERI), or the Biodiversity Habitat Index (BHI)
     type: image/tiff;application=geotiff[]
+    example: NULL
   bilbi_denominator: 
     label: BILBI denominator tif file
     description: Tiff file to calculate the weighted geometric mean
     type: image/tiff;application=geotiff[]
+    example: NULL
   study_area:
     label: Study area
     description: Study area over which to calculate the weighted geometric mean value for the indicator
     type: application/geopackage+sqlite3
+    example: NULL
 outputs: 
   summarised_values:
     label: Indicator summary
