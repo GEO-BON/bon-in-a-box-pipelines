@@ -98,6 +98,8 @@ for (i in 1:length(input$bilbi_indicator)) {
   summary_list[[i]] <- summary
 }
 summary_list <- do.call(rbind, summary_list)
+summary_list$BILBI_indicator <- round(summary_list$BILBI_indicator, 4)
+summary_list <- summary_list[,c(7, 2)]
 
 summary_path <- file.path(outputFolder, "summary.csv")
 write.csv(summary_list, summary_path, row.names = F)
