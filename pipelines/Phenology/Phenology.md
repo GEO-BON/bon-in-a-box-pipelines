@@ -37,6 +37,8 @@ The pipeline requires an API key for the Copernicus Data Space Ecosystem. To acq
 
 - **State/Province:** the user can specify a state/province within the country of interest and the pipeline will pull the polygon and protected areas for this region. This is input as the full name of the state.
 
+### Pipeline steps
+
 #### **1. Retrieving the bounding box**
 This step retrieves the bounding box for the country/region of interest in EPSG:4326.
 
