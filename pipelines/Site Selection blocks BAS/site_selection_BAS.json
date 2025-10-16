@@ -56,19 +56,6 @@
       }
     },
     {
-      "id": "18",
-      "type": "constant",
-      "position": {
-        "x": 1221,
-        "y": 292.3333333333333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": null
-      }
-    },
-    {
       "id": "26",
       "type": "io",
       "position": {
@@ -201,13 +188,6 @@
       "id": "reactflow__edge-0blocks_plot-14"
     },
     {
-      "source": "18",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-18-2weight_matrix_with_ids"
-    },
-    {
       "source": "26",
       "sourceHandle": "pts_df",
       "target": "29",
@@ -258,10 +238,10 @@
     },
     {
       "source": "45",
-      "sourceHandle": "country_polygon",
+      "sourceHandle": "country_region_polygon",
       "target": "49",
       "targetHandle": "study_area_file",
-      "id": "reactflow__edge-45country_polygon-49study_area_file"
+      "id": "reactflow__edge-45country_region_polygon-49study_area_file"
     },
     {
       "source": "48",
@@ -279,17 +259,17 @@
     },
     {
       "source": "45",
-      "sourceHandle": "country_polygon",
+      "sourceHandle": "country_region_polygon",
       "target": "0",
       "targetHandle": "country_polygon",
-      "id": "reactflow__edge-45country_polygon-0country_polygon"
+      "id": "reactflow__edge-45country_region_polygon-0country_polygon"
     },
     {
       "source": "45",
-      "sourceHandle": "country_polygon",
+      "sourceHandle": "country_region_polygon",
       "target": "26",
       "targetHandle": "country_polygon",
-      "id": "reactflow__edge-45country_polygon-26country_polygon"
+      "id": "reactflow__edge-45country_region_polygon-26country_polygon"
     },
     {
       "source": "2",
@@ -307,12 +287,26 @@
     }
   ],
   "inputs": {
+    "data>getCountryPolygon.yml@45|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "Country",
+      "type": "text",
+      "example": "PER",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@45|region": {
+      "description": "State/Province name in the native language of the region",
+      "label": "State/Province name",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
     "data>loadFromStac.yml@2|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "stac_url",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 0
+      "weight": 2
     },
     "data>loadFromStac.yml@2|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
@@ -322,14 +316,14 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio12"
       ],
-      "weight": 1
+      "weight": 3
     },
     "data>loadFromStac.yml@2|spatial_res": {
       "description": "Integer, spatial resolution of the rasters",
       "label": "spatial resolution",
       "type": "float",
       "example": 1000,
-      "weight": 2
+      "weight": 4
     },
     "data>loadFromStac.yml@2|resampling": {
       "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
@@ -352,7 +346,7 @@
         "q3"
       ],
       "example": "near",
-      "weight": 3
+      "weight": 5
     },
     "data>loadFromStac.yml@2|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
@@ -366,20 +360,6 @@
         "median"
       ],
       "example": "first",
-      "weight": 4
-    },
-    "data>getCountryPolygon.yml@45|country": {
-      "description": "Country of interest",
-      "label": "Country",
-      "type": "text",
-      "example": "Peru",
-      "weight": 5
-    },
-    "data>getCountryPolygon.yml@45|region": {
-      "description": "Region of interest",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
       "weight": 6
     },
     "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
@@ -420,6 +400,27 @@
       "type": "text",
       "example": "EPSG:5387",
       "weight": 11
+    },
+    "data>loadFromStac.yml@2|t0": {
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "Start date",
+      "type": "text",
+      "example": null,
+      "weight": 12
+    },
+    "data>loadFromStac.yml@2|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "End date",
+      "type": "text",
+      "example": null,
+      "weight": 13
+    },
+    "data>loadFromStac.yml@2|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": null,
+      "weight": 14
     }
   },
   "outputs": {
