@@ -12,7 +12,7 @@ inputs:
     example: https://stac.geobon.org/
   bbox:
     label: Bounding box
-    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
+    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax. This input should be null when using a custom study area.
     type: float[]
     example: [-2316297, -1971146, 1015207, 1511916]
   collections_items:
