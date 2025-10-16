@@ -3,7 +3,6 @@ library(rjson)
 library(dplyr)
 library(countrycode)
 library(httr2)
-Sys.setenv(OGR_GEOJSON_MAX_OBJ_SIZE = "0")
 
 input <- biab_inputs()
 crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
@@ -43,6 +42,7 @@ if (is.null(input$bbox_crs$region)) { # pull study area polygon
   geojson_url <- meta$gjDownloadURL # Extract the GeoJSON download URL
 
   country_region_polygon <- st_read(geojson_url) # Load geojson
+  country_region_polygon <- st_transform(country_region_polygon, crs = crs)
 
   if (nrow(country_region_polygon) == 0) {
     biab_error_stop("Could not find polygon. Check that you have correct country code.")
@@ -81,20 +81,10 @@ if (is.null(input$bbox_crs$region)) { # pull study area polygon
   # country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == best_region_name, ]
   meta <- res |> resp_body_json()
   geojson_url <- meta$gjDownloadURL
-  # Download to a temp file
-  temp_file <- tempfile(fileext = ".geojson")
-  download.file(geojson_url, temp_file, mode = "wb")
 
-  # Check if download succeeded
-  if (file.info(temp_file)$size == 0) {
-    biab_error_stop("GeoJSON file appears empty — download failed.")
-  }
-
-  # Read the file using sf
-  country_region_polygon <- st_read(temp_file, quiet = TRUE)
-  #country_region_polygon <- st_read(geojson_url)
-
+  country_region_polygon <- st_read(geojson_url)
   country_region_polygon <- st_transform(country_region_polygon, crs = crs)
+
   print(country_region_polygon$shapeName)
   # country_region_polygon_path <- file.path(outputFolder, "country_region_polygon.gpkg")
   # sf::st_write(country_region_polygon, country_region_polygon_path, delete_dsn = T)
