@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 2229,
-        "y": 120
+        "x": 2253,
+        "y": 89
       },
       "data": {
         "descriptionFile": "site_selection_BAS>Block_creation.yml"
@@ -15,8 +15,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 1624,
-        "y": 258.3333333333333
+        "x": 1751,
+        "y": 395
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 2827,
-        "y": 278
+        "x": 2851,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 2827,
-        "y": 12
+        "x": 2851,
+        "y": 337
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "14",
       "type": "output",
       "position": {
-        "x": 2827,
-        "y": 230
+        "x": 2851,
+        "y": 60
       },
       "data": {
         "label": "Output"
@@ -59,8 +59,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 2827,
-        "y": 70
+        "x": 2851,
+        "y": 177
       },
       "data": {
         "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
@@ -70,8 +70,8 @@
       "id": "29",
       "type": "output",
       "position": {
-        "x": 3294,
-        "y": 201
+        "x": 3318,
+        "y": 308
       },
       "data": {
         "label": "Output"
@@ -81,8 +81,8 @@
       "id": "31",
       "type": "output",
       "position": {
-        "x": 3294,
-        "y": 41
+        "x": 3318,
+        "y": 148
       },
       "data": {
         "label": "Output"
@@ -92,8 +92,8 @@
       "id": "32",
       "type": "output",
       "position": {
-        "x": 3294,
-        "y": 153
+        "x": 3318,
+        "y": 260
       },
       "data": {
         "label": "Output"
@@ -103,8 +103,8 @@
       "id": "45",
       "type": "io",
       "position": {
-        "x": 455,
-        "y": 136.33333333333331
+        "x": 434,
+        "y": 123
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -115,7 +115,7 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 168.33333333333331
+        "y": 447
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -127,8 +127,8 @@
       "id": "49",
       "type": "io",
       "position": {
-        "x": 1095,
-        "y": 210.33333333333331
+        "x": 1172,
+        "y": 267
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
@@ -138,8 +138,8 @@
       "id": "50",
       "type": "output",
       "position": {
-        "x": 2174.0784636685935,
-        "y": 263.63724807968634
+        "x": 2253,
+        "y": 366
       },
       "data": {
         "label": "Output"
@@ -149,8 +149,8 @@
       "id": "51",
       "type": "constant",
       "position": {
-        "x": 897.7004700169571,
-        "y": 396.8832204578773
+        "x": 1074,
+        "y": 612
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -161,8 +161,8 @@
       "id": "52",
       "type": "constant",
       "position": {
-        "x": 1225.6000061035156,
-        "y": 341.7999954223633
+        "x": 1268,
+        "y": 518
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -190,8 +190,8 @@
       "id": "53",
       "type": "constant",
       "position": {
-        "x": 1235.6000061035156,
-        "y": 378.7999954223633
+        "x": 1268,
+        "y": 565
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -210,8 +210,8 @@
       "id": "54",
       "type": "constant",
       "position": {
-        "x": 1225.6000061035156,
-        "y": 310.7999954223633
+        "x": 1293,
+        "y": 476
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -223,8 +223,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 1268.6000061035156,
-        "y": 318.7999954223633
+        "x": 1298,
+        "y": 381
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -235,8 +235,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 1273.6000061035156,
-        "y": 282.7999954223633
+        "x": 1298,
+        "y": 339
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -248,13 +248,25 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 1278.6000061035156,
-        "y": 257.7999954223633
+        "x": 1298,
+        "y": 215
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text",
         "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 1298,
+        "y": 423
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
       }
     }
   ],
@@ -426,15 +438,39 @@
       "target": "2",
       "targetHandle": "stac_url",
       "id": "reactflow__edge-58-2stac_url"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-59-2temporal_res"
     }
   ],
   "inputs": {
+    "data>getCountryPolygon.yml@45|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "PER",
+      "weight": 0
+    },
     "data>getCountryPolygon.yml@45|region": {
       "description": "State/Province name in the native language of the region",
       "label": "State/Province name",
       "type": "text",
       "example": null,
-      "weight": 0
+      "weight": 1
+    },
+    "data>loadFromStac.yml@2|collections_items": {
+      "description": "Set of environmental variables to use  (e.g. for temperature \"chelsa-clim|bio1\", precipitation \"chelsa-clim|bio12\"), on which to run the PCA (a minimum of 2 variables are needed). Environmental variables must be continuous values.",
+      "label": "Environmental variables (STAC collection items)",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 2
     },
     "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
       "description": "Select and option between equal BAS or unequal probability BAS. \"Equal\" will not consider the blocks and place all sampling randomly in the whole study area.  \"Unequal\" will take into account the size of the each environmental block and redistribute the sampling sites based on the size of block.  ",
@@ -445,59 +481,35 @@
         "unequal"
       ],
       "example": "equal",
-      "weight": 1
+      "weight": 3
     },
     "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
       "description": "A number of target sampling sites to obtain with the algorithm",
       "label": "Target total sites",
       "type": "int",
       "example": 100,
-      "weight": 2
+      "weight": 4
     },
     "site_selection_BAS>Block_creation.yml@0|n_cols": {
       "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks)",
       "label": "Number of columns",
       "type": "int",
       "example": 10,
-      "weight": 3
+      "weight": 5
     },
     "site_selection_BAS>Block_creation.yml@0|n_rows": {
       "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks)",
       "label": "Number of rows",
       "type": "int",
       "example": 10,
-      "weight": 4
+      "weight": 6
     },
     "pipeline@48": {
       "label": "Coordinate reference system",
       "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
       "type": "text",
       "example": "EPSG:5387",
-      "weight": 5
-    },
-    "data>loadFromStac.yml@2|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": null,
-      "weight": 6
-    },
-    "data>loadFromStac.yml@2|collections_items": {
-      "description": "Set of environmental variables to use  (e.g. for temperature \"chelsa-clim|bio1\", precipitation \"chelsa-clim|bio12\"), on which to run the PCA (a minimum of 2 variables are needed)",
-      "label": "Environmental variables (STAC collection items)",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
       "weight": 7
-    },
-    "data>getCountryPolygon.yml@45|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "COL",
-      "weight": 8
     }
   },
   "outputs": {
@@ -546,7 +558,7 @@
   },
   "metadata": {
     "name": "Environmental Sampling Site Selection",
-    "description": "## Introduction\nBiodiversity monitoring often requires researchers to draw samples of different population due to limitation of budget, time, and accesibility. Many methods exist to produce samples from a continous surface, but balanced sampling has proven to be one of the most efficient in capturing patterns in different populations. Often times, researchers aim to prioritize sampling based on  different parameters, one being environmental characteristics of their study region  (as a proxy of biomes or ecological regions). Tools that allow for quick and robust sampling frameworks provide researchers with strong sampling designs to address  multiple ecological questions. \nHere we present a method that uses balanced acceptance sampling to randomly select  sampling sites in a defined area, and allows for the prioritization of environmentally  differnt regions within the study area.    \n## Uses\nSelection of sampling sites using a BAS algorithm with two different approches (equal  and unequal sampling distribution). \nIn a first step, the pipeline produces environmental blocks based on user defined environmental variables (after performing a PCA analysis on said variables and defining a block grid) and can  use those blocks to generate an unequal sampling distribution.  \nBlocks are based on PCA performed on the selected environmental variables or can use  only 2 raw environmental variables (and no PCA is performed). \nThe user should  define the grid size  for the block generation and a target  sample size that will be assigned using a randomly balanced design, taking into account the inclusion probability of each block  which is  proportional to their area, if the option \"unequeal\" is selected. \nEqual sampling distribution can also be obtained, and will plot the randomly selected  sampling points over the environmental blocks to visualize how a random patter may be  mising (or not certain areas). \n## Limitations \n* Currently the pipeline only works for a defined geopolitical outline (e.g. country,  or province) defined in the STAC Catalog. \n* Unequal sampling may produce unexpected results in the balanced appproach. \n## Before you start\n* Define a projected CRS for your study area * Select environmental variables that may be of ecological importance for your study * Define how many environmental blocks you expect to produce (too many may be noisy,  to little may be underrepresenting the environmental diversity). \n ",
+    "description": "## Introduction\nBiodiversity monitoring often requires researchers to draw samples of different population due to limitation of budget, time, and accesibility. Many methods exist to produce samples from a continous surface, but balanced sampling has proven to be one of the most efficient in capturing patterns in different populations. Often, researchers aim to prioritize sampling based on  different parameters, one being environmental characteristics of their study region (as a proxy of biomes or ecological regions). Tools that allow for quick and robust sampling frameworks provide researchers with strong sampling designs to address multiple ecological questions. \n\nHere we present a method that uses balanced acceptance sampling to randomly select  sampling sites in a defined area, and allows for the prioritization of environmentally different regions within the study area.    \n## Uses\nSelection of sampling sites using a BAS algorithm with two different approches (equal and unequal sampling distribution). \n\nIn a first step, the pipeline produces environmental blocks based on user defined environmental variables (after performing a PCA analysis on said variables and defining a block grid) and can use those blocks to generate an unequal sampling distribution.  \n\nBlocks are created from PCAs performed on the selected environmental variables or can use only two raw environmental variables, in which case no PCA is performed. \n\nThe user must define the grid size for block generation and specify a target  sample size to be allocated using a randomly balanced design. When the “unequal” option  is selected, the inclusion probability of each block is proportional to its area,  ensuring that larger blocks have a higher chance of being sampled.\n\nAlternatively, an equal sampling distribution can be selected, where all blocks have the  same probability of selection. The procedure will also plot the randomly selected sampling  points over the environmental blocks, allowing users to visually assess whether certain  areas are underrepresented or missing from the random sampling pattern.\n## Limitations \n* Currently the pipeline only works for a defined geopolitical outline (e.g. country, or province). \n* Unequal sampling may produce unexpected results in the balanced appproach. \n## Before you start\n* Define a projected CRS for your study area \n* Select environmental variables that may be of ecological importance for your study \n* Define how many environmental blocks you expect to produce (too many may be noisy, to little may be underrepresenting the environmental diversity). \n ",
     "author": [
       {
         "name": "Francis van Oordt",
