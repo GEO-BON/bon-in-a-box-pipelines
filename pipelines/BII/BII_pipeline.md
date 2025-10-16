@@ -1,5 +1,5 @@
 # Biodiversity Intactness Index
-Author(s): Jory Griffith
+_Author: Jory Griffith_
 
 Reviewed by: In development
 
