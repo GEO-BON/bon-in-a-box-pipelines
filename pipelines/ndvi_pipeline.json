@@ -26,8 +26,8 @@
       "id": "200",
       "type": "output",
       "position": {
-        "x": 921.9624938964844,
-        "y": 210.79999542236328
+        "x": 891.9624938964844,
+        "y": 520.7999954223633
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "201",
       "type": "output",
       "position": {
-        "x": 931.9624938964844,
-        "y": 243.79999542236328
+        "x": 927.9624938964844,
+        "y": 425.7999954223633
       },
       "data": {
         "label": "Output"
@@ -78,11 +78,11 @@
       }
     },
     {
-      "id": "205",
-      "type": "userInput",
+      "id": "206",
+      "type": "constant",
       "position": {
-        "x": -29.037506103515625,
-        "y": 193.79999542236328
+        "x": -155.73916625976562,
+        "y": 197.39129638671875
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -142,11 +142,11 @@
       "id": "reactflow__edge-199timeseries_plot-204"
     },
     {
-      "source": "205",
+      "source": "206",
       "sourceHandle": null,
       "target": "198",
       "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-205-198pipeline@2"
+      "id": "reactflow__edge-206-198pipeline@2"
     }
   ],
   "inputs": {
@@ -164,40 +164,26 @@
       "example": null,
       "weight": 1
     },
-    "NDVI>calculateNDVI.yml@199|crs": {
-      "description": "Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated",
-      "label": "Coordinate reference system",
-      "type": "text",
-      "example": "EPSG:4326",
-      "weight": 2
-    },
-    "pipeline@205": {
-      "label": "Coordinate reference system",
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n",
-      "type": "text",
-      "example": "EPSG:4326",
-      "weight": 3
-    },
     "NDVI>calculateNDVI.yml@199|start_date": {
       "description": "Start date for summarizing vegetation index",
       "label": "Start date",
       "type": "text",
       "example": "2024-01-01",
-      "weight": 4
+      "weight": 2
     },
     "NDVI>calculateNDVI.yml@199|end_date": {
       "description": "End date for summarizing vegetation index",
       "label": "End date",
       "type": "text",
       "example": "2024-01-31",
-      "weight": 5
+      "weight": 3
     },
     "NDVI>calculateNDVI.yml@199|spatial_resolution": {
       "description": "Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m). If using a projected CRS, the resolution should be in meters. If using an unprojected CRS (e.g. EPSG:4326), this must be in degrees (0.008 degrees is ~1km at the equator).\n\nLeave blank to have the original spatial resolution of the layer (10m x 10m).",
       "label": "Spatial resolution",
       "type": "float",
       "example": 0.008,
-      "weight": 6
+      "weight": 4
     },
     "NDVI>calculateNDVI.yml@199|summary_statistic": {
       "description": "Statistic to summarize layers over time for summarised raster layer and space for plot of ndvi means over time",
@@ -210,7 +196,14 @@
         "min"
       ],
       "example": "mean",
-      "weight": 7
+      "weight": 5
+    },
+    "NDVI>calculateNDVI.yml@199|crs": {
+      "description": "Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated",
+      "label": "Coordinate reference system",
+      "type": "text",
+      "example": "EPSG:4326",
+      "weight": 6
     }
   },
   "outputs": {
