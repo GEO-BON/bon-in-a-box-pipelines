@@ -77,19 +77,31 @@ if (is.null(input$bbox_crs$region)) { # pull study area polygon
 
   bbox_values <- (input$bbox_crs$bbox)
   names(bbox_values) <- c("xmin", "ymin", "xmax", "ymax")
-  print(bbox_values)
   bbox_poly <- st_as_sfc(st_bbox(bbox_values, crs = crs))
 
-  # bbox_poly <- st_buffer(bbox_poly, dist = 10)
+  # Find all regions that intersect the bbox
+  intersections <- st_intersection(country_region_polygon, bbox_poly)
 
-  country_region_polygon <- country_region_polygon[st_within(country_region_polygon, bbox_poly, sparse = FALSE), ]
+  # Compute area of each intersection
+  intersections$overlap_area <- st_area(intersections)
+
+  # Pick the one with the largest overlap
+  best_idx <- which.max(intersections$overlap_area)
+  best_region_name <- intersections$shapeName[best_idx]
+  print(best_region_name)
+
+  # Filter to that region
+  country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == best_region_name, ]
+  print(country_region_polygon)
+  # Optional: print which region was chosen
+  print(paste("Selected region:", best_region_name))
 
   # print(country_region_polygon$shapeName)
   # shapeName <- paste(country_region_polygon$shapeName, collapse = ", ")
   # country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == input$region, ] # filter shape by region of interest
 
   if (nrow(country_region_polygon) == 0) {
-    biab_error_stop(paste0("Could not find polygon. Check that you have correct region name. Valid region names are: ", shapeName))
+    biab_error_stop(paste0("Could not find polygon. Check that you have correct region name."))
   } # stop if object is empty
 }
 
