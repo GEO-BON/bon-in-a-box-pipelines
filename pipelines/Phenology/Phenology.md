@@ -61,7 +61,7 @@ This step calculates the difference in the layers of the phenology raster layers
 - **Region:** region of interest.
 
 ## Example
-Example output available soon.
+**Sample run:** See an example run here in the [viewer](https://pipelines-results.geobon.org/viewer/Phenology%3Ephenology_EO%3Ef08ed95a9538d87c7303027390889fba).
 
 ## Troubleshooting
 

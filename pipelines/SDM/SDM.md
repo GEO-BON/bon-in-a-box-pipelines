@@ -93,7 +93,7 @@ pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 
 [See an example pipeline output here](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_BRT%3Ed519bfe0fa3489f28738763dced7ceb0)
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Using BRTs to fit a species distribution model requires _absence data_. For the majority of species where no absence data is available, there are various methods to generate pseudoabsences (PAs) based on heuristics about species occurrence. However, the performance characteristics of an SDM fit using PAs can be widely variable depending on the method and parameters used to generate PAs. This means the results of BRT should be explicitly considered as a function of how PAs were generated, and sensitivity analysis to different PAs is _highly_ encouraged.
 
 - **Range Map**: species range, computed by thresholding the predicted SDM at

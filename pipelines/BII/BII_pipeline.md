@@ -61,7 +61,7 @@ This step generates a raster of the change in the BII between the two chosen tim
 - **Region:** the country of interest.
 
 ## Example
-**Sample run:** See an example BII run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/BII%3EBII/5411ef9f7f4b1444a865a05acee4e136) and [viewer](https://pipelines-results.geobon.org/viewer/BII%3EBII%3E5411ef9f7f4b1444a865a05acee4e136).
+**Sample run:** See an example BII run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/BII%3EBII/d29bd8231a0ceefbd0fd14bc16e1e4cc) and [viewer](https://pipelines-results.geobon.org/viewer/BII%3EBII%3Ed29bd8231a0ceefbd0fd14bc16e1e4cc).
 
 ## Troubleshooting
 - The spatial resolution of the BII layers is 10 x 10 km (10,000 m). Choosing a spatial resolution lower than that may cause issues with the pipeline outputs.
