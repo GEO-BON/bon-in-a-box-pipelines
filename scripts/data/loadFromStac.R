@@ -32,6 +32,14 @@ ymax <- input$bbox[4]
 
 weight_matrix <- NULL
 
+# Load study area polygon
+if (!is.null(input$study_area)) {
+  poly <- st_read(input$study_area)
+  if (!is.null(input$crs) && st_crs(poly)$epsg != input$crs) {
+    poly <- st_transform(poly, input$crs)
+  }
+}
+
 if (xmin > xmax) {
   biab_error_stop("left and right seem reversed")
 }
@@ -181,10 +189,7 @@ for (coll_it in collections_items) { # Loop through input array
 
     # Crop if there is a study area
     if (!is.null(input$study_area)) {
-      study_area <- vect(input$study_area)
-      if (crs(study_area) != crs(resampled)) {
-        study_area <- project(study_area, crs)
-      }
+      study_area <- vect(poly)
       masked <- mask(resampled, study_area)
     } else {
       masked <- resampled
@@ -281,10 +286,6 @@ for (coll_it in collections_items) { # Loop through input array
         raster_layers <- gdalcubes::raster_cube(st, v)
 
         if (!is.null(input$study_area)) {
-          poly <- st_read(input$study_area)
-          if (crs(poly) != srs.cube) {
-            poly <- st_transform(poly, st_crs(srs.cube))
-          }
           raster_layers <- filter_geom(raster_layers, poly$geom)
         }
 
@@ -324,19 +325,15 @@ for (coll_it in collections_items) { # Loop through input array
           raster_layers <- gdalcubes::raster_cube(st, v)
 
           if (!is.null(input$study_area)) {
-            poly <- st_read(input$study_area)
-            if (crs(poly) != srs.cube) {
-              poly <- st_transform(poly, st_crs(srs.cube))
-            }
             raster_layers <- filter_geom(raster_layers, poly$geom)
           }
-
-          out <- gdalcubes::write_tif(raster_layers,
-            dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
-            creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
-          )
-          paths <- out
         }
+
+        out <- gdalcubes::write_tif(raster_layers,
+          dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
+          creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
+        )
+        paths <- out
       } else {
         v <- gdalcubes::cube_view(
           srs = srs.cube,
@@ -357,10 +354,6 @@ for (coll_it in collections_items) { # Loop through input array
         raster_layers <- gdalcubes::raster_cube(st, v)
 
         if (!is.null(input$study_area)) {
-          poly <- st_read(input$study_area)
-          if (crs(poly) != srs.cube) {
-            poly <- st_transform(poly, st_crs(srs.cube))
-          }
           raster_layers <- filter_geom(raster_layers, poly$geom)
         }
 
