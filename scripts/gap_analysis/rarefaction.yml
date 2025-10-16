@@ -1,0 +1,35 @@
+script: rarefaction.R
+name: Taxonomic coverage of a given region over time with rarefaction analysis
+description: This script calculates a summary of taxonomic coverage for a given region over time using rarefaction analysis.
+author:
+  - name: Guillaume Larocque
+    email: guillaume.larocque@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+  - name: Benjamin Mercier
+    email: Benjamin.B.Mercier@usherbrooke.ca 
+license: CC BY
+external_link: 
+lifecycle:
+  status: in_development
+inputs:
+  occurrences_csv:
+    label: CSV file
+    description: CSV file containing occurrence data with at least the following columns - species, longitude, latitude, and date (in YYYY-MM-DD format).
+    type: text/csv
+    example: null
+outputs:
+  richness_year:
+    label: Richness over time for each taxonomic group
+    description: Plot of species richness over time for each taxonomic group.
+    type: image/png[]
+  richness_year_table:
+    label: Richness over time for each taxonomic group table
+    description: Table of species richness over time for each taxonomic group.
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - r-dplyr=1.0.10
+    - r-ggplot2=3.4.2
+    - r-inext=2.0.20

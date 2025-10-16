@@ -1,0 +1,370 @@
+{
+  "nodes": [
+    {
+      "id": "6",
+      "type": "io",
+      "position": {
+        "x": 444,
+        "y": 20.666666666666664
+      },
+      "data": {
+        "descriptionFile": "data>getWDPA.yml"
+      }
+    },
+    {
+      "id": "9",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 166
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "27",
+      "type": "userInput",
+      "position": {
+        "x": 95,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "COL"
+      }
+    },
+    {
+      "id": "57",
+      "type": "io",
+      "position": {
+        "x": 613,
+        "y": 134.66666666666669
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "58",
+      "type": "output",
+      "position": {
+        "x": 1306,
+        "y": 35.66666666666667
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "59",
+      "type": "output",
+      "position": {
+        "x": 1306,
+        "y": 353.6666666666667
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "60",
+      "type": "io",
+      "position": {
+        "x": 1703.1000148937533,
+        "y": 176.8000030517578
+      },
+      "data": {
+        "descriptionFile": "protected_areas>protected_areas_summary.yml"
+      }
+    },
+    {
+      "id": "61",
+      "type": "constant",
+      "position": {
+        "x": 1400.1531107096214,
+        "y": 204.0219116265665
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "62",
+      "type": "output",
+      "position": {
+        "x": 2710.351009693186,
+        "y": 176.5219787946111
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "63",
+      "type": "output",
+      "position": {
+        "x": 2702.6510285002387,
+        "y": 188.62194924067146
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "64",
+      "type": "output",
+      "position": {
+        "x": 2696.051044620569,
+        "y": 207.32190356640115
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "65",
+      "type": "output",
+      "position": {
+        "x": 2693.8510499940126,
+        "y": 219.4218740124615
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "66",
+      "type": "output",
+      "position": {
+        "x": 2689.4510607408997,
+        "y": 229.32184983196547
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "67",
+      "type": "output",
+      "position": {
+        "x": 2680.651082234674,
+        "y": 244.72181221786047
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "country_iso",
+      "id": "reactflow__edge-27-6country_iso"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-9-57crs"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "country",
+      "id": "reactflow__edge-27-57country"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "country",
+      "target": "58",
+      "targetHandle": null,
+      "id": "reactflow__edge-57country-58"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "region",
+      "target": "59",
+      "targetHandle": null,
+      "id": "reactflow__edge-57region-59"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "protected_area_polygon",
+      "target": "60",
+      "targetHandle": "protected_area_polygon",
+      "id": "reactflow__edge-6protected_area_polygon-60protected_area_polygon"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "country_region_polygon",
+      "target": "60",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-57country_region_polygon-60study_area_polygon"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "60",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-9-60crs"
+    },
+    {
+      "source": "61",
+      "sourceHandle": null,
+      "target": "60",
+      "targetHandle": "date_column_name",
+      "id": "reactflow__edge-61-60date_column_name"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "protected_areas",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-60protected_areas-62"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "type_yrs_plot",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-60type_yrs_plot-63"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "type_yrs_table",
+      "target": "64",
+      "targetHandle": null,
+      "id": "reactflow__edge-60type_yrs_table-64"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "terrestrial_total_yrs_table",
+      "target": "65",
+      "targetHandle": null,
+      "id": "reactflow__edge-60terrestrial_total_yrs_table-65"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "terrestrial_iucn_yrs_plot",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-60terrestrial_iucn_yrs_plot-66"
+    },
+    {
+      "source": "60",
+      "sourceHandle": "terrestrial_iucn_yrs_table",
+      "target": "67",
+      "targetHandle": null,
+      "id": "reactflow__edge-60terrestrial_iucn_yrs_table-67"
+    }
+  ],
+  "inputs": {
+    "pipeline@27": {
+      "label": "ISO3 country code",
+      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+      "type": "text",
+      "example": "COL",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@57|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
+    "pipeline@9": {
+      "label": "Coordinate reference system",
+      "description": "The coordinate reference system of the study area polygon and the protected area polygons for the ProtConn calculation. This must be a projected CRS (in meters), otherwise the distance calculations will not be accurate.\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n",
+      "type": "text",
+      "example": "EPSG:3116",
+      "weight": 2
+    },
+    "protected_areas>protected_areas_summary.yml@60|start_year": {
+      "description": "Year for the time series plot to start",
+      "label": "Start year",
+      "type": "int",
+      "example": 1980,
+      "weight": 3
+    }
+  },
+  "outputs": {
+    "data>getCountryPolygon.yml@57|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@57|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 1
+    },
+    "protected_areas>protected_areas_summary.yml@60|protected_areas": {
+      "description": "Protected areas on which the analysis has been performed.",
+      "label": "Protected areas",
+      "type": "application/geopackage+sqlite3[]",
+      "weight": 2
+    },
+    "protected_areas>protected_areas_summary.yml@60|type_yrs_plot": {
+      "description": "Change in the total area that is protected over time, by type (Marine or Terrestrial).",
+      "label": "Protected areas time series plot by type",
+      "type": "image/png[]",
+      "weight": 3
+    },
+    "protected_areas>protected_areas_summary.yml@60|type_yrs_table": {
+      "description": "Table of total area that is protected over time, by type (Marine or Terrestrial).",
+      "label": "Protected areas time series by type",
+      "type": "text/csv",
+      "weight": 4
+    },
+    "protected_areas>protected_areas_summary.yml@60|terrestrial_total_yrs_table": {
+      "description": "Table of total area that is protected over time, cropped over the region.",
+      "label": "Protected areas surface area and % in terrestrial habitats for each year",
+      "type": "text/csv",
+      "weight": 5
+    },
+    "protected_areas>protected_areas_summary.yml@60|terrestrial_iucn_yrs_plot": {
+      "description": "Change in the total area and percentage of the country that is protected over time, by IUCN category, cropped over the region.",
+      "label": "Protected areas surface area and % time series plot by IUCN category",
+      "type": "image/png[]",
+      "weight": 6
+    },
+    "protected_areas>protected_areas_summary.yml@60|terrestrial_iucn_yrs_table": {
+      "description": "Table of total area and percentage of the country that is protected over time, by IUCN category, cropped over the region.",
+      "label": "Protected areas  surface area and % time series table by IUCN category",
+      "type": "text/csv",
+      "weight": 7
+    }
+  },
+  "metadata": {
+    "name": "Summary of protected areas for a region",
+    "description": "## Introduction Gives a summary of the area and percentage of protected areas for a region based on the  World Database of Protected Areas (WDPA).",
+    "author": [
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156"
+      },
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      }
+    ],
+    "lifecycle": {
+      "status": "in_development"
+    }
+  }
+}

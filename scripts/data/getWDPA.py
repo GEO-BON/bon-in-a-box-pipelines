@@ -22,7 +22,7 @@ if country_iso == '' or country_iso is None or len(country_iso) == 0:
 
 request_url = "https://api.protectedplanet.net/v3/"
 
-adapter = HTTPAdapter(max_retries=5)
+adapter = HTTPAdapter(max_retries=10)
 session = requests.Session()
 session.mount("http://", adapter)
 session.mount("https://", adapter)
@@ -50,7 +50,7 @@ print('Starting download of protected areas data for %s' % country_iso)
 all_results = gpd.GeoDataFrame()
 valid_results = True
 page = 1
-per_page = 50
+per_page = 25
 total = 0
 while valid_results:
     params={'country': country_iso, 'page': page, "per_page": per_page, "with_geometry": "true", "token": token }

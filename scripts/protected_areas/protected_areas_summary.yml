@@ -48,12 +48,16 @@ outputs:
     label: Protected areas time series by type
     description: Table of total area that is protected over time, by type (Marine or Terrestrial).
     type: text/csv
-  iucn_yrs_plot:
-    label: Protected areas time series plot by IUCN calculated
-    description: Change in the total area that is protected over time, by IUCN category.
+  terrestrial_total_yrs_table:
+    label: Protected areas surface area and % in terrestrial habitats for each year
+    description: Table of total area that is protected over time, cropped over the region.
+    type: text/csv
+  terrestrial_iucn_yrs_plot:
+    label: Protected areas surface area and % time series plot by IUCN category
+    description: Change in the total area and percentage of the country that is protected over time, by IUCN category, cropped over the region.
     type: image/png[]
-  iucn_yrs_table:
-    label: Protected areas time series by IUCN calculated
-    description: Table of total area that is protected over time, by IUCN category.
+  terrestrial_iucn_yrs_table:
+    label: Protected areas  surface area and % time series table by IUCN category
+    description: Table of total area and percentage of the country that is protected over time, by IUCN category, cropped over the region.
     type: text/csv
 
