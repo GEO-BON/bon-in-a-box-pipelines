@@ -1,0 +1,133 @@
+script: RedListIndex.R
+name: Red List Index
+description: "Estimates the Red List Index (RLI) for a group of species, reflecting trends in the overall extinction risk for that group."
+external_link: https://nrl.iucnredlist.org/assessment/red-list-index
+author:
+ - name: Maria Camila diaz
+   email: maria.camila.diaz.corzo@usherbrooke.ca
+ - name: Victor Julio Rincon
+   email: rincon-v@javeriana.edu.co
+ - name: Laetitia Tremblay
+   role: Maintenance
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-data.table
+    - r-reshape2
+    - r-dplyr
+    - r-plyr
+    - r-ggplot2
+    - r-tibble
+    - r-pbapply
+    - r-rredlist
+    - r-plyr
+    # - r-red (not in channels)
+    - r-gdistance
+    - r-BAT
+    - r-ape
+    - r-geometry
+    - r-magic
+    - r-hypervolume
+    - r-ks
+    - r-mclust
+    - r-mvtnorm
+    - r-pracma
+    - r-fastcluster
+    - r-pdist
+    - r-palmerpenguins
+    - r-caret
+    - r-recipes
+    - r-timeDate
+    - r-gower
+    - r-hardhat
+    - r-ipred
+    - r-prodlim
+    - r-lava
+    - r-future.apply
+    - r-future
+    - r-globals
+    - r-listenv
+    - r-parallelly
+    - r-ModelMetrics
+    - r-pROC
+    - r-nls2
+    - r-proto
+    - r-vegan
+    - r-permute
+    - r-phytools
+    - r-combinat
+    - r-clusterGeneration
+    - r-DEoptim
+    - r-expm
+    - r-optimParallel
+    - r-phangorn
+    - r-fastmatch
+    - r-scatterplot3d
+    - r-predicts
+    - r-coda
+    - r-mnormt
+    - r-numDeriv
+    - r-quadprog
+    - r-dismo
+    - r-geosphere
+    - r-rjson
+
+inputs:
+  history_assessment_data:
+    label: History assessment data
+    description: "Dataset that contains the list of species and their historical threat category assessments."
+    type: text/csv
+    example: 'scripts/RedListIndex/input/iucn_history_assessment_data.csv'
+  country:
+    label: Country
+    description: Country of interest
+    type: text
+    example: "Colombia"
+  taxonomic_group:
+    label: Taxonomic group
+    description: Name of taxonomic group of interest
+    type: text[]
+    example:
+  species_use:
+    label: Species use(s) or trade(s)
+    description: The species use or trade selected
+    type: text[]
+    example:
+  threat:
+    label: Species threat(s)
+    description: The threat category selected
+    type: text[]
+    example:
+  sp_col:
+    label: Species name column
+    description: "Name of the column in 'history_assessment_data' that contains the scientific names of the species."
+    type: text
+    example: 'scientific_name'
+  time_col:
+    label: Time column
+    description: "Name of the column in 'history_assessment_data' that contains the periods (years) when the assessments were conducted for each species."
+    type: text
+    example: 'assess_year'
+  threat_category_code_column:
+    label: Threat category column
+    description: "Name of the column in 'history_assessment_data' that contains the threat category code. The codes should correspond to the IUCN threat category codes (EX, EW, RE, CR, EN, VU, NT, DD, LC)."
+    type: text
+    example: 'code'
+outputs:
+  redlist_trend_plot:
+    label: Red List trend
+    description: "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss."
+    type: image/jpg
+  redlist_data:
+    label: Red List data
+    description: "Dataset containing the results of the Red List Index (RLI) calculation."
+    type: text/csv
+  redlist_matrix:
+    label: Red List matrix
+    description: "Matrix showing the distribution of threat categories over time for the group of species."
+    type: text/csv

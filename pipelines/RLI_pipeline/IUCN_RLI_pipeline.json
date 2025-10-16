@@ -1,68 +1,77 @@
 {
   "nodes": [
     {
-      "id": "10",
+      "id": "55",
       "type": "io",
       "position": {
-        "x": 300,
-        "y": 71
+        "x": 1579,
+        "y": 249.5
       },
       "data": {
-        "descriptionFile": "IUCN_redlist_spList>IUCN_redlist_spList.yml"
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml"
       }
     },
     {
-      "id": "13",
+      "id": "56",
       "type": "io",
       "position": {
-        "x": 760,
-        "y": 61
+        "x": 281,
+        "y": 106
       },
       "data": {
-        "descriptionFile": "IUCN_redlist_historyAssesment>IUCN_redlist_historyAssesment.yml"
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
       }
     },
     {
-      "id": "14",
-      "type": "constant",
-      "position": {
-        "x": 390,
-        "y": 199.99999999999997
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "scientific_name"
-      }
-    },
-    {
-      "id": "15",
+      "id": "58",
       "type": "io",
       "position": {
-        "x": 1387,
-        "y": 201.33333333333331
+        "x": 880,
+        "y": -66
       },
       "data": {
-        "descriptionFile": "RedListIndex>RedListIndex.yml"
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spList.yml"
       }
     },
     {
-      "id": "18",
+      "id": "59",
+      "type": "io",
+      "position": {
+        "x": 2348,
+        "y": 493.5
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>RedListIndex.yml"
+      }
+    },
+    {
+      "id": "60",
       "type": "output",
       "position": {
-        "x": 1811,
-        "y": 159.83333333333331
+        "x": 2231.9814661452997,
+        "y": 259.5782412059755
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "19",
+      "id": "63",
+      "type": "output",
+      "position": {
+        "x": 2811.763464985768,
+        "y": 502.355450824636
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "65",
       "type": "constant",
       "position": {
-        "x": 1007,
-        "y": 232.33333333333331
+        "x": 1859.241415622526,
+        "y": 592.4023593708758
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -71,11 +80,11 @@
       }
     },
     {
-      "id": "20",
+      "id": "66",
       "type": "constant",
       "position": {
-        "x": 1007,
-        "y": 274.3333333333333
+        "x": 1860.159576687689,
+        "y": 637.4074172640236
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -84,343 +93,101 @@
       }
     },
     {
-      "id": "21",
+      "id": "67",
+      "type": "constant",
+      "position": {
+        "x": 1161,
+        "y": 534
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "scientific_name"
+      }
+    },
+    {
+      "id": "69",
       "type": "output",
       "position": {
-        "x": 1811,
-        "y": 257.8333333333333
+        "x": 878,
+        "y": 163
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "23",
-      "type": "userInput",
+      "id": "77",
+      "type": "io",
       "position": {
-        "x": 12,
-        "y": 23.166666666666657
+        "x": 202,
+        "y": 270
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "options",
-        "value": "Colombia",
-        "options": [
-          "Afghanistan",
-          "Albania",
-          "Algeria",
-          "American Samoa",
-          "Andorra",
-          "Angola",
-          "Anguilla",
-          "Antarctica",
-          "Antigua and Barbuda",
-          "Argentina",
-          "Armenia",
-          "Aruba",
-          "Australia",
-          "Austria",
-          "Azerbaijan",
-          "Bahamas",
-          "Bahrain",
-          "Bangladesh",
-          "Barbados",
-          "Belarus",
-          "Belgium",
-          "Belize",
-          "Benin",
-          "Bermuda",
-          "Bhutan",
-          "Bolivia, Plurinational State of",
-          "Bonaire, Sint Eustatius and Saba",
-          "Bosnia and Herzegovina",
-          "Botswana",
-          "Bouvet Island",
-          "Brazil",
-          "British Indian Ocean Territory",
-          "Brunei Darussalam",
-          "Bulgaria",
-          "Burkina Faso",
-          "Burundi",
-          "Cabo Verde",
-          "Cambodia",
-          "Cameroon",
-          "Canada",
-          "Cayman Islands",
-          "Central African Republic",
-          "Chad",
-          "Chile",
-          "China",
-          "Christmas Island",
-          "Cocos (Keeling) Islands",
-          "Colombia",
-          "Comoros",
-          "Congo",
-          "Congo, The Democratic Republic of the",
-          "Cook Islands",
-          "Costa Rica",
-          "Croatia",
-          "Cuba",
-          "Curaçao",
-          "Cyprus",
-          "Czechia",
-          "Côte d'Ivoire",
-          "Denmark",
-          "Djibouti",
-          "Dominica",
-          "Dominican Republic",
-          "Ecuador",
-          "Egypt",
-          "El Salvador",
-          "Equatorial Guinea",
-          "Eritrea",
-          "Estonia",
-          "Eswatini",
-          "Ethiopia",
-          "Falkland Islands (Malvinas)",
-          "Faroe Islands",
-          "Fiji",
-          "Finland",
-          "France",
-          "French Guiana",
-          "French Polynesia",
-          "French Southern Territories",
-          "Gabon",
-          "Gambia",
-          "Georgia",
-          "Germany",
-          "Ghana",
-          "Gibraltar",
-          "Greece",
-          "Greenland",
-          "Grenada",
-          "Guadeloupe",
-          "Guam",
-          "Guatemala",
-          "Guernsey",
-          "Guinea",
-          "Guinea-Bissau",
-          "Guyana",
-          "Haiti",
-          "Heard Island and McDonald Islands",
-          "Holy See (Vatican City State)",
-          "Honduras",
-          "Hong Kong",
-          "Hungary",
-          "Iceland",
-          "India",
-          "Indonesia",
-          "Iran, Islamic Republic of",
-          "Iraq",
-          "Ireland",
-          "Israel",
-          "Italy",
-          "Jamaica",
-          "Japan",
-          "Jersey",
-          "Jordan",
-          "Kazakhstan",
-          "Kenya",
-          "Kiribati",
-          "Korea, Democratic People's Republic of",
-          "Korea, Republic of",
-          "Kuwait",
-          "Kyrgyzstan",
-          "Lao People's Democratic Republic",
-          "Latvia",
-          "Lebanon",
-          "Lesotho",
-          "Liberia",
-          "Libya",
-          "Liechtenstein",
-          "Lithuania",
-          "Luxembourg",
-          "Macao",
-          "Madagascar",
-          "Malawi",
-          "Malaysia",
-          "Maldives",
-          "Mali",
-          "Malta",
-          "Marshall Islands",
-          "Martinique",
-          "Mauritania",
-          "Mauritius",
-          "Mayotte",
-          "Mexico",
-          "Micronesia, Federated States of",
-          "Moldova, Republic of",
-          "Monaco",
-          "Mongolia",
-          "Montenegro",
-          "Montserrat",
-          "Morocco",
-          "Mozambique",
-          "Myanmar",
-          "Namibia",
-          "Nauru",
-          "Nepal",
-          "Netherlands",
-          "Netherlands Antilles",
-          "New Caledonia",
-          "New Zealand",
-          "Nicaragua",
-          "Niger",
-          "Nigeria",
-          "Niue",
-          "Norfolk Island",
-          "North Macedonia",
-          "Northern Mariana Islands",
-          "Norway",
-          "Oman",
-          "Pakistan",
-          "Palau",
-          "Palestine, State of",
-          "Panama",
-          "Papua New Guinea",
-          "Paraguay",
-          "Peru",
-          "Philippines",
-          "Pitcairn",
-          "Poland",
-          "Portugal",
-          "Puerto Rico",
-          "Qatar",
-          "Romania",
-          "Russian Federation",
-          "Rwanda",
-          "Réunion",
-          "Saint Barthélemy",
-          "Saint Helena, Ascension and Tristan da Cunha",
-          "Saint Kitts and Nevis",
-          "Saint Lucia",
-          "Saint Martin (French part)",
-          "Saint Pierre and Miquelon",
-          "Saint Vincent and the Grenadines",
-          "Samoa",
-          "San Marino",
-          "Sao Tome and Principe",
-          "Saudi Arabia",
-          "Senegal",
-          "Serbia",
-          "Seychelles",
-          "Sierra Leone",
-          "Singapore",
-          "Sint Maarten (Dutch part)",
-          "Slovakia",
-          "Slovenia",
-          "Solomon Islands",
-          "Somalia",
-          "South Africa",
-          "South Georgia and the South Sandwich Islands",
-          "South Sudan",
-          "Spain",
-          "Sri Lanka",
-          "Sudan",
-          "Suriname",
-          "Svalbard and Jan Mayen",
-          "Sweden",
-          "Switzerland",
-          "Syrian Arab Republic",
-          "Taiwan, Province of China",
-          "Tajikistan",
-          "Tanzania, United Republic of",
-          "Thailand",
-          "Timor-Leste",
-          "Togo",
-          "Tokelau",
-          "Tonga",
-          "Trinidad and Tobago",
-          "Tunisia",
-          "Turkey",
-          "Turkmenistan",
-          "Turks and Caicos Islands",
-          "Tuvalu",
-          "Uganda",
-          "Ukraine",
-          "United Arab Emirates",
-          "United Kingdom of Great Britain and Northern Ireland",
-          "United States Minor Outlying Islands",
-          "United States of America",
-          "Uruguay",
-          "Uzbekistan",
-          "Vanuatu",
-          "Venezuela, Bolivarian Republic of",
-          "Viet Nam",
-          "Virgin Islands, British",
-          "Virgin Islands, U.S.",
-          "Wallis and Futuna",
-          "Western Sahara",
-          "Yemen",
-          "Zambia",
-          "Zimbabwe"
-        ]
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spUse.yml"
       }
     },
     {
-      "id": "24",
-      "type": "userInput",
-      "position": {
-        "x": 12,
-        "y": 82.66666666666667
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "mammals",
-        "options": [
-          "all",
-          "amphibians",
-          "birds",
-          "mammals",
-          "reptiles",
-          "angelfishes",
-          "blennies",
-          "butterfly_fishes",
-          "cacti",
-          "chameleons",
-          "cone_snails",
-          "conifers",
-          "crocodiles_and_alligators",
-          "cycads",
-          "fw_caridean_shrimps",
-          "fw_crabs",
-          "fw_crayfish",
-          "hagfishes",
-          "lobsters",
-          "magnolias",
-          "mangrove_plants",
-          "pufferfishes",
-          "reef_building_corals",
-          "seabreams_porgies_picarels",
-          "seagrasses",
-          "seasnakes",
-          "sharks_and_rays",
-          "sturgeons",
-          "surgeonfishes",
-          "tarpons_and_ladyfishes",
-          "tunas_and_billfishes",
-          "wrasses_and_parrotfishes"
-        ]
-      }
-    },
-    {
-      "id": "25",
+      "id": "78",
       "type": "output",
       "position": {
-        "x": 300,
-        "y": 12
+        "x": 874,
+        "y": 320
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "26",
+      "id": "82",
+      "type": "io",
+      "position": {
+        "x": 147,
+        "y": 186
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spGroup.yml"
+      }
+    },
+    {
+      "id": "83",
       "type": "output",
       "position": {
-        "x": 300,
-        "y": 151
+        "x": 876,
+        "y": 242.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "91",
+      "type": "output",
+      "position": {
+        "x": 1527.5822625076985,
+        "y": -55.646618680163954
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "92",
+      "type": "io",
+      "position": {
+        "x": 112,
+        "y": 356
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spThreats.yml"
+      }
+    },
+    {
+      "id": "93",
+      "type": "output",
+      "position": {
+        "x": 870,
+        "y": 398
       },
       "data": {
         "label": "Output"
@@ -429,96 +196,193 @@
   ],
   "edges": [
     {
-      "source": "10",
-      "sourceHandle": "iucn_splist",
-      "target": "13",
-      "targetHandle": "species_data",
-      "id": "reactflow__edge-10iucn_splist-13species_data"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "13",
-      "targetHandle": "sp_col",
-      "id": "reactflow__edge-14-13sp_col"
-    },
-    {
-      "source": "13",
+      "source": "55",
       "sourceHandle": "iucn_history_assessment_data",
-      "target": "15",
+      "target": "59",
       "targetHandle": "history_assessment_data",
-      "id": "reactflow__edge-13iucn_history_assessment_data-15history_assessment_data"
+      "id": "reactflow__edge-55iucn_history_assessment_data-59history_assessment_data"
     },
     {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "sp_col",
-      "id": "reactflow__edge-14-15sp_col"
-    },
-    {
-      "source": "15",
-      "sourceHandle": "redlist_trend_plot",
-      "target": "18",
+      "source": "55",
+      "sourceHandle": "api_citation",
+      "target": "60",
       "targetHandle": null,
-      "id": "reactflow__edge-15redlist_trend_plot-18"
+      "id": "reactflow__edge-55api_citation-60"
     },
     {
-      "source": "19",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "time_col",
-      "id": "reactflow__edge-19-15time_col"
-    },
-    {
-      "source": "20",
-      "sourceHandle": null,
-      "target": "15",
-      "targetHandle": "threat_category_code_column",
-      "id": "reactflow__edge-20-15threat_category_code_column"
-    },
-    {
-      "source": "15",
+      "source": "59",
       "sourceHandle": "redlist_data",
-      "target": "21",
+      "target": "63",
       "targetHandle": null,
-      "id": "reactflow__edge-15redlist_data-21"
+      "id": "reactflow__edge-59redlist_data-63"
     },
     {
-      "source": "23",
+      "source": "58",
+      "sourceHandle": "iucn_splist",
+      "target": "55",
+      "targetHandle": "species_data",
+      "id": "reactflow__edge-58iucn_splist-55species_data"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "iucn_country_splist",
+      "target": "58",
+      "targetHandle": "splist_country",
+      "id": "reactflow__edge-56iucn_country_splist-58splist_country"
+    },
+    {
+      "source": "65",
       "sourceHandle": null,
-      "target": "10",
+      "target": "59",
+      "targetHandle": "time_col",
+      "id": "reactflow__edge-65-59time_col"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "threat_category_code_column",
+      "id": "reactflow__edge-66-59threat_category_code_column"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "55",
+      "targetHandle": "sp_col",
+      "id": "reactflow__edge-67-55sp_col"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "sp_col",
+      "id": "reactflow__edge-67-59sp_col"
+    },
+    {
+      "source": "56",
+      "sourceHandle": "country",
+      "target": "59",
       "targetHandle": "country",
-      "id": "reactflow__edge-23-10country"
+      "id": "reactflow__edge-56country-59country"
     },
     {
-      "source": "24",
-      "sourceHandle": null,
-      "target": "10",
+      "source": "56",
+      "sourceHandle": "country",
+      "target": "69",
+      "targetHandle": null,
+      "id": "reactflow__edge-56country-69"
+    },
+    {
+      "source": "77",
+      "sourceHandle": "iucn_use_splist",
+      "target": "58",
+      "targetHandle": "splist_use",
+      "id": "reactflow__edge-77iucn_use_splist-58splist_use"
+    },
+    {
+      "source": "77",
+      "sourceHandle": "species_use",
+      "target": "58",
+      "targetHandle": "species_use",
+      "id": "reactflow__edge-77species_use-58species_use"
+    },
+    {
+      "source": "77",
+      "sourceHandle": "species_use",
+      "target": "78",
+      "targetHandle": null,
+      "id": "reactflow__edge-77species_use-78"
+    },
+    {
+      "source": "82",
+      "sourceHandle": "iucn_taxon_splist",
+      "target": "58",
+      "targetHandle": "splist_taxon",
+      "id": "reactflow__edge-82iucn_taxon_splist-58splist_taxon"
+    },
+    {
+      "source": "82",
+      "sourceHandle": "taxonomic_group",
+      "target": "58",
       "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-24-10taxonomic_group"
+      "id": "reactflow__edge-82taxonomic_group-58taxonomic_group"
     },
     {
-      "source": "23",
-      "sourceHandle": null,
-      "target": "25",
-      "targetHandle": null,
-      "id": "reactflow__edge-23-25"
+      "source": "82",
+      "sourceHandle": "taxonomic_group",
+      "target": "59",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-82taxonomic_group-59taxonomic_group"
     },
     {
-      "source": "24",
-      "sourceHandle": null,
-      "target": "26",
+      "source": "77",
+      "sourceHandle": "species_use",
+      "target": "59",
+      "targetHandle": "species_use",
+      "id": "reactflow__edge-77species_use-59species_use"
+    },
+    {
+      "source": "82",
+      "sourceHandle": "taxonomic_group",
+      "target": "83",
       "targetHandle": null,
-      "id": "reactflow__edge-24-26"
+      "id": "reactflow__edge-82taxonomic_group-83"
+    },
+    {
+      "source": "58",
+      "sourceHandle": "number_species",
+      "target": "91",
+      "targetHandle": null,
+      "id": "reactflow__edge-58number_species-91"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "threat_category",
+      "target": "58",
+      "targetHandle": "threat",
+      "id": "reactflow__edge-92threat_category-58threat"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "threat_category",
+      "target": "59",
+      "targetHandle": "threat",
+      "id": "reactflow__edge-92threat_category-59threat"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "threat_category",
+      "target": "93",
+      "targetHandle": null,
+      "id": "reactflow__edge-92threat_category-93"
+    },
+    {
+      "source": "92",
+      "sourceHandle": "iucn_threats_splist",
+      "target": "58",
+      "targetHandle": "splist_threat",
+      "id": "reactflow__edge-92iucn_threats_splist-58splist_threat"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "redlist_trend_plot",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-59redlist_trend_plot-63"
+    },
+    {
+      "source": "59",
+      "sourceHandle": "redlist_matrix",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-59redlist_matrix-63"
     }
   ],
   "inputs": {
-    "pipeline@23": {
+    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
+      "description": "Select the country of interest.",
       "label": "Country",
-      "description": "Select the country to obtain the list of species.",
       "type": "options",
-      "example": "Colombia",
       "options": [
         "Afghanistan",
         "Albania",
@@ -769,376 +633,214 @@
         "Zambia",
         "Zimbabwe"
       ],
+      "example": "Colombia",
       "weight": 0
     },
-    "pipeline@24": {
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
+      "description": "Select the taxonomic groups for which to calculate the RLI. If 'All' is selected, the pipeline will include all taxonomic groups.",
       "label": "Taxonomic group",
-      "description": "Select the taxonomic group to obtain the list of species. If 'all' is selected, a list of all species listed by the IUCN for the selected country will be obtained.",
-      "type": "options",
-      "example": "mammals",
+      "type": "options[]",
       "options": [
-        "all",
-        "amphibians",
-        "birds",
-        "mammals",
-        "reptiles",
-        "angelfishes",
-        "blennies",
-        "butterfly_fishes",
-        "cacti",
-        "chameleons",
-        "cone_snails",
-        "conifers",
-        "crocodiles_and_alligators",
-        "cycads",
-        "fw_caridean_shrimps",
-        "fw_crabs",
-        "fw_crayfish",
-        "hagfishes",
-        "lobsters",
-        "magnolias",
-        "mangrove_plants",
-        "pufferfishes",
-        "reef_building_corals",
-        "seabreams_porgies_picarels",
-        "seagrasses",
-        "seasnakes",
-        "sharks_and_rays",
-        "sturgeons",
-        "surgeonfishes",
-        "tarpons_and_ladyfishes",
-        "tunas_and_billfishes",
-        "wrasses_and_parrotfishes"
+        "All",
+        "Amphibians",
+        "Birds",
+        "Mammals",
+        "Reptiles",
+        "Fishes",
+        "Insects",
+        "Angelfishes",
+        "Arachnids",
+        "Blennies",
+        "Brown algae",
+        "Butterfly fishes",
+        "Cacti",
+        "Chameleons",
+        "Cone snails",
+        "Conifers",
+        "Corals",
+        "Crocodiles and alligators",
+        "Crustaceans",
+        "Cycads",
+        "Fernes and allies",
+        "Flowering plants",
+        "Fw caridean shrimps",
+        "Fw crabs",
+        "Fw crayfish",
+        "Green algae",
+        "Groupers",
+        "Gymnosperms",
+        "Hagfishes",
+        "Horseshoe crabs",
+        "Lichens",
+        "Lobsters",
+        "Magnolias",
+        "Mangrove plants",
+        "Molluscs",
+        "Mosses",
+        "Mushrooms",
+        "Others",
+        "Pufferfishes",
+        "Red algae",
+        "Reef building corals",
+        "Seabreams porgies picarels",
+        "Seagrasses",
+        "Seasnakes",
+        "Sharks and rays",
+        "Sturgeons",
+        "Surgeonfishes",
+        "Tarpons and ladyfishes",
+        "Tunas and billfishes",
+        "Velvet worms",
+        "Wrasses and parrotfishes"
+      ],
+      "example": [
+        "Mammals"
       ],
       "weight": 1
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
+      "description": "Select the species use(s) or trade(s). This will filter the species list to only include species with the selected uses. If 'All' is selected, the pipeline will include all species that have a use recorded in the Red List database. You may omit this filter by selecting 'Do not filter by species use or trade'.",
+      "label": "Species use",
+      "type": "options[]",
+      "options": [
+        "All",
+        "Do not filter by species use or trade",
+        "Food - human",
+        "Food - animal",
+        "Medicine - human & veterinary",
+        "Poisons",
+        "Manufacturing chemicals",
+        "Other chemicals",
+        "Fuels",
+        "Fibre",
+        "Construction or structural materials",
+        "Wearing apparel, accessories",
+        "Other household goods",
+        "Handicrafts, jewellery, etc.",
+        "Pets/display animals, horticulture",
+        "Research",
+        "Sport hunting/specimen collecting",
+        "Establishing ex-situ production",
+        "Other",
+        "Unknown"
+      ],
+      "example": [
+        "Do not filter by species use or trade"
+      ],
+      "weight": 2
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category_input": {
+      "description": "Select the species threat(s) to filter for. This returns a list of IUCN Red List species that are threatened by the categories selected.",
+      "label": "Threat category",
+      "type": "options[]",
+      "options": [
+        "Do not filter by threat category",
+        "Residential & commercial development",
+        "Agriculture & aquaculture",
+        "Energy production & mining",
+        "Transportation & service corridors",
+        "Biological resource use",
+        "Human intrusions & disturbance",
+        "Natural system modifications",
+        "Invasive and other problematic species, genes & diseases",
+        "Invasive alien species or diseases",
+        "Pollution",
+        "Geological events",
+        "Climate change & severe weather",
+        "Fisheries",
+        "Other options"
+      ],
+      "example": [
+        "Do not filter by threat category"
+      ],
+      "weight": 3
     }
   },
   "outputs": {
-    "pipeline@23|default_output": {
-      "label": "Country",
-      "description": "Country for which the assessment is conducted.",
-      "example": "Colombia",
-      "type": "options",
-      "options": [
-        "Afghanistan",
-        "Albania",
-        "Algeria",
-        "American Samoa",
-        "Andorra",
-        "Angola",
-        "Anguilla",
-        "Antarctica",
-        "Antigua and Barbuda",
-        "Argentina",
-        "Armenia",
-        "Aruba",
-        "Australia",
-        "Austria",
-        "Azerbaijan",
-        "Bahamas",
-        "Bahrain",
-        "Bangladesh",
-        "Barbados",
-        "Belarus",
-        "Belgium",
-        "Belize",
-        "Benin",
-        "Bermuda",
-        "Bhutan",
-        "Bolivia, Plurinational State of",
-        "Bonaire, Sint Eustatius and Saba",
-        "Bosnia and Herzegovina",
-        "Botswana",
-        "Bouvet Island",
-        "Brazil",
-        "British Indian Ocean Territory",
-        "Brunei Darussalam",
-        "Bulgaria",
-        "Burkina Faso",
-        "Burundi",
-        "Cabo Verde",
-        "Cambodia",
-        "Cameroon",
-        "Canada",
-        "Cayman Islands",
-        "Central African Republic",
-        "Chad",
-        "Chile",
-        "China",
-        "Christmas Island",
-        "Cocos (Keeling) Islands",
-        "Colombia",
-        "Comoros",
-        "Congo",
-        "Congo, The Democratic Republic of the",
-        "Cook Islands",
-        "Costa Rica",
-        "Croatia",
-        "Cuba",
-        "Curaçao",
-        "Cyprus",
-        "Czechia",
-        "Côte d'Ivoire",
-        "Denmark",
-        "Djibouti",
-        "Dominica",
-        "Dominican Republic",
-        "Ecuador",
-        "Egypt",
-        "El Salvador",
-        "Equatorial Guinea",
-        "Eritrea",
-        "Estonia",
-        "Eswatini",
-        "Ethiopia",
-        "Falkland Islands (Malvinas)",
-        "Faroe Islands",
-        "Fiji",
-        "Finland",
-        "France",
-        "French Guiana",
-        "French Polynesia",
-        "French Southern Territories",
-        "Gabon",
-        "Gambia",
-        "Georgia",
-        "Germany",
-        "Ghana",
-        "Gibraltar",
-        "Greece",
-        "Greenland",
-        "Grenada",
-        "Guadeloupe",
-        "Guam",
-        "Guatemala",
-        "Guernsey",
-        "Guinea",
-        "Guinea-Bissau",
-        "Guyana",
-        "Haiti",
-        "Heard Island and McDonald Islands",
-        "Holy See (Vatican City State)",
-        "Honduras",
-        "Hong Kong",
-        "Hungary",
-        "Iceland",
-        "India",
-        "Indonesia",
-        "Iran, Islamic Republic of",
-        "Iraq",
-        "Ireland",
-        "Israel",
-        "Italy",
-        "Jamaica",
-        "Japan",
-        "Jersey",
-        "Jordan",
-        "Kazakhstan",
-        "Kenya",
-        "Kiribati",
-        "Korea, Democratic People's Republic of",
-        "Korea, Republic of",
-        "Kuwait",
-        "Kyrgyzstan",
-        "Lao People's Democratic Republic",
-        "Latvia",
-        "Lebanon",
-        "Lesotho",
-        "Liberia",
-        "Libya",
-        "Liechtenstein",
-        "Lithuania",
-        "Luxembourg",
-        "Macao",
-        "Madagascar",
-        "Malawi",
-        "Malaysia",
-        "Maldives",
-        "Mali",
-        "Malta",
-        "Marshall Islands",
-        "Martinique",
-        "Mauritania",
-        "Mauritius",
-        "Mayotte",
-        "Mexico",
-        "Micronesia, Federated States of",
-        "Moldova, Republic of",
-        "Monaco",
-        "Mongolia",
-        "Montenegro",
-        "Montserrat",
-        "Morocco",
-        "Mozambique",
-        "Myanmar",
-        "Namibia",
-        "Nauru",
-        "Nepal",
-        "Netherlands",
-        "Netherlands Antilles",
-        "New Caledonia",
-        "New Zealand",
-        "Nicaragua",
-        "Niger",
-        "Nigeria",
-        "Niue",
-        "Norfolk Island",
-        "North Macedonia",
-        "Northern Mariana Islands",
-        "Norway",
-        "Oman",
-        "Pakistan",
-        "Palau",
-        "Palestine, State of",
-        "Panama",
-        "Papua New Guinea",
-        "Paraguay",
-        "Peru",
-        "Philippines",
-        "Pitcairn",
-        "Poland",
-        "Portugal",
-        "Puerto Rico",
-        "Qatar",
-        "Romania",
-        "Russian Federation",
-        "Rwanda",
-        "Réunion",
-        "Saint Barthélemy",
-        "Saint Helena, Ascension and Tristan da Cunha",
-        "Saint Kitts and Nevis",
-        "Saint Lucia",
-        "Saint Martin (French part)",
-        "Saint Pierre and Miquelon",
-        "Saint Vincent and the Grenadines",
-        "Samoa",
-        "San Marino",
-        "Sao Tome and Principe",
-        "Saudi Arabia",
-        "Senegal",
-        "Serbia",
-        "Seychelles",
-        "Sierra Leone",
-        "Singapore",
-        "Sint Maarten (Dutch part)",
-        "Slovakia",
-        "Slovenia",
-        "Solomon Islands",
-        "Somalia",
-        "South Africa",
-        "South Georgia and the South Sandwich Islands",
-        "South Sudan",
-        "Spain",
-        "Sri Lanka",
-        "Sudan",
-        "Suriname",
-        "Svalbard and Jan Mayen",
-        "Sweden",
-        "Switzerland",
-        "Syrian Arab Republic",
-        "Taiwan, Province of China",
-        "Tajikistan",
-        "Tanzania, United Republic of",
-        "Thailand",
-        "Timor-Leste",
-        "Togo",
-        "Tokelau",
-        "Tonga",
-        "Trinidad and Tobago",
-        "Tunisia",
-        "Turkey",
-        "Turkmenistan",
-        "Turks and Caicos Islands",
-        "Tuvalu",
-        "Uganda",
-        "Ukraine",
-        "United Arab Emirates",
-        "United Kingdom of Great Britain and Northern Ireland",
-        "United States Minor Outlying Islands",
-        "United States of America",
-        "Uruguay",
-        "Uzbekistan",
-        "Vanuatu",
-        "Venezuela, Bolivarian Republic of",
-        "Viet Nam",
-        "Virgin Islands, British",
-        "Virgin Islands, U.S.",
-        "Wallis and Futuna",
-        "Western Sahara",
-        "Yemen",
-        "Zambia",
-        "Zimbabwe"
-      ],
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_data": {
+      "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
+      "label": "Red List data",
+      "type": "text/csv",
       "weight": 0
     },
-    "pipeline@24|default_output": {
-      "label": "Taxonomic group",
-      "description": "Taxonomic group to obtain the list of species. ",
-      "example": "mammals",
-      "type": "options",
-      "options": [
-        "all",
-        "amphibians",
-        "birds",
-        "mammals",
-        "reptiles",
-        "angelfishes",
-        "blennies",
-        "butterfly_fishes",
-        "cacti",
-        "chameleons",
-        "cone_snails",
-        "conifers",
-        "crocodiles_and_alligators",
-        "cycads",
-        "fw_caridean_shrimps",
-        "fw_crabs",
-        "fw_crayfish",
-        "hagfishes",
-        "lobsters",
-        "magnolias",
-        "mangrove_plants",
-        "pufferfishes",
-        "reef_building_corals",
-        "seabreams_porgies_picarels",
-        "seagrasses",
-        "seasnakes",
-        "sharks_and_rays",
-        "sturgeons",
-        "surgeonfishes",
-        "tarpons_and_ladyfishes",
-        "tunas_and_billfishes",
-        "wrasses_and_parrotfishes"
-      ],
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_trend_plot": {
+      "description": "The Red List Index of species for the chosen taxonomy group over time. An RLI of 1.0 indicates that all species have a status of Least Concerned, while 0.0 indicates Extinct. If the RLI value is constant over time, the overall extinction risk remains unchanged. An upward trend shows a reduction in the rate of biodiversity loss.",
+      "label": "Red List trend",
+      "type": "image/jpg",
       "weight": 1
     },
-    "RedListIndex>RedListIndex.yml@15|redlist_data": {
-      "description": "Dataset containing the results of the Red List Index (RLI) calculation.",
-      "label": "redList data",
+    "IUCNRedlistIndex>RedListIndex.yml@59|redlist_matrix": {
+      "description": "Matrix showing the distribution of threat categories over time for the group of species.",
+      "label": "Red List matrix",
       "type": "text/csv",
       "weight": 2
     },
-    "RedListIndex>RedListIndex.yml@15|redlist_trend_plot": {
-      "description": "Figure showing the trend of the Red List Index (RLI) for the evaluated group of species. For more information about the workflow and the interpretation of the results consult the documentation [RLI documentation](https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html) ",
-      "label": "redlist trend plot",
-      "type": "image/jpg",
+    "IUCNRedlistIndex>IUCN_redlist_spList.yml@58|number_species": {
+      "description": "Number of species in that country, filtered by taxon, threat, and use categories.",
+      "label": "Number of species",
+      "type": "int",
       "weight": 3
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
+      "description": "Country chosen for IUCN red list assessment.",
+      "label": "Country",
+      "type": "text",
+      "example": null,
+      "weight": 4
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
+      "description": "The taxonomic group(s) of interest.",
+      "label": "Taxonomic group(s)",
+      "type": "text/plain",
+      "example": null,
+      "weight": 5
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category": {
+      "description": "IUCN threat category",
+      "label": "Species threat(s)",
+      "type": "text[]",
+      "weight": 6
+    },
+    "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
+      "description": "The species use(s) or trade(s) selected.",
+      "label": "Species use(s)",
+      "type": "text[]",
+      "weight": 7
+    },
+    "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml@55|api_citation": {
+      "description": "Citation for the data acquired using the IUCN Red List API.",
+      "label": "IUCN API citation",
+      "type": "text/plain",
+      "weight": 8
     }
   },
   "metadata": {
     "name": "Red List Index (RLI) pipeline",
-    "description": "This pipeline calculates the \nRLI by filtering the IUCN data by country and taxonomic group.",
+    "description": "## Introduction\nThe Red List Index (RLI) shows trends in overall extinction risk for species, and is used to track progress towards reducing extinctions and biodiversity loss. Many species that move categories in the Red List do so because of revised taxonomy or improved knowledge. Therefore, looking at raw trends in Red List status can be misleading.  RLI models these trends to show overall changes the status of species groups that are  based only on genuine improvement or deterioriation.\nRLI has been widely integrated into various policy frameworks. Initially used to assess  progress towards the Convention on Biological Diversity’s 2010 target (Rodrigues, 2006),  it has since been employed in regional, thematic, and global assessments by bodies such as  the Intergovernmental Science-Policy Platform on Biodiversity and Ecosystem Services (IPBES),  the Global Environment Outlook, and others (Global Biodiversity Outlook, 2010).\n## Uses\nThe RLI is a key indicator for the UN Sustainable Development Goals, particularly Goal 15,  and is adopted by the Convention on Migratory Species and its agreements. It also serves as  a headline indicator for Goal A and Target 4 of the CBD’s Kunming-Montreal Global Biodiversity  Framework (CBD, 2022). Furthermore, by tracking the proportion of threatened species showing  status improvement, the RLI plays a central role in evaluating progress toward Goal A. Beyond  global trends, the RLI can be used to track changes in extinction risk across biogeographic realms,  political units, ecosystems, habitats, taxonomic groups, threat types, use or trades, and those  relevant to various international agreements and treaties (Butchart et al., 2004; Butchart et al., 2005).  The RLI supports progress towards several other goals and targets within the framework, such as Goal B,  Target 2, and Target 5, highlighting changes in extinction risk, including for utilized species.  By calculating the RLI in more specific contexts, such as for species impacted by pollution  (Target 7), species affected by invasive alien species (Target 6b), or those used for food and medicine  (Target 9b), the indicator provides targeted insights that directly inform efforts to meet these goals.  To read more about the RLI indicator in the Global Biodiversity Framework, see the metadata  [here](https://www.gbf-indicators.org/metadata/headline/A-3).\n  \nThe following are suggested inputs that are goal-specific:\n1. RLI of species impacted by pollution (Target 7)\n  - Country: User's choice \n  - Taxonomic group: All \n  - Threat category: Pollution \n  - Species use: Do not filter by species use or trade\n\n2. RLI of species impacted by invasive alien species (Target 6b)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Invasive alien species or diseases\n  - Species use: Do not filter by species use or trade\n\n3. RLI of species used in food and medicine (Target 9b)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Do not filter by threat category\n  - Species use: Food - human, Food - animal, Medicine human & veterinary\n\n4. RLI for all utilized species (Goal B and Target 5)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Do not filter by threat category\n  - Species use: All\n\n5. RLI for species threatened by fisheries (Target 9)\n  - Country: User's choice\n  - Taxonomic group: All\n  - Threat category: Fisheries\n  - Species use: Do not filter by species use or trade\n\n## Pipeline Limitations\n* On large or species-rich countries, as well as in threat or use categories that have a substantial  number of species, this pipeline takes a significant amount of time to retrieve the data.\n* This pipeline calculates the RLI for species only. Subspecies, subpopulations, and varieties are  excluded from the analysis.\n* The list of IUCN assessments extracted for this pipeline are only the ones done on a Global scale.  Regional scale assessments are excluded from the analysis.\n## Before you start\nTo use this pipeline, you’ll need an [IUCN token](https://api.iucnredlist.org/users/sign_up) to access  data on the International Union for Conservation of Nature (IUCN) Red List of Threatened Species.\nTo interpret the results of this pipeline, it's important to understand the IUCN threat categorizations,  which are present throughout the outputs. Some results present these categorizations directly,  while others such as the Red List Index (RLI) calculations, use them to model changes in extinction  risk over time. \nThe IUCN Red List of Threatened Species defines the following threat categories:\n  - EX: Exinct \n  - EW: Extinct in the wild \n  - RE: Regionally extinct \n  - CR: Critically endangered \n  - EN: Endangered \n  - VU: Vulnerable \n  - LR/cd: Lower risk \n  - Conservation dependent \n  - NT or LR/nt: Near threatened \n  - LC or LR/lc: Least concern \n  - DD: Data deficient\n\n(IUCN, 2025)",
     "author": [
       {
         "name": "Victor Julio Rincon",
-        "identifier": "rincon-v@javeriana.edu.co"
+        "email": "rincon-v@javeriana.edu.co",
+        "role": "Pipeline development"
       },
       {
         "name": "Maria Camila Diaz",
-        "identifier": "maria.camila.diaz.corzo@usherbrooke.ca"
+        "email": "maria.camila.diaz.corzo@usherbrooke.ca",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetitia.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
       }
     ],
-    "license": "MIT",
-    "external_link": "https://html-preview.github.io/?url=https://github.com/PEM-Humboldt/biab-2.0/blob/RLI_pipeline/pipelines/RLI_pipeline/IUCN_RLI_pipeline.html"
+    "license": "MIT"
   }
 }

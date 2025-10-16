@@ -497,19 +497,6 @@
       }
     },
     {
-      "id": "135",
-      "type": "constant",
-      "position": {
-        "x": 186.03825626726825,
-        "y": 370.59360803475454
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "\n"
-      }
-    },
-    {
       "id": "137",
       "type": "constant",
       "position": {
@@ -866,13 +853,6 @@
       "id": "reactflow__edge-133observations_file-34presence"
     },
     {
-      "source": "135",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-135-134weight_matrix_with_ids"
-    },
-    {
       "source": "134",
       "sourceHandle": "rasters",
       "target": "97",
@@ -1073,6 +1053,27 @@
       ],
       "example": "plants",
       "weight": 13
+    },
+    "data>loadFromStac.yml@134|t0": {
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "Start date",
+      "type": "text",
+      "weight": 14,
+      "example": null
+    },
+    "data>loadFromStac.yml@134|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "End date",
+      "type": "text",
+      "weight": 15,
+      "example": null
+    },
+    "data>loadFromStac.yml@134|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "weight": 16,
+      "example": null
     }
   },
   "outputs": {
@@ -1127,15 +1128,19 @@
     "author": [
       {
         "name": "Sarah Valentin",
-        "identifier": "https://orcid.org/0000-0002-9028-681X"
+        "identifier": "https://orcid.org/0000-0002-9028-681X",
+        "role": "Pipeline development"
       },
       {
         "name": "Guillaume Larocque",
-        "identifier": "https://orcid.org/0000-0002-5967-9156"
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
       },
       {
         "name": "François Rousseu",
-        "identifier": "https://orcid.org/0000-0002-2400-2479"
+        "identifier": "https://orcid.org/0000-0002-2400-2479",
+        "role": "Pipeline development"
       }
     ],
     "license": "MIT",
