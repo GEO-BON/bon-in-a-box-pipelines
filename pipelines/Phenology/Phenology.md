@@ -5,7 +5,7 @@
 ## Introduction
 Phenology is one of the species trait EBVs. It describes presence, absence, abundance or duration of seasonal activities of organisms. This pipeline uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season. It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog). The script pulls the yearly phenology layers using openEO and resamples them to the spatial resolution of choice, calculates summary statistics over a country or region of interest, and subtracts the rasters to look at change over time.
 
-## 'Use Case'/Context
+## Context
 This pipeline can be used to look at the Phenology EBV. It can also serve as inputs for subsequent pipelines, such as species distribution models.
 
 ## Pipeline limitations
@@ -25,7 +25,7 @@ The pipeline requires an API key for the Copernicus Data Space Ecosystem. To acq
 
 - **Bands:** raster bands of interest for the calculations.
 
-- **Spatial resolution:** spatial resolution (in meters) of the raster, for plotting. Leave blank to extract layers in the original spatial resolution (10m x 10m).
+- **Spatial resolution:** spatial resolution (in meters) of the raster, for plotting. Leave blank to extract layers in the original spatial resolution (10m x 10m). The spatial resolution should not be less that 10m.
 
 - **Start year:** start year for the phenology time series.
 
