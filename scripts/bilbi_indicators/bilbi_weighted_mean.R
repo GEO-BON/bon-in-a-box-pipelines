@@ -94,7 +94,7 @@ summary_list <- list()
 for (i in 1:length(input$bilbi_indicator)) {
   path <- input$bilbi_indicator[i]
   summary <- summarize_BILBI(bilbi_raster_path = path, sumsimilarity_raster_path = denom, region_raster_path = study_area_rast)
-  summary$date <- as.Date(str_extract(path, "\\d{4}-\\d{2}-\\d{2}"))
+  summary$Date <- as.Date(str_extract(path, "\\d{4}-\\d{2}-\\d{2}"))
   summary_list[[i]] <- summary
 }
 summary_list <- do.call(rbind, summary_list)
@@ -110,7 +110,7 @@ biab_output("summarised_values", summary_path)
 result_yrs_plot <-
     ggplot(
       summary_list,
-      aes(x = date, y = BILBI_indicator)
+      aes(x = Date, y = BILBI_indicator)
     ) +
     geom_point(size=4, color="#078c83") +
     geom_line(size=1.5, color="#078c83") +

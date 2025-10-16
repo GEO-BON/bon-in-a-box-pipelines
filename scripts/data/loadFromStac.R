@@ -293,7 +293,7 @@ for (coll_it in collections_items) { # Loop through input array
           dir = file.path(outputFolder), prefix = paste0(coll_it, "_", asset_names[i], "_"),
           creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
         )
-        paths <- c(paths, out)
+        paths <- out
       }
     } else { # If asset names are the same, filter by date (or tile if they are all the same date)
       st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
@@ -327,13 +327,13 @@ for (coll_it in collections_items) { # Loop through input array
           if (!is.null(input$study_area)) {
             raster_layers <- filter_geom(raster_layers, poly$geom)
           }
-        }
 
-        out <- gdalcubes::write_tif(raster_layers,
-          dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
-          creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
-        )
-        paths <- out
+          out <- gdalcubes::write_tif(raster_layers,
+            dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
+            creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
+          )
+          paths <- out
+        }
       } else {
         v <- gdalcubes::cube_view(
           srs = srs.cube,
