@@ -1,5 +1,6 @@
 # Red List Index
-Author(s): Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griffith
+_Authors: Maria Camila Diaz, Victor Julio Rincon, Laetitia Tremblay, Jory Griffith_
+
 Reviewed by: In review
 
 ## Introduction
