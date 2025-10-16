@@ -110,9 +110,9 @@ result_yrs_plot <-
       summary_list,
       aes(x = date, y = BILBI_indicator)
     ) +
-    geom_point() +
-    geom_line() +
-    labs(y = "Indicator value", x = "Date")+
+    geom_point(size=4, color="#078c83") +
+    geom_line(size=1.5, color="#078c83") +
+    labs(y = "Indicator value", x = "Date") +
     theme_bw()
 
 file_path <- file.path(outputFolder, paste0("result_plot.png"))

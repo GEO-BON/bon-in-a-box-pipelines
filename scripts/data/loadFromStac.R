@@ -46,8 +46,6 @@ if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null
 # Load the CRS object
 if (!is.null(input$crs) & !is.null(input$spatial_res)) {
   coord <- st_crs(input$crs)
-  print(coord)
-  print(st_is_longlat(coord))
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$spatial_res > 1) {
     biab_error_stop("CRS is in degrees and resolution is in meters.")
@@ -226,7 +224,6 @@ for (coll_it in collections_items) { # Loop through input array
     asset_names <- unlist(asset_names)
     print("Asset names:")
     print(asset_names)
-    print(length(asset_names))
 
     # Extract spatial res if not provided
     if (is.null(input$spatial_res)) { # Obtain spatial resolution from metadata
@@ -307,7 +304,6 @@ for (coll_it in collections_items) { # Loop through input array
         paths <- c()
         for (i in 1:length(dates_unique)) { # loop through dates
           date <- dates_unique[i] # select date
-          print(date)
           v <- gdalcubes::cube_view(
             srs = srs.cube,
             extent = list(
