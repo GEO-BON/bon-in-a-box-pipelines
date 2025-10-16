@@ -9,23 +9,24 @@ crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 
 # Output country and region
 country <- input$bbox_crs$country$ISO3
+print(country)
 
 if (is.null(input$bbox_crs$region)) {
   region <- "No region chosen"
 } else {
   region <- input$bbox_crs$region$regionName
 }
-
+print(region)
 biab_output("region", region)
 
-# Change from ISO code to country namelibrary(countrycode)
-country_name <- countrycode(
-  country,
-  origin = "iso3c",
-  destination = "country.name.en"
-)
+# # Change from ISO code to country namelibrary(countrycode)
+# country_name <- countrycode(
+#   country,
+#   origin = "iso3c",
+#   destination = "country.name.en"
+# )
 
-biab_output("country", country_name)
+biab_output("country", input$bbox_crs$country$englishName)
 
 if (is.null(input$bbox_crs$region)) { # pull study area polygon
   # pull whole country
@@ -54,9 +55,14 @@ if (is.null(input$bbox_crs$region)) { # pull study area polygon
   }
 } else {
   print("pulling region polygon")
+  adm_code <- "/ADM1"
+  exceptions <- c("ITA", "BEL") # countries where the states are in ADM2
+  if (country %in% exceptions) {
+    adm_code <- "/ADM2"
+  }
   tryCatch(
     {
-      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", country, "/ADM1")) |> # ADM1 gives states and provinces
+      res <- request(paste0("https://www.geoboundaries.org/api/current/gbOpen/", country, adm_code)) |> # ADM1 gives states and provinces
         req_perform()
     },
     error = function(e) {
@@ -74,6 +80,7 @@ if (is.null(input$bbox_crs$region)) { # pull study area polygon
 
   country_region_polygon <- st_read(geojson_url)
   country_region_polygon <- st_transform(country_region_polygon, crs = crs)
+  print(country_region_polygon)
 
   bbox_values <- (input$bbox_crs$bbox)
   names(bbox_values) <- c("xmin", "ymin", "xmax", "ymax")
@@ -88,11 +95,10 @@ if (is.null(input$bbox_crs$region)) { # pull study area polygon
   # Pick the one with the largest overlap
   best_idx <- which.max(intersections$overlap_area)
   best_region_name <- intersections$shapeName[best_idx]
-  print(best_region_name)
 
   # Filter to that region
   country_region_polygon <- country_region_polygon[country_region_polygon$shapeName == best_region_name, ]
-  print(country_region_polygon)
+
   # Optional: print which region was chosen
   print(paste("Selected region:", best_region_name))
 
