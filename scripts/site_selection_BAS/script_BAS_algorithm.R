@@ -1,10 +1,10 @@
 library(rjson)
 library(remotes)
-if (!'spbal' %in% installed.packages()) {
+#if (!'spbal' %in% installed.packages()) {
   remotes::install_github("https://github.com/docgovtnz/spbal.git", force = TRUE)
-}else{
-  print("spbal package installed locally, not in CONDA")
-}
+#}else{
+ # print("spbal package installed locally, not in CONDA")
+#}
 
 library(spbal)
 library(terra)
