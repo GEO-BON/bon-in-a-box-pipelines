@@ -5,6 +5,7 @@ library(sf)
 # Add inputs
 input <- biab_inputs()
 sf_use_s2(FALSE)
+crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 # Get polygon for study area
 
 # Read in polygon of study area
@@ -16,7 +17,7 @@ if (is.null(input$study_area_polygon)) {
 # Load and fix geometry issues in study area
 study_area <- input$study_area_polygon
 study_area <- sf::st_read(study_area)
-study_area <- st_transform(study_area, crs = input$crs)
+study_area <- st_transform(study_area, crs = crs)
 study_area <- st_buffer(study_area, 0.1)
 study_area_clean <- st_make_valid(study_area)
 
@@ -28,7 +29,7 @@ biab_output("study_area_clean", study_area_clean_path)
 protected_areas <- sf::st_read(input$protected_area_file, type = 3, promote_to_multi = FALSE)
 
 # # transform
-protected_areas <- st_transform(protected_areas, crs = input$crs)
+protected_areas <- st_transform(protected_areas, crs = crs)
 
 # ## Clean data
 print("Cleaning data")

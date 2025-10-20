@@ -12,19 +12,6 @@
       }
     },
     {
-      "id": "27",
-      "type": "userInput",
-      "position": {
-        "x": -1119.6858657086595,
-        "y": 86.71639421847621
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6622"
-      }
-    },
-    {
       "id": "28",
       "type": "output",
       "position": {
@@ -39,22 +26,11 @@
       "id": "38",
       "type": "io",
       "position": {
-        "x": -919.6990564351008,
-        "y": -72.40443535328512
+        "x": -505.69905643510083,
+        "y": 11.595564646714877
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
-      "id": "39",
-      "type": "io",
-      "position": {
-        "x": -237.62660150542172,
-        "y": -73.92015191979553
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
       }
     },
     {
@@ -83,22 +59,27 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": 380.16807300518667,
-        "y": -159.69435047402465
+        "x": 68.16807300518667,
+        "y": -309.69435047402465
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
       }
+    },
+    {
+      "id": "43",
+      "type": "userInput",
+      "position": {
+        "x": -930.0802947923225,
+        "y": -181.65718710282113
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "22",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-27-22crs"
-    },
     {
       "source": "22",
       "sourceHandle": "class_percentage",
@@ -123,44 +104,9 @@
     {
       "source": "38",
       "sourceHandle": "country_region_polygon",
-      "target": "39",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-38country_region_polygon-39study_area_file"
-    },
-    {
-      "source": "38",
-      "sourceHandle": "country_region_polygon",
       "target": "22",
       "targetHandle": "study_area_polygon",
       "id": "reactflow__edge-38country_region_polygon-22study_area_polygon"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "38",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-27-38crs"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "39",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-27-39crs"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "bbox",
-      "target": "22",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-39bbox-22bbox"
-    },
-    {
-      "source": "39",
-      "sourceHandle": "bbox",
-      "target": "42",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-39bbox-42bbox"
     },
     {
       "source": "42",
@@ -170,48 +116,41 @@
       "id": "reactflow__edge-42rasters-22rasters"
     },
     {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "42",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-27-42crs"
-    },
-    {
       "source": "38",
       "sourceHandle": "country_region_polygon",
       "target": "42",
       "targetHandle": "study_area",
       "id": "reactflow__edge-38country_region_polygon-42study_area"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "38",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-43-38bbox_crs"
+    },
+    {
+      "source": "43",
+      "sourceHandle": null,
+      "target": "42",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-43-42bbox_crs"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@38|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "COL",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@38|region": {
-      "description": "Name of the state, province or region of interest. Leave blank for full country analysis.",
-      "label": "State/Province/Region",
-      "type": "text",
+    "pipeline@43": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
       "example": null,
-      "weight": 1
-    },
-    "pipeline@27": {
-      "label": "Study area EPSG",
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area. This numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This MUST be in a projected reference system (not lat long).\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html). The website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n*Leave blank if you want the bounding box to be in EPSG:4326.*",
-      "type": "text",
-      "example": "EPSG:3116",
-      "weight": 2
+      "weight": 0
     },
     "data>loadFromStac.yml@42|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 3
+      "weight": 1
     },
     "data>loadFromStac.yml@42|collections_items": {
       "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.",
@@ -221,35 +160,35 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 4
+      "weight": 2
     },
     "data>loadFromStac.yml@42|t0": {
       "description": "Start date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "Start date",
       "type": "text",
       "example": null,
-      "weight": 5
+      "weight": 3
     },
     "data>loadFromStac.yml@42|t1": {
       "description": "End date for time series layers in format YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "End date",
       "type": "text",
       "example": null,
-      "weight": 6
+      "weight": 4
     },
     "data>loadFromStac.yml@42|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
       "example": null,
-      "weight": 7
+      "weight": 5
     },
     "data>loadFromStac.yml@42|spatial_res": {
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
       "label": "Spatial resolution",
       "type": "float",
       "example": 1000,
-      "weight": 8
+      "weight": 6
     },
     "data>loadFromStac.yml@42|resampling": {
       "description": "Resampling method used when rescaling and/or reprojecting the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
@@ -272,7 +211,7 @@
         "q3"
       ],
       "example": "near",
-      "weight": 9
+      "weight": 7
     },
     "data>loadFromStac.yml@42|aggregation": {
       "description": "Method used to aggregate items when layers combining over time.",
@@ -286,7 +225,7 @@
         "median"
       ],
       "example": "first",
-      "weight": 10
+      "weight": 8
     }
   },
   "outputs": {
