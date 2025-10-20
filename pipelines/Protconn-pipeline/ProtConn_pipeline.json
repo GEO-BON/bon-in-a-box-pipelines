@@ -233,6 +233,13 @@
       "example": "COL",
       "weight": 0
     },
+    "data>getCountryPolygon.yml@57|region": {
+      "description": "Name of the province or region of interest, in the language of the region.",
+      "label": "State/Province name",
+      "type": "text",
+      "example": null,
+      "weight": 1
+    },
     "pipeline@41": {
       "label": "Polygon of study area",
       "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script.",

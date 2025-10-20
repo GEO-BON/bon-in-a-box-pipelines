@@ -2,6 +2,10 @@ Species distributions are an important EBV in the ‘species populations’ clas
 
 ### **MaxEnt**
 
+_Author: [Sarah Valentin](https://orcid.org/0000-0002-9028-681X), [Guillaume Larocque](https://orcid.org/0000-0002-5967-9156), [François Rousseu](https://orcid.org/0000-0002-2400-2479)_
+
+Review status: Under development
+
 **Methods:**
 
 SDMs predict where species are likely to occur based on a suite of environmental variables that are associated with known occurrences (Peterson, 2001; Elith and Leathwick, 2009). The MaxEnt pipeline pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. Then, the pipeline cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. Third, the pipeline creates a set of pseudo-absences (background points) and combines this with presences and the environmental predictors to create a dataset that is ready to be input into the SDM model. The pipeline runs the SDM on this data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\) partitioning occurrence and background points into subsets for training and evaluation, 2\) building the model with different algorithmic settings (model tuning), and 3\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). Lastly, the pipeline computes the 95% confidence interval using bootstrapping and cross validation techniques.
@@ -38,12 +42,6 @@ The pipeline creates the following outputs:
 
 [See an example output here](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_maxEnt%3E78ed53b7ea6b96ef58008075a4dfb487)
 
-**Contributors:**
-
-- [Sarah Valentin](https://orcid.org/0000-0002-9028-681X)
-- [Guillaume Larocque](https://orcid.org/0000-0002-5967-9156)
-- [François Rousseu](https://orcid.org/0000-0002-2400-2479)
-
 **Citations:**
 
 Elith, J., & Leathwick, J. R. (2009). Species Distribution Models: Ecological Explanation and Prediction Across Space and Time. Annual Review of Ecology, Evolution, and Systematics, 40(Volume 40, 2009), 677–697. https://doi.org/10.1146/annurev.ecolsys.110308.120159
@@ -54,7 +52,11 @@ Peterson, A. T. (2001). Predicting Species’ Geographic Distributions Based on 
 
 ### **Boosted Regression Trees**
 
-This document describes the methodology behind the BON-in-a-Box (BiaB) pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
+_Author: [Michael D. Catchen](https://orcid.org/0000-0002-6506-6487)_
+
+Review status: Under development
+
+This document describes the methodology behind the BON in a Box pipeline for using Boosted Regression Trees (BRTs) for species distribution modeling.
 
 **Summary**
 
@@ -93,7 +95,7 @@ pipeline, [`fitBRT.jl`](../../scripts/SDM/BRT/fitBRT.md).
 
 [See an example pipeline output here](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_BRT%3Ed519bfe0fa3489f28738763dced7ceb0)
 
-> [!IMPORTANT]  
+> [!IMPORTANT]
 > Using BRTs to fit a species distribution model requires _absence data_. For the majority of species where no absence data is available, there are various methods to generate pseudoabsences (PAs) based on heuristics about species occurrence. However, the performance characteristics of an SDM fit using PAs can be widely variable depending on the method and parameters used to generate PAs. This means the results of BRT should be explicitly considered as a function of how PAs were generated, and sensitivity analysis to different PAs is _highly_ encouraged.
 
 - **Range Map**: species range, computed by thresholding the predicted SDM at
@@ -128,6 +130,10 @@ flowchart LR
 ```
 
 ### **ewlgcpSDM (mapSpecies)**
+
+_Authors: [François Rousseu](https://orcid.org/0000-0002-2400-2479), [Guillaume Blanchet](https://orcid.org/0000-0001-5149-2488), [Dominique Gravel](https://orcid.org/0000-0002-4498-7076)_
+
+Review status: Under development
 
 **Methods:**
 The species distribution modeling method provided in the package ewlgcpSDM (Effort-Weighted Log-Gaussian Cox Process) is based on spatial point processes and presence-only observations. It implements the method proposed by Simpson et al. (2016) to estimate log-Gaussian Cox processes using INLA (Rue et al. 2009) and the SPDE approach (Lindgren et al. 2009). The model relies on a discrete grid (the mesh) of arbitrary resolution to approximate the spatial component of the model. The method proposed in ewlgcpSDM contains three key aspects for species distribution modeling, namely:
@@ -167,11 +173,6 @@ The pipeline creates the following outputs:
 
 [See an example pipeline output here](https://pipelines-results.geobon.org/viewer/SDM%3ESDM_ewlgcp%3Edfbdc18c5e923c2a9fa426efc502843c)
 
-**Contributors:**
-
-- François Rousseu (https://orcid.org/0000-0002-2400-2479)
-- Guillaume Blanchet (https://orcid.org/0000-0001-5149-2488)
-- Dominique Gravel (https://orcid.org/0000-0002-4498-7076)
 
 **Citations:**
 Lindgren, F., Rue, H., and Lindström, J. 2011. An explicit link between Gaussian fields and Gaussian Markov random fields: the stochastic partial differential equation approach. Journal of the Royal Statistical Society Series B: Statistical Methodology, 73(4): 423-498.

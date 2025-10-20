@@ -217,7 +217,7 @@
       "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
       "label": "State/Province code",
       "type": "text",
-      "example": "CO-PUT",
+      "example": "Putumayo",
       "weight": 1
     },
     "pipeline@31": {
