@@ -8,7 +8,7 @@
         "y": 108
       },
       "data": {
-        "descriptionFile": "BILBI_Indicators>bilbi_weighted_mean.yml"
+        "descriptionFile": "bilbi_indicators>bilbi_weighted_mean.yml"
       }
     },
     {
@@ -569,17 +569,17 @@
     },
     "data>loadFromStac.yml@1|rasters": {
       "description": "Output raster files in geotiff format.",
-      "label": "Rasters",
+      "label": "Raster layers of indicator for each year",
       "type": "image/tiff;application=geotiff[]",
       "weight": 2
     },
-    "BILBI_Indicators>bilbi_weighted_mean.yml@0|summarised_values": {
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of BERI in the study area polygon.\n\n\nThe value, ranging from 0 to 1 represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.",
       "label": "Indicator summary",
       "type": "text/csv",
       "weight": 3
     },
-    "BILBI_Indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
       "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
       "label": "Time series plot",
       "type": "image/png",
