@@ -13,11 +13,11 @@ inputs:
     description: Table, cleaned presence points
     type: text/tab-separated-values
     example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
-  proj:
-    label: projection system
-    description: String, projection system
-    type: text
-    example: "EPSG:6623"
+  bbox_crs:
+    description: Select a bounding box and CRS
+    label: Bounding and CRS
+    type: bboxCRS
+    example:
   method:
     label: study extent method
     description: Option, method to create the study extent.
@@ -33,11 +33,6 @@ inputs:
     description: Integer, buffer width (applied around the box, mcp or points depending on the method used)
     type: int
     example: 0
-  bbox:
-    label: bbox
-    description: If method = bbox, vector of float, bbox coordinates of the extent of interest in the order xmin, ymin, xmax, ymax
-    type: float[]
-    example: [-2316297, -1971146, 1015207, 1511916]
 outputs:
   area_study_extent:
     label: study extent area

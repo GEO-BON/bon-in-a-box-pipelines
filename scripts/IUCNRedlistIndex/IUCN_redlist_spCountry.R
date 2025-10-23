@@ -11,16 +11,18 @@ if (token == "") {
 }
 
 
-country <- input$country
-
-biab_output("country", country)
+country <- input$country$country$englishName
 
 ## Load sp country ####
 
 IUCN_countries <- rredlist::rl_countries(key = token)
-IUCN_isocode <- IUCN_countries$countries$code[IUCN_countries$countries$description$en == input$country]
+IUCN_isocode <- IUCN_countries$countries$code[IUCN_countries$countries$description$en == country]
 
-print(sprintf("Loading species for %s...", input$country))
+if (is.null(IUCN_isocode)) {
+  biab_error_stop("The country you have selected is not in the IUCN database, please select a different one.")
+}
+
+print(sprintf("Loading species for %s...", country))
 IUCN_country <- rredlist::rl_countries(code = IUCN_isocode, key = token, latest = TRUE, scope_code = 1)$assessments
 
 if (nrow(IUCN_country) == 0) {

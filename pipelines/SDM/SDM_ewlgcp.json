@@ -113,37 +113,6 @@
       }
     },
     {
-      "id": "57",
-      "type": "userInput",
-      "position": {
-        "x": 119,
-        "y": 869.1666666666666
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      }
-    },
-    {
-      "id": "58",
-      "type": "userInput",
-      "position": {
-        "x": 207,
-        "y": 370
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
-      }
-    },
-    {
       "id": "64",
       "type": "constant",
       "position": {
@@ -382,8 +351,8 @@
       "id": "131",
       "type": "io",
       "position": {
-        "x": 4144,
-        "y": 835.4545454545454
+        "x": 4162,
+        "y": 753.4545454545454
       },
       "data": {
         "descriptionFile": "SDM>runewlgcp.yml"
@@ -572,6 +541,18 @@
       "data": {
         "type": "text"
       }
+    },
+    {
+      "id": "149",
+      "type": "userInput",
+      "position": {
+        "x": -51.78265380859375,
+        "y": 388.39129638671875
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
     }
   ],
   "edges": [
@@ -623,13 +604,6 @@
       "target": "40",
       "targetHandle": "extent",
       "id": "reactflow__edge-104study_extent-40extent"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-104proj"
     },
     {
       "source": "35",
@@ -709,13 +683,6 @@
       "id": "reactflow__edge-101-97cutoff_cor"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-104bbox"
-    },
-    {
       "source": "47",
       "sourceHandle": null,
       "target": "44",
@@ -772,13 +739,6 @@
       "id": "reactflow__edge-46-131n_folds"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-131proj"
-    },
-    {
       "source": "131",
       "sourceHandle": "sdm_pred",
       "target": "109",
@@ -828,13 +788,6 @@
       "id": "reactflow__edge-131sdm_obs-136"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-139proj"
-    },
-    {
       "source": "121",
       "sourceHandle": null,
       "target": "139",
@@ -854,27 +807,6 @@
       "target": "126",
       "targetHandle": null,
       "id": "reactflow__edge-139gbif_doi-126"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "140",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-140bbox"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-139bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "140",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-140crs"
     },
     {
       "source": "128",
@@ -912,25 +844,11 @@
       "id": "reactflow__edge-140rasters-144"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "145",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-145crs"
-    },
-    {
       "source": "128",
       "sourceHandle": null,
       "target": "145",
       "targetHandle": "spatial_res",
       "id": "reactflow__edge-128-145spatial_res"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "145",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-145bbox"
     },
     {
       "source": "145",
@@ -966,9 +884,51 @@
       "target": "131",
       "targetHandle": "spatial_res",
       "id": "reactflow__edge-128-131spatial_res"
+    },
+    {
+      "source": "149",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-149-139bbox_crs"
+    },
+    {
+      "source": "149",
+      "sourceHandle": null,
+      "target": "145",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-149-145bbox_crs"
+    },
+    {
+      "source": "149",
+      "sourceHandle": null,
+      "target": "140",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-149-140bbox_crs"
+    },
+    {
+      "source": "149",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-149-104bbox_crs"
+    },
+    {
+      "source": "149",
+      "sourceHandle": null,
+      "target": "131",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-149-131bbox"
     }
   ],
   "inputs": {
+    "pipeline@149": {
+      "label": "Bounding and CRS",
+      "description": "Select a bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "pipeline@121": {
       "label": "Taxa list",
       "description": "Array of taxa values",
@@ -976,7 +936,7 @@
       "example": [
         "Acer saccharum"
       ],
-      "weight": 0
+      "weight": 1
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "Method used to sample background points",
@@ -989,21 +949,21 @@
         "unweighted_raster"
       ],
       "example": "weighted_raster",
-      "weight": 1
+      "weight": 2
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "Number of background points",
       "label": "Number of background points",
       "type": "int",
       "example": 100000,
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@140|stac_url": {
       "description": "URL of the STAC catalog to pull predictor layers.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 3
+      "weight": 4
     },
     "data>loadFromStac.yml@140|collections_items": {
       "description": "Collection name of STAC layers followed by '|' followed by item id",
@@ -1015,61 +975,42 @@
         "earthenv_landcover|class_7",
         "earthenv_landcover|class_3"
       ],
-      "weight": 4
+      "weight": 5
     },
     "data>loadFromStac.yml@140|study_area": {
       "description": "Polygon of study area used to crop output layers",
       "label": "Study area",
       "type": "application/geopackage+sqlite3",
       "example": null,
-      "weight": 5
+      "weight": 6
     },
     "pipeline@46": {
       "label": "Number of blocks",
       "description": "Number of blocks (for crossvalidation method, currently ignored)",
       "type": "int",
       "example": 2,
-      "weight": 6
-    },
-    "pipeline@57": {
-      "label": "Projection system",
-      "description": "String, projection system",
-      "type": "text",
-      "example": "EPSG:6622",
       "weight": 7
-    },
-    "pipeline@58": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 8
     },
     "pipeline@128": {
       "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 9
+      "weight": 8
     },
     "data>getGBIFObservations>getGBIFObservations.yml@139|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 10
+      "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@139|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 11
+      "weight": 10
     },
     "data>GBIFHeatmapFromSTAC.yml@145|taxa": {
       "description": "taxonomic group for which to retrieve GBIF heatmap",
@@ -1085,7 +1026,7 @@
         "all"
       ],
       "example": "plants",
-      "weight": 12
+      "weight": 11
     }
   },
   "outputs": {

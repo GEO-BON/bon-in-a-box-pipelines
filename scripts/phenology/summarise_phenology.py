@@ -11,7 +11,7 @@ os.chdir(sys.argv[1])
 # Reading inputs
 data = biab_inputs()
 
-bbox = data['bbox']
+bbox = data['bbox_crs']['bbox']
 start_year = data['start_year']
 end_year = data['end_year']
 bands = data['bands']
@@ -19,7 +19,7 @@ polygon = data['study_area_polygon']
 aggregate_function = data['aggregate_function']
 spatial_resolution = data['spatial_resolution']
 season = data['season']
-crs = data['crs']
+crs = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['code'])
 id = os.getenv("CDSE_CLIENT_ID")
 secret = os.getenv("CDSE_CLIENT_SECRET")
 

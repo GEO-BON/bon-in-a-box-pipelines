@@ -12,6 +12,7 @@ lapply(packages_list, library, character.only = TRUE)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs : ")
 print(input)
+crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 
 presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE)
 predictors <- terra::rast(unlist(input$predictors))
@@ -46,11 +47,11 @@ params <- dmesh_predictors(params, predictors)
 print(colnames(params$predictors))
 
 ### Create an exclusion buffer
-obs <- st_as_sf(presence_background[presence_background$pa == 1, ], coords = c("lon", "lat"), crs = input$proj)
+obs <- st_as_sf(presence_background[presence_background$pa == 1, ], coords = c("lon", "lat"), crs = crs)
 buff <- st_buffer(obs, 250000) |> st_union()
 
 ### Gather effort
-bg <- st_as_sf(presence_background, coords = c("lon", "lat"), crs = input$proj)
+bg <- st_as_sf(presence_background, coords = c("lon", "lat"), crs = crs)
 params <- dmesh_effort(params, obs = obs, background = bg, buffer = buff, adjust = FALSE)
 
 print(head(params$predictors))
