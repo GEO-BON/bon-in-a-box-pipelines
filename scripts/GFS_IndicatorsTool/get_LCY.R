@@ -41,7 +41,6 @@ load_stac<-function(staccollection='esacci-lc'){
     ) |>
     rstac::get_request()
   
-  
   make_vsicurl_url <- function(base_url) {
     paste0(
       "/vsicurl",
@@ -51,11 +50,17 @@ load_stac<-function(staccollection='esacci-lc'){
       base_url
     )
   }
-  
-  # get download URLs
-  lcpri_url <- make_vsicurl_url(rstac::assets_url(stac_query, paste0('esacci-lc-',yoi)))
-  lcpri_url
-  
+
+
+  # get download urls
+  lcpri_url =   rev(unlist(lapply(stac_query$features, function(x){
+    if (x$id%in%paste0('esacci-lc-',yoi)) {
+      return(rstac::assets_url(x))
+    }
+  })))
+
+  # make urls readily accessible for stac
+  lcpri_url = make_vsicurl_url(lcpri_url)
   
   # open rasters from server
   raster_server = rast(lcpri_url)
