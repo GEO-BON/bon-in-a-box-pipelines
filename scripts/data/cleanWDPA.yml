@@ -96,6 +96,10 @@ inputs:
     type: boolean
     example: TRUE
 outputs:
+  study_area_clean:
+    label: Study area
+    description: Study area with fixed geometry
+    type: application/geopackage+sqlite3
   protected_areas_clean:
     label: Polygon of protected areas
     description: Map of the protected areas in GeoPackage format, cleaned and filtered according to the input criteria.
@@ -107,6 +111,7 @@ conda:
   dependencies:
     - r-rjson
     - r-sf
+    - r-lwgeom
     - r-remotes
     - r-dplyr
     - r-lubridate

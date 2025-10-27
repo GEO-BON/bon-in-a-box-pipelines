@@ -1,17 +1,15 @@
-Sys.setenv("R_REMOTES_NO_ERRORS_FROM_WARNINGS" = "true")
-
-library("devtools")
-if (!"stacatalogue" %in% installed.packages()[, "Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-
 ## Load functions
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/removeCollinearityFunc.R", sep = "/"))
-source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
+
+## Load required packages
+packages_list <- list("terra", "rjson", "raster", "dplyr", "gdalcubes")
+
+lapply(packages_list, library, character.only = TRUE)
 
 library("terra")
 library("rjson")
 library("raster")
 library("dplyr")
-library("stacatalogue")
 library("gdalcubes")
 
 input <- biab_inputs()

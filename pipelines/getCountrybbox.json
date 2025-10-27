@@ -12,17 +12,6 @@
       }
     },
     {
-      "id": "1",
-      "type": "io",
-      "position": {
-        "x": 18.962493896484375,
-        "y": 120
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "2",
       "type": "userInput",
       "position": {
@@ -33,17 +22,6 @@
       "data": {
         "type": "text",
         "value": "EPSG:4326"
-      }
-    },
-    {
-      "id": "3",
-      "type": "output",
-      "position": {
-        "x": 594.9624938964844,
-        "y": 117
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -58,22 +36,44 @@
       }
     },
     {
-      "id": "7",
+      "id": "12",
+      "type": "io",
+      "position": {
+        "x": 181.35704305765262,
+        "y": 112.96066028936173
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "13",
       "type": "output",
       "position": {
-        "x": 601.9624938964844,
-        "y": 117
+        "x": 786.0906597056153,
+        "y": 120.6964087870177
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "8",
+      "id": "14",
       "type": "output",
       "position": {
-        "x": 609.9624938964844,
-        "y": 132
+        "x": 783.0592265725945,
+        "y": 128.27499161956968
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 771.6000061035156,
+        "y": 160.79999542236328
       },
       "data": {
         "label": "Output"
@@ -82,32 +82,11 @@
   ],
   "edges": [
     {
-      "source": "1",
-      "sourceHandle": "country_polygon",
-      "target": "0",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-1country_polygon-0study_area_file"
-    },
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-2-1crs"
-    },
-    {
       "source": "2",
       "sourceHandle": null,
       "target": "0",
       "targetHandle": "crs",
       "id": "reactflow__edge-2-0crs"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "country_polygon",
-      "target": "3",
-      "targetHandle": null,
-      "id": "reactflow__edge-1country_polygon-3"
     },
     {
       "source": "0",
@@ -117,31 +96,52 @@
       "id": "reactflow__edge-0bbox-4"
     },
     {
-      "source": "1",
-      "sourceHandle": "country",
-      "target": "7",
-      "targetHandle": null,
-      "id": "reactflow__edge-1country-7"
+      "source": "2",
+      "sourceHandle": null,
+      "target": "12",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-2-12crs"
     },
     {
-      "source": "1",
-      "sourceHandle": "region",
-      "target": "8",
+      "source": "12",
+      "sourceHandle": "country_region_polygon",
+      "target": "0",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-12country_region_polygon-0study_area_file"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "country",
+      "target": "13",
       "targetHandle": null,
-      "id": "reactflow__edge-1region-8"
+      "id": "reactflow__edge-12country-13"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "region",
+      "target": "14",
+      "targetHandle": null,
+      "id": "reactflow__edge-12region-14"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "country_region_polygon",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-12country_region_polygon-15"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@1|country": {
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
+    "data>getCountryPolygon.yml@12|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
       "label": "ISO3 country code",
       "type": "text",
       "example": "COL",
       "weight": 0
     },
-    "data>getCountryPolygon.yml@1|region": {
-      "description": "State of interest",
-      "label": "State/Province",
+    "data>getCountryPolygon.yml@12|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
       "type": "text",
       "example": null,
       "weight": 1
@@ -155,28 +155,28 @@
     }
   },
   "outputs": {
-    "data>getCountryPolygon.yml@1|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@1|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 1
-    },
-    "data>getCountryPolygon.yml@1|country_polygon": {
-      "description": "Polygon of the chosen country or region in the crs of choice in geopackage format",
-      "label": "Polygon of country or region",
-      "type": "application/geopackage+sqlite3",
-      "weight": 2
-    },
     "data>getBoundingBox.yml@0|bbox": {
       "description": "boundary box around area of interest in the order of xmin, ymin, xmax, ymax",
       "label": "Bounding box",
       "type": "float[]",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@12|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 1
+    },
+    "data>getCountryPolygon.yml@12|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 2
+    },
+    "data>getCountryPolygon.yml@12|country_region_polygon": {
+      "description": "A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.",
+      "label": "Polygon of country or region",
+      "type": "application/geopackage+sqlite3",
       "weight": 3
     }
   },

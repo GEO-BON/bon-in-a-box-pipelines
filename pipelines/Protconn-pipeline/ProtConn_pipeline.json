@@ -1,17 +1,6 @@
 {
   "nodes": [
     {
-      "id": "5",
-      "type": "io",
-      "position": {
-        "x": 871,
-        "y": 184
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "6",
       "type": "io",
       "position": {
@@ -33,17 +22,6 @@
       "data": {
         "type": "text",
         "value": "EPSG:4326"
-      }
-    },
-    {
-      "id": "22",
-      "type": "output",
-      "position": {
-        "x": 1517,
-        "y": 265
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -118,30 +96,42 @@
       "data": {
         "descriptionFile": "data>cleanWDPA.yml"
       }
+    },
+    {
+      "id": "57",
+      "type": "io",
+      "position": {
+        "x": 1033.4217657702507,
+        "y": 311.49028218644725
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "58",
+      "type": "output",
+      "position": {
+        "x": 1653.3125480833176,
+        "y": 317.7103141175928
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "59",
+      "type": "output",
+      "position": {
+        "x": 1645.7339652507653,
+        "y": 328.32033008316563
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "9",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-9-5crs"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "country",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-5country-22"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "country",
-      "id": "reactflow__edge-27-5country"
-    },
     {
       "source": "27",
       "sourceHandle": null,
@@ -178,13 +168,6 @@
       "id": "reactflow__edge-42protected_areas-43"
     },
     {
-      "source": "5",
-      "sourceHandle": "country_polygon",
-      "target": "42",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-5country_polygon-42study_area_polygon"
-    },
-    {
       "source": "48",
       "sourceHandle": "protected_areas_clean",
       "target": "42",
@@ -199,32 +182,11 @@
       "id": "reactflow__edge-6protected_area_polygon-48protected_area_file"
     },
     {
-      "source": "5",
-      "sourceHandle": "country_polygon",
-      "target": "48",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-5country_polygon-48study_area_polygon"
-    },
-    {
       "source": "9",
       "sourceHandle": null,
       "target": "48",
       "targetHandle": "crs",
       "id": "reactflow__edge-9-48crs"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "region",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-5region-22"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "country_polygon",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-5country_polygon-22"
     },
     {
       "source": "42",
@@ -253,6 +215,48 @@
       "target": "43",
       "targetHandle": null,
       "id": "reactflow__edge-42result_yrs-43"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-9-57crs"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "country",
+      "id": "reactflow__edge-27-57country"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "country",
+      "target": "58",
+      "targetHandle": null,
+      "id": "reactflow__edge-57country-58"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "region",
+      "target": "59",
+      "targetHandle": null,
+      "id": "reactflow__edge-57region-59"
+    },
+    {
+      "source": "57",
+      "sourceHandle": "country_region_polygon",
+      "target": "48",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-57country_region_polygon-48study_area_polygon"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "study_area_clean",
+      "target": "42",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-48study_area_clean-42study_area_polygon"
     }
   ],
   "inputs": {
@@ -263,11 +267,11 @@
       "example": "COL",
       "weight": 0
     },
-    "data>getCountryPolygon.yml@5|region": {
-      "description": "Region of interest",
-      "label": "State/Province",
+    "data>getCountryPolygon.yml@57|region": {
+      "description": "Name of the province or region of interest, in the language of the region.",
+      "label": "State/Province name",
       "type": "text",
-      "example": "Putumayo",
+      "example": null,
       "weight": 1
     },
     "pipeline@41": {
@@ -357,7 +361,7 @@
       "weight": 11
     },
     "data>cleanWDPA.yml@48|include_unesco": {
-      "description": "Check to include UNESCO Biosphere reserves. These These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
+      "description": "Check to include UNESCO Biosphere reserves.  These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
       "label": "Include UNESCO Biosphere reserves",
       "type": "boolean",
       "example": true,
@@ -386,53 +390,47 @@
     }
   },
   "outputs": {
-    "data>getCountryPolygon.yml@5|country": {
+    "data>getCountryPolygon.yml@57|country": {
       "description": "Name of country of interest",
       "label": "Country",
       "type": "text",
       "weight": 0
     },
-    "data>getCountryPolygon.yml@5|region": {
+    "data>getCountryPolygon.yml@57|region": {
       "description": "Name of state/province of interest",
       "label": "Region",
       "type": "text",
       "weight": 1
     },
-    "data>getCountryPolygon.yml@5|country_polygon": {
-      "description": "Polygon of the chosen country or region in the crs of choice in geopackage format.",
-      "label": "Polygon of country or region",
-      "type": "application/geopackage+sqlite3",
-      "weight": 2
-    },
     "protconn_analysis>protconn_analysis.yml@42|protected_areas": {
       "description": "Protected areas on which ProtConn is being calculated. Overlapping protected areas have been merged into one to speed up calculation.",
       "label": "Protected areas",
       "type": "application/geopackage+sqlite3[]",
-      "weight": 3
+      "weight": 2
     },
     "protconn_analysis>protconn_analysis.yml@42|protconn_result": {
       "description": "The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected, and the percentage that is protected and connected (ProtConn) and protected and unconnected (ProtUnconn).",
       "label": "ProtConn results",
       "type": "text/csv",
-      "weight": 4
+      "weight": 3
     },
     "protconn_analysis>protconn_analysis.yml@42|result_plot": {
       "description": "Donut plot of the percentage of total area that is unprotected, protected and connected, and protected and unconnected for each input dispersal distance (in meters).",
       "label": "ProtConn result plot",
       "type": "image/png",
-      "weight": 5
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@42|result_yrs": {
       "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.",
       "label": "ProtConn time series results",
       "type": "text/csv",
-      "weight": 6
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@42|result_yrs_plot": {
       "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.",
       "label": "ProtConn time series plot",
       "type": "image/png[]",
-      "weight": 7
+      "weight": 6
     }
   },
   "metadata": {
