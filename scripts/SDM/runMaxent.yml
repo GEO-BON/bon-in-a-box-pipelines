@@ -31,7 +31,9 @@ inputs:
       ]
   fc:
     label: feature classes
-    description: Vector of strings, feature classes for MaxEnt algorithm.
+    description:
+      Vector of strings, feature classes for MaxEnt algorithm.
+      Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).
     type: text[]
     example: ["L", "LQ", "LQHP"]
   rm:
