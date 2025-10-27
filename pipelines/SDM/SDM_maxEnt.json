@@ -313,8 +313,8 @@
       "id": "108",
       "type": "io",
       "position": {
-        "x": 4111,
-        "y": 1025.5
+        "x": 4112.028113826656,
+        "y": 1023.4437723466879
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -329,40 +329,6 @@
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "110",
-      "type": "userInput",
-      "position": {
-        "x": 3752,
-        "y": 1009
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "L",
-          "LQ",
-          "LQHP"
-        ]
-      }
-    },
-    {
-      "id": "111",
-      "type": "userInput",
-      "position": {
-        "x": 3671,
-        "y": 1043
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          0.5,
-          1,
-          2
-        ]
       }
     },
     {
@@ -691,13 +657,6 @@
       "id": "reactflow__edge-105-104method"
     },
     {
-      "source": "110",
-      "sourceHandle": null,
-      "target": "108",
-      "targetHandle": "fc",
-      "id": "reactflow__edge-110-108fc"
-    },
-    {
       "source": "45",
       "sourceHandle": null,
       "target": "44",
@@ -724,13 +683,6 @@
       "target": "104",
       "targetHandle": "width_buffer",
       "id": "reactflow__edge-107-104width_buffer"
-    },
-    {
-      "source": "111",
-      "sourceHandle": null,
-      "target": "108",
-      "targetHandle": "rm",
-      "id": "reactflow__edge-111-108rm"
     },
     {
       "source": "46",
@@ -1013,20 +965,20 @@
       "example": 1000,
       "weight": 7
     },
-    "pipeline@110": {
-      "label": "feature classes",
+    "SDM>runMaxent.yml@108|fc": {
       "description": "Vector of strings, feature classes for MaxEnt algorithm. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
+      "label": "feature classes",
       "type": "text[]",
       "example": [
         "L",
         "LQ",
-        "LQH"
+        "LQHP"
       ],
       "weight": 8
     },
-    "pipeline@111": {
-      "label": "regularization multiplier",
+    "SDM>runMaxent.yml@108|rm": {
       "description": "Vector of numbers, regularization multipliers for MaxEnt algorithm.",
+      "label": "regularization multiplier",
       "type": "float[]",
       "example": [
         0.5,
@@ -1097,22 +1049,22 @@
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "Start date",
       "type": "text",
-      "weight": 16,
-      "example": null
+      "example": null,
+      "weight": 16
     },
     "data>loadFromStac.yml@134|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "End date",
       "type": "text",
-      "weight": 17,
-      "example": null
+      "example": null,
+      "weight": 17
     },
     "data>loadFromStac.yml@134|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
-      "weight": 18,
-      "example": null
+      "example": null,
+      "weight": 18
     }
   },
   "outputs": {
