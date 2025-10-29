@@ -867,13 +867,6 @@
     }
   ],
   "inputs": {
-    "pipeline@149": {
-      "label": "Bounding and CRS",
-      "description": "Select a bounding box and CRS",
-      "type": "bboxCRS",
-      "example": null,
-      "weight": 0
-    },
     "pipeline@121": {
       "label": "Taxa list",
       "description": "Array of taxa values",
@@ -881,6 +874,13 @@
       "example": [
         "Acer saccharum"
       ],
+      "weight": 0
+    },
+    "pipeline@149": {
+      "label": "Bounding and CRS",
+      "description": "Select a bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
       "weight": 1
     },
     "SDM>selectBackground.yml@40|method_background": {

@@ -205,26 +205,33 @@
     }
   ],
   "inputs": {
+    "pipeline@36": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "pipeline@31": {
       "label": "Polygon of study area",
       "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
-      "weight": 0
+      "weight": 1
     },
     "pipeline@29": {
       "label": "Polygon of protected areas",
       "description": "The protected areas of interest, in geopackage format. If you want to use World Database of Protected Areas (WDPA) data or a combination of WDPA data with custom data, use the \"ProtConn analysis with WDPA\" pipeline.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
-      "weight": 1
+      "weight": 2
     },
     "protconn_analysis>protconn_analysis.yml@8|date_column_name": {
       "description": "Name of the column in the user provided protected area file that specifies when the PA was created.",
       "label": "Date column name",
       "type": "text",
       "example": null,
-      "weight": 2
+      "weight": 3
     },
     "pipeline@32": {
       "label": "Distance analysis threshold",
@@ -234,7 +241,7 @@
         1000,
         10000
       ],
-      "weight": 3
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@8|distance_matrix_type": {
       "description": "Type of distance matrix to use in the ProtConn calculation. The \"centroid\" option will measure the distances between protected areas from from the geometric center of each protected area, while the \"edge\" option will measure the distance as the nearest edge between two protected areas. ",
@@ -245,34 +252,27 @@
         "edge"
       ],
       "example": "centroid",
-      "weight": 4
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@8|years": {
       "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
       "label": "Year for cutoff",
       "type": "int",
       "example": 2025,
-      "weight": 5
+      "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@8|start_year": {
       "description": "Year for the time series plot to start",
       "label": "Start year",
       "type": "int",
       "example": 1980,
-      "weight": 6
+      "weight": 7
     },
     "protconn_analysis>protconn_analysis.yml@8|year_int": {
       "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 10 will calculate ProtConn for every 10 years)",
       "label": "Year interval",
       "type": "int",
       "example": 20,
-      "weight": 7
-    },
-    "pipeline@36": {
-      "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
-      "type": "bboxCRS",
-      "example": null,
       "weight": 8
     }
   },
