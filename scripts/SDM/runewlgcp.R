@@ -12,7 +12,7 @@ lapply(packages_list, library, character.only = TRUE)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs : ")
 print(input)
-crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
+crs <- paste0(input$bbox$CRS$authority, ":", input$bbox$CRS$code)
 
 presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE)
 predictors <- terra::rast(unlist(input$predictors))
@@ -52,6 +52,10 @@ buff <- st_buffer(obs, 250000) |> st_union()
 
 ### Gather effort
 bg <- st_as_sf(presence_background, coords = c("lon", "lat"), crs = crs)
+print("here:")
+print(crs)
+print(st_crs(obs))
+print(st_crs(bg))
 params <- dmesh_effort(params, obs = obs, background = bg, buffer = buff, adjust = FALSE)
 
 print(head(params$predictors))
