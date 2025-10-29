@@ -53,7 +53,10 @@ load_stac<-function(staccollection='esacci-lc'){
   }
   
   # get download URLs
-  lcpri_url <- make_vsicurl_url(rstac::assets_url(stac_query, paste0('esacci-lc-',yoi)))
+  lcpri_url <- make_vsicurl_url(
+    rstac::assets_url(stac_query) |>
+      purrr::keep(~ grepl(paste0(yoi, collapse = "|"), .))
+  )
   lcpri_url
   
   
@@ -114,7 +117,8 @@ for (name in pop_poly$name) {
   LC_pop_cl[is.na(LC_pop)] = NA
   
   lcy = LC_pop_cl
-  
+  print(names(lcy))
+  print(yoi)
   names(lcy)=paste0('y',yoi)
   plot(lcy)
   # write output
