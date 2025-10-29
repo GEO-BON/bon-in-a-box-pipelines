@@ -15,7 +15,7 @@ inputs:
     example: "/output/cleanCoordinates/modCleanCoordinates_R/bb4400dd0e2bfec94745f1ab67e5a4a0/clean_presence.tsv"
   bbox_crs:
     description: Select a bounding box and CRS
-    label: Bounding and CRS
+    label: Bounding box and CRS
     type: bboxCRS
     example:
   method:

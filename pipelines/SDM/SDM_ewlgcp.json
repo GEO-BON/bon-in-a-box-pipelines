@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1949,
-        "y": 90.5
+        "x": 1940,
+        "y": 163.5
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1516,
-        "y": 80
+        "x": 1507,
+        "y": 193.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -37,8 +37,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 2906,
-        "y": 401
+        "x": 2909,
+        "y": 390.5
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3492,
-        "y": 644.5
+        "x": 3495,
+        "y": 780
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -59,8 +59,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 3030,
-        "y": 666
+        "x": 3033,
+        "y": 801.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 3147,
-        "y": 797
+        "x": 3150,
+        "y": 932.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,8 +90,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 3054,
-        "y": 713
+        "x": 3057,
+        "y": 848.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,8 +103,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 3068,
-        "y": 755
+        "x": 3071,
+        "y": 890.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -116,8 +116,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1521,
-        "y": 191
+        "x": 1512,
+        "y": 304.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -129,8 +129,8 @@
       "id": "97",
       "type": "io",
       "position": {
-        "x": 1308,
-        "y": 471
+        "x": 1299,
+        "y": 433
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -140,8 +140,8 @@
       "id": "98",
       "type": "constant",
       "position": {
-        "x": 836,
-        "y": 401
+        "x": 837,
+        "y": 397.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -160,8 +160,8 @@
       "id": "99",
       "type": "constant",
       "position": {
-        "x": 836,
-        "y": 448
+        "x": 837,
+        "y": 444.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -178,8 +178,8 @@
       "id": "100",
       "type": "constant",
       "position": {
-        "x": 874,
-        "y": 495
+        "x": 875,
+        "y": 491.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -191,8 +191,8 @@
       "id": "101",
       "type": "constant",
       "position": {
-        "x": 860,
-        "y": 537
+        "x": 861,
+        "y": 533.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -204,8 +204,8 @@
       "id": "102",
       "type": "constant",
       "position": {
-        "x": 874,
-        "y": 579
+        "x": 875,
+        "y": 575.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -217,8 +217,8 @@
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2433,
-        "y": 269.5
+        "x": 2424,
+        "y": 326.5
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -228,8 +228,8 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 1981,
-        "y": 291
+        "x": 1972,
+        "y": 357.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -247,8 +247,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 2019,
-        "y": 338
+        "x": 2010,
+        "y": 451.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -257,22 +257,11 @@
       }
     },
     {
-      "id": "109",
-      "type": "output",
-      "position": {
-        "x": 4583,
-        "y": 973.9545454545454
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "116",
       "type": "constant",
       "position": {
-        "x": 3662,
-        "y": 843
+        "x": 3665,
+        "y": 978.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -291,7 +280,7 @@
       "type": "userInput",
       "position": {
         "x": 189,
-        "y": 22.16666666666663
+        "y": 22.166666666666664
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -305,7 +294,7 @@
       "id": "122",
       "type": "output",
       "position": {
-        "x": 544,
+        "x": 514,
         "y": 12
       },
       "data": {
@@ -316,8 +305,8 @@
       "id": "124",
       "type": "output",
       "position": {
-        "x": 1949,
-        "y": 749
+        "x": 1940,
+        "y": 404.5
       },
       "data": {
         "label": "Output"
@@ -327,8 +316,8 @@
       "id": "126",
       "type": "output",
       "position": {
-        "x": 1308,
-        "y": 233
+        "x": 1299,
+        "y": 136.5
       },
       "data": {
         "label": "Output"
@@ -339,7 +328,7 @@
       "type": "userInput",
       "position": {
         "x": 118,
-        "y": 998.1666666666666
+        "y": 846.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -348,77 +337,11 @@
       }
     },
     {
-      "id": "131",
-      "type": "io",
-      "position": {
-        "x": 4162,
-        "y": 753.4545454545454
-      },
-      "data": {
-        "descriptionFile": "SDM>runewlgcp.yml"
-      }
-    },
-    {
-      "id": "132",
-      "type": "output",
-      "position": {
-        "x": 4583,
-        "y": 806.9545454545454
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "133",
-      "type": "output",
-      "position": {
-        "x": 4583,
-        "y": 759.9545454545454
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "134",
-      "type": "output",
-      "position": {
-        "x": 4583,
-        "y": 712.9545454545454
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "135",
-      "type": "output",
-      "position": {
-        "x": 4583,
-        "y": 1020.9545454545454
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "136",
-      "type": "output",
-      "position": {
-        "x": 4583,
-        "y": 926.9545454545454
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "139",
       "type": "io",
       "position": {
-        "x": 544,
-        "y": 154.5
+        "x": 514,
+        "y": 69
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -428,8 +351,8 @@
       "id": "140",
       "type": "io",
       "position": {
-        "x": 793,
-        "y": 621
+        "x": 826,
+        "y": 617.5
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -440,7 +363,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 904.1666666666666
+        "y": 703.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -469,7 +392,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 951.1666666666666
+        "y": 750.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -488,8 +411,8 @@
       "id": "144",
       "type": "output",
       "position": {
-        "x": 1308,
-        "y": 969.9166666666666
+        "x": 1299,
+        "y": 800.5
       },
       "data": {
         "label": "Output"
@@ -499,8 +422,8 @@
       "id": "145",
       "type": "io",
       "position": {
-        "x": 770,
-        "y": 806
+        "x": 801,
+        "y": 829
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
@@ -511,7 +434,7 @@
       "type": "constant",
       "position": {
         "x": 41,
-        "y": 581
+        "y": 577.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -523,7 +446,7 @@
       "type": "constant",
       "position": {
         "x": 41,
-        "y": 623
+        "y": 619.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -535,7 +458,7 @@
       "type": "constant",
       "position": {
         "x": 41,
-        "y": 665
+        "y": 661.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -546,12 +469,34 @@
       "id": "149",
       "type": "userInput",
       "position": {
-        "x": -51.78265380859375,
-        "y": 388.39129638671875
+        "x": 67,
+        "y": 84.83333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "151",
+      "type": "io",
+      "position": {
+        "x": 4137,
+        "y": 960.6363636363636
+      },
+      "data": {
+        "descriptionFile": "SDM>runewlgcp.yml"
+      }
+    },
+    {
+      "id": "152",
+      "type": "output",
+      "position": {
+        "x": 4676,
+        "y": 1054.7792207792206
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -718,76 +663,6 @@
       "id": "reactflow__edge-97rasters_selected-124"
     },
     {
-      "source": "44",
-      "sourceHandle": "presence_background",
-      "target": "131",
-      "targetHandle": "presence_background",
-      "id": "reactflow__edge-44presence_background-131presence_background"
-    },
-    {
-      "source": "97",
-      "sourceHandle": "rasters_selected",
-      "target": "131",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-97rasters_selected-131predictors"
-    },
-    {
-      "source": "46",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "n_folds",
-      "id": "reactflow__edge-46-131n_folds"
-    },
-    {
-      "source": "131",
-      "sourceHandle": "sdm_pred",
-      "target": "109",
-      "targetHandle": null,
-      "id": "reactflow__edge-131sdm_pred-109"
-    },
-    {
-      "source": "116",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "orientation_block",
-      "id": "reactflow__edge-116-131orientation_block"
-    },
-    {
-      "source": "131",
-      "sourceHandle": "sdm_unc",
-      "target": "132",
-      "targetHandle": null,
-      "id": "reactflow__edge-131sdm_unc-132"
-    },
-    {
-      "source": "131",
-      "sourceHandle": "sdm_ci",
-      "target": "133",
-      "targetHandle": null,
-      "id": "reactflow__edge-131sdm_ci-133"
-    },
-    {
-      "source": "131",
-      "sourceHandle": "sdm_bg",
-      "target": "134",
-      "targetHandle": null,
-      "id": "reactflow__edge-131sdm_bg-134"
-    },
-    {
-      "source": "131",
-      "sourceHandle": "sdm_dmesh",
-      "target": "135",
-      "targetHandle": null,
-      "id": "reactflow__edge-131sdm_dmesh-135"
-    },
-    {
-      "source": "131",
-      "sourceHandle": "sdm_obs",
-      "target": "136",
-      "targetHandle": null,
-      "id": "reactflow__edge-131sdm_obs-136"
-    },
-    {
       "source": "121",
       "sourceHandle": null,
       "target": "139",
@@ -879,13 +754,6 @@
       "id": "reactflow__edge-148-140temporal_res"
     },
     {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-131spatial_res"
-    },
-    {
       "source": "149",
       "sourceHandle": null,
       "target": "139",
@@ -914,11 +782,88 @@
       "id": "reactflow__edge-149-104bbox_crs"
     },
     {
+      "source": "151",
+      "sourceHandle": "sdm_pred",
+      "target": "152",
+      "targetHandle": null,
+      "id": "reactflow__edge-151sdm_pred-152"
+    },
+    {
+      "source": "151",
+      "sourceHandle": "sdm_unc",
+      "target": "152",
+      "targetHandle": null,
+      "id": "reactflow__edge-151sdm_unc-152"
+    },
+    {
+      "source": "151",
+      "sourceHandle": "sdm_ci",
+      "target": "152",
+      "targetHandle": null,
+      "id": "reactflow__edge-151sdm_ci-152"
+    },
+    {
+      "source": "151",
+      "sourceHandle": "sdm_obs",
+      "target": "152",
+      "targetHandle": null,
+      "id": "reactflow__edge-151sdm_obs-152"
+    },
+    {
+      "source": "151",
+      "sourceHandle": "sdm_bg",
+      "target": "152",
+      "targetHandle": null,
+      "id": "reactflow__edge-151sdm_bg-152"
+    },
+    {
+      "source": "151",
+      "sourceHandle": "sdm_dmesh",
+      "target": "152",
+      "targetHandle": null,
+      "id": "reactflow__edge-151sdm_dmesh-152"
+    },
+    {
+      "source": "44",
+      "sourceHandle": "presence_background",
+      "target": "151",
+      "targetHandle": "presence_background",
+      "id": "reactflow__edge-44presence_background-151presence_background"
+    },
+    {
+      "source": "97",
+      "sourceHandle": "rasters_selected",
+      "target": "151",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-97rasters_selected-151predictors"
+    },
+    {
+      "source": "116",
+      "sourceHandle": null,
+      "target": "151",
+      "targetHandle": "orientation_block",
+      "id": "reactflow__edge-116-151orientation_block"
+    },
+    {
       "source": "149",
       "sourceHandle": null,
-      "target": "131",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-149-131bbox"
+      "target": "151",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-149-151crs"
+    },
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "151",
+      "targetHandle": "n_folds",
+      "id": "reactflow__edge-46-151n_folds"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "151",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-151spatial_res"
     }
   ],
   "inputs": {
@@ -1039,33 +984,38 @@
       "type": "text[]",
       "weight": 0
     },
-    "SDM>runewlgcp.yml@131|sdm_obs": {
-      "description": "GBIF observations used for the sdm model",
-      "label": "Presences",
-      "type": "application/geo+json",
-      "weight": 1
-    },
     "SDM>removeCollinearity.yml@97|rasters_selected": {
       "description": "Environmental layers used as predictors in species distribution modeling",
       "label": "Environmental predictors",
       "type": "image/tiff;application=geotiff[]",
+      "weight": 1
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@139|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
       "weight": 2
     },
-    "SDM>runewlgcp.yml@131|sdm_dmesh": {
-      "description": "Dual mesh used by the sdm model",
-      "label": "Dmesh",
-      "type": "application/geo+json",
+    "data>loadFromStac.yml@140|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 3
     },
-    "SDM>runewlgcp.yml@131|sdm_bg": {
-      "description": "Background points used for the sdm model",
-      "label": "Background",
-      "type": "application/geo+json",
+    "SDM>runewlgcp.yml@151|sdm_pred": {
+      "description": "model predictions while trained on the whole dataset",
+      "label": "predictions",
+      "type": "image/tiff;application=geotiff",
+      "range": [
+        0,
+        1
+      ],
       "weight": 4
     },
-    "SDM>runewlgcp.yml@131|sdm_pred": {
-      "description": "Model predictions while trained on the whole dataset",
-      "label": "Predictions",
+    "SDM>runewlgcp.yml@151|sdm_unc": {
+      "description": "model uncertainty metrics",
+      "label": "uncertainty",
       "type": "image/tiff;application=geotiff",
       "range": [
         0,
@@ -1073,37 +1023,32 @@
       ],
       "weight": 5
     },
-    "SDM>runewlgcp.yml@131|sdm_unc": {
-      "description": "Model uncertainty metrics",
-      "label": "Uncertainty",
-      "type": "image/tiff;application=geotiff",
-      "range": [
-        0,
-        1
-      ],
-      "weight": 6
-    },
-    "SDM>runewlgcp.yml@131|sdm_ci": {
-      "description": "Difference between the upper (0.975) and the lower (0.025) CI bound",
+    "SDM>runewlgcp.yml@151|sdm_ci": {
+      "description": "difference between the upper and the lower CI bound",
       "label": "CI range",
       "type": "image/tiff;application=geotiff[]",
       "range": [
         0,
         1
       ],
+      "weight": 6
+    },
+    "SDM>runewlgcp.yml@151|sdm_obs": {
+      "description": "GBIF observations used for the sdm model",
+      "label": "observations",
+      "type": "application/geo+json",
       "weight": 7
     },
-    "data>getGBIFObservations>getGBIFObservations.yml@139|gbif_doi": {
-      "description": "DOI of GBIF download. Used for citing downloaded data.",
-      "label": "DOI of GBIF download",
-      "type": "text",
-      "example": "10.15468/dl.j644h5",
+    "SDM>runewlgcp.yml@151|sdm_bg": {
+      "description": "background points used for the sdm model",
+      "label": "background",
+      "type": "application/geo+json",
       "weight": 8
     },
-    "data>loadFromStac.yml@140|rasters": {
-      "description": "array of output raster paths",
-      "label": "Rasters",
-      "type": "image/tiff;application=geotiff[]",
+    "SDM>runewlgcp.yml@151|sdm_dmesh": {
+      "description": "dual mesh used by the sdm model",
+      "label": "dmesh",
+      "type": "application/geo+json",
       "weight": 9
     }
   },

@@ -113,37 +113,6 @@
       }
     },
     {
-      "id": "57",
-      "type": "userInput",
-      "position": {
-        "x": 120,
-        "y": 958.8333333333335
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      }
-    },
-    {
-      "id": "58",
-      "type": "userInput",
-      "position": {
-        "x": 163.04421957119848,
-        "y": 449.5086307292705
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
-      }
-    },
-    {
       "id": "64",
       "type": "constant",
       "position": {
@@ -281,8 +250,8 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 1965,
-        "y": 329.5000000000001
+        "x": 1919,
+        "y": 377.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -300,8 +269,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 2003,
-        "y": 377.5000000000001
+        "x": 2005,
+        "y": 455.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -451,17 +420,6 @@
       }
     },
     {
-      "id": "126",
-      "type": "output",
-      "position": {
-        "x": 1290,
-        "y": 104.50000000000011
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "128",
       "type": "userInput",
       "position": {
@@ -472,28 +430,6 @@
       "data": {
         "type": "float",
         "value": 1000
-      }
-    },
-    {
-      "id": "133",
-      "type": "io",
-      "position": {
-        "x": 535,
-        "y": 22
-      },
-      "data": {
-        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
-      }
-    },
-    {
-      "id": "134",
-      "type": "io",
-      "position": {
-        "x": 696.9068923323825,
-        "y": 350.42374043471244
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
@@ -554,6 +490,51 @@
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
+      }
+    },
+    {
+      "id": "140",
+      "type": "userInput",
+      "position": {
+        "x": -172.31010215480546,
+        "y": 342.65299130497647
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "142",
+      "type": "io",
+      "position": {
+        "x": 519.6898978451945,
+        "y": 89.65299130497647
+      },
+      "data": {
+        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
+      }
+    },
+    {
+      "id": "143",
+      "type": "output",
+      "position": {
+        "x": 1253.6898978451945,
+        "y": 148.65299130497647
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "144",
+      "type": "io",
+      "position": {
+        "x": 713.6898978451945,
+        "y": 421.65299130497647
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
       }
     }
   ],
@@ -634,13 +615,6 @@
       "target": "40",
       "targetHandle": "extent",
       "id": "reactflow__edge-104study_extent-40extent"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-104proj"
     },
     {
       "source": "97",
@@ -741,13 +715,6 @@
       "id": "reactflow__edge-101-97cutoff_cor"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "104",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-104bbox"
-    },
-    {
       "source": "47",
       "sourceHandle": null,
       "target": "44",
@@ -767,13 +734,6 @@
       "target": "44",
       "targetHandle": "cv_partitions",
       "id": "reactflow__edge-48-44cv_partitions"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "108",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-108proj"
     },
     {
       "source": "46",
@@ -818,97 +778,6 @@
       "id": "reactflow__edge-97rasters_selected-124"
     },
     {
-      "source": "121",
-      "sourceHandle": null,
-      "target": "133",
-      "targetHandle": "taxa",
-      "id": "reactflow__edge-121-133taxa"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "133",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-133bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "133",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-133proj"
-    },
-    {
-      "source": "133",
-      "sourceHandle": "gbif_doi",
-      "target": "126",
-      "targetHandle": null,
-      "id": "reactflow__edge-133gbif_doi-126"
-    },
-    {
-      "source": "133",
-      "sourceHandle": "observations_file",
-      "target": "34",
-      "targetHandle": "presence",
-      "id": "reactflow__edge-133observations_file-34presence"
-    },
-    {
-      "source": "134",
-      "sourceHandle": "rasters",
-      "target": "97",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-134rasters-97rasters"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-134crs"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-134bbox"
-    },
-    {
-      "source": "128",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-128-134spatial_res"
-    },
-    {
-      "source": "137",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-137-134aggregation"
-    },
-    {
-      "source": "138",
-      "sourceHandle": null,
-      "target": "134",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-138-134resampling"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-139bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "139",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-139crs"
-    },
-    {
       "source": "128",
       "sourceHandle": null,
       "target": "139",
@@ -921,21 +790,112 @@
       "target": "40",
       "targetHandle": "raster",
       "id": "reactflow__edge-139rasters-40raster"
+    },
+    {
+      "source": "140",
+      "sourceHandle": null,
+      "target": "139",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-140-139bbox_crs"
+    },
+    {
+      "source": "140",
+      "sourceHandle": null,
+      "target": "104",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-140-104bbox_crs"
+    },
+    {
+      "source": "140",
+      "sourceHandle": null,
+      "target": "108",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-140-108crs"
+    },
+    {
+      "source": "142",
+      "sourceHandle": "gbif_doi",
+      "target": "143",
+      "targetHandle": null,
+      "id": "reactflow__edge-142gbif_doi-143"
+    },
+    {
+      "source": "121",
+      "sourceHandle": null,
+      "target": "142",
+      "targetHandle": "taxa",
+      "id": "reactflow__edge-121-142taxa"
+    },
+    {
+      "source": "140",
+      "sourceHandle": null,
+      "target": "142",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-140-142bbox_crs"
+    },
+    {
+      "source": "142",
+      "sourceHandle": "observations_file",
+      "target": "34",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-142observations_file-34presence"
+    },
+    {
+      "source": "137",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-137-144aggregation"
+    },
+    {
+      "source": "138",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-138-144resampling"
+    },
+    {
+      "source": "128",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-128-144spatial_res"
+    },
+    {
+      "source": "140",
+      "sourceHandle": null,
+      "target": "144",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-140-144bbox_crs"
+    },
+    {
+      "source": "144",
+      "sourceHandle": "rasters",
+      "target": "97",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-144rasters-97rasters"
     }
   ],
   "inputs": {
+    "pipeline@140": {
+      "label": "Bounding box and CRS",
+      "description": "Select a bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "pipeline@121": {
       "label": "Taxa list",
-      "description": "Array of taxa values",
+      "description": "Array of taxa",
       "type": "text[]",
       "example": [
         "Acer saccharum"
       ],
-      "weight": 0
+      "weight": 1
     },
     "SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
-      "label": "method background",
+      "label": "Method background",
       "type": "options",
       "options": [
         "random",
@@ -944,44 +904,25 @@
         "unweighted_raster"
       ],
       "example": "random",
-      "weight": 1
+      "weight": 2
     },
     "SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
-      "label": "number of background points",
+      "label": "Number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 2
+      "weight": 3
     },
     "pipeline@46": {
-      "label": "number of runs",
+      "label": "Number of runs",
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "type": "int",
       "example": 2,
-      "weight": 3
-    },
-    "pipeline@57": {
-      "label": "projection system",
-      "description": "String, projection system",
-      "type": "text",
-      "example": "EPSG:6624",
       "weight": 4
-    },
-    "pipeline@58": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 5
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
-      "label": "partition type",
+      "label": "Partition type",
       "type": "options",
       "options": [
         "randomkfold",
@@ -991,55 +932,17 @@
         "checkerboard2"
       ],
       "example": "block",
-      "weight": 6
+      "weight": 5
     },
     "pipeline@128": {
-      "label": "spatial resolution",
+      "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 7
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@133|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
-      "type": "int",
-      "example": 2010,
-      "weight": 8
-    },
-    "data>getGBIFObservations>getGBIFObservations.yml@133|max_year": {
-      "description": "Max year observations wanted",
-      "label": "maximum year",
-      "type": "int",
-      "example": 2024,
-      "weight": 9
-    },
-    "data>loadFromStac.yml@134|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 10
-    },
-    "data>loadFromStac.yml@134|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
-      "weight": 11
-    },
-    "data>loadFromStac.yml@134|study_area": {
-      "description": "Polygon of study area used to crop output layers",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 12
+      "weight": 6
     },
     "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
-      "description": "taxonomic group for which to retrieve GBIF heatmap",
+      "description": "taxonomic group of the taxa from the taxa list, for which to retrieve GBIF heatmap",
       "label": "Taxa",
       "type": "options",
       "options": [
@@ -1052,28 +955,66 @@
         "all"
       ],
       "example": "plants",
-      "weight": 13
+      "weight": 7
     },
-    "data>loadFromStac.yml@134|t0": {
+    "data>getGBIFObservations>getGBIFObservations.yml@142|min_year": {
+      "description": "Min year observations wanted",
+      "label": "Minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 8
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@142|max_year": {
+      "description": "Max year observations wanted",
+      "label": "Maximum year",
+      "type": "int",
+      "example": 2024,
+      "weight": 9
+    },
+    "data>loadFromStac.yml@144|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "STAC URL",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 10
+    },
+    "data>loadFromStac.yml@144|collections_items": {
+      "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 11
+    },
+    "data>loadFromStac.yml@144|t0": {
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "Start date",
       "type": "text",
-      "weight": 14,
-      "example": null
+      "example": null,
+      "weight": 12
     },
-    "data>loadFromStac.yml@134|t1": {
+    "data>loadFromStac.yml@144|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "End date",
       "type": "text",
-      "weight": 15,
-      "example": null
+      "example": null,
+      "weight": 13
     },
-    "data>loadFromStac.yml@134|temporal_res": {
+    "data>loadFromStac.yml@144|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
-      "weight": 16,
-      "example": null
+      "example": null,
+      "weight": 14
+    },
+    "data>loadFromStac.yml@144|study_area": {
+      "description": "Polygon of study area used to mask output layers, in geopackage format.",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 15
     }
   },
   "outputs": {
@@ -1114,7 +1055,7 @@
       "type": "image/tiff;application=geotiff",
       "weight": 4
     },
-    "data>getGBIFObservations>getGBIFObservations.yml@133|gbif_doi": {
+    "data>getGBIFObservations>getGBIFObservations.yml@142|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",

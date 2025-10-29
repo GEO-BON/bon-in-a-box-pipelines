@@ -12,7 +12,7 @@ lapply(packages_list, library, character.only = TRUE)
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs : ")
 print(input)
-crs <- paste0(input$bbox$CRS$authority, ":", input$bbox$CRS$code)
+crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 
 presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE)
 predictors <- terra::rast(unlist(input$predictors))

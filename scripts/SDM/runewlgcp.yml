@@ -39,9 +39,9 @@ inputs:
       - lon_lon
       - lat_lat
     example: lat_lon
-  bbox:
-    description: Object containing bounding box
-    label: Bounding box
+  crs:
+    label: CRS
+    description: Object containing CRS.
     type: bboxCRS
     example:
   n_folds:
