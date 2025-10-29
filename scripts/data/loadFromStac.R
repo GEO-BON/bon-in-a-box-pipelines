@@ -47,8 +47,9 @@ if (st_is_longlat(coord) && input$spatial_res > 1) {
   biab_error_stop("CRS is in degrees and resolution is in meters.")
 }
 
-if (st_is_longlat(coord) == FALSE && input$spatial_res < 1) {
-  biab_error_stop("CRS is in meters and resolution is in degrees.")
+  if (st_is_longlat(coord) == FALSE && input$spatial_res < 1) {
+    biab_error_stop("CRS is in meters and resolution is in degrees.")
+  }
 }
 
 # Convert date so it is in the correct format
@@ -106,9 +107,7 @@ if (!("stac_url" %in% names(input))) {
 # Connect to STAC
 print("url output")
 print(RCurl::url.exists(input$stac_url))
-# if (RCurl::url.exists(input$stac_url)==FALSE){
-# biab_error_stop("Could not find the URL for the STAC catalog.")
-# }
+
 s <- rstac::stac(input$stac_url)
 
 # initialize list for items
@@ -149,8 +148,23 @@ for (coll_it in collections_items) { # Loop through input array
     # Make empty raster with desired resolution and extent
     empty_raster <- rast(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, resolution = as.numeric(input$spatial_res), crs = crs)
 
-    # Resample
-    resampled <- project(r, empty_raster)
+    if (is.null(input$spatial_res)) {
+      resolution <- res(r)
+      resolution <- resolution[[1]]
+    } else {
+      resolution <- as.numeric(input$spatial_res)
+    }
+    print(resolution)
+
+    # Make empty raster with desired resolution and extent
+    empty_raster <- rast(xmin = input$bbox[1], xmax = input$bbox[3], ymin = input$bbox[2], ymax = input$bbox[4], resolution = resolution, crs = srs.cube)
+
+    # Resample if crs or spatial resolution are not empty
+    if (!is.null(input$spatial_res) | !is.null(input$crs)) {
+      resampled <- project(r, empty_raster)
+    } else {
+      resampled <- r
+    }
 
     # Change band names if they are all called data
     if (names(resampled) == "data") {
@@ -169,11 +183,9 @@ for (coll_it in collections_items) { # Loop through input array
     }
 
     # Name file path
-    path <- file.path(outputFolder, paste0(names(masked), ".tif"))
-    print(path)
+    paths <- file.path(outputFolder, paste0(names(masked), ".tif"))
 
-    file <- writeRaster(masked, path)
-    raster_paths <- c(raster_paths, path)
+    file <- writeRaster(masked, paths)
 
     #### Case 2: Pull all items in a collection ####
   } else { # if there are not collection items specified
@@ -204,12 +216,13 @@ for (coll_it in collections_items) { # Loop through input array
     asset_names <- unlist(asset_names)
     print("Asset names:")
     print(asset_names)
-    print(length(asset_names))
 
     # Extract spatial res if not provided
     if (is.null(input$spatial_res)) { # Obtain spatial resolution from metadata
       spatial.res <-
-        it_obj$assets[[name1]]$`raster:bands`[[1]]$spatial_resolution
+        print(it_obj$features[[1]]$assets$data$`raster:bands`[[1]]$spatial_resolution)
+      print("Spatial.res:")
+      print(spatial.res)
     } else {
       spatial.res <- input$spatial_res
     }
@@ -229,7 +242,7 @@ for (coll_it in collections_items) { # Loop through input array
     dates <- vapply(it_obj$features, function(x) x$properties$`datetime`, character(1))
     if (!all(asset_names == asset_names[1])) { # pull whole collection if names of assets are different
       print(asset_names)
-      raster_paths <- c()
+      paths <- c()
       for (i in 1:length(asset_names)) { # loop through items in a collection
         print("Pulling all items")
         asset <- asset_names[i]
@@ -248,38 +261,28 @@ for (coll_it in collections_items) { # Loop through input array
             t0 = min(date_layer), # will only pull layers from that date
             t1 = max(date_layer)
           ),
-          dx = input$spatial_res,
-          dy = input$spatial_res,
+          dx = spatial.res,
+          dy = spatial.res,
           dt = "P1D", # this doesn't matter because there is only one date per object
           aggregation = input$aggregation,
           resampling = input$resampling
         )
 
         raster_layers <- gdalcubes::raster_cube(st, v)
+
+        if (!is.null(input$study_area)) {
+          raster_layers <- filter_geom(raster_layers, poly$geom)
+        }
+
         out <- gdalcubes::write_tif(raster_layers,
           dir = file.path(outputFolder), prefix = paste0(coll_it, "_", asset_names[i], "_"),
           creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
         )
-        raster_paths <- c(raster_paths, out)
+        paths <- out
       }
     } else { # If asset names are the same, filter by date (or tile if they are all the same date)
       st <- gdalcubes::stac_image_collection(feats, asset_names = "data") # make stac image collection
       print("filtering cube by date")
-
-      # calculate interval between dates (if they are not the same)
-      dates_lub <- as_datetime(dates)
-      print(dates_lub)
-      diff <- dates_lub[2] - dates_lub[1]
-      diff <- time_length(interval(dates_lub[2], dates_lub[1]), "years")
-      diff <- abs(diff)
-      diff_in <- paste0("P", diff, "Y")
-      if (diff < 1) {
-        diff <- time_length(interval(dates_lub[1], dates_lub[2]), "days")
-        diff <- abs(diff)
-        diff_in <- paste0("P", diff, "D")
-      }
-      print("Time interval:")
-      print(diff_in)
 
       if ((is.null(input$t0) && is.null(input$t1)) || min(dates) == max(dates)) { # If there is no time input or the dates are all the same
         v <- gdalcubes::cube_view(
@@ -306,16 +309,16 @@ for (coll_it in collections_items) { # Loop through input array
             right = xmax,
             top = ymax,
             bottom = ymin,
-            t0 = t0,
-            t1 = t1
+            t0 = input$t0,
+            t1 = input$t1
           ),
-          dx = input$spatial_res,
-          dy = input$spatial_res,
+          dx = spatial.res,
+          dy = spatial.res,
           dt = input$temporal_res,
           aggregation = input$aggregation,
           resampling = input$resampling
         )
-      }
+        raster_layers <- gdalcubes::raster_cube(st, v)
 
       print(v)
       # Make raster cube
@@ -327,25 +330,16 @@ for (coll_it in collections_items) { # Loop through input array
         if (crs(poly) != crs) {
           poly <- st_transform(poly, st_crs(crs))
         }
-        raster_layers <- filter_geom(raster_layers, poly$geom)
+
+        out <- gdalcubes::write_tif(raster_layers,
+          dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
+          creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
+        )
+        paths <- out
       }
-
-      out <- gdalcubes::write_tif(raster_layers,
-        dir = file.path(outputFolder), prefix = paste0(coll_it, "_"),
-        creation_options = list("COMPRESS" = "DEFLATE"), COG = TRUE, write_json_descr = TRUE
-      )
-      # add list of raster paths
-
-      path <- list.files(
-        path = outputFolder,
-        pattern = "\\.tif$",
-        full.names = TRUE
-      )
-
-      print(path)
-      raster_paths <- c(raster_paths, path)
     }
   }
+  raster_paths <- c(raster_paths, paths)
 }
 
 biab_output("rasters", raster_paths)
