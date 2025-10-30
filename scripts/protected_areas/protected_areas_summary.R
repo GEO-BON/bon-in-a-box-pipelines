@@ -106,17 +106,13 @@ biab_output("type_yrs_table", type_yrs_table_path)
 
 plot_type <- ggplot(pa_type_yrs_table |> 
          arrange(type, year), aes(x=year, y=cumsum(cum_area/(10000^2)), color=type)) + 
-  geom_line() + theme_minimal() + scale_color_manual(values=c('blue','darkgreen'))+
+  geom_line() + theme_minimal() + scale_color_manual(values=c('blue','darkgreen')) +
   labs(y=bquote('Area '(km^2)), x="Year",color='Type')
 
 plot_type_path <- file.path(outputFolder, paste0("plot_PAs_by_marine_terrestrial.png"))
 
-ggsave(plot_type_path, plot_type, width='800', height='600', units='px')
+ggsave(plot_type_path, plot_type, width=18, height=12, units='cm')
 biab_output("type_yrs_plot", plot_type_path)
-
-pa_vec_path <- file.path(outputFolder, "protected_areas_by_iucn_type_years.gpkg")
-st_write(pa_iucn_corr, pa_vec_path, delete_dsn=TRUE)
-biab_output("protected_areas", pa_vec_path)
 
 #TOTAL AREA for terrestrial PAs over time by IUCN category 
 
@@ -125,6 +121,12 @@ pa_iucn_type <- pa |> st_intersection(study_area) |>
   group_by(type, year, iucn_cat, priority) |>
   summarize(area=sum(st_area(geom))) |>
   ungroup() |> arrange(type, year, priority)
+
+pa_vec_path <- file.path(outputFolder, "protected_areas_by_iucn_type_years.gpkg")
+st_write(pa_iucn_type, pa_vec_path, delete_dsn=TRUE)
+biab_output("protected_areas", pa_vec_path)
+
+
 
 # For each time step, type and year, remove lower priority PAs that overlap with higher priority PAs
 for (r in 1:nrow(pa_iucn_type)){
@@ -147,6 +149,8 @@ pa_iucn_corr <- pa_iucn_tmp |> group_by(type, year, iucn_cat) |>
   mutate(cum_area=sum(corrected_area)) |> drop_units()
 
 pa_iucn_corr$iucn_cat = factor(pa_iucn_corr$iucn_cat,levels=c('Ia','Ib','II','III','IV','V','VI','OECM','Not Applicable','Not Reported'))
+
+
 
 pa_iucn_yrs_table <- pa_iucn_corr |> 
   filter(type == 'Terrestrial') |> 
@@ -186,6 +190,6 @@ plot_iucn_cat <- ggplot() +
 
 plot_iucn_cat_path <- file.path(outputFolder, paste0("plot_PAs_by_IUCN_categories.png"))
 
-ggsave(plot_iucn_cat_path, plot_iucn_cat, width='800', height='600', units='px')
+ggsave(plot_iucn_cat_path, plot_iucn_cat, width=18, height=12, units='cm')
 biab_output("terrestrial_iucn_yrs_plot", plot_iucn_cat_path)
 

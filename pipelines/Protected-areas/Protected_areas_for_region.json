@@ -319,7 +319,7 @@
     "protected_areas>protected_areas_summary.yml@60|type_yrs_plot": {
       "description": "Change in the total area that is protected over time, by type (Marine or Terrestrial).",
       "label": "Protected areas time series plot by type",
-      "type": "image/png[]",
+      "type": "image/png",
       "weight": 3
     },
     "protected_areas>protected_areas_summary.yml@60|type_yrs_table": {
@@ -337,7 +337,7 @@
     "protected_areas>protected_areas_summary.yml@60|terrestrial_iucn_yrs_plot": {
       "description": "Change in the total area and percentage of the country that is protected over time, by IUCN category, cropped over the region.",
       "label": "Protected areas surface area and % time series plot by IUCN category",
-      "type": "image/png[]",
+      "type": "image/png",
       "weight": 6
     },
     "protected_areas>protected_areas_summary.yml@60|terrestrial_iucn_yrs_table": {
@@ -349,7 +349,7 @@
   },
   "metadata": {
     "name": "Summary of protected areas for a region",
-    "description": "## Introduction Gives a summary of the area and percentage of protected areas for a region based on the  World Database of Protected Areas (WDPA).",
+    "description": "Gives a summary of the area and percentage of protected areas for a region based on the  World Database of Protected Areas (WDPA).",
     "author": [
       {
         "name": "Guillaume Larocque",
