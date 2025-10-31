@@ -21,16 +21,11 @@ inputs:
       - amphibians
       - all
     example: plants
-  bbox:
-    label: Bounding box
-    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
-    type: float[]
-    example: [-2316297, -1971146, 1015207, 1511916]
-  crs:
-    label: Coordinate reference system
-    description: String, projection of the rasters
-    type: text
-    example: "EPSG:6623"
+  bbox_crs:
+    description: Select a bounding box and CRS
+    label: Bounding box and CRS
+    type: bboxCRS
+    example:
   spatial_res:
     label: Spatial resolution
     description: Integer, spatial resolution of the rasters

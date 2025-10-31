@@ -16,7 +16,7 @@ except:
 if token == '' or token is None or len(token) == 0:
     biab_error_stop('API Key is null')
 
-country_iso = inputs['country_iso']
+country_iso = inputs['country']['country']['ISO3']
 if country_iso == '' or country_iso is None or len(country_iso) == 0:
     biab_error_stop('Please specify a ISO country code')
 

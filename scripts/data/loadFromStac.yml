@@ -5,16 +5,16 @@ author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
 inputs:
+  bbox_crs:
+    label: Bounding box and CRS
+    description: Object containing the chosen bounding box and CRS.
+    type: bboxCRS
+    example:
   stac_url:
     label: STAC URL
     description: URL of the STAC catalog.
     type: text
     example: https://stac.geobon.org/
-  bbox:
-    label: Bounding box
-    description: Vector of float, bbox coordinates of the extent in the order xmin, ymin, xmax, ymax
-    type: float[]
-    example: [-2316297, -1971146, 1015207, 1511916]
   collections_items:
     label: STAC collection items
     description: Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. "chelsa-clim|bio1").
@@ -39,12 +39,6 @@ inputs:
       coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.
     type: text
     example: NULL
-  crs:
-    label: Coordinate reference system
-    description: |
-      Numerical value referring to the coordinate reference system
-    type: text
-    example: "EPSG:6622"
   spatial_res:
     label: Spatial resolution
     description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system

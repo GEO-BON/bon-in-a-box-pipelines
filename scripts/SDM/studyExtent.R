@@ -8,6 +8,8 @@ source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 input <- biab_inputs()
 print("Inputs: ")
 print(input)
+bbox <- input$bbox_crs$bbox
+crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 
 if (input$presence != "") {
   presence <- read.table(file = input$presence, sep = "\t", header = TRUE)
@@ -24,11 +26,11 @@ if (is.numeric(input$width_buffer)) {
 study_extent <- create_study_extent(presence,
   lon = "lon",
   lat = "lat",
-  proj = input$proj,
+  proj = crs,
   method = input$method,
   dist_buffer = width_buffer,
   shapefile_path = NULL,
-  bbox = input$bbox
+  bbox = bbox
 )
 
 study_extent_shp <- file.path(outputFolder, "study_extent.shp")

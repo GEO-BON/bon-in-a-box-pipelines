@@ -34,35 +34,11 @@
       }
     },
     {
-      "id": "31",
-      "type": "userInput",
-      "position": {
-        "x": 12,
-        "y": 363.75
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6622"
-      }
-    },
-    {
-      "id": "52",
-      "type": "io",
-      "position": {
-        "x": 854.3164129354765,
-        "y": 615.6847349950567
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
       "id": "53",
       "type": "io",
       "position": {
-        "x": 156.1660109824801,
-        "y": 645.9747418574636
+        "x": 476.0826023635467,
+        "y": 579.650570473584
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -72,8 +48,8 @@
       "id": "55",
       "type": "output",
       "position": {
-        "x": 782.3326899653318,
-        "y": 701.9635745429575
+        "x": 1020.3326899653318,
+        "y": 691.9635745429575
       },
       "data": {
         "label": "Output"
@@ -83,8 +59,8 @@
       "id": "56",
       "type": "io",
       "position": {
-        "x": 1357.0524670348445,
-        "y": 310.5246492351982
+        "x": 1368.7567325731761,
+        "y": 392.45450800352006
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -214,6 +190,18 @@
         "type": "text",
         "value": "P5Y"
       }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": 14.560022958672334,
+        "y": 407.2202294777127
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
     }
   ],
   "edges": [
@@ -225,13 +213,6 @@
       "id": "reactflow__edge-14bii_change-15"
     },
     {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "25",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-25crs"
-    },
-    {
       "source": "53",
       "sourceHandle": "country_region_polygon",
       "target": "25",
@@ -240,38 +221,10 @@
     },
     {
       "source": "53",
-      "sourceHandle": "country_region_polygon",
-      "target": "52",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-53country_region_polygon-52study_area_file"
-    },
-    {
-      "source": "53",
       "sourceHandle": "region",
       "target": "55",
       "targetHandle": null,
       "id": "reactflow__edge-53region-55"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "53",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-53crs"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "52",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-52crs"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "bbox",
-      "target": "25",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-52bbox-25bbox"
     },
     {
       "source": "53",
@@ -302,13 +255,6 @@
       "id": "reactflow__edge-58-56collections_items"
     },
     {
-      "source": "52",
-      "sourceHandle": "bbox",
-      "target": "56",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-52bbox-56bbox"
-    },
-    {
       "source": "53",
       "sourceHandle": "country_region_polygon",
       "target": "56",
@@ -335,13 +281,6 @@
       "target": "56",
       "targetHandle": "aggregation",
       "id": "reactflow__edge-60-56aggregation"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "56",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-56crs"
     },
     {
       "source": "56",
@@ -391,29 +330,36 @@
       "target": "56",
       "targetHandle": "temporal_res",
       "id": "reactflow__edge-66-56temporal_res"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-53bbox_crs"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-56bbox_crs"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-25bbox_crs"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@53|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "CAN",
+    "pipeline@67": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
+      "example": null,
       "weight": 0
-    },
-    "data>getCountryPolygon.yml@53|region": {
-      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
-      "label": "State/Province code",
-      "type": "text",
-      "example": "CA-QB",
-      "weight": 1
-    },
-    "pipeline@31": {
-      "label": "Coordinate reference system",
-      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
-      "type": "text",
-      "example": "EPSG:6624",
-      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -432,28 +378,28 @@
       "example": [
         "mean"
       ],
-      "weight": 3
+      "weight": 1
     },
     "data>loadFromStac.yml@56|spatial_res": {
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
       "label": "Spatial resolution",
       "type": "float",
-      "example": 1000,
-      "weight": 4
+      "example": 10000,
+      "weight": 2
     },
     "pipeline@63": {
       "label": "Start date",
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
       "type": "text",
       "example": "2000",
-      "weight": 5
+      "weight": 3
     },
     "pipeline@64": {
       "label": "End date",
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
       "type": "text",
       "example": "2020",
-      "weight": 6
+      "weight": 4
     }
   },
   "outputs": {

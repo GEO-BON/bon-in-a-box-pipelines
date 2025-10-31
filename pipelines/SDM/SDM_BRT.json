@@ -34,37 +34,6 @@
       }
     },
     {
-      "id": "57",
-      "type": "userInput",
-      "position": {
-        "x": -16,
-        "y": 294.49999999999994
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      }
-    },
-    {
-      "id": "58",
-      "type": "userInput",
-      "position": {
-        "x": 88,
-        "y": 196.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
-      }
-    },
-    {
       "id": "64",
       "type": "constant",
       "position": {
@@ -460,6 +429,18 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "174",
+      "type": "userInput",
+      "position": {
+        "x": -45.64938453793343,
+        "y": 229.16716503895168
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
     }
   ],
   "edges": [
@@ -511,20 +492,6 @@
       "target": "135",
       "targetHandle": null,
       "id": "reactflow__edge-132sdm_uncertainty-135"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "132",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-132bbox"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "132",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-132crs"
     },
     {
       "source": "132",
@@ -590,13 +557,6 @@
       "id": "reactflow__edge-121-159taxa"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "proj",
-      "id": "reactflow__edge-57-159proj"
-    },
-    {
       "source": "159",
       "sourceHandle": "gbif_doi",
       "target": "126",
@@ -653,20 +613,6 @@
       "id": "reactflow__edge-146-161stac_url"
     },
     {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-160bbox"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-161bbox"
-    },
-    {
       "source": "137",
       "sourceHandle": null,
       "target": "160",
@@ -702,20 +648,6 @@
       "id": "reactflow__edge-128-161spatial_res"
     },
     {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "160",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-160crs"
-    },
-    {
-      "source": "57",
-      "sourceHandle": null,
-      "target": "161",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-57-161crs"
-    },
-    {
       "source": "166",
       "sourceHandle": null,
       "target": "161",
@@ -735,13 +667,6 @@
       "target": "161",
       "targetHandle": "resampling",
       "id": "reactflow__edge-163-161resampling"
-    },
-    {
-      "source": "58",
-      "sourceHandle": null,
-      "target": "159",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-58-159bbox"
     },
     {
       "source": "167",
@@ -784,6 +709,34 @@
       "target": "173",
       "targetHandle": null,
       "id": "reactflow__edge-161rasters-173"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "159",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-159bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "160",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-160bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-161bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "132",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-132bbox_crs"
     }
   ],
   "inputs": {
@@ -796,6 +749,13 @@
       ],
       "weight": 0
     },
+    "pipeline@174": {
+      "label": "Bounding and CRS",
+      "description": "Select a bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 1
+    },
     "pipeline@137": {
       "label": "Environmental Predictors",
       "description": "Vector of strings, collection name followed by '|' followed by item id. View GEO BON STAC catalog items [here](https://stac.geobon.org/viewer/). The collection name and item name can be found in the URL (e.g. for \"https://stac.geobon.org/viewer/chelsa-clim/bio1\" the collection name is chelsa-clim and the item id is bio1). ",
@@ -807,96 +767,77 @@
         "chelsa-clim|bio12",
         "chelsa-clim|bio15"
       ],
-      "weight": 1
+      "weight": 2
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 2
+      "weight": 3
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 3
-    },
-    "pipeline@58": {
-      "label": "Bounding Box",
-      "description": "Vector of floating point numbers. Represent the bounding box in the order xmin, ymin, xmax, ymax. Must be in the same CRS as the CRS input.",
-      "type": "float[]",
-      "example": [
-        "-8185951",
-        "3491465",
-        "-4435963",
-        "6654068"
-      ],
       "weight": 4
-    },
-    "pipeline@57": {
-      "label": "Coordinate Reference System",
-      "description": "String, Projection System as an EPSG code.",
-      "type": "text",
-      "example": "EPSG:8857",
-      "weight": 5
     },
     "pipeline@128": {
       "label": "Spatial Resolution",
       "description": "Integer, spatial resolution of the rasters in the same units as the chosen coordinate reference system (meters or degrees)",
       "type": "float",
       "example": 1000,
-      "weight": 6
+      "weight": 5
     },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
       "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
       "type": "float",
       "example": 10,
-      "weight": 7
+      "weight": 6
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
       "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
       "type": "int",
       "example": 100000,
-      "weight": 8
+      "weight": 7
     },
     "pipeline@154": {
       "label": "Pseudoabsence proportion",
       "description": "The number of PAs, given by the proportion of the total occurrences to use.",
       "type": "float",
       "example": 2.4,
-      "weight": 9
+      "weight": 8
     },
     "pipeline@167": {
       "label": "Study area",
       "description": "Polygon of study area used to crop output layers",
       "type": "application/geopackage+sqlite3",
       "example": null,
-      "weight": 10
+      "weight": 9
     },
     "data>loadFromStac.yml@161|t0": {
       "description": "Start date for time series layers in STAC catalog. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
       "label": "Start date",
       "type": "text",
       "example": null,
-      "weight": 11
+      "weight": 10
     },
     "data>loadFromStac.yml@161|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
       "label": "End date",
       "type": "text",
       "example": null,
-      "weight": 12
+      "weight": 11
     },
     "data>loadFromStac.yml@161|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
       "example": null,
-      "weight": 13
+      "weight": 12
     }
   },
   "outputs": {

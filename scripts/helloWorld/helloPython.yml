@@ -14,9 +14,18 @@ inputs:
     description: A number that we will increment
     type: int
     example: 3
+  study_area_bbox:
+    label: Bounding box
+    description: Bounding box and CRS of study area
+    type: bboxCRS
 outputs:
   increment:
     label: A number (input++)
     description: bla bla
     type: int
     example: 4
+  crs_id:
+    label: CRS ID
+    description: ID of CRS obtained from bounding box selector
+    type: text
+    example: EPSG:4326

@@ -15,16 +15,11 @@ inputs:
     description: paths to geotiff
     type: image/tiff;application=geotiff[]
     example: "/output/foo/bar"
-  bbox:
-    label: bounding box
-    description: the bounding box
-    type: float[]
-    example: [-2316297, -1971146, 1015207, 1511916]
-  crs:
-    label: coordinate reference system
-    description: cooridnate reference system for input layers and occurrences
-    type: text
-    example: EPSG:4326
+  bbox_crs:
+    label: Bounding box and CRS
+    description: Object containing the chosen bounding box and CRS.
+    type: bboxCRS
+    example:
   water_mask:
     label: water mask
     description: landcover layer containing open water pixels

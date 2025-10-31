@@ -12,12 +12,12 @@ import datetime as dt
 
 data = biab_inputs()
 
-bbox = data['bounding_box']
+bbox = data['bbox_crs']['bbox']
 start_date = data['start_date']
 end_date = data['end_date']
 polygon = data['study_area_polygon']
 spatial_resolution = data['spatial_resolution']
-crs = data['crs']
+crs = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['code'])
 summary_statistic = data['summary_statistic']
 
 if (int(start_date[:4]) < 2017):
