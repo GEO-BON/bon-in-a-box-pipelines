@@ -90,6 +90,7 @@ inputs:
     label: Coordinate Reference System
     description: Using the CRS chooser to select a Coordinate Reference System
     type: CRS
+    example:
   bbox:
     label: Bounding box and CRS
     description: Using the bounding box chooser to select a bbox and the CRS associated with this bounding box.

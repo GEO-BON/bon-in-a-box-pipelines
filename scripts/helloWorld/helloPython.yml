@@ -18,6 +18,7 @@ inputs:
     label: Bounding box
     description: Bounding box and CRS of study area
     type: bboxCRS
+    example:
 outputs:
   increment:
     label: A number (input++)

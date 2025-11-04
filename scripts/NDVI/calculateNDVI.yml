@@ -18,6 +18,7 @@ inputs:
     label: CRS
     description: Object containing the chosen bounding box and CRS.
     type: bboxCRS
+    example:
   study_area_polygon:
     label: Polygon of study area
     description: Polygon of the study area of interest
