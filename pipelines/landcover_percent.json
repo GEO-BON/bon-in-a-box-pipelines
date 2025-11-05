@@ -153,12 +153,11 @@
       "weight": 1
     },
     "data>loadFromStac.yml@42|collections_items": {
-      "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.",
+      "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.\n\nLayers used in this pipeline must be categorical variables (e.g. landcover). ",
       "label": "STAC collection items",
       "type": "text[]",
       "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
+        "esacci-lc|esacci-lc-2020"
       ],
       "weight": 2
     },
