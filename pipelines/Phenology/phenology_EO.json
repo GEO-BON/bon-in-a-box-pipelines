@@ -292,40 +292,40 @@
     }
   },
   "outputs": {
-    "phenology>summarise_phenology.yml@37|rasters": {
-      "description": "Rasters of phenology layers, with one raster per year in the input time range. Will either be the raw raster layers or resampled to the spatial resolution and CRS input by the user.\n",
-      "label": "Phenology rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 0
-    },
-    "phenology>phenology_difference.yml@48|phenology_change": {
-      "description": "Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger values indicate a greater decrease in the given value over time.\n",
-      "label": "Change in phenology metrics",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 1
-    },
-    "phenology>phenology_difference.yml@48|phenology_change_plot": {
-      "description": "Plot of the summarised phenology values over time for the bands of interest",
-      "label": "Plot of phenology change",
-      "type": "image/png",
-      "weight": 2
-    },
-    "phenology>summarise_phenology.yml@37|timeseries": {
-      "description": "Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest",
-      "label": "Zonal statistics",
-      "type": "text/csv",
-      "weight": 3
-    },
     "data>getCountryPolygon.yml@66|country": {
       "description": "Name of country of interest",
       "label": "Country",
       "type": "text",
-      "weight": 4
+      "weight": 0
     },
     "data>getCountryPolygon.yml@66|region": {
       "description": "Name of state/province of interest",
       "label": "Region",
       "type": "text",
+      "weight": 1
+    },
+    "phenology>summarise_phenology.yml@37|rasters": {
+      "description": "Rasters of phenology layers, with one raster per year in the input time range. Will either be the raw raster layers or resampled to the spatial resolution and CRS input by the user.\n",
+      "label": "Phenology rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 2
+    },
+    "phenology>phenology_difference.yml@48|phenology_change": {
+      "description": "Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger values indicate a greater decrease in the given value over time.\n",
+      "label": "Change in phenology metrics",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 3
+    },
+    "phenology>phenology_difference.yml@48|phenology_change_plot": {
+      "description": "Plot of the summarised phenology values over time for the bands of interest",
+      "label": "Plot of phenology change",
+      "type": "image/png",
+      "weight": 4
+    },
+    "phenology>summarise_phenology.yml@37|timeseries": {
+      "description": "Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest",
+      "label": "Zonal statistics",
+      "type": "text/csv",
       "weight": 5
     }
   },
