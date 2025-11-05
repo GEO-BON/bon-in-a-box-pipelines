@@ -1,6 +1,6 @@
-# Protected Connected Index
-Author(s): Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord
-Reviewed by: In review
+_Authors: Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord_
+
+Review status: In review
 
 
 ## Introduction
@@ -99,7 +99,7 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 ## Example
 
-**Sample run:** See an example ProtConn run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/Protconn-pipeline%3EProtConn_pipeline/1809e8c81dd453dd652d7904224e6522) and [viewer](https://pipelines-results.geobon.org/viewer/Protconn-pipeline%3EProtConn_pipeline%3E1809e8c81dd453dd652d7904224e6522).
+**Sample run:** See an example ProtConn run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/Protconn-pipeline%3EProtConn_pipeline/163fed81a7957fbb3824b8050762f737) and [viewer](https://pipelines-results.geobon.org/viewer/Protconn-pipeline%3EProtConn_pipeline%3E163fed81a7957fbb3824b8050762f737).
 
 ## Troubleshooting
 

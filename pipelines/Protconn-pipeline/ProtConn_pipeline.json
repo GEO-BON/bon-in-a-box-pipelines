@@ -268,8 +268,8 @@
       "weight": 0
     },
     "data>getCountryPolygon.yml@57|region": {
-      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
-      "label": "State/Province code",
+      "description": "Name of the province or region of interest, in the language of the region.",
+      "label": "State/Province name",
       "type": "text",
       "example": null,
       "weight": 1

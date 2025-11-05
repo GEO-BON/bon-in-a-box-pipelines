@@ -88,8 +88,10 @@ if (is.null(input$region)) { # pull study area polygon
 
 
 # transform to crs of interest
+if (!is.null(input$crs)){
 country_region_polygon <- st_transform(country_region_polygon, crs = input$crs)
 print(st_crs(country_region_polygon))
+}
 
 print("Study area downloaded")
 print(class(country_region_polygon))
