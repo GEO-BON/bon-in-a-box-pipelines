@@ -21,7 +21,7 @@ print(input)
 spat_res <- ifelse(is.null(input$spat_res), 1000, input$spat_res)
 
 # Define SRS
-srs <- input$srs
+srs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 check_srs <- grepl("^[[:digit:]]+$", srs)
 sf_srs <- if (check_srs) st_crs(as.numeric(srs)) else st_crs(srs) # converts to numeric in case SRID is used
 srs_cube <- suppressWarnings(if (check_srs) {
