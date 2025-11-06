@@ -9,26 +9,21 @@ author:
     identifier: https://orcid.org/0000-0001-6020-6690
 license: CC-BY
 description: |
-  This script calculates and summarizes the NDVI for every pixel within a given region and for a selected 
+  This script calculates and summarizes the NDVI for every pixel within a given region and for a selected
   time period using the red and near-infrared bands from the [Sentinel-2 data](https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-2),
-   with a cloud mask. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting 
+   with a cloud mask. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting
    raster will give you a meaningful and cloud-free vegetation index.
 inputs:
-  bounding_box:
-    label: Bounding box
-    description: Bounding box in the order xmin, ymin, xmax, ymax. Coordinates must be in latitude longitude degrees.
-    type: float[]
-    example: null
+  bbox_crs:
+    label: CRS
+    description: Object containing the chosen bounding box and CRS.
+    type: bboxCRS
+    example:
   study_area_polygon:
     label: Polygon of study area
     description: Polygon of the study area of interest
     type: application/geopackage+sqlite3
     example: null
-  crs:
-    label: Coordinate reference system
-    description: Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated
-    type: text
-    example: 'EPSG:4326'
   start_date:
     label: Start date
     description: Start date for summarizing vegetation index

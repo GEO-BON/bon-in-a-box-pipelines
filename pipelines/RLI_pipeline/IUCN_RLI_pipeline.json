@@ -12,17 +12,6 @@
       }
     },
     {
-      "id": "56",
-      "type": "io",
-      "position": {
-        "x": 281,
-        "y": 106
-      },
-      "data": {
-        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
-      }
-    },
-    {
       "id": "58",
       "type": "io",
       "position": {
@@ -37,8 +26,8 @@
       "id": "59",
       "type": "io",
       "position": {
-        "x": 2348,
-        "y": 493.5
+        "x": 2298,
+        "y": 403.5
       },
       "data": {
         "descriptionFile": "IUCNRedlistIndex>RedListIndex.yml"
@@ -103,17 +92,6 @@
       "data": {
         "type": "text",
         "value": "scientific_name"
-      }
-    },
-    {
-      "id": "69",
-      "type": "output",
-      "position": {
-        "x": 878,
-        "y": 163
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -192,6 +170,29 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "95",
+      "type": "userInput",
+      "position": {
+        "x": -36.78265380859375,
+        "y": 50.46257479652951
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "country"
+      }
+    },
+    {
+      "id": "96",
+      "type": "io",
+      "position": {
+        "x": 211.6578765557415,
+        "y": -16.669803723311958
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
+      }
     }
   ],
   "edges": [
@@ -224,13 +225,6 @@
       "id": "reactflow__edge-58iucn_splist-55species_data"
     },
     {
-      "source": "56",
-      "sourceHandle": "iucn_country_splist",
-      "target": "58",
-      "targetHandle": "splist_country",
-      "id": "reactflow__edge-56iucn_country_splist-58splist_country"
-    },
-    {
       "source": "65",
       "sourceHandle": null,
       "target": "59",
@@ -257,20 +251,6 @@
       "target": "59",
       "targetHandle": "sp_col",
       "id": "reactflow__edge-67-59sp_col"
-    },
-    {
-      "source": "56",
-      "sourceHandle": "country",
-      "target": "59",
-      "targetHandle": "country",
-      "id": "reactflow__edge-56country-59country"
-    },
-    {
-      "source": "56",
-      "sourceHandle": "country",
-      "target": "69",
-      "targetHandle": null,
-      "id": "reactflow__edge-56country-69"
     },
     {
       "source": "77",
@@ -376,264 +356,35 @@
       "target": "63",
       "targetHandle": null,
       "id": "reactflow__edge-59redlist_matrix-63"
+    },
+    {
+      "source": "95",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "country",
+      "id": "reactflow__edge-95-59country"
+    },
+    {
+      "source": "95",
+      "sourceHandle": null,
+      "target": "96",
+      "targetHandle": "country",
+      "id": "reactflow__edge-95-96country"
+    },
+    {
+      "source": "96",
+      "sourceHandle": "iucn_country_splist",
+      "target": "58",
+      "targetHandle": "splist_country",
+      "id": "reactflow__edge-96iucn_country_splist-58splist_country"
     }
   ],
   "inputs": {
-    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
-      "description": "Select the country of interest.",
+    "pipeline@95": {
       "label": "Country",
-      "type": "options",
-      "options": [
-        "Afghanistan",
-        "Albania",
-        "Algeria",
-        "American Samoa",
-        "Andorra",
-        "Angola",
-        "Anguilla",
-        "Antarctica",
-        "Antigua and Barbuda",
-        "Argentina",
-        "Armenia",
-        "Aruba",
-        "Australia",
-        "Austria",
-        "Azerbaijan",
-        "Bahamas",
-        "Bahrain",
-        "Bangladesh",
-        "Barbados",
-        "Belarus",
-        "Belgium",
-        "Belize",
-        "Benin",
-        "Bermuda",
-        "Bhutan",
-        "Bolivia, Plurinational State of",
-        "Bonaire, Sint Eustatius and Saba",
-        "Bosnia and Herzegovina",
-        "Botswana",
-        "Bouvet Island",
-        "Brazil",
-        "British Indian Ocean Territory",
-        "Brunei Darussalam",
-        "Bulgaria",
-        "Burkina Faso",
-        "Burundi",
-        "Cabo Verde",
-        "Cambodia",
-        "Cameroon",
-        "Canada",
-        "Cayman Islands",
-        "Central African Republic",
-        "Chad",
-        "Chile",
-        "China",
-        "Christmas Island",
-        "Cocos (Keeling) Islands",
-        "Colombia",
-        "Comoros",
-        "Congo",
-        "Congo, The Democratic Republic of the",
-        "Cook Islands",
-        "Costa Rica",
-        "Croatia",
-        "Cuba",
-        "Curaçao",
-        "Cyprus",
-        "Czechia",
-        "Côte d'Ivoire",
-        "Denmark",
-        "Djibouti",
-        "Dominica",
-        "Dominican Republic",
-        "Ecuador",
-        "Egypt",
-        "El Salvador",
-        "Equatorial Guinea",
-        "Eritrea",
-        "Estonia",
-        "Eswatini",
-        "Ethiopia",
-        "Falkland Islands (Malvinas)",
-        "Faroe Islands",
-        "Fiji",
-        "Finland",
-        "France",
-        "French Guiana",
-        "French Polynesia",
-        "French Southern Territories",
-        "Gabon",
-        "Gambia",
-        "Georgia",
-        "Germany",
-        "Ghana",
-        "Gibraltar",
-        "Greece",
-        "Greenland",
-        "Grenada",
-        "Guadeloupe",
-        "Guam",
-        "Guatemala",
-        "Guernsey",
-        "Guinea",
-        "Guinea-Bissau",
-        "Guyana",
-        "Haiti",
-        "Heard Island and McDonald Islands",
-        "Holy See (Vatican City State)",
-        "Honduras",
-        "Hong Kong",
-        "Hungary",
-        "Iceland",
-        "India",
-        "Indonesia",
-        "Iran, Islamic Republic of",
-        "Iraq",
-        "Ireland",
-        "Israel",
-        "Italy",
-        "Jamaica",
-        "Japan",
-        "Jersey",
-        "Jordan",
-        "Kazakhstan",
-        "Kenya",
-        "Kiribati",
-        "Korea, Democratic People's Republic of",
-        "Korea, Republic of",
-        "Kuwait",
-        "Kyrgyzstan",
-        "Lao People's Democratic Republic",
-        "Latvia",
-        "Lebanon",
-        "Lesotho",
-        "Liberia",
-        "Libya",
-        "Liechtenstein",
-        "Lithuania",
-        "Luxembourg",
-        "Macao",
-        "Madagascar",
-        "Malawi",
-        "Malaysia",
-        "Maldives",
-        "Mali",
-        "Malta",
-        "Marshall Islands",
-        "Martinique",
-        "Mauritania",
-        "Mauritius",
-        "Mayotte",
-        "Mexico",
-        "Micronesia, Federated States of",
-        "Moldova, Republic of",
-        "Monaco",
-        "Mongolia",
-        "Montenegro",
-        "Montserrat",
-        "Morocco",
-        "Mozambique",
-        "Myanmar",
-        "Namibia",
-        "Nauru",
-        "Nepal",
-        "Netherlands",
-        "Netherlands Antilles",
-        "New Caledonia",
-        "New Zealand",
-        "Nicaragua",
-        "Niger",
-        "Nigeria",
-        "Niue",
-        "Norfolk Island",
-        "North Macedonia",
-        "Northern Mariana Islands",
-        "Norway",
-        "Oman",
-        "Pakistan",
-        "Palau",
-        "Palestine, State of",
-        "Panama",
-        "Papua New Guinea",
-        "Paraguay",
-        "Peru",
-        "Philippines",
-        "Pitcairn",
-        "Poland",
-        "Portugal",
-        "Puerto Rico",
-        "Qatar",
-        "Romania",
-        "Russian Federation",
-        "Rwanda",
-        "Réunion",
-        "Saint Barthélemy",
-        "Saint Helena, Ascension and Tristan da Cunha",
-        "Saint Kitts and Nevis",
-        "Saint Lucia",
-        "Saint Martin (French part)",
-        "Saint Pierre and Miquelon",
-        "Saint Vincent and the Grenadines",
-        "Samoa",
-        "San Marino",
-        "Sao Tome and Principe",
-        "Saudi Arabia",
-        "Senegal",
-        "Serbia",
-        "Seychelles",
-        "Sierra Leone",
-        "Singapore",
-        "Sint Maarten (Dutch part)",
-        "Slovakia",
-        "Slovenia",
-        "Solomon Islands",
-        "Somalia",
-        "South Africa",
-        "South Georgia and the South Sandwich Islands",
-        "South Sudan",
-        "Spain",
-        "Sri Lanka",
-        "Sudan",
-        "Suriname",
-        "Svalbard and Jan Mayen",
-        "Sweden",
-        "Switzerland",
-        "Syrian Arab Republic",
-        "Taiwan, Province of China",
-        "Tajikistan",
-        "Tanzania, United Republic of",
-        "Thailand",
-        "Timor-Leste",
-        "Togo",
-        "Tokelau",
-        "Tonga",
-        "Trinidad and Tobago",
-        "Tunisia",
-        "Turkey",
-        "Turkmenistan",
-        "Turks and Caicos Islands",
-        "Tuvalu",
-        "Uganda",
-        "Ukraine",
-        "United Arab Emirates",
-        "United Kingdom of Great Britain and Northern Ireland",
-        "United States Minor Outlying Islands",
-        "United States of America",
-        "Uruguay",
-        "Uzbekistan",
-        "Vanuatu",
-        "Venezuela, Bolivarian Republic of",
-        "Viet Nam",
-        "Virgin Islands, British",
-        "Virgin Islands, U.S.",
-        "Wallis and Futuna",
-        "Western Sahara",
-        "Yemen",
-        "Zambia",
-        "Zimbabwe"
-      ],
-      "example": "Colombia",
+      "description": "Country of interest.",
+      "type": "country",
+      "example": null,
       "weight": 0
     },
     "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
@@ -781,37 +532,30 @@
       "type": "int",
       "weight": 3
     },
-    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@56|country": {
-      "description": "Country chosen for IUCN red list assessment.",
-      "label": "Country",
-      "type": "text",
-      "example": null,
-      "weight": 4
-    },
     "IUCNRedlistIndex>IUCN_redlist_spGroup.yml@82|taxonomic_group": {
       "description": "The taxonomic group(s) of interest.",
       "label": "Taxonomic group(s)",
       "type": "text/plain",
       "example": null,
-      "weight": 5
+      "weight": 4
     },
     "IUCNRedlistIndex>IUCN_redlist_spThreats.yml@92|threat_category": {
       "description": "IUCN threat category",
       "label": "Species threat(s)",
       "type": "text[]",
-      "weight": 6
+      "weight": 5
     },
     "IUCNRedlistIndex>IUCN_redlist_spUse.yml@77|species_use": {
       "description": "The species use(s) or trade(s) selected.",
       "label": "Species use(s)",
       "type": "text[]",
-      "weight": 7
+      "weight": 6
     },
     "IUCNRedlistIndex>IUCN_redlist_historyAssesment.yml@55|api_citation": {
       "description": "Citation for the data acquired using the IUCN Red List API.",
       "label": "IUCN API citation",
       "type": "text/plain",
-      "weight": 8
+      "weight": 7
     }
   },
   "metadata": {

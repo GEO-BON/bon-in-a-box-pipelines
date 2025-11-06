@@ -11,11 +11,11 @@ description: |
   It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions.
   It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. You can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog)."
 inputs:
-  bbox:
-    label: bbox
-    description: Coordinates of the extent in the order xmin, ymin, xmax, ymax (lat long)
-    type: float[]
-    example: null
+  bbox_crs:
+    label: Bounding box and CRS
+    description: Object containing the chosen bounding box and CRS.
+    type: bboxCRS
+    example:
   study_area_polygon:
     label: Polygon of study area
     description: Polygon of the study area of interest. Leave blank if you do not want to crop by a polygon and want to use the bounding box instead.
@@ -90,11 +90,6 @@ inputs:
     description: Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).
     type: float
     example: 1000
-  crs:
-    label: Coordinate reference system
-    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [epsg.io](https://epsg.io/).
-    type: text
-    example: "EPSG:4326"
 outputs:
   rasters:
     label: Phenology rasters

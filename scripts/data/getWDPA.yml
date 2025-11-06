@@ -9,11 +9,11 @@ external_link:
 lifecycle:
   status: in_review
 inputs:
-  country_iso:
-    label: Country
-    description: ISO-3 country code. To find the ISO-3 code of a country, you can refer to the [list provided here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
-    type: text
-    example: COL
+  country:
+    label: Country ISO3 code
+    description: Object containing country ISO3 code.
+    type: bboxCRS
+    example:
 outputs:
   protected_area_polygon:
     label: Polygon of protected areas
