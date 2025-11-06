@@ -1,0 +1,54 @@
+script: habitatChange_ESA.R
+name: Measure habitat change with ESA
+description: This script measures habitat change using ESA landcover data.
+author:
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
+inputs:
+  layers:
+    label: Raster layers
+    description: Raster layers from ESA landcover data in the STAC Catalogue
+    type: image/tiff;application=geotiff[]
+    example:
+  habitats:
+    label: Habitats
+    description: Codes for the habitat types of the species of interest. For habitat types and their associated codes, refer to the [list of global CCI-LC codes](http://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf).
+    type: int[]
+    example: 50, 60, 70, 80, 90, 151, 160, 170
+  aoh:
+    label: Area of habitat
+    description: Area of habitat of the species of interest
+    type: image/tiff;application=geotiff[]
+    example:
+  start_year:
+    label: Start year
+    description: First time point
+    type: text
+    example: "2000"
+  end_year:
+    label: End year
+    description: Second time point
+    type: text
+    example: "2020"
+outputs:
+  raster:
+    label: Habitat per time point
+    description: Rasters of land cover data for each time point.
+    type: image/tiff;application=geotiff[]
+  habitat_change_map:
+    label: Habitat change map
+    description: Map showing habitat change between the start and end year time points. A value of 1, 2, and 3 represents habitat loss, habitat gain, and no change in habitat, respectively.
+    type: image/tiff;application=geotiff
+  shs_timeseries:
+    label: SHS time series
+    description: Figure showing a time series of SHS values for each species.
+    type: image/png[]
+  df_shs:
+    label: SHS table
+    description: A TSV file containing Area Score, Connectivity Score, and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.
+    type: text/tab-separated-values[]
+  df_shs_tidy:
+    label: SHS table (long format)
+    description: A TSV file in long format containing Area Score, Connectivity Score, and SHS by time step for each species. The SHS is the mean value between the AS and CS.  Percentage of change, 100% being equal to the reference year.
+    type: text/tab-separated-values[]
+
