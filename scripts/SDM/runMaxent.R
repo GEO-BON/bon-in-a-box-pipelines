@@ -18,6 +18,7 @@ source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 input <- biab_inputs()
 print("Inputs : ")
 print(input)
+crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 
 presence_background <- read.table(file = input$presence_background, sep = "\t", header = TRUE, check.names = FALSE)
 predictors <- terra::rast(unlist(input$predictors))
@@ -67,7 +68,7 @@ runs.output <- paste0(outputFolder, "/sdm_runs_", 1:nlyr(sdm_runs), ".tif")
 # runs.output <- file.path(outputFolder, "sdm_runs.tif")
 biab_output("sdm_pred", pred.output)
 
-sdm_pred <- project(sdm_pred, crs(input$proj)) ## Temporary fix while maxent transitions to terra
+sdm_pred <- project(sdm_pred, crs(crs)) ## Temporary fix while maxent transitions to terra
 terra::writeRaster(
   x = sdm_pred,
   filename = pred.output,
@@ -76,7 +77,7 @@ terra::writeRaster(
   overwrite = TRUE
 )
 for (i in 1:nlyr(sdm_runs)) {
-  thisrun <- project(sdm_runs[[i]], crs(input$proj)) ## Temporary fix while maxent transitions to terra
+  thisrun <- project(sdm_runs[[i]], crs(crs)) ## Temporary fix while maxent transitions to terra
   terra::writeRaster(
     x = thisrun,
     filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),

@@ -25,26 +25,21 @@ gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1) # restrict GDAL threads to 1
 
 gdalcubes::gdalcubes_options(parallel = 1)
 
-xmin <- input$bbox[1]
-ymin <- input$bbox[2]
-xmax <- input$bbox[3]
-ymax <- input$bbox[4]
+bbox <- input$bbox_crs$bbox
+
+xmin <- bbox[1]
+ymin <- bbox[2]
+xmax <- bbox[3]
+ymax <- bbox[4]
 
 weight_matrix <- NULL
-
-if (xmin > xmax) {
-  biab_error_stop("left and right seem reversed")
-}
-if (ymin > ymax) {
-  biab_error_stop("bottom and top seem reversed")
-}
 
 if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null(input$t0) || !is.null(input$t1))) {
   biab_info("The chelsa collection has no temporal option. Extracting all chelsa items...")
 }
-
 # Load the CRS object
-coord <- st_crs(input$crs)
+crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
+coord <- st_crs(crs)
 print(coord)
 print(st_is_longlat(coord))
 # Check for inconsistencies between CRS type and resolution
@@ -98,10 +93,10 @@ if ("taxa" %in% names(input)) { # EXTRACT GBIF HEATMAPS
   resampling <- "sum" # Sum number of occurences when upscaling
 } else { # EXTRACT OTHER LAYERS
   if (length(input$collections_items) == 0) {
-      stop("Please specify collections_items")
-    } else {
+    stop("Please specify collections_items")
+  } else {
     collections_items <- input$collections_items
-}
+  }
 }
 
 if (!("stac_url" %in% names(input))) {
@@ -152,7 +147,7 @@ for (coll_it in collections_items) { # Loop through input array
     r <- rast(paste0("/vsicurl/", urls[1]))
 
     # Make empty raster with desired resolution and extent
-    empty_raster <- rast(xmin = input$bbox[1], xmax = input$bbox[3], ymin = input$bbox[2], ymax = input$bbox[4], resolution = as.numeric(input$spatial_res), crs = input$crs)
+    empty_raster <- rast(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, resolution = as.numeric(input$spatial_res), crs = crs)
 
     # Resample
     resampled <- project(r, empty_raster)
@@ -166,7 +161,7 @@ for (coll_it in collections_items) { # Loop through input array
     if (!is.null(input$study_area)) {
       study_area <- vect(input$study_area)
       if (crs(study_area) != crs(resampled)) {
-        study_area <- project(study_area, input$crs)
+        study_area <- project(study_area, crs)
       }
       masked <- mask(resampled, study_area)
     } else {
@@ -220,14 +215,14 @@ for (coll_it in collections_items) { # Loop through input array
     }
 
     # Extract crs if not provided
-    if (is.null(input$crs)) { # Obtain CRS from metadata
+    if (is.null(crs)) { # Obtain CRS from metadata
       if ("proj:epsg" %in% names(it_obj$properties)) {
         srs.cube <- paste0("EPSG:", it_obj$properties$`proj:epsg`)
       } else if (`proj:wkt2` %in% names(it_obj$properties)) {
         srs.cube <- it_obj$properties$`proj:wkt2`
       }
     } else {
-      srs.cube <- input$crs
+      srs.cube <- crs
     }
 
     # Extract date
@@ -244,7 +239,7 @@ for (coll_it in collections_items) { # Loop through input array
         st <- gdalcubes::stac_image_collection(feats, asset_names = asset) # make stac image collection for each item in collection
         # Make a cube
         v <- gdalcubes::cube_view(
-          srs = input$crs,
+          srs = crs,
           extent = list(
             left = xmin,
             right = xmax,
@@ -288,7 +283,7 @@ for (coll_it in collections_items) { # Loop through input array
 
       if ((is.null(input$t0) && is.null(input$t1)) || min(dates) == max(dates)) { # If there is no time input or the dates are all the same
         v <- gdalcubes::cube_view(
-          srs = input$crs,
+          srs = crs,
           extent = list(
             left = xmin,
             right = xmax,
@@ -305,7 +300,7 @@ for (coll_it in collections_items) { # Loop through input array
         )
       } else {
         v <- gdalcubes::cube_view(
-          srs = input$crs,
+          srs = crs,
           extent = list(
             left = xmin,
             right = xmax,
@@ -329,8 +324,8 @@ for (coll_it in collections_items) { # Loop through input array
 
       if (!is.null(input$study_area)) {
         poly <- st_read(input$study_area)
-        if (crs(poly) != input$crs) {
-          poly <- st_transform(poly, st_crs(input$crs))
+        if (crs(poly) != crs) {
+          poly <- st_transform(poly, st_crs(crs))
         }
         raster_layers <- filter_geom(raster_layers, poly$geom)
       }

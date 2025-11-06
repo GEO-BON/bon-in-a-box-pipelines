@@ -1,0 +1,516 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 2253,
+        "y": 89
+      },
+      "data": {
+        "descriptionFile": "site_selection_BAS>Block_creation.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 1751,
+        "y": 395
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "output",
+      "position": {
+        "x": 2851,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 2851,
+        "y": 337
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "14",
+      "type": "output",
+      "position": {
+        "x": 2851,
+        "y": 60
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "26",
+      "type": "io",
+      "position": {
+        "x": 2851,
+        "y": 177
+      },
+      "data": {
+        "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
+      }
+    },
+    {
+      "id": "31",
+      "type": "output",
+      "position": {
+        "x": 3404.0000000000005,
+        "y": 182
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "45",
+      "type": "io",
+      "position": {
+        "x": 434,
+        "y": 123
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "50",
+      "type": "output",
+      "position": {
+        "x": 2253,
+        "y": 366
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "51",
+      "type": "constant",
+      "position": {
+        "x": 1074,
+        "y": 612
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": 1268,
+        "y": 518
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "53",
+      "type": "constant",
+      "position": {
+        "x": 1268,
+        "y": 565
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "54",
+      "type": "constant",
+      "position": {
+        "x": 1293,
+        "y": 476
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1000
+      }
+    },
+    {
+      "id": "55",
+      "type": "constant",
+      "position": {
+        "x": 1298,
+        "y": 381
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "56",
+      "type": "constant",
+      "position": {
+        "x": 1298,
+        "y": 339
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 1298,
+        "y": 215
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 1298,
+        "y": 423
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "60",
+      "type": "userInput",
+      "position": {
+        "x": 14.202108032828164,
+        "y": 308.96381886643223
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "0",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-2rasters-0rasters"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "rast_blocks",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-0rast_blocks-6"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "pca_summary_df",
+      "target": "13",
+      "targetHandle": null,
+      "id": "reactflow__edge-0pca_summary_df-13"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "blocks_plot",
+      "target": "14",
+      "targetHandle": null,
+      "id": "reactflow__edge-0blocks_plot-14"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "rast_blocks",
+      "target": "26",
+      "targetHandle": "rast_blocks",
+      "id": "reactflow__edge-0rast_blocks-26rast_blocks"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "maps_output",
+      "target": "31",
+      "targetHandle": null,
+      "id": "reactflow__edge-26maps_output-31"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "colors_vect",
+      "target": "26",
+      "targetHandle": "colors_vect",
+      "id": "reactflow__edge-0colors_vect-26colors_vect"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_region_polygon",
+      "target": "0",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-45country_region_polygon-0country_polygon"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "country_region_polygon",
+      "target": "26",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-45country_region_polygon-26country_polygon"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "rasters",
+      "target": "50",
+      "targetHandle": null,
+      "id": "reactflow__edge-2rasters-50"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-51-2study_area"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-52-2resampling"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-53-2aggregation"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-54-2spatial_res"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-55-2t1"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-56-2t0"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-58-2stac_url"
+    },
+    {
+      "source": "59",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-59-2temporal_res"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "pts_df",
+      "target": "31",
+      "targetHandle": null,
+      "id": "reactflow__edge-26pts_df-31"
+    },
+    {
+      "source": "26",
+      "sourceHandle": "points_shape",
+      "target": "31",
+      "targetHandle": null,
+      "id": "reactflow__edge-26points_shape-31"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-60-45bbox_crs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-60-2bbox_crs"
+    }
+  ],
+  "inputs": {
+    "pipeline@60": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "data>loadFromStac.yml@2|collections_items": {
+      "description": "Set of environmental variables to use  (e.g. for temperature \"chelsa-clim|bio1\", precipitation \"chelsa-clim|bio12\"), on which to run the PCA (a minimum of 2 variables are needed). Environmental variables must be continuous values.",
+      "label": "Environmental variables (STAC collection items)",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 1
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
+      "description": "Select and option between equal BAS or unequal probability BAS. \"Equal\" will not consider the blocks and place all sampling randomly in the whole study area.  \"Unequal\" will take into account the size of the each environmental block and redistribute the sampling sites based on the size of block.  ",
+      "label": "Sampling type",
+      "type": "options",
+      "options": [
+        "equal",
+        "unequal"
+      ],
+      "example": "equal",
+      "weight": 2
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
+      "description": "A number of target sampling sites to obtain with the algorithm",
+      "label": "Target total sites",
+      "type": "int",
+      "example": 100,
+      "weight": 3
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_cols": {
+      "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks)",
+      "label": "Number of columns",
+      "type": "int",
+      "example": 10,
+      "weight": 4
+    },
+    "site_selection_BAS>Block_creation.yml@0|n_rows": {
+      "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks)",
+      "label": "Number of rows",
+      "type": "int",
+      "example": 10,
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "site_selection_BAS>Block_creation.yml@0|rast_blocks": {
+      "description": "Raster file of the study area with the environmental blocks as categorical classes  ",
+      "label": "Environmental blocks raster",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "site_selection_BAS>Block_creation.yml@0|pca_summary_df": {
+      "description": "Principal component analysis summary for the environmental variables included in the analysis",
+      "label": "Summary of PCA",
+      "type": "csv",
+      "weight": 1
+    },
+    "site_selection_BAS>Block_creation.yml@0|blocks_plot": {
+      "description": "Blocks showing the PCA 1 and 2 result and the predefined blocks dividing the environmental space and the map of the environmental blocks in geographic space",
+      "label": "Blocks and map plots",
+      "type": "image/png",
+      "weight": 2
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|maps_output": {
+      "description": "Maps of study area with selected sampling points only (no environmental blocks) and also including the environmental blocks.",
+      "label": "Maps output",
+      "type": "image/png",
+      "weight": 3
+    },
+    "data>loadFromStac.yml@2|rasters": {
+      "description": "Array of environmental rasters (for exploration only)",
+      "label": "Environmental Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 4
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|pts_df": {
+      "description": "dataframe of selected points",
+      "label": "Selected points",
+      "type": "csv",
+      "weight": 5
+    },
+    "site_selection_BAS>BAS_algorithm.yml@26|points_shape": {
+      "description": "Vector shapefile of selected points",
+      "label": "selected points shapefile",
+      "type": "application/geo+json",
+      "weight": 6
+    }
+  },
+  "metadata": {
+    "name": "Environmental Sampling Site Selection",
+    "description": "## Introduction\nBiodiversity monitoring often requires researchers to draw samples of different population due to limitation of budget, time, and accesibility. Many methods exist to produce samples from a continous surface, but balanced sampling has proven to be one of the most efficient in capturing patterns in different populations. Often, researchers aim to prioritize sampling based on  different parameters, one being environmental characteristics of their study region (as a proxy of biomes or ecological regions). Tools that allow for quick and robust sampling frameworks provide researchers with strong sampling designs to address multiple ecological questions. \n\nHere we present a method that uses balanced acceptance sampling to randomly select  sampling sites in a defined area, and allows for the prioritization of environmentally different regions within the study area.    \n## Uses\nSelection of sampling sites using a BAS algorithm with two different approches (equal and unequal sampling distribution). \n\nIn a first step, the pipeline produces environmental blocks based on user defined environmental variables (after performing a PCA analysis on said variables and defining a block grid) and can use those blocks to generate an unequal sampling distribution.  \n\nBlocks are created from PCAs performed on the selected environmental variables or can use only two raw environmental variables, in which case no PCA is performed. \n\nThe user must define the grid size for block generation and specify a target  sample size to be allocated using a randomly balanced design. When the “unequal” option  is selected, the inclusion probability of each block is proportional to its area,  ensuring that larger blocks have a higher chance of being sampled.\n\nAlternatively, an equal sampling distribution can be selected, where all blocks have the  same probability of selection. The procedure will also plot the randomly selected sampling  points over the environmental blocks, allowing users to visually assess whether certain  areas are underrepresented or missing from the random sampling pattern.\n## Limitations \n* Currently the pipeline only works for a defined geopolitical outline (e.g. country, or province). \n* Unequal sampling may produce unexpected results in the balanced appproach. \n## Before you start\n* Define a projected CRS for your study area \n* Select environmental variables that may be of ecological importance for your study \n* Define how many environmental blocks you expect to produce (too many may be noisy, to little may be underrepresenting the environmental diversity). \n ",
+    "author": [
+      {
+        "name": "Francis van Oordt",
+        "email": "francis.vanoordtlahoz@mail.mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-8471-235X"
+      }
+    ],
+    "license": "CC-BY",
+    "references": [
+      {
+        "text": "spbal: Spatially Balanced Sampling Algorithms",
+        "doi": "10.32614/CRAN.package.spbal"
+      },
+      {
+        "text": "Survey-gap analysis in expeditionary research: where do we go from here?",
+        "doi": "https://doi.org/10.1111/j.1095-8312.2005.00520.x"
+      },
+      {
+        "text": "Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations",
+        "doi": "https://doi.org/10.1111/2041-210X.13869"
+      }
+    ]
+  }
+}
