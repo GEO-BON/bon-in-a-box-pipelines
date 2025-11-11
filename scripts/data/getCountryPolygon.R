@@ -9,6 +9,9 @@ crs <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 
 # Output country and region
 country <- input$bbox_crs$country$ISO3
+if (is.null(country) || is.null(crs)) {
+  biab_error_stop("Please select a country/region and CRS. When using a custom study area, select the country/region that contains the study area and a CRS to use.")
+}
 print(country)
 
 if (is.null(input$bbox_crs$region)) {
