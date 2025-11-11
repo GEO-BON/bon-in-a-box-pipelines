@@ -27,6 +27,11 @@ gdalcubes::gdalcubes_options(parallel = 1)
 CRS <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 bounding_box <- input$bbox_crs$bbox
 
+if (is.null(CRS) || is.null(bounding_box)){
+  biab_error_stop("Please select a country/region and CRS. When using a custom study area,
+  select the country/region that contains the study area and a CRS to use.")
+}
+
 xmin <- bounding_box[1]
 ymin <- bounding_box[2]
 xmax <- bounding_box[3]
