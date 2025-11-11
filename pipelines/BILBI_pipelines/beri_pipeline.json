@@ -459,8 +459,8 @@
       "weight": 3
     },
     "pipeline@19": {
-      "label": "Spatial resolution (optional)",
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers.",
+      "label": "Spatial resolution",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "type": "float",
       "example": null,
       "weight": 4
