@@ -7,7 +7,7 @@ author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
-license: CC-BY
+license: CC BY
 description: |
   This script calculates and summarizes the NDVI for every pixel within a given region and for a selected
   time period using the red and near-infrared bands from the [Sentinel-2 data](https://dataspace.copernicus.eu/explore-data/data-collections/sentinel-data/sentinel-2),

@@ -497,7 +497,7 @@
         "identifier": "https://orcid.org/0000-0002-8471-235X"
       }
     ],
-    "license": "CC-BY",
+    "license": "CC BY",
     "references": [
       {
         "text": "spbal: Spatially Balanced Sampling Algorithms",

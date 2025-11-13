@@ -3,7 +3,7 @@ name: Zonal statistics
 description: |
       This script calculates zonal statistics for one or more raster layers over a bounding box or polygon of interest using the R pacckage exactextractr.
       Zonal statistics will be calculated separately for each layer.
-license: CC-BY
+license: CC BY
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
