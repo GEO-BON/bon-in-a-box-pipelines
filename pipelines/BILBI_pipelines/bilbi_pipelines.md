@@ -1,0 +1,97 @@
+_Authors: Jory Griffith_
+
+Review status: In review
+
+## Introduction
+
+CSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30
+arc-second product for the years 2000, 2005, 2010, 2015 and 2020. BERI
+measures the capacity of natural ecosystems to retain species diversity in the
+face of climate change, as a function of ecosystem area, connectivity and
+integrity. The indicator assesses the extent to which any given spatial
+configuration of natural habitat across a landscape will promote or hinder
+climate-induced shifts in biological distributions. It does this by analyzing
+the functional connectivity of each grid-cell of natural habitat to areas of
+habitat in the surrounding landscape which are projected to support a similar
+assemblage of species under climate change to that currently associated with
+the cell of interest. The indicator can then be aggregated and reported by any
+desired spatial unit – e.g. an ecosystem type, a country, or the entire
+planet.
+
+### Uses
+
+The BERI can be used to monitor and report past-to-present trends in the
+capacity of ecosystems to retain species diversity in the face of ongoing
+climate change by repeatedly recalculating the indicator using best-available
+mapping of ecosystem condition or integrity observed at multiple points in
+time, e.g. for different years. It can also serve as a leading indicator for
+assessing the contribution that proposed or implemented area-based actions are
+expected to make to enhancing the present capacity of ecosystems to retain
+species diversity, thereby providing a foundation for strategic prioritisation
+of such actions by countries.
+
+### Pipeline limitations
+
+
+## Before you start
+
+
+## Running the pipeline
+
+
+### Pipeline inputs
+
+BON in a Box contains a pipeline to calculate the BERI indicator for a given country or region of interest. The pipeline has the following user inputs:
+
+- **Bounding Box and Coordinate Reference System (CRS):** the user must select a bounding box and CRS to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu.
+
+- **Start date:** this input is optional. The user can select a start date for time series layers, in the format YYYY or YYYY-MM-DD. To perform the analysis on all available dates, the user should leave this input blank.
+
+- **End date:** this input is optional. The user can select an end date for the time series layers, in the format YYYY or YYYY-MM-DD. To perform the analysis on all available dates, the user should leave this input blank.
+
+- **Temporal resolution:** this input is optional. The user can select a temporal resolution for the query of STAC items by date, in the format ("P", time interval, and time unit, e.g. "P1Y" is yearly, "P1M" is monthly, and "P1D" is daily). If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below. The user should leave this input blank if no start and end date was selected.
+
+- **Spatial resolution:** the user can select the spatial resolution of the rasters. This must be in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat-long). To use the original spatial resolution of the layers, the user should leave this input blank. In that case, the CRS selected must be EPSG:4326.
+
+- **Resampling method:** the user must select a resampling method to be used when the analysis requires rescaling and/or reprojecting of the raster layers.
+See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for a description. This input will be ignored if there is no need for resampling.
+
+- **Aggregation method:** the user must select a method to aggregate items when layers are combined over time. This input will be ignored if there is no need for resampling.
+
+### Pipeline steps
+
+#### **1. Getting the polygon of the area of interest**
+
+This step returns the polygon for the country/region/area of interest.
+
+#### **2. Loading data from the GEO BON STAC catalog**
+
+This step first extracts the CSIRO Bioclimatic Ecosystem Resilience Index (BERI) layers, then the CSIRO denominator layers, from collections on the GEO BON Spatio Temporal Asset Catalog. The layers are in EPSG:4326 and 10x10 km resolution but the user can specify other coordinate references systems and spatial resolutions. The CSIRO denominator layers are use to calculate the weighted geometric mean of the CSIRO BERI layers.
+
+#### **3. Calculating the weighted arithmetic mean for the BERI layers**
+
+This step calculates the weighted arithmetic mean for the BERI layers to calculate the summary statistics over the area of interest.
+
+### Pipeline outputs
+
+- **Raster layers of indicator for each year:** raster files of the BERI layers in geotiff format.
+
+- **BERI summary:** yearly weighted geometric mean of the BERI in the area of interest. The value ranges from 0 to 1, and represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.
+
+- **Time series plot:** plot of the geometric mean of the BERI over time in the area of interest.
+
+- **Country:** the country of interest or within which the area of interest is found.
+
+- **Region:** the region of interest, if any.
+
+## Example
+
+**Sample run:** See an example ProtConn run here in the [run ui]() and [viewer]().
+
+## Troubleshooting
+
+**Common errors:**
+
+## References
+
+Harwood, Tom; Ware, Chris; Hoskins, Andrew; Ferrier, Simon; Bush, Alex; Golebiewski, Maciej; Hill, Samantha; Ota, Noboru; Perry, Justin; Purvis, Andy; & Williams, Kristen (2022): BERI v2: Bioclimatic Ecosystem Resilience Index: 30s global time series. v2. CSIRO. Data Collection. doi: 10.25919/4vvz-4j96

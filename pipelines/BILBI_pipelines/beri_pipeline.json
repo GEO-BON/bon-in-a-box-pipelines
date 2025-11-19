@@ -512,7 +512,7 @@
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of BERI in the study area polygon.\n\n\nThe value, ranging from 0 to 1 represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.",
-      "label": "Indicator summary",
+      "label": "BERI summary",
       "type": "text/csv",
       "weight": 1
     },
