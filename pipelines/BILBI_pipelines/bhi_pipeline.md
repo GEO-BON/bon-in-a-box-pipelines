@@ -33,7 +33,7 @@ thereby providing a foundation for strategic prioritisation of such actions by
 countries.
 
 ### Pipeline limitations
-
+- BHI is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.
 
 ## Before you start
 There are no data or API keys required for this analysis.
@@ -90,8 +90,6 @@ This step calculates the weighted arithmetic mean for the BHI layers to calculat
 Example output available soon.
 
 ## Troubleshooting
-
-**Common errors:**
 
 ## References
 

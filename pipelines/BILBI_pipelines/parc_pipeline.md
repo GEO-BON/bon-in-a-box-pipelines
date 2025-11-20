@@ -22,13 +22,12 @@ improving present PARC scores, thereby providing a foundation for prioritising
 such actions.
 
 ### Pipeline limitations
-
+- PARC is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.
 
 ## Before you start
 There are no data or API keys required for this analysis.
 
 ## Running the pipeline
-
 
 ### Pipeline inputs
 
@@ -80,8 +79,6 @@ This step calculates the weighted arithmetic mean for the PARC layers to calcula
 Example output available soon.
 
 ## Troubleshooting
-
-**Common errors:**
 
 ## References
 

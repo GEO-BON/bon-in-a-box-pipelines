@@ -32,6 +32,7 @@ of such actions by countries.
 
 ### Pipeline limitations
 
+- BERI is a modeled layer, therefore there are greater uncertainties in areas with less data. Interpret the results with caution.
 
 ## Before you start
 There are no data or API keys required for this analysis.
@@ -89,8 +90,6 @@ This step calculates the weighted arithmetic mean for the BERI layers to calcula
 Example output available soon.
 
 ## Troubleshooting
-
-**Common errors:**
 
 ## References
 
