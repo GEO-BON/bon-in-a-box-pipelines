@@ -1,0 +1,23 @@
+script: ohi_calculate_scores.R
+name: Calculate Ocean Health Index scores
+description: |
+  This script uses the OHI input layers to calculate scores for each goal. 
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  start_year:
+    label: Start year
+    description: Start year for the OHI assessment
+    type: int
+  end_year:
+    label: End year
+    description: End year for the OHI assessment
+    type: int
+outputs:
+  scores:
+    label: OHI scores
+    description: OHI scores
+    type: text/csv
+
