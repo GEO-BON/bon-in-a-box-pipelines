@@ -34,7 +34,7 @@ of such actions by countries.
 
 
 ## Before you start
-
+There are no data or API keys required for this analysis.
 
 ## Running the pipeline
 
