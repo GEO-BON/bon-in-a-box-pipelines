@@ -2,7 +2,7 @@ script: getCountryPolygon.R
 name: Get country polygon
 description: |
   This script pulls country (or state/province/region) polygons using the [GeoBoundaries API](https://www.geoboundaries.org/),
-  and outputs as a geopackage, projected in the crs of interest.
+  and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, the script will return a polygon made from the bounding box using the sf package.
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -12,7 +12,7 @@ lifecycle:
 inputs:
   bbox_crs:
     label: Bounding box and CRS
-    description: Select a country/region and a CRS to obtain the associated bounding box.
+    description: Select a country and/or region, or type in/draw a custom bounding box. Then, choose an appropriate CRS.
     type: bboxCRS
     example: null
 outputs:
