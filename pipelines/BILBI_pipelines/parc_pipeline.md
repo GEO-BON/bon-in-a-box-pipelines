@@ -77,7 +77,7 @@ This step calculates the weighted arithmetic mean for the PARC layers to calcula
 
 ## Example
 
-**Sample run:** See an example run here in the [run ui]() and [viewer]().
+Example output available soon.
 
 ## Troubleshooting
 
