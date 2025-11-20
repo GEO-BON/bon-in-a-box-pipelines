@@ -381,22 +381,22 @@
       "weight": 1
     },
     "data>loadFromStac.yml@56|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "label": "Spatial resolution",
       "type": "float",
-      "example": 10000,
+      "example": null,
       "weight": 2
     },
     "pipeline@63": {
       "label": "Start date",
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2000",
       "weight": 3
     },
     "pipeline@64": {
       "label": "End date",
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2020",
       "weight": 4
@@ -436,13 +436,19 @@
   },
   "metadata": {
     "name": "Biodiversity Intactness Index",
-    "description": "This pipeline calculates zonal statistics of the biodiversity intactness index of a given country or region and change over time using the BII layers developed by the Natural History Museum.",
+    "description": "## Introduction The Biodiversity Intactness Index (BII) is a metric designed to assess the degree to which ecosystems are intact and functioning relative to their natural state. It measures the abundance and diversity of species in a given area compared to what would be expected in an undisturbed ecosystem. The BII accounts for various factors, including habitat loss, fragmentation, and degradation, providing a comprehensive view of biodiversity health. A higher BII value indicates a more intact ecosystem with greater species diversity and abundance, while a lower value suggests significant ecological disruption. The biodiversity intactness index is a complimentary indicator in the GBF. The BII was created by the Natural History Museum and uses their PREDICTS database, which aggregates data from studies comparing terrestrial biodiversity at sites experiencing varying levels of human pressure. The database is used to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact. It currently contains over 3 million records from more than 26,000 sites across 94 countries, representing a diverse array of over 45,000 plant, invertebrate, and vertebrate species.\n## Uses The Biodiversity Intactness Index is a compimentary indicator in the GBF. This pipeline can be used to calculate summary statistics and plot a time series of the 10km resolution BII layer for a given country or region. The BII is expressed as a percentage, with higher percentages being more intact.\n## Pipeline limitations The pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the 10 x 10 km BII layer pre-calcuated by the Natural History Museum calculated global layer. Therefore, you cannot customize the model or input custom data and you cannot increase the resolution of the layer. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Before you start There are no data or API keys required for this analysis. To view the global layer, go to our [STAC catalog](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).",
     "author": [
       {
         "name": "Jory Griffith",
         "email": "jory.griffith@mcgill.ca",
         "identifier": "https://orcid.org/0000-0001-6020-6690",
         "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline documentation"
       }
     ],
     "license": "CC BY-NC-SA",
