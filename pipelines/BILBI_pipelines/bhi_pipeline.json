@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 1124,
-        "y": 51
+        "x": 1130.620049667487,
+        "y": 49.34498758312827
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -225,8 +225,8 @@
       "id": "21",
       "type": "io",
       "position": {
-        "x": 452,
-        "y": 487
+        "x": 445.3799503325131,
+        "y": 559.8205463423566
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -443,7 +443,7 @@
   "inputs": {
     "pipeline@23": {
       "label": "Bounding box and CRS",
-      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
       "type": "bboxCRS",
       "example": null,
       "weight": 0
@@ -501,7 +501,7 @@
     },
     "pipeline@20": {
       "label": "Aggregation method",
-      "description": "Method used to aggregate items when layers combining over time.\n\nWill be ignored if not resampling.",
+      "description": "Method used to aggregate items when layers combining over time.\n\nWill be ignored if not aggregating.",
       "type": "options",
       "example": "first",
       "options": [
@@ -523,7 +523,7 @@
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of BHI in the study area polygon.\n\n\nA higher value (closer to 1) indicates that a large proportion of the habitat remains in good condition and is well-connected, leading to a high expectation of species persistence. A lower value indicates that a significant proportion of the original habitat has been lost, degraded, or fragmented, which puts biodiversity at risk.",
-      "label": "Indicator summary",
+      "label": "BHI summary",
       "type": "text/csv",
       "weight": 1
     },

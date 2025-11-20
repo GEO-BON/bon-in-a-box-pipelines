@@ -4,7 +4,7 @@ Review status: In review
 
 ## Introduction
 
-CSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30
+The CSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30
 arc-second product for the years 2000, 2005, 2010, 2015 and 2020. BERI
 measures the capacity of natural ecosystems to retain species diversity in the
 face of climate change, as a function of ecosystem area, connectivity and
@@ -41,9 +41,9 @@ of such actions by countries.
 
 ### Pipeline inputs
 
-BON in a Box contains a pipeline to calculate the BERI indicator for a given country or region of interest. The pipeline has the following user inputs:
+BON in a Box contains a pipeline to calculate the BERI indicator for a given area of interest. The pipeline has the following user inputs:
 
-- **Bounding Box and Coordinate Reference System (CRS):** the user must select a bounding box and CRS to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu.
+- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu.
 
 - **Start date:** this input is optional. The user can select a start date for time series layers, in the format YYYY or YYYY-MM-DD. To perform the analysis on all available dates, the user should leave this input blank.
 
@@ -56,13 +56,13 @@ BON in a Box contains a pipeline to calculate the BERI indicator for a given cou
 - **Resampling method:** the user must select a resampling method to be used when the analysis requires rescaling and/or reprojecting of the raster layers.
 See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for a description. This input will be ignored if there is no need for resampling.
 
-- **Aggregation method:** the user must select a method to aggregate items when layers are combined over time. This input will be ignored if there is no need for resampling.
+- **Aggregation method:** the user must select a method to aggregate items when layers are combined over time. This input will be ignored if there is no need for aggregation.
 
 ### Pipeline steps
 
 #### **1. Getting the polygon of the area of interest**
 
-This step returns the polygon for the country/region/area of interest.
+This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using the [GeoBoundaries API](https://www.geoboundaries.org/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
 
 #### **2. Loading data from the GEO BON STAC catalog**
 
@@ -80,13 +80,13 @@ This step calculates the weighted arithmetic mean for the BERI layers to calcula
 
 - **Time series plot:** plot of the geometric mean of the BERI over time in the area of interest.
 
-- **Country:** the country of interest or within which the area of interest is found.
+- **Country:** the country of interest, if any.
 
 - **Region:** the region of interest, if any.
 
 ## Example
 
-**Sample run:** See an example ProtConn run here in the [run ui]() and [viewer]().
+**Sample run:** See an example run here in the [run ui]() and [viewer]().
 
 ## Troubleshooting
 
