@@ -16,8 +16,25 @@ inputs:
     description: End year for the OHI assessment
     type: int
 outputs:
+  layers:
+    label: Layers
+    description: layers
+    type: text/csv
   scores:
     label: OHI scores
     description: OHI scores
     type: text/csv
+conda: 
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-devtools
+    - r-rjson
+    - r-tidyverse
+    - r-plotly
+    - r-zoo
+    - r-htmlwidgets
+    - r-here
+
 
