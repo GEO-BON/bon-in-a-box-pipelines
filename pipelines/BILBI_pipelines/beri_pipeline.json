@@ -510,34 +510,34 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
-      "description": "Yearly weighted geometric mean of BERI in the study area polygon.\n\n\nThe value, ranging from 0 to 1 represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.",
-      "label": "BERI summary",
-      "type": "text/csv",
-      "weight": 1
-    },
-    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
-      "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
-      "label": "Time series plot",
-      "type": "image/png",
-      "weight": 2
-    },
     "data>getCountryPolygon.yml@21|country": {
       "description": "Name of country of interest",
       "label": "Country",
       "type": "text",
-      "weight": 3
+      "weight": 1
     },
     "data>getCountryPolygon.yml@21|region": {
       "description": "Name of state/province of interest",
       "label": "Region",
       "type": "text",
+      "weight": 2
+    },
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
+      "description": "Yearly weighted geometric mean of BERI in the study area polygon.\n\n\nThe value, ranging from 0 to 1 represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.",
+      "label": "BERI summary",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
+      "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
+      "label": "Time series plot",
+      "type": "image/png",
       "weight": 4
     }
   },
   "metadata": {
     "name": "Bioclimatic Ecosystem Resilience Index (BERI)",
-    "description": "CSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30 arc-second product for the years 2000, 2005, 2010, 2015 and 2020. BERI measures the capacity of natural ecosystems to retain species diversity in the face of climate change, as a function of ecosystem area, connectivity and integrity. The indicator assesses the extent to which any given spatial configuration of natural habitat across a landscape will promote or hinder climate-induced shifts in biological distributions. It does this by analyzing the functional connectivity of each grid-cell of natural habitat to areas of habitat in the surrounding landscape which are projected to support a similar assemblage of species under climate change to that currently associated with the cell of interest. The indicator can then be aggregated and reported by any desired spatial unit – e.g. an ecosystem type, a country, or the entire planet.\n\nThe BERI can be used to monitor and report past-to-present trends in the capacity of ecosystems to retain species diversity in the face of ongoing climate change by repeatedly recalculating the indicator using best-available mapping of ecosystem condition or integrity observed at multiple points in time, e.g. for different years. It can also serve as a leading indicator for assessing the contribution that proposed or implemented area-based actions are expected to make to enhancing the present capacity of ecosystems to retain species diversity, thereby providing a foundation for strategic prioritisation of such actions by countries.",
+    "description": "\n## Introduction\nCSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30 arc-second product for the years 2000, 2005, 2010, 2015 and 2020. BERI measures the capacity of natural ecosystems to retain species diversity in the face of climate change, as a function of ecosystem area, connectivity and integrity. The indicator assesses the extent to which any given spatial configuration of natural habitat across a landscape will promote or hinder climate-induced shifts in biological distributions. It does this by analyzing the functional connectivity of each grid-cell of natural habitat to areas of habitat in the surrounding landscape which are projected to support a similar assemblage of species under climate change to that currently associated with the cell of interest. The indicator can then be aggregated and reported by any desired spatial unit – e.g. an ecosystem type, a country, or the entire planet.\nThis pipeline calculates a weighted geometric mean of the BERI indicator over a region of interest.  The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of  CSIRO BILBI indicator\" script on the  [CSIRO data access portal](https://doi.org/10.25919/4vvz-4j96).\n## Uses\nThe BERI can be used to monitor and report past-to-present trends in the capacity of ecosystems to retain species diversity in the face of ongoing climate change by repeatedly recalculating the indicator using best-available mapping of ecosystem condition or integrity observed at multiple points in time, e.g. for different years. It can also serve as a leading indicator for assessing the contribution that proposed or implemented area-based actions are expected to make to enhancing the present capacity of ecosystems to retain species diversity, thereby providing a foundation for strategic prioritisation of such actions by countries.\n## Pipeline limitations\n- BERI is a modeled layer, therefore there are greater uncertainties in areas with less data.  Interpret the results with caution.",
     "author": [
       {
         "name": "Jory Griffith",
@@ -546,11 +546,10 @@
       }
     ],
     "license": "CC-BY-NC",
-    "external_link": "https://data.csiro.au/collection/csiro:53973",
     "references": [
       {
         "text": "Harwood et al. 2022",
-        "doi": "https://doi.org/10.25919/tt2t-h452"
+        "doi": "https://doi.org/10.25919/4vvz-4j96"
       }
     ]
   }
