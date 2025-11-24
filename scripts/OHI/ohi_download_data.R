@@ -57,6 +57,10 @@ print(pressures)
 bd_pressure_layers <- pressures[pressures$goal %in% c('HAB', 'SPP'), ]
 bd_pressure_layers <- bd_pressure_layers[rowSums(!is.na(bd_pressure_layers[, 4:ncol(bd_pressure_layers)])) > 0, ]
 print(colnames(bd_pressure_layers))
+# Save filtered matrix
+pressure_matrix_path <- file.path(outputFolder, "pressures_matrix_bd.csv")
+write.csv(bd_pressure_layers, pressure_matrix_path, row.names=FALSE)
+biab_output("pressure_matrix_bd", pressure_matrix_path) 
 
 cols <- paste(colnames(bd_pressure_layers), collapse="|")
 file_names_pressure <- file_names[str_detect(file_names, regex(cols, ignore_case = TRUE))]
@@ -79,6 +83,10 @@ bd_resilience_layers <- bd_resilience_layers[
   rowSums(bd_resilience_layers[, 4:ncol(bd_resilience_layers)] == "x", na.rm = TRUE) > 0,
 ]
 print(colnames(bd_resilience_layers))
+
+resilience_matrix_path <- file.path(outputFolder, "resilience_matrix_bd.csv")
+write.csv(bd_resilience_layers, resilience_matrix_path, row.names=FALSE)
+biab_output("resilience_matrix_bd", resilience_matrix_path) 
 
 
 cols <- paste(colnames(bd_resilience_layers), collapse="|")

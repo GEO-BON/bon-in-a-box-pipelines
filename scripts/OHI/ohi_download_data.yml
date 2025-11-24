@@ -32,6 +32,14 @@ outputs:
     label: Resilience layers
     description: Resilience layers for biodiversity goal OHI assessment extracted from GitHub
     type: text/csv[]
+  pressure_matrix_bd:
+    label: Pressure matrix
+    description: Pressure matrix with weights for the biodiversity goal
+    type: text/csv
+  resilience_matrix_bd:
+    label: Resilience matrix
+    description: Resilience matrix with weights for the biodiversity goal
+    type: text/csv
 conda: 
   channels:
     - conda-forge
