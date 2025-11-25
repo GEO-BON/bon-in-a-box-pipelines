@@ -4,7 +4,7 @@ description: Performs point selection based on BAS algorithm, and unequal inclus
 author:
   - name: Francis van Oordt
     identifier: https://orcid.org/0000-0002-8471-235X
-license: CC-BY
+license: CC BY
 inputs:
   colors_vect:
     label: Color vector

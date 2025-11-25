@@ -4,7 +4,7 @@ author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
-license: CC-BY
+license: CC BY
 description: |
   Summarises the yearly phenology data for a country (Europe only) using the copernicus data space ecosystem phenology layer. The script uses the openEO python client to send a job to openEO.
   The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosynthetic activity throughout the growing season.

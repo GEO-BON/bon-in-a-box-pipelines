@@ -189,7 +189,7 @@
         "role": "Pipeline development"
       }
     ],
-    "license": "CC-BY",
+    "license": "CC BY",
     "lifecycle": {
       "status": "deprecated",
       "message": "This pipeline is no longer needed with integration of our location chooser. Please use the location chooser to obtain a country's bounding box. Refer to the user documentation for more details."
