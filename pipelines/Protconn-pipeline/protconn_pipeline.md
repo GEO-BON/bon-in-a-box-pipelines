@@ -84,9 +84,9 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 ### Pipeline outputs
 
-- **Country:** the country of interest, if any.
+- **Country:** the country of interest, if selected.
 
-- **Region:** the region of interest, if any.
+- **Region:** the region of interest, if selected.
 
 - **Protected areas:** protected areas on which ProtConn is being calculated. Note that overlapping protected areas have been merged into one to speed up calculation.
 

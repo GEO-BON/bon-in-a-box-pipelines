@@ -47,9 +47,9 @@ This step calculates the difference in the layers of the phenology raster layers
 
 ### Pipeline outputs
 
-- **Country:** country of interest, if any.
+- **Country:** country of interest, if selected.
 
-- **Region:** region of interest, if any.
+- **Region:** region of interest, if selected.
 
 - **Phenology rasters:** rasters of phenology layers, with one raster per year in the input time range. Will either be the raw raster layers or resampled to the spatial resolution input by the user.
 

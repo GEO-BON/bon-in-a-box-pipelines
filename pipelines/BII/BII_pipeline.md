@@ -51,9 +51,9 @@ This step generates a raster of the change in the BII between the two chosen tim
 
 - **Change in BII:** a raster plot of the change in BII between the two chosen years. Higher numbers indicate greater BII loss.
 
-- **Country:** the region of interest, if any.
+- **Country:** the region of interest, if selected.
 
-- **Region:** the country of interest, if any.
+- **Region:** the country of interest, if selected.
 
 ## Example
 **Sample run:** See an example BII run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/BII%3EBII/d29bd8231a0ceefbd0fd14bc16e1e4cc) and [viewer](https://pipelines-results.geobon.org/viewer/BII%3EBII%3Ed29bd8231a0ceefbd0fd14bc16e1e4cc).
