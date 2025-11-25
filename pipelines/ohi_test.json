@@ -1,0 +1,84 @@
+{
+  "nodes": [
+    {
+      "id": "69",
+      "type": "io",
+      "position": {
+        "x": 630.9624938964844,
+        "y": 232.79999542236328
+      },
+      "data": {
+        "descriptionFile": "OHI>ohi_status_trends.yml"
+      }
+    },
+    {
+      "id": "70",
+      "type": "io",
+      "position": {
+        "x": 34.962493896484375,
+        "y": 190.79999542236328
+      },
+      "data": {
+        "descriptionFile": "OHI>ohi_download_data.yml"
+      }
+    },
+    {
+      "id": "71",
+      "type": "output",
+      "position": {
+        "x": 1235.9624938964844,
+        "y": 235.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "70",
+      "sourceHandle": "habitat_layers",
+      "target": "69",
+      "targetHandle": "habitat_layers",
+      "id": "reactflow__edge-70habitat_layers-69habitat_layers"
+    },
+    {
+      "source": "70",
+      "sourceHandle": "species_layers",
+      "target": "69",
+      "targetHandle": "species_layers",
+      "id": "reactflow__edge-70species_layers-69species_layers"
+    },
+    {
+      "source": "69",
+      "sourceHandle": "habitat_st_scores",
+      "target": "71",
+      "targetHandle": null,
+      "id": "reactflow__edge-69habitat_st_scores-71"
+    }
+  ],
+  "inputs": {
+    "OHI>ohi_download_data.yml@70|start_year": {
+      "description": "Start year for the OHI assessment",
+      "label": "Start year",
+      "type": "int",
+      "example": null,
+      "weight": 0
+    },
+    "OHI>ohi_download_data.yml@70|end_year": {
+      "description": "End year for the OHI assessment",
+      "label": "End year",
+      "type": "int",
+      "example": null,
+      "weight": 1
+    }
+  },
+  "outputs": {
+    "OHI>ohi_status_trends.yml@69|habitat_st_scores": {
+      "description": "Habitat status and trend scores",
+      "label": "Habitat status and trends",
+      "type": "text/csv",
+      "weight": 0
+    }
+  }
+}

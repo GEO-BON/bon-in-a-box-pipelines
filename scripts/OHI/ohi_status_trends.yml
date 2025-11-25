@@ -1,0 +1,30 @@
+script: ohi_status_trends.R
+name: Calculate OHI status and trends
+description: |
+ Calculate the status and trends of the biodiversity goal of OHI.
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  habitat_layers:
+    label: Habitat layers
+    description: Habitat layers for OHI assessment extracted from GitHub
+    type: text/csv[]
+  species_layers:
+    label: Species layers
+    description: Species layers for OHI assessment extracted from GitHub
+    type: text/csv[]
+outputs:
+  habitat_st_scores:
+    label: Habitat status and trends
+    description: Habitat status and trend scores
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-tidyverse
+    - r-devtools
