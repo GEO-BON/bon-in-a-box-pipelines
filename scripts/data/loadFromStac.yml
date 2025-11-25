@@ -24,30 +24,30 @@ inputs:
     example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
   t0:
     label: Start date
-    description: Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
+    description: Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.
     type: text
     example: NULL
   t1:
     label: End date
-    description: End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.
+    description: End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.
     type: text
     example: NULL
   temporal_res:
     label: Temporal resolution
     description: Temporal resolution to use when querying STAC items by date, in the format ("P", time interval, and time unit, e.g.
-      "P1Y" is yearly, "P1M" is montly, and "P1D" is daily). Leave blank if not querying by date. If the temporal resolution is
+      "P1Y" is yearly, "P1M" is montly, and "P1D" is daily). Leave blank if not querying by date or if extracting layers from all available dates. If the temporal resolution is
       coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.
     type: text
     example: NULL
   spatial_res:
     label: Spatial resolution
     description: Integer, spatial resolution of the rasters in the same units as the coordinate reference system
-      (meters for projected reference systems and degrees for reference systems in lat long).
+      (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.
     type: float
-    example: 1000.0
+    example: NULL
   resampling:
     label: Resampling method
-    description: Resampling method used when rescaling and/or reprojecting the raster layers.
+    description: Resampling method used when rescaling and/or reprojecting the raster layers. Will be ignored if no resampling occurs.
       See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.
     type: options
     options:
@@ -68,7 +68,7 @@ inputs:
     example: near
   aggregation:
     label: Aggregation method
-    description: Method used to aggregate items when layers combining over time.
+    description: Method used to aggregate items when layers combining over time. Will be ignored if no aggregation occurs.
     type: options
     options:
       - first
