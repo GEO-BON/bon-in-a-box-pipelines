@@ -1,6 +1,8 @@
 #packages <- c("rjson", "geojsonsf", "terra",'sf')
 #new.packages <- packages[!(packages %in% installed.packages()[,"Package"])]
 #if(length(new.packages)) install.packages(new.packages)
+
+
 library(rjson)
 library(terra)
 library(sf)
@@ -70,7 +72,6 @@ load_stac<-function(staccollection='esacci-lc'){
   
   return(raster)
 }
-
 
 print("Loading Land Cover from STAC:", )
 LC<-load_stac("esacci-lc")
@@ -151,7 +152,7 @@ No_habitat = (lcy[[nlyr(lcy)]]==0 & lcy[[1]]==0) | is.na(lcy[[1]])
 # resample information on habitat absence
 no_habitat_canvas = No_habitat
 res(no_habitat_canvas) = c(0.01,0.01)
-No_habitat = resample(No_habitat, no_habitat_canvas, method='q1') # find which resampled pixels are covered by at least 50% habitat
+No_habitat = resample(No_habitat, no_habitat_canvas, method='med') # find which resampled pixels are covered by at least 50% habitat
 
 # remove missing habitat from delta 
 D_lcy[No_habitat] = NA
