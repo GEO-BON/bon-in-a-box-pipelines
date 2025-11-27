@@ -3,17 +3,16 @@ packages_list <- list("terra", "rjson", "raster", "dplyr", "gdalcubes", "ENMeval
 lapply(packages_list, library, character.only = TRUE)
 
 # Load libraries from external sources
-if (!"stacatalogue" %in% installed.packages()[,"Package"]) devtools::install_github("ReseauBiodiversiteQuebec/stac-catalogue")
-#if (!"gdalcubes" %in% installed.packages()[,"Package"]) devtools::install_github("appelmar/gdalcubes_R")
 if (!"INLA" %in% installed.packages()[,"Package"]) install.packages("INLA",repos=c(getOption("repos"),INLA="https://inla.r-inla-download.org/R/stable"), dep=TRUE)
 if (!"ewlgcpSDM" %in% installed.packages()[,"Package"]) devtools::install_github("BiodiversiteQuebec/ewlgcpSDM")
 
-packages_list <- list("stacatalogue", "INLA", "ewlgcpSDM")
+packages_list <- list("INLA", "ewlgcpSDM")
 lapply(packages_list, library, character.only = TRUE)
 
 input <- fromJSON(file=file.path(outputFolder, "input.json"))
 print("Inputs : ")
 print(input)
+crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 
 presence_background <- read.table(file = input$presence_background, sep = '\t', header = TRUE, check.names = FALSE)
 predictors <- terra::rast(unlist(input$predictors))
@@ -48,11 +47,15 @@ params <- dmesh_predictors(params, predictors)
 print(colnames(params$predictors))
 
 ### Create an exclusion buffer
-obs <- st_as_sf(presence_background[presence_background$pa == 1, ], coords = c("lon", "lat"), crs = input$proj)
+obs <- st_as_sf(presence_background[presence_background$pa == 1, ], coords = c("lon", "lat"), crs = crs)
 buff <- st_buffer(obs, 250000) |> st_union()
 
 ### Gather effort
-bg <- st_as_sf(presence_background, coords = c("lon", "lat"), crs = input$proj)
+bg <- st_as_sf(presence_background, coords = c("lon", "lat"), crs = crs)
+print("here:")
+print(crs)
+print(st_crs(obs))
+print(st_crs(bg))
 params <- dmesh_effort(params, obs = obs, background = bg, buffer = buff, adjust = FALSE)
 
 print(head(params$predictors))

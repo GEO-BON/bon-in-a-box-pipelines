@@ -1,0 +1,211 @@
+{
+  "nodes": [
+    {
+      "id": "199",
+      "type": "io",
+      "position": {
+        "x": 1074,
+        "y": 20.333333333333336
+      },
+      "data": {
+        "descriptionFile": "NDVI>calculateNDVI.yml"
+      }
+    },
+    {
+      "id": "202",
+      "type": "output",
+      "position": {
+        "x": 1613,
+        "y": 121.83333333333331
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "207",
+      "type": "io",
+      "position": {
+        "x": 442,
+        "y": 31.333333333333336
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "208",
+      "type": "output",
+      "position": {
+        "x": 1074,
+        "y": 160.33333333333331
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "210",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "199",
+      "sourceHandle": "rasters",
+      "target": "202",
+      "targetHandle": null,
+      "id": "reactflow__edge-199rasters-202"
+    },
+    {
+      "source": "207",
+      "sourceHandle": "country",
+      "target": "208",
+      "targetHandle": null,
+      "id": "reactflow__edge-207country-208"
+    },
+    {
+      "source": "207",
+      "sourceHandle": "country_region_polygon",
+      "target": "199",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-207country_region_polygon-199study_area_polygon"
+    },
+    {
+      "source": "210",
+      "sourceHandle": null,
+      "target": "207",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-210-207bbox_crs"
+    },
+    {
+      "source": "210",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-210-199bbox_crs"
+    },
+    {
+      "source": "199",
+      "sourceHandle": "timeseries",
+      "target": "202",
+      "targetHandle": null,
+      "id": "reactflow__edge-199timeseries-202"
+    },
+    {
+      "source": "199",
+      "sourceHandle": "timeseries_plot",
+      "target": "202",
+      "targetHandle": null,
+      "id": "reactflow__edge-199timeseries_plot-202"
+    },
+    {
+      "source": "207",
+      "sourceHandle": "region",
+      "target": "208",
+      "targetHandle": null,
+      "id": "reactflow__edge-207region-208"
+    }
+  ],
+  "inputs": {
+    "pipeline@210": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "NDVI>calculateNDVI.yml@199|start_date": {
+      "description": "Start date for summarizing vegetation index",
+      "label": "Start date",
+      "type": "text",
+      "example": "2024-01-01",
+      "weight": 1
+    },
+    "NDVI>calculateNDVI.yml@199|end_date": {
+      "description": "End date for summarizing vegetation index",
+      "label": "End date",
+      "type": "text",
+      "example": "2024-01-31",
+      "weight": 2
+    },
+    "NDVI>calculateNDVI.yml@199|spatial_resolution": {
+      "description": "Spatial resolution of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m). If using a projected CRS, the resolution should be in meters. If using an unprojected CRS (e.g. EPSG:4326), this must be in degrees (0.008 degrees is ~1km at the equator).\n\nLeave blank to have the original spatial resolution of the layer (10m x 10m).",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": 0.008,
+      "weight": 3
+    },
+    "NDVI>calculateNDVI.yml@199|summary_statistic": {
+      "description": "Statistic to summarize layers over time for summarised raster layer and space for plot of ndvi means over time",
+      "label": "Summary statistic",
+      "type": "options",
+      "options": [
+        "mean",
+        "median",
+        "max",
+        "min"
+      ],
+      "example": "mean",
+      "weight": 4
+    }
+  },
+  "outputs": {
+    "NDVI>calculateNDVI.yml@199|rasters": {
+      "description": "Raster of the NDVI values summarised by the input statistic (mean, max, min, median) for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
+      "label": "Vegetation index rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "NDVI>calculateNDVI.yml@199|timeseries": {
+      "description": "Time series of NDVI values for every date where there is data in the specified time period.",
+      "label": "Time series of NDVI",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "NDVI>calculateNDVI.yml@199|timeseries_plot": {
+      "description": "Plot of NDVI values over time",
+      "label": "NDVI time series plot",
+      "type": "image/png",
+      "weight": 2
+    },
+    "data>getCountryPolygon.yml@207|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 3
+    },
+    "data>getCountryPolygon.yml@207|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
+      "weight": 4
+    }
+  },
+  "metadata": {
+    "name": "Normalized Difference Vegetation Index",
+    "description": "## Introduction\nThis pipeline calculates the Normalized Difference Vegetation Index (NDVI) using OpenEO  Copernicus Data Space Ecosystem. NDVI measures the \"greenness\" of vegetation, with higher  values indicating dense vegatation and low values indicating barren areas with rock, snow, sand, or exposed soils.\n\nThe red and infrared bands from Sentinel 2 L2A are used to calcuate NDVI. The pipeline  summarises these values over the time period of interest with the specified summary statistic. The NDVi layers are masked with the SCL dilation mask avoid erroneous values by taking out pixels covered by clouds.\n- Learn more about Sentinel 2 [here](https://dataspace.copernicus.eu/data-collections/copernicus-sentinel-data/sentinel-2)\n- Learn more about calculating NDVI with openEO [here](https://openeo.org/documentation/1.0/cookbook/#example-1-ndvi)\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).\n\nThe pipeline may take significant time to pull and summarise data,  especially at fine spatial resolutions for large areas.",
+    "author": [
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Jory Griffith",
+        "email": "jory.griffith@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0001-6020-6690",
+        "role": "Pipeline development"
+      }
+    ]
+  }
+}
