@@ -13,7 +13,7 @@ end_year <- as.integer(input$end_year)
 # Input checks
 
 if (is.null(layers) || nlyr(layers) != 2) {
-  biab_error_stop("Incorrect input for ESA landcover raster layers. 
+  biab_error_stop("Incorrect input for ESA landcover raster layers.
   There must be exactly two layers to compute the change in landcover.")
 }
 if (is.null(habitats) || !is.numeric(habitats)) {
@@ -53,8 +53,8 @@ for (s in 1:n_species) {
     }
 
     # Resample land cover raster to match area of habitat
+    # layer <- resample(layer, species_aoh, method = "near")
     layer <- resample(layer, species_aoh, method = "near")
-    layer <- resample(layer, species_aoh, method = "mode")
 
     # Need raster without mask for later analysis
     layers_nomask[[i]] <- layer
@@ -75,7 +75,7 @@ for (s in 1:n_species) {
 
   # Save rasters
   raster_path[s] <- file.path(outputFolder, paste0(species_name, "_raster.tif"))
-  writeRaster(land_cover_raster, filename = raster_path[s], overwrite = TRUE)
+  writeRaster(land_cover_raster, filename = raster_path[s])
 
   print(sprintf("========== Measuring habitat change for %s... ==========", species_name))
   ## This step creates a raster that maps habitat gain, loss, and unchanged throughout the time interval ##
@@ -102,8 +102,7 @@ for (s in 1:n_species) {
 
   writeRaster(
     change_map,
-    filename = change_map_path[s],
-    overwrite = TRUE
+    filename = change_map_path[s]
   )
   print(sprintf("========== Calculating area score for %s... ==========", species_name))
   ## This step calculates the species area score by finding the amount of area lost over time ##
@@ -115,14 +114,8 @@ for (s in 1:n_species) {
   full_raster <- c(r1, r2)
 
   # Calculate pixel area
-  if (crs(full_raster, proj = TRUE) == "EPSG:4326") {
-    cell_area <- cellSize(full_raster[[1]], unit = "ha")
-  } else {
-    spatial_res <- res(full_raster)[1]
-    area_m2 <- (spatial_res^2) / 1000
-    cell_area <- full_raster[[1]]
-    cell_area[] <- area_m2
-  }
+  cell_area <- terra::cellSize(full_raster[[1]])  # m² for both lon/lat & projected
+  cell_area <- cell_area / 10000                  # convert m² → ha
 
   # Multiply habitat cover by pixel area
   s_habitat_area <- full_raster * cell_area
@@ -140,7 +133,7 @@ for (s in 1:n_species) {
     dplyr::group_by(Year) |>
     dplyr::mutate(
       diff = ref_area - Area,
-      percentage = as.numeric(Area * 100 / ref_area),
+      percentage = pmin(as.numeric(Area * 100 / ref_area), 100),
       score = "AS"
     )
 
@@ -154,11 +147,8 @@ for (s in 1:n_species) {
   # Need unmasked land cover as reference point
   r1_nomask <- ifel(!is.na(raster_nomask[[1]]), 1, 0)
   r2_nomask <- ifel(!is.na(raster_nomask[[2]]), 1, 0)
-  print(r1_nomask)
-  print(r2_nomask)
 
   full_raster_nomask <- c(r1_nomask, r2_nomask)
-  print(full_raster_nomask)
 
   # Calculate distance to edge
   l_habitat_dist <- map(as.list(full_raster_nomask), ~ gridDist(.x, target = 0))
@@ -189,6 +179,9 @@ for (s in 1:n_species) {
 
   # Add species habitat score to table
   df_SHS <- df_SHS |> dplyr::mutate(SHS = (AS + CS) / 2, info = "ESA", Year = c(start_year, end_year))
+  df_SHS$AS <- pmin(df_SHS$AS, 100)
+  df_SHS$CS <- pmin(df_SHS$CS, 100)
+  df_SHS$SHS <- pmin(df_SHS$SHS, 100)
 
   # Long format of this table
   df_SHS_tidy <- df_SHS |> pivot_longer(c("AS", "CS", "SHS"), names_to = "Score", values_to = "Values")

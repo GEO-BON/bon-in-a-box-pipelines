@@ -6,7 +6,7 @@ options(timeout = max(60000000, getOption("timeout")))
 packages <- list(
   "rjson", "dplyr", "tidyr", "purrr", "terra", "stars", "sf", "readr",
   "geodata", "gdalcubes", "rredlist", "stringr", "httr2", "geojsonsf", "rstac",
-  "sp"
+  "sp", "lwgeom"
 )
 
 lapply(packages, library, character.only = TRUE)
