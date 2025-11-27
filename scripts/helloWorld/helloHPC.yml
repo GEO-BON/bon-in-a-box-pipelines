@@ -15,6 +15,7 @@ inputs:
     description:
       Number of seconds that this run will take to complete.
       An input value of 13 generates and error message.
+      With the current 3 minute time limit, any input >= 180 will timeout.
     type: int
     example: 300
   some_csv_file:
@@ -39,6 +40,6 @@ outputs:
     type: int
     example: 4
 hpc:
-  mem: 30G
+  mem: 1G
   cpus-per-task: 1
-  time: 00:10:00
+  time: 00:03:00
