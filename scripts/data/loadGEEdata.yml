@@ -1,0 +1,29 @@
+script: loadGEEdata.py
+name: Load GEE Data
+description: |
+ Load data from Google Earth Engine
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  gee_layer_name:
+    label: GEE layer path
+    description: Path to the layer of interest in GEE
+    type: text
+    example: "ACA/reef_habitat/v2_0"
+  polygon: 
+    label: Polygon to crop by
+    description: Polygon to crop GEE layers by
+    type: application/geopackage+sqlite3
+outputs:
+  gee_layer:
+    label: GEE layer
+    description: Layer pulled from GEE
+    type: image/tiff;application=geotiff[]
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - earthengine-api
+    - geemap
