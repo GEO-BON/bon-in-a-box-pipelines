@@ -39,8 +39,8 @@
       "id": "12",
       "type": "io",
       "position": {
-        "x": 181.35704305765262,
-        "y": 112.96066028936173
+        "x": 72.03851576149248,
+        "y": 109.64797764402351
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -50,8 +50,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 786.0906597056153,
-        "y": 120.6964087870177
+        "x": 779.4652944149389,
+        "y": 87.56958233363585
       },
       "data": {
         "label": "Output"
@@ -61,8 +61,8 @@
       "id": "14",
       "type": "output",
       "position": {
-        "x": 783.0592265725945,
-        "y": 128.27499161956968
+        "x": 776.4338612819183,
+        "y": 13.987440355402327
       },
       "data": {
         "label": "Output"
@@ -77,6 +77,18 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": -238.37053192354372,
+        "y": 114.33877254806276
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
       }
     }
   ],
@@ -94,13 +106,6 @@
       "target": "4",
       "targetHandle": null,
       "id": "reactflow__edge-0bbox-4"
-    },
-    {
-      "source": "2",
-      "sourceHandle": null,
-      "target": "12",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-2-12crs"
     },
     {
       "source": "12",
@@ -129,29 +134,22 @@
       "target": "15",
       "targetHandle": null,
       "id": "reactflow__edge-12country_region_polygon-15"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "12",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-17-12bbox_crs"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@12|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "COL",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@12|region": {
-      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
-      "label": "State/Province code",
-      "type": "text",
-      "example": null,
-      "weight": 1
-    },
     "pipeline@2": {
       "label": "Coordinate reference system",
       "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\nThis MUST be in a projected reference system (not lat long).\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
       "type": "text",
       "example": "EPSG:4326",
-      "weight": 2
+      "weight": 0
     }
   },
   "outputs": {
@@ -191,7 +189,11 @@
         "role": "Pipeline development"
       }
     ],
-    "license": "CC-BY",
+    "license": "CC BY",
+    "lifecycle": {
+      "status": "deprecated",
+      "message": "This pipeline is no longer needed with integration of our location chooser. Please use the location chooser to obtain a country's bounding box. Refer to the user documentation for more details."
+    },
     "references": [
       {
         "text": "Massicotte P, South A (2023). _rnaturalearth: World Map Data from Natural Earth_. R package version 1.0.1, <https://CRAN.R-project.org/package=rnaturalearth>.",

@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 1747,
-        "y": 108
+        "x": 1577,
+        "y": 151.66666666666663
       },
       "data": {
         "descriptionFile": "bilbi_indicators>bilbi_weighted_mean.yml"
@@ -15,8 +15,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 1265,
-        "y": 496
+        "x": 1124,
+        "y": 427.66666666666663
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 1214.85869939063,
-        "y": 165.7096661262308
+        "x": 1124,
+        "y": 181.66666666666663
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -37,8 +37,8 @@
       "id": "3",
       "type": "constant",
       "position": {
-        "x": 742,
-        "y": 480
+        "x": 651,
+        "y": 431.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 742,
-        "y": 122
+        "x": 651,
+        "y": 57.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -63,19 +63,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 2334,
-        "y": 79
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "7",
-      "type": "output",
-      "position": {
-        "x": 2334,
-        "y": 163
+        "x": 2246,
+        "y": 547.5
       },
       "data": {
         "label": "Output"
@@ -85,8 +74,8 @@
       "id": "8",
       "type": "constant",
       "position": {
-        "x": 732,
-        "y": 600
+        "x": 641,
+        "y": 508.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -100,8 +89,8 @@
       "id": "9",
       "type": "constant",
       "position": {
-        "x": 732,
-        "y": 174
+        "x": 641,
+        "y": 99.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -112,68 +101,22 @@
       }
     },
     {
-      "id": "10",
-      "type": "io",
-      "position": {
-        "x": 465.148698354997,
-        "y": 281
-      },
-      "data": {
-        "descriptionFile": "getCountrybbox.json"
-      }
-    },
-    {
-      "id": "11",
-      "type": "output",
-      "position": {
-        "x": 1265,
-        "y": 12
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "12",
-      "type": "output",
-      "position": {
-        "x": 1265,
-        "y": 60
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "13",
       "type": "output",
       "position": {
-        "x": 1747,
-        "y": 467
+        "x": 1577,
+        "y": 582.1666666666666
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "14",
-      "type": "userInput",
-      "position": {
-        "x": 12,
-        "y": 447
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:4326"
       }
     },
     {
       "id": "15",
       "type": "constant",
       "position": {
-        "x": 742,
-        "y": 239
+        "x": 651,
+        "y": 141.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -185,8 +128,8 @@
       "id": "16",
       "type": "constant",
       "position": {
-        "x": 742,
-        "y": 375
+        "x": 651,
+        "y": 183.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -197,8 +140,8 @@
       "id": "17",
       "type": "constant",
       "position": {
-        "x": 742,
-        "y": 417
+        "x": 651,
+        "y": 225.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -209,8 +152,8 @@
       "id": "18",
       "type": "userInput",
       "position": {
-        "x": 768,
-        "y": 566
+        "x": 677,
+        "y": 396.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -238,8 +181,8 @@
       "id": "19",
       "type": "userInput",
       "position": {
-        "x": 819,
-        "y": 522
+        "x": 647,
+        "y": 350.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -251,8 +194,8 @@
       "id": "20",
       "type": "userInput",
       "position": {
-        "x": 763,
-        "y": 642
+        "x": 672,
+        "y": 473.66666666666663
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -265,6 +208,40 @@
           "mean",
           "median"
         ]
+      }
+    },
+    {
+      "id": "21",
+      "type": "io",
+      "position": {
+        "x": 452,
+        "y": 267.66666666666663
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "22",
+      "type": "output",
+      "position": {
+        "x": 1124,
+        "y": 12
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "24",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 366.91666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
       }
     }
   ],
@@ -305,13 +282,6 @@
       "id": "reactflow__edge-0summarised_values-6"
     },
     {
-      "source": "0",
-      "sourceHandle": "time_series_plot",
-      "target": "7",
-      "targetHandle": null,
-      "id": "reactflow__edge-0time_series_plot-7"
-    },
-    {
       "source": "8",
       "sourceHandle": null,
       "target": "1",
@@ -326,60 +296,11 @@
       "id": "reactflow__edge-9-2collections_items"
     },
     {
-      "source": "10",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "2",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-10data>getBoundingBox.yml@0|bbox-2bbox"
-    },
-    {
-      "source": "10",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "1",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-10data>getBoundingBox.yml@0|bbox-1bbox"
-    },
-    {
-      "source": "10",
-      "sourceHandle": "data>getCountryPolygon.yml@12|country_region_polygon",
-      "target": "0",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-10data>getCountryPolygon.yml@12|country_region_polygon-0study_area"
-    },
-    {
-      "source": "10",
-      "sourceHandle": "data>getCountryPolygon.yml@12|country",
-      "target": "11",
-      "targetHandle": null,
-      "id": "reactflow__edge-10data>getCountryPolygon.yml@12|country-11"
-    },
-    {
-      "source": "10",
-      "sourceHandle": "data>getCountryPolygon.yml@12|region",
-      "target": "12",
-      "targetHandle": null,
-      "id": "reactflow__edge-10data>getCountryPolygon.yml@12|region-12"
-    },
-    {
       "source": "1",
       "sourceHandle": "rasters",
       "target": "13",
       "targetHandle": null,
       "id": "reactflow__edge-1rasters-13"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-14-2crs"
-    },
-    {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "1",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-14-1crs"
     },
     {
       "source": "15",
@@ -445,76 +366,104 @@
       "id": "reactflow__edge-20-1aggregation"
     },
     {
-      "source": "14",
-      "sourceHandle": null,
-      "target": "10",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-14-10pipeline@2"
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
+      "target": "0",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-21country_region_polygon-0study_area"
     },
     {
-      "source": "10",
-      "sourceHandle": "data>getCountryPolygon.yml@12|country_region_polygon",
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
       "target": "2",
       "targetHandle": "study_area",
-      "id": "reactflow__edge-10data>getCountryPolygon.yml@12|country_region_polygon-2study_area"
+      "id": "reactflow__edge-21country_region_polygon-2study_area"
     },
     {
-      "source": "10",
-      "sourceHandle": "data>getCountryPolygon.yml@12|country_region_polygon",
+      "source": "21",
+      "sourceHandle": "country_region_polygon",
       "target": "1",
       "targetHandle": "study_area",
-      "id": "reactflow__edge-10data>getCountryPolygon.yml@12|country_region_polygon-1study_area"
+      "id": "reactflow__edge-21country_region_polygon-1study_area"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "country",
+      "target": "22",
+      "targetHandle": null,
+      "id": "reactflow__edge-21country-22"
+    },
+    {
+      "source": "21",
+      "sourceHandle": "region",
+      "target": "22",
+      "targetHandle": null,
+      "id": "reactflow__edge-21region-22"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "21",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-24-21bbox_crs"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-24-2bbox_crs"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-24-1bbox_crs"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "time_series_plot",
+      "target": "6",
+      "targetHandle": null,
+      "id": "reactflow__edge-0time_series_plot-6"
     }
   ],
   "inputs": {
-    "getCountrybbox.json@10|data>getCountryPolygon.yml@12|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "COL",
+    "pipeline@24": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
+      "type": "bboxCRS",
+      "example": null,
       "weight": 0
-    },
-    "getCountrybbox.json@10|data>getCountryPolygon.yml@12|region": {
-      "description": "Name of region, in the native language of that region",
-      "label": "State/Province name (optional)",
-      "type": "text",
-      "example": null,
-      "weight": 1
-    },
-    "pipeline@14": {
-      "label": "Coordinate reference system (optional)",
-      "description": "Numerical value referring to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nLeave blank to pull layers in their original CRS. Otherwise, they will be reprojected and resampled according to the resampling and aggregation methods specified below.",
-      "type": "text",
-      "example": null,
-      "weight": 2
     },
     "data>loadFromStac.yml@1|t0": {
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "Start date (optional)",
       "type": "text",
       "example": null,
-      "weight": 3
+      "weight": 1
     },
     "data>loadFromStac.yml@1|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "End date (optional)",
       "type": "text",
       "example": null,
-      "weight": 4
+      "weight": 2
     },
     "data>loadFromStac.yml@1|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution (optional)",
       "type": "text",
       "example": null,
-      "weight": 5
+      "weight": 3
     },
     "pipeline@19": {
-      "label": "Spatial resolution (optional)",
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers.",
+      "label": "Spatial resolution",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "type": "float",
       "example": null,
-      "weight": 6
+      "weight": 4
     },
     "pipeline@18": {
       "label": "Resampling method",
@@ -537,11 +486,11 @@
         "q1",
         "q3"
       ],
-      "weight": 7
+      "weight": 5
     },
     "pipeline@20": {
       "label": "Aggregation method",
-      "description": "Method used to aggregate items when layers combining over time.\n\nWill be ignored if not resampling.",
+      "description": "Method used to aggregate items when layers combining over time.\n\nWill be ignored if not aggregating.",
       "type": "options",
       "example": "first",
       "options": [
@@ -551,31 +500,31 @@
         "mean",
         "median"
       ],
-      "weight": 8
+      "weight": 6
     }
   },
   "outputs": {
-    "getCountrybbox.json@10|data>getCountryPolygon.yml@12|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "getCountrybbox.json@10|data>getCountryPolygon.yml@12|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 1
-    },
     "data>loadFromStac.yml@1|rasters": {
       "description": "Output raster files in geotiff format.",
       "label": "Raster layers of indicator for each year",
       "type": "image/tiff;application=geotiff[]",
+      "weight": 0
+    },
+    "data>getCountryPolygon.yml@21|country": {
+      "description": "Name of country of interest",
+      "label": "Country",
+      "type": "text",
+      "weight": 1
+    },
+    "data>getCountryPolygon.yml@21|region": {
+      "description": "Name of state/province of interest",
+      "label": "Region",
+      "type": "text",
       "weight": 2
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of BERI in the study area polygon.\n\n\nThe value, ranging from 0 to 1 represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.",
-      "label": "Indicator summary",
+      "label": "BERI summary",
       "type": "text/csv",
       "weight": 3
     },
@@ -588,7 +537,7 @@
   },
   "metadata": {
     "name": "Bioclimatic Ecosystem Resilience Index (BERI)",
-    "description": "CSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30 arc-second product for the years 2000, 2005, 2010, 2015 and 2020. BERI measures the capacity of natural ecosystems to retain species diversity in the face of climate change, as a function of ecosystem area, connectivity and integrity. The indicator assesses the extent to which any given spatial configuration of natural habitat across a landscape will promote or hinder climate-induced shifts in biological distributions. It does this by analyzing the functional connectivity of each grid-cell of natural habitat to areas of habitat in the surrounding landscape which are projected to support a similar assemblage of species under climate change to that currently associated with the cell of interest. The indicator can then be aggregated and reported by any desired spatial unit – e.g. an ecosystem type, a country, or the entire planet.\n\nThe BERI can be used to monitor and report past-to-present trends in the capacity of ecosystems to retain species diversity in the face of ongoing climate change by repeatedly recalculating the indicator using best-available mapping of ecosystem condition or integrity observed at multiple points in time, e.g. for different years. It can also serve as a leading indicator for assessing the contribution that proposed or implemented area-based actions are expected to make to enhancing the present capacity of ecosystems to retain species diversity, thereby providing a foundation for strategic prioritisation of such actions by countries.",
+    "description": "\n## Introduction\nCSIRO Bioclimatic Ecosystem Resilience Index (BERI v2) is a global 30 arc-second product for the years 2000, 2005, 2010, 2015 and 2020. BERI measures the capacity of natural ecosystems to retain species diversity in the face of climate change, as a function of ecosystem area, connectivity and integrity. The indicator assesses the extent to which any given spatial configuration of natural habitat across a landscape will promote or hinder climate-induced shifts in biological distributions. It does this by analyzing the functional connectivity of each grid-cell of natural habitat to areas of habitat in the surrounding landscape which are projected to support a similar assemblage of species under climate change to that currently associated with the cell of interest. The indicator can then be aggregated and reported by any desired spatial unit – e.g. an ecosystem type, a country, or the entire planet.\nThis pipeline calculates a weighted geometric mean of the BERI indicator over a region of interest.  The code to calculate the weighted mean was adapted from the \"Calculating weighted geometric means of  CSIRO BILBI indicator\" script on the  [CSIRO data access portal](https://doi.org/10.25919/4vvz-4j96).\n## Uses\nThe BERI can be used to monitor and report past-to-present trends in the capacity of ecosystems to retain species diversity in the face of ongoing climate change by repeatedly recalculating the indicator using best-available mapping of ecosystem condition or integrity observed at multiple points in time, e.g. for different years. It can also serve as a leading indicator for assessing the contribution that proposed or implemented area-based actions are expected to make to enhancing the present capacity of ecosystems to retain species diversity, thereby providing a foundation for strategic prioritisation of such actions by countries.\n## Pipeline limitations\n- BERI is a modeled layer, therefore there are greater uncertainties in areas with less data.  Interpret the results with caution.",
     "author": [
       {
         "name": "Jory Griffith",
@@ -597,11 +546,10 @@
       }
     ],
     "license": "CC-BY-NC",
-    "external_link": "https://data.csiro.au/collection/csiro:53973",
     "references": [
       {
         "text": "Harwood et al. 2022",
-        "doi": "https://doi.org/10.25919/tt2t-h452"
+        "doi": "https://doi.org/10.25919/4vvz-4j96"
       }
     ]
   }

@@ -25,20 +25,14 @@ inputs:
     label: Protected areas file
     description: >
       Optional, additionnal user-provided protected areas in GeoPackage format.
-
-
       When left blank, the script will only use the protected areas from WDPA.
     type: application/geopackage+sqlite3
     example: null
   crs:
-    label: Coordinate reference system
-    description: |
-      Coordinate reference system for the study area and protected areas. Must be in a projected reference system.
-
-
-      To find the reference system for your region, visit [epsg.io](https://epsg.io/).
-    type: text
-    example: EPSG:4326
+    label: CRS
+    description: Object containing CRS.
+    type: bboxCRS
+    example:
   status_type:
     label: PA legal status types to include
     description: |

@@ -11,7 +11,10 @@ os.chdir(sys.argv[1])
 # Reading inputs
 data = biab_inputs()
 
-bbox = data['bbox']
+if (data['bbox_crs']['region'] is not None):
+    bbox = data['bbox_crs']['region']['regionBboxWGS84']
+else:
+    bbox = data['bbox_crs']['country']['countryBboxWGS84']
 start_year = data['start_year']
 end_year = data['end_year']
 bands = data['bands']
@@ -19,7 +22,7 @@ polygon = data['study_area_polygon']
 aggregate_function = data['aggregate_function']
 spatial_resolution = data['spatial_resolution']
 season = data['season']
-crs = data['crs']
+crs = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['code'])
 id = os.getenv("CDSE_CLIENT_ID")
 secret = os.getenv("CDSE_CLIENT_SECRET")
 
@@ -59,6 +62,7 @@ datacube = connection.load_collection(
 )
 
 gdf = gpd.read_file(polygon)
+gdf = gdf.to_crs(epsg=4326)
 
 # Extract the geometry (assuming only one feature)
 geometry = gdf.geometry.iloc[0]

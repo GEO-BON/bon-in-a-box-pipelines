@@ -85,9 +85,9 @@ inputs:
     example: 'scripts/RedListIndex/input/iucn_history_assessment_data.csv'
   country:
     label: Country
-    description: Country of interest
-    type: text
-    example: "Colombia"
+    description: Country of interest.
+    type: country
+    example:
   taxonomic_group:
     label: Taxonomic group
     description: Name of taxonomic group of interest
