@@ -1,7 +1,7 @@
-script: loadGEEdata.py
-name: Load GEE Data
+script: calculate_extent_gee.py
+name: Calculate extent from GEE layer
 description: |
- Load data from Google Earth Engine
+ Calculate extent of a mask layer loaded from Google Earth Engine
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -12,10 +12,6 @@ inputs:
     description: Path to the layer of interest in GEE
     type: text
     example: "ACA/reef_habitat/v2_0"
-  polygon: 
-    label: Polygon to crop by
-    description: Polygon to crop GEE layers by
-    type: application/geopackage+sqlite3
   bands:
     label: Layer bands
     description: Bands to extract (leave blank for all)
@@ -25,12 +21,16 @@ inputs:
     label: Resolution
     description: Resolution for exported GEE layer (leave blank for original resolution)
     type: int
-    example: 100
+    example: 30
+  polygon: 
+    label: Polygon to crop by
+    description: Polygon to crop GEE layers by
+    type: application/geopackage+sqlite3
 outputs:
-  gee_layer:
-    label: GEE layer
-    description: Layer pulled from GEE
-    type: image/tiff;application=geotiff[]
+  coral_extent:
+    label: Extent
+    description: Extent of coral in m2
+    type: float
 conda:
   channels:
     - conda-forge

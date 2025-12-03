@@ -1,6 +1,7 @@
 import ee
 import os
 import geemap.geemap as geemap
+from shapely import Polygon
 
 inputs = biab_inputs()
 # -----------------------------
@@ -15,44 +16,33 @@ print(KEY_FILE)
 credentials = ee.ServiceAccountCredentials(SERVICE_ACCOUNT, KEY_FILE)
 
 ee.Initialize(credentials)
-print("here")
+
 # -----------------------------
 # 2. Load Habitat Image (input)
 # -----------------------------
-gee_layer_name = inputs['gee_layer_name']  # replace or make this dynamic
+gee_layer_name = inputs['gee_layer_name']  
 hab = ee.Image(gee_layer_name)
 
-# -----------------------------
-# 3. Create EEZ bounding box
-# -----------------------------
-eez_polygon = ee.Geometry.Rectangle([-80.60, 20.40, -72.50, 27.50], proj='EPSG:4326', geodesic=False)
-print(hab)
+#Either load bounding box or polygon
+
+polygon = ee.Geometry.Rectangle([-80.60, 20.40, -72.50, 27.50], proj='EPSG:4326', geodesic=False)
+# if bounding box
+#if input['polygon'] is None:
+    #polygon = ee.Geometry.Rectangle(input['bbox'], proj=input['proj'], geodesic=False)
+# if polygon
+#else:
+ #   polygon = polygon = Polygon(input['polygon'])
+
 # -----------------------------
 # 4. Clip habitat to EEZ
 # -----------------------------
-hab_clipped = hab.clip(eez_polygon)
+hab_clipped = hab.clip(polygon)
 print(hab_clipped)
 
-hab_clipped = hab_clipped.select(['reef_mask'])
+bands = inputs['bands']
+hab_clipped = hab_clipped.select(bands)
 
 
-# Calculate reef extent 
-area_image = ee.Image.pixelArea()
-
-reef_area = area_image.updateMask(hab_clipped.eq(1))
-
-scale_value = hab_clipped.projection().nominalScale().getInfo()
-
-stats = reef_area.reduceRegion(
-    reducer=ee.Reducer.sum(),
-    geometry=eez_polygon,
-    scale=scale_value,
-    maxPixels=1e13  # Set high to ensure all pixels are included
-)
-
-print("STATS")
-total_reef_area_sq_m = stats.get('area').getInfo()
-print(f"Total Reef Extent (m²): {total_reef_area_sq_m:,.2f}")
 # -----------------------------
 # 5. Export/download image locally
 # -----------------------------
@@ -60,12 +50,13 @@ print(f"Total Reef Extent (m²): {total_reef_area_sq_m:,.2f}")
 # Use ee.batch.Export.image.toDrive() for large images
 outfile = ("%s/gee_layer.tif") % (output_folder)
 
+resolution = inputs['resolution']
 #Download directly to local file
 geemap.ee_export_image(
     hab_clipped,
     filename=outfile,
-    scale=1000,
-    region=eez_polygon,
+    scale=resolution,
+    region=polygon,
     file_per_band=False
 )
 

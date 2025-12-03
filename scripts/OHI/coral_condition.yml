@@ -1,0 +1,33 @@
+script: coral_condition.py
+name: Calculate coral condition data
+description: | 
+ This script uses condition data from percent live coral cover from 12,634 surveys from 1975-2006 (Bruno and Selig 2007,
+  Schutte et al. 2010). When multiple data points were available for the same site and year, we averaged these data,
+   and also averaged the site data to calculate a per country per year average. However, data were missing for several 
+   countries and some countries did not have data for the reference or current year time periods or had only 1-2 surveys. 
+   Because coral cover can be highly temporally and spatially dynamic, having only a few surveys that may have been motivated 
+   by different reasons (i.e., documenting a pristine or an impacted habitat) can bias results. To calculate condition we 
+   used fitted values from a linear trend of all data per country, which was more robust to data poor situations and allowed 
+   us to take advantage of periods of intense sampling that did not always include both current and reference years. Then,
+    we created a fitted linear model of all these data points from 1975-2010, provided that 2 or more points are in 1980-1995
+     and 2 or more points are in 2000-2010. We defined the ‘current’ condition (health) as the mean of the predicted values
+    for 2008-2010, and the reference condition as the mean of the predicted values for 1985-1987.
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs: 
+  eez_polygon:
+    label: EEZ polygon
+    description: Exclusive economic zone polygon
+    type: application/geopackage+sqlite3
+  extent_data:
+    label: Habitat extent
+    description: Data on coral habitat extent
+    type: text/csv
+outputs:
+  coral_health:
+    label: Coral health
+    description: Coral health
+    type: text/csv
+
