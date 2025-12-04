@@ -73,7 +73,6 @@ load_stac<-function(staccollection='esacci-lc'){
   return(raster)
 }
 
-
 print("Loading Land Cover from STAC:", )
 LC<-load_stac("esacci-lc")
 
