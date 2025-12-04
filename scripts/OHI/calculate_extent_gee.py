@@ -1,6 +1,7 @@
 import ee
 import os
 import geemap.geemap as geemap
+import geopandas as gpd
 
 inputs = biab_inputs()
 
@@ -17,7 +18,9 @@ ee.Initialize(credentials)
 gee_layer_name = inputs['gee_layer_name']  # replace or make this dynamic
 hab = ee.Image(gee_layer_name)
 
-eez_polygon = ee.Geometry.Rectangle([-80.60, 20.40, -72.50, 27.50], proj='EPSG:4326', geodesic=False)
+
+eez_polygon = gpd.read_file(inputs['polygon'])
+
 
 hab_clipped = hab.clip(eez_polygon)
 print(hab_clipped)
@@ -34,6 +37,7 @@ print("Pixel resolution (m):", scale)
 reef_mask = hab_clipped.eq(1)
 
 resolution = inputs['resolution']
+
 pixel_count = reef_mask.reduceRegion(
     reducer=ee.Reducer.count(),
     geometry=eez_polygon,

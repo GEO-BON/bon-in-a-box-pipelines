@@ -1,17 +1,22 @@
-#if (!require("mregions2")) {
-pak::pak("mregions2")
-#  }
-
-library(mregions2)
+library(duckdb)
 library(sf)
+library(dplyr)
+if (!require("duckdbfs")) {
+  install.packages("duckdbfs")
+}
+library(duckdbfs)
 
-inputs <- biab_inputs()
-# Search for EEZ layers that match the country name
-print(input$country)
-search_result <- mr_search(input$country, dataset = "eez")
+input <- biab_inputs()
+print(input$country_region$country$englishName)
 
-eez <- mr_get(search_result, format = "sf")
+lazy_geo_data <- open_dataset("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/marine_regions_eez/eez_v12.parquet")
+print(input$country$englishName)
 
-eez_polygon_path <- file.path(outputFolder, "eez_polygon.gpkg")
-sf::st_write(eez, eez_polygon_path, delete_dsn = T)
-biab_output("eez", eez_polygon_path)
+geo_data_sf <- lazy_geo_data |> filter(TERRITORY1 == input$country_region$country$englishName) |> to_sf() |> st_set_crs(4326)
+geo_data_sf$fid <- as.integer(geo_data_sf$fid)
+
+print(class(geo_data_sf))
+
+eez_path <- file.path(outputFolder, "eez.gpkg")
+st_write(geo_data_sf, eez_path) 
+biab_output("eez", eez_path)

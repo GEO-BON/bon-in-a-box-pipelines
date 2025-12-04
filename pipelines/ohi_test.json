@@ -1,33 +1,44 @@
 {
   "nodes": [
     {
-      "id": "69",
+      "id": "1",
       "type": "io",
       "position": {
-        "x": 630.9624938964844,
-        "y": 232.79999542236328
+        "x": 602.9624938964844,
+        "y": 261.7999954223633
       },
       "data": {
-        "descriptionFile": "OHI>ohi_status_trends.yml"
+        "descriptionFile": "OHI>calculate_extent_gee.yml"
       }
     },
     {
-      "id": "70",
+      "id": "2",
       "type": "io",
       "position": {
-        "x": 34.962493896484375,
-        "y": 190.79999542236328
+        "x": 112.96249389648438,
+        "y": 210.79999542236328
       },
       "data": {
-        "descriptionFile": "OHI>ohi_download_data.yml"
+        "descriptionFile": "OHI>load_eez.yml"
       }
     },
     {
-      "id": "71",
+      "id": "3",
       "type": "output",
       "position": {
-        "x": 1235.9624938964844,
-        "y": 235.79999542236328
+        "x": 1121.9624938964844,
+        "y": 265.7999954223633
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "4",
+      "type": "output",
+      "position": {
+        "x": 496.9624938964844,
+        "y": 215.79999542236328
       },
       "data": {
         "label": "Output"
@@ -36,49 +47,71 @@
   ],
   "edges": [
     {
-      "source": "70",
-      "sourceHandle": "habitat_layers",
-      "target": "69",
-      "targetHandle": "habitat_layers",
-      "id": "reactflow__edge-70habitat_layers-69habitat_layers"
+      "source": "2",
+      "sourceHandle": "eez",
+      "target": "1",
+      "targetHandle": "polygon",
+      "id": "reactflow__edge-2eez-1polygon"
     },
     {
-      "source": "70",
-      "sourceHandle": "species_layers",
-      "target": "69",
-      "targetHandle": "species_layers",
-      "id": "reactflow__edge-70species_layers-69species_layers"
-    },
-    {
-      "source": "69",
-      "sourceHandle": "habitat_st_scores",
-      "target": "71",
+      "source": "1",
+      "sourceHandle": "coral_extent",
+      "target": "3",
       "targetHandle": null,
-      "id": "reactflow__edge-69habitat_st_scores-71"
+      "id": "reactflow__edge-1coral_extent-3"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "eez",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-2eez-4"
     }
   ],
   "inputs": {
-    "OHI>ohi_download_data.yml@70|start_year": {
-      "description": "Start year for the OHI assessment",
-      "label": "Start year",
-      "type": "int",
-      "example": null,
+    "OHI>calculate_extent_gee.yml@1|gee_layer_name": {
+      "description": "Path to the layer of interest in GEE",
+      "label": "GEE layer path",
+      "type": "text",
+      "example": "ACA/reef_habitat/v2_0",
       "weight": 0
     },
-    "OHI>ohi_download_data.yml@70|end_year": {
-      "description": "End year for the OHI assessment",
-      "label": "End year",
-      "type": "int",
-      "example": null,
+    "OHI>calculate_extent_gee.yml@1|bands": {
+      "description": "Bands to extract (leave blank for all)",
+      "label": "Layer bands",
+      "type": "text[]",
+      "example": [
+        "reef_mask"
+      ],
       "weight": 1
+    },
+    "OHI>calculate_extent_gee.yml@1|resolution": {
+      "description": "Resolution for exported GEE layer (leave blank for original resolution)",
+      "label": "Resolution",
+      "type": "int",
+      "example": 30,
+      "weight": 2
+    },
+    "OHI>load_eez.yml@2|country_region": {
+      "description": "Using the country chooser to select a region (region selections will be ignored as EEZs are national).",
+      "label": "Country",
+      "type": "countryRegion",
+      "weight": 3,
+      "example": null
     }
   },
   "outputs": {
-    "OHI>ohi_status_trends.yml@69|habitat_st_scores": {
-      "description": "Habitat status and trend scores",
-      "label": "Habitat status and trends",
-      "type": "text/csv",
+    "OHI>calculate_extent_gee.yml@1|coral_extent": {
+      "description": "Extent of coral in m2",
+      "label": "Extent",
+      "type": "float",
       "weight": 0
+    },
+    "OHI>load_eez.yml@2|eez": {
+      "description": "Polygons of EEZs for the country of interest",
+      "label": "Exclusive economic zones",
+      "type": "application/geopackage+sqlite3",
+      "weight": 1
     }
   }
 }

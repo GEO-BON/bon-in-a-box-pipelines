@@ -38,3 +38,4 @@ conda:
     - earthengine-api
     - geemap
     - shapely
+    - geopandas
