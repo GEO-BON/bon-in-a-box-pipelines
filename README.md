@@ -9,10 +9,10 @@
 <br>
 
 There is more to BON in a Box than pipelines. To get the big picture, you may watch these two short videos:
-[BON in a Box 2023](https://youtu.be/mLjnjCWwU3w?si=Zdj_HmMSh3SH5BpE) and 
+[BON in a Box 2023](https://youtu.be/mLjnjCWwU3w?si=Zdj_HmMSh3SH5BpE) and
 [What’s in the box?](https://youtu.be/QJ1j455Tsuo?si=5C-kJ63vlcFfXtca),
 [this longer webinar](https://youtu.be/6QHSX1Y70ss), or head to the [website](https://boninabox.geobon.org).
 
 ____________________
 
-*A GEO BON project, born from a collaboration between Microsoft, McGill, Humboldt institute, Université de Sherbrooke, Université Concordia and Université de Montréal.*
+*A GEO BON project, born from a collaboration between McGill, Humboldt institute, Université de Sherbrooke, Université Concordia and Université de Montréal, with seed funding from Microsoft.*
