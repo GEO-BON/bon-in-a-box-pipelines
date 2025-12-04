@@ -99,7 +99,7 @@ tcy=c()
 
 # Get year-by-year tree cover for whole area
 for (y in as.numeric(substr(c(yoi[1],yoi[length(yoi)]), 3,4))) {
-  
+  gc()
   # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
   tci = TC>30 & (tree_cover_loss==0 | tree_cover_loss > y) 
   
@@ -116,7 +116,7 @@ tcytot = rast(tcy)
 # create output directory for population maps
 dir.create(file.path(outputFolder, "/tcyy/"))
 for (pop in pop_poly$name) {
-
+  gc()
   print(pop)
 
   # crop rasters to pop extent
@@ -128,7 +128,7 @@ for (pop in pop_poly$name) {
   
   # Get year-by-year tree cover
   for (y in as.numeric(substr(yoi, 3,4))) {
-    
+      gc()
       # check if there was cover in 2000 (>30%), tree cover that was never lost (==0) or cover has not been lost yet
       tci = TC_pop>30 & (tree_cover_loss_pop==0 | tree_cover_loss_pop > y) 
 
@@ -145,6 +145,7 @@ for (pop in pop_poly$name) {
   terra::writeRaster(tcy, filename = paste0(outputFolder, "/tcyy/",pop,'.tif'), gdal=c("COMPRESS=DEFLATE", "TFW=YES"), filetype = "COG", overwrite=T)
   
 }
+gc()
 ######## Resample Pixels and create three polygons describing regions where habitat was lost, increased, or remained stable
 # create output directory for cover maps
 dir.create(file.path(outputFolder, "/cover maps/"))

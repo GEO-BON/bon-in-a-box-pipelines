@@ -1,0 +1,55 @@
+script: sensitivity.R
+name: sensitivity analysis
+author:
+  - name: Simon Pahls
+    email: simon.pahls@uzh.ch
+  - name: Oliver Selmoni
+description: "This script saves the Outputs of the analysis that are also used for the html report as a separate list. This can then be used as a standardized output for further analysis."
+
+inputs:
+  buffer_user:
+    label: User Buffer
+    description: Buffer provided by the user.
+    type: float
+    example: 100
+  buffer_uncertainty:
+    label: Buffer Uncertainty
+    description: Uncertainty in the buffer provided by the user.
+    type: float
+    example: 10
+  distance_user:
+    label: User Distance
+    description: Distance provided by the user.
+    type: float
+    example: 50
+  distance_uncertainty:
+    label: Distance Uncertainty
+    description: Uncertainty in the distance provided by the user.
+    type: float
+    example: 5
+  density_user:
+    label: User Density
+    description: Density provided by the user.
+    type: float
+    example: 1.5
+  density_uncertainty:
+    label: Density Uncertainty
+    description: Uncertainty in the density provided by the user.
+    type: float
+    example: 0.2
+  NeNc_ratio_user:
+    label: User NeNc Ratio
+    description: NeNc ratio provided by the user.
+    type: float
+    example: 0.8
+  NeNc_ratio_uncertainty:
+    label: NeNc Ratio Uncertainty
+    description: Uncertainty in the NeNc ratio provided by the user.
+    type: float
+    example: 0.1
+outputs:
+  table:
+    label: table
+    description: table of sensitivity analysis results
+    type: text/plain
+  

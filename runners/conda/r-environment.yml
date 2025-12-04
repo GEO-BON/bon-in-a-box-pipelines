@@ -48,3 +48,6 @@ dependencies:
   - r-ecmwfr
   - r-dismo
   - r-tidyverse
+  - r-ggeffects
+  - r-glmmTMB
+  - r-patchwork

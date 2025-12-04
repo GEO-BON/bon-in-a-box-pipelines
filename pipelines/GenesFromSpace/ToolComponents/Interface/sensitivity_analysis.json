@@ -1,0 +1,261 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 418,
+        "y": 93
+      },
+      "data": {
+        "descriptionFile": "GFS_IndicatorsTool>sensitivity.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "userInput",
+      "position": {
+        "x": 110,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 100
+      }
+    },
+    {
+      "id": "2",
+      "type": "userInput",
+      "position": {
+        "x": 53,
+        "y": 48
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 10
+      }
+    },
+    {
+      "id": "3",
+      "type": "userInput",
+      "position": {
+        "x": 90,
+        "y": 84
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 50
+      }
+    },
+    {
+      "id": "4",
+      "type": "userInput",
+      "position": {
+        "x": 32,
+        "y": 120
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 5
+      }
+    },
+    {
+      "id": "5",
+      "type": "userInput",
+      "position": {
+        "x": 100,
+        "y": 156
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1.5
+      }
+    },
+    {
+      "id": "6",
+      "type": "userInput",
+      "position": {
+        "x": 42,
+        "y": 192
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.2
+      }
+    },
+    {
+      "id": "7",
+      "type": "userInput",
+      "position": {
+        "x": 69,
+        "y": 228
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.8
+      }
+    },
+    {
+      "id": "8",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 264
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.1
+      }
+    },
+    {
+      "id": "9",
+      "type": "output",
+      "position": {
+        "x": 876.2927547790025,
+        "y": 97.28197023850603
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "buffer_user",
+      "id": "reactflow__edge-1-0buffer_user"
+    },
+    {
+      "source": "2",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "buffer_uncertainty",
+      "id": "reactflow__edge-2-0buffer_uncertainty"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "distance_user",
+      "id": "reactflow__edge-3-0distance_user"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "distance_uncertainty",
+      "id": "reactflow__edge-4-0distance_uncertainty"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "density_user",
+      "id": "reactflow__edge-5-0density_user"
+    },
+    {
+      "source": "6",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "density_uncertainty",
+      "id": "reactflow__edge-6-0density_uncertainty"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "NeNc_ratio_user",
+      "id": "reactflow__edge-7-0NeNc_ratio_user"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "NeNc_ratio_uncertainty",
+      "id": "reactflow__edge-8-0NeNc_ratio_uncertainty"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "table",
+      "target": "9",
+      "targetHandle": null,
+      "id": "reactflow__edge-0table-9"
+    }
+  ],
+  "inputs": {
+    "pipeline@1": {
+      "label": "User Buffer",
+      "description": "Buffer provided by the user.",
+      "type": "float",
+      "example": 100,
+      "weight": 0
+    },
+    "pipeline@2": {
+      "label": "Buffer Uncertainty",
+      "description": "Uncertainty in the buffer provided by the user.",
+      "type": "float",
+      "example": 10,
+      "weight": 1
+    },
+    "pipeline@3": {
+      "label": "User Distance",
+      "description": "Distance provided by the user.",
+      "type": "float",
+      "example": 50,
+      "weight": 2
+    },
+    "pipeline@4": {
+      "label": "Distance Uncertainty",
+      "description": "Uncertainty in the distance provided by the user.",
+      "type": "float",
+      "example": 5,
+      "weight": 3
+    },
+    "pipeline@5": {
+      "label": "User Density",
+      "description": "Density provided by the user.",
+      "type": "float",
+      "example": 1.5,
+      "weight": 4
+    },
+    "pipeline@6": {
+      "label": "Density Uncertainty",
+      "description": "Uncertainty in the density provided by the user.",
+      "type": "float",
+      "example": 0.2,
+      "weight": 5
+    },
+    "pipeline@7": {
+      "label": "User NeNc Ratio",
+      "description": "NeNc ratio provided by the user.",
+      "type": "float",
+      "example": 0.8,
+      "weight": 6
+    },
+    "pipeline@8": {
+      "label": "NeNc Ratio Uncertainty",
+      "description": "Uncertainty in the NeNc ratio provided by the user.",
+      "type": "float",
+      "example": 0.1,
+      "weight": 7
+    }
+  },
+  "outputs": {
+    "GFS_IndicatorsTool>sensitivity.yml@0|table": {
+      "description": "table of sensitivity analysis results",
+      "label": "table",
+      "type": "text/plain",
+      "weight": 0
+    }
+  }
+}

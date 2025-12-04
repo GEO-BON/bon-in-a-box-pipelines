@@ -1,0 +1,27 @@
+script: LC_info.R
+name: Landcover Information
+description: This Script tells you land cover classes are prevalent in the area of interest and how much area they cover.
+author:
+  - name: Oliver Selmoni
+
+inputs:
+  
+  population_polygons:
+    label: Polygons of populations 
+    description: Path to geojson file storing polygons of populations.  
+    type: application/geo+json
+    example: '/userdata/updated_polygons.geojson'
+
+  yoi:
+    label: Years of interest
+    description: List of years for which landcover should be extracted (maximum range 1992 - 2020).
+    type: int[]
+    example: [1995, 2000, 2005, 2010, 2015, 2020]
+
+
+outputs:
+
+  lc_prevalence:
+    label: Land cover prevalence
+    description: Which land cover classes are prevalent in the area of interest and how much area they cover.
+    type: text
