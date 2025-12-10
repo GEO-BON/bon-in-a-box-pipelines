@@ -24,7 +24,7 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 	for x in splist:
 		print(x)
 		try:
-			keys.append(species.name_backbone(x)['usageKey'])
+			keys.append(species.name_backbone(x)['usage']['key'])
 		except:
 			print(f"Couldn't find {x}")
 			continue
