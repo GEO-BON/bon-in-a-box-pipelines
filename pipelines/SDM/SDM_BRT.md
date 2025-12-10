@@ -75,16 +75,20 @@ A GBIF API key is needed for this analysis. Learn more [here](https://techdocs.g
 ### Pipeline inputs
 
 - **Species**: The name of the taxon the build a species distribution model for
-- **Environmental Predictors**: The set of environmental predictors to use
-- **Coordinate Reference System**: The coordinate reference system to use for the analysis
-- **Bounding Box**: The bounding box for the analysis, given in the same coordinate
-  reference system as listed above
-- **GBIF Data Source**: the source of GBIF data to use
-- **Start Year**: the earliest year to select occurrences from
-- **End Year**: the final year to select occurrences from
-- **Spatial Resolution**: the spatial resolution of the analysis in meters
-- **Mask**: a mask of regions to ignore
+- **Bounding and CRS**: Choose a bounding box for the analysis, can be a country, region, or a custom bounding box. This will also allow the user to choose a CRS for the output.
 - **STAC URL**: the URL to the STAC catalogue where the environmental predictors are hosted
+- **Environmental Predictors**: The set of environmental predictors to use, for example bioclimactic variables or land cover.
+- **Minimum year**: Minimum year for the GBIF observations
+- **Maximum year**: The maximum year for the GBIF observations
+- **Spatial resolution**: spatial resolution of the rasters in the same units as the chosen coordinate reference system (meters or degrees)
+- **Study area**: Polygon of the study area used to crop outputs.
+- **Land cover layer**: The layer for landcover to mask either water or land (depending on whether it is terrestrial or not)
+- **Value for water in mask**: Value used to represent water in the chosen water mask (will mask out everything else if doing SDM for aquatic species)
+- **is terrestrial species**: Boolean to choose whether you are running the SDM on terrestrial or aquatic.
+- **Max candidate pseudoabsences**: Setting the maximum number of candidate pseudoabsences involves ensuring broad coverage of the study area while avoiding unnecessary computational cost or excessive sampling of unrealistic environments. A larger pool of candidate points increases the chance of selecting ecologically meaningful absences, but beyond a certain threshold it offers diminishing returns and may introduce bias if it oversamples areas far outside the species’ accessible range. The ideal number is typically guided by study extent, environmental heterogeneity, and species ecology, and can be fine-tuned by testing different values to identify a level that supports stable model performance without inflating computation or noise.
+- **Num crossvalidation folds**: Number of folds to use for k-fold crossvalidation. Increasing the number of folds in cross-validation for a species distribution model generally provides a more reliable estimate of model performance by reducing variance, but it also increases computational cost and may lead to higher sensitivity to spatial autocorrelation if folds are too small or not spatially structured.
+- **Pseudoabsence buffer**: Minimum distance to a presence in kilometers. Choose a pseudoabsence buffer that is large enough to avoid placing absences in areas the species is likely to occupy, but not so large that it removes important environmental variation. The buffer distance should reflect species ecology, sampling bias, and the resolution of environmental predictors, and can be refined by testing several distances to find one that yields stable, interpretable model performance.
+- **Pseudoabsence proportion**: The number of pseudoabsences given by the proportion of the total occurrences to use. Choosing an appropriate pseudoabsence proportion involves balancing statistical power with ecological realism. Using more pseudoabsences can improve model discrimination by providing a stronger contrast with presence data, but too many can overwhelm the presence signal or overweight poorly sampled areas. The optimal proportion typically reflects species prevalence, study extent, and modeling algorithm, and is best identified by testing several proportions to find the one that produces stable predictions and strong performance metrics.
 
 
 ### Pipeline outputs
