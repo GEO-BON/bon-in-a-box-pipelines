@@ -736,6 +736,13 @@
       "example": null,
       "weight": 1
     },
+    "pipeline@146": {
+      "label": "STAC URL",
+      "description": "URL of the STAC catalog.",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 2
+    },
     "pipeline@137": {
       "label": "Environmental Predictors",
       "description": "Vector of strings, collection name followed by '|' followed by item id. View GEO BON STAC catalog items [here](https://stac.geobon.org/viewer/). The collection name and item name can be found in the URL (e.g. for \"https://stac.geobon.org/viewer/chelsa-clim/bio1\" the collection name is chelsa-clim and the item id is bio1). ",
@@ -747,27 +754,20 @@
         "chelsa-clim|bio12",
         "chelsa-clim|bio15"
       ],
-      "weight": 2
+      "weight": 3
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 3
+      "weight": 4
     },
     "pipeline@128": {
       "label": "Spatial Resolution",
       "description": "Integer, spatial resolution of the rasters in the same units as the chosen coordinate reference system (meters or degrees)",
       "type": "float",
       "example": 0.008,
-      "weight": 4
-    },
-    "pipeline@146": {
-      "label": "STAC URL",
-      "description": "URL of the STAC catalog.",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
       "weight": 5
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
