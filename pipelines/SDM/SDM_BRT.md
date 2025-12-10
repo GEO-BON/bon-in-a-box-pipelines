@@ -7,8 +7,8 @@ Review status: Under review
 ## Introduction
 This pipeline builds a model to predict the distribution of a species (a type of
 essential biodiversity variable), by using occurrence data from the Global
-Biodiversity Information Facility (GBIF), and environmental predictors from an
-arbitrary STAC Catalogue.
+Biodiversity Information Facility (GBIF), and environmental predictors from a
+STAC Catalogue.
 
 In particular, this pipeline uses a specific model called a Boosted Regression
 Tree (BRT), a machine-learning model which tends to work well with spatial data.
