@@ -808,28 +808,28 @@
       "weight": 10
     },
     "SDM>BRT>fitBRT.yml@179|max_candidate_pseudoabsences": {
-      "description": "helps w large rasters",
+      "description": "Maximum number of candidate pseudoabsences. A larger pool of candidate points increases the chance of selecting ecologically meaningful absences, but beyond a certain threshold it offers diminishing returns and may introduce bias if it oversamples areas far outside the species’ accessible range. The ideal number is typically guided by study extent, environmental heterogeneity, and species ecology, and can be fine-tuned by testing different values to identify a level that supports stable model performance without inflating computation or noise.",
       "label": "max candidate pseudoabsences",
       "type": "int",
       "example": 100000,
       "weight": 11
     },
     "SDM>BRT>fitBRT.yml@179|num_folds": {
-      "description": "number of folds to use for k-fold crossvalidation",
+      "description": "Number of folds to use for k-fold crossvalidation. Increasing the number of folds in cross-validation \nfor a species distribution model generally provides a more reliable estimate of model performance by reducing variance, but it also increases computational cost",
       "label": "num crossvalidation folds",
       "type": "int",
       "example": 4,
       "weight": 12
     },
     "SDM>BRT>fitBRT.yml@179|pseudoabsence_buffer": {
-      "description": "minimum distance to a presence in kilometers",
+      "description": "Minimum distance to a presence in kilometers. Choose a pseudoabsence buffer that is large enough to avoid placing absences in areas the species is likely to occupy, but not so large that it removes important \nenvironmental variation. The buffer distance should reflect species ecology, sampling bias, and the resolution of environmental predictors, and can be refined by testing several distances to find one that yields stable, interpretable model performance.",
       "label": "pseudoabsence buffer",
       "type": "float",
       "example": 10,
       "weight": 13
     },
     "SDM>BRT>fitBRT.yml@179|pa_proportion": {
-      "description": "The number of PAs, given by the proportion of the total occurrences to use.",
+      "description": "The number of pseudoabsences, given by the proportion of the total occurrences to use. Using more pseudoabsences can improve model discrimination by providing a stronger contrast with presence data, \nbut too many can overwhelm the presence signal or overweight poorly sampled areas.",
       "label": "Pseudoabsence proportion",
       "type": "float",
       "example": 2.4,
