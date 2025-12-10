@@ -1,0 +1,33 @@
+script: balancedAcceptance.jl
+name: Balanced Acceptance Sampling
+description: "Selects Spatially Balanced Samples from a Priority Map, where the weighting toward high priority is a parameter."
+author:
+  - name: Michael D. Catchen
+    identifier: https://orcid.org/0000-0002-6506-6487
+inputs:
+  priority_map:
+    label: sampling priority map
+    description: a raster where each pixel is the relative priority for sampling.
+    type: image/tiff;application=geotiff
+    example: "/output/JuliaBAS/balancedAcceptance/demo_data/demo_priority.tif"
+  num_sites:
+    label: number of sites 
+    description: number of sites to select
+    type: int
+    example: 50
+  mask:
+    label: mask of valid sampling locations
+    description: mask of where valid smapling locations can be placed. 1 = allowed, 0 = not allowed.
+    type: image/tiff;application=geotiff
+    example: "/output/JuliaBAS/balancedAcceptance/demo_data/demo_mask.tif"
+  weight:
+    label: weight toward high priority
+    description: (0, infinity), where higher means more weight toward high priority. this can break if too high
+    type: float
+    example: 3.0
+outputs:
+  selected_sites:
+    label: selected sites
+    description: TSV of selected sites
+    type: image/tiff;application=geotiff
+ 
