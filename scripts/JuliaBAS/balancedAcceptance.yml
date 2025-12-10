@@ -29,5 +29,5 @@ outputs:
   selected_sites:
     label: selected sites
     description: TSV of selected sites
-    type: image/tiff;application=geotiff
+    type: text/tab-separated-values
  

@@ -76,14 +76,17 @@ function main()
     num_sites = inputs["num_sites"]
     priority_map = SDMLayer(inputs["priority_map"])
     
-    mask_layer = Bool.(SDMLayer(inputs["mask"]))
-    # hack until fixed in public BONs version
-    mask_layer.indices .= mask_layer.indices .& mask_layer.grid
-
+    
+    mask_layer = nothing 
+    if !isnothing(inputs["mask"]) 
+        mask_layer = Bool.(SDMLayer(inputs["mask"]))
+        # hack until fixed in public BONs version
+        mask_layer.indices .= mask_layer.indices .& mask_layer.grid
+    end 
 
     inclusion_probability = apply_weight_to_layer(priority_map, priority_weight)
 
-    bon = sample(BalancedAcceptance(num_sites), priority_map, inclusion=inclusion_probability)
+    bon = sample(BalancedAcceptance(num_sites), priority_map, inclusion=inclusion_probability, mask=mask_layer)
 
     write_outputs(RUNTIME_DIR, bon)
 end
