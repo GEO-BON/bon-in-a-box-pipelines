@@ -25,11 +25,26 @@ inputs:
     description: landcover layer containing open water pixels
     type: image/tiff;application=geotiff[]
     example: "/output/foo/bar"
+  water_value:
+    label: value for water in mask
+    description: value used to represent water in the water mask
+    type: int
+    example: 210
+  terrestrial:
+    label: is terrestrial species
+    description: boolean flag if the species are terrestrial
+    type: boolean
+    example: true
   max_candidate_pseudoabsences:
     label: max candidate pseudoabsences
     description: helps w large rasters
     type: int
     example: 100000
+  num_folds:
+    label: num crossvalidation folds
+    description: number of folds to use for k-fold crossvalidation
+    type: int
+    example: 4
   pseudoabsence_buffer:
     label: pseudoabsence buffer
     description: minimum distance to a presence in kilometers
@@ -64,8 +79,4 @@ outputs:
   env_corners:
     label: env_corners
     description: location of presences and pseudoabsences in environment space
-    type: image/jpg
-  tuning:
-    label: tuning curve
-    description: tuning curve
     type: image/jpg
