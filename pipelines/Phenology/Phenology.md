@@ -63,6 +63,7 @@ This step calculates the difference in the layers of the phenology raster layers
 **Sample run:** See an example Phenology run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/Phenology%3Ephenology_EO/f08ed95a9538d87c7303027390889fba) and [viewer](https://pipelines-results.geobon.org/viewer/Phenology%3Ephenology_EO%3Ef08ed95a9538d87c7303027390889fba).
 
 ## Troubleshooting
+The phenology layers are fine resolution, so pulling them in the original resolution may take a significant amount of time and space on your computer.
 
 ## References
 Copernicus Land Monitoring Service. (2024). High Resolution Vegetation Phenology and Productivity: Plant Phenology Index (raster 10 m), version 1 revision 1 [Dataset]. European Union. https://land.copernicus.eu/en/access-data/copernicus-services-catalogue/high-resolution-vegetation-phenology-and-productivity-1
