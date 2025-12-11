@@ -37,7 +37,7 @@ The pipeline requires an API key for the Copernicus Data Space Ecosystem. To acq
 ### Pipeline steps
 
 #### **1. Getting the polygon of the area of interest**
-This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using the [GeoBoundaries API](https://www.geoboundaries.org/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
+This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using [Fieldmaps](https://fieldmaps.io/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
 
 #### **2. Summarising the phenology**
 This step summarises the yearly phenology data for the country of interest using the copernicus data space ecosystem phenology layer. The openEO python client is used to send a job to openEO. The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season. It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation.
