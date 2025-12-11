@@ -72,7 +72,7 @@ This step retrieves protected areas in the country/region of interest from the W
 
 #### **2. Getting the polygon of the area of interest**
 
-This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using the [GeoBoundaries API](https://www.geoboundaries.org/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
+This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using the [Fieldmaps](https://fieldmaps.io/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
 
 #### **3. Cleaning the protected areas data**
 
