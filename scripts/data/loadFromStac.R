@@ -27,7 +27,7 @@ gdalcubes::gdalcubes_options(parallel = 1)
 CRS <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 bounding_box <- input$bbox_crs$bbox
 
-if (is.null(CRS) || is.null(bounding_box)){
+if (is.null(CRS) || is.null(bounding_box)) {
   biab_error_stop("Please select a country/region and CRS. When using a custom study area,
   select the country/region that contains the study area and a CRS to use.")
 }
@@ -202,8 +202,15 @@ for (coll_it in collections_items) { # Loop through input array
       masked <- resampled
     }
 
-    # Name file path
+    # Name file path, adds
+    base_name <- names(masked)
     paths <- file.path(outputFolder, paste0(names(masked), ".tif"))
+    print(paths)
+    k <- 1
+    while (file.exists(paths)) {
+      paths <- file.path(outputFolder, paste0(base_name, "_", k, ".tif"))
+      k <- k + 1
+    }
 
     file <- writeRaster(masked, paths)
 
