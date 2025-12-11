@@ -32,7 +32,7 @@ The Natural History Museum has created raster layers of BII since the year 2000.
 ### Pipeline steps
 
 #### **1. Getting the polygon of the area of interest**
-This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using the [GeoBoundaries API](https://www.geoboundaries.org/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
+This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using [Fieldmaps](https://fieldmaps.io/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
 
 #### **2. Loading data from the GEO BON STAC catalog**
 This step extracts the global biodiversity intactness layers from various collections on the GEO BON Spatio Temporal Asset Catalog. The layers are in EPSG: 4326 and 10x10 km resolution but the user can specify other coordinate references systems and spatial resolutions. The BII uses the PREDICTS database to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact.
