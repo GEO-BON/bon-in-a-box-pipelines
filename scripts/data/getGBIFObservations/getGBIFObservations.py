@@ -12,10 +12,10 @@ taxa = data['taxa']
 if taxa=='' or taxa==None or len(taxa)==0:
 	biab_error_stop("Please specify taxa")
 
-bbox = data['bbox_crs']['bbox']
+if data['bbox_crs']=='' or data['bbox_crs']==None or len(data['bbox_crs'])==0:
+	biab_error_stop("Please specify bounding box and crs")
 
-if bbox=='' or bbox==None or len(bbox)==0:
-	biab_error_stop("Please specify bounding box")
+bbox = data['bbox_crs']['bbox']
 
 min_year = data['min_year']
 if min_year==None or min_year=='' or min_year<0 or min_year>datetime.date.today().year:

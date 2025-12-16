@@ -904,7 +904,7 @@
   },
   "metadata": {
     "name": "Species distribution modeling with Boosted Regression Trees (BRTs)",
-    "description": "This pipeline generates predictions for a species distribution model using the BRTs.",
+    "description": "\n## Introduction\nThis pipeline builds a model to predict the distribution of a species (a type of essential biodiversity variable), by using occurrence data from the Global Biodiversity Information Facility (GBIF), and environmental predictors from a STAC Catalogue.\nIn particular, this pipeline uses a specific model called a Boosted Regression Tree (BRT), a machine-learning model which tends to work well with spatial data.\n\n## Uses\nBRT species distribution models can be used as input layers for other pipelines that require species ranges (e.g. the Species Habitat Index) or stacked together to create maps of species richness. Uncertaintly layers from these SDMs can be used to prioritize sampling areas (e.g. through the occurrence sampling priority pipeline).\n\n## Pipeline limitations\n- The pipeline needs a minimum number of occurrences. If there are too few occurrences the model will not generate accurate predictions. - If there are a ton of occurrences, pseudoabsence generation will be slow. Make sure that the maximum candidate number of pseudoabsences is appropriate for the size of the input rasters. Pseudoabsences should not be too sparse compared to your occurrences. - Do not transform variables (e.g. PCA) before inputting into the pipeline. \n\n## Before you start\nA GBIF API key is needed for this analysis. Learn more [here](https://techdocs.gbif.org/en/openapi/).",
     "author": [
       {
         "name": "Michael D. Catchen",
@@ -912,7 +912,20 @@
         "role": "Pipeline development"
       }
     ],
+    "lifecycle": {
+      "status": "in_review"
+    },
     "license": "MIT",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT"
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT",
+    "references": [
+      {
+        "text": "Elith, J., Leathwick, J.R. and Hastie, T. (2008), A working guide to boosted regression trees. Journal of Animal Ecology, 77.802-813.",
+        "doi": "https://doi.org/10.1111/j.1365-2656.2008.01390.x"
+      },
+      {
+        "text": "Poisot, T.; Bussières-Fournel, A.; Dansereau, G.; Catchen, M. D. A Julia toolkit for species distribution data. Peer Community Journal, Volume 5 (2025), article no. e101.",
+        "doi": "https://doi.org/10.24072/pcjournal.589"
+      }
+    ]
   }
 }
