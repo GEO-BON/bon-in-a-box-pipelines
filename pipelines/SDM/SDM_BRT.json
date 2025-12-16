@@ -763,18 +763,18 @@
       "example": 2010,
       "weight": 4
     },
-    "pipeline@128": {
-      "label": "Spatial Resolution",
-      "description": "Integer, spatial resolution of the rasters in the same units as the chosen coordinate reference system (meters or degrees)",
-      "type": "float",
-      "example": 0.008,
-      "weight": 5
-    },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
+      "weight": 5
+    },
+    "pipeline@128": {
+      "label": "Spatial Resolution",
+      "description": "Integer, spatial resolution of the rasters in the same units as the chosen coordinate reference system (meters or degrees)",
+      "type": "float",
+      "example": 0.008,
       "weight": 6
     },
     "pipeline@166": {
