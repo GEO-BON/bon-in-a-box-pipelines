@@ -1,0 +1,112 @@
+{
+  "nodes": [
+    {
+      "id": "175",
+      "type": "io",
+      "position": {
+        "x": 241,
+        "y": 258.8125
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "176",
+      "type": "io",
+      "position": {
+        "x": 715,
+        "y": 274.8125
+      },
+      "data": {
+        "descriptionFile": "OHI>calculate_extent_gee.yml"
+      }
+    },
+    {
+      "id": "178",
+      "type": "output",
+      "position": {
+        "x": 1248,
+        "y": 275.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "175",
+      "sourceHandle": "polygon",
+      "target": "176",
+      "targetHandle": "polygon",
+      "id": "reactflow__edge-175polygon-176polygon"
+    },
+    {
+      "source": "176",
+      "sourceHandle": "extent",
+      "target": "178",
+      "targetHandle": null,
+      "id": "reactflow__edge-176extent-178"
+    }
+  ],
+  "inputs": {
+    "data>load_polygons.yml@175|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs)",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ"
+      ],
+      "example": null,
+      "weight": 0
+    },
+    "data>load_polygons.yml@175|country_region": {
+      "description": "Using the country chooser to select a region (region selections will be ignored as EEZs are national).",
+      "label": "Country",
+      "type": "countryRegion",
+      "example": null,
+      "weight": 1
+    },
+    "data>load_polygons.yml@175|buffer": {
+      "description": "Buffer for pulling transboundary protected areas (WDPA data only). The buffer will pull protected areas within that distance of the country border (in meters).",
+      "label": "Transboundary buffer",
+      "type": "int",
+      "example": 500,
+      "weight": 2
+    },
+    "OHI>calculate_extent_gee.yml@176|gee_layer_name": {
+      "description": "Path to the layer of interest in GEE",
+      "label": "GEE layer path",
+      "type": "text",
+      "example": "ACA/reef_habitat/v2_0",
+      "weight": 3
+    },
+    "OHI>calculate_extent_gee.yml@176|bands": {
+      "description": "Bands to extract (leave blank for all)",
+      "label": "Layer bands",
+      "type": "text[]",
+      "example": [
+        "reef_mask"
+      ],
+      "weight": 4
+    },
+    "OHI>calculate_extent_gee.yml@176|resolution": {
+      "description": "Resolution for exported GEE layer (leave blank for original resolution)",
+      "label": "Resolution",
+      "type": "int",
+      "example": 30,
+      "weight": 5
+    }
+  },
+  "outputs": {
+    "OHI>calculate_extent_gee.yml@176|extent": {
+      "description": "Extent of coral in m2",
+      "label": "Extent",
+      "type": "float",
+      "weight": 0
+    }
+  }
+}

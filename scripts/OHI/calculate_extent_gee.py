@@ -51,4 +51,4 @@ count_value = pixel_count.get('reef_mask').getInfo()
 area_m2 = count_value * scale * scale  # since pixel is 5m × 5m
 print("Total reef area (m²):", area_m2)
 
-biab_output("coral_extent", area_m2)
+biab_output("extent", area_m2)

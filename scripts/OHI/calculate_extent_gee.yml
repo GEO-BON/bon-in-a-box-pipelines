@@ -27,7 +27,7 @@ inputs:
     description: Polygon to crop GEE layers by
     type: application/geopackage+sqlite3
 outputs:
-  coral_extent:
+  extent:
     label: Extent
     description: Extent of coral in m2
     type: float
