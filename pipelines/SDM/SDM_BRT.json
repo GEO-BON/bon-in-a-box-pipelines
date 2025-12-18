@@ -342,88 +342,77 @@
       }
     },
     {
-      "id": "179",
+      "id": "187",
       "type": "io",
       "position": {
-        "x": 1893,
-        "y": 352.5
+        "x": 1972.0055301679058,
+        "y": 416.8401202567726
       },
       "data": {
         "descriptionFile": "SDM>BRT>fitBRT.yml"
       }
     },
     {
-      "id": "180",
+      "id": "188",
       "type": "output",
       "position": {
-        "x": 2264,
-        "y": 601
+        "x": 2424.005530167906,
+        "y": 415.8401202567726
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "181",
+      "id": "189",
       "type": "output",
       "position": {
-        "x": 2264,
-        "y": 648
+        "x": 2414.005530167906,
+        "y": 431.8401202567726
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "182",
+      "id": "190",
       "type": "output",
       "position": {
-        "x": 2264,
-        "y": 695
+        "x": 2420.005530167906,
+        "y": 441.8401202567726
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "183",
+      "id": "191",
       "type": "output",
       "position": {
-        "x": 2264,
-        "y": 507
+        "x": 2464.005530167906,
+        "y": 461.8401202567726
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "184",
+      "id": "192",
       "type": "output",
       "position": {
-        "x": 2264,
-        "y": 554
+        "x": 2446.005530167906,
+        "y": 469.8401202567726
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "185",
+      "id": "193",
       "type": "output",
       "position": {
-        "x": 2264,
-        "y": 742
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "186",
-      "type": "output",
-      "position": {
-        "x": 2264,
-        "y": 789
+        "x": 2436.005530167906,
+        "y": 487.8401202567726
       },
       "data": {
         "label": "Output"
@@ -642,81 +631,74 @@
       "id": "reactflow__edge-178-161temporal_res"
     },
     {
-      "source": "161",
-      "sourceHandle": "rasters",
-      "target": "179",
-      "targetHandle": "water_mask",
-      "id": "reactflow__edge-161rasters-179water_mask"
+      "source": "187",
+      "sourceHandle": "predicted_sdm",
+      "target": "188",
+      "targetHandle": null,
+      "id": "reactflow__edge-187predicted_sdm-188"
     },
     {
-      "source": "160",
-      "sourceHandle": "rasters",
-      "target": "179",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-160rasters-179predictors"
+      "source": "187",
+      "sourceHandle": "sdm_uncertainty",
+      "target": "189",
+      "targetHandle": null,
+      "id": "reactflow__edge-187sdm_uncertainty-189"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "fit_stats",
+      "target": "190",
+      "targetHandle": null,
+      "id": "reactflow__edge-187fit_stats-190"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "range",
+      "target": "191",
+      "targetHandle": null,
+      "id": "reactflow__edge-187range-191"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "pseudoabsences",
+      "target": "192",
+      "targetHandle": null,
+      "id": "reactflow__edge-187pseudoabsences-192"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "env_corners",
+      "target": "193",
+      "targetHandle": null,
+      "id": "reactflow__edge-187env_corners-193"
     },
     {
       "source": "34",
       "sourceHandle": "clean_presence",
-      "target": "179",
+      "target": "187",
       "targetHandle": "occurrence",
-      "id": "reactflow__edge-34clean_presence-179occurrence"
+      "id": "reactflow__edge-34clean_presence-187occurrence"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "187",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-160rasters-187predictors"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "187",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-161rasters-187water_mask"
     },
     {
       "source": "174",
       "sourceHandle": null,
-      "target": "179",
+      "target": "187",
       "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-174-179bbox_crs"
-    },
-    {
-      "source": "179",
-      "sourceHandle": "env_corners",
-      "target": "180",
-      "targetHandle": null,
-      "id": "reactflow__edge-179env_corners-180"
-    },
-    {
-      "source": "179",
-      "sourceHandle": "pseudoabsences",
-      "target": "181",
-      "targetHandle": null,
-      "id": "reactflow__edge-179pseudoabsences-181"
-    },
-    {
-      "source": "179",
-      "sourceHandle": "range",
-      "target": "182",
-      "targetHandle": null,
-      "id": "reactflow__edge-179range-182"
-    },
-    {
-      "source": "179",
-      "sourceHandle": "range",
-      "target": "183",
-      "targetHandle": null,
-      "id": "reactflow__edge-179range-183"
-    },
-    {
-      "source": "179",
-      "sourceHandle": "sdm_uncertainty",
-      "target": "184",
-      "targetHandle": null,
-      "id": "reactflow__edge-179sdm_uncertainty-184"
-    },
-    {
-      "source": "179",
-      "sourceHandle": "predicted_sdm",
-      "target": "185",
-      "targetHandle": null,
-      "id": "reactflow__edge-179predicted_sdm-185"
-    },
-    {
-      "source": "179",
-      "sourceHandle": "fit_stats",
-      "target": "186",
-      "targetHandle": null,
-      "id": "reactflow__edge-179fit_stats-186"
+      "id": "reactflow__edge-174-187bbox_crs"
     }
   ],
   "inputs": {
@@ -793,43 +775,43 @@
       "example": null,
       "weight": 8
     },
-    "SDM>BRT>fitBRT.yml@179|water_value": {
+    "SDM>BRT>fitBRT.yml@187|water_value": {
       "description": "value used to represent water in the water mask",
       "label": "value for water in mask",
       "type": "int",
       "example": 210,
       "weight": 9
     },
-    "SDM>BRT>fitBRT.yml@179|terrestrial": {
+    "SDM>BRT>fitBRT.yml@187|terrestrial": {
       "description": "boolean flag if the species are terrestrial",
       "label": "is terrestrial species",
       "type": "boolean",
       "example": true,
       "weight": 10
     },
-    "SDM>BRT>fitBRT.yml@179|max_candidate_pseudoabsences": {
+    "SDM>BRT>fitBRT.yml@187|max_candidate_pseudoabsences": {
       "description": "Maximum number of candidate pseudoabsences. A larger pool of candidate points increases the chance of selecting ecologically meaningful absences, but beyond a certain threshold it offers diminishing returns and may introduce bias if it oversamples areas far outside the species’ accessible range. The ideal number is typically guided by study extent, environmental heterogeneity, and species ecology, and can be fine-tuned by testing different values to identify a level that supports stable model performance without inflating computation or noise.",
-      "label": "max candidate pseudoabsences",
+      "label": "maximum candidate pseudoabsences",
       "type": "int",
       "example": 100000,
       "weight": 11
     },
-    "SDM>BRT>fitBRT.yml@179|num_folds": {
-      "description": "Number of folds to use for k-fold crossvalidation. Increasing the number of folds in cross-validation \nfor a species distribution model generally provides a more reliable estimate of model performance by reducing variance, but it also increases computational cost",
-      "label": "num crossvalidation folds",
+    "SDM>BRT>fitBRT.yml@187|num_folds": {
+      "description": "Number of folds to use for k-fold crossvalidation. Increasing the number of folds in cross-validation for a species distribution model generally provides a more reliable estimate of model performance by reducing variance, but it also increases computational cost",
+      "label": "number of crossvalidation folds",
       "type": "int",
       "example": 4,
       "weight": 12
     },
-    "SDM>BRT>fitBRT.yml@179|pseudoabsence_buffer": {
-      "description": "Minimum distance to a presence in kilometers. Choose a pseudoabsence buffer that is large enough to avoid placing absences in areas the species is likely to occupy, but not so large that it removes important \nenvironmental variation. The buffer distance should reflect species ecology, sampling bias, and the resolution of environmental predictors, and can be refined by testing several distances to find one that yields stable, interpretable model performance.",
+    "SDM>BRT>fitBRT.yml@187|pseudoabsence_buffer": {
+      "description": "Minimum distance to a presence in kilometers. Choose a pseudoabsence buffer that is large enough to avoid placing absences in areas the species is likely to occupy, but not so large that it removes important environmental variation. The buffer distance should reflect species ecology, sampling bias, and the resolution of environmental predictors, and can be refined by testing several distances to find one that yields stable, interpretable model performance.",
       "label": "pseudoabsence buffer",
       "type": "float",
       "example": 10,
       "weight": 13
     },
-    "SDM>BRT>fitBRT.yml@179|pa_proportion": {
-      "description": "The number of pseudoabsences, given by the proportion of the total occurrences to use. Using more pseudoabsences can improve model discrimination by providing a stronger contrast with presence data, \nbut too many can overwhelm the presence signal or overweight poorly sampled areas.",
+    "SDM>BRT>fitBRT.yml@187|pa_proportion": {
+      "description": "The number of pseudoabsences, given by the proportion of the total occurrences to use. Using more pseudoabsences can improve model discrimination by providing a stronger contrast with presence data, but too many can overwhelm the presence signal or overweight poorly sampled areas.",
       "label": "Pseudoabsence proportion",
       "type": "float",
       "example": 2.4,
@@ -865,41 +847,41 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 3
     },
-    "SDM>BRT>fitBRT.yml@179|env_corners": {
-      "description": "location of presences and pseudoabsences in environment space",
-      "label": "env_corners",
-      "type": "image/jpg",
+    "SDM>BRT>fitBRT.yml@187|predicted_sdm": {
+      "description": "A map of predicted SDM probability that shows the relative likelihood that suitable environmental conditions for a species occur across the landscape, with higher values indicating areas more likely to support the species.",
+      "label": "Predicted SDM",
+      "type": "image/tiff;application=geotiff",
       "weight": 4
     },
-    "SDM>BRT>fitBRT.yml@179|pseudoabsences": {
-      "description": "pseudoabsence coordinates",
-      "label": "pseudoabsences",
-      "type": "text/tab-separated-values",
+    "SDM>BRT>fitBRT.yml@187|sdm_uncertainty": {
+      "description": "The SDM uncertainty layer indicates the confidence or variability in the model’s predictions across the landscape, with higher values representing areas where the model is less certain about habitat suitability. This layer helps identify regions where predictions are more reliable versus areas where additional data or caution is needed for interpretation.",
+      "label": "SDM uncertainty",
+      "type": "image/tiff;application=geotiff",
       "weight": 5
     },
-    "SDM>BRT>fitBRT.yml@179|range": {
-      "description": "range map thresholded at todo",
-      "label": "range",
+    "SDM>BRT>fitBRT.yml@187|fit_stats": {
+      "description": "Fit statistics for the model in JSON format. PR AUC indicates how well the model correctly identifies true presences while limiting false positives, and is especially informative when presences are rare. MCC summarizes overall classification accuracy at the chosen threshold by balancing true and false positives and negatives, with values close to 1 indicating excellent performance. Threshold is the probability cutoff used to convert continuous predictions into presence–absence, where values at or above 0.14 are classified as suitable habitat. ROC AUC measures the model’s ability to discriminate between suitable and unsuitable locations across all thresholds, with values near 1 indicating outstanding discrimination.",
+      "label": "Fit statistics",
+      "type": "text/json",
+      "weight": 6
+    },
+    "SDM>BRT>fitBRT.yml@187|range": {
+      "description": "range map thresholded at the optimal threshold for the model. All cells with a probability higher than that threshold are indicated as a presence.",
+      "label": "Range",
       "type": "image/tiff;application=geotiff",
       "weight": 7
     },
-    "SDM>BRT>fitBRT.yml@179|sdm_uncertainty": {
-      "description": "map of relative uncertainty",
-      "label": "sdm uncertainty",
-      "type": "image/tiff;application=geotiff",
+    "SDM>BRT>fitBRT.yml@187|pseudoabsences": {
+      "description": "Coordinates of generated pseudoabsences.",
+      "label": "Pseudoabsences",
+      "type": "text/tab-separated-values",
       "weight": 8
     },
-    "SDM>BRT>fitBRT.yml@179|predicted_sdm": {
-      "description": "map of predicted occurrence probability",
-      "label": "predicted sdm",
-      "type": "image/tiff;application=geotiff",
+    "SDM>BRT>fitBRT.yml@187|env_corners": {
+      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (green) in environment space for up to the first 5 predictors.",
+      "label": "Environment space",
+      "type": "image/jpg",
       "weight": 9
-    },
-    "SDM>BRT>fitBRT.yml@179|fit_stats": {
-      "description": "JSON of model fit stats and threshold",
-      "label": "fit statistics",
-      "type": "text/json",
-      "weight": 10
     }
   },
   "metadata": {

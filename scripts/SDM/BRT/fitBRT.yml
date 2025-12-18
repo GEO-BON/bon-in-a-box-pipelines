@@ -68,26 +68,37 @@ inputs:
     example: 2.4
 outputs:
   predicted_sdm:
-    label: predicted sdm
-    description: map of predicted occurrence probability
+    label: Predicted SDM
+    description: A map of predicted SDM probability that shows the relative likelihood that suitable environmental 
+      conditions for a species occur across the landscape, with higher values indicating areas more likely to support 
+      the species.
     type: image/tiff;application=geotiff
   sdm_uncertainty:
-    label: sdm uncertainty
-    description: map of relative uncertainty
+    label: SDM uncertainty
+    description: The SDM uncertainty layer indicates the confidence or variability in the model’s 
+      predictions across the landscape, with higher values representing areas where the model is less certain 
+      about habitat suitability. This layer helps identify regions where predictions are more reliable versus areas 
+      where additional data or caution is needed for interpretation.
     type: image/tiff;application=geotiff
   fit_stats:
-    label: fit statistics
-    description: JSON of model fit stats and threshold
+    label: Fit statistics
+    description: Fit statistics for the model in JSON format. PR AUC indicates how well the model correctly identifies 
+      true presences while limiting false positives, and is especially informative when presences are rare. 
+      MCC summarizes overall classification accuracy at the chosen threshold by balancing true and false positives and
+       negatives, with values close to 1 indicating excellent performance. Threshold is the probability cutoff used to 
+       convert continuous predictions into presence–absence, where values at or above 0.14 are classified as suitable 
+       habitat. ROC AUC measures the model’s ability to discriminate between suitable and unsuitable locations across 
+       all thresholds, with values near 1 indicating outstanding discrimination.
     type: text/json
   range:
-    label: range
-    description: range map thresholded at todo
+    label: Range
+    description: range map thresholded at the optimal threshold for the model. All cells with a probability higher than that threshold are indicated as a presence.
     type: image/tiff;application=geotiff
   pseudoabsences:
-    label: pseudoabsences
-    description: pseudoabsence coordinates
+    label: Pseudoabsences
+    description: Coordinates of generated pseudoabsences.
     type: text/tab-separated-values
   env_corners:
-    label: env_corners
-    description: location of presences and pseudoabsences in environment space
+    label: Environment space
+    description: Diagnostic plot of the location of presences (blue) and pseudoabsences (green) in environment space for up to the first 5 predictors.
     type: image/jpg
