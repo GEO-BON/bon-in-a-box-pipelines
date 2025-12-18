@@ -204,12 +204,12 @@ function calculate_evaluation_metrics(y_true, y_predicted, thresholds=0:0.001:1)
     _, threshold_index = findmax(trueskill.(confusion_matrices))
     optimal_threshold = thresholds[threshold_index]
 
-    return Dict(
-        :prauc => pr_auc,
-        :rocauc => roc_auc,
-        :tss => trueskill(confusion_matrices[threshold_index]),
-        :mcc => mcc(confusion_matrices[threshold_index]),
-        :threshold => optimal_threshold
+    return DataFrame(
+        prauc = round(pr_auc, digits = 3),
+        rocauc = round(roc_auc, digits = 3),
+        tss = round(trueskill(confusion_matrices[threshold_index]), digits = 3),
+        mcc = round(mcc(confusion_matrices[threshold_index]), digits = 3),
+        threshold = round(optimal_threshold, digits = 3)
     )
 end
 
@@ -250,7 +250,7 @@ function main()
     end
 
     fit_stats = calculate_evaluation_metrics(true_labels, out_of_fold_predictions)
-    optimal_threshold = fit_stats[:threshold]
+    optimal_threshold = fit_stats.threshold[begin]
 
     @info "Predicting SDM..."
     model = train_model(features, labels)

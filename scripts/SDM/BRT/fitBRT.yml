@@ -82,14 +82,14 @@ outputs:
     type: image/tiff;application=geotiff
   fit_stats:
     label: Fit statistics
-    description: Fit statistics for the model in JSON format. PR AUC indicates how well the model correctly identifies 
+    description: Fit statistics for the model in TSV format. PR-AUC indicates how well the model correctly identifies 
       true presences while limiting false positives, and is especially informative when presences are rare. 
       MCC summarizes overall classification accuracy at the chosen threshold by balancing true and false positives and
        negatives, with values close to 1 indicating excellent performance. Threshold is the probability cutoff used to 
        convert continuous predictions into presence–absence, where values at or above 0.14 are classified as suitable 
-       habitat. ROC AUC measures the model’s ability to discriminate between suitable and unsuitable locations across 
+       habitat. ROC-AUC measures the model’s ability to discriminate between suitable and unsuitable locations across 
        all thresholds, with values near 1 indicating outstanding discrimination.
-    type: text/json
+    type: text/tab-separated-values
   range:
     label: Range
     description: range map thresholded at the optimal threshold for the model. All cells with a probability higher than that threshold are indicated as a presence.
