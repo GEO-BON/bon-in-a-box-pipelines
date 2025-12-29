@@ -26,7 +26,7 @@ inputs:
     label: Sampling sites
     description: sampling sites with classification of well-known (1) and demand (0) sites
     type: text/csv
-    example: null
+    example: "Peru sample"
   mdist:
     label: joint distance matrix
     description: joint distance matrix
