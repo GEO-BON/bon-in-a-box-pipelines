@@ -6,6 +6,11 @@ author:
     identifier: "https://orcid.org/0000-0002-8471-235X"
 license: CC-BY
 inputs:
+  country_polygon:
+    label: Shapefile of country map
+    description: polygon of the country of interest
+    type: application/geopackage+sqlite3
+    example: Peru
   res_fact:
     label: Aggregation factor (resolution)
     description: Factor reduction for raster pixel resolution (usually from 1km raw)
@@ -15,7 +20,7 @@ inputs:
     label: Algorithm Iterations
     description: number of iterations to run (equivalent to sites to be selected)
     type: int
-    example: 100
+    example: 50
   rasters:
     label: Rasters
     description: Rasters layers of environmental variables of interest
@@ -25,7 +30,7 @@ inputs:
   locations_csv:
     label: Sampling sites
     description: sampling sites with classification of well-known (1) and demand (0) sites
-    type: text/csv
+    type: text/csv[]
     example: "Peru sample"
   mdist:
     label: joint distance matrix
@@ -44,6 +49,10 @@ outputs:
     label: plot for uncovered variance
     description: plot for uncovered variance
     type: image/png
+  surdes_map:
+    label: map for selected points
+    description: map for selected points
+    type: image/png
 
 conda:
   channels:
@@ -52,7 +61,9 @@ conda:
   dependencies:
     - r-rjson
     - r-terra
+    - r-tidyterra
     - r-ggplot2
+    - r-dplyr
 
 references:
    - text: "Designing bryophyte surveys for an optimal coverage of diversity gradients. 2013. Nagore G. Medina, Francisco Lara, Vicente Mazimpaka & Joaquín Hortal . Biodiversity and Conservation. 22, 3121–3139"
