@@ -1,44 +1,44 @@
 {
   "nodes": [
     {
-      "id": "0",
+      "id": "39",
       "type": "io",
       "position": {
-        "x": 2218,
-        "y": 101
+        "x": 2296,
+        "y": 314
       },
       "data": {
-        "descriptionFile": "site_optz_pmedians>distance_matrix.yml"
+        "descriptionFile": "site_optz_stepwise>distance_matrix.yml"
       }
     },
     {
-      "id": "1",
+      "id": "41",
       "type": "io",
       "position": {
-        "x": 542,
-        "y": 26.5
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
-      "id": "2",
-      "type": "io",
-      "position": {
-        "x": 1147,
-        "y": 96.5
+        "x": 1162,
+        "y": 98
       },
       "data": {
         "descriptionFile": "data>getBoundingBox.yml"
       }
     },
     {
-      "id": "3",
+      "id": "42",
+      "type": "io",
+      "position": {
+        "x": 2610,
+        "y": 6.999999999999943
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "43",
       "type": "userInput",
       "position": {
-        "x": 316,
-        "y": 0
+        "x": 178,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -47,11 +47,11 @@
       }
     },
     {
-      "id": "4",
+      "id": "44",
       "type": "userInput",
       "position": {
-        "x": 220,
-        "y": 103.75
+        "x": 12,
+        "y": 106
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -60,58 +60,147 @@
       }
     },
     {
-      "id": "5",
+      "id": "45",
       "type": "io",
       "position": {
-        "x": 1611,
-        "y": 72.5
+        "x": 1721,
+        "y": 162
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
-      "id": "6",
-      "type": "userInput",
+      "id": "46",
+      "type": "constant",
       "position": {
-        "x": 1752,
-        "y": 37.5
+        "x": 1288,
+        "y": 56
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text/csv"
+        "type": "text",
+        "value": "https://stac.geobon.org/"
       }
     },
     {
-      "id": "11",
-      "type": "io",
+      "id": "47",
+      "type": "constant",
       "position": {
-        "x": 2376,
-        "y": 98
+        "x": 1288,
+        "y": 180
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "descriptionFile": "site_optz_stepwise>site_optz_stepwise.yml"
+        "type": "text"
       }
     },
     {
-      "id": "12",
+      "id": "48",
+      "type": "constant",
+      "position": {
+        "x": 1283,
+        "y": 233
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1000
+      }
+    },
+    {
+      "id": "49",
+      "type": "constant",
+      "position": {
+        "x": 1258,
+        "y": 275
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "50",
+      "type": "constant",
+      "position": {
+        "x": 1258,
+        "y": 322
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "51",
+      "type": "constant",
+      "position": {
+        "x": 1064,
+        "y": 369
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "52",
       "type": "userInput",
       "position": {
-        "x": 1970,
-        "y": -93
+        "x": 1860,
+        "y": 322
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "Sample Peru"
+      }
+    },
+    {
+      "id": "53",
+      "type": "userInput",
+      "position": {
+        "x": 2475,
+        "y": 84
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "int",
-        "value": 9
+        "value": 10
       }
     },
     {
-      "id": "13",
+      "id": "54",
       "type": "userInput",
       "position": {
-        "x": 2029,
-        "y": -36
+        "x": 2561,
+        "y": 118
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -120,200 +209,234 @@
       }
     },
     {
-      "id": "18",
+      "id": "55",
+      "type": "userInput",
+      "position": {
+        "x": 2566,
+        "y": 163
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "Peru sample"
+      }
+    },
+    {
+      "id": "61",
+      "type": "io",
+      "position": {
+        "x": 3231.6000061035156,
+        "y": 136.79999542236328
+      },
+      "data": {
+        "descriptionFile": "site_optz_stepwise>site_optz_stepwise.yml"
+      }
+    },
+    {
+      "id": "62",
       "type": "output",
       "position": {
-        "x": 3250,
-        "y": 110
+        "x": 4088.39797163211,
+        "y": 140.8924161418345
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "19",
-      "type": "constant",
-      "position": {
-        "x": 793.7169107242826,
-        "y": -37.54208425062939
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/geopackage+sqlite3",
-        "value": null
-      }
-    },
-    {
-      "id": "20",
-      "type": "constant",
-      "position": {
-        "x": 1911.4885302178227,
-        "y": 256.75615438588045
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text/csv"
       }
     }
   ],
   "edges": [
     {
-      "source": "3",
+      "source": "43",
       "sourceHandle": null,
-      "target": "1",
+      "target": "42",
       "targetHandle": "country",
-      "id": "reactflow__edge-3-1country"
+      "id": "reactflow__edge-43-42country"
     },
     {
-      "source": "4",
+      "source": "44",
       "sourceHandle": null,
-      "target": "1",
+      "target": "42",
       "targetHandle": "crs",
-      "id": "reactflow__edge-4-1crs"
+      "id": "reactflow__edge-44-42crs"
     },
     {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-4-2crs"
-    },
-    {
-      "source": "2",
-      "sourceHandle": "bbox",
-      "target": "5",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-2bbox-5bbox"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "5",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-4-5crs"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "rasters",
-      "target": "0",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-5rasters-0rasters"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "locations_csv",
-      "id": "reactflow__edge-6-0locations_csv"
-    },
-    {
-      "source": "0",
-      "sourceHandle": "mdist",
-      "target": "11",
-      "targetHandle": "mdist",
-      "id": "reactflow__edge-0mdist-11mdist"
-    },
-    {
-      "source": "5",
-      "sourceHandle": "rasters",
-      "target": "11",
-      "targetHandle": "rasters",
-      "id": "reactflow__edge-5rasters-11rasters"
-    },
-    {
-      "source": "12",
-      "sourceHandle": null,
-      "target": "11",
-      "targetHandle": "res_fact",
-      "id": "reactflow__edge-12-11res_fact"
-    },
-    {
-      "source": "13",
-      "sourceHandle": null,
-      "target": "11",
-      "targetHandle": "iters",
-      "id": "reactflow__edge-13-11iters"
-    },
-    {
-      "source": "11",
-      "sourceHandle": "uncov",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-11uncov-18"
-    },
-    {
-      "source": "11",
-      "sourceHandle": "point_Sel",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-11point_Sel-18"
-    },
-    {
-      "source": "11",
-      "sourceHandle": "surdes_uncov",
-      "target": "18",
-      "targetHandle": null,
-      "id": "reactflow__edge-11surdes_uncov-18"
-    },
-    {
-      "source": "6",
-      "sourceHandle": null,
-      "target": "11",
-      "targetHandle": "locations_csv",
-      "id": "reactflow__edge-6-11locations_csv"
-    },
-    {
-      "source": "1",
+      "source": "42",
       "sourceHandle": "country_polygon",
-      "target": "2",
+      "target": "41",
       "targetHandle": "study_area_file",
-      "id": "reactflow__edge-1country_polygon-2study_area_file"
+      "id": "reactflow__edge-42country_polygon-41study_area_file"
     },
     {
-      "source": "19",
+      "source": "44",
       "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-19-2study_area_file"
+      "target": "41",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-44-41crs"
     },
     {
-      "source": "20",
+      "source": "46",
       "sourceHandle": null,
-      "target": "11",
+      "target": "45",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-46-45stac_url"
+    },
+    {
+      "source": "41",
+      "sourceHandle": "bbox",
+      "target": "45",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-41bbox-45bbox"
+    },
+    {
+      "source": "47",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-47-45weight_matrix_with_ids"
+    },
+    {
+      "source": "44",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-44-45crs"
+    },
+    {
+      "source": "48",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-48-45spatial_res"
+    },
+    {
+      "source": "49",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-49-45resampling"
+    },
+    {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-50-45aggregation"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-51-45study_area"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "rasters",
+      "target": "39",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-45rasters-39rasters"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "39",
+      "targetHandle": "locations_csv",
+      "id": "reactflow__edge-52-39locations_csv"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "res_fact",
+      "id": "reactflow__edge-53-61res_fact"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "iters",
+      "id": "reactflow__edge-54-61iters"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "locations_csv",
+      "id": "reactflow__edge-55-61locations_csv"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "mdist",
+      "target": "61",
       "targetHandle": "mdist",
-      "id": "reactflow__edge-20-11mdist"
+      "id": "reactflow__edge-39mdist-61mdist"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "rasters",
+      "target": "61",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-45rasters-61rasters"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "country_polygon",
+      "target": "61",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-42country_polygon-61country_polygon"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "uncov",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61uncov-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "point_Sel",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61point_Sel-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_map",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_map-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_uncov",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_uncov-62"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@1|region": {
+    "data>getCountryPolygon.yml@42|region": {
       "description": "Region of interest",
       "label": "State/Province",
       "type": "text",
       "example": null,
       "weight": 0
     },
-    "pipeline@3": {
+    "pipeline@43": {
       "label": "Country",
       "description": "Country of interest",
       "type": "text",
       "example": "Peru",
       "weight": 1
     },
-    "pipeline@4": {
+    "pipeline@44": {
       "label": "Coordinate reference system",
       "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
       "type": "text",
       "example": "EPSG:5387",
       "weight": 2
     },
-    "data>loadFromStac.yml@5|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 3
-    },
-    "data>loadFromStac.yml@5|collections_items": {
+    "data>loadFromStac.yml@45|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "label": "STAC collection items",
       "type": "text[]",
@@ -321,109 +444,84 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 4
+      "weight": 3
     },
-    "data>loadFromStac.yml@5|weight_matrix_with_ids": {
-      "description": "Weight matrix used for BON optimization. Vector of strings, collection name followed by '|' followed by item id, followed by weights. If using the GEO BON Stac catalog, see the list of [available layers here](https://stac.geobon.org/viewer). The collection and item ids can be obtained as the last two parts of the url for each layer (chelsa-clim/bio1). Cannot be used if collection_items is set.",
-      "label": "Weight matrix with ids",
-      "type": "text",
-      "example": null,
-      "weight": 5
-    },
-    "data>loadFromStac.yml@5|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in meters",
-      "label": "Spatial resolution",
-      "type": "float",
-      "example": 1000,
-      "weight": 6
-    },
-    "data>loadFromStac.yml@5|resampling": {
-      "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
-      "label": "Resampling method",
-      "type": "options",
-      "options": [
-        "near",
-        "bilinear",
-        "average",
-        "mode",
-        "cubic",
-        "cubicspline",
-        "lanczos",
-        "rms",
-        "min",
-        "max",
-        "sum",
-        "med",
-        "q1",
-        "q3"
-      ],
-      "example": "near",
-      "weight": 7
-    },
-    "data>loadFromStac.yml@5|aggregation": {
-      "description": "Method used to aggregate items that overlay each other",
-      "label": "Aggregation method",
-      "type": "options",
-      "options": [
-        "first",
-        "min",
-        "max",
-        "mean",
-        "median"
-      ],
-      "example": "first",
-      "weight": 8
-    },
-    "pipeline@6": {
+    "pipeline@52": {
       "label": "Occurence points of species",
       "description": "Occurence points from GBIF or uploaded by the user",
       "type": "text/csv",
-      "example": null,
-      "weight": 9
+      "example": "Sample Peru",
+      "weight": 4
     },
-    "data>loadFromStac.yml@5|study_area": {
-      "description": "Polygon of study area used to crop output layers",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 10
-    },
-    "pipeline@12": {
+    "pipeline@53": {
       "label": "Aggregation factor (resolution)",
       "description": "Factor reduction for raster pixel resolution (usually from 1km raw)",
       "type": "int",
       "example": 10,
-      "weight": 11
+      "weight": 5
     },
-    "pipeline@13": {
+    "pipeline@54": {
       "label": "Algorithm Iterations",
-      "description": "number of iterations to run (equivalent to sites to be selected)",
+      "description": "number of iterations to run (equivalent to sites to be selected from the demand sites pool. NOTE: it has to be equal or less that the \"demand sites\" number)",
       "type": "int",
-      "example": 100,
-      "weight": 12
+      "example": 30,
+      "weight": 6
+    },
+    "pipeline@55": {
+      "label": "Sampling sites",
+      "description": "sampling sites with classification of well-known (1) and demand (0) sites",
+      "type": "text/csv",
+      "example": "Peru sample",
+      "weight": 7
     }
   },
   "outputs": {
-    "site_optz_stepwise>site_optz_stepwise.yml@11|uncov": {
+    "site_optz_stepwise>site_optz_stepwise.yml@61|uncov": {
       "description": "uncovered variances values",
       "label": "uncovered variances",
       "type": "text/csv",
-      "example": "\"csv file\"",
       "weight": 0
     },
-    "site_optz_stepwise>site_optz_stepwise.yml@11|point_Sel": {
+    "site_optz_stepwise>site_optz_stepwise.yml@61|point_Sel": {
       "description": "selection of demand points",
       "label": "selection of demand points",
       "type": "text/csv",
-      "example": "\"csv of points\"",
       "weight": 1
     },
-    "site_optz_stepwise>site_optz_stepwise.yml@11|surdes_uncov": {
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
+      "description": "map for selected points",
+      "label": "map for selected points",
+      "type": "image/png",
+      "weight": 2
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
       "description": "plot for uncovered variance",
       "label": "plot for uncovered variance",
       "type": "image/png",
-      "example": "\"plot of uncovered variance per point\"",
-      "weight": 2
+      "weight": 3
     }
+  },
+  "metadata": {
+    "name": "Site optimization sampling",
+    "description": "Site optimization is challenge in biodiversity monitoring. Often times surveys historically survey sampling locations and discard other locations based on constraints such as time or budget, missing important environmental variability that may otherwise show biodiversity patterns. The pipeline select using a stepwise procedure through a pmedians algorithm site that will contribute to cover the missing environmental variability but the historical sites alone, and select among the Demand sites. The user must provide a dataframe with previously know survey site (Historic) and demand sites (to be surveyed).",
+    "author": [
+      {
+        "name": "Francis van Oordt",
+        "email": "francis.vanoordtlahoz@mail.mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-8471-235X"
+      }
+    ],
+    "license": "CC-BY",
+    "external_link": null,
+    "references": [
+      {
+        "text": "Medina, N. G., Lara, F., Mazimpaka, V., & Hortal, J. (2013). Designing bryophyte surveys for an optimal coverage of diversity gradients. Biodiversity and Conservation, 22(13–14), 3121–3139.",
+        "doi": "https://doi.org/10.1007/s10531-013-0574-5"
+      },
+      {
+        "text": null,
+        "doi": null
+      }
+    ]
   }
 }
