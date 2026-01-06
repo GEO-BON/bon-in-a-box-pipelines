@@ -46,6 +46,6 @@ conda:
   channels:
     - conda-forge
   dependencies:
-    - pygbif
+    - pygbif 0.6.6
     - pandas
     - pyproj
