@@ -44,6 +44,9 @@ out={}
 temp_file = (Path(sys.argv[1]) / next(tempfile._get_candidate_names())).with_suffix(".tsv")
 out=gbif_api.gbif_api_dl(splist=taxa, bbox=bbox_wgs84, years=[min_year,max_year], outfile=(str(temp_file)))
 
+if int(out['total_records']) == 0:
+    biab_error_stop("There are no GBIF occurrences for the chosen species and area.")
+
 print(taxa)
 print(sys.argv[1])
 
