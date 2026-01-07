@@ -13,7 +13,7 @@ library(duckspatial)
 input <- biab_inputs()
 
 # Load country region polygon
-if (input$polygon_type == "Country or region") {
+if (input$polygon_type == "Country or region" | input$polygon_type == "WDPA") {
     # Load country if region is null
     if (is.null(input$country_region$region)) {
         country <- open_dataset("https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet")
@@ -38,40 +38,34 @@ if (input$polygon_type == "Country or region") {
 }
 
 if (input$polygon_type == "WDPA") {
-#country_region_polygon <- geo_data_sf
-#print(colnames(country_region_polygon))
-# url <- "https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet"
+country_region_polygon <- geo_data_sf
+print(colnames(country_region_polygon))
 
-con <- dbConnect(duckdb())
+con<-dbConnect(duckdb())
 
-dbExecute(con,"INSTALL spatial; INSTALL httpfs; LOAD spatial; LOAD httpfs;")
+dbExecute(con, 'INSTALL spatial; LOAD spatial; INSTALL httpfs; LOAD httpfs;')
+dbExecute(con, 'CREATE OR REPLACE VIEW wdpa AS SELECT * FROM read_parquet("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet")');
+dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet' WHERE adm0_src=", input$country_region$country$ISO3, "and adm1_name=", input$country_region$region$regionName));
 
-# ddbs_write_vector(
-# con,
-# country_region_polygon,
-# "region",
-# overwrite = TRUE
-# )
+dbExecute(con, 'CREATE OR REPLACE TABLE wdpa_region AS (WITH reg AS (
+        SELECT
+            geometry_bbox.xmin AS xmin_r,
+            geometry_bbox.ymin AS ymin_r,
+            geometry_bbox.xmax AS xmax_r,
+            geometry_bbox.ymax AS ymax_r
+        FROM region
+    )
+    SELECT w.* EXCLUDE(geom_wkt, bbox)
+    FROM wdpa w, reg r
+    WHERE 
+        bbox.xmax >= r.xmin_r AND
+        bbox.xmin <= r.xmax_r AND
+        bbox.ymin <= r.ymax_r AND
+        bbox.ymax >= r.ymin_r)');
 
-# buffer <- input$buffer
-
-# wdpa_area<-dbExecute(con,paste0("CREATE OR REPLACE VIEW tmp AS SELECT w.* FROM read_parquet('",url,"') w, region WHERE st_intersects(w.SHAPE,region.geom)"))
-
-# geo_data_sf <- ddbs_read_vector(con, "tmp") |> st_set_crs(4326)
-
-adm0=input$country_region$country$ISO3
-adm1=input$country_region$region$regionName
-url_reg <- "https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet"
-dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * FROM read_parquet('",url_reg,"') WHERE adm0_src='",adm0,"' and adm1_name='",adm1,"'"))
-url_wdpa <- "https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet"
-dbExecute(con,paste0("CREATE OR REPLACE VIEW wdpa AS SELECT * FROM read_parquet('",url_wdpa,"')"))
-dbExecute(con,"CREATE OR REPLACE TABLE wdpa_bbox AS SELECT wdpa.* FROM wdpa, region WHERE ST_INTERSECTS(wdpa.SHAPE, ST_EXTENT(region.geometry))");
-print(geo_data_sf)
-
-
-dbGetQuery(con,"CREATE OR REPLACE VIEW wdpa_region AS SELECT ST_INTERSECTS(wdpa_bbox.geometry, region.geometry)")
-geo_data_sf <- ddbs_read_vector(con, "wdpa_region") |> st_set_crs(4326)
+dbExecute(con, paste0("COPY (SELECT w.* FROM wdpa_region w, region r WHERE ST_DWithin(w.geometry,r.geometry,", input$buffer, ")) TO '/", outputFolder, "/polygon.gpkg' (DRIVER 'GPKG', FORMAT gdal)"))
 }
+
 
 if (input$polygon_type == "EEZ") {
     eez <- open_dataset("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/marine_regions_eez/eez_v12.parquet")
@@ -91,5 +85,5 @@ if (input$polygon_type == "EEZ") {
 # Transform to crs of interest
 
 polygon_path <- file.path(outputFolder, "polygon.gpkg")
-st_write(geo_data_sf, polygon_path)
+#st_write(geo_data_sf, polygon_path)
 biab_output("polygon", polygon_path)
