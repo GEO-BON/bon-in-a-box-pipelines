@@ -1,7 +1,11 @@
-script: coral_condition.py
-name: Calculate coral condition data
+script: coral_condition.R
+name: Load coral condition data
 description: | 
- This script uses condition data from percent live coral cover from 12,634 surveys from 1975-2006 (Bruno and Selig 2007,
+  This script loads the coral condition data from the github and filters for the EEZ of interest.
+
+
+  Description of methods on OHI:
+  This script uses condition data from percent live coral cover from 12,634 surveys from 1975-2006 (Bruno and Selig 2007,
   Schutte et al. 2010). When multiple data points were available for the same site and year, we averaged these data,
    and also averaged the site data to calculate a per country per year average. However, data were missing for several 
    countries and some countries did not have data for the reference or current year time periods or had only 1-2 surveys. 
@@ -17,14 +21,10 @@ author:
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 inputs: 
-  eez_polygon:
-    label: EEZ polygon
-    description: Exclusive economic zone polygon
-    type: application/geopackage+sqlite3
-  extent_data:
-    label: Habitat extent
-    description: Data on coral habitat extent
-    type: text/csv
+  country_region:
+    label: Country
+    description: Using the country chooser to select a region (region selections will be ignored as EEZs are national).
+    type: countryRegion
 outputs:
   coral_health:
     label: Coral health

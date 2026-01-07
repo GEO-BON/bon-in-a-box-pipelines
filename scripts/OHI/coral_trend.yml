@@ -1,0 +1,19 @@
+script: coral_trend.R
+name: Load coral trend data
+description: | 
+  This script loads the coral trend data from the OHI github and filters for the EEZ of interest.
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs: 
+  country_region:
+    label: Country
+    description: Using the country chooser to select a region (region selections will be ignored as EEZs are national).
+    type: countryRegion
+outputs:
+  coral_trend:
+    label: Coral trend
+    description: Coral trend
+    type: text/csv
+

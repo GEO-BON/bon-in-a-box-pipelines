@@ -26,8 +26,64 @@
       "id": "178",
       "type": "output",
       "position": {
-        "x": 1248,
-        "y": 275.8125
+        "x": 1089,
+        "y": 112.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "181",
+      "type": "io",
+      "position": {
+        "x": 1382,
+        "y": 183.80392545328124
+      },
+      "data": {
+        "descriptionFile": "OHI>coral_condition.yml"
+      }
+    },
+    {
+      "id": "182",
+      "type": "output",
+      "position": {
+        "x": 1891.6671035745487,
+        "y": 278.7277375755469
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "183",
+      "type": "userInput",
+      "position": {
+        "x": -85,
+        "y": 115.3125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "countryRegion"
+      }
+    },
+    {
+      "id": "184",
+      "type": "io",
+      "position": {
+        "x": 1395,
+        "y": 317.8125
+      },
+      "data": {
+        "descriptionFile": "OHI>coral_trend.yml"
+      }
+    },
+    {
+      "id": "186",
+      "type": "output",
+      "position": {
+        "x": 1783,
+        "y": 322.8125
       },
       "data": {
         "label": "Output"
@@ -48,6 +104,41 @@
       "target": "178",
       "targetHandle": null,
       "id": "reactflow__edge-176extent-178"
+    },
+    {
+      "source": "181",
+      "sourceHandle": "coral_health",
+      "target": "182",
+      "targetHandle": null,
+      "id": "reactflow__edge-181coral_health-182"
+    },
+    {
+      "source": "183",
+      "sourceHandle": null,
+      "target": "175",
+      "targetHandle": "country_region",
+      "id": "reactflow__edge-183-175country_region"
+    },
+    {
+      "source": "183",
+      "sourceHandle": null,
+      "target": "181",
+      "targetHandle": "country_region",
+      "id": "reactflow__edge-183-181country_region"
+    },
+    {
+      "source": "183",
+      "sourceHandle": null,
+      "target": "184",
+      "targetHandle": "country_region",
+      "id": "reactflow__edge-183-184country_region"
+    },
+    {
+      "source": "184",
+      "sourceHandle": "coral_trend",
+      "target": "186",
+      "targetHandle": null,
+      "id": "reactflow__edge-184coral_trend-186"
     }
   ],
   "inputs": {
@@ -63,26 +154,19 @@
       "example": null,
       "weight": 0
     },
-    "data>load_polygons.yml@175|country_region": {
-      "description": "Using the country chooser to select a region (region selections will be ignored as EEZs are national).",
-      "label": "Country",
-      "type": "countryRegion",
-      "example": null,
-      "weight": 1
-    },
     "data>load_polygons.yml@175|buffer": {
       "description": "Buffer for pulling transboundary protected areas (WDPA data only). The buffer will pull protected areas within that distance of the country border (in meters).",
       "label": "Transboundary buffer",
       "type": "int",
       "example": 500,
-      "weight": 2
+      "weight": 1
     },
     "OHI>calculate_extent_gee.yml@176|gee_layer_name": {
       "description": "Path to the layer of interest in GEE",
       "label": "GEE layer path",
       "type": "text",
       "example": "ACA/reef_habitat/v2_0",
-      "weight": 3
+      "weight": 2
     },
     "OHI>calculate_extent_gee.yml@176|bands": {
       "description": "Bands to extract (leave blank for all)",
@@ -91,13 +175,20 @@
       "example": [
         "reef_mask"
       ],
-      "weight": 4
+      "weight": 3
     },
     "OHI>calculate_extent_gee.yml@176|resolution": {
       "description": "Resolution for exported GEE layer (leave blank for original resolution)",
       "label": "Resolution",
       "type": "int",
       "example": 30,
+      "weight": 4
+    },
+    "pipeline@183": {
+      "label": "Country",
+      "description": "Using the country chooser to select a region (region selections will be ignored as EEZs are national).",
+      "type": "countryRegion",
+      "example": null,
       "weight": 5
     }
   },
@@ -107,6 +198,18 @@
       "label": "Extent",
       "type": "float",
       "weight": 0
+    },
+    "OHI>coral_condition.yml@181|coral_health": {
+      "description": "Coral health",
+      "label": "Coral health",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "OHI>coral_trend.yml@184|coral_trend": {
+      "description": "Coral trend",
+      "label": "Coral trend",
+      "type": "text/csv",
+      "weight": 2
     }
   }
 }
