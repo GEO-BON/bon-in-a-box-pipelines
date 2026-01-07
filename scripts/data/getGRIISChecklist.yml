@@ -1,0 +1,28 @@
+script: getGRIISChecklist.py
+name: Get GRIIS Checklist
+description: Returns a GRIIS Checklist for IAS (Invasive alien species) of specified country
+author:
+  - name: Laetitia Tremblay (laetitia.tremblay@mcgill.ca)
+external_link:
+inputs:
+  country:
+    label: Country
+    description: Country of interest
+    type: country
+    example: NULL
+outputs:
+  checklist:
+    label: GRIIS Checklist
+    description: CSV file of GRIIS Checklist download
+    type: text/csv
+  gbif_key:
+    label: GBIF dataset key
+    description: Dataset key in GBIF
+    type: text
+references:
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pandas
+    - requests

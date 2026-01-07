@@ -1,0 +1,77 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 307.9624938964844,
+        "y": 106.79999542236328
+      },
+      "data": {
+        "descriptionFile": "data>getGRIISChecklist.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "io",
+      "position": {
+        "x": 691.9624938964844,
+        "y": 164.79999542236328
+      },
+      "data": {
+        "descriptionFile": "data>gbif_speciesinfo.yml"
+      }
+    },
+    {
+      "id": "4",
+      "type": "output",
+      "position": {
+        "x": 1149.9624938964844,
+        "y": 162.79999542236328
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "0",
+      "sourceHandle": "gbif_key",
+      "target": "3",
+      "targetHandle": "dataset_key",
+      "id": "reactflow__edge-0gbif_key-3dataset_key"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "checklist",
+      "target": "3",
+      "targetHandle": "species",
+      "id": "reactflow__edge-0checklist-3species"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "habitat",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-3habitat-4"
+    }
+  ],
+  "inputs": {
+    "data>getGRIISChecklist.yml@0|country": {
+      "description": "Country of interest",
+      "label": "Country",
+      "type": "country",
+      "example": null,
+      "weight": 0
+    }
+  },
+  "outputs": {
+    "data>gbif_speciesinfo.yml@3|habitat": {
+      "description": "habitat",
+      "label": "habitat",
+      "type": "text/csv",
+      "weight": 0
+    }
+  }
+}

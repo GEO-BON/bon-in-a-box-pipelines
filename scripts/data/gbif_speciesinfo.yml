@@ -1,0 +1,29 @@
+script: gbif_speciesinfo.py
+name: Get species info from GBIF
+description: Get species info from GBIF endpoint
+author:
+  - name: Jory Griffith
+external_link:
+inputs:
+  dataset_key:
+    label: Dataset key
+    description: Dataset key of interest in GBIF
+    type: text
+    example: NULL
+  species:
+    label: List of species
+    description: List of species to pull info for from GBIF
+    type: text/csv
+    example: NULL
+outputs:
+  habitat:
+    label: habitat
+    description: habitat
+    type: text/csv
+references:
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pandas
+    - requests
