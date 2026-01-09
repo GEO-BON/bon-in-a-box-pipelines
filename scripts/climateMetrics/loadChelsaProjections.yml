@@ -17,8 +17,8 @@ inputs:
   spatial_res:
     label: Spatial resolution output
     description: Pixel size (in meters) of the output raster
-    type: int
-    example: 1000 
+    type: float
+    example: 0.008 
   srs_cube: 
     label: Spatial reference output
     description: Target spatial reference system of the output raster

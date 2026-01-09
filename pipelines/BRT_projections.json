@@ -1,0 +1,1229 @@
+{
+  "nodes": [
+    {
+      "id": "34",
+      "type": "io",
+      "position": {
+        "x": 1319,
+        "y": 742
+      },
+      "data": {
+        "descriptionFile": "filtering>cleanCoordinates.yml"
+      }
+    },
+    {
+      "id": "35",
+      "type": "constant",
+      "position": {
+        "x": 895,
+        "y": 731
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "equal",
+          "zeros",
+          "duplicates",
+          "same_pixel",
+          "capitals",
+          "centroids",
+          "gbif",
+          "institutions"
+        ]
+      }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 900,
+        "y": 843
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.8
+      }
+    },
+    {
+      "id": "121",
+      "type": "userInput",
+      "position": {
+        "x": 249,
+        "y": 683.1666666666666
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Acer saccharum"
+        ]
+      }
+    },
+    {
+      "id": "123",
+      "type": "output",
+      "position": {
+        "x": 1815,
+        "y": 810.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "126",
+      "type": "output",
+      "position": {
+        "x": 1319,
+        "y": 954.5
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "146",
+      "type": "userInput",
+      "position": {
+        "x": 242,
+        "y": 958
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "149",
+      "type": "output",
+      "position": {
+        "x": 553,
+        "y": 672
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "159",
+      "type": "io",
+      "position": {
+        "x": 553,
+        "y": 886
+      },
+      "data": {
+        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
+      }
+    },
+    {
+      "id": "161",
+      "type": "io",
+      "position": {
+        "x": 864,
+        "y": 1037.5
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "163",
+      "type": "constant",
+      "position": {
+        "x": 70,
+        "y": 1192
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "164",
+      "type": "constant",
+      "position": {
+        "x": 70,
+        "y": 1240
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "166",
+      "type": "userInput",
+      "position": {
+        "x": 173,
+        "y": 993
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "esacci-lc|esacci-lc-2020"
+        ]
+      }
+    },
+    {
+      "id": "167",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 1288
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "174",
+      "type": "userInput",
+      "position": {
+        "x": 126,
+        "y": 899.75
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "176",
+      "type": "constant",
+      "position": {
+        "x": 99,
+        "y": 1028
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "177",
+      "type": "constant",
+      "position": {
+        "x": 99,
+        "y": 1071
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "178",
+      "type": "constant",
+      "position": {
+        "x": 99,
+        "y": 1114
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "187",
+      "type": "io",
+      "position": {
+        "x": 1815,
+        "y": 967.5
+      },
+      "data": {
+        "descriptionFile": "SDM>BRT>fitBRT.yml"
+      }
+    },
+    {
+      "id": "188",
+      "type": "output",
+      "position": {
+        "x": 2234,
+        "y": 840
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "189",
+      "type": "output",
+      "position": {
+        "x": 2234,
+        "y": 938
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "190",
+      "type": "output",
+      "position": {
+        "x": 2234,
+        "y": 1169
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "191",
+      "type": "output",
+      "position": {
+        "x": 2234,
+        "y": 1218
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "192",
+      "type": "output",
+      "position": {
+        "x": 2234,
+        "y": 889
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "193",
+      "type": "output",
+      "position": {
+        "x": 2234,
+        "y": 1120
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "194",
+      "type": "io",
+      "position": {
+        "x": 834,
+        "y": 12.884099269003173
+      },
+      "data": {
+        "descriptionFile": "climateMetrics>loadChelsaProjections.yml"
+      }
+    },
+    {
+      "id": "195",
+      "type": "io",
+      "position": {
+        "x": 834,
+        "y": 143.63861070440402
+      },
+      "data": {
+        "descriptionFile": "climateMetrics>loadChelsaProjections.yml"
+      }
+    },
+    {
+      "id": "196",
+      "type": "io",
+      "position": {
+        "x": 834,
+        "y": 272
+      },
+      "data": {
+        "descriptionFile": "climateMetrics>loadChelsaProjections.yml"
+      }
+    },
+    {
+      "id": "197",
+      "type": "io",
+      "position": {
+        "x": 834,
+        "y": 403.6477228886406
+      },
+      "data": {
+        "descriptionFile": "climateMetrics>loadChelsaProjections.yml"
+      }
+    },
+    {
+      "id": "198",
+      "type": "io",
+      "position": {
+        "x": 834,
+        "y": 530.6901420173944
+      },
+      "data": {
+        "descriptionFile": "climateMetrics>loadChelsaProjections.yml"
+      }
+    },
+    {
+      "id": "199",
+      "type": "userInput",
+      "position": {
+        "x": 329,
+        "y": 511.16666666666663
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "ssp126",
+        "options": [
+          "ssp126",
+          "ssp370",
+          "ssp585"
+        ]
+      }
+    },
+    {
+      "id": "201",
+      "type": "userInput",
+      "position": {
+        "x": 333.5926321436374,
+        "y": 106.94689989334907
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:6624"
+      }
+    },
+    {
+      "id": "202",
+      "type": "userInput",
+      "position": {
+        "x": 203.52844068498428,
+        "y": 151.4503664558593
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "2041-2070",
+        "options": [
+          "2011-2040",
+          "2041-2070",
+          "2071-2100"
+        ]
+      }
+    },
+    {
+      "id": "203",
+      "type": "userInput",
+      "position": {
+        "x": -57.03989859495141,
+        "y": 564.7275640598624
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float[]",
+        "value": [
+          -2316297,
+          -1971146,
+          1015207,
+          1511916
+        ]
+      }
+    },
+    {
+      "id": "205",
+      "type": "constant",
+      "position": {
+        "x": 228.83255137944798,
+        "y": 366.73790366006074
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "mean",
+        "options": [
+          "min",
+          "max",
+          "mean",
+          "median",
+          "first"
+        ]
+      }
+    },
+    {
+      "id": "206",
+      "type": "userInput",
+      "position": {
+        "x": 398.4647586774082,
+        "y": 31.073917873647645
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0.008
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "tests",
+      "id": "reactflow__edge-35-34tests"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "34",
+      "targetHandle": "env_threshold",
+      "id": "reactflow__edge-64-34env_threshold"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "123",
+      "targetHandle": null,
+      "id": "reactflow__edge-34clean_presence-123"
+    },
+    {
+      "source": "121",
+      "sourceHandle": null,
+      "target": "149",
+      "targetHandle": null,
+      "id": "reactflow__edge-121-149"
+    },
+    {
+      "source": "121",
+      "sourceHandle": null,
+      "target": "159",
+      "targetHandle": "taxa",
+      "id": "reactflow__edge-121-159taxa"
+    },
+    {
+      "source": "159",
+      "sourceHandle": "gbif_doi",
+      "target": "126",
+      "targetHandle": null,
+      "id": "reactflow__edge-159gbif_doi-126"
+    },
+    {
+      "source": "159",
+      "sourceHandle": "observations_file",
+      "target": "34",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-159observations_file-34presence"
+    },
+    {
+      "source": "146",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-146-161stac_url"
+    },
+    {
+      "source": "166",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-166-161collections_items"
+    },
+    {
+      "source": "164",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-164-161aggregation"
+    },
+    {
+      "source": "163",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-163-161resampling"
+    },
+    {
+      "source": "167",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-167-161study_area"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "159",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-159bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-161bbox_crs"
+    },
+    {
+      "source": "176",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-176-161t0"
+    },
+    {
+      "source": "177",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-177-161t1"
+    },
+    {
+      "source": "178",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-178-161temporal_res"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "predicted_sdm",
+      "target": "188",
+      "targetHandle": null,
+      "id": "reactflow__edge-187predicted_sdm-188"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "sdm_uncertainty",
+      "target": "189",
+      "targetHandle": null,
+      "id": "reactflow__edge-187sdm_uncertainty-189"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "fit_stats",
+      "target": "190",
+      "targetHandle": null,
+      "id": "reactflow__edge-187fit_stats-190"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "range",
+      "target": "191",
+      "targetHandle": null,
+      "id": "reactflow__edge-187range-191"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "pseudoabsences",
+      "target": "192",
+      "targetHandle": null,
+      "id": "reactflow__edge-187pseudoabsences-192"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "env_corners",
+      "target": "193",
+      "targetHandle": null,
+      "id": "reactflow__edge-187env_corners-193"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "187",
+      "targetHandle": "occurrence",
+      "id": "reactflow__edge-34clean_presence-187occurrence"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "187",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-161rasters-187water_mask"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "187",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-187bbox_crs"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "194",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-199-194rcp"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-199-195rcp"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "196",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-199-196rcp"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "197",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-199-197rcp"
+    },
+    {
+      "source": "199",
+      "sourceHandle": null,
+      "target": "198",
+      "targetHandle": "rcp",
+      "id": "reactflow__edge-199-198rcp"
+    },
+    {
+      "source": "201",
+      "sourceHandle": null,
+      "target": "194",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-201-194srs_cube"
+    },
+    {
+      "source": "201",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-201-195srs_cube"
+    },
+    {
+      "source": "201",
+      "sourceHandle": null,
+      "target": "196",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-201-196srs_cube"
+    },
+    {
+      "source": "201",
+      "sourceHandle": null,
+      "target": "197",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-201-197srs_cube"
+    },
+    {
+      "source": "201",
+      "sourceHandle": null,
+      "target": "198",
+      "targetHandle": "srs_cube",
+      "id": "reactflow__edge-201-198srs_cube"
+    },
+    {
+      "source": "202",
+      "sourceHandle": null,
+      "target": "194",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-202-194time_span"
+    },
+    {
+      "source": "202",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-202-195time_span"
+    },
+    {
+      "source": "202",
+      "sourceHandle": null,
+      "target": "197",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-202-197time_span"
+    },
+    {
+      "source": "202",
+      "sourceHandle": null,
+      "target": "198",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-202-198time_span"
+    },
+    {
+      "source": "203",
+      "sourceHandle": null,
+      "target": "198",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-203-198bbox"
+    },
+    {
+      "source": "203",
+      "sourceHandle": null,
+      "target": "197",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-203-197bbox"
+    },
+    {
+      "source": "203",
+      "sourceHandle": null,
+      "target": "196",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-203-196bbox"
+    },
+    {
+      "source": "203",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-203-195bbox"
+    },
+    {
+      "source": "203",
+      "sourceHandle": null,
+      "target": "194",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-203-194bbox"
+    },
+    {
+      "source": "198",
+      "sourceHandle": "future_climate",
+      "target": "187",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-198future_climate-187predictors"
+    },
+    {
+      "source": "197",
+      "sourceHandle": "future_climate",
+      "target": "187",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-197future_climate-187predictors"
+    },
+    {
+      "source": "196",
+      "sourceHandle": "future_climate",
+      "target": "187",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-196future_climate-187predictors"
+    },
+    {
+      "source": "195",
+      "sourceHandle": "future_climate",
+      "target": "187",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-195future_climate-187predictors"
+    },
+    {
+      "source": "194",
+      "sourceHandle": "future_climate",
+      "target": "187",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-194future_climate-187predictors"
+    },
+    {
+      "source": "198",
+      "sourceHandle": "future_climate",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-198future_climate-34predictors"
+    },
+    {
+      "source": "197",
+      "sourceHandle": "future_climate",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-197future_climate-34predictors"
+    },
+    {
+      "source": "196",
+      "sourceHandle": "future_climate",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-196future_climate-34predictors"
+    },
+    {
+      "source": "195",
+      "sourceHandle": "future_climate",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-195future_climate-34predictors"
+    },
+    {
+      "source": "194",
+      "sourceHandle": "future_climate",
+      "target": "34",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-194future_climate-34predictors"
+    },
+    {
+      "source": "205",
+      "sourceHandle": null,
+      "target": "197",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-205-197aggregation"
+    },
+    {
+      "source": "205",
+      "sourceHandle": null,
+      "target": "198",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-205-198aggregation"
+    },
+    {
+      "source": "205",
+      "sourceHandle": null,
+      "target": "196",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-205-196aggregation"
+    },
+    {
+      "source": "205",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-205-195aggregation"
+    },
+    {
+      "source": "205",
+      "sourceHandle": null,
+      "target": "194",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-205-194aggregation"
+    },
+    {
+      "source": "202",
+      "sourceHandle": null,
+      "target": "196",
+      "targetHandle": "time_span",
+      "id": "reactflow__edge-202-196time_span"
+    },
+    {
+      "source": "206",
+      "sourceHandle": null,
+      "target": "194",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-206-194spatial_res"
+    },
+    {
+      "source": "206",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-206-195spatial_res"
+    },
+    {
+      "source": "206",
+      "sourceHandle": null,
+      "target": "196",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-206-196spatial_res"
+    },
+    {
+      "source": "206",
+      "sourceHandle": null,
+      "target": "197",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-206-197spatial_res"
+    },
+    {
+      "source": "206",
+      "sourceHandle": null,
+      "target": "198",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-206-198spatial_res"
+    },
+    {
+      "source": "206",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-206-161spatial_res"
+    }
+  ],
+  "inputs": {
+    "pipeline@121": {
+      "label": "Species",
+      "description": "Name of species",
+      "type": "text[]",
+      "example": [
+        "Prunus serotina"
+      ],
+      "weight": 0
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 1
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
+      "description": "Max year observations wanted",
+      "label": "maximum year",
+      "type": "int",
+      "example": 2024,
+      "weight": 2
+    },
+    "pipeline@174": {
+      "label": "Bounding and CRS",
+      "description": "Select a bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 3
+    },
+    "pipeline@146": {
+      "label": "STAC URL",
+      "description": "URL of the STAC catalog.",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 4
+    },
+    "pipeline@167": {
+      "label": "Study area",
+      "description": "Polygon of study area used to crop output layers",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 5
+    },
+    "pipeline@199": {
+      "label": "Shared socioeconomic pathways",
+      "description": "Shared socioeconomic pathways ([more info here](see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways))",
+      "type": "options",
+      "example": "ssp126",
+      "options": [
+        "ssp126",
+        "ssp370",
+        "ssp585"
+      ],
+      "weight": 6
+    },
+    "climateMetrics>loadChelsaProjections.yml@194|variable": {
+      "description": "Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.",
+      "label": "Climate variable",
+      "type": "text",
+      "example": "bio1",
+      "weight": 7
+    },
+    "climateMetrics>loadChelsaProjections.yml@195|variable": {
+      "description": "Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.",
+      "label": "Climate variable",
+      "type": "text",
+      "example": "bio3",
+      "weight": 8
+    },
+    "climateMetrics>loadChelsaProjections.yml@196|variable": {
+      "description": "Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.",
+      "label": "Climate variable",
+      "type": "text",
+      "example": "bio4",
+      "weight": 9
+    },
+    "climateMetrics>loadChelsaProjections.yml@198|variable": {
+      "description": "Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.",
+      "label": "Climate variable",
+      "type": "text",
+      "example": "bio12",
+      "weight": 10
+    },
+    "climateMetrics>loadChelsaProjections.yml@197|variable": {
+      "description": "Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.",
+      "label": "Climate variable",
+      "type": "text",
+      "example": "bio15",
+      "weight": 11
+    },
+    "pipeline@166": {
+      "label": "Land Cover Layer",
+      "description": "Land cover layer in the stack to use to mask water.",
+      "type": "text[]",
+      "example": [
+        "esacci-lc|esacci-lc-2020"
+      ],
+      "weight": 12
+    },
+    "SDM>BRT>fitBRT.yml@187|water_value": {
+      "description": "value used to represent water in the water mask",
+      "label": "value for water in mask",
+      "type": "int",
+      "example": 210,
+      "weight": 13
+    },
+    "SDM>BRT>fitBRT.yml@187|terrestrial": {
+      "description": "boolean flag if the species are terrestrial",
+      "label": "is terrestrial species",
+      "type": "boolean",
+      "example": true,
+      "weight": 14
+    },
+    "SDM>BRT>fitBRT.yml@187|max_candidate_pseudoabsences": {
+      "description": "Maximum number of candidate pseudoabsences. A larger pool of candidate points increases the chance of selecting ecologically meaningful absences, but beyond a certain threshold it offers diminishing returns and may introduce bias if it oversamples areas far outside the species’ accessible range. The ideal number is typically guided by study extent, environmental heterogeneity, and species ecology, and can be fine-tuned by testing different values to identify a level that supports stable model performance without inflating computation or noise.",
+      "label": "maximum candidate pseudoabsences",
+      "type": "int",
+      "example": 100000,
+      "weight": 15
+    },
+    "SDM>BRT>fitBRT.yml@187|num_folds": {
+      "description": "Number of folds to use for k-fold crossvalidation. Increasing the number of folds in cross-validation for a species distribution model generally provides a more reliable estimate of model performance by reducing variance, but it also increases computational cost",
+      "label": "number of crossvalidation folds",
+      "type": "int",
+      "example": 4,
+      "weight": 16
+    },
+    "SDM>BRT>fitBRT.yml@187|pseudoabsence_buffer": {
+      "description": "Minimum distance to a presence in kilometers. Choose a pseudoabsence buffer that is large enough to avoid placing absences in areas the species is likely to occupy, but not so large that it removes important environmental variation. The buffer distance should reflect species ecology, sampling bias, and the resolution of environmental predictors, and can be refined by testing several distances to find one that yields stable, interpretable model performance.",
+      "label": "pseudoabsence buffer",
+      "type": "float",
+      "example": 10,
+      "weight": 17
+    },
+    "SDM>BRT>fitBRT.yml@187|pa_proportion": {
+      "description": "The number of pseudoabsences, given by the proportion of the total occurrences to use. Using more pseudoabsences can improve model discrimination by providing a stronger contrast with presence data, but too many can overwhelm the presence signal or overweight poorly sampled areas.",
+      "label": "Pseudoabsence proportion",
+      "type": "float",
+      "example": 2.4,
+      "weight": 18
+    },
+    "pipeline@201": {
+      "label": "Spatial reference output",
+      "description": "Target spatial reference system of the output raster",
+      "type": "text",
+      "example": "EPSG:4326",
+      "weight": 19
+    },
+    "pipeline@202": {
+      "label": "Future time span",
+      "description": "Period for climate projection, start year to end year",
+      "type": "options",
+      "example": "2041-2070",
+      "options": [
+        "2011-2040",
+        "2041-2070",
+        "2071-2100"
+      ],
+      "weight": 20
+    },
+    "pipeline@203": {
+      "label": "Bounding box",
+      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
+      "type": "float[]",
+      "example": [
+        "2.54133",
+        "49.49697",
+        "6.40794",
+        "51.50511"
+      ],
+      "weight": 21
+    },
+    "pipeline@206": {
+      "label": "Spatial resolution output",
+      "description": "Pixel size (in meters) of the output raster",
+      "type": "float",
+      "example": 0.008,
+      "weight": 22
+    }
+  },
+  "outputs": {
+    "pipeline@121|default_output": {
+      "label": "Species",
+      "description": "Name of species",
+      "example": [
+        "Acer saccharum"
+      ],
+      "type": "text[]",
+      "weight": 0
+    },
+    "filtering>cleanCoordinates.yml@34|clean_presence": {
+      "description": "Occurrences from GBIF after cleaning",
+      "label": "Presences",
+      "type": "text/tab-separated-values",
+      "weight": 1
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@159|gbif_doi": {
+      "description": "DOI of GBIF download. Used for citing downloaded data.",
+      "label": "DOI of GBIF download",
+      "type": "text",
+      "example": "10.15468/dl.j644h5",
+      "weight": 2
+    },
+    "SDM>BRT>fitBRT.yml@187|predicted_sdm": {
+      "description": "A map of predicted SDM score that shows the relative suitability of environmental conditions at that location, with higher values indicating areas more likely to support the species.",
+      "label": "Predicted SDM",
+      "type": "image/tiff;application=geotiff",
+      "weight": 3
+    },
+    "SDM>BRT>fitBRT.yml@187|sdm_uncertainty": {
+      "description": "The SDM uncertainty layer indicates the confidence or variability in the model’s predictions across the landscape, with higher values representing areas where the model is less certain about habitat suitability. This layer helps identify regions where predictions are more reliable versus areas where additional data or caution is needed for interpretation.",
+      "label": "SDM uncertainty",
+      "type": "image/tiff;application=geotiff",
+      "weight": 4
+    },
+    "SDM>BRT>fitBRT.yml@187|fit_stats": {
+      "description": "Fit statistics for the model in JSON format. PR AUC indicates how well the model correctly identifies true presences while limiting false positives, and is especially informative when presences are rare. MCC summarizes overall classification accuracy at the chosen threshold by balancing true and false positives and negatives, with values close to 1 indicating excellent performance and 0 indicating random. Threshold is the cutoff used to convert continuous predictions into presence–absence, where values at or above the threshold are classified as suitable habitat. ROC AUC measures the model’s ability to discriminate between suitable and unsuitable locations across all thresholds, with a value of 1.0 indicating perfect, and 0.5 indicating equivalent to range.",
+      "label": "Fit statistics",
+      "type": "text/json",
+      "weight": 5
+    },
+    "SDM>BRT>fitBRT.yml@187|range": {
+      "description": "Range map thresholded at the optimal threshold for the model. All cells with a score higher than that threshold are indicated as a presence.",
+      "label": "Range",
+      "type": "image/tiff;application=geotiff",
+      "weight": 6
+    },
+    "SDM>BRT>fitBRT.yml@187|pseudoabsences": {
+      "description": "Coordinates of generated pseudoabsences.",
+      "label": "Pseudoabsences",
+      "type": "text/tab-separated-values",
+      "weight": 7
+    },
+    "SDM>BRT>fitBRT.yml@187|env_corners": {
+      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (green) in environment space for up to the first 5 predictors.",
+      "label": "Environment space",
+      "type": "image/jpg",
+      "weight": 8
+    }
+  },
+  "metadata": {
+    "name": "Species distribution modeling with Boosted Regression Trees (BRTs) with climate projections",
+    "description": "\n## Introduction\nThis pipeline builds a model to predict the distribution of a species (a type of essential biodiversity variable), by using occurrence data from the Global Biodiversity Information Facility (GBIF), and environmental predictors from a STAC Catalogue.\nIn particular, this pipeline uses a specific model called a Boosted Regression Tree (BRT), a machine-learning model which tends to work well with spatial data.\n\n## Uses\nBRT species distribution models can be used as input layers for other pipelines that require species ranges (e.g. the Species Habitat Index) or stacked together to create maps of species richness. Uncertaintly layers from these SDMs can be used to prioritize sampling areas (e.g. through the occurrence sampling priority pipeline).\n\n## Pipeline limitations\n- The pipeline needs a minimum number of occurrences. If there are too few occurrences the model will not generate accurate predictions. - If there are a ton of occurrences, pseudoabsence generation will be slow. Make sure that the maximum candidate number of pseudoabsences is appropriate for the size of the input rasters. Pseudoabsences should not be too sparse compared to your occurrences. - Do not transform variables (e.g. PCA) before inputting into the pipeline. \n\n## Before you start\nA GBIF API key is needed for this analysis. Learn more [here](https://techdocs.gbif.org/en/openapi/).",
+    "author": [
+      {
+        "name": "Michael D. Catchen",
+        "identifier": "https://orcid.org/0000-0002-6506-6487",
+        "role": "Pipeline development"
+      }
+    ],
+    "lifecycle": {
+      "status": "in_review"
+    },
+    "license": "MIT",
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT",
+    "references": [
+      {
+        "text": "Elith, J., Leathwick, J.R. and Hastie, T. (2008), A working guide to boosted regression trees. Journal of Animal Ecology, 77.802-813.",
+        "doi": "https://doi.org/10.1111/j.1365-2656.2008.01390.x"
+      },
+      {
+        "text": "Poisot, T.; Bussières-Fournel, A.; Dansereau, G.; Catchen, M. D. A Julia toolkit for species distribution data. Peer Community Journal, Volume 5 (2025), article no. e101.",
+        "doi": "https://doi.org/10.24072/pcjournal.589"
+      }
+    ]
+  }
+}
