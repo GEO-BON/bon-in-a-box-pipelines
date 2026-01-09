@@ -23,11 +23,10 @@ print("Done!", flush=True)
 
 if seconds == 13 :
   biab_error_stop("seconds == 13, you're not lucky! This causes failure.")
-  print("You will never see this message")
 
 with open(fileIn, 'r') as f:
   content = f.read()
   print("Contents of csv input:")
   print(content)
 
-  biab_output("length", len(content))
+biab_output("length", len(content))
