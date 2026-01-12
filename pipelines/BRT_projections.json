@@ -168,7 +168,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
-        "value": "first",
+        "value": "mean",
         "options": [
           "first",
           "min",
@@ -346,8 +346,8 @@
       "id": "195",
       "type": "io",
       "position": {
-        "x": 834,
-        "y": 143.63861070440402
+        "x": 826,
+        "y": 129.63861070440402
       },
       "data": {
         "descriptionFile": "climateMetrics>loadChelsaProjections.yml"
@@ -453,6 +453,17 @@
       "data": {
         "type": "float",
         "value": 0.008
+      }
+    },
+    {
+      "id": "207",
+      "type": "io",
+      "position": {
+        "x": 1753.1777567959734,
+        "y": 335.56302618797366
+      },
+      "data": {
+        "descriptionFile": "data>resample_layers.yml"
       }
     }
   ],
@@ -624,13 +635,6 @@
       "target": "187",
       "targetHandle": "occurrence",
       "id": "reactflow__edge-34clean_presence-187occurrence"
-    },
-    {
-      "source": "161",
-      "sourceHandle": "rasters",
-      "target": "187",
-      "targetHandle": "water_mask",
-      "id": "reactflow__edge-161rasters-187water_mask"
     },
     {
       "source": "174",
@@ -890,6 +894,27 @@
       "target": "194",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-174-194bbox_crs"
+    },
+    {
+      "source": "194",
+      "sourceHandle": "future_climate",
+      "target": "207",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-194future_climate-207layers"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "207",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-161rasters-207water_mask"
+    },
+    {
+      "source": "207",
+      "sourceHandle": "water_mask_resampled",
+      "target": "187",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-207water_mask_resampled-187water_mask"
     }
   ],
   "inputs": {

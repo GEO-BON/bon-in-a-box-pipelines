@@ -60,7 +60,7 @@ resampling = "bilinear"
     
     # Create the bbox (WGS84 projection)
 
-    bbox.wgs84 <- bbox %>% sf::st_bbox(crs = srs.cube) %>% 
+    bbox.wgs84 <- bbox %>% sf::st_bbox(crs = crs_input) %>% 
       sf::st_as_sfc() %>% sf::st_transform(crs = "EPSG:4326") %>% 
       sf::st_bbox()
  
@@ -106,7 +106,7 @@ resampling = "bilinear"
   
   # if layers = NULL, load all the layers
   v <- gdalcubes::cube_view(
-    srs = srs.cube,
+    srs = crs_input,
     extent = list(
       t0 = t0,
       t1 = t0,

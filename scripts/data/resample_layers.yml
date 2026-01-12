@@ -1,0 +1,19 @@
+script: resample_layers.R
+name: Resample layers to match
+description: 
+author:
+  - name: Jory griffith
+inputs:
+  layers:
+    label: predictor layer
+    description: predictor layer
+    type: image/tiff;application=geotiff[]
+  water_mask:
+    label: water mask
+    description: water mask
+    type: image/tiff;application=geotiff[]
+outputs:
+  water_mask_resampled:
+    label: water mask resampled
+    description: water mask resampled
+    type: image/tiff;application=geotiff
