@@ -139,7 +139,7 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "options",
-        "value": "near",
+        "value": "bilinear",
         "options": [
           "near",
           "bilinear",
