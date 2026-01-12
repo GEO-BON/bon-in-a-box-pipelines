@@ -3,8 +3,13 @@ library(sf)
 
 input <- biab_inputs()
 
-bbox <- st_bbox(c(xmin = input$bbox[1], ymin = input$bbox[2], 
-        xmax = input$bbox[3], ymax = input$bbox[4]), crs = st_crs(input$srs_cube))
+bbox_input <- input$bbox_crs$bbox
+
+crs_input <- paste0(input$bbox_crs$CRS$authority,":",input$bbox_crs$CRS$code)
+print(crs_input)
+bbox <- st_bbox(c(xmin =bbox_input[1], ymin = bbox_input[2], 
+        xmax = bbox_input[3], ymax = bbox_input[4]), crs = st_crs(crs_input))
+
 
 gdalcubes::gdalcubes_options(parallel = T)
 ## Create function
@@ -14,7 +19,7 @@ stac_path="https://stac.geobon.org/"
 collections = 'chelsa-clim-proj'         
 bbox = bbox
 limit = 5000
-srs.cube = input$srs_cube
+srs.cube = crs_input
 rcp = input$rcp #ssp126, ssp370, ssp585
 time.span =input$time_span #"2011-2040", 2041-2070 or 2071-2100
 variable = input$variable

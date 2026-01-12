@@ -5,6 +5,10 @@ description:
 author:
   - name: Juan Zuloaga
 inputs:
+  bbox_crs:
+    label: Bounding box and CRS
+    description: Object containing the chosen bounding box and CRS.
+    type: bboxCRS
   rcp:
     label: Shared socioeconomic pathways
     description: Shared socioeconomic pathways ([more info here](see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways))
@@ -19,11 +23,6 @@ inputs:
     description: Pixel size (in meters) of the output raster
     type: float
     example: 0.008 
-  srs_cube: 
-    label: Spatial reference output
-    description: Target spatial reference system of the output raster
-    type: text
-    example: EPSG:6624
   variable: 
     label: Climate variable
     description: Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.
@@ -44,11 +43,6 @@ inputs:
       - 2041-2070
       - 2071-2100
     example: 2041-2070
-  bbox:
-    label: Bounding box
-    description: Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax
-    type: float[]
-    example: [-2316297,-1971146,1015207,1511916]
 outputs:
   future_climate:
     label: Future climate

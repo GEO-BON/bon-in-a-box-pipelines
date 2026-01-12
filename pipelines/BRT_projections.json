@@ -405,19 +405,6 @@
       }
     },
     {
-      "id": "201",
-      "type": "userInput",
-      "position": {
-        "x": 333.5926321436374,
-        "y": 106.94689989334907
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6624"
-      }
-    },
-    {
       "id": "202",
       "type": "userInput",
       "position": {
@@ -432,24 +419,6 @@
           "2011-2040",
           "2041-2070",
           "2071-2100"
-        ]
-      }
-    },
-    {
-      "id": "203",
-      "type": "userInput",
-      "position": {
-        "x": -57.03989859495141,
-        "y": 564.7275640598624
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
         ]
       }
     },
@@ -706,41 +675,6 @@
       "id": "reactflow__edge-199-198rcp"
     },
     {
-      "source": "201",
-      "sourceHandle": null,
-      "target": "194",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-201-194srs_cube"
-    },
-    {
-      "source": "201",
-      "sourceHandle": null,
-      "target": "195",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-201-195srs_cube"
-    },
-    {
-      "source": "201",
-      "sourceHandle": null,
-      "target": "196",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-201-196srs_cube"
-    },
-    {
-      "source": "201",
-      "sourceHandle": null,
-      "target": "197",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-201-197srs_cube"
-    },
-    {
-      "source": "201",
-      "sourceHandle": null,
-      "target": "198",
-      "targetHandle": "srs_cube",
-      "id": "reactflow__edge-201-198srs_cube"
-    },
-    {
       "source": "202",
       "sourceHandle": null,
       "target": "194",
@@ -767,41 +701,6 @@
       "target": "198",
       "targetHandle": "time_span",
       "id": "reactflow__edge-202-198time_span"
-    },
-    {
-      "source": "203",
-      "sourceHandle": null,
-      "target": "198",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-203-198bbox"
-    },
-    {
-      "source": "203",
-      "sourceHandle": null,
-      "target": "197",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-203-197bbox"
-    },
-    {
-      "source": "203",
-      "sourceHandle": null,
-      "target": "196",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-203-196bbox"
-    },
-    {
-      "source": "203",
-      "sourceHandle": null,
-      "target": "195",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-203-195bbox"
-    },
-    {
-      "source": "203",
-      "sourceHandle": null,
-      "target": "194",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-203-194bbox"
     },
     {
       "source": "198",
@@ -956,6 +855,41 @@
       "target": "161",
       "targetHandle": "spatial_res",
       "id": "reactflow__edge-206-161spatial_res"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "198",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-198bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "197",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-197bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "196",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-196bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "195",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-195bbox_crs"
+    },
+    {
+      "source": "174",
+      "sourceHandle": null,
+      "target": "194",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-174-194bbox_crs"
     }
   ],
   "inputs": {
@@ -1101,13 +1035,6 @@
       "example": 2.4,
       "weight": 18
     },
-    "pipeline@201": {
-      "label": "Spatial reference output",
-      "description": "Target spatial reference system of the output raster",
-      "type": "text",
-      "example": "EPSG:4326",
-      "weight": 19
-    },
     "pipeline@202": {
       "label": "Future time span",
       "description": "Period for climate projection, start year to end year",
@@ -1118,26 +1045,14 @@
         "2041-2070",
         "2071-2100"
       ],
-      "weight": 20
-    },
-    "pipeline@203": {
-      "label": "Bounding box",
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [
-        "2.54133",
-        "49.49697",
-        "6.40794",
-        "51.50511"
-      ],
-      "weight": 21
+      "weight": 19
     },
     "pipeline@206": {
       "label": "Spatial resolution output",
       "description": "Pixel size (in meters) of the output raster",
       "type": "float",
       "example": 0.008,
-      "weight": 22
+      "weight": 20
     }
   },
   "outputs": {
