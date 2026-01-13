@@ -13,7 +13,7 @@ if not os.path.exists(fileIn):
 # Do stuff.
 biab_output("target", seconds)
 
-print("Counting the seconds...")
+print("Looping with some delay to simulate processing...")
 counter = 0
 for x in range(0, seconds + 1):
   print(x, flush=True)
