@@ -1,5 +1,6 @@
 library(terra)
 
+input <- biab_inputs()
 # Load geotiff
 predictor <- rast(input$layers)
 

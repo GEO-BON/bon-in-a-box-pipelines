@@ -23,7 +23,7 @@ inputs:
   water_mask:
     label: water mask
     description: landcover layer containing open water pixels
-    type: image/tiff;application=geotiff[]
+    type: image/tiff;application=geotiff
     example: "/output/foo/bar"
   water_value:
     label: value for water in mask
