@@ -36,6 +36,9 @@ if (input$polygon_type == "Country or region" | input$polygon_type == "WDPA") {
         geo_data_sf$fid <- as.integer(geo_data_sf$fid)
     }
     print(geo_data_sf)
+
+    polygon_path <- file.path(outputFolder, "polygon.gpkg")
+    st_write(geo_data_sf, polygon_path)
 }
 
 if (input$polygon_type == "WDPA") {
@@ -48,9 +51,9 @@ if (input$polygon_type == "WDPA") {
     dbExecute(con, 'CREATE OR REPLACE VIEW wdpa AS SELECT * FROM read_parquet("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet")')
 
     if (!is.null(input$country_region$region$regionName)) {
-        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet' WHERE adm0_src='", input$country_region$country$ISO3, "' and adm1_name='", input$country_region$region$regionName,"'")); 
+        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet' WHERE adm0_src='", input$country_region$country$ISO3, "' and adm1_name='", input$country_region$region$regionName, "'"))
     } else {
-        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * FROM 'https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet' WHERE adm0_src='", input$country_region$country$ISO3,"'"))
+        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * FROM 'https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet' WHERE adm0_src='", input$country_region$country$ISO3, "'"))
     }
     dbExecute(con, "CREATE OR REPLACE TABLE wdpa_region AS (WITH reg AS (
         SELECT
@@ -68,7 +71,9 @@ if (input$polygon_type == "WDPA") {
         bbox.ymin <= r.ymax_r AND
         bbox.ymax >= r.ymin_r)")
 
-    dbExecute(con, paste0("COPY (SELECT w.* FROM wdpa_region w, region r WHERE ST_DWithin(w.geometry,r.geometry,", input$buffer, ")) TO '/", outputFolder, "/polygon.gpkg' (DRIVER 'GPKG', FORMAT gdal)"))
+    dbExecute(con, paste0("COPY (SELECT w.* FROM wdpa_region w, region r WHERE ST_DWithin(w.geometry,r.geometry,", input$buffer, ")) TO '/", outputFolder, "/polygon.gpkg' (DRIVER 'GPKG', FORMAT gdal, SRS 'EPSG:4326')"))
+    polygon_path <- file.path(outputFolder, "polygon.gpkg")
+
 }
 
 
@@ -85,8 +90,9 @@ if (input$polygon_type == "EEZ") {
     if (nrow(geo_data_sf) == 0) {
         biab_error_stop("There is no Exclusive Economic Zone for this country")
     }
+
+    polygon_path <- file.path(outputFolder, "polygon.gpkg")
+    st_write(geo_data_sf, polygon_path)
 }
 
-polygon_path <- file.path(outputFolder, "polygon.gpkg")
-# st_write(geo_data_sf, polygon_path)
 biab_output("polygon", polygon_path)
