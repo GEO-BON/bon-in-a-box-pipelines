@@ -19,13 +19,13 @@ inputs:
   country_region:
     label: Country
     description: Using the country chooser to select a region (region selections will be ignored as EEZs are national).
-    type: countryRegion
+    type: countryRegionCRS
   buffer:
     label: Transboundary buffer
     description: Buffer for pulling transboundary protected areas (WDPA data only). 
       The buffer will pull protected areas within that distance of the country border (in degrees).
-    type: int
-    example: 500
+    type: float
+    example: 0.08
 outputs:
   polygon:
     label: Polygon
