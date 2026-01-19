@@ -131,13 +131,20 @@ dbExecute(con, paste0("CREATE OR REPLACE TABLE wdpa_region AS
 # 6. Final Spatial Join & Export
 # This finds exactly what is inside the buffer
 
-
-dbExecute(con, paste0("COPY (
+region_output <- dbGetQuery(con, "
     SELECT 
         w.* EXCLUDE (bbox) 
     FROM wdpa_region w, buffered_region b
-    WHERE ST_Intersects(w.geometry, b.geometry)
-) TO '/", outputFolder, "/polygon.gpkg' (DRIVER 'GPKG', FORMAT gdal, SRS ", crs_input, ")"))
+    WHERE ST_Intersects(w.geometry, b.geometry)")
+
+
+
+# dbExecute(con, paste0("COPY (
+#     SELECT 
+#         w.* EXCLUDE (bbox) 
+#     FROM wdpa_region w, buffered_region b
+#     WHERE ST_Intersects(w.geometry, b.geometry)
+# ) TO '/", outputFolder, "/polygon.gpkg' (DRIVER 'GPKG', FORMAT gdal, SRS ", crs_input, ")"))
     # dbExecute(con, "CREATE OR REPLACE TABLE wdpa_region AS (WITH reg AS (
     #     SELECT
     #         geometry_bbox.xmin AS xmin_r,
