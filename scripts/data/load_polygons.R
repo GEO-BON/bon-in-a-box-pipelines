@@ -18,6 +18,7 @@ print(input$country_region)
 
 crs_input <- paste0(input$country_region$CRS$authority, ":", input$country_region$CRS$code)
 polygon_path <- file.path(outputFolder, "polygon.gpkg")
+region_path <- file.path(outputFolder, "country_region.gpkg")
 print(polygon_path)
 
 # Load country region polygon
@@ -45,7 +46,7 @@ if (input$polygon_type == "Country or region" | input$polygon_type == "WDPA") {
     }
     print(geo_data_sf)
 
-    st_write(geo_data_sf, polygon_path)
+    st_write(geo_data_sf, region_path)
 }
 
 if (input$polygon_type == "WDPA") {
@@ -131,14 +132,15 @@ dbExecute(con, paste0("CREATE OR REPLACE TABLE wdpa_region AS
 # 6. Final Spatial Join & Export
 # This finds exactly what is inside the buffer
 
-region_output <- dbGetQuery(con, "
-    SELECT 
+region_output <- dbExecute(con, "
+   CREATE OR REPLACE TABLE region_output AS SELECT 
         w.* EXCLUDE (bbox) 
     FROM wdpa_region w, buffered_region b
     WHERE ST_Intersects(w.geometry, b.geometry)")
 
 
-
+ddbs_read_vector(con, "region_output") |> st_set_crs(4326) |> st_transform(crs = as.integer(gsub("EPSG:", "", crs_input))) |>
+    st_write(polygon_path, delete_dsn = TRUE)
 # dbExecute(con, paste0("COPY (
 #     SELECT 
 #         w.* EXCLUDE (bbox) 
