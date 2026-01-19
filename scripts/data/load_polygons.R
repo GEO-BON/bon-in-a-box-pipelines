@@ -141,7 +141,7 @@ region_output <- dbExecute(con, "
     WHERE ST_Intersects(w.geometry, b.geometry)")
 
 
-ddbs_read_vector(con, "region_output") |> st_set_crs(4326) |> st_transform(crs = as.integer(gsub("EPSG:", "", crs_input))) |>
+ddbs_read_vector(con, "region_output") |> st_set_crs(4326) |> st_transform(crs_input) |>
     st_write(polygon_path, delete_dsn = TRUE)
 # dbExecute(con, paste0("COPY (
 #     SELECT 
