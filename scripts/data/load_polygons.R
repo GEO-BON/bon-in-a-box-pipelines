@@ -14,15 +14,13 @@ library(duckspatial)
 Sys.setenv(HOME = "/output")
 
 input <- biab_inputs()
-print(input$country_region)
 
 crs_input <- paste0(input$country_region$CRS$authority, ":", input$country_region$CRS$code)
 polygon_path <- file.path(outputFolder, "polygon.gpkg")
 region_path <- file.path(outputFolder, "country_region.gpkg")
-print(polygon_path)
 
 # Load country region polygon
-if (input$polygon_type == "Country or region" | input$polygon_type == "WDPA") {
+if (input$polygon_type == "Country or region") {
     # Load country if region is null
     if (is.null(input$country_region$region)) {
         country <- open_dataset("https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet")
@@ -50,11 +48,7 @@ if (input$polygon_type == "Country or region" | input$polygon_type == "WDPA") {
 }
 
 if (input$polygon_type == "WDPA") {
-    
     # adding quotes around it for duckdb functions
-    crs_input <- paste0("'", crs_input, "'")
-    print("crs:")
-    print(crs_input)
 
     con <- dbConnect(duckdb())
 
@@ -63,110 +57,69 @@ if (input$polygon_type == "WDPA") {
     SELECT * EXCLUDE geometry, geometry::GEOMETRY AS geometry FROM read_parquet("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet")')
 
     if (!is.null(input$country_region$region$regionName)) {
-        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS 
+        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS
         SELECT * EXCLUDE geometry, geometry::GEOMETRY AS geometry
-        FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet' 
+        FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet'
         WHERE adm0_src='", input$country_region$country$ISO3, "' and adm1_name='", input$country_region$region$regionName, "'"))
     } else {
         dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * EXCLUDE geometry, geometry::GEOMETRY AS geometry
         FROM 'https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet' WHERE adm0_src='", input$country_region$country$ISO3, "'"))
     }
-    
-    # 4. Filter WDPA while everything is still in DEGREES (Crucial for BBox performance)
-    dbExecute(con, paste0("CREATE OR REPLACE TABLE wdpa_region AS 
-    SELECT 
-        w.* EXCLUDE (geometry), 
-        ST_Transform(w.geometry, 'EPSG:4326', ", crs_input, ") AS geometry
-    FROM wdpa w, region r
-    WHERE w.bbox.xmax >= ST_XMin(r.geometry) 
-      AND w.bbox.xmin <= ST_XMax(r.geometry)
-      AND w.bbox.ymax >= ST_YMin(r.geometry)
-      AND w.bbox.ymin <= ST_YMax(r.geometry)
-"))
 
-    # 5. Transform Region and Buffer (Now we move to the projected CRS)
-    dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS 
-    SELECT * EXCLUDE geometry, ST_Transform(geometry, 'EPSG:4326', ", crs_input, ") AS geometry FROM region"))
 
+    # Transform region to crs of interest
+    dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS
+    SELECT * EXCLUDE geometry, ST_Transform(geometry, 'EPSG:4326', '", crs_input, "') AS geometry FROM region"))
+
+    # buffer region
     dbExecute(con, paste0("
-    CREATE OR REPLACE TABLE buffered_region AS 
+    CREATE OR REPLACE TABLE buffered_region AS
     SELECT ST_Buffer(geometry, ", input$buffer, ") AS geometry
     FROM region
     "))
-    
-    # dbExecute(con, paste0("
-    # CREATE OR REPLACE TABLE buffered_region AS
-    # SELECT
-    #     ST_Transform(
-    #         ST_Buffer(
-    #             ST_Transform(geometry, 'EPSG:4326',", crs_input,"), 
-    #             ", input$buffer, "
-    #         ),
-    #         'EPSG:3857', 'EPSG:4326'
-    #     ) AS geometry
-    # FROM region
-    # "))
 
-# dbExecute(con, "CREATE OR REPLACE TABLE wdpa_region AS (
-#     WITH b_reg AS (
-#         SELECT 
-#             ST_XMin(geometry) AS xmin_b, ST_YMin(geometry) AS ymin_b, 
-#             ST_XMax(geometry) AS xmax_b, ST_YMax(geometry) AS ymax_b 
-#         FROM buffered_region
-#     )
-#     SELECT w.* EXCLUDE (bbox)
-#     FROM wdpa w, b_reg b
-#     WHERE w.bbox.xmax >= b.xmin_b AND w.bbox.xmin <= b.xmax_b 
-#       AND w.bbox.ymin <= b.ymax_b AND w.bbox.ymax >= b.ymin_b
-# )")
-
-dbExecute(con, paste0("CREATE OR REPLACE TABLE wdpa_region AS 
-    SELECT 
-        w.* EXCLUDE (geometry), 
-        ST_Transform(w.geometry, 'EPSG:4326', ", crs_input, ") AS geometry
-    FROM wdpa w, region r
-    WHERE w.bbox.xmax >= ST_XMin(r.geometry) 
-      AND w.bbox.xmin <= ST_XMax(r.geometry)
-      AND w.bbox.ymax >= ST_YMin(r.geometry) 
-    AND w.bbox.ymin <= ST_YMax(r.geometry)
+    # transform bbox of buffered region back to 4326 to filter wdpa data
+    dbExecute(con, paste0("
+    CREATE OR REPLACE TABLE bbox_filter AS
+    SELECT
+        ST_Transform(ST_Envelope(geometry), '", crs_input, "', 'EPSG:4326') AS geom_4326
+    FROM buffered_region
 "))
 
-# 6. Final Spatial Join & Export
-# This finds exactly what is inside the buffer
 
-region_output <- dbExecute(con, "
-   CREATE OR REPLACE TABLE region_output AS SELECT 
-        w.* EXCLUDE (bbox) 
-    FROM wdpa_region w, buffered_region b
+    # Filter WDPA and transform to the crs of interest
+    dbExecute(con, paste0("
+    CREATE OR REPLACE TABLE wdpa_filtered AS
+    SELECT
+        w.* EXCLUDE (geometry),
+        ST_Force2D(ST_Transform(w.geometry, 'EPSG:4326', '", crs_input, "')) AS geometry
+    FROM wdpa w, bbox_filter b
+    WHERE w.bbox.xmax >= ST_XMin(b.geom_4326)
+      AND w.bbox.xmin <= ST_XMax(b.geom_4326)
+      AND w.bbox.ymax >= ST_YMin(b.geom_4326)
+      AND w.bbox.ymin <= ST_YMax(b.geom_4326)
+"))
+
+
+    region_output <- dbExecute(con, "
+   CREATE OR REPLACE TABLE region_output AS SELECT
+        w.* 
+    FROM wdpa_filtered w, buffered_region b
     WHERE ST_Intersects(w.geometry, b.geometry)")
 
-
-ddbs_read_vector(con, "region_output") |> st_set_crs(4326) |> st_transform(crs_input) |>
-    st_write(polygon_path, delete_dsn = TRUE)
-# dbExecute(con, paste0("COPY (
-#     SELECT 
-#         w.* EXCLUDE (bbox) 
-#     FROM wdpa_region w, buffered_region b
-#     WHERE ST_Intersects(w.geometry, b.geometry)
-# ) TO '/", outputFolder, "/polygon.gpkg' (DRIVER 'GPKG', FORMAT gdal, SRS ", crs_input, ")"))
-    # dbExecute(con, "CREATE OR REPLACE TABLE wdpa_region AS (WITH reg AS (
-    #     SELECT
-    #         geometry_bbox.xmin AS xmin_r,
-    #         geometry_bbox.ymin AS ymin_r,
-    #         geometry_bbox.xmax AS xmax_r,
-    #         geometry_bbox.ymax AS ymax_r
-    #     FROM region
-    # )
-    # SELECT w.* EXCLUDE(geom_wkt, bbox)
-    # FROM wdpa w, reg r
-    # WHERE
-    #     bbox.xmax >= r.xmin_r AND
-    #     bbox.xmin <= r.xmax_r AND
-    #     bbox.ymin <= r.ymax_r AND
-    #     bbox.ymax >= r.ymin_r)")
-
-    # dbExecute(con, paste0("COPY (SELECT w.* FROM wdpa_region w, region r WHERE ST_DWithin(w.geometry,r.geometry, ", input$buffer, ")) TO '/", outputFolder, "/polygon.gpkg' (DRIVER 'GPKG', FORMAT gdal, SRS 'EPSG:4326')"))
-    # polygon_path <- file.path(outputFolder, "polygon.gpkg")
+row_count <- dbGetQuery(con, "SELECT COUNT(*) FROM region_output")[[1]]
+print("row_count")
+print(row_count)
+    df <- dbGetQuery(con, "SELECT * EXCLUDE geometry, ST_AsWKB(geometry) as geometry FROM region_output")
+    print(df)
+    geom_sfc <- st_as_sfc(df$geometry, crs = crs_input)
+    region_sf <- st_as_sf(df)
+    st_geometry(region_sf) <- geom_sfc
+    #df$geometry <- st_as_sfc(df$geometry)
+    #print(ddbs_read_vector(con, "region_output")) |> st_set_crs(crs_input) |> # st_transform(crs_input) |>
+    #    st_write(polygon_path, delete_dsn = TRUE)
+    region_sf <- st_as_sf(df, geometry_column = "geometry", crs = crs_input)
+    st_write(region_sf, polygon_path, delete_dsn = TRUE)
 }
 
 
