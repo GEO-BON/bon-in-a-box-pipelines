@@ -127,6 +127,8 @@ dbExecute(con, paste0("CREATE OR REPLACE TABLE wdpa_region AS
     FROM wdpa w, region r
     WHERE w.bbox.xmax >= ST_XMin(r.geometry) 
       AND w.bbox.xmin <= ST_XMax(r.geometry)
+      AND w.bbox.ymax >= ST_YMin(r.geometry) 
+    AND w.bbox.ymin <= ST_YMax(r.geometry)
 "))
 
 # 6. Final Spatial Join & Export
