@@ -1,6 +1,7 @@
 import ee
 import os
 import geemap.geemap as geemap
+import pandas as pd
 import geopandas as gpd
 
 inputs = biab_inputs()
@@ -70,7 +71,18 @@ pixel_count = reef_mask.reduceRegion(
 
 
 count_value = pixel_count.get('reef_mask').getInfo() 
-area_m2 = count_value * scale * scale  # since pixel is 5m × 5m
+area_m2 = count_value * scale * scale  
 print("Total reef area (m²):", area_m2)
 
-biab_output("extent", area_m2)
+# Make data frame to match the other inputs
+coral_extent_df = {
+    'habitat': ['Coral'],
+    'extent': [area_m2]
+}
+
+coral_extent_df = pd.DataFrame(coral_extent_df)
+
+csv_path = os.path.join(output_folder, "extent.csv")
+coral_extent_df.to_csv(csv_path, index=False)
+
+biab_output("extent", csv_path)

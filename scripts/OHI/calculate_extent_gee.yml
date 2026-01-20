@@ -30,7 +30,7 @@ outputs:
   extent:
     label: Extent
     description: Extent of coral in m2
-    type: float
+    type: text/csv
 conda:
   channels:
     - conda-forge

@@ -1,0 +1,22 @@
+script: download_species_data.R
+name: Download species data for OHI scoring
+description: |
+ Download OHI data from the GitHub repository. This will eventually be replaced with scripts to pull data and clean directly.
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  start_year:
+    label: Start year
+    description: Start year for the OHI assessment
+    type: int
+  end_year:
+    label: End year
+    description: End year for the OHI assessment
+    type: int
+outputs:
+  species_layers:
+    label: Species layers
+    description: Species layers for OHI assessment extracted from GitHub
+    type: text/csv[]

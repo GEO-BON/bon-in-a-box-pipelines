@@ -37,8 +37,8 @@
       "id": "181",
       "type": "io",
       "position": {
-        "x": 1382,
-        "y": 183.80392545328124
+        "x": 689.3896748563423,
+        "y": 71.48873759214757
       },
       "data": {
         "descriptionFile": "OHI>coral_condition.yml"
@@ -48,8 +48,8 @@
       "id": "182",
       "type": "output",
       "position": {
-        "x": 1891.6671035745487,
-        "y": 278.7277375755469
+        "x": 1157.6071257678539,
+        "y": 30.029821597322297
       },
       "data": {
         "label": "Output"
@@ -71,8 +71,8 @@
       "id": "184",
       "type": "io",
       "position": {
-        "x": 1395,
-        "y": 317.8125
+        "x": 837.4353174036576,
+        "y": 480.9369395125989
       },
       "data": {
         "descriptionFile": "OHI>coral_trend.yml"
@@ -82,11 +82,22 @@
       "id": "186",
       "type": "output",
       "position": {
-        "x": 1783,
-        "y": 322.8125
+        "x": 1174.6260657521923,
+        "y": 595.5779562341818
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "187",
+      "type": "io",
+      "position": {
+        "x": 1336.843021779444,
+        "y": 286.3208150150488
+      },
+      "data": {
+        "descriptionFile": "OHI>OHI_functions.yml"
       }
     }
   ],
@@ -139,6 +150,27 @@
       "target": "186",
       "targetHandle": null,
       "id": "reactflow__edge-184coral_trend-186"
+    },
+    {
+      "source": "176",
+      "sourceHandle": "extent",
+      "target": "187",
+      "targetHandle": "extent_layers",
+      "id": "reactflow__edge-176extent-187extent_layers"
+    },
+    {
+      "source": "181",
+      "sourceHandle": "coral_health",
+      "target": "187",
+      "targetHandle": "health_layers",
+      "id": "reactflow__edge-181coral_health-187health_layers"
+    },
+    {
+      "source": "184",
+      "sourceHandle": "coral_trend",
+      "target": "187",
+      "targetHandle": "trend_layers",
+      "id": "reactflow__edge-184coral_trend-187trend_layers"
     }
   ],
   "inputs": {

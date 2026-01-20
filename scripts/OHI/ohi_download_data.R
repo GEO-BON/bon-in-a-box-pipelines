@@ -78,6 +78,7 @@ for (i in seq_along(file_names_pressure)) {
 biab_output("pressures_layers", pressures_file_paths)
 
 
+## Load resilience matrix and filter for the rows that appy to biodiversity goal
 bd_resilience_layers <- resilience[resilience$goal %in% c('HAB', 'SPP'), ]
 bd_resilience_layers <- bd_resilience_layers[
   rowSums(bd_resilience_layers[, 4:ncol(bd_resilience_layers)] == "x", na.rm = TRUE) > 0,

@@ -1,0 +1,37 @@
+script: OHI_functions.R
+name: Functions for calculating OHI scores
+description: |
+ Download OHI data from the GitHub repository. This will eventually be replaced with scripts to pull data and clean directly.
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  extent_layers:
+    label: Extent layers
+    description: CSVs with habitat extent values
+    type: text/csv[]
+  health_layers:
+    label: Health layers
+    description: CSVs with habitat health values
+    type: text/csv[]
+  trend_layers:
+    label: Trend layers
+    description: CSVs with habitat trend values
+    type: text/csv[]
+  # spp_status:
+  #   label: Species status
+  #   description: CSVs with species status values
+  #   type: text/csv[]
+  # spp_trend:
+  #   label: Species trend
+  #   description: CSVs with species trend values
+  #   type: text/csv[]
+outputs:
+  habitat_score:
+    label: Habitat score
+    description: habitat score
+    type: text/csv
+  
+  
+  
