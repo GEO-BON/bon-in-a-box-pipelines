@@ -54,28 +54,28 @@ if (input$polygon_type == "WDPA") {
 
     dbExecute(con, "INSTALL spatial; LOAD spatial; INSTALL httpfs; LOAD httpfs;")
     dbExecute(con, 'CREATE OR REPLACE VIEW wdpa AS
-    SELECT * EXCLUDE geometry, geometry::GEOMETRY AS geometry FROM read_parquet("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet")')
+    SELECT * FROM read_parquet("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet")')
 
     if (!is.null(input$country_region$region$regionName)) {
         dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS
-        SELECT * EXCLUDE geometry, geometry::GEOMETRY AS geometry
+        SELECT *
         FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet'
         WHERE adm0_src='", input$country_region$country$ISO3, "' and adm1_name='", input$country_region$region$regionName, "'"))
     } else {
-        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT * EXCLUDE geometry, geometry::GEOMETRY AS geometry
+        dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT *
         FROM 'https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet' WHERE adm0_src='", input$country_region$country$ISO3, "'"))
     }
 
 
     # Transform region to crs of interest
-    dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS
+    dbExecute(con, paste0("CREATE OR REPLACE TABLE region_crs AS
     SELECT * EXCLUDE geometry, ST_Transform(geometry, 'EPSG:4326', '", crs_input, "') AS geometry FROM region"))
 
     # buffer region
     dbExecute(con, paste0("
     CREATE OR REPLACE TABLE buffered_region AS
     SELECT ST_Buffer(geometry, ", input$buffer, ") AS geometry
-    FROM region
+    FROM region_crs
     "))
 
     # transform bbox of buffered region back to 4326 to filter wdpa data
@@ -90,9 +90,7 @@ if (input$polygon_type == "WDPA") {
     # Filter WDPA and transform to the crs of interest
     dbExecute(con, paste0("
     CREATE OR REPLACE TABLE wdpa_filtered AS
-    SELECT
-        w.* EXCLUDE (geometry),
-        ST_Force2D(ST_Transform(w.geometry, 'EPSG:4326', '", crs_input, "')) AS geometry
+    SELECT w.*
     FROM wdpa w, bbox_filter b
     WHERE w.bbox.xmax >= ST_XMin(b.geom_4326)
       AND w.bbox.xmin <= ST_XMax(b.geom_4326)
@@ -100,26 +98,15 @@ if (input$polygon_type == "WDPA") {
       AND w.bbox.ymin <= ST_YMax(b.geom_4326)
 "))
 
-
-    region_output <- dbExecute(con, "
-   CREATE OR REPLACE TABLE region_output AS SELECT
-        w.* 
+    df <- dbGetQuery(con, paste0("SELECT w.*, 
+    ST_AsWKB(ST_Transform(w.geometry, 'EPSG:4326', '", crs_input, "', TRUE)) as geometry_wkb
     FROM wdpa_filtered w, buffered_region b
-    WHERE ST_Intersects(w.geometry, b.geometry)")
+     WHERE ST_Intersects(ST_Transform(w.geometry, 'EPSG:4326', '", crs_input, "'), b.geometry)"))
 
-row_count <- dbGetQuery(con, "SELECT COUNT(*) FROM region_output")[[1]]
-print("row_count")
-print(row_count)
-    df <- dbGetQuery(con, "SELECT * EXCLUDE geometry, ST_AsWKB(geometry) as geometry FROM region_output")
-    print(df)
-    geom_sfc <- st_as_sfc(df$geometry, crs = crs_input)
-    region_sf <- st_as_sf(df)
-    st_geometry(region_sf) <- geom_sfc
-    #df$geometry <- st_as_sfc(df$geometry)
-    #print(ddbs_read_vector(con, "region_output")) |> st_set_crs(crs_input) |> # st_transform(crs_input) |>
-    #    st_write(polygon_path, delete_dsn = TRUE)
-    region_sf <- st_as_sf(df, geometry_column = "geometry", crs = crs_input)
-    st_write(region_sf, polygon_path, delete_dsn = TRUE)
+    print("row_count")
+    print(nrow(df))
+    df$geometry = sf::st_as_sfc(structure(as.list(df$geometry_wkb), class = "WKB"),crs = crs_input)
+    st_write(df, polygon_path, delete_dsn = TRUE)
 }
 
 
