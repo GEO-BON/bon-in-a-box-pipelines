@@ -2,7 +2,7 @@ script: load_polygons.R
 name: Load polygons
 description: |
  Load polygons stored as geoparquet files. Load polygons for countries or regions, polygons from the World Database of Protected Areas, 
- or polygons of Exclusive Economic Zones (EEZs). All polygons are returned in EPSG:4326.
+ or polygons of Exclusive Economic Zones (EEZs). 
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -23,7 +23,7 @@ inputs:
   buffer:
     label: Transboundary buffer
     description: Buffer for pulling transboundary protected areas (WDPA data only). 
-      The buffer will pull protected areas within that distance of the country border (in degrees).
+      The buffer will pull protected areas within that distance of the country border in the unit of the coordinate reference system (meters of degrees).
     type: float
     example: 0.08
 outputs:

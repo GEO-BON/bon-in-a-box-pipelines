@@ -17,7 +17,6 @@ input <- biab_inputs()
 
 crs_input <- paste0(input$country_region$CRS$authority, ":", input$country_region$CRS$code)
 polygon_path <- file.path(outputFolder, "polygon.gpkg")
-region_path <- file.path(outputFolder, "country_region.gpkg")
 
 # Load country region polygon
 if (input$polygon_type == "Country or region") {
@@ -42,9 +41,13 @@ if (input$polygon_type == "Country or region") {
             st_set_crs(4326)
         geo_data_sf$fid <- as.integer(geo_data_sf$fid)
     }
-    print(geo_data_sf)
+    
+       if(input$country_region$CRS$code != 4326){
+        geo_data_sf <- st_transform(geo_data_sf, crs_input)
+    }
+    print(st_crs(geo_data_sf))
 
-    st_write(geo_data_sf, region_path)
+    st_write(geo_data_sf, polygon_path)
 }
 
 if (input$polygon_type == "WDPA") {
@@ -122,6 +125,9 @@ if (input$polygon_type == "EEZ") {
 
     if (nrow(geo_data_sf) == 0) {
         biab_error_stop("There is no Exclusive Economic Zone for this country")
+    }
+    if(input$country_region$CRS$code != 4326){
+        geo_data_sf <- st_transform(geo_data_sf, crs_input)
     }
 
     st_write(geo_data_sf, polygon_path)
