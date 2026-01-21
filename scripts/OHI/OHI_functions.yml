@@ -19,18 +19,30 @@ inputs:
     label: Trend layers
     description: CSVs with habitat trend values
     type: text/csv[]
-  # spp_status:
-  #   label: Species status
-  #   description: CSVs with species status values
-  #   type: text/csv[]
-  # spp_trend:
-  #   label: Species trend
-  #   description: CSVs with species trend values
-  #   type: text/csv[]
+  spp_status:
+    label: Species status
+    description: CSVs with species status values
+    type: text/csv[]
+  spp_trend:
+    label: Species trend
+    description: CSVs with species trend values
+    type: text/csv[]
 outputs:
   habitat_score:
     label: Habitat score
     description: habitat score
+    type: text/csv
+  habitat_weights:
+    label: Habitat weights
+    description: Habitat weights
+    type: text/csv
+  species_score:
+    label: Species score
+    description: Species score
+    type: text/csv
+  bd_score:
+    label: Biodiversity score
+    description: Biodiversity score
     type: text/csv
   
   

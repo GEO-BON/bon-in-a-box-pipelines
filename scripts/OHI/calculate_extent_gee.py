@@ -76,7 +76,7 @@ print("Total reef area (m²):", area_m2)
 
 # Make data frame to match the other inputs
 coral_extent_df = {
-    'habitat': ['Coral'],
+    'habitat': ['coral'],
     'extent': [area_m2]
 }
 

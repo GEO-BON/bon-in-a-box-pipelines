@@ -25,6 +25,10 @@ inputs:
     label: Country
     description: Using the country chooser to select a region (region selections will be ignored as EEZs are national).
     type: countryRegion
+  eez_code:
+    label: EEZ code
+    description: EEZ code
+    type: float
 outputs:
   coral_health:
     label: Coral health

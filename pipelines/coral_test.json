@@ -4,8 +4,8 @@
       "id": "175",
       "type": "io",
       "position": {
-        "x": 241,
-        "y": 258.8125
+        "x": 270.82926135520165,
+        "y": 194.18243373039638
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -71,8 +71,8 @@
       "id": "184",
       "type": "io",
       "position": {
-        "x": 837.4353174036576,
-        "y": 480.9369395125989
+        "x": 722.2959855210995,
+        "y": 436.6525810962304
       },
       "data": {
         "descriptionFile": "OHI>coral_trend.yml"
@@ -98,6 +98,105 @@
       },
       "data": {
         "descriptionFile": "OHI>OHI_functions.yml"
+      }
+    },
+    {
+      "id": "188",
+      "type": "io",
+      "position": {
+        "x": 559.3052592269153,
+        "y": 699.1911361706605
+      },
+      "data": {
+        "descriptionFile": "OHI>download_species_data.yml"
+      }
+    },
+    {
+      "id": "189",
+      "type": "output",
+      "position": {
+        "x": 1902.0987033405702,
+        "y": 291.6456914469
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "190",
+      "type": "io",
+      "position": {
+        "x": 280.0346768732031,
+        "y": 330.10695011613
+      },
+      "data": {
+        "descriptionFile": "OHI>get_eez_code.yml"
+      }
+    },
+    {
+      "id": "191",
+      "type": "io",
+      "position": {
+        "x": 1249,
+        "y": 496.16197312001884
+      },
+      "data": {
+        "descriptionFile": "OHI>calculate_pressures.yml"
+      }
+    },
+    {
+      "id": "192",
+      "type": "output",
+      "position": {
+        "x": 1834.7476311521145,
+        "y": 501.6125535982103
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "193",
+      "type": "output",
+      "position": {
+        "x": 1828.0002655520204,
+        "y": 511.0588654383422
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "194",
+      "type": "io",
+      "position": {
+        "x": 1351.6174956702232,
+        "y": 670.646638109692
+      },
+      "data": {
+        "descriptionFile": "OHI>calculate_resilience.yml"
+      }
+    },
+    {
+      "id": "195",
+      "type": "output",
+      "position": {
+        "x": 1869.7830738254713,
+        "y": 672.2453568633229
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "196",
+      "type": "output",
+      "position": {
+        "x": 1983.7830738254713,
+        "y": 696.2453568633229
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -171,6 +270,97 @@
       "target": "187",
       "targetHandle": "trend_layers",
       "id": "reactflow__edge-184coral_trend-187trend_layers"
+    },
+    {
+      "source": "188",
+      "sourceHandle": "spp_status",
+      "target": "187",
+      "targetHandle": "spp_status",
+      "id": "reactflow__edge-188spp_status-187spp_status"
+    },
+    {
+      "source": "188",
+      "sourceHandle": "spp_trend",
+      "target": "187",
+      "targetHandle": "spp_trend",
+      "id": "reactflow__edge-188spp_trend-187spp_trend"
+    },
+    {
+      "source": "183",
+      "sourceHandle": null,
+      "target": "188",
+      "targetHandle": "country_region",
+      "id": "reactflow__edge-183-188country_region"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "habitat_score",
+      "target": "189",
+      "targetHandle": null,
+      "id": "reactflow__edge-187habitat_score-189"
+    },
+    {
+      "source": "183",
+      "sourceHandle": null,
+      "target": "190",
+      "targetHandle": "country_region",
+      "id": "reactflow__edge-183-190country_region"
+    },
+    {
+      "source": "190",
+      "sourceHandle": "eez_code",
+      "target": "184",
+      "targetHandle": "eez_code",
+      "id": "reactflow__edge-190eez_code-184eez_code"
+    },
+    {
+      "source": "190",
+      "sourceHandle": "eez_code",
+      "target": "181",
+      "targetHandle": "eez_code",
+      "id": "reactflow__edge-190eez_code-181eez_code"
+    },
+    {
+      "source": "190",
+      "sourceHandle": "eez_code",
+      "target": "191",
+      "targetHandle": "eez_code",
+      "id": "reactflow__edge-190eez_code-191eez_code"
+    },
+    {
+      "source": "191",
+      "sourceHandle": "pressure_matrix_bd",
+      "target": "192",
+      "targetHandle": null,
+      "id": "reactflow__edge-191pressure_matrix_bd-192"
+    },
+    {
+      "source": "191",
+      "sourceHandle": "pressure_values",
+      "target": "193",
+      "targetHandle": null,
+      "id": "reactflow__edge-191pressure_values-193"
+    },
+    {
+      "source": "190",
+      "sourceHandle": "eez_code",
+      "target": "194",
+      "targetHandle": "eez_code",
+      "id": "reactflow__edge-190eez_code-194eez_code"
+    },
+    {
+      "source": "194",
+      "sourceHandle": "resilience_matrix_bd",
+      "target": "195",
+      "targetHandle": null,
+      "id": "reactflow__edge-194resilience_matrix_bd-195"
+    },
+    {
+      "source": "194",
+      "sourceHandle": "resilience_values",
+      "target": "196",
+      "targetHandle": null,
+      "id": "reactflow__edge-194resilience_values-196"
     }
   ],
   "inputs": {
@@ -242,6 +432,36 @@
       "label": "Coral trend",
       "type": "text/csv",
       "weight": 2
+    },
+    "OHI>OHI_functions.yml@187|habitat_score": {
+      "description": "habitat score",
+      "label": "Habitat score",
+      "type": "text/csv",
+      "weight": 3
+    },
+    "OHI>calculate_pressures.yml@191|pressure_matrix_bd": {
+      "description": "Pressure matrix for weighting different pressures based on goals",
+      "label": "pressure matrix for biodiversity",
+      "type": "text/csv",
+      "weight": 4
+    },
+    "OHI>calculate_pressures.yml@191|pressure_values": {
+      "description": "Pressure values for most recent year",
+      "label": "Pressure values",
+      "type": "text/csv",
+      "weight": 5
+    },
+    "OHI>calculate_resilience.yml@194|resilience_matrix_bd": {
+      "description": "resilience matrix for weighting different pressures based on goals",
+      "label": "resilience matrix for biodiversity",
+      "type": "text/csv",
+      "weight": 6
+    },
+    "OHI>calculate_resilience.yml@194|resilience_values": {
+      "description": "resilience values for most recent year",
+      "label": "resilience values",
+      "type": "text/csv",
+      "weight": 7
     }
   }
 }

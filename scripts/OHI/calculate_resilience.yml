@@ -1,0 +1,21 @@
+script: calculate_resilience.R
+name: Load resilience data and matrix
+description: Load resilience data and matrix
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs: 
+  eez_code:
+    label: EEZ code
+    description: EEZ code
+    type: float
+outputs:
+  resilience_matrix_bd:
+    label: resilience matrix for biodiversity
+    description: resilience matrix for weighting different pressures based on goals
+    type: text/csv
+  resilience_values:
+    label: resilience values
+    description: resilience values for most recent year
+    type: text/csv

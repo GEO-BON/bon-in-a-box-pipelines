@@ -7,16 +7,24 @@ author:
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 inputs:
-  start_year:
-    label: Start year
-    description: Start year for the OHI assessment
-    type: int
-  end_year:
-    label: End year
-    description: End year for the OHI assessment
-    type: int
+  country_region:
+    label: Country
+    description: Using the country chooser to select a region (region selections will be ignored as EEZs are national).
+    type: countryRegion
 outputs:
-  species_layers:
-    label: Species layers
-    description: Species layers for OHI assessment extracted from GitHub
-    type: text/csv[]
+  spp_status:
+    label: Species status
+    description: CSVs with species status values
+    type: text/csv
+  spp_trend:
+    label: Species trend
+    description: CSVs with species trend values
+    type: text/csv
+conda: 
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-gh
+    - r-rjson
+    - r-tidyverse

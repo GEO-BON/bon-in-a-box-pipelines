@@ -1,28 +1,14 @@
-## Script to load pressure and resiliences matrices and integrate them into OHI scoring
-
+library(gh)
+library(tidyverse)
+input <- biab_inputs()
 # connect to github repo
 files <- gh("GET /repos/{owner}/{repo}/contents/{path}",
             owner = "OHI-Science",
             repo  = "ohi-global",
             path  = "eez/layers")
 
-
-# load pressure and resilience and filter to the goals of interest
-resilience <- read.csv("https://raw.githubusercontent.com/OHI-Science/ohi-global/draft/eez/conf/resilience_matrix.csv", stringsAsFactors = FALSE, na.strings = c("", "NA"))
-print(resilience)
-
-bd_resilience_layers <- resilience[resilience$goal %in% c('HAB', 'SPP'), ]
-bd_resilience_layers <- bd_resilience_layers[
-  rowSums(bd_resilience_layers[, 4:ncol(bd_resilience_layers)] == "x", na.rm = TRUE) > 0,
-]
-
-# load resilience files
-cols <- paste(colnames(bd_resilience_layers), collapse="|")
-file_names_resilience <- file_names[str_detect(file_names, regex(cols, ignore_case = TRUE))]
-print(file_names_resilience)
-download_urls_resilience <- download_urls[file_names %in% file_names_resilience]
-
-
+file_names <- vapply(files, function(x) x$name, character(1))
+download_urls <- vapply(files, function(x) x$download_url, character(1))
 
 
 pressures <- read.csv("https://raw.githubusercontent.com/OHI-Science/ohi-global/draft/eez/conf/pressures_matrix.csv", stringsAsFactors = FALSE, na.strings = c("", "NA"))
@@ -31,17 +17,43 @@ print(pressures)
 # filter to the goals of interest
 bd_pressure_layers <- pressures[pressures$goal %in% c('HAB', 'SPP'), ]
 bd_pressure_layers <- bd_pressure_layers[rowSums(!is.na(bd_pressure_layers[, 4:ncol(bd_pressure_layers)])) > 0, ] #take only ones that are greater than 0
+print(bd_pressure_layers)
 
+pressure_matrix_path <- file.path(outputFolder, "pressure_matrix_bd.csv")
+write.csv(bd_pressure_layers, pressure_matrix_path, row.names=FALSE)
+biab_output("pressure_matrix_bd", pressure_matrix_path) 
 
-pressures_file_paths <- c()
+cols <- paste(colnames(bd_pressure_layers), collapse="|")
+file_names_pressure <- file_names[str_detect(file_names, regex(cols, ignore_case = TRUE))]
+print(file_names_pressure)
+download_urls_pressure <- download_urls[file_names %in% file_names_pressure]
+
+pressure_values <- list()
+# load in pressures for most recent year and add to data frame
 for (i in seq_along(file_names_pressure)) {
-  dest <- file.path(outputFolder, file_names_pressure[i])
-  download.file(download_urls_pressure[i], destfile = dest, mode = "wb")
-  cat("Saved:", dest, "\n")
-  pressures_file_paths <- rbind(pressures_file_paths, dest)
+  df <- read.csv(download_urls_pressure[i]) %>% filter(year == max(year)) %>% filter(rgn_id == input$eez_code) %>%
+  mutate(pressure = sub("\\.csv$", "", file_names_pressure[i], ignore.case = TRUE))
+  pressure_values <- rbind(pressure_values, df)
 }
 
+pressure_values_path <- file.path(outputFolder, "pressure_values.csv")
+write.csv(pressure_values, pressure_values_path)
+biab_output("pressure_values", pressure_values_paths)
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+# FROM CHAT GPT:
 
 # Weighted function to calculate pressure
 calculate_weighted_pressure <- function(data_layers, matrix_file, goal_nm) {
