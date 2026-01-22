@@ -134,39 +134,6 @@
       }
     },
     {
-      "id": "191",
-      "type": "io",
-      "position": {
-        "x": 1249,
-        "y": 496.16197312001884
-      },
-      "data": {
-        "descriptionFile": "OHI>calculate_pressures.yml"
-      }
-    },
-    {
-      "id": "192",
-      "type": "output",
-      "position": {
-        "x": 1834.7476311521145,
-        "y": 501.6125535982103
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "193",
-      "type": "output",
-      "position": {
-        "x": 1828.0002655520204,
-        "y": 511.0588654383422
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "194",
       "type": "io",
       "position": {
@@ -194,6 +161,39 @@
       "position": {
         "x": 1983.7830738254713,
         "y": 696.2453568633229
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "197",
+      "type": "io",
+      "position": {
+        "x": 1565,
+        "y": 485.3125
+      },
+      "data": {
+        "descriptionFile": "OHI>calculate_pressures.yml"
+      }
+    },
+    {
+      "id": "198",
+      "type": "output",
+      "position": {
+        "x": 2119.2049846504233,
+        "y": 486.5391935323039
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "199",
+      "type": "output",
+      "position": {
+        "x": 2125.3681203249935,
+        "y": 503.48781663737236
       },
       "data": {
         "label": "Output"
@@ -323,27 +323,6 @@
     {
       "source": "190",
       "sourceHandle": "eez_code",
-      "target": "191",
-      "targetHandle": "eez_code",
-      "id": "reactflow__edge-190eez_code-191eez_code"
-    },
-    {
-      "source": "191",
-      "sourceHandle": "pressure_matrix_bd",
-      "target": "192",
-      "targetHandle": null,
-      "id": "reactflow__edge-191pressure_matrix_bd-192"
-    },
-    {
-      "source": "191",
-      "sourceHandle": "pressure_values",
-      "target": "193",
-      "targetHandle": null,
-      "id": "reactflow__edge-191pressure_values-193"
-    },
-    {
-      "source": "190",
-      "sourceHandle": "eez_code",
       "target": "194",
       "targetHandle": "eez_code",
       "id": "reactflow__edge-190eez_code-194eez_code"
@@ -361,6 +340,27 @@
       "target": "196",
       "targetHandle": null,
       "id": "reactflow__edge-194resilience_values-196"
+    },
+    {
+      "source": "197",
+      "sourceHandle": "pressure_matrix_bd",
+      "target": "198",
+      "targetHandle": null,
+      "id": "reactflow__edge-197pressure_matrix_bd-198"
+    },
+    {
+      "source": "197",
+      "sourceHandle": "pressure_values",
+      "target": "199",
+      "targetHandle": null,
+      "id": "reactflow__edge-197pressure_values-199"
+    },
+    {
+      "source": "190",
+      "sourceHandle": "eez_code",
+      "target": "197",
+      "targetHandle": "eez_code",
+      "id": "reactflow__edge-190eez_code-197eez_code"
     }
   ],
   "inputs": {
@@ -439,27 +439,27 @@
       "type": "text/csv",
       "weight": 3
     },
-    "OHI>calculate_pressures.yml@191|pressure_matrix_bd": {
-      "description": "Pressure matrix for weighting different pressures based on goals",
-      "label": "pressure matrix for biodiversity",
-      "type": "text/csv",
-      "weight": 4
-    },
-    "OHI>calculate_pressures.yml@191|pressure_values": {
-      "description": "Pressure values for most recent year",
-      "label": "Pressure values",
-      "type": "text/csv",
-      "weight": 5
-    },
     "OHI>calculate_resilience.yml@194|resilience_matrix_bd": {
       "description": "resilience matrix for weighting different pressures based on goals",
       "label": "resilience matrix for biodiversity",
       "type": "text/csv",
-      "weight": 6
+      "weight": 4
     },
     "OHI>calculate_resilience.yml@194|resilience_values": {
       "description": "resilience values for most recent year",
       "label": "resilience values",
+      "type": "text/csv",
+      "weight": 5
+    },
+    "OHI>calculate_pressures.yml@197|pressure_matrix_bd": {
+      "description": "Pressure matrix for weighting different pressures based on goals",
+      "label": "pressure matrix for biodiversity",
+      "type": "text/csv",
+      "weight": 6
+    },
+    "OHI>calculate_pressures.yml@197|pressure_values": {
+      "description": "Pressure values for most recent year",
+      "label": "Pressure values",
       "type": "text/csv",
       "weight": 7
     }
