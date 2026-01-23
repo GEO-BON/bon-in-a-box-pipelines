@@ -49,7 +49,10 @@ write.csv(pressure_values, pressure_values_path)
 biab_output("pressure_values", pressure_values_path)
 
 ### Now use matrix to calculate the total pressure for each goal
-# put matrix into logn format
+# Load pressure categories script to get social vs ecological pressure categories
+pressure_categories <- read.csv("https://raw.githubusercontent.com/OHI-Science/ohi-global/refs/heads/draft/eez/conf/pressure_categories.csv")
+pressure_categories <- pressure_categories %>% rename(pressure = layer)
+# put matrix into long format
 pressure_matrix_long <- bd_pressure_layers %>%
   tidyr::pivot_longer(
     cols = -c(goal, element, element_name),
@@ -57,17 +60,40 @@ pressure_matrix_long <- bd_pressure_layers %>%
     values_to = "weight"
   ) %>%
   dplyr::filter(!is.na(weight))
+print(pressure_matrix_long)
 
+gamma = input$pressures_gamma
 
-## Now join matrix and values together
-goal_pressures <- pressure_values %>%
+## Now join matrix and values together and categories together
+pressure_scores <- pressure_values %>%
   dplyr::inner_join(pressure_matrix_long, by = "pressure") %>%
-  dplyr::mutate(weighted = score * weight) %>% # multiply by weight
-  dplyr::group_by(goal) %>%
-  dplyr::summarize(
-    score = sum(weighted, na.rm = TRUE) / sum(weight, na.rm = TRUE),
+  group_by(goal, pressure) %>% # average scores within goals and resilience layers
+  summarise(
+    score = mean(score, na.rm = TRUE),
+    weight = first(weight),
     .groups = "drop"
-  ) 
-  #dplyr::mutate(dimension = "pressures")
+  ) %>% # take the mean of each resilience score within each layer, weight will stay the same
+  dplyr::inner_join(pressure_categories, by = "pressure") %>%
+  group_by(pressure, goal, category) %>%
+  summarise(
+    score = sum(score * weight, na.rm = TRUE) /
+            sum(weight, na.rm = TRUE),
+    .groups = "drop"
+  ) %>% # calculate weighted mean
+  group_by(goal, category) %>% # average by category (social vs ecological)
+  summarise(score = mean(score)) %>%
+  pivot_wider(names_from = category, values_from = score) %>%
+  group_by(goal) %>%
+    summarise(
+    score = if (all(c("ecological", "social") %in% names(cur_data()))) {
+              gamma * ecological + (1 - gamma) * social
+            } else {
+              mean(c(ecological, social), na.rm = TRUE)
+            },
+    .groups = "drop"
+  )
+print(pressure_scores)
 
-  print(goal_pressures)
+pressure_scores_path <- file.path(outputFolder, "pressure_scores.csv")
+write.csv(pressure_scores, pressure_scores_path)
+biab_output("pressure_scores", pressure_scores_path)

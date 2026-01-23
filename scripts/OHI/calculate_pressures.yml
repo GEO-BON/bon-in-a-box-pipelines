@@ -10,6 +10,10 @@ inputs:
     label: EEZ code
     description: EEZ code
     type: float
+  pressures_gamma:
+    label: Pressures gamma
+    description: Relative importance of social vs ecological resilience
+    type: float
 outputs:
   pressure_matrix_bd:
     label: pressure matrix for biodiversity
@@ -17,5 +21,9 @@ outputs:
     type: text/csv
   pressure_values:
     label: Pressure values
-    description: Pressure values for most recent year
+    description: Pressure values for each pressure for most recent year
+    type: text/csv
+  pressure_scores:
+    label: Pressure scores
+    description: Pressure scores for Habitats and Species aspects of BD goal
     type: text/csv

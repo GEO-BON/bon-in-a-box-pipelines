@@ -134,66 +134,44 @@
       }
     },
     {
-      "id": "194",
+      "id": "200",
       "type": "io",
       "position": {
-        "x": 1351.6174956702232,
-        "y": 670.646638109692
+        "x": 1540,
+        "y": 695.8125
       },
       "data": {
         "descriptionFile": "OHI>calculate_resilience.yml"
       }
     },
     {
-      "id": "195",
-      "type": "output",
-      "position": {
-        "x": 1869.7830738254713,
-        "y": 672.2453568633229
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "196",
-      "type": "output",
-      "position": {
-        "x": 1983.7830738254713,
-        "y": 696.2453568633229
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "197",
+      "id": "201",
       "type": "io",
       "position": {
-        "x": 1565,
-        "y": 485.3125
+        "x": 1714,
+        "y": 543.8125
       },
       "data": {
         "descriptionFile": "OHI>calculate_pressures.yml"
       }
     },
     {
-      "id": "198",
+      "id": "204",
       "type": "output",
       "position": {
-        "x": 2119.2049846504233,
-        "y": 486.5391935323039
+        "x": 2197,
+        "y": 724.8125
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "199",
+      "id": "205",
       "type": "output",
       "position": {
-        "x": 2125.3681203249935,
-        "y": 503.48781663737236
+        "x": 2359,
+        "y": 572.8125
       },
       "data": {
         "label": "Output"
@@ -323,44 +301,30 @@
     {
       "source": "190",
       "sourceHandle": "eez_code",
-      "target": "194",
+      "target": "201",
       "targetHandle": "eez_code",
-      "id": "reactflow__edge-190eez_code-194eez_code"
-    },
-    {
-      "source": "194",
-      "sourceHandle": "resilience_matrix_bd",
-      "target": "195",
-      "targetHandle": null,
-      "id": "reactflow__edge-194resilience_matrix_bd-195"
-    },
-    {
-      "source": "194",
-      "sourceHandle": "resilience_values",
-      "target": "196",
-      "targetHandle": null,
-      "id": "reactflow__edge-194resilience_values-196"
-    },
-    {
-      "source": "197",
-      "sourceHandle": "pressure_matrix_bd",
-      "target": "198",
-      "targetHandle": null,
-      "id": "reactflow__edge-197pressure_matrix_bd-198"
-    },
-    {
-      "source": "197",
-      "sourceHandle": "pressure_values",
-      "target": "199",
-      "targetHandle": null,
-      "id": "reactflow__edge-197pressure_values-199"
+      "id": "reactflow__edge-190eez_code-201eez_code"
     },
     {
       "source": "190",
       "sourceHandle": "eez_code",
-      "target": "197",
+      "target": "200",
       "targetHandle": "eez_code",
-      "id": "reactflow__edge-190eez_code-197eez_code"
+      "id": "reactflow__edge-190eez_code-200eez_code"
+    },
+    {
+      "source": "200",
+      "sourceHandle": "resilience_scores",
+      "target": "204",
+      "targetHandle": null,
+      "id": "reactflow__edge-200resilience_scores-204"
+    },
+    {
+      "source": "201",
+      "sourceHandle": "pressure_scores",
+      "target": "205",
+      "targetHandle": null,
+      "id": "reactflow__edge-201pressure_scores-205"
     }
   ],
   "inputs": {
@@ -412,6 +376,20 @@
       "type": "countryRegion",
       "example": null,
       "weight": 5
+    },
+    "OHI>calculate_resilience.yml@200|resilience_gamma": {
+      "description": "Relative importance of social vs ecological resilience",
+      "label": "Resilience gamma",
+      "type": "float",
+      "example": null,
+      "weight": 6
+    },
+    "OHI>calculate_pressures.yml@201|pressures_gamma": {
+      "description": "Relative importance of social vs ecological resilience",
+      "label": "Pressures gamma",
+      "type": "float",
+      "example": null,
+      "weight": 7
     }
   },
   "outputs": {
@@ -439,29 +417,17 @@
       "type": "text/csv",
       "weight": 3
     },
-    "OHI>calculate_resilience.yml@194|resilience_matrix_bd": {
-      "description": "resilience matrix for weighting different pressures based on goals",
-      "label": "resilience matrix for biodiversity",
-      "type": "text/csv",
+    "OHI>calculate_resilience.yml@200|resilience_scores": {
+      "description": "Resilience scores for Habitats and Species aspects of BD goal",
+      "label": "Resilience scores",
+      "type": "text/csvs",
       "weight": 4
     },
-    "OHI>calculate_resilience.yml@194|resilience_values": {
-      "description": "resilience values for most recent year",
-      "label": "resilience values",
+    "OHI>calculate_pressures.yml@201|pressure_scores": {
+      "description": "Pressure scores for Habitats and Species aspects of BD goal",
+      "label": "Pressure scores",
       "type": "text/csv",
       "weight": 5
-    },
-    "OHI>calculate_pressures.yml@197|pressure_matrix_bd": {
-      "description": "Pressure matrix for weighting different pressures based on goals",
-      "label": "pressure matrix for biodiversity",
-      "type": "text/csv",
-      "weight": 6
-    },
-    "OHI>calculate_pressures.yml@197|pressure_values": {
-      "description": "Pressure values for most recent year",
-      "label": "Pressure values",
-      "type": "text/csv",
-      "weight": 7
     }
   }
 }

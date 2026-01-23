@@ -50,3 +50,46 @@ resilience_values_path <- file.path(outputFolder, "resilience_values.csv")
 write.csv(resilience_values, resilience_values_path)
 biab_output("resilience_values", resilience_values_path)
 
+# Calculate resilience score for each aspect of biodiversity
+# All weights are 1 (in conf/resilience_vategories.csv) so I can take the mean of each layer for each aspect of the biodiversity goal
+resilience_matrix_long <- bd_resilience_layers %>%
+  tidyr::pivot_longer(
+    cols = -c(goal, element),
+    names_to  = "resilience",
+    values_to = "include"
+  ) %>%
+  dplyr::filter(!is.na(include))
+  print(resilience_matrix_long)
+
+# Put resilience matrix in long format to assess which layers are applicable to which goal and join to values
+# Load resilience categories csv to get info on weights and whether it is social or ecological
+resilience_categories <- read.csv("https://raw.githubusercontent.com/OHI-Science/ohi-global/refs/heads/draft/eez/conf/resilience_categories.csv")
+resilience_categories <- resilience_categories %>% rename(resilience = layer)
+print(resilience_categories)
+gamma = input$resilience_gamma
+
+resilience_scores <- resilience_values %>%
+  inner_join(resilience_matrix_long, by = "resilience") %>%
+  group_by(goal, resilience) %>% # average scores within goals and resilience layers
+  summarize(score = mean(value)) %>% # take the mean of each resilience score within each layer
+  inner_join(resilience_categories, by = "resilience") %>% # join with resilience categories
+  mutate(score = score * weight) %>% # multiply it by the weight of the layer (1 for all in this case)
+  group_by(goal, category) %>% # average by category (social vs ecological)
+  summarise(score = mean(score)) %>%
+  pivot_wider(names_from = category, values_from = score) %>%
+  group_by(goal) %>%
+  summarise(
+    score = if (all(c("ecological","social") %in% names(cur_data()))) {
+              gamma * ecological + (1 - gamma) * social
+            } else {
+              mean(c(ecological, social), na.rm = TRUE)
+            },
+    .groups = "drop"
+  ) # finally use gamma parameter to calculate the resilience for each goal
+
+print(resilience_scores)
+
+
+resilience_scores_path <- file.path(outputFolder, "resilience_scores.csv")
+write.csv(resilience_scores, resilience_scores_path)
+biab_output("resilience_scores", resilience_scores_path)

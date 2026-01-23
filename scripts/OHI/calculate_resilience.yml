@@ -10,6 +10,10 @@ inputs:
     label: EEZ code
     description: EEZ code
     type: float
+  resilience_gamma:
+    label: Resilience gamma
+    description: Relative importance of social vs ecological resilience
+    type: float
 outputs:
   resilience_matrix_bd:
     label: resilience matrix for biodiversity
@@ -18,4 +22,8 @@ outputs:
   resilience_values:
     label: resilience values
     description: resilience values for most recent year
+    type: text/csv
+  resilience_scores:
+    label: Resilience scores
+    description: Resilience scores for Habitats and Species aspects of BD goal
     type: text/csv
