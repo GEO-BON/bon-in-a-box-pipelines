@@ -1,0 +1,74 @@
+script: helloJulia.jl
+name: HPC Julia Example
+author:
+  - name: Jean-Michel Lord
+    identifier: https://orcid.org/0009-0007-3826-1125
+license: CC-BY
+description:
+  Julia script that runs on a HPC. If no HPC is configured, it will run locally.
+
+  This script allows to test successful scripts, scripts that produce errors
+  and scripts that extends allocated time from SLURM.
+lifecycle:
+  status: example
+inputs:
+  number:
+    label: Number
+    description: |
+      Number of seconds that this run will take to complete.
+
+      An input value of 13 generates and error message.
+
+      With the current 3 minute time limit, any input >= 180 will produce a timeout.
+    type: int
+    example: 50
+  study_area_bbox:
+    label: Bounding box
+    description: Bounding box and CRS of study area
+    type: bboxCRS
+    example:
+      CRS:
+        authority: EPSG
+        code: 4326
+        name: WGS84 - Lat/long
+        proj4Def: +proj=longlat +datum=WGS84 +no_defs
+        unit: degree
+      bbox: &ref_0
+        - -141.001858
+        - 41.676568
+        - -52.61908
+        - 83.113214
+      country:
+        ISO3: CAN
+        code: CA
+        countryBboxWGS84: *ref_0
+        englishName: Canada
+      region:
+        ISO3166_2: QC
+        countryEnglishName: Canada
+        regionBboxWGS84:
+          - -79.761059
+          - 44.991143
+          - -57.105486
+          - 62.582865
+        regionName: Quebec
+
+outputs:
+  increment:
+    label: Increment
+    description: Result, incremented by 1
+    type: int
+    example: 9
+  crs_id:
+    label: CRS ID
+    description: ID of CRS obtained from bounding box selector
+    type: text
+    example: EPSG:4326
+references:
+  - text: John Doe, The ins and outs of copy-pasting, CopyScience, Volume 71, Issue 5, May 2021, Pages 448–451
+    doi: 10.1093/copysci/biab041
+
+hpc:
+  mem: 1G
+  cpus-per-task: 1
+  time: "00:03:00"

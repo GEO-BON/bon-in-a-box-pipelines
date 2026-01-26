@@ -1,26 +1,31 @@
 script: helloHPC.py
-name: HPC Example
+name: HPC Python Example
 author:
   - name: Jean-Michel Lord
     identifier: https://orcid.org/0009-0007-3826-1125
 license: CC-BY
 description:
-  Python script that runs on a HPC.
-  If no HPC is configured, it will run locally.
+  Python script that runs on a HPC. If no HPC is configured, it will run locally.
+
+
+  This script allows to test file sync, successful scripts, scripts that produce errors
+  and scripts that extends allocated time from SLURM.
 lifecycle:
   status: example
 inputs:
   seconds:
     label: Seconds
-    description:
+    description: |
       Number of seconds that this run will take to complete.
+
       An input value of 13 generates and error message.
-      With the current 3 minute time limit, any input >= 180 will timeout.
+
+      With the current 3 minute time limit, any input >= 180 will produce a timeout.
     type: int
-    example: 300
+    example: 50
   some_csv_file:
     label: Some file
-    description: A file, which will be sent to HPC and printed to show it works.
+    description: A file, which will be sent to HPC and printed from the compute node.
     type: text/csv
     example: /scripts/helloWorld/example.csv
 outputs:
@@ -28,10 +33,12 @@ outputs:
     label: Target seconds
     description:
       The number of seconds to be counted. Same as the input.
+
+
       It is printed at the beginning of the script,
       this allows to test fetching partial results when the job times out.
     type: int
-    example: 300
+    example: 50
   length:
     label: Content length
     description:
