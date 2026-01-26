@@ -95,5 +95,5 @@ pressure_scores <- pressure_values %>%
 print(pressure_scores)
 
 pressure_scores_path <- file.path(outputFolder, "pressure_scores.csv")
-write.csv(pressure_scores, pressure_scores_path)
+write.csv(pressure_scores, pressure_scores_path, row.names=FALSE)
 biab_output("pressure_scores", pressure_scores_path)

@@ -23,17 +23,6 @@
       }
     },
     {
-      "id": "178",
-      "type": "output",
-      "position": {
-        "x": 1089,
-        "y": 112.8125
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "181",
       "type": "io",
       "position": {
@@ -42,17 +31,6 @@
       },
       "data": {
         "descriptionFile": "OHI>coral_condition.yml"
-      }
-    },
-    {
-      "id": "182",
-      "type": "output",
-      "position": {
-        "x": 1157.6071257678539,
-        "y": 30.029821597322297
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -79,25 +57,14 @@
       }
     },
     {
-      "id": "186",
-      "type": "output",
-      "position": {
-        "x": 1174.6260657521923,
-        "y": 595.5779562341818
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "187",
       "type": "io",
       "position": {
-        "x": 1336.843021779444,
-        "y": 286.3208150150488
+        "x": 1334.843021779444,
+        "y": 292.3208150150488
       },
       "data": {
-        "descriptionFile": "OHI>OHI_functions.yml"
+        "descriptionFile": "OHI>calc_spp_hab_scores.yml"
       }
     },
     {
@@ -109,17 +76,6 @@
       },
       "data": {
         "descriptionFile": "OHI>download_species_data.yml"
-      }
-    },
-    {
-      "id": "189",
-      "type": "output",
-      "position": {
-        "x": 1902.0987033405702,
-        "y": 291.6456914469
-      },
-      "data": {
-        "label": "Output"
       }
     },
     {
@@ -176,6 +132,61 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "210",
+      "type": "output",
+      "position": {
+        "x": 1931,
+        "y": 292.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "211",
+      "type": "output",
+      "position": {
+        "x": 1935,
+        "y": 358.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "214",
+      "type": "io",
+      "position": {
+        "x": 2292.1302385917525,
+        "y": 387.65681290770203
+      },
+      "data": {
+        "descriptionFile": "OHI>calc_OHI.yml"
+      }
+    },
+    {
+      "id": "215",
+      "type": "output",
+      "position": {
+        "x": 2802.2289260769703,
+        "y": 393.65774164514215
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "216",
+      "type": "output",
+      "position": {
+        "x": 2893.1756453658527,
+        "y": 407.20299770944376
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -185,20 +196,6 @@
       "target": "176",
       "targetHandle": "polygon",
       "id": "reactflow__edge-175polygon-176polygon"
-    },
-    {
-      "source": "176",
-      "sourceHandle": "extent",
-      "target": "178",
-      "targetHandle": null,
-      "id": "reactflow__edge-176extent-178"
-    },
-    {
-      "source": "181",
-      "sourceHandle": "coral_health",
-      "target": "182",
-      "targetHandle": null,
-      "id": "reactflow__edge-181coral_health-182"
     },
     {
       "source": "183",
@@ -220,13 +217,6 @@
       "target": "184",
       "targetHandle": "country_region",
       "id": "reactflow__edge-183-184country_region"
-    },
-    {
-      "source": "184",
-      "sourceHandle": "coral_trend",
-      "target": "186",
-      "targetHandle": null,
-      "id": "reactflow__edge-184coral_trend-186"
     },
     {
       "source": "176",
@@ -269,13 +259,6 @@
       "target": "188",
       "targetHandle": "country_region",
       "id": "reactflow__edge-183-188country_region"
-    },
-    {
-      "source": "187",
-      "sourceHandle": "habitat_score",
-      "target": "189",
-      "targetHandle": null,
-      "id": "reactflow__edge-187habitat_score-189"
     },
     {
       "source": "183",
@@ -325,6 +308,62 @@
       "target": "205",
       "targetHandle": null,
       "id": "reactflow__edge-201pressure_scores-205"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "habitat_scores",
+      "target": "210",
+      "targetHandle": null,
+      "id": "reactflow__edge-187habitat_scores-210"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "species_scores",
+      "target": "211",
+      "targetHandle": null,
+      "id": "reactflow__edge-187species_scores-211"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "species_scores",
+      "target": "214",
+      "targetHandle": "species_scores",
+      "id": "reactflow__edge-187species_scores-214species_scores"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "habitat_scores",
+      "target": "214",
+      "targetHandle": "habitat_scores",
+      "id": "reactflow__edge-187habitat_scores-214habitat_scores"
+    },
+    {
+      "source": "200",
+      "sourceHandle": "resilience_scores",
+      "target": "214",
+      "targetHandle": "resilience_scores",
+      "id": "reactflow__edge-200resilience_scores-214resilience_scores"
+    },
+    {
+      "source": "201",
+      "sourceHandle": "pressure_scores",
+      "target": "214",
+      "targetHandle": "pressure_scores",
+      "id": "reactflow__edge-201pressure_scores-214pressure_scores"
+    },
+    {
+      "source": "214",
+      "sourceHandle": "ohi_scores_subgoal",
+      "target": "215",
+      "targetHandle": null,
+      "id": "reactflow__edge-214ohi_scores_subgoal-215"
+    },
+    {
+      "source": "214",
+      "sourceHandle": "ohi_score",
+      "target": "216",
+      "targetHandle": null,
+      "id": "reactflow__edge-214ohi_score-216"
     }
   ],
   "inputs": {
@@ -381,51 +420,65 @@
       "description": "Relative importance of social vs ecological resilience",
       "label": "Resilience gamma",
       "type": "float",
-      "example": null,
+      "example": 0.5,
       "weight": 6
     },
     "OHI>calculate_pressures.yml@201|pressures_gamma": {
       "description": "Relative importance of social vs ecological resilience",
       "label": "Pressures gamma",
       "type": "float",
-      "example": null,
+      "example": 0.5,
       "weight": 7
+    },
+    "OHI>calc_OHI.yml@214|beta": {
+      "description": "Value for weighting trend vs resilience and pressures",
+      "label": "beta",
+      "type": "float",
+      "example": 0.67,
+      "weight": 8
+    },
+    "OHI>calc_OHI.yml@214|weights": {
+      "description": "weight for species vs. habitat (weight will be for species and habitat will be 1-weight)",
+      "label": "Weight for subgoals",
+      "type": "float",
+      "example": 0.5,
+      "weight": 9
     }
   },
   "outputs": {
-    "OHI>calculate_extent_gee.yml@176|extent": {
-      "description": "Extent of coral in m2",
-      "label": "Extent",
-      "type": "float",
-      "weight": 0
-    },
-    "OHI>coral_condition.yml@181|coral_health": {
-      "description": "Coral health",
-      "label": "Coral health",
-      "type": "text/csv",
-      "weight": 1
-    },
-    "OHI>coral_trend.yml@184|coral_trend": {
-      "description": "Coral trend",
-      "label": "Coral trend",
-      "type": "text/csv",
-      "weight": 2
-    },
-    "OHI>OHI_functions.yml@187|habitat_score": {
-      "description": "habitat score",
-      "label": "Habitat score",
-      "type": "text/csv",
-      "weight": 3
-    },
     "OHI>calculate_resilience.yml@200|resilience_scores": {
       "description": "Resilience scores for Habitats and Species aspects of BD goal",
       "label": "Resilience scores",
       "type": "text/csvs",
-      "weight": 4
+      "weight": 0
     },
     "OHI>calculate_pressures.yml@201|pressure_scores": {
       "description": "Pressure scores for Habitats and Species aspects of BD goal",
       "label": "Pressure scores",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "OHI>calc_OHI.yml@214|ohi_scores_subgoal": {
+      "description": "Calculate OHI scores for each subgoal",
+      "label": "OHI scores for each subgoal",
+      "type": "text/csv",
+      "weight": 2
+    },
+    "OHI>calc_OHI.yml@214|ohi_score": {
+      "description": "Calculate final OHI score for biodiversity based on weights",
+      "label": "OHI score",
+      "type": "float",
+      "weight": 3
+    },
+    "OHI>calc_spp_hab_scores.yml@187|habitat_scores": {
+      "description": "habitat scores",
+      "label": "Habitat scores",
+      "type": "text/csv",
+      "weight": 4
+    },
+    "OHI>calc_spp_hab_scores.yml@187|species_scores": {
+      "description": "Species scores",
+      "label": "Species scores",
       "type": "text/csv",
       "weight": 5
     }

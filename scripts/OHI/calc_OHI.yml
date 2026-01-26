@@ -1,0 +1,45 @@
+script: calc_OHI.R
+name: Calculate final OHI score
+description: |
+ Calculate final OHI score from species and habitat scores combined with resilience and pressures
+author:
+  - name: Jory Griffith
+    email: jory.griffith@mcgill.ca
+    identifier: https://orcid.org/0000-0001-6020-6690
+inputs:
+  species_scores:
+    label: Species scores
+    description: Species score
+    type: text/csv
+  habitat_scores:
+    label: Habitat scores
+    description: habitat score
+    type: text/csv
+  resilience_scores:
+    label: Resilience scores
+    description: Resilience scores for Habitats and Species aspects of BD goal
+    type: text/csv
+  pressure_scores:
+    label: Pressure scores
+    description: Pressure scores for Habitats and Species aspects of BD goal
+    type: text/csv
+  beta:
+    label: beta
+    description: Value for weighting trend vs resilience and pressures
+    type: float
+    example: 0.67
+  weights:
+    label: Weight for subgoals
+    description: weight for species vs. habitat (weight will be for species and habitat will be 1-weight)
+    type: float
+    example: 0.5
+outputs:
+  ohi_scores_subgoal:
+    label: OHI scores for each subgoal
+    description: Calculate OHI scores for each subgoal
+    type: text/csv
+  ohi_score:
+    label: OHI score
+    description: Calculate final OHI score for biodiversity based on weights
+    type: float
+  

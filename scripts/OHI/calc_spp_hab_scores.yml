@@ -1,7 +1,7 @@
-script: OHI_functions.R
-name: Functions for calculating OHI scores
+script: calc_spp_hab_scores.R
+name: Calculate species and habitat scores
 description: |
- Download OHI data from the GitHub repository. This will eventually be replaced with scripts to pull data and clean directly.
+ Calculate species and habitat scores
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -28,21 +28,17 @@ inputs:
     description: CSVs with species trend values
     type: text/csv[]
 outputs:
-  habitat_score:
-    label: Habitat score
-    description: habitat score
+  habitat_scores:
+    label: Habitat scores
+    description: habitat scores
     type: text/csv
   habitat_weights:
     label: Habitat weights
     description: Habitat weights
     type: text/csv
-  species_score:
-    label: Species score
-    description: Species score
-    type: text/csv
-  bd_score:
-    label: Biodiversity score
-    description: Biodiversity score
+  species_scores:
+    label: Species scores
+    description: Species scores
     type: text/csv
   
   

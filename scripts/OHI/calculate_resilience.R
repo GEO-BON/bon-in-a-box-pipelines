@@ -91,5 +91,5 @@ print(resilience_scores)
 
 
 resilience_scores_path <- file.path(outputFolder, "resilience_scores.csv")
-write.csv(resilience_scores, resilience_scores_path)
+write.csv(resilience_scores, resilience_scores_path, row.names=FALSE)
 biab_output("resilience_scores", resilience_scores_path)
