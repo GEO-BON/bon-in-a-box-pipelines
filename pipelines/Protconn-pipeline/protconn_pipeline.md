@@ -27,15 +27,11 @@ To use this pipeline, you’ll need a [Protected Planet API key](https://api.pro
 
 BON in a Box contains a pipeline to calculate ProtConn for a given country or region of interest. The pipeline has the following user inputs:
 
-- **ISO3 country code:** the user can input the [ISO3 country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-3) of the country of interest and the pipeline will pull the polygon and protected areas for this country.
+- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu.
 
-- **State/Province:** the user can specify a state/province within the country of interest and the pipeline will pull the polygon and protected areas for this region. This is input as the full name of the state.
-
-- **Polygon of study area:** there is also an option to add a custom study area file, which will override the polygon from the specified country or region of interest.
+- **Polygon of study area:** this is an optional input to add a custom study area file, which will override the polygon generated from the Bounding Box and CRS input. The custom study area file must be in geopackage format and added to the userdata folder in your local repository. This input should be the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg).
 
 - **Polygon of protected areas:** this input should only be used if the user wants to use custom protected area data, for example if they want to calculate ProtConn for proposed protected areas or protected areas that are not yet in WDPA. If you use the `ProtConn Analysis with WDPA` pipeline, this input is optional and any file added will be combined with WDPA data of the country of interest. If you use the `ProtConn Analysis with custom PAs` pipeline, this input is mandatory and the pipeline will analyze only user-input protected area polygons.
-
-- **Coordinate Reference System:** the coordinate reference system of choice. Search for a CRS of interest [here](https://epsg.io/). This needs to be a projected coordinate reference system for ProtConn calculations.
 
 - **Date Column Name:** the user must indicate the name of the column in the custom protected area data file that specifies when the protected area was created (leave blank if only using WDPA data).
 
@@ -55,14 +51,14 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 
 - **Year interval:** the year interval for the time series of ProtConn values. (eg. an input of 10 will calculate ProtConn values every 10 years).
 
-- **PA legal status types to include:** the user can choose legal status types of WDPA data to include in the analysis. The protected areas can have a legal status of `Designated`, `Inscribed`, or `Established`.
+- **PA legal status types to include:** the user can choose legal status types of WDPA data to include in the analysis. This input is only relevant if using WDPA data. The protected areas can have a legal status of `Designated`, `Inscribed`, or `Established`.
  - Designated means that it is officially established under national or international law/policy.
  - Inscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated.
  - Established means that it is protected and managed, but possibly lacks formal legal designation.
 
-- **Include UNESCO Biosphere reserves:** the user can specify whether they want to include UNESCO Man and the Biosphere reserves in the analysis or not. These serve as learning sites for sustainable development and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. They may not be legally protected and may not be fully conserved, as they are often used for development or human settlement. Excluding these will limit the dataset to meeting stricter conservation standards. Note that this is only relevant if using WDPA data.
+- **Include UNESCO Biosphere reserves:** the user can specify whether they want to include UNESCO Man and the Biosphere reserves in the analysis or not. These serve as learning sites for sustainable development and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. They may not be legally protected and may not be fully conserved, as they are often used for development or human settlement. Excluding these will limit the dataset to meeting stricter conservation standards. This input is only relevant if using WDPA data.
 
-- **Buffer protected area points:** the user can specify whether they want to buffer protected area points. For any protected areas that are represented as single points instead of polygons, this will create a circle around the polygon that is equal to the reported area. This will not affect the connectivity metrics if using centroids but may cause inaccuracies if assessing connectivity using the nearest edge. If left unchecked, all protected areas represented as points will be removed. Note that this is only relevant if using WDPA data.
+- **Buffer protected area points:** the user can specify whether they want to buffer protected area points. For any protected areas that are represented as single points instead of polygons, this will create a circle around the polygon that is equal to the reported area. This will not affect the connectivity metrics if using centroids but may cause inaccuracies if assessing connectivity using the nearest edge. If left unchecked, all protected areas represented as points will be removed. This input is only relevant if using WDPA data.
 
 - **Include marine protected areas:** the user can specify whether they want to include marine protected areas in the analysis or not. Note that the analysis is still limited to the bounds of the study area polygon. This input is only relevant if using WDPA data.
 
@@ -74,9 +70,9 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 
 This step retrieves protected areas in the country/region of interest from the WDPA database using the WDPA API. (This step is skipped if you are only using custom PA data).
 
-#### **2. Getting the country polygon**
+#### **2. Getting the polygon of the area of interest**
 
-This step returns the polygon for the country/region of interest.
+This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using the [Fieldmaps](https://fieldmaps.io/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
 
 #### **3. Cleaning the protected areas data**
 
@@ -88,14 +84,22 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 ### Pipeline outputs
 
+- **Country:** the country of interest, if selected.
+
+- **Region:** the region of interest, if selected.
+
+- **Protected areas:** protected areas on which ProtConn is being calculated. Note that overlapping protected areas have been merged into one to speed up calculation.
+
 - **ProtConn results:** the pipeline gives a table with several measures:
   - Unprotected - percentage of study area that is protected
   - ProtConn - percentage of the study area that is protected and connected
   - ProtUnconn - percentage of the study area that is protected and unconnected
 
-- **Result plot:** donut plot of percentage of the study area that is protected and unconnected, and protected and connected.
+- **ProtConn result plot:** donut plot of the percentage of total area that is unprotected, protected and connected, and protected and unconnected for each input dispersal distance (in meters).
 
-- **ProtConn time series:** plot of ProtConn over time, based on the dates that protected areas were established and the specified dispersal distance.
+- **ProtConn time series results:** table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.
+
+- **ProtConn time series plot:** plot showing the change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.
 
 ## Example
 
