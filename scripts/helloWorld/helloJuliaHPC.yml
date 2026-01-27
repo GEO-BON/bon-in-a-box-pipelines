@@ -69,6 +69,6 @@ references:
     doi: 10.1093/copysci/biab041
 
 hpc:
-  mem: 1G
+  mem: 2G
   cpus-per-task: 1
   time: "00:03:00"
