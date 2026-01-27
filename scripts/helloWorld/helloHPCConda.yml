@@ -13,8 +13,8 @@ description:
   If no HPC is configured, it will run locally.
 
 
-  This script allows to test file sync, successful scripts, scripts that produce errors
-  and scripts that extends allocated time from SLURM.
+  This script allows to test file sync, successful runs, runs that produce errors
+  and runs that extends allocated time from SLURM.
 lifecycle:
   status: example
 inputs:
