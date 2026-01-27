@@ -1,0 +1,22 @@
+script: helperForCatalogue.R
+name: Helper script for STAC Catalogue
+description: This script takes two dates as input and returns the names of the STAC Catalogue items in the ESA Landcover collection for those dates.
+author:
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
+inputs:
+  start_year:
+    label: Start year
+    description: Year of the first STAC Catalogue item wanted
+    type: int
+    example: 2010
+  end_year:
+    label: End year
+    description: Year of the second STAC Catalogue item wanted
+    type: int
+    example: 2011
+outputs:
+  collections:
+    label: Collections
+    description: Name of the items to be pulled from the STAC Catalogue
+    type: text[]
