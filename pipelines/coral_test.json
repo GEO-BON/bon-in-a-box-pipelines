@@ -449,7 +449,7 @@
     "OHI>calculate_resilience.yml@200|resilience_scores": {
       "description": "Resilience scores for Habitats and Species aspects of BD goal",
       "label": "Resilience scores",
-      "type": "text/csvs",
+      "type": "text/csv",
       "weight": 0
     },
     "OHI>calculate_pressures.yml@201|pressure_scores": {
