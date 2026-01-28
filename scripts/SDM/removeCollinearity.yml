@@ -58,12 +58,5 @@ conda:
   dependencies:
     - r-terra
     - r-rjson
-    - r-stars
     - r-dplyr
-    - r-CoordinateCleaner
-    - r-lubridate
-    - r-rgdal
-    - r-remotes
-    - r-RCurl
     - r-gdalcubes
-    - r-devtools
