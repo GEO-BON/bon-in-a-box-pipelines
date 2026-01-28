@@ -9,11 +9,11 @@ RUN chmod a+w /data
 # Setting Time zone (necessary to install cmake, + will persist at runtime)
 ENV TZ=Etc/UTC
 
-# CMake needs to be installed in order to install R packages from github (at least it's the case for some dependency of Makurhini)
+# CMake, libudunits and pkg-config needs to be installed in order to install some R packages from github.
 ARG DEBIAN_FRONTEND=noninteractive
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends cmake psmisc; \
+    apt-get install -y --no-install-recommends cmake psmisc libudunits2-dev pkg-config; \
     apt-get clean all;
 
 ## Mamba installation
