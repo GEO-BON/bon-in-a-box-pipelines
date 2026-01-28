@@ -58,7 +58,6 @@ conda:
   dependencies:
     - r-terra
     - r-rjson
-    - r-raster
     - r-stars
     - r-dplyr
     - r-CoordinateCleaner
