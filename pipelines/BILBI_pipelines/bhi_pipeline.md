@@ -17,9 +17,9 @@ diversity); or 2. the effective proportion of habitat that can be translated,
 through standard species-area analysis, into a prediction of the proportion of
 species expected to persist (i.e. avoid extinction) over the long term.
 
-This pipeline calculates a weighted geometric mean of the BERI indicator over a region of interest. 
-The code to calculate the weighted mean was adapted from the "Calculating weighted geometric means of 
-CSIRO BILBI indicator" script on the 
+This pipeline calculates a weighted geometric mean of the BERI indicator over a region of interest.
+The code to calculate the weighted mean was adapted from the "Calculating weighted geometric means of
+CSIRO BILBI indicator" script on the
 [CSIRO data access portal](https://doi.org/10.25919/tt2t-h452)
 
 ## Uses
@@ -65,7 +65,7 @@ BON in a Box contains a pipeline to calculate the BHI indicator for a given area
 - **Resampling method:** the user must select a resampling method to be used when the analysis requires rescaling to a new spatial resolution and/or reprojecting of the raster layers.
 See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for a description. This input will be ignored if there is no need for resampling.
 
-- **Aggregation method:** the user must select a method to aggregate items when layers are combined over time, e.g. if a courser temporal resolution is chosen. This input will be ignored if there is no need for aggregation (the temporal resolution of the 
+- **Aggregation method:** the user must select a method to aggregate items when layers are combined over time, e.g. if a courser temporal resolution is chosen. This input will be ignored if there is no need for aggregation (the temporal resolution of the
 original layers is selected).
 
 ### Pipeline steps
@@ -101,4 +101,4 @@ Example output available soon.
 
 ## References
 
-Harwood, Tom; Ware, Chris; Hoskins, Andrew; Ferrier, Simon; Bush, Alex; Golebiewski, Maciej; Hill, Samantha; Ota, Noboru; Perry, Justin; Purvis, Andy; & Williams, Kristen (2022): BHI v2: Biodiversity Habitat Index: 30s global time series. v1. CSIRO. Data Collection. doi: 10.25919/tt2t-h452
+Harwood, Tom; Ware, Chris; Hoskins, Andrew; Ferrier, Simon; Bush, Alex; Golebiewski, Maciej; Hill, Samantha; Ota, Noboru; Perry, Justin; Purvis, Andy; & Williams, Kristen (2022): BHI v2: Biodiversity Habitat Index: 30s global time series. v1. CSIRO. Data Collection. doi: https://doi.org/10.25919/tt2t-h452
