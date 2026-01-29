@@ -4,6 +4,8 @@ description: "Extract individual unprocessed items from various collections on t
 author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
+lifecycle:
+  status: in_review
 inputs:
   bbox_crs:
     label: Bounding box and CRS
