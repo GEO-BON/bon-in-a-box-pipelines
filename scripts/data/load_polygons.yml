@@ -16,10 +16,12 @@ inputs:
       - Country or region
       - WDPA
       - EEZ
+    example:
   country_region_bbox:
     label: Region of interest
     description: Use the bounding box chooser to select a region or create a custom bounding box (region selections will be ignored for EEZs since are national).
     type: bboxCRS
+    example:
   buffer:
     label: Transboundary buffer
     description: Buffer for pulling transboundary protected areas (WDPA data only).
