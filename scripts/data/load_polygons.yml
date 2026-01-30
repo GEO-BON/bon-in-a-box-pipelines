@@ -1,8 +1,8 @@
 script: load_polygons.R
 name: Load polygons
 description: |
- Load polygons stored as geoparquet files. Load polygons for countries or regions, polygons from the World Database of Protected Areas, 
- or polygons of Exclusive Economic Zones (EEZs). 
+ Load polygons stored as geoparquet files. Load polygons for countries or regions, polygons from the World Database of Protected Areas,
+ or polygons of Exclusive Economic Zones (EEZs).
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -16,14 +16,14 @@ inputs:
       - Country or region
       - WDPA
       - EEZ
-  country_region:
-    label: Country
-    description: Using the country chooser to select a region (region selections will be ignored as EEZs are national).
-    type: countryRegionCRS
+  country_region_bbox:
+    label: Region of interest
+    description: Use the bounding box chooser to select a region or create a custom bounding box (region selections will be ignored for EEZs since are national).
+    type: bboxCRS
   buffer:
     label: Transboundary buffer
-    description: Buffer for pulling transboundary protected areas (WDPA data only). 
-      The buffer will pull protected areas within that distance of the country border in the unit of the coordinate reference system (meters of degrees).
+    description: Buffer for pulling transboundary protected areas (WDPA data only).
+      The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees).
     type: float
     example: 0.08
 outputs:
@@ -40,3 +40,9 @@ conda:
     - r-duckdb
     - r-sf
     - r-dplyr
+    - r-stringi
+    - r-stringr
+    - r-tidyr
+    - r-dbplyr
+    - r-fs
+    - r-uuid
