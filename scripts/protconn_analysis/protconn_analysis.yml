@@ -65,6 +65,14 @@ inputs:
     description: Whether to calculate time series plot of ProtConn values based on date of PA establishment
     type: boolean
     example: TRUE
+  include_NAs_date:
+    label: Include missing values for date
+    description: How missing values for date should be handled in the time series analysis. If the box
+       is checked, protected areas with missing values for establishment date will be included in the time series
+        analysis and assigned to the chosen value for start year. If not checked, these protected areas will be omitted
+        from the time series analysis (note they will still be included in the main analysis).
+    type: boolean
+    example: TRUE
   start_year:
     label: Start year
     description: Year for the time series plot to start. Missing dates for protected area establishment will be automatically assigned to 

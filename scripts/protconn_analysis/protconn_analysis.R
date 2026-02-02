@@ -54,11 +54,22 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
 
   protected_areas <- st_read(protected_areas) 
   protected_areas <- st_transform(protected_areas, st_crs(input$crs))
-# Assign all PAs without a date to the start year for the time series
+
+
+  # label which rows are missing dates to remove later
+if (input$include_NAs_date == FALSE){
+  protected_areas_NA <- which(
+    is.na(protected_areas$legal_status_updated_at) |
+    protected_areas$legal_status_updated_at == 0
+  )
+}
+
+# Assign all PAs without a date to the start year for the time series or omit
 for (i in 1:nrow(protected_areas)) {
   if (is.na(protected_areas$legal_status_updated_at[i]) | protected_areas$legal_status_updated_at[i] == 0) {
     protected_areas$legal_status_updated_at[i] <- input$start_year
   }
+}
 }
 
   protected_areas$legal_status_updated_at <- lubridate::parse_date_time(protected_areas$legal_status_updated_at, orders = c("ymd", "mdy", "dmy", "y"))
@@ -67,7 +78,7 @@ for (i in 1:nrow(protected_areas)) {
   print("Protected area geometry:")
   print(unique(st_geometry_type(protected_areas)))
   print(protected_areas)
-}
+
 
 
 if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
@@ -271,13 +282,19 @@ if (!(input$years %in% years)) { # check if the end year is there
 print("Calculating ProtConn time series")
 
 if(input$time_series==TRUE){
+
+  # drop Na dates if user chose not to include them
+  if (input$include_NAs_date == FALSE){
+  protected_areas <- protected_areas[-protected_areas_NA, ]
+  }
 protconn_ts_result <- list()
 
 for (i in seq_along(years)) {
   yr <- years[i]
   print(paste("Processing year:", yr))
 
-  if (yr == input$years) { # skip end year because already calculated above
+
+  if (input$include_NAs_date == TRUE && yr == input$years) { # skip end year because already calculated above
     protconn_result_combined <- protconn_result_long
     protconn_result_combined$Year <- yr
   } else {
