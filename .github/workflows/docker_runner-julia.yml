@@ -16,7 +16,8 @@ env:
   # Get base image platforms with
   # docker buildx imagetools inspect julia:1.12 | grep Platform
   # Excluding windows/amd64 for now since we would need a separate builder.
-  PLATFORMS: linux/amd64,linux/arm64/v8,linux/386
+  # Excluding linux/386 since this points to old 32-bit processor machines and it fails to compile.
+  PLATFORMS: linux/amd64,linux/arm64/v8
 
 
 jobs:
