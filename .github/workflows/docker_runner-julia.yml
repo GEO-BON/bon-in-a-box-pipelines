@@ -15,7 +15,8 @@ env:
   IMAGE_NAME: ${{ github.repository }}/runner-julia
   # Get base image platforms with
   # docker buildx imagetools inspect julia:1.12 | grep Platform
-  PLATFORMS: linux/amd64,linux/arm64/v8,linux/386,windows/amd64
+  # Excluding windows/amd64 for now since we would need a separate builder.
+  PLATFORMS: linux/amd64,linux/arm64/v8,linux/386
 
 
 jobs:
