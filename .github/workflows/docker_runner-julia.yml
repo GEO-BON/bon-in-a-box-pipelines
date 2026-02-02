@@ -13,6 +13,10 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}/runner-julia
+  # Get base image platforms with
+  # docker buildx imagetools inspect julia:1.12 | grep Platform
+  PLATFORMS: linux/amd64,linux/arm64/v8,linux/386,windows/amd64
+
 
 jobs:
   runner-julia:
@@ -26,6 +30,9 @@ jobs:
     steps:
       - name: Check out the repo
         uses: actions/checkout@v4
+
+      - name: QEMU setup
+        uses: docker/setup-qemu-action@v3
 
       - name: Log in to GitHub Packages
         uses: docker/login-action@v3
@@ -54,9 +61,14 @@ jobs:
         with:
           context: runners/julia
           file: runners/julia/julia-dockerfile
+          platforms: ${{ env.PLATFORMS }}
           push: true
           tags: ${{ steps.metadata-main.outputs.tags || steps.metadata-staging.outputs.tags }}
           labels: ${{ steps.metadata-main.outputs.labels || steps.metadata-staging.outputs.labels }}
+          cache-from: type=gha
+          cache-to: |
+            type=gha
+            mode=max
 
       - name: Generate artifact attestation
         uses: actions/attest-build-provenance@v2

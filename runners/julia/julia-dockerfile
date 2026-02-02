@@ -1,4 +1,7 @@
-FROM julia:1.11
+# syntax=docker/dockerfile:1.7
+
+ARG TARGETPLATFORM
+FROM --platform=$TARGETPLATFORM julia:1.12
 
 COPY importEnvVars.sh /importEnvVars.sh
 RUN chmod a+x /importEnvVars.sh
@@ -19,3 +22,9 @@ RUN julia --project=$JULIA_DEPOT_PATH -e 'using Pkg; \
 RUN chmod -R 777 $JULIA_DEPOT_PATH
 
 RUN date +"%Y-%m-%d %R" > /version.txt
+
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+ARG TARGETPLATFORM
+RUN echo "Architecture: ${TARGETPLATFORM} (${TARGETOS}/${TARGETARCH}${TARGETVARIANT:+/$TARGETVARIANT})" >> /version.txt
