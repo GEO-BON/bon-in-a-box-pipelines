@@ -112,10 +112,6 @@ if (isFALSE(input$include_oecm)) {
 }
 print(nrow(protected_areas))
 
-## Crop data by study area
-print("Cropping data by study area")
-protected_areas_clean <- st_intersection(protected_areas, study_area)
-print(nrow(protected_areas))
 if(nrow(protected_areas_clean)==0){
   biab_error_stop("There are no protected areas.")
 }
