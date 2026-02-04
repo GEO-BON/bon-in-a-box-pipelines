@@ -16,7 +16,22 @@ env:
   IMAGE_NAME: ${{ github.repository }}/runner-julia
 
 jobs:
+
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      ghcr_slug: ${{ steps.slug.outputs.ghcr_slug }}
+    steps:
+      - name: Compute lowercase GHCR slug
+        id: slug
+        shell: bash
+        run: |
+          echo "ghcr_slug=ghcr.io/${GITHUB_REPOSITORY@L}" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: prepare
+    env:
+      GHCR_SLUG: ${{ needs.prepare.outputs.ghcr_slug }}
     timeout-minutes: 60
     strategy:
       matrix:
@@ -56,7 +71,7 @@ jobs:
         id: metadata
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.GHCR_SLUG }}/${{ env.IMAGE_NAME }}
           tags: |
             # Image used in compose file
             type=raw,value=${{ (github.ref_name == 'main' && 'latest') || github.ref_name }}-${{ matrix.arch_tag }}
@@ -76,12 +91,14 @@ jobs:
           push: true
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }}
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }},mode=max
+          cache-from: type=registry,ref=${{ env.GHCR_SLUG }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }}-${{ github.ref_name }}
+          cache-to: type=registry,ref=${{ env.GHCR_SLUG }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }}-${{ github.ref_name }},mode=max
 
   manifest:
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, prepare]
+    env:
+      GHCR_SLUG: ${{ needs.prepare.outputs.ghcr_slug }}
     permissions:
       contents: read
       packages: write
@@ -98,7 +115,7 @@ jobs:
           # exemples de tags "agrégés"
           TAG_MAIN="${{ github.ref_name == 'main' && 'latest' || github.ref_name }}"
           TAG_SHA="sha-${{ github.sha }}"
-          BASE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}"
+          BASE="${{ env.GHCR_SLUG }}/${{ env.IMAGE_NAME }}"
 
           docker buildx imagetools create \
             -t "${BASE}:${TAG_MAIN}" \
