@@ -8,6 +8,10 @@ from pathlib import Path
 
 data = biab_inputs()
 
+required_keys = ['GBIF_USER', 'GBIF_PWD', 'GBIF_EMAIL']
+if not all(key in os.environ for key in required_keys) or any(os.environ[key] == '' for key in required_keys):
+	biab_error_stop("GBIF_USER, GBIF_PWD, and GBIF_EMAIL environment variables must be defined")
+
 taxa = data['taxa']
 if taxa=='' or taxa==None or len(taxa)==0:
 	biab_error_stop("Please specify taxa")
