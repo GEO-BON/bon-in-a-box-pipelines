@@ -14,11 +14,6 @@ from pathlib import Path
 
 
 def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
-	required_keys = ['GBIF_USER', 'GBIF_PWD', 'GBIF_EMAIL']
-
-	if not all(key in os.environ for key in required_keys):
-		biab_error_stop("GBIF_USER, GBIF_PWD, and GBIF_EMAIL environment variables must be defined")
-
 	GBIF_USER=os.environ['GBIF_USER']
 	GBIF_PWD=os.environ['GBIF_PWD']
 	GBIF_EMAIL=os.environ['GBIF_EMAIL']
