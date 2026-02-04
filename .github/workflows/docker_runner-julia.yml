@@ -91,8 +91,8 @@ jobs:
           push: true
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
-          cache-from: type=registry,ref=${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }}-${{ github.ref_name }}
-          cache-to: type=registry,ref=${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }}-${{ github.ref_name }},mode=max
+          cache-from: type=registry,ref=${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }}
+          cache-to: type=registry,ref=${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}:buildcache-${{ matrix.arch_tag }},mode=max
 
   manifest:
     runs-on: ubuntu-latest
