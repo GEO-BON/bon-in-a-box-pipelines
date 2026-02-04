@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - edge
       - '*staging'
     paths:
       - '.github/workflows/docker_runner-julia.yml'
