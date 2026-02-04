@@ -929,6 +929,9 @@
       }
     ],
     "license": "MIT",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT"
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT",
+    "lifecycle": {
+      "status": "in_review"
+    }
   }
 }

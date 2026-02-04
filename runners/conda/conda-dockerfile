@@ -42,6 +42,11 @@ ADD ./r-environment.yml /data/r-environment.yml
 RUN mamba env create -f /data/r-environment.yml \
     && mamba clean --all --force-pkgs-dirs -y
 
+# Faster cpp compilation of R packages.
+# -j for build time, -j4 for runtime (slightly faster but avoid filling the memory)
+RUN mkdir /.R && echo "MAKEFLAGS = -j4" > /.R/Makevars && chmod a+r /.R/Makevars
+RUN mkdir /root/.R && echo "MAKEFLAGS = -j" > /root/.R/Makevars
+
 
 ## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
 RUN bash --login -c "mamba activate rbase \
