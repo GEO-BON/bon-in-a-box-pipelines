@@ -50,36 +50,52 @@ if (input$polygon_type == "Country or region") {
         }
     } else { # custom bounding box
         sprintf("Loading region polygon for custom bounding box: %s", paste(input$country_region_bbox$bbox, collapse = ", "))
-        bbox_values <- unlist(input$country_region_bbox$bbox)
-        names(bbox_values) <- c("xmin", "ymin", "xmax", "ymax")
-        print(paste("Bbox values:", paste(bbox_values, collapse = ", ")))
-        bbox_poly <- st_as_sfc(st_bbox(bbox_values, crs = 4326))
+        bbox_values_4326 <- unlist(input$country_region_bbox$CRS$CRSBboxWGS84) # extract bbox in 4326
 
-        # Check if bbox contains countries
-        print("Loading country polygons...")
-        country_poly <- open_dataset("https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet")
-        geo_data_sf <- country_poly |>
-            to_sf() |>
-            st_set_crs(4326)
-        print(paste("Total country polygons loaded:", nrow(geo_data_sf)))
-        geo_data_sf <- geo_data_sf[st_within(geo_data_sf, bbox_poly, sparse = FALSE), ]
-        print(paste("Country polygons within bbox:", nrow(geo_data_sf)))
+        # transform 
 
-        if (nrow(geo_data_sf) == 0) {
-            print("No country polygons found in bbox, loading region polygons")
-            region_poly <- open_dataset("https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet")
-            geo_data_sf <- region_poly |>
-                to_sf() |>
-                st_set_crs(4326)
-            geo_data_sf$fid <- as.integer(geo_data_sf$fid)
-            print(paste("Total region polygons loaded:", nrow(geo_data_sf)))
-            # Filter region polygons within bounding box
-            geo_data_sf <- geo_data_sf[st_within(geo_data_sf, bbox_poly, sparse = FALSE), ]
-            print(paste("Region polygons within bbox:", nrow(geo_data_sf)))
-            if (nrow(geo_data_sf) == 0) {
-                biab_error_stop("No polygons found in bounding box given.")
-            }
-        }
+        # # Check if bbox contains countries
+        # print("Loading country polygons...")
+        # country_poly <- open_dataset("https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet")
+        # geo_data_sf <- country_poly |>
+        #     to_sf() |>
+        #     st_set_crs(4326)
+        # print(paste("Total country polygons loaded:", nrow(geo_data_sf)))
+        # geo_data_sf <- geo_data_sf[st_within(geo_data_sf, bbox_poly, sparse = FALSE), ]
+        # print(paste("Country polygons within bbox:", nrow(geo_data_sf)))
+
+        # if (nrow(geo_data_sf) == 0) {
+        #     print("No country polygons found in bbox, loading region polygons")
+        #     region_poly <- open_dataset("https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet")
+        #     geo_data_sf <- region_poly |>
+        #         to_sf() |>
+        #         st_set_crs(4326)
+        #     geo_data_sf$fid <- as.integer(geo_data_sf$fid)
+        #     print(paste("Total region polygons loaded:", nrow(geo_data_sf)))
+        #     # Filter region polygons within bounding box
+        #     geo_data_sf <- geo_data_sf[st_within(geo_data_sf, bbox_poly, sparse = FALSE), ]
+        #     print(paste("Region polygons within bbox:", nrow(geo_data_sf)))
+        #     if (nrow(geo_data_sf) == 0) {
+        #         biab_error_stop("No polygons found in bounding box given.")
+        #     }
+        # }
+        con <- dbConnect(duckdb())
+
+         # first try country, and will have to see if it returns anything. If not, then move on to region
+            dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT *
+            FROM 'https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet'"))
+
+        # Filter by input bounding box
+        dbExecute(con, paste0("
+        CREATE OR REPLACE TABLE country_filtered AS
+        SELECT w.*
+        FROM country w
+        WHERE w.bbox.xmax >= ST_XMax("bbox_values_4326[1]")
+        AND w.bbox.xmin <= ST_XMin("bbox_values_4326[2]")
+        AND w.bbox.ymax >= ST_YMax("bbox_values_4326[3]")
+        AND w.bbox.ymin <= ST_YMin("bbox_values_4326[4]")
+        "))
+
     }
     if (input$country_region_bbox$CRS$code != 4326) {
         geo_data_sf <- st_transform(geo_data_sf, crs_input)
@@ -147,10 +163,10 @@ if (input$polygon_type == "WDPA") {
         CREATE OR REPLACE TABLE wdpa_filtered AS
         SELECT w.*
         FROM wdpa w, bbox_filter b
-        WHERE w.bbox.xmax >= ST_XMin(b.geom_4326)
-        AND w.bbox.xmin <= ST_XMax(b.geom_4326)
-        AND w.bbox.ymax >= ST_YMin(b.geom_4326)
-        AND w.bbox.ymin <= ST_YMax(b.geom_4326)
+        WHERE w.bbox.xmax >= ST_XMax(b.geom_4326)
+        AND w.bbox.xmin <= ST_XMin(b.geom_4326)
+        AND w.bbox.ymax >= ST_YMax(b.geom_4326)
+        AND w.bbox.ymin <= ST_YMin(b.geom_4326)
         "))
 
         if (!latlong) {
