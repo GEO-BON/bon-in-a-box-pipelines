@@ -115,7 +115,7 @@ if (input$polygon_type == "WDPA") {
             dbExecute(con, paste0("CREATE OR REPLACE TABLE region_crs AS
             SELECT * EXCLUDE geometry, ST_Transform(geometry, 'EPSG:4326', '", crs_input, "') AS geometry FROM region"))
         } else {
-           dbExecute(con, "CREATE OR REPLACE TABLE region_crs AS SELECT * FROM region")
+            dbExecute(con, "CREATE OR REPLACE TABLE region_crs AS SELECT * FROM region")
         }
 
         # buffer region
@@ -176,13 +176,13 @@ if (input$polygon_type == "WDPA") {
         # Convert to WKT polygon for DuckDB
         if (latlong) {
             bbox_wkt <- paste0(
-            "POLYGON((",
-            bbox_values["xmin"], " ", bbox_values["ymin"], ", ",
-            bbox_values["xmin"], " ", bbox_values["ymax"], ", ",
-            bbox_values["xmax"], " ", bbox_values["ymax"], ", ",
-            bbox_values["xmax"], " ", bbox_values["ymin"], ", ",
-            bbox_values["xmin"], " ", bbox_values["ymin"],
-            "))"
+                "POLYGON((",
+                bbox_values["xmin"], " ", bbox_values["ymin"], ", ",
+                bbox_values["xmin"], " ", bbox_values["ymax"], ", ",
+                bbox_values["xmax"], " ", bbox_values["ymax"], ", ",
+                bbox_values["xmax"], " ", bbox_values["ymin"], ", ",
+                bbox_values["xmin"], " ", bbox_values["ymin"],
+                "))"
             )
             # Create bbox_filter table directly
             dbExecute(con, paste0("
@@ -193,10 +193,10 @@ if (input$polygon_type == "WDPA") {
             bbox_sf <- sf::st_as_sfc(
                 sf::st_bbox(
                     c(
-                    xmin = bbox_values["xmin"],
-                    ymin = bbox_values["ymin"],
-                    xmax = bbox_values["xmax"],
-                    ymax = bbox_values["ymax"]
+                        xmin = bbox_values["xmin"],
+                        ymin = bbox_values["ymin"],
+                        xmax = bbox_values["xmax"],
+                        ymax = bbox_values["ymax"]
                     ),
                     crs = crs_input
                 )
@@ -246,10 +246,10 @@ if (input$polygon_type == "EEZ") {
         bbox_sf <- st_as_sfc(
             st_bbox(
                 c(
-                xmin = bbox[1],
-                ymin = bbox[2],
-                xmax = bbox[3],
-                ymax = bbox[4]
+                    xmin = bbox[1],
+                    ymin = bbox[2],
+                    xmax = bbox[3],
+                    ymax = bbox[4]
                 ),
                 crs = 4326
             )
