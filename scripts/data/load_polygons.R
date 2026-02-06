@@ -5,6 +5,7 @@ if (!require("duckdbfs")) {
     install.packages("duckdbfs")
 }
 if (!require("duckspatial")) {
+    install.packages("arrow")
     install.packages("duckspatial")
 }
 library(duckdbfs)
@@ -287,29 +288,42 @@ if (input$polygon_type == "EEZ") {
             to_sf() |>
             st_set_crs(4326)
     } else { # Filter by custom bounding box
-        bbox <- input$country_region_bbox$bbox
         print("Loading EEZ based on custom bounding box:")
-        print(bbox)
+        bbox_values_4326 <- unlist(input$country_region_bbox$CRS$CRSBboxWGS84) # extract bbox in 4326
 
-        bbox_sf <- st_as_sfc(
-            st_bbox(
-                c(
-                    xmin = bbox[1],
-                    ymin = bbox[2],
-                    xmax = bbox[3],
-                    ymax = bbox[4]
-                ),
-                crs = 4326
-            )
+        con <- dbConnect(duckdb())
+
+         # first try country, and will have to see if it returns anything. If not, then move on to region
+        dbExecute(con, paste0("CREATE OR REPLACE TABLE eez AS SELECT *
+        FROM 'https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/marine_regions_eez/eez_v12.parquet'"))
+        # Filter by input bounding box
+        bbox_wkt <- paste0(
+            "POLYGON((",
+            bbox_values_4326[1], " ", bbox_values_4326[2], ", ",
+            bbox_values_4326[1], " ", bbox_values_4326[4], ", ",
+            bbox_values_4326[3], " ", bbox_values_4326[4], ", ",
+            bbox_values_4326[3], " ", bbox_values_4326[2], ", ",
+            bbox_values_4326[1], " ", bbox_values_4326[2],
+            "))"
         )
-        eez <- open_dataset("https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/marine_regions_eez/eez_v12.parquet")
 
-        geo_data_sf <- eez |>
-            to_sf() |>
-            st_set_crs(4326) |>
-            mutate(geom = st_make_valid(geom)) |>
-            filter(st_intersects(geom, bbox_sf, sparse = FALSE))
+        dbExecute(con, paste0("
+        CREATE OR REPLACE TABLE bbox_filter AS
+        SELECT ST_GeomFromText('", bbox_wkt, "') AS geom_4326
+        "))
+
+        dbExecute(con, paste0("
+        CREATE OR REPLACE TABLE eez_filtered AS
+        SELECT w.*
+        FROM eez w, bbox_filter b
+        WHERE ST_Intersects(w.geometry, b.geom_4326)
+        "))
+        # output as a sf object
+        df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM eez_filtered")
+        df$geometry <- sf::st_as_sfc(structure(as.list(df$geometry_wkb), class = "WKB"), crs = 4326)
+        geo_data_sf <- st_as_sf(df)
     }
+
     geo_data_sf$fid <- as.integer(geo_data_sf$fid)
 
     if (nrow(geo_data_sf) == 0) {
