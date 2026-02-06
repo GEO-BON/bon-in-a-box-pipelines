@@ -129,8 +129,12 @@ if (!is.null(input$date_column)){
 
 print(nrow(protected_areas))
 
-protected_areas <- st_make_valid(protected_areas)
+any_invalid <- any(!st_is_valid(protected_areas))
 
+if (any_invalid) {
+  message("Invalid geometries detected. Fixing...")
+  protected_areas <- st_make_valid(protected_areas)
+}
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")

@@ -17,8 +17,16 @@ if (is.null(input$study_area_polygon)) {
 study_area <- input$study_area_polygon
 study_area <- sf::st_read(study_area)
 study_area <- st_transform(study_area, crs = input$crs)
-study_area <- st_buffer(study_area, 0.1)
-study_area_clean <- st_make_valid(study_area)
+
+any_invalid <- any(!st_is_valid(study_area))
+
+if (any_invalid) {
+  message("Invalid geometries detected. Fixing...")
+  study_area <- st_buffer(study_area, 0.1)
+  study_area_clean <- st_make_valid(study_area)
+} else {
+  study_area_clean <- study_area
+}
 
 study_area_clean_path <- file.path(outputFolder, "study_area_clean.gpkg")
 sf::st_write(study_area_clean, study_area_clean_path, delete_dsn = T)
@@ -89,10 +97,15 @@ if (isTRUE(input$buffer_points)) {
 # Geometery fixes
 print("Fixing invalid geometries")
 
-protected_areas <- st_buffer(protected_areas, 0)
 print(nrow(protected_areas))
 
+any_invalid <- any(!st_is_valid(protected_areas))
+
+if (any_invalid) {
+  message("Invalid geometries detected. Fixing...")
+protected_areas <- st_buffer(protected_areas, 0)
 protected_areas <- st_make_valid(protected_areas)
+} 
 
 print("Removing slivers (protected areas less than 1 square meters)")
 sliver_threshold <- units::set_units(1, "m^2")
