@@ -16,16 +16,44 @@ Sys.setenv(HOME = "/output")
 input <- biab_inputs()
 
 crs_input <- paste0(input$country_region_bbox$CRS$authority, ":", input$country_region_bbox$CRS$code)
+print(crs_input)
 polygon_path <- file.path(outputFolder, "polygon.gpkg")
 
 # Checks if crs is lat long
 latlong <- st_is_longlat(crs_input)
 
 # Checks whether we have a custom bbox or not
-if (is.null(input$country_region_bbox$country)) {
-    country <- FALSE
-} else {
+# Robustly detect missing country: treat NULL, zero-length, and atomic NA as missing
+val_country <- input$country_region_bbox$country
+print(val_country)
+country <- FALSE
+if (!is.null(val_country) && length(val_country) > 0 && !(is.atomic(val_country) && all(is.na(val_country)))) {
     country <- TRUE
+}
+
+if (!country) {
+    print("No country selected, will load polygon based on custom bounding box")
+    bbox_values <- unlist(input$country_region_bbox$bbox)
+    print(bbox_values)
+
+    bbox_sf <- sf::st_as_sfc(
+        sf::st_bbox(
+            c(
+                xmin = bbox_values[1],
+                ymin = bbox_values[2],
+                xmax = bbox_values[3],
+                ymax = bbox_values[4]
+            ),
+            crs = crs_input
+        )
+    )
+    if (!latlong) {
+        bbox_sf_4326 <- sf::st_transform(bbox_sf, 4326) # transform bbox if not in 4326
+    } else {
+        bbox_sf_4326 <- bbox_sf
+    }
+    bbox_wkt_4326 <- sf::st_as_text(bbox_sf_4326)
+    print(bbox_wkt_4326)
 }
 
 # Load country region polygon
@@ -33,14 +61,14 @@ if (input$polygon_type == "Country or region") {
     if (country) {
         # Load country if region is null
         if (is.null(input$country_region_bbox$region)) {
-            sprintf("Loading country polygon for: %s", input$country_region_bbox$country$englishName)
+            print(sprintf("Loading country polygon for: %s", input$country_region_bbox$country$englishName))
             country_poly <- open_dataset("https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet")
-            geo_data_sf <- country_poly |>
-                filter(adm0_src == input$country_region_bbox$country$ISO3) |>
-                to_sf() |>
+            geo_data_sf <- country_poly |
+                filter(adm0_src == input$country_region_bbox$country$ISO3) |
+                to_sf() |
                 st_set_crs(4326)
         } else { # Region not null
-            sprintf("Loading region polygon for: %s", input$country_region_bbox$region$regionName)
+            print(sprintf("Loading region polygon for: %s", input$country_region_bbox$region$regionName))
             country_region_bbox <- open_dataset("https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet")
             geo_data_sf <- country_region_bbox |>
                 filter(adm0_src == input$country_region_bbox$country$ISO3) |>
@@ -50,74 +78,64 @@ if (input$polygon_type == "Country or region") {
             geo_data_sf$fid <- as.integer(geo_data_sf$fid)
         }
     } else { # custom bounding box
-        sprintf("Loading region polygon for custom bounding box: %s", paste(input$country_region_bbox$bbox, collapse = ", "))
-        bbox_values_4326 <- unlist(input$country_region_bbox$CRS$CRSBboxWGS84) # extract bbox in 4326
-
+        print(sprintf("Loading region polygon for custom bounding box: %s", paste(input$country_region_bbox$bbox, collapse = ", ")))
         con <- dbConnect(duckdb())
+        dbExecute(con, "INSTALL spatial; LOAD spatial; INSTALL httpfs; LOAD httpfs;")
 
-         # first try country, and will have to see if it returns anything. If not, then move on to region
-        dbExecute(con, paste0("CREATE OR REPLACE TABLE country_region AS SELECT *
-        FROM 'https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet'"))
+        dbExecute(con, paste0("CREATE OR REPLACE VIEW bbox_view AS SELECT ST_GeomFromText('", bbox_wkt_4326, "') AS geom_4326"))
 
-        # Filter by input bounding box
-        bbox_wkt <- paste0(
-            "POLYGON((",
-            bbox_values_4326[1], " ", bbox_values_4326[2], ", ",
-            bbox_values_4326[1], " ", bbox_values_4326[4], ", ",
-            bbox_values_4326[3], " ", bbox_values_4326[4], ", ",
-            bbox_values_4326[3], " ", bbox_values_4326[2], ", ",
-            bbox_values_4326[1], " ", bbox_values_4326[2],
-            "))"
-        )
 
-        dbExecute(con, paste0("
-        CREATE OR REPLACE TABLE bbox_filter AS
-        SELECT ST_GeomFromText('", bbox_wkt, "') AS geom_4326
-        "))
+        dbExecute(con, "
+    CREATE OR REPLACE TABLE country_filtered AS
+    SELECT w.* FROM read_parquet('https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet') w, bbox_view b
+    WHERE ST_Intersects(w.geometry, b.geom_4326)
+    ")
 
-        dbExecute(con, paste0("
-        CREATE OR REPLACE TABLE country_region_filtered AS
-        SELECT w.*
-        FROM country_region w, bbox_filter b
-        WHERE ST_Within(w.geometry, b.geom_4326)
-        "))
-        
-        result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM country_region_filtered")
+        result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM country_filtered")
+        print("result count 1")
+        print(result_count)
+
+        dbExecute(con, "
+    CREATE OR REPLACE TABLE country_within AS
+    SELECT w.* FROM read_parquet('https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet') w, bbox_view b
+    WHERE ST_Within(w.geometry, b.geom_4326)
+    ")
+
+        result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM country_within")
+        print(result_count)
 
         if (result_count$count == 0) {
-        print("No country polygons found in bbox, will try region polygons")
+            print("No country polygons found in bbox, will try region polygons")
+            print("here1")
 
-        dbExecute(con, paste0("CREATE OR REPLACE TABLE country_region AS SELECT *
-        FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet'"))
-        
-
-        dbExecute(con, paste0("
-        CREATE OR REPLACE TABLE country_region_filtered AS
-        SELECT w.*
-        FROM country_region w, bbox_filter b
-        WHERE ST_Within(w.geometry, b.geom_4326)
-        "))
-        
-        result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM country_region_filtered")
-
-        if (result_count$count == 0) {
-            biab_error_stop("No polygons found in bounding box given.")
+            print("No country polygons found. Filtering regions...")
+            # Again, filter WHILE reading
+            dbExecute(con, "
+        CREATE OR REPLACE TABLE region_filtered AS
+        SELECT w.* FROM read_parquet('https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet') w, bbox_view b
+        WHERE ST_Intersects(w.geometry, b.geom_4326)
+    ")
+            print("here3")
+            result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region_filtered")
+            print(result_count)
+            # output as a sf object
+            df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM region_filtered")
+        } else {
+            df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM country_filtered")
         }
 
-        }
-
-        # output as a sf object
-        df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM country_region_filtered")
         df$geometry <- sf::st_as_sfc(structure(as.list(df$geometry_wkb), class = "WKB"), crs = 4326)
         geo_data_sf <- st_as_sf(df)
-
-}
+        print("printing sf object")
+        print(geo_data_sf)
+    }
 
 
     if (input$country_region_bbox$CRS$code != 4326) {
         geo_data_sf <- st_transform(geo_data_sf, crs_input)
     }
-
+    
+print("here")
     print(st_crs(geo_data_sf))
     st_write(geo_data_sf, polygon_path)
 }
@@ -145,12 +163,12 @@ if (input$polygon_type == "WDPA") {
             sprintf("Loading WDPA data for: %s", input$country_region_bbox$region$regionName)
             dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS
             SELECT *
-            FROM 'https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet'
+            FROM read_parquet('https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet')
             WHERE adm0_src='", input$country_region_bbox$country$ISO3, "' and adm1_name='", input$country_region_bbox$region$regionName, "'"))
         } else {
             sprintf("Loading WDPA for: %s", input$country_region_bbox$country$englishName)
             dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT *
-            FROM 'https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet' WHERE adm0_src='", input$country_region_bbox$country$ISO3, "'"))
+            FROM read_parquet('https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet') WHERE adm0_src='", input$country_region_bbox$country$ISO3, "'"))
         }
 
         # If not in 4326: Transform region to crs of interest
@@ -216,44 +234,14 @@ if (input$polygon_type == "WDPA") {
         bbox_values <- input$country_region_bbox$bbox
         names(bbox_values) <- c("xmin", "ymin", "xmax", "ymax")
 
-        # Convert to WKT polygon for DuckDB
-        if (latlong) {
-            bbox_wkt <- paste0(
-                "POLYGON((",
-                bbox_values["xmin"], " ", bbox_values["ymin"], ", ",
-                bbox_values["xmin"], " ", bbox_values["ymax"], ", ",
-                bbox_values["xmax"], " ", bbox_values["ymax"], ", ",
-                bbox_values["xmax"], " ", bbox_values["ymin"], ", ",
-                bbox_values["xmin"], " ", bbox_values["ymin"],
-                "))"
-            )
-            # Create bbox_filter table directly
-            dbExecute(con, paste0("
-                CREATE OR REPLACE TABLE bbox_filter AS
-                SELECT ST_GeomFromText('", bbox_wkt, "') AS geom_4326
-            "))
-        } else {
-            bbox_sf <- sf::st_as_sfc(
-                sf::st_bbox(
-                    c(
-                        xmin = bbox_values["xmin"],
-                        ymin = bbox_values["ymin"],
-                        xmax = bbox_values["xmax"],
-                        ymax = bbox_values["ymax"]
-                    ),
-                    crs = crs_input
-                )
-            )
-            bbox_sf_4326 <- sf::st_transform(bbox_sf, 4326)
 
-            # --- Step 5: Push bbox into DuckDB ---
-            bbox_wkt <- sf::st_as_text(bbox_sf_4326)
+        # Create bbox_filter table directly
+        dbExecute(con, paste0("
+        CREATE OR REPLACE TABLE bbox_filter AS
+        SELECT ST_GeomFromText('", bbox_wkt_4326, "') AS geom_4326
+        "))
 
-            dbExecute(con, paste0("
-            CREATE OR REPLACE TABLE bbox_filter AS
-            SELECT ST_GeomFromText('", bbox_wkt, "') AS geom_4326
-            "))
-        }
+
         dbExecute(con, "
             CREATE OR REPLACE TABLE wdpa_filtered AS
             SELECT w.*
@@ -271,6 +259,8 @@ if (input$polygon_type == "WDPA") {
     }
     st_write(df, polygon_path, delete_dsn = TRUE)
 }
+
+
 
 
 
@@ -292,8 +282,9 @@ if (input$polygon_type == "EEZ") {
         bbox_values_4326 <- unlist(input$country_region_bbox$CRS$CRSBboxWGS84) # extract bbox in 4326
 
         con <- dbConnect(duckdb())
+        dbExecute(con, "INSTALL spatial; LOAD spatial; INSTALL httpfs; LOAD httpfs;")
 
-         # first try country, and will have to see if it returns anything. If not, then move on to region
+        # first try country, and will have to see if it returns anything. If not, then move on to region
         dbExecute(con, paste0("CREATE OR REPLACE TABLE eez AS SELECT *
         FROM 'https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/marine_regions_eez/eez_v12.parquet'"))
         # Filter by input bounding box
