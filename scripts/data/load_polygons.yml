@@ -38,6 +38,7 @@ conda:
     - conda-forge
     - r
   dependencies:
+    - r-arrow
     - r-rjson
     - r-duckdb
     - r-sf
