@@ -137,6 +137,7 @@ if (input$polygon_type == "Country or region") {
     
 print("here")
     print(st_crs(geo_data_sf))
+    geo_data_sf$fid <- as.integer(geo_data_sf$fid)
     st_write(geo_data_sf, polygon_path)
 }
 
@@ -257,6 +258,7 @@ if (input$polygon_type == "WDPA") {
         ")
         df$geometry <- sf::st_as_sfc(structure(as.list(df$geometry_wkb), class = "WKB"), crs = 4326)
     }
+    
     st_write(df, polygon_path, delete_dsn = TRUE)
 }
 
