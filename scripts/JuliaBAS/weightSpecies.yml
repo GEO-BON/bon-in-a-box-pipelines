@@ -1,0 +1,28 @@
+script: weightSpecies.jl
+name: Weight Species Uncertainty
+description: "Combines species uncertainties as a weighted average"
+author:
+  - name: Michael D. Catchen
+    identifier: https://orcid.org/0000-0002-6506-6487
+inputs:
+  uncertainty_maps:
+    label: uncertainty maps
+    description: a bunch of uncertainty maps of species habitat suitability.
+    type: image/tiff;application=geotiff[]
+    example: "foo/bar/baz"
+  species_weights:
+    label: species weights
+    description: a weight for each species. should sum to 1.
+    type: float[]
+    example: [0.3, 0.2, 0.1, 0.4]
+  species:
+    label: species names
+    description: name of each species corresponding with weights
+    type: text[]
+    example: ["foo", "bar", "baz"]
+outputs:
+  priority_map:
+    label: priority map
+    description: a priority map for sampling
+    type: image/tiff;application=geotiff
+ 
