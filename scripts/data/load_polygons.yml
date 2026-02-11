@@ -16,9 +16,9 @@ inputs:
       - Country or region
       - WDPA
       - EEZ
-    example:
+    example: Country or region
   country_region_bbox:
-    label: Region of interest
+    label: Bounding box
     description: Use the bounding box chooser to select a region or create a custom bounding box (region selections will be ignored for EEZs since are national).
     type: bboxCRS
     example:
@@ -28,7 +28,7 @@ inputs:
       The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees).
       If pulling WDPA data with a custom bounding box, the buffer will not be applied.
     type: float
-    example: 0.08
+    example: 500000
 outputs:
   polygon:
     label: Polygon

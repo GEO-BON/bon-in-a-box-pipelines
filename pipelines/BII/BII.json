@@ -34,28 +34,6 @@
       }
     },
     {
-      "id": "53",
-      "type": "io",
-      "position": {
-        "x": 476.0826023635467,
-        "y": 579.650570473584
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
-      "id": "55",
-      "type": "output",
-      "position": {
-        "x": 1020.3326899653318,
-        "y": 691.9635745429575
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "56",
       "type": "io",
       "position": {
@@ -202,6 +180,59 @@
       "data": {
         "type": "bboxCRS"
       }
+    },
+    {
+      "id": "68",
+      "type": "io",
+      "position": {
+        "x": 824.4738874036411,
+        "y": 585.8583779303075
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "69",
+      "type": "output",
+      "position": {
+        "x": 1255.0726458313782,
+        "y": 661.3618300004938
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "70",
+      "type": "constant",
+      "position": {
+        "x": 439.24193203584343,
+        "y": 567.216164595444
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": 505.2173275744881,
+        "y": 618.6769731155869
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
     }
   ],
   "edges": [
@@ -211,27 +242,6 @@
       "target": "15",
       "targetHandle": null,
       "id": "reactflow__edge-14bii_change-15"
-    },
-    {
-      "source": "53",
-      "sourceHandle": "country_region_polygon",
-      "target": "25",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-53country_region_polygon-25study_area_polygon"
-    },
-    {
-      "source": "53",
-      "sourceHandle": "region",
-      "target": "55",
-      "targetHandle": null,
-      "id": "reactflow__edge-53region-55"
-    },
-    {
-      "source": "53",
-      "sourceHandle": "country",
-      "target": "55",
-      "targetHandle": null,
-      "id": "reactflow__edge-53country-55"
     },
     {
       "source": "25",
@@ -253,13 +263,6 @@
       "target": "56",
       "targetHandle": "collections_items",
       "id": "reactflow__edge-58-56collections_items"
-    },
-    {
-      "source": "53",
-      "sourceHandle": "country_region_polygon",
-      "target": "56",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-53country_region_polygon-56study_area"
     },
     {
       "source": "56",
@@ -334,13 +337,6 @@
     {
       "source": "67",
       "sourceHandle": null,
-      "target": "53",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-67-53bbox_crs"
-    },
-    {
-      "source": "67",
-      "sourceHandle": null,
       "target": "56",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-67-56bbox_crs"
@@ -351,6 +347,48 @@
       "target": "25",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-67-25bbox_crs"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-67-68country_region_bbox"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "25",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-68polygon-25study_area_polygon"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "56",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-68polygon-56study_area"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "69",
+      "targetHandle": null,
+      "id": "reactflow__edge-68polygon-69"
+    },
+    {
+      "source": "70",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-70-68polygon_type"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-71-68buffer"
     }
   ],
   "inputs": {
@@ -381,57 +419,51 @@
       "weight": 1
     },
     "data>loadFromStac.yml@56|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
-      "label": "Spatial resolution",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). Leave blank to pull in the original spatial resolution of the layers.",
+      "label": "Spatial resolution (optional)",
       "type": "float",
-      "example": 10000,
+      "example": null,
       "weight": 2
     },
     "pipeline@63": {
-      "label": "Start date",
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "label": "Start date (optional)",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank to pull all layers in the time series.",
       "type": "text",
-      "example": "2000",
+      "example": null,
       "weight": 3
     },
     "pipeline@64": {
-      "label": "End date",
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "label": "End date (optional)",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank to pull all layers in the time series.",
       "type": "text",
-      "example": "2020",
+      "example": null,
       "weight": 4
     }
   },
   "outputs": {
-    "data>getCountryPolygon.yml@53|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@53|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 1
-    },
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 2
+      "weight": 0
     },
     "BII>BIIChange.yml@14|bii_change": {
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 1
     },
     "data>loadFromStac.yml@56|rasters": {
       "description": "Output raster files in geotiff format.",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 4
+      "weight": 2
+    },
+    "data>load_polygons.yml@68|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
+      "weight": 3
     }
   },
   "metadata": {

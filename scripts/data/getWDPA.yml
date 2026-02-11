@@ -7,7 +7,7 @@ author:
     identifier: https://orcid.org/0000-0002-5967-9156
 external_link:
 lifecycle:
-  status: in_review
+  status: deprecated
 inputs:
   country:
     label: Country ISO3 code
