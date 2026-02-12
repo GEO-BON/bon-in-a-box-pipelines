@@ -41,6 +41,11 @@ inputs:
     description: Dataset with the list of species for a threat category
     example: null
     type: text/csv
+  splist_habitat:
+    label: IUCN species list for a habitat
+    description: Dataset with the list of species of a habitat
+    example: null
+    type: text/csv
   taxonomic_group:
     label: Taxonomic group
     description: The taxonomic group selected
@@ -56,6 +61,12 @@ inputs:
     description: The threat category selected
     type: text[]
     example:
+  habitat:
+    label: Habitat(s)
+    description: The habitat(s) selected
+    type: text[]
+    example:
+
 outputs:
   iucn_splist:
     label: IUCN species list

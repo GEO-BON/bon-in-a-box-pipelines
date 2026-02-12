@@ -12,6 +12,7 @@ print(sprintf("Total number of species before filtering: %s", nrow(iucn_splist))
 taxonomic_group <- input$taxonomic_group
 use <- input$species_use
 threat <- input$threat
+habitat <- input$habitat
 
 if (!"All" %in% taxonomic_group) {
   print("Filtering by taxonomic group.")
@@ -36,6 +37,15 @@ if (!"Do not filter by threat category" %in% threat) {
   IUCN_threat <- read.csv(input$splist_threat)
   ## Filter country list by threat list ####
   iucn_splist <- IUCN_threat %>%
+    dplyr::filter(sis_taxon_id %in% iucn_splist$sis_taxon_id)
+  print(sprintf("Species left: %s", nrow(iucn_splist)))
+}
+
+if (!"Do not filter by habitat" %in% habitat) {
+  print("Filtering by habitat.")
+  IUCN_habitat <- read.csv(input$splist_habitat)
+  ## Filter country list by habitat ####
+  iucn_splist <- IUCN_habitat %>%
     dplyr::filter(sis_taxon_id %in% iucn_splist$sis_taxon_id)
   print(sprintf("Species left: %s", nrow(iucn_splist)))
 }

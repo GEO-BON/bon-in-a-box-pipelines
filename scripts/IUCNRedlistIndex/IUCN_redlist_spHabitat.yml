@@ -1,0 +1,168 @@
+script: IUCN_redlist_spHabitat.R
+name: IUCN list of species by habitat
+description: Obtains a list of species assessed by the IUCN Red List of Species from a habitat type
+author:
+  - name: Laetitia Tremblay
+    email: laetitia.tremblay@mcgill.ca
+    identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+inputs:
+  habitat:
+    label: Habitat
+    description: Select the habitat(s) to filter for. This returns a list of IUCN Red List species that are found in these habitats.
+    type: options[]
+    example: [Marine]
+    options:
+    - Marine
+    - Terrestrial
+    - Forest
+    - Forest - Boreal
+    - Forest - Subarctic
+    - Forest - Temperate
+    - Forest - Subtropical/Tropical Dry
+    - Forest - Subtropical/Tropical Moist Lowland
+    - Forest - Subtropical/Tropical Mangrove Vegetation Above High Tide Level
+    - Forest - Subtropical/Tropical Swamp
+    - Forest - Subtropical/Tropical Moist Montane
+    - Savanna
+    - Savanna - Dry
+    - Savanna - Moist
+    - Shrubland
+    - Shrubland - Subarctic
+    - Shrubland - Subantarctic
+    - Shrubland - Boreal
+    - Shrubland - Temperate
+    - Shrubland - Subtropical/Tropical Dry
+    - Shrubland - Subtropical/Tropical Moist
+    - Shrubland - Subtropical/Tropical High Altitude
+    - Shrubland - Mediterranean-type Shrubby Vegetation
+    - Grassland
+    - Grassland - Tundra
+    - Grassland - Subarctic
+    - Grassland - Subantarctic
+    - Grassland - Temperate
+    - Grassland - Subtropical/Tropical Dry
+    - Grassland - Subtropical/Tropical Seasonally Wet/Flooded
+    - Grassland - Subtropical/Tropical High Altitude
+    - Wetlands (inland)
+    - Wetlands (inland) - Permanent Rivers/Streams/Creeks (includes waterfalls)
+    - Wetlands (inland) - Seasonal/Intermittent/Irregular Rivers/Streams/Creeks
+    - Wetlands (inland) - Shrub Dominated Wetlands
+    - Wetlands (inland) - Bogs, Marshes, Swamps, Fens, Peatlands
+    - Wetlands (inland) - Permanent Freshwater Lakes (over 8ha)
+    - Wetlands (inland) - Seasonal/Intermittent Freshwater Lakes (over 8ha)
+    - Wetlands (inland) - Permanent Freshwater Marshes/Pools (under 8ha)
+    - Wetlands (inland) - Seasonal/Intermittent Freshwater Marshes/Pools (under 8ha)
+    - Wetlands (inland) - Freshwater Springs and Oases
+    - Wetlands (inland) - Tundra Wetlands (incl. pools and temporary waters from snowmelt)
+    - Wetlands (inland) - Alpine Wetlands (includes temporary waters from snowmelt)
+    - Wetlands (inland) - Geothermal Wetlands
+    - Wetlands (inland) - Permanent Inland Deltas
+    - Wetlands (inland) - Permanent Saline, Brackish or Alkaline Lakes
+    - Wetlands (inland) - Seasonal/Intermittent Saline, Brackish or Alkaline Lakes and Flats
+    - Wetlands (inland) - Permanent Saline, Brackish or Alkaline Marshes/Pools
+    - Wetlands (inland) - Seasonal/Intermittent Saline, Brackish or Alkaline Marshes/Pools
+    - Wetlands (inland) - Karst and Other Subterranean Hydrological Systems (inland)
+    - Rocky areas (eg. inland cliffs, mountain peaks)
+    - Caves and Subterranean Habitats (non-aquatic)
+    - Caves and Subterranean Habitats (non-aquatic) - Caves
+    - Caves and Subterranean Habitats (non-aquatic) - Other Subterranean Habitats
+    - Desert
+    - Desert - Hot
+    - Desert - Temperate
+    - Desert - Cold
+    - Marine Neritic
+    - Marine Neritic - Pelagic
+    - Marine Neritic - Subtidal Rock and Rocky Reefs
+    - Marine Neritic - Subtidal Loose Rock/pebble/gravel
+    - Marine Neritic - Subtidal Sandy
+    - Marine Neritic - Subtidal Sandy-Mud
+    - Marine Neritic - Subtidal Muddy
+    - Marine Neritic - Macroalgal/Kelp
+    - Marine Neritic - Coral Reef
+    - Outer Reef Channel
+    - Back Slope
+    - Foreslope (Outer Reef Slope)
+    - Lagoon
+    - Inter-Reef Soft Substrate
+    - Inter-Reef Rubble Substrate
+    - Marine Neritic - Seagrass (Submerged)
+    - Marine Neritic - Estuaries
+    - Marine Oceanic
+    - Marine Oceanic - Epipelagic (0-200m)
+    - Marine Oceanic - Mesopelagic (200-1000m)
+    - Marine Oceanic - Bathypelagic (1000-4000m)
+    - Marine Oceanic - Abyssopelagic (4000-6000m)
+    - Marine Deep Benthic
+    - Marine Deep Benthic - Continental Slope/Bathyl Zone (200-4,000m)
+    - Hard Substrate
+    - Soft Substrate
+    - Marine Deep Benthic - Abyssal Plain (4,000-6,000m)
+    - Marine Deep Benthic - Abyssal Mountain/Hills (4,000-6,000m)
+    - Marine Deep Benthic - Hadal/Deep Sea Trench (>6,000m)
+    - Marine Deep Benthic - Seamount
+    - Marine Deep Benthic - Deep Sea Vents (Rifts/Seeps)
+    - Marine Intertidal
+    - Marine Intertidal - Rocky Shoreline
+    - Marine Intertidal - Sandy Shoreline and/or Beaches, Sand Bars, Spits, Etc
+    - Marine Intertidal - Shingle and/or Pebble Shoreline and/or Beaches
+    - Marine Intertidal - Mud Flats and Salt Flats
+    - Marine Intertidal - Salt Marshes (Emergent Grasses)
+    - Marine Intertidal - Tidepools
+    - Marine Intertidal - Mangrove Submerged Roots
+    - Marine Coastal/Supratidal
+    - Marine Coastal/Supratidal - Sea Cliffs and Rocky Offshore Islands
+    - Marine Coastal/supratidal - Coastal Caves/Karst
+    - Marine Coastal/Supratidal - Coastal Sand Dunes
+    - Marine Coastal/Supratidal - Coastal Brackish/Saline Lagoons/Marine Lakes
+    - Marine Coastal/Supratidal - Coastal Freshwater Lakes
+    - Artificial/Terrestrial
+    - Artificial/Terrestrial - Arable Land
+    - Artificial/Terrestrial - Pastureland
+    - Artificial/Terrestrial - Plantations
+    - Artificial/Terrestrial - Rural Gardens
+    - Artificial/Terrestrial - Urban Areas
+    - Artificial/Terrestrial - Subtropical/Tropical Heavily Degraded Former Forest
+    - Artificial/Aquatic & Marine
+    - Artificial/Aquatic - Water Storage Areas (over 8ha)
+    - Artificial/Aquatic - Ponds (below 8ha)
+    - Artificial/Aquatic - Aquaculture Ponds
+    - Artificial/Aquatic - Salt Exploitation Sites
+    - Artificial/Aquatic - Excavations (open)
+    - Artificial/Aquatic - Wastewater Treatment Areas
+    - Artificial/Aquatic - Irrigated Land (includes irrigation channels)
+    - Artificial/Aquatic - Seasonally Flooded Agricultural Land
+    - Artificial/Aquatic - Canals and Drainage Channels, Ditches
+    - Artificial/Aquatic - Karst and Other Subterranean Hydrological Systems (human-made)
+    - Artificial/Marine - Marine Anthropogenic Structures
+    - Artificial/Marine - Mariculture Cages
+    - Artificial/Marine - Mari/Brackishculture Ponds
+    - Introduced vegetation
+    - Other
+    - Unknown
+    - Do not filter by habitat
+outputs:
+  habitats:
+    label: Habitat(s)
+    description: Habitats of species
+    type: text[]
+  IUCN_habitat_splist:
+    label: Species list filtered by habitat
+    description: List of species in the habitat selected
+    type: text/csv
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquired using the IUCN Red List API
+    type: text
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist
+    - r-this.path
+    - r-rjson
+
+
+
