@@ -5,7 +5,6 @@ if (!require("duckdbfs")) {
     install.packages("duckdbfs")
 }
 if (!require("duckspatial")) {
-    install.packages("arrow")
     install.packages("duckspatial")
 }
 library(duckdbfs)
@@ -15,10 +14,16 @@ Sys.setenv(HOME = "/output")
 
 input <- biab_inputs()
 
+# Parquet URLS for polygons
+countries_url <- "https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet"
+regions_url <- "https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet"
+wdpa_url <- "https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet"
+eez_url <- "https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/marine_regions_eez/eez_v12.parquet"
+
+
 crs_input <- paste0(input$country_region_bbox$CRS$authority, ":", input$country_region_bbox$CRS$code)
 print(crs_input)
 polygon_path <- file.path(outputFolder, "polygon.gpkg")
-
 # Checks if crs is lat long
 latlong <- st_is_longlat(st_crs(crs_input))
 
@@ -55,8 +60,6 @@ if (!country) {
     bbox_wkt_4326 <- sf::st_as_text(bbox_sf_4326)
     print(bbox_wkt_4326)
 }
-countries_url <- "https://data.fieldmaps.io/adm0/osm/intl/adm0_polygons.parquet"
-regions_url <- "https://data.fieldmaps.io/edge-matched/humanitarian/intl/adm1_polygons.parquet"
 
 # Load country region polygon
 if (input$polygon_type == "Country or region") {
@@ -97,7 +100,6 @@ if (input$polygon_type == "Country or region") {
         
         if (result_count$count == 0) {
             print("No country polygons found in bbox, will try region polygons")
-            print("here1")
 
             print("No country polygons found. Filtering regions...")
             # Again, filter WHILE reading
@@ -106,7 +108,6 @@ if (input$polygon_type == "Country or region") {
         SELECT w.* FROM read_parquet('", regions_url, "') w, bbox_view b
         WHERE ST_Within(w.geometry, b.geom_4326)
     "))
-            print("here3")
             result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region_filtered")
             print(result_count)
             # output as a sf object
@@ -126,11 +127,14 @@ if (input$polygon_type == "Country or region") {
         geo_data_sf <- st_transform(geo_data_sf, st_crs(crs_input))
     }
 
-    print("here")
     print(st_crs(geo_data_sf))
     print(geo_data_sf)
     if ("fid" %in% names(geo_data_sf)) {
         geo_data_sf$fid <- as.integer(geo_data_sf$fid)
+    }
+
+if (nrow(geo_data_sf) == 0) {
+        biab_error_stop("There is no country or region polygon for this bounding box")
     }
     st_write(geo_data_sf, polygon_path)
 }
@@ -141,8 +145,6 @@ if (input$polygon_type == "Country or region") {
 
 
 ############ WDPA #############
-
-wdpa_url <- "https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/wdpa/wdpa.parquet"
 
 if (input$polygon_type == "WDPA") {
     # adding quotes around it for duckdb functions
@@ -255,6 +257,10 @@ if (input$polygon_type == "WDPA") {
 
     # ensure df is an sf object before writing
     df_sf <- st_as_sf(df)
+    if (nrow(df_sf) == 0) {
+        biab_error_stop("There is no WDPA data for this country or bounding box")
+    }
+
     st_write(df_sf, polygon_path, delete_dsn = TRUE)
 }
 
@@ -263,9 +269,6 @@ if (input$polygon_type == "WDPA") {
 
 
 ################# EEZ #################
-
-eez_url <- "https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/marine_regions_eez/eez_v12.parquet"
-
 if (input$polygon_type == "EEZ") {
     if (country) { # Filter by country name
         eez <- open_dataset(eez_url)
