@@ -77,6 +77,10 @@ if (!is.null(input$t0) | !is.null(input$t1)) {
     biab_error_stop("Please provide both start and end date to filter by dates")
   }
 
+  if (input$t0 >= input$t1) {
+    biab_error_stop("Input years seem reversed. Please double check your inputs.")
+  }
+
   if (is.null(input$temporal_res)) {
     biab_error_stop("Please provide a temporal resolution to filter by date.")
   }
