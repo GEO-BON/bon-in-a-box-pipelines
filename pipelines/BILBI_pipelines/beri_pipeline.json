@@ -211,17 +211,6 @@
       }
     },
     {
-      "id": "21",
-      "type": "io",
-      "position": {
-        "x": 452,
-        "y": 267.66666666666663
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "22",
       "type": "output",
       "position": {
@@ -242,6 +231,48 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 455.9624938964844,
+        "y": 285.7999954223633
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 99.96249389648438,
+        "y": 216.79999542236328
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 65.96249389648438,
+        "y": 307.7999954223633
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -366,48 +397,6 @@
       "id": "reactflow__edge-20-1aggregation"
     },
     {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "0",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-0study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "2",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-2study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "1",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-1study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-21country-22"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "region",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-21region-22"
-    },
-    {
-      "source": "24",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-24-21bbox_crs"
-    },
-    {
       "source": "24",
       "sourceHandle": null,
       "target": "2",
@@ -427,6 +416,48 @@
       "target": "6",
       "targetHandle": null,
       "id": "reactflow__edge-0time_series_plot-6"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-24-25country_region_bbox"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-2study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "1",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-1study_area"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-26-25polygon_type"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-27-25buffer"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "0",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-0study_area"
     }
   ],
   "inputs": {
@@ -510,29 +541,17 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "data>getCountryPolygon.yml@21|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 1
-    },
-    "data>getCountryPolygon.yml@21|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 2
-    },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of BERI in the study area polygon.\n\n\nThe value, ranging from 0 to 1 represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.",
       "label": "BERI summary",
       "type": "text/csv",
-      "weight": 3
+      "weight": 1
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
       "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
       "label": "Time series plot",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
     }
   },
   "metadata": {
