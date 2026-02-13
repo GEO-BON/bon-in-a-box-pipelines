@@ -28,7 +28,7 @@ references:
 - text:
     UNEP-WCMC and IUCN (2024), Protected Planet. The World Database on Protected Areas (WDPA)[On-line],
     [October 2024], Cambridge, UK. UNEP-WCMC and IUCN. Available at
-  doi: 10.34892/6fwd-af11
+  doi: https://doi.org/10.34892/6fwd-af11
 conda:
   channels:
     - conda-forge
