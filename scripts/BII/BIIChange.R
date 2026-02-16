@@ -7,9 +7,14 @@ input <- biab_inputs()
 start_years <- list("2000", "2005", "2010", "2015")
 end_years <- list("2005", "2010", "2015", "2020")
 
-if (is.null(input$start_year) || is.null(input$end_year)) {
-  biab_error_stop("Please input a start and end date.")
+if (is.null(input$start_year)){
+  start_yr <- "bii_nhm_10km_2000"
 }
+
+if (is.null(input$end_year)){
+  end_yr <- "bii_nhm_10km_2020"
+}
+
 
 if (!(input$start_year %in% start_years) || !(input$end_year %in% end_years)) {
   biab_error_stop("Invalid input for start or end year. The options are 2000, 2005, 2010, 2015 or 2020.")
