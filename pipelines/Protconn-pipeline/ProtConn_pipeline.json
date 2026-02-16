@@ -247,15 +247,15 @@
       "weight": 0
     },
     "pipeline@41": {
-      "label": "Polygon of study area",
-      "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script.",
+      "label": "Polygon of study area (optional)",
+      "description": "This input can be used to add a custom study area file, which will override the polygon generated from the Bounding Box and CRS input. The custom study area file must be in geopackage format and added to the userdata folder in your local repository. This input should be the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg).",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
       "weight": 1
     },
     "pipeline@29": {
-      "label": "Polygon of protected areas",
-      "description": "The protected areas (PAs) of interest. To combine WDPA data and custom data, add the path to the custom geopkg here \"e.g. /userdata/my_protected_areas.gpkg). They will be combined within the script. If you want to use only custom polygons, please use the \"ProtConn analysis with custom PAs\" pipeline.",
+      "label": "Polygon of protected areas (optional)",
+      "description": "The protected areas (PAs) of interest. To combine WDPA data and custom data, add the path to the custom geopackage here (e.g. /userdata/my_protected_areas.gpkg). The two datasets will be combined during the analysis. If you want to use only custom polygons, please use the \"ProtConn analysis with custom PAs\" pipeline.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
       "weight": 2
@@ -395,6 +395,7 @@
       "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.",
       "label": "ProtConn time series plot",
       "type": "image/png[]",
+      "example": [],
       "weight": 6
     }
   },
@@ -418,7 +419,7 @@
         "name": "Laetitia Tremblay",
         "email": "laetita.tremblay@mcgill.ca",
         "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
-        "role": "Pipeline testing and debugging"
+        "role": "Pipeline testing, debugging and documentation"
       },
       {
         "name": "Jean-Michel Lord",
