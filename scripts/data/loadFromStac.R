@@ -254,9 +254,19 @@ for (coll_it in collections_items) { # Loop through input array
         print(it_obj$features[[1]]$assets$data$`raster:bands`[[1]]$spatial_resolution)
       print("Spatial.res:")
       print(spatial.res)
+
+      if (st_is_longlat(coord) == FALSE && spatial.res < 1) {
+      biab_error_stop("CRS is in meters and resolution is in degrees.")
+      }
+
+      if (st_is_longlat(coord) && spatial.res > 1) {
+      biab_error_stop("CRS is in degrees and resolution is in meters.")
+      }
+
     } else {
       spatial.res <- input$spatial_res
     }
+
 
     # Extract crs if not provided
     if (is.null(CRS)) { # Obtain CRS from metadata
