@@ -27,7 +27,7 @@ gdalcubes::gdalcubes_options(parallel = 1)
 CRS <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
 bounding_box <- input$bbox_crs$bbox
 
-if (is.null(CRS) || is.null(bounding_box)){
+if (is.null(CRS) || is.null(bounding_box)) {
   biab_error_stop("Please select a country/region and CRS. When using a custom study area,
   select the country/region that contains the study area and a CRS to use.")
 }
@@ -57,10 +57,9 @@ if (ymin > ymax) {
 if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null(input$t0) || !is.null(input$t1))) {
   biab_info("The chelsa collection has no temporal option. Extracting all chelsa items...")
 }
-
+coord <- st_crs(CRS)
 # Load the CRS object
 if (!is.null(CRS) & !is.null(input$spatial_res)) {
-  coord <- st_crs(CRS)
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$spatial_res > 1) {
     biab_error_stop("CRS is in degrees and resolution is in meters.")
@@ -75,6 +74,10 @@ if (!is.null(CRS) & !is.null(input$spatial_res)) {
 if (!is.null(input$t0) | !is.null(input$t1)) {
   if (is.null(input$t0) | is.null(input$t1)) {
     biab_error_stop("Please provide both start and end date to filter by dates")
+  }
+
+  if (input$t0 >= input$t1) {
+    biab_error_stop("Input years seem reversed. Please double check your inputs.")
   }
 
   if (is.null(input$temporal_res)) {
@@ -202,8 +205,15 @@ for (coll_it in collections_items) { # Loop through input array
       masked <- resampled
     }
 
-    # Name file path
+    # Name file path, adds
+    base_name <- names(masked)
     paths <- file.path(outputFolder, paste0(names(masked), ".tif"))
+    print(paths)
+    k <- 1
+    while (file.exists(paths)) {
+      paths <- file.path(outputFolder, paste0(base_name, "_", k, ".tif"))
+      k <- k + 1
+    }
 
     file <- writeRaster(masked, paths)
 
@@ -243,9 +253,19 @@ for (coll_it in collections_items) { # Loop through input array
         print(it_obj$features[[1]]$assets$data$`raster:bands`[[1]]$spatial_resolution)
       print("Spatial.res:")
       print(spatial.res)
+
+      if (st_is_longlat(coord) == FALSE && spatial.res < 1) {
+      biab_error_stop("CRS is in meters and resolution is in degrees.")
+      }
+
+      if (st_is_longlat(coord) && spatial.res > 1) {
+      biab_error_stop("CRS is in degrees and resolution is in meters.")
+      }
+
     } else {
       spatial.res <- input$spatial_res
     }
+
 
     # Extract crs if not provided
     if (is.null(CRS)) { # Obtain CRS from metadata

@@ -4,8 +4,8 @@
       "id": "4",
       "type": "io",
       "position": {
-        "x": 1507,
-        "y": 231
+        "x": 1340,
+        "y": 198
       },
       "data": {
         "descriptionFile": "zonal_statistics>zonal_stats.yml"
@@ -15,41 +15,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 1924,
-        "y": 69
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "21",
-      "type": "io",
-      "position": {
-        "x": 452,
-        "y": 80
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
-      "id": "22",
-      "type": "output",
-      "position": {
-        "x": 1054,
-        "y": 241
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "24",
-      "type": "output",
-      "position": {
-        "x": 1054,
-        "y": 12
+        "x": 1755,
+        "y": 169
       },
       "data": {
         "label": "Output"
@@ -59,8 +26,8 @@
       "id": "25",
       "type": "io",
       "position": {
-        "x": 1054,
-        "y": 69
+        "x": 868,
+        "y": 24
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -70,8 +37,8 @@
       "id": "26",
       "type": "output",
       "position": {
-        "x": 1507,
-        "y": 40.5
+        "x": 1340,
+        "y": 140
       },
       "data": {
         "label": "Output"
@@ -82,11 +49,35 @@
       "type": "userInput",
       "position": {
         "x": 12,
-        "y": 67.5
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "28",
+      "type": "io",
+      "position": {
+        "x": 432,
+        "y": 218
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "30",
+      "type": "constant",
+      "position": {
+        "x": 14,
+        "y": 232
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -97,34 +88,6 @@
       "target": "6",
       "targetHandle": null,
       "id": "reactflow__edge-4zonal_stats-6"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-21country-22"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-21country_region_polygon-24"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "4",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-21country_region_polygon-4study_area_polygon"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "25",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-25study_area"
     },
     {
       "source": "25",
@@ -143,13 +106,6 @@
     {
       "source": "27",
       "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-27-21bbox_crs"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
       "target": "25",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-27-25bbox_crs"
@@ -160,15 +116,55 @@
       "target": "4",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-27-4bbox_crs"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "28",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-27-28country_region_bbox"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "28",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-30-28buffer"
+    },
+    {
+      "source": "28",
+      "sourceHandle": "polygon",
+      "target": "25",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-28polygon-25study_area"
+    },
+    {
+      "source": "28",
+      "sourceHandle": "polygon",
+      "target": "4",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-28polygon-4study_area_polygon"
     }
   ],
   "inputs": {
+    "data>load_polygons.yml@28|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ"
+      ],
+      "example": "Country or region",
+      "weight": 0
+    },
     "pipeline@27": {
       "label": "Bounding box and CRS",
       "description": "Select a country/region and a CRS to obtain the associated bounding box.",
       "type": "bboxCRS",
       "example": null,
-      "weight": 0
+      "weight": 1
     },
     "zonal_statistics>zonal_stats.yml@4|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -188,14 +184,14 @@
         "mean",
         "variance"
       ],
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@25|stac_url": {
       "description": "URL of the STAC catalog.",
       "label": "STAC URL",
       "type": "text",
       "example": "https://stac.geobon.org/",
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@25|collections_items": {
       "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.",
@@ -205,38 +201,38 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 3
+      "weight": 4
     },
     "data>loadFromStac.yml@25|t0": {
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "Start date",
-      "type": "text",
-      "example": null,
-      "weight": 4
-    },
-    "data>loadFromStac.yml@25|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "End date",
+      "label": "Start date (optional)",
       "type": "text",
       "example": null,
       "weight": 5
     },
-    "data>loadFromStac.yml@25|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
+    "data>loadFromStac.yml@25|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
+      "label": "End date (optional)",
       "type": "text",
       "example": null,
       "weight": 6
     },
-    "data>loadFromStac.yml@25|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
-      "label": "Spatial resolution",
-      "type": "float",
-      "example": 1000,
+    "data>loadFromStac.yml@25|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution (optional)",
+      "type": "text",
+      "example": null,
       "weight": 7
     },
+    "data>loadFromStac.yml@25|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
+      "label": "Spatial resolution (optional)",
+      "type": "float",
+      "example": 1000,
+      "weight": 8
+    },
     "data>loadFromStac.yml@25|resampling": {
-      "description": "Resampling method used when rescaling and/or reprojecting the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "description": "Resampling method used when rescaling and/or reprojecting the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.\n\nWill be ignored if not resampling.",
       "label": "Resampling method",
       "type": "options",
       "options": [
@@ -256,10 +252,10 @@
         "q3"
       ],
       "example": "near",
-      "weight": 8
+      "weight": 9
     },
     "data>loadFromStac.yml@25|aggregation": {
-      "description": "Method used to aggregate items when layers combining over time.",
+      "description": "Method used to aggregate items when layers combining over time.\n\nWill be ignored if not combining over time.",
       "label": "Aggregation method",
       "type": "options",
       "options": [
@@ -270,33 +266,21 @@
         "median"
       ],
       "example": "first",
-      "weight": 9
+      "weight": 10
     }
   },
   "outputs": {
-    "data>getCountryPolygon.yml@21|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@21|country_region_polygon": {
-      "description": "A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.",
-      "label": "Polygon of country or region",
-      "type": "application/geopackage+sqlite3",
-      "weight": 1
-    },
     "zonal_statistics>zonal_stats.yml@4|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 2
+      "weight": 0
     },
     "data>loadFromStac.yml@25|rasters": {
       "description": "Output raster files in geotiff format.",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 1
     }
   },
   "metadata": {

@@ -71,17 +71,6 @@
       }
     },
     {
-      "id": "66",
-      "type": "io",
-      "position": {
-        "x": 442,
-        "y": 46.66666666666667
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "67",
       "type": "output",
       "position": {
@@ -96,12 +85,54 @@
       "id": "68",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 38.333333333333336
+        "x": -68.68078960952789,
+        "y": 234.53434442923063
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "69",
+      "type": "io",
+      "position": {
+        "x": 584.6292772587663,
+        "y": 37.15957310454998
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "70",
+      "type": "constant",
+      "position": {
+        "x": 271.5754987604073,
+        "y": 101.33004775092365
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": 249.1438642772681,
+        "y": 235.91985464975892
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -163,13 +194,6 @@
       "id": "reactflow__edge-45-48end_year"
     },
     {
-      "source": "66",
-      "sourceHandle": "country_region_polygon",
-      "target": "37",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-66country_region_polygon-37study_area_polygon"
-    },
-    {
       "source": "48",
       "sourceHandle": "phenology_change_plot",
       "target": "49",
@@ -184,32 +208,46 @@
       "id": "reactflow__edge-37timeseries-39"
     },
     {
-      "source": "66",
-      "sourceHandle": "country",
-      "target": "67",
-      "targetHandle": null,
-      "id": "reactflow__edge-66country-67"
-    },
-    {
-      "source": "66",
-      "sourceHandle": "region",
-      "target": "67",
-      "targetHandle": null,
-      "id": "reactflow__edge-66region-67"
-    },
-    {
-      "source": "68",
-      "sourceHandle": null,
-      "target": "66",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-68-66bbox_crs"
-    },
-    {
       "source": "68",
       "sourceHandle": null,
       "target": "37",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-68-37bbox_crs"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-68-69country_region_bbox"
+    },
+    {
+      "source": "70",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-70-69polygon_type"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-71-69buffer"
+    },
+    {
+      "source": "69",
+      "sourceHandle": "polygon",
+      "target": "37",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-69polygon-37study_area_polygon"
+    },
+    {
+      "source": "69",
+      "sourceHandle": "polygon",
+      "target": "67",
+      "targetHandle": null,
+      "id": "reactflow__edge-69polygon-67"
     }
   ],
   "inputs": {
@@ -258,28 +296,28 @@
       "weight": 2
     },
     "phenology>summarise_phenology.yml@37|spatial_resolution": {
-      "description": "Spatial resolution, in meters, of the raster for plotting, leave blank to have the original spatial resolution of the layer (10m x 10m).",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "label": "Spatial resolution",
       "type": "float",
-      "example": 0.008,
+      "example": 0,
       "weight": 3
     },
     "pipeline@44": {
       "label": "Start year",
-      "description": "Start date for phenology time series.",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2017",
       "weight": 4
     },
     "pipeline@45": {
       "label": "End year",
-      "description": "End date for phenology time series.",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2024",
       "weight": 5
     },
     "phenology>summarise_phenology.yml@37|aggregate_function": {
-      "description": "Function to spatially aggregate the phenology data.",
+      "description": "Method used to aggregate items when layers combining over time.\nWill be ignored if not aggregating.",
       "label": "Aggregate function",
       "type": "options",
       "options": [
@@ -292,46 +330,40 @@
     }
   },
   "outputs": {
-    "data>getCountryPolygon.yml@66|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@66|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 1
-    },
     "phenology>summarise_phenology.yml@37|rasters": {
       "description": "Rasters of phenology layers, with one raster per year in the input time range. Will either be the raw raster layers or resampled to the spatial resolution and CRS input by the user.\n",
       "label": "Phenology rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 0
     },
     "phenology>phenology_difference.yml@48|phenology_change": {
       "description": "Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger values indicate a greater decrease in the given value over time.\n",
       "label": "Change in phenology metrics",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 1
     },
     "phenology>phenology_difference.yml@48|phenology_change_plot": {
       "description": "Plot of the summarised phenology values over time for the bands of interest",
       "label": "Plot of phenology change",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
     },
     "phenology>summarise_phenology.yml@37|timeseries": {
       "description": "Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest",
       "label": "Zonal statistics",
       "type": "text/csv",
-      "weight": 5
+      "weight": 3
+    },
+    "data>load_polygons.yml@69|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
+      "weight": 4
     }
   },
   "metadata": {
     "name": "Plant phenology index pipeline (Europe only)",
-    "description": "## Introduction\nPhenology is one of the species trait EBVs. It describes presence, absence, abundance or duration of seasonal activities of organisms. This pipeline uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season. It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. \nYou can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog). The script pulls the yearly phenology layers using openEO and resamples them to the spatial resolution of choice, calculates summary statistics over a country or region of interest, and subtracts the rasters to look at change over time.\n## Context\nThis pipeline can be used to look at the Phenology EBV. It can also serve as inputs for subsequent pipelines,  such as species distribution models.\n## Pipeline limitations \n* Phenology layers are only available for countries in Europe.\n* The pipeline uses a very fine resolution, so it takes a long time to run on for large areas.  \n* The pipeline outputs layers only in EPSG:4346.\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).",
+    "description": "## Introduction\nPhenology is one of the species trait EBVs. It describes presence, absence, abundance or duration of seasonal activities of organisms. This pipeline uses the openEO python package to pull phenology layers from the copernicus data space ecosystem phenology layer. The raster has values for the Plant Phenology Index (PPI), which is a vegetation index that helps estimate vegetation health and photosyntehtic activity throughout the growing season. It is more directly related to plant phenology compared to other vegetation indices like NDVI, and does not saturate in high biomass conditions. It is computed with near infrared reflectance, which is strongly reflected by healthy vegetation. \nYou can read more about the phenology layers [here](https://land.copernicus.eu/en/dataset-catalog). The script pulls the yearly phenology layers using openEO and resamples them to the spatial resolution of choice, calculates summary statistics over a country or region of interest, and subtracts the rasters to look at change over time.\n## Context\nThis pipeline can be used to look at the Phenology EBV. It can also serve as inputs for subsequent pipelines,  such as species distribution models.\n## Pipeline limitations \n* Phenology layers are only available for countries in Europe.\n* The pipeline uses a very fine resolution, so it takes a long time to run on for large areas.\n## Before you start\nThe pipeline requires an API key for the Copernicus Data Space Ecosystem. To acquire an API key, visit the CDSE [website](https://dataspace.copernicus.eu/analyse/openeo).",
     "author": [
       {
         "name": "Jory Griffith",
@@ -343,7 +375,7 @@
         "name": "Laetitia Tremblay",
         "email": "laetitia.tremblay@mcgill.ca",
         "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
-        "role": "Pipeline testing and debugging"
+        "role": "Pipeline testing, debugging, and documentation"
       }
     ],
     "lifecycle": {
