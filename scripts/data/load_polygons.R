@@ -97,13 +97,10 @@ if (input$polygon_type == "Country or region") {
     "))
 
         result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM regions_filtered")
-        
-            # output as a sf object
-            df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM region_filtered")
-        } else {
-            df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM country_filtered")
-        }
 
+            # output as a sf object
+            df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM regions_filtered")
+        }
         df$geometry <- sf::st_as_sfc(structure(as.list(df$geometry_wkb), class = "WKB"), crs = 4326)
         geo_data_sf <- st_as_sf(df)
         print("printing sf object")
@@ -111,21 +108,21 @@ if (input$polygon_type == "Country or region") {
     }
 
 
-    if (input$country_region_bbox$CRS$code != 4326) {
-        geo_data_sf <- st_transform(geo_data_sf, st_crs(crs_input))
-    }
+if (input$country_region_bbox$CRS$code != 4326) {
+    geo_data_sf <- st_transform(geo_data_sf, st_crs(crs_input))
+}
 
-    print(st_crs(geo_data_sf))
-    print(geo_data_sf)
-    if ("fid" %in% names(geo_data_sf)) {
-        geo_data_sf$fid <- as.integer(geo_data_sf$fid)
-    }
+print(st_crs(geo_data_sf))
+print(geo_data_sf)
+if ("fid" %in% names(geo_data_sf)) {
+    geo_data_sf$fid <- as.integer(geo_data_sf$fid)
+}
 
 if (nrow(geo_data_sf) == 0) {
         biab_error_stop("There is no country or region polygon for this bounding box")
     }
-    st_write(geo_data_sf, polygon_path)
-}
+st_write(geo_data_sf, polygon_path)
+
 
 
 
@@ -279,7 +276,7 @@ if (input$polygon_type == "EEZ") {
         CREATE OR REPLACE TABLE eez_filtered AS
         SELECT w.* EXCLUDE (geom), w.geom AS geometry
         FROM read_parquet('", eez_url, "') w, bbox_view b
-        WHERE ST_Intersects(w.geom, b.geom_4326) 
+        WHERE ST_Intersects(w.geom, b.geom_4326)
         "))
         # output as a sf object
         df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM eez_filtered")
