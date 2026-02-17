@@ -28,7 +28,7 @@ inputs:
       The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees).
       If pulling WDPA data with a custom bounding box, the buffer will not be applied.
     type: float
-    example: 500000
+    example: 0
 outputs:
   polygon:
     label: Polygon

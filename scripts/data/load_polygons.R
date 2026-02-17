@@ -147,33 +147,68 @@ if (input$polygon_type == "WDPA") {
             SELECT *
             FROM read_parquet('", regions_url, "')
             WHERE adm0_src='", input$country_region_bbox$country$ISO3, "' and adm1_name='", input$country_region_bbox$region$regionName, "'"))
+            
+            # Check if region table was created successfully
+            if (dbExistsTable(con, 'region')) {
+                region_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region")
+                print(sprintf('Table region created successfully with %d rows', region_count$count))
+            } else {
+                print('Error: Table region was not created')
+            }
         } else {
             print(sprintf("Loading WDPA for: %s", input$country_region_bbox$country$englishName))
             dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT *
             FROM read_parquet('", countries_url, "') WHERE adm0_src='", input$country_region_bbox$country$ISO3, "'"))
+            
+            # Check if region table was created successfully
+            if (dbExistsTable(con, 'region')) {
+                region_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region")
+                print(sprintf('Table region created successfully with %d rows', region_count$count))
+            } else {
+                print('Error: Table region was not created')
+            }
         }
 
         # If not in 4326: Transform region to crs of interest
         if (!latlong) {
             dbExecute(con, paste0("CREATE OR REPLACE TABLE region_crs AS
-            SELECT * EXCLUDE geometry, ST_Transform(geometry, 'EPSG:4326', '", crs_input, "') AS geometry FROM region"))
+            SELECT * EXCLUDE geometry, ST_Transform(geometry, CAST('EPSG:4326' AS VARCHAR), CAST('", crs_input, "' AS VARCHAR)) AS geometry FROM region"))
         } else {
             dbExecute(con, "CREATE OR REPLACE TABLE region_crs AS SELECT * FROM region")
         }
+        
+        # Check if region_crs table was created successfully
+        if (dbExistsTable(con, 'region_crs')) {
+            region_crs_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region_crs")
+            print(sprintf('Table region_crs created successfully with %d rows', region_crs_count$count))
+        } else {
+            print('Error: Table region_crs was not created')
+        }
 
-        # buffer region
+      #  buffer region
         dbExecute(con, paste0("
         CREATE OR REPLACE TABLE buffered_region AS
         SELECT ST_Buffer(geometry, ", input$buffer, ") AS geometry
         FROM region_crs
         "))
+        
+        #Check if buffered_region table was created successfully
+        if (dbExistsTable(con, 'buffered_region')) {
+            buffered_region_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM buffered_region")
+            print(sprintf('Table buffered_region created successfully with %d rows', buffered_region_count$count))            
+            # Debug: Check the buffered_region geometry before envelope
+            buffered_debug <- dbGetQuery(con, "SELECT ST_AsText(geometry) as geom_text, ST_IsEmpty(geometry) as is_empty, ST_IsValid(geometry) as is_valid FROM buffered_region LIMIT 1")
+            print("buffered_region geometry details:")
+            print(buffered_debug)        } else {
+            print('Error: Table buffered_region was not created')
+        }
 
         # transform bbox of buffered region back to 4326 to filter wdpa data
         if (!latlong) {
             dbExecute(con, paste0("
             CREATE OR REPLACE TABLE bbox_filter AS
             SELECT
-                ST_Transform(ST_Envelope(geometry), '", crs_input, "', 'EPSG:4326') AS geom_4326
+                ST_Transform(ST_Envelope(geometry), CAST('", crs_input, "' AS VARCHAR), CAST('EPSG:4326' AS VARCHAR)) AS geom_4326
             FROM buffered_region
             "))
         } else {
@@ -184,17 +219,35 @@ if (input$polygon_type == "WDPA") {
             FROM buffered_region
             "))
         }
+        
+        # Check if bbox_filter table was created successfully
+        if (dbExistsTable(con, 'bbox_filter')) {
+            bbox_filter_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM bbox_filter")
+            print(sprintf('Table bbox_filter created successfully with %d rows', bbox_filter_count$count))
+            
+            # Print bbox_filter geometry details
+            bbox_filter_data <- dbGetQuery(con, "SELECT ST_AsText(geom_4326) as geom_text, ST_IsEmpty(geom_4326) as is_empty, ST_GeometryType(geom_4326) as geom_type FROM bbox_filter")
+            print("bbox_filter geometry details:")
+            print(bbox_filter_data)
+        } else {
+            print('Error: Table bbox_filter was not created')
+        }
 
         # Filter WDPA and transform to the crs of interest
         dbExecute(con, paste0("
         CREATE OR REPLACE TABLE wdpa_filtered AS
         SELECT w.*
         FROM wdpa w, bbox_filter b
-        WHERE w.bbox.xmax >= ST_XMax(b.geom_4326)
-        AND w.bbox.xmin <= ST_XMin(b.geom_4326)
-        AND w.bbox.ymax >= ST_YMax(b.geom_4326)
-        AND w.bbox.ymin <= ST_YMin(b.geom_4326)
+        WHERE ST_Intersects(w.geometry, b.geom_4326)
         "))
+        
+      #  Check if wdpa_filtered table was created successfully
+        if (dbExistsTable(con, 'wdpa_filtered')) {
+            wdpa_filtered_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM wdpa_filtered")
+            print(sprintf('Table wdpa_filtered created successfully with %d rows', wdpa_filtered_count$count))
+        } else {
+            print('Error: Table wdpa_filtered was not created')
+        }
 
         if (!latlong) {
             df <- dbGetQuery(con, paste0("SELECT w.*,
@@ -208,8 +261,16 @@ if (input$polygon_type == "WDPA") {
             WHERE ST_Intersects(w.geometry, b.geometry)"))
         }
 
-        print("row_count")
-        print(nrow(df))
+        # print("row_count")
+        # print(nrow(df))
+        
+        # # Check if df has data
+        # if (nrow(df) == 0) {
+        #     print("Warning: wdpa_filtered query returned 0 rows")
+        # } else {
+        #     print(sprintf("Successfully retrieved %d WDPA records", nrow(df)))
+        # }
+        
         df$geometry <- sf::st_as_sfc(structure(as.list(df$geometry_wkb), class = "WKB"), crs = st_crs(crs_input))
     } else {
         sprintf("Loading region WDPA data for custom bounding box: %s", input$country_region_bbox$bbox)
@@ -242,6 +303,11 @@ if (input$polygon_type == "WDPA") {
 
     # ensure df is an sf object before writing
     df_sf <- st_as_sf(df)
+
+    if ("fid" %in% names(df_sf)) {
+        df_sf$fid <- as.integer(df_sf$fid)
+    }
+
     if (nrow(df_sf) == 0) {
         biab_error_stop("There is no WDPA data for this country or bounding box")
     }
