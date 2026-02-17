@@ -1,0 +1,537 @@
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 919.7864116591577,
+        "y": 67.11240584423331
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spList.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": -153.71017005391587,
+        "y": -3.1101258349980583
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "io",
+      "position": {
+        "x": -416.8599785753445,
+        "y": 287.2201417594278
+      },
+      "data": {
+        "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spHabitat.yml"
+      }
+    },
+    {
+      "id": "7",
+      "type": "constant",
+      "position": {
+        "x": -355.84786454371795,
+        "y": 85.84887367119251
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "All"
+        ]
+      }
+    },
+    {
+      "id": "8",
+      "type": "constant",
+      "position": {
+        "x": -453.200306587885,
+        "y": 116.2715118099947
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Do not filter by species use or trade"
+        ]
+      }
+    },
+    {
+      "id": "9",
+      "type": "constant",
+      "position": {
+        "x": -596.1867058402553,
+        "y": 181.68018380841943
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Do not filter by threat category"
+        ]
+      }
+    },
+    {
+      "id": "11",
+      "type": "constant",
+      "position": {
+        "x": -21.19884501689387,
+        "y": 169.51112855289853
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv"
+      }
+    },
+    {
+      "id": "13",
+      "type": "constant",
+      "position": {
+        "x": -9.029789761372797,
+        "y": 110.18698418223428
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": null
+      }
+    },
+    {
+      "id": "14",
+      "type": "constant",
+      "position": {
+        "x": -44.015823620995434,
+        "y": 58.46849934627056
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv"
+      }
+    },
+    {
+      "id": "17",
+      "type": "io",
+      "position": {
+        "x": 1674.1958012468713,
+        "y": 88.98280006566418
+      },
+      "data": {
+        "descriptionFile": "data>calculateOHI.yml"
+      }
+    },
+    {
+      "id": "18",
+      "type": "io",
+      "position": {
+        "x": 982.4405161647805,
+        "y": 262.9742333344083
+      },
+      "data": {
+        "descriptionFile": "data>getRangeMap.yml"
+      }
+    },
+    {
+      "id": "19",
+      "type": "constant",
+      "position": {
+        "x": 652.3816279838027,
+        "y": 281.87412342674617
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "IUCN",
+        "options": [
+          "MOL",
+          "IUCN",
+          "QC"
+        ]
+      }
+    },
+    {
+      "id": "20",
+      "type": "io",
+      "position": {
+        "x": 1044.2579628037495,
+        "y": -113.91278004511264
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "21",
+      "type": "userInput",
+      "position": {
+        "x": 538.7172906153758,
+        "y": -91.0246675889704
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "22",
+      "type": "constant",
+      "position": {
+        "x": 690.269740439945,
+        "y": -25.218998586196875
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "23",
+      "type": "constant",
+      "position": {
+        "x": 652.5271740990568,
+        "y": -153.91926098989484
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "EEZ",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "24",
+      "type": "output",
+      "position": {
+        "x": 2110.3862320626667,
+        "y": 100.62932598112442
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": -802.1516324321381,
+        "y": 300.45760008556334
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options[]",
+        "value": [
+          "Marine"
+        ],
+        "options": [
+          "Marine",
+          "Terrestrial",
+          "Forest",
+          "Forest - Boreal",
+          "Forest - Subarctic",
+          "Forest - Temperate",
+          "Forest - Subtropical/Tropical Dry",
+          "Forest - Subtropical/Tropical Moist Lowland",
+          "Forest - Subtropical/Tropical Mangrove Vegetation Above High Tide Level",
+          "Forest - Subtropical/Tropical Swamp",
+          "Forest - Subtropical/Tropical Moist Montane",
+          "Savanna",
+          "Savanna - Dry",
+          "Savanna - Moist",
+          "Shrubland",
+          "Shrubland - Subarctic",
+          "Shrubland - Subantarctic",
+          "Shrubland - Boreal",
+          "Shrubland - Temperate",
+          "Shrubland - Subtropical/Tropical Dry",
+          "Shrubland - Subtropical/Tropical Moist",
+          "Shrubland - Subtropical/Tropical High Altitude",
+          "Shrubland - Mediterranean-type Shrubby Vegetation",
+          "Grassland",
+          "Grassland - Tundra",
+          "Grassland - Subarctic",
+          "Grassland - Subantarctic",
+          "Grassland - Temperate",
+          "Grassland - Subtropical/Tropical Dry",
+          "Grassland - Subtropical/Tropical Seasonally Wet/Flooded",
+          "Grassland - Subtropical/Tropical High Altitude",
+          "Wetlands (inland)",
+          "Wetlands (inland) - Permanent Rivers/Streams/Creeks (includes waterfalls)",
+          "Wetlands (inland) - Seasonal/Intermittent/Irregular Rivers/Streams/Creeks",
+          "Wetlands (inland) - Shrub Dominated Wetlands",
+          "Wetlands (inland) - Bogs, Marshes, Swamps, Fens, Peatlands",
+          "Wetlands (inland) - Permanent Freshwater Lakes (over 8ha)",
+          "Wetlands (inland) - Seasonal/Intermittent Freshwater Lakes (over 8ha)",
+          "Wetlands (inland) - Permanent Freshwater Marshes/Pools (under 8ha)",
+          "Wetlands (inland) - Seasonal/Intermittent Freshwater Marshes/Pools (under 8ha)",
+          "Wetlands (inland) - Freshwater Springs and Oases",
+          "Wetlands (inland) - Tundra Wetlands (incl. pools and temporary waters from snowmelt)",
+          "Wetlands (inland) - Alpine Wetlands (includes temporary waters from snowmelt)",
+          "Wetlands (inland) - Geothermal Wetlands",
+          "Wetlands (inland) - Permanent Inland Deltas",
+          "Wetlands (inland) - Permanent Saline, Brackish or Alkaline Lakes",
+          "Wetlands (inland) - Seasonal/Intermittent Saline, Brackish or Alkaline Lakes and Flats",
+          "Wetlands (inland) - Permanent Saline, Brackish or Alkaline Marshes/Pools",
+          "Wetlands (inland) - Seasonal/Intermittent Saline, Brackish or Alkaline Marshes/Pools",
+          "Wetlands (inland) - Karst and Other Subterranean Hydrological Systems (inland)",
+          "Rocky areas (eg. inland cliffs, mountain peaks)",
+          "Caves and Subterranean Habitats (non-aquatic)",
+          "Caves and Subterranean Habitats (non-aquatic) - Caves",
+          "Caves and Subterranean Habitats (non-aquatic) - Other Subterranean Habitats",
+          "Desert",
+          "Desert - Hot",
+          "Desert - Temperate",
+          "Desert - Cold",
+          "Marine Neritic",
+          "Marine Neritic - Pelagic",
+          "Marine Neritic - Subtidal Rock and Rocky Reefs",
+          "Marine Neritic - Subtidal Loose Rock/pebble/gravel",
+          "Marine Neritic - Subtidal Sandy",
+          "Marine Neritic - Subtidal Sandy-Mud",
+          "Marine Neritic - Subtidal Muddy",
+          "Marine Neritic - Macroalgal/Kelp",
+          "Marine Neritic - Coral Reef",
+          "Outer Reef Channel",
+          "Back Slope",
+          "Foreslope (Outer Reef Slope)",
+          "Lagoon",
+          "Inter-Reef Soft Substrate",
+          "Inter-Reef Rubble Substrate",
+          "Marine Neritic - Seagrass (Submerged)",
+          "Marine Neritic - Estuaries",
+          "Marine Oceanic",
+          "Marine Oceanic - Epipelagic (0-200m)",
+          "Marine Oceanic - Mesopelagic (200-1000m)",
+          "Marine Oceanic - Bathypelagic (1000-4000m)",
+          "Marine Oceanic - Abyssopelagic (4000-6000m)",
+          "Marine Deep Benthic",
+          "Marine Deep Benthic - Continental Slope/Bathyl Zone (200-4,000m)",
+          "Hard Substrate",
+          "Soft Substrate",
+          "Marine Deep Benthic - Abyssal Plain (4,000-6,000m)",
+          "Marine Deep Benthic - Abyssal Mountain/Hills (4,000-6,000m)",
+          "Marine Deep Benthic - Hadal/Deep Sea Trench (>6,000m)",
+          "Marine Deep Benthic - Seamount",
+          "Marine Deep Benthic - Deep Sea Vents (Rifts/Seeps)",
+          "Marine Intertidal",
+          "Marine Intertidal - Rocky Shoreline",
+          "Marine Intertidal - Sandy Shoreline and/or Beaches, Sand Bars, Spits, Etc",
+          "Marine Intertidal - Shingle and/or Pebble Shoreline and/or Beaches",
+          "Marine Intertidal - Mud Flats and Salt Flats",
+          "Marine Intertidal - Salt Marshes (Emergent Grasses)",
+          "Marine Intertidal - Tidepools",
+          "Marine Intertidal - Mangrove Submerged Roots",
+          "Marine Coastal/Supratidal",
+          "Marine Coastal/Supratidal - Sea Cliffs and Rocky Offshore Islands",
+          "Marine Coastal/supratidal - Coastal Caves/Karst",
+          "Marine Coastal/Supratidal - Coastal Sand Dunes",
+          "Marine Coastal/Supratidal - Coastal Brackish/Saline Lagoons/Marine Lakes",
+          "Marine Coastal/Supratidal - Coastal Freshwater Lakes",
+          "Artificial/Terrestrial",
+          "Artificial/Terrestrial - Arable Land",
+          "Artificial/Terrestrial - Pastureland",
+          "Artificial/Terrestrial - Plantations",
+          "Artificial/Terrestrial - Rural Gardens",
+          "Artificial/Terrestrial - Urban Areas",
+          "Artificial/Terrestrial - Subtropical/Tropical Heavily Degraded Former Forest",
+          "Artificial/Aquatic & Marine",
+          "Artificial/Aquatic - Water Storage Areas (over 8ha)",
+          "Artificial/Aquatic - Ponds (below 8ha)",
+          "Artificial/Aquatic - Aquaculture Ponds",
+          "Artificial/Aquatic - Salt Exploitation Sites",
+          "Artificial/Aquatic - Excavations (open)",
+          "Artificial/Aquatic - Wastewater Treatment Areas",
+          "Artificial/Aquatic - Irrigated Land (includes irrigation channels)",
+          "Artificial/Aquatic - Seasonally Flooded Agricultural Land",
+          "Artificial/Aquatic - Canals and Drainage Channels, Ditches",
+          "Artificial/Aquatic - Karst and Other Subterranean Hydrological Systems (human-made)",
+          "Artificial/Marine - Marine Anthropogenic Structures",
+          "Artificial/Marine - Mariculture Cages",
+          "Artificial/Marine - Mari/Brackishculture Ponds",
+          "Introduced vegetation",
+          "Other",
+          "Unknown",
+          "Do not filter by habitat"
+        ]
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "iucn_country_splist",
+      "target": "0",
+      "targetHandle": "splist_country",
+      "id": "reactflow__edge-1iucn_country_splist-0splist_country"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-7-0taxonomic_group"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "species_use",
+      "id": "reactflow__edge-8-0species_use"
+    },
+    {
+      "source": "9",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "threat",
+      "id": "reactflow__edge-9-0threat"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "habitats",
+      "target": "0",
+      "targetHandle": "habitat",
+      "id": "reactflow__edge-3habitats-0habitat"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "IUCN_habitat_splist",
+      "target": "0",
+      "targetHandle": "splist_habitat",
+      "id": "reactflow__edge-3IUCN_habitat_splist-0splist_habitat"
+    },
+    {
+      "source": "11",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "splist_threat",
+      "id": "reactflow__edge-11-0splist_threat"
+    },
+    {
+      "source": "13",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "splist_use",
+      "id": "reactflow__edge-13-0splist_use"
+    },
+    {
+      "source": "14",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "splist_taxon",
+      "id": "reactflow__edge-14-0splist_taxon"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "iucn_splist",
+      "target": "17",
+      "targetHandle": "sp_status",
+      "id": "reactflow__edge-0iucn_splist-17sp_status"
+    },
+    {
+      "source": "19",
+      "sourceHandle": null,
+      "target": "18",
+      "targetHandle": "expert_source",
+      "id": "reactflow__edge-19-18expert_source"
+    },
+    {
+      "source": "18",
+      "sourceHandle": "sf_range_map",
+      "target": "17",
+      "targetHandle": "range_maps",
+      "id": "reactflow__edge-18sf_range_map-17range_maps"
+    },
+    {
+      "source": "20",
+      "sourceHandle": "polygon",
+      "target": "17",
+      "targetHandle": "EEZ",
+      "id": "reactflow__edge-20polygon-17EEZ"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "17",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-21-17country_region_bbox"
+    },
+    {
+      "source": "21",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-21-20country_region_bbox"
+    },
+    {
+      "source": "22",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-22-20buffer"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "20",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-23-20polygon_type"
+    },
+    {
+      "source": "17",
+      "sourceHandle": "ohi_results",
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-17ohi_results-24"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "habitat",
+      "id": "reactflow__edge-25-3habitat"
+    }
+  ],
+  "inputs": {
+    "IUCNRedlistIndex>IUCN_redlist_spCountry.yml@1|country": {
+      "description": "Country of interest.",
+      "label": "Country",
+      "type": "country",
+      "example": null,
+      "weight": 0
+    },
+    "data>getRangeMap.yml@18|species": {
+      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
+      "label": "species",
+      "type": "text[]",
+      "example": [
+        "Myrmecophaga tridactyla"
+      ],
+      "weight": 1
+    },
+    "pipeline@21": {
+      "label": "Bounding box",
+      "description": "Use the bounding box chooser to select a region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 2
+    }
+  },
+  "outputs": {
+    "data>calculateOHI.yml@17|ohi_results": {
+      "description": "OHI results",
+      "label": "OHI",
+      "type": "text/csv",
+      "weight": 0
+    }
+  }
+}
