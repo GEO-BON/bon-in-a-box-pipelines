@@ -91,25 +91,13 @@ if (input$polygon_type == "Country or region") {
 
 
         dbExecute(con, paste0("
-    CREATE OR REPLACE TABLE country_filtered AS
-    SELECT w.* FROM read_parquet('", countries_url, "') w, bbox_view b
+    CREATE OR REPLACE TABLE regions_filtered AS
+    SELECT w.* FROM read_parquet('", regions_url, "') w, bbox_view b
     WHERE ST_Within(w.geometry, b.geom_4326)
     "))
 
-        result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM country_filtered")
+        result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM regions_filtered")
         
-        if (result_count$count == 0) {
-            print("No country polygons found in bbox, will try region polygons")
-
-            print("No country polygons found. Filtering regions...")
-            # Again, filter WHILE reading
-            dbExecute(con, paste0("
-        CREATE OR REPLACE TABLE region_filtered AS
-        SELECT w.* FROM read_parquet('", regions_url, "') w, bbox_view b
-        WHERE ST_Within(w.geometry, b.geom_4326)
-    "))
-            result_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region_filtered")
-            print(result_count)
             # output as a sf object
             df <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) AS geometry_wkb FROM region_filtered")
         } else {
