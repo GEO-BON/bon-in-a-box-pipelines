@@ -27,47 +27,80 @@ inputs:
     description: landcover layer containing open water pixels
     type: image/tiff;application=geotiff[]
     example: "/output/foo/bar"
+  water_value:
+    label: value for water in mask
+    description: value used to represent water in the water mask
+    type: int
+    example: 210
+  terrestrial:
+    label: is terrestrial species
+    description: boolean flag if the species are terrestrial
+    type: boolean
+    example: true
   max_candidate_pseudoabsences:
-    label: max candidate pseudoabsences
-    description: helps w large rasters
+    label: maximum candidate pseudoabsences
+    description: Maximum number of candidate pseudoabsences. A larger pool of candidate points increases the chance of 
+      selecting ecologically meaningful absences, but beyond a certain threshold it offers diminishing returns and may 
+      introduce bias if it oversamples areas far outside the species’ accessible range. The ideal number is typically 
+      guided by study extent, environmental heterogeneity, and species ecology, and can be fine-tuned by testing different 
+      values to identify a level that supports stable model performance without inflating computation or noise.
     type: int
     example: 100000
+  num_folds:
+    label: number of crossvalidation folds
+    description: Number of folds to use for k-fold crossvalidation. Increasing the number of folds in cross-validation 
+      for a species distribution model generally provides a more reliable estimate of model performance by reducing variance, 
+      but it also increases computational cost
+    type: int
+    example: 4
   pseudoabsence_buffer:
     label: pseudoabsence buffer
-    description: minimum distance to a presence in kilometers
+    description: Minimum distance to a presence in kilometers. Choose a pseudoabsence buffer that is large enough 
+      to avoid placing absences in areas the species is likely to occupy, but not so large that it removes important 
+      environmental variation. The buffer distance should reflect species ecology, sampling bias, and the resolution of 
+      environmental predictors, and can be refined by testing several distances to find one that yields stable, 
+      interpretable model performance.
     type: float
     example: 10.0
   pa_proportion:
     label: Pseudoabsence proportion
-    description: The number of PAs, given by the proportion of the total occurrences to use.
+    description: The number of pseudoabsences, given by the proportion of the total occurrences to use. Using more pseudoabsences can improve model discrimination by providing a stronger contrast with presence data, 
+      but too many can overwhelm the presence signal or overweight poorly sampled areas.
     type: float
     example: 2.4
 outputs:
   predicted_sdm:
-    label: predicted sdm
-    description: map of predicted occurrence probability
+    label: Predicted SDM
+    description: A map of predicted SDM probability that shows the relative likelihood that suitable environmental 
+      conditions for a species occur across the landscape, with higher values indicating areas more likely to support 
+      the species.
     type: image/tiff;application=geotiff
   sdm_uncertainty:
-    label: sdm uncertainty
-    description: map of relative uncertainty
+    label: SDM uncertainty
+    description: The SDM uncertainty layer indicates the confidence or variability in the model’s 
+      predictions across the landscape, with higher values representing areas where the model is less certain 
+      about habitat suitability. This layer helps identify regions where predictions are more reliable versus areas 
+      where additional data or caution is needed for interpretation.
     type: image/tiff;application=geotiff
   fit_stats:
-    label: fit statistics
-    description: JSON of model fit stats and threshold
-    type: text/json
+    label: Fit statistics
+    description: Fit statistics for the model in TSV format. PR-AUC indicates how well the model correctly identifies 
+      true presences while limiting false positives, and is especially informative when presences are rare. 
+      MCC summarizes overall classification accuracy at the chosen threshold by balancing true and false positives and
+       negatives, with values close to 1 indicating excellent performance. Threshold is the probability cutoff used to 
+       convert continuous predictions into presence–absence, where values at or above 0.14 are classified as suitable 
+       habitat. ROC-AUC measures the model’s ability to discriminate between suitable and unsuitable locations across 
+       all thresholds, with values near 1 indicating outstanding discrimination.
+    type: text/tab-separated-values
   range:
-    label: range
-    description: range map thresholded at todo
+    label: Range
+    description: range map thresholded at the optimal threshold for the model. All cells with a probability higher than that threshold are indicated as a presence.
     type: image/tiff;application=geotiff
   pseudoabsences:
-    label: pseudoabsences
-    description: pseudoabsence coordinates
+    label: Pseudoabsences
+    description: Coordinates of generated pseudoabsences.
     type: text/tab-separated-values
   env_corners:
-    label: env_corners
-    description: location of presences and pseudoabsences in environment space
-    type: image/jpg
-  tuning:
-    label: tuning curve
-    description: tuning curve
+    label: Environment space
+    description: Diagnostic plot of the location of presences (blue) and pseudoabsences (green) in environment space for up to the first 5 predictors.
     type: image/jpg

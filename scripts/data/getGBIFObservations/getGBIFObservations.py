@@ -16,10 +16,10 @@ taxa = data['taxa']
 if taxa=='' or taxa==None or len(taxa)==0:
 	biab_error_stop("Please specify taxa")
 
-bbox = data['bbox_crs']['bbox']
+if data['bbox_crs']=='' or data['bbox_crs']==None or len(data['bbox_crs'])==0:
+	biab_error_stop("Please specify bounding box and crs")
 
-if bbox=='' or bbox==None or len(bbox)==0:
-	biab_error_stop("Please specify bounding box")
+bbox = data['bbox_crs']['bbox']
 
 min_year = data['min_year']
 if min_year==None or min_year=='' or min_year<0 or min_year>datetime.date.today().year:
@@ -47,6 +47,10 @@ out={}
 
 temp_file = (Path(sys.argv[1]) / next(tempfile._get_candidate_names())).with_suffix(".tsv")
 out=gbif_api.gbif_api_dl(splist=taxa, bbox=bbox_wgs84, years=[min_year,max_year], outfile=(str(temp_file)))
+
+if int(out['total_records']) == 0:
+    biab_error_stop("There are no GBIF occurrences for the chosen species and area. " \
+	"Please check the spelling of the scientific name and verify that the species range is within the bounding box.")
 
 print(taxa)
 print(sys.argv[1])
