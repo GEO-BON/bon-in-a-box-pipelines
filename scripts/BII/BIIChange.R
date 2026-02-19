@@ -41,15 +41,15 @@ if (!is.null(input$start_year) && !is.null(input$end_year)) {
 
 # Load rasters as a raster stack
 rasters <- terra::rast(c(input$rasters))
-print(terra::time(rasters))
 print((rasters))
 
 first_raster <- rasters[[1]]
+
 end_raster <- rasters[[nlyr(rasters)]]
 
 print(names(first_raster))
 # Summarise
-bii_change <- first_raster - end_raster
+bii_change <- end_raster - first_raster
 
 # Output
 bii_change_path <- file.path(outputFolder, "BII_change.tif")
