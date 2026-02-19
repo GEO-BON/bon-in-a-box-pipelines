@@ -23,7 +23,7 @@ eez_url <- "https://object-arbutus.cloud.computecanada.ca/bq-io/vectors-cloud/ma
 
 crs_input <- paste0(input$country_region_bbox$CRS$authority, ":", input$country_region_bbox$CRS$code)
 print(crs_input)
-polygon_path <- file.path(outputFolder, "polygon.gpkg")
+
 # Checks if crs is in 4326
 latlong <- crs_input == "EPSG:4326"
 
@@ -35,6 +35,25 @@ country <- FALSE
 if (!is.null(val_country) && length(val_country) > 0 && !(is.atomic(val_country) && all(is.na(val_country)))) {
     country <- TRUE
 }
+
+# Path for polygon
+if (country) { # if there is a country or region input
+    if (is.null(input$country_region_bbox$region)) {
+    name <- gsub(" ", "_", input$country_region_bbox$country$englishName)
+    } else {
+    name <- gsub(" ", "_", input$country_region_bbox$region$regionName)
+    }
+} else {
+     name <- "bbox" # or we just call it bbox
+}
+
+
+if (input$polygon_type == "Country or region") {
+    polygon_path <- file.path(outputFolder, paste0(name, "_polygon.gpkg"))
+} else {
+    polygon_path <- file.path(outputFolder, paste0(input$polygon_type, "_", name, "_polygon.gpkg"))
+}
+
 
 if (!country) {
     print("No country selected, will load polygon based on custom bounding box")
@@ -66,22 +85,24 @@ if (input$polygon_type == "Country or region") {
     if (country) {
         # Load country if region is null
         if (is.null(input$country_region_bbox$region)) {
-            print(sprintf("Loading country polygon for: %s", input$country_region_bbox$country$englishName))
+            print(sprintf("Loading country polygon for: %s", name))
             country_poly <- open_dataset(countries_url)
             geo_data_sf <- country_poly |>
                 filter(adm0_src == input$country_region_bbox$country$ISO3) |>
                 to_sf() |>
                 st_set_crs(4326)
         } else { # Region not null
-            print(sprintf("Loading region polygon for: %s", input$country_region_bbox$region$regionName))
+            print(sprintf("Loading region polygon for: %s", name))
             country_region_bbox <- open_dataset(regions_url)
             geo_data_sf <- country_region_bbox |>
                 filter(adm0_src == input$country_region_bbox$country$ISO3) |>
-                filter(adm1_name == input$country_region_bbox$region$regionName) |>
+                filter(adm1_name == name) |>
                 to_sf() |>
                 st_set_crs(4326)
             geo_data_sf$fid <- as.integer(geo_data_sf$fid)
         }
+
+        
     } else { # custom bounding box
         print(sprintf("Loading region polygon for custom bounding box: %s", paste(input$country_region_bbox$bbox, collapse = ", ")))
         con <- dbConnect(duckdb())
@@ -121,6 +142,8 @@ if (input$polygon_type == "Country or region") {
     if (nrow(geo_data_sf) == 0) {
         biab_error_stop("There is no country or region polygon for this bounding box")
     }
+
+
     st_write(geo_data_sf, polygon_path)
 }
 
@@ -138,6 +161,20 @@ if (input$polygon_type == "WDPA") {
     dbExecute(con, "INSTALL spatial; LOAD spatial; INSTALL httpfs; LOAD httpfs;")
     dbExecute(con, paste0("CREATE OR REPLACE VIEW wdpa AS
     SELECT * FROM read_parquet('", wdpa_url, "')"))
+
+    # Make sure buffer distance is in the correct units
+    coord <- st_crs(crs_input)
+    # Load the CRS object
+    if (!is.null(input$buffer)) {
+  # Check for inconsistencies between CRS type and resolution
+  if (st_is_longlat(coord) && input$buffer > 1) {
+    biab_error_stop("CRS is in degrees and buffer distance is in meters.")
+  }
+
+  if (st_is_longlat(coord) == FALSE && input$buffer < 1) {
+    biab_error_stop("CRS is in meters and buffer distance is in degrees.")
+  }
+}
 
     # If user selected a country, we will use its polygon to crop the WDPA data
     if (country) {
@@ -212,95 +249,6 @@ if (input$polygon_type == "WDPA") {
         } else {
             print("Error: Table buffered_region was not created")
         }
-
-
-        # if (!is.null(input$country_region_bbox$region$regionName)) {
-        #     print(sprintf("Loading WDPA data for: %s", input$country_region_bbox$region$regionName))
-        #     dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS
-        #     SELECT *
-        #     FROM read_parquet('", regions_url, "')
-        #     WHERE adm0_src='", input$country_region_bbox$country$ISO3, "' and adm1_name='", input$country_region_bbox$region$regionName, "'"))
-
-        #     # Check if region table was created successfully
-        #     if (dbExistsTable(con, "region")) {
-        #         region_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region")
-        #         print(sprintf("Table region created successfully with %d rows", region_count$count))
-        #     } else {
-        #         print("Error: Table region was not created")
-        #     }
-        # } else {
-        #     print(sprintf("Loading WDPA for: %s", input$country_region_bbox$country$englishName))
-        #     dbExecute(con, paste0("CREATE OR REPLACE TABLE region AS SELECT *
-        #     FROM read_parquet('", countries_url, "') WHERE adm0_src='", input$country_region_bbox$country$ISO3, "'"))
-
-        #     # Check if region table was created successfully
-        #     if (dbExistsTable(con, "region")) {
-        #         region_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM region")
-        #         print(sprintf("Table region created successfully with %d rows", region_count$count))
-        #     } else {
-        #         print("Error: Table region was not created")
-        #     }
-        # }
-
-        # Pull region into sf and transform
-        # if (!latlong) {
-        #     region_sf <- dbGetQuery(con, "SELECT *, ST_AsWKB(geometry) as geom_wkb FROM region")
-        #     region_sf$geometry <- sf::st_as_sfc(structure(as.list(region_sf$geom_wkb), class = "WKB"), crs = 4326)
-        #     region_sf <- st_as_sf(region_sf)
-        #     region_sf <- sf::st_transform(region_sf, crs_input) # sf can handle more codes
-
-        #     if (input$buffer > 0) {
-        #         region_sf <- st_buffer(region_sf, dist = input$buffer)
-        #     }
-
-        # Register the sf object back into duckdb as buffered_region table
-        #   duckdb::duckdb_register(con, "buffered_region", region_sf)
-        # } else {
-        #     # or just buffer in duckdb
-        #     if (input$buffer > 0) {
-        #         dbExecute(con, paste0("
-        #         CREATE OR REPLACE TABLE buffered_region AS
-        #         SELECT ST_Buffer(geometry, ", input$buffer, ") AS geometry
-        #         FROM region
-        #         "))
-        #     } else {
-        #         dbExecute(con, "CREATE OR REPLACE TABLE buffered_region AS SELECT * FROM region_crs")
-        #     }
-        # }
-
-        # Check if buffered_region table was created successfully
-        # if (dbExistsTable(con, "buffered_region")) {
-        #     buffered_region_count <- dbGetQuery(con, "SELECT COUNT(*) as count FROM buffered_region")
-        #     print(sprintf("Table buffered_region created successfully with %d rows", buffered_region_count$count))
-
-        #     # Debug: Only check geometry for SQL-created tables (not registered sf objects)
-        #     if (latlong) {
-        #         buffered_debug <- dbGetQuery(con, "SELECT ST_AsText(geometry) as geom_text, ST_IsEmpty(geometry) as is_empty, ST_IsValid(geometry) as is_valid FROM buffered_region LIMIT 1")
-        #         print("buffered_region geometry details:")
-        #         print(buffered_debug)
-        #     } else {
-        #         print("buffered_region was created using sf transformation (geometry stored as coordinate arrays)")
-        #     }
-        # } else {
-        #     print("Error: Table buffered_region was not created")
-        # }
-
-        # transform bbox of buffered region back to 4326 to filter wdpa data
-        # if (!latlong) {
-        #     dbExecute(con, paste0("
-        #     CREATE OR REPLACE TABLE bbox_filter AS
-        #     SELECT
-        #         ST_Transform(ST_Envelope(geometry), CAST('", crs_input, "' AS VARCHAR), CAST('EPSG:4326' AS VARCHAR)) AS geom_4326
-        #     FROM buffered_region
-        #     "))
-        # } else {
-        #     dbExecute(con, paste0("
-        #     CREATE OR REPLACE TABLE bbox_filter AS
-        #     SELECT
-        #         ST_Envelope(geometry) AS geom_4326
-        #     FROM buffered_region
-        #     "))
-        # }
 
         # Check if bbox_filter table was created successfully
         if (dbExistsTable(con, "bbox_filter")) {

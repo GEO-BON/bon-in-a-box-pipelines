@@ -1,8 +1,8 @@
 script: load_polygons.R
-name: Load polygons
+name: Load country, region, WDPA or EEZ polygons
 description: |
  Load polygons stored as geoparquet files. Load polygons for countries or regions, polygons from the World Database of Protected Areas,
- or polygons of Exclusive Economic Zones (EEZs).
+ or polygons of Exclusive Economic Zones (EEZs). This script utilizes remote files stored as Geoparquet.
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -18,8 +18,8 @@ inputs:
       - EEZ
     example: Country or region
   country_region_bbox:
-    label: Bounding box
-    description: Use the bounding box chooser to select a region or create a custom bounding box (region selections will be ignored for EEZs since they are national).
+    label: Country, region, or bounding box
+    description: Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).
     type: bboxCRS
     example:
   buffer:
