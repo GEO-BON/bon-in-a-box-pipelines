@@ -72,6 +72,10 @@ outputs:
     label: IUCN species list
     description: "Dataset with the list of species for the specified country for the specified filters. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv
+  species:
+    label: Species name
+    description: List of the scientific name of all species in the dataset
+    type: text[]
   number_species:
     label: Number of species
     description: Number of species in that country, filtered by taxon, threat, and use categories.

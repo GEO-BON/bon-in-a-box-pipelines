@@ -1,3 +1,7 @@
+################################################################################
+# OHI Species Condition Model - Adapted for Your Data Structure
+################################################################################
+
 library(tidyverse)
 library(sf)
 library(rredlist)
@@ -20,26 +24,49 @@ threat_weights <- tribble(
 # Floor value for catastrophic biodiversity loss
 CATASTROPHIC_FLOOR <- 0.25
 
-# Load inputs
+################################################################################
+# LOAD INPUTS
+################################################################################
+
+cat("Loading inputs...\n")
 input <- biab_inputs()
-eez_boundaries <- st_read(input$EEZ)
-bbox <- input$country_region_bbox$bbox
+
+# Load EEZ boundaries
+eez_boundaries <- st_read(input$EEZ, quiet = TRUE)
+cat(sprintf("  Loaded EEZ with %d region(s)\n", nrow(eez_boundaries)))
+
+# Load species status data
 sp_status <- read.csv(input$sp_status)
+cat(sprintf("  Loaded status for %d species\n", nrow(sp_status)))
 
-print(head(sp_status))
+# Prepare species threat data (rename columns to match model expectations)
+species_threat <- sp_status %>%
+  select(
+    species_id = scientific_name,
+    category = red_list_category_code
+  ) %>%
+  filter(!is.na(category)) %>%
+  filter(!category %in% c("DD", "NE")) %>%  # Remove Data Deficient, Not Evaluated
+  distinct()
 
-biab_error_stop("")
+cat(sprintf("  Prepared threat data for %d species\n", nrow(species_threat)))
 
+# Get bbox
+bbox <- input$country_region_bbox$bbox
+
+# Set output directory
+output_dir <- "output/species_condition"
+
+################################################################################
+# HELPER FUNCTIONS
+################################################################################
 
 #' Create grid covering the selected EEZ region(s)
-#' @param eez_boundaries SF object with EEZ boundaries (already filtered by user)
-#' @param resolution Grid resolution in degrees (default 0.5)
-#' @param buffer_degrees Buffer around EEZs in degrees (default 2)
-#' @return Grid covering the region
 create_regional_grid <- function(eez_boundaries,
                                  resolution = 0.5,
                                  buffer_degrees = 2) {
-  cat("Creating grid for selected region(s)...\n")
+
+  cat("\nStep 1: Creating grid for selected region(s)...\n")
 
   # Get bounding box of all selected EEZs
   region_bbox <- st_bbox(eez_boundaries)
@@ -51,15 +78,18 @@ create_regional_grid <- function(eez_boundaries,
     ymin = max(region_bbox["ymin"] - buffer_degrees, -90),
     ymax = min(region_bbox["ymax"] + buffer_degrees, 90)
   )
+
+  cat(sprintf("  Grid bbox: [%.2f, %.2f, %.2f, %.2f]\n",
+              bbox_buffered["xmin"], bbox_buffered["xmax"],
+              bbox_buffered["ymin"], bbox_buffered["ymax"]))
+
   # Create grid cells
   lon_seq <- seq(bbox_buffered["xmin"],
-    bbox_buffered["xmax"],
-    by = resolution
-  )
+                 bbox_buffered["xmax"],
+                 by = resolution)
   lat_seq <- seq(bbox_buffered["ymin"],
-    bbox_buffered["ymax"],
-    by = resolution
-  )
+                 bbox_buffered["ymax"],
+                 by = resolution)
 
   # Ensure we don't exceed bounds
   lon_seq <- lon_seq[lon_seq < bbox_buffered["xmax"]]
@@ -92,28 +122,134 @@ create_regional_grid <- function(eez_boundaries,
   grid <- grid %>%
     mutate(area_km2 = as.numeric(st_area(.) / 1e6))
 
+  cat(sprintf("  Created %d grid cells\n", nrow(grid)))
+
   return(grid)
 }
 
+#' Load all range maps from file path vector (handling empty/NA files)
+load_range_maps <- function(range_files, species_list) {
+
+  cat("\nStep 2: Loading species range maps...\n")
+
+  cat(sprintf("  Found %d range map files\n", length(range_files)))
+
+  if (length(range_files) == 0) {
+    stop("No range map files provided!")
+  }
+
+  # Load each range map and combine
+  all_ranges_list <- list()
+  successful <- 0
+  skipped <- 0
+
+  for (i in seq_along(range_files)) {
+    file <- range_files[i]
+
+    if (i %% 10 == 0) {
+      cat(sprintf("  Processing file %d of %d...\n", i, length(range_files)))
+    }
+
+    tryCatch({
+      # Try to read the file
+      range_map <- st_read(file, quiet = TRUE)
+
+      # Check if it's empty or has no geometries
+      if (nrow(range_map) == 0 || all(st_is_empty(range_map))) {
+        skipped <- skipped + 1
+        next
+      }
+
+      # Standardize species ID column (check multiple possible names)
+      if ("binomial" %in% names(range_map)) {
+        range_map <- range_map %>% rename(species_id = binomial)
+      } else if ("BINOMIAL" %in% names(range_map)) {
+        range_map <- range_map %>% rename(species_id = BINOMIAL)
+      } else if ("sci_name" %in% names(range_map)) {
+        range_map <- range_map %>% rename(species_id = sci_name)
+      } else if ("scientific_name" %in% names(range_map)) {
+        range_map <- range_map %>% rename(species_id = scientific_name)
+      } else if ("SCINAME" %in% names(range_map)) {
+        range_map <- range_map %>% rename(species_id = SCINAME)
+      } else {
+        # If no recognized column, extract from filename/path
+        # Your format: ".../ Rhincodon typus/Rhincodon typus_range.gpkg"
+
+        # Try to extract from directory name (parent folder)
+        species_name <- basename(dirname(file))
+
+        # If that doesn't work, try extracting from filename
+        if (species_name == "" || species_name == "." ||
+            grepl("^[0-9a-f]{32}$", species_name)) {  # Skip hash directories
+          # Try to extract from filename: "Rhincodon typus_range.gpkg"
+          filename <- basename(file)
+          species_name <- gsub("_range\\.gpkg$", "", filename)
+        }
+
+        if (species_name != "" && species_name != ".") {
+          range_map <- range_map %>%
+            mutate(species_id = species_name)
+          cat(sprintf("    Extracted species name '%s' from file path\n", species_name))
+        } else {
+          warning(sprintf("Could not extract species ID from %s", file))
+          skipped <- skipped + 1
+          next
+        }
+      }
+
+      # Keep only relevant columns and valid geometries
+      range_map_clean <- range_map %>%
+        select(species_id, geometry) %>%
+        filter(!st_is_empty(geometry))
+
+      if (nrow(range_map_clean) > 0) {
+        all_ranges_list[[length(all_ranges_list) + 1]] <- range_map_clean
+        successful <- successful + 1
+      } else {
+        skipped <- skipped + 1
+      }
+
+    }, error = function(e) {
+      # Skip files that can't be read or are corrupt
+      skipped <<- skipped + 1
+    })
+  }
+
+  cat(sprintf("  Successfully loaded: %d files\n", successful))
+  cat(sprintf("  Skipped (empty/invalid): %d files\n", skipped))
+
+  # Combine all valid ranges
+  if (length(all_ranges_list) == 0) {
+    stop("No valid range maps were loaded!")
+  }
+
+  all_ranges <- bind_rows(all_ranges_list)
+
+  # Remove duplicates and ensure valid geometries
+  all_ranges <- all_ranges %>%
+    filter(st_is_valid(geometry)) %>%
+    distinct()
+
+  n_species <- length(unique(all_ranges$species_id))
+  cat(sprintf("  Total: %d unique species with valid ranges\n", n_species))
+
+  return(all_ranges)
+}
+
 #' Filter species ranges to region of interest
-#' @param range_maps SF object with all species ranges
-#' @param eez_boundaries Filtered EEZ boundaries
-#' @param buffer_degrees Buffer in degrees
-#' @return Filtered species ranges
 filter_ranges_to_region <- function(range_maps,
                                     eez_boundaries,
                                     buffer_degrees = 2) {
-  cat("Filtering species ranges to selected region...\n")
+
+  cat("\n  Filtering species ranges to selected region...\n")
 
   # Get bounding box with buffer
   region_bbox <- st_bbox(eez_boundaries)
   bbox_buffered <- st_bbox(
-    c(
-      xmin = region_bbox["xmin"] - buffer_degrees,
+    c(xmin = region_bbox["xmin"] - buffer_degrees,
       xmax = region_bbox["xmax"] + buffer_degrees,
       ymin = region_bbox["ymin"] - buffer_degrees,
-      ymax = region_bbox["ymax"] + buffer_degrees
-    ),
+      ymax = region_bbox["ymax"] + buffer_degrees),
     crs = st_crs(eez_boundaries)
   ) %>% st_as_sfc()
 
@@ -122,19 +258,20 @@ filter_ranges_to_region <- function(range_maps,
     st_filter(bbox_buffered)
 
   n_species <- length(unique(filtered_ranges$species_id))
-  cat(sprintf("  Found %d species in region\n\n", n_species))
+  cat(sprintf("  Found %d species in region\n", n_species))
 
   return(filtered_ranges)
 }
 
-# Calculate area-weighted species risk status
+#' Calculate area-weighted species risk status
 calculate_species_status <- function(species_by_cell,
                                      species_threat,
                                      cell_countries) {
+
   # Join threat weights to species data
   species_data <- species_by_cell %>%
     left_join(species_threat, by = "species_id") %>%
-    left_join(threat_weights, by = c("category" = "category")) %>%
+    left_join(threat_weights, by = c("category" = "code")) %>%  # Match on 'code' column
     filter(!is.na(weight))
 
   # Join cell countries
@@ -167,90 +304,97 @@ calculate_species_status <- function(species_by_cell,
   return(country_scores)
 }
 
-# Convert R_spp to final status score
+#' Convert R_spp to final status score
 calculate_status_score <- function(R_spp) {
-  # Equation 6.5: x_spp = max((R_spp - 0.25) / 0.75, 0)
   status <- pmax((R_spp - CATASTROPHIC_FLOOR) / (1 - CATASTROPHIC_FLOOR), 0)
   return(status)
 }
 
-######## Run OHI Species Condition Model ########
+################################################################################
+# RUN MODEL
+################################################################################
+
+cat("\n========================================\n")
+cat("OHI Species Condition Model\n")
+cat("========================================\n\n")
 
 # Validate inputs
 if (nrow(eez_boundaries) == 0) {
   stop("No EEZ boundaries found.")
 }
 
-# Step 1: Create regional grid
-cat("Step 1: Creating grid for selected EEZ(s)...\n")
-grid <- create_regional_grid(eez_boundaries)
-
-# Step 2: Load and filter species ranges
-cat("Step 2: Loading species range maps...\n")
-all_ranges <- st_read(input$range_maps, quiet = TRUE)
-
-biabt_error_stop("stop")
-
-# Standardize species ID column
-if ("binomial" %in% names(all_ranges)) {
-  all_ranges <- all_ranges %>% rename(species_id = binomial)
-} else if ("BINOMIAL" %in% names(all_ranges)) {
-  all_ranges <- all_ranges %>% rename(species_id = BINOMIAL)
-} else if ("sci_name" %in% names(all_ranges)) {
-  all_ranges <- all_ranges %>% rename(species_id = sci_name)
+if (nrow(species_threat) == 0) {
+  stop("No species threat data found.")
 }
 
+# Step 1: Create regional grid
+grid <- create_regional_grid(
+  eez_boundaries,
+  resolution = 0.5,
+  buffer_degrees = 2
+)
+
+# Step 2: Load all range maps from file paths
+all_ranges <- load_range_maps(
+  range_files = input$range_maps,  # Vector of file paths
+  species_list = species_threat$species_id
+)
+
+# Filter to species that are in both threat data and range maps
+common_species <- intersect(
+  unique(all_ranges$species_id),
+  unique(species_threat$species_id)
+)
+
+cat(sprintf("\n  Species overlap: %d species in both threat data and range maps\n",
+            length(common_species)))
+
+# Filter range maps to common species
+all_ranges <- all_ranges %>%
+  filter(species_id %in% common_species)
+
+# Filter threat data to common species
+species_threat <- species_threat %>%
+  filter(species_id %in% common_species)
+
+# Filter ranges to region
 range_maps <- filter_ranges_to_region(
   all_ranges,
   eez_boundaries,
-  buffer_degrees = buffer_degrees
+  buffer_degrees = 2
 )
 
-# Step 3: Get species threat data if not provided
-# need species threat input? is this the categorization?
-
-# Step 4: Intersect ranges with grid
-cat("Step 4: Intersecting species ranges with grid...\n")
+# Step 3: Intersect ranges with grid
+cat("\nStep 3: Intersecting species ranges with grid...\n")
+cat("  This may take a few minutes...\n")
 
 species_by_cell <- st_intersection(range_maps, grid) %>%
   st_drop_geometry() %>%
   select(species_id, cell_id, area_km2) %>%
   distinct()
 
-# Step 5: Assign cells to countries/EEZs
-cat("Step 5: Assigning grid cells to countries...\n")
+cat(sprintf("  Found %d species-cell combinations\n", nrow(species_by_cell)))
+
+# Step 4: Assign cells to countries/EEZs
+cat("\nStep 4: Assigning grid cells to study region...\n")
 
 grid_centroids <- st_centroid(grid)
+
+# Simple assignment: all cells within any EEZ belong to the study region
 cell_countries <- st_join(grid_centroids, eez_boundaries, join = st_within) %>%
-  st_drop_geometry()
+  st_drop_geometry() %>%
+  filter(!is.na(MRGID)) %>%  # Keep only cells that intersect with EEZs
+  select(cell_id) %>%
+  distinct() %>%
+  mutate(
+    country_id = 1,
+    country_name = "Study Region"
+  )
 
-# Extract country ID and name (handle different column names)
-id_col <- names(cell_countries)[names(cell_countries) %in%
-  c("MRGID", "EEZ_ID", "id", "ID")][1]
-name_col <- names(cell_countries)[names(cell_countries) %in%
-  c(
-    "GEONAME", "SOVEREIGN1", "TERRITORY1",
-    "name", "NAME", "Country"
-  )][1]
+cat(sprintf("  Assigned %d cells to study region\n", nrow(cell_countries)))
 
-if (!is.na(id_col) && !is.na(name_col)) {
-  cell_countries <- cell_countries %>%
-    select(cell_id, country_id = !!sym(id_col), country_name = !!sym(name_col)) %>%
-    filter(!is.na(country_id)) %>%
-    distinct()
-} else {
-  # Fallback: create simple assignment
-  cell_countries <- cell_countries %>%
-    mutate(
-      country_id = 1,
-      country_name = "Study Region"
-    ) %>%
-    select(cell_id, country_id, country_name) %>%
-    distinct()
-}
-
-# Step 6: Calculate status scores
-cat("Step 6: Calculating species status scores...\n")
+# Step 5: Calculate status scores
+cat("\nStep 5: Calculating species status scores...\n")
 
 country_scores <- calculate_species_status(
   species_by_cell,
@@ -265,8 +409,10 @@ final_scores <- country_scores %>%
   ) %>%
   arrange(desc(status_score))
 
-# Step 7: Save results
-cat("Step 7: Saving results...\n")
+cat(sprintf("  Calculated scores for %d region\n", nrow(final_scores)))
+
+# Step 6: Save results
+cat("\nStep 6: Saving results...\n")
 if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
 
 write_csv(final_scores, file.path(output_dir, "species_status_scores.csv"))
@@ -274,127 +420,40 @@ write_csv(species_by_cell, file.path(output_dir, "species_by_cell.csv"))
 write_csv(cell_countries, file.path(output_dir, "cell_countries.csv"))
 write_csv(species_threat, file.path(output_dir, "species_threat_data.csv"))
 
+# Save grid for visualization
+st_write(grid, file.path(output_dir, "analysis_grid.gpkg"),
+         delete_dsn = TRUE, quiet = TRUE)
+
 # Summary statistics
 summary <- final_scores %>%
   summarize(
-    n_countries = n(),
-    mean_score = mean(status_score, na.rm = TRUE),
-    median_score = median(status_score, na.rm = TRUE),
-    min_score = min(status_score, na.rm = TRUE),
-    max_score = max(status_score, na.rm = TRUE),
-    countries_below_threshold = sum(status_score < CATASTROPHIC_FLOOR)
+    region_name = country_name,
+    status_score = status_score,
+    R_spp = R_spp,
+    total_species = total_species,
+    n_cells = n_cells,
+    below_threshold = ifelse(status_score < CATASTROPHIC_FLOOR, 1, 0)
   )
 
 write_csv(summary, file.path(output_dir, "summary_statistics.csv"))
 
-################################################################################
-# 5. VISUALIZATION FUNCTIONS
-################################################################################
+# Display results
+cat("\n========================================\n")
+cat("Analysis Complete!\n")
+cat("========================================\n\n")
 
-#' Plot species status scores by country
-plot_country_status <- function(status_data, save_path = NULL) {
-  p <- ggplot(status_data, aes(
-    x = reorder(country_name, status_score),
-    y = status_score
-  )) +
-    geom_col(fill = "steelblue", alpha = 0.8) +
-    geom_hline(
-      yintercept = CATASTROPHIC_FLOOR,
-      linetype = "dashed",
-      color = "red",
-      linewidth = 1
-    ) +
-    coord_flip() +
-    labs(
-      title = "OHI Species Condition Status by Country",
-      subtitle = paste("Red line indicates catastrophic threshold (",
-        CATASTROPHIC_FLOOR, ")",
-        sep = ""
-      ),
-      x = "Country/Region",
-      y = "Status Score (0-1)",
-      caption = "Based on IUCN Red List species assessments"
-    ) +
-    theme_minimal() +
-    theme(
-      plot.title = element_text(size = 14, face = "bold"),
-      axis.text = element_text(size = 10)
-    )
+cat("Study Region Results:\n")
+cat("---------------------\n")
+print(final_scores %>%
+        select(status_score, R_spp, total_species, n_cells) %>%
+        as.data.frame())
 
-  if (!is.null(save_path)) {
-    ggsave(save_path, p, width = 10, height = 6, dpi = 300)
-  }
-
-  return(p)
-}
-
-#' Create a map of the analysis region with scores
-plot_regional_map <- function(results, eez_boundaries, save_path = NULL) {
-  # Join scores to EEZ boundaries
-  eez_with_scores <- eez_boundaries %>%
-    left_join(
-      results$scores %>% select(country_id, status_score),
-      by = c("MRGID" = "country_id") # Adjust column name as needed
-    )
-
-  p <- ggplot() +
-    geom_sf(
-      data = eez_with_scores, aes(fill = status_score),
-      color = "white", size = 0.2
-    ) +
-    scale_fill_viridis_c(
-      name = "Status\nScore",
-      limits = c(0, 1),
-      option = "plasma"
-    ) +
-    labs(
-      title = "OHI Species Condition Status",
-      subtitle = "By Country EEZ"
-    ) +
-    theme_minimal() +
-    theme(
-      plot.title = element_text(size = 14, face = "bold"),
-      legend.position = "right"
-    )
-
-  if (!is.null(save_path)) {
-    ggsave(save_path, p, width = 12, height = 8, dpi = 300)
-  }
-
-  return(p)
-}
-
-################################################################################
-# 6. EXAMPLE USAGE
-################################################################################
-
-# Example workflow:
-#
-# library(sf)
-# source("ohi_species_condition_country.R")
-#
-# # Step 1: Load all EEZs
-# all_eez <- st_read("data/eez_v11/eez_v11.shp")
-#
-# # Step 2: Filter to your region of interest (YOU do this)
-# # Option A: By bounding box
-# my_bbox <- st_bbox(c(xmin = -85, xmax = -60, ymin = 10, ymax = 25), crs = 4326)
-# my_eezs <- st_crop(all_eez, my_bbox)
-#
-# # Option B: By country codes
-# my_eezs <- all_eez %>% filter(ISO_SOV1 %in% c("USA", "CAN", "MEX"))
-#
-# # Option C: By country names
-# my_eezs <- all_eez %>% filter(SOVEREIGN1 %in% c("United States", "Canada"))
-#
-# # Step 3: Run the model with your pre-filtered EEZs
-# results <- run_species_condition_model(
-#   range_maps_path = "data/IUCN_ranges/marine_species.shp",
-#   eez_boundaries = my_eezs,
-#   grid_resolution = 0.5,
-#   output_dir = "output/my_region"
-# )
-#
-# # Step 4: Visualize results
-# plot_country_status(results$scores,
-#                     save_path = "output/my_region/country_scores.png")
+cat("\n\nSummary Statistics:\n")
+cat("-------------------\n")
+cat(sprintf("  Status Score: %.3f\n", final_scores$status_score))
+cat(sprintf("  R_spp: %.3f\n", final_scores$R_spp))
+cat(sprintf("  Total species analyzed: %d\n", final_scores$total_species))
+cat(sprintf("  Grid cells: %d\n", final_scores$n_cells))
+cat(sprintf("  Below catastrophic threshold (0.25): %s\n",
+            ifelse(final_scores$status_score < CATASTROPHIC_FLOOR, "YES", "NO")))
+cat(sprintf("\nResults saved to: %s\n\n", output_dir))

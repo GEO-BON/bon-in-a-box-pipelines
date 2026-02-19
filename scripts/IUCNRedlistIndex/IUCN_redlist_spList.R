@@ -61,6 +61,9 @@ iucn_splist <- iucn_splist %>%
   dplyr::distinct(sis_taxon_id, .keep_all = TRUE)
 
 print(sprintf("Number of species after removing duplicates: %s", nrow(iucn_splist)))
+iucn_splist <- head(iucn_splist)
+species_names <- iucn_splist$scientific_name
+biab_output("species", species_names)
 
 iucn_splist_path <- file.path(outputFolder, paste0("iucn_splist", ".csv")) # Define the file path
 write.csv(iucn_splist, iucn_splist_path, row.names = F) # write result

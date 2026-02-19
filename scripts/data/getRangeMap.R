@@ -56,8 +56,10 @@ source(file.path(path_script, "data/getRangeMapFunc.R"), echo = TRUE)
     if (file.exists(file)) {
       sf_range_map <- st_read(file)
     } else {
-      path_to_range_map <- NULL
-      biab_error_stop("========== No range map available from expert source database ==========")
+      #path_to_range_map <- NULL
+      sf_range_map <- data.frame()
+      print("No range map found for this species")
+      #biab_error_stop("========== No range map available from expert source database ==========")
     }
 
     if (!dir.exists(file.path(outputFolder, sp[i]))) {

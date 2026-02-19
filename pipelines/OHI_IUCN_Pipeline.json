@@ -34,21 +34,6 @@
       }
     },
     {
-      "id": "7",
-      "type": "constant",
-      "position": {
-        "x": -355.84786454371795,
-        "y": 85.84887367119251
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "All"
-        ]
-      }
-    },
-    {
       "id": "8",
       "type": "constant",
       "position": {
@@ -130,8 +115,8 @@
       "id": "18",
       "type": "io",
       "position": {
-        "x": 982.4405161647805,
-        "y": 262.9742333344083
+        "x": 1559.89441221679,
+        "y": 228.4525330269512
       },
       "data": {
         "descriptionFile": "data>getRangeMap.yml"
@@ -364,6 +349,21 @@
           "Do not filter by habitat"
         ]
       }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": -475.90493387535633,
+        "y": -103.3369960722527
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "All"
+        ]
+      }
     }
   ],
   "edges": [
@@ -373,13 +373,6 @@
       "target": "0",
       "targetHandle": "splist_country",
       "id": "reactflow__edge-1iucn_country_splist-0splist_country"
-    },
-    {
-      "source": "7",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "taxonomic_group",
-      "id": "reactflow__edge-7-0taxonomic_group"
     },
     {
       "source": "8",
@@ -499,6 +492,20 @@
       "target": "3",
       "targetHandle": "habitat",
       "id": "reactflow__edge-25-3habitat"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "species",
+      "target": "18",
+      "targetHandle": "species",
+      "id": "reactflow__edge-0species-18species"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "taxonomic_group",
+      "id": "reactflow__edge-26-0taxonomic_group"
     }
   ],
   "inputs": {
@@ -509,21 +516,12 @@
       "example": null,
       "weight": 0
     },
-    "data>getRangeMap.yml@18|species": {
-      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
-      "label": "species",
-      "type": "text[]",
-      "example": [
-        "Myrmecophaga tridactyla"
-      ],
-      "weight": 1
-    },
     "pipeline@21": {
       "label": "Bounding box",
       "description": "Use the bounding box chooser to select a region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
       "type": "bboxCRS",
       "example": null,
-      "weight": 2
+      "weight": 1
     }
   },
   "outputs": {
