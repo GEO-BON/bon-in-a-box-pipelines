@@ -5,7 +5,7 @@ library(sf)
 # Add inputs
 input <- biab_inputs()
 sf_use_s2(FALSE)
-crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
+crs_input <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 # Get polygon for study area
 
 # Read in polygon of study area
@@ -17,7 +17,7 @@ if (is.null(input$study_area_polygon)) {
 # Load and fix geometry issues in study area
 study_area <- input$study_area_polygon
 study_area <- sf::st_read(study_area)
-study_area <- st_transform(study_area, crs = input$crs)
+study_area <- st_transform(study_area, crs = crs_input)
 
 any_invalid <- any(!st_is_valid(study_area))
 
@@ -35,24 +35,26 @@ biab_output("study_area_clean", study_area_clean_path)
 
 # Read in wdpa data
 protected_areas <- sf::st_read(input$protected_area_file)
+print(nrow(protected_areas))
+print(unique(protected_areas$STATUS))
 
 # # transform
-protected_areas <- st_transform(protected_areas, crs = input$crs)
-print(unique(protected_areas$legal_status))
+protected_areas <- st_transform(protected_areas, crs = crs_input)
+print(nrow(protected_areas))
 # ## Clean data
 print("Cleaning data")
 
 print("Including areas based on status")
 protected_areas <- protected_areas %>%
-  filter(sapply(legal_status, function(x) any(grepl(paste(input$status_type, collapse = "|"), x, ignore.case = TRUE))))
-
+  filter(sapply(STATUS, function(x) any(grepl(paste(input$status_type, collapse = "|"), x, ignore.case = TRUE))))
+print(nrow(protected_areas))
 
 if (isFALSE(input$include_unesco)) {
   print("Removing UNESCO biosphere reserves")
-  protected_areas <- protected_areas %>% filter(!grepl("UNESCO-MAB Biosphere Reserve", designation))
+  protected_areas <- protected_areas %>% filter(!grepl("UNESCO-MAB Biosphere Reserve", DESIG))
 }
 
-
+print(nrow(protected_areas))
 # Fixing geometries
 
 ## Check if it is point and label as such
@@ -68,16 +70,16 @@ protected_areas$geometry_type[is_point] <- "POINT" # label points as a point
 # deal with points
 if (isTRUE(input$buffer_points)) {
   print("Removing points with no reported area or area of 0")
-  protected_areas$reported_area <- as.numeric(protected_areas$reported_area)
+  protected_areas$REP_AREA <- as.numeric(protected_areas$REP_AREA)
 
-  protected_areas <- protected_areas %>% filter(!(geometry_type == "POINT" & (is.na(reported_area) | reported_area == 0)))
+  protected_areas <- protected_areas %>% filter(!(geometry_type == "POINT" & (is.na(REP_AREA) | REP_AREA == 0)))
 
   points_data <- protected_areas[(protected_areas$geometry_type == "POINT"),]
 
 
   if(nrow(points_data) > 0){
     points_data <- points_data %>%
-    mutate(buffer_radius = sqrt((as.numeric(reported_area) * 1e6) / pi))
+    mutate(buffer_radius = sqrt((as.numeric(REP_AREA) * 1e6) / pi))
     points_data <- st_buffer(points_data, dist = points_data$buffer_radius)
     points_data <- points_data %>% select(!buffer_radius)
 
@@ -94,7 +96,7 @@ if (isTRUE(input$buffer_points)) {
   print("Removing points")
   protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT"), ]
 }
-
+print(nrow(protected_areas))
 # Geometery fixes
 print("Fixing invalid geometries")
 
@@ -112,11 +114,11 @@ print("Removing slivers (protected areas less than 1 square meters)")
 sliver_threshold <- units::set_units(1, "m^2")
 protected_areas <- protected_areas[(sf::st_area(protected_areas)) > sliver_threshold, ]
 print(nrow(protected_areas))
-
+print(unique(protected_areas$REALM))
 # Include marine
 if (isFALSE(input$include_marine)) {
   print("Removing marine protected areas")
-  protected_areas <- protected_areas %>% filter(marine == FALSE)
+  protected_areas <- protected_areas %>% filter(REALM != "marine")
 }
 print(nrow(protected_areas))
 # Include OECMs
@@ -126,12 +128,12 @@ if (isFALSE(input$include_oecm)) {
 }
 print(nrow(protected_areas))
 
-if(nrow(protected_areas_clean)==0){
+if(nrow(protected_areas)==0){
   biab_error_stop("There are no protected areas.")
 }
 
 protected_areas_clean_path <- file.path(outputFolder, "protected_areas_clean.gpkg")
-sf::st_write(protected_areas_clean, protected_areas_clean_path, delete_dsn = T)
+sf::st_write(protected_areas, protected_areas_clean_path, delete_dsn = T)
 biab_output("protected_areas_clean", protected_areas_clean_path)
 
 
