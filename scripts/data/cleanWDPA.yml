@@ -1,3 +1,4 @@
+# For review PR
 script: cleanWDPA.R
 name: Clean protected areas from WDPA API
 description: |
@@ -13,7 +14,7 @@ author:
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 lifecycle:
-  status: in_review
+  status: reviewed
 inputs:
   study_area_polygon:
     label: Study area polygon
@@ -38,17 +39,25 @@ inputs:
     description: |
       Legal status types of protected areas to include.
 
-      Designated means that it is officially established under national or international law/policy.
+      **Proposed:** The site is in the process of gaining recognition through legal or other effective means. It may still be managed as a protected area during this process. 
 
-      Inscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated.
+      **Inscribed:** Protected areas designated under the UNESCO World Heritage Convention.
 
-      Established means that it is protected and managed, but possibly lacks formal legal desgination.
+      **Adopted:** Specially protected areas of marine importance (SPAMI) created under the Barcelona convention, 
+      focusing on the protection of the marine environment and coastal region of the mediterranean.
+
+      **Designated:** The site is legally recognized as a protected area. This implies specific binding commitment to
+      conservation in the long term. 
+
+      **Established:** The site is recognized as protected area through other effective means. This implies long-term commitment to conservation, but without legal recognition.
     type: options[]
     options:
-      - Designated
+      - Proposed
       - Inscribed
+      - Adopted
+      - Designated
       - Established
-    example: ["Designated", "Inscribed", "Established"]
+    example: ["Proposed", "Inscribed", "Adopted", "Designated", "Established"]
   include_unesco:
     label: Include UNESCO Biosphere reserves
     description: >
@@ -71,7 +80,7 @@ inputs:
 
       Protected area points with no reported area will be removed in all cases.
     type: boolean
-    example: FALSE
+    example: TRUE
   include_marine:
     label: Include marine protected areas
     description: >
