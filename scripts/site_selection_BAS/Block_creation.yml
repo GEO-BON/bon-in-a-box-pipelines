@@ -1,0 +1,64 @@
+script: script_Block_creation.R
+name: Environmental Blocks
+description: Performs PCA variables and create a grid of environmental block in two dimensional space based code from biosurvey package
+author:
+  - name: Francis van Oordt
+    identifier: "https://orcid.org/0000-0002-8471-235X"
+license: CC BY
+inputs:
+  country_polygon:
+    label: Country polygon
+    description: polygon of the country of interest
+    type: application/geopackage+sqlite3
+    example: Peru
+  n_rows:
+    label: number of rows
+    description: Number of rows for the block grid
+    type: int
+    example: 10
+  n_cols:
+    label: number of columns
+    description: Number of columns for the block grid
+    type: int
+    example: 10
+  rasters:
+    label: Rasters
+    description: Rasters layers of environmental variables of interest
+    type: image/tiff;application=geotiff[]
+    example: |
+      GBSTAC|chelsa-clim|bio1, 0.7, 0.6
+      GBSTAC|chelsa-clim|bio2, 0.3, 0.4,
+      GBSTAC|chelsa-clim|bio12, 0.7, 0.6
+outputs:
+  rast_blocks:
+    label: environmental blocks raster
+    description: environmental blocks raster
+    type: image/tiff;application=geotiff[]
+  blocks_plot:
+    label: blocks and map plots
+    description: env space and map of blocks
+    type: image/png
+  pca_summary_df:
+    label: summary of PCA
+    description: summary of PCA
+    type: csv
+  colors_vect:
+    label: Color vector
+    description: vector of random colors for plotting
+    type: csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-ggplot2
+    - r-tidyterra
+    - r-cowplot
+    - r-factoextra
+references:
+   - text: "Survey-gap analysis in expeditionary research: where do we go from here?"
+     doi: "https://doi.org/10.1111/j.1095-8312.2005.00520.x"
+   - text: "Selection of sampling sites for biodiversity inventory: Effects of environmental and geographical considerations"
+     doi: "https://doi.org/10.1111/2041-210X.13869"

@@ -71,6 +71,31 @@ inputs:
     example: |
       This is a multiline example.
       Once there is a line break in the example, it becomes a textarea in the UI.
+  country:
+    label: Country
+    description: Using the country chooser to select a country
+    type: country
+    example:
+  country_region:
+    label: Country and region
+    description: Using the country and region chooser to select a region
+    type: countryRegion
+    example:
+  country_region_crs:
+    label: Country, region and CRS
+    description: Using the country, region and CRS chooser to select a Coordinate Reference System appropriate for a region
+    type: countryRegionCRS
+    example:
+  crs:
+    label: Coordinate Reference System
+    description: Using the CRS chooser to select a Coordinate Reference System
+    type: CRS
+    example:
+  bbox:
+    label: Bounding box and CRS
+    description: Using the bounding box chooser to select a bbox and the CRS associated with this bounding box.
+    type: bboxCRS
+    example:
 
 outputs:
   text:
@@ -123,8 +148,13 @@ outputs:
     description: Some interactive graph
     type: text/html
     example: /path/to/some/example.html
+  crs_id:
+    label: CRS ID
+    description: CRS ID derived from a bounding box selector
+    type: text
+    example: ESPG:4326
 references:
   - text: John Doe, The ins and outs of copy-pasting, CopyScience, Volume 71, Issue 5, May 2021, Pages 448–451
-    doi: 10.1093/copysci/biab041
+    doi: https://doi.org/10.1093/copysci/biab041
   - text: Nick Copy, Rupert Paste, Replicating text in a documentation context, Textopasto, 405, (123456), (2022).
-    doi: 10.1016/j.tpasto.2021.115424
+    doi: https://doi.org/10.1016/j.tpasto.2021.115424

@@ -5,6 +5,7 @@ library(sf)
 # Add inputs
 input <- biab_inputs()
 sf_use_s2(FALSE)
+crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 # Get polygon for study area
 
 # Read in polygon of study area

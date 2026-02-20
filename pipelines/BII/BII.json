@@ -34,35 +34,11 @@
       }
     },
     {
-      "id": "31",
-      "type": "userInput",
-      "position": {
-        "x": 12,
-        "y": 363.75
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6622"
-      }
-    },
-    {
-      "id": "52",
-      "type": "io",
-      "position": {
-        "x": 854.3164129354765,
-        "y": 615.6847349950567
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
       "id": "53",
       "type": "io",
       "position": {
-        "x": 156.1660109824801,
-        "y": 645.9747418574636
+        "x": 476.0826023635467,
+        "y": 579.650570473584
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -72,8 +48,8 @@
       "id": "55",
       "type": "output",
       "position": {
-        "x": 782.3326899653318,
-        "y": 701.9635745429575
+        "x": 1020.3326899653318,
+        "y": 691.9635745429575
       },
       "data": {
         "label": "Output"
@@ -83,8 +59,8 @@
       "id": "56",
       "type": "io",
       "position": {
-        "x": 1357.0524670348445,
-        "y": 310.5246492351982
+        "x": 1368.7567325731761,
+        "y": 392.45450800352006
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -214,6 +190,18 @@
         "type": "text",
         "value": "P5Y"
       }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": 14.560022958672334,
+        "y": 407.2202294777127
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
     }
   ],
   "edges": [
@@ -225,13 +213,6 @@
       "id": "reactflow__edge-14bii_change-15"
     },
     {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "25",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-25crs"
-    },
-    {
       "source": "53",
       "sourceHandle": "country_region_polygon",
       "target": "25",
@@ -240,38 +221,10 @@
     },
     {
       "source": "53",
-      "sourceHandle": "country_region_polygon",
-      "target": "52",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-53country_region_polygon-52study_area_file"
-    },
-    {
-      "source": "53",
       "sourceHandle": "region",
       "target": "55",
       "targetHandle": null,
       "id": "reactflow__edge-53region-55"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "53",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-53crs"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "52",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-52crs"
-    },
-    {
-      "source": "52",
-      "sourceHandle": "bbox",
-      "target": "25",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-52bbox-25bbox"
     },
     {
       "source": "53",
@@ -302,13 +255,6 @@
       "id": "reactflow__edge-58-56collections_items"
     },
     {
-      "source": "52",
-      "sourceHandle": "bbox",
-      "target": "56",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-52bbox-56bbox"
-    },
-    {
       "source": "53",
       "sourceHandle": "country_region_polygon",
       "target": "56",
@@ -335,13 +281,6 @@
       "target": "56",
       "targetHandle": "aggregation",
       "id": "reactflow__edge-60-56aggregation"
-    },
-    {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "56",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-56crs"
     },
     {
       "source": "56",
@@ -391,29 +330,36 @@
       "target": "56",
       "targetHandle": "temporal_res",
       "id": "reactflow__edge-66-56temporal_res"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "53",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-53bbox_crs"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-56bbox_crs"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-25bbox_crs"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@53|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "CAN",
+    "pipeline@67": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
+      "example": null,
       "weight": 0
-    },
-    "data>getCountryPolygon.yml@53|region": {
-      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
-      "label": "State/Province code",
-      "type": "text",
-      "example": "CA-QB",
-      "weight": 1
-    },
-    "pipeline@31": {
-      "label": "Coordinate reference system",
-      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
-      "type": "text",
-      "example": "EPSG:6624",
-      "weight": 2
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -432,28 +378,28 @@
       "example": [
         "mean"
       ],
-      "weight": 3
+      "weight": 1
     },
     "data>loadFromStac.yml@56|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).",
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "label": "Spatial resolution",
       "type": "float",
-      "example": 1000,
-      "weight": 4
+      "example": null,
+      "weight": 2
     },
     "pipeline@63": {
       "label": "Start date",
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2000",
-      "weight": 5
+      "weight": 3
     },
     "pipeline@64": {
       "label": "End date",
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD.",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2020",
-      "weight": 6
+      "weight": 4
     }
   },
   "outputs": {
@@ -490,16 +436,22 @@
   },
   "metadata": {
     "name": "Biodiversity Intactness Index",
-    "description": "This pipeline calculates zonal statistics of the biodiversity intactness index of a given country or region and change over time using the BII layers developed by the Natural History Museum.",
+    "description": "## Introduction \nThe Biodiversity Intactness Index (BII) is a metric designed to assess the degree to which ecosystems are intact and functioning relative to their natural state. It measures the abundance and diversity of species in a given area compared to what would be expected in an undisturbed ecosystem. The BII accounts for various factors, including habitat loss, fragmentation, and degradation, providing a comprehensive view of biodiversity health. A higher BII value indicates a more intact ecosystem with greater species diversity and abundance, while a lower value suggests significant ecological disruption. The biodiversity intactness index is a complimentary indicator in the GBF. The BII was created by the Natural History Museum and uses their PREDICTS database, which aggregates data from studies comparing terrestrial biodiversity at sites experiencing varying levels of human pressure. The database is used to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact. It currently contains over 3 million records from more than 26,000 sites across 94 countries, representing a diverse array of over 45,000 plant, invertebrate, and vertebrate species.\n## Uses \nThe Biodiversity Intactness Index is a complimentary indicator in the GBF. This pipeline can be used to calculate summary statistics and plot a time series of the 10km resolution BII layer for a given country or region. The BII is expressed as a percentage, with higher percentages being more intact.\n## Pipeline limitations \nThe pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the 10 x 10 km BII layer pre-calcuated by the Natural History Museum calculated global layer. Therefore, you cannot customize the model or input custom data and you cannot increase the resolution of the layer. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Before you start \nThere are no data or API keys required for this analysis. To view the global layer, go to our [STAC catalog](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).",
     "author": [
       {
         "name": "Jory Griffith",
         "email": "jory.griffith@mcgill.ca",
         "identifier": "https://orcid.org/0000-0001-6020-6690",
         "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline documentation"
       }
     ],
-    "license": "CC-BY-NC-SA",
+    "license": "CC BY-NC-SA",
     "references": [
       {
         "text": "De Palma et al. 2024",

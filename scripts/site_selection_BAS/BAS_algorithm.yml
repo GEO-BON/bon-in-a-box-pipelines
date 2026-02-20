@@ -1,0 +1,65 @@
+script: script_BAS_algorithm.R
+name: BAS selection
+description: Performs point selection based on BAS algorithm, and unequal inclusion probabilities
+author:
+  - name: Francis van Oordt
+    identifier: https://orcid.org/0000-0002-8471-235X
+license: CC BY
+inputs:
+  colors_vect:
+    label: Color vector
+    description: vector of random colors for plotting
+    type: csv
+    example: null
+  country_polygon:
+    label: Country polygon
+    description: polygon of the country of interest
+    type: application/geopackage+sqlite3
+    example: Peru
+  rast_blocks:
+    label: environmental blocks raster
+    description: environmental blocks raster
+    type: image/tiff;application=geotiff[]
+    example: rast_blocks.tif
+  ndesign:
+    label: Target total sites
+    description: A number of target sites to obtain
+    type: int
+    example: 100
+  options_bas:
+    label: Sampling type
+    description: Select and option beween equal BAS or unequal prob BAS
+    type: options
+    options:
+    - equal
+    - unequal
+    example: equal
+outputs:
+  maps_output:
+    label: Maps output
+    description: maps of selected points
+    type: image/png
+  pts_df:
+    label: Selected points
+    description: dataframe of selected points
+    type: csv
+  points_shape:
+    label: selected points shapefile
+    description: Vector shapefile of selected points
+    type: application/geo+json
+
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-ggplot2
+    - r-tidyterra
+    - r-cowplot
+    - r-sf
+    - r-remotes
+references:
+   - text: "spbal: Spatially Balanced Sampling Algorithms"
+     doi: "https://doi.org/10.32614/CRAN.package.spbal"

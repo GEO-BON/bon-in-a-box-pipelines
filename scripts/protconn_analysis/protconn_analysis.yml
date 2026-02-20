@@ -27,10 +27,10 @@ inputs:
     type: text
     example: null
   crs:
-    label: Coordinate reference system
-    description: Coordinate reference system for the study area and protected areas. Must be in a projected reference system (not EPSG:4326). To find the reference system for your region visit [epsg.io](https://epsg.io/).
-    type: text
-    example: "EPSG:4326"
+    label: CRS
+    description: Object containing CRS.
+    type: bboxCRS
+    example:
   distance_threshold:
     label: Distance analysis threshold
     description: >
@@ -122,8 +122,8 @@ outputs:
     type: text/csv
 references:
   - text: Saura et al. 2017
-    doi: 10.1016/j.ecolind.2016.12.047
+    doi: https://doi.org/10.1016/j.ecolind.2016.12.047
   - text: Saura et al. 2018
-    doi: 10.1016/j.biocon.2017.12.020
+    doi: https://doi.org/10.1016/j.biocon.2017.12.020
   - text: Godínez-Gómez and Correa Ayram 2020
-    doi: 10.5281/zenodo.3771605
+    doi: https://doi.org/10.5281/zenodo.3771605

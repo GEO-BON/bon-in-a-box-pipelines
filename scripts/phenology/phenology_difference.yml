@@ -1,0 +1,44 @@
+script: phenology_difference.R
+name: Phenology difference
+author:
+   - name: Jory Griffith
+     email: jory.griffith@gmail.com
+     identifier: https://orcid.org/0000-0001-6020-6690
+license: CC BY
+description: |
+  Script to calculate the difference in the layers of the phenology raster layers from the start to end year to show the spatial
+  distribution of changes in phenology. The start year is subtracted from the end year, so larger values indicate a larger difference in
+  the phenology layers.
+inputs:
+  rasters:
+    label: Rasters of phenology
+    description: Rasters for phenology
+    type: image/tiff;application=geotiff[]
+    example: null
+  start_year:
+    label: Start year
+    description: Start date for phenology time series
+    type: text
+    example: "2017"
+  end_year:
+    label: End year
+    description: End year for phenology time series (not inclusive).
+    type: text
+    example: "2024"
+  timeseries:
+    label: Zonal statistics
+    description: Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest
+    type: text/csv
+    example: null
+outputs:
+  phenology_change:
+    label: Change in phenology metrics
+    description: |
+      Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger
+      values indicate a greater decrease in the given value over time.
+    type: image/tiff;application=geotiff[]
+  phenology_change_plot:
+    label: Plot of phenology change
+    description: Plot of the summarised phenology values over time for the bands of interest
+    type: image/png
+

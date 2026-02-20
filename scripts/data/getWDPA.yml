@@ -10,11 +10,11 @@ external_link:
 lifecycle:
   status: reviewed
 inputs:
-  country_iso:
-    label: Country
-    description: ISO-3 country code. To find the ISO-3 code of a country, you can refer to the [list provided here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).
-    type: text
-    example: COL
+  country:
+    label: Country ISO3 code
+    description: Object containing country ISO3 code.
+    type: bboxCRS
+    example:
 outputs:
   protected_area_polygon:
     label: Polygon of protected areas
@@ -28,7 +28,7 @@ references:
 - text:
     UNEP-WCMC and IUCN (2024), Protected Planet. The World Database on Protected Areas (WDPA)[On-line],
     [October 2024], Cambridge, UK. UNEP-WCMC and IUCN. Available at
-  doi: 10.34892/6fwd-af11
+  doi: https://doi.org/10.34892/6fwd-af11
 conda:
   channels:
     - conda-forge

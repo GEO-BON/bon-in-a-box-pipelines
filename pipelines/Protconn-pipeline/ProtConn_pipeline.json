@@ -4,45 +4,19 @@
       "id": "6",
       "type": "io",
       "position": {
-        "x": 516,
-        "y": 19
+        "x": 432,
+        "y": 276.5
       },
       "data": {
         "descriptionFile": "data>getWDPA.yml"
       }
     },
     {
-      "id": "9",
-      "type": "userInput",
-      "position": {
-        "x": 446.1490343311875,
-        "y": 320.4660675955349
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:4326"
-      }
-    },
-    {
-      "id": "27",
-      "type": "userInput",
-      "position": {
-        "x": 145,
-        "y": 129
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "COL"
-      }
-    },
-    {
       "id": "29",
       "type": "userInput",
       "position": {
-        "x": 1719,
-        "y": 385
+        "x": 1507,
+        "y": 306.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -56,8 +30,8 @@
       "id": "41",
       "type": "userInput",
       "position": {
-        "x": 1762.2968599942237,
-        "y": 308.127113190749
+        "x": 1548,
+        "y": 106
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,8 +42,8 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": 2334.4003574201383,
-        "y": 210.6295207759896
+        "x": 2225,
+        "y": 174.5
       },
       "data": {
         "descriptionFile": "protconn_analysis>protconn_analysis.yml"
@@ -79,8 +53,8 @@
       "id": "43",
       "type": "output",
       "position": {
-        "x": 2908.68425810204,
-        "y": 237.3201932724112
+        "x": 2837,
+        "y": 261.33333333333337
       },
       "data": {
         "label": "Output"
@@ -90,8 +64,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 1604.5820248131813,
-        "y": 9.522270172911277
+        "x": 1419,
+        "y": 392.5
       },
       "data": {
         "descriptionFile": "data>cleanWDPA.yml"
@@ -101,8 +75,8 @@
       "id": "57",
       "type": "io",
       "position": {
-        "x": 1033.4217657702507,
-        "y": 311.49028218644725
+        "x": 701,
+        "y": 87.5
       },
       "data": {
         "descriptionFile": "data>getCountryPolygon.yml"
@@ -112,8 +86,8 @@
       "id": "58",
       "type": "output",
       "position": {
-        "x": 1653.3125480833176,
-        "y": 317.7103141175928
+        "x": 1323,
+        "y": 59
       },
       "data": {
         "label": "Output"
@@ -123,22 +97,27 @@
       "id": "59",
       "type": "output",
       "position": {
-        "x": 1645.7339652507653,
-        "y": 328.32033008316563
+        "x": 1323,
+        "y": 12
       },
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "60",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 160.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "6",
-      "targetHandle": "country_iso",
-      "id": "reactflow__edge-27-6country_iso"
-    },
     {
       "source": "41",
       "sourceHandle": null,
@@ -152,13 +131,6 @@
       "target": "42",
       "targetHandle": "protected_area_polygon",
       "id": "reactflow__edge-29-42protected_area_polygon"
-    },
-    {
-      "source": "9",
-      "sourceHandle": null,
-      "target": "42",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-9-42crs"
     },
     {
       "source": "42",
@@ -180,13 +152,6 @@
       "target": "48",
       "targetHandle": "protected_area_file",
       "id": "reactflow__edge-6protected_area_polygon-48protected_area_file"
-    },
-    {
-      "source": "9",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-9-48crs"
     },
     {
       "source": "42",
@@ -217,20 +182,6 @@
       "id": "reactflow__edge-42result_yrs-43"
     },
     {
-      "source": "9",
-      "sourceHandle": null,
-      "target": "57",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-9-57crs"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "57",
-      "targetHandle": "country",
-      "id": "reactflow__edge-27-57country"
-    },
-    {
       "source": "57",
       "sourceHandle": "country",
       "target": "58",
@@ -259,62 +210,62 @@
       "id": "reactflow__edge-48study_area_clean-42study_area_polygon"
     },
     {
-      "source": "42",
-      "sourceHandle": "study_area_km2",
-      "target": "43",
-      "targetHandle": null,
-      "id": "reactflow__edge-42study_area_km2-43"
+      "source": "60",
+      "sourceHandle": null,
+      "target": "57",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-60-57bbox_crs"
     },
     {
-      "source": "42",
-      "sourceHandle": "protected_area_km2",
-      "target": "43",
-      "targetHandle": null,
-      "id": "reactflow__edge-42protected_area_km2-43"
+      "source": "60",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "country",
+      "id": "reactflow__edge-60-6country"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-60-48crs"
+    },
+    {
+      "source": "60",
+      "sourceHandle": null,
+      "target": "42",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-60-42crs"
     }
   ],
   "inputs": {
-    "pipeline@27": {
-      "label": "ISO3 country code",
-      "description": "ISO3 country code for country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).",
-      "type": "text",
-      "example": "COL",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@57|region": {
-      "description": "Name of region of interest, in the native language of the location. Leave blank to load a polygon for the whole country.",
-      "label": "State/Province name",
-      "type": "text",
+    "pipeline@60": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
       "example": null,
-      "weight": 1
+      "weight": 0
     },
     "pipeline@41": {
       "label": "Polygon of study area (optional)",
       "description": "Polygon of the study area, in geopackage format. To use a custom study area, input the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg) and it will override the country polygon from the \"Get country polygon\" script. Leave blank to use country or region polygons pulled from the \"get country polygon\" script. Protected areas outside of the country polygon will be cropped out.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
-      "weight": 2
+      "weight": 1
     },
     "pipeline@29": {
       "label": "Polygon of protected areas (optional)",
       "description": "The protected areas (PAs) of interest. To combine WDPA data and custom data, add the path to the custom geopackage here \"e.g. /userdata/my_protected_areas.gpkg). They will be combined within the script. If you want to use only custom polygons, please use the \"ProtConn analysis with custom PAs\" pipeline. Leave blank to use only WDPA data.",
       "type": "application/geopackage+sqlite3[]",
       "example": [],
-      "weight": 3
-    },
-    "pipeline@9": {
-      "label": "Coordinate reference system",
-      "description": "The coordinate reference system of the study area polygon and the protected area polygons for the ProtConn calculation. This must be a projected CRS (in meters), otherwise the distance calculations will not be accurate.\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n",
-      "type": "text",
-      "example": "EPSG:3116",
-      "weight": 4
+      "weight": 2
     },
     "protconn_analysis>protconn_analysis.yml@42|date_column_name": {
       "description": "Name of the column in the user provided protected area file that specifies when the PA was created. Leave blank if only using WDPA data.",
       "label": "Date column name (optional)",
       "type": "text",
       "example": null,
-      "weight": 5
+      "weight": 3
     },
     "protconn_analysis>protconn_analysis.yml@42|distance_threshold": {
       "description": "Refers to the threshold distance (in meters) used to estimate if the areas are connected in a spatial analysis. This threshold represents the median dispersal probability (i.e. where the dispersal probability between patches is 0.5). Dispersal probability is calculated with an exponential decay function with increasing distance.\n\nCommon dispersal distances that encompass a large majority of terrestrial species are 1000 meters (1km), 3000 meters (3km), 10,000 meters (10 km), and 100,000 meters (100 km; Saura et al. 2017).\n\nNote that the more distances included, the longer the pipeline will take to run and the more memory it will require. Additionally, larger dispersal distances will be more computationally intensive. ",
@@ -324,7 +275,7 @@
         1000,
         10000
       ],
-      "weight": 6
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@42|years": {
       "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
@@ -489,7 +440,7 @@
         "name": "Laetitia Tremblay",
         "email": "laetita.tremblay@mcgill.ca",
         "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
-        "role": "Pipeline testing and debugging"
+        "role": "Pipeline testing, debugging and documentation"
       },
       {
         "name": "Jean-Michel Lord",
