@@ -8,7 +8,8 @@ author:
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 lifecycle:
-  status: in_review
+  status: "deprecated"
+  message: This script is deprecated. Please use the "Load Polygons" script instead.
 inputs:
   bbox_crs:
     label: Bounding box and CRS
