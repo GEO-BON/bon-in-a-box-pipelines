@@ -15,8 +15,8 @@
       "id": "29",
       "type": "userInput",
       "position": {
-        "x": 1507,
-        "y": 306.5
+        "x": 1491,
+        "y": 166.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -64,8 +64,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 1419,
-        "y": 392.5
+        "x": 1409,
+        "y": 310.5
       },
       "data": {
         "descriptionFile": "data>cleanWDPA.yml"
@@ -282,35 +282,35 @@
       "label": "Year for cutoff",
       "type": "int",
       "example": 2025,
-      "weight": 7
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@42|time_series": {
       "description": "Whether to calculate time series plot of ProtConn values based on date of PA establishment",
       "label": "Time series",
       "type": "boolean",
       "example": true,
-      "weight": 8
+      "weight": 6
     },
     "protconn_analysis>protconn_analysis.yml@42|include_NAs_date": {
       "description": "How missing values for date should be handled in the time series analysis. If the box is checked, protected areas with missing values for establishment date will be included in the time series analysis and assigned to the chosen value for start year. If not checked, these protected areas will be omitted from the time series analysis (note they will still be included in the main analysis).",
       "label": "Include missing values for date",
       "type": "boolean",
       "example": true,
-      "weight": 9
+      "weight": 7
     },
     "protconn_analysis>protconn_analysis.yml@42|start_year": {
       "description": "Year for the time series plot to start. This input will only be used if the time series input is selected.",
       "label": "Start year (optional)",
       "type": "int",
       "example": 1980,
-      "weight": 10
+      "weight": 8
     },
     "protconn_analysis>protconn_analysis.yml@42|year_int": {
       "description": "Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year). This input will only be used if the time series input is selected.",
       "label": "Year interval (optional)",
       "type": "int",
       "example": 20,
-      "weight": 11
+      "weight": 9
     },
     "data>cleanWDPA.yml@48|status_type": {
       "description": "Legal status types of protected areas to include.  \n\nDesignated means that it is officially established under national or international law/policy. \n\nInscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated. \n\nEstablished means that it is protected and managed, but possibly lacks formal legal desgination.\n",
@@ -326,42 +326,42 @@
         "Inscribed",
         "Established"
       ],
-      "weight": 12
+      "weight": 10
     },
     "data>cleanWDPA.yml@48|include_unesco": {
       "description": "Check to include UNESCO Biosphere reserves.  These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
       "label": "Include UNESCO Biosphere reserves",
       "type": "boolean",
       "example": true,
-      "weight": 13
+      "weight": 11
     },
     "data>cleanWDPA.yml@48|buffer_points": {
       "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area.\nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
       "label": "Buffer protected area points",
       "type": "boolean",
       "example": true,
-      "weight": 14
+      "weight": 12
     },
     "data>cleanWDPA.yml@48|include_marine": {
       "description": "Include marine protected areas or filter them out. Note that the analysis is still limited to the bounds of the study \narea polygon.\n",
       "label": "Include marine protected areas",
       "type": "boolean",
       "example": false,
-      "weight": 15
+      "weight": 13
     },
     "data>cleanWDPA.yml@48|include_oecm": {
       "description": "Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated\nprotected areas but are still achieving conservation outcomes.\n",
       "label": "Include OECMs",
       "type": "boolean",
       "example": true,
-      "weight": 16
+      "weight": 14
     },
     "protconn_analysis>protconn_analysis.yml@42|pa_size_threshold": {
       "description": "Size threshold for PAs, in kilometers squared. Protected areas smaller than this area will be removed. A threshold of 1km2 was used in Saura et al. 2017 because at larger scales, protected areas less than 1km2 do not have a large impact on ProtConn values. Removing small protected areas significantly speeds up calculation and is recommended for large areas. To not PAs filter by a size threshold, input a value of 0.",
       "label": "PA size threshold",
       "type": "float",
       "example": 1000,
-      "weight": 17
+      "weight": 15
     }
   },
   "outputs": {
@@ -377,47 +377,35 @@
       "type": "text",
       "weight": 1
     },
-    "protconn_analysis>protconn_analysis.yml@42|study_area_km2": {
-      "description": "Area of the study area in square kilometers",
-      "label": "Area of study area",
-      "type": "text",
-      "weight": 2
-    },
-    "protconn_analysis>protconn_analysis.yml@42|protected_area_km2": {
-      "description": "Total area of the protected areas in square kilometers",
-      "label": "Area of protected area",
-      "type": "text",
-      "weight": 3
-    },
     "protconn_analysis>protconn_analysis.yml@42|protected_areas": {
       "description": "Protected areas on which ProtConn is being calculated. Overlapping protected areas have been merged into one to speed up calculation.",
       "label": "Protected areas",
       "type": "application/geopackage+sqlite3[]",
-      "weight": 4
+      "weight": 2
     },
     "protconn_analysis>protconn_analysis.yml@42|protconn_result": {
       "description": "The results of the ProtConn calculations, including the percentage of the study area that is unprotected and protected, and the percentage that is protected and connected (ProtConn) and protected and unconnected (ProtUnconn).",
       "label": "ProtConn results",
       "type": "text/csv",
-      "weight": 5
+      "weight": 3
     },
     "protconn_analysis>protconn_analysis.yml@42|result_plot": {
       "description": "Donut plot of the percentage of total area that is unprotected, protected and connected, and protected and unconnected for each input dispersal distance (in meters).",
       "label": "ProtConn result plot",
       "type": "image/png",
-      "weight": 6
+      "weight": 4
     },
     "protconn_analysis>protconn_analysis.yml@42|result_yrs": {
       "description": "Table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.",
       "label": "ProtConn time series results",
       "type": "text/csv",
-      "weight": 7
+      "weight": 5
     },
     "protconn_analysis>protconn_analysis.yml@42|result_yrs_plot": {
       "description": "Change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.",
       "label": "ProtConn time series plot",
       "type": "image/png[]",
-      "weight": 8
+      "weight": 6
     }
   },
   "metadata": {
