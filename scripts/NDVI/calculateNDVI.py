@@ -49,6 +49,12 @@ connection.authenticate_oidc_client_credentials(
 
 # Load study area polygon
 polygon = gpd.read_file(polygon)
+# Simplify for openEO calculation
+if coord.is_projected:
+    tolerance = 0.001  # in degrees
+else:
+    tolerance=100 # in meters
+polygon['geometry'] = polygon.geometry.simplify(tolerance, preserve_topology=True)
 
 # Pull sentinel data and calculate NDVI
 
@@ -88,13 +94,22 @@ if polygon is None:
     ndvi_cropped = ndvi_reduced
 else:
     if polygon.crs and polygon.crs.to_epsg() == 4326:
-        polygon = json.loads(polygon.to_json())
-
-        ndvi_cropped = ndvi_reduced.filter_spatial(polygon) # cropping to polygon
+        # Convert datetime columns to strings before serialization
+        polygon_copy = polygon.copy()
+        for col in polygon_copy.select_dtypes(include=['datetime64']).columns:
+            polygon_copy[col] = polygon_copy[col].astype(str)
+        
+        polygon = json.loads(polygon_copy.to_json())
+        ndvi_cropped = ndvi_reduced.filter_spatial(polygon)
     else:
         print('Reprojecting polygon file to 4326', flush=True)
-        polygon = json.loads(polygon.to_crs(epsg=4326).to_json())
-        #crs(repro)
+        polygon_reprojected = polygon.to_crs(epsg=4326)
+        
+        # Convert datetime columns to strings before serialization
+        for col in polygon_reprojected.select_dtypes(include=['datetime64']).columns:
+            polygon_reprojected[col] = polygon_reprojected[col].astype(str)
+        
+        polygon = json.loads(polygon_reprojected.to_json())
         ndvi_cropped = ndvi_reduced.filter_spatial(polygon)
 
 ndvi_resampled = ndvi_cropped.resample_spatial(resolution=spatial_resolution, projection=EPSG, method="average")

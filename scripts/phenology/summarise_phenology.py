@@ -12,9 +12,9 @@ os.chdir(sys.argv[1])
 data = biab_inputs()
 
 if (data['bbox_crs']['region'] is not None):
-    bbox = data['bbox_crs']['region']['regionBboxWGS84']
+    bbox = data['bbox_crs']['region']['bboxWGS84']
 else:
-    bbox = data['bbox_crs']['country']['countryBboxWGS84']
+    bbox = data['bbox_crs']['country']['bboxWGS84']
 start_year = data['start_year']
 end_year = data['end_year']
 bands = data['bands']
@@ -62,7 +62,12 @@ datacube = connection.load_collection(
 )
 
 gdf = gpd.read_file(polygon)
+EPSG = crs.split(':')[1]
+
+
 gdf = gdf.to_crs(epsg=4326)
+tolerance = 0.001
+gdf['geometry'] = gdf.geometry.simplify(tolerance, preserve_topology=True)
 
 # Extract the geometry (assuming only one feature)
 geometry = gdf.geometry.iloc[0]
