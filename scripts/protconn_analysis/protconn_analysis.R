@@ -8,7 +8,7 @@ lapply(packages_list, library, character.only = TRUE) # Load libraries - package
 sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
-crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
+crs_input <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 
 if ((input$year_int) >= (input$years - input$start_year)) {
   biab_error_stop("Please make sure the year interval is smaller than the difference between start year and year for cutoff.")
@@ -27,7 +27,7 @@ if (length(input$study_area_polygon) > 1) { # if there is userdata study area in
 }
 
 
-study_area <- st_transform(study_area, st_crs(input$crs))
+study_area <- st_transform(study_area, st_crs(crs_input))
 print("CRS:")
 print(st_crs(study_area))
 
@@ -54,27 +54,27 @@ if (length(protected_areas_user) > 0 && length(protected_areas) > 0) {
 if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, load that
 
   protected_areas <- st_read(protected_areas) 
-  protected_areas <- st_transform(protected_areas, st_crs(input$crs))
-
+  protected_areas <- st_transform(protected_areas, st_crs(crs_input))
+print(head(protected_areas))
 
   # label which rows are missing dates to remove later
 if (input$include_NAs_date == FALSE){
   protected_areas_NA <- which(
-    is.na(protected_areas$legal_status_updated_at) |
-    protected_areas$legal_status_updated_at == 0
+    is.na(protected_areas$STATUS_YR) |
+    protected_areas$STATUS_YR == 0
   )
 }
 
 # Assign all PAs without a date to the start year for the time series or omit
 for (i in 1:nrow(protected_areas)) {
-  if (is.na(protected_areas$legal_status_updated_at[i]) | protected_areas$legal_status_updated_at[i] == 0) {
-    protected_areas$legal_status_updated_at[i] <- input$start_year
+  if (is.na(protected_areas$STATUS_YR[i]) | protected_areas$STATUS_YR[i] == 0) {
+    protected_areas$STATUS_YR[i] <- input$start_year
   }
 }
 }
 
-  protected_areas$legal_status_updated_at <- lubridate::parse_date_time(protected_areas$legal_status_updated_at, orders = c("ymd", "mdy", "dmy", "y"))
-  protected_areas$legal_status_updated_at <- lubridate::year(protected_areas$legal_status_updated_at)
+  protected_areas$STATUS_YR <- lubridate::parse_date_time(protected_areas$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
+  protected_areas$STATUS_YR <- lubridate::year(protected_areas$STATUS_YR)
 
   print("Protected area geometry:")
   print(unique(st_geometry_type(protected_areas)))
@@ -85,7 +85,7 @@ for (i in 1:nrow(protected_areas)) {
 if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
   protected_areas_user <- st_read(protected_areas_user) # load
   print(protected_areas_user)
-  protected_areas_user <- st_transform(protected_areas_user, st_crs(input$crs))
+  protected_areas_user <- st_transform(protected_areas_user, st_crs(crs_input))
   
   if ((input$time_series==TRUE) & is.null(input$date_column)) {
     biab_error_stop("Please specify a date column name for the protected areas file or deselect the time series option.")
@@ -95,15 +95,15 @@ if (!is.null(input$date_column)){
 # Assign all PAs without a date to the start year for the time series
 print("fixing date")
 
- protected_areas_user <- protected_areas_user %>% rename(legal_status_updated_at = input$date_column)
+ protected_areas_user <- protected_areas_user %>% rename(STATUS_YR = input$date_column)
 for (i in 1:nrow(protected_areas_user)) {
-  if (is.na(protected_areas_user$legal_status_updated_at[i]) | protected_areas$legal_status_updated_at[i] == 0) {
-    protected_areas_user$legal_status_updated_at[i] <- input$start_year
+  if (is.na(protected_areas_user$STATUS_YR[i]) | protected_areas$STATUS_YR[i] == 0) {
+    protected_areas_user$STATUS_YR[i] <- input$start_year
   }
 }
 
-  protected_areas_user$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_user$legal_status_updated_at, orders = c("ymd", "mdy", "dmy", "y"))
-  protected_areas_user$legal_status_updated_at <- lubridate::year(protected_areas_user$legal_status_updated_at)
+  protected_areas_user$STATUS_YR <- lubridate::parse_date_time(protected_areas_user$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
+  protected_areas_user$STATUS_YR <- lubridate::year(protected_areas_user$STATUS_YR)
 }
 }
 
@@ -118,8 +118,8 @@ if (pa_input_type == "Both") {
   }
   print("Combining user defined protected areas with WDPA data")
 if (!is.null(input$date_column)){
-  protected_areas <- protected_areas[, c("legal_status_updated_at", "geom")]
-  protected_areas_user <- protected_areas_user[, c("legal_status_updated_at", "geom")]
+  protected_areas <- protected_areas[, c("STATUS_YR", "geom")]
+  protected_areas_user <- protected_areas_user[, c("STATUS_YR", "geom")]
 } else {
   protected_areas <- protected_areas[, c("geom")]
   protected_areas_user <- protected_areas_user[, c("geom")]
@@ -169,7 +169,7 @@ print("Calculating ProtConn")
 
 
 if (!is.null(input$date_column)){
-protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years | is.na(legal_status_updated_at))
+protected_areas <- protected_areas %>% filter(STATUS_YR <= input$years | is.na(STATUS_YR))
 }
 print("Num prot areas:")
 print(nrow(protected_areas))
@@ -208,7 +208,7 @@ protconn_result <- Makurhini::MK_ProtConn(
   area_unit = "m2",
   distance = list(type = "edge", keep=0.6),
   probability = 0.5,
-  transboundary = 0,
+  transboundary = input$buffer,
   distance_thresholds = c(input$distance_threshold)
 )
 gc()
@@ -304,7 +304,7 @@ for (i in seq_along(years)) {
     protconn_result_combined$Year <- yr
   } else {
     protected_areas_filt_yr <- protected_areas %>%
-      dplyr::filter(legal_status_updated_at <= yr)
+      dplyr::filter(STATUS_YR <= yr)
 
     if (nrow(protected_areas_filt_yr) < 2) {
       message(paste("Not enough protected area data from", yr, "- skipping"))
@@ -322,7 +322,7 @@ for (i in seq_along(years)) {
       area_unit = "m2",
       distance = list(type = "edge", keep=0.6),
       probability = 0.5,
-      transboundary = 0,
+      transboundary = input$buffer,
       distance_thresholds = c(input$distance_threshold)
     )
 

@@ -21,6 +21,13 @@ inputs:
     description: The protected areas (PAs) of interest.
     type: application/geopackage+sqlite3[]
     example: null
+  buffer:
+    label: Transboundary buffer
+    description: Buffer for pulling transboundary protected areas (WDPA data only).
+      The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees).
+      If pulling WDPA data with a custom bounding box, the buffer will not be applied.
+    type: float
+    example: 0
   date_column_name:
     label: Date column name
     description: Name of the column in the user provided protected area file that specifies when the PA was created. Leave blank if only using WDPA data or your protected area file does not have a date column.

@@ -165,7 +165,7 @@ if (input$polygon_type == "WDPA") {
     # Make sure buffer distance is in the correct units
     coord <- st_crs(crs_input)
     # Load the CRS object
-    if (!is.null(input$buffer)) {
+    if (!is.null(input$buffer) && input$buffer > 0) {
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$buffer > 1) {
     biab_error_stop("CRS is in degrees and buffer distance is in meters.")
