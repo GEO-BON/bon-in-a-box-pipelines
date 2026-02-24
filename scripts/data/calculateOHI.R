@@ -33,11 +33,11 @@ input <- biab_inputs()
 
 # Load EEZ boundaries
 eez_boundaries <- st_read(input$EEZ, quiet = TRUE)
-cat(sprintf("  Loaded EEZ with %d region(s)\n", nrow(eez_boundaries)))
+print(sprintf("  Loaded EEZ with %d region(s)\n", nrow(eez_boundaries)))
 
 # Load species status data
 sp_status <- read.csv(input$sp_status)
-cat(sprintf("  Loaded status for %d species\n", nrow(sp_status)))
+print(sprintf("  Loaded status for %d species\n", nrow(sp_status)))
 
 # Prepare species threat data (rename columns to match model expectations)
 species_threat <- sp_status %>%
@@ -49,7 +49,7 @@ species_threat <- sp_status %>%
   filter(!category %in% c("DD", "NE")) %>%  # Remove Data Deficient, Not Evaluated
   distinct()
 
-cat(sprintf("  Prepared threat data for %d species\n", nrow(species_threat)))
+print(sprintf("  Prepared threat data for %d species\n", nrow(species_threat)))
 
 # Get bbox
 bbox <- input$country_region_bbox$bbox
@@ -71,15 +71,15 @@ create_regional_grid <- function(eez_boundaries,
   # Get bounding box of all selected EEZs
   region_bbox <- st_bbox(eez_boundaries)
 
-  # Add buffer
+  # Add buffer - clamp to valid bounds (avoid exact poles)
   bbox_buffered <- c(
     xmin = max(region_bbox["xmin"] - buffer_degrees, -180),
     xmax = min(region_bbox["xmax"] + buffer_degrees, 180),
-    ymin = max(region_bbox["ymin"] - buffer_degrees, -90),
-    ymax = min(region_bbox["ymax"] + buffer_degrees, 90)
+    ymin = max(region_bbox["ymin"] - buffer_degrees, -89.9),
+    ymax = min(region_bbox["ymax"] + buffer_degrees, 89.9)
   )
 
-  cat(sprintf("  Grid bbox: [%.2f, %.2f, %.2f, %.2f]\n",
+  print(sprintf("  Grid bbox: [%.2f, %.2f, %.2f, %.2f]\n",
               bbox_buffered["xmin"], bbox_buffered["xmax"],
               bbox_buffered["ymin"], bbox_buffered["ymax"]))
 
@@ -122,24 +122,66 @@ create_regional_grid <- function(eez_boundaries,
   grid <- grid %>%
     mutate(area_km2 = as.numeric(st_area(.) / 1e6))
 
-  cat(sprintf("  Created %d grid cells\n", nrow(grid)))
+  print(sprintf("  Created %d grid cells\n", nrow(grid)))
 
   return(grid)
 }
 
 #' Load all range maps from file path vector (handling empty/NA files)
-load_range_maps <- function(range_files, species_list) {
+#' Also filters to region of interest during loading to avoid geometry issues
+load_range_maps <- function(range_files, species_list, eez_boundaries, buffer_degrees = 2) {
 
   cat("\nStep 2: Loading species range maps...\n")
 
-  cat(sprintf("  Found %d range map files\n", length(range_files)))
+  print(sprintf("  Found %d range map files\n", length(range_files)))
 
   if (length(range_files) == 0) {
     stop("No range map files provided!")
   }
+  
+  # Make EEZ boundaries valid first
+  eez_valid <- st_make_valid(eez_boundaries)
+  
+  # Create bounding box for filtering
+  region_bbox <- st_bbox(eez_valid)
+  
+  # Check for NA values in bbox
+  if (any(is.na(region_bbox))) {
+    print("  WARNING: EEZ bounding box contains NA values. Attempting to fix...")
+    # Try to get bbox from union of all geometries
+    eez_union <- st_union(eez_valid)
+    region_bbox <- st_bbox(eez_union)
+  }
+  
+  # If still NA, stop with helpful error
+  if (any(is.na(region_bbox))) {
+    stop("Could not compute valid bounding box from EEZ boundaries. Check that EEZ file has valid geometries.")
+  }
+  
+  print(sprintf("  Region bbox: [%.2f, %.2f, %.2f, %.2f]\n",
+                region_bbox["xmin"], region_bbox["xmax"],
+                region_bbox["ymin"], region_bbox["ymax"]))
+  
+  # Create buffered bbox manually (avoiding st_bbox which can fail)
+  # Clamp to valid geographic bounds (avoid exact poles which cause issues)
+  xmin_buf <- max(region_bbox["xmin"] - buffer_degrees, -180)
+  xmax_buf <- min(region_bbox["xmax"] + buffer_degrees, 180)
+  ymin_buf <- max(region_bbox["ymin"] - buffer_degrees, -89.9)  # Avoid exact pole
+  ymax_buf <- min(region_bbox["ymax"] + buffer_degrees, 89.9)   # Avoid exact pole
+  
+  # Create polygon from coordinates directly
+  bbox_coords <- matrix(c(
+    xmin_buf, ymin_buf,
+    xmax_buf, ymin_buf,
+    xmax_buf, ymax_buf,
+    xmin_buf, ymax_buf,
+    xmin_buf, ymin_buf
+  ), ncol = 2, byrow = TRUE)
+  
+  bbox_buffered <- st_sfc(st_polygon(list(bbox_coords)), crs = st_crs(eez_valid))
 
   # Load each range map and combine
-  all_ranges_list <- list()
+  all_ranges <- NULL
   successful <- 0
   skipped <- 0
 
@@ -147,7 +189,7 @@ load_range_maps <- function(range_files, species_list) {
     file <- range_files[i]
 
     if (i %% 10 == 0) {
-      cat(sprintf("  Processing file %d of %d...\n", i, length(range_files)))
+      print(sprintf("  Processing file %d of %d...\n", i, length(range_files)))
     }
 
     tryCatch({
@@ -158,6 +200,16 @@ load_range_maps <- function(range_files, species_list) {
       if (nrow(range_map) == 0 || all(st_is_empty(range_map))) {
         skipped <- skipped + 1
         next
+      }
+      
+      # Make geometries valid
+      range_map <- st_make_valid(range_map)
+      
+      # Ensure CRS matches
+      if (is.na(st_crs(range_map))) {
+        st_crs(range_map) <- 4326
+      } else if (st_crs(range_map) != st_crs(eez_valid)) {
+        range_map <- st_transform(range_map, st_crs(eez_valid))
       }
 
       # Standardize species ID column (check multiple possible names)
@@ -173,65 +225,100 @@ load_range_maps <- function(range_files, species_list) {
         range_map <- range_map %>% rename(species_id = SCINAME)
       } else {
         # If no recognized column, extract from filename/path
-        # Your format: ".../ Rhincodon typus/Rhincodon typus_range.gpkg"
-
+        print(sprintf("    No standard column found in: %s\n", basename(file)))
+        print(sprintf("    Available columns: %s\n", paste(names(range_map), collapse=", ")))
+        
         # Try to extract from directory name (parent folder)
         species_name <- basename(dirname(file))
+        print(sprintf("    Parent directory: '%s'\n", species_name))
 
         # If that doesn't work, try extracting from filename
         if (species_name == "" || species_name == "." ||
-            grepl("^[0-9a-f]{32}$", species_name)) {  # Skip hash directories
-          # Try to extract from filename: "Rhincodon typus_range.gpkg"
+            grepl("^[0-9a-f]{8,}$", species_name, ignore.case = TRUE)) {  # Skip hash directories (8+ hex chars)
+          # Try to extract from filename - remove common suffixes
           filename <- basename(file)
-          species_name <- gsub("_range\\.gpkg$", "", filename)
+          # Remove file extension first
+          species_name <- tools::file_path_sans_ext(filename)
+          # Remove common patterns like _range, _map, _distribution, etc.
+          species_name <- gsub("_(range|map|distribution|habitat)$", "", species_name, ignore.case = TRUE)
+          species_name <- gsub("^range_|^map_", "", species_name, ignore.case = TRUE)
+          print(sprintf("    Extracted from filename: '%s'\n", species_name))
         }
 
-        if (species_name != "" && species_name != ".") {
+        # Final cleanup: replace underscores with spaces for binomial names
+        if (species_name != "" && species_name != "." && 
+            !grepl("^[0-9a-f]{8,}$", species_name, ignore.case = TRUE)) {  # Not a hash
+          species_name <- gsub("_", " ", species_name)
           range_map <- range_map %>%
             mutate(species_id = species_name)
-          cat(sprintf("    Extracted species name '%s' from file path\n", species_name))
+          print(sprintf("    Final species name: '%s'\n", species_name))
         } else {
-          warning(sprintf("Could not extract species ID from %s", file))
+          print(sprintf("    WARNING: Could not extract valid species ID from %s\n", file))
           skipped <- skipped + 1
           next
         }
       }
 
-      # Keep only relevant columns and valid geometries
-      range_map_clean <- range_map %>%
-        select(species_id, geometry) %>%
-        filter(!st_is_empty(geometry))
-
-      if (nrow(range_map_clean) > 0) {
-        all_ranges_list[[length(all_ranges_list) + 1]] <- range_map_clean
-        successful <- successful + 1
-      } else {
+      # Keep only species_id and geometry, filter empty geometries
+      geom_col <- attr(range_map, "sf_column")
+      range_map_clean <- range_map[, c("species_id", geom_col)]
+      range_map_clean <- range_map_clean[!st_is_empty(range_map_clean), ]
+      
+      if (nrow(range_map_clean) == 0) {
         skipped <- skipped + 1
+        next
+      }
+      
+      # Filter to region of interest NOW (before combining)
+      intersects_bbox <- st_intersects(range_map_clean, bbox_buffered, sparse = FALSE)
+      range_map_filtered <- range_map_clean[intersects_bbox[, 1], ]
+      
+      if (nrow(range_map_filtered) == 0) {
+        # No intersection with region - skip
+        skipped <- skipped + 1
+        next
+      }
+      
+      # Rename geometry column to 'geom' for consistency
+      if (geom_col != "geom") {
+        names(range_map_filtered)[names(range_map_filtered) == geom_col] <- "geom"
+        st_geometry(range_map_filtered) <- "geom"
       }
 
+      # Combine with existing data
+      if (is.null(all_ranges)) {
+        all_ranges <- range_map_filtered
+      } else {
+        all_ranges <- rbind(all_ranges, range_map_filtered)
+      }
+      successful <- successful + 1
+
     }, error = function(e) {
-      # Skip files that can't be read or are corrupt
+      # Log the error and skip file
+      print(sprintf("    ERROR reading file: %s\n", file))
+      print(sprintf("    Error message: %s\n", conditionMessage(e)))
       skipped <<- skipped + 1
     })
   }
 
-  cat(sprintf("  Successfully loaded: %d files\n", successful))
-  cat(sprintf("  Skipped (empty/invalid): %d files\n", skipped))
+  print(sprintf("  Successfully loaded: %d files\n", successful))
+  print(sprintf("  Skipped (empty/invalid/outside region): %d files\n", skipped))
 
-  # Combine all valid ranges
-  if (length(all_ranges_list) == 0) {
-    stop("No valid range maps were loaded!")
+  # Check if any ranges were loaded
+  if (is.null(all_ranges)) {
+    stop(sprintf(
+      "No valid range maps were loaded!\n  Total files attempted: %d\n  Successfully loaded: %d\n  Skipped: %d\n  Check the error messages above for details.",
+      length(range_files), successful, skipped
+    ))
   }
 
-  all_ranges <- bind_rows(all_ranges_list)
-
-  # Remove duplicates and ensure valid geometries
-  all_ranges <- all_ranges %>%
-    filter(st_is_valid(geometry)) %>%
-    distinct()
+  # Final cleanup - make valid and remove any remaining issues  
+  all_ranges <- st_make_valid(all_ranges)
+  all_ranges <- all_ranges[st_is_valid(all_ranges), ]
+  all_ranges <- distinct(all_ranges)
 
   n_species <- length(unique(all_ranges$species_id))
-  cat(sprintf("  Total: %d unique species with valid ranges\n", n_species))
+  print(sprintf("  Total: %d unique species with valid ranges in region\n", n_species))
 
   return(all_ranges)
 }
@@ -243,22 +330,63 @@ filter_ranges_to_region <- function(range_maps,
 
   cat("\n  Filtering species ranges to selected region...\n")
 
+  # Make EEZ valid first
+  eez_valid <- st_make_valid(eez_boundaries)
+  
   # Get bounding box with buffer
-  region_bbox <- st_bbox(eez_boundaries)
-  bbox_buffered <- st_bbox(
-    c(xmin = region_bbox["xmin"] - buffer_degrees,
-      xmax = region_bbox["xmax"] + buffer_degrees,
-      ymin = region_bbox["ymin"] - buffer_degrees,
-      ymax = region_bbox["ymax"] + buffer_degrees),
-    crs = st_crs(eez_boundaries)
-  ) %>% st_as_sfc()
+  region_bbox <- st_bbox(eez_valid)
+  
+  # Create buffered bbox manually - clamp to valid bounds
+  xmin_buf <- max(region_bbox["xmin"] - buffer_degrees, -180)
+  xmax_buf <- min(region_bbox["xmax"] + buffer_degrees, 180)
+  ymin_buf <- max(region_bbox["ymin"] - buffer_degrees, -89.9)  # Avoid exact pole
+  ymax_buf <- min(region_bbox["ymax"] + buffer_degrees, 89.9)   # Avoid exact pole
+  
+  bbox_coords <- matrix(c(
+    xmin_buf, ymin_buf,
+    xmax_buf, ymin_buf,
+    xmax_buf, ymax_buf,
+    xmin_buf, ymax_buf,
+    xmin_buf, ymin_buf
+  ), ncol = 2, byrow = TRUE)
+  
+  bbox_buffered <- st_sfc(st_polygon(list(bbox_coords)), crs = st_crs(eez_valid))
 
-  # Filter ranges that intersect with buffered bbox
-  filtered_ranges <- range_maps %>%
-    st_filter(bbox_buffered)
+  # Process each row individually to avoid NA geometry issues
+  filtered_list <- list()
+  n_total <- nrow(range_maps)
+  
+  for (i in seq_len(n_total)) {
+    if (i %% 100 == 0) {
+      print(sprintf("  Filtering range %d of %d...\n", i, n_total))
+    }
+    
+    tryCatch({
+      row <- range_maps[i, ]
+      
+      # Skip if geometry is NA or empty
+      if (is.na(st_geometry(row)) || st_is_empty(row)) {
+        next
+      }
+      
+      # Check if this row intersects with bbox
+      if (st_intersects(row, bbox_buffered, sparse = FALSE)[1, 1]) {
+        filtered_list[[length(filtered_list) + 1]] <- row
+      }
+    }, error = function(e) {
+      # Skip problematic rows
+    })
+  }
+  
+  # Combine filtered results
+  if (length(filtered_list) > 0) {
+    filtered_ranges <- do.call(rbind, filtered_list)
+  } else {
+    filtered_ranges <- range_maps[0, ]  # Empty sf with same structure
+  }
 
   n_species <- length(unique(filtered_ranges$species_id))
-  cat(sprintf("  Found %d species in region\n", n_species))
+  print(sprintf("  Found %d species in region\n", n_species))
 
   return(filtered_ranges)
 }
@@ -334,10 +462,12 @@ grid <- create_regional_grid(
   buffer_degrees = 2
 )
 
-# Step 2: Load all range maps from file paths
+# Step 2: Load all range maps from file paths (also filters to region)
 all_ranges <- load_range_maps(
   range_files = input$range_maps,  # Vector of file paths
-  species_list = species_threat$species_id
+  species_list = species_threat$species_id,
+  eez_boundaries = eez_boundaries,
+  buffer_degrees = 2
 )
 
 # Filter to species that are in both threat data and range maps
@@ -346,23 +476,16 @@ common_species <- intersect(
   unique(species_threat$species_id)
 )
 
-cat(sprintf("\n  Species overlap: %d species in both threat data and range maps\n",
+print(sprintf("\n  Species overlap: %d species in both threat data and range maps\n",
             length(common_species)))
 
 # Filter range maps to common species
-all_ranges <- all_ranges %>%
+range_maps <- all_ranges %>%
   filter(species_id %in% common_species)
 
 # Filter threat data to common species
 species_threat <- species_threat %>%
   filter(species_id %in% common_species)
-
-# Filter ranges to region
-range_maps <- filter_ranges_to_region(
-  all_ranges,
-  eez_boundaries,
-  buffer_degrees = 2
-)
 
 # Step 3: Intersect ranges with grid
 cat("\nStep 3: Intersecting species ranges with grid...\n")
@@ -373,7 +496,7 @@ species_by_cell <- st_intersection(range_maps, grid) %>%
   select(species_id, cell_id, area_km2) %>%
   distinct()
 
-cat(sprintf("  Found %d species-cell combinations\n", nrow(species_by_cell)))
+print(sprintf("  Found %d species-cell combinations\n", nrow(species_by_cell)))
 
 # Step 4: Assign cells to countries/EEZs
 cat("\nStep 4: Assigning grid cells to study region...\n")
@@ -391,7 +514,7 @@ cell_countries <- st_join(grid_centroids, eez_boundaries, join = st_within) %>%
     country_name = "Study Region"
   )
 
-cat(sprintf("  Assigned %d cells to study region\n", nrow(cell_countries)))
+print(sprintf("  Assigned %d cells to study region\n", nrow(cell_countries)))
 
 # Step 5: Calculate status scores
 cat("\nStep 5: Calculating species status scores...\n")
@@ -409,7 +532,7 @@ final_scores <- country_scores %>%
   ) %>%
   arrange(desc(status_score))
 
-cat(sprintf("  Calculated scores for %d region\n", nrow(final_scores)))
+print(sprintf("  Calculated scores for %d region\n", nrow(final_scores)))
 
 # Step 6: Save results
 cat("\nStep 6: Saving results...\n")
@@ -450,10 +573,10 @@ print(final_scores %>%
 
 cat("\n\nSummary Statistics:\n")
 cat("-------------------\n")
-cat(sprintf("  Status Score: %.3f\n", final_scores$status_score))
-cat(sprintf("  R_spp: %.3f\n", final_scores$R_spp))
-cat(sprintf("  Total species analyzed: %d\n", final_scores$total_species))
-cat(sprintf("  Grid cells: %d\n", final_scores$n_cells))
-cat(sprintf("  Below catastrophic threshold (0.25): %s\n",
+print(sprintf("  Status Score: %.3f\n", final_scores$status_score))
+print(sprintf("  R_spp: %.3f\n", final_scores$R_spp))
+print(sprintf("  Total species analyzed: %d\n", final_scores$total_species))
+print(sprintf("  Grid cells: %d\n", final_scores$n_cells))
+print(sprintf("  Below catastrophic threshold (0.25): %s\n",
             ifelse(final_scores$status_score < CATASTROPHIC_FLOOR, "YES", "NO")))
-cat(sprintf("\nResults saved to: %s\n\n", output_dir))
+print(sprintf("\nResults saved to: %s\n\n", output_dir))
