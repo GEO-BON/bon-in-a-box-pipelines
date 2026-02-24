@@ -19,30 +19,26 @@ There are no data or API keys required for this analysis. To view the global lay
 ### Pipeline inputs
 The Natural History Museum has created raster layers of BII since the year 2000. BON in a Box has a pipeline to calculate summary statistics and plot a time series from these layers in a country, region, or custom study area of interest. The pipeline has the following inputs:
 
-- **Country:** country of interest.
-
-- **State/Province:** region of interest.
+- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu.
 
 - **Summary statistic:** the user can choose the summary statistic for BII (options: mean, median, mode) that will be calculated for the country or region of interest.
 
-- **Start year for BII raster comparison:** reference BII year for raster plotting.
+- **Spatial resolution:** the user can select the spatial resolution of the rasters. This must be in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat-long). To use the original spatial resolution of the layers (10 x 10 km), the user should leave this input blank. In that case, the CRS selected must be EPSG:4326.
 
-- **End year for BII comparison:** BII layer to compare to the start year.
+- **Start date:** this input is optional. The user can select a start date as a reference BII year for raster plotting, in the format YYYY or YYYY-MM-DD. To perform the analysis on all available dates, the user should leave this input blank.
 
-- **Coordinate reference system:** the coordinate reference system of choice. Search for a CRS of interest [here](https://epsg.io/). This needs to be a projected coordinate reference system (in meters).
-
-- **Spatial resolution:** the spatial resolution of the rasters (in meters). The spatial resolution of the layer is 10 x 10 km.
+- **End date:** this input is optional. The user can select an end date to extract a BII layer to compare to the start year, in the format YYYY or YYYY-MM-DD. To perform the analysis on all available dates, the user should leave this input blank.
 
 ### Pipeline steps
 
-#### **1. Retrieving the country bounding box**
-This step retrieves the bounding box for the country/region of interest using the `Get country bounding box` pipeline.
+#### **1. Getting the polygon of the area of interest**
+This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using [Fieldmaps](https://fieldmaps.io/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
 
 #### **2. Loading data from the GEO BON STAC catalog**
 This step extracts the global biodiversity intactness layers from various collections on the GEO BON Spatio Temporal Asset Catalog. The layers are in EPSG: 4326 and 10x10 km resolution but the user can specify other coordinate references systems and spatial resolutions. The BII uses the PREDICTS database to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact.
 
 #### **3. Calculating zonal statistics**
-This step calculates the zonal statistics for the raster layers obtained from the GEO BON STAC catalog over the bounding box from step 1, using the R package exactextractr. The user can choose what types of zonal statistics will be extracted.
+This step calculates the zonal statistics for the raster layers obtained from the GEO BON STAC catalog over the chosen bounding box, using the R package exactextractr. The user can choose what types of zonal statistics will be extracted.
 
 #### **4. Calculating the BII change**
 This step generates a raster of the change in the BII between the two chosen time points.
@@ -55,9 +51,9 @@ This step generates a raster of the change in the BII between the two chosen tim
 
 - **Change in BII:** a raster plot of the change in BII between the two chosen years. Higher numbers indicate greater BII loss.
 
-- **Country:** the region of interest.
+- **Country:** the region of interest, if selected.
 
-- **Region:** the country of interest.
+- **Region:** the country of interest, if selected.
 
 ## Example
 **Sample run:** See an example BII run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/BII%3EBII/d29bd8231a0ceefbd0fd14bc16e1e4cc) and [viewer](https://pipelines-results.geobon.org/viewer/BII%3EBII%3Ed29bd8231a0ceefbd0fd14bc16e1e4cc).

@@ -4,6 +4,8 @@ description: "This script creates a Species Distribution Model (SDM) and uncerta
 author:
   - name: Michael D. Catchen
     identifier: https://orcid.org/0000-0002-6506-6487
+lifecycle:
+  status: in_review
 inputs:
   occurrence:
     label: occurrence coordinate dataframe

@@ -4,8 +4,8 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 2253,
-        "y": 89
+        "x": 1358,
+        "y": 94
       },
       "data": {
         "descriptionFile": "site_selection_BAS>Block_creation.yml"
@@ -15,8 +15,8 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 1751,
-        "y": 395
+        "x": 876,
+        "y": 300
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "6",
       "type": "output",
       "position": {
-        "x": 2851,
-        "y": 12
+        "x": 1976,
+        "y": 343
       },
       "data": {
         "label": "Output"
@@ -37,8 +37,8 @@
       "id": "13",
       "type": "output",
       "position": {
-        "x": 2851,
-        "y": 337
+        "x": 1976,
+        "y": 163
       },
       "data": {
         "label": "Output"
@@ -48,8 +48,8 @@
       "id": "14",
       "type": "output",
       "position": {
-        "x": 2851,
-        "y": 60
+        "x": 1976,
+        "y": 391
       },
       "data": {
         "label": "Output"
@@ -59,8 +59,8 @@
       "id": "26",
       "type": "io",
       "position": {
-        "x": 2851,
-        "y": 177
+        "x": 1976,
+        "y": 221
       },
       "data": {
         "descriptionFile": "site_selection_BAS>BAS_algorithm.yml"
@@ -70,53 +70,30 @@
       "id": "31",
       "type": "output",
       "position": {
-        "x": 3404.0000000000005,
-        "y": 182
+        "x": 2523,
+        "y": 304.5
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "45",
-      "type": "io",
-      "position": {
-        "x": 434,
-        "y": 123
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
       }
     },
     {
       "id": "50",
       "type": "output",
       "position": {
-        "x": 2253,
-        "y": 366
+        "x": 1358,
+        "y": 271
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "51",
-      "type": "constant",
-      "position": {
-        "x": 1074,
-        "y": 612
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "application/geopackage+sqlite3"
-      }
-    },
-    {
       "id": "52",
       "type": "constant",
       "position": {
-        "x": 1268,
-        "y": 518
+        "x": 206,
+        "y": 290
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -144,8 +121,8 @@
       "id": "53",
       "type": "constant",
       "position": {
-        "x": 1268,
-        "y": 565
+        "x": 206,
+        "y": 337
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -164,8 +141,8 @@
       "id": "54",
       "type": "constant",
       "position": {
-        "x": 1293,
-        "y": 476
+        "x": 231,
+        "y": 248
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -177,8 +154,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 1298,
-        "y": 381
+        "x": 236,
+        "y": 164
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -189,8 +166,8 @@
       "id": "56",
       "type": "constant",
       "position": {
-        "x": 1298,
-        "y": 339
+        "x": 236,
+        "y": 122
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -202,8 +179,8 @@
       "id": "58",
       "type": "constant",
       "position": {
-        "x": 1298,
-        "y": 215
+        "x": 236,
+        "y": 80
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -215,24 +192,67 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 1298,
-        "y": 423
+        "x": 236,
+        "y": 206
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text"
+        "type": "text",
+        "value": null
       }
     },
     {
       "id": "60",
       "type": "userInput",
       "position": {
-        "x": 14.202108032828164,
-        "y": 308.96381886643223
+        "x": 229,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "61",
+      "type": "io",
+      "position": {
+        "x": 865.1255198182539,
+        "y": 15.91400744111553
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "62",
+      "type": "constant",
+      "position": {
+        "x": 541.1255198182539,
+        "y": -133.08599255888447
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "63",
+      "type": "constant",
+      "position": {
+        "x": 495.1255198182539,
+        "y": 70.91400744111553
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -287,32 +307,11 @@
       "id": "reactflow__edge-0colors_vect-26colors_vect"
     },
     {
-      "source": "45",
-      "sourceHandle": "country_region_polygon",
-      "target": "0",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-45country_region_polygon-0country_polygon"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "country_region_polygon",
-      "target": "26",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-45country_region_polygon-26country_polygon"
-    },
-    {
       "source": "2",
       "sourceHandle": "rasters",
       "target": "50",
       "targetHandle": null,
       "id": "reactflow__edge-2rasters-50"
-    },
-    {
-      "source": "51",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-51-2study_area"
     },
     {
       "source": "52",
@@ -380,16 +379,51 @@
     {
       "source": "60",
       "sourceHandle": null,
-      "target": "45",
+      "target": "2",
       "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-60-45bbox_crs"
+      "id": "reactflow__edge-60-2bbox_crs"
     },
     {
       "source": "60",
       "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-60-61country_region_bbox"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
+      "target": "0",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-61polygon-0country_polygon"
+    },
+    {
+      "source": "62",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-62-61polygon_type"
+    },
+    {
+      "source": "63",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-63-61buffer"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
       "target": "2",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-60-2bbox_crs"
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-61polygon-2study_area"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "polygon",
+      "target": "26",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-61polygon-26country_polygon"
     }
   ],
   "inputs": {
