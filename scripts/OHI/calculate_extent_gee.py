@@ -44,7 +44,6 @@ ee_fc = ee.FeatureCollection(features)
 
 ee_fc = ee.FeatureCollection(features)
 
-
 hab_clipped = hab.clip(ee_fc)
 print(hab_clipped)
 
@@ -53,7 +52,23 @@ band = inputs['bands']
 if band is not None:
     hab_clipped = hab_clipped.select(band)
 
+## Output layer
+outfile = ("%s/gee_layer.tif") % (output_folder)
 
+resolution = inputs['resolution']
+#Download directly to local file
+geemap.ee_export_image(
+    hab_clipped,
+    filename=outfile,
+    scale=resolution,
+    region=ee_fc.geometry(),
+    file_per_band=False
+)
+
+biab_output("gee_layer", outfile)
+
+
+### Output extent
 scale = hab_clipped.projection().nominalScale().getInfo()
 print("Pixel resolution (m):", scale)
 

@@ -218,6 +218,17 @@
       "data": {
         "type": "bboxCRS"
       }
+    },
+    {
+      "id": "223",
+      "type": "output",
+      "position": {
+        "x": 1319.3721872321828,
+        "y": 209.14875548721562
+      },
+      "data": {
+        "label": "Output"
+      }
     }
   ],
   "edges": [
@@ -395,6 +406,13 @@
       "target": "219",
       "targetHandle": "country_region_bbox",
       "id": "reactflow__edge-222-219country_region_bbox"
+    },
+    {
+      "source": "176",
+      "sourceHandle": "gee_layer",
+      "target": "223",
+      "targetHandle": null,
+      "id": "reactflow__edge-176gee_layer-223"
     }
   ],
   "inputs": {
@@ -493,6 +511,12 @@
       "label": "Species scores",
       "type": "text/csv",
       "weight": 5
+    },
+    "OHI>calculate_extent_gee.yml@176|gee_layer": {
+      "description": "Layer pulled from GEE",
+      "label": "GEE layer",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 6
     }
   },
   "metadata": {

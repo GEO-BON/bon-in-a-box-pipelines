@@ -27,6 +27,10 @@ inputs:
     description: Polygon to crop GEE layers by
     type: application/geopackage+sqlite3
 outputs:
+  gee_layer:
+    label: GEE layer
+    description: Layer pulled from GEE
+    type: image/tiff;application=geotiff[]
   extent:
     label: Extent
     description: Extent of coral in m2
