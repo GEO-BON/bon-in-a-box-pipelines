@@ -85,18 +85,18 @@ if (input$polygon_type == "Country or region") {
     if (country) {
         # Load country if region is null
         if (is.null(input$country_region_bbox$region)) {
-            print(sprintf("Loading country polygon for: %s", name))
+            print(sprintf("Loading country polygon for: %s", input$country_region_bbox$country$englishName))
             country_poly <- open_dataset(countries_url)
             geo_data_sf <- country_poly |>
                 filter(adm0_src == input$country_region_bbox$country$ISO3) |>
                 to_sf() |>
                 st_set_crs(4326)
         } else { # Region not null
-            print(sprintf("Loading region polygon for: %s", name))
+            print(sprintf("Loading region polygon for: %s", input$country_region_bbox$region$regionName))
             country_region_bbox <- open_dataset(regions_url)
             geo_data_sf <- country_region_bbox |>
                 filter(adm0_src == input$country_region_bbox$country$ISO3) |>
-                filter(adm1_name == name) |>
+                filter(adm1_name == input$country_region_bbox$region$regionName) |>
                 to_sf() |>
                 st_set_crs(4326)
             geo_data_sf$fid <- as.integer(geo_data_sf$fid)
