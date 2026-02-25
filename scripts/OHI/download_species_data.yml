@@ -10,7 +10,7 @@ inputs:
   country_region:
     label: Country
     description: Using the country chooser to select a region (region selections will be ignored as EEZs are national).
-    type: countryRegion
+    type: bboxCRS
 outputs:
   spp_status:
     label: Species status

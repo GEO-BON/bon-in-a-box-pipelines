@@ -23,18 +23,6 @@
       }
     },
     {
-      "id": "183",
-      "type": "userInput",
-      "position": {
-        "x": -85,
-        "y": 115.3125
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "countryRegion"
-      }
-    },
-    {
       "id": "184",
       "type": "io",
       "position": {
@@ -218,23 +206,21 @@
           "EEZ"
         ]
       }
+    },
+    {
+      "id": "222",
+      "type": "userInput",
+      "position": {
+        "x": 17.262842284670967,
+        "y": 411.35827762595443
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
     }
   ],
   "edges": [
-    {
-      "source": "183",
-      "sourceHandle": null,
-      "target": "181",
-      "targetHandle": "country_region",
-      "id": "reactflow__edge-183-181country_region"
-    },
-    {
-      "source": "183",
-      "sourceHandle": null,
-      "target": "184",
-      "targetHandle": "country_region",
-      "id": "reactflow__edge-183-184country_region"
-    },
     {
       "source": "176",
       "sourceHandle": "extent",
@@ -269,20 +255,6 @@
       "target": "187",
       "targetHandle": "spp_trend",
       "id": "reactflow__edge-188spp_trend-187spp_trend"
-    },
-    {
-      "source": "183",
-      "sourceHandle": null,
-      "target": "188",
-      "targetHandle": "country_region",
-      "id": "reactflow__edge-183-188country_region"
-    },
-    {
-      "source": "183",
-      "sourceHandle": null,
-      "target": "190",
-      "targetHandle": "country_region",
-      "id": "reactflow__edge-183-190country_region"
     },
     {
       "source": "190",
@@ -402,29 +374,43 @@
       "target": "176",
       "targetHandle": "polygon",
       "id": "reactflow__edge-219polygon-176polygon"
+    },
+    {
+      "source": "222",
+      "sourceHandle": null,
+      "target": "188",
+      "targetHandle": "country_region",
+      "id": "reactflow__edge-222-188country_region"
+    },
+    {
+      "source": "222",
+      "sourceHandle": null,
+      "target": "190",
+      "targetHandle": "country_region",
+      "id": "reactflow__edge-222-190country_region"
+    },
+    {
+      "source": "222",
+      "sourceHandle": null,
+      "target": "219",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-222-219country_region_bbox"
     }
   ],
   "inputs": {
-    "pipeline@183": {
+    "pipeline@222": {
       "label": "Country",
       "description": "Using the country chooser to select a region (region selections will be ignored as EEZs are national).",
-      "type": "countryRegion",
-      "example": null,
-      "weight": 0
-    },
-    "data>load_polygons.yml@219|country_region_bbox": {
-      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
-      "label": "Country, region, or bounding box",
       "type": "bboxCRS",
       "example": null,
-      "weight": 1
+      "weight": 0
     },
     "OHI>calculate_extent_gee.yml@176|gee_layer_name": {
       "description": "Path to the layer of interest in GEE",
       "label": "GEE layer path",
       "type": "text",
       "example": "ACA/reef_habitat/v2_0",
-      "weight": 2
+      "weight": 1
     },
     "OHI>calculate_extent_gee.yml@176|bands": {
       "description": "Bands to extract (leave blank for all)",
@@ -433,42 +419,42 @@
       "example": [
         "reef_mask"
       ],
-      "weight": 3
+      "weight": 2
     },
     "OHI>calculate_extent_gee.yml@176|resolution": {
       "description": "Resolution for exported GEE layer (leave blank for original resolution)",
       "label": "Resolution",
       "type": "int",
       "example": 30,
-      "weight": 4
+      "weight": 3
     },
     "OHI>calculate_resilience.yml@200|resilience_gamma": {
       "description": "Relative importance of social vs ecological resilience",
       "label": "Resilience gamma",
       "type": "float",
       "example": 0.5,
-      "weight": 5
+      "weight": 4
     },
     "OHI>calculate_pressures.yml@201|pressures_gamma": {
       "description": "Relative importance of social vs ecological resilience",
       "label": "Pressures gamma",
       "type": "float",
       "example": 0.5,
-      "weight": 6
+      "weight": 5
     },
     "OHI>calc_OHI.yml@214|beta": {
       "description": "Value for weighting trend vs resilience and pressures",
       "label": "beta",
       "type": "float",
       "example": 0.67,
-      "weight": 7
+      "weight": 6
     },
     "OHI>calc_OHI.yml@214|weights": {
       "description": "weight for species vs. habitat (weight will be for species and habitat will be 1-weight)",
       "label": "Weight for subgoals",
       "type": "float",
       "example": 0.5,
-      "weight": 8
+      "weight": 7
     }
   },
   "outputs": {
