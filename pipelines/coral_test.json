@@ -1,22 +1,11 @@
 {
   "nodes": [
     {
-      "id": "175",
-      "type": "io",
-      "position": {
-        "x": 270.82926135520165,
-        "y": 194.18243373039638
-      },
-      "data": {
-        "descriptionFile": "data>load_polygons.yml"
-      }
-    },
-    {
       "id": "176",
       "type": "io",
       "position": {
-        "x": 715,
-        "y": 274.8125
+        "x": 789.0271179372503,
+        "y": 282.6048282039211
       },
       "data": {
         "descriptionFile": "OHI>calculate_extent_gee.yml"
@@ -187,23 +176,51 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "219",
+      "type": "io",
+      "position": {
+        "x": 454.50623430812357,
+        "y": 165.9582018200709
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "220",
+      "type": "constant",
+      "position": {
+        "x": 20.320125665701994,
+        "y": 233.69282583072643
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "221",
+      "type": "constant",
+      "position": {
+        "x": 110.31217283518708,
+        "y": -36.283315677728496
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "EEZ",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
     }
   ],
   "edges": [
-    {
-      "source": "175",
-      "sourceHandle": "polygon",
-      "target": "176",
-      "targetHandle": "polygon",
-      "id": "reactflow__edge-175polygon-176polygon"
-    },
-    {
-      "source": "183",
-      "sourceHandle": null,
-      "target": "175",
-      "targetHandle": "country_region",
-      "id": "reactflow__edge-183-175country_region"
-    },
     {
       "source": "183",
       "sourceHandle": null,
@@ -364,26 +381,42 @@
       "target": "216",
       "targetHandle": null,
       "id": "reactflow__edge-214ohi_score-216"
+    },
+    {
+      "source": "220",
+      "sourceHandle": null,
+      "target": "219",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-220-219buffer"
+    },
+    {
+      "source": "221",
+      "sourceHandle": null,
+      "target": "219",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-221-219polygon_type"
+    },
+    {
+      "source": "219",
+      "sourceHandle": "polygon",
+      "target": "176",
+      "targetHandle": "polygon",
+      "id": "reactflow__edge-219polygon-176polygon"
     }
   ],
   "inputs": {
-    "data>load_polygons.yml@175|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs)",
-      "label": "Polygon type",
-      "type": "options",
-      "options": [
-        "Country or region",
-        "WDPA",
-        "EEZ"
-      ],
+    "pipeline@183": {
+      "label": "Country",
+      "description": "Using the country chooser to select a region (region selections will be ignored as EEZs are national).",
+      "type": "countryRegion",
       "example": null,
       "weight": 0
     },
-    "data>load_polygons.yml@175|buffer": {
-      "description": "Buffer for pulling transboundary protected areas (WDPA data only). The buffer will pull protected areas within that distance of the country border (in meters).",
-      "label": "Transboundary buffer",
-      "type": "int",
-      "example": 500,
+    "data>load_polygons.yml@219|country_region_bbox": {
+      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
+      "label": "Country, region, or bounding box",
+      "type": "bboxCRS",
+      "example": null,
       "weight": 1
     },
     "OHI>calculate_extent_gee.yml@176|gee_layer_name": {
@@ -409,40 +442,33 @@
       "example": 30,
       "weight": 4
     },
-    "pipeline@183": {
-      "label": "Country",
-      "description": "Using the country chooser to select a region (region selections will be ignored as EEZs are national).",
-      "type": "countryRegion",
-      "example": null,
-      "weight": 5
-    },
     "OHI>calculate_resilience.yml@200|resilience_gamma": {
       "description": "Relative importance of social vs ecological resilience",
       "label": "Resilience gamma",
       "type": "float",
       "example": 0.5,
-      "weight": 6
+      "weight": 5
     },
     "OHI>calculate_pressures.yml@201|pressures_gamma": {
       "description": "Relative importance of social vs ecological resilience",
       "label": "Pressures gamma",
       "type": "float",
       "example": 0.5,
-      "weight": 7
+      "weight": 6
     },
     "OHI>calc_OHI.yml@214|beta": {
       "description": "Value for weighting trend vs resilience and pressures",
       "label": "beta",
       "type": "float",
       "example": 0.67,
-      "weight": 8
+      "weight": 7
     },
     "OHI>calc_OHI.yml@214|weights": {
       "description": "weight for species vs. habitat (weight will be for species and habitat will be 1-weight)",
       "label": "Weight for subgoals",
       "type": "float",
       "example": 0.5,
-      "weight": 9
+      "weight": 8
     }
   },
   "outputs": {
@@ -482,5 +508,28 @@
       "type": "text/csv",
       "weight": 5
     }
+  },
+  "metadata": {
+    "name": "OHI proof of concept",
+    "description": null,
+    "author": [
+      {
+        "name": null,
+        "email": null,
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": null,
+    "references": [
+      {
+        "text": null,
+        "doi": null
+      },
+      {
+        "text": null,
+        "doi": null
+      }
+    ]
   }
 }
