@@ -39,12 +39,12 @@ if (!is.null(val_country) && length(val_country) > 0 && !(is.atomic(val_country)
 # Path for polygon
 if (country) { # if there is a country or region input
     if (is.null(input$country_region_bbox$region)) {
-    name <- gsub(" ", "_", input$country_region_bbox$country$englishName)
+        name <- gsub(" ", "_", input$country_region_bbox$country$englishName)
     } else {
-    name <- gsub(" ", "_", input$country_region_bbox$region$regionName)
+        name <- gsub(" ", "_", input$country_region_bbox$region$regionName)
     }
 } else {
-     name <- "bbox" # or we just call it bbox
+    name <- "bbox" # or we just call it bbox
 }
 
 
@@ -85,24 +85,22 @@ if (input$polygon_type == "Country or region") {
     if (country) {
         # Load country if region is null
         if (is.null(input$country_region_bbox$region)) {
-            print(sprintf("Loading country polygon for: %s", name))
+            print(sprintf("Loading country polygon for: %s", input$country_region_bbox$country$englishName))
             country_poly <- open_dataset(countries_url)
             geo_data_sf <- country_poly |>
                 filter(adm0_src == input$country_region_bbox$country$ISO3) |>
                 to_sf() |>
                 st_set_crs(4326)
         } else { # Region not null
-            print(sprintf("Loading region polygon for: %s", name))
+            print(sprintf("Loading region polygon for: %s", input$country_region_bbox$region$regionName))
             country_region_bbox <- open_dataset(regions_url)
             geo_data_sf <- country_region_bbox |>
                 filter(adm0_src == input$country_region_bbox$country$ISO3) |>
-                filter(adm1_name == name) |>
+                filter(adm1_name == input$country_region_bbox$region$regionName) |>
                 to_sf() |>
                 st_set_crs(4326)
             geo_data_sf$fid <- as.integer(geo_data_sf$fid)
         }
-
-        
     } else { # custom bounding box
         print(sprintf("Loading region polygon for custom bounding box: %s", paste(input$country_region_bbox$bbox, collapse = ", ")))
         con <- dbConnect(duckdb())
@@ -166,15 +164,15 @@ if (input$polygon_type == "WDPA") {
     coord <- st_crs(crs_input)
     # Load the CRS object
     if (!is.null(input$buffer) && input$buffer > 0) {
-  # Check for inconsistencies between CRS type and resolution
-  if (st_is_longlat(coord) && input$buffer > 1) {
-    biab_error_stop("CRS is in degrees and buffer distance is in meters.")
-  }
+        # Check for inconsistencies between CRS type and resolution
+        if (st_is_longlat(coord) && input$buffer > 1) {
+            biab_error_stop("CRS is in degrees and buffer distance is in meters.")
+        }
 
-  if (st_is_longlat(coord) == FALSE && input$buffer < 1) {
-    biab_error_stop("CRS is in meters and buffer distance is in degrees.")
-  }
-}
+        if (st_is_longlat(coord) == FALSE && input$buffer < 1) {
+            biab_error_stop("CRS is in meters and buffer distance is in degrees.")
+        }
+    }
 
     # If user selected a country, we will use its polygon to crop the WDPA data
     if (country) {
