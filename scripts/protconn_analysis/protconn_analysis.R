@@ -129,6 +129,8 @@ if (!is.null(input$date_column)){
 }
 
 print(nrow(protected_areas))
+# buffer by a distance of 0 to fix some geometries
+protected_areas <- st_buffer(protected_areas, 0)
 
 any_invalid <- any(!st_is_valid(protected_areas))
 
@@ -139,25 +141,57 @@ if (any_invalid) {
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")
-  protected_areas_buffer <- st_buffer(x, dist = 10) # buffering polygons by 10 meters
-  intersections <- st_intersects(protected_areas_buffer) # Identifying intersecting polygons
+  
+  protected_areas_buffer <- st_buffer(x, dist = 10)
+  intersections <- st_intersects(protected_areas_buffer)
 
-  # Grouping intersecting polygons
-  groups <- as.integer(igraph::components(graph = igraph::graph_from_adj_list(intersections))$membership)
+  groups <- as.integer(igraph::components(
+    graph = igraph::graph_from_adj_list(intersections))$membership)
 
   x$group_id <- groups
 
   protected_areas_clean <- x %>%
     group_by(group_id) %>%
-    summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
+    summarize(geom = st_union(geom), .groups = "drop")
+  
+  # Re-validate after union if needed
+  invalid_after_union <- sum(!st_is_valid(protected_areas_clean))
+  if (invalid_after_union > 0) {
+    print(paste(invalid_after_union, "invalid geometries found after union, running st_make_valid"))
+    protected_areas_clean <- st_make_valid(protected_areas_clean)
+  } else {
+    print("All geometries valid after union")
+  }
 
-  # Exploding multipolygons into polygons for faster calculation
-  protected_areas_multi <- protected_areas_clean %>%
-    filter(st_geometry_type(protected_areas_clean) == "MULTIPOLYGON") %>%
+  # Cast all to POLYGON (handles both POLYGON and MULTIPOLYGON)
+  protected_areas_clean <- protected_areas_clean %>%
     st_cast("POLYGON", group_or_split = TRUE)
-  protected_areas_poly <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean) == "POLYGON")
 
-  protected_areas_clean <- rbind(protected_areas_multi, protected_areas_poly)
+  # Checks to see if st_cast causes polygon loss
+  # Before
+n_before <- nrow(protected_areas_clean)
+
+protected_areas_clean <- protected_areas_clean %>%
+  st_cast("POLYGON", group_or_split = TRUE)
+
+# After
+n_after <- nrow(protected_areas_clean)
+
+if (n_after < n_before) {
+  warning(paste("Polygon loss detected:", n_before - n_after, 
+                "features lost during st_cast"))
+} else {
+  print(paste("No polygon loss detected.", n_after, "polygons retained"))
+}
+  
+  # Re-validate after cast if needed
+  invalid_after_cast <- sum(!st_is_valid(protected_areas_clean))
+  if (invalid_after_cast > 0) {
+    print(paste(invalid_after_cast, "invalid geometries found after cast, running st_make_valid"))
+    protected_areas_clean <- st_make_valid(protected_areas_clean)
+  } else {
+    print("All geometries valid after cast")
+  }
 
   return(protected_areas_clean)
 }
@@ -209,7 +243,8 @@ protconn_result <- Makurhini::MK_ProtConn(
   distance = list(type = "edge", keep=0.6),
   probability = 0.5,
   transboundary = input$buffer,
-  distance_thresholds = c(input$distance_threshold)
+  distance_thresholds = c(input$distance_threshold),
+  protconn_bound=TRUE
 )
 gc()
 
@@ -323,7 +358,8 @@ for (i in seq_along(years)) {
       distance = list(type = "edge", keep=0.6),
       probability = 0.5,
       transboundary = input$buffer,
-      distance_thresholds = c(input$distance_threshold)
+      distance_thresholds = c(input$distance_threshold), 
+      protconn_bound = TRUE
     )
 
 
