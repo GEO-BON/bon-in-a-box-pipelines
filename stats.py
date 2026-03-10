@@ -26,13 +26,14 @@ def parse_gc_table(log_content):
         print(f"\t{total_mb:.1f} mb")
         return total_mb
 
-    py_jl_pattern = r"Memory used: (\d+) kb"
-    match = re.search(py_jl_pattern, log_content)
-    if match:
-        total_kb = int(match.group(1))
-        total_mb = total_kb / 1024
-        print(f"\t{total_mb:.3f} mb")
-        return total_mb
+    # FIXME: this does not work now that \time was removed since it broke signal forwarding.
+    # py_jl_pattern = r"Memory used: (\d+) kb"
+    # match = re.search(py_jl_pattern, log_content)
+    # if match:
+    #     total_kb = int(match.group(1))
+    #     total_mb = total_kb / 1024
+    #     print(f"\t{total_mb:.3f} mb")
+    #     return total_mb
 
     print("\t! No stats found")
     return None
