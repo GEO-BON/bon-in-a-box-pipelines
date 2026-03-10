@@ -15,6 +15,7 @@ if ((input$year_int) >= (input$years - input$start_year)) {
 }
 
 units::units_options(set_units_mode = "standard")
+protected_areas_path <- c()
 # Load study area shapefile
 print("Loading study area")
 
@@ -53,7 +54,7 @@ if (length(protected_areas_user) > 0 && length(protected_areas) > 0) {
 ### Load protected area shapefile
 if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, load that
 
-  protected_areas <- st_read(protected_areas) 
+  protected_areas <- st_read(protected_areas)
   protected_areas <- st_transform(protected_areas, st_crs(crs_input))
 print(head(protected_areas))
 
@@ -86,10 +87,10 @@ if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and par
   protected_areas_user <- st_read(protected_areas_user) # load
   print(protected_areas_user)
   protected_areas_user <- st_transform(protected_areas_user, st_crs(crs_input))
-  
+
   if ((input$time_series==TRUE) & is.null(input$date_column)) {
     biab_error_stop("Please specify a date column name for the protected areas file or deselect the time series option.")
-  } 
+  }
 
 if (!is.null(input$date_column)){
 # Assign all PAs without a date to the start year for the time series
@@ -345,7 +346,6 @@ for (i in seq_along(years)) {
       message(paste("Not enough protected area data from", yr, "- skipping"))
       next
     }
-    
 
     protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
     protected_areas_filt_yr <- protected_areas_filt_yr %>% filter((st_area(protected_areas_filt_yr)) > threshold)
@@ -387,8 +387,11 @@ for (i in seq_along(years)) {
   }
   print(protconn_result_combined)
   protconn_ts_result[[i]] <- protconn_result_combined
+  protected_areas_path[i] <- file.path(outputFolder, paste0(yr, "_protected_areas.gpkg"))
+  sf::st_write(protected_areas_filt_yr, protected_areas_path[i], delete_dsn = T)
   gc()
 }
+biab_output("protected_areas_yr", protected_areas_path)
 
 # Final time series dataframe
 protconn_result_yrs <- do.call(rbind, protconn_ts_result)

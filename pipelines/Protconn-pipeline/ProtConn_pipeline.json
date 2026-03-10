@@ -348,6 +348,13 @@
       "target": "42",
       "targetHandle": "buffer",
       "id": "reactflow__edge-69-42buffer"
+    },
+    {
+      "source": "42",
+      "sourceHandle": "protected_areas_yr",
+      "target": "43",
+      "targetHandle": null,
+      "id": "reactflow__edge-42protected_areas_yr-43"
     }
   ],
   "inputs": {
@@ -425,7 +432,7 @@
       "weight": 9
     },
     "protconn_analysis>protconn_analysis.yml@42|pa_size_threshold": {
-      "description": "Size threshold for PAs, in kilometers squared. Protected areas smaller than this area will be removed. A threshold of 1km2 was used in Saura et al. 2017 because at larger scales, protected areas less than 1km2 do not have a large impact on ProtConn values. Removing small protected areas significantly speeds up calculation and is recommended for large areas. To not PAs filter by a size threshold, input a value of 0.",
+      "description": "Size threshold for PAs, in meters squared. Protected areas smaller than this area will be removed. A threshold of 1000m2 was used in Saura et al. 2017 because at larger scales, protected areas less than 1000m2 do not have a large impact on ProtConn values. Removing small protected areas significantly speeds up calculation and is recommended for large areas. To not PAs filter by a size threshold, input a value of 0.",
       "label": "PA size threshold",
       "type": "float",
       "example": 1000,
@@ -523,6 +530,12 @@
       "label": "Study area polygon",
       "type": "application/geopackage+sqlite3",
       "weight": 5
+    },
+    "protconn_analysis>protconn_analysis.yml@42|protected_areas_yr": {
+      "description": "Protected areas on which ProtConn has been calculated, filtered by year.",
+      "label": "Year based protected areas",
+      "type": "application/geopackage+sqlite3[]",
+      "weight": 6
     }
   },
   "metadata": {

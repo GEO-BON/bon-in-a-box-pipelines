@@ -63,11 +63,11 @@ inputs:
   years:
     label: Year for cutoff
     description: Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs
-      that were designated before the year 2000). Leave blank if only using WDPA data or your protected area file does not have dates. 
+      that were designated before the year 2000). Leave blank if only using WDPA data or your protected area file does not have dates.
       Note that if your protected area file doesn't have dates you cannot do the time series analysis.
     type: int
     example: 2025
-  time_series: 
+  time_series:
     label: Time series
     description: Whether to calculate time series plot of ProtConn values based on date of PA establishment
     type: boolean
@@ -82,7 +82,7 @@ inputs:
     example: TRUE
   start_year:
     label: Start year
-    description: Year for the time series plot to start. Missing dates for protected area establishment will be automatically assigned to 
+    description: Year for the time series plot to start. Missing dates for protected area establishment will be automatically assigned to
       this year for the time series analysis. Leave blank if time series is not selected.
     type: int
     example: 1980
@@ -97,6 +97,10 @@ outputs:
     label: Protected areas
     description: Protected areas on which ProtConn has been calculated. Overlapping protected areas have been merged
       into one to speed up calculation. Protected areas less than the threshold size were also removed.
+    type: application/geopackage+sqlite3[]
+  protected_areas_yr:
+    label: Year based protected areas
+    description: Protected areas on which ProtConn has been calculated, filtered by year.
     type: application/geopackage+sqlite3[]
   study_area_km2:
     label: Area of study area
