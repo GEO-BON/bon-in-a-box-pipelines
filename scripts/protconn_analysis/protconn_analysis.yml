@@ -72,7 +72,7 @@ inputs:
     description: Whether to calculate time series plot of ProtConn values based on date of PA establishment
     type: boolean
     example: TRUE
-  include_NAs_date:
+  include_na_dates:
     label: Include missing values for date
     description: How missing values for date should be handled in the time series analysis. If the box
        is checked, protected areas with missing values for establishment date will be included in the time series
@@ -113,12 +113,12 @@ outputs:
   protconn_result:
     label: ProtConn results
     description: >
-      The results of the ProtConn calculations. "Prot" and "Unprot" is the percentage of the study area that is 
+      The results of the ProtConn calculations. "Prot" and "Unprot" is the percentage of the study area that is
       protected and unprotected, respectively. "ProtConn" is the percentage of the study area that is protected, and
       connected, ProtUnconn is the percentage that is protected but unconnected. "ProtConn Within" is the percentage
       of the landscape that is connected within a single protected area, i.e. the contribution to overall connectivity
       coming from within the protected area, without species having to traverse unprotected land. "ProtConn Contig"
-      is the proportion connected through direct physical adjascency, capturing the value of neighboring or touching PAs. 
+      is the proportion connected through direct physical adjascency, capturing the value of neighboring or touching PAs.
     type: text/csv
   result_plot:
     label: ProtConn result plot
