@@ -56,6 +56,7 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
 
   protected_areas <- st_read(protected_areas)
   protected_areas <- st_transform(protected_areas, st_crs(crs_input))
+
 print(head(protected_areas))
 
   # label which rows are missing dates to remove later
@@ -143,17 +144,13 @@ if (any_invalid) {
 dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")
 
-  protected_areas_buffer <- st_buffer(x, dist = 10)
-  intersections <- st_intersects(protected_areas_buffer)
-
-  groups <- as.integer(igraph::components(
-    graph = igraph::graph_from_adj_list(intersections))$membership)
-
-  x$group_id <- groups
-
   protected_areas_clean <- x %>%
-    group_by(group_id) %>%
-    summarize(geom = st_union(geom), .groups = "drop")
+  st_buffer(dist = 10) %>%
+  st_union() %>%
+  st_cast("POLYGON") %>%
+  st_as_sf()
+
+  print(protected_areas_clean)
 
   # Re-validate after union if needed
   invalid_after_union <- sum(!st_is_valid(protected_areas_clean))
