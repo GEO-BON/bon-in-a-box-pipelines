@@ -57,10 +57,9 @@ if (ymin > ymax) {
 if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null(input$t0) || !is.null(input$t1))) {
   biab_info("The chelsa collection has no temporal option. Extracting all chelsa items...")
 }
-
+coord <- st_crs(CRS)
 # Load the CRS object
 if (!is.null(CRS) & !is.null(input$spatial_res)) {
-  coord <- st_crs(CRS)
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$spatial_res > 1) {
     biab_error_stop("CRS is in degrees and resolution is in meters.")
@@ -75,6 +74,10 @@ if (!is.null(CRS) & !is.null(input$spatial_res)) {
 if (!is.null(input$t0) | !is.null(input$t1)) {
   if (is.null(input$t0) | is.null(input$t1)) {
     biab_error_stop("Please provide both start and end date to filter by dates")
+  }
+
+  if (input$t0 >= input$t1) {
+    biab_error_stop("Input years seem reversed. Please double check your inputs.")
   }
 
   if (is.null(input$temporal_res)) {
@@ -250,9 +253,19 @@ for (coll_it in collections_items) { # Loop through input array
         print(it_obj$features[[1]]$assets$data$`raster:bands`[[1]]$spatial_resolution)
       print("Spatial.res:")
       print(spatial.res)
+
+      if (st_is_longlat(coord) == FALSE && spatial.res < 1) {
+      biab_error_stop("CRS is in meters and resolution is in degrees.")
+      }
+
+      if (st_is_longlat(coord) && spatial.res > 1) {
+      biab_error_stop("CRS is in degrees and resolution is in meters.")
+      }
+
     } else {
       spatial.res <- input$spatial_res
     }
+
 
     # Extract crs if not provided
     if (is.null(CRS)) { # Obtain CRS from metadata

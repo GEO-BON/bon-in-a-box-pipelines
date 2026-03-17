@@ -6,42 +6,29 @@ author:
     identifier: https://orcid.org/0000-0003-4024-9268
   - name: "Guillaume Larocque"
     identifier: "https://orcid.org/0000-0002-5967-9156"
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
 license: CC BY
 inputs:
   spat_res:
     label: output spatial resolution
     description: Spatial resolution (in meters) for the output of the analysis.
-    type: int
+    type: float
     example: 1000
-  srs:
-    label: spatial reference system
-    description: Reference system for the area of interest. It can be 1) the Spatial Reference System Identifier (SRID), 2) the authority name (e.g. EPSG) with the SRID or 3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]). If just the SRID is given and the software can not find the reference system try options 2 or 3.
-    type: text
-    example: EPSG:3116
-  study_area_opt:
-    label: study area option
-    description: Choose the source for the study area either if it should be at a country level and downloaded according to the 'country_code', at region level according to 'region' or a user defined polygon with the borders of the study area.
-    type: options
-    options:
-      - "Country"
-      - "Region in Country"
-      - "User defined"
+  crs:
+    label: CRS
+    description: Object containing CRS.
+    type: bboxCRS
     example:
-        Country
   study_area:
     label: study area
-    description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not foget to add the projection file to the folder)
+    description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not forget to add the projection file to the folder)
     type: application/geopackage+sqlite3
     example: null
-  country_code:
-    label: country
-    description: 'Name of the country for the analysis. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
-    type: text
-    example: Colombia
-  region:
-    label: region
-    description: 'For cases when a more specific administrative boundary (than the country level) is required, a region name can be used. Check the available countries and regions here: https://www.naturalearthdata.com/downloads/10m-cultural-vectors/'
-    type: text
+  country_region_polygon:
+    label: Polygon of country or region
+    description: A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.
+    type: application/geopackage+sqlite3
     example: null
   buff_size:
     label: buffer for study area
@@ -96,6 +83,11 @@ inputs:
     description: Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.
     type: int
     example: null
+  rasters:
+    label: Rasters
+    description: rasters for elevation limits
+    type: image/tiff;application=geotiff[]
+    example: null
 outputs:
   r_area_of_habitat:
     label: area of habitat
@@ -125,11 +117,12 @@ conda:
     - r-readr
     - r-geodata
     - r-gdalcubes
-    - r-rredlist=0.7.1
+    - r-rredlist=1.0.0
     - r-stringr
     - r-httr2
     - r-geojsonsf
     - r-sp
+    - r-lwgeom
 
 references:
   - text: Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]
