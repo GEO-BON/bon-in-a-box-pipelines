@@ -2,6 +2,7 @@ library(sf)
 library(rjson)
 library(dplyr)
 library(sf)
+library(tidyverse)
 # Add inputs
 input <- biab_inputs()
 sf_use_s2(FALSE)
@@ -108,7 +109,7 @@ if (any_invalid) {
   message("Invalid geometries detected. Fixing...")
 protected_areas <- st_buffer(protected_areas, 0)
 protected_areas <- st_make_valid(protected_areas)
-} 
+}
 
 print("Removing slivers (protected areas less than 1 square meters)")
 sliver_threshold <- units::set_units(1, "m^2")
@@ -118,7 +119,7 @@ print(unique(protected_areas$REALM))
 # Include marine
 if (isFALSE(input$include_marine)) {
   print("Removing marine protected areas")
-  protected_areas <- protected_areas %>% filter(REALM != "marine")
+  protected_areas <- protected_areas %>% filter(!str_detect(REALM, regex("marine", ignore_case = TRUE)))
 }
 print(nrow(protected_areas))
 # Include OECMs

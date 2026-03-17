@@ -438,19 +438,12 @@
       "example": 1000,
       "weight": 10
     },
-    "protconn_analysis>protconn_analysis.yml@42|include_NAs_date": {
-      "description": "How missing values for date should be handled in the time series analysis. If the box is checked, protected areas with missing values for establishment date will be included in the time series analysis and assigned to the chosen value for start year. If not checked, these protected areas will be omitted from the time series analysis (note they will still be included in the main analysis).",
-      "label": "Include missing values for date",
-      "type": "boolean",
-      "example": true,
-      "weight": 11
-    },
     "data>cleanWDPA.yml@48|include_unesco": {
       "description": "Check to include UNESCO Biosphere reserves.  These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
       "label": "Include UNESCO Biosphere reserves",
       "type": "boolean",
       "example": true,
-      "weight": 12
+      "weight": 11
     },
     "pipeline@68": {
       "label": "PA legal status types to include",
@@ -470,27 +463,34 @@
         "Adopted",
         "Proposed"
       ],
-      "weight": 13
+      "weight": 12
     },
     "data>cleanWDPA.yml@48|buffer_points": {
       "description": "Buffer protected area points by reported area. Some protected areas are reported as single points rather than polygons.\nIf checked, this will create a circular protected area around the reported point that is equal to the reported area.\nIf there is no reported area, it will remove the point. If left unchecked, all protected areas represented as points will be removed.\n",
       "label": "Buffer protected area points",
       "type": "boolean",
       "example": true,
-      "weight": 14
+      "weight": 13
     },
     "data>cleanWDPA.yml@48|include_oecm": {
       "description": "Whether to include areas with other effective area-based conservation measures (OECMs). These are not officially designated\nprotected areas but are still achieving conservation outcomes.\n",
       "label": "Include OECMs",
       "type": "boolean",
       "example": true,
-      "weight": 15
+      "weight": 14
     },
     "data>cleanWDPA.yml@48|include_marine": {
       "description": "Include marine protected areas or filter them out. Note that the analysis is still limited to the bounds of the study \narea polygon.\n",
       "label": "Include marine protected areas",
       "type": "boolean",
       "example": false,
+      "weight": 15
+    },
+    "protconn_analysis>protconn_analysis.yml@42|include_na_dates": {
+      "description": "How missing values for date should be handled in the time series analysis. If the box is checked, protected areas with missing values for establishment date will be included in the time series analysis and assigned to the chosen value for start year. If not checked, these protected areas will be omitted from the time series analysis (note they will still be included in the main analysis).",
+      "label": "Include missing values for date",
+      "type": "boolean",
+      "example": true,
       "weight": 16
     }
   },

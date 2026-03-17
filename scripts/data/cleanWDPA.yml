@@ -39,15 +39,15 @@ inputs:
     description: |
       Legal status types of protected areas to include.
 
-      **Proposed:** The site is in the process of gaining recognition through legal or other effective means. It may still be managed as a protected area during this process. 
+      **Proposed:** The site is in the process of gaining recognition through legal or other effective means. It may still be managed as a protected area during this process.
 
       **Inscribed:** Protected areas designated under the UNESCO World Heritage Convention.
 
-      **Adopted:** Specially protected areas of marine importance (SPAMI) created under the Barcelona convention, 
+      **Adopted:** Specially protected areas of marine importance (SPAMI) created under the Barcelona convention,
       focusing on the protection of the marine environment and coastal region of the mediterranean.
 
       **Designated:** The site is legally recognized as a protected area. This implies specific binding commitment to
-      conservation in the long term. 
+      conservation in the long term.
 
       **Established:** The site is recognized as protected area through other effective means. This implies long-term commitment to conservation, but without legal recognition.
     type: options[]
@@ -118,3 +118,4 @@ conda:
     - r-remotes
     - r-dplyr
     - r-lubridate
+    - r-tidyverse

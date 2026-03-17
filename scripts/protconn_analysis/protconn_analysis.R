@@ -59,7 +59,7 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
 print(head(protected_areas))
 
   # label which rows are missing dates to remove later
-if (input$include_NAs_date == FALSE){
+if (input$include_na_dates == FALSE){
   protected_areas_NA <- which(
     is.na(protected_areas$STATUS_YR) |
     protected_areas$STATUS_YR == 0
@@ -142,7 +142,7 @@ if (any_invalid) {
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")
-  
+
   protected_areas_buffer <- st_buffer(x, dist = 10)
   intersections <- st_intersects(protected_areas_buffer)
 
@@ -154,7 +154,7 @@ dissolve_overlaps <- function(x) {
   protected_areas_clean <- x %>%
     group_by(group_id) %>%
     summarize(geom = st_union(geom), .groups = "drop")
-  
+
   # Re-validate after union if needed
   invalid_after_union <- sum(!st_is_valid(protected_areas_clean))
   if (invalid_after_union > 0) {
@@ -171,20 +171,21 @@ dissolve_overlaps <- function(x) {
   # Checks to see if st_cast causes polygon loss
   # Before
 n_before <- nrow(protected_areas_clean)
+print(n_before)
 
 protected_areas_clean <- protected_areas_clean %>%
   st_cast("POLYGON", group_or_split = TRUE)
 
 # After
 n_after <- nrow(protected_areas_clean)
-
+print(n_after)
 if (n_after < n_before) {
-  warning(paste("Polygon loss detected:", n_before - n_after, 
+  warning(paste("Polygon loss detected:", n_before - n_after,
                 "features lost during st_cast"))
 } else {
   print(paste("No polygon loss detected.", n_after, "polygons retained"))
 }
-  
+
   # Re-validate after cast if needed
   invalid_after_cast <- sum(!st_is_valid(protected_areas_clean))
   if (invalid_after_cast > 0) {
@@ -325,7 +326,7 @@ print("Calculating ProtConn time series")
 if(input$time_series==TRUE){
 
   # drop Na dates if user chose not to include them
-  if (input$include_NAs_date == FALSE){
+  if (input$include_na_dates == FALSE){
   protected_areas <- protected_areas[-protected_areas_NA, ]
   }
 protconn_ts_result <- list()
@@ -335,7 +336,7 @@ for (i in seq_along(years)) {
   print(paste("Processing year:", yr))
 
 
-  if (input$include_NAs_date == TRUE && yr == input$years) { # skip end year because already calculated above
+  if (input$include_na_dates == TRUE && yr == input$years) { # skip end year because already calculated above
     protconn_result_combined <- protconn_result_long
     protconn_result_combined$Year <- yr
   } else {
@@ -358,7 +359,7 @@ for (i in seq_along(years)) {
       distance = list(type = "edge", keep=0.6),
       probability = 0.5,
       transboundary = input$buffer,
-      distance_thresholds = c(input$distance_threshold), 
+      distance_thresholds = c(input$distance_threshold),
       protconn_bound = TRUE
     )
 
