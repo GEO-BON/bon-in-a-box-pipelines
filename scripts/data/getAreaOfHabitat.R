@@ -136,11 +136,11 @@ for (i in seq_along(sp)) {
   print("========== Step 2.1 - Expert range map successfully loaded ==========")
 
   # Intersect range map to study area-------------------------------------------
-  # sf_area_lim <- st_intersection(sf_area_lim2,sf_area_lim1) |>
-  #   st_make_valid()
   print(st_crs(sf_area_lim2_srs) == st_crs(sf_area_lim1_srs))
   sf_area_lim_srs <- st_intersection(sf_area_lim2_srs, sf_area_lim1_srs) |>
-    st_make_valid()
+    st_make_valid() |>
+    sf::st_collection_extract("POLYGON") |>
+    sf::st_cast("MULTIPOLYGON")
 
   print(sf_area_lim_srs)
   if (nrow(sf_area_lim_srs) == 0) {
@@ -159,15 +159,13 @@ for (i in seq_along(sp)) {
   }
 
   # get bounding box for the complete area projected and non projected----------
-  suppressWarnings({
-    if (!is.null(st_crs(sf_area_lim_srs)$units)) {
-      sf_ext_srs <<- st_bbox(st_buffer(sf_area_lim_srs, buff_size))
-    } else {
-      sf::sf_use_s2(FALSE)
-      sf_ext_srs <<- st_bbox(st_buffer(sf_area_lim_srs, buff_size))
-      message("--- Buffer defined for spherical geometry ---")
-    }
-  })
+  if (!is.null(st_crs(sf_area_lim_srs)$units)) {
+    sf_ext_srs <<- st_bbox(st_buffer(sf_area_lim_srs, buff_size))
+  } else {
+    sf::sf_use_s2(FALSE)
+    sf_ext_srs <<- st_bbox(st_buffer(sf_area_lim_srs, buff_size))
+    message("--- Buffer defined for spherical geometry ---")
+  }
   print(sf_ext_srs)
 
   sf_bbox_analysis <- sf_ext_srs |> st_as_sfc()
@@ -183,7 +181,7 @@ for (i in seq_along(sp)) {
 
   crs(r_frame) <- srs_cube
   values(r_frame) <- 1
-  r_aoh <- terra::mask(r_frame, vect(as(sf_area_lim_srs, "Spatial")))
+  r_aoh <- terra::mask(r_frame, vect(sf_area_lim_srs))
 
   # elevation filters-----------------------------------------------------------
   if (elevation_filter == 1) {
