@@ -231,17 +231,6 @@
       }
     },
     {
-      "id": "114",
-      "type": "io",
-      "position": {
-        "x": 562,
-        "y": 53.5
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "115",
       "type": "constant",
       "position": {
@@ -287,6 +276,17 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "119",
+      "type": "io",
+      "position": {
+        "x": 1041.3474352119083,
+        "y": 14.107467715831458
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
       }
     }
   ],
@@ -474,13 +474,6 @@
       "id": "reactflow__edge-112-107study_area"
     },
     {
-      "source": "114",
-      "sourceHandle": "country_region_polygon",
-      "target": "80",
-      "targetHandle": "country_region_polygon",
-      "id": "reactflow__edge-114country_region_polygon-80country_region_polygon"
-    },
-    {
       "source": "115",
       "sourceHandle": null,
       "target": "107",
@@ -518,13 +511,6 @@
     {
       "source": "118",
       "sourceHandle": null,
-      "target": "114",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-118-114bbox_crs"
-    },
-    {
-      "source": "118",
-      "sourceHandle": null,
       "target": "80",
       "targetHandle": "crs",
       "id": "reactflow__edge-118-80crs"
@@ -535,6 +521,20 @@
       "target": "96",
       "targetHandle": "crs",
       "id": "reactflow__edge-118-96crs"
+    },
+    {
+      "source": "118",
+      "sourceHandle": null,
+      "target": "119",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-118-119country_region_bbox"
+    },
+    {
+      "source": "119",
+      "sourceHandle": "polygon",
+      "target": "80",
+      "targetHandle": "country_region_polygon",
+      "id": "reactflow__edge-119polygon-80country_region_polygon"
     }
   ],
   "inputs": {
@@ -702,6 +702,25 @@
       ],
       "example": "first",
       "weight": 16
+    },
+    "data>load_polygons.yml@119|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ"
+      ],
+      "example": "Country or region",
+      "weight": 17
+    },
+    "data>load_polygons.yml@119|buffer": {
+      "description": "Buffer for pulling transboundary protected areas (WDPA data only). The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees). If pulling WDPA data with a custom bounding box, the buffer will not be applied.",
+      "label": "Transboundary buffer",
+      "type": "float",
+      "example": 0,
+      "weight": 18
     }
   },
   "outputs": {
