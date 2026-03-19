@@ -222,17 +222,6 @@
       }
     },
     {
-      "id": "21",
-      "type": "io",
-      "position": {
-        "x": 445.3799503325131,
-        "y": 559.8205463423566
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "22",
       "type": "output",
       "position": {
@@ -253,6 +242,48 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "24",
+      "type": "io",
+      "position": {
+        "x": 670.2014246184821,
+        "y": 542.0767939479501
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "25",
+      "type": "constant",
+      "position": {
+        "x": 311.4959189855209,
+        "y": 633.2839626700775
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 257.52178406116127,
+        "y": 534.0411984543193
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
       }
     }
   ],
@@ -384,48 +415,6 @@
       "id": "reactflow__edge-20-1aggregation"
     },
     {
-      "source": "21",
-      "sourceHandle": "country",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-21country-22"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "region",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-21region-22"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "2",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-2study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "1",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-1study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "0",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-0study_area"
-    },
-    {
-      "source": "23",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-23-21bbox_crs"
-    },
-    {
       "source": "23",
       "sourceHandle": null,
       "target": "2",
@@ -438,6 +427,55 @@
       "target": "1",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-23-1bbox_crs"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-23-24country_region_bbox"
+    },
+    {
+      "source": "25",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-25-24buffer"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "24",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-26-24polygon_type"
+    },
+    {
+      "source": "24",
+      "sourceHandle": "polygon",
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-24polygon-2study_area"
+    },
+    {
+      "source": "24",
+      "sourceHandle": "polygon",
+      "target": "1",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-24polygon-1study_area"
+    },
+    {
+      "source": "24",
+      "sourceHandle": "polygon",
+      "target": "0",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-24polygon-0study_area"
+    },
+    {
+      "source": "24",
+      "sourceHandle": "polygon",
+      "target": "22",
+      "targetHandle": null,
+      "id": "reactflow__edge-24polygon-22"
     }
   ],
   "inputs": {
@@ -470,14 +508,14 @@
       "weight": 3
     },
     "pipeline@19": {
-      "label": "Spatial resolution",
+      "label": "Spatial resolution (optional)",
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "type": "float",
       "example": null,
       "weight": 4
     },
     "pipeline@18": {
-      "label": "Resampling method",
+      "label": "Resampling method (optional)",
       "description": "Resampling method used when rescaling and/or reprojecting the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.\n\nWill be ignored if not resampling.",
       "type": "options",
       "example": "near",
@@ -500,7 +538,7 @@
       "weight": 5
     },
     "pipeline@20": {
-      "label": "Aggregation method",
+      "label": "Aggregation method (optional)",
       "description": "Method used to aggregate items when layers combining over time.\n\nWill be ignored if not aggregating.",
       "type": "options",
       "example": "first",
@@ -521,29 +559,23 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "data>getCountryPolygon.yml@21|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 1
-    },
-    "data>getCountryPolygon.yml@21|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 2
-    },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of BHI in the study area polygon.\n\n\nA higher value (closer to 1) indicates that a large proportion of the habitat remains in good condition and is well-connected, leading to a high expectation of species persistence. A lower value indicates that a significant proportion of the original habitat has been lost, degraded, or fragmented, which puts biodiversity at risk.",
       "label": "BHI summary",
       "type": "text/csv",
-      "weight": 3
+      "weight": 1
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
       "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
       "label": "Time series plot",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
+    },
+    "data>load_polygons.yml@24|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
+      "weight": 3
     }
   },
   "metadata": {

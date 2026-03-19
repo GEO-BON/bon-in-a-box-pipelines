@@ -222,17 +222,6 @@
       }
     },
     {
-      "id": "21",
-      "type": "io",
-      "position": {
-        "x": 442,
-        "y": 476.5
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "23",
       "type": "userInput",
       "position": {
@@ -253,6 +242,48 @@
       },
       "data": {
         "label": "Output"
+      }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 525.5185571826676,
+        "y": 481.8260063799862
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "26",
+      "type": "constant",
+      "position": {
+        "x": 124.05774866252466,
+        "y": 491.8966566846712
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 137.2528277702536,
+        "y": 630.4449873158251
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": null
       }
     }
   ],
@@ -384,27 +415,6 @@
       "id": "reactflow__edge-20-1aggregation"
     },
     {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "2",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-2study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "1",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-1study_area"
-    },
-    {
-      "source": "23",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-23-21bbox_crs"
-    },
-    {
       "source": "23",
       "sourceHandle": null,
       "target": "2",
@@ -419,25 +429,53 @@
       "id": "reactflow__edge-23-1bbox_crs"
     },
     {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
+      "source": "23",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-23-25country_region_bbox"
+    },
+    {
+      "source": "26",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-26-25polygon_type"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-27-25buffer"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "24",
+      "targetHandle": null,
+      "id": "reactflow__edge-25polygon-24"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-2study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "1",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-1study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
       "target": "0",
       "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-0study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country",
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-21country-24"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "region",
-      "target": "24",
-      "targetHandle": null,
-      "id": "reactflow__edge-21region-24"
+      "id": "reactflow__edge-25polygon-0study_area"
     }
   ],
   "inputs": {
@@ -515,35 +553,29 @@
     }
   },
   "outputs": {
-    "data>getCountryPolygon.yml@21|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@21|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 1
-    },
     "data>loadFromStac.yml@1|rasters": {
       "description": "Output raster files in geotiff format.",
       "label": "Rasters of indicator layers for each year",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 0
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of PARC in the study area polygon.\n\nA high score indicates that a higher percentage of the region's biodiversity and environmental variation is represented in protected areas. A low score suggests that some ecological types are underrepresented.",
       "label": "PARC summary",
       "type": "text/csv",
-      "weight": 3
+      "weight": 1
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
       "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
       "label": "Time series plot",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
+    },
+    "data>load_polygons.yml@25|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
+      "weight": 3
     }
   },
   "metadata": {

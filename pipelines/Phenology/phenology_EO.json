@@ -71,17 +71,6 @@
       }
     },
     {
-      "id": "66",
-      "type": "io",
-      "position": {
-        "x": 442,
-        "y": 46.66666666666667
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "67",
       "type": "output",
       "position": {
@@ -102,6 +91,48 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "69",
+      "type": "io",
+      "position": {
+        "x": 584.6292772587663,
+        "y": 37.15957310454998
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "70",
+      "type": "constant",
+      "position": {
+        "x": 271.5754987604073,
+        "y": 101.33004775092365
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": 249.1438642772681,
+        "y": 235.91985464975892
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -163,13 +194,6 @@
       "id": "reactflow__edge-45-48end_year"
     },
     {
-      "source": "66",
-      "sourceHandle": "country_region_polygon",
-      "target": "37",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-66country_region_polygon-37study_area_polygon"
-    },
-    {
       "source": "48",
       "sourceHandle": "phenology_change_plot",
       "target": "49",
@@ -184,32 +208,46 @@
       "id": "reactflow__edge-37timeseries-39"
     },
     {
-      "source": "66",
-      "sourceHandle": "country",
-      "target": "67",
-      "targetHandle": null,
-      "id": "reactflow__edge-66country-67"
-    },
-    {
-      "source": "66",
-      "sourceHandle": "region",
-      "target": "67",
-      "targetHandle": null,
-      "id": "reactflow__edge-66region-67"
-    },
-    {
-      "source": "68",
-      "sourceHandle": null,
-      "target": "66",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-68-66bbox_crs"
-    },
-    {
       "source": "68",
       "sourceHandle": null,
       "target": "37",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-68-37bbox_crs"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-68-69country_region_bbox"
+    },
+    {
+      "source": "70",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-70-69polygon_type"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "69",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-71-69buffer"
+    },
+    {
+      "source": "69",
+      "sourceHandle": "polygon",
+      "target": "37",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-69polygon-37study_area_polygon"
+    },
+    {
+      "source": "69",
+      "sourceHandle": "polygon",
+      "target": "67",
+      "targetHandle": null,
+      "id": "reactflow__edge-69polygon-67"
     }
   ],
   "inputs": {
@@ -292,41 +330,35 @@
     }
   },
   "outputs": {
-    "data>getCountryPolygon.yml@66|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "data>getCountryPolygon.yml@66|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 1
-    },
     "phenology>summarise_phenology.yml@37|rasters": {
       "description": "Rasters of phenology layers, with one raster per year in the input time range. Will either be the raw raster layers or resampled to the spatial resolution and CRS input by the user.\n",
       "label": "Phenology rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 0
     },
     "phenology>phenology_difference.yml@48|phenology_change": {
       "description": "Raster plot of change in phenology from the start year to the end year. The end year is subtracted from the start year, so larger values indicate a greater decrease in the given value over time.\n",
       "label": "Change in phenology metrics",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 3
+      "weight": 1
     },
     "phenology>phenology_difference.yml@48|phenology_change_plot": {
       "description": "Plot of the summarised phenology values over time for the bands of interest",
       "label": "Plot of phenology change",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
     },
     "phenology>summarise_phenology.yml@37|timeseries": {
       "description": "Summarised values over the polygon of interest (mean, minimum, or maximum) for each year for each band of interest",
       "label": "Zonal statistics",
       "type": "text/csv",
-      "weight": 5
+      "weight": 3
+    },
+    "data>load_polygons.yml@69|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
+      "weight": 4
     }
   },
   "metadata": {
