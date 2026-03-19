@@ -55,7 +55,6 @@ RUN bash --login -c "mamba activate rbase \
         # ), repos=\"https://cloud.r-project.org/\"); \
         # \
 ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
-        devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\"); \
         devtools::install_github(\"connectscape/Makurhini\"); \
     ' \
     # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
