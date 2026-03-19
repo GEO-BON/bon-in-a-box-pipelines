@@ -52,7 +52,6 @@ RUN mkdir /root/.R && echo "MAKEFLAGS = -j" > /root/.R/Makevars
 RUN bash --login -c "mamba activate rbase \
     && R -e ' \
         install.packages(c(\"CoordinateCleaner\", \
-            \"OpenStreetMap\" \
         ), repos=\"https://cloud.r-project.org/\"); \
         \
 ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
