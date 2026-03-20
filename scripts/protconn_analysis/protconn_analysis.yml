@@ -98,10 +98,10 @@ outputs:
     description: Protected areas on which ProtConn has been calculated. Overlapping protected areas have been merged
       into one to speed up calculation. Protected areas less than the threshold size were also removed.
     type: application/geopackage+sqlite3[]
-  protected_areas_yr:
-    label: Year based protected areas
-    description: Protected areas on which ProtConn has been calculated, filtered by year.
-    type: application/geopackage+sqlite3[]
+  # protected_areas_yr:
+  #   label: Year based protected areas
+  #   description: Protected areas on which ProtConn has been calculated, filtered by year.
+  #   type: application/geopackage+sqlite3[]
   study_area_km2:
     label: Area of study area
     description: Area of the study area in square kilometers

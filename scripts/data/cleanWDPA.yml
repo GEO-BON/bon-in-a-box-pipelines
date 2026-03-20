@@ -82,12 +82,12 @@ inputs:
     type: boolean
     example: TRUE
   include_marine:
-    label: Include marine protected areas
+    label: Include marine and coastal protected areas
     description: >
-      Check to include marine protected areas.
+      Check to include marine and coastal protected areas.
 
 
-      Note that the analysis is still limited to the bounds of the studyarea polygon.
+      Note that the analysis is still limited to the bounds of the study area polygon.
       The chosen polygon needs to exceed the country land boundaries in order to really include marine protected areas.
     type: boolean
     example: FALSE

@@ -209,9 +209,10 @@ print(nrow(protected_areas))
 # Get rid of overlaps
 protected_areas_simp <- dissolve_overlaps(protected_areas)
 
-
 print("Num prot areas with overlaps dissolved and multipolygons expanded into different rows:")
 print(nrow(protected_areas_simp))
+print(head(protected_areas_simp))
+attr(protected_areas_simp, "sf_column")
 
 # Filter out protected areas smaller than the size threshold
 threshold <- units::set_units(input$pa_size_threshold, "m^2")
@@ -220,9 +221,8 @@ protected_areas_simp <- protected_areas_simp %>% filter((st_area(protected_areas
 
 
 # output simplified protected areas
-protected_areas_simp_path <- file.path(outputFolder, "protected_areas.gpkg")
+protected_areas_simp_path <- file.path(outputFolder, "protected_areas_full.gpkg")
 sf::st_write(protected_areas_simp, protected_areas_simp_path, delete_dsn = T)
-biab_output("protected_areas", protected_areas_simp_path)
 
 
 if (nrow(protected_areas_simp) < 2) {
@@ -235,7 +235,9 @@ if (isTRUE(st_is_longlat(protected_areas_simp))) {
   biab_error_stop("Protected areas are in latitude longitude degrees, please choose a projected coordinate reference system.")
 }
 
-protconn_result <- Makurhini::MK_ProtConn(
+
+protconn_result <- tryCatch(
+  { Makurhini::MK_ProtConn(
   nodes = protected_areas_simp,
   region = study_area,
   area_unit = "m2",
@@ -244,6 +246,13 @@ protconn_result <- Makurhini::MK_ProtConn(
   transboundary = input$buffer,
   distance_thresholds = c(input$distance_threshold),
   protconn_bound=TRUE
+)
+},
+  error = function(e) {
+    if (grepl("missing value where TRUE/FALSE needed", e$message)) {
+      biab_error_stop("Error - PAs are functionally isolated at this dispersal threshold. Please input a larger dispersal threashold or check the protected area input file.")
+    }
+  }
 )
 gc()
 
@@ -388,8 +397,10 @@ for (i in seq_along(years)) {
   protected_areas_path[i] <- file.path(outputFolder, paste0(yr, "_protected_areas.gpkg"))
   sf::st_write(protected_areas_filt_yr, protected_areas_path[i], delete_dsn = T)
   gc()
+  protected_areas_path <- c(protected_areas_simp_path, protected_areas_path) # combine the original simplified protected areas with the yearly filtered ones for output
 }
-biab_output("protected_areas_yr", protected_areas_path)
+
+
 
 # Final time series dataframe
 protconn_result_yrs <- do.call(rbind, protconn_ts_result)
@@ -440,9 +451,13 @@ for (i in seq_along(input$distance_threshold)) {
   biab_output("result_yrs_plot", plot_paths)
 }
 } else {
-result_yrs <- "Time series option was not selected"
+result_yrs <- NULL
 biab_output("result_yrs", result_yrs)
 
-result_yrs_plot <- "Time series option was not selected"
+result_yrs_plot <- NULL
 biab_output("result_yrs_plot", result_yrs_plot)
+
+protected_areas_path <- protected_areas_simp_path
 }
+
+biab_output("protected_areas", protected_areas_path)

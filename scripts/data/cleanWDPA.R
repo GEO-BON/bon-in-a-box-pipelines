@@ -119,7 +119,7 @@ print(unique(protected_areas$REALM))
 # Include marine
 if (isFALSE(input$include_marine)) {
   print("Removing marine protected areas")
-  protected_areas <- protected_areas %>% filter(!str_detect(REALM, regex("marine", ignore_case = TRUE)))
+  protected_areas <- protected_areas %>% filter(!str_detect(REALM, regex("marine|coastal", ignore_case = TRUE)))
 }
 print(nrow(protected_areas))
 # Include OECMs

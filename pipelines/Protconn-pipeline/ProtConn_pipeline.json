@@ -348,13 +348,6 @@
       "target": "42",
       "targetHandle": "buffer",
       "id": "reactflow__edge-69-42buffer"
-    },
-    {
-      "source": "42",
-      "sourceHandle": "protected_areas_yr",
-      "target": "43",
-      "targetHandle": null,
-      "id": "reactflow__edge-42protected_areas_yr-43"
     }
   ],
   "inputs": {
@@ -480,8 +473,8 @@
       "weight": 14
     },
     "data>cleanWDPA.yml@48|include_marine": {
-      "description": "Include marine protected areas or filter them out. Note that the analysis is still limited to the bounds of the study \narea polygon.\n",
-      "label": "Include marine protected areas",
+      "description": "Check to include marine and coastal protected areas. Note that the analysis is still limited to the bounds of the study \narea polygon.\n",
+      "label": "Include marine and coastal protected areas",
       "type": "boolean",
       "example": false,
       "weight": 15
@@ -530,12 +523,6 @@
       "label": "Study area polygon",
       "type": "application/geopackage+sqlite3",
       "weight": 5
-    },
-    "protconn_analysis>protconn_analysis.yml@42|protected_areas_yr": {
-      "description": "Protected areas on which ProtConn has been calculated, filtered by year.",
-      "label": "Year based protected areas",
-      "type": "application/geopackage+sqlite3[]",
-      "weight": 6
     }
   },
   "metadata": {
