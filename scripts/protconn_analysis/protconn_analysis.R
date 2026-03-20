@@ -83,7 +83,6 @@ for (i in 1:nrow(protected_areas)) {
   print(protected_areas)
 
 
-
 if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
   protected_areas_user <- st_read(protected_areas_user) # load
   print(protected_areas_user)
@@ -206,13 +205,16 @@ protected_areas <- protected_areas %>% filter(STATUS_YR <= input$years | is.na(S
 }
 print("Num prot areas:")
 print(nrow(protected_areas))
+
 # Get rid of overlaps
 protected_areas_simp <- dissolve_overlaps(protected_areas)
 
+# rename geometry column
+sf::st_geometry(protected_areas_simp) <- "geom"
+
 print("Num prot areas with overlaps dissolved and multipolygons expanded into different rows:")
 print(nrow(protected_areas_simp))
-print(head(protected_areas_simp))
-attr(protected_areas_simp, "sf_column")
+
 
 # Filter out protected areas smaller than the size threshold
 threshold <- units::set_units(input$pa_size_threshold, "m^2")
@@ -355,6 +357,7 @@ for (i in seq_along(years)) {
     }
 
     protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
+    print(head(protected_areas_filt_yr))
     protected_areas_filt_yr <- protected_areas_filt_yr %>% filter((st_area(protected_areas_filt_yr)) > threshold)
     print(nrow(protected_areas_filt_yr))
 
