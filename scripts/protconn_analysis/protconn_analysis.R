@@ -397,12 +397,11 @@ for (i in seq_along(years)) {
   }
   print(protconn_result_combined)
   protconn_ts_result[[i]] <- protconn_result_combined
-  protected_areas_path[i] <- file.path(outputFolder, paste0(yr, "_protected_areas.gpkg"))
+  protected_areas_path[i] <- file.path(outputFolder, paste0("_protected_areas.gpkg", yr))
   sf::st_write(protected_areas_filt_yr, protected_areas_path[i], delete_dsn = T)
   gc()
-  protected_areas_path <- c(protected_areas_simp_path, protected_areas_path) # combine the original simplified protected areas with the yearly filtered ones for output
 }
-
+protected_areas_path <- c(protected_areas_simp_path, protected_areas_path) # combine the original simplified protected areas with the yearly filtered ones for output
 
 
 # Final time series dataframe
