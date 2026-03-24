@@ -397,7 +397,7 @@ for (i in seq_along(years)) {
   }
   print(protconn_result_combined)
   protconn_ts_result[[i]] <- protconn_result_combined
-  protected_areas_path[i] <- file.path(outputFolder, paste0("_protected_areas.gpkg", yr))
+  protected_areas_path[i] <- file.path(outputFolder, paste0(yr, "_protected_areas.gpkg"))
   sf::st_write(protected_areas_filt_yr, protected_areas_path[i], delete_dsn = T)
   gc()
 }
