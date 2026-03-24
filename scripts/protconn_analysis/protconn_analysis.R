@@ -252,7 +252,7 @@ protconn_result <- tryCatch(
 },
   error = function(e) {
     if (grepl("missing value where TRUE/FALSE needed", e$message)) {
-      biab_error_stop("Error - PAs are functionally isolated at this dispersal threshold. Please input a larger dispersal threashold or check the protected area input file.")
+      biab_error_stop("Error - PAs are functionally isolated at this dispersal threshold. Please input a larger dispersal threshold or check the protected area input file.")
     }
   }
 )
