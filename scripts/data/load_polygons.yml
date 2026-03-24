@@ -41,7 +41,7 @@ conda:
   dependencies:
     - r-arrow
     - r-rjson
-    - r-duckdb
+    - r-duckdb=1.4.4
     - r-sf
     - r-dplyr
     - r-stringi
@@ -50,3 +50,4 @@ conda:
     - r-dbplyr
     - r-fs
     - r-uuid
+    - r-remotes
