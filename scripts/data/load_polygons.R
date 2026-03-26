@@ -4,9 +4,10 @@ library(dplyr)
 if (!require("duckdbfs")) {
     install.packages("duckdbfs")
 }
-if (!require("duckspatial")) {
-    install.packages("duckspatial")
+if (!require("duckspatial") || packageVersion("duckspatial") != "0.9.0") {
+    remotes::install_github("Cidree/duckspatial@v0.9.0")
 }
+
 library(duckdbfs)
 library(duckspatial)
 
