@@ -12,10 +12,10 @@ jobs:
   run-yml-validation:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       name: Checkout pipelines and scripts repository
 
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
       name: Checkout server repository
       with:
         # Repository name with owner. For example, actions/checkout
