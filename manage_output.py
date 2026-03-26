@@ -45,7 +45,7 @@ def apply_operation(source_path, operation, dest_dir=None):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python apply_operation.py <run folder> <delete|move|copy> [destination_output_root]")
+        print("Usage: ./manage_output.py <run folder> <delete|move|copy> [destination_output_root]")
         sys.exit(1)
 
     pipelineRunFolder = sys.argv[1]
