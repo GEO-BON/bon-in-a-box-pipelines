@@ -103,6 +103,8 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print(f"Usage: {sys.argv[0]} <target_directory>")
         print("This script parses the target ouput directory logs and compiles run statistics.")
+        print("The current implementation only supports parsing R script logs for memory usage.")
+        print("Time parsing works for all languages.")
         sys.exit(1)
 
     target_directory = sys.argv[1]
