@@ -374,10 +374,10 @@
     },
     {
       "source": "61",
-      "sourceHandle": "point_Sel",
+      "sourceHandle": "point_sel",
       "target": "62",
       "targetHandle": null,
-      "id": "reactflow__edge-61point_Sel-62"
+      "id": "reactflow__edge-61point_sel-62"
     },
     {
       "source": "61",
@@ -462,28 +462,28 @@
       "type": "text/csv",
       "weight": 0
     },
-    "site_optz_stepwise>site_optz_stepwise.yml@61|point_Sel": {
-      "description": "selection of demand points in stepwise order",
-      "label": "Selection of demand points",
-      "type": "text/csv",
-      "weight": 1
-    },
     "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
       "description": "Map showing the selected points, the well-know sites (only used to define the environmental universe) and the remaining not selected demand sites. ",
       "label": "Map for selected points",
       "type": "image/png",
-      "weight": 2
+      "weight": 1
     },
     "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
       "description": "Uncovered variance that new sampling sites will optimize",
       "label": "Plot for uncovered variance",
       "type": "image/png",
+      "weight": 2
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|point_sel": {
+      "description": "selection of demand points",
+      "label": "selection of demand points",
+      "type": "text/csv",
       "weight": 3
     }
   },
   "metadata": {
     "name": "Site optimization sampling",
-    "description": "## Introduction\nSite optimization is challenge in biodiversity monitoring. Often times ecological monitoring selects sampling locations based on multiple reason. Reasons vary from sampling design, budget and accesibility constraints, and rotational site selection, among others. Such variation may  produce a set of current or well-known of locations, and historical or demand site (site which have not been samples in a many years). Given that monitoring projects could increase or  rotate new sampling location, decision of how to define this sites can be informed by environmental variability, that may help understand better biodiversity patterns.\n## Uses\nThe pipeline selects a set of locations from a pool of demand sites (historical sites or  not recently sampled sites) using a stepwise procedure through a pmedians  algorithm. The algorith aims to select sites that cover greatest environmental and spatial distance. Selected sites will contribute to cover the remaining environmental variability based on the universal variability (universe defined by well-know and historical sites together). but the historical sites alone, and select among the Demand sites. The user must provide a dataframe with well- know survey sites (current) and demand sites (or historical sites), a will select  sites only from the demand site pool.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquam, felis ac volutpat scelerisque, lectus sapien malesuada eros, id consectetur ligula sapien a metus. Maecenas auctor enim leo, at lobortis orci rhoncus sit amet. Vestibulum quis lorem quis justo suscipit mattis eu non sem. Nunc urna purus, interdum nec dolor at, eleifend elementum turpis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras sed placerat elit, a maximus enim. Nam commodo commodo eros sagittis dapibus. Donec ultricies auctor quam eu fermentum. Phasellus fringilla urna sit amet bibendum egestas. Duis id urna viverra, vulputate lacus nec, scelerisque leo.\n## Limitations \n* Optimization algorithm is based on only a subset of points (demand) from a universe  (well-know and demand) that defines the environmental and spatial variability.\n* The p-median algortihm is slow with large matrices (more than ~200 sites) depending on computing power.\n* Selection of environmental variables is key to defining universal environmental variability, therefore results may vary significantly based on the selected envionrmental variables. \n* Boundary is limited to spatial polygons defined by the avalilabe country bounding box polygons within Bon-in-a-Box.\n\n## Before you start\n* Be sure to produce a dataframe of points with the correct colum labels: lat, lon, and vini.\n* Be sure that the vini column should only include 1 and 0 values, which are demand and historical sites respectively. Only demand sites will be chosen. ",
+    "description": "## Introduction\nSite optimization is challenge in biodiversity monitoring. Often times ecological monitoring selects sampling locations based on multiple reason. Reasons vary from sampling design, budget and accesibility constraints, and rotational site selection, among others. Such variation may  produce a set of current or well-known of locations, and historical or demand site (site which have not been samples in a many years). Given that monitoring projects could increase or  rotate new sampling location, decision of how to define this sites can be informed by environmental variability, that may help understand better biodiversity patterns.\n## Uses\nThe pipeline selects a set of locations from a pool of demand sites (historical sites or  not recently sampled sites) using a stepwise procedure through a pmedians  algorithm. The algorith aims to select sites that cover greatest environmental and spatial distance. Selected sites will contribute to cover the remaining environmental variability based on the universal variability (universe defined by well-know and historical sites together). but the historical sites alone, and select among the Demand sites. The user must provide a dataframe with well- know survey sites (current) and demand sites (or historical sites), a will select  sites only from the demand site pool.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquam, felis ac volutpat scelerisque, lectus sapien malesuada eros, id consectetur ligula sapien a metus. Maecenas auctor enim leo, at lobortis orci rhoncus sit amet. Vestibulum quis lorem quis justo suscipit mattis eu non sem. Nunc urna purus, interdum nec dolor at, eleifend elementum turpis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras sed placerat elit, a maximus enim. Nam commodo commodo eros sagittis dapibus. Donec ultricies auctor quam eu fermentum. Phasellus fringilla urna sit amet bibendum egestas. Duis id urna viverra, vulputate lacus nec, scelerisque leo.\n## Limitations \n* Optimization algorithm is based on only a subset of points (demand) from a universe  (well-know and demand) that defines the environmental and spatial variability.\n* The p-median algortihm is slow with large matrices (more than ~200 sites) depending on computing power.\n* Selection of environmental variables is key to defining universal environmental variability, therefore results may vary significantly based on the ßected envionrmental variables. \n* Boundary is limited to spatial polygons defined by the avalilabe country bounding box polygons within Bon-in-a-Box.\n\n## Before you start\n* Be sure to produce a dataframe of points with the correct colum labels: lat, lon, and vini.\n* Be sure that the vini column should only include 1 and 0 values, which are demand and historical sites respectively. Only demand sites will be chosen. ",
     "author": [
       {
         "name": "Francis van Oordt",
