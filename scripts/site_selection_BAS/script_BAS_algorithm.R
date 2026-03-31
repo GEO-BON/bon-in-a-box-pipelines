@@ -1,6 +1,5 @@
 library(rjson)
 library(remotes)
-# For review PR
 #if (!'spbal' %in% installed.packages()) {
   remotes::install_github("https://github.com/docgovtnz/spbal.git", force = TRUE)
 #}else{

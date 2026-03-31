@@ -1,6 +1,8 @@
 script: script_Block_creation.R
 name: Environmental Blocks
 description: Performs PCA variables and create a grid of environmental block in two dimensional space based code from biosurvey package
+lifecycle: 
+  status: reviewed
 author:
   - name: Francis van Oordt
     identifier: "https://orcid.org/0000-0002-8471-235X"
