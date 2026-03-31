@@ -36,6 +36,7 @@ inputs:
     label: joint distance matrix
     description: joint distance matrix
     type: text/csv
+    example: NULL
 outputs:
   uncov:
     label: uncovered variances
