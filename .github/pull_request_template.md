@@ -27,9 +27,9 @@
 
 If "other" selected, list language and version here:
 
-**Files for review:** List all of the files (scripts, YAML files, and .md tutorials that should be reviewed.
+**Files for review:** List all of the files (scripts, YAML files, and .md tutorials) that should be reviewed.
 
-**Dependencies manager:** List all packages and their versions here (note: list versions even if the versions are not specified in the Conda dependencies for future versioning) -->
+**Dependencies manager:** List all packages and their versions here (note: list versions even if the versions are not specified in the Conda dependencies for future versioning). Package versions can be found in the BON in a Box "Environment" output for each script when a script or pipeline is run in the platform. Dependencies should also be specified in the Conda environment and frozen (e.g. r-sf=1.8-42) to prevent breaking changes in the published pipeline when packages are updated.
 
 > [!INFO]
 > Pipelines **must** be accompanied a list of their dependencies, including information about
