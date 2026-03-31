@@ -188,7 +188,7 @@ surdes_map <- ggplot2::ggplot()+
 #save output of point selection
 point_Sel_path<-file.path(outputFolder, "point_Sel.csv") 
 write.csv(point_Sel, point_Sel_path, row.names = FALSE )
-biab_output("point_Sel", point_Sel_path)
+biab_output("point_sel", point_Sel_path)
 
 #save output of uncovered variance
 uncov_path<-file.path(outputFolder, "uncov.csv") 

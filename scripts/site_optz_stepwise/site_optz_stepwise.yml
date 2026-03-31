@@ -3,7 +3,7 @@ name: Stepwise SURDES optimization with pmedians
 description: Runs a stepwise optimization with pmedians using the SURDES package/project on a given set of points. Selection is based on the environmental variability of a universe of given points, selecting only point within a subset of demand point of the universe. The algortihm allows for criteria and conditions to be met when selection each point (to be defined by user)
 author: 
   - name: Francis van Oordt
-    identifier: "https://orcid.org/0000-0002-8471-235X"
+    identifier: https://orcid.org/0000-0002-8471-235X
 license: CC-BY
 inputs:
   country_polygon:
@@ -41,7 +41,7 @@ outputs:
     label: uncovered variances
     description: uncovered variances values
     type: text/csv
-  point_Sel:
+  point_sel:
     label: selection of demand points
     description: selection of demand points
     type: text/csv
