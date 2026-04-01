@@ -53,12 +53,12 @@ conda:
     - conda-forge
     - r
   dependencies:
-    - r-rjson
-    - r-terra
-    - r-ggplot2
-    - r-tidyterra
-    - r-cowplot
-    - r-factoextra
+    - r-rjson=0.2.23
+    - r-terra=1.8-42
+    - r-ggplot2=3.5.2
+    - r-tidyterra=0.4.0
+    - r-cowplot=1.2.0
+    - r-factoextra=1.0.7
 references:
    - text: "Survey-gap analysis in expeditionary research: where do we go from here?"
      doi: "https://doi.org/10.1111/j.1095-8312.2005.00520.x"

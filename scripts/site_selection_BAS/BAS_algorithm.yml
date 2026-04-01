@@ -55,13 +55,13 @@ conda:
     - conda-forge
     - r
   dependencies:
-    - r-rjson
-    - r-terra
-    - r-ggplot2
-    - r-tidyterra
-    - r-cowplot
-    - r-sf
-    - r-remotes
+    - r-rjson=0.2.23
+    - r-terra=1.8-42
+    - r-ggplot2=3.5.2
+    - r-tidyterra=0.4.0
+    - r-cowplot=1.2.0
+    - r-sf=1.1-0
+    - r-remotes=2.5.0
 references:
    - text: "spbal: Spatially Balanced Sampling Algorithms"
      doi: "https://doi.org/10.32614/CRAN.package.spbal"
