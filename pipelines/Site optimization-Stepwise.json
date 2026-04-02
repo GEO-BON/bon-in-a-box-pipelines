@@ -12,54 +12,6 @@
       }
     },
     {
-      "id": "41",
-      "type": "io",
-      "position": {
-        "x": 1162,
-        "y": 98
-      },
-      "data": {
-        "descriptionFile": "data>getBoundingBox.yml"
-      }
-    },
-    {
-      "id": "42",
-      "type": "io",
-      "position": {
-        "x": 2610,
-        "y": 6.999999999999943
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
-      "id": "43",
-      "type": "userInput",
-      "position": {
-        "x": 178,
-        "y": 12
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "Colombia"
-      }
-    },
-    {
-      "id": "44",
-      "type": "userInput",
-      "position": {
-        "x": 12,
-        "y": 106
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:4326"
-      }
-    },
-    {
       "id": "45",
       "type": "io",
       "position": {
@@ -81,31 +33,6 @@
       "data": {
         "type": "text",
         "value": "https://stac.geobon.org/"
-      }
-    },
-    {
-      "id": "47",
-      "type": "constant",
-      "position": {
-        "x": 1288,
-        "y": 180
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text"
-      }
-    },
-    {
-      "id": "48",
-      "type": "constant",
-      "position": {
-        "x": 1283,
-        "y": 233
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 1000
       }
     },
     {
@@ -229,71 +156,39 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "63",
+      "type": "io",
+      "position": {
+        "x": 2348.9858996262433,
+        "y": -53.129078019698454
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 1983.8602567085231,
+        "y": 15.061958027760227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
     }
   ],
   "edges": [
-    {
-      "source": "43",
-      "sourceHandle": null,
-      "target": "42",
-      "targetHandle": "country",
-      "id": "reactflow__edge-43-42country"
-    },
-    {
-      "source": "44",
-      "sourceHandle": null,
-      "target": "42",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-44-42crs"
-    },
-    {
-      "source": "42",
-      "sourceHandle": "country_polygon",
-      "target": "41",
-      "targetHandle": "study_area_file",
-      "id": "reactflow__edge-42country_polygon-41study_area_file"
-    },
-    {
-      "source": "44",
-      "sourceHandle": null,
-      "target": "41",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-44-41crs"
-    },
     {
       "source": "46",
       "sourceHandle": null,
       "target": "45",
       "targetHandle": "stac_url",
       "id": "reactflow__edge-46-45stac_url"
-    },
-    {
-      "source": "41",
-      "sourceHandle": "bbox",
-      "target": "45",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-41bbox-45bbox"
-    },
-    {
-      "source": "47",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-47-45weight_matrix_with_ids"
-    },
-    {
-      "source": "44",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-44-45crs"
-    },
-    {
-      "source": "48",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-48-45spatial_res"
     },
     {
       "source": "49",
@@ -359,13 +254,6 @@
       "id": "reactflow__edge-45rasters-61rasters"
     },
     {
-      "source": "42",
-      "sourceHandle": "country_polygon",
-      "target": "61",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-42country_polygon-61country_polygon"
-    },
-    {
       "source": "61",
       "sourceHandle": "uncov",
       "target": "62",
@@ -399,30 +287,23 @@
       "target": "61",
       "targetHandle": "locations_csv",
       "id": "reactflow__edge-52-61locations_csv"
+    },
+    {
+      "source": "63",
+      "sourceHandle": "polygon",
+      "target": "61",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-63polygon-61country_polygon"
+    },
+    {
+      "source": "64",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-64-63buffer"
     }
   ],
   "inputs": {
-    "data>getCountryPolygon.yml@42|region": {
-      "description": "Region of interest",
-      "label": "State/Province",
-      "type": "text",
-      "example": null,
-      "weight": 0
-    },
-    "pipeline@43": {
-      "label": "Country",
-      "description": "Country of interest",
-      "type": "text",
-      "example": "Peru",
-      "weight": 1
-    },
-    "pipeline@44": {
-      "label": "Coordinate reference system",
-      "description": "This input specifies the coordinate reference system of the country polygon output.\n\nThe numerical value refers to the EPSG code (European Petroleum Survey Group) associated with the spatial reference system that will be used as a reference for the study area.\nThis numerical value specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area.\n\nFor further information on coordinate systems and EPSG codes, you can access the official database on the EPSG website at [https://epsg.org/home.html](https://epsg.org/home.html).\nThe website provides documentation, resources, and tools for searching and understanding the EPSG codes used in various geospatial contexts.\n",
-      "type": "text",
-      "example": "EPSG:5387",
-      "weight": 2
-    },
     "data>loadFromStac.yml@45|collections_items": {
       "description": "Vector of strings, collection name followed by '|' followed by item id",
       "label": "STAC collection items",
@@ -431,28 +312,82 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 3
+      "weight": 0
     },
     "pipeline@52": {
       "label": "Sampling locations",
       "description": "Sampling locations/site in lat lon format, including a \"vini\" column (defining well-known sites as \"1\" and demand/historic sites as \"0\", which will be selected for the sampling optimization)",
       "type": "text/csv",
       "example": "Sample Peru",
-      "weight": 4
+      "weight": 1
     },
     "pipeline@53": {
       "label": "Aggregation factor (resolution)",
       "description": "Factor reduction for raster pixel resolution (usually from 1km raw)",
       "type": "int",
       "example": 10,
-      "weight": 5
+      "weight": 2
     },
     "pipeline@54": {
       "label": "Algorithm Iterations",
       "description": "Number of iterations to run (equivalent to sites to be selected from the demand sites pool. NOTE: it has to be equal or less that the \"demand sites\" number)",
       "type": "int",
       "example": 30,
+      "weight": 3
+    },
+    "data>loadFromStac.yml@45|bbox_crs": {
+      "description": "Object containing the chosen bounding box and CRS.",
+      "label": "Bounding box and CRS",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 4
+    },
+    "data>loadFromStac.yml@45|t0": {
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "label": "Start date",
+      "type": "text",
+      "example": null,
+      "weight": 5
+    },
+    "data>loadFromStac.yml@45|t1": {
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "label": "End date",
+      "type": "text",
+      "example": null,
       "weight": 6
+    },
+    "data>loadFromStac.yml@45|temporal_res": {
+      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date or if extracting layers from all available dates. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
+      "label": "Temporal resolution",
+      "type": "text",
+      "example": null,
+      "weight": 7
+    },
+    "data>load_polygons.yml@63|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ"
+      ],
+      "example": "Country or region",
+      "weight": 8
+    },
+    "data>load_polygons.yml@63|country_region_bbox": {
+      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
+      "label": "Country, region, or bounding box",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 9
+    },
+    "data>loadFromStac.yml@45|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": null,
+      "weight": 10
     }
   },
   "outputs": {

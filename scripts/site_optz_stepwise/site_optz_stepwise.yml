@@ -7,7 +7,7 @@ author:
 license: CC-BY
 inputs:
   country_polygon:
-    label: Shapefile of country map
+    label: Country polygon
     description: polygon of the country of interest
     type: application/geopackage+sqlite3
     example: Peru
@@ -39,19 +39,19 @@ inputs:
     example: NULL
 outputs:
   uncov:
-    label: uncovered variances
+    label: Uncovered variances
     description: uncovered variances values
     type: text/csv
   point_sel:
-    label: selection of demand points
+    label: Selection of demand points
     description: selection of demand points
     type: text/csv
   surdes_uncov:
-    label: plot for uncovered variance
+    label: Plot for uncovered variance
     description: plot for uncovered variance
     type: image/png
   surdes_map:
-    label: map for selected points
+    label: Map for selected points
     description: map for selected points
     type: image/png
 
