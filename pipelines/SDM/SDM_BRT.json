@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1182.9361440176413,
-        "y": 321.9620685253946
+        "x": 1372,
+        "y": 231.5
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 694,
-        "y": 279.83333333333326
+        "x": 950,
+        "y": 221.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -37,8 +37,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 666,
-        "y": 400.83333333333326
+        "x": 956,
+        "y": 331.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -50,8 +50,8 @@
       "id": "121",
       "type": "userInput",
       "position": {
-        "x": 93,
-        "y": 64.33333333333337
+        "x": 250,
+        "y": 43
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -65,8 +65,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 1535,
-        "y": 381.33333333333326
+        "x": 1893,
+        "y": 305.5
       },
       "data": {
         "label": "Output"
@@ -76,8 +76,8 @@
       "id": "126",
       "type": "output",
       "position": {
-        "x": 1323.3001942482933,
-        "y": 83.45159639955898
+        "x": 1372,
+        "y": 126.5
       },
       "data": {
         "label": "Output"
@@ -87,8 +87,8 @@
       "id": "128",
       "type": "userInput",
       "position": {
-        "x": 28.09705606290231,
-        "y": 557.7588988734078
+        "x": 171,
+        "y": 454
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -97,55 +97,11 @@
       }
     },
     {
-      "id": "132",
-      "type": "io",
-      "position": {
-        "x": 1565,
-        "y": 631.3333333333333
-      },
-      "data": {
-        "descriptionFile": "SDM>BRT>fitBRT.yml"
-      }
-    },
-    {
-      "id": "133",
-      "type": "output",
-      "position": {
-        "x": 2028,
-        "y": 662.8333333333333
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "134",
-      "type": "output",
-      "position": {
-        "x": 2028,
-        "y": 600.8333333333333
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "135",
-      "type": "output",
-      "position": {
-        "x": 2030,
-        "y": 527.8333333333333
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "137",
       "type": "userInput",
       "position": {
-        "x": 21.61485380971783,
-        "y": 447.3965396974388
+        "x": 106,
+        "y": 235.16666666666669
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -157,44 +113,11 @@
       }
     },
     {
-      "id": "141",
-      "type": "output",
-      "position": {
-        "x": 2028,
-        "y": 472.83333333333326
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "142",
-      "type": "output",
-      "position": {
-        "x": 2030,
-        "y": 831.8333333333333
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "143",
-      "type": "output",
-      "position": {
-        "x": 2028,
-        "y": 779.8333333333333
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "146",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": -59.99999999999994,
-        "y": 481.26025544916456
+        "x": 77,
+        "y": 396.1666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -203,21 +126,10 @@
       }
     },
     {
-      "id": "148",
-      "type": "output",
-      "position": {
-        "x": 2028,
-        "y": 723.8333333333333
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "149",
       "type": "output",
       "position": {
-        "x": 513,
+        "x": 611,
         "y": 12
       },
       "data": {
@@ -225,50 +137,11 @@
       }
     },
     {
-      "id": "152",
-      "type": "userInput",
-      "position": {
-        "x": 1206,
-        "y": 775.8333333333333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 10
-      }
-    },
-    {
-      "id": "153",
-      "type": "userInput",
-      "position": {
-        "x": 1220,
-        "y": 740.8333333333333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "int",
-        "value": 100000
-      }
-    },
-    {
-      "id": "154",
-      "type": "userInput",
-      "position": {
-        "x": 1206,
-        "y": 810.8333333333333
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 2.4
-      }
-    },
-    {
       "id": "159",
       "type": "io",
       "position": {
-        "x": 542.6786444321133,
-        "y": 110.27536266231323
+        "x": 611,
+        "y": 59
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -278,8 +151,8 @@
       "id": "160",
       "type": "io",
       "position": {
-        "x": 445.3590725330655,
-        "y": 533.8631584084096
+        "x": 922,
+        "y": 382.5
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -289,8 +162,8 @@
       "id": "161",
       "type": "io",
       "position": {
-        "x": 475.4997120637047,
-        "y": 745.2202912882263
+        "x": 922,
+        "y": 565.5
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -300,8 +173,8 @@
       "id": "162",
       "type": "output",
       "position": {
-        "x": 996.3956315772633,
-        "y": 528.5460837746845
+        "x": 1372,
+        "y": 184.5
       },
       "data": {
         "label": "Output"
@@ -311,8 +184,8 @@
       "id": "163",
       "type": "constant",
       "position": {
-        "x": -62.877394447579945,
-        "y": 636.5226616924128
+        "x": 70,
+        "y": 488
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -340,8 +213,8 @@
       "id": "164",
       "type": "constant",
       "position": {
-        "x": -104.66382148579396,
-        "y": 697.4612011231416
+        "x": 70,
+        "y": 534
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -358,10 +231,10 @@
     },
     {
       "id": "166",
-      "type": "constant",
+      "type": "userInput",
       "position": {
-        "x": -15.867664029589264,
-        "y": 770.587448440016
+        "x": 92,
+        "y": 589
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -375,8 +248,8 @@
       "id": "167",
       "type": "userInput",
       "position": {
-        "x": -261.0375061035156,
-        "y": 588
+        "x": 12,
+        "y": 621
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -387,8 +260,8 @@
       "id": "169",
       "type": "constant",
       "position": {
-        "x": 32.417229226464315,
-        "y": 514.3360238228396
+        "x": 100,
+        "y": 269.1666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -399,20 +272,21 @@
       "id": "170",
       "type": "constant",
       "position": {
-        "x": 40.33427669110165,
-        "y": 572.3943718968469
+        "x": 100,
+        "y": 310.1666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text"
+        "type": "text",
+        "value": null
       }
     },
     {
       "id": "171",
       "type": "constant",
       "position": {
-        "x": 98.39262476510896,
-        "y": 598.7845301123049
+        "x": 100,
+        "y": 351.1666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -420,26 +294,128 @@
       }
     },
     {
-      "id": "173",
+      "id": "174",
+      "type": "userInput",
+      "position": {
+        "x": 126,
+        "y": 163.89999999999998
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "176",
+      "type": "constant",
+      "position": {
+        "x": 100,
+        "y": 655
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "177",
+      "type": "constant",
+      "position": {
+        "x": 100,
+        "y": 696
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "178",
+      "type": "constant",
+      "position": {
+        "x": 100,
+        "y": 737
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "187",
+      "type": "io",
+      "position": {
+        "x": 1972.0055301679058,
+        "y": 416.8401202567726
+      },
+      "data": {
+        "descriptionFile": "SDM>BRT>fitBRT.yml"
+      }
+    },
+    {
+      "id": "188",
       "type": "output",
       "position": {
-        "x": 925.1980098346921,
-        "y": 742.4831969284229
+        "x": 2424.005530167906,
+        "y": 415.8401202567726
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "174",
-      "type": "userInput",
+      "id": "189",
+      "type": "output",
       "position": {
-        "x": -45.64938453793343,
-        "y": 229.16716503895168
+        "x": 2414.005530167906,
+        "y": 431.8401202567726
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "bboxCRS"
+        "label": "Output"
+      }
+    },
+    {
+      "id": "190",
+      "type": "output",
+      "position": {
+        "x": 2420.005530167906,
+        "y": 441.8401202567726
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "191",
+      "type": "output",
+      "position": {
+        "x": 2464.005530167906,
+        "y": 461.8401202567726
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "192",
+      "type": "output",
+      "position": {
+        "x": 2446.005530167906,
+        "y": 469.8401202567726
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "193",
+      "type": "output",
+      "position": {
+        "x": 2436.005530167906,
+        "y": 487.8401202567726
+      },
+      "data": {
+        "label": "Output"
       }
     }
   ],
@@ -466,88 +442,11 @@
       "id": "reactflow__edge-34clean_presence-123"
     },
     {
-      "source": "34",
-      "sourceHandle": "clean_presence",
-      "target": "132",
-      "targetHandle": "occurrence",
-      "id": "reactflow__edge-34clean_presence-132occurrence"
-    },
-    {
-      "source": "132",
-      "sourceHandle": "range",
-      "target": "133",
-      "targetHandle": null,
-      "id": "reactflow__edge-132range-133"
-    },
-    {
-      "source": "132",
-      "sourceHandle": "fit_stats",
-      "target": "134",
-      "targetHandle": null,
-      "id": "reactflow__edge-132fit_stats-134"
-    },
-    {
-      "source": "132",
-      "sourceHandle": "sdm_uncertainty",
-      "target": "135",
-      "targetHandle": null,
-      "id": "reactflow__edge-132sdm_uncertainty-135"
-    },
-    {
-      "source": "132",
-      "sourceHandle": "predicted_sdm",
-      "target": "141",
-      "targetHandle": null,
-      "id": "reactflow__edge-132predicted_sdm-141"
-    },
-    {
-      "source": "132",
-      "sourceHandle": "tuning",
-      "target": "142",
-      "targetHandle": null,
-      "id": "reactflow__edge-132tuning-142"
-    },
-    {
-      "source": "132",
-      "sourceHandle": "env_corners",
-      "target": "143",
-      "targetHandle": null,
-      "id": "reactflow__edge-132env_corners-143"
-    },
-    {
-      "source": "132",
-      "sourceHandle": "pseudoabsences",
-      "target": "148",
-      "targetHandle": null,
-      "id": "reactflow__edge-132pseudoabsences-148"
-    },
-    {
       "source": "121",
       "sourceHandle": null,
       "target": "149",
       "targetHandle": null,
       "id": "reactflow__edge-121-149"
-    },
-    {
-      "source": "152",
-      "sourceHandle": null,
-      "target": "132",
-      "targetHandle": "pseudoabsence_buffer",
-      "id": "reactflow__edge-152-132pseudoabsence_buffer"
-    },
-    {
-      "source": "153",
-      "sourceHandle": null,
-      "target": "132",
-      "targetHandle": "max_candidate_pseudoabsences",
-      "id": "reactflow__edge-153-132max_candidate_pseudoabsences"
-    },
-    {
-      "source": "154",
-      "sourceHandle": null,
-      "target": "132",
-      "targetHandle": "pa_proportion",
-      "id": "reactflow__edge-154-132pa_proportion"
     },
     {
       "source": "121",
@@ -583,20 +482,6 @@
       "target": "162",
       "targetHandle": null,
       "id": "reactflow__edge-160rasters-162"
-    },
-    {
-      "source": "160",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-160rasters-132predictors"
-    },
-    {
-      "source": "161",
-      "sourceHandle": "rasters",
-      "target": "132",
-      "targetHandle": "water_mask",
-      "id": "reactflow__edge-161rasters-132water_mask"
     },
     {
       "source": "146",
@@ -704,13 +589,6 @@
       "id": "reactflow__edge-171-160temporal_res"
     },
     {
-      "source": "161",
-      "sourceHandle": "rasters",
-      "target": "173",
-      "targetHandle": null,
-      "id": "reactflow__edge-161rasters-173"
-    },
-    {
       "source": "174",
       "sourceHandle": null,
       "target": "159",
@@ -732,11 +610,95 @@
       "id": "reactflow__edge-174-161bbox_crs"
     },
     {
+      "source": "176",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-176-161t0"
+    },
+    {
+      "source": "177",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-177-161t1"
+    },
+    {
+      "source": "178",
+      "sourceHandle": null,
+      "target": "161",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-178-161temporal_res"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "predicted_sdm",
+      "target": "188",
+      "targetHandle": null,
+      "id": "reactflow__edge-187predicted_sdm-188"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "sdm_uncertainty",
+      "target": "189",
+      "targetHandle": null,
+      "id": "reactflow__edge-187sdm_uncertainty-189"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "fit_stats",
+      "target": "190",
+      "targetHandle": null,
+      "id": "reactflow__edge-187fit_stats-190"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "range",
+      "target": "191",
+      "targetHandle": null,
+      "id": "reactflow__edge-187range-191"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "pseudoabsences",
+      "target": "192",
+      "targetHandle": null,
+      "id": "reactflow__edge-187pseudoabsences-192"
+    },
+    {
+      "source": "187",
+      "sourceHandle": "env_corners",
+      "target": "193",
+      "targetHandle": null,
+      "id": "reactflow__edge-187env_corners-193"
+    },
+    {
+      "source": "34",
+      "sourceHandle": "clean_presence",
+      "target": "187",
+      "targetHandle": "occurrence",
+      "id": "reactflow__edge-34clean_presence-187occurrence"
+    },
+    {
+      "source": "160",
+      "sourceHandle": "rasters",
+      "target": "187",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-160rasters-187predictors"
+    },
+    {
+      "source": "161",
+      "sourceHandle": "rasters",
+      "target": "187",
+      "targetHandle": "water_mask",
+      "id": "reactflow__edge-161rasters-187water_mask"
+    },
+    {
       "source": "174",
       "sourceHandle": null,
-      "target": "132",
+      "target": "187",
       "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-174-132bbox_crs"
+      "id": "reactflow__edge-174-187bbox_crs"
     }
   ],
   "inputs": {
@@ -756,6 +718,13 @@
       "example": null,
       "weight": 1
     },
+    "pipeline@146": {
+      "label": "STAC URL",
+      "description": "URL of the STAC catalog.",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 2
+    },
     "pipeline@137": {
       "label": "Environmental Predictors",
       "description": "Vector of strings, collection name followed by '|' followed by item id. View GEO BON STAC catalog items [here](https://stac.geobon.org/viewer/). The collection name and item name can be found in the URL (e.g. for \"https://stac.geobon.org/viewer/chelsa-clim/bio1\" the collection name is chelsa-clim and the item id is bio1). ",
@@ -767,77 +736,86 @@
         "chelsa-clim|bio12",
         "chelsa-clim|bio15"
       ],
-      "weight": 2
+      "weight": 3
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|min_year": {
       "description": "Min year observations wanted",
       "label": "minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 3
+      "weight": 4
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|max_year": {
       "description": "Max year observations wanted",
       "label": "maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 4
+      "weight": 5
     },
     "pipeline@128": {
       "label": "Spatial Resolution",
       "description": "Integer, spatial resolution of the rasters in the same units as the chosen coordinate reference system (meters or degrees)",
       "type": "float",
-      "example": 1000,
-      "weight": 5
-    },
-    "pipeline@152": {
-      "label": "Pseudoabsence Buffer",
-      "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
-      "type": "float",
-      "example": 10,
+      "example": 0.008,
       "weight": 6
     },
-    "pipeline@153": {
-      "label": "Max Candidate Pseudoabsences",
-      "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
-      "type": "int",
-      "example": 100000,
+    "pipeline@166": {
+      "label": "Land Cover Layer",
+      "description": "Land cover layer in the stack to use to mask water.",
+      "type": "text[]",
+      "example": [
+        "esacci-lc|esacci-lc-2020"
+      ],
       "weight": 7
-    },
-    "pipeline@154": {
-      "label": "Pseudoabsence proportion",
-      "description": "The number of PAs, given by the proportion of the total occurrences to use.",
-      "type": "float",
-      "example": 2.4,
-      "weight": 8
     },
     "pipeline@167": {
       "label": "Study area",
       "description": "Polygon of study area used to crop output layers",
       "type": "application/geopackage+sqlite3",
       "example": null,
+      "weight": 8
+    },
+    "SDM>BRT>fitBRT.yml@187|water_value": {
+      "description": "value used to represent water in the water mask",
+      "label": "value for water in mask",
+      "type": "int",
+      "example": 210,
       "weight": 9
     },
-    "data>loadFromStac.yml@161|t0": {
-      "description": "Start date for time series layers in STAC catalog. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
-      "label": "Start date",
-      "type": "text",
-      "example": null,
+    "SDM>BRT>fitBRT.yml@187|terrestrial": {
+      "description": "boolean flag if the species are terrestrial",
+      "label": "is terrestrial species",
+      "type": "boolean",
+      "example": true,
       "weight": 10
     },
-    "data>loadFromStac.yml@161|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. For example, ESA landcover can be extracted by specifying the item name or specifying the whole collection and the start and end date here. Leave blank if extracting items by name.",
-      "label": "End date",
-      "type": "text",
-      "example": null,
+    "SDM>BRT>fitBRT.yml@187|max_candidate_pseudoabsences": {
+      "description": "Maximum number of candidate pseudoabsences. A larger pool of candidate points increases the chance of selecting ecologically meaningful absences, but beyond a certain threshold it offers diminishing returns and may introduce bias if it oversamples areas far outside the species’ accessible range. The ideal number is typically guided by study extent, environmental heterogeneity, and species ecology, and can be fine-tuned by testing different values to identify a level that supports stable model performance without inflating computation or noise.",
+      "label": "maximum candidate pseudoabsences",
+      "type": "int",
+      "example": 100000,
       "weight": 11
     },
-    "data>loadFromStac.yml@161|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": null,
+    "SDM>BRT>fitBRT.yml@187|num_folds": {
+      "description": "Number of folds to use for k-fold crossvalidation. Increasing the number of folds in cross-validation for a species distribution model generally provides a more reliable estimate of model performance by reducing variance, but it also increases computational cost",
+      "label": "number of crossvalidation folds",
+      "type": "int",
+      "example": 4,
       "weight": 12
+    },
+    "SDM>BRT>fitBRT.yml@187|pseudoabsence_buffer": {
+      "description": "Minimum distance to a presence in kilometers. Choose a pseudoabsence buffer that is large enough to avoid placing absences in areas the species is likely to occupy, but not so large that it removes important environmental variation. The buffer distance should reflect species ecology, sampling bias, and the resolution of environmental predictors, and can be refined by testing several distances to find one that yields stable, interpretable model performance.",
+      "label": "pseudoabsence buffer",
+      "type": "float",
+      "example": 10,
+      "weight": 13
+    },
+    "SDM>BRT>fitBRT.yml@187|pa_proportion": {
+      "description": "The number of pseudoabsences, given by the proportion of the total occurrences to use. Using more pseudoabsences can improve model discrimination by providing a stronger contrast with presence data, but too many can overwhelm the presence signal or overweight poorly sampled areas.",
+      "label": "Pseudoabsence proportion",
+      "type": "float",
+      "example": 2.4,
+      "weight": 14
     }
   },
   "outputs": {
@@ -856,71 +834,59 @@
       "type": "text/tab-separated-values",
       "weight": 1
     },
-    "SDM>BRT>fitBRT.yml@132|pseudoabsences": {
-      "description": "pseudoabsence coordinates",
-      "label": "Pseudoabsences",
-      "type": "text/tab-separated-values",
-      "weight": 2
-    },
-    "SDM>BRT>fitBRT.yml@132|env_corners": {
-      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (red) in environment space for up to the first 5 predictors.",
-      "label": "Environment Space",
-      "type": "image/jpg",
-      "weight": 3
-    },
-    "SDM>BRT>fitBRT.yml@132|tuning": {
-      "description": "Describes how the Matthew's Correlation Coefficient (MCC) changes as the threshold value changes from 0 to 1.",
-      "label": "Tuning Curve",
-      "type": "image/jpg",
-      "weight": 4
-    },
-    "SDM>BRT>fitBRT.yml@132|fit_stats": {
-      "description": "JSON of BRT fit statistics and optimal threshold value.",
-      "label": "Fit Statistics",
-      "type": "text/json",
-      "weight": 5
-    },
-    "SDM>BRT>fitBRT.yml@132|predicted_sdm": {
-      "description": "Map of occurrence score between 0 and 1.",
-      "label": "Predicted SDM",
-      "type": "image/tiff;application=geotiff",
-      "weight": 6
-    },
-    "SDM>BRT>fitBRT.yml@132|range": {
-      "description": "Range map thresholded at the optimal value.",
-      "label": "Range",
-      "type": "image/tiff;application=geotiff",
-      "weight": 7
-    },
-    "SDM>BRT>fitBRT.yml@132|sdm_uncertainty": {
-      "description": "Map of the BRT's relative uncertainty for each location.",
-      "label": "SDM Uncertainty",
-      "type": "image/tiff;application=geotiff",
-      "weight": 8
-    },
     "data>getGBIFObservations>getGBIFObservations.yml@159|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
       "label": "DOI of GBIF download",
       "type": "text",
       "example": "10.15468/dl.j644h5",
-      "weight": 9
+      "weight": 2
     },
     "data>loadFromStac.yml@160|rasters": {
       "description": "array of output raster paths",
       "label": "Rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 10
+      "weight": 3
     },
-    "data>loadFromStac.yml@161|rasters": {
-      "description": "Output raster files in geotiff format.",
-      "label": "Rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 11
+    "SDM>BRT>fitBRT.yml@187|predicted_sdm": {
+      "description": "A map of predicted SDM score that shows the relative suitability of environmental conditions at that location, with higher values indicating areas more likely to support the species.",
+      "label": "Predicted SDM",
+      "type": "image/tiff;application=geotiff",
+      "weight": 4
+    },
+    "SDM>BRT>fitBRT.yml@187|sdm_uncertainty": {
+      "description": "The SDM uncertainty layer indicates the confidence or variability in the model’s predictions across the landscape, with higher values representing areas where the model is less certain about habitat suitability. This layer helps identify regions where predictions are more reliable versus areas where additional data or caution is needed for interpretation.",
+      "label": "SDM uncertainty",
+      "type": "image/tiff;application=geotiff",
+      "weight": 5
+    },
+    "SDM>BRT>fitBRT.yml@187|fit_stats": {
+      "description": "Fit statistics for the model in JSON format. PR AUC indicates how well the model correctly identifies true presences while limiting false positives, and is especially informative when presences are rare. MCC summarizes overall classification accuracy at the chosen threshold by balancing true and false positives and negatives, with values close to 1 indicating excellent performance and 0 indicating random. Threshold is the cutoff used to convert continuous predictions into presence–absence, where values at or above the threshold are classified as suitable habitat. ROC AUC measures the model’s ability to discriminate between suitable and unsuitable locations across all thresholds, with a value of 1.0 indicating perfect, and 0.5 indicating equivalent to range.",
+      "label": "Fit statistics",
+      "type": "text/json",
+      "weight": 6
+    },
+    "SDM>BRT>fitBRT.yml@187|range": {
+      "description": "Range map thresholded at the optimal threshold for the model. All cells with a score higher than that threshold are indicated as a presence.",
+      "label": "Range",
+      "type": "image/tiff;application=geotiff",
+      "weight": 7
+    },
+    "SDM>BRT>fitBRT.yml@187|pseudoabsences": {
+      "description": "Coordinates of generated pseudoabsences.",
+      "label": "Pseudoabsences",
+      "type": "text/tab-separated-values",
+      "weight": 8
+    },
+    "SDM>BRT>fitBRT.yml@187|env_corners": {
+      "description": "Diagnostic plot of the location of presences (blue) and pseudoabsences (green) in environment space for up to the first 5 predictors.",
+      "label": "Environment space",
+      "type": "image/jpg",
+      "weight": 9
     }
   },
   "metadata": {
     "name": "Species distribution modeling with Boosted Regression Trees (BRTs)",
-    "description": "This pipeline generates predictions for a species distribution model using the BRTs.",
+    "description": "\n## Introduction\nThis pipeline builds a model to predict the distribution of a species (a type of essential biodiversity variable), by using occurrence data from the Global Biodiversity Information Facility (GBIF), and environmental predictors from a STAC Catalogue.\nIn particular, this pipeline uses a specific model called a Boosted Regression Tree (BRT), a machine-learning model which tends to work well with spatial data.\n\n## Uses\nBRT species distribution models can be used as input layers for other pipelines that require species ranges (e.g. the Species Habitat Index) or stacked together to create maps of species richness. Uncertaintly layers from these SDMs can be used to prioritize sampling areas (e.g. through the occurrence sampling priority pipeline).\n\n## Pipeline limitations\n- The pipeline needs a minimum number of occurrences. If there are too few occurrences the model will not generate accurate predictions. - If there are a ton of occurrences, pseudoabsence generation will be slow. Make sure that the maximum candidate number of pseudoabsences is appropriate for the size of the input rasters. Pseudoabsences should not be too sparse compared to your occurrences. - Do not transform variables (e.g. PCA) before inputting into the pipeline. \n\n## Before you start\nA GBIF API key is needed for this analysis. Learn more [here](https://techdocs.gbif.org/en/openapi/).",
     "author": [
       {
         "name": "Michael D. Catchen",
@@ -928,10 +894,20 @@
         "role": "Pipeline development"
       }
     ],
-    "license": "MIT",
-    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT",
     "lifecycle": {
       "status": "in_review"
-    }
+    },
+    "license": "MIT",
+    "external_link": "https://github.com/GEO-BON/biab-2.0/blob/main/scripts/SDM/BRT",
+    "references": [
+      {
+        "text": "Elith, J., Leathwick, J.R. and Hastie, T. (2008), A working guide to boosted regression trees. Journal of Animal Ecology, 77.802-813.",
+        "doi": "https://doi.org/10.1111/j.1365-2656.2008.01390.x"
+      },
+      {
+        "text": "Poisot, T.; Bussières-Fournel, A.; Dansereau, G.; Catchen, M. D. A Julia toolkit for species distribution data. Peer Community Journal, Volume 5 (2025), article no. e101.",
+        "doi": "https://doi.org/10.24072/pcjournal.589"
+      }
+    ]
   }
 }
