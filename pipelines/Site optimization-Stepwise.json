@@ -147,11 +147,11 @@
       }
     },
     {
-      "id": "62",
+      "id": "63",
       "type": "output",
       "position": {
-        "x": 4088.39797163211,
-        "y": 140.8924161418345
+        "x": 4089.8630673375337,
+        "y": 146.5766920425865
       },
       "data": {
         "label": "Output"
@@ -254,6 +254,13 @@
       "id": "reactflow__edge-45rasters-61rasters"
     },
     {
+<<<<<<< HEAD
+      "source": "42",
+      "sourceHandle": "country_polygon",
+      "target": "61",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-42country_polygon-61country_polygon"
+=======
       "source": "61",
       "sourceHandle": "uncov",
       "target": "62",
@@ -280,6 +287,7 @@
       "target": "62",
       "targetHandle": null,
       "id": "reactflow__edge-61surdes_uncov-62"
+>>>>>>> 4ad1b673fdfe270705c7969a4364a0481686389c
     },
     {
       "source": "52",
@@ -289,6 +297,27 @@
       "id": "reactflow__edge-52-61locations_csv"
     },
     {
+<<<<<<< HEAD
+      "source": "61",
+      "sourceHandle": "uncov",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-61uncov-63"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "point_sel",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-61point_sel-63"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_uncov",
+      "target": "63",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_uncov-63"
+=======
       "source": "63",
       "sourceHandle": "polygon",
       "target": "61",
@@ -301,6 +330,7 @@
       "target": "63",
       "targetHandle": "buffer",
       "id": "reactflow__edge-64-63buffer"
+>>>>>>> 4ad1b673fdfe270705c7969a4364a0481686389c
     }
   ],
   "inputs": {
@@ -392,11 +422,24 @@
   },
   "outputs": {
     "site_optz_stepwise>site_optz_stepwise.yml@61|uncov": {
-      "description": "Uncovered variance raw values covered by each selected point",
-      "label": "Uncovered variance values",
+      "description": "uncovered variances values",
+      "label": "uncovered variances",
       "type": "text/csv",
       "weight": 0
     },
+<<<<<<< HEAD
+    "site_optz_stepwise>site_optz_stepwise.yml@61|point_sel": {
+      "description": "selection of demand points",
+      "label": "selection of demand points",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
+      "description": "plot for uncovered variance",
+      "label": "plot for uncovered variance",
+      "type": "image/png",
+      "weight": 2
+=======
     "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
       "description": "Map showing the selected points, the well-know sites (only used to define the environmental universe) and the remaining not selected demand sites. ",
       "label": "Map for selected points",
@@ -414,6 +457,7 @@
       "label": "selection of demand points",
       "type": "text/csv",
       "weight": 3
+>>>>>>> 4ad1b673fdfe270705c7969a4364a0481686389c
     }
   },
   "metadata": {
