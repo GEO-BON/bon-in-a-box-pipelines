@@ -14,7 +14,7 @@ ProtConn can be used to assess current progress towards Goal A and Target 3 of t
 ### Pipeline limitations
 
 - On larger datasets, the pipeline is slow and uses a lot of memory
-- Currently, the pipeline does not take into account landscape resistance (ie. whether areas between protected areas are easily traversed by species)
+- Currently, the pipeline does not take into account landscape resistance (ie. whether areas between protected areas are easily traversed by species). This will be added in the future.
 
 ## Before you start
 
@@ -39,17 +39,11 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 
   ![Dispersal probability](https://github.com/user-attachments/assets/5a867368-12a3-4402-aa1d-a034b9dc7962)
 
-- **Type of distance matrix:** the user can specify whether the distances between protected areas should be measured using the centroid (geometric center) of the protected area or the closest edge.
-
-  ![Centroid](https://github.com/user-attachments/assets/273e25a8-74ae-4453-a0a1-ccddf7df7138)
-
-  ![Nearest edge](https://github.com/user-attachments/assets/ba3b3b66-735a-4ea0-8db9-5398e8dc01a9)
-
 - **Year for cutoff:** the user can specify a year for the analysis. The analysis will only calculate values for protected areas that were established before this cutoff year.
 
-- **Start year:** the start year of the time series of ProtConn values. The time series will calculate ProtConn for the protected areas established on or before the chosen year, and will count up to the cutoff year by the specified interval.
+- **Start year:** the start year of the time series of ProtConn values. The time series will calculate ProtConn for the protected areas established on or before the chosen year, and will count up to the cutoff year by the specified interval. Any missing dates in the protected area file will be automatically assigned to this year. This can be left blank or will be ignored if the time series option was not selected.
 
-- **Year interval:** the year interval for the time series of ProtConn values. (eg. an input of 10 will calculate ProtConn values every 10 years).
+- **Year interval:** the year interval for the time series of ProtConn values. (eg. an input of 10 will calculate ProtConn values every 10 years). This can be left blank or will be ignored if the time series option was not selected.
 
 - **PA legal status types to include:** the user can choose legal status types of WDPA data to include in the analysis. This input is only relevant if using WDPA data. The protected areas can have a legal status of `Designated`, `Inscribed`, or `Established`.
  - Designated means that it is officially established under national or international law/policy.
@@ -80,24 +74,27 @@ This step cleans the data retrieved from the WDPA by correcting any geometry iss
 
 #### **3. Performing the ProtConn analysis**
 
-This step performs the ProtConn analysis on the protected areas of interest. ProtConn is calculated by creating a pairwise matrix of the distances between each protected area. Then, it calculates the probability of a species dispersing between these protected areas using a negative exponential dispersal kernel with the input distance assigned to a probability of 0.5. This means that if the protected areas are very near one another, there is a high probability that species will be able to disperse between them, but this probability decays exponentially with increasing distance. Different dispersal distances can be specified based on the species of interest, as very small species such as rodents can not disperse as far as large mammals such as deer, so the connectedness would not be the same for those groups. Then, the dispersal probabilities between each of the protected areas are summed together, multiplied by the area of the protected areas, and divided by the area of the study area. Thus, ProtConn is the percentage of the total study area (country or region) that is protected with well-connected protected areas.
+This step performs the ProtConn analysis on the protected areas of interest. ProtConn is calculated by creating a pairwise matrix of the distances between the closest edge of each protected area. Then, it calculates the probability of a species dispersing between these protected areas using a negative exponential dispersal kernel with the input distance assigned to a probability of 0.5. This means that if the protected areas are very near one another, there is a high probability that species will be able to disperse between them, but this probability decays exponentially with increasing distance. Different dispersal distances can be specified based on the species of interest, as very small species such as rodents can not disperse as far as large mammals such as deer, so the connectedness would not be the same for those groups. Then, the dispersal probabilities between each of the protected areas are summed together, multiplied by the area of the protected areas, and divided by the area of the study area. Thus, ProtConn is the percentage of the total study area (country or region) that is protected with well-connected protected areas.
 
 ### Pipeline outputs
 
-- **Country:** the country of interest, if selected.
+- **Country:** name of the country of interest
 
-- **Region:** the region of interest, if selected.
+- **Region:** name of the region of interest
 
-- **Protected areas:** protected areas on which ProtConn is being calculated. Note that overlapping protected areas have been merged into one to speed up calculation.
+- **Area of study area:** area of the study area, in square kilometers
+
+- **Area of protected area:** combines area of the protected areas, in square kilometers
 
 - **ProtConn results:** the pipeline gives a table with several measures:
   - Unprotected - percentage of study area that is protected
   - ProtConn - percentage of the study area that is protected and connected
   - ProtUnconn - percentage of the study area that is protected and unconnected
+  - ProtConn_Unprot - Percentage of the protected connected land that can be reached by moving through unprotected areas. It includes movements between PAs that entirely happen through unprotected lands and others that traverse unprotected lands in the initial and final stretches but that may use some protected land in between. The value of this fraction will be lower when PAs are separated by larger tracts of unprotected lands, making inter-PA movements less likely, particularly when the distances that need to be traversed through unprotected lands are large compared to the dispersal distance.
+  - ProtConn_Within - Percentage of the protected connected land that can be reached by moving only within individual PAs 
+  - ProtConn_Contig - Percentage of the protected connected land that can be reached by moving through sets of immediately adjacent (contiguous) PAs without traversing any unprotected lands.
 
-- **ProtConn result plot:** donut plot of the percentage of total area that is unprotected, protected and connected, and protected and unconnected for each input dispersal distance (in meters).
-
-- **ProtConn time series results:** table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.
+- **Result plot:** donut plot of percentage of the study area that is protected and unconnected, and protected and connected.
 
 - **ProtConn time series plot:** plot showing the change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.
 

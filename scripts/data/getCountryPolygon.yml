@@ -1,5 +1,6 @@
 script: getCountryPolygon.R
 name: Get country polygon
+# For review PR
 description: |
   This script pulls country (or state/province/region) polygons using the [GeoBoundaries API](https://www.geoboundaries.org/),
   and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, the script will return a polygon made from the bounding box using the sf package.
