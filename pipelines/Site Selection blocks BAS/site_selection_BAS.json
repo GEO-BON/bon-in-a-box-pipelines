@@ -138,24 +138,11 @@
       }
     },
     {
-      "id": "54",
-      "type": "constant",
-      "position": {
-        "x": 231,
-        "y": 248
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 1000
-      }
-    },
-    {
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 236,
-        "y": 164
+        "x": 235.12855401204058,
+        "y": 163.12855401204052
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -167,7 +154,7 @@
       "type": "constant",
       "position": {
         "x": 236,
-        "y": 122
+        "y": 120.26004758449247
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -192,8 +179,8 @@
       "id": "59",
       "type": "constant",
       "position": {
-        "x": 236,
-        "y": 206
+        "x": 236.87144598795942,
+        "y": 210.35722993979732
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -326,13 +313,6 @@
       "target": "2",
       "targetHandle": "aggregation",
       "id": "reactflow__edge-53-2aggregation"
-    },
-    {
-      "source": "54",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-54-2spatial_res"
     },
     {
       "source": "55",
@@ -475,6 +455,13 @@
       "type": "int",
       "example": 10,
       "weight": 5
+    },
+    "data>loadFromStac.yml@2|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
+      "label": "Spatial resolution",
+      "type": "float",
+      "weight": 6,
+      "example": null
     }
   },
   "outputs": {
