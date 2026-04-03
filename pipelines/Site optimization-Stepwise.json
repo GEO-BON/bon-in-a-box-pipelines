@@ -39,8 +39,8 @@
       "id": "49",
       "type": "constant",
       "position": {
-        "x": 1258,
-        "y": 275
+        "x": 1195.9831281936738,
+        "y": 289.51458701850186
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -68,8 +68,8 @@
       "id": "50",
       "type": "constant",
       "position": {
-        "x": 1258,
-        "y": 322
+        "x": 1197.3026361044467,
+        "y": 329.91704746463733
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -148,21 +148,10 @@
     },
     {
       "id": "63",
-      "type": "output",
-      "position": {
-        "x": 4089.8630673375337,
-        "y": 146.5766920425865
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "63",
       "type": "io",
       "position": {
-        "x": 2348.9858996262433,
-        "y": -53.129078019698454
+        "x": 1109.1297482207376,
+        "y": -81.927692783396
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -179,6 +168,78 @@
       "data": {
         "type": "float",
         "value": 0
+      }
+    },
+    {
+      "id": "66",
+      "type": "output",
+      "position": {
+        "x": 4087.9853137767586,
+        "y": 154.16432079877748
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": 509.11140941552844,
+        "y": -24.77440148948895
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "68",
+      "type": "constant",
+      "position": {
+        "x": 1170.3279505323394,
+        "y": 150.8537739207222
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "69",
+      "type": "constant",
+      "position": {
+        "x": 1205.9546641232077,
+        "y": 185.16097960081748
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "70",
+      "type": "constant",
+      "position": {
+        "x": 1192.7595850154792,
+        "y": 222.10720110245853
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": 1183.5230296400687,
+        "y": 255.0948988717809
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float"
       }
     }
   ],
@@ -288,21 +349,82 @@
       "targetHandle": "locations_csv",
       "id": "reactflow__edge-52-61locations_csv"
     },
-   
     {
       "source": "61",
       "sourceHandle": "point_sel",
-      "target": "63",
+      "target": "66",
       "targetHandle": null,
-      "id": "reactflow__edge-61point_sel-63"
+      "id": "reactflow__edge-61point_sel-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "uncov",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61uncov-66"
     },
     {
       "source": "61",
       "sourceHandle": "surdes_uncov",
-      "target": "63",
+      "target": "66",
       "targetHandle": null,
-      "id": "reactflow__edge-61surdes_uncov-63"
-
+      "id": "reactflow__edge-61surdes_uncov-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_map",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_map-66"
+    },
+    {
+      "source": "63",
+      "sourceHandle": "polygon",
+      "target": "61",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-63polygon-61country_polygon"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-67-63country_region_bbox"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-45bbox_crs"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-68-45t0"
+    },
+    {
+      "source": "69",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-69-45t1"
+    },
+    {
+      "source": "70",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-70-45temporal_res"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-71-45spatial_res"
     }
   ],
   "inputs": {
@@ -337,34 +459,6 @@
       "example": 30,
       "weight": 3
     },
-    "data>loadFromStac.yml@45|bbox_crs": {
-      "description": "Object containing the chosen bounding box and CRS.",
-      "label": "Bounding box and CRS",
-      "type": "bboxCRS",
-      "example": null,
-      "weight": 4
-    },
-    "data>loadFromStac.yml@45|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
-      "label": "Start date",
-      "type": "text",
-      "example": null,
-      "weight": 5
-    },
-    "data>loadFromStac.yml@45|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
-      "label": "End date",
-      "type": "text",
-      "example": null,
-      "weight": 6
-    },
-    "data>loadFromStac.yml@45|temporal_res": {
-      "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date or if extracting layers from all available dates. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
-      "label": "Temporal resolution",
-      "type": "text",
-      "example": null,
-      "weight": 7
-    },
     "data>load_polygons.yml@63|polygon_type": {
       "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
       "label": "Polygon type",
@@ -375,46 +469,46 @@
         "EEZ"
       ],
       "example": "Country or region",
-      "weight": 8
+      "weight": 4
     },
-    "data>load_polygons.yml@63|country_region_bbox": {
-      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
+    "data>load_polygons.yml@63|buffer": {
+      "description": "Buffer for pulling transboundary protected areas (WDPA data only). The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees). If pulling WDPA data with a custom bounding box, the buffer will not be applied.",
+      "label": "Transboundary buffer",
+      "type": "float",
+      "example": 0,
+      "weight": 5
+    },
+    "pipeline@67": {
       "label": "Country, region, or bounding box",
+      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
       "type": "bboxCRS",
       "example": null,
-      "weight": 9
-    },
-    "data>loadFromStac.yml@45|spatial_res": {
-      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
-      "label": "Spatial resolution",
-      "type": "float",
-      "example": null,
-      "weight": 10
+      "weight": 6
     }
   },
   "outputs": {
-    "site_optz_stepwise>site_optz_stepwise.yml@61|uncov": {
-      "description": "uncovered variances values",
-      "label": "uncovered variances",
-      "type": "text/csv",
-      "weight": 0
-    },
-    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
-      "description": "Map showing the selected points, the well-know sites (only used to define the environmental universe) and the remaining not selected demand sites. ",
-      "label": "Map for selected points",
-      "type": "image/png",
-      "weight": 1
-    },
-    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
-      "description": "Uncovered variance that new sampling sites will optimize",
-      "label": "Plot for uncovered variance",
-      "type": "image/png",
-      "weight": 2
-    },
     "site_optz_stepwise>site_optz_stepwise.yml@61|point_sel": {
       "description": "selection of demand points",
       "label": "selection of demand points",
       "type": "text/csv",
+      "weight": 0
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|uncov": {
+      "description": "uncovered variances values",
+      "label": "Uncovered variances",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
+      "description": "plot for uncovered variance",
+      "label": "Plot for uncovered variance",
+      "type": "image/png",
+      "weight": 2
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
+      "description": "map for selected points",
+      "label": "Map for selected points",
+      "type": "image/png",
       "weight": 3
     }
   },
