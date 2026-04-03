@@ -254,13 +254,6 @@
       "id": "reactflow__edge-45rasters-61rasters"
     },
     {
-<<<<<<< HEAD
-      "source": "42",
-      "sourceHandle": "country_polygon",
-      "target": "61",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-42country_polygon-61country_polygon"
-=======
       "source": "61",
       "sourceHandle": "uncov",
       "target": "62",
@@ -287,7 +280,6 @@
       "target": "62",
       "targetHandle": null,
       "id": "reactflow__edge-61surdes_uncov-62"
->>>>>>> 4ad1b673fdfe270705c7969a4364a0481686389c
     },
     {
       "source": "52",
@@ -296,14 +288,7 @@
       "targetHandle": "locations_csv",
       "id": "reactflow__edge-52-61locations_csv"
     },
-    {
-<<<<<<< HEAD
-      "source": "61",
-      "sourceHandle": "uncov",
-      "target": "63",
-      "targetHandle": null,
-      "id": "reactflow__edge-61uncov-63"
-    },
+   
     {
       "source": "61",
       "sourceHandle": "point_sel",
@@ -317,20 +302,7 @@
       "target": "63",
       "targetHandle": null,
       "id": "reactflow__edge-61surdes_uncov-63"
-=======
-      "source": "63",
-      "sourceHandle": "polygon",
-      "target": "61",
-      "targetHandle": "country_polygon",
-      "id": "reactflow__edge-63polygon-61country_polygon"
-    },
-    {
-      "source": "64",
-      "sourceHandle": null,
-      "target": "63",
-      "targetHandle": "buffer",
-      "id": "reactflow__edge-64-63buffer"
->>>>>>> 4ad1b673fdfe270705c7969a4364a0481686389c
+
     }
   ],
   "inputs": {
