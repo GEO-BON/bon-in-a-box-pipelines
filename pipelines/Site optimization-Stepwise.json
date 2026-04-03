@@ -399,19 +399,6 @@
       "type": "text/csv",
       "weight": 0
     },
-<<<<<<< HEAD
-    "site_optz_stepwise>site_optz_stepwise.yml@61|point_sel": {
-      "description": "selection of demand points",
-      "label": "selection of demand points",
-      "type": "text/csv",
-      "weight": 1
-    },
-    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
-      "description": "plot for uncovered variance",
-      "label": "plot for uncovered variance",
-      "type": "image/png",
-      "weight": 2
-=======
     "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
       "description": "Map showing the selected points, the well-know sites (only used to define the environmental universe) and the remaining not selected demand sites. ",
       "label": "Map for selected points",
@@ -429,7 +416,6 @@
       "label": "selection of demand points",
       "type": "text/csv",
       "weight": 3
->>>>>>> 4ad1b673fdfe270705c7969a4364a0481686389c
     }
   },
   "metadata": {
