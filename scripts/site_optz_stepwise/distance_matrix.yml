@@ -1,0 +1,49 @@
+script: script_distance_matrix.R
+name: Distance matrix
+description: Produces distance matrices taking into account environmental and spatial distances, using site locations and environmental rasters for a given polygon (country or region) 
+author: 
+  - name: Francis van Oordt
+    identifier: "https://orcid.org/0000-0002-8471-235X"
+license: CC-BY
+inputs:
+  rasters:
+    label: Rasters
+    description: Rasters layers of environmental variables of interest
+    type: image/tiff;application=geotiff[]
+    example: |
+      GBSTAC|chelsa-clim|bio1,GBSTAC|chelsa-clim|bio2, GBSTAC|chelsa-clim|bio12, 
+  locations_csv:
+    label: Occurence points of species
+    description: Occurence points from GBIF or uploaded by the user
+    type: text/csv
+    example: "Sample Peru"
+
+outputs:
+  dist_matrix:
+    label: spatial distance matrix
+    description: spatial distance matrix
+    type: text/csv
+  env_matrix:
+    label: environmental distance matrix
+    description: environmental distance matrix
+    type: text/csv
+  mdist:
+    label: joint distance matrix
+    description: joint distance matrix
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-rjson
+    - r-terra
+    - r-tidyterra
+    - r-tidyterra
+    - r-dplyr
+
+references:
+   - text: "Teitz, M. B., and P. Bart (1968), Heuristic methods for estimating generalized vertex median of a weighted graph, Operations Research, 16, 955-961."
+     doi: "https://doi.org/10.1287/opre.16.5.955"
+   - text: "tbart: Teitz and Bart's p-Median Algorithm"
+     doi: "https://github.com/cran/tbart"
