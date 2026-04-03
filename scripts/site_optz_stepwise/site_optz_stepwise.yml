@@ -43,11 +43,7 @@ outputs:
     description: uncovered variances values
     type: text/csv
   point_sel:
-<<<<<<< HEAD
     label: selection of demand points
-=======
-    label: Selection of demand points
->>>>>>> 4ad1b673fdfe270705c7969a4364a0481686389c
     description: selection of demand points
     type: text/csv
   surdes_uncov:
