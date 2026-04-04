@@ -267,24 +267,6 @@
         "type": "float",
         "value": 0
       }
-    },
-    {
-      "id": "26",
-      "type": "constant",
-      "position": {
-        "x": 257.52178406116127,
-        "y": 534.0411984543193
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "Country or region",
-        "options": [
-          "Country or region",
-          "WDPA",
-          "EEZ"
-        ]
-      }
     }
   ],
   "edges": [
@@ -443,13 +425,6 @@
       "id": "reactflow__edge-25-24buffer"
     },
     {
-      "source": "26",
-      "sourceHandle": null,
-      "target": "24",
-      "targetHandle": "polygon_type",
-      "id": "reactflow__edge-26-24polygon_type"
-    },
-    {
       "source": "24",
       "sourceHandle": "polygon",
       "target": "2",
@@ -479,40 +454,53 @@
     }
   ],
   "inputs": {
+    "data>load_polygons.yml@24|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 0
+    },
     "pipeline@23": {
       "label": "Bounding box and CRS",
       "description": "Select a country/region and a CRS to obtain the associated bounding box. You may also draw/input a custom bounding box along with a CRS.",
       "type": "bboxCRS",
       "example": null,
-      "weight": 0
+      "weight": 1
     },
     "data>loadFromStac.yml@1|t0": {
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "Start date (optional)",
       "type": "text",
       "example": null,
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@1|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "End date (optional)",
       "type": "text",
       "example": null,
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@1|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution (optional)",
       "type": "text",
       "example": null,
-      "weight": 3
+      "weight": 4
     },
     "pipeline@19": {
       "label": "Spatial resolution (optional)",
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "type": "float",
       "example": null,
-      "weight": 4
+      "weight": 5
     },
     "pipeline@18": {
       "label": "Resampling method (optional)",
@@ -535,7 +523,7 @@
         "q1",
         "q3"
       ],
-      "weight": 5
+      "weight": 6
     },
     "pipeline@20": {
       "label": "Aggregation method (optional)",
@@ -549,7 +537,7 @@
         "mean",
         "median"
       ],
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {

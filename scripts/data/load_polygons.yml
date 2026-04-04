@@ -10,12 +10,13 @@ author:
 inputs:
   polygon_type:
     label: Polygon type
-    description: Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).
+    description: Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.
     type: options
     options:
       - Country or region
       - WDPA
       - EEZ
+      - Polygon of bounding box
     example: Country or region
   country_region_bbox:
     label: Country, region, or bounding box
@@ -34,6 +35,10 @@ outputs:
     label: Polygon
     description: Polygons of the country, WDPA, EEZs for the country or region of interest
     type: application/geopackage+sqlite3
+  bbox_crs:
+    label: Bounding box and crs of polygon
+    description: Bounding box and coordinate reference system of output polygon
+    type: bboxCRS
 conda:
   channels:
     - conda-forge

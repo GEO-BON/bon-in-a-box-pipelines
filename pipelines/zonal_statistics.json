@@ -148,7 +148,7 @@
   ],
   "inputs": {
     "data>load_polygons.yml@28|polygon_type": {
-      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
       "label": "Polygon type",
       "type": "options",
       "options": [
