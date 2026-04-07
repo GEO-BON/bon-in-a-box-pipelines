@@ -231,15 +231,16 @@
       }
     },
     {
-      "id": "71",
+      "id": "72",
       "type": "constant",
       "position": {
-        "x": 1183.5230296400687,
-        "y": 255.0948988717809
+        "x": 764.4035082335045,
+        "y": -214.93196475146232
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "float"
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -420,44 +421,20 @@
       "id": "reactflow__edge-70-45temporal_res"
     },
     {
-      "source": "71",
+      "source": "72",
       "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-71-45spatial_res"
+      "target": "63",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-72-63buffer"
     }
   ],
   "inputs": {
-    "data>loadFromStac.yml@45|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2"
-      ],
+    "pipeline@67": {
+      "label": "Country, region, or bounding box",
+      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
+      "type": "bboxCRS",
+      "example": null,
       "weight": 0
-    },
-    "pipeline@52": {
-      "label": "Sampling locations",
-      "description": "Sampling locations/site in lat lon format, including a \"vini\" column (defining well-known sites as \"1\" and demand/historic sites as \"0\", which will be selected for the sampling optimization)",
-      "type": "text/csv",
-      "example": "Sample Peru",
-      "weight": 1
-    },
-    "pipeline@53": {
-      "label": "Aggregation factor (resolution)",
-      "description": "Factor reduction for raster pixel resolution (usually from 1km raw)",
-      "type": "int",
-      "example": 10,
-      "weight": 2
-    },
-    "pipeline@54": {
-      "label": "Algorithm Iterations",
-      "description": "Number of iterations to run (equivalent to sites to be selected from the demand sites pool. NOTE: it has to be equal or less that the \"demand sites\" number)",
-      "type": "int",
-      "example": 30,
-      "weight": 3
     },
     "data>load_polygons.yml@63|polygon_type": {
       "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
@@ -469,19 +446,43 @@
         "EEZ"
       ],
       "example": "Country or region",
+      "weight": 1
+    },
+    "data>loadFromStac.yml@45|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 2
+    },
+    "pipeline@52": {
+      "label": "Sampling locations",
+      "description": "Sampling locations/site in lat lon format, including a \"vini\" column (defining well-known sites as \"1\" and demand/historic sites as \"0\", which will be selected for the sampling optimization)",
+      "type": "text/csv",
+      "example": "Sample Peru",
+      "weight": 3
+    },
+    "pipeline@53": {
+      "label": "Aggregation factor (resolution)",
+      "description": "Factor reduction for raster pixel resolution (usually from 1km raw)",
+      "type": "int",
+      "example": 10,
       "weight": 4
     },
-    "data>load_polygons.yml@63|buffer": {
-      "description": "Buffer for pulling transboundary protected areas (WDPA data only). The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees). If pulling WDPA data with a custom bounding box, the buffer will not be applied.",
-      "label": "Transboundary buffer",
-      "type": "float",
-      "example": 0,
+    "pipeline@54": {
+      "label": "Algorithm Iterations",
+      "description": "Number of iterations to run (equivalent to sites to be selected from the demand sites pool. NOTE: it has to be equal or less that the \"demand sites\" number)",
+      "type": "int",
+      "example": 30,
       "weight": 5
     },
-    "pipeline@67": {
-      "label": "Country, region, or bounding box",
-      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
-      "type": "bboxCRS",
+    "data>loadFromStac.yml@45|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
+      "label": "Spatial resolution",
+      "type": "float",
       "example": null,
       "weight": 6
     }
@@ -514,7 +515,7 @@
   },
   "metadata": {
     "name": "Site optimization sampling",
-    "description": "## Introduction\nSite optimization is challenge in biodiversity monitoring. Often times ecological monitoring selects sampling locations based on multiple reason. Reasons vary from sampling design, budget and accesibility constraints, and rotational site selection, among others. Such variation may  produce a set of current or well-known of locations, and historical or demand site (site which have not been samples in a many years). Given that monitoring projects could increase or  rotate new sampling location, decision of how to define this sites can be informed by environmental variability, that may help understand better biodiversity patterns.\n## Uses\nThe pipeline selects a set of locations from a pool of demand sites (historical sites or  not recently sampled sites) using a stepwise procedure through a pmedians  algorithm. The algorith aims to select sites that cover greatest environmental and spatial distance. Selected sites will contribute to cover the remaining environmental variability based on the universal variability (universe defined by well-know and historical sites together). but the historical sites alone, and select among the Demand sites. The user must provide a dataframe with well- know survey sites (current) and demand sites (or historical sites), a will select  sites only from the demand site pool.\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque aliquam, felis ac volutpat scelerisque, lectus sapien malesuada eros, id consectetur ligula sapien a metus. Maecenas auctor enim leo, at lobortis orci rhoncus sit amet. Vestibulum quis lorem quis justo suscipit mattis eu non sem. Nunc urna purus, interdum nec dolor at, eleifend elementum turpis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Cras sed placerat elit, a maximus enim. Nam commodo commodo eros sagittis dapibus. Donec ultricies auctor quam eu fermentum. Phasellus fringilla urna sit amet bibendum egestas. Duis id urna viverra, vulputate lacus nec, scelerisque leo.\n## Limitations \n* Optimization algorithm is based on only a subset of points (demand) from a universe  (well-know and demand) that defines the environmental and spatial variability.\n* The p-median algortihm is slow with large matrices (more than ~200 sites) depending on computing power.\n* Selection of environmental variables is key to defining universal environmental variability, therefore results may vary significantly based on the ßected envionrmental variables. \n* Boundary is limited to spatial polygons defined by the avalilabe country bounding box polygons within Bon-in-a-Box.\n\n## Before you start\n* Be sure to produce a dataframe of points with the correct colum labels: lat, lon, and vini.\n* Be sure that the vini column should only include 1 and 0 values, which are demand and historical sites respectively. Only demand sites will be chosen. ",
+    "description": "## Introduction\nSite optimization is challenge in biodiversity monitoring. Often times ecological monitoring selects sampling locations based on multiple reason. Reasons vary from sampling design, budget and accesibility constraints, and rotational site selection, among others. Such variation may  produce a set of current or well-known of locations, and historical or demand site (site which have not been samples in a many years). Given that monitoring projects could increase or  rotate new sampling location, decision of how to define this sites can be informed by environmental variability, that may help understand better biodiversity patterns.\n## Uses\nThe pipeline selects a set of locations from a pool of demand sites (historical sites or  not recently sampled sites) using a stepwise procedure through a pmedians  algorithm. The algorith aims to select sites that cover greatest environmental and spatial distance. Selected sites will contribute to cover the remaining environmental variability based on the universal variability (universe defined by well-know and historical sites together). but the historical sites alone, and select among the Demand sites. The user must provide a dataframe with well- know survey sites (current) and demand sites (or historical sites), a will select  sites only from the demand site pool.\n## Limitations \n* Optimization algorithm is based on only a subset of points (demand) from a universe  (well-know and demand) that defines the environmental and spatial variability.\n* The p-median algortihm is slow with large matrices (more than ~200 sites) depending on computing power.\n* Selection of environmental variables is key to defining universal environmental variability, therefore results may vary significantly based on the ßected envionrmental variables. \n* Boundary is limited to spatial polygons defined by the avalilabe country bounding box polygons within Bon-in-a-Box.\n\n## Before you start\n* Be sure to produce a dataframe of points with the correct colum labels: lat, lon, and vini.\n* Be sure that the vini column should only include 1 and 0 values, which are demand and historical sites respectively. Only demand sites will be chosen. ",
     "author": [
       {
         "name": "Francis van Oordt",

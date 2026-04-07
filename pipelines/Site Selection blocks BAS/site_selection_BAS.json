@@ -138,19 +138,6 @@
       }
     },
     {
-      "id": "54",
-      "type": "constant",
-      "position": {
-        "x": 231,
-        "y": 248
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 1000
-      }
-    },
-    {
       "id": "55",
       "type": "constant",
       "position": {
@@ -328,13 +315,6 @@
       "id": "reactflow__edge-53-2aggregation"
     },
     {
-      "source": "54",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-54-2spatial_res"
-    },
-    {
       "source": "55",
       "sourceHandle": null,
       "target": "2",
@@ -475,6 +455,13 @@
       "type": "int",
       "example": 10,
       "weight": 5
+    },
+    "data>loadFromStac.yml@2|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
+      "label": "Spatial resolution",
+      "type": "float",
+      "weight": 6,
+      "example": null
     }
   },
   "outputs": {
