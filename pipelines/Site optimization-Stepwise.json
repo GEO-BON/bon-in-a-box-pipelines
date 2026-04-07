@@ -1,0 +1,534 @@
+{
+  "nodes": [
+    {
+      "id": "39",
+      "type": "io",
+      "position": {
+        "x": 2296,
+        "y": 314
+      },
+      "data": {
+        "descriptionFile": "site_optz_stepwise>distance_matrix.yml"
+      }
+    },
+    {
+      "id": "45",
+      "type": "io",
+      "position": {
+        "x": 1721,
+        "y": 162
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "46",
+      "type": "constant",
+      "position": {
+        "x": 1288,
+        "y": 56
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "49",
+      "type": "constant",
+      "position": {
+        "x": 1195.9831281936738,
+        "y": 289.51458701850186
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "50",
+      "type": "constant",
+      "position": {
+        "x": 1197.3026361044467,
+        "y": 329.91704746463733
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "51",
+      "type": "constant",
+      "position": {
+        "x": 1064,
+        "y": 369
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3"
+      }
+    },
+    {
+      "id": "52",
+      "type": "userInput",
+      "position": {
+        "x": 1860,
+        "y": 322
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": "Sample Peru"
+      }
+    },
+    {
+      "id": "53",
+      "type": "userInput",
+      "position": {
+        "x": 2475,
+        "y": 84
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 10
+      }
+    },
+    {
+      "id": "54",
+      "type": "userInput",
+      "position": {
+        "x": 2561,
+        "y": 118
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 100
+      }
+    },
+    {
+      "id": "61",
+      "type": "io",
+      "position": {
+        "x": 3231.6000061035156,
+        "y": 136.79999542236328
+      },
+      "data": {
+        "descriptionFile": "site_optz_stepwise>site_optz_stepwise.yml"
+      }
+    },
+    {
+      "id": "63",
+      "type": "io",
+      "position": {
+        "x": 1109.1297482207376,
+        "y": -81.927692783396
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "64",
+      "type": "constant",
+      "position": {
+        "x": 1983.8602567085231,
+        "y": 15.061958027760227
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    },
+    {
+      "id": "66",
+      "type": "output",
+      "position": {
+        "x": 4087.9853137767586,
+        "y": 154.16432079877748
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": 509.11140941552844,
+        "y": -24.77440148948895
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "68",
+      "type": "constant",
+      "position": {
+        "x": 1170.3279505323394,
+        "y": 150.8537739207222
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": null
+      }
+    },
+    {
+      "id": "69",
+      "type": "constant",
+      "position": {
+        "x": 1205.9546641232077,
+        "y": 185.16097960081748
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "70",
+      "type": "constant",
+      "position": {
+        "x": 1192.7595850154792,
+        "y": 222.10720110245853
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "72",
+      "type": "constant",
+      "position": {
+        "x": 764.4035082335045,
+        "y": -214.93196475146232
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "46",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-46-45stac_url"
+    },
+    {
+      "source": "49",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-49-45resampling"
+    },
+    {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-50-45aggregation"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-51-45study_area"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "rasters",
+      "target": "39",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-45rasters-39rasters"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "39",
+      "targetHandle": "locations_csv",
+      "id": "reactflow__edge-52-39locations_csv"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "res_fact",
+      "id": "reactflow__edge-53-61res_fact"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "iters",
+      "id": "reactflow__edge-54-61iters"
+    },
+    {
+      "source": "39",
+      "sourceHandle": "mdist",
+      "target": "61",
+      "targetHandle": "mdist",
+      "id": "reactflow__edge-39mdist-61mdist"
+    },
+    {
+      "source": "45",
+      "sourceHandle": "rasters",
+      "target": "61",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-45rasters-61rasters"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "uncov",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61uncov-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "point_sel",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61point_sel-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_map",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_map-62"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_uncov",
+      "target": "62",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_uncov-62"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "61",
+      "targetHandle": "locations_csv",
+      "id": "reactflow__edge-52-61locations_csv"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "point_sel",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61point_sel-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "uncov",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61uncov-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_uncov",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_uncov-66"
+    },
+    {
+      "source": "61",
+      "sourceHandle": "surdes_map",
+      "target": "66",
+      "targetHandle": null,
+      "id": "reactflow__edge-61surdes_map-66"
+    },
+    {
+      "source": "63",
+      "sourceHandle": "polygon",
+      "target": "61",
+      "targetHandle": "country_polygon",
+      "id": "reactflow__edge-63polygon-61country_polygon"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-67-63country_region_bbox"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-45bbox_crs"
+    },
+    {
+      "source": "68",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-68-45t0"
+    },
+    {
+      "source": "69",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-69-45t1"
+    },
+    {
+      "source": "70",
+      "sourceHandle": null,
+      "target": "45",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-70-45temporal_res"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "63",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-72-63buffer"
+    }
+  ],
+  "inputs": {
+    "pipeline@67": {
+      "label": "Country, region, or bounding box",
+      "description": "Use the chooser to select a country/ region or create a custom bounding box (region selections will be ignored for EEZs since they are national).",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
+    "data>load_polygons.yml@63|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ"
+      ],
+      "example": "Country or region",
+      "weight": 1
+    },
+    "data>loadFromStac.yml@45|collections_items": {
+      "description": "Vector of strings, collection name followed by '|' followed by item id",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 2
+    },
+    "pipeline@52": {
+      "label": "Sampling locations",
+      "description": "Sampling locations/site in lat lon format, including a \"vini\" column (defining well-known sites as \"1\" and demand/historic sites as \"0\", which will be selected for the sampling optimization)",
+      "type": "text/csv",
+      "example": "Sample Peru",
+      "weight": 3
+    },
+    "pipeline@53": {
+      "label": "Aggregation factor (resolution)",
+      "description": "Factor reduction for raster pixel resolution (usually from 1km raw)",
+      "type": "int",
+      "example": 10,
+      "weight": 4
+    },
+    "pipeline@54": {
+      "label": "Algorithm Iterations",
+      "description": "Number of iterations to run (equivalent to sites to be selected from the demand sites pool. NOTE: it has to be equal or less that the \"demand sites\" number)",
+      "type": "int",
+      "example": 30,
+      "weight": 5
+    },
+    "data>loadFromStac.yml@45|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
+      "label": "Spatial resolution",
+      "type": "float",
+      "example": null,
+      "weight": 6
+    }
+  },
+  "outputs": {
+    "site_optz_stepwise>site_optz_stepwise.yml@61|point_sel": {
+      "description": "selection of demand points",
+      "label": "selection of demand points",
+      "type": "text/csv",
+      "weight": 0
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|uncov": {
+      "description": "uncovered variances values",
+      "label": "Uncovered variances",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_uncov": {
+      "description": "plot for uncovered variance",
+      "label": "Plot for uncovered variance",
+      "type": "image/png",
+      "weight": 2
+    },
+    "site_optz_stepwise>site_optz_stepwise.yml@61|surdes_map": {
+      "description": "map for selected points",
+      "label": "Map for selected points",
+      "type": "image/png",
+      "weight": 3
+    }
+  },
+  "metadata": {
+    "name": "Site optimization sampling",
+    "description": "## Introduction\nSite optimization is challenge in biodiversity monitoring. Often times ecological monitoring selects sampling locations based on multiple reason. Reasons vary from sampling design, budget and accesibility constraints, and rotational site selection, among others. Such variation may  produce a set of current or well-known of locations, and historical or demand site (site which have not been samples in a many years). Given that monitoring projects could increase or  rotate new sampling location, decision of how to define this sites can be informed by environmental variability, that may help understand better biodiversity patterns.\n## Uses\nThe pipeline selects a set of locations from a pool of demand sites (historical sites or  not recently sampled sites) using a stepwise procedure through a pmedians  algorithm. The algorith aims to select sites that cover greatest environmental and spatial distance. Selected sites will contribute to cover the remaining environmental variability based on the universal variability (universe defined by well-know and historical sites together). but the historical sites alone, and select among the Demand sites. The user must provide a dataframe with well- know survey sites (current) and demand sites (or historical sites), a will select  sites only from the demand site pool.\n## Limitations \n* Optimization algorithm is based on only a subset of points (demand) from a universe  (well-know and demand) that defines the environmental and spatial variability.\n* The p-median algortihm is slow with large matrices (more than ~200 sites) depending on computing power.\n* Selection of environmental variables is key to defining universal environmental variability, therefore results may vary significantly based on the ßected envionrmental variables. \n* Boundary is limited to spatial polygons defined by the avalilabe country bounding box polygons within Bon-in-a-Box.\n\n## Before you start\n* Be sure to produce a dataframe of points with the correct colum labels: lat, lon, and vini.\n* Be sure that the vini column should only include 1 and 0 values, which are demand and historical sites respectively. Only demand sites will be chosen. ",
+    "author": [
+      {
+        "name": "Francis van Oordt",
+        "email": "francis.vanoordtlahoz@mail.mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-8471-235X"
+      }
+    ],
+    "license": "CC-BY",
+    "references": [
+      {
+        "text": "Medina, N. G., Lara, F., Mazimpaka, V., & Hortal, J. (2013). Designing bryophyte surveys for an optimal coverage of diversity gradients. Biodiversity and Conservation, 22(13–14), 3121–3139.",
+        "doi": "https://doi.org/10.1007/s10531-013-0574-5"
+      }
+    ]
+  }
+}
