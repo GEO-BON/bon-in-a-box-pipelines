@@ -27,36 +27,46 @@ To use this pipeline, you’ll need a [Protected Planet API key](https://api.pro
 
 BON in a Box contains a pipeline to calculate ProtConn for a given country or region of interest. The pipeline has the following user inputs:
 
-- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu.
+- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu. **The CRS must be projected.**
 
 - **Polygon of study area:** this is an optional input to add a custom study area file, which will override the polygon generated from the Bounding Box and CRS input. The custom study area file must be in geopackage format and added to the userdata folder in your local repository. This input should be the path to the file in userdata (e.g. /userdata/study_area_polygon.gpkg).
 
-- **Polygon of protected areas:** this input should only be used if the user wants to use custom protected area data, for example if they want to calculate ProtConn for proposed protected areas or protected areas that are not yet in WDPA. If you use the `ProtConn Analysis with WDPA` pipeline, this input is optional and any file added will be combined with WDPA data of the country of interest. If you use the `ProtConn Analysis with custom PAs` pipeline, this input is mandatory and the pipeline will analyze only user-input protected area polygons.
+- **Polygon of protected areas:** this is an optional input and should only be used if the user wants to use custom protected area data, for example if they want to calculate ProtConn for proposed protected areas or protected areas that are not yet in WDPA. If you use the `ProtConn Analysis with WDPA` pipeline, this input is optional and any file added will be combined with WDPA data of the country of interest. If you use the `ProtConn Analysis with custom PAs` pipeline, this input is mandatory and the pipeline will analyze only user-input protected area polygons.
 
-- **Date Column Name:** the user must indicate the name of the column in the custom protected area data file that specifies when the protected area was created (leave blank if only using WDPA data).
+- **Transboundary Buffer:** the user must select a buffer for pulling transboundary protected areas. The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system. If pulling WDPA data with a custom bounding box, the buffer will not be applied. It is recommended that the user chooses a transboundary distance 5 times greater than the largest distance threshold, which corresponds to a dispersal probability of ~0.03. Default value is zero.
 
-- **Distance analysis threshold:** the user can specify one or more dispersal distances depending on which species they are interested in. Common dispersal distances are 1,000 meters (1km), 10,000 m (10km) and 100,000 m (100 km) The dispersal distance is the median of the negative exponential dispersal kernel, meaning that at that distance there is a dispersal probability of 0.5. Note that larger dispersal distances will be more computationally intensive.
+- **Date Column Name:** this is an optional input to be use for a custom protected area data file. The user can indicate the name of the column in the file that specifies when the protected area was created (leave blank if only using WDPA data).
+
+- **Distance analysis threshold:** the user can specify one or more dispersal distances depending on which species they are interested in. Common dispersal distances are 1,000 meters (1km), 10,000 m (10km) and 100,000 m (100 km). The dispersal distance is the median of the negative exponential dispersal kernel, meaning that at that distance there is a dispersal probability of 0.5. Note that larger dispersal distances will be more computationally intensive.
 
   ![Dispersal probability](https://github.com/user-attachments/assets/5a867368-12a3-4402-aa1d-a034b9dc7962)
 
-- **Year for cutoff:** the user can specify a year for the analysis. The analysis will only calculate values for protected areas that were established before this cutoff year.
+- **Time series**: the user can specify whether they want to calculate a time series plot of ProtConn values based on date of PA establishment. Omitting the time series reduces memory and computational costs.
 
 - **Start year:** the start year of the time series of ProtConn values. The time series will calculate ProtConn for the protected areas established on or before the chosen year, and will count up to the cutoff year by the specified interval. Any missing dates in the protected area file will be automatically assigned to this year. This can be left blank or will be ignored if the time series option was not selected.
 
-- **Year interval:** the year interval for the time series of ProtConn values. (eg. an input of 10 will calculate ProtConn values every 10 years). This can be left blank or will be ignored if the time series option was not selected.
+- **Year for cutoff:** the user can specify a year for the analysis. The analysis will only calculate values for protected areas that were established before this cutoff year. For example, an input of 2000 will calculate ProtConn only for PAs that were designated before the year 2000.
 
-- **PA legal status types to include:** the user can choose legal status types of WDPA data to include in the analysis. This input is only relevant if using WDPA data. The protected areas can have a legal status of `Designated`, `Inscribed`, or `Established`.
- - Designated means that it is officially established under national or international law/policy.
+- **Year interval:** the year interval for the time series of ProtConn values. For example, an input of 10 will calculate ProtConn values every 10 years. This can be left blank or will be ignored if the time series option was not selected.
+
+- **PA size threshold:** the user must input a size threshold for PAs, in meters squared. Protected areas smaller than this area will be removed. A threshold of 1000m2 was used in Saura et al. 2017 because at larger scales, protected areas less than 1000m2 do not have a large impact on ProtConn values. Removing small protected areas significantly speeds up calculation and is recommended for large areas. To not PAs filter by a size threshold, input a value of 0.
+
+- **PA legal status types to include:** the user can choose legal status types of WDPA data to include in the analysis. This input is only relevant if using WDPA data. The protected areas can have a legal status of `Proposed`, `Inscribed`, `Adopted`, `Designated`, or `Established`.
+- Proposed means that the site is in the process of gaining recognition through legal or other effective means. It may still be managed as a protected area during this process.
  - Inscribed means that it is inscribed in an international list (e.g. World Heritage). This can overlap with designated.
+ - Adopted means that it is a specially protected area of marine importance (SPAMI) created under the Barcelona convention, focusing on the protection of the marine environment and coastal region of the mediterranean.
+ - Designated means that it is officially established under national or international law/policy.
  - Established means that it is protected and managed, but possibly lacks formal legal designation.
 
 - **Include UNESCO Biosphere reserves:** the user can specify whether they want to include UNESCO Man and the Biosphere reserves in the analysis or not. These serve as learning sites for sustainable development and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. They may not be legally protected and may not be fully conserved, as they are often used for development or human settlement. Excluding these will limit the dataset to meeting stricter conservation standards. This input is only relevant if using WDPA data.
 
 - **Buffer protected area points:** the user can specify whether they want to buffer protected area points. For any protected areas that are represented as single points instead of polygons, this will create a circle around the polygon that is equal to the reported area. This will not affect the connectivity metrics if using centroids but may cause inaccuracies if assessing connectivity using the nearest edge. If left unchecked, all protected areas represented as points will be removed. This input is only relevant if using WDPA data.
 
-- **Include marine protected areas:** the user can specify whether they want to include marine protected areas in the analysis or not. Note that the analysis is still limited to the bounds of the study area polygon. This input is only relevant if using WDPA data.
-
 - **Include OECMs:** the user can specify whether they want to include other effective area-based conservation measures (OECMs) in the analysis or not. These areas are not officially designated protected areas but are still achieving conservation outcomes. This input is only relevant if using WDPA data.
+
+- **Include marine and coastal protected areas:** the user can specify whether they want to include marine protected areas in the analysis or not. Note that the analysis is still limited to the bounds of the study area polygon. This input is only relevant if using WDPA data.
+
+- **Include missing values for date:** the user can specify how missing values for date should be handled in the time series analysis. If the box is checked, protected areas with missing values for establishment date will be included in the time series analysis and assigned to the chosen value for start year. If not checked, these protected areas will be omitted from the time series analysis (note they will still be included in the main analysis).
 
 ### Pipeline steps
 
@@ -76,27 +86,25 @@ This step cleans the data retrieved from the WDPA by correcting any geometry iss
 
 This step performs the ProtConn analysis on the protected areas of interest. ProtConn is calculated by creating a pairwise matrix of the distances between the closest edge of each protected area. Then, it calculates the probability of a species dispersing between these protected areas using a negative exponential dispersal kernel with the input distance assigned to a probability of 0.5. This means that if the protected areas are very near one another, there is a high probability that species will be able to disperse between them, but this probability decays exponentially with increasing distance. Different dispersal distances can be specified based on the species of interest, as very small species such as rodents can not disperse as far as large mammals such as deer, so the connectedness would not be the same for those groups. Then, the dispersal probabilities between each of the protected areas are summed together, multiplied by the area of the protected areas, and divided by the area of the study area. Thus, ProtConn is the percentage of the total study area (country or region) that is protected with well-connected protected areas.
 
-### Pipeline outputs
+### Pipeline
 
-- **Country:** name of the country of interest
-
-- **Region:** name of the region of interest
-
-- **Area of study area:** area of the study area, in square kilometers
-
-- **Area of protected area:** combines area of the protected areas, in square kilometers
+- **Protected areas:** protected areas on which ProtConn is being calculated. Overlapping protected areas have been merged into one to speed up calculations.
 
 - **ProtConn results:** the pipeline gives a table with several measures:
   - Unprotected - percentage of study area that is protected
   - ProtConn - percentage of the study area that is protected and connected
   - ProtUnconn - percentage of the study area that is protected and unconnected
   - ProtConn_Unprot - Percentage of the protected connected land that can be reached by moving through unprotected areas. It includes movements between PAs that entirely happen through unprotected lands and others that traverse unprotected lands in the initial and final stretches but that may use some protected land in between. The value of this fraction will be lower when PAs are separated by larger tracts of unprotected lands, making inter-PA movements less likely, particularly when the distances that need to be traversed through unprotected lands are large compared to the dispersal distance.
-  - ProtConn_Within - Percentage of the protected connected land that can be reached by moving only within individual PAs 
+  - ProtConn_Within - Percentage of the protected connected land that can be reached by moving only within individual PAs
   - ProtConn_Contig - Percentage of the protected connected land that can be reached by moving through sets of immediately adjacent (contiguous) PAs without traversing any unprotected lands.
 
-- **Result plot:** donut plot of percentage of the study area that is protected and unconnected, and protected and connected.
+- **ProtConn result plot:** donut plot of percentage of the study area that is protected and unconnected, and protected and connected for each input dispersal distance (in meters).
+
+- **ProtConn time series results:** table of the time series of ProtConn and ProtUnconn values, calculated at the time interval that is specified.
 
 - **ProtConn time series plot:** plot showing the change in the percentage area that is protected and the percentage that is protected and connected over time, at the chosen time interval, compared to the Kunming-Montreal GBF goals.
+
+- **Study area polygon:** polygon of the chosen study area.
 
 ## Example
 

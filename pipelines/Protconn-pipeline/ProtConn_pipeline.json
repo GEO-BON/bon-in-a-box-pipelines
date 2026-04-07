@@ -396,25 +396,25 @@
       ],
       "weight": 5
     },
-    "protconn_analysis>protconn_analysis.yml@42|start_year": {
-      "description": "Year for the time series plot to start. This input will only be used if the time series input is selected.",
-      "label": "Start year (optional)",
-      "type": "int",
-      "example": 1980,
-      "weight": 6
-    },
-    "protconn_analysis>protconn_analysis.yml@42|years": {
-      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn for only PAs that were designated before the year 2000)",
-      "label": "Year for cutoff",
-      "type": "int",
-      "example": 2025,
-      "weight": 7
-    },
     "protconn_analysis>protconn_analysis.yml@42|time_series": {
       "description": "Whether to calculate time series plot of ProtConn values based on date of PA establishment",
       "label": "Time series",
       "type": "boolean",
       "example": true,
+      "weight": 6
+    },
+    "protconn_analysis>protconn_analysis.yml@42|start_year": {
+      "description": "Year for the time series plot to start. This input will only be used if the time series input is selected.",
+      "label": "Start year (optional)",
+      "type": "int",
+      "example": 1980,
+      "weight": 7
+    },
+    "protconn_analysis>protconn_analysis.yml@42|years": {
+      "description": "Year for which you want ProtConn calculated (e.g. an input of 2000 will calculate ProtConn only for PAs that were designated before the year 2000)",
+      "label": "Year for cutoff",
+      "type": "int",
+      "example": 2025,
       "weight": 8
     },
     "protconn_analysis>protconn_analysis.yml@42|year_int": {
@@ -430,13 +430,6 @@
       "type": "float",
       "example": 1000,
       "weight": 10
-    },
-    "data>cleanWDPA.yml@48|include_unesco": {
-      "description": "Check to include UNESCO Biosphere reserves.  These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
-      "label": "Include UNESCO Biosphere reserves",
-      "type": "boolean",
-      "example": true,
-      "weight": 11
     },
     "pipeline@68": {
       "label": "PA legal status types to include",
@@ -456,6 +449,13 @@
         "Adopted",
         "Proposed"
       ],
+      "weight": 11
+    },
+    "data>cleanWDPA.yml@48|include_unesco": {
+      "description": "Check to include UNESCO Biosphere reserves.  These serve as learning sites for sustainable development \nand combine biodiversity conservation with the sustainable use of natural resources and sustainable development. \nThey may not be legally protected and may not be fully conserved, because they are often used for development or\nhuman settlement. Excluding these will limit the dataset to meeting stricter conservation standards.\n",
+      "label": "Include UNESCO Biosphere reserves",
+      "type": "boolean",
+      "example": true,
       "weight": 12
     },
     "data>cleanWDPA.yml@48|buffer_points": {
