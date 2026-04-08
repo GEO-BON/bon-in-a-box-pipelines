@@ -1,0 +1,57 @@
+script: IUCN_redlist_spUse.R
+name: IUCN list of species from a use or trade
+description: Obtains a list of species assessed by the IUCN Red List of Species for a specific use or trade, including their most recent threat categorization.
+author:
+ - name: Laetitia Tremblay
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist
+    - r-this.path
+    - r-rjson
+inputs:
+  species_use:
+    label: Species use
+    description: Select the species use or trade. This returns a list of IUCN Red List species that are used/involved in the categories selected. If 'All' is selected, the script will return the list of all species involved in the uses and trades listed.
+    type: options[]
+    example: [Research]
+    options:
+      - All
+      - Do not filter by species use or trade
+      - Food - human
+      - Food - animal
+      - Medicine - human & veterinary
+      - Poisons
+      - Manufacturing chemicals
+      - Other chemicals
+      - Fuels
+      - Fibre
+      - Construction or structural materials
+      - Wearing apparel, accessories
+      - Other household goods
+      - Handicrafts, jewellery, etc.
+      - Pets/display animals, horticulture
+      - Research
+      - Sport hunting/specimen collecting
+      - Establishing ex-situ production
+      - Other
+      - Unknown
+outputs:
+  iucn_use_splist:
+    label: IUCN species list
+    description: Dataset with the list of species for the specified species use. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List.
+    type: text/csv
+  species_use:
+    label: Species use
+    description: Species use for IUCN red list assessment
+    type: text[]
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquired using the IUCN Red List API
+    type: text

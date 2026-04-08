@@ -1,0 +1,37 @@
+script: IUCN_redlist_spCountry.R
+name: IUCN list of species of a country
+description: Obtains a list of species assessed by the IUCN Red List of Species for a specific country, including their most recent threat categorization.
+author:
+ - name: Maria Camila diaz
+   email: maria.camila.diaz.corzo@usherbrooke.ca
+ - name: Victor Julio Rincon
+   email: rincon-v@javeriana.edu.co
+ - name: Laetitia Tremblay
+   role: Maintenance
+   email: laetitia.tremblay@mcgill.ca
+   identifier: http://www.linkedin.com/in/laetitia-tremblay-b0619b273
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-magrittr
+    - r-dplyr
+    - r-rredlist
+    - r-this.path
+    - r-rjson
+inputs:
+  country:
+    label: Country
+    description: Country of interest.
+    type: country
+    example:
+outputs:
+  iucn_country_splist:
+    label: IUCN species list
+    description: Dataset with the list of species for the specified country. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List.
+    type: text/csv
+  api_citation:
+    label: IUCN API citation
+    description: Citation for the data acquired using the IUCN Red List API
+    type: text

@@ -1,25 +1,6 @@
 {
   "nodes": [
     {
-      "id": "10",
-      "type": "constant",
-      "position": {
-        "x": 743,
-        "y": 64
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text[]",
-        "value": [
-          "bii_nhm|bii_nhm_10km_2000",
-          "bii_nhm|bii_nhm_10km_2005",
-          "bii_nhm|bii_nhm_10km_2010",
-          "bii_nhm|bii_nhm_10km_2015",
-          "bii_nhm|bii_nhm_10km_2020"
-        ]
-      }
-    },
-    {
       "id": "14",
       "type": "io",
       "position": {
@@ -34,59 +15,11 @@
       "id": "15",
       "type": "output",
       "position": {
-        "x": 2424,
-        "y": 383
+        "x": 2502.922667485678,
+        "y": 472.85042144523356
       },
       "data": {
         "label": "Output"
-      }
-    },
-    {
-      "id": "18",
-      "type": "io",
-      "position": {
-        "x": 1196,
-        "y": 310
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "19",
-      "type": "output",
-      "position": {
-        "x": 1783,
-        "y": 281.5
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "20",
-      "type": "constant",
-      "position": {
-        "x": 753,
-        "y": 12
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "https://stac.geobon.org/"
-      }
-    },
-    {
-      "id": "21",
-      "type": "constant",
-      "position": {
-        "x": 824,
-        "y": 310
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "\n"
       }
     },
     {
@@ -101,22 +34,50 @@
       }
     },
     {
-      "id": "26",
-      "type": "output",
+      "id": "56",
+      "type": "io",
       "position": {
-        "x": 2424,
-        "y": 430
+        "x": 1368.7567325731761,
+        "y": 392.45450800352006
       },
       "data": {
-        "label": "Output"
+        "descriptionFile": "data>loadFromStac.yml"
       }
     },
     {
-      "id": "27",
+      "id": "57",
       "type": "constant",
       "position": {
-        "x": 724,
-        "y": 416
+        "x": 859.6500859313794,
+        "y": 117.0631809998606
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "58",
+      "type": "constant",
+      "position": {
+        "x": 875.6500859313794,
+        "y": 227.0631809998606
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "bii_nhm"
+        ]
+      }
+    },
+    {
+      "id": "59",
+      "type": "constant",
+      "position": {
+        "x": 892.2622337466457,
+        "y": 401.1329734474144
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -141,11 +102,11 @@
       }
     },
     {
-      "id": "29",
+      "id": "60",
       "type": "constant",
       "position": {
-        "x": 724,
-        "y": 463
+        "x": 845.2750201848235,
+        "y": 437.51017104366395
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -161,50 +122,22 @@
       }
     },
     {
-      "id": "31",
-      "type": "userInput",
+      "id": "61",
+      "type": "output",
       "position": {
-        "x": 12,
-        "y": 363.75
+        "x": 1766.662872369557,
+        "y": 184.38550443642754
       },
-      "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "EPSG:6622"
+        "label": "Output"
       }
     },
     {
-      "id": "32",
+      "id": "63",
       "type": "userInput",
       "position": {
-        "x": 830,
-        "y": 381
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float",
-        "value": 10000
-      }
-    },
-    {
-      "id": "43",
-      "type": "userInput",
-      "position": {
-        "x": 95,
-        "y": 527.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "COL"
-      }
-    },
-    {
-      "id": "44",
-      "type": "userInput",
-      "position": {
-        "x": 126,
-        "y": 562.5
+        "x": 750.0053287271539,
+        "y": 275.5024869625019
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -212,36 +145,93 @@
       }
     },
     {
-      "id": "45",
+      "id": "64",
+      "type": "userInput",
+      "position": {
+        "x": 651.6977672355612,
+        "y": 342.47255291045855
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text"
+      }
+    },
+    {
+      "id": "66",
+      "type": "constant",
+      "position": {
+        "x": 895.9533005549715,
+        "y": 358.40573556140333
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "P5Y"
+      }
+    },
+    {
+      "id": "67",
+      "type": "userInput",
+      "position": {
+        "x": 14.560022958672334,
+        "y": 407.2202294777127
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "68",
       "type": "io",
       "position": {
-        "x": 473,
-        "y": 520
+        "x": 824.4738874036411,
+        "y": 585.8583779303075
       },
       "data": {
-        "descriptionFile": "getCountrybbox.json"
+        "descriptionFile": "data>load_polygons.yml"
       }
     },
     {
-      "id": "46",
+      "id": "69",
       "type": "output",
       "position": {
-        "x": 1196,
-        "y": 591.5
+        "x": 1255.0726458313782,
+        "y": 661.3618300004938
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "47",
-      "type": "output",
+      "id": "70",
+      "type": "constant",
       "position": {
-        "x": 1196,
-        "y": 638.5
+        "x": 439.24193203584343,
+        "y": 567.216164595444
       },
+      "dragHandle": ".dragHandle",
       "data": {
-        "label": "Output"
+        "type": "options",
+        "value": "Country or region",
+        "options": [
+          "Country or region",
+          "WDPA",
+          "EEZ"
+        ]
+      }
+    },
+    {
+      "id": "71",
+      "type": "constant",
+      "position": {
+        "x": 505.2173275744881,
+        "y": 618.6769731155869
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -254,167 +244,160 @@
       "id": "reactflow__edge-14bii_change-15"
     },
     {
-      "source": "18",
-      "sourceHandle": "rasters",
-      "target": "19",
+      "source": "25",
+      "sourceHandle": "zonal_stats",
+      "target": "15",
       "targetHandle": null,
-      "id": "reactflow__edge-18rasters-19"
+      "id": "reactflow__edge-25zonal_stats-15"
     },
     {
-      "source": "18",
+      "source": "57",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-57-56stac_url"
+    },
+    {
+      "source": "58",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-58-56collections_items"
+    },
+    {
+      "source": "56",
       "sourceHandle": "rasters",
       "target": "14",
       "targetHandle": "rasters",
-      "id": "reactflow__edge-18rasters-14rasters"
+      "id": "reactflow__edge-56rasters-14rasters"
     },
     {
-      "source": "10",
+      "source": "59",
       "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "collections_items",
-      "id": "reactflow__edge-10-18collections_items"
+      "target": "56",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-59-56resampling"
     },
     {
-      "source": "20",
+      "source": "60",
       "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "stac_url",
-      "id": "reactflow__edge-20-18stac_url"
+      "target": "56",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-60-56aggregation"
     },
     {
-      "source": "21",
-      "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "weight_matrix_with_ids",
-      "id": "reactflow__edge-21-18weight_matrix_with_ids"
-    },
-    {
-      "source": "18",
+      "source": "56",
       "sourceHandle": "rasters",
       "target": "25",
       "targetHandle": "rasters",
-      "id": "reactflow__edge-18rasters-25rasters"
+      "id": "reactflow__edge-56rasters-25rasters"
     },
     {
-      "source": "25",
-      "sourceHandle": "zonal_stats",
-      "target": "26",
+      "source": "56",
+      "sourceHandle": "rasters",
+      "target": "61",
       "targetHandle": null,
-      "id": "reactflow__edge-25zonal_stats-26"
+      "id": "reactflow__edge-56rasters-61"
     },
     {
-      "source": "27",
+      "source": "63",
       "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "resampling",
-      "id": "reactflow__edge-27-18resampling"
+      "target": "56",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-63-56t0"
     },
     {
-      "source": "29",
+      "source": "63",
       "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "aggregation",
-      "id": "reactflow__edge-29-18aggregation"
+      "target": "14",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-63-14start_year"
     },
     {
-      "source": "31",
+      "source": "64",
       "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-18crs"
+      "target": "56",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-64-56t1"
     },
     {
-      "source": "31",
+      "source": "64",
+      "sourceHandle": null,
+      "target": "14",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-64-14end_year"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "temporal_res",
+      "id": "reactflow__edge-66-56temporal_res"
+    },
+    {
+      "source": "67",
+      "sourceHandle": null,
+      "target": "56",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-56bbox_crs"
+    },
+    {
+      "source": "67",
       "sourceHandle": null,
       "target": "25",
-      "targetHandle": "crs",
-      "id": "reactflow__edge-31-25crs"
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-67-25bbox_crs"
     },
     {
-      "source": "32",
+      "source": "67",
       "sourceHandle": null,
-      "target": "18",
-      "targetHandle": "spatial_res",
-      "id": "reactflow__edge-32-18spatial_res"
+      "target": "68",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-67-68country_region_bbox"
     },
     {
-      "source": "31",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-31-45pipeline@2"
-    },
-    {
-      "source": "44",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "data>getCountryPolygon.yml@1|region",
-      "id": "reactflow__edge-44-45data>getCountryPolygon.yml@1|region"
-    },
-    {
-      "source": "43",
-      "sourceHandle": null,
-      "target": "45",
-      "targetHandle": "data>getCountryPolygon.yml@1|country",
-      "id": "reactflow__edge-43-45data>getCountryPolygon.yml@1|country"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country-46"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|region",
-      "target": "47",
-      "targetHandle": null,
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|region-47"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
-      "target": "18",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country_polygon-18study_area"
-    },
-    {
-      "source": "45",
-      "sourceHandle": "data>getCountryPolygon.yml@1|country_polygon",
+      "source": "68",
+      "sourceHandle": "polygon",
       "target": "25",
       "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-45data>getCountryPolygon.yml@1|country_polygon-25study_area_polygon"
+      "id": "reactflow__edge-68polygon-25study_area_polygon"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "18",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-45data>getBoundingBox.yml@0|bbox-18bbox"
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "56",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-68polygon-56study_area"
     },
     {
-      "source": "45",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "25",
-      "targetHandle": "bbox",
-      "id": "reactflow__edge-45data>getBoundingBox.yml@0|bbox-25bbox"
+      "source": "68",
+      "sourceHandle": "polygon",
+      "target": "69",
+      "targetHandle": null,
+      "id": "reactflow__edge-68polygon-69"
+    },
+    {
+      "source": "70",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "polygon_type",
+      "id": "reactflow__edge-70-68polygon_type"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "68",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-71-68buffer"
     }
   ],
   "inputs": {
-    "pipeline@43": {
-      "label": "ISO3 country code",
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes, look [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "type": "text",
-      "example": "COL",
-      "weight": 0
-    },
-    "pipeline@44": {
-      "label": "State/Province",
-      "description": "Region of interest",
-      "type": "text",
+    "pipeline@67": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
       "example": null,
-      "weight": 1
+      "weight": 0
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -433,93 +416,74 @@
       "example": [
         "mean"
       ],
+      "weight": 1
+    },
+    "data>loadFromStac.yml@56|spatial_res": {
+      "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
+      "label": "Spatial resolution (optional)",
+      "type": "float",
+      "example": null,
       "weight": 2
     },
-    "BII>BIIChange.yml@14|start_year": {
-      "description": "Reference BII year for raster plotting",
-      "label": "Start year for BII raster comparison",
-      "type": "options",
-      "options": [
-        "2000",
-        "2005",
-        "2010",
-        "2015"
-      ],
-      "example": "2000",
+    "pipeline@63": {
+      "label": "Start date (optional)",
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
+      "type": "text",
+      "example": null,
       "weight": 3
     },
-    "BII>BIIChange.yml@14|end_year": {
-      "description": "BII layer to compare to the start year",
-      "label": "End year for BII comparison",
-      "type": "options",
-      "options": [
-        "2005",
-        "2010",
-        "2015",
-        "2020"
-      ],
-      "example": "2020",
-      "weight": 4
-    },
-    "pipeline@31": {
-      "label": "Coordinate reference system",
-      "description": "The coordinate reference system of the country polygon, bounding box, and raster layers for the output. This must be a projected CRS (in meters).\n\nYou can search for EPSG codes by country [here](https://epsg.io/).\n\n*Leave blank if you want the bounding box to be in EPSG:4326.*\n",
+    "pipeline@64": {
+      "label": "End date (optional)",
+      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
-      "example": "EPSG:6624",
-      "weight": 5
-    },
-    "pipeline@32": {
-      "label": "Spatial resolution",
-      "description": "Integer, spatial resolution of the rasters (in meters)",
-      "type": "float",
-      "example": 10000,
-      "weight": 6
+      "example": null,
+      "weight": 4
     }
   },
   "outputs": {
-    "data>loadFromStac.yml@18|rasters": {
-      "description": "array of output raster paths",
-      "label": "Rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 0
-    },
     "zonal_statistics>zonal_stats.yml@25|zonal_stats": {
       "description": "Summary statistic over the polygon",
       "label": "Summary statistic",
       "type": "text/csv",
-      "weight": 1
+      "weight": 0
     },
     "BII>BIIChange.yml@14|bii_change": {
       "description": "Raster plot of change in BII. Higher numbers indicate greater BII loss.",
       "label": "Change in BII",
       "type": "image/tiff;application=geotiff[]",
+      "weight": 1
+    },
+    "data>loadFromStac.yml@56|rasters": {
+      "description": "Output raster files in geotiff format.",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 2
     },
-    "getCountrybbox.json@45|data>getCountryPolygon.yml@1|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
+    "data>load_polygons.yml@68|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
       "weight": 3
-    },
-    "getCountrybbox.json@45|data>getCountryPolygon.yml@1|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 4
     }
   },
   "metadata": {
     "name": "Biodiversity Intactness Index",
-    "description": "This pipeline calculates zonal statistics of the biodiversity intactness index of a given country or region and change over time using the BII layers developed by the Natural History Museum.",
+    "description": "## Introduction \nThe Biodiversity Intactness Index (BII) is a metric designed to assess the degree to which ecosystems are intact and functioning relative to their natural state. It measures the abundance and diversity of species in a given area compared to what would be expected in an undisturbed ecosystem. The BII accounts for various factors, including habitat loss, fragmentation, and degradation, providing a comprehensive view of biodiversity health. A higher BII value indicates a more intact ecosystem with greater species diversity and abundance, while a lower value suggests significant ecological disruption. The biodiversity intactness index is a complimentary indicator in the GBF. The BII was created by the Natural History Museum and uses their PREDICTS database, which aggregates data from studies comparing terrestrial biodiversity at sites experiencing varying levels of human pressure. The database is used to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact. It currently contains over 3 million records from more than 26,000 sites across 94 countries, representing a diverse array of over 45,000 plant, invertebrate, and vertebrate species.\n## Uses \nThe Biodiversity Intactness Index is a complimentary indicator in the GBF. This pipeline can be used to calculate summary statistics and plot a time series of the 10km resolution BII layer for a given country or region. The BII is expressed as a percentage, with higher percentages being more intact.\n## Pipeline limitations \nThe pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the 10 x 10 km BII layer pre-calcuated by the Natural History Museum calculated global layer. Therefore, you cannot customize the model or input custom data and you cannot increase the resolution of the layer. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).\n## Before you start \nThere are no data or API keys required for this analysis. To view the global layer, go to our [STAC catalog](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).",
     "author": [
       {
         "name": "Jory Griffith",
         "email": "jory.griffith@mcgill.ca",
         "identifier": "https://orcid.org/0000-0001-6020-6690",
         "role": "Pipeline development"
+      },
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetita.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline documentation"
       }
     ],
-    "license": "CC-BY-NC-SA",
+    "license": "CC BY-NC-SA",
     "references": [
       {
         "text": "De Palma et al. 2024",

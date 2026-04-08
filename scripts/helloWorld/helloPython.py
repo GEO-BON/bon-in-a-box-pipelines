@@ -21,3 +21,4 @@ intIn += 1
 
 # Saving result
 biab_output("increment", intIn)
+biab_output("crs_id", data['study_area_bbox']['CRS']['authority']+':'+str(data['study_area_bbox']['CRS']['code']))

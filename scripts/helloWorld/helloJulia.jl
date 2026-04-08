@@ -20,3 +20,5 @@ end
 # Do the processing... (save the outputs along the way)
 number += 1
 biab_output("increment", number)
+
+biab_output("crs_id", string(input_data["study_area_bbox"]["CRS"]["authority"],":",input_data["study_area_bbox"]["CRS"]["code"]))

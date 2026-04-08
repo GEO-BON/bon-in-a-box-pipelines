@@ -8,6 +8,7 @@ lapply(packages_list, library, character.only = TRUE) # Load libraries - package
 sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
+crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 
 if ((input$year_int) >= (input$years - input$start_year)) {
   biab_error_stop("Please make sure the year interval is smaller than the difference between start year and year for cutoff.")
@@ -25,7 +26,7 @@ if (length(input$study_area_polygon) > 1) { # if there is userdata study area in
   study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
 }
 
-study_area <- st_transform(study_area, st_crs(input$crs))
+study_area <- st_transform(study_area, st_crs(crs))
 print("CRS:")
 print(st_crs(study_area))
 
@@ -53,7 +54,7 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
 
   print(protected_areas)
   protected_areas <- st_read(protected_areas, type = 3, promote_to_multi = FALSE) # input as polygons
-  protected_areas <- st_transform(protected_areas, st_crs(input$crs))
+  protected_areas <- st_transform(protected_areas, st_crs(crs))
   # fix date
   protected_areas$legal_status_updated_at <- lubridate::parse_date_time(protected_areas$legal_status_updated_at, orders = c("ymd", "mdy", "dmy", "y"))
   protected_areas$legal_status_updated_at <- lubridate::year(protected_areas$legal_status_updated_at)
@@ -66,7 +67,7 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
 if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
   protected_areas_user <- st_read(protected_areas_user, type = 3, promote_to_multi = FALSE) # load
   print(protected_areas_user)
-  protected_areas_user <- st_transform(protected_areas_user, st_crs(input$crs))
+  protected_areas_user <- st_transform(protected_areas_user, st_crs(crs))
   if (is.null(input$date_column)) {
     biab_error_stop("Please specify a date column name for the protected areas file.")
   }
