@@ -1,0 +1,30 @@
+script: download_checklist.R
+name: Download GRIIS checklist
+description: "This script generates GRIIS checklist for a country"
+author:
+  - name: 
+    email: 
+    identifier: 
+inputs:
+  country_name:
+    label: Country name
+    type: country
+    description: Name of the country for which to download the GRIIS checklist.
+outputs:
+  griis_checklist:
+    label: GRIIS checklist
+    description: GRIIS checklist for the specified country.
+    type: text/csv
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-xml
+    - r-dplyr
+    - r-stringr
+    - r-readr
+    - r-tidyrss
+    - r-tidyr
+    - r-rvest
+    - r-rjson
