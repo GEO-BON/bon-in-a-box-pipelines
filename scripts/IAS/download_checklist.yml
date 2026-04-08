@@ -2,14 +2,14 @@ script: download_checklist.R
 name: Download GRIIS checklist
 description: "This script generates GRIIS checklist for a country"
 author:
-  - name: 
-    email: 
-    identifier: 
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
 inputs:
   country_name:
     label: Country name
     type: country
     description: Name of the country for which to download the GRIIS checklist.
+    example: NULL
 outputs:
   griis_checklist:
     label: GRIIS checklist
