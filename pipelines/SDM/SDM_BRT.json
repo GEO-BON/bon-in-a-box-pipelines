@@ -803,7 +803,6 @@
       "type": "float",
       "example": 1000,
       "weight": 5
-      "weight": 5
     },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
@@ -811,14 +810,12 @@
       "type": "float",
       "example": 10,
       "weight": 6
-      "weight": 6
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
       "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
       "type": "int",
       "example": 100000,
-      "weight": 7
       "weight": 7
     },
     "pipeline@154": {
