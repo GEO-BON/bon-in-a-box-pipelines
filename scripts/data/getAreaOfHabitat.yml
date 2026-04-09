@@ -8,11 +8,14 @@ author:
     identifier: "https://orcid.org/0000-0002-5967-9156"
   - name: Laetitia Tremblay
     identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
+  - name: Laetitia Tremblay
+    identifier: https://www.linkedin.com/in/laetitia-tremblay-b0619b273/
 license: CC BY
 inputs:
   spat_res:
     label: output spatial resolution
     description: Spatial resolution (in meters) for the output of the analysis.
+    type: float
     type: float
     example: 1000
   crs:
@@ -25,6 +28,10 @@ inputs:
     description: Path to the study area file. This file should be a polygon with a .gpkg extension or .shp (in this case do not forget to add the projection file to the folder)
     type: application/geopackage+sqlite3
     example: null
+  country_region_polygon:
+    label: Polygon of country or region
+    description: A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.
+    type: application/geopackage+sqlite3
   country_region_polygon:
     label: Polygon of country or region
     description: A GeoPackage file containing the polygon of the chosen country or region of interest, in the specified crs.
@@ -88,6 +95,11 @@ inputs:
     description: rasters for elevation limits
     type: image/tiff;application=geotiff[]
     example: null
+  rasters:
+    label: Rasters
+    description: rasters for elevation limits
+    type: image/tiff;application=geotiff[]
+    example: null
 outputs:
   r_area_of_habitat:
     label: area of habitat
@@ -117,6 +129,7 @@ conda:
     - r-readr
     - r-geodata
     - r-gdalcubes
+    - r-rredlist=1.0.0
     - r-rredlist=1.0.0
     - r-stringr
     - r-httr2

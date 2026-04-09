@@ -1,0 +1,1232 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 1526,
+        "y": 913.8214285714286
+      },
+      "data": {
+        "descriptionFile": "data>helperForCatalogue.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "io",
+      "position": {
+        "x": 2184,
+        "y": 441.57142857142856
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 1651,
+        "y": 87.82142857142857
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "https://stac.geobon.org/"
+      }
+    },
+    {
+      "id": "8",
+      "type": "userInput",
+      "position": {
+        "x": 12,
+        "y": 12
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "EPSG:4326"
+      }
+    },
+    {
+      "id": "9",
+      "type": "io",
+      "position": {
+        "x": 3505,
+        "y": 372.82142857142856
+      },
+      "data": {
+        "descriptionFile": "SHI>habitatChange_ESA.yml"
+      }
+    },
+    {
+      "id": "11",
+      "type": "io",
+      "position": {
+        "x": 2791,
+        "y": 550.5714285714286
+      },
+      "data": {
+        "descriptionFile": "data>getAreaOfHabitat.yml"
+      }
+    },
+    {
+      "id": "12",
+      "type": "io",
+      "position": {
+        "x": 483,
+        "y": 315.57142857142856
+      },
+      "data": {
+        "descriptionFile": "data>getCountryPolygon.yml"
+      }
+    },
+    {
+      "id": "13",
+      "type": "io",
+      "position": {
+        "x": 1524,
+        "y": 388.57142857142856
+      },
+      "data": {
+        "descriptionFile": "data>getBoundingBox.yml"
+      }
+    },
+    {
+      "id": "15",
+      "type": "userInput",
+      "position": {
+        "x": 862,
+        "y": 269.57142857142856
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Myrmecophaga tridactyla"
+        ]
+      }
+    },
+    {
+      "id": "16",
+      "type": "io",
+      "position": {
+        "x": 2184,
+        "y": 201.82142857142856
+      },
+      "data": {
+        "descriptionFile": "data>loadFromStac.yml"
+      }
+    },
+    {
+      "id": "17",
+      "type": "constant",
+      "position": {
+        "x": 1189,
+        "y": -32.178571428571445
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "earthenv_topography|elevation_min",
+          "earthenv_topography|elevation_max"
+        ]
+      }
+    },
+    {
+      "id": "23",
+      "type": "userInput",
+      "position": {
+        "x": 3195,
+        "y": 376.48809523809524
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int[]",
+        "value": []
+      }
+    },
+    {
+      "id": "26",
+      "type": "output",
+      "position": {
+        "x": 1205,
+        "y": 617.8214285714286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "27",
+      "type": "userInput",
+      "position": {
+        "x": 864,
+        "y": 495.82142857142856
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3",
+        "value": null
+      }
+    },
+    {
+      "id": "29",
+      "type": "userInput",
+      "position": {
+        "x": 866,
+        "y": 880.3214285714286
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2010
+      }
+    },
+    {
+      "id": "30",
+      "type": "userInput",
+      "position": {
+        "x": 872,
+        "y": 921.3214285714286
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2011
+      }
+    },
+    {
+      "id": "33",
+      "type": "userInput",
+      "position": {
+        "x": 1672,
+        "y": 506.57142857142856
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "first",
+        "options": [
+          "first",
+          "min",
+          "max",
+          "mean",
+          "median"
+        ]
+      }
+    },
+    {
+      "id": "35",
+      "type": "userInput",
+      "position": {
+        "x": 1521,
+        "y": 627.5714285714286
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 1000
+      }
+    },
+    {
+      "id": "36",
+      "type": "userInput",
+      "position": {
+        "x": 1677,
+        "y": 471.57142857142856
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "near",
+        "options": [
+          "near",
+          "bilinear",
+          "average",
+          "mode",
+          "cubic",
+          "cubicspline",
+          "lanczos",
+          "rms",
+          "min",
+          "max",
+          "sum",
+          "med",
+          "q1",
+          "q3"
+        ]
+      }
+    },
+    {
+      "id": "37",
+      "type": "output",
+      "position": {
+        "x": 4171,
+        "y": 722.3214285714286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "38",
+      "type": "output",
+      "position": {
+        "x": 4171,
+        "y": 451.32142857142856
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "41",
+      "type": "output",
+      "position": {
+        "x": 4171,
+        "y": 769.3214285714286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "42",
+      "type": "output",
+      "position": {
+        "x": 4171,
+        "y": 675.3214285714286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "43",
+      "type": "io",
+      "position": {
+        "x": 4171,
+        "y": 602.3214285714286
+      },
+      "data": {
+        "descriptionFile": "SHI>calculateSHI.yml"
+      }
+    },
+    {
+      "id": "44",
+      "type": "output",
+      "position": {
+        "x": 4680,
+        "y": 573.8214285714286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "45",
+      "type": "output",
+      "position": {
+        "x": 4680,
+        "y": 526.8214285714286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "46",
+      "type": "output",
+      "position": {
+        "x": 4680,
+        "y": 479.82142857142856
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "47",
+      "type": "io",
+      "position": {
+        "x": 2284,
+        "y": 675.8214285714286
+      },
+      "data": {
+        "descriptionFile": "data>threshold_SDM.yml"
+      }
+    },
+    {
+      "id": "48",
+      "type": "io",
+      "position": {
+        "x": 1205,
+        "y": 685.8214285714286
+      },
+      "data": {
+        "descriptionFile": "SDM>SDM_BRT.json"
+      }
+    },
+    {
+      "id": "49",
+      "type": "output",
+      "position": {
+        "x": 2791,
+        "y": 738.5714285714286
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "50",
+      "type": "userInput",
+      "position": {
+        "x": 95,
+        "y": 307.23809523809524
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "CAN"
+      }
+    },
+    {
+      "id": "51",
+      "type": "userInput",
+      "position": {
+        "x": 82,
+        "y": 806.1982401656314
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "CA-QB"
+      }
+    },
+    {
+      "id": "52",
+      "type": "constant",
+      "position": {
+        "x": 423.22685831842955,
+        "y": 590.024099874347
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "layer, current, change\nGBSTAC|chelsa-clim|bio1, 0.7, 0.6\nGBSTAC|chelsa-clim|bio2, 0.3, 0.4\n"
+      }
+    },
+    {
+      "id": "53",
+      "type": "constant",
+      "position": {
+        "x": 447.22685831842955,
+        "y": 726.024099874347
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "chelsa-clim|bio1",
+          "chelsa-clim|bio3",
+          "chelsa-clim|bio4",
+          "chelsa-clim|bio12",
+          "chelsa-clim|bio15"
+        ]
+      }
+    },
+    {
+      "id": "54",
+      "type": "constant",
+      "position": {
+        "x": 2424.2935851853445,
+        "y": 990.33748131821
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "application/geopackage+sqlite3[]",
+        "value": [
+          "/scripts/SHI/Myrmecophaga tridactyla_range.gpkg"
+        ]
+      }
+    },
+    {
+      "id": "55",
+      "type": "constant",
+      "position": {
+        "x": 2404.1217866307984,
+        "y": 831.5951791500296
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Raster",
+        "options": [
+          "Polygon",
+          "Raster",
+          "Both"
+        ]
+      }
+    },
+    {
+      "id": "56",
+      "type": "constant",
+      "position": {
+        "x": 2438.5121570824435,
+        "y": 928.6492951725086
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Yes",
+        "options": [
+          "Yes",
+          "No"
+        ]
+      }
+    },
+    {
+      "id": "57",
+      "type": "constant",
+      "position": {
+        "x": 2396.5121570824435,
+        "y": 776.6492951725086
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int"
+      }
+    },
+    {
+      "id": "58",
+      "type": "output",
+      "position": {
+        "x": 2029.1045125149903,
+        "y": 777.9174453284354
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "collections",
+      "target": "3",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-1collections-3collections_items"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-4-3stac_url"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-8-3crs"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "rasters",
+      "target": "9",
+      "targetHandle": "layers",
+      "id": "reactflow__edge-3rasters-9layers"
+    },
+    {
+      "source": "11",
+      "sourceHandle": "r_area_of_habitat",
+      "target": "9",
+      "targetHandle": "aoh",
+      "id": "reactflow__edge-11r_area_of_habitat-9aoh"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "13",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-8-13crs"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "12",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-8-12crs"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "country_region_polygon",
+      "target": "13",
+      "targetHandle": "study_area_file",
+      "id": "reactflow__edge-12country_region_polygon-13study_area_file"
+    },
+    {
+      "source": "13",
+      "sourceHandle": "bbox",
+      "target": "3",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-13bbox-3bbox"
+    },
+    {
+      "source": "12",
+      "sourceHandle": "country_region_polygon",
+      "target": "11",
+      "targetHandle": "country_region_polygon",
+      "id": "reactflow__edge-12country_region_polygon-11country_region_polygon"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "species",
+      "id": "reactflow__edge-15-11species"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "srs",
+      "id": "reactflow__edge-8-11srs"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "stac_url",
+      "id": "reactflow__edge-4-16stac_url"
+    },
+    {
+      "source": "13",
+      "sourceHandle": "bbox",
+      "target": "16",
+      "targetHandle": "bbox",
+      "id": "reactflow__edge-13bbox-16bbox"
+    },
+    {
+      "source": "16",
+      "sourceHandle": "rasters",
+      "target": "11",
+      "targetHandle": "rasters",
+      "id": "reactflow__edge-16rasters-11rasters"
+    },
+    {
+      "source": "17",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "collections_items",
+      "id": "reactflow__edge-17-16collections_items"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "crs",
+      "id": "reactflow__edge-8-16crs"
+    },
+    {
+      "source": "23",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "habitats",
+      "id": "reactflow__edge-23-9habitats"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-27-16study_area"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-27-3study_area"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-27-11study_area"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-29-1start_year"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "1",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-30-1end_year"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-29-9start_year"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-30-9end_year"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-33-16aggregation"
+    },
+    {
+      "source": "33",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "aggregation",
+      "id": "reactflow__edge-33-3aggregation"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-35-16spatial_res"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "spatial_res",
+      "id": "reactflow__edge-35-3spatial_res"
+    },
+    {
+      "source": "36",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-36-16resampling"
+    },
+    {
+      "source": "36",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "resampling",
+      "id": "reactflow__edge-36-3resampling"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "shs_timeseries",
+      "target": "37",
+      "targetHandle": null,
+      "id": "reactflow__edge-9shs_timeseries-37"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "df_shs",
+      "target": "38",
+      "targetHandle": null,
+      "id": "reactflow__edge-9df_shs-38"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "26",
+      "targetHandle": null,
+      "id": "reactflow__edge-15-26"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "habitat_change_map",
+      "target": "41",
+      "targetHandle": null,
+      "id": "reactflow__edge-9habitat_change_map-41"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "raster",
+      "target": "42",
+      "targetHandle": null,
+      "id": "reactflow__edge-9raster-42"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "df_shs_tidy",
+      "target": "43",
+      "targetHandle": "df_shs_tidy",
+      "id": "reactflow__edge-9df_shs_tidy-43df_shs_tidy"
+    },
+    {
+      "source": "11",
+      "sourceHandle": "df_aoh_areas",
+      "target": "43",
+      "targetHandle": "df_aoh_areas",
+      "id": "reactflow__edge-11df_aoh_areas-43df_aoh_areas"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "df_shi",
+      "target": "44",
+      "targetHandle": null,
+      "id": "reactflow__edge-43df_shi-44"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "img_shi_timeseries",
+      "target": "45",
+      "targetHandle": null,
+      "id": "reactflow__edge-43img_shi_timeseries-45"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "img_w_shi_timeseries",
+      "target": "46",
+      "targetHandle": null,
+      "id": "reactflow__edge-43img_w_shi_timeseries-46"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "SDM>BRT>fitBRT.yml@132|predicted_sdm",
+      "target": "47",
+      "targetHandle": "raster",
+      "id": "reactflow__edge-48SDM>BRT>fitBRT.yml@132|predicted_sdm-47raster"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "range_map",
+      "target": "11",
+      "targetHandle": "r_range_map",
+      "id": "reactflow__edge-47range_map-11r_range_map"
+    },
+    {
+      "source": "47",
+      "sourceHandle": "range_map",
+      "target": "49",
+      "targetHandle": null,
+      "id": "reactflow__edge-47range_map-49"
+    },
+    {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "getCountrybbox.json@168|data>getCountryPolygon.yml@12|country",
+      "id": "reactflow__edge-50-48getCountrybbox.json@168|data>getCountryPolygon.yml@12|country"
+    },
+    {
+      "source": "50",
+      "sourceHandle": null,
+      "target": "12",
+      "targetHandle": "country",
+      "id": "reactflow__edge-50-12country"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "getCountrybbox.json@168|data>getCountryPolygon.yml@12|region",
+      "id": "reactflow__edge-51-48getCountrybbox.json@168|data>getCountryPolygon.yml@12|region"
+    },
+    {
+      "source": "51",
+      "sourceHandle": null,
+      "target": "12",
+      "targetHandle": "region",
+      "id": "reactflow__edge-51-12region"
+    },
+    {
+      "source": "29",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "data>getGBIFObservations>getGBIFObservations.yml@159|min_year",
+      "id": "reactflow__edge-29-48data>getGBIFObservations>getGBIFObservations.yml@159|min_year"
+    },
+    {
+      "source": "30",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "data>getGBIFObservations>getGBIFObservations.yml@159|max_year",
+      "id": "reactflow__edge-30-48data>getGBIFObservations>getGBIFObservations.yml@159|max_year"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "pipeline@128",
+      "id": "reactflow__edge-35-48pipeline@128"
+    },
+    {
+      "source": "15",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "pipeline@121",
+      "id": "reactflow__edge-15-48pipeline@121"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "pipeline@57",
+      "id": "reactflow__edge-8-48pipeline@57"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "data>loadFromStac.yml@161|weight_matrix_with_ids",
+      "id": "reactflow__edge-52-48data>loadFromStac.yml@161|weight_matrix_with_ids"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-52-3weight_matrix_with_ids"
+    },
+    {
+      "source": "52",
+      "sourceHandle": null,
+      "target": "16",
+      "targetHandle": "weight_matrix_with_ids",
+      "id": "reactflow__edge-52-16weight_matrix_with_ids"
+    },
+    {
+      "source": "53",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "pipeline@137",
+      "id": "reactflow__edge-53-48pipeline@137"
+    },
+    {
+      "source": "54",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "sf_range_map",
+      "id": "reactflow__edge-54-11sf_range_map"
+    },
+    {
+      "source": "55",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "range_map_type",
+      "id": "reactflow__edge-55-11range_map_type"
+    },
+    {
+      "source": "56",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "elevation_filter",
+      "id": "reactflow__edge-56-11elevation_filter"
+    },
+    {
+      "source": "57",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "elev_buffer",
+      "id": "reactflow__edge-57-11elev_buffer"
+    },
+    {
+      "source": "35",
+      "sourceHandle": null,
+      "target": "11",
+      "targetHandle": "spat_res",
+      "id": "reactflow__edge-35-11spat_res"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "48",
+      "targetHandle": "pipeline@167",
+      "id": "reactflow__edge-27-48pipeline@167"
+    },
+    {
+      "source": "48",
+      "sourceHandle": "SDM>BRT>fitBRT.yml@132|predicted_sdm",
+      "target": "58",
+      "targetHandle": null,
+      "id": "reactflow__edge-48SDM>BRT>fitBRT.yml@132|predicted_sdm-58"
+    }
+  ],
+  "inputs": {
+    "pipeline@15": {
+      "label": "Species",
+      "description": "Scientific name of the species.",
+      "type": "text[]",
+      "example": [
+        "Ambystoma laterale"
+      ],
+      "weight": 0
+    },
+    "pipeline@50": {
+      "label": "ISO3 country code",
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "type": "text",
+      "example": "CAN",
+      "weight": 1
+    },
+    "pipeline@51": {
+      "label": "State/Province code",
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "type": "text",
+      "example": "CA-QB",
+      "weight": 2
+    },
+    "pipeline@8": {
+      "label": "Coordinate reference system",
+      "description": "The coordinate reference system specifies the projection and geodetic datum used to define the coordinates and spatial representation of the data in the study area. This must be a projected CRS (in meters).\nYou can search for EPSG codes by country [here](https://epsg.io/).\n",
+      "type": "text",
+      "example": "EPSG:3348",
+      "weight": 3
+    },
+    "pipeline@27": {
+      "label": "Study area",
+      "description": "Polygon of study area used to crop output layers. *Specifying a custom study area will override the country/region input.*",
+      "type": "application/geopackage+sqlite3",
+      "example": null,
+      "weight": 4
+    },
+    "data>getAreaOfHabitat.yml@11|buff_size": {
+      "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
+      "label": "Buffer for study area",
+      "type": "int",
+      "example": 0,
+      "weight": 5
+    },
+    "pipeline@29": {
+      "label": "Start year",
+      "description": "Start year of the analysis.",
+      "type": "int",
+      "example": 1992,
+      "weight": 6
+    },
+    "pipeline@30": {
+      "label": "End year",
+      "description": "End year of the analysis",
+      "type": "int",
+      "example": 2020,
+      "weight": 7
+    },
+    "pipeline@23": {
+      "label": "Habitats",
+      "description": "Codes for the habitat types of the species of interest. For habitat types and their associated codes, refer to the [list of global CCI-LC codes](http://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf).",
+      "type": "int[]",
+      "example": [
+        "50",
+        "60",
+        "70",
+        "80",
+        "90",
+        "150",
+        "160",
+        "170"
+      ],
+      "weight": 8
+    },
+    "pipeline@33": {
+      "label": "Aggregation method",
+      "description": "Method used to aggregate items that overlay each other.",
+      "type": "options",
+      "example": "first",
+      "options": [
+        "first",
+        "min",
+        "max",
+        "mean",
+        "median"
+      ],
+      "weight": 9
+    },
+    "pipeline@35": {
+      "label": "Spatial resolution",
+      "description": "Integer, spatial resolution of the rasters in meters",
+      "type": "float",
+      "example": 1000,
+      "weight": 10
+    },
+    "pipeline@36": {
+      "label": "Resampling method",
+      "description": "Resampling method used when rescaling the raster layers pulled from the STAC catalogue. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
+      "type": "options",
+      "example": "near",
+      "options": [
+        "near",
+        "bilinear",
+        "average",
+        "mode",
+        "cubic",
+        "cubicspline",
+        "lanczos",
+        "rms",
+        "min",
+        "max",
+        "sum",
+        "med",
+        "q1",
+        "q3"
+      ],
+      "weight": 11
+    },
+    "SDM>SDM_BRT.json@48|pipeline@154": {
+      "description": "The number of PAs, given by the proportion of the total occurrences to use.",
+      "label": "Pseudoabsence proportion",
+      "type": "float",
+      "example": 2.4,
+      "weight": 12
+    },
+    "SDM>SDM_BRT.json@48|pipeline@152": {
+      "description": "The minimum distance a PA is allowed to be from a presence in kilometers",
+      "label": "Pseudoabsence Buffer",
+      "type": "float",
+      "example": 10,
+      "weight": 13
+    },
+    "SDM>SDM_BRT.json@48|pipeline@153": {
+      "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
+      "label": "Max Candidate Pseudoabsences",
+      "type": "int",
+      "example": 100000,
+      "weight": 14
+    },
+    "data>threshold_SDM.yml@47|threshold": {
+      "description": "Minimum threshold value for the raster map of occurence (predicted SDM). Raster cells with values above this number will be set 1 and the rest to NA. Ranges from 0 to 1.",
+      "label": "Threshold value",
+      "type": "float",
+      "example": 0.95,
+      "weight": 15
+    }
+  },
+  "outputs": {
+    "pipeline@15|default_output": {
+      "label": "Species",
+      "description": "Scientific name of the species. Multiple species names can be specified, separated with a comma.",
+      "example": [
+        "Ambystoma laterale"
+      ],
+      "type": "text[]",
+      "weight": 0
+    },
+    "SHI>habitatChange_ESA.yml@9|shs_timeseries": {
+      "description": "Figure showing a time series of SHS values for each species.",
+      "label": "SHS time series",
+      "type": "image/png[]",
+      "weight": 1
+    },
+    "SHI>habitatChange_ESA.yml@9|df_shs": {
+      "description": "A TSV file containing Area Score, Connectivity Score, and SHS by time step for each species. Percentage of change, 100% being equal to the reference year.",
+      "label": "SHS table",
+      "type": "text/tab-separated-values[]",
+      "weight": 2
+    },
+    "SHI>habitatChange_ESA.yml@9|habitat_change_map": {
+      "description": "Map showing habitat change between the start and end year time points. A value of 1, 2, and 3 represents habitat loss, habitat gain, and no change in habitat, respectively.",
+      "label": "Habitat change map",
+      "type": "image/tiff;application=geotiff",
+      "weight": 3
+    },
+    "SHI>habitatChange_ESA.yml@9|raster": {
+      "description": "Rasters of land cover data for each time point.",
+      "label": "Habitat per time point",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 4
+    },
+    "SHI>calculateSHI.yml@43|df_shi": {
+      "description": "Table with SHI and Steward’s SHI values for the complete area of study.",
+      "label": "SHI table",
+      "type": "text/tab-separated-values",
+      "weight": 5
+    },
+    "SHI>calculateSHI.yml@43|img_shi_timeseries": {
+      "description": "Figure showing a time series of SHI values for each time step, 100% being equal to the reference year.",
+      "label": "SHI time series",
+      "type": "image/png",
+      "weight": 6
+    },
+    "SHI>calculateSHI.yml@43|img_w_shi_timeseries": {
+      "description": "Figure showing a time series of Steward’s SHI values for each time step. This is weighted by the proportion between the area of habitat for the study area and the total range map of the species. The reference year will start at the proportion of area of habitat in the study area. For example, if half of the species habitat is covered by the study area, the reference year’s value will be 50%.",
+      "label": "Steward’s SHI time series",
+      "type": "image/png",
+      "weight": 7
+    },
+    "data>threshold_SDM.yml@47|range_map": {
+      "description": "Species range map based on the SDM prediction map filtered by the minimum threshold input.",
+      "label": "Range map",
+      "type": "image/tiff;application=geotiff",
+      "weight": 8
+    },
+    "SDM>SDM_BRT.json@48|SDM>BRT>fitBRT.yml@132|predicted_sdm": {
+      "description": "Map of occurrence with values between 0 and 1. The higher the value, the higher the probability of species occurrence.",
+      "label": "Predicted SDM",
+      "type": "image/tiff;application=geotiff",
+      "weight": 9
+    }
+  },
+  "metadata": {
+    "name": "SHI using SDM with BRTs",
+    "description": "This pipeline calculates the Species Habitat Score (SHS) and the Species Habitat Index (SHI) for selected  species, following the methodology proposed by Jetz et al. (2022) (link). The species habitat is determined by running an SDM with BRTs and extracting a raster with probabilities above a certain threshold. The SHS consists of two  components: an Area Score, which measures the extent of suitable habitat, and a Connectivity Score,  which assesses the spatial connectedness of that habitat. The SHI is calculated as the average of these  two scores. Species scores can also be weighted based on the proportion of their habitat area that falls  within the study region, allowing for more regionally relevant assessments. To evaluate habitat change over  time, the pipeline compares layers of land cover data from the European Space Agency (ESA), which serve as  the basis for computing both the Area and Connectivity Scores.",
+    "author": [
+      {
+        "name": "Laetitia Tremblay",
+        "email": "laetitia.tremblay@mcgill.ca",
+        "identifier": "https://www.linkedin.com/in/laetitia-tremblay-b0619b273/",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Maria Isabel Arce-Plata",
+        "identifier": "https://orcid.org/0000-0003-4024-9268",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Guillaume Larocque",
+        "email": "guillaume.larocque@mcgill.ca",
+        "identifier": "https://orcid.org/0000-0002-5967-9156",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Jaime Burbano-Girón",
+        "identifier": "https://orcid.org/0000-0001-6570-439X",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Maria Camila Díaz",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Timothée Poisot",
+        "identifier": "https://orcid.org/0000-0002-0735-5184",
+        "role": "Pipeline development"
+      },
+      {
+        "name": "Michael D. Catchen",
+        "identifier": "https://orcid.org/0000-0002-6506-6487",
+        "role": "Pipeline development"
+      }
+    ],
+    "references": [
+      {
+        "text": "Brooks, T. M., Pimm, S. L., Akçakaya, H. R., Buchanan, G. M., Butchart, S. H. M., Foden, W., Hilton-Taylor, C., Hoffmann, M., Jenkins, C. N., Joppa, L., Li, B. V., Menon, V., Ocampo-Peñuela, N., & Rondinini, C. (2019). Measuring Terrestrial Area of Habitat (AOH) and Its Utility for the IUCN Red List. Trends in Ecology & Evolution, 34(11), 977–986. https://doi.org/10.1016/j.tree.2019.06.009 [https://www.sciencedirect.com/science/article/pii/S0169534719301892?via%3Dihub]"
+      },
+      {
+        "text": "Jetz et al., Species Habitat Index [accessed on 24/8/2022](https://mol.org/indicators/habitat/background)"
+      },
+      {
+        "text": "Jetz, W., McGowan, J., Rinnan, D. S., Possingham, H. P., Visconti, P., O’Donnell, B., & Londoño-Murcia, M. C. (2022). Include biodiversity representation indicators in area-based conservation targets. Nature Ecology & Evolution, 6(2), 123–126. https://doi.org/10.1038/s41559-021-01620-y [https://www.nature.com/articles/s41559-021-01620-y]"
+      }
+    ],
+    "license": "CC BY"
+  }
+}

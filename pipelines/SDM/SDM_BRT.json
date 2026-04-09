@@ -740,6 +740,20 @@
     }
   ],
   "inputs": {
+    "getCountrybbox.json@168|data>getCountryPolygon.yml@12|country": {
+      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
+      "label": "ISO3 country code",
+      "type": "text",
+      "example": "CAN",
+      "weight": 0
+    },
+    "getCountrybbox.json@168|data>getCountryPolygon.yml@12|region": {
+      "description": "ISO 3166-2 code for province or region, see more [here](en.wikipedia.org/wiki/ISO_3166-2)",
+      "label": "State/Province code",
+      "type": "text",
+      "example": "CA-QB",
+      "weight": 1
+    },
     "pipeline@121": {
       "label": "Species",
       "description": "Name of species",
@@ -789,6 +803,7 @@
       "type": "float",
       "example": 1000,
       "weight": 5
+      "weight": 5
     },
     "pipeline@152": {
       "label": "Pseudoabsence Buffer",
@@ -796,12 +811,14 @@
       "type": "float",
       "example": 10,
       "weight": 6
+      "weight": 6
     },
     "pipeline@153": {
       "label": "Max Candidate Pseudoabsences",
       "description": "The maximum number of candidate pseudoabsences to consider. This speeds up PA generation on large rasters.",
       "type": "int",
       "example": 100000,
+      "weight": 7
       "weight": 7
     },
     "pipeline@154": {
@@ -897,6 +914,12 @@
       "label": "SDM Uncertainty",
       "type": "image/tiff;application=geotiff",
       "weight": 8
+    },
+    "data>loadFromStac.yml@160|rasters": {
+      "description": "array of output raster paths",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
+      "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@159|gbif_doi": {
       "description": "DOI of GBIF download. Used for citing downloaded data.",
