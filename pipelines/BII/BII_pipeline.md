@@ -1,15 +1,15 @@
-_Author: Jory Griffith_
-
-Review status: In development
+# Biodiversity Intactness Index
+### Author(s): Jory Griffith
+#### Reviewed by: In development
 
 ## Introduction
 The Biodiversity Intactness Index (BII) is a metric designed to assess the degree to which ecosystems are intact and functioning relative to their natural state. It measures the abundance and diversity of species in a given area compared to what would be expected in an undisturbed ecosystem. The BII accounts for various factors, including habitat loss, fragmentation, and degradation, providing a comprehensive view of biodiversity health. A higher BII value indicates a more intact ecosystem with greater species diversity and abundance, while a lower value suggests significant ecological disruption. The biodiversity intactness index is a complimentary indicator in the GBF. The BII was created by the Natural History Museum and uses their PREDICTS database, which aggregates data from studies comparing terrestrial biodiversity at sites experiencing varying levels of human pressure. The database is used to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact. It currently contains over 3 million records from more than 26,000 sites across 94 countries, representing a diverse array of over 45,000 plant, invertebrate, and vertebrate species.
 
-## Uses
+## 'Use Case'/Context
 The Biodiversity Intactness Index is a compimentary indicator in the GBF. This pipeline can be used to calculate summary statistics and plot a time series of the 10km resolution BII layer for a given country or region. The BII is expressed as a percentage, with higher percentages being more intact.
 
 ## Pipeline limitations
-The pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the 10 x 10 km BII layer pre-calcuated by the Natural History Museum calculated global layer. Therefore, you cannot customize the model or input custom data and you cannot increase the resolution of the layer. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).
+The pipeline does not model the Biodiversity Intactness Index from the data, it calculates summary statistics over the already calculated global layer at 10x10km resolution. Therefore, you cannot customize the model or input custom data. Additionally, because BII is a modelled data layer, the values may be less accurate in areas where there is a lack of data. To learn more about the PREDICTS database, visit the [page on the Natural History Museum website](https://www.nhm.ac.uk/our-science/research/projects/predicts/science.html).
 
 ## Before you start
 There are no data or API keys required for this analysis. To view the global layer, go to our [STAC catalog](https://stac.geobon.org/viewer/bii_nhm/bii_nhm_10km_2020).
@@ -19,29 +19,33 @@ There are no data or API keys required for this analysis. To view the global lay
 ### Pipeline inputs
 The Natural History Museum has created raster layers of BII since the year 2000. BON in a Box has a pipeline to calculate summary statistics and plot a time series from these layers in a country, region, or custom study area of interest. The pipeline has the following inputs:
 
-- **Bounding Box and CRS:** the user must select a bounding box and coordinate reference system (CRS) to be used for the analysis. This can be done by using the chooser to either select a country and/or region, or type in/draw a custom bounding box. Then, an appropriate CRS can be selected from the corresponding drop-down menu.
+- **Country:** country of interest.
+
+- **State/Province:** region of interest.
 
 - **Summary statistic:** the user can choose the summary statistic for BII (options: mean, median, mode) that will be calculated for the country or region of interest.
 
-- **Spatial resolution:** the user can select the spatial resolution of the rasters. This must be in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat-long). To use the original spatial resolution of the layers (10 x 10 km), the user should leave this input blank. In that case, the CRS selected must be EPSG:4326.
+- **Start year for BII raster comparison:** reference BII year for raster plotting.
 
-- **Start date:** this input is optional. The user can select a start date as a reference BII year for raster plotting, in the format YYYY or YYYY-MM-DD. To perform the analysis on all available dates, the user should leave this input blank.
+- **End year for BII comparison:** BII layer to compare to the start year.
 
-- **End date:** this input is optional. The user can select an end date to extract a BII layer to compare to the start year, in the format YYYY or YYYY-MM-DD. To perform the analysis on all available dates, the user should leave this input blank.
+- **Coordinate reference system:** the coordinate reference system of choice. Search for a CRS of interest [here](https://epsg.io/). This needs to be a projected coordinate reference system (in meters).
+
+- **Spatial resolution:** the spatial resolution of the rasters (in meters). The spatial resolution of the layer is 10 x 10 km.
 
 ### Pipeline steps
 
-#### **1. Getting the polygon of the area of interest**
-This step returns the polygon for the country/region/area of interest. If a country/region was selected, it pulls the country/region polygon using [Fieldmaps](https://fieldmaps.io/), and outputs as a geopackage, projected in the crs of interest. If the user inputs a custom bounding box, it will return a polygon made from that bounding box.
+#### **1. Retrieving the country bounding box**
+This step retrieves the bounding box for the country/region of interest using the `Get country bounding box` pipeline.
 
 #### **2. Loading data from the GEO BON STAC catalog**
-This step extracts the global biodiversity intactness layers from various collections on the GEO BON Spatio Temporal Asset Catalog. The layers are in EPSG: 4326 and 10x10 km resolution but the user can specify other coordinate references systems and spatial resolutions. The BII uses the PREDICTS database to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact.
+This step extracts the global biodiversity intactness layers from various collections on the GEO BON Spatio Temporal Asset Catalog. The layers are in EPSG: 4326 and 10x10 km resolution but the user can specify other coordinate references systems and spatial resolutions.
 
 #### **3. Calculating zonal statistics**
-This step calculates the zonal statistics for the raster layers obtained from the GEO BON STAC catalog over the chosen bounding box, using the R package exactextractr. The user can choose what types of zonal statistics will be extracted.
+This step calculates the zonal statistics for the raster layers obtained from the GEO BON STAC catalog over the bounding box from step 1, using the R package exactextractr. The user can choose what types of zonal statistics will be extracted.
 
 #### **4. Calculating the BII change**
-This step generates a raster of the change in the BII between the two chosen time points.
+This step generates a raster of the change in the BII between the two chosen time points. The BII uses the PREDICTS database to establish a reference state using the biodiversity patterns in habitats with minimal disturbance levels. Then, it assigns sensitivity scores to each species based on their vulnerability to human pressure. Intactness is calculated by comparing the observed species abundance in a given area to what is expected under reference conditions with low human impact.
 
 ### Pipeline outputs
 
@@ -51,12 +55,12 @@ This step generates a raster of the change in the BII between the two chosen tim
 
 - **Change in BII:** a raster plot of the change in BII between the two chosen years. Higher numbers indicate greater BII loss.
 
-- **Country:** the region of interest, if selected.
+- **Country:** the region of interest.
 
-- **Region:** the country of interest, if selected.
+- **Region:** the country of interest.
 
 ## Example
-**Sample run:** See an example BII run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/BII%3EBII/d29bd8231a0ceefbd0fd14bc16e1e4cc) and [viewer](https://pipelines-results.geobon.org/viewer/BII%3EBII%3Ed29bd8231a0ceefbd0fd14bc16e1e4cc).
+**Sample run:** See an example BII run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/BII%3EBII/5411ef9f7f4b1444a865a05acee4e136) and [viewer](https://pipelines-results.geobon.org/viewer/BII%3EBII%3E5411ef9f7f4b1444a865a05acee4e136).
 
 ## Troubleshooting
 - The spatial resolution of the BII layers is 10 x 10 km (10,000 m). Choosing a spatial resolution lower than that may cause issues with the pipeline outputs.

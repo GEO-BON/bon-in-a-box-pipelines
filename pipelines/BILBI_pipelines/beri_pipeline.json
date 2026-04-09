@@ -237,29 +237,11 @@
       "id": "25",
       "type": "io",
       "position": {
-        "x": 455.9624938964844,
-        "y": 285.7999954223633
+        "x": 162.99622326667782,
+        "y": 524.0062154671593
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
-      }
-    },
-    {
-      "id": "26",
-      "type": "constant",
-      "position": {
-        "x": 99.96249389648438,
-        "y": 216.79999542236328
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "Country or region",
-        "options": [
-          "Country or region",
-          "WDPA",
-          "EEZ"
-        ]
       }
     },
     {
@@ -399,13 +381,6 @@
     {
       "source": "24",
       "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-24-2bbox_crs"
-    },
-    {
-      "source": "24",
-      "sourceHandle": null,
       "target": "1",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-24-1bbox_crs"
@@ -439,13 +414,6 @@
       "id": "reactflow__edge-25polygon-1study_area"
     },
     {
-      "source": "26",
-      "sourceHandle": null,
-      "target": "25",
-      "targetHandle": "polygon_type",
-      "id": "reactflow__edge-26-25polygon_type"
-    },
-    {
       "source": "27",
       "sourceHandle": null,
       "target": "25",
@@ -458,6 +426,13 @@
       "target": "0",
       "targetHandle": "study_area",
       "id": "reactflow__edge-25polygon-0study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "bbox_crs",
+      "target": "2",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-25bbox_crs-2bbox_crs"
     }
   ],
   "inputs": {
@@ -468,33 +443,46 @@
       "example": null,
       "weight": 0
     },
+    "data>load_polygons.yml@25|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 1
+    },
     "data>loadFromStac.yml@1|t0": {
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "Start date (optional)",
       "type": "text",
       "example": null,
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@1|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "End date (optional)",
       "type": "text",
       "example": null,
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@1|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution (optional)",
       "type": "text",
       "example": null,
-      "weight": 3
+      "weight": 4
     },
     "pipeline@19": {
       "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "type": "float",
       "example": null,
-      "weight": 4
+      "weight": 5
     },
     "pipeline@18": {
       "label": "Resampling method",
@@ -517,7 +505,7 @@
         "q1",
         "q3"
       ],
-      "weight": 5
+      "weight": 6
     },
     "pipeline@20": {
       "label": "Aggregation method",
@@ -531,7 +519,7 @@
         "mean",
         "median"
       ],
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {
