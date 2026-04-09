@@ -389,12 +389,9 @@ if (!input$polygon_type == "Polygon of bounding box") {
 
 if (input$polygon_type == "Polygon of bounding box") {
     polygon <- st_sf(geometry = bbox_sf)
+    st_write(polygon, polygon_path)
 }
 
-st_write(polygon, polygon_path)
-print("printing polygon sf object")
-print(polygon)
-print(class(polygon))
 
 biab_output("polygon", polygon_path)
 biab_output("bbox_crs", input$country_region_bbox)
