@@ -78,3 +78,9 @@ RUN mkdir -p /opt/conda/pkgs; \
 RUN chmod -R 777 /opt/conda/envs/rbase/lib/R/library
 
 RUN date +"%Y-%m-%d %R" > /version.txt
+
+ARG TARGETOS
+ARG TARGETARCH
+ARG TARGETVARIANT
+ARG TARGETPLATFORM
+RUN echo "Architecture: ${TARGETPLATFORM} (${TARGETOS}/${TARGETARCH}${TARGETVARIANT:+/$TARGETVARIANT})" >> /version.txt

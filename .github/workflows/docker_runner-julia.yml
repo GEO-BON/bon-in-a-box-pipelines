@@ -112,7 +112,6 @@ jobs:
 
       - name: Create and push manifest
         run: |
-          # exemples de tags "agrégés"
           TAG_MAIN="${{ github.ref_name == 'main' && 'latest' || github.ref_name }}"
           TAG_SHA="sha-${{ github.sha }}"
           BASE="${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}"
