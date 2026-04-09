@@ -4,8 +4,8 @@
       "id": "1",
       "type": "io",
       "position": {
-        "x": 1526,
-        "y": 913.8214285714286
+        "x": 281,
+        "y": 856.5000000000001
       },
       "data": {
         "descriptionFile": "data>helperForCatalogue.yml"
@@ -15,8 +15,8 @@
       "id": "3",
       "type": "io",
       "position": {
-        "x": 2581.8337906324896,
-        "y": 353.18394906804144
+        "x": 1462,
+        "y": 882.0000000000001
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -26,8 +26,8 @@
       "id": "4",
       "type": "constant",
       "position": {
-        "x": 1651,
-        "y": 87.82142857142857
+        "x": 477,
+        "y": 639.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +39,8 @@
       "id": "9",
       "type": "io",
       "position": {
-        "x": 3597,
-        "y": 364.82142857142856
+        "x": 3297,
+        "y": 986.0000000000001
       },
       "data": {
         "descriptionFile": "SHI>habitatChange_ESA.yml"
@@ -50,8 +50,8 @@
       "id": "11",
       "type": "io",
       "position": {
-        "x": 2959,
-        "y": 528.5714285714286
+        "x": 2613,
+        "y": 549.0000000000001
       },
       "data": {
         "descriptionFile": "data>getAreaOfHabitat.yml"
@@ -61,8 +61,8 @@
       "id": "15",
       "type": "userInput",
       "position": {
-        "x": 208,
-        "y": 387.57142857142856
+        "x": 556,
+        "y": 131.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -76,8 +76,8 @@
       "id": "16",
       "type": "io",
       "position": {
-        "x": 2184,
-        "y": 201.82142857142856
+        "x": 1462,
+        "y": 710.0000000000001
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -87,8 +87,8 @@
       "id": "17",
       "type": "constant",
       "position": {
-        "x": 1822.571481079533,
-        "y": -45.97686139763567
+        "x": 405,
+        "y": 352.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,8 +103,8 @@
       "id": "23",
       "type": "userInput",
       "position": {
-        "x": 2749,
-        "y": 238.48809523809524
+        "x": 3017,
+        "y": 989.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -116,8 +116,8 @@
       "id": "27",
       "type": "userInput",
       "position": {
-        "x": 851.1134154609406,
-        "y": 506.86707246205094
+        "x": 319,
+        "y": 604.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -129,8 +129,8 @@
       "id": "29",
       "type": "userInput",
       "position": {
-        "x": 42.43714059961218,
-        "y": 1116.0169329704313
+        "x": 12,
+        "y": 298.33333333333337
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -142,8 +142,8 @@
       "id": "30",
       "type": "userInput",
       "position": {
-        "x": 50,
-        "y": 1231.3214285714284
+        "x": 18,
+        "y": 859.8333333333335
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -155,8 +155,8 @@
       "id": "33",
       "type": "userInput",
       "position": {
-        "x": 1672,
-        "y": 506.57142857142856
+        "x": 427,
+        "y": 791.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -175,8 +175,8 @@
       "id": "35",
       "type": "userInput",
       "position": {
-        "x": 1446.2195705270374,
-        "y": 812.1358928025695
+        "x": 483,
+        "y": 317.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -188,8 +188,8 @@
       "id": "36",
       "type": "userInput",
       "position": {
-        "x": 1641.3122232066812,
-        "y": 434.6940592183324
+        "x": 432,
+        "y": 756.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -214,44 +214,11 @@
       }
     },
     {
-      "id": "37",
-      "type": "output",
-      "position": {
-        "x": 4171,
-        "y": 722.3214285714286
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "38",
-      "type": "output",
-      "position": {
-        "x": 4171,
-        "y": 451.32142857142856
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "41",
       "type": "output",
       "position": {
-        "x": 4171,
-        "y": 769.3214285714286
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "42",
-      "type": "output",
-      "position": {
-        "x": 4171,
-        "y": 675.3214285714286
+        "x": 3907,
+        "y": 1003.4000000000001
       },
       "data": {
         "label": "Output"
@@ -261,8 +228,8 @@
       "id": "43",
       "type": "io",
       "position": {
-        "x": 4171,
-        "y": 602.3214285714286
+        "x": 3983,
+        "y": 519.0000000000001
       },
       "data": {
         "descriptionFile": "SHI>calculateSHI.yml"
@@ -272,30 +239,8 @@
       "id": "44",
       "type": "output",
       "position": {
-        "x": 4680,
-        "y": 573.8214285714286
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "45",
-      "type": "output",
-      "position": {
-        "x": 4680,
-        "y": 526.8214285714286
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "46",
-      "type": "output",
-      "position": {
-        "x": 4680,
-        "y": 479.82142857142856
+        "x": 4530,
+        "y": 527.6500000000001
       },
       "data": {
         "label": "Output"
@@ -305,30 +250,19 @@
       "id": "47",
       "type": "io",
       "position": {
-        "x": 2284,
-        "y": 675.8214285714286
+        "x": 2056,
+        "y": 700.0000000000001
       },
       "data": {
         "descriptionFile": "data>threshold_SDM.yml"
       }
     },
     {
-      "id": "48",
-      "type": "io",
-      "position": {
-        "x": 1205,
-        "y": 685.8214285714286
-      },
-      "data": {
-        "descriptionFile": "SDM>SDM_BRT.json"
-      }
-    },
-    {
       "id": "49",
       "type": "output",
       "position": {
-        "x": 2791,
-        "y": 738.5714285714286
+        "x": 2613,
+        "y": 942.6666666666667
       },
       "data": {
         "label": "Output"
@@ -338,8 +272,8 @@
       "id": "54",
       "type": "constant",
       "position": {
-        "x": 2275.808341755157,
-        "y": 996.5243664611347
+        "x": 1905,
+        "y": 593.0000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -351,8 +285,8 @@
       "id": "55",
       "type": "constant",
       "position": {
-        "x": 2404.1217866307984,
-        "y": 831.5951791500296
+        "x": 2101,
+        "y": 546.0000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -369,8 +303,8 @@
       "id": "58",
       "type": "output",
       "position": {
-        "x": 2029.1045125149903,
-        "y": 777.9174453284354
+        "x": 1905,
+        "y": 159.16666666666674
       },
       "data": {
         "label": "Output"
@@ -380,8 +314,8 @@
       "id": "59",
       "type": "io",
       "position": {
-        "x": 824.4712839612957,
-        "y": 558.817193563122
+        "x": 1235.6636778693457,
+        "y": 332.07398026109934
       },
       "data": {
         "descriptionFile": "SDM>SDM_maxEnt.json"
@@ -391,8 +325,8 @@
       "id": "60",
       "type": "userInput",
       "position": {
-        "x": 1167.4542219224136,
-        "y": 129.77236697974536
+        "x": 399,
+        "y": 224.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -403,8 +337,8 @@
       "id": "61",
       "type": "io",
       "position": {
-        "x": 1021.1113515122461,
-        "y": 310.9825133601705
+        "x": 1158,
+        "y": 45
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -414,8 +348,8 @@
       "id": "62",
       "type": "constant",
       "position": {
-        "x": 457.4542219224136,
-        "y": 271.77236697974536
+        "x": 377,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -432,8 +366,8 @@
       "id": "63",
       "type": "constant",
       "position": {
-        "x": 405.4542219224136,
-        "y": 339.77236697974536
+        "x": 401,
+        "y": 59
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -445,8 +379,8 @@
       "id": "64",
       "type": "constant",
       "position": {
-        "x": -11.062731105011153,
-        "y": 1039.0654672928072
+        "x": 477,
+        "y": 259.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -455,24 +389,11 @@
       }
     },
     {
-      "id": "65",
-      "type": "constant",
-      "position": {
-        "x": 209.40656306199662,
-        "y": 513.3187423888874
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": null
-      }
-    },
-    {
       "id": "66",
       "type": "userInput",
       "position": {
-        "x": 1481.4065630619966,
-        "y": 397.31874238888736
+        "x": 467,
+        "y": 929.5000000000001
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -483,8 +404,8 @@
       "id": "67",
       "type": "constant",
       "position": {
-        "x": 1877.4065630619966,
-        "y": 271.31874238888736
+        "x": 477,
+        "y": 557.6666666666667
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -495,8 +416,8 @@
       "id": "68",
       "type": "constant",
       "position": {
-        "x": 1535.2679426382213,
-        "y": 170.14151304181974
+        "x": 477,
+        "y": 463.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -507,12 +428,38 @@
       "id": "70",
       "type": "constant",
       "position": {
-        "x": 1519.297578427336,
-        "y": 234.5335328974528
+        "x": 477,
+        "y": 510.66666666666674
       },
       "dragHandle": ".dragHandle",
       "data": {
         "type": "text"
+      }
+    },
+    {
+      "id": "71",
+      "type": "userInput",
+      "position": {
+        "x": 551,
+        "y": 686.6666666666667
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2000"
+      }
+    },
+    {
+      "id": "72",
+      "type": "userInput",
+      "position": {
+        "x": 557,
+        "y": 721.6666666666667
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text",
+        "value": "2020"
       }
     }
   ],
@@ -602,20 +549,6 @@
       "id": "reactflow__edge-30-1end_year"
     },
     {
-      "source": "29",
-      "sourceHandle": null,
-      "target": "9",
-      "targetHandle": "start_year",
-      "id": "reactflow__edge-29-9start_year"
-    },
-    {
-      "source": "30",
-      "sourceHandle": null,
-      "target": "9",
-      "targetHandle": "end_year",
-      "id": "reactflow__edge-30-9end_year"
-    },
-    {
       "source": "33",
       "sourceHandle": null,
       "target": "16",
@@ -659,31 +592,10 @@
     },
     {
       "source": "9",
-      "sourceHandle": "shs_timeseries",
-      "target": "37",
-      "targetHandle": null,
-      "id": "reactflow__edge-9shs_timeseries-37"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "df_shs",
-      "target": "38",
-      "targetHandle": null,
-      "id": "reactflow__edge-9df_shs-38"
-    },
-    {
-      "source": "9",
       "sourceHandle": "habitat_change_map",
       "target": "41",
       "targetHandle": null,
       "id": "reactflow__edge-9habitat_change_map-41"
-    },
-    {
-      "source": "9",
-      "sourceHandle": "raster",
-      "target": "42",
-      "targetHandle": null,
-      "id": "reactflow__edge-9raster-42"
     },
     {
       "source": "9",
@@ -707,20 +619,6 @@
       "id": "reactflow__edge-43df_shi-44"
     },
     {
-      "source": "43",
-      "sourceHandle": "img_shi_timeseries",
-      "target": "45",
-      "targetHandle": null,
-      "id": "reactflow__edge-43img_shi_timeseries-45"
-    },
-    {
-      "source": "43",
-      "sourceHandle": "img_w_shi_timeseries",
-      "target": "46",
-      "targetHandle": null,
-      "id": "reactflow__edge-43img_w_shi_timeseries-46"
-    },
-    {
       "source": "47",
       "sourceHandle": "range_map",
       "target": "11",
@@ -733,34 +631,6 @@
       "target": "49",
       "targetHandle": null,
       "id": "reactflow__edge-47range_map-49"
-    },
-    {
-      "source": "29",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "data>getGBIFObservations>getGBIFObservations.yml@159|min_year",
-      "id": "reactflow__edge-29-48data>getGBIFObservations>getGBIFObservations.yml@159|min_year"
-    },
-    {
-      "source": "30",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "data>getGBIFObservations>getGBIFObservations.yml@159|max_year",
-      "id": "reactflow__edge-30-48data>getGBIFObservations>getGBIFObservations.yml@159|max_year"
-    },
-    {
-      "source": "35",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "pipeline@128",
-      "id": "reactflow__edge-35-48pipeline@128"
-    },
-    {
-      "source": "15",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "pipeline@121",
-      "id": "reactflow__edge-15-48pipeline@121"
     },
     {
       "source": "54",
@@ -782,13 +652,6 @@
       "target": "11",
       "targetHandle": "spat_res",
       "id": "reactflow__edge-35-11spat_res"
-    },
-    {
-      "source": "27",
-      "sourceHandle": null,
-      "target": "48",
-      "targetHandle": "pipeline@167",
-      "id": "reactflow__edge-27-48pipeline@167"
     },
     {
       "source": "59",
@@ -889,13 +752,6 @@
       "id": "reactflow__edge-35-59pipeline@128"
     },
     {
-      "source": "65",
-      "sourceHandle": null,
-      "target": "59",
-      "targetHandle": "data>loadFromStac.yml@144|temporal_res",
-      "id": "reactflow__edge-65-59data>loadFromStac.yml@144|temporal_res"
-    },
-    {
       "source": "66",
       "sourceHandle": null,
       "target": "3",
@@ -943,45 +799,143 @@
       "target": "11",
       "targetHandle": "rasters",
       "id": "reactflow__edge-16rasters-11rasters"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "start_year",
+      "id": "reactflow__edge-71-9start_year"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "9",
+      "targetHandle": "end_year",
+      "id": "reactflow__edge-72-9end_year"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "t1",
+      "id": "reactflow__edge-72-3t1"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "t0",
+      "id": "reactflow__edge-71-3t0"
+    },
+    {
+      "source": "71",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "data>loadFromStac.yml@144|t0",
+      "id": "reactflow__edge-71-59data>loadFromStac.yml@144|t0"
+    },
+    {
+      "source": "72",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "data>loadFromStac.yml@144|t1",
+      "id": "reactflow__edge-72-59data>loadFromStac.yml@144|t1"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "img_shi_timeseries",
+      "target": "44",
+      "targetHandle": null,
+      "id": "reactflow__edge-43img_shi_timeseries-44"
+    },
+    {
+      "source": "43",
+      "sourceHandle": "img_w_shi_timeseries",
+      "target": "44",
+      "targetHandle": null,
+      "id": "reactflow__edge-43img_w_shi_timeseries-44"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "raster",
+      "target": "41",
+      "targetHandle": null,
+      "id": "reactflow__edge-9raster-41"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "shs_timeseries",
+      "target": "41",
+      "targetHandle": null,
+      "id": "reactflow__edge-9shs_timeseries-41"
+    },
+    {
+      "source": "9",
+      "sourceHandle": "df_shs",
+      "target": "41",
+      "targetHandle": null,
+      "id": "reactflow__edge-9df_shs-41"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "data>loadFromStac.yml@144|study_area",
+      "id": "reactflow__edge-27-59data>loadFromStac.yml@144|study_area"
+    },
+    {
+      "source": "66",
+      "sourceHandle": null,
+      "target": "59",
+      "targetHandle": "data>loadFromStac.yml@144|temporal_res",
+      "id": "reactflow__edge-66-59data>loadFromStac.yml@144|temporal_res"
     }
   ],
   "inputs": {
+    "pipeline@60": {
+      "label": "Bounding box and CRS",
+      "description": "Object containing the chosen bounding box and CRS.",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 0
+    },
     "pipeline@15": {
       "label": "Species",
       "description": "Scientific name of the species.",
       "type": "text[]",
       "example": [
-        "Ambystoma laterale"
+        "Ateles fusciceps"
       ],
-      "weight": 0
+      "weight": 1
     },
     "pipeline@27": {
       "label": "Study area",
       "description": "Polygon of study area used to crop output layers. *Specifying a custom study area will override the country/region input.*",
       "type": "application/geopackage+sqlite3",
       "example": null,
-      "weight": 1
+      "weight": 2
     },
     "data>getAreaOfHabitat.yml@11|buff_size": {
       "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
       "label": "Buffer for study area",
       "type": "int",
       "example": 0,
-      "weight": 2
+      "weight": 3
     },
     "pipeline@29": {
       "label": "Start year",
       "description": "Start year of the analysis.",
       "type": "int",
-      "example": 1992,
-      "weight": 3
+      "example": 2000,
+      "weight": 4
     },
     "pipeline@30": {
       "label": "End year",
       "description": "End year of the analysis",
       "type": "int",
       "example": 2020,
-      "weight": 4
+      "weight": 5
     },
     "pipeline@23": {
       "label": "Habitats",
@@ -997,7 +951,7 @@
         "160",
         "170"
       ],
-      "weight": 5
+      "weight": 6
     },
     "pipeline@33": {
       "label": "Aggregation method",
@@ -1011,14 +965,14 @@
         "mean",
         "median"
       ],
-      "weight": 6
+      "weight": 7
     },
     "pipeline@35": {
       "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters in meters",
       "type": "float",
-      "example": 1000,
-      "weight": 7
+      "example": 0.08,
+      "weight": 8
     },
     "pipeline@36": {
       "label": "Resampling method",
@@ -1041,35 +995,14 @@
         "q1",
         "q3"
       ],
-      "weight": 8
+      "weight": 9
     },
     "data>threshold_SDM.yml@47|threshold": {
       "description": "Minimum threshold value for the raster map of occurence (predicted SDM). Raster cells with values above this number will be set 1 and the rest to NA. Ranges from 0 to 1.",
       "label": "Threshold value",
       "type": "float",
       "example": 0.95,
-      "weight": 9
-    },
-    "data>loadFromStac.yml@3|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
-      "label": "Start date",
-      "type": "text",
-      "weight": 10,
-      "example": null
-    },
-    "data>loadFromStac.yml@3|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
-      "label": "End date",
-      "type": "text",
-      "weight": 11,
-      "example": null
-    },
-    "SDM>SDM_maxEnt.json@59|data>loadFromStac.yml@144|study_area": {
-      "description": "Polygon of study area used to mask output layers, in geopackage format.",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 12
+      "weight": 10
     },
     "SDM>SDM_maxEnt.json@59|SDM>selectBackground.yml@40|method_background": {
       "description": "method used to sample background points",
@@ -1082,7 +1015,7 @@
         "unweighted_raster"
       ],
       "example": "random",
-      "weight": 13
+      "weight": 11
     },
     "SDM>SDM_maxEnt.json@59|data>GBIFHeatmapFromSTAC.yml@139|taxa": {
       "description": "taxonomic group of the taxa from the taxa list, for which to retrieve GBIF heatmap",
@@ -1097,8 +1030,8 @@
         "amphibians",
         "all"
       ],
-      "example": "plants",
-      "weight": 14
+      "example": "mammals",
+      "weight": 12
     },
     "SDM>SDM_maxEnt.json@59|SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
@@ -1112,7 +1045,7 @@
         "checkerboard2"
       ],
       "example": "block",
-      "weight": 15
+      "weight": 13
     },
     "SDM>SDM_maxEnt.json@59|data>loadFromStac.yml@144|collections_items": {
       "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution.",
@@ -1122,67 +1055,60 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 16
-    },
-    "SDM>SDM_maxEnt.json@59|data>loadFromStac.yml@144|t1": {
-      "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "End date",
-      "type": "text",
-      "example": null,
-      "weight": 17
-    },
-    "SDM>SDM_maxEnt.json@59|data>loadFromStac.yml@144|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "Start date",
-      "type": "text",
-      "example": null,
-      "weight": 18
+      "weight": 14
     },
     "SDM>SDM_maxEnt.json@59|SDM>selectBackground.yml@40|n_background": {
       "description": "number of background points",
       "label": "Number of background points",
       "type": "int",
       "example": 10000,
-      "weight": 19
+      "weight": 15
     },
     "SDM>SDM_maxEnt.json@59|pipeline@46": {
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "label": "Number of runs",
       "type": "int",
       "example": 2,
-      "weight": 20
-    },
-    "pipeline@60": {
-      "label": "Bounding box and CRS",
-      "description": "Object containing the chosen bounding box and CRS.",
-      "type": "bboxCRS",
-      "example": null,
-      "weight": 21
+      "weight": 16
     },
     "pipeline@66": {
       "label": "Temporal resolution",
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date or if extracting layers from all available dates. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "type": "text",
-      "example": null,
-      "weight": 22
+      "example": "P20Y",
+      "weight": 17
     },
     "data>getAreaOfHabitat.yml@11|elevation_filter": {
       "description": "If 'yes' an elevation filter using IUCN information is applied, if 'no' the range map is taken as the area of habitat.",
-      "label": "filter by elevation",
+      "label": "Filter by elevation",
       "type": "options",
       "options": [
         "Yes",
         "No"
       ],
       "example": "Yes",
-      "weight": 23
+      "weight": 18
     },
     "data>getAreaOfHabitat.yml@11|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
-      "label": "elevation buffer",
+      "label": "Elevation buffer",
       "type": "int",
-      "weight": 24,
-      "example": null
+      "example": null,
+      "weight": 19
+    },
+    "pipeline@71": {
+      "label": "Start year",
+      "description": "First time point",
+      "type": "text",
+      "example": "2000",
+      "weight": 20
+    },
+    "pipeline@72": {
+      "label": "End year",
+      "description": "Second time point",
+      "type": "text",
+      "example": "2020",
+      "weight": 21
     }
   },
   "outputs": {
@@ -1246,8 +1172,8 @@
     }
   },
   "metadata": {
-    "name": "SHI using SDM with BRTs",
-    "description": "This pipeline calculates the Species Habitat Score (SHS) and the Species Habitat Index (SHI) for selected  species, following the methodology proposed by Jetz et al. (2022) (link). The species habitat is determined by running an SDM with BRTs and extracting a raster with probabilities above a certain threshold. The SHS consists of two  components: an Area Score, which measures the extent of suitable habitat, and a Connectivity Score,  which assesses the spatial connectedness of that habitat. The SHI is calculated as the average of these  two scores. Species scores can also be weighted based on the proportion of their habitat area that falls  within the study region, allowing for more regionally relevant assessments. To evaluate habitat change over  time, the pipeline compares layers of land cover data from the European Space Agency (ESA), which serve as  the basis for computing both the Area and Connectivity Scores.",
+    "name": "SHI using SDM with Maxent",
+    "description": "This pipeline calculates the Species Habitat Score (SHS) and the Species Habitat Index (SHI) for selected  species, following the methodology proposed by Jetz et al. (2022) (link). The species habitat is determined by running an SDM with Maxent and extracting a raster with probabilities above a certain threshold. The SHS consists of two  components: an Area Score, which measures the extent of suitable habitat, and a Connectivity Score,  which assesses the spatial connectedness of that habitat. The SHI is calculated as the average of these  two scores. Species scores can also be weighted based on the proportion of their habitat area that falls  within the study region, allowing for more regionally relevant assessments. To evaluate habitat change over  time, the pipeline compares layers of land cover data from the European Space Agency (ESA), which serve as  the basis for computing both the Area and Connectivity Scores.",
     "author": [
       {
         "name": "Laetitia Tremblay",
