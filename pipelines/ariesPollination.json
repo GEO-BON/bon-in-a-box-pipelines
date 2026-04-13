@@ -201,5 +201,15 @@
       "type": "image/tiff;application=geotiff",
       "weight": 0
     }
+  },
+  "metadata": {
+    "name": "ARIES Pollinator Occurrences",
+    "description": "Pipeline querying ARIES for pollinator occurrence data filtered by a GloBI-derived species list, compared against Quebec Biodiversity Atlas observations to produce a heatmap.",
+    "author": [
+      {
+        "name": "Joannie Lao"
+      }
+    ],
+    "license": "CC BY"
   }
 }
