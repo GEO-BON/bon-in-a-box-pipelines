@@ -1,0 +1,28 @@
+script: gettingSpeciesV2.py
+name: Extract raw pollinator data
+description: Extracting organisms with interaction "pollinates" or "visits flowers" from GloBI, filtered by a designated bounding box.
+author:
+  - name: Joannie Lao
+
+inputs:
+  bbox_crs:
+    label: Spatial Extent
+    description: Select the bounding box for the target area.
+    type: bboxCRS
+
+outputs:
+  pollinator_parquet:
+    label: Pollinator occurrences parquet
+    description: Parquet with decimalLatitude, decimalLongitude, subScientificName columns 
+    type: application/x-parquet
+
+conda:
+  channels: 
+    - conda-forge
+  dependencies:
+    - python=3.11
+    - pip
+    - pip:
+      - pandas
+      - pyarrow
+      - pyproj

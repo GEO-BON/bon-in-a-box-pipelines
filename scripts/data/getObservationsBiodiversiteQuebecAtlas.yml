@@ -11,11 +11,11 @@ inputs:
     label: Taxa list
     type: text[]
     example: [Acer saccharum, Bubo scandiacus]
-  bbox:
-    label: bbox
-    description: Vector of float, bbox coordinates of the bbox in the order long xmin, lat ymin, long xmax, lat ymax
-    type: float[]
-    example: [-80, 44.8, -50.7, 63]
+  bbox_crs:
+    label: Bounding box and CRS
+    description: Bounding box with coordinate reference system
+    type: bboxCRS
+    example:
   min_year:
     description: Min year observations wanted
     label: minimum year
@@ -30,8 +30,8 @@ outputs:
   observations_file:
     label: Observations
     description: Output file with observations
-    type: text/csv
-    example: hfn7s62sq.csv
+    type: text/tab-separated-values
+    example: hfn7s62sq.tsv
   total_records:
     label: Total number of occurrences
     description: Total number of occurrences in csv file
@@ -47,6 +47,7 @@ conda:
     - conda-forge
     - r
   dependencies:
-    - r-duckdb=1.0.0 #package=version
+    - r-duckdb=1.0.0
     - r-dplyr
     - r-rjson
+    - r-proj4

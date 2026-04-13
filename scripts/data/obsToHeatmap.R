@@ -9,8 +9,7 @@ print("Inputs: ")
 print(input)
 
 predictors <- terra::rast(input$predictors)
-presence <- read.table(file = input$presence, sep = "\t", header = TRUE)
-
+presence <- read.table(file = input$presence, sep = "\t", header = TRUE, quote = "")
 # Get projection
 proj <- terra::crs(predictors, proj = T)
 

@@ -1,0 +1,69 @@
+script: gloBIComparisonV2.py
+name: Compare GloBI pollinator occurrences against ARIES raster
+description: >
+  Overlays pollinator occurrence points against the ARIES pollinator occurrence raster. Runs correlation analysis, sampling bias detection, gap analysis, taxonomic breakdown, and ROC curve analysis. Outputs plots, a results CSV, and a gap raster.
+author:
+  - name: Joannie Lao
+
+inputs:
+  pollen_parquet:
+    label: Pollinator interactions parquet
+    description: Path to pollen.parquet produced by pollen_interactions script
+    type: application/x-parquet
+  pollinator_raster:
+    label: ARIES pollinator occurrence raster
+    description: Path to GeoTIFF raster produced by kLAB script
+    type: image/tiff;application=geotiff
+  high_value_threshold:
+    label: High value threshold for gap analysis
+    description: >
+      ARIES raster values above this threshold are considered "high value" for the gap analysis. Between 0 and 1.
+    type: float
+    example: 0.6
+
+outputs:
+  results_csv:
+    label: Point-level results CSV
+    description: Every heatmap point with its extracted ARIES value
+    type: text/csv
+  gap_raster:
+    label: Gap analysis raster
+    description: >
+      GeoTIFF marking cells with high ARIES value but no heatmap observations
+    type: image/tiff;application=geotiff
+  plot_correlation:
+    label: Correlation analysis plot
+    description: Scatter and 2D density of ARIES value vs Heatmap observation count
+    type: image/png
+  plot_sampling_bias:
+    label: Sampling bias plot
+    description: Heatmap observations per ARIES bin and longitude proxy plot
+    type: image/png
+  plot_gap_analysis:
+    label: Gap analysis map
+    description: Three-panel map showing ARIES raster, Heatmap points, and gap cells
+    type: image/png
+  plot_taxonomic:
+    label: Taxonomic breakdown plot
+    description: Mean ARIES value and boxplots by taxonomic group
+    type: image/png
+  plot_roc:
+    label: ROC curve plot
+    description: ROC curve showing ARIES predictive power for Heatmap presence
+    type: image/png
+
+conda:
+  channels: [conda-forge]
+  dependencies:
+    - python=3.12
+    - pip
+    - pip:
+        - numpy
+        - pandas
+        - pyarrow
+        - geopandas
+        - rasterio
+        - matplotlib
+        - seaborn
+        - scipy
+        - scikit-learn

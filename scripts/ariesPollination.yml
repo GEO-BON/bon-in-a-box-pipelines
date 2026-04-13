@@ -1,0 +1,36 @@
+script: ariesPollination.py
+name: Querying ARIES pollinator occurrences
+description: This script connects to the k.LAB modelling engine and queries the AREIS for SEEA model for pollinator occurence for given study area and year.
+author:
+  - name: Joannie Lao
+
+inputs:
+  bbox_crs:
+    label: Spatial Extent
+    description: Select the bounding box for the study area.
+    type: bboxCRS
+  study_year:
+    label: Study year
+    description: Year for which to run the ARIES pollination model (2012–2019)
+    type: int
+    default: 2019
+  resolution:
+    label: Spatial resolution
+    description: Grid resolution for the output raster (e.g. "1 km" or "150 m")
+    type: text
+    default: "1 km"
+
+outputs:
+  pollinator_raster:
+    label: Pollinator occurrence raster
+    description: GeoTIFF raster of ARIES-modelled pollinator insect occurrence probability at the specified resolution and study area.
+    type: image/tiff;application=geotiff
+
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pyproj
+    - pip
+    - pip:
+      - klab-client-py==0.2.2
