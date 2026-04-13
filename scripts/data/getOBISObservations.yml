@@ -10,11 +10,16 @@ inputs:
     label: Species name
     description: Scientific name(s) of species
     type: text[]
-    example: ["Stenella coeruleoalba", "Astronesthes cyaneus"]
+    example: ["Stenella coeruleoalba",  "Thunnus thynnus"]
+  bbox:
+    label: Bounding box
+    description: Bounding box for the area to pull OBIS points
+    type: bboxCRS
+    example: NULL
   study_area: 
     label: Polygon of study area
     description: Polygon of study area for which you want to pull OBIS points
-    type: application/geo+json
+    type: application/geopackage+sqlite3
     example: null
   start_date: 
     label: Start date
