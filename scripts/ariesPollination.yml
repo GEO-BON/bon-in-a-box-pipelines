@@ -1,37 +1,215 @@
-script: ariesPollination.py
-name: Querying ARIES pollinator occurrences
-description: This script connects to the k.LAB modelling engine and queries the AREIS for SEEA model for pollinator occurence for given study area and year.
-author:
-  - name: Joannie Lao
-
-inputs:
-  bbox_crs:
-    label: Spatial Extent
-    description: Select the bounding box for the study area.
-    type: bboxCRS
-    example: '{"bbox": [-80.0, 43.0, -73.0, 47.0], "CRS": {"authority": "EPSG", "code": "4326"}}'
-  study_year:
-    label: Study year
-    description: Year for which to run the ARIES pollination model (2012–2019)
-    type: int
-    example: 2019
-  resolution:
-    label: Spatial resolution
-    description: Grid resolution for the output raster (e.g. "1 km" or "150 m")
-    type: text
-    example: 1 km
-
-outputs:
-  pollinator_raster:
-    label: Pollinator occurrence raster
-    description: GeoTIFF raster of ARIES-modelled pollinator insect occurrence probability at the specified resolution and study area.
-    type: image/tiff;application=geotiff
-
-conda:
-  channels:
-    - conda-forge
-  dependencies:
-    - pyproj
-    - pip
-    - pip:
-      - klab-client-py==0.2.2
+{
+  "nodes": [
+    {
+      "id": "0",
+      "type": "io",
+      "position": {
+        "x": 367,
+        "y": 540.3125
+      },
+      "data": {
+        "descriptionFile": "ariesPollination.yml"
+      }
+    },
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 236,
+        "y": 197.3125
+      },
+      "data": {
+        "descriptionFile": "cleaningSpeciesList.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "io",
+      "position": {
+        "x": 171,
+        "y": 88.3125
+      },
+      "data": {
+        "descriptionFile": "gettingSpeciesV2.yml"
+      }
+    },
+    {
+      "id": "3",
+      "type": "io",
+      "position": {
+        "x": 507,
+        "y": 381.3125
+      },
+      "data": {
+        "descriptionFile": "data>getObservationsBiodiversiteQuebecAtlas.yml"
+      }
+    },
+    {
+      "id": "4",
+      "type": "userInput",
+      "position": {
+        "x": -123,
+        "y": 338.3125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "5",
+      "type": "userInput",
+      "position": {
+        "x": 163,
+        "y": 425.3125
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2020
+      }
+    },
+    {
+      "id": "6",
+      "type": "io",
+      "position": {
+        "x": 1379,
+        "y": 403.3125
+      },
+      "data": {
+        "descriptionFile": "data>obsToHeatmap.yml"
+      }
+    },
+    {
+      "id": "7",
+      "type": "output",
+      "position": {
+        "x": 1847,
+        "y": 406.3125
+      },
+      "data": {
+        "label": "Output"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "2",
+      "sourceHandle": "pollinator_parquet",
+      "target": "1",
+      "targetHandle": "pollinator_parquet",
+      "id": "reactflow__edge-2pollinator_parquet-1pollinator_parquet"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "taxa",
+      "target": "3",
+      "targetHandle": "taxa",
+      "id": "reactflow__edge-1taxa-3taxa"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-4-3bbox_crs"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-4-2bbox_crs"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-4-0bbox_crs"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "3",
+      "targetHandle": "max_year",
+      "id": "reactflow__edge-5-3max_year"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "study_year",
+      "id": "reactflow__edge-5-0study_year"
+    },
+    {
+      "source": "3",
+      "sourceHandle": "observations_file",
+      "target": "6",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-3observations_file-6presence"
+    },
+    {
+      "source": "0",
+      "sourceHandle": "pollinator_raster",
+      "target": "6",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-0pollinator_raster-6predictors"
+    },
+    {
+      "source": "6",
+      "sourceHandle": "heatmap",
+      "target": "7",
+      "targetHandle": null,
+      "id": "reactflow__edge-6heatmap-7"
+    }
+  ],
+  "inputs": {
+    "ariesPollination.yml@0|resolution": {
+      "description": "Grid resolution for the output raster (e.g. \"1 km\" or \"150 m\")",
+      "label": "Spatial resolution",
+      "type": "text",
+      "weight": 0,
+      "example": null
+    },
+    "data>getObservationsBiodiversiteQuebecAtlas.yml@3|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
+      "weight": 1
+    },
+    "pipeline@4": {
+      "label": "Bounding box and CRS",
+      "description": "Bounding box with coordinate reference system",
+      "type": "bboxCRS",
+      "example": null,
+      "weight": 2
+    },
+    "pipeline@5": {
+      "label": "maximum year",
+      "description": "Max year observations wanted",
+      "type": "int",
+      "example": 2020,
+      "weight": 3
+    }
+  },
+  "outputs": {
+    "data>obsToHeatmap.yml@6|heatmap": {
+      "description": "raster, heatmap of occurrences",
+      "label": "heatmap",
+      "type": "image/tiff;application=geotiff",
+      "weight": 0
+    }
+  },
+  "metadata": {
+    "name": "ARIES Pollinator Occurrences",
+    "description": "Pipeline querying ARIES for pollinator occurrence data filtered by a GloBI-derived species list, compared against Quebec Biodiversity Atlas observations to produce a heatmap.",
+    "author": [
+      {
+        "name": "Joannie Lao"
+      }
+    ],
+    "license": "CC BY"
+  }
+}
