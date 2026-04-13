@@ -9,6 +9,7 @@ inputs:
     label: Spatial Extent
     description: Select the bounding box for the target area.
     type: bboxCRS
+    example: '{"bbox": [-80.0, 43.0, -73.0, 47.0], "CRS": {"authority": "EPSG", "code": "4326"}}'
 
 outputs:
   pollinator_parquet:

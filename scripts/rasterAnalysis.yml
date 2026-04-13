@@ -10,14 +10,16 @@ inputs:
     label: Observation heatmap
     description: GeoTIFF heatmap of pollinator observations from the Quebec Atlas pipeline
     type: image/tiff;application=geotiff
+    example: observations_heatmap.tif
   pollinator_raster:
     label: ARIES pollinator occurrence raster
     description: GeoTIFF raster produced by the ARIES for SEEA script
     type: image/tiff;application=geotiff
+    example: occurrence_of_agriculture-Pollinator_biology-Insect.tif
   high_aries_threshold:
     label: High ARIES value threshold
     description: >
-      ARIES values above this are considered high-occurrence for binaryanalyses. Between 0 and 1.
+      ARIES values above this are considered high-occurrence for binary analyses. Between 0 and 1.
     type: float
     example: 0.6
   high_heat_threshold:

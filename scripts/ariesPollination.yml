@@ -9,16 +9,17 @@ inputs:
     label: Spatial Extent
     description: Select the bounding box for the study area.
     type: bboxCRS
+    example: '{"bbox": [-80.0, 43.0, -73.0, 47.0], "CRS": {"authority": "EPSG", "code": "4326"}}'
   study_year:
     label: Study year
     description: Year for which to run the ARIES pollination model (2012–2019)
     type: int
-    default: 2019
+    example: 2019
   resolution:
     label: Spatial resolution
     description: Grid resolution for the output raster (e.g. "1 km" or "150 m")
     type: text
-    default: "1 km"
+    example: 1 km
 
 outputs:
   pollinator_raster:

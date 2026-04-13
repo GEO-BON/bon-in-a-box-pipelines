@@ -10,10 +10,12 @@ inputs:
     label: Pollinator interactions parquet
     description: Path to pollen.parquet produced by pollen_interactions script
     type: application/x-parquet
+    example: raw_interactions.parquet
   pollinator_raster:
     label: ARIES pollinator occurrence raster
     description: Path to GeoTIFF raster produced by kLAB script
     type: image/tiff;application=geotiff
+    example: occurrence_of_agriculture-Pollinator_biology-Insect.tif
   high_value_threshold:
     label: High value threshold for gap analysis
     description: >
