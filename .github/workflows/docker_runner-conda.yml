@@ -13,9 +13,10 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}/runner-conda
+  IMAGE_NAME: runner-conda
 
 jobs:
+
   prepare:
     runs-on: ubuntu-latest
     outputs:
