@@ -43,12 +43,12 @@ jobs:
           - platform: linux/amd64
             runs_on: ubuntu-latest
             arch_tag: amd64
-          - platform: linux/arm64
-            runs_on: ubuntu-24.04-arm
-            arch_tag: arm64
-          - platform: linux/ppc64le
-            runs_on: ubuntu-latest
-            arch_tag: ppc64le
+          # - platform: linux/arm64
+          #   runs_on: ubuntu-24.04-arm
+          #   arch_tag: arm64
+          # - platform: linux/ppc64le
+          #   runs_on: ubuntu-latest
+          #   arch_tag: ppc64le
     runs-on: ${{ matrix.runs_on }}
     permissions:
       contents: read
