@@ -40,15 +40,15 @@ jobs:
           # docker buildx imagetools inspect condaforge/miniforge3:latest | grep Platform
           # Excluding windows/amd64 for now since we would need a separate builder.
           # Excluding linux/386 since this points to old 32-bit processor machines and it fails to compile.
-          # - platform: linux/amd64
-          #   runs_on: ubuntu-latest
-          #   arch_tag: amd64
+          - platform: linux/amd64
+            runs_on: ubuntu-latest
+            arch_tag: amd64
           - platform: linux/arm64
-            runs_on: macos-latest
+            runs_on: ubuntu-24.04-arm
             arch_tag: arm64
-          # - platform: linux/ppc64le
-          #   runs_on: ubuntu-latest
-          #   arch_tag: ppc64le
+          - platform: linux/ppc64le
+            runs_on: ubuntu-latest
+            arch_tag: ppc64le
     runs-on: ${{ matrix.runs_on }}
     permissions:
       contents: read
