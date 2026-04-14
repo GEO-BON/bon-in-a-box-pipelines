@@ -12,6 +12,7 @@ print(sprintf("Total number of species before filtering: %s", nrow(iucn_splist))
 taxonomic_group <- input$taxonomic_group
 use <- input$species_use
 threat <- input$threat
+habitat <- input$habitat
 
 if (!"All" %in% taxonomic_group) {
   print("Filtering by taxonomic group.")
@@ -40,6 +41,15 @@ if (!"Do not filter by threat category" %in% threat) {
   print(sprintf("Species left: %s", nrow(iucn_splist)))
 }
 
+if (!"Do not filter by habitat" %in% habitat) {
+  print("Filtering by habitat.")
+  IUCN_habitat <- read.csv(input$splist_habitat)
+  ## Filter country list by habitat ####
+  iucn_splist <- IUCN_habitat %>%
+    dplyr::filter(sis_taxon_id %in% iucn_splist$sis_taxon_id)
+  print(sprintf("Species left: %s", nrow(iucn_splist)))
+}
+
 if (nrow(iucn_splist) == 0) {
   biab_error_stop("Could not find any species in the country of interest based on the applied filters")
 }
@@ -51,6 +61,9 @@ iucn_splist <- iucn_splist %>%
   dplyr::distinct(sis_taxon_id, .keep_all = TRUE)
 
 print(sprintf("Number of species after removing duplicates: %s", nrow(iucn_splist)))
+iucn_splist <- head(iucn_splist)
+species_names <- iucn_splist$scientific_name
+biab_output("species", species_names)
 
 iucn_splist_path <- file.path(outputFolder, paste0("iucn_splist", ".csv")) # Define the file path
 write.csv(iucn_splist, iucn_splist_path, row.names = F) # write result

@@ -193,6 +193,34 @@
       "data": {
         "descriptionFile": "IUCNRedlistIndex>IUCN_redlist_spCountry.yml"
       }
+    },
+    {
+      "id": "97",
+      "type": "constant",
+      "position": {
+        "x": 409.0297696379455,
+        "y": 110.43853774936233
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text[]",
+        "value": [
+          "Do not filter by habitat"
+        ]
+      }
+    },
+    {
+      "id": "98",
+      "type": "constant",
+      "position": {
+        "x": 411.5532396381773,
+        "y": 59.969137744728926
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "text/csv",
+        "value": null
+      }
     }
   ],
   "edges": [
@@ -377,6 +405,20 @@
       "target": "58",
       "targetHandle": "splist_country",
       "id": "reactflow__edge-96iucn_country_splist-58splist_country"
+    },
+    {
+      "source": "97",
+      "sourceHandle": null,
+      "target": "58",
+      "targetHandle": "habitat",
+      "id": "reactflow__edge-97-58habitat"
+    },
+    {
+      "source": "98",
+      "sourceHandle": null,
+      "target": "58",
+      "targetHandle": "splist_habitat",
+      "id": "reactflow__edge-98-58splist_habitat"
     }
   ],
   "inputs": {

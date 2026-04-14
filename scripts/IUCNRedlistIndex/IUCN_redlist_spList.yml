@@ -41,6 +41,11 @@ inputs:
     description: Dataset with the list of species for a threat category
     example: null
     type: text/csv
+  splist_habitat:
+    label: IUCN species list for a habitat
+    description: Dataset with the list of species of a habitat
+    example: null
+    type: text/csv
   taxonomic_group:
     label: Taxonomic group
     description: The taxonomic group selected
@@ -56,11 +61,21 @@ inputs:
     description: The threat category selected
     type: text[]
     example:
+  habitat:
+    label: Habitat(s)
+    description: The habitat(s) selected
+    type: text[]
+    example:
+
 outputs:
   iucn_splist:
     label: IUCN species list
     description: "Dataset with the list of species for the specified country for the specified filters. It contains the scientific name of the species and their most recent threat categorization according to the IUCN Red List."
     type: text/csv
+  species:
+    label: Species name
+    description: List of the scientific name of all species in the dataset
+    type: text[]
   number_species:
     label: Number of species
     description: Number of species in that country, filtered by taxon, threat, and use categories.
