@@ -34,7 +34,6 @@ occurrences <- occurrence(
         scientificname = species_list, geometry = bbox_wkt, startdate = as.Date(input$start_date, format = "%Y-%m-%d"),
         enddate = as.Date(input$end_date, format = "%Y-%m-%d"), startdepth = input$min_depth, enddepth = input$max_depth
 )
-print(occurrences)
 
 # If there is a study area input, crop
 if (!is.null(input$study_area)) {
@@ -53,7 +52,7 @@ if (!is.null(input$study_area)) {
                         decimalLatitude != 0
                 ) %>% rename (longitude = decimalLongitude, latitude = decimalLatitude) %>%
                 st_as_sf(coords = c("longitude", "latitude"), crs = 4326, remove = FALSE)
-        occ_sf_cropped <- st_intersection(occ_sf, study_area)
+        occ_sf_cropped <- st_filter(occ_sf, study_area)
         occurrences <- st_drop_geometry(occ_sf_cropped)
 }
 
