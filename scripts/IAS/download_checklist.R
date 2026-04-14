@@ -69,7 +69,6 @@ url <- tables[[1]] |>
   rvest::html_attr(name = "href")
 
 # Downloads with specified name into specified location - needs to be country name when looped + subfolders?
-outputFolder <- "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS"
 download.file(url,
   destfile = file.path(outputFolder, "temp.zip"),
   mode = "wb"
@@ -117,21 +116,6 @@ summary <- tidyr::tibble(
   invasiveCount = griis_checklist %>% dplyr::filter(isInvasive == "Invasive") %>% nrow()
 )
 
-summary <- summary %>%
-  dplyr::mutate(
-    ISO3 = countrycode::countrycode(
-      name,
-      origin = "country.name",
-      destination = "iso3c"
-    )
-  ) %>%
-  dplyr::relocate(ISO3, .after = "name")
-
-summary <- summary %>%
-  dplyr::left_join(., compendiumCountries %>% dplyr::select(ISO3) %>% dplyr::mutate(countryInCompendium = TRUE), by = "ISO3") %>%
-  dplyr::relocate(countryInCompendium, .after = ISO3) %>%
-  tidyr::replace_na(list(countryInCompendium = FALSE))
-
 print("summary")
 print(summary)
 
@@ -154,31 +138,15 @@ directory <- tidyr::tibble(
 print("directory")
 print(directory)
 
-directory %>% dplyr::mutate(
-  ISO3 = countrycode::countrycode(
-    name,
-    origin = "country.name",
-    destination = "iso3c"
-  )
-)
-
-directory <- directory %>%
-  dplyr::mutate(
-    ISO3 = countrycode::countrycode(
-      name,
-      origin = "country.name",
-      destination = "iso3c"
-    )
-  ) %>%
-  dplyr::relocate(ISO3, .after = "name")
-
-directory <- directory %>%
-  dplyr::left_join(., compendiumCountries %>% dplyr::select(ISO3) %>% dplyr::mutate(countryInCompendium = TRUE), by = "ISO3") %>%
-  dplyr::relocate(countryInCompendium, .after = ISO3) %>%
-  tidyr::replace_na(list(countryInCompendium = FALSE))
-
+# setting output paths
 checklist_path <- file.path(outputFolder, "GRIIS_checklist.csv")
+summary_path <- file.path(outputFolder, "GRIIS_summary.csv")
+directory_path <- file.path(outputFolder, "GRIIS_directory.csv")
 
 # Save checklist
-write.csv(griis_checklist, checklist_path)
+write.csv(griis_checklist, checklist_path, row.names = FALSE)
+write.csv(summary, summary_path, row.names = FALSE)
+write.csv(directory, directory_path, row.names = FALSE)
 biab_output("griis_checklist", checklist_path)
+biab_output("griis_summary", summary_path)
+biab_output("griis_directory", directory_path)

@@ -15,6 +15,14 @@ outputs:
     label: GRIIS checklist
     description: GRIIS checklist for the specified country.
     type: text/csv
+  griis_summary:
+    label: GRIIS summary
+    description: Summary of the GRIIS checklist for the specified country.
+    type: text/csv
+  griis_directory:
+    label: GRIIS directory
+    description: Directory where the GRIIS checklist is saved.
+    type: text/csv
 conda:
   channels:
     - conda-forge

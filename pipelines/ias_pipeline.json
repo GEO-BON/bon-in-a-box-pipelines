@@ -1,0 +1,148 @@
+{
+  "nodes": [
+    {
+      "id": "1",
+      "type": "io",
+      "position": {
+        "x": 34,
+        "y": 224.8125
+      },
+      "data": {
+        "descriptionFile": "IAS>download_checklist.yml"
+      }
+    },
+    {
+      "id": "2",
+      "type": "output",
+      "position": {
+        "x": 1143,
+        "y": 194.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "3",
+      "type": "output",
+      "position": {
+        "x": 1159,
+        "y": 337.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "4",
+      "type": "output",
+      "position": {
+        "x": 566,
+        "y": 135.8125
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "5",
+      "type": "io",
+      "position": {
+        "x": 577,
+        "y": 271.8125
+      },
+      "data": {
+        "descriptionFile": "IAS>combine_checklists.yml"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "1",
+      "sourceHandle": "griis_summary",
+      "target": "4",
+      "targetHandle": null,
+      "id": "reactflow__edge-1griis_summary-4"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "griis_checklist",
+      "target": "5",
+      "targetHandle": "griis_checklist",
+      "id": "reactflow__edge-1griis_checklist-5griis_checklist"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "griis_directory",
+      "target": "5",
+      "targetHandle": "griis_directory",
+      "id": "reactflow__edge-1griis_directory-5griis_directory"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "all_data_summary",
+      "target": "2",
+      "targetHandle": null,
+      "id": "reactflow__edge-5all_data_summary-2"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "per_list_summary",
+      "target": "3",
+      "targetHandle": null,
+      "id": "reactflow__edge-5per_list_summary-3"
+    }
+  ],
+  "inputs": {
+    "IAS>download_checklist.yml@1|country_name": {
+      "description": "Name of the country for which to download the GRIIS checklist.",
+      "label": "Country name",
+      "type": "country",
+      "example": null,
+      "weight": 0
+    }
+  },
+  "outputs": {
+    "IAS>download_checklist.yml@1|griis_summary": {
+      "description": "Summary of the GRIIS checklist for the specified country.",
+      "label": "GRIIS summary",
+      "type": "text/csv",
+      "weight": 0
+    },
+    "IAS>combine_checklists.yml@5|all_data_summary": {
+      "description": "GRIIS checklist summary for all data.",
+      "label": "GRIIS checklist summary (all data)",
+      "type": "text/csv",
+      "weight": 1
+    },
+    "IAS>combine_checklists.yml@5|per_list_summary": {
+      "description": "GRIIS checklist summary for each list.",
+      "label": "GRIIS checklist summary (per list)",
+      "type": "text/csv",
+      "weight": 2
+    }
+  },
+  "metadata": {
+    "name": "Invasive alien species pipeline",
+    "description": null,
+    "author": [
+      {
+        "name": null,
+        "email": null,
+        "identifier": null
+      }
+    ],
+    "license": null,
+    "external_link": null,
+    "references": [
+      {
+        "text": null,
+        "link": null
+      },
+      {
+        "text": null,
+        "link": null
+      }
+    ]
+  }
+}

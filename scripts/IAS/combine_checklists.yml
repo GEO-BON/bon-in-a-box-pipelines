@@ -1,0 +1,26 @@
+script: combine_checklists.R
+name: Combine GRIIS checklists
+description: "This script combines GRIIS checklists for multiple countries"
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  griis_checklist:
+    label: GRIIS checklist
+    type: text/csv
+    description: GRIIS checklist for the specified country.
+    example: NULL
+  griis_directory:
+    label: GRIIS directory
+    type: text/csv
+    description: GRIIS directory for the specified country.
+    example: NULL
+outputs:
+  all_data_summary:
+    label: GRIIS checklist summary (all data)
+    description: GRIIS checklist summary for all data.
+    type: text/csv
+  per_list_summary:
+    label: GRIIS checklist summary (per list)
+    description: GRIIS checklist summary for each list.
+    type: text/csv
