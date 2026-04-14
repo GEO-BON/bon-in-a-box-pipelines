@@ -103,8 +103,6 @@ jobs:
   manifest:
     runs-on: ubuntu-latest
     needs: [build, prepare]
-    env:
-      REPO_SLUG: ${{ needs.prepare.outputs.repo_slug }}
     permissions:
       contents: read
       packages: write
@@ -120,7 +118,7 @@ jobs:
         run: |
           TAG_MAIN="${{ github.ref_name == 'main' && 'latest' || github.ref_name }}"
           TAG_SHA="sha-${{ github.sha }}"
-          BASE="${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}"
+          BASE="ghcr.io/${GITHUB_REPOSITORY}/${{ env.IMAGE_NAME }}"
 
           docker buildx imagetools create \
             -t "${BASE}:${TAG_MAIN}" \
