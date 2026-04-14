@@ -57,5 +57,5 @@ if (!is.null(input$study_area)) {
 }
 
 occurrences_path <- file.path(outputFolder, "occurrences.csv")
-write.csv(occurrences, occurrences_path)
+write.csv(occurrences, occurrences_path, row.names = FALSE)
 biab_output("occurrences", occurrences_path)
