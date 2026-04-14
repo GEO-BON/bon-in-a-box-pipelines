@@ -44,7 +44,7 @@ jobs:
           #   runs_on: ubuntu-latest
           #   arch_tag: amd64
           - platform: linux/arm64
-            runs_on: ubuntu-24.04-arm
+            runs_on: macos-latest
             arch_tag: arm64
           # - platform: linux/ppc64le
           #   runs_on: ubuntu-latest
