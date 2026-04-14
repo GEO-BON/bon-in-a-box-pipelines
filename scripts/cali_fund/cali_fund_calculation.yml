@@ -1,0 +1,87 @@
+script: cali_fund_calculation.R
+name: Cali fund calculation
+description: "This script calculates the Cali fund for a country and for a list of countries based on the criteria of biodiversity importance, genetic resources, conservation capacity, and IPLC and TK. The calculation is based on a weighted formula that takes into account the base amount, ceiling amount, total fund, and the scores for each criterion."
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_name:
+    label: Country name
+    type: country
+    description: Name of the specific country for which to calculate the Cali fund.
+    example: NULL
+  country_list:
+    label: Country list
+    type: text/csv
+    description: List of countries for which to calculate the Cali fund.
+    example: NULL
+  base:
+    label: Base percent
+    type: number
+    description: Base amount that every country receives regardless of their scores. Expressed in % of the total funds available.
+    example: 5
+  ceiling:
+    label: Ceiling percent
+    type: number
+    description: Maximum amount any country can get. Expressed in % of the total funds available.
+    example: 20
+  total_fund:
+    label: Total fund
+    type: number
+    description: Total amount available in the Cali fund.
+    example: 1000000
+  biodiversity_importance:
+    label: Biodiversity importance = Criterion A (Ca)
+    type: text/csv
+    description: Biodiversity importance score for each country.
+    example: NULL
+  gr:
+    label: Genetic resources = Criterion B (Cb)
+    type: text/csv
+    description: Genetic resources score for each country.
+    example: NULL
+  conservation_capacity:
+    label: Conservation capacity = Criterion C (Cc)
+    type: text/csv
+    description: Conservation capacity score for each country.
+    example: NULL
+  iplc_tk:
+    label: IPLC and TK = Criterion D (Cd)
+    type: text/csv
+    description: IPLC and TK score for each country.
+    example: NULL
+  biodiversity_weight:
+    label: Biodiversity importance weight = w1
+    type: float
+    description: Weight for biodiversity importance criterion.
+    example: 0.4
+  genetic_resources_weight:
+    label: Genetic resources weight = w2
+    type: float
+    description: Weight for genetic resources criterion.
+    example: 0.3
+  conservation_capacity_weight:
+    label: Conservation capacity weight = w3
+    type: float
+    description: Weight for conservation capacity criterion.
+    example: 0.2
+  iplc_tk_weight:
+    label: IPLC and TK weight = w4
+    type: float
+    description: Weight for IPLC and TK criterion.
+    example: 0.7
+outputs:
+  cali_fund_allocation:
+    label: Cali fund
+    description: Cali fund for all countries.
+    type: text/csv
+  cali_fund_allocation_country:
+    label: Cali fund for the specified country
+    description: Cali fund for the specified country.
+    type: float
+conda:
+  channels:
+    - conda-forge
+    - r
+  dependencies:
+    - r-dplyr
