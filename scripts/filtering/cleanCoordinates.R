@@ -42,6 +42,10 @@ clean_presence <- clean_coordinates(
 clean_presence <- clean_presence |> # summary = TRUE means the observations was identified as an outlier at least once during the cleaning procedure
   dplyr::select(id, scientific_name, lon, lat)
 
+if (nrow(clean_presence) == 0) {
+  biab_error_stop("There are no occurences of the species of interest in this country/region")
+}
+
 clean_presence.output <- file.path(outputFolder, "clean_presence.tsv")
 
 write.table(clean_presence, clean_presence.output,
