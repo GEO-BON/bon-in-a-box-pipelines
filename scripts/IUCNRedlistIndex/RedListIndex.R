@@ -86,7 +86,7 @@ redlist_data <- red::rli(matrix_output, boot = F) %>%
 print("redlist_data")
 
 #Add country name in plot title
-title <- paste0("RLI for species in ", input$country)
+title <- paste0("RLI for species in ", input$country$englishName)
 
 #Write subtitle in plot based on inputs
 subtitle_parts <- c()

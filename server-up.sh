@@ -18,6 +18,13 @@ while (( $# > 0 )) ; do
     -c|--clean) ./.server/prod-server.sh clean ;;
     -y|--yes) skipPrompts="-y" ;;
     --offline) offline=true ;;
+    -v|--version)
+        cd .server
+        ./prod-server.sh version
+        exit 0 ;;
+    --licence|--license)
+        ./.server/prod-server.sh licence
+        exit 0 ;;
     -h|--help)
         echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH]"
         echo
@@ -31,6 +38,8 @@ while (( $# > 0 )) ; do
         echo "  -y, --yes           Skip update confirmation prompt (for automation)"
         echo "      --offline       Run the currently installed version of the server. "
         echo "                      Will not attempt to pull the latest version or the containers nor server configuration."
+        echo "  -v, --version       Display version information"
+        echo "  --licence           Display licence information"
         echo
         echo "GIT BRANCH:           Refers to the git branch of the server, on https://github.com/GEO-BON/bon-in-a-box-pipeline-engine"
         echo "                      The branch must be available on the GitHub package registry, such as main, edge, and *staging branches."
