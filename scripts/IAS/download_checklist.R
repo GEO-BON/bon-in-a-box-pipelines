@@ -69,7 +69,7 @@ url <- tables[[1]] |>
   rvest::html_attr(name = "href")
 
 # Downloads with specified name into specified location - needs to be country name when looped + subfolders?
-
+outputFolder <- "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output/IAS"
 download.file(url,
   destfile = file.path(outputFolder, "temp.zip"),
   mode = "wb"
@@ -92,14 +92,10 @@ publicationDate <-
   trimws(gsub("\n", "", meta$dataset$pubDate), which = "both")
 
 # bounding box of the country
-northBoundingCoordinate <-
-  meta$dataset$coverage$geographicCoverage$boundingCoordinates$northBoundingCoordinate
-southBoundingCoordinate <-
-  meta$dataset$coverage$geographicCoverage$boundingCoordinates$southBoundingCoordinate
-eastBoundingCoordinate <-
-  meta$dataset$coverage$geographicCoverage$boundingCoordinates$eastBoundingCoordinate
-westBoundingCoordinate <-
-  meta$dataset$coverage$geographicCoverage$boundingCoordinates$westBoundingCoordinate
+northBoundingCoordinate <- meta$dataset$coverage$geographicCoverage$boundingCoordinates$northBoundingCoordinate
+southBoundingCoordinate <- meta$dataset$coverage$geographicCoverage$boundingCoordinates$southBoundingCoordinate
+eastBoundingCoordinate <- meta$dataset$coverage$geographicCoverage$boundingCoordinates$eastBoundingCoordinate
+westBoundingCoordinate <- meta$dataset$coverage$geographicCoverage$boundingCoordinates$westBoundingCoordinate
 
 # Remove temp file once complete
 unlink(file.path(outputFolder, "temp.zip"))
@@ -120,6 +116,22 @@ summary <- tidyr::tibble(
   speciesCount = nrow(griis_checklist),
   invasiveCount = griis_checklist %>% dplyr::filter(isInvasive == "Invasive") %>% nrow()
 )
+
+summary <- summary %>%
+  dplyr::mutate(
+    ISO3 = countrycode::countrycode(
+      name,
+      origin = "country.name",
+      destination = "iso3c"
+    )
+  ) %>%
+  dplyr::relocate(ISO3, .after = "name")
+
+summary <- summary %>%
+  dplyr::left_join(., compendiumCountries %>% dplyr::select(ISO3) %>% dplyr::mutate(countryInCompendium = TRUE), by = "ISO3") %>%
+  dplyr::relocate(countryInCompendium, .after = ISO3) %>%
+  tidyr::replace_na(list(countryInCompendium = FALSE))
+
 print("summary")
 print(summary)
 
@@ -141,6 +153,29 @@ directory <- tidyr::tibble(
 )
 print("directory")
 print(directory)
+
+directory %>% dplyr::mutate(
+  ISO3 = countrycode::countrycode(
+    name,
+    origin = "country.name",
+    destination = "iso3c"
+  )
+)
+
+directory <- directory %>%
+  dplyr::mutate(
+    ISO3 = countrycode::countrycode(
+      name,
+      origin = "country.name",
+      destination = "iso3c"
+    )
+  ) %>%
+  dplyr::relocate(ISO3, .after = "name")
+
+directory <- directory %>%
+  dplyr::left_join(., compendiumCountries %>% dplyr::select(ISO3) %>% dplyr::mutate(countryInCompendium = TRUE), by = "ISO3") %>%
+  dplyr::relocate(countryInCompendium, .after = ISO3) %>%
+  tidyr::replace_na(list(countryInCompendium = FALSE))
 
 checklist_path <- file.path(outputFolder, "GRIIS_checklist.csv")
 
