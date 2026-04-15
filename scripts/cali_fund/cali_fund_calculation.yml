@@ -31,7 +31,7 @@ inputs:
     description: Total amount available in the Cali fund.
     example: 1000000
   biodiversity_importance:
-    label: Biodiversity importance = Criterion A (Ca)
+    label: Biodiversity component = Criterion A (CA)
     type: text/csv
     description: Biodiversity importance score for each country.
     example: NULL
@@ -43,17 +43,17 @@ inputs:
   conservation_capacity:
     label: Conservation capacity = Criterion C (Cc)
     type: text/csv
-    description: Conservation capacity score for each country.
+    description: Conservation capacity score for each country. This is the inverse of the UN scale of assessments.
     example: NULL
   iplc_tk:
-    label: IPLC and TK = Criterion D (Cd)
+    label: IPLC/TK = Criterion D (Cd)
     type: text/csv
-    description: IPLC and TK score for each country.
+    description: Indigenous Peoples and Local Communities (IPLC) and Traditional Knowledge (TK) score for each country.
     example: NULL
   biodiversity_weight:
-    label: Biodiversity importance weight = w1
+    label: Biodiversity component weight = w1
     type: float
-    description: Weight for biodiversity importance criterion.
+    description: Weight for biodiversity component criterion.
     example: 0.4
   genetic_resources_weight:
     label: Genetic resources weight = w2
@@ -66,18 +66,18 @@ inputs:
     description: Weight for conservation capacity criterion.
     example: 0.2
   iplc_tk_weight:
-    label: IPLC and TK weight = w4
+    label: IPLC/TK weight = w4
     type: float
     description: Weight for IPLC and TK criterion.
     example: 0.7
 outputs:
   cali_fund_allocation:
     label: Cali fund
-    description: Cali fund for all countries.
+    description: Cali fund allocation for all countries based on the criteria of biodiversity importance, genetic resources, conservation capacity, and IPLC/TK.
     type: text/csv
   cali_fund_allocation_country:
-    label: Cali fund for the specified country
-    description: Cali fund for the specified country.
+    label: Cali fund allocation for the selected country.
+    description: Cali fund allocation for the selected country.
     type: float
 conda:
   channels:
