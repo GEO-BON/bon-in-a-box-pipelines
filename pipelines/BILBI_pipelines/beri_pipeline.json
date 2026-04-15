@@ -211,17 +211,6 @@
       }
     },
     {
-      "id": "21",
-      "type": "io",
-      "position": {
-        "x": 452,
-        "y": 267.66666666666663
-      },
-      "data": {
-        "descriptionFile": "data>getCountryPolygon.yml"
-      }
-    },
-    {
       "id": "22",
       "type": "output",
       "position": {
@@ -242,6 +231,30 @@
       "dragHandle": ".dragHandle",
       "data": {
         "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "25",
+      "type": "io",
+      "position": {
+        "x": 162.99622326667782,
+        "y": 524.0062154671593
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "27",
+      "type": "constant",
+      "position": {
+        "x": 65.96249389648438,
+        "y": 307.7999954223633
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
@@ -366,55 +379,6 @@
       "id": "reactflow__edge-20-1aggregation"
     },
     {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "0",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-0study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "2",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-2study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country_region_polygon",
-      "target": "1",
-      "targetHandle": "study_area",
-      "id": "reactflow__edge-21country_region_polygon-1study_area"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "country",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-21country-22"
-    },
-    {
-      "source": "21",
-      "sourceHandle": "region",
-      "target": "22",
-      "targetHandle": null,
-      "id": "reactflow__edge-21region-22"
-    },
-    {
-      "source": "24",
-      "sourceHandle": null,
-      "target": "21",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-24-21bbox_crs"
-    },
-    {
-      "source": "24",
-      "sourceHandle": null,
-      "target": "2",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-24-2bbox_crs"
-    },
-    {
       "source": "24",
       "sourceHandle": null,
       "target": "1",
@@ -427,6 +391,48 @@
       "target": "6",
       "targetHandle": null,
       "id": "reactflow__edge-0time_series_plot-6"
+    },
+    {
+      "source": "24",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-24-25country_region_bbox"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "2",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-2study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "1",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-1study_area"
+    },
+    {
+      "source": "27",
+      "sourceHandle": null,
+      "target": "25",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-27-25buffer"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "polygon",
+      "target": "0",
+      "targetHandle": "study_area",
+      "id": "reactflow__edge-25polygon-0study_area"
+    },
+    {
+      "source": "25",
+      "sourceHandle": "bbox_crs",
+      "target": "2",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-25bbox_crs-2bbox_crs"
     }
   ],
   "inputs": {
@@ -437,33 +443,46 @@
       "example": null,
       "weight": 0
     },
+    "data>load_polygons.yml@25|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 1
+    },
     "data>loadFromStac.yml@1|t0": {
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "Start date (optional)",
       "type": "text",
       "example": null,
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@1|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "label": "End date (optional)",
       "type": "text",
       "example": null,
-      "weight": 2
+      "weight": 3
     },
     "data>loadFromStac.yml@1|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is monthly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution (optional)",
       "type": "text",
       "example": null,
-      "weight": 3
+      "weight": 4
     },
     "pipeline@19": {
       "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\n\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "type": "float",
       "example": null,
-      "weight": 4
+      "weight": 5
     },
     "pipeline@18": {
       "label": "Resampling method",
@@ -486,7 +505,7 @@
         "q1",
         "q3"
       ],
-      "weight": 5
+      "weight": 6
     },
     "pipeline@20": {
       "label": "Aggregation method",
@@ -500,7 +519,7 @@
         "mean",
         "median"
       ],
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {
@@ -510,29 +529,17 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 0
     },
-    "data>getCountryPolygon.yml@21|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 1
-    },
-    "data>getCountryPolygon.yml@21|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 2
-    },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|summarised_values": {
       "description": "Yearly weighted geometric mean of BERI in the study area polygon.\n\n\nThe value, ranging from 0 to 1 represents the proportion of connected habitat expected to remain under climate change compared to what would exist without human modification or climate change.",
       "label": "BERI summary",
       "type": "text/csv",
-      "weight": 3
+      "weight": 1
     },
     "bilbi_indicators>bilbi_weighted_mean.yml@0|time_series_plot": {
       "description": "Plot of the geometric mean of the indicator over time in the study area of interest",
       "label": "Time series plot",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
     }
   },
   "metadata": {
