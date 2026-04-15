@@ -9,6 +9,7 @@ inputs:
     label: Bounding box and CRS
     description: Object containing the chosen bounding box and CRS.
     type: bboxCRS
+    example: NULL
   rcp:
     label: Shared socioeconomic pathways
     description: Shared socioeconomic pathways ([more info here](see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways))
