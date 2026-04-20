@@ -17,8 +17,15 @@ if number == 13
     biab_error_stop("Number cannot be 13.")
 end
 
-# Do the processing... (save the outputs along the way)
-number += 1
-biab_output("increment", number)
-
+# Partial outputs
 biab_output("crs_id", string(input_data["study_area_bbox"]["CRS"]["authority"],":",input_data["study_area_bbox"]["CRS"]["code"]))
+
+# Simulate processing
+println("Looping with some delay to simulate processing")
+for i in 0:number
+    println("Iteration: ", i)
+    sleep(1)
+end
+
+# Final output
+biab_output("increment", number + 1)
