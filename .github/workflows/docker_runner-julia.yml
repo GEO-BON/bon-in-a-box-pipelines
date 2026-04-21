@@ -73,8 +73,6 @@ jobs:
         with:
           images: ${{ env.REPO_SLUG }}/${{ env.IMAGE_NAME }}
           tags: |
-            # Image used in compose file
-            type=raw,value=${{ (github.ref_name == 'main' && 'latest') || github.ref_name }}-${{ matrix.arch_tag }}
             # In case we want to replicate a specific legacy setup
             type=sha,value=${{ github.sha }}-${{ matrix.arch_tag }}
           labels: |
