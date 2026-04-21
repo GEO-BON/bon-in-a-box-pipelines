@@ -47,6 +47,7 @@ v_path_bbox_analysis <- if (is.null(input$sf_bbox)) {
   input$sf_bbox
 }
 
+
 # Area of habitat
 v_path_to_area_of_habitat <- if (is.null(input$r_area_of_habitat)) {
   NA
@@ -85,8 +86,13 @@ for (i in 1:length(sp)) {
   #-------------------------------------------------------------------------------------------------------------------
   # 1. Load inputs
   #-------------------------------------------------------------------------------------------------------------------
-
+if (input$crs$CRS$code != 4326) {
+  sf_bbox_analysis <- st_read(v_path_bbox_analysis[i]) |> st_transform("EPSG:4326")
+  sf_bbox_analysis <- st_segmentize(sf_bbox_analysis, dfMaxLength = 1000) # segmentize to avoid reprojection issues with large polygons
+} else {
   sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
+}
+
   sf_ext_srs <- sf_bbox_analysis |> st_bbox()
   print(sf_ext_srs)
   print(v_path_to_area_of_habitat[i])
@@ -111,8 +117,8 @@ for (i in 1:length(sp)) {
       limit = 1000,
       collections = c("gfw-treecover2000"),
       bbox = sf_ext_srs,
-      srs.cube = srs_cube,
-      spatial.res = spat_res,
+      srs.cube = "EPSG:4326",  
+      spatial.res = NULL, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
@@ -124,7 +130,11 @@ for (i in 1:length(sp)) {
   } else {
     cube_GFW_TC_threshold <<- funFilterCube_range(cube_GFW_TC, min = min_forest[i], max = max_forest[i], value = FALSE)
   }
-  r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold, format = "terra") # convert to raster format
+
+  print(cube_GFW_TC_threshold)
+  library(stars)
+  r_GFW_TC_threshold <- st_as_stars(cube_GFW_TC_threshold) |> terra::rast()
+  #r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold, format = "terra") # convert to raster format
   r_GFW_TC_threshold <- r_GFW_TC_threshold |>
     terra::classify(rcl = cbind(NA, 0)) # turn NA to 0
 
@@ -139,8 +149,8 @@ for (i in 1:length(sp)) {
       limit = 1000,
       collections = c("gfw-lossyear"),
       bbox = sf_ext_srs,
-      srs.cube = srs_cube,
-      spatial.res = spat_res,
+      srs.cube = "EPSG:4326",  
+      spatial.res = NULL, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
@@ -154,6 +164,7 @@ for (i in 1:length(sp)) {
 
   l_year_loss <- map(times, ~ funFilterCube_range(cube = cube_GFW_loss, max = .x, type_max = 1, min = 1, type_min = 1, value = FALSE))
   # turn cube to raster
+
   l_r_year_loss <- map(l_year_loss, cube_to_raster, format = "terra")
   s_year_loss_w_nas <- rast(l_r_year_loss)
   # turn NAs into 0 for raster operations
@@ -196,8 +207,8 @@ for (i in 1:length(sp)) {
       limit = 1000,
       collections = c("gfw-gain"),
       bbox = sf_ext_srs,
-      srs.cube = srs_cube,
-      spatial.res = spat_res,
+      srs.cube = "EPSG:4326",  
+      spatial.res = NULL, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
@@ -208,7 +219,8 @@ for (i in 1:length(sp)) {
   class(cube_GFW_gain)
   print(cube_GFW_gain)
 
-  r_GFW_gain <- cube_to_raster(cube_GFW_gain, format = "terra") # convert to raster format
+  r_GFW_TC_threshold <- st_as_stars(cube_GFW_gain) |> terra::rast()
+ # r_GFW_gain <- cube_to_raster(cube_GFW_gain, format = "terra") # convert to raster format
   r_GFW_gain_rescaled <- terra::resample(r_GFW_gain, r_aoh_rescaled, method = "mode")
   r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain_rescaled, r_aoh_rescaled), rcl = cbind(0, NA))
 

@@ -17,7 +17,7 @@ inputs:
     type: float
     example: 1000
   crs:
-    label: CRS
+    label: Bounding box and CRS
     description: Object containing CRS.
     type: bboxCRS
     example:
