@@ -1,13 +1,6 @@
----
-name: New pipeline
-description: Initiate the peer review process for a new pipeline
-title: "[NEW PIPELINE]: "
-labels: ["pipeline", "user contributed", "peer review needed"]
----
-
 > [!IMPORTANT]
-> To facilitate the peer review of the new pipeline, do not change the structure of this
-> document. Only the parts in comments should be replaced. The info sections can be removed when addressed.
+> Fill out this document to initiate a pipeline peer review.
+> Only the parts in comments should be replaced. The info sections can be removed when addressed.
 
 ## Contribution checklist
 > Before submitting for review, please make sure that you meet these requirements:
@@ -19,10 +12,9 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 
 ## General information about the pipeline
 
-**Title:** <!-- TITLE GOES HERE -->
+**Title:** Pipeline title
 
-> [!INFO]
-> Short (1-2 sentence) description of the pipeline here
+> **Description:** Short (1-2 sentence) description of the pipeline here
 
 ## Code information
 
@@ -33,11 +25,11 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 - [ ] Python (version)
 - [ ] other
 
-> [!INFO]
-> For each *other* language, copy this quote block and list the language, version, and other
-> relevant information
+If "other" selected, list language and version here:
 
-**Dependencies manager:** <!-- List all packages and their versions here (note: list versions even if the versions are not specified in the Conda dependencies for future versioning) -->
+**Files for review:** List all of the files (scripts, YAML files, and .md tutorials) that should be reviewed.
+
+**Dependencies manager:** List all packages and their versions here (note: list versions even if the versions are not specified in the Conda dependencies for future versioning). Package versions can be found in the BON in a Box "Environment" output for each script when a script or pipeline is run in the platform. Dependencies should also be specified in the Conda environment and frozen (e.g. r-sf=1.8-42) to prevent breaking changes in the published pipeline when packages are updated.
 
 > [!INFO]
 > Pipelines **must** be accompanied a list of their dependencies, including information about
@@ -45,12 +37,9 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 
 ## Additional information
 
-**Testing:** <!-- free-form text to explain the testing/CI of the pipeline -->
+**Testing:** Include a description of how the pipeline should be tested.
 
-[!INFO]
-> Please include an explanation of how the pipeline should be tested.
-
-## Diagram (recommended)
+## Diagram (optional)
 
 - [ ] Diagram of pipeline steps (e.g. [Mermaid][mermaid] diagram)
 
@@ -63,11 +52,8 @@ labels: ["pipeline", "user contributed", "peer review needed"]
 - Name 3 (email)
 
 ## Review information
-
-| Date | Step | Comments | User |
-|----|----|----|----|
-| <!-- TODAY YYYY-MM-DD --> | Submission | | <!-- YOUR GITHUB ID --> |
-| | Initial check | | |
-| | Review started | | |
-| | Reviewer 1 invited | | |
-| | Reviewer 2 invited | | |
+- Review submitted - DATE
+- Review 1 completed - DATE
+- Review 2 completed - DATE
+- Revisions completed - DATE
+- Pipeline published - DATE
