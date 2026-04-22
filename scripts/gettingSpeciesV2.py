@@ -1,5 +1,6 @@
 import os
 import sys
+import tempfile
 import urllib.request
 import zipfile
 import pandas as pd  
@@ -18,10 +19,15 @@ zenodo_url = get_biab_input("zenodo_url", "https://zenodo.org/record/14640564/fi
 
 # Output directory
 output_folder = sys.argv[1] if len(sys.argv) > 1 else "/tmp"
+os.makedirs(output_folder, exist_ok=True)
 parquet_output = os.path.join(output_folder, "raw_interactions.parquet")
 
-# Using /tmp for autodeletion
-local_zip = "/tmp/dwca.zip"
+# Use a writable temporary directory and ensure it exists
+tmp_dir = tempfile.gettempdir()
+if not os.path.isdir(tmp_dir):
+    tmp_dir = output_folder
+os.makedirs(tmp_dir, exist_ok=True)
+local_zip = os.path.join(tmp_dir, "dwca.zip")
 
 # Bounding box
 bbox_crs = get_biab_input('bbox_crs', None)
