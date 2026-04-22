@@ -183,7 +183,7 @@
       "label": "maximum year",
       "description": "Max year observations wanted",
       "type": "int",
-      "example": 2020,
+      "example": 2026,
       "weight": 2
     },
     "data>getGBIFObservations>getGBIFObservations.yml@8|min_year": {
