@@ -635,14 +635,14 @@
         "No"
       ],
       "example": "Yes",
-      "weight": 12
+      "weight": 10
     },
     "data>getAreaOfHabitat.yml@80|elev_buffer": {
       "description": "Elevation buffer in meters to add (or substract) to the reported species elevation range. Default is zero. Positive values will increase the range in that value in meters and negative values will reduce the range in that value.",
       "label": "Elevation buffer",
       "type": "int",
       "example": 0,
-      "weight": 13
+      "weight": 11
     },
     "data>loadFromStac.yml@107|resampling": {
       "description": "Resampling method used when rescaling the raster layers. See [gdalwarp](https://gdal.org/en/latest/programs/gdalwarp.html) for description.",
@@ -665,7 +665,7 @@
         "q3"
       ],
       "example": "near",
-      "weight": 14
+      "weight": 12
     },
     "data>loadFromStac.yml@107|aggregation": {
       "description": "Method used to aggregate items that overlay each other",
@@ -679,7 +679,7 @@
         "median"
       ],
       "example": "first",
-      "weight": 15
+      "weight": 13
     },
     "data>load_polygons.yml@119|polygon_type": {
       "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), or Exclusive Economic Zones (EEZs).",
@@ -691,21 +691,28 @@
         "EEZ"
       ],
       "example": "Country or region",
-      "weight": 16
+      "weight": 14
     },
     "data>load_polygons.yml@119|buffer": {
       "description": "Buffer for pulling transboundary protected areas (WDPA data only). The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees). If pulling WDPA data with a custom bounding box, the buffer will not be applied.",
       "label": "Transboundary buffer",
       "type": "float",
       "example": 0,
-      "weight": 17
+      "weight": 15
     },
     "pipeline@120": {
       "label": "Spatial resolution",
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long). This input may be blank when using ESPG:4326.",
       "type": "float",
       "example": null,
-      "weight": 18
+      "weight": 16
+    },
+    "data>getAreaOfHabitat.yml@80|buff_size": {
+      "description": "Size of the buffer around the study area. If it is not defined it will be estimated as half of the total width of the study area.",
+      "label": "buffer for study area",
+      "type": "int",
+      "example": 0,
+      "weight": 17
     }
   },
   "outputs": {
