@@ -34,17 +34,6 @@
       }
     },
     {
-      "id": "3",
-      "type": "io",
-      "position": {
-        "x": 507,
-        "y": 381.3125
-      },
-      "data": {
-        "descriptionFile": "data>getObservationsBiodiversiteQuebecAtlas.yml"
-      }
-    },
-    {
       "id": "4",
       "type": "userInput",
       "position": {
@@ -90,6 +79,17 @@
       "data": {
         "label": "Output"
       }
+    },
+    {
+      "id": "8",
+      "type": "io",
+      "position": {
+        "x": 541,
+        "y": 345.8125
+      },
+      "data": {
+        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
+      }
     }
   ],
   "edges": [
@@ -99,20 +99,6 @@
       "target": "1",
       "targetHandle": "pollinator_parquet",
       "id": "reactflow__edge-2pollinator_parquet-1pollinator_parquet"
-    },
-    {
-      "source": "1",
-      "sourceHandle": "taxa",
-      "target": "3",
-      "targetHandle": "taxa",
-      "id": "reactflow__edge-1taxa-3taxa"
-    },
-    {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "3",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-4-3bbox_crs"
     },
     {
       "source": "4",
@@ -131,23 +117,9 @@
     {
       "source": "5",
       "sourceHandle": null,
-      "target": "3",
-      "targetHandle": "max_year",
-      "id": "reactflow__edge-5-3max_year"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
       "target": "0",
       "targetHandle": "study_year",
       "id": "reactflow__edge-5-0study_year"
-    },
-    {
-      "source": "3",
-      "sourceHandle": "observations_file",
-      "target": "6",
-      "targetHandle": "presence",
-      "id": "reactflow__edge-3observations_file-6presence"
     },
     {
       "source": "0",
@@ -162,6 +134,34 @@
       "target": "7",
       "targetHandle": null,
       "id": "reactflow__edge-6heatmap-7"
+    },
+    {
+      "source": "1",
+      "sourceHandle": "taxa",
+      "target": "8",
+      "targetHandle": "taxa",
+      "id": "reactflow__edge-1taxa-8taxa"
+    },
+    {
+      "source": "4",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-4-8bbox_crs"
+    },
+    {
+      "source": "5",
+      "sourceHandle": null,
+      "target": "8",
+      "targetHandle": "max_year",
+      "id": "reactflow__edge-5-8max_year"
+    },
+    {
+      "source": "8",
+      "sourceHandle": "observations_file",
+      "target": "6",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-8observations_file-6presence"
     }
   ],
   "inputs": {
@@ -172,25 +172,25 @@
       "example": null,
       "weight": 0
     },
-    "data>getObservationsBiodiversiteQuebecAtlas.yml@3|min_year": {
-      "description": "Min year observations wanted",
-      "label": "minimum year",
-      "type": "int",
-      "example": 2010,
-      "weight": 1
-    },
     "pipeline@4": {
       "label": "Bounding box and CRS",
       "description": "Bounding box with coordinate reference system",
       "type": "bboxCRS",
       "example": null,
-      "weight": 2
+      "weight": 1
     },
     "pipeline@5": {
       "label": "maximum year",
       "description": "Max year observations wanted",
       "type": "int",
       "example": 2020,
+      "weight": 2
+    },
+    "data>getGBIFObservations>getGBIFObservations.yml@8|min_year": {
+      "description": "Min year observations wanted",
+      "label": "minimum year",
+      "type": "int",
+      "example": 2010,
       "weight": 3
     }
   },
@@ -203,7 +203,7 @@
     }
   },
   "metadata": {
-    "name": "ARIES Pollinator Occurrences - Quebec",
+    "name": "ARIES Pollinator Occurrences - GBIF",
     "description": "Pipeline querying ARIES for pollinator occurrence data filtered by a GloBI-derived species list, compared against Quebec Biodiversity Atlas observations to produce a heatmap.",
     "author": [
       {

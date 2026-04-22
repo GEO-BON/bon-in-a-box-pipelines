@@ -14,7 +14,9 @@ presence <- read.table(file = input$presence, sep = "\t", header = TRUE, quote =
 proj <- terra::crs(predictors, proj = T)
 
 # Convert to SpatVector
-presence <- terra::vect(presence[, c("lon", "lat")], crs = proj)
+presence <- terra::vect(presence[, grepl("lon|lat", names(presence), ignore.case = TRUE)], crs = proj)
+xy = c(grep("lon", names(presence), ignore.case = TRUE, value = TRUE),
+    grep("lat", names(presence), ignore.case = TRUE, value = TRUE))
 # Convert to SpatRaster; sum within cells (fun = length)
 convertedRaster <- terra::rasterize(presence, predictors, fun = "length")
 
