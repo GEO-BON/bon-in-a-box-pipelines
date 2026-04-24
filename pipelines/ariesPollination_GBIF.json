@@ -8,7 +8,7 @@
         "y": 540.3125
       },
       "data": {
-        "descriptionFile": "ariesPollination.yml"
+        "descriptionFile": "queryingARIES.yml"
       }
     },
     {
@@ -165,7 +165,7 @@
     }
   ],
   "inputs": {
-    "ariesPollination.yml@0|resolution": {
+    "queryingARIES.yml@0|resolution": {
       "description": "Grid resolution for the output raster (e.g. \"1 km\" or \"150 m\")",
       "label": "Spatial resolution",
       "type": "text",
