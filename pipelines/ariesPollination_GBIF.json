@@ -123,10 +123,10 @@
     },
     {
       "source": "0",
-      "sourceHandle": "pollinator_raster",
+      "sourceHandle": "raster",
       "target": "6",
       "targetHandle": "predictors",
-      "id": "reactflow__edge-0pollinator_raster-6predictors"
+      "id": "reactflow__edge-0raster-6predictors"
     },
     {
       "source": "6",
