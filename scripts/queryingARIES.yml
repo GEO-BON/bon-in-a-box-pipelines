@@ -1,0 +1,67 @@
+script: queryingARIES.py
+name: Querying ARIES for SEEA models
+description: This script connects to the k.LAB modelling engine and queries the selected ARIES for SEEA model for given geographical bounds and a given timeframe.
+author:
+  - name: Joannie Lao
+
+inputs:
+  model:
+    label: ARIES model
+    description: ARIES for SEEA model to query
+    type: options
+    options:
+      - Organic carbon mass
+      - Vegetation carbon mass
+      - Net value of pollination
+      - Occurrence of pollinator insects
+      - Weather suitability for pollinator insects
+      - Landscape suitability for pollinator insects
+      - Proneness to flooding
+      - Value of outdoor recreation
+      - Net value of outdoor recreation
+      - Demanded value of outdoor recreation
+      - Potential value of outdoor recreation
+      - Theoretical value of outdoor recreation
+      - Retained soil mass caused by vegetation
+      - Potential removed soil mass
+      - Combined value of ecosystem services supply
+      - Maize crop yield
+      - Wood biomass harvest
+      - Monetary value of water from forests
+      - Monetary value of non-wood forest products
+    example: Occurrence of pollinator insects
+  bbox_crs:
+    label: Spatial Extent
+    description: Select the bounding box for the study area.
+    type: bboxCRS
+    example: 
+  min_year:
+    label: Starting study year
+    description: Starting year to run ARIES model
+    type: int
+    example: 2012
+  max_year:
+    label: Ending study year
+    description: Ending year to run ARIES model
+    type: int
+    example: 2019
+  resolution:
+    label: Spatial resolution
+    description: Grid resolution for the output raster (e.g. "1 km" or "150 m")
+    type: text
+    example: 10 km
+
+outputs:
+  raster:
+    label: ARIES model output raster
+    description: GeoTIFF raster of ARIES model at the specified resolution and study area.
+    type: image/tiff;application=geotiff
+
+conda:
+  channels:
+    - conda-forge
+  dependencies:
+    - pyproj
+    - pip
+    - pip:
+      - klab-client-py==0.2.2

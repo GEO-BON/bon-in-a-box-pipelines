@@ -4,19 +4,19 @@
       "id": "0",
       "type": "io",
       "position": {
-        "x": 367,
-        "y": 540.3125
+        "x": 243,
+        "y": 159.3125
       },
       "data": {
-        "descriptionFile": "ariesPollination.yml"
+        "descriptionFile": "gettingSpeciesV2.yml"
       }
     },
     {
       "id": "1",
       "type": "io",
       "position": {
-        "x": 236,
-        "y": 197.3125
+        "x": 275,
+        "y": 248.3125
       },
       "data": {
         "descriptionFile": "cleaningSpeciesList.yml"
@@ -26,30 +26,19 @@
       "id": "2",
       "type": "io",
       "position": {
-        "x": 171,
-        "y": 88.3125
+        "x": 571.4121848172425,
+        "y": 589.4900348703484
       },
       "data": {
-        "descriptionFile": "gettingSpeciesV2.yml"
+        "descriptionFile": "queryingARIES.yml"
       }
     },
     {
       "id": "3",
-      "type": "io",
-      "position": {
-        "x": 507,
-        "y": 381.3125
-      },
-      "data": {
-        "descriptionFile": "data>getObservationsBiodiversiteQuebecAtlas.yml"
-      }
-    },
-    {
-      "id": "4",
       "type": "userInput",
       "position": {
-        "x": -123,
-        "y": 338.3125
+        "x": -80.24131571381338,
+        "y": 373.7798953889546
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -57,11 +46,80 @@
       }
     },
     {
+      "id": "4",
+      "type": "constant",
+      "position": {
+        "x": 67.29128889723188,
+        "y": 578.2549087972455
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "options",
+        "value": "Occurrence of pollinator insects",
+        "options": [
+          "Organic carbon mass",
+          "Vegetation carbon mass",
+          "Net value of pollination",
+          "Occurrence of pollinator insects",
+          "Weather suitability for pollinator insects",
+          "Landscape suitability for pollinator insects",
+          "Proneness to flooding",
+          "Value of outdoor recreation",
+          "Net value of outdoor recreation",
+          "Demanded value of outdoor recreation",
+          "Potential value of outdoor recreation",
+          "Theoretical value of outdoor recreation",
+          "Retained soil mass caused by vegetation",
+          "Potential removed soil mass",
+          "Combined value of ecosystem services supply",
+          "Maize crop yield",
+          "Wood biomass harvest",
+          "Monetary value of water from forests",
+          "Monetary value of non-wood forest products"
+        ]
+      }
+    },
+    {
       "id": "5",
+      "type": "io",
+      "position": {
+        "x": 1738.6140021242252,
+        "y": 472.8993629303402
+      },
+      "data": {
+        "descriptionFile": "rasterAnalysis.yml"
+      }
+    },
+    {
+      "id": "6",
+      "type": "io",
+      "position": {
+        "x": 497.5283194751688,
+        "y": 400.4272062793004
+      },
+      "data": {
+        "descriptionFile": "data>getObservationsBiodiversiteQuebecAtlas.yml"
+      }
+    },
+    {
+      "id": "7",
       "type": "userInput",
       "position": {
-        "x": 163,
-        "y": 425.3125
+        "x": 150.11661078413448,
+        "y": 434.6047411496488
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "int",
+        "value": 2010
+      }
+    },
+    {
+      "id": "8",
+      "type": "userInput",
+      "position": {
+        "x": 106.11565853171749,
+        "y": 476.01740209310015
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -70,22 +128,99 @@
       }
     },
     {
-      "id": "6",
+      "id": "9",
       "type": "io",
       "position": {
-        "x": 1379,
-        "y": 403.3125
+        "x": 1267.5449838924667,
+        "y": 285.2482430303266
       },
       "data": {
         "descriptionFile": "data>obsToHeatmap.yml"
       }
     },
     {
-      "id": "7",
+      "id": "10",
       "type": "output",
       "position": {
-        "x": 1847,
-        "y": 406.3125
+        "x": 2426.1561292594406,
+        "y": 479.8998390565488
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "11",
+      "type": "output",
+      "position": {
+        "x": 2426.1561292594406,
+        "y": 491.5471499468945
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "12",
+      "type": "output",
+      "position": {
+        "x": 2426.1561292594406,
+        "y": 505.7827521462059
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "13",
+      "type": "output",
+      "position": {
+        "x": 2426.1561292594406,
+        "y": 516.1359173820687
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "14",
+      "type": "output",
+      "position": {
+        "x": 2426.1561292594406,
+        "y": 532.9598108903458
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "15",
+      "type": "output",
+      "position": {
+        "x": 2426.1561292594406,
+        "y": 549.7837043986228
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "16",
+      "type": "output",
+      "position": {
+        "x": 2427.4502749139237,
+        "y": 562.7251609434513
+      },
+      "data": {
+        "label": "Output"
+      }
+    },
+    {
+      "id": "17",
+      "type": "output",
+      "position": {
+        "x": 2426.1561292594406,
+        "y": 575.6666174882799
       },
       "data": {
         "label": "Output"
@@ -94,78 +229,162 @@
   ],
   "edges": [
     {
-      "source": "2",
+      "source": "0",
       "sourceHandle": "pollinator_parquet",
       "target": "1",
       "targetHandle": "pollinator_parquet",
-      "id": "reactflow__edge-2pollinator_parquet-1pollinator_parquet"
+      "id": "reactflow__edge-0pollinator_parquet-1pollinator_parquet"
     },
     {
-      "source": "1",
-      "sourceHandle": "taxa",
-      "target": "3",
-      "targetHandle": "taxa",
-      "id": "reactflow__edge-1taxa-3taxa"
-    },
-    {
-      "source": "4",
+      "source": "3",
       "sourceHandle": null,
-      "target": "3",
+      "target": "2",
       "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-4-3bbox_crs"
+      "id": "reactflow__edge-3-2bbox_crs"
+    },
+    {
+      "source": "3",
+      "sourceHandle": null,
+      "target": "0",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-3-0bbox_crs"
     },
     {
       "source": "4",
       "sourceHandle": null,
       "target": "2",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-4-2bbox_crs"
+      "targetHandle": "model",
+      "id": "reactflow__edge-4-2model"
     },
     {
-      "source": "4",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-4-0bbox_crs"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "3",
-      "targetHandle": "max_year",
-      "id": "reactflow__edge-5-3max_year"
-    },
-    {
-      "source": "5",
-      "sourceHandle": null,
-      "target": "0",
-      "targetHandle": "study_year",
-      "id": "reactflow__edge-5-0study_year"
+      "source": "1",
+      "sourceHandle": "taxa",
+      "target": "6",
+      "targetHandle": "taxa",
+      "id": "reactflow__edge-1taxa-6taxa"
     },
     {
       "source": "3",
-      "sourceHandle": "observations_file",
+      "sourceHandle": null,
       "target": "6",
-      "targetHandle": "presence",
-      "id": "reactflow__edge-3observations_file-6presence"
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-3-6bbox_crs"
     },
     {
-      "source": "0",
-      "sourceHandle": "pollinator_raster",
+      "source": "7",
+      "sourceHandle": null,
       "target": "6",
-      "targetHandle": "predictors",
-      "id": "reactflow__edge-0pollinator_raster-6predictors"
+      "targetHandle": "min_year",
+      "id": "reactflow__edge-7-6min_year"
+    },
+    {
+      "source": "7",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "min_year",
+      "id": "reactflow__edge-7-2min_year"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "6",
+      "targetHandle": "max_year",
+      "id": "reactflow__edge-8-6max_year"
+    },
+    {
+      "source": "8",
+      "sourceHandle": null,
+      "target": "2",
+      "targetHandle": "max_year",
+      "id": "reactflow__edge-8-2max_year"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "raster",
+      "target": "5",
+      "targetHandle": "pollinator_raster",
+      "id": "reactflow__edge-2raster-5pollinator_raster"
     },
     {
       "source": "6",
+      "sourceHandle": "observations_file",
+      "target": "9",
+      "targetHandle": "presence",
+      "id": "reactflow__edge-6observations_file-9presence"
+    },
+    {
+      "source": "2",
+      "sourceHandle": "raster",
+      "target": "9",
+      "targetHandle": "predictors",
+      "id": "reactflow__edge-2raster-9predictors"
+    },
+    {
+      "source": "9",
       "sourceHandle": "heatmap",
-      "target": "7",
+      "target": "5",
+      "targetHandle": "heatmap_raster",
+      "id": "reactflow__edge-9heatmap-5heatmap_raster"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "residual_raster",
+      "target": "10",
       "targetHandle": null,
-      "id": "reactflow__edge-6heatmap-7"
+      "id": "reactflow__edge-5residual_raster-10"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "gap_raster",
+      "target": "11",
+      "targetHandle": null,
+      "id": "reactflow__edge-5gap_raster-11"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "plot_correlation",
+      "target": "12",
+      "targetHandle": null,
+      "id": "reactflow__edge-5plot_correlation-12"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "plot_residual",
+      "target": "13",
+      "targetHandle": null,
+      "id": "reactflow__edge-5plot_residual-13"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "plot_gap_analysis",
+      "target": "14",
+      "targetHandle": null,
+      "id": "reactflow__edge-5plot_gap_analysis-14"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "plot_confusion",
+      "target": "15",
+      "targetHandle": null,
+      "id": "reactflow__edge-5plot_confusion-15"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "plot_roc",
+      "target": "16",
+      "targetHandle": null,
+      "id": "reactflow__edge-5plot_roc-16"
+    },
+    {
+      "source": "5",
+      "sourceHandle": "plot_hotspot",
+      "target": "17",
+      "targetHandle": null,
+      "id": "reactflow__edge-5plot_hotspot-17"
     }
   ],
   "inputs": {
-    "ariesPollination.yml@0|resolution": {
+    "queryingARIES.yml@2|resolution": {
       "description": "Grid resolution for the output raster (e.g. \"1 km\" or \"150 m\")",
       "label": "Spatial resolution",
       "type": "text",
@@ -179,14 +398,35 @@
       "example": 2010,
       "weight": 1
     },
-    "pipeline@4": {
-      "label": "Bounding box and CRS",
-      "description": "Bounding box with coordinate reference system",
+    "pipeline@3": {
+      "label": "Spatial Extent",
+      "description": "Select the bounding box for the study area.",
       "type": "bboxCRS",
       "example": null,
+      "weight": 1
+    },
+    "rasterAnalysis.yml@5|high_aries_threshold": {
+      "description": "ARIES values above this are considered high-occurrence for binary analyses. Between 0 and 1.\n",
+      "label": "High ARIES value threshold",
+      "type": "float",
+      "example": 0.6,
       "weight": 2
     },
-    "pipeline@5": {
+    "rasterAnalysis.yml@5|high_heat_threshold": {
+      "description": "Normalised heatmap values above this are considered high-density for binary analyses. Between 0 and 1.\n",
+      "label": "High heatmap value threshold",
+      "type": "float",
+      "example": 0.6,
+      "weight": 3
+    },
+    "pipeline@7": {
+      "label": "minimum year",
+      "description": "Min year observations wanted",
+      "type": "int",
+      "example": 2010,
+      "weight": 4
+    },
+    "pipeline@8": {
       "label": "maximum year",
       "description": "Max year observations wanted",
       "type": "int",
@@ -195,11 +435,53 @@
     }
   },
   "outputs": {
-    "data>obsToHeatmap.yml@6|heatmap": {
-      "description": "raster, heatmap of occurrences",
-      "label": "heatmap",
+    "rasterAnalysis.yml@5|residual_raster": {
+      "description": "GeoTIFF of ARIES minus normalised heatmap per cell",
+      "label": "Residual raster",
       "type": "image/tiff;application=geotiff",
       "weight": 0
+    },
+    "rasterAnalysis.yml@5|gap_raster": {
+      "description": "GeoTIFF marking cells with high ARIES value but low heatmap density",
+      "label": "Gap analysis raster",
+      "type": "image/tiff;application=geotiff",
+      "weight": 1
+    },
+    "rasterAnalysis.yml@5|plot_correlation": {
+      "description": "Scatter and 2D density of ARIES vs heatmap values",
+      "label": "Correlation plot",
+      "type": "image/png",
+      "weight": 2
+    },
+    "rasterAnalysis.yml@5|plot_residual": {
+      "description": "Map showing where ARIES over- and underpredicts relative to heatmap",
+      "label": "Residual map plot",
+      "type": "image/png",
+      "weight": 3
+    },
+    "rasterAnalysis.yml@5|plot_gap_analysis": {
+      "description": "Three-panel map of ARIES raster, heatmap, and gap cells",
+      "label": "Gap analysis map",
+      "type": "image/png",
+      "weight": 4
+    },
+    "rasterAnalysis.yml@5|plot_confusion": {
+      "description": "Binary agreement between ARIES and heatmap with kappa score",
+      "label": "Confusion matrix plot",
+      "type": "image/png",
+      "weight": 5
+    },
+    "rasterAnalysis.yml@5|plot_roc": {
+      "description": "ROC/AUC treating heatmap as ground truth and ARIES as predictor",
+      "label": "ROC curve plot",
+      "type": "image/png",
+      "weight": 6
+    },
+    "rasterAnalysis.yml@5|plot_hotspot": {
+      "description": "Four-class map showing agreement and disagreement between hotspots",
+      "label": "Hotspot overlap map",
+      "type": "image/png",
+      "weight": 7
     }
   },
   "metadata": {
