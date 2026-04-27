@@ -92,8 +92,8 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 - **ProtConn results:** the pipeline gives a table with several measures:
   - Unprotected - percentage of study area that is not covered by a protected area
-  - ProtConn - percentage of the study area that is protected and connected
-  - ProtUnconn - percentage of the study area that is protected and unconnected
+  - ProtConn - percentage of the study area that is coverd by well-connected protected areas
+  - ProtUnconn - percentage of the study area that is covered by protected areas that are not well connected
   - ProtConn_Unprot - Percentage of the protected connected land that can be reached by moving through unprotected areas. It includes movements between PAs that entirely happen through unprotected lands and others that traverse unprotected lands in the initial and final stretches but that may use some protected land in between. The value of this fraction will be lower when PAs are separated by larger tracts of unprotected lands, making inter-PA movements less likely, particularly when the distances that need to be traversed through unprotected lands are large compared to the dispersal distance.
   - ProtConn_Within - Percentage of the protected connected land that can be reached by moving only within individual PAs
   - ProtConn_Contig - Percentage of the protected connected land that can be reached by moving through sets of immediately adjacent (contiguous) PAs without traversing any unprotected lands.
