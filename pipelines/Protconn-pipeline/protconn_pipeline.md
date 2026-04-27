@@ -5,7 +5,7 @@ Review status: In review
 
 ## Introduction
 
-The Protected Connected Index (ProtConn) is a component indicator in the Global Biodiversity Framework (GBF). ProtConn measures the percent of a given country or region that is conserved and managed through well-connected protected areas. This is an important indicator for assessing progress towards Goal A and Target 3 of the Kunming-Montreal Global Biodiversity Framework, which aim to have 30% of land area protected by a network of well-connected protected areas by 2030.
+The Protected Connected Index (ProtConn) is a component indicator in the Global Biodiversity Framework (GBF). ProtConn measures the percent of a given country or region that is covered by well-connected protected areas. This is an important indicator for assessing progress towards Goal A and Target 3 of the Kunming-Montreal Global Biodiversity Framework, which aim to have 30% of land area protected by a network of well-connected protected areas by 2030.
 
 ### Uses
 
