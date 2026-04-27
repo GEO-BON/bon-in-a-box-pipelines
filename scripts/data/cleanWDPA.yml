@@ -112,10 +112,9 @@ conda:
     - conda-forge
     - r
   dependencies:
-    - r-rjson
-    - r-sf
+    - r-rjson=0.2.23
+    - r-sf=1.1-0
     - r-lwgeom
     - r-remotes
-    - r-dplyr
-    - r-lubridate
-    - r-tidyverse
+    - r-lubridate=1.9.5
+    - r-tidyverse=2.0.0

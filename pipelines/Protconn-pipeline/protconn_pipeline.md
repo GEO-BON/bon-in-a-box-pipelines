@@ -60,7 +60,7 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 
 - **Include UNESCO Biosphere reserves:** the user can specify whether they want to include UNESCO Man and the Biosphere reserves in the analysis or not. These serve as learning sites for sustainable development and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. They may not be legally protected and may not be fully conserved, as they are often used for development or human settlement. Excluding these will limit the dataset to meeting stricter conservation standards. This input is only relevant if using WDPA data.
 
-- **Buffer protected area points:** the user can specify whether they want to buffer protected area points. For any protected areas that are represented as single points instead of polygons, this will create a circle around the polygon that is equal to the reported area. This will not affect the connectivity metrics if using centroids but may cause inaccuracies if assessing connectivity using the nearest edge. If left unchecked, all protected areas represented as points will be removed. This input is only relevant if using WDPA data.
+- **Buffer protected area points:** the user can specify whether they want to buffer protected area points. For any protected areas that are represented as single points instead of polygons, this will create a circle around the polygon that is equal to the reported area. If left unchecked, all protected areas represented as points will be removed. This input is only relevant if using WDPA data.
 
 - **Include OECMs:** the user can specify whether they want to include other effective area-based conservation measures (OECMs) in the analysis or not. These areas are not officially designated protected areas but are still achieving conservation outcomes. This input is only relevant if using WDPA data.
 
@@ -82,9 +82,9 @@ This step returns the polygon for the country/region/area of interest. If a coun
 
 This step cleans the data retrieved from the WDPA by correcting any geometry issues and filtering by the desired inputs. This step also crops the protected areas by the study area (This step is skipped if you are only using custom PA data).
 
-#### **3. Performing the ProtConn analysis**
+#### **4. Performing the ProtConn analysis**
 
-This step performs the ProtConn analysis on the protected areas of interest. ProtConn is calculated by creating a pairwise matrix of the distances between the closest edge of each protected area. Then, it calculates the probability of a species dispersing between these protected areas using a negative exponential dispersal kernel with the input distance assigned to a probability of 0.5. This means that if the protected areas are very near one another, there is a high probability that species will be able to disperse between them, but this probability decays exponentially with increasing distance. Different dispersal distances can be specified based on the species of interest, as very small species such as rodents can not disperse as far as large mammals such as deer, so the connectedness would not be the same for those groups. Then, the dispersal probabilities between each of the protected areas are summed together, multiplied by the area of the protected areas, and divided by the area of the study area. Thus, ProtConn is the percentage of the total study area (country or region) that is protected with well-connected protected areas.
+This step performs the ProtConn analysis on the protected areas of interest. ProtConn is calculated by creating a pairwise matrix of the distances between the closest edge of each protected area. Then, it calculates the probability of a species dispersing between these protected areas using a negative exponential dispersal kernel with the input distance assigned to a probability of 0.5. This means that if the protected areas are very near one another, there is a high probability that species will be able to disperse between them, but this probability decays exponentially with increasing distance. Different dispersal distances can be specified based on the species of interest, as very small species such as rodents can not disperse as far as large mammals such as deer, so the connectedness would not be the same for those groups. Then, the dispersal probability between each pair of protected areas is multiplied by the area of the protected areas, and the result of this product is summed together for all pairs of protected areas, and divided by the area of the study area
 
 ### Pipeline
 
@@ -120,10 +120,11 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 ## References
 
+Godínez-Gómez, O., Correa Ayram, C.A., Goicolea, T., Saura, S. 2026. Makurhini: An R package for comprehensive analysis of landscape fragmentation and connectivity. Environmental Modelling & Software. https://doi.org/10.1016/j.envsoft.2026.106981. 
+
 Saura, Santiago, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. “Protected Areas in the World’s Ecoregions: How Well Connected Are They?” Ecological Indicators 76 (May 1, 2017): 144–58. https://doi.org/10.1016/j.ecolind.2016.12.047.
 
 Saura, Santiago, Bastian Bertzky, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. “Protected Area Connectivity: Shortfalls in Global Targets and Country-Level Priorities.” Biological Conservation 219 (March 1, 2018): 53–67. https://doi.org/10.1016/j.biocon.2017.12.020.
 
-Godínez-Gómez, O. and Correa Ayram C.A. 2020. Makurhini: Analyzing landscape connectivity. 10.5281/zenodo.3771605
 
 

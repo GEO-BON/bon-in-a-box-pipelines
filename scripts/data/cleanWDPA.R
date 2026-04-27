@@ -1,7 +1,5 @@
 library(sf)
 library(rjson)
-library(dplyr)
-library(sf)
 library(tidyverse)
 # Add inputs
 input <- biab_inputs()
