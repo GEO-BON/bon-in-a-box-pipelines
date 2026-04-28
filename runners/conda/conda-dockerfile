@@ -48,16 +48,13 @@ RUN mkdir /.R && echo "MAKEFLAGS = -j4" > /.R/Makevars && chmod a+r /.R/Makevars
 RUN mkdir /root/.R && echo "MAKEFLAGS = -j" > /root/.R/Makevars
 
 
-## ADD CRAN PACKAGES HERE (for packages not found in anaconda.org)
 RUN bash --login -c "mamba activate rbase \
     && R -e ' \
-        install.packages(c(\"CoordinateCleaner\", \
-            \"geodata\", \
-            \"OpenStreetMap\" \
-        ), repos=\"https://cloud.r-project.org/\"); \
-        \
+## ADD CRAN PACKAGES HERE (uncomment for packages not found in anaconda.org) \
+        # install.packages(c(\"CoordinateCleaner\", \
+        # ), repos=\"https://cloud.r-project.org/\"); \
+        # \
 ## ADD GITHUB PACKAGES HERE (for packages not found in anaconda.org nor CRAN) \
-        devtools::install_github(\"ReseauBiodiversiteQuebec/stac-catalogue\"); \
         devtools::install_github(\"connectscape/Makurhini\"); \
     ' \
     # Remove documentation files from /opt/conda/envs/rbase/lib/R/library \
