@@ -73,24 +73,24 @@ if (isTRUE(input$buffer_points)) {
 
   protected_areas <- protected_areas %>% filter(!(geometry_type == "POINT" & (is.na(REP_AREA) | REP_AREA == 0)))
 
-  points_data <- protected_areas[(protected_areas$geometry_type == "POINT"),]
+  points_data <- protected_areas[(protected_areas$geometry_type == "POINT"), ]
 
 
-  if(nrow(points_data) > 0){
+  if (nrow(points_data) > 0) {
     points_data <- points_data %>%
-    mutate(buffer_radius = sqrt((as.numeric(REP_AREA) * 1e6) / pi))
+      mutate(buffer_radius = sqrt((as.numeric(REP_AREA) * 1e6) / pi))
     points_data <- st_buffer(points_data, dist = points_data$buffer_radius)
     points_data <- points_data %>% select(!buffer_radius)
 
-      if (any(protected_areas$geometry_type == "POLYGON")) {
+    if (any(protected_areas$geometry_type == "POLYGON")) {
       protected_areas <- rbind(protected_areas[which(protected_areas$geometry_type %in% c("POLYGON", "MULTIPOLYGON")), ], points_data)
-      } else {
+    } else {
       protected_areas <- points_data
-      }
+    }
   } else {
     print("There are no protected areas represented as points")
     protected_areas <- protected_areas
-    }
+  }
 } else {
   print("Removing points")
   protected_areas <- protected_areas[!(protected_areas$geometry_type == "POINT"), ]
@@ -105,8 +105,8 @@ any_invalid <- any(!st_is_valid(protected_areas))
 
 if (any_invalid) {
   message("Invalid geometries detected. Fixing...")
-protected_areas <- st_buffer(protected_areas, 0)
-protected_areas <- st_make_valid(protected_areas)
+  protected_areas <- st_buffer(protected_areas, 0)
+  protected_areas <- st_make_valid(protected_areas)
 }
 
 print("Removing slivers (protected areas less than 1 square meters)")
@@ -127,12 +127,11 @@ if (isFALSE(input$include_oecm)) {
 }
 print(nrow(protected_areas))
 
-if(nrow(protected_areas)==0){
+if (nrow(protected_areas) == 0) {
   biab_error_stop("There are no protected areas.")
 }
 
+protected_areas <- protected_areas %>% select(!geometry_type)
 protected_areas_clean_path <- file.path(outputFolder, "protected_areas_clean.gpkg")
 sf::st_write(protected_areas, protected_areas_clean_path, delete_dsn = T)
 biab_output("protected_areas_clean", protected_areas_clean_path)
-
-

@@ -1,6 +1,6 @@
 # Script for analyzing ProtConn with the function
 # For review PR
-packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ", "ggrepel")
+packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ")
 
 # Load libraries
 lapply(packages_list, library, character.only = TRUE) # Load libraries - packages
@@ -98,7 +98,7 @@ if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and par
 
     protected_areas_user <- protected_areas_user %>% rename(STATUS_YR = input$date_column)
     for (i in 1:nrow(protected_areas_user)) {
-      if (is.na(protected_areas_user$STATUS_YR[i]) | protected_areas$STATUS_YR[i] == 0) {
+      if (is.na(protected_areas_user$STATUS_YR[i]) | protected_areas_user$STATUS_YR[i] == 0) {
         protected_areas_user$STATUS_YR[i] <- input$start_year
       }
     }
@@ -393,8 +393,10 @@ if (input$time_series == TRUE) {
     }
     print(protconn_result_combined)
     protconn_ts_result[[i]] <- protconn_result_combined
-    protected_areas_path[i] <- file.path(outputFolder, paste0(yr, "_protected_areas.gpkg"))
-    sf::st_write(protected_areas_filt_yr, protected_areas_path[i], delete_dsn = T)
+    if (exists("protected_areas_filt_yr")) {
+      protected_areas_path[i] <- file.path(outputFolder, paste0(yr, "_protected_areas.gpkg"))
+      sf::st_write(protected_areas_filt_yr, protected_areas_path[i], delete_dsn = T)
+    }
     gc()
   }
   protected_areas_path <- c(protected_areas_simp_path, protected_areas_path) # combine the original simplified protected areas with the yearly filtered ones for output
@@ -439,15 +441,14 @@ if (input$time_series == TRUE) {
       geom_hline(yintercept = 30, lty = 2) +
       annotate("text", x = xint, y = 33, label = "Kunming-Montreal target") +
       facet_wrap(~Distance) +
-      geom_line() +
       theme_classic() +
       theme(strip.text.y = element_blank())
 
     file_path <- file.path(outputFolder, paste0("result_plot_yrs_", input$distance_threshold[i], "m.png"))
-    plot_paths <- cbind(plot_paths, file_path) # put file paths in list
+    plot_paths <- c(plot_paths, file_path) # put file paths in list
     ggsave(file_path, result_yrs_plot)
-    biab_output("result_yrs_plot", plot_paths)
   }
+  biab_output("result_yrs_plot", plot_paths)
 } else {
   result_yrs <- NULL
   biab_output("result_yrs", result_yrs)
