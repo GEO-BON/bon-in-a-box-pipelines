@@ -554,6 +554,24 @@
         "role": "Environment setup, technical support, standards review"
       }
     ],
+    "reviewer": [
+      {
+        "name": "Santiago Saura",
+        "email": "santiago.saura@upm.es"
+      },
+      {
+        "name": "Oscar Godinez-Gomez",
+        "email": "oscargodinezgome@ufl.edu"
+      },
+      {
+        "name": "Camilo Andres Correa Ayram",
+        "email": "correa.c@javeriana.edu.co"
+      },
+      {
+        "name": "Teresa Goicolea",
+        "email": "t.goicolea@gmail.com"
+      }
+    ],
     "lifecycle": {
       "status": "reviewed"
     },
