@@ -88,23 +88,25 @@ if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and par
   print(protected_areas_user)
   protected_areas_user <- st_transform(protected_areas_user, st_crs(crs_input))
 
-  if ((input$time_series == TRUE) & is.null(input$date_column)) {
-    biab_error_stop("Please specify a date column name for the protected areas file or deselect the time series option.")
-  }
-
-  if (!is.null(input$date_column)) {
-    # Assign all PAs without a date to the start year for the time series
-    print("fixing date")
-
-    protected_areas_user <- protected_areas_user %>% rename(STATUS_YR = input$date_column)
-    for (i in 1:nrow(protected_areas_user)) {
-      if (is.na(protected_areas_user$STATUS_YR[i]) | protected_areas_user$STATUS_YR[i] == 0) {
-        protected_areas_user$STATUS_YR[i] <- input$start_year
-      }
+  if (input$time_series == TRUE) {
+    if (is.null(input$date_column)) {
+      biab_error_stop("Please specify a date column name for the protected areas file or deselect the time series option.")
     }
 
-    protected_areas_user$STATUS_YR <- lubridate::parse_date_time(protected_areas_user$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
-    protected_areas_user$STATUS_YR <- lubridate::year(protected_areas_user$STATUS_YR)
+    if (!is.null(input$date_column)) {
+      # Assign all PAs without a date to the start year for the time series
+      print("fixing date")
+
+      protected_areas_user <- protected_areas_user %>% rename(STATUS_YR = input$date_column)
+      for (i in 1:nrow(protected_areas_user)) {
+        if (is.na(protected_areas_user$STATUS_YR[i]) | protected_areas_user$STATUS_YR[i] == 0) {
+          protected_areas_user$STATUS_YR[i] <- input$start_year
+        }
+      }
+
+      protected_areas_user$STATUS_YR <- lubridate::parse_date_time(protected_areas_user$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
+      protected_areas_user$STATUS_YR <- lubridate::year(protected_areas_user$STATUS_YR)
+    }
   }
 }
 
