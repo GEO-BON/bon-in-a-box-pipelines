@@ -6,7 +6,8 @@ Reviewed by: Santiago Saura, Oscar Godinez-Gomez, Camilo Andreas Correa Ayram, T
 
 
 name: Protected Connected Index (ProtConn)
-description: >-
+
+description:
 
 ## Introduction
 
@@ -68,11 +69,11 @@ BON in a Box contains a pipeline to calculate ProtConn for a given country or re
 - **PA size threshold:** the user must input a size threshold for PAs, in square meters. Protected areas smaller than this area will be removed. A threshold of 1,000 m2 was used in Saura et al. 2017 because at larger scales, protected areas less than 1,000 m2 do not have a large impact on ProtConn values. Removing small protected areas significantly speeds up calculation and is recommended for large areas. To avoid filtering PAs by size threshold, input a value of 0.
 
 - **PA legal status types to include:** the user can choose legal status types of WDPA data to include in the analysis. This input is only relevant if using WDPA data. The protected areas can have a legal status of `Proposed`, `Inscribed`, `Adopted`, `Designated`, or `Established`.
-- `Proposed` means that the site is in the process of gaining recognition through legal or other effective means. It may still be managed as a protected area during this process.
-- `Inscribed` means that it is inscribed in an international list (e.g., World Heritage). This can overlap with designated.
-- `Adopted` means that it is a specially protected area of marine importance (SPAMI) created under the Barcelona Convention, focusing on the protection of the marine environment and coastal regions of the Mediterranean.
-- `Designated` means that it is officially established under national or international law/policy.
-- `Established` means that it is protected and managed, but possibly lacks formal legal designation.
+  - `Proposed` means that the site is in the process of gaining recognition through legal or other effective means. It may still be managed as a protected area during this process.
+  - `Inscribed` means that it is inscribed in an international list (e.g., World Heritage). This can overlap with designated.
+  - `Adopted` means that it is a specially protected area of marine importance (SPAMI) created under the Barcelona Convention, focusing on the protection of the marine environment and coastal regions of the Mediterranean.
+  - `Designated` means that it is officially established under national or international law/policy.
+  - `Established` means that it is protected and managed, but possibly lacks formal legal designation.
 
 - **Include UNESCO Biosphere reserves:** the user can specify whether they want to include UNESCO Man and the Biosphere reserves in the analysis or not. These serve as learning sites for sustainable development and combine biodiversity conservation with the sustainable use of natural resources and sustainable development. They may not be legally protected and may not be fully conserved, as they are often used for development or human settlement. Excluding these will limit the dataset to meeting stricter conservation standards. This input is only relevant if using WDPA data.
 
@@ -142,7 +143,7 @@ Example of a pipeline run with both user data and WDPA data: [insert link]
 
 ## References
 
-Godínez-Gómez, O., Correa Ayram, C.A., Goicolea, T., Saura, S. 2026. Makurhini: An R package for comprehensive analysis of landscape fragmentation and connectivity. Environmental Modelling & Software. https://doi.org/10.1016/j.envsoft.2026.106981. 
+Godínez-Gómez, O., Correa Ayram, C.A., Goicolea, T., Saura, S. 2026. Makurhini: An R package for comprehensive analysis of landscape fragmentation and connectivity. Environmental Modelling & Software. https://doi.org/10.1016/j.envsoft.2026.106981.
 
 Saura, Santiago, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. 2017. “Protected Areas in the World’s Ecoregions: How Well Connected Are They?” Ecological Indicators 76:144–58. doi:10.1016/j.ecolind.2016.12.047.
 
