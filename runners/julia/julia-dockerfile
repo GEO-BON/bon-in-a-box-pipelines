@@ -22,8 +22,5 @@ RUN chmod -R 777 $JULIA_DEPOT_PATH
 
 RUN date +"%Y-%m-%d %R" > /version.txt
 
-ARG TARGETOS
-ARG TARGETARCH
-ARG TARGETVARIANT
 ARG TARGETPLATFORM
-RUN echo "Architecture: ${TARGETPLATFORM} (${TARGETOS}/${TARGETARCH}${TARGETVARIANT:+/$TARGETVARIANT})" >> /version.txt
+RUN echo "Architecture: ${TARGETPLATFORM}" >> /version.txt
