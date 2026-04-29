@@ -225,24 +225,6 @@
       }
     },
     {
-      "id": "62",
-      "type": "constant",
-      "position": {
-        "x": 541.1255198182539,
-        "y": -133.08599255888447
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "Country or region",
-        "options": [
-          "Country or region",
-          "WDPA",
-          "EEZ"
-        ]
-      }
-    },
-    {
       "id": "63",
       "type": "constant",
       "position": {
@@ -398,13 +380,6 @@
       "id": "reactflow__edge-61polygon-0country_polygon"
     },
     {
-      "source": "62",
-      "sourceHandle": null,
-      "target": "61",
-      "targetHandle": "polygon_type",
-      "id": "reactflow__edge-62-61polygon_type"
-    },
-    {
       "source": "63",
       "sourceHandle": null,
       "target": "61",
@@ -427,12 +402,25 @@
     }
   ],
   "inputs": {
+    "data>load_polygons.yml@61|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "WDPA",
+        "EEZ",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 0
+    },
     "pipeline@60": {
       "label": "Bounding box and CRS",
       "description": "Select a country/region and a CRS to obtain the associated bounding box.",
       "type": "bboxCRS",
       "example": null,
-      "weight": 0
+      "weight": 1
     },
     "data>loadFromStac.yml@2|collections_items": {
       "description": "Set of environmental variables to use  (e.g. for temperature \"chelsa-clim|bio1\", precipitation \"chelsa-clim|bio12\"), on which to run the PCA (a minimum of 2 variables are needed). Environmental variables must be continuous values.",
@@ -442,7 +430,7 @@
         "chelsa-clim|bio1",
         "chelsa-clim|bio2"
       ],
-      "weight": 1
+      "weight": 2
     },
     "site_selection_BAS>BAS_algorithm.yml@26|options_bas": {
       "description": "Select and option between equal BAS or unequal probability BAS. \"Equal\" will not consider the blocks and place all sampling randomly in the whole study area.  \"Unequal\" will take into account the size of the each environmental block and redistribute the sampling sites based on the size of block.  ",
@@ -453,28 +441,28 @@
         "unequal"
       ],
       "example": "equal",
-      "weight": 2
+      "weight": 3
     },
     "site_selection_BAS>BAS_algorithm.yml@26|ndesign": {
       "description": "A number of target sampling sites to obtain with the algorithm",
       "label": "Target total sites",
       "type": "int",
       "example": 100,
-      "weight": 3
+      "weight": 4
     },
     "site_selection_BAS>Block_creation.yml@0|n_cols": {
       "description": "Number of columns for the environmental space grid (together with rows will define the final number of environmental blocks)",
       "label": "Number of columns",
       "type": "int",
       "example": 10,
-      "weight": 4
+      "weight": 5
     },
     "site_selection_BAS>Block_creation.yml@0|n_rows": {
       "description": "Number of rows for the environmental space grid (together with columns will define the final number environmental blocks)",
       "label": "Number of rows",
       "type": "int",
       "example": 10,
-      "weight": 5
+      "weight": 6
     }
   },
   "outputs": {

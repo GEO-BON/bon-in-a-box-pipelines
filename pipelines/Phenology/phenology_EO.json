@@ -4,8 +4,8 @@
       "id": "37",
       "type": "io",
       "position": {
-        "x": 1064,
-        "y": 119.66666666666667
+        "x": 1341,
+        "y": 71.16666666666666
       },
       "data": {
         "descriptionFile": "phenology>summarise_phenology.yml"
@@ -15,8 +15,8 @@
       "id": "39",
       "type": "output",
       "position": {
-        "x": 1653,
-        "y": 46.666666666666664
+        "x": 1932,
+        "y": 48.166666666666664
       },
       "data": {
         "label": "Output"
@@ -26,8 +26,8 @@
       "id": "44",
       "type": "userInput",
       "position": {
-        "x": 786,
-        "y": 239.00000000000003
+        "x": 1062,
+        "y": 102.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -39,8 +39,8 @@
       "id": "45",
       "type": "userInput",
       "position": {
-        "x": 792,
-        "y": 274
+        "x": 1068,
+        "y": 218.83333333333331
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -52,8 +52,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 1653,
-        "y": 103.66666666666666
+        "x": 1932,
+        "y": 165.16666666666666
       },
       "data": {
         "descriptionFile": "phenology>phenology_difference.yml"
@@ -63,8 +63,8 @@
       "id": "49",
       "type": "output",
       "position": {
-        "x": 2257,
-        "y": 81.33333333333333
+        "x": 2537,
+        "y": 84.16666666666666
       },
       "data": {
         "label": "Output"
@@ -74,8 +74,8 @@
       "id": "67",
       "type": "output",
       "position": {
-        "x": 1064,
-        "y": 12
+        "x": 1341,
+        "y": 12.166666666666664
       },
       "data": {
         "label": "Output"
@@ -85,8 +85,8 @@
       "id": "68",
       "type": "userInput",
       "position": {
-        "x": -68.68078960952789,
-        "y": 234.53434442923063
+        "x": 12,
+        "y": 12
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -97,37 +97,19 @@
       "id": "69",
       "type": "io",
       "position": {
-        "x": 584.6292772587663,
-        "y": 37.15957310454998
+        "x": 433,
+        "y": 254.83333333333331
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
       }
     },
     {
-      "id": "70",
-      "type": "constant",
-      "position": {
-        "x": 271.5754987604073,
-        "y": 101.33004775092365
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "Country or region",
-        "options": [
-          "Country or region",
-          "WDPA",
-          "EEZ"
-        ]
-      }
-    },
-    {
       "id": "71",
       "type": "constant",
       "position": {
-        "x": 249.1438642772681,
-        "y": 235.91985464975892
+        "x": 46,
+        "y": 278.3333333333333
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -222,13 +204,6 @@
       "id": "reactflow__edge-68-69country_region_bbox"
     },
     {
-      "source": "70",
-      "sourceHandle": null,
-      "target": "69",
-      "targetHandle": "polygon_type",
-      "id": "reactflow__edge-70-69polygon_type"
-    },
-    {
       "source": "71",
       "sourceHandle": null,
       "target": "69",
@@ -251,12 +226,23 @@
     }
   ],
   "inputs": {
+    "data>load_polygons.yml@69|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 0
+    },
     "pipeline@68": {
       "label": "Bounding box and CRS",
       "description": "Select a country/region and a CRS to obtain the associated bounding box.",
       "type": "bboxCRS",
       "example": null,
-      "weight": 0
+      "weight": 1
     },
     "phenology>summarise_phenology.yml@37|season": {
       "description": "Season for which to run phenology analyses. Season 1 is the first growing season (spring and early summer) and season 2 is the second growing season (late summer and fall).\n",
@@ -267,7 +253,7 @@
         "SEASON2"
       ],
       "example": "SEASON1",
-      "weight": 1
+      "weight": 2
     },
     "phenology>summarise_phenology.yml@37|bands": {
       "description": "Bands of interest for the calculations. \n- SOSD (Start of season date) - date when the vegetation growing season starts, when the PPI value reaches 25% of the season amplitude during the green-up period.\n- EOSD (End of season date) - the date when the vegetation growing season ends in the time profile of the PPI. Occurs when the PPI value reaches 15% of the season amplitude during the green-down period.\n- SOSV (Start of season value) - the value of the PPI at the start of the vegetation growing season\n- EOSV (End of season value) - the value of the PPI at the end of the vegetation growing season\n- MAXV (Season maximum value) - the maximum (peak) value that the PPI reaches during the vegetation growing season\n- MAXD (Season maximum date) - date in the vegetation growing season where the maximum PPI is reached\n- MINV (Season minimum value) - average PPI of minima of left and right sides of each season\n- AMPL (Season amplitude) - difference between the maximum and minimum PPI values reached during the season\n- LENGTH (Season length) - number of days between the start and end dates of the vegetation growing season\n- LSLOPE (Slope of the green-up period) - the rate of change in the values of PPI at the day when the vegetation growing season starts\n- RSLOPE (Slope of the green-down period) - the rate of change in the values of PPO at the date when the vegetation growing season ends\n- SPROD (Seasonal productivity) - growing season integral computed as sum of all daily PPI values between the dates of the season start and end, minus their base level.\n- TPROD (Total productivity) - the growing season integral computed as sum of all daily PPI values between the dates of the season start and end\n- QFLAG (Quality flag) - quality indicator assisting users with the screening of clouds, shadows from clouds and topography, other dark areas, snow and water surfaces in their analysis of the PPI dataset\n",
@@ -293,28 +279,28 @@
         "LENGTH",
         "AMPL"
       ],
-      "weight": 2
+      "weight": 3
     },
     "phenology>summarise_phenology.yml@37|spatial_resolution": {
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "label": "Spatial resolution",
       "type": "float",
       "example": 0,
-      "weight": 3
+      "weight": 4
     },
     "pipeline@44": {
       "label": "Start year",
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2017",
-      "weight": 4
+      "weight": 5
     },
     "pipeline@45": {
       "label": "End year",
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": "2024",
-      "weight": 5
+      "weight": 6
     },
     "phenology>summarise_phenology.yml@37|aggregate_function": {
       "description": "Method used to aggregate items when layers combining over time.\nWill be ignored if not aggregating.",
@@ -326,7 +312,7 @@
         "max"
       ],
       "example": "mean",
-      "weight": 6
+      "weight": 7
     }
   },
   "outputs": {

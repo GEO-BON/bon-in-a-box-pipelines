@@ -185,8 +185,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 824.4738874036411,
-        "y": 585.8583779303075
+        "x": 571.9895018016334,
+        "y": 576.7943546043192
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -204,29 +204,11 @@
       }
     },
     {
-      "id": "70",
-      "type": "constant",
-      "position": {
-        "x": 439.24193203584343,
-        "y": 567.216164595444
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "options",
-        "value": "Country or region",
-        "options": [
-          "Country or region",
-          "WDPA",
-          "EEZ"
-        ]
-      }
-    },
-    {
       "id": "71",
       "type": "constant",
       "position": {
-        "x": 505.2173275744881,
-        "y": 618.6769731155869
+        "x": 264.7261507577249,
+        "y": 723.3613677299426
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -337,13 +319,6 @@
     {
       "source": "67",
       "sourceHandle": null,
-      "target": "56",
-      "targetHandle": "bbox_crs",
-      "id": "reactflow__edge-67-56bbox_crs"
-    },
-    {
-      "source": "67",
-      "sourceHandle": null,
       "target": "25",
       "targetHandle": "bbox_crs",
       "id": "reactflow__edge-67-25bbox_crs"
@@ -377,27 +352,38 @@
       "id": "reactflow__edge-68polygon-69"
     },
     {
-      "source": "70",
-      "sourceHandle": null,
-      "target": "68",
-      "targetHandle": "polygon_type",
-      "id": "reactflow__edge-70-68polygon_type"
-    },
-    {
       "source": "71",
       "sourceHandle": null,
       "target": "68",
       "targetHandle": "buffer",
       "id": "reactflow__edge-71-68buffer"
+    },
+    {
+      "source": "68",
+      "sourceHandle": "bbox_crs",
+      "target": "56",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-68bbox_crs-56bbox_crs"
     }
   ],
   "inputs": {
+    "data>load_polygons.yml@68|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
+      "weight": 0
+    },
     "pipeline@67": {
       "label": "Bounding box and CRS",
       "description": "Select a country/region and a CRS to obtain the associated bounding box.",
       "type": "bboxCRS",
       "example": null,
-      "weight": 0
+      "weight": 1
     },
     "zonal_statistics>zonal_stats.yml@25|summary_statistic": {
       "description": "Summary statistic for layers",
@@ -416,28 +402,28 @@
       "example": [
         "mean"
       ],
-      "weight": 1
+      "weight": 2
     },
     "data>loadFromStac.yml@56|spatial_res": {
       "description": "Integer, spatial resolution of the rasters in the same units as the coordinate reference system (meters for projected reference systems and degrees for reference systems in lat long).\nLeave blank to use the original spatial resolution of the layers. If left blank, CRS must be EPSG:4326.",
       "label": "Spatial resolution (optional)",
       "type": "float",
       "example": null,
-      "weight": 2
+      "weight": 3
     },
     "pipeline@63": {
       "label": "Start date (optional)",
       "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": null,
-      "weight": 3
+      "weight": 4
     },
     "pipeline@64": {
       "label": "End date (optional)",
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if using all available dates.",
       "type": "text",
       "example": null,
-      "weight": 4
+      "weight": 5
     }
   },
   "outputs": {
@@ -453,16 +439,16 @@
       "type": "image/tiff;application=geotiff[]",
       "weight": 1
     },
-    "data>loadFromStac.yml@56|rasters": {
-      "description": "Output raster files in geotiff format.",
-      "label": "Rasters",
-      "type": "image/tiff;application=geotiff[]",
-      "weight": 2
-    },
     "data>load_polygons.yml@68|polygon": {
       "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
       "label": "Polygon",
       "type": "application/geopackage+sqlite3",
+      "weight": 2
+    },
+    "data>loadFromStac.yml@56|rasters": {
+      "description": "Output raster files in geotiff format.",
+      "label": "Rasters",
+      "type": "image/tiff;application=geotiff[]",
       "weight": 3
     }
   },
