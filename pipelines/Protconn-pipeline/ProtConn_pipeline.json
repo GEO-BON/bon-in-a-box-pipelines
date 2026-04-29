@@ -4,8 +4,8 @@
       "id": "29",
       "type": "userInput",
       "position": {
-        "x": 1491,
-        "y": 166.5
+        "x": 1533.3057153476302,
+        "y": 89.8980948841234
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -19,8 +19,8 @@
       "id": "41",
       "type": "userInput",
       "position": {
-        "x": 1548,
-        "y": 106
+        "x": 1573.509525579383,
+        "y": 59.898094884123395
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -31,8 +31,8 @@
       "id": "42",
       "type": "io",
       "position": {
-        "x": 2225,
-        "y": 174.5
+        "x": 2312,
+        "y": 116
       },
       "data": {
         "descriptionFile": "protconn_analysis>protconn_analysis.yml"
@@ -42,8 +42,8 @@
       "id": "43",
       "type": "output",
       "position": {
-        "x": 2837,
-        "y": 261.33333333333337
+        "x": 2968,
+        "y": 165.5
       },
       "data": {
         "label": "Output"
@@ -53,8 +53,8 @@
       "id": "48",
       "type": "io",
       "position": {
-        "x": 1409,
-        "y": 310.5
+        "x": 1389,
+        "y": -83
       },
       "data": {
         "descriptionFile": "data>cleanWDPA.yml"
@@ -64,8 +64,8 @@
       "id": "60",
       "type": "userInput",
       "position": {
-        "x": 12,
-        "y": 160.5
+        "x": 30,
+        "y": 39.39999999999998
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -76,8 +76,8 @@
       "id": "61",
       "type": "io",
       "position": {
-        "x": 595.5357951765077,
-        "y": 50.05956522807304
+        "x": 493,
+        "y": -192.5
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -87,8 +87,8 @@
       "id": "62",
       "type": "output",
       "position": {
-        "x": 1315.9017319033253,
-        "y": 55.81317129316608
+        "x": 1389,
+        "y": -198
       },
       "data": {
         "label": "Output"
@@ -98,8 +98,8 @@
       "id": "64",
       "type": "io",
       "position": {
-        "x": 573.9017319033253,
-        "y": 362.8131712931661
+        "x": 495,
+        "y": -111
       },
       "data": {
         "descriptionFile": "data>load_polygons.yml"
@@ -109,8 +109,8 @@
       "id": "65",
       "type": "constant",
       "position": {
-        "x": 197.9017319033253,
-        "y": 289.8131712931661
+        "x": 18,
+        "y": -78
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -127,8 +127,8 @@
       "id": "66",
       "type": "constant",
       "position": {
-        "x": 203.9017319033253,
-        "y": 15.813171293166079
+        "x": 18,
+        "y": -219.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -145,8 +145,8 @@
       "id": "67",
       "type": "constant",
       "position": {
-        "x": 219.9017319033253,
-        "y": 91.81317129316608
+        "x": 42,
+        "y": -171.5
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -158,8 +158,8 @@
       "id": "68",
       "type": "userInput",
       "position": {
-        "x": 866.5740026845781,
-        "y": 254.01093687657897
+        "x": 910,
+        "y": 10
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -184,8 +184,8 @@
       "id": "69",
       "type": "userInput",
       "position": {
-        "x": 182.67327708741357,
-        "y": 377.4723065074228
+        "x": 80,
+        "y": 95.66666666666669
       },
       "dragHandle": ".dragHandle",
       "data": {
