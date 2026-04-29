@@ -577,23 +577,23 @@
     },
     "references": [
       {
-        "text": "Saura et al. 2017",
+        "text": "Godínez-Gómez, O., Correa Ayram, C.A., Goicolea, T., Saura, S. 2026. Makurhini An R package for comprehensive analysis of landscape fragmentation and connectivity. Environmental Modelling & Software.",
+        "doi": "https://doi.org/10.34892/6fwd-af11"
+      },
+      {
+        "text": "Saura, Santiago, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. 2017. “Protected Areas in the World’s Ecoregions: How Well Connected Are They?” Ecological Indicators 76:144–58.",
         "doi": "https://doi.org/10.1016/j.ecolind.2016.12.047"
       },
       {
-        "text": "Saura et al. 2018",
+        "text": "Saura, Santiago, Bastian Bertzky, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. 2018. “Protected Area Connectivity: Shortfalls in Global Targets and Country-Level Priorities.” Biological Conservation 219:53–67.",
         "doi": "https://doi.org/10.1016/j.biocon.2017.12.020"
       },
       {
-        "text": "Saura et al. 2019",
+        "text": "Saura, Santiago, Bastian Bertzky, Lucy Bastin, Luca Battistella, Andrea Mandrici, and Grégoire Dubois. 2019. “Global Trends in Protected Area Connectivity from 2010 to 2018.” Biological Conservation 238:108183.",
         "doi": "https://doi.org/doi:10.1016/j.biocon.2019.07.028"
       },
       {
-        "text": "Godínez-Gómez et al. 2026",
-        "doi": "https://doi.org/10.1016/j.envsoft.2026.106981"
-      },
-      {
-        "text": "UNEP-WCMC and IUCN",
+        "text": "UNEP-WCMC and IUCN (2026), Protected Planet: The World Database on Protected Areas (WDPA), Cambridge, UK: UNEP-WCMC and IUCN.",
         "doi": "https://doi.org/10.34892/6fwd-af11"
       }
     ]
