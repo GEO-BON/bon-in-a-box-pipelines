@@ -21,7 +21,8 @@ inputs:
     label: STAC collection items
     description: Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. "chelsa-clim|bio1").
       To extract a whole collection, type the collection name only (e.g. "chelsa-clim"). To pull collection items by date, write the collection name and
-      provide a start date, end date, and temporal resolution.
+      provide a start date, end date, and temporal resolution. If pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W),
+      enter the collection name (e.g. gfw-lossyear), bounding box and time range if the layer is a time series, and the script will assemble the tiles into a continuous layer automatically.)
     type: text[]
     example: ["chelsa-clim|bio1", "chelsa-clim|bio2"]
   t0:
