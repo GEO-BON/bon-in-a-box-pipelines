@@ -21,7 +21,7 @@ inputs:
     example: ssp126
   spatial_res:
     label: Spatial resolution output
-    description: Pixel size (in meters) of the output raster
+    description: Pixel size of the output raster in the same units as the coordinate reference system (meters or degrees). 
     type: float
     example: 0.008 
   variable: 

@@ -129,26 +129,9 @@ print(cube_future)
 print(class(cube_future))
 print(cube_future[1])
 print(names(cube_future))
-#  layer_paths<-c()
-#  for (i in 1:length(cube_future)) {
-#    ff <- tempfile(pattern = paste0(names(cube_future[i]),'_'))
-#    out<-gdalcubes::write_tif(cube_future[i], dir = file.path(outputFolder), prefix=basename(ff),creation_options = list("COMPRESS" = "DEFLATE"), COG=TRUE, write_json_descr=TRUE)
-#    fp <- paste0(out[1])
-#    layer_paths <- cbind(layer_paths,fp)
-#  }
 
 
  out<-gdalcubes::write_tif(cube_future, dir = file.path(outputFolder), prefix = "future_climate", creation_options = list("COMPRESS" = "DEFLATE"), 
       COG=TRUE, write_json_descr=TRUE)
-
-# layer_paths <- c()
-# for(i in 1:length(names(cube_future))){
-# layer_paths[i] <- paste0(outputFolder, "/", names(cube_future[i]), ".tif")
-#  terra::writeRaster(x = cube_future[i],
-#                       layer_paths[i],
-#                       filetype='COG',
-#                      options=c("COMPRESS=DEFLATE"),
-#                      overwrite = TRUE)
-# }
 
 biab_output("future_climate", file.path(out[1]))
