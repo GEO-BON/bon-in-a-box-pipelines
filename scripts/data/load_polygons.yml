@@ -47,7 +47,7 @@ conda:
     - r-arrow
     - r-rjson
     - r-duckdb=1.4.4
-    - r-sf
+    - r-sf=1.1-0
     - r-dplyr
     - r-stringi
     - r-stringr

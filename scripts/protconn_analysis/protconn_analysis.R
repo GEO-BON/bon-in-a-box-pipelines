@@ -1,6 +1,6 @@
 # Script for analyzing ProtConn with the function
-
-packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ", "ggrepel")
+# For review PR
+packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ")
 
 # Load libraries
 lapply(packages_list, library, character.only = TRUE) # Load libraries - packages
@@ -8,13 +8,14 @@ lapply(packages_list, library, character.only = TRUE) # Load libraries - package
 sf_use_s2(FALSE) # turn off spherical geometry
 
 input <- biab_inputs() # Load input file
-crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
+crs_input <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 
 if ((input$year_int) >= (input$years - input$start_year)) {
   biab_error_stop("Please make sure the year interval is smaller than the difference between start year and year for cutoff.")
 }
 
 units::units_options(set_units_mode = "standard")
+protected_areas_path <- c()
 # Load study area shapefile
 print("Loading study area")
 
@@ -26,7 +27,8 @@ if (length(input$study_area_polygon) > 1) { # if there is userdata study area in
   study_area <- st_read(input$study_area_polygon) # otherwise use the country polygon from the script
 }
 
-study_area <- st_transform(study_area, st_crs(crs))
+
+study_area <- st_transform(study_area, st_crs(crs_input))
 print("CRS:")
 print(st_crs(study_area))
 
@@ -52,29 +54,60 @@ if (length(protected_areas_user) > 0 && length(protected_areas) > 0) {
 ### Load protected area shapefile
 if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, load that
 
-  print(protected_areas)
-  protected_areas <- st_read(protected_areas, type = 3, promote_to_multi = FALSE) # input as polygons
-  protected_areas <- st_transform(protected_areas, st_crs(crs))
-  # fix date
-  protected_areas$legal_status_updated_at <- lubridate::parse_date_time(protected_areas$legal_status_updated_at, orders = c("ymd", "mdy", "dmy", "y"))
-  protected_areas$legal_status_updated_at <- lubridate::year(protected_areas$legal_status_updated_at)
+  protected_areas <- st_read(protected_areas)
+  protected_areas <- st_transform(protected_areas, st_crs(crs_input))
 
-  print("Protected area geometry:")
-  print(unique(st_geometry_type(protected_areas)))
+  print(head(protected_areas))
+
+  if (input$time_series == TRUE) {
+    # label which rows are missing dates to remove later
+    if (input$include_na_dates == FALSE) {
+      protected_areas_NA <- which(
+        is.na(protected_areas$STATUS_YR) |
+          protected_areas$STATUS_YR == 0
+      )
+    }
+
+    # Assign all PAs without a date to the start year for the time series or omit
+    for (i in 1:nrow(protected_areas)) {
+      if (is.na(protected_areas$STATUS_YR[i]) | protected_areas$STATUS_YR[i] == 0) {
+        protected_areas$STATUS_YR[i] <- input$start_year
+      }
+    }
+
+    protected_areas$STATUS_YR <- lubridate::parse_date_time(protected_areas$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
+    protected_areas$STATUS_YR <- lubridate::year(protected_areas$STATUS_YR)
+  }
 }
 
 
 if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
-  protected_areas_user <- st_read(protected_areas_user, type = 3, promote_to_multi = FALSE) # load
+  protected_areas_user <- st_read(protected_areas_user) # load
   print(protected_areas_user)
-  protected_areas_user <- st_transform(protected_areas_user, st_crs(crs))
-  if (is.null(input$date_column)) {
-    biab_error_stop("Please specify a date column name for the protected areas file.")
+  protected_areas_user <- st_transform(protected_areas_user, st_crs(crs_input))
+
+  if (input$time_series == TRUE) {
+    if (is.null(input$date_column)) {
+      biab_error_stop("Please specify a date column name for the protected areas file or deselect the time series option.")
+    }
+
+    if (!is.null(input$date_column)) {
+      # Assign all PAs without a date to the start year for the time series
+      print("fixing date")
+
+      protected_areas_user <- protected_areas_user %>% rename(STATUS_YR = input$date_column)
+      for (i in 1:nrow(protected_areas_user)) {
+        if (is.na(protected_areas_user$STATUS_YR[i]) | protected_areas_user$STATUS_YR[i] == 0) {
+          protected_areas_user$STATUS_YR[i] <- input$start_year
+        }
+      }
+
+      protected_areas_user$STATUS_YR <- lubridate::parse_date_time(protected_areas_user$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
+      protected_areas_user$STATUS_YR <- lubridate::year(protected_areas_user$STATUS_YR)
+    }
   }
-  protected_areas_user <- protected_areas_user %>% rename(legal_status_updated_at = input$date_column)
-  protected_areas_user$legal_status_updated_at <- lubridate::parse_date_time(protected_areas_user$legal_status_updated_at, orders = c("ymd", "mdy", "dmy", "y"))
-  protected_areas_user$legal_status_updated_at <- lubridate::year(protected_areas_user$legal_status_updated_at)
 }
+
 
 if (pa_input_type == "User input") {
   protected_areas <- protected_areas_user
@@ -85,38 +118,84 @@ if (pa_input_type == "Both") {
     biab_error_stop("Geometry column must be called 'geom'")
   }
   print("Combining user defined protected areas with WDPA data")
-  protected_areas <- protected_areas[, c("legal_status_updated_at", "geom")]
-  protected_areas_user <- protected_areas_user[, c("legal_status_updated_at", "geom")]
+  if (input$time_series == TRUE) {
+    protected_areas <- protected_areas[, c("STATUS_YR", "geom")]
+    protected_areas_user <- protected_areas_user[, c("STATUS_YR", "geom")]
+  } else {
+    protected_areas <- protected_areas[, c("geom")]
+    protected_areas_user <- protected_areas_user[, c("geom")]
+  }
 
   protected_areas <- rbind(protected_areas, protected_areas_user)
 }
 
+print("Protected area geometry:")
+print(unique(st_geometry_type(protected_areas)))
+print(protected_areas)
+
 print(nrow(protected_areas))
+# buffer by a distance of 0 to fix some geometries
+protected_areas <- st_buffer(protected_areas, 0)
 
-protected_areas <- st_make_valid(protected_areas)
+any_invalid <- any(!st_is_valid(protected_areas))
 
+if (any_invalid) {
+  message("Invalid geometries detected. Fixing...")
+  protected_areas <- st_make_valid(protected_areas)
+}
 ## Make function to get rid of overlapping geometries
 dissolve_overlaps <- function(x) {
   print("Combining overlapping geometries")
-  protected_areas_buffer <- st_buffer(x, dist = 10) # buffering polygons by 10 meters
-  intersections <- st_intersects(protected_areas_buffer) # Identifying intersecting polygons
-
-  # Grouping intersecting polygons
-  groups <- as.integer(igraph::components(graph = igraph::graph_from_adj_list(intersections))$membership)
-
-  x$group_id <- groups
 
   protected_areas_clean <- x %>%
-    group_by(group_id) %>%
-    summarize(geom = st_union(geom), .groups = "drop") # COmbining intersecting polygons
+    st_buffer(dist = 10) %>%
+    st_union() %>%
+    st_cast("POLYGON") %>%
+    st_as_sf()
 
-  # Exploding multipolygons into polygons for faster calculation
-  protected_areas_multi <- protected_areas_clean %>%
-    filter(st_geometry_type(protected_areas_clean) == "MULTIPOLYGON") %>%
+  print(protected_areas_clean)
+
+  # Re-validate after union if needed
+  invalid_after_union <- sum(!st_is_valid(protected_areas_clean))
+  if (invalid_after_union > 0) {
+    print(paste(invalid_after_union, "invalid geometries found after union, running st_make_valid"))
+    protected_areas_clean <- st_make_valid(protected_areas_clean)
+  } else {
+    print("All geometries valid after union")
+  }
+
+  # Cast all to POLYGON (handles both POLYGON and MULTIPOLYGON)
+  protected_areas_clean <- protected_areas_clean %>%
     st_cast("POLYGON", group_or_split = TRUE)
-  protected_areas_poly <- protected_areas_clean %>% filter(st_geometry_type(protected_areas_clean) == "POLYGON")
 
-  protected_areas_clean <- rbind(protected_areas_multi, protected_areas_poly)
+  # Checks to see if st_cast causes polygon loss
+  # Before
+  n_before <- nrow(protected_areas_clean)
+  print(n_before)
+
+  protected_areas_clean <- protected_areas_clean %>%
+    st_cast("POLYGON", group_or_split = TRUE)
+
+  # After
+  n_after <- nrow(protected_areas_clean)
+  print(n_after)
+  if (n_after < n_before) {
+    warning(paste(
+      "Polygon loss detected:", n_before - n_after,
+      "features lost during st_cast"
+    ))
+  } else {
+    print(paste("No polygon loss detected.", n_after, "polygons retained"))
+  }
+
+  # Re-validate after cast if needed
+  invalid_after_cast <- sum(!st_is_valid(protected_areas_clean))
+  if (invalid_after_cast > 0) {
+    print(paste(invalid_after_cast, "invalid geometries found after cast, running st_make_valid"))
+    protected_areas_clean <- st_make_valid(protected_areas_clean)
+  } else {
+    print("All geometries valid after cast")
+  }
 
   return(protected_areas_clean)
 }
@@ -125,19 +204,29 @@ dissolve_overlaps <- function(x) {
 
 print("Calculating ProtConn")
 
-protected_areas <- protected_areas %>% filter(legal_status_updated_at <= input$years | is.na(legal_status_updated_at))
+if ("STATUS_YR" %in% names(protected_areas)) {
+  protected_areas <- protected_areas %>% filter(STATUS_YR <= input$years | is.na(STATUS_YR))
+}
 print("Num prot areas:")
 print(nrow(protected_areas))
+
 # Get rid of overlaps
 protected_areas_simp <- dissolve_overlaps(protected_areas)
+
+# rename geometry column
+sf::st_geometry(protected_areas_simp) <- "geom"
+
 print("Num prot areas with overlaps dissolved and multipolygons expanded into different rows:")
 print(nrow(protected_areas_simp))
 
-# output simplified protected areas
-protected_areas_simp_path <- file.path(outputFolder, "protected_areas.gpkg")
-sf::st_write(protected_areas_simp, protected_areas_simp_path, delete_dsn = T)
-biab_output("protected_areas", protected_areas_simp_path)
+# Filter out protected areas smaller than the size threshold
+threshold <- units::set_units(input$pa_size_threshold, "m^2")
+print(threshold)
+protected_areas_simp <- protected_areas_simp %>% filter((st_area(protected_areas_simp)) > threshold)
 
+# output simplified protected areas
+protected_areas_simp_path <- file.path(outputFolder, "protected_areas_full.gpkg")
+sf::st_write(protected_areas_simp, protected_areas_simp_path, delete_dsn = T)
 
 if (nrow(protected_areas_simp) < 2) {
   biab_error_stop("Can't calculate ProtConn on one or less protected areas, please check input file.")
@@ -147,18 +236,26 @@ if (isTRUE(st_is_longlat(protected_areas_simp))) {
   biab_error_stop("Protected areas are in latitude longitude degrees, please choose a projected coordinate reference system.")
 }
 
-protconn_result <- Makurhini::MK_ProtConn(
-  nodes = protected_areas_simp,
-  region = study_area,
-  area_unit = "m2",
-  distance = list(type = input$distance_matrix_type),
-  probability = 0.5,
-  transboundary = 0,
-  distance_thresholds = c(input$distance_threshold)
+protconn_result <- tryCatch(
+  {
+    Makurhini::MK_ProtConn(
+      nodes = protected_areas_simp,
+      region = study_area,
+      area_unit = "m2",
+      distance = list(type = "edge", keep = 0.6),
+      probability = 0.5,
+      transboundary = input$buffer,
+      distance_thresholds = c(input$distance_threshold),
+      protconn_bound = TRUE
+    )
+  },
+  error = function(e) {
+    if (grepl("missing value where TRUE/FALSE needed", e$message)) {
+      biab_error_stop("Error - PAs are functionally isolated at this dispersal threshold. Please input a larger dispersal threshold or check the protected area input file.")
+    }
+  }
 )
 gc()
-print(class(protconn_result))
-print(length(protconn_result))
 
 # extract columns of interest and put in a dataframe, add a distance column
 protconn_result_list <- list()
@@ -173,12 +270,17 @@ if (length(input$distance_threshold) == 1) {
   protconn_result[[name]] <- tmp
 }
 
-print(names(protconn_result))
+print("printing result:")
+study_area_km2 <- round((as.numeric(as.data.frame(protconn_result[[1]])[3, 2])) / 1e6, 2)
+print(class(study_area_km2))
+biab_output("study_area_km2", study_area_km2)
+protected_area_km2 <- round((as.numeric(as.data.frame(protconn_result[[1]])[4, 2]) / 1e6), 2)
+biab_output("protected_area_km2", protected_area_km2)
+
 for (i in seq_along(protconn_result)) {
   protconn <- as.data.frame(protconn_result[[i]])
-  print(protconn)
   df <- protconn %>%
-    dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
+    dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn", "ProtConn_Within", "ProtConn_Contig", "ProtConn_Unprot")) %>%
     dplyr::select(Percentage, `ProtConn indicator`)
   df$Distance <- names(protconn_result)[i]
   df <- mutate(df, Distance = as.numeric(gsub("^d", "", Distance)))
@@ -196,7 +298,7 @@ protconn_result_path <- file.path(outputFolder, "protconn_result.csv")
 write.csv(protconn_result, protconn_result_path, row.names = F)
 biab_output("protconn_result", protconn_result_path)
 
-protconn_result_long_noprot <- protconn_result_long %>% filter(!`ProtConn indicator` == "Prot") # filter out protected for plotting
+protconn_result_long_noprot <- protconn_result_long %>% filter(`ProtConn indicator` %in% c("Unprotected", "ProtConn", "ProtUnconn")) # filter out protected for plotting
 result_plot <- ggplot2::ggplot(protconn_result_long_noprot) +
   geom_col(aes(y = Percentage, x = 1, fill = `ProtConn indicator`)) +
   coord_polar(theta = "y") +
@@ -224,123 +326,139 @@ if (!(input$years %in% years)) { # check if the end year is there
   # 3. If not, append it to the sequence and ensure uniqueness and order
   years <- sort(unique(c(years, input$years)))
 }
-# assign all PAs with no date to the start date for plotting
-for (i in 1:nrow(protected_areas)) {
-  if (is.na(protected_areas$legal_status_updated_at[i])) {
-    print("fixing date")
-    protected_areas$legal_status_updated_at[i] <- input$start_year
-  }
-}
 
 # Calculate ProtConn for each specified year
 print("Calculating ProtConn time series")
 
-protconn_ts_result <- list()
-
-for (i in seq_along(years)) {
-  yr <- years[i]
-  print(paste("Processing year:", yr))
-
-  if (yr == input$years) { # skip end year because already calculated above
-    protconn_result_combined <- protconn_result_long
-    protconn_result_combined$Year <- yr
-  } else {
-    protected_areas_filt_yr <- protected_areas %>%
-      dplyr::filter(legal_status_updated_at <= yr)
-
-    if (nrow(protected_areas_filt_yr) < 2) {
-      message(paste("Not enough protected area data from", yr, "- skipping"))
-      next
-    }
-
-    protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
-
-    protconn_result_yrs <- Makurhini::MK_ProtConn(
-      nodes = protected_areas_filt_yr,
-      region = study_area,
-      area_unit = "m2",
-      distance = list(type = input$distance_matrix_type),
-      probability = 0.5,
-      transboundary = 0,
-      distance_thresholds = c(input$distance_threshold)
-    )
-
-
-    if (length(input$distance_threshold) == 1) {
-      name <- paste0("d", input$distance_threshold)
-      tmp <- protconn_result_yrs
-      protconn_result_yrs <- list()
-      protconn_result_yrs[[name]] <- tmp
-    }
-
-    # Reset for this iteration to avoid duplicates
-    protconn_result_list <- list()
-
-    for (j in seq_along(protconn_result_yrs)) {
-      protconn <- as.data.frame(protconn_result_yrs[[j]])
-      df <- protconn %>%
-        dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn")) %>%
-        dplyr::select(Percentage, `ProtConn indicator`)
-      df$Distance <- as.numeric(gsub("^d", "", names(protconn_result_yrs)[j]))
-      protconn_result_list[[j]] <- df
-    }
-
-    protconn_result_combined <- do.call(rbind, protconn_result_list)
-    protconn_result_combined$Year <- yr
+if (input$time_series == TRUE) {
+  # drop Na dates if user chose not to include them
+  if (input$include_na_dates == FALSE) {
+    protected_areas <- protected_areas[-protected_areas_NA, ]
   }
-  print(protconn_result_combined)
-  protconn_ts_result[[i]] <- protconn_result_combined
-  gc()
+  protconn_ts_result <- list()
+
+  for (i in seq_along(years)) {
+    yr <- years[i]
+    print(paste("Processing year:", yr))
+
+
+    if (input$include_na_dates == TRUE && yr == input$years) { # skip end year because already calculated above
+      protconn_result_combined <- protconn_result_long
+      protconn_result_combined$Year <- yr
+    } else {
+      protected_areas_filt_yr <- protected_areas %>%
+        dplyr::filter(STATUS_YR <= yr)
+
+      if (nrow(protected_areas_filt_yr) < 2) {
+        message(paste("Not enough protected area data from", yr, "- skipping"))
+        next
+      }
+
+      protected_areas_filt_yr <- dissolve_overlaps(protected_areas_filt_yr)
+      print(head(protected_areas_filt_yr))
+      protected_areas_filt_yr <- protected_areas_filt_yr %>% filter((st_area(protected_areas_filt_yr)) > threshold)
+      print(nrow(protected_areas_filt_yr))
+
+      protconn_result_yrs <- Makurhini::MK_ProtConn(
+        nodes = protected_areas_filt_yr,
+        region = study_area,
+        area_unit = "m2",
+        distance = list(type = "edge", keep = 0.6),
+        probability = 0.5,
+        transboundary = input$buffer,
+        distance_thresholds = c(input$distance_threshold),
+        protconn_bound = TRUE
+      )
+
+
+      if (length(input$distance_threshold) == 1) {
+        name <- paste0("d", input$distance_threshold)
+        tmp <- protconn_result_yrs
+        protconn_result_yrs <- list()
+        protconn_result_yrs[[name]] <- tmp
+      }
+
+      # Reset for this iteration to avoid duplicates
+      protconn_result_list <- list()
+
+      for (j in seq_along(protconn_result_yrs)) {
+        protconn <- as.data.frame(protconn_result_yrs[[j]])
+        df <- protconn %>%
+          dplyr::filter(`ProtConn indicator` %in% c("Prot", "Unprotected", "ProtConn", "ProtUnconn", "ProtConn_Within", "ProtConn_Contig", "ProtConn_Unprot")) %>%
+          dplyr::select(Percentage, `ProtConn indicator`)
+        df$Distance <- as.numeric(gsub("^d", "", names(protconn_result_yrs)[j]))
+        protconn_result_list[[j]] <- df
+      }
+
+      protconn_result_combined <- do.call(rbind, protconn_result_list)
+      protconn_result_combined$Year <- yr
+    }
+    print(protconn_result_combined)
+    protconn_ts_result[[i]] <- protconn_result_combined
+    if (exists("protected_areas_filt_yr")) {
+      protected_areas_path[i] <- file.path(outputFolder, paste0(yr, "_protected_areas.gpkg"))
+      sf::st_write(protected_areas_filt_yr, protected_areas_path[i], delete_dsn = T)
+    }
+    gc()
+  }
+  protected_areas_path <- c(protected_areas_simp_path, protected_areas_path) # combine the original simplified protected areas with the yearly filtered ones for output
+
+
+  # Final time series dataframe
+  protconn_result_yrs <- do.call(rbind, protconn_ts_result)
+  print("Printing result years")
+  print(protconn_result_yrs)
+
+  result_yrs <- tidyr::pivot_wider(
+    data = protconn_result_yrs,
+    id_cols = c("Distance", "Year"),
+    names_from = "ProtConn indicator",
+    values_from = "Percentage",
+    id_expand = TRUE
+  )
+
+  result_yrs_path <- file.path(outputFolder, "result_yrs.csv") # save protconn result
+  write.csv(result_yrs, result_yrs_path)
+  biab_output("result_yrs", result_yrs_path)
+
+  xint <- (input$start_year) + round(((input$years - input$start_year) / 2))
+
+  protconn_result_yrs <- protconn_result_yrs %>% filter(`ProtConn indicator` %in% c("Unprotected", "ProtConn", "ProtUnconn")) # filter out unprotected for plotting
+
+  # make separate plot for each distance threshold
+  plot_paths <- c()
+  for (i in seq_along(input$distance_threshold)) {
+    result_dist <- protconn_result_yrs %>% filter(Distance == input$distance_threshold[i])
+
+    name <- paste("Median dispersal distance", input$distance_threshold[i], "meters")
+    result_yrs_plot <-
+      ggplot(
+        result_dist,
+        aes(x = Year, y = Percentage, group = `ProtConn indicator`, shape = `ProtConn indicator`, color = `ProtConn indicator`)
+      ) +
+      geom_point() +
+      geom_line() +
+      labs(y = "Percent area", x = "Year", title = name) +
+      scale_color_manual(values = c("#39568CFF", "#1F968BFF", "#73D055FF")) +
+      geom_hline(yintercept = 30, lty = 2) +
+      annotate("text", x = xint, y = 33, label = "Kunming-Montreal target") +
+      facet_wrap(~Distance) +
+      theme_classic() +
+      theme(strip.text.y = element_blank())
+
+    file_path <- file.path(outputFolder, paste0("result_plot_yrs_", input$distance_threshold[i], "m.png"))
+    plot_paths <- c(plot_paths, file_path) # put file paths in list
+    ggsave(file_path, result_yrs_plot)
+  }
+  biab_output("result_yrs_plot", plot_paths)
+} else {
+  result_yrs <- NULL
+  biab_output("result_yrs", result_yrs)
+
+  result_yrs_plot <- NULL
+  biab_output("result_yrs_plot", result_yrs_plot)
+
+  protected_areas_path <- protected_areas_simp_path
 }
 
-# Final time series dataframe
-protconn_result_yrs <- do.call(rbind, protconn_ts_result)
-print("Printing result years")
-print(protconn_result_yrs)
-print(class(protconn_result_yrs))
-
-result_yrs <- tidyr::pivot_wider(
-  data = protconn_result_yrs,
-  id_cols = c("Distance", "Year"),
-  names_from = "ProtConn indicator",
-  values_from = "Percentage",
-  id_expand = TRUE
-)
-print(result_yrs)
-
-result_yrs_path <- file.path(outputFolder, "result_yrs.csv") # save protconn result
-write.csv(result_yrs, result_yrs_path)
-biab_output("result_yrs", result_yrs_path)
-
-xint <- (input$start_year) + round(((input$years - input$start_year) / 2))
-
-protconn_result_yrs <- protconn_result_yrs %>% filter(!`ProtConn indicator` == "Unprotected") # filter out unprotected for plotting
-
-# make separate plot for each distance threshold
-plot_paths <- c()
-for (i in seq_along(input$distance_threshold)) {
-  result_dist <- protconn_result_yrs %>% filter(Distance == input$distance_threshold[i])
-
-  name <- paste("Median dispersal distance", input$distance_threshold[i], "meters")
-  result_yrs_plot <-
-    ggplot(
-      result_dist,
-      aes(x = Year, y = Percentage, group = `ProtConn indicator`, shape = `ProtConn indicator`, color = `ProtConn indicator`)
-    ) +
-    geom_point() +
-    geom_line() +
-    labs(y = "Percent area", x = "Year", title = name) +
-    scale_color_manual(values = c("#39568CFF", "#1F968BFF", "#73D055FF")) +
-    geom_hline(yintercept = 30, lty = 2) +
-    annotate("text", x = xint, y = 31, label = "Kunming-Montreal target") +
-    facet_wrap(~Distance) +
-    geom_line() +
-    theme_classic() +
-    theme(strip.text.y = element_blank())
-
-  file_path <- file.path(outputFolder, paste0("result_plot_yrs_", input$distance_threshold[i], "m.png"))
-  plot_paths <- cbind(plot_paths, file_path) # put file paths in list
-  ggsave(file_path, result_yrs_plot)
-}
-
-biab_output("result_yrs_plot", plot_paths)
+biab_output("protected_areas", protected_areas_path[!is.na(protected_areas_path)])
