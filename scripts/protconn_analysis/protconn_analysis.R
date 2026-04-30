@@ -59,24 +59,26 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
 
   print(head(protected_areas))
 
-  # label which rows are missing dates to remove later
-  if (input$include_na_dates == FALSE) {
-    protected_areas_NA <- which(
-      is.na(protected_areas$STATUS_YR) |
-        protected_areas$STATUS_YR == 0
-    )
-  }
-
-  # Assign all PAs without a date to the start year for the time series or omit
-  for (i in 1:nrow(protected_areas)) {
-    if (is.na(protected_areas$STATUS_YR[i]) | protected_areas$STATUS_YR[i] == 0) {
-      protected_areas$STATUS_YR[i] <- input$start_year
+  if (input$time_series == TRUE) {
+    # label which rows are missing dates to remove later
+    if (input$include_na_dates == FALSE) {
+      protected_areas_NA <- which(
+        is.na(protected_areas$STATUS_YR) |
+          protected_areas$STATUS_YR == 0
+      )
     }
+
+    # Assign all PAs without a date to the start year for the time series or omit
+    for (i in 1:nrow(protected_areas)) {
+      if (is.na(protected_areas$STATUS_YR[i]) | protected_areas$STATUS_YR[i] == 0) {
+        protected_areas$STATUS_YR[i] <- input$start_year
+      }
+    }
+
+    protected_areas$STATUS_YR <- lubridate::parse_date_time(protected_areas$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
+    protected_areas$STATUS_YR <- lubridate::year(protected_areas$STATUS_YR)
   }
 }
-
-protected_areas$STATUS_YR <- lubridate::parse_date_time(protected_areas$STATUS_YR, orders = c("ymd", "mdy", "dmy", "y"))
-protected_areas$STATUS_YR <- lubridate::year(protected_areas$STATUS_YR)
 
 print("Protected area geometry:")
 print(unique(st_geometry_type(protected_areas)))
@@ -120,7 +122,7 @@ if (pa_input_type == "Both") {
     biab_error_stop("Geometry column must be called 'geom'")
   }
   print("Combining user defined protected areas with WDPA data")
-  if (!is.null(input$date_column)) {
+  if (input$time_series == TRUE) {
     protected_areas <- protected_areas[, c("STATUS_YR", "geom")]
     protected_areas_user <- protected_areas_user[, c("STATUS_YR", "geom")]
   } else {
@@ -202,9 +204,7 @@ dissolve_overlaps <- function(x) {
 
 print("Calculating ProtConn")
 
-
-
-if (!is.null(input$date_column)) {
+if ("STATUS_YR" %in% names(protected_areas)) {
   protected_areas <- protected_areas %>% filter(STATUS_YR <= input$years | is.na(STATUS_YR))
 }
 print("Num prot areas:")
