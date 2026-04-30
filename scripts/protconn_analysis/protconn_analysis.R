@@ -80,10 +80,6 @@ if (pa_input_type == "WDPA" || pa_input_type == "Both") { # if using WDPA data, 
   }
 }
 
-print("Protected area geometry:")
-print(unique(st_geometry_type(protected_areas)))
-print(protected_areas)
-
 
 if (pa_input_type == "User input" || pa_input_type == "Both") { # rename and parse date column
   protected_areas_user <- st_read(protected_areas_user) # load
@@ -132,6 +128,10 @@ if (pa_input_type == "Both") {
 
   protected_areas <- rbind(protected_areas, protected_areas_user)
 }
+
+print("Protected area geometry:")
+print(unique(st_geometry_type(protected_areas)))
+print(protected_areas)
 
 print(nrow(protected_areas))
 # buffer by a distance of 0 to fix some geometries
