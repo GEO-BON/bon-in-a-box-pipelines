@@ -60,7 +60,7 @@ This step calculates the difference in the layers of the phenology raster layers
 - **Zonal statistics:** summarised values over the country/region of interest based on the aggregate function input by the user, for each year for each band of interest.
 
 ## Example
-**Sample run:** See an example Phenology run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/Phenology%3Ephenology_EO/f08ed95a9538d87c7303027390889fba) and [viewer](https://pipelines-results.geobon.org/viewer/Phenology%3Ephenology_EO%3Ef08ed95a9538d87c7303027390889fba).
+**Sample run:** See an example Phenology run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/_2025-10-16%3EPhenology%3Ephenology_EO/f08ed95a9538d87c7303027390889fba) and [viewer](https://pipelines-results.geobon.org/viewer/_2025-10-16%3EPhenology%3Ephenology_EO%3Ef08ed95a9538d87c7303027390889fba).
 
 ## Troubleshooting
 The phenology layers are fine resolution, so pulling them in the original resolution may take a significant amount of time and space on your computer.

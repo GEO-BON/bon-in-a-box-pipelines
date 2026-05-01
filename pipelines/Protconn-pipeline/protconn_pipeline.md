@@ -103,7 +103,7 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 ## Example
 
-**Sample run:** See an example ProtConn run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/Protconn-pipeline%3EProtConn_pipeline/163fed81a7957fbb3824b8050762f737) and [viewer](https://pipelines-results.geobon.org/viewer/Protconn-pipeline%3EProtConn_pipeline%3E163fed81a7957fbb3824b8050762f737).
+**Sample run:** See an example ProtConn run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/_2025-10-16%3EProtconn-pipeline%3EProtConn_pipeline/163fed81a7957fbb3824b8050762f737) and [viewer](https://pipelines-results.geobon.org/viewer/_2025-10-16%3EProtconn-pipeline%3EProtConn_pipeline%3E163fed81a7957fbb3824b8050762f737).
 
 ## Troubleshooting
 

@@ -92,7 +92,7 @@ This steps calculate the Species Habitat Index (SHI) for the species of interest
 - **Steward's SHI time series:** Plot of Steward’s SHI over time. Steward’s SHI is weighted by the proportion of the species’ range that is in the study area.
 
 ## Example
-**Sample run:** See an example SHI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/SHI_pipeline/fb4b651c9c810117b3e8338085a009e2) and [viewer](https://pipelines-results.geobon.org/viewer/SHI_pipeline%3Efb4b651c9c810117b3e8338085a009e2).
+**Sample run:** See an example SHI run here in the [run ui](https://pipelines-results.geobon.org/pipeline-form/_2025-10-16%3ESpeciesHabitatIndex%3ESHI_pipeline/6cc8d65e413c341d251ea2550dadeacc) and [viewer](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESpeciesHabitatIndex%3ESHI_pipeline%3E6cc8d65e413c341d251ea2550dadeacc).
 
 ## Troubleshooting
 

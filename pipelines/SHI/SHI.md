@@ -28,7 +28,7 @@ The pipeline creates the following outputs:
 - **Habitat by time step:** Raster maps of the habitat for each time point.
 - **Raster plot of forest change:** Maps areas that have lost habitat, gained habitat, and experienced no change over the specified time period.
 
-[See an example SHI output here](https://pipelines-results.geobon.org/viewer/SHI_pipeline%3E6cc8d65e413c341d251ea2550dadeacc)
+[See an example SHI output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESpeciesHabitatIndex%3ESHI_pipeline%3E6cc8d65e413c341d251ea2550dadeacc)
 
 Workflow for Species Habitat Score
 ![image2](https://github.com/user-attachments/assets/3ddb7aa8-14e8-49eb-93a8-8c26129e0fc8)
