@@ -10,7 +10,54 @@ import sys
 # --- CONFIGURATION ---
 BASE_DIR = "output/"
 
-def apply_operation(source_path, operation, dest_dir=None):
+
+def relative_to_base(path):
+    normalized_path = os.path.normpath(path)
+    normalized_base = os.path.normpath(BASE_DIR)
+
+    if normalized_path == normalized_base:
+        return ""
+
+    if normalized_path.startswith(normalized_base + os.sep):
+        return os.path.relpath(normalized_path, normalized_base)
+
+    return path
+
+
+def patch_pipeline_output_json(json_path, script_prefix):
+    with open(json_path, "r") as jf:
+        pipeline_output = json.load(jf)
+
+    patched = {}
+    for key, value in pipeline_output.items():
+        # Always patch the key (scripts path)
+        new_key = f"{script_prefix}>{key}"
+
+        # Avoid patching values that are not paths (e.g. "cancelled")
+        if isinstance(value, str) and "/" in value:
+            new_value = f"{script_prefix}/{value}"
+        else:
+            new_value = value
+
+        patched[new_key] = new_value
+
+    serialized = json.dumps(patched, indent=2)
+    # Preserve escaped separator in file text (\u003e) instead of literal '>'
+    serialized = serialized.replace(">", "\\u003e")
+
+    with open(json_path, "w") as jf:
+        jf.write(serialized)
+
+def patch_input_or_output_json(json_path, script_prefix):
+    with open(json_path, "r") as jf:
+        content = jf.read()
+
+    # Insert script_prefix after /output/ in all matching paths
+    patched = content.replace("/output/", f"/output/{script_prefix}/")
+    with open(json_path, "w") as jf:
+        jf.write(patched)
+
+def apply_operation(source_path, operation, dest_root=None, script_prefix=None):
     if not os.path.exists(source_path):
         print(f"Path does not exist: {source_path}")
         return
@@ -24,33 +71,62 @@ def apply_operation(source_path, operation, dest_dir=None):
             print(f"Deleted file: {source_path}")
 
     elif operation in ("copy", "move"):
-        if not dest_dir:
-            print("Destination directory required for copy/move.")
+        if not dest_root:
+            print("Destination output root directory required for copy/move.")
             return
 
+        dest_dir = os.path.join(dest_root, script_prefix) if script_prefix else dest_root
 
-        rel_source_path = source_path[len(BASE_DIR):] if source_path.startswith(BASE_DIR) else source_path
+        rel_source_path = relative_to_base(source_path)
         dest_path = os.path.join(dest_dir, rel_source_path)
         if os.path.isdir(source_path):
             if os.path.exists(dest_path):
                 shutil.rmtree(dest_path)
 
+            print(f"{operation.capitalize()} folder: {source_path} -> {dest_path}")
             shutil.copytree(source_path, dest_path) if operation == "copy" else shutil.move(source_path, dest_path)
-            print(f"{operation.capitalize()}d folder: {source_path} -> {dest_path}")
         else:
+            print(f"{operation.capitalize()} file: {source_path} -> {dest_path}")
             shutil.copy2(source_path, dest_path) if operation == "copy" else shutil.move(source_path, dest_path)
-            print(f"{operation.capitalize()}d file: {source_path} -> {dest_path}")
+
+        # Edit input.json and output.json to insert prefix in all source paths
+        if script_prefix:
+            json_filenames = {"input.json", "output.json", "pipelineOutput.json"}
+            # Collect all JSON files to patch (either the file itself or inside a copied folder)
+            if os.path.isdir(dest_path):
+                json_files_to_patch = [
+                    os.path.join(root, fname)
+                    for root, _, files in os.walk(dest_path)
+                    for fname in files if fname in json_filenames
+                ]
+            elif os.path.basename(dest_path) in json_filenames:
+                json_files_to_patch = [dest_path]
+            else:
+                json_files_to_patch = []
+
+            for json_path in json_files_to_patch:
+                if os.path.basename(json_path) == "pipelineOutput.json":
+                    patch_pipeline_output_json(json_path, script_prefix)
+                else:
+                    patch_input_or_output_json(json_path, script_prefix)
+
+                print(f"Patched paths in: {json_path}")
+
     else:
         print(f"Unknown operation: {operation}")
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: ./manage_output.py <run folder> <delete|move|copy> [destination_output_root]")
+        print("Usage: ./manage_output.py <run folder> <delete|move|copy> [destination_output_root] [script_prefix]")
+        print("Script prefix is optional and will be used as a subfolder " \
+            "in the destination root to avoid collisions between different script versions. " \
+            "It is expected that the scripts have a corresponding folder in the scripts root with that version of the scripts checked out.")
         sys.exit(1)
 
     pipelineRunFolder = sys.argv[1]
     operation = sys.argv[2]
     dest_root = sys.argv[3] if len(sys.argv) > 3 else None
+    script_prefix = sys.argv[4] if len(sys.argv) > 4 else None
 
     with open(pipelineRunFolder + "/pipelineOutput.json", "r") as f:
         data = json.load(f)
@@ -62,10 +138,10 @@ def main():
             # Only operate if path exists and is a directory
             folder_path = os.path.join(BASE_DIR, v)
             if os.path.isdir(folder_path):
-                apply_operation(os.path.join(BASE_DIR, v), operation, dest_root)
+                apply_operation(os.path.join(BASE_DIR, v), operation, dest_root, script_prefix)
 
     # Apply operation to the JSON file itself
-    apply_operation(pipelineRunFolder, operation, dest_root)
+    apply_operation(pipelineRunFolder, operation, dest_root, script_prefix)
 
 if __name__ == "__main__":
     main()
