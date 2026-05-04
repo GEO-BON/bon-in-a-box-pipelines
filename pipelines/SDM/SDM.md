@@ -40,7 +40,7 @@ The pipeline creates the following outputs:
 - **Predictions:** SDM prediction probabilities can be viewed as a raster.
 - **Variability of predictions:** The variability of the 95% confidence of each prediction can be viewed on a map to show uncertainty.
 
-[See an example output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESDM%3ESDM_BRT%3E933ca049e112ab67db9711517e6ee30a)
+[See an example output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESDM%3ESDM_maxEnt%3E78ed53b7ea6b96ef58008075a4dfb487)
 
 **Citations:**
 
