@@ -1,6 +1,9 @@
 script: protconn_analysis.R
 name: Protconn Analysis
-description: This script calculates the Protected Connected Index (ProtConn) from protected area polygons using the MK_ProtConn function in the Makurhini package. This creates a distance matrix from protected area polygons and calculates ProtConn using dispersal probabilities between protected areas.
+description: This script calculates the Protected Connected Index (ProtConn) from protected area polygons
+  using the MK_ProtConn function in the Makurhini package. This creates a distance matrix from
+  protected area polygons and calculates ProtConn using dispersal probabilities between protected
+  areas.
 author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
@@ -23,13 +26,16 @@ inputs:
   buffer:
     label: Transboundary buffer
     description: Buffer for pulling transboundary protected areas (WDPA data only).
-      The buffer will pull protected areas within that distance of the country border or bounding box in the unit of the coordinate reference system (meters or degrees).
+      The buffer will pull protected areas within that distance of the country border
+      or bounding box in the unit of the coordinate reference system (meters or degrees).
       If pulling WDPA data with a custom bounding box, the buffer will not be applied.
     type: float
     example: 0
   date_column_name:
     label: Date column name
-    description: Name of the column in the user provided protected area file that specifies when the PA was created. Leave blank if only using WDPA data or your protected area file does not have a date column.
+    description: Name of the column in the user provided protected area file that specifies
+      when the PA was created. Leave blank if only using WDPA data or your protected area file
+      does not have a date column.
     type: text
     example: null
   crs:
@@ -45,7 +51,8 @@ inputs:
       Dispersal probability is calculated with an exponential decay function with increasing distance.
 
 
-      Common dispersal distances that encompass a large majority of terrestrial species are 1000 meters, 3000 meters, 10,000 meters, and 100,000 meters (Saura et al. 2017).
+      Common dispersal distances that encompass a large majority of terrestrial species are 1000 meters,
+      3000 meters, 10,000 meters, and 100,000 meters (Saura et al. 2017).
 
 
       Note that the more distances you include, the longer the pipeline will take to complete and the more memory it will require.
@@ -87,8 +94,9 @@ inputs:
     example: 1980
   year_int:
     label: Year interval
-    description: Year interval for the time series plot of ProtConn values (e.g. an input of 20 will calculate ProtConn for every 20 years by filtering out protected areas established before that year).
-     The last year will always be the input year. Leave blank if time series is not selected.
+    description: Year interval for the time series plot of ProtConn values (e.g. an input of 20
+      will calculate ProtConn for every 20 years by filtering out protected areas established before that year).
+      The last year will always be the input year. Leave blank if time series is not selected.
     type: int
     example: 20
 outputs:
