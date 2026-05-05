@@ -1,0 +1,18 @@
+script: country_list.R
+name: Country list for Cali Fund
+description: "This script cleans the country list for the Calie fund calculation and produces a clean csv file"
+author:
+  - name: Samara Manzin
+    email: samara.manzin@mcgill.ca
+inputs:
+  country_list:
+    label: Country list
+    type: file
+    description: Excel (.xlsx) file containing a list of countries for which to calculate the Cali fund.
+    example: NULL
+outputs:
+  clean_country_list:
+    label: Clean country list
+    type: text/csv
+    description: Cleaned list of countries for which to calculate the Cali fund, in csv format.
+    example: NULL
