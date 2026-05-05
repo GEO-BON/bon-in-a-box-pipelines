@@ -1,4 +1,3 @@
-# For review PR
 script: cleanWDPA.R
 name: Clean protected areas from WDPA API
 description: |

@@ -1,5 +1,4 @@
 # Script for analyzing ProtConn with the function
-# For review PR
 packages_list <- list("sf", "terra", "tidyverse", "ggrepel", "rjson", "Makurhini", "PROJ")
 
 # Load libraries
