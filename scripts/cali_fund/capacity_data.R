@@ -1,8 +1,8 @@
 library(readxl)
 
-country_list <- read.csv("/Users/samaramanzin/Downloads/clean_country_list.csv")
+country_list <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/clean_country_list.csv")
 
-raw <- read_excel('/Users/samaramanzin/Downloads/Scale of Assessments for RB 1946-2027.xlsx', skip = 2)
+raw <- read_excel("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/Scale of Assessments for RB 1946-2027.xlsx", skip = 2)
 
 
 # Rename first column
@@ -40,4 +40,8 @@ clean <- raw %>%
 clean_countries <- clean %>%
   filter(country_name %in% country_list$country_name)
 
-write.csv(clean_countries, "/Users/samaramanzin/Downloads/scale_assessments_clean.csv", row.names = FALSE)
+inverse <- clean_countries %>%
+  mutate(inverse = 1/value) %>%
+  select(country_name, inverse)
+
+write.csv(inverse, "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/capacity.csv", row.names = FALSE)

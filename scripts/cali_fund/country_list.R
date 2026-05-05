@@ -1,9 +1,7 @@
 library(readxl)
 library(tidyverse)
 
-input <- biab_inputs()
-
-country_list <- read.csv(input$country_list)
+country_list <- read_xls("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/List of countries eligible for funding_April-2026.xls")
 head(country_list)
 
 # Function to test if something is a number
@@ -40,8 +38,7 @@ clean_country_list <- map_dfr(2:ncol(country_list), function(i) {
   distinct() %>%
   arrange(country_name)
 
-path <- file.path(outputFolder, "clean_country_list.csv")
+head(clean_country_list)
 
 # Save checklist
-write.csv(clean_country_list, path)
-biab_output("clean_country_list", path)
+write.csv(clean_country_list, "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/clean_country_list.csv", row.names = FALSE)

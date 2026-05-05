@@ -2,21 +2,33 @@ library(dplyr)
 
 input <- biab_inputs()
 
-# reading in criterion data
-biodiversity_iportance <- read.csv(input$biodiversity_importance)
-gr <- read.csv(input$gr)
-conservation_capacity <- read.csv(input$conservation_capacity)
-iplc_tk <- read.csv(input$iplc_tk)
-
 # list of countries to calculate Cali fund for
-country_list <- read.csv(input$country_list)
+country_list <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/clean_country_list.csv")
+
+# reading in criterion data
+biodiversity_importance <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/gef_countries.csv")
+gr <- read.csv()
+gr <- country_list %>%
+  mutate(gr = 0.5)
+conservation_capacity <- read.csv("C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/cali_fund/capacity.csv")
+iplc_tk <- read.csv()
+iplc_tk <- country_list %>%
+  mutate(iplc_tk = 0.5)
 
 # joining all criterion data to country list
 country_data <- country_list %>%
-  dplyr::left_join(biodiversity_iportance, by = "country") %>%
-  dplyr::left_join(gr, by = "country") %>%
-  dplyr::left_join(conservation_capacity, by = "country") %>%
-  dplyr::left_join(iplc_tk, by = "country")
+  dplyr::left_join(biodiversity_importance, by = "country_name") %>%
+  dplyr::left_join(gr, by = "country_name") %>%
+  dplyr::left_join(conservation_capacity, by = "country_name") %>%
+  dplyr::left_join(iplc_tk, by = "country_name") %>%
+  mutate(gef_allocation = as.numeric(gef_allocation), 
+  gr = as.numeric(gr), 
+  inverse = as.numeric(inverse), 
+  iplc_tk = as.numeric(iplc_tk)) %>%
+  rename(biodiversity_importance = gef_allocation,
+         gr = gr,
+         conservation_capacity = inverse,
+         iplc_tk = iplc_tk)
 
 # scale each criterion to a 0-1 range
 country_data <- country_data %>%
