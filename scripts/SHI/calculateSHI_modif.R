@@ -93,6 +93,16 @@ img_SubScores_boxplots <- df_SHS_sp |> filter(Score != "SHS") |>
 path_img_SubScores_boxplots <- file.path(outputFolder, "SHS_boxplots.png")
 ggsave(path_img_SubScores_boxplots, img_SubScores_boxplots, dpi = 300, width = 6, height = 4)
 
+#-------------------------------------------------------------------------------
+# SHS By species
+#-------------------------------------------------------------------------------
+
+img_shs_scores_bar <- ggplot(df_SHS_aoh_areas_sp, 
+                              aes(x=sci_name,y=Values)) +
+  geom_bar(stat="identity",alpha=0.8)+ xlab("") + scale_y_continuous("Species Habitat Score",limits=c(0,190))+
+  geom_hline(yintercept = 100, linetype="dotted", col="gray")+
+  theme_classic() + coord_flip() +
+  theme(axis.text.y = element_text(angle = 0, vjust = 0.5,hjust=1,size=4,face = "italic"))
 
 #-------------------------------------------------------------------------------
 # Outputing result
