@@ -11,17 +11,23 @@ import sys
 BASE_DIR = "output/"
 
 
+def extract_base_dir(path):
+    normalized_path = os.path.abspath(path)
+
+    # Substring until the last occurrence of BASE_DIR, inclusively
+    if BASE_DIR in normalized_path:
+        normalized_path = normalized_path.partition(BASE_DIR)[0] + BASE_DIR
+
+    return normalized_path
+
 def relative_to_base(path):
-    normalized_path = os.path.normpath(path)
-    normalized_base = os.path.normpath(BASE_DIR)
+    normalized_path = os.path.abspath(path)
 
-    if normalized_path == normalized_base:
-        return ""
+    # Substring after the last occurrence of BASE_DIR
+    if BASE_DIR in normalized_path:
+        normalized_path = normalized_path.partition(BASE_DIR)[2]
 
-    if normalized_path.startswith(normalized_base + os.sep):
-        return os.path.relpath(normalized_path, normalized_base)
-
-    return path
+    return normalized_path
 
 
 def patch_pipeline_output_json(json_path, script_prefix):
@@ -110,7 +116,7 @@ def apply_operation(source_path, operation, dest_root=None, script_prefix=None):
                 else:
                     patch_input_or_output_json(json_path, script_prefix)
 
-                print(f"Patched paths in: {json_path}")
+                print(f" ↳ Patched paths in: {json_path}")
 
     else:
         print(f"Unknown operation: {operation}")
@@ -131,14 +137,17 @@ def main():
     with open(pipelineRunFolder + "/pipelineOutput.json", "r") as f:
         data = json.load(f)
 
+    source_root= extract_base_dir(pipelineRunFolder)
+    print(f"Source root: {source_root}")
+
     # Apply operation to all folder values (skip "cancelled")
     for v in data.values():
         # Single words are not paths, but flags like "cancelled"
         if (isinstance(v, str) and "/" in v):
             # Only operate if path exists and is a directory
-            folder_path = os.path.join(BASE_DIR, v)
+            folder_path = os.path.join(source_root, v)
             if os.path.isdir(folder_path):
-                apply_operation(os.path.join(BASE_DIR, v), operation, dest_root, script_prefix)
+                apply_operation(folder_path, operation, dest_root, script_prefix)
 
     # Apply operation to the JSON file itself
     apply_operation(pipelineRunFolder, operation, dest_root, script_prefix)
