@@ -1,12 +1,22 @@
 library(duckdb)
 library(sf)
 library(dplyr)
-if (!require("duckdbfs")) {
-    install.packages("duckdbfs", version="0.1.2", dependencies = FALSE)
-}
-if (!require("duckspatial") || packageVersion("duckspatial") != "0.9.0") {
-    remotes::install_github("Cidree/duckspatial@v0.9.0", dependencies = FALSE)
-}
+
+biab_ensure_package(
+    "duckdbfs",
+    version = "0.1.2",
+    installer = function() {
+        remotes::install_version("duckdbfs", version = "0.1.2", dependencies = FALSE, upgrade = "never")
+    }
+)
+
+biab_ensure_package(
+    "duckspatial",
+    version = "0.9.0",
+    installer = function() {
+        remotes::install_github("Cidree/duckspatial@v0.9.0", dependencies = FALSE, upgrade = "never")
+    }
+)
 
 library(duckdbfs)
 library(duckspatial)
