@@ -2,7 +2,7 @@ _Authors: Jory Griffith, Guillaume Larocque, Laetitia Tremblay, Jean-Michel Lord
 
 Review status: Reviewed
 
-Reviewed by: Santiago Saura, Oscar Godinez-Gomez, Camilo Andreas Correa Ayram, Teresa Goicolea
+Reviewed by: Santiago Saura, Oscar Godinez-Gomez, Camilo Andreas Correa Ayram, Teresa Goicolea, Corey Ruha
 
 
 name: Protected Connected Index (ProtConn)
@@ -129,9 +129,11 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 Example of a pipeline run with WDPA data: [insert link]
 
-Example of a pipeline run with user data: [insert link]
+Example of a pipeline run with user data: <a href="" target="_blank">
+  Fake protected areasi in the Atlantic
+</a>
 
-Example of a pipeline run with both user data and WDPA data: [insert link]
+Example of a pipeline run with combined user data and WDPA data: [insert link]
 
 ## Troubleshooting
 
