@@ -2,10 +2,10 @@ library(duckdb)
 library(sf)
 library(dplyr)
 if (!require("duckdbfs")) {
-    install.packages("duckdbfs")
+    install.packages("duckdbfs", version="0.1.2", dependencies = FALSE)
 }
 if (!require("duckspatial") || packageVersion("duckspatial") != "0.9.0") {
-    remotes::install_github("Cidree/duckspatial@v0.9.0")
+    remotes::install_github("Cidree/duckspatial@v0.9.0", dependencies = FALSE)
 }
 
 library(duckdbfs)
