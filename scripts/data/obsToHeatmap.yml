@@ -3,7 +3,8 @@ name: Observations to Heatmap
 description: "Converts occurrence points to raster, conforming to resolution and projection of the predictors raster."
 author:
   - name: Dat Nguyen
-
+lifecycle:
+  status: core
 inputs:
   presence:
     label: presence

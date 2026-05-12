@@ -5,6 +5,8 @@ author:
   - name: Jory Griffith
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
+lifecycle:
+  status: core
 inputs:
   species_name:
     label: Species name
@@ -16,12 +18,12 @@ inputs:
     description: Bounding box for the area to pull OBIS points
     type: bboxCRS
     example: NULL
-  study_area: 
+  study_area:
     label: Polygon of study area
     description: Polygon of study area for which you want to pull OBIS points
     type: application/geopackage+sqlite3
     example: null
-  start_date: 
+  start_date:
     label: Start date
     description: Start date for the occurences in YYYY-MM-DD format (leave blank for all dates)
     type: text
@@ -36,23 +38,23 @@ inputs:
     description: Mininum depth in meters for occurences (leave blank for no minimum depth)
     type: int
     example: null
-  max_depth: 
+  max_depth:
     label: Maximum depth
     description: Maximum depth in meters for occurences (leave blank for no maximum depth)
     type: int
     example: null
 outputs:
-  occurrences: 
+  occurrences:
     label: OBIS Occurrences
     description: CSV of OBIS occurrences
     type: text/csv
 conda:
-  channels: 
+  channels:
     - conda-forge
     - r
-  dependencies: 
+  dependencies:
     - r-robis
     - r-sf
     - r-dplyr
     - r-rjson
-  
+
