@@ -3,7 +3,7 @@ name: Convert IUCN habitat types to ESA landcover codes
 description: This script converts IUCN habitat types to ESA landcover codes.
 author:
   - name: Samara Manzin
-    identifier: null
+    identifier: samara.manzin@mcgill.ca
 inputs:
   species:
     label: Species
