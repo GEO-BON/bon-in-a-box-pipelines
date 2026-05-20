@@ -26,6 +26,9 @@ def relative_to_base(path):
     # Substring after the last occurrence of BASE_DIR
     if BASE_DIR in normalized_path:
         normalized_path = normalized_path.partition(BASE_DIR)[2]
+    else:
+        print(f"Error: Base directory '{BASE_DIR}' not found in path '{normalized_path}'.")
+        exit(1)
 
     return normalized_path
 
@@ -87,6 +90,7 @@ def apply_operation(source_path, operation, dest_root=None, script_prefix=None):
         dest_path = os.path.join(dest_dir, rel_source_path)
         if os.path.isdir(source_path):
             if os.path.exists(dest_path):
+                print(f"Destination folder already exists and will be overwritten: {dest_path}")
                 shutil.rmtree(dest_path)
 
             print(f"{operation.capitalize()} folder: {source_path} -> {dest_path}")
