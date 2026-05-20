@@ -43,7 +43,7 @@ clean_presence <- clean_presence |> # summary = TRUE means the observations was 
   dplyr::select(id, scientific_name, lon, lat)
 
 if (nrow(clean_presence) == 0) {
-  biab_error_stop("There are no occurences of the species of interest in this country/region")
+  biab_error_stop("No occurences left after cleaning for the species of interest in this country/region.")
 }
 
 clean_presence.output <- file.path(outputFolder, "clean_presence.tsv")
