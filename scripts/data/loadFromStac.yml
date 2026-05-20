@@ -5,7 +5,7 @@ author:
   - name: Guillaume Larocque
     identifier: https://orcid.org/0000-0002-5967-9156
 lifecycle:
-  status: in_review
+  status: core
 inputs:
   bbox_crs:
     label: Bounding box and CRS

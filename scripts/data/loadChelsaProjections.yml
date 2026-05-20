@@ -1,9 +1,11 @@
 script: loadChelsaProjections.R
 name: Load CHELSA climate projections
-description: 
+description:
   This script loads the CHELSA climate projections
 author:
   - name: Juan Zuloaga
+lifecycle:
+  status: core
 inputs:
   bbox_crs:
     label: Bounding box and CRS
@@ -14,17 +16,17 @@ inputs:
     label: Shared socioeconomic pathways
     description: Shared socioeconomic pathways ([more info here](see https://en.wikipedia.org/wiki/Shared_Socioeconomic_Pathways))
     type: options
-    options: 
+    options:
       - ssp126
       - ssp370
       - ssp585
     example: ssp126
   spatial_res:
     label: Spatial resolution output
-    description: Pixel size of the output raster in the same units as the coordinate reference system (meters or degrees). 
+    description: Pixel size of the output raster in the same units as the coordinate reference system (meters or degrees).
     type: float
-    example: 0.008 
-  variable: 
+    example: 0.008
+  variable:
     label: Climate variable
     description: Chelsa climte variable for projection. See a list of variables [here](https://chelsa-climate.org/wp-admin/download-page/CHELSA_tech_specification.pdf) in section 5.
     type: text
@@ -40,7 +42,7 @@ inputs:
     description: Period for climate projection, start year to end year
     type: options
     options:
-      - 2011-2040 
+      - 2011-2040
       - 2041-2070
       - 2071-2100
     example: 2041-2070

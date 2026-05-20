@@ -13,7 +13,7 @@ author:
     email: jory.griffith@mcgill.ca
     identifier: https://orcid.org/0000-0001-6020-6690
 lifecycle:
-  status: reviewed
+  status: core
 inputs:
   study_area_polygon:
     label: Study area polygon
