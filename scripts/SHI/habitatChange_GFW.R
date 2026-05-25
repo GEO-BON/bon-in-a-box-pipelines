@@ -1,6 +1,27 @@
 #-------------------------------------------------------------------------------
 # This script measures change on the habitat of the species associated to forest cover
 #-------------------------------------------------------------------------------
+### inputs for testing locally ###
+
+Sys.setenv(SCRIPT_LOCATION = "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/scripts")
+
+input <- list(
+  species = "Myrmecophaga tridactyla",
+  spat_res = 1000,
+  crs = list(CRS = list(authority = "EPSG", code = "4326")),
+  sf_bbox = "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/scripts/SHI/Myrmecophaga tridactyla_range.gpkg",
+  r_area_of_habitat = "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/scripts/SHI/myrmecophaga_tridactyla.tif",
+  min_forest = 0,
+  max_forest = 100,
+  t_0 = 2000,
+  t_n = 2020,
+  time_step = 10
+)
+
+outputFolder <- "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/output"
+
+############
+
 options(timeout = max(60000000, getOption("timeout")))
 path_script <- Sys.getenv("SCRIPT_LOCATION")
 
@@ -135,8 +156,20 @@ for (i in 1:length(sp)) {
   }
 
   print(cube_GFW_TC_threshold)
+# check unique values in  the cube
+
+
+# aggregating to the desired spatial resultion. here we sum the number of pixels that are suitable in each aggregeated pixel which will later be translated to the area suitable
+cube_area_suitable <- aggregate_space(
+  cube_GFW_TC_threshold_binary,
+  dx = spat_res,
+  dy = spat_res,
+  method = "sum"
+)
+
+
   library(stars)
-  r_GFW_TC_threshold <- st_as_stars(cube_GFW_TC_threshold) |> terra::rast()
+  r_GFW_TC_threshold <- st_as_stars(cube_area_suitable) |> terra::rast()
   #r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold, format = "terra") # convert to raster format
   r_GFW_TC_threshold <- r_GFW_TC_threshold |>
     terra::classify(rcl = cbind(NA, 0)) # turn NA to 0
@@ -167,6 +200,17 @@ for (i in 1:length(sp)) {
   times <- as.numeric(substr(v_time_steps[v_time_steps > 2000], start = 3, stop = 4))
 
   l_year_loss <- map(times, ~ funFilterCube_range(cube = cube_GFW_loss, max = .x, type_max = 1, min = 1, type_min = 1, value = FALSE))
+  
+# aggregate each cumulative loss cube to desired resolution
+l_year_loss_agg <- map(
+  l_year_loss,
+  ~ gdalcubes::aggregate_space(
+    .x,
+    dx = spat_res,
+    dy = spat_res,
+    method = "sum"
+  ))
+
   # turn cube to raster
 
   l_r_year_loss <- map(l_year_loss, cube_to_raster, format = "terra")
