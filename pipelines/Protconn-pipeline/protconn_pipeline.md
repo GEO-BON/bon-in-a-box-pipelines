@@ -123,18 +123,15 @@ This step performs the ProtConn analysis on the protected areas of interest. Pro
 
 - **Study area polygon:** polygon of the chosen study area.
 
-## Example
+## Examples
 
-**Sample run:**
+Example of a pipeline run with WDPA data: [Results viewer](http://pipelines-results.geobon.org/viewer/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline%3ErgKj9pkfr2WYcX2U3L6seYkqqPXJ) and [run details](https://pipelines-results.geobon.org/pipeline-form/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline/rgKj9pkfr2WYcX2U3L6seYkqqPXJ)
 
-Example of a pipeline run with WDPA data: [https://pipelines-1.geobon.org/pipeline-form/Protconn-pipeline%3EProtConn_pipeline/rgKj9pkfr2WYcX2U3L6seYkqqPXJ]
+Example of a pipeline run with user data: [Results viewer](https://pipelines-results.geobon.org/viewer/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline_userdata%3ECuX6Sktt9wSZcPb885-LCHZQ9ODI) and [run details](https://pipelines-results.geobon.org/pipeline-form/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline_userdata/CuX6Sktt9wSZcPb885-LCHZQ9ODI)
+  
+</a>
 
-Example of a pipeline run with user data: <a href="" target="_blank">
-  Fake protected areas in Putumayo, Colombia
-</a> 
-[https://pipelines-1.geobon.org/pipeline-form/Protconn-pipeline%3EProtConn_pipeline_userdata/CuX6Sktt9wSZcPb885-LCHZQ9ODI]
-
-Example of a pipeline run with combined user data and WDPA data: [https://pipelines-1.geobon.org/pipeline-form/Protconn-pipeline%3EProtConn_pipeline/F7Kx9xgMeuerWHxh-p-tBG_PxM4z]
+Example of a pipeline run with combined user data and WDPA data: [Results viewer](https://pipelines-results.geobon.org/viewer/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline%3EF7Kx9xgMeuerWHxh-p-tBG_PxM4z) and [run details](https://pipelines-results.geobon.org/pipeline-form/_2026-05-06%3EProtconn-pipeline%3EProtConn_pipeline/F7Kx9xgMeuerWHxh-p-tBG_PxM4z)
 
 ## Troubleshooting
 
