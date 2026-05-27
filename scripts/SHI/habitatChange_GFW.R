@@ -3,14 +3,14 @@
 #-------------------------------------------------------------------------------
 ### inputs for testing locally ###
 
-Sys.setenv(SCRIPT_LOCATION = "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/scripts")
+Sys.setenv(SCRIPT_LOCATION = "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts")
 
 input <- list(
   species = "Myrmecophaga tridactyla",
-  spat_res = 1000,
+  spat_res = 0.009,
   crs = list(CRS = list(authority = "EPSG", code = "4326")),
-  sf_bbox = "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/scripts/SHI/Myrmecophaga tridactyla_range.gpkg",
-  r_area_of_habitat = "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/scripts/SHI/myrmecophaga_tridactyla.tif",
+  sf_bbox = "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/SHI/Myrmecophaga tridactyla_range.gpkg",
+  r_area_of_habitat = "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/SHI/myrmecophaga_tridactyla.tif",
   min_forest = 0,
   max_forest = 100,
   t_0 = 2000,
@@ -18,7 +18,7 @@ input <- list(
   time_step = 10
 )
 
-outputFolder <- "/Users/samaramanzin/Desktop/bon-in-a-box-pipelines/output"
+outputFolder <- "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output"
 
 ############
 
@@ -43,7 +43,8 @@ source(file.path(path_script, "data/loadCubeFunc.R"), echo = TRUE)
 
 # Parameters -------------------------------------------------------------------
 # spatial resolution
-spat_res <- ifelse(is.null(input$spat_res), 1000, input$spat_res)
+#spat_res <- ifelse(is.null(input$spat_res), 1000, input$spat_res)
+spat_res <- input$spat_res
 
 # Define SRS
 srs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
@@ -117,6 +118,14 @@ for (i in 1:length(sp)) {
     sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
   }
 
+  if (input$crs$CRS$code != 4326) {
+  sf_bbox_analysis <- st_read(v_path_bbox_analysis[i]) |>
+    st_segmentize(dfMaxLength = 1000) |>
+    st_transform(srs)
+} else {
+  sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
+}
+
   sf_ext_srs <- sf_bbox_analysis |> st_bbox()
   print(sf_ext_srs)
   print(v_path_to_area_of_habitat[i])
@@ -141,7 +150,7 @@ for (i in 1:length(sp)) {
       limit = 1000,
       collections = c("gfw-treecover2000"),
       bbox = sf_ext_srs,
-      srs.cube = "EPSG:4326",
+      srs.cube = srs,
       spatial.res = NULL, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
@@ -161,18 +170,22 @@ for (i in 1:length(sp)) {
 
 # aggregating to the desired spatial resultion. here we sum the number of pixels that are suitable in each aggregeated pixel which will later be translated to the area suitable
 cube_area_suitable <- aggregate_space(
-  cube_GFW_TC_threshold_binary,
+  cube_GFW_TC_threshold,
   dx = spat_res,
   dy = spat_res,
   method = "sum"
 )
 
+print(cube_area_suitable)
 
   library(stars)
   r_GFW_TC_threshold <- st_as_stars(cube_area_suitable) |> terra::rast()
   #r_GFW_TC_threshold <- cube_to_raster(cube_GFW_TC_threshold, format = "terra") # convert to raster format
   r_GFW_TC_threshold <- r_GFW_TC_threshold |>
     terra::classify(rcl = cbind(NA, 0)) # turn NA to 0
+
+print(r_GFW_TC_threshold)
+biab_error_stop()
 
   r_aoh_native <- terra::project(r_aoh, r_GFW_TC_threshold, method = "near")
   r_aoh_rescaled <- terra::resample(r_aoh_native, r_GFW_TC_threshold, method = "mode") # Align AOH to the native GFW grid before combining layers
