@@ -1,26 +1,6 @@
 #-------------------------------------------------------------------------------
 # This script measures change on the habitat of the species associated to forest cover
 #-------------------------------------------------------------------------------
-### inputs for testing locally ###
-
-Sys.setenv(SCRIPT_LOCATION = "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts")
-
-input <- list(
-  species = "Myrmecophaga tridactyla",
-  spat_res = 0.009,
-  crs = list(CRS = list(authority = "EPSG", code = "4326")),
-  sf_bbox = "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/SHI/Myrmecophaga tridactyla_range.gpkg",
-  r_area_of_habitat = "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/scripts/SHI/myrmecophaga_tridactyla.tif",
-  min_forest = 0,
-  max_forest = 100,
-  t_0 = 2000,
-  t_n = 2020,
-  time_step = 10
-)
-
-outputFolder <- "C:/Users/Samara/Desktop/bon-in-a-box-pipelines/output"
-
-############
 
 options(timeout = max(60000000, getOption("timeout")))
 path_script <- Sys.getenv("SCRIPT_LOCATION")
@@ -111,20 +91,15 @@ for (i in 1:length(sp)) {
   #-------------------------------------------------------------------------------------------------------------------
   # 1. Load inputs
   #-------------------------------------------------------------------------------------------------------------------
-  if (input$crs$CRS$code != 4326) {
-    sf_bbox_analysis <- st_read(v_path_bbox_analysis[i]) |> st_transform("EPSG:4326")
-    sf_bbox_analysis <- st_segmentize(sf_bbox_analysis, dfMaxLength = 1000) # segmentize to avoid reprojection issues with large polygons
-  } else {
-    sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
-  }
+ 
+#  if (input$crs$CRS$code != 4326) {
+#   sf_bbox_analysis <- st_read(v_path_bbox_analysis[i]) |> st_transform("EPSG:4326")
+#    sf_bbox_analysis <- st_segmentize(sf_bbox_analysis, dfMaxLength = 1000) # segmentize to avoid reprojection issues with large polygons
+#  } else {
+#    sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
+#  }
 
-  if (input$crs$CRS$code != 4326) {
-  sf_bbox_analysis <- st_read(v_path_bbox_analysis[i]) |>
-    st_segmentize(dfMaxLength = 1000) |>
-    st_transform(srs)
-} else {
   sf_bbox_analysis <- st_read(v_path_bbox_analysis[i])
-}
 
   sf_ext_srs <- sf_bbox_analysis |> st_bbox()
   print(sf_ext_srs)
@@ -139,6 +114,12 @@ for (i in 1:length(sp)) {
     print("dir exists")
   }
 
+# Define fine resolution for loading GFW data. This is needed to apply the threshold for forest cover at the native resolution of the data before aggregating to the desired spatial resolution. The fine resolution is set to 30m if the input CRS is in meters, and to 0.00025 degrees (approximately 30m at the equator) if the input CRS is in degrees.
+if (input$crs$CRS$unit == "metre") {
+  fine_res <- 30
+} else {
+  fine_res <- 0.00025
+}
   #-------------------------------------------------------------------------------------------------------------------
   # 2. Land Cover Values
   #-------------------------------------------------------------------------------------------------------------------
@@ -150,8 +131,8 @@ for (i in 1:length(sp)) {
       limit = 1000,
       collections = c("gfw-treecover2000"),
       bbox = sf_ext_srs,
-      srs.cube = srs,
-      spatial.res = NULL, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
+      srs.cube = srs_cube,
+      spatial.res = fine_res, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
@@ -165,8 +146,6 @@ for (i in 1:length(sp)) {
   }
 
   print(cube_GFW_TC_threshold)
-# check unique values in  the cube
-
 
 # aggregating to the desired spatial resultion. here we sum the number of pixels that are suitable in each aggregeated pixel which will later be translated to the area suitable
 cube_area_suitable <- aggregate_space(
@@ -185,11 +164,11 @@ print(cube_area_suitable)
     terra::classify(rcl = cbind(NA, 0)) # turn NA to 0
 
 print(r_GFW_TC_threshold)
-biab_error_stop()
 
   r_aoh_native <- terra::project(r_aoh, r_GFW_TC_threshold, method = "near")
   r_aoh_rescaled <- terra::resample(r_aoh_native, r_GFW_TC_threshold, method = "mode") # Align AOH to the native GFW grid before combining layers
 
+print(r_aoh_rescaled)
   print("========== Base forest layer downloaded ==========")
 
   # Download forest loss maps and create different layers for each year to remove from forest
@@ -199,8 +178,8 @@ biab_error_stop()
       limit = 1000,
       collections = c("gfw-lossyear"),
       bbox = sf_ext_srs,
-      srs.cube = "EPSG:4326",
-      spatial.res = NULL, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
+      srs.cube = srs_cube,
+      spatial.res = fine_res, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
@@ -209,21 +188,41 @@ biab_error_stop()
     )
 
   print("========== Forest loss layer downloaded ==========")
+print(cube_GFW_loss)
 
   times <- as.numeric(substr(v_time_steps[v_time_steps > 2000], start = 3, stop = 4))
 
   l_year_loss <- map(times, ~ funFilterCube_range(cube = cube_GFW_loss, max = .x, type_max = 1, min = 1, type_min = 1, value = FALSE))
   
+  print(l_year_loss)
+# only keep the suitale pixels that are lost so that we aren't losing areas that are already not suitable in the base year.
+l_year_lost_suitable <- map(l_year_loss, function(loss_cube) {
+
+  combined <- gdalcubes::join_bands(
+    list(cube_GFW_TC_threshold, loss_cube)
+  )
+  
+  # Build expression from actual names, replacing dots with underscores
+  band_names <- gsub("\\.", "_", tolower(names(combined)))
+  print(band_names)  # should be c("x1_band1", "x2_band1")
+  
+  exprs <- paste(band_names[[1]], band_names[[2]], sep = "*")
+  print(exprs)  # should be "x1_band1 * x2_band1"
+
+  apply_pixel(combined, exprs, "result")
+})
+print(l_year_loss_suitable)
 # aggregate each cumulative loss cube to desired resolution
 l_year_loss_agg <- map(
-  l_year_loss,
+  l_year_loss_suitable,
   ~ gdalcubes::aggregate_space(
     .x,
     dx = spat_res,
     dy = spat_res,
     method = "sum"
   ))
-
+print(l_year_loss_agg)
+biab_error_stop()
   # turn cube to raster
 
   l_r_year_loss <- map(l_year_loss, cube_to_raster, format = "terra")
@@ -240,7 +239,8 @@ l_year_loss_agg <- map(
     cat("Create t0 layer with: ", paste0("Loss_", t_0), "\n")
     s_year_loss <- terra::subset(s_year_loss, subset = paste0("Loss_", v_time_steps[v_time_steps > t_0]))
     cat("Create new loss layers without t0: ", paste0("Loss_", v_time_steps[v_time_steps > t_0], collapse = ", "), "\n")
-    r_GFW_TC_threshold <- terra::classify(r_GFW_TC_threshold - s_year_loss_t0, rcl = cbind(-1, 0))
+    r_GFW_TC_threshold <- r_GFW_TC_threshold - s_year_loss_t0
+    r_GFW_TC_threshold[r_GFW_TC_threshold < 0] <- 0
     print("Create new base habitat layer")
   } else {
     names(s_year_loss) <- paste0("Loss_", v_time_steps[v_time_steps > t_0])
@@ -268,13 +268,14 @@ l_year_loss_agg <- map(
       limit = 1000,
       collections = c("gfw-gain"),
       bbox = sf_ext_srs,
-      srs.cube = "EPSG:4326",
-      spatial.res = NULL, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
+      srs.cube = srs_cube,
+      spatial.res = fine_res, # loading the native resolution of the data, which is 30m, to be able to apply the threshold for forest cover. The resampling to the desired spatial resolution will be done after applying the threshold.
       temporal.res = "P1Y",
       t0 = "2000-01-01",
       t1 = "2000-12-31",
       resampling = "near"
     )
+
 
   print("========== Forest gain layer downloaded ==========")
   class(cube_GFW_gain)
