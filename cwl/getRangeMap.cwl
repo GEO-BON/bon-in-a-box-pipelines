@@ -20,8 +20,10 @@ requirements:
       - entry: '${ return {"class": "Directory", "basename": "conda-env-yml", "listing": []}; }'
         entryname: /conda-env-yml
         writable: true
+
   DockerRequirement:
     dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda
+
   EnvVarRequirement:
     envDef:
       CONDA_PKGS_DIRS: /conda-env-yml/pkgs
@@ -33,6 +35,15 @@ arguments:
   - |
     log=$(inputs.runFolder.basename)/logs.txt
     mkdir -p /conda-env-yml/pkgs /conda-env-yml/envs
+
+    cat > "$(inputs.runFolder.path)/inputs.json" <<'JSON'
+    ${
+      return JSON.stringify({
+        "expert_source": inputs.expert_source,
+        "species": inputs.species
+      }, null, 2);
+    }
+    JSON
 
     source $(inputs.condaInitialization.path) $(inputs.runFolder.path) data__getRangeMap "
       name: data__getRangeMap
@@ -57,7 +68,23 @@ inputs:
     inputBinding:
       position: 1
 
-  
+  expert_source:
+    type:
+      type: enum
+      symbols:
+        - MOL
+        - IUCN
+        - QC
+    inputBinding:
+      position: 2
+    default: IUCN
+
+  species: 
+    type: string[]
+    inputBinding:
+      position: 3
+    default: ["Myrmecophaga tridactyla"]
+
 
   ##############################################
   # The following inputs should not be changed #
