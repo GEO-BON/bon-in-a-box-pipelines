@@ -26,6 +26,7 @@ requirements:
 baseCommand: ["bash", "-c"]
 arguments:
   - |
+    log=$(inputs.runFolder.basename)/logs.txt
     export CONDA_PKGS_DIRS=/conda-env-yml/pkgs
     export CONDA_ENVS_PATH=/opt/conda/envs:/conda-env-yml/envs
     mkdir -p /conda-env-yml/pkgs /conda-env-yml/envs
@@ -41,8 +42,8 @@ arguments:
         - r-purrr
         - r-sf
         - r-stringr
-    "
-    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.script.path)
+    " | tee $log
+    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.script.path) > $(inputs.runFolder.basename)/logs.txt | tee $log
 
 inputs:
   runFolder:
@@ -76,11 +77,7 @@ inputs:
 
 
 outputs:
-  logs:
-    type: stdout
   output_file:
     type: File
     outputBinding:
        glob: $(inputs.runFolder.path)/output.json
-
-stdout: $(inputs.runFolder.basename)/logs.txt
