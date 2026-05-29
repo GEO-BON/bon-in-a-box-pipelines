@@ -2,6 +2,15 @@
 cwlVersion: v1.2
 class: CommandLineTool
 
+# To run this POC
+# 1. checkout the BON in a Box repo
+# 2. copy runner.sample.env to runner.env
+# 3. cd to the cwl folder
+# 4. run:
+#   cwltool getRangeMap.cwl --runFolder="../output/cwl/data/getRangeMap" --expert_source="MOL"
+#
+# To run with default parameters, runner.env must contain IUCN_TOKEN variable.
+
 requirements:
   InlineJavascriptRequirement:
     expressionLib:
