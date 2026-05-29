@@ -59,7 +59,9 @@ arguments:
         - r-stringr
     "
 
-    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.scripts_root.path)/$(inputs.scriptPath) | tee $log
+
+    # Leave mamba
+    while [ ! -z $CONDA_PREFIX ]; do mamba deactivate; done
 
 inputs:
   runFolder:
