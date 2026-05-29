@@ -59,7 +59,7 @@ arguments:
         - r-stringr
     "
 
-    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.scripts_root.path)/$(inputs.scriptPath) > $(inputs.runFolder.basename)/logs.txt | tee $log
+    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.scripts_root.path)/$(inputs.scriptPath) | tee $log
 
 inputs:
   runFolder:
