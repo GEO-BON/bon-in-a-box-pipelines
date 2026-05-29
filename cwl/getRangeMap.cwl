@@ -53,8 +53,15 @@ arguments:
 inputs:
   runFolder:
     type: Directory
+    doc: This folder will contain the input.json, output.json, logs.txt, and any other file saved by the script.
     inputBinding:
       position: 1
+
+  
+
+  ##############################################
+  # The following inputs should not be changed #
+  ##############################################
 
   condaInitialization:
     type: File
@@ -89,8 +96,10 @@ inputs:
 outputs:
   logs:
     type: stdout
+
   output_file:
     type: File
+    doc: BON in a Box output file
     outputBinding:
        glob: $(inputs.runFolder.path)/output.json
 
