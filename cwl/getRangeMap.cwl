@@ -45,8 +45,8 @@ arguments:
       }, null, 2);
     }
     JSON
-    echo "Running in $(inputs.runFolder.basename)" >> $log
-    cat $(inputs.runFolder.basename)/input.json >> $log
+    echo "Running in $(inputs.runFolder.basename)" | tee -a $log
+    cat $(inputs.runFolder.basename)/input.json | tee -a $log
 
     source $(inputs.condaInitialization.path) $(inputs.runFolder.path) data__getRangeMap "
       name: data__getRangeMap
@@ -60,7 +60,7 @@ arguments:
         - r-purrr
         - r-sf
         - r-stringr
-    "
+    " 2>&1 >> $log
 
     echo "Current mamba environment:" | tee -a $log
     mamba env list | tee -a $log
