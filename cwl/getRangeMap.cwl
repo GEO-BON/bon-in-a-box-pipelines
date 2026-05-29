@@ -34,9 +34,10 @@ baseCommand: ["bash", "-c"]
 arguments:
   - |
     log=$(inputs.runFolder.basename)/logs.txt
+    rm -f $log
     mkdir -p /conda-env-yml/pkgs /conda-env-yml/envs
 
-    cat > "$(inputs.runFolder.path)/inputs.json" <<'JSON'
+    cat > "$(inputs.runFolder.basename)/input.json" <<'JSON'
     ${
       return JSON.stringify({
         "expert_source": inputs.expert_source,
@@ -44,6 +45,8 @@ arguments:
       }, null, 2);
     }
     JSON
+    echo "Running in $(inputs.runFolder.basename)" >> $log
+    cat $(inputs.runFolder.basename)/input.json >> $log
 
     source $(inputs.condaInitialization.path) $(inputs.runFolder.path) data__getRangeMap "
       name: data__getRangeMap
@@ -59,6 +62,10 @@ arguments:
         - r-stringr
     "
 
+    echo "Current mamba environment:" | tee -a $log
+    mamba env list | tee -a $log
+
+    Rscript $(inputs.wrapper.path) $(inputs.runFolder.basename) $(inputs.scripts_root.path)/$(inputs.scriptPath) 2>&1 | tee -a $log
 
     # Leave mamba
     while [ ! -z $CONDA_PREFIX ]; do mamba deactivate; done
@@ -124,12 +131,13 @@ inputs:
 
 outputs:
   logs:
-    type: stdout
+    type: File
+    outputBinding:
+       glob: $(inputs.runFolder.basename)/logs.txt
 
   output_file:
     type: File
     doc: BON in a Box output file
     outputBinding:
-       glob: $(inputs.runFolder.path)/output.json
+       glob: $(inputs.runFolder.basename)/output.json
 
-stdout: $(inputs.runFolder.basename)/logs.txt
