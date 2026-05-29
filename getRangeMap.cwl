@@ -22,14 +22,18 @@ requirements:
         writable: true
   DockerRequirement:
     dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda
+  EnvVarRequirement:
+    envDef:
+      CONDA_PKGS_DIRS: /conda-env-yml/pkgs
+      CONDA_ENVS_PATH: /opt/conda/envs:/conda-env-yml/envs
+      SCRIPT_LOCATION: $(inputs.scripts.path)
 
 baseCommand: ["bash", "-c"]
 arguments:
   - |
     log=$(inputs.runFolder.basename)/logs.txt
-    export CONDA_PKGS_DIRS=/conda-env-yml/pkgs
-    export CONDA_ENVS_PATH=/opt/conda/envs:/conda-env-yml/envs
     mkdir -p /conda-env-yml/pkgs /conda-env-yml/envs
+
     source $(inputs.condaInitialization.path) $(inputs.runFolder.path) data__getRangeMap "
       name: data__getRangeMap
       channels:
