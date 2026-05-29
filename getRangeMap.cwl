@@ -86,7 +86,11 @@ inputs:
 
 
 outputs:
+  logs:
+    type: stdout
   output_file:
     type: File
     outputBinding:
        glob: $(inputs.runFolder.path)/output.json
+
+stdout: $(inputs.runFolder.basename)/logs.txt
