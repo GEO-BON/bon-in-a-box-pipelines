@@ -65,7 +65,7 @@ arguments:
     echo "Current mamba environment:" | tee -a $log
     mamba env list | tee -a $log
 
-    Rscript $(inputs.wrapper.path) $(inputs.runFolder.basename) $(inputs.scripts_root.path)/$(inputs.scriptPath) 2>&1 | tee -a $log
+    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.scripts_root.path)/$(inputs.scriptPath) 2>&1 | tee -a $log
 
     # Leave mamba
     while [ ! -z $CONDA_PREFIX ]; do mamba deactivate; done
