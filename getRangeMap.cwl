@@ -46,8 +46,9 @@ arguments:
         - r-purrr
         - r-sf
         - r-stringr
-    " | tee $log
-    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.script.path) > $(inputs.runFolder.basename)/logs.txt | tee $log
+    "
+
+    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.scripts.path)/$(inputs.scriptPath) > $(inputs.runFolder.basename)/logs.txt | tee $log
 
 inputs:
   runFolder:
@@ -67,11 +68,15 @@ inputs:
       class: File
       path: .server/script-stubs/system/scriptWrapper.R
 
-  script:
-    type: File
+  scriptPath:
+    type: string
+    default: data/getRangeMap.R
+
+  scripts:
+    type: Directory
     default:
-      class: File
-      path: scripts/data/getRangeMap.R
+      class: Directory
+      path: scripts
 
   environment:
     type: File
