@@ -26,7 +26,7 @@ requirements:
     envDef:
       CONDA_PKGS_DIRS: /conda-env-yml/pkgs
       CONDA_ENVS_PATH: /opt/conda/envs:/conda-env-yml/envs
-      SCRIPT_LOCATION: $(inputs.scripts.path)
+      SCRIPT_LOCATION: $(inputs.scripts_root.path)
 
 baseCommand: ["bash", "-c"]
 arguments:
@@ -48,7 +48,7 @@ arguments:
         - r-stringr
     "
 
-    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.scripts.path)/$(inputs.scriptPath) > $(inputs.runFolder.basename)/logs.txt | tee $log
+    Rscript $(inputs.wrapper.path) $(inputs.runFolder.path) $(inputs.scripts_root.path)/$(inputs.scriptPath) > $(inputs.runFolder.basename)/logs.txt | tee $log
 
 inputs:
   runFolder:
@@ -60,29 +60,30 @@ inputs:
     type: File
     default:
       class: File
-      path: .server/script-stubs/system/condaEnvironment.sh
+      path: ../.server/script-stubs/system/condaEnvironment.sh
 
   wrapper:
     type: File
     default:
       class: File
-      path: .server/script-stubs/system/scriptWrapper.R
+      path: ../.server/script-stubs/system/scriptWrapper.R
 
   scriptPath:
     type: string
+    doc: Path to the script, relative to scripts_root.
     default: data/getRangeMap.R
 
-  scripts:
+  scripts_root:
     type: Directory
     default:
       class: Directory
-      path: scripts
+      path: ../scripts
 
   environment:
     type: File
     default:
       class: File
-      path: runner.env
+      path: ../runner.env
 
 
 outputs:
