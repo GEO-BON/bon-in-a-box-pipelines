@@ -196,20 +196,19 @@ print(cube_GFW_loss)
   
   print(l_year_loss)
 # only keep the suitale pixels that are lost so that we aren't losing areas that are already not suitable in the base year.
-l_year_lost_suitable <- map(l_year_loss, function(loss_cube) {
+l_year_loss_suitable <- map(l_year_loss, function(loss_cube) {
 
-  combined <- gdalcubes::join_bands(
-    list(cube_GFW_TC_threshold, loss_cube)
+  combined <- gdalcubes::join_bands(list(cube_GFW_TC_threshold, loss_cube))
+
+  # Keep only pixels that were suitable in the base year and were lost in the GFW loss cube.
+  # Use FUN instead of an expression string so we do not depend on band rename semantics.
+  apply_pixel(
+    combined,
+    FUN = function(pixel) {
+      pixel[1] * pixel[2]
+    },
+    names = "result"
   )
-  
-  # Build expression from actual names, replacing dots with underscores
-  band_names <- gsub("\\.", "_", tolower(names(combined)))
-  print(band_names)  # should be c("x1_band1", "x2_band1")
-  
-  exprs <- paste(band_names[[1]], band_names[[2]], sep = "*")
-  print(exprs)  # should be "x1_band1 * x2_band1"
-
-  apply_pixel(combined, exprs, "result")
 })
 print(l_year_loss_suitable)
 # aggregate each cumulative loss cube to desired resolution
@@ -222,10 +221,8 @@ l_year_loss_agg <- map(
     method = "sum"
   ))
 print(l_year_loss_agg)
-biab_error_stop()
-  # turn cube to raster
-
-  l_r_year_loss <- map(l_year_loss, cube_to_raster, format = "terra")
+  # turn aggregated loss cubes to raster
+  l_r_year_loss <- map(l_year_loss_agg, cube_to_raster, format = "terra")
   s_year_loss_w_nas <- rast(l_r_year_loss)
   # turn NAs into 0 for raster operations
   s_year_loss <- s_year_loss_w_nas |> terra::classify(rcl = cbind(NA, 0)) # faster than with ifel
@@ -281,8 +278,17 @@ biab_error_stop()
   class(cube_GFW_gain)
   print(cube_GFW_gain)
 
-  r_GFW_gain <- st_as_stars(cube_GFW_gain) |> terra::rast()
- # r_GFW_gain <- cube_to_raster(cube_GFW_gain, format = "terra") # convert to raster format
+  # Aggregate gain layer to desired resolution (binary gain indicator, no thresholding needed)
+  cube_gain_agg <- gdalcubes::aggregate_space(
+    cube_GFW_gain,
+    dx = spat_res,
+    dy = spat_res,
+    method = "sum"
+  )
+
+  # Convert aggregated gain cube to raster
+  r_GFW_gain <- st_as_stars(cube_gain_agg) |> terra::rast()
+  r_GFW_gain <- r_GFW_gain |> terra::classify(rcl = cbind(NA, 0)) # turn NA to 0
   r_GFW_gain_rescaled <- terra::resample(r_GFW_gain, r_aoh_rescaled, method = "mode")
   r_GFW_gain_mask <- terra::classify(terra::mask(r_GFW_gain_rescaled, r_aoh_rescaled), rcl = cbind(0, NA))
 
@@ -303,7 +309,8 @@ biab_error_stop()
   df_r_GFW_TC_threshold_mask <- as.data.frame(r_GFW_TC_threshold_mask, xy = TRUE) |> setNames(c("x", "y", "No_change"))
   df_r_year_loss_mask_plot <- as.data.frame(r_year_loss_mask_plot, xy = TRUE) |> setNames(c("x", "y", "Loss"))
   df_r_GFW_gain_mask <- as.data.frame(r_GFW_gain_mask, xy = TRUE) |> setNames(c("x", "y", "Gain"))
-
+  
+  
   bbox_figure <- st_bbox(r_GFW_TC_threshold_mask)
   img_map_habitat_changes <- ggplot() +
     geom_tile(data = df_r_aoh, aes(x = x, y = y, fill = "Base"), alpha = 0.4) +
@@ -367,9 +374,27 @@ biab_error_stop()
   #-------------------------------------------------------------------------------------------------------------------
 
   # Area Score--------------------------------------------------------------------
-  r_areas <- terra::cellSize(s_habitat[[1]], unit = "ha") # create raster of areas by pixel
-
-  s_habitat_area <- s_habitat * r_areas
+  # Convert fine resolution pixel area to hectares based on CRS units
+  if (input$crs$CRS$unit == "metre") {
+    # fine_res in meters: convert m² to ha (1 ha = 10,000 m²)
+    fine_pixel_area_ha <- (fine_res * fine_res) / 10000
+    print(paste("Fine pixel area:", fine_pixel_area_ha, "hectares"))
+  } else {
+    # CRS in degrees: cannot directly convert to ha without latitude
+    # Use terra::cellSize on a known projected reference instead
+    warning("CRS in degrees detected. Using cellSize on reference grid for accurate area calculation.")
+    fine_pixel_area_ha <- NA  # Will use cellSize method below
+  }
+  
+  if (is.na(fine_pixel_area_ha)) {
+    # For degree-based CRS, calculate area using the first habitat layer's grid
+    r_areas_fine <- terra::cellSize(s_habitat[[1]], unit = "ha")
+    s_habitat_area <- s_habitat * r_areas_fine
+  } else {
+    # For meter-based CRS, use the calculated fine pixel area
+    s_habitat_area <- s_habitat * fine_pixel_area_ha
+  }
+  
   habitat_area <- terra::global(s_habitat_area, sum, na.rm = T)
 
   df_area_score_gfw <- tibble(sci_name = sp[i], Year = v_time_steps, Area = units::set_units(habitat_area$sum, "ha")) |>
