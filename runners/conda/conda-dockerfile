@@ -37,6 +37,9 @@ RUN set -ex; \
 # We need to create it and set the permissions.
 RUN mkdir /conda-env-yml && chmod a+w /conda-env-yml;
 
+# Add conda-pack to the base environment
+RUN mamba install -n base conda-pack
+
 # Load R base environment
 ADD ./r-environment.yml /data/r-environment.yml
 RUN mamba env create -f /data/r-environment.yml \
