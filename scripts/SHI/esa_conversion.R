@@ -14,8 +14,7 @@ token <- Sys.getenv("IUCN_TOKEN")
 if (token == "") {
   biab_error_stop("Please specify an IUCN token in your environment file")
 }
-
-conversion_table <- "scripts\\SHI\\iucn_esa_conversion.csv"    
+print(conversion_table)
 conversion_table <- read.csv(conversion_table) |>
   mutate(IUCN_code = as.character(IUCN_code)) |>
   mutate(IUCN_code = gsub(".", "_", IUCN_code, fixed = TRUE)) # change to same format as IUCN code is read in

@@ -17,7 +17,7 @@ print("Inputs: ")
 print(input)
 
 # Parameters -------------------------------------------------------------------
-spat_res <- ifelse(is.null(input$spat_res), 1000, input$spat_res)
+spat_res <- input$spat_res
 
 srs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 check_srs <- grepl("^[[:digit:]]+$", srs)

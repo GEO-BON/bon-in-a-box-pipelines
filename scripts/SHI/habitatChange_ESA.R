@@ -12,6 +12,12 @@ end_year <- as.integer(input$end_year)
 
 # Input checks
 
+# taking habitat for all species, but if want to specify habitat for each species, need to change this part of code and loop through species
+habitats <- read.csv(habitats) |> 
+  pull(ESA_CCI_code) |>
+  unique() |>
+  as.numeric()
+
 if (is.null(layers) || nlyr(layers) != 2) {
   biab_error_stop("Incorrect input for ESA landcover raster layers.
   There must be exactly two layers to compute the change in landcover.")

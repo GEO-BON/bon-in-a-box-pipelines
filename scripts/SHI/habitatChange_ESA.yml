@@ -13,7 +13,7 @@ inputs:
   habitats:
     label: Habitats
     description: Codes for the habitat types of the species of interest. For habitat types and their associated codes, refer to the [list of global CCI-LC codes](http://maps.elie.ucl.ac.be/CCI/viewer/download/CCI-LC_Maps_Legend.pdf).
-    type: int[]
+    type: text/csv
     example: 50, 60, 70, 80, 90, 151, 160, 170
   aoh:
     label: Area of habitat
