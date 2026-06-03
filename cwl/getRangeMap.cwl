@@ -71,32 +71,26 @@ arguments:
     cat $(inputs.runFolder.basename)/input.json | tee -a $log
 
     # This script does not really need the conda environment. Switch the comments to test with Conda.
-    source $(inputs.condaInitialization.path) $(inputs.runFolder.path) rbase 2>&1 >> $log
-    # source $(inputs.condaInitialization.path) $(inputs.runFolder.path) data__getRangeMap "
-    #   name: data__getRangeMap
-    #   channels:
-    #     - conda-forge
-    #     - r
-    #   dependencies:
-    #     - r-rjson
-    #     - r-dplyr
-    #     - r-tidyr
-    #     - r-purrr
-    #     - r-sf
-    #     - r-stringr
-    # " $(inputs.envFolder.path) 2>&1 >> $log
-
-    echo "Current mamba environment:" | tee -a $log
-    mamba env list | tee -a $log
+    # source $(inputs.condaInitialization.path) $(inputs.runFolder.path) rbase 2>&1 >> $log
+    source $(inputs.condaInitialization.path) $(inputs.runFolder.path) data__getRangeMap "
+      name: data__getRangeMap
+      channels:
+        - conda-forge
+        - r
+      dependencies:
+        - r-rjson
+        - r-dplyr
+        - r-tidyr
+        - r-purrr
+        - r-sf
+        - r-stringr
+    " $(inputs.envFolder.path) 2>&1 >> $log
 
     Rscript \
       $(inputs.wrapper.path) \
       $(inputs.runFolder.path) \
       $(inputs.scripts_root.path)/$(inputs.scriptPath) \
       2>&1 | tee -a $log
-
-    # Leave mamba
-    while [ ! -z $CONDA_PREFIX ]; do mamba deactivate; done
 
 inputs:
   runFolder:
