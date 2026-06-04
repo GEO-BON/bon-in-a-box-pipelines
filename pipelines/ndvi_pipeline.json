@@ -1,125 +1,76 @@
 {
   "nodes": [
     {
-      "id": "198",
-      "type": "io",
-      "position": {
-        "x": 278.9624938964844,
-        "y": 191.79999542236328
-      },
-      "data": {
-        "descriptionFile": "getCountrybbox.json"
-      }
-    },
-    {
       "id": "199",
       "type": "io",
       "position": {
-        "x": 1023.9624938964844,
-        "y": 175.79999542236328
+        "x": 1363,
+        "y": 22
       },
       "data": {
         "descriptionFile": "NDVI>calculateNDVI.yml"
       }
     },
     {
-      "id": "200",
-      "type": "output",
-      "position": {
-        "x": 891.9624938964844,
-        "y": 520.7999954223633
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "201",
-      "type": "output",
-      "position": {
-        "x": 927.9624938964844,
-        "y": 425.7999954223633
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
       "id": "202",
       "type": "output",
       "position": {
-        "x": 1572.9624938964844,
-        "y": 177.79999542236328
+        "x": 1903,
+        "y": 118.5
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "203",
+      "id": "208",
       "type": "output",
       "position": {
-        "x": 1558.9624938964844,
-        "y": 189.79999542236328
+        "x": 1363,
+        "y": 158
       },
       "data": {
         "label": "Output"
       }
     },
     {
-      "id": "204",
-      "type": "output",
+      "id": "210",
+      "type": "userInput",
       "position": {
-        "x": 1550.9624938964844,
-        "y": 205.79999542236328
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "206",
-      "type": "constant",
-      "position": {
-        "x": -155.73916625976562,
-        "y": 197.39129638671875
+        "x": 34,
+        "y": 13.333333333333334
       },
       "dragHandle": ".dragHandle",
       "data": {
-        "type": "text",
-        "value": "EPSG:4326"
+        "type": "bboxCRS"
+      }
+    },
+    {
+      "id": "211",
+      "type": "io",
+      "position": {
+        "x": 455,
+        "y": 187.5
+      },
+      "data": {
+        "descriptionFile": "data>load_polygons.yml"
+      }
+    },
+    {
+      "id": "212",
+      "type": "constant",
+      "position": {
+        "x": 68,
+        "y": 216.5
+      },
+      "dragHandle": ".dragHandle",
+      "data": {
+        "type": "float",
+        "value": 0
       }
     }
   ],
   "edges": [
-    {
-      "source": "198",
-      "sourceHandle": "data>getBoundingBox.yml@0|bbox",
-      "target": "199",
-      "targetHandle": "bounding_box",
-      "id": "reactflow__edge-198data>getBoundingBox.yml@0|bbox-199bounding_box"
-    },
-    {
-      "source": "198",
-      "sourceHandle": "data>getCountryPolygon.yml@12|country_region_polygon",
-      "target": "199",
-      "targetHandle": "study_area_polygon",
-      "id": "reactflow__edge-198data>getCountryPolygon.yml@12|country_region_polygon-199study_area_polygon"
-    },
-    {
-      "source": "198",
-      "sourceHandle": "data>getCountryPolygon.yml@12|country",
-      "target": "200",
-      "targetHandle": null,
-      "id": "reactflow__edge-198data>getCountryPolygon.yml@12|country-200"
-    },
-    {
-      "source": "198",
-      "sourceHandle": "data>getCountryPolygon.yml@12|region",
-      "target": "201",
-      "targetHandle": null,
-      "id": "reactflow__edge-198data>getCountryPolygon.yml@12|region-201"
-    },
     {
       "source": "199",
       "sourceHandle": "rasters",
@@ -128,39 +79,71 @@
       "id": "reactflow__edge-199rasters-202"
     },
     {
+      "source": "210",
+      "sourceHandle": null,
+      "target": "199",
+      "targetHandle": "bbox_crs",
+      "id": "reactflow__edge-210-199bbox_crs"
+    },
+    {
       "source": "199",
       "sourceHandle": "timeseries",
-      "target": "203",
+      "target": "202",
       "targetHandle": null,
-      "id": "reactflow__edge-199timeseries-203"
+      "id": "reactflow__edge-199timeseries-202"
     },
     {
       "source": "199",
       "sourceHandle": "timeseries_plot",
-      "target": "204",
+      "target": "202",
       "targetHandle": null,
-      "id": "reactflow__edge-199timeseries_plot-204"
+      "id": "reactflow__edge-199timeseries_plot-202"
     },
     {
-      "source": "206",
+      "source": "210",
       "sourceHandle": null,
-      "target": "198",
-      "targetHandle": "pipeline@2",
-      "id": "reactflow__edge-206-198pipeline@2"
+      "target": "211",
+      "targetHandle": "country_region_bbox",
+      "id": "reactflow__edge-210-211country_region_bbox"
+    },
+    {
+      "source": "212",
+      "sourceHandle": null,
+      "target": "211",
+      "targetHandle": "buffer",
+      "id": "reactflow__edge-212-211buffer"
+    },
+    {
+      "source": "211",
+      "sourceHandle": "polygon",
+      "target": "199",
+      "targetHandle": "study_area_polygon",
+      "id": "reactflow__edge-211polygon-199study_area_polygon"
+    },
+    {
+      "source": "211",
+      "sourceHandle": "polygon",
+      "target": "208",
+      "targetHandle": null,
+      "id": "reactflow__edge-211polygon-208"
     }
   ],
   "inputs": {
-    "getCountrybbox.json@198|data>getCountryPolygon.yml@12|country": {
-      "description": "ISO3 country code for the country of interest. For a list of ISO3 country codes,\nlook [here](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes).\n",
-      "label": "ISO3 country code",
-      "type": "text",
-      "example": "COL",
+    "data>load_polygons.yml@211|polygon_type": {
+      "description": "Type of polygon to load. Country or region polygons, World database of Protected Areas (WDPA), Exclusive Economic Zones (EEZs), or a custom polygon of a bounding box.",
+      "label": "Polygon type",
+      "type": "options",
+      "options": [
+        "Country or region",
+        "Polygon of bounding box"
+      ],
+      "example": "Country or region",
       "weight": 0
     },
-    "getCountrybbox.json@198|data>getCountryPolygon.yml@12|region": {
-      "description": "Name of the region of interest, in the native language of that region. For a list of valid names, input a random character string and run.",
-      "label": "State/Province name",
-      "type": "text",
+    "pipeline@210": {
+      "label": "Bounding box and CRS",
+      "description": "Select a country/region and a CRS to obtain the associated bounding box.",
+      "type": "bboxCRS",
       "example": null,
       "weight": 1
     },
@@ -197,45 +180,32 @@
       ],
       "example": "mean",
       "weight": 5
-    },
-    "NDVI>calculateNDVI.yml@199|crs": {
-      "description": "Coordinate reference system (EPSG number or WKT2 string) in which the output file must be generated",
-      "label": "Coordinate reference system",
-      "type": "text",
-      "example": "EPSG:4326",
-      "weight": 6
     }
   },
   "outputs": {
-    "getCountrybbox.json@198|data>getCountryPolygon.yml@12|country": {
-      "description": "Name of country of interest",
-      "label": "Country",
-      "type": "text",
-      "weight": 0
-    },
-    "getCountrybbox.json@198|data>getCountryPolygon.yml@12|region": {
-      "description": "Name of state/province of interest",
-      "label": "Region",
-      "type": "text",
-      "weight": 1
-    },
     "NDVI>calculateNDVI.yml@199|rasters": {
       "description": "Raster of the NDVI values summarised by the input statistic (mean, max, min, median) for each pixel within the time span choosen. If multiple indices were chosen, each band corresponds to a different vegetation index\n",
       "label": "Vegetation index rasters",
       "type": "image/tiff;application=geotiff[]",
-      "weight": 2
+      "weight": 0
     },
     "NDVI>calculateNDVI.yml@199|timeseries": {
       "description": "Time series of NDVI values for every date where there is data in the specified time period.",
       "label": "Time series of NDVI",
       "type": "text/csv",
-      "weight": 3
+      "weight": 1
     },
     "NDVI>calculateNDVI.yml@199|timeseries_plot": {
       "description": "Plot of NDVI values over time",
       "label": "NDVI time series plot",
       "type": "image/png",
-      "weight": 4
+      "weight": 2
+    },
+    "data>load_polygons.yml@211|polygon": {
+      "description": "Polygons of the country, WDPA, EEZs for the country or region of interest",
+      "label": "Polygon",
+      "type": "application/geopackage+sqlite3",
+      "weight": 3
     }
   },
   "metadata": {

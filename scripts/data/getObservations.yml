@@ -1,5 +1,5 @@
 script: getObservations.R
-name: GBIF Observations < 100 000 (DEPRECATED)
+name: GBIF Observations < 100 000
 description: "This script gets observations from GBIF database, using the package RGIF."
 lifecycle:
   status: "deprecated"

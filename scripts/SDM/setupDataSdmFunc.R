@@ -89,9 +89,10 @@ setup_presence_background <- function(
   if (partition_type == "crossvalidation") presence_background <- data.frame(cv.matrix, presence_background)
   if (partition_type == "bootstrap") presence_background <- data.frame(boot.matrix, presence_background)
 
-  env_vals <- terra::extract(predictors, dplyr::select(presence_background, lon, lat))
+   env_vals <- terra::extract(predictors, as.matrix(dplyr::select(presence_background, lon, lat)))
+  
   presence_background <- dplyr::bind_cols(presence_background,
-                          env_vals) |> dplyr::select(-ID)
+                          env_vals) 
   
   return(presence_background)
 }

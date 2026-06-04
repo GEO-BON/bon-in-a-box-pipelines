@@ -7,7 +7,7 @@ author:
 references:
   - text: https://github.com/cjcarlson/embarcadero/
   - text: Carlson, Colin J. embarcadero Species distribution modelling with Bayesian additive regression trees in r, Methods in Ecology and Evolution (2022).
-    doi: 10.1111/2041-210X.13389
+    doi: https://doi.org/10.1111/2041-210X.13389
 
 inputs:
   presence_background:

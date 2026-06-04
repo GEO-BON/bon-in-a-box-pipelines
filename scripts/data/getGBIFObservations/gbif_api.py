@@ -18,13 +18,11 @@ def gbif_api_dl(splist=[], bbox=[], years=[1980, 2022], outfile=('out.csv')):
 	GBIF_PWD=os.environ['GBIF_PWD']
 	GBIF_EMAIL=os.environ['GBIF_EMAIL']
 
-	if GBIF_USER=='' or GBIF_PWD=='' or GBIF_EMAIL=='':
-		biab_error_stop("GBIF_USER, GBIF_PWD and GBIF_EMAIL environment variable must be defined")
 	keys=[]
 	for x in splist:
 		print(x)
 		try:
-			keys.append(species.name_backbone(x)['usageKey'])
+			keys.append(species.name_backbone(x)['usage']['key'])
 		except:
 			print(f"Couldn't find {x}")
 			continue

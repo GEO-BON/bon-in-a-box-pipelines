@@ -14,18 +14,13 @@ inputs:
   spat_res:
     label: output spatial resolution
     description: Spatial resolution (in meters) for the output of the analysis.
-    type: int
+    type: float
     example: 1000
-  srs:
-    label: spatial reference system
-    description: Reference system for the area of interest. It can be
-      1) the Spatial Reference System Identifier (SRID),
-      2) the authority name (e.g. EPSG) with the SRID or
-      3) the description of the spatial reference system details (e.g. [https://spatialreference.org/]).
-
-      If just the SRID is given and the software can not find the reference system, try options 2 or 3.
-    type: text
-    example: EPSG:3116
+  crs:
+    label: CRS
+    description: Object containing CRS.
+    type: bboxCRS
+    example:
   species:
     label: species
     description: Scientific name of the species. Multiple species names can be specified, separated with a comma.

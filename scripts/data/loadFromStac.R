@@ -24,19 +24,26 @@ gdalcubes_set_gdal_config("CHECK_WITH_INVERT_PROJ", "FALSE") # disable checks on
 gdalcubes_set_gdal_config("GDAL_NUM_THREADS", 1) # restrict GDAL threads to 1
 
 gdalcubes::gdalcubes_options(parallel = 1)
+CRS <- paste0(input$bbox_crs$CRS$authority, ":", input$bbox_crs$CRS$code)
+bounding_box <- input$bbox_crs$bbox
 
-xmin <- input$bbox[1]
-ymin <- input$bbox[2]
-xmax <- input$bbox[3]
-ymax <- input$bbox[4]
+if (is.null(CRS) || is.null(bounding_box)) {
+  biab_error_stop("Please select a country/region and CRS. When using a custom study area,
+  select the country/region that contains the study area and a CRS to use.")
+}
+
+xmin <- bounding_box[1]
+ymin <- bounding_box[2]
+xmax <- bounding_box[3]
+ymax <- bounding_box[4]
 
 weight_matrix <- NULL
 
 # Load study area polygon
 if (!is.null(input$study_area)) {
   poly <- st_read(input$study_area)
-  if (!is.null(input$crs) && st_crs(poly)$epsg != input$crs) {
-    poly <- st_transform(poly, input$crs)
+  if (!is.null(CRS) && st_crs(poly)$epsg != CRS) {
+    poly <- st_transform(poly, CRS)
   }
 }
 
@@ -50,10 +57,9 @@ if (ymin > ymax) {
 if (grepl("chelsa", input$collections_items[1], ignore.case = TRUE) && (!is.null(input$t0) || !is.null(input$t1))) {
   biab_info("The chelsa collection has no temporal option. Extracting all chelsa items...")
 }
-
+coord <- st_crs(CRS)
 # Load the CRS object
-if (!is.null(input$crs) & !is.null(input$spatial_res)) {
-  coord <- st_crs(input$crs)
+if (!is.null(CRS) & !is.null(input$spatial_res)) {
   # Check for inconsistencies between CRS type and resolution
   if (st_is_longlat(coord) && input$spatial_res > 1) {
     biab_error_stop("CRS is in degrees and resolution is in meters.")
@@ -68,6 +74,10 @@ if (!is.null(input$crs) & !is.null(input$spatial_res)) {
 if (!is.null(input$t0) | !is.null(input$t1)) {
   if (is.null(input$t0) | is.null(input$t1)) {
     biab_error_stop("Please provide both start and end date to filter by dates")
+  }
+
+  if (input$t0 >= input$t1) {
+    biab_error_stop("Input years seem reversed. Please double check your inputs.")
   }
 
   if (is.null(input$temporal_res)) {
@@ -157,10 +167,10 @@ for (coll_it in collections_items) { # Loop through input array
     # Connect with terra
     r <- rast(paste0("/vsicurl/", urls[1]))
 
-    if (is.null(input$crs)) {
+    if (is.null(CRS)) {
       srs.cube <- paste0("EPSG:", st_crs(r)$epsg)
     } else {
-      srs.cube <- input$crs
+      srs.cube <- CRS
     }
     print(srs.cube)
 
@@ -173,10 +183,10 @@ for (coll_it in collections_items) { # Loop through input array
     print(resolution)
 
     # Make empty raster with desired resolution and extent
-    empty_raster <- rast(xmin = input$bbox[1], xmax = input$bbox[3], ymin = input$bbox[2], ymax = input$bbox[4], resolution = resolution, crs = srs.cube)
+    empty_raster <- rast(xmin = bounding_box[1], xmax = bounding_box[3], ymin = bounding_box[2], ymax = bounding_box[4], resolution = resolution, crs = srs.cube)
 
     # Resample if crs or spatial resolution are not empty
-    if (!is.null(input$spatial_res) | !is.null(input$crs)) {
+    if (!is.null(input$spatial_res) | !is.null(CRS)) {
       resampled <- project(r, empty_raster)
     } else {
       resampled <- r
@@ -195,8 +205,15 @@ for (coll_it in collections_items) { # Loop through input array
       masked <- resampled
     }
 
-    # Name file path
+    # Name file path, adds
+    base_name <- names(masked)
     paths <- file.path(outputFolder, paste0(names(masked), ".tif"))
+    print(paths)
+    k <- 1
+    while (file.exists(paths)) {
+      paths <- file.path(outputFolder, paste0(base_name, "_", k, ".tif"))
+      k <- k + 1
+    }
 
     file <- writeRaster(masked, paths)
 
@@ -236,12 +253,22 @@ for (coll_it in collections_items) { # Loop through input array
         print(it_obj$features[[1]]$assets$data$`raster:bands`[[1]]$spatial_resolution)
       print("Spatial.res:")
       print(spatial.res)
+
+      if (st_is_longlat(coord) == FALSE && spatial.res < 1) {
+      biab_error_stop("CRS is in meters and resolution is in degrees.")
+      }
+
+      if (st_is_longlat(coord) && spatial.res > 1) {
+      biab_error_stop("CRS is in degrees and resolution is in meters.")
+      }
+
     } else {
       spatial.res <- input$spatial_res
     }
 
+
     # Extract crs if not provided
-    if (is.null(input$crs)) { # Obtain CRS from metadata
+    if (is.null(CRS)) { # Obtain CRS from metadata
       if ("proj:epsg" %in% names(it_obj$features[[1]]$properties)) {
         srs.cube <- paste0("EPSG:", it_obj$features[[1]]$properties$`proj:epsg`)
         print("srs_cube")
@@ -250,7 +277,7 @@ for (coll_it in collections_items) { # Loop through input array
         srs.cube <- it_obj$features[[1]]$properties$`proj:wkt2`
       }
     } else {
-      srs.cube <- input$crs
+      srs.cube <- CRS
     }
 
     # Extract date

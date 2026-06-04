@@ -18,6 +18,7 @@ source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/sdmUtils.R", sep = "/"))
 input <- biab_inputs()
 print("Inputs : ")
 print(input)
+crs <- paste0(input$crs$CRS$authority, ":", input$crs$CRS$code)
 
 # based on https://github.com/jamiemkass/ENMeval/blob/master/R/enm.maxnet.R
 all.fc <- unlist(sapply(1:5, function(x) apply(combn(c("L", "Q", "H", "P", "T"), x), 2, function(y) paste(y, collapse = ""))))
@@ -73,7 +74,7 @@ runs.output <- paste0(outputFolder, "/sdm_runs_", 1:nlyr(sdm_runs), ".tif")
 # runs.output <- file.path(outputFolder, "sdm_runs.tif")
 biab_output("sdm_pred", pred.output)
 
-sdm_pred <- project(sdm_pred, crs(input$proj)) ## Temporary fix while maxent transitions to terra
+sdm_pred <- project(sdm_pred, crs(crs)) ## Temporary fix while maxent transitions to terra
 terra::writeRaster(
   x = sdm_pred,
   filename = pred.output,
@@ -82,7 +83,7 @@ terra::writeRaster(
   overwrite = TRUE
 )
 for (i in 1:nlyr(sdm_runs)) {
-  thisrun <- project(sdm_runs[[i]], crs(input$proj)) ## Temporary fix while maxent transitions to terra
+  thisrun <- project(sdm_runs[[i]], crs(crs)) ## Temporary fix while maxent transitions to terra
   terra::writeRaster(
     x = thisrun,
     filename = file.path(outputFolder, paste0("/sdm_runs_", i, ".tif")),

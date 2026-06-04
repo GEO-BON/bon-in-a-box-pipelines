@@ -2,13 +2,12 @@
 source(paste(Sys.getenv("SCRIPT_LOCATION"), "SDM/removeCollinearityFunc.R", sep = "/"))
 
 ## Load required packages
-packages_list <- list("terra", "rjson", "raster", "dplyr", "gdalcubes")
+packages_list <- list("terra", "rjson", "dplyr", "gdalcubes")
 
 lapply(packages_list, library, character.only = TRUE)
 
 library("terra")
 library("rjson")
-library("raster")
 library("dplyr")
 library("gdalcubes")
 

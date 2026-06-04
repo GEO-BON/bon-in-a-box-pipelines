@@ -1,5 +1,5 @@
 script: getProtectedAreasWDPA.R
-name: Get protected areas (DEPRECATED)
+name: Get protected areas
 lifecycle:
   status: deprecated
   message: |

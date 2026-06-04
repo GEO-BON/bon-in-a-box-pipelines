@@ -27,9 +27,12 @@ end
 function process_inputs(RUNTIME_DIR)
     inputs = read_inputs_dict(RUNTIME_DIR)
 
-    crs = inputs["crs"]
+    bounding_box = inputs["bbox_crs"]["bbox"]
+
+    crs = string(inputs["bbox_crs"]["CRS"]["authority"],":", inputs["bbox_crs"]["CRS"]["code"])
+
     transformer = _PROJ.Transformation(crs, "EPSG:4326", always_xy=true)
-    bbox = _get_wgs84_bbox(transformer, inputs["bbox"]...)
+    bbox = _get_wgs84_bbox(transformer, bounding_box...)
 
     predictor_layers = SDMLayer.(inputs["predictors"]; bbox...)
     water = _get_water_mask(inputs["water_mask"])
