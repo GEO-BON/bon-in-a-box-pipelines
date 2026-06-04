@@ -8,7 +8,7 @@ license: CC BY
 description: |
     This script calculates and summarizes the LAI for every pixel within a given region and for a selected
     time period. The data is pulled using the OpenEO Python client connected to the Copernicus Data Space Ecosystem backend. The resulting
-    raster will give you the maximum LAI in each pixel of a given region. You can read more about the LAI layers [here](https://algorithm-catalogue.apex.esa.int/apps/biopar#biophysical-parameters)."
+    raster will give you the maximum LAI in each pixel of a given region over a given time period. You can read more about the LAI layers [here](https://algorithm-catalogue.apex.esa.int/apps/udp_obsgession_w23_lai#eo4diversity-evi-lai)."
 inputs:
   bbox_crs:
     label: Bounding box and CRS

@@ -1,18 +1,18 @@
-import sys;
 import json;
 import openeo;
-import shapely;
 import os
 import geopandas as gpd
 from pyproj import CRS
+from shapely.geometry import box
 
 # Reading inputs
 data = biab_inputs()
 
-if (data['bbox_crs']['region'] is not None):
-    bbox = data['bbox_crs']['region']['bboxWGS84']
+if (data['bbox_crs']['bbox'] is not None):
+    bbox = data['bbox_crs']['bbox']
 else:
-    bbox = data['bbox_crs']['country']['bboxWGS84']
+    biab_error_stop("No bounding box specified in bbox_crs input.")
+    
 start_year = data['start_year']
 end_year = data['end_year']
 polygon = data['study_area_polygon']
@@ -20,6 +20,8 @@ spatial_resolution = data['spatial_resolution']
 crs = data['bbox_crs']['CRS']['authority']+':'+str(data['bbox_crs']['CRS']['code'])
 id = os.getenv("CDSE_CLIENT_ID")
 secret = os.getenv("CDSE_CLIENT_SECRET")
+if spatial_resolution == "":
+    spatial_resolution = None
 
 start_date = f"{start_year}-01-01"
 end_date = f"{end_year}-12-31"
@@ -28,19 +30,26 @@ end_date = f"{end_year}-12-31"
 if not id or not secret:
     biab_error_stop("Please specify CDSE credentials in runner.env")
 
-if crs is None or crs=='':
-    crs='EPSG:4326'
-    print('No CRS specified, using Latitude, Longitude WGS84 (EPSG:4326) as the CRS.')
-
-EPSG = crs.split(':')[1]
-code = int(crs.split(':')[1])  
+EPSG = int(crs.split(':')[1])
 coord = CRS.from_epsg(EPSG)
 
-if coord.is_geographic and spatial_resolution > 1:
+if spatial_resolution is not None and coord.is_geographic and spatial_resolution > 1:
     biab_error_stop("CRS is in degrees and resolution is in meters.")
 
-if coord.is_projected and spatial_resolution < 1:
+if spatial_resolution is not None and coord.is_projected and spatial_resolution < 1:
     biab_error_stop("CRS is in meters and resolution is in degrees.")
+
+geometry = None
+if polygon is not None and polygon != "":
+    gdf = gpd.read_file(polygon)
+    gdf = gdf.to_crs(crs)
+    if gdf.empty:
+        biab_error_stop("Study area polygon file does not contain any features.")
+    for col in gdf.select_dtypes(include=['datetime64']).columns:
+        gdf[col] = gdf[col].astype(str)
+    geometry = json.loads(gdf.to_json())
+    west, south, east, north = gdf.total_bounds
+    bbox = [west, south, east, north]
 
 connection = openeo.connect("https://openeo.dataspace.copernicus.eu/")
 
@@ -50,8 +59,9 @@ connection.authenticate_oidc_client_credentials(
     client_secret = secret,
 )
 
-# make sure to pass coordinate in meter and not in degree
-aoi = {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], 'crs': code}
+# Use WGS84 for the UDP request. Some CDSE-hosted collections used inside the
+# UDP fail when the inherited spatial extent uses newer EPSG codes like 8857.
+aoi = {"west": bbox[0], "south": bbox[1], "east": bbox[2], "north": bbox[3], "crs": EPSG}
 process_graph = "https://raw.githubusercontent.com/ESA-APEx/apex_algorithms/obsgession_lai/algorithm_catalog/obsgession/udp_obsgession_w23_lai/openeo_udp/udp_obsgession_w23_lai.json"
 
 #get cube from udp
@@ -61,9 +71,12 @@ cube = connection.datacube_from_process(
     start_date = start_date,
     end_date = end_date,
     spatial_extent = aoi,
+    binning_period = "year",
+    temp_aggregator = "max",
+    epsg = EPSG
 )
 
-# Step 1: Run the UDP job
+# Run the UDP first, then reload its STAC output as a raster cube.
 print("Starting UDP job to retrieve LAI cube...", flush=True)
 udp_job = cube.create_job(
     title=f"LAI UDP {start_year}-{end_year}",
@@ -76,10 +89,8 @@ except Exception as e:
 
 print(f"UDP job finished: {udp_job.job_id}", flush=True)
 
-# Get the canonical STAC link from the job results metadata
 job_results = udp_job.get_results()
 job_metadata = job_results.get_metadata()
-print(f"Job results metadata: {job_metadata}", flush=True)
 
 canonical_links = [
     link["href"]
@@ -88,39 +99,26 @@ canonical_links = [
 ]
 
 if not canonical_links:
-    biab_error_stop("No canonical STAC link found in job results")
+    biab_error_stop("No canonical STAC link found in UDP job results.")
 
 stac_url = canonical_links[0]
 print(f"Using STAC URL: {stac_url}", flush=True)
-
-# Step 2: Build a new process graph that loads from the STAC URL
-print("Building second job to load STAC and aggregate...", flush=True)
 lai_cube = connection.load_stac(stac_url)
+
+# crop to study area polygon if provided
+if polygon is None or polygon == "":
+    lai_cube_cropped = lai_cube
+else:
+    lai_cube_cropped = lai_cube.filter_spatial(geometry)
 
 # add step to resample spatial resolution if needed
 if spatial_resolution is None:
-    datacube_resampled = lai_cube
+    datacube_resampled_cropped = lai_cube_cropped
 else:
-    datacube_resampled = lai_cube.resample_spatial(resolution=spatial_resolution, projection=crs, method="bilinear")
+    datacube_resampled_cropped = lai_cube_cropped.resample_spatial(resolution=spatial_resolution, projection=crs, method="bilinear")
 
-# Step 1: calculate max LAI per cell per year
-# build yearly intervals
-years = list(range(int(start_year), int(end_year)+1))
-print(years)
-intervals = [[f"{y}-01-01", f"{y+1}-01-01"] for y in years]
-print(intervals)
-labels = [f"{y}-07-01" for y in years]  # label each interval with the mid-year date
-print(labels)
-
-yearly_max = datacube_resampled.aggregate_temporal(
-    intervals=intervals,
-    labels=labels,
-    reducer="max",
-)
-print(yearly_max)
-
-# Step 2: Min of yearly maxima per cell
-lai = yearly_max.reduce_dimension(dimension="t", reducer="min")
+# Min of yearly maxima per cell
+lai = datacube_resampled_cropped.reduce_dimension(dimension="t", reducer="min")
 
 # Submit aggregation as separate job
 lai.save_result("GTiff")
