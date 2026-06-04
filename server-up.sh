@@ -4,6 +4,7 @@
 # The UI can then be accessed throught the localhost of this machine.
 
 RED="\033[31m"
+YELLOW="\033[33m"
 ENDCOLOR="\033[0m"
 function assertSuccess {
     if [[ $? -ne 0 ]] ; then
@@ -30,7 +31,7 @@ while (( $# > 0 )) ; do
         ./.server/prod-server.sh licence
         exit 0 ;;
     -h|--help)
-        echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH]"
+        echo "Usage: ./server-up.sh [OPTIONS] [GIT BRANCH/TAG]"
         echo
         echo "Starts the BON in a Box server locally."
         echo "The server will be available at http://localhost"
@@ -48,9 +49,9 @@ while (( $# > 0 )) ; do
         echo "                      When --offline flag is used, this option will be ignored."
         echo "      --licence       Display licence information"
         echo
-        echo "GIT BRANCH:           Refers to the git branch of the server, on https://github.com/GEO-BON/bon-in-a-box-pipeline-engine"
+        echo "GIT BRANCH/TAG:       Refers to the git branch or tag of the server, on https://github.com/GEO-BON/bon-in-a-box-pipeline-engine"
         echo "                      The branch must be available on the GitHub package registry, such as main, edge, and *staging branches."
-        echo "                      Default: main"
+        echo "                      Tags are detected automatically. Default branch: main"
         echo
         exit 0 ;;
     *) break ;;
@@ -65,9 +66,21 @@ if [ "$offline" = true ]; then
     exit 0
 fi
 
-# Optional arg: branch name of server repo, default "main"
-branch=${1:-"main"}
+# Optional positional arg: branch name or tag of server repo, default "main"
+gitRef=${1:-"main"}
 
+# Auto-detect whether the argument is a branch or a tag
+remoteUrl="git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git"
+if git ls-remote --exit-code --heads "$remoteUrl" "$gitRef" > /dev/null 2>&1; then
+    isTag=false
+    refType="branch"
+elif git ls-remote --exit-code --tags "$remoteUrl" "$gitRef" > /dev/null 2>&1; then
+    isTag=true
+    refType="tag"
+else
+    echo -e "${RED}Error: '$gitRef' is neither a branch nor a tag on the remote repository.${ENDCOLOR}"
+    exit 1
+fi
 
 if [ -L .server ]; then
     echo "Warning: .server is a symlink, will not attempt branch change nor checkout.";
@@ -75,10 +88,15 @@ if [ -L .server ]; then
 else
     echo "Updating server init script..."
     if cd .server; then
-        # Check for a branch change
-        remoteFetch="+refs/heads/$branch:refs/remotes/origin/$branch"
+        # Check for a branch/tag change
+        if [ "$isTag" = true ]; then
+            remoteFetch="+refs/tags/$gitRef:refs/tags/$gitRef"
+        else
+            remoteFetch="+refs/heads/$gitRef:refs/remotes/origin/$gitRef"
+        fi
+
         if [[ "$(git config remote.origin.fetch)" != $remoteFetch ]]; then
-            echo "Switching to branch $branch..."
+            echo "Switching to $refType $gitRef..."
 
             # Change branch restriction of shallow repo.
             # We are not really changing branch but just allowing to checkout individual files from that other branch.
@@ -87,21 +105,34 @@ else
             ls -a | grep -Ev "^(\.git|\.|\.\.)$" | xargs rm -r
         fi
 
-        git fetch --no-tag --depth 1 origin $branch
-        assertSuccess
+        if [ "$isTag" = true ]; then
+            git fetch --depth 1 origin refs/tags/$gitRef ; assertSuccess
+        else
+            git fetch --no-tag --depth 1 origin $gitRef ; assertSuccess
+        fi
+
     else
-        git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git --branch $branch --single-branch .server --depth 1
+        git clone -n git@github.com:GEO-BON/bon-in-a-box-pipeline-engine.git --branch $gitRef --single-branch .server --depth 1
         assertSuccess
         cd .server
         assertSuccess
     fi
 
-    echo "Using git branch $branch."
-    git checkout origin/$branch -- prod-server.sh
+    echo "Using git $refType $gitRef."
+    if [ "$isTag" = true ]; then
+        git checkout refs/tags/$gitRef -- prod-server.sh
+    else
+        git checkout origin/$gitRef -- prod-server.sh
+    fi
     assertSuccess
 
-    ./prod-server.sh checkout $branch
-
+    ./prod-server.sh checkout $gitRef
+    if [[ $? -ne 0 ]] ; then
+        echo -e "${YELLOW}Failed to checkout server configuration files from $refType $gitRef."
+        echo -e "${YELLOW}Please check that the branch or tag exists and contains the necessary configuration files.${ENDCOLOR}"
+        echo -e "${YELLOW}You may also try to run './server-up.sh --offline' to run the currently installed version of the server.${ENDCOLOR}"
+        exit 1;
+    fi
 fi
 
 if [ "$startServer" = true ]; then
