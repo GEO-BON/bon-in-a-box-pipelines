@@ -4,8 +4,8 @@
       "id": "34",
       "type": "io",
       "position": {
-        "x": 1926,
-        "y": 343.5
+        "x": 1934,
+        "y": 90
       },
       "data": {
         "descriptionFile": "filtering>cleanCoordinates.yml"
@@ -15,8 +15,8 @@
       "id": "35",
       "type": "constant",
       "position": {
-        "x": 1493,
-        "y": 333
+        "x": 1527,
+        "y": 68
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -37,8 +37,8 @@
       "id": "40",
       "type": "io",
       "position": {
-        "x": 2868,
-        "y": 695
+        "x": 2906,
+        "y": 454
       },
       "data": {
         "descriptionFile": "SDM>selectBackground.yml"
@@ -48,8 +48,8 @@
       "id": "44",
       "type": "io",
       "position": {
-        "x": 3462,
-        "y": 811.5
+        "x": 3489,
+        "y": 553.5
       },
       "data": {
         "descriptionFile": "SDM>setupDataSdm.yml"
@@ -59,8 +59,8 @@
       "id": "45",
       "type": "constant",
       "position": {
-        "x": 2989,
-        "y": 833
+        "x": 3026,
+        "y": 575
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -77,8 +77,8 @@
       "id": "46",
       "type": "userInput",
       "position": {
-        "x": 3124,
-        "y": 964
+        "x": 3161,
+        "y": 706
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -90,8 +90,8 @@
       "id": "47",
       "type": "constant",
       "position": {
-        "x": 3014,
-        "y": 880
+        "x": 3068,
+        "y": 622
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -103,8 +103,8 @@
       "id": "48",
       "type": "constant",
       "position": {
-        "x": 3028,
-        "y": 922
+        "x": 3082,
+        "y": 664
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -113,42 +113,11 @@
       }
     },
     {
-      "id": "57",
-      "type": "userInput",
-      "position": {
-        "x": 120,
-        "y": 1104
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "EPSG:6623"
-      }
-    },
-    {
-      "id": "58",
-      "type": "userInput",
-      "position": {
-        "x": 208,
-        "y": 576.4
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "float[]",
-        "value": [
-          -2316297,
-          -1971146,
-          1015207,
-          1511916
-        ]
-      }
-    },
-    {
       "id": "64",
       "type": "constant",
       "position": {
-        "x": 1498,
-        "y": 444
+        "x": 1533,
+        "y": 202
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -160,8 +129,8 @@
       "id": "68",
       "type": "io",
       "position": {
-        "x": 4546,
-        "y": 1015.5
+        "x": 4541,
+        "y": 711
       },
       "data": {
         "descriptionFile": "SDM>rangePredictions.yml"
@@ -171,8 +140,8 @@
       "id": "69",
       "type": "output",
       "position": {
-        "x": 4919,
-        "y": 986.5
+        "x": 4913,
+        "y": 770.5
       },
       "data": {
         "label": "Output"
@@ -182,8 +151,8 @@
       "id": "97",
       "type": "io",
       "position": {
-        "x": 1287,
-        "y": 837
+        "x": 1306,
+        "y": 534
       },
       "data": {
         "descriptionFile": "SDM>removeCollinearity.yml"
@@ -193,8 +162,8 @@
       "id": "98",
       "type": "constant",
       "position": {
-        "x": 824,
-        "y": 767
+        "x": 833,
+        "y": 464
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -213,8 +182,8 @@
       "id": "99",
       "type": "constant",
       "position": {
-        "x": 824,
-        "y": 814
+        "x": 833,
+        "y": 511
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -231,8 +200,8 @@
       "id": "100",
       "type": "constant",
       "position": {
-        "x": 863,
-        "y": 861
+        "x": 889,
+        "y": 558
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -244,8 +213,8 @@
       "id": "101",
       "type": "constant",
       "position": {
-        "x": 849,
-        "y": 903
+        "x": 875,
+        "y": 600
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -257,8 +226,8 @@
       "id": "102",
       "type": "constant",
       "position": {
-        "x": 863,
-        "y": 945
+        "x": 889,
+        "y": 642
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -270,8 +239,8 @@
       "id": "104",
       "type": "io",
       "position": {
-        "x": 2398,
-        "y": 475.5
+        "x": 2415,
+        "y": 403.5
       },
       "data": {
         "descriptionFile": "SDM>studyExtent.yml"
@@ -281,8 +250,8 @@
       "id": "105",
       "type": "constant",
       "position": {
-        "x": 1955,
-        "y": 497
+        "x": 1962,
+        "y": 425
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -300,8 +269,8 @@
       "id": "107",
       "type": "constant",
       "position": {
-        "x": 1994,
-        "y": 544
+        "x": 2018,
+        "y": 472
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -313,8 +282,8 @@
       "id": "108",
       "type": "io",
       "position": {
-        "x": 4112.028113826656,
-        "y": 1023.4437723466879
+        "x": 4107,
+        "y": 721
       },
       "data": {
         "descriptionFile": "SDM>runMaxent.yml"
@@ -324,8 +293,8 @@
       "id": "109",
       "type": "output",
       "position": {
-        "x": 4546,
-        "y": 1166.5
+        "x": 4541,
+        "y": 676
       },
       "data": {
         "label": "Output"
@@ -335,8 +304,8 @@
       "id": "115",
       "type": "constant",
       "position": {
-        "x": 3628,
-        "y": 1146
+        "x": 3654,
+        "y": 823
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -353,8 +322,8 @@
       "id": "116",
       "type": "constant",
       "position": {
-        "x": 3628,
-        "y": 1077
+        "x": 3654,
+        "y": 754
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -373,7 +342,7 @@
       "type": "userInput",
       "position": {
         "x": 190,
-        "y": 441
+        "y": 155.83333333333337
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -387,8 +356,8 @@
       "id": "122",
       "type": "output",
       "position": {
-        "x": 535,
-        "y": 438
+        "x": 515,
+        "y": 12
       },
       "data": {
         "label": "Output"
@@ -398,8 +367,8 @@
       "id": "123",
       "type": "output",
       "position": {
-        "x": 2398,
-        "y": 314.5
+        "x": 2415,
+        "y": 234
       },
       "data": {
         "label": "Output"
@@ -409,19 +378,8 @@
       "id": "124",
       "type": "output",
       "position": {
-        "x": 1926,
-        "y": 939
-      },
-      "data": {
-        "label": "Output"
-      }
-    },
-    {
-      "id": "126",
-      "type": "output",
-      "position": {
-        "x": 1287,
-        "y": 275
+        "x": 1934,
+        "y": 706
       },
       "data": {
         "label": "Output"
@@ -432,7 +390,7 @@
       "type": "userInput",
       "position": {
         "x": 121,
-        "y": 1232
+        "y": 909.1666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -441,46 +399,11 @@
       }
     },
     {
-      "id": "133",
-      "type": "io",
-      "position": {
-        "x": 535,
-        "y": 192
-      },
-      "data": {
-        "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
-      }
-    },
-    {
-      "id": "134",
-      "type": "io",
-      "position": {
-        "x": 682,
-        "y": 597
-      },
-      "data": {
-        "descriptionFile": "data>loadFromStac.yml"
-      }
-    },
-    {
-      "id": "135",
-      "type": "constant",
-      "position": {
-        "x": 109,
-        "y": 619.5
-      },
-      "dragHandle": ".dragHandle",
-      "data": {
-        "type": "text",
-        "value": "\n"
-      }
-    },
-    {
       "id": "137",
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 1185
+        "y": 862.1666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -500,7 +423,7 @@
       "type": "constant",
       "position": {
         "x": 12,
-        "y": 1138
+        "y": 815.1666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -528,8 +451,8 @@
       "id": "139",
       "type": "io",
       "position": {
-        "x": 760,
-        "y": 1036
+        "x": 801,
+        "y": 729
       },
       "data": {
         "descriptionFile": "data>GBIFHeatmapFromSTAC.yml"
@@ -539,8 +462,8 @@
       "id": "140",
       "type": "userInput",
       "position": {
-        "x": -172.31010215480546,
-        "y": 342.65299130497647
+        "x": 35,
+        "y": 780.1666666666666
       },
       "dragHandle": ".dragHandle",
       "data": {
@@ -551,8 +474,8 @@
       "id": "142",
       "type": "io",
       "position": {
-        "x": 519.6898978451945,
-        "y": 89.65299130497647
+        "x": 515,
+        "y": 172.5
       },
       "data": {
         "descriptionFile": "data>getGBIFObservations>getGBIFObservations.yml"
@@ -562,8 +485,8 @@
       "id": "143",
       "type": "output",
       "position": {
-        "x": 1253.6898978451945,
-        "y": 148.65299130497647
+        "x": 1306,
+        "y": 244
       },
       "data": {
         "label": "Output"
@@ -573,8 +496,8 @@
       "id": "144",
       "type": "io",
       "position": {
-        "x": 713.6898978451945,
-        "y": 421.65299130497647
+        "x": 826,
+        "y": 300
       },
       "data": {
         "descriptionFile": "data>loadFromStac.yml"
@@ -942,52 +865,12 @@
       "example": 10000,
       "weight": 3
     },
-    "pipeline@57": {
-      "label": "projection system",
-      "description": "String, projection system",
-      "type": "text",
-      "example": "EPSG:6622",
-      "weight": 3
-    },
-    "pipeline@58": {
-      "label": "bbox",
-      "description": "Vector of float, bbox coordinates of the bbox in the order xmin, ymin, xmax, ymax",
-      "type": "float[]",
-      "example": [
-        -2316297,
-        -1971146,
-        1015207,
-        1511916
-      ],
-      "weight": 4
-    },
-    "data>loadFromStac.yml@134|stac_url": {
-      "description": "URL of the STAC catalog.",
-      "label": "STAC URL",
-      "type": "text",
-      "example": "https://stac.geobon.org/",
-      "weight": 5
-    },
-    "data>loadFromStac.yml@134|collections_items": {
-      "description": "Vector of strings, collection name followed by '|' followed by item id",
-      "label": "STAC collection items",
-      "type": "text[]",
-      "example": [
-        "chelsa-clim|bio1",
-        "chelsa-clim|bio2",
-        "cec_land_cover_percentage|cec_land_cover_percent_class_5",
-        "cec_land_cover_percentage|cec_land_cover_percent_class_6",
-        "cec_land_cover_percentage|cec_land_cover_percent_class_15",
-        "earthenv_topography_derived|geomflat_perc"
-      ],
-      "weight": 6
-    },
     "pipeline@128": {
       "label": "spatial resolution",
       "description": "Integer, spatial resolution of the rasters",
       "type": "float",
       "example": 1000,
-      "weight": 7
+      "weight": 4
     },
     "SDM>runMaxent.yml@108|fc": {
       "description": "Vector of strings, feature classes for MaxEnt algorithm. Accepted values are combinations of L (linear), Q (quadratic), P (product), H (hinge) or T (threshold).",
@@ -998,7 +881,7 @@
         "LQ",
         "LQHP"
       ],
-      "weight": 8
+      "weight": 5
     },
     "SDM>runMaxent.yml@108|rm": {
       "description": "Vector of numbers, regularization multipliers for MaxEnt algorithm.",
@@ -1009,7 +892,7 @@
         1,
         2
       ],
-      "weight": 9
+      "weight": 6
     },
     "SDM>runMaxent.yml@108|partition_type": {
       "description": "String, name of partitioning technique.",
@@ -1023,35 +906,28 @@
         "checkerboard2"
       ],
       "example": "block",
-      "weight": 10
+      "weight": 7
     },
     "pipeline@46": {
       "label": "number of runs",
       "description": "number of runs (in bootstrap or crossvalidation method)",
       "type": "int",
       "example": 2,
-      "weight": 11
+      "weight": 8
     },
     "data>getGBIFObservations>getGBIFObservations.yml@142|min_year": {
       "description": "Min year observations wanted",
       "label": "Minimum year",
       "type": "int",
       "example": 2010,
-      "weight": 12
+      "weight": 9
     },
     "data>getGBIFObservations>getGBIFObservations.yml@142|max_year": {
       "description": "Max year observations wanted",
       "label": "Maximum year",
       "type": "int",
       "example": 2024,
-      "weight": 13
-    },
-    "data>loadFromStac.yml@134|study_area": {
-      "description": "Polygon of study area used to crop output layers",
-      "label": "Study area",
-      "type": "application/geopackage+sqlite3",
-      "example": null,
-      "weight": 14
+      "weight": 10
     },
     "data>GBIFHeatmapFromSTAC.yml@139|taxa": {
       "description": "taxonomic group for which to retrieve GBIF heatmap",
@@ -1067,28 +943,52 @@
         "all"
       ],
       "example": "plants",
-      "weight": 15
-    },
-    "data>loadFromStac.yml@134|t0": {
-      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
-      "label": "Start date",
-      "type": "text",
-      "example": null,
-      "weight": 16
+      "weight": 11
     },
     "data>loadFromStac.yml@144|t1": {
       "description": "End date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name.",
       "label": "End date",
       "type": "text",
       "example": null,
-      "weight": 17
+      "weight": 12
     },
     "data>loadFromStac.yml@144|temporal_res": {
       "description": "Temporal resolution to use when querying STAC items by date, in the format (\"P\", time interval, and time unit, e.g. \"P1Y\" is yearly, \"P1M\" is montly, and \"P1D\" is daily). Leave blank if not querying by date. If the temporal resolution is coarser than the temporal resolution of the time series, the layers will be aggregated with the aggregation method chosen below.",
       "label": "Temporal resolution",
       "type": "text",
       "example": null,
-      "weight": 18
+      "weight": 13
+    },
+    "data>loadFromStac.yml@144|stac_url": {
+      "description": "URL of the STAC catalog.",
+      "label": "STAC URL",
+      "type": "text",
+      "example": "https://stac.geobon.org/",
+      "weight": 14
+    },
+    "data>loadFromStac.yml@144|collections_items": {
+      "description": "Vector of strings. To pull specific collection items, input the collection name followed by '|' followed by item id (e.g. \"chelsa-clim|bio1\"). To extract a whole collection, type the collection name only (e.g. \"chelsa-clim\"). To pull collection items by date, write the collection name and provide a start date, end date, and temporal resolution. If pulling a layer that is tiled (e.g. https://stac.geobon.org/viewer/gfw-lossyear/_80N_180W), enter the collection name (e.g. gfw-lossyear), bounding box and time range if the layer is a time series, and the script will assemble the tiles into a continuous layer automatically.)",
+      "label": "STAC collection items",
+      "type": "text[]",
+      "example": [
+        "chelsa-clim|bio1",
+        "chelsa-clim|bio2"
+      ],
+      "weight": 15
+    },
+    "data>loadFromStac.yml@144|t0": {
+      "description": "Start date for time series layers. Can be in the format YYYY or YYYY-MM-DD. Leave blank if extracting items by name or to extract layers from all available dates.",
+      "label": "Start date",
+      "type": "text",
+      "weight": 16,
+      "example": null
+    },
+    "data>loadFromStac.yml@144|study_area": {
+      "description": "Polygon of study area used to mask output layers, in geopackage format.",
+      "label": "Study area",
+      "type": "application/geopackage+sqlite3",
+      "weight": 17,
+      "example": null
     }
   },
   "outputs": {
