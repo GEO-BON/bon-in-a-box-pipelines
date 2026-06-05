@@ -94,7 +94,7 @@ arguments:
     scriptExitCode=\${PIPESTATUS[0]}
     echo "Script exited with code $scriptExitCode" | tee -a $log
 
-    $(inputs.condaPackScript.path) data__getRangeMap $(inputs.envFolder.path) | tee -a $log
+    source $(inputs.condaPackScript.path) data__getRangeMap $(inputs.envFolder.path) 2>&1 >> $log
 
     exit "$scriptExitCode"
 
