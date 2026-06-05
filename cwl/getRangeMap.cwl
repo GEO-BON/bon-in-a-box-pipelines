@@ -71,8 +71,8 @@ arguments:
     cat $(inputs.runFolder.basename)/input.json | tee -a $log
 
     # This script does not really need the conda environment. Switch the comments to test with Conda.
-    # source $(inputs.condaInitialization.path) $(inputs.runFolder.path) rbase 2>&1 >> $log
-    source $(inputs.condaInitialization.path) $(inputs.runFolder.path) data__getRangeMap "
+    # source $(inputs.condaInitializationScript.path) $(inputs.runFolder.path) rbase 2>&1 >> $log
+    source $(inputs.condaInitializationScript.path) $(inputs.runFolder.path) data__getRangeMap "
       name: data__getRangeMap
       channels:
         - conda-forge
@@ -91,6 +91,8 @@ arguments:
       $(inputs.runFolder.path) \
       $(inputs.scripts_root.path)/$(inputs.scriptPath) \
       2>&1 | tee -a $log
+
+    $(inputs.condaPackScript.path) data__getRangeMap $(inputs.envFolder.path) | tee -a $log
 
 inputs:
   runFolder:
@@ -128,11 +130,17 @@ inputs:
       class: Directory
       path: ./envs
 
-  condaInitialization:
+  condaInitializationScript:
     type: File
     default:
       class: File
       path: ../.server/script-stubs/system/condaEnvironment.sh
+
+  condaPackScript:
+    type: File
+    default:
+      class: File
+      path: ../.server/script-stubs/system/condaPackEnvironment.sh
 
   wrapper:
     type: File
