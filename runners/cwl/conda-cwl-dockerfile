@@ -1,0 +1,14 @@
+FROM ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda
+
+# Install CURL, needed to download conda-pack environments from the specified URL
+RUN set -ex; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends curl; \
+    apt-get clean all;
+
+# Add conda-pack to the base environment
+RUN mamba install -n base conda-pack
+
+# TODO: Clone the repo (no depth, remove .git folder)
+# TODO: stub runner.env file
+# TODO: init .server folder (remove .git folder)
