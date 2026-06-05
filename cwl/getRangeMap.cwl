@@ -91,8 +91,12 @@ arguments:
       $(inputs.runFolder.path) \
       $(inputs.scripts_root.path)/$(inputs.scriptPath) \
       2>&1 | tee -a $log
+    scriptExitCode=\${PIPESTATUS[0]}
+    echo "Script exited with code $scriptExitCode" | tee -a $log
 
     $(inputs.condaPackScript.path) data__getRangeMap $(inputs.envFolder.path) | tee -a $log
+
+    exit "$scriptExitCode"
 
 inputs:
   runFolder:
@@ -168,7 +172,7 @@ inputs:
 
 outputs:
   sf_range_map:
-    type: File?
+    type: File
     outputBinding:
       glob: $(inputs.runFolder.basename)/output.json
       loadContents: true
