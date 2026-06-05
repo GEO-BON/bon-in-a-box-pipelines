@@ -3,7 +3,7 @@ FROM ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda
 # Install CURL, needed to download conda-pack environments from the specified URL
 RUN set -ex; \
     apt-get update; \
-    apt-get install -y --no-install-recommends curl; \
+    apt-get install -y --no-install-recommends curl pigz; \
     apt-get clean all;
 
 # Add conda-pack to the base environment
