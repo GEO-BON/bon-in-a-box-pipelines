@@ -18,12 +18,12 @@ lifecycle:
 inputs:
   presence:
     label: presence
-    description: Dataframe, presence data.
+    description: Tab-separated occurrence records to be cleaned, typically the output of a GBIF download step. Each row should represent one observation with at minimum latitude, longitude, and species columns.
     type: text/tab-separated-values
     example: "/scripts/filtering/cleanCoordinates_presence.tsv"
   predictors:
     label: predictors
-    description: Raster, predictors.
+    description: Stack of environmental predictor rasters in GeoTIFF format. Used for the 'env' cleaning test to identify environmental outliers.
     type: image/tiff;application=geotiff[]
     example: ["/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio141981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio151981-01-01.tif", "/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio181981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio21981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio31981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio81981-01-01.tif","/output/SDM/loadPredictors_R/e09acd85debd23c991652771b1d771b2/bio91981-01-01.tif"]
   tests:
@@ -50,17 +50,17 @@ inputs:
 outputs:
   n_presence:
     label: n presence
-    description: Integer, initial number of presences points.
+    description: Number of occurrence records entering the cleaning pipeline. Compare with `n_clean` to assess how many records were removed and whether the cleaning settings are appropriate for your dataset.
     type: int
     example: 500
   n_clean:
     label: n clean presence
-    description: Integer, final number of presences points after cleaning.
+    description: Number of occurrence records remaining after all selected cleaning tests have been applied. A large drop relative to `n_presence` may indicate overly aggressive settings or systematic issues in the input data. Very low counts (<20) may produce unreliable SDM results.
     type: int
     example: 400
   clean_presence:
      label: clean presences
-     description: Dataframe, table with clean presence points.
+     description: Tab-separated table of occurrence records that passed all selected cleaning tests. This is the recommended input for downstream species distribution modeling steps.
      type: text/tab-separated-values
 conda:
   channels:
