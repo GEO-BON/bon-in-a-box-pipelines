@@ -44,7 +44,7 @@ requirements:
         writable: true
 
   DockerRequirement:
-    dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda:cwl-poc
+    dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda-cwl
 
   EnvVarRequirement:
     envDef:
@@ -84,7 +84,7 @@ arguments:
         - r-purrr
         - r-sf
         - r-stringr
-    " $(inputs.envFolder.path) 2>&1 >> $log
+    " $(inputs.envFolder.path) $(inputs.condaPackURL) 2>&1 >> $log
 
     Rscript \
       $(inputs.wrapper.path) \
@@ -145,6 +145,11 @@ inputs:
     default:
       class: File
       path: ../.server/script-stubs/system/condaPackEnvironment.sh
+
+  condaPackURL:
+    type: string
+    doc: Base URL to check for conda-pack environments.
+    default: https://object-arbutus.alliancecan.ca/swift/v1/3857940e33774dca8ae21e4999fe402e/conda-pack/
 
   wrapper:
     type: File
