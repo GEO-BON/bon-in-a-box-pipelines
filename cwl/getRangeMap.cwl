@@ -33,6 +33,7 @@ requirements:
         writable: true
 
       - entry: $(inputs.envFolder)
+        entryname: /conda-envs # A fixed prefix is necessary for unpacked environments to be usable a second time.
         writable: true
 
       # This is the equivalent of a docker mount
@@ -68,6 +69,7 @@ arguments:
     }
     JSON
     echo "Running in $(inputs.runFolder.basename)" | tee -a $log
+    echo "Inputs:" | tee -a $log
     cat $(inputs.runFolder.basename)/input.json | tee -a $log
 
     # This script does not really need the conda environment. Switch the comments to test with Conda.
@@ -84,7 +86,7 @@ arguments:
         - r-purrr
         - r-sf
         - r-stringr
-    " $(inputs.envFolder.path) $(inputs.condaPackURL) 2>&1 >> $log
+    " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
 
     Rscript \
       $(inputs.wrapper.path) \
@@ -94,7 +96,7 @@ arguments:
     scriptExitCode=\${PIPESTATUS[0]}
     echo "Script exited with code $scriptExitCode" | tee -a $log
 
-    source $(inputs.condaPackScript.path) data__getRangeMap $(inputs.envFolder.path) 2>&1 >> $log
+    source $(inputs.condaPackScript.path) data__getRangeMap /conda-envs 2>&1 >> $log
 
     exit "$scriptExitCode"
 
