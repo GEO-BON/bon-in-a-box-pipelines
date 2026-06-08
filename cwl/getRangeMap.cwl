@@ -28,30 +28,45 @@ requirements:
   NetworkAccess:
     networkAccess: true
   InitialWorkDirRequirement:
-    listing:
-      - entry: $(inputs.runFolder)
-        writable: true
+    listing: |
+      ${
+        return [
+          {
+            entry: inputs.runFolder,
+            writable: true
+          },
+          {
+            entry: inputs.envFolder,
+            entryname: "/conda-envs",
+            writable: true
+          },
+          {
+            entry: { "class": "Directory", "basename": "conda-env-yml", "listing": [] },
+            entryname: "/conda-env-yml",
+            writable: true
+          }
+        ].concat(
+          inputs.environment
+            ? [{ entry: inputs.environment, entryname: "/runner.env" }]
+            : []
+        );
+      }
 
-      - entry: $(inputs.envFolder)
-        entryname: /conda-envs # A fixed prefix is necessary for unpacked environments to be usable a second time.
-        writable: true
-
-      # This is the equivalent of a docker mount
-      - entry: $(inputs.environment)
-        entryname: /runner.env
-
-      - entry: '${ return {"class": "Directory", "basename": "conda-env-yml", "listing": []}; }'
-        entryname: /conda-env-yml
-        writable: true
 
   DockerRequirement:
-    dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda-cwl
+    dockerPull: ghcr.io/geo-bon/bon-in-a-box-pipelines/runner-conda-cwl:cwl-poc
+    # dockerImageId: conda-cwl-runner-local
+    # dockerFile:
+    #     $include: ../runners/cwl/conda-cwl-dockerfile
 
   EnvVarRequirement:
     envDef:
       CONDA_PKGS_DIRS: /conda-env-yml/pkgs
       CONDA_ENVS_PATH: /opt/conda/envs:/conda-env-yml/envs
-      SCRIPT_LOCATION: $(inputs.scripts_root.path)
+      SCRIPT_LOCATION: /scripts
+      SCRIPT_STUBS_LOCATION: /script-stubs
+      USERDATA_LOCATION: /userdata
+      OUTPUT_LOCATION: /output
 
 baseCommand: ["bash", "-c"]
 arguments:
@@ -73,8 +88,8 @@ arguments:
     cat $(inputs.runFolder.basename)/input.json | tee -a $log
 
     # This script does not really need the conda environment. Switch the comments to test with Conda.
-    # source $(inputs.condaInitializationScript.path) $(inputs.runFolder.path) rbase 2>&1 >> $log
-    source $(inputs.condaInitializationScript.path) $(inputs.runFolder.path) data__getRangeMap "
+    # source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $(inputs.runFolder.path) rbase 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaEnvironment.sh $(inputs.runFolder.path) data__getRangeMap "
       name: data__getRangeMap
       channels:
         - conda-forge
@@ -89,14 +104,14 @@ arguments:
     " /conda-envs $(inputs.condaPackURL) 2>&1 >> $log
 
     Rscript \
-      $(inputs.wrapper.path) \
+      $SCRIPT_STUBS_LOCATION/system/scriptWrapper.R \
       $(inputs.runFolder.path) \
-      $(inputs.scripts_root.path)/$(inputs.scriptPath) \
+      $SCRIPT_LOCATION/$(inputs.scriptPath) \
       2>&1 | tee -a $log
     scriptExitCode=\${PIPESTATUS[0]}
     echo "Script exited with code $scriptExitCode" | tee -a $log
 
-    source $(inputs.condaPackScript.path) data__getRangeMap /conda-envs 2>&1 >> $log
+    source $SCRIPT_STUBS_LOCATION/system/condaPackEnvironment.sh data__getRangeMap /conda-envs 2>&1 >> $log
 
     exit "$scriptExitCode"
 
@@ -124,57 +139,30 @@ inputs:
       position: 3
     default: ["Myrmecophaga tridactyla"]
 
-
-  ##############################################
-  # The following inputs should not be changed #
-  ##############################################
-
   envFolder:
     type: Directory
-    doc: Folder for conda-pack to export environments. This avoids resolving the environement multiple times.
+    doc: Folder for conda-pack to export environments. This avoids downloading/resolving the environement multiple times.
     default:
       class: Directory
       path: ./envs
 
-  condaInitializationScript:
-    type: File
-    default:
-      class: File
-      path: ../.server/script-stubs/system/condaEnvironment.sh
+  environment:
+    type: File?
+    doc: BON in a Box runner.env file, necessary for scripts requiring credentials. If not provided, an empty one will be used.
 
-  condaPackScript:
-    type: File
-    default:
-      class: File
-      path: ../.server/script-stubs/system/condaPackEnvironment.sh
+  #################################################################
+  # The following inputs should not be changed in a regular setup #
+  #################################################################
 
   condaPackURL:
     type: string
     doc: Base URL to check for conda-pack environments.
     default: https://object-arbutus.alliancecan.ca/swift/v1/3857940e33774dca8ae21e4999fe402e/conda-pack/
 
-  wrapper:
-    type: File
-    default:
-      class: File
-      path: ../.server/script-stubs/system/scriptWrapper.R
-
   scriptPath:
     type: string
     doc: Path to the script, relative to scripts_root.
     default: data/getRangeMap.R
-
-  scripts_root:
-    type: Directory
-    default:
-      class: Directory
-      path: ../scripts
-
-  environment:
-    type: File
-    default:
-      class: File
-      path: ../runner.env
 
 
 outputs:
