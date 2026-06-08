@@ -49,6 +49,10 @@ requirements:
           inputs.environment
             ? [{ entry: inputs.environment, entryname: "/runner.env" }]
             : []
+        ).concat( // For debugging, overrides /scripts
+          inputs.scripts_root
+            ? [{ entry: inputs.scripts_root, entryname: "/scripts" }]
+            : []
         );
       }
 
@@ -161,9 +165,12 @@ inputs:
 
   scriptPath:
     type: string
-    doc: Path to the script, relative to scripts_root.
+    doc: Path to the script, relative to scripts root.
     default: data/getRangeMap.R
 
+  scripts_root:
+    type: Directory?
+    doc: Root folder for scripts. Use this to override the image's scripts while debugging.
 
 outputs:
   sf_range_map:
