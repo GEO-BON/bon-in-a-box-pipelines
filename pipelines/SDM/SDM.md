@@ -6,12 +6,80 @@ _Author: [Sarah Valentin](https://orcid.org/0000-0002-9028-681X), [Guillaume Lar
 
 Review status: Under development
 
-**Methods:**
+### **Introcution:**
+  The MaxEnt pipeline builds a species distribution model using occurrence
+  records from the Global Biodiversity Information Facility (GBIF) and
+  environmental raster layers from a STAC catalog. The pipeline retrieves GBIF
+  observations for the selected taxon or taxa, cleans occurrence coordinates,
+  removes highly collinear environmental predictors, generates background
+  points, and fits a MaxEnt model using the ENMeval R package. MaxEnt is a
+  presence-background modeling approach, meaning it compares known species
+  presences with background environmental conditions across the study area.   
 
-SDMs predict where species are likely to occur based on a suite of environmental variables that are associated with known occurrences (Peterson, 2001; Elith and Leathwick, 2009). The MaxEnt pipeline pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. Then, the pipeline cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. Third, the pipeline creates a set of pseudo-absences (background points) and combines this with presences and the environmental predictors to create a dataset that is ready to be input into the SDM model. The pipeline runs the SDM on this data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\) partitioning occurrence and background points into subsets for training and evaluation, 2\) building the model with different algorithmic settings (model tuning), and 3\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). Lastly, the pipeline computes the 95% confidence interval using bootstrapping and cross validation techniques.
+  The pipeline evaluates different MaxEnt settings, including feature classes
+  and regularization multipliers, and selects a tuned model based on model
+  performance. It produces a habitat suitability prediction raster, cleaned
+  occurrence records, selected environmental predictors, a GBIF download DOI,
+  and a raster summarizing variability among model runs.  
 
-**BON in a Box pipeline:**
+### **Uses:**
 
+  SDMs predict where species are likely to occur based on a suite of environmental variables that are associated with known occurrences (Peterson, 2001; Elith and Leathwick, 2009). The MaxEnt pipeline can be used to estimate the potential distribution or relative habitat suitability of one or more species within a selected study area. Outputs can support conservation planning, sampling prioritization, identification of biodiversity hotspots, protected area planning, risk assessment for species of conservation concern, and environmental impact
+  assessments.  
+
+  The results can also be used as inputs to other biodiversity analyses and
+  indicators, such as identifying areas where species are likely to occur,
+  comparing predicted habitat suitability across regions, or highlighting areas
+  where additional occurrence sampling may be needed. Because the pipeline
+  retrieves both GBIF observations and environmental predictor layers, it
+  provides a reproducible workflow for generating species distribution maps from
+  public biodiversity and environmental data.  
+
+ The MaxEnt pipeline pulls occurrences of the species of interest from GBIF and environmental raster layers from the GEO BON STAC catalog. Then, the pipeline cleans the GBIF data by only including one occurrence per pixel and removes collinearity between the environmental layers. Third, the pipeline creates a set of pseudo-absences (background points) and combines this with presences and the environmental predictors to create a dataset that is ready to be input into the SDM model. The pipeline runs the SDM on this data using the MaxEnt algorithm using the ENMeval R package (Kass et al. 2021). The MaxEnt SDM is run by 1\) partitioning occurrence and background points into subsets for training and evaluation, 2\) building the model with different algorithmic settings (model tuning), and 3\) evaluating their performance ([see package vignette](https://jamiemkass.github.io/ENMeval/articles/ENMeval-2.0-vignette.html#partition)). Lastly, the pipeline computes the 95% confidence interval using bootstrapping and cross validation techniques.
+
+ ## **Pipeline limitations:**
+
+  * MaxEnt uses presence-background data, not confirmed absence data.
+  Predictions should be interpreted as relative habitat suitability or relative
+  occurrence potential, not confirmed species presence or absence.
+
+  * GBIF records may contain spatial, taxonomic, and temporal biases. The
+  pipeline applies coordinate-cleaning steps, but users should still inspect the
+  cleaned presences and interpret results cautiously, especially for poorly
+  sampled taxa or regions.
+
+  * Model quality depends strongly on the number and quality of occurrence
+  records. Very small numbers of cleaned presences may produce unreliable
+  predictions.
+
+  * The choice of environmental predictors, background sampling method, feature
+  classes, regularization multipliers, and partitioning method can affect model
+  outputs. Users should treat the model as sensitive to these settings,
+  especially for final analyses.
+
+  * Environmental predictors must be ecologically relevant to the species being
+  modeled. Including many correlated or irrelevant predictors can reduce
+  interpretability and increase overfitting risk.
+
+  * The pipeline estimates suitability based on the predictor layers supplied by
+  the user. It does not directly account for dispersal limits, biotic
+  interactions, land-use barriers, species detectability, or future
+  environmental change unless those factors are represented in the input data.
+
+  * Larger study areas, finer spatial resolutions, more environmental
+  predictors, and more model runs increase computation time and memory use.
+
+## **Before you start:**
+A GBIF API key is required to run this pipeline and can be added into the runner.env file.
+
+Before running the pipeline, choose the taxon or taxa you want to model and make sure the names match the GBIF taxonomic backbone. Species names can be checked on the GBIF website.
+
+Select a study area using the bounding box and CRS input. The CRS and spatial resolution determine the scale of the analysis, so choose a CRS appropriate for the region and make sure the spatial resolution is in the units of that CRS.
+
+Choose environmental predictor layers from the STAC catalog that are ecologically relevant to the species being modeled. For example, climate, vegetation, elevation, land cover, or habitat-related predictors may be appropriate depending on the species. Avoid including many predictors that represent the same underlying environmental gradient.
+
+## **Running the pipeline:**
+### Pipeline inputs
 The BON in a Box pipeline allows you to run an SDM for a specific region and species (or multiple species) of interest. The pipeline has the following inputs:
 
 - **Taxa list:** The user can specify the species (or multiple species) they are interested in.
@@ -32,6 +100,9 @@ The BON in a Box pipeline allows you to run an SDM for a specific region and spe
 - **Mask:** If the user is only interested in a specific country or study area, they can upload a polygon and the pipeline will crop the results to only that area.
 - **Spatial resolution:** The spatial resolution at which to predict the SDMs.
 
+## **Pipeline steps**
+
+### **Pipeline outputs**
 The pipeline creates the following outputs:
 
 - **DOI of GBIF download:** Generates a DOI of the GBIF download for reproducibility.
@@ -40,9 +111,10 @@ The pipeline creates the following outputs:
 - **Predictions:** SDM prediction probabilities can be viewed as a raster.
 - **Variability of predictions:** The variability of the 95% confidence of each prediction can be viewed on a map to show uncertainty.
 
+## **Examples:**
 [See an example output here](https://pipelines-results.geobon.org/viewer/_2025-10-16%3ESDM%3ESDM_maxEnt%3E78ed53b7ea6b96ef58008075a4dfb487)
 
-**Citations:**
+## **References:**
 
 Elith, J., & Leathwick, J. R. (2009). Species Distribution Models: Ecological Explanation and Prediction Across Space and Time. Annual Review of Ecology, Evolution, and Systematics, 40(Volume 40, 2009), 677–697. https://doi.org/10.1146/annurev.ecolsys.110308.120159
 
